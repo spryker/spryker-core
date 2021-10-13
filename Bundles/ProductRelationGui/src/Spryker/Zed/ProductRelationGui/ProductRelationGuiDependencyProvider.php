@@ -26,19 +26,49 @@ use Spryker\Zed\ProductRelationGui\Dependency\Service\ProductRelationGuiToUtilEn
  */
 class ProductRelationGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_PRODUCT_RELATION = 'FACADE_PRODUCT_RELATION';
+    /**
+     * @var string
+     */
     public const FACADE_PRODUCT = 'FACADE_PRODUCT';
+    /**
+     * @var string
+     */
     public const FACADE_LOCALE = 'FACADE_LOCALE';
+    /**
+     * @var string
+     */
     public const FACADE_PRODUCT_ATTRIBUTE = 'FACADE_PRODUCT_ATTRIBUTE';
 
+    /**
+     * @var string
+     */
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
+    /**
+     * @var string
+     */
     public const PROPEL_QUERY_PRODUCT_RELATION = 'PROPEL_QUERY_PRODUCT_RELATION';
+    /**
+     * @var string
+     */
     public const PROPEL_QUERY_PRODUCT_ABSTRACT = 'PROPEL_QUERY_PRODUCT_ABSTRACT';
+    /**
+     * @var string
+     */
     public const PROPEL_QUERY_PRODUCT_ATTRIBUTE_KEY = 'PROPEL_QUERY_PRODUCT_ATTRIBUTE_KEY';
 
+    /**
+     * @var string
+     */
     public const QUERY_CONTAINER_PROPEL_QUERY_BUILDER = 'QUERY_CONTAINER_PROPEL_QUERY_BUILDER';
 
+    /**
+     * @var string
+     */
     public const PLUGIN_STORE_RELATION_FORM_TYPE = 'PLUGIN_STORE_RELATION_FORM_TYPE';
 
     /**

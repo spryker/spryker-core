@@ -9,7 +9,7 @@ namespace Spryker\Client\ConfigurableBundlePageSearch\Plugin\Elasticsearch\Query
 
 use Elastica\Query;
 use Elastica\Query\BoolQuery;
-use Elastica\Query\Match;
+use Elastica\Query\MatchQuery;
 use Generated\Shared\Search\PageIndexMap;
 use Generated\Shared\Transfer\ConfigurableBundleTemplatePageSearchRequestTransfer;
 use Generated\Shared\Transfer\SearchContextTransfer;
@@ -20,6 +20,9 @@ use Spryker\Shared\ConfigurableBundlePageSearch\ConfigurableBundlePageSearchConf
 
 class ConfigurableBundleTemplatePageSearchQueryPlugin extends AbstractPlugin implements QueryInterface, SearchContextAwareQueryInterface
 {
+    /**
+     * @var string
+     */
     protected const SOURCE_IDENTIFIER = 'page';
 
     /**
@@ -124,8 +127,8 @@ class ConfigurableBundleTemplatePageSearchQueryPlugin extends AbstractPlugin imp
      */
     protected function setTypeFilter(BoolQuery $boolQuery): BoolQuery
     {
-        $typeFilter = new Match();
-        $typeFilter->setField(PageIndexMap::TYPE, ConfigurableBundlePageSearchConfig::CONFIGURABLE_BUNDLE_TEMPLATE_RESOURCE_NAME);
+        $typeFilter = $this->getMatchQuery()
+            ->setField(PageIndexMap::TYPE, ConfigurableBundlePageSearchConfig::CONFIGURABLE_BUNDLE_TEMPLATE_RESOURCE_NAME);
 
         return $boolQuery->addMust($typeFilter);
     }
@@ -147,5 +150,19 @@ class ConfigurableBundleTemplatePageSearchQueryPlugin extends AbstractPlugin imp
     protected function hasSearchContext(): bool
     {
         return (bool)$this->searchContextTransfer;
+    }
+
+    /**
+     * For compatibility with PHP 8.
+     *
+     * @return \Elastica\Query\MatchQuery|\Elastica\Query\Match
+     */
+    protected function getMatchQuery()
+    {
+        $matchQueryClassName = class_exists(MatchQuery::class)
+            ? MatchQuery::class
+            : '\Elastica\Query\Match';
+
+        return new $matchQueryClassName();
     }
 }

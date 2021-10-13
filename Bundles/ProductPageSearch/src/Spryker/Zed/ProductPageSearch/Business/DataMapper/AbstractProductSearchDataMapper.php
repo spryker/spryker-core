@@ -16,9 +16,21 @@ use Laminas\Filter\Word\UnderscoreToDash;
 
 abstract class AbstractProductSearchDataMapper
 {
+    /**
+     * @var string
+     */
     protected const FACET_NAME = 'facet-name';
+    /**
+     * @var string
+     */
     protected const FACET_VALUE = 'facet-value';
+    /**
+     * @var string
+     */
     protected const ALL_PARENTS = 'all-parents';
+    /**
+     * @var string
+     */
     protected const DIRECT_PARENTS = 'direct-parents';
 
     /**
@@ -74,6 +86,7 @@ abstract class AbstractProductSearchDataMapper
             return $key;
         }
 
+        /** @var string $normalizedKey */
         $normalizedKey = $this->underscoreToDashFilter->filter($key);
 
         if (in_array($normalizedKey, $pageIndexMapProperties)) {
@@ -127,7 +140,7 @@ abstract class AbstractProductSearchDataMapper
 
     /**
      * @param array $result
-     * @param \Generated\Shared\Transfer\SearchResultDataMapTransfer[]|\ArrayObject $searchResultData
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\SearchResultDataMapTransfer> $searchResultData
      *
      * @return array
      */
@@ -146,7 +159,7 @@ abstract class AbstractProductSearchDataMapper
 
     /**
      * @param array $result
-     * @param \Generated\Shared\Transfer\StringFacetMapTransfer[]|\ArrayObject $stringFacetMap
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\StringFacetMapTransfer> $stringFacetMap
      *
      * @return array
      */
@@ -168,7 +181,7 @@ abstract class AbstractProductSearchDataMapper
 
     /**
      * @param array $result
-     * @param \Generated\Shared\Transfer\IntegerFacetMapTransfer[]|\ArrayObject $integerFacet
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\IntegerFacetMapTransfer> $integerFacet
      *
      * @return array
      */
@@ -190,7 +203,7 @@ abstract class AbstractProductSearchDataMapper
 
     /**
      * @param array $result
-     * @param \Generated\Shared\Transfer\StringSortMapTransfer[]|\ArrayObject $stringSortMap
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\StringSortMapTransfer> $stringSortMap
      *
      * @return array
      */
@@ -209,7 +222,7 @@ abstract class AbstractProductSearchDataMapper
 
     /**
      * @param array $result
-     * @param \Generated\Shared\Transfer\IntegerSortMapTransfer[]|\ArrayObject $integerSortMap
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\IntegerSortMapTransfer> $integerSortMap
      *
      * @return array
      */
@@ -261,7 +274,7 @@ abstract class AbstractProductSearchDataMapper
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function getPageIndexMapProperties(): array
     {

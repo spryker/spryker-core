@@ -14,6 +14,9 @@ use Elastica\Aggregation\AbstractTermsAggregation;
  */
 abstract class AbstractTermsFacetAggregation extends AbstractFacetAggregation
 {
+    /**
+     * @var string
+     */
     public const AGGREGATION_PARAM_SIZE = 'size';
 
     /**

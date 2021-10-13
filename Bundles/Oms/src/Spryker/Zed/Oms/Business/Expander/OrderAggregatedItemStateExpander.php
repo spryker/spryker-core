@@ -37,9 +37,9 @@ class OrderAggregatedItemStateExpander implements OrderAggregatedItemStateExpand
     }
 
     /**
-     * @param \Generated\Shared\Transfer\OrderTransfer[] $orderTransfers
+     * @param array<\Generated\Shared\Transfer\OrderTransfer> $orderTransfers
      *
-     * @return \Generated\Shared\Transfer\OrderTransfer[]
+     * @return array<\Generated\Shared\Transfer\OrderTransfer>
      */
     public function expandOrdersWithAggregatedItemStates(array $orderTransfers): array
     {
@@ -56,10 +56,10 @@ class OrderAggregatedItemStateExpander implements OrderAggregatedItemStateExpand
     }
 
     /**
-     * @param \Generated\Shared\Transfer\OrderTransfer[] $orderTransfers
-     * @param \Generated\Shared\Transfer\AggregatedItemStateTransfer[][] $aggregatedItemStateMap
+     * @param array<\Generated\Shared\Transfer\OrderTransfer> $orderTransfers
+     * @param array<\Generated\Shared\Transfer\AggregatedItemStateTransfer[]> $aggregatedItemStateMap
      *
-     * @return \Generated\Shared\Transfer\OrderTransfer[]
+     * @return array<\Generated\Shared\Transfer\OrderTransfer>
      */
     protected function updateOrders(array $orderTransfers, array $aggregatedItemStateMap): array
     {
@@ -73,9 +73,9 @@ class OrderAggregatedItemStateExpander implements OrderAggregatedItemStateExpand
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return \Generated\Shared\Transfer\AggregatedItemStateTransfer[][]
+     * @return array<\Generated\Shared\Transfer\AggregatedItemStateTransfer[]>
      */
     protected function getAggregatedItemStateMap(array $itemTransfers): array
     {
@@ -97,12 +97,16 @@ class OrderAggregatedItemStateExpander implements OrderAggregatedItemStateExpand
     }
 
     /**
-     * @param \Generated\Shared\Transfer\OrderTransfer[] $orderTransfers
+     * @param array<\Generated\Shared\Transfer\OrderTransfer> $orderTransfers
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     protected function getOrderItems(array $orderTransfers): array
     {
+        if (!$orderTransfers) {
+            return [];
+        }
+
         $itemTransfers = $this->extractItemTransfersFromOrderTransfers($orderTransfers);
         if ($itemTransfers) {
             return $itemTransfers;
@@ -117,9 +121,9 @@ class OrderAggregatedItemStateExpander implements OrderAggregatedItemStateExpand
     }
 
     /**
-     * @param \Generated\Shared\Transfer\OrderTransfer[] $orderTransfers
+     * @param array<\Generated\Shared\Transfer\OrderTransfer> $orderTransfers
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function extractOrderReferences(array $orderTransfers): array
     {
@@ -133,9 +137,9 @@ class OrderAggregatedItemStateExpander implements OrderAggregatedItemStateExpand
     }
 
     /**
-     * @param \Generated\Shared\Transfer\OrderTransfer[] $orderTransfers
+     * @param array<\Generated\Shared\Transfer\OrderTransfer> $orderTransfers
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     protected function extractItemTransfersFromOrderTransfers(array $orderTransfers): array
     {

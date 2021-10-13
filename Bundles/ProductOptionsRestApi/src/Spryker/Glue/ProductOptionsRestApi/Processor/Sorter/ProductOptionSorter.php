@@ -13,13 +13,17 @@ use Spryker\Glue\ProductOptionsRestApi\ProductOptionsRestApiConfig;
 
 class ProductOptionSorter implements ProductOptionSorterInterface
 {
+    /**
+     * @phpstan-var non-empty-string
+     * @var string
+     */
     protected const SORT_VALUE_DELIMITER = '.';
 
     /**
-     * @param \Generated\Shared\Transfer\RestProductOptionsAttributesTransfer[] $restProductOptionsAttributesTransfers
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\SortInterface[] $sorts
+     * @param array<\Generated\Shared\Transfer\RestProductOptionsAttributesTransfer> $restProductOptionsAttributesTransfers
+     * @param array<\Spryker\Glue\GlueApplication\Rest\Request\Data\SortInterface> $sorts
      *
-     * @return \Generated\Shared\Transfer\RestProductOptionsAttributesTransfer[]
+     * @return array<\Generated\Shared\Transfer\RestProductOptionsAttributesTransfer>
      */
     public function sortRestProductOptionsAttributesTransfers(
         array $restProductOptionsAttributesTransfers,
@@ -48,7 +52,7 @@ class ProductOptionSorter implements ProductOptionSorterInterface
     /**
      * @param \Generated\Shared\Transfer\RestProductOptionsAttributesTransfer $currentRestProductOptionsAttributesTransfer
      * @param \Generated\Shared\Transfer\RestProductOptionsAttributesTransfer $nextRestProductOptionsAttributesTransfer
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\SortInterface[] $sorts
+     * @param array<\Spryker\Glue\GlueApplication\Rest\Request\Data\SortInterface> $sorts
      * @param int $index
      *
      * @return int
@@ -84,9 +88,9 @@ class ProductOptionSorter implements ProductOptionSorterInterface
     }
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\SortInterface[] $sorts
+     * @param array<\Spryker\Glue\GlueApplication\Rest\Request\Data\SortInterface> $sorts
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\Request\Data\SortInterface[]
+     * @return array<\Spryker\Glue\GlueApplication\Rest\Request\Data\SortInterface>
      */
     protected function removeNonOptionsRelatedSortingParameters(array $sorts): array
     {
@@ -98,7 +102,7 @@ class ProductOptionSorter implements ProductOptionSorterInterface
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\SortInterface $sort
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getSortingParameters(SortInterface $sort): array
     {

@@ -44,10 +44,10 @@ class MerchantTranslator implements MerchantTranslatorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantStorageTransfer[] $merchantStorageTransfers
+     * @param array<\Generated\Shared\Transfer\MerchantStorageTransfer> $merchantStorageTransfers
      * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\MerchantStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\MerchantStorageTransfer>
      */
     public function translateMerchantStorageTransfers(
         array $merchantStorageTransfers,
@@ -61,9 +61,9 @@ class MerchantTranslator implements MerchantTranslatorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantStorageTransfer[] $merchantStorageTransfers
+     * @param array<\Generated\Shared\Transfer\MerchantStorageTransfer> $merchantStorageTransfers
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getGlossaryStorageKeysFromMerchantStorageTransfers(array $merchantStorageTransfers): array
     {
@@ -92,10 +92,10 @@ class MerchantTranslator implements MerchantTranslatorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantStorageTransfer[] $merchantStorageTransfers
-     * @param string[] $translations
+     * @param array<\Generated\Shared\Transfer\MerchantStorageTransfer> $merchantStorageTransfers
+     * @param array<string> $translations
      *
-     * @return \Generated\Shared\Transfer\MerchantStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\MerchantStorageTransfer>
      */
     protected function setTranslationsToMerchantStorageTransfers(array $merchantStorageTransfers, array $translations): array
     {

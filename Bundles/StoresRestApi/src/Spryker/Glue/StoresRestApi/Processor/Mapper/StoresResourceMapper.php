@@ -26,8 +26,8 @@ class StoresResourceMapper implements StoresResourceMapperInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\StoreCountryRestAttributesTransfer[] $countries
-     * @param \Generated\Shared\Transfer\StoreCurrencyRestAttributesTransfer[] $currencies
+     * @param array<\Generated\Shared\Transfer\StoreCountryRestAttributesTransfer> $countries
+     * @param array<\Generated\Shared\Transfer\StoreCurrencyRestAttributesTransfer> $currencies
      *
      * @return \Generated\Shared\Transfer\StoresRestAttributesTransfer
      */
@@ -108,7 +108,7 @@ class StoresResourceMapper implements StoresResourceMapperInterface
 
     /**
      * @param \Generated\Shared\Transfer\StoresRestAttributesTransfer $storesRestAttributes
-     * @param \Generated\Shared\Transfer\StoreCountryRestAttributesTransfer[] $storeCountryAttributes
+     * @param array<\Generated\Shared\Transfer\StoreCountryRestAttributesTransfer> $storeCountryAttributes
      *
      * @return \Generated\Shared\Transfer\StoresRestAttributesTransfer
      */
@@ -125,7 +125,7 @@ class StoresResourceMapper implements StoresResourceMapperInterface
 
     /**
      * @param \Generated\Shared\Transfer\StoresRestAttributesTransfer $storesRestAttributes
-     * @param \Generated\Shared\Transfer\StoreCurrencyRestAttributesTransfer[] $storeCurrencyAttributes
+     * @param array<\Generated\Shared\Transfer\StoreCurrencyRestAttributesTransfer> $storeCurrencyAttributes
      *
      * @return \Generated\Shared\Transfer\StoresRestAttributesTransfer
      */

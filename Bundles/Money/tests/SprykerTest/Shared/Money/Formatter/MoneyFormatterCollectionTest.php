@@ -25,6 +25,9 @@ use Spryker\Shared\Money\Formatter\MoneyFormatterInterface;
  */
 class MoneyFormatterCollectionTest extends Unit
 {
+    /**
+     * @var string
+     */
     public const FORMATTER = 'formatter';
 
     /**

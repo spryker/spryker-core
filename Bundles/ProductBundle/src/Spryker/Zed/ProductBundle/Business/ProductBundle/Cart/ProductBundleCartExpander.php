@@ -17,15 +17,21 @@ use Generated\Shared\Transfer\ProductForBundleTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use OutOfBoundsException;
+use Spryker\Zed\ProductBundle\Business\ProductBundle\Price\PriceReaderInterface;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleReaderInterface;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToLocaleFacadeInterface;
-use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToPriceFacadeInterface;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToPriceProductFacadeInterface;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToProductFacadeInterface;
 
 class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
 {
+    /**
+     * @var string
+     */
     public const BUNDLE_IDENTIFIER_DELIMITER = '_';
+    /**
+     * @var string
+     */
     protected const GROUP_KEY_DELIMITER = '_';
 
     /**
@@ -44,9 +50,9 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
     protected $localeFacade;
 
     /**
-     * @var \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToPriceFacadeInterface
+     * @var \Spryker\Zed\ProductBundle\Business\ProductBundle\Price\PriceReaderInterface
      */
-    protected $priceFacade;
+    protected $priceReader;
 
     /**
      * @var array
@@ -72,21 +78,21 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
      * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToPriceProductFacadeInterface $priceProductFacade
      * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToProductFacadeInterface $productFacade
      * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToLocaleFacadeInterface $localeFacade
-     * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToPriceFacadeInterface $priceFacade
      * @param \Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleReaderInterface $productBundleReader
+     * @param \Spryker\Zed\ProductBundle\Business\ProductBundle\Price\PriceReaderInterface $priceReader
      */
     public function __construct(
         ProductBundleToPriceProductFacadeInterface $priceProductFacade,
         ProductBundleToProductFacadeInterface $productFacade,
         ProductBundleToLocaleFacadeInterface $localeFacade,
-        ProductBundleToPriceFacadeInterface $priceFacade,
-        ProductBundleReaderInterface $productBundleReader
+        ProductBundleReaderInterface $productBundleReader,
+        PriceReaderInterface $priceReader
     ) {
         $this->priceProductFacade = $priceProductFacade;
         $this->productFacade = $productFacade;
         $this->localeFacade = $localeFacade;
-        $this->priceFacade = $priceFacade;
         $this->productBundleReader = $productBundleReader;
+        $this->priceReader = $priceReader;
     }
 
     /**
@@ -138,7 +144,7 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\ProductForBundleTransfer[] $productForBundleTransfers
+     * @param array<\Generated\Shared\Transfer\ProductForBundleTransfer> $productForBundleTransfers
      *
      * @return array
      */
@@ -204,7 +210,7 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductOptionTransfer[] $sortedProductOptions
+     * @param array<\Generated\Shared\Transfer\ProductOptionTransfer> $sortedProductOptions
      *
      * @return string
      */
@@ -222,7 +228,7 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductForBundleTransfer[] $productForBundleTransfers
+     * @param array<\Generated\Shared\Transfer\ProductForBundleTransfer> $productForBundleTransfers
      * @param string $bundleItemIdentifier
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -258,7 +264,7 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $bundledProducts
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $bundledProducts
      * @param int $bundleUnitPrice
      * @param string $priceMode
      *
@@ -345,7 +351,7 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
             static::$productPriceCache[$sku] = $this->priceProductFacade->findPriceFor($priceFilterTransfer);
         }
 
-         return static::$productPriceCache[$sku];
+        return static::$productPriceCache[$sku];
     }
 
     /**
@@ -385,7 +391,7 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $bundledProducts
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $bundledProducts
      * @param string $priceMode
      *
      * @return int
@@ -393,7 +399,7 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
     protected function calculateBundleTotalUnitPrice(array $bundledProducts, $priceMode)
     {
         $totalBundleItemAmount = (int)array_reduce($bundledProducts, function ($total, ItemTransfer $itemTransfer) use ($priceMode) {
-            if ($priceMode === $this->priceFacade->getNetPriceModeIdentifier()) {
+            if ($priceMode === $this->priceReader->getNetPriceModeIdentifier()) {
                 $total += $itemTransfer->getUnitNetPrice();
 
                 return $total;
@@ -450,7 +456,7 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
      */
     protected function setPrice(ItemTransfer $itemTransfer, $unitPrice, $priceMode)
     {
-        if ($priceMode === $this->priceFacade->getNetPriceModeIdentifier()) {
+        if ($priceMode === $this->priceReader->getNetPriceModeIdentifier()) {
             $itemTransfer->setUnitNetPrice($unitPrice);
             $itemTransfer->setUnitGrossPrice(0);
             $itemTransfer->setSumGrossPrice(0);
@@ -471,7 +477,7 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
      */
     protected function requirePriceByMode(ItemTransfer $itemTransfer, $priceMode)
     {
-        if ($priceMode === $this->priceFacade->getNetPriceModeIdentifier()) {
+        if ($priceMode === $this->priceReader->getNetPriceModeIdentifier()) {
             $itemTransfer->requireUnitNetPrice();
 
             return;
@@ -488,7 +494,7 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
      */
     protected function getPriceByPriceMode(ItemTransfer $itemTransfer, $priceMode)
     {
-        if ($priceMode === $this->priceFacade->getNetPriceModeIdentifier()) {
+        if ($priceMode === $this->priceReader->getNetPriceModeIdentifier()) {
             return $itemTransfer->getUnitNetPrice();
         }
 
@@ -513,7 +519,7 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getProductConcreteSkusFromCartChangeTransfer(CartChangeTransfer $cartChangeTransfer): array
     {

@@ -13,6 +13,8 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductSearch\Business\Attribute\AttributeMapWriter;
 use Spryker\Zed\ProductSearch\Business\Attribute\AttributeReader;
 use Spryker\Zed\ProductSearch\Business\Attribute\AttributeWriter;
+use Spryker\Zed\ProductSearch\Business\Collector\ProductSearchCollectorRunner;
+use Spryker\Zed\ProductSearch\Business\Collector\ProductSearchCollectorRunnerInterface;
 use Spryker\Zed\ProductSearch\Business\Collector\Storage\ProductSearchConfigExtensionCollector;
 use Spryker\Zed\ProductSearch\Business\Map\Collector\ProductSearchAttributeCollector;
 use Spryker\Zed\ProductSearch\Business\Map\Collector\ProductSearchAttributeMapCollector;
@@ -59,7 +61,7 @@ class ProductSearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductSearch\Business\Map\Collector\ProductSearchAttributeMapCollectorInterface[]
+     * @return array<\Spryker\Zed\ProductSearch\Business\Map\Collector\ProductSearchAttributeMapCollectorInterface>
      */
     protected function getAttributeMapCollectors()
     {
@@ -302,5 +304,16 @@ class ProductSearchBusinessFactory extends AbstractBusinessFactory
     protected function getEventFacade()
     {
         return $this->getProvidedDependency(ProductSearchDependencyProvider::FACADE_EVENT);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductSearch\Business\Collector\ProductSearchCollectorRunnerInterface
+     */
+    public function createProductSearchConfigExtensionCollectorRunner(): ProductSearchCollectorRunnerInterface
+    {
+        return new ProductSearchCollectorRunner(
+            $this->createProductSearchConfigExtensionCollector(),
+            $this->getCollectorFacade()
+        );
     }
 }

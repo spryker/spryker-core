@@ -19,6 +19,9 @@ use Twig\TwigFilter;
  */
 class BooleanToStringTwigPlugin extends AbstractPlugin implements TwigPluginInterface
 {
+    /**
+     * @var string
+     */
     protected const FILTER_NAME_BOOL_TO_STR = 'boolToStr';
 
     /**

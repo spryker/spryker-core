@@ -12,12 +12,12 @@ use Generated\Shared\Transfer\CustomerTransfer;
 class CompanyUserChecker implements CompanyUserCheckerInterface
 {
     /**
-     * @var \Spryker\Client\BusinessOnBehalfExtension\Dependency\Plugin\CompanyUserChangeAllowedCheckPluginInterface[]
+     * @var array<\Spryker\Client\BusinessOnBehalfExtension\Dependency\Plugin\CompanyUserChangeAllowedCheckPluginInterface>
      */
     protected $companyUserChangeAllowedCheckPlugins;
 
     /**
-     * @param \Spryker\Client\BusinessOnBehalfExtension\Dependency\Plugin\CompanyUserChangeAllowedCheckPluginInterface[] $companyUserChangeAllowedCheckPlugins
+     * @param array<\Spryker\Client\BusinessOnBehalfExtension\Dependency\Plugin\CompanyUserChangeAllowedCheckPluginInterface> $companyUserChangeAllowedCheckPlugins
      */
     public function __construct(array $companyUserChangeAllowedCheckPlugins)
     {

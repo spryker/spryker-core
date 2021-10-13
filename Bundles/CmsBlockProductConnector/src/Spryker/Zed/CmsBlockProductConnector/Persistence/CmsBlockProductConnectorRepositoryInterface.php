@@ -13,14 +13,14 @@ interface CmsBlockProductConnectorRepositoryInterface
      * @param int $idLocale
      * @param int $idCmsBlock
      *
-     * @return \Generated\Shared\Transfer\ProductAbstractTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductAbstractTransfer>
      */
     public function getAssignedProductAbstracts(int $idLocale, int $idCmsBlock): array;
 
     /**
      * @param int $idCmsBlock
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getAssignedProductAbstractIds(int $idCmsBlock): array;
 }

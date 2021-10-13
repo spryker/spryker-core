@@ -14,6 +14,9 @@ use Spryker\Service\BarcodeExtension\Dependency\Plugin\BarcodeGeneratorPluginInt
 
 class ProductBarcodeMockHelper extends Module
 {
+    /**
+     * @var string
+     */
     protected const GENERATED_ENCODING = 'data:image/png;base64';
 
     /**

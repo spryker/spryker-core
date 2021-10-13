@@ -10,7 +10,7 @@ namespace Spryker\Client\ProductCustomerPermission\Plugin;
 use Elastica\Query;
 use Elastica\Query\BoolQuery;
 use Elastica\Query\HasChild;
-use Elastica\Query\Match;
+use Elastica\Query\MatchQuery;
 use InvalidArgumentException;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface;
@@ -22,6 +22,9 @@ use Spryker\Shared\ProductCustomerPermission\ProductCustomerPermissionConfig;
  */
 class ProductCustomerPermissionQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPluginInterface
 {
+    /**
+     * @var string
+     */
     protected const ID_CUSTOMER = 'id-customer';
 
     /**
@@ -74,12 +77,11 @@ class ProductCustomerPermissionQueryExpanderPlugin extends AbstractPlugin implem
     /**
      * @param int $idCustomer
      *
-     * @return \Elastica\Query\Match
+     * @return \Elastica\Query\MatchQuery
      */
-    protected function createCustomerQuery(int $idCustomer): Match
+    protected function createCustomerQuery(int $idCustomer): MatchQuery
     {
-        return (new Match())
-            ->setField(static::ID_CUSTOMER, $idCustomer);
+        return $this->getMatchQuery()->setField(static::ID_CUSTOMER, $idCustomer);
     }
 
     /**
@@ -93,5 +95,19 @@ class ProductCustomerPermissionQueryExpanderPlugin extends AbstractPlugin implem
 
         return (new HasChild($customerQuery))
             ->setType(ProductCustomerPermissionConfig::ELASTICSEARCH_INDEX_TYPE_NAME);
+    }
+
+    /**
+     * For compatibility with PHP 8.
+     *
+     * @return \Elastica\Query\MatchQuery|\Elastica\Query\Match
+     */
+    protected function getMatchQuery()
+    {
+        $matchQueryClassName = class_exists(MatchQuery::class)
+            ? MatchQuery::class
+            : '\Elastica\Query\Match';
+
+        return new $matchQueryClassName();
     }
 }

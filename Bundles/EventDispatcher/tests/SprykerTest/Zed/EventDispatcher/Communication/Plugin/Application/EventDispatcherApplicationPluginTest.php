@@ -32,8 +32,14 @@ use Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher;
  */
 class EventDispatcherApplicationPluginTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const SERVICE_DISPATCHER = 'dispatcher';
 
+    /**
+     * @var string
+     */
     public const DUMMY_EVENT = 'DUMMY_EVENT';
 
     /**

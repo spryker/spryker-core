@@ -10,11 +10,19 @@ namespace Spryker\Zed\ProductBundle\Business\ProductBundle\Cache;
 interface ProductBundleCacheInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ProductForBundleTransfer[] $productForBundleTransfers
+     * @param array<\Generated\Shared\Transfer\ProductForBundleTransfer> $productForBundleTransfers
      *
      * @return void
      */
     public function cacheProductForBundleTransfersBySku(array $productForBundleTransfers): void;
+
+    /**
+     * @param array<\Generated\Shared\Transfer\ProductForBundleTransfer> $productForBundleTransfers
+     * @param array<string> $skus
+     *
+     * @return void
+     */
+    public function cacheProductForBundleTransfersBySkus(array $productForBundleTransfers, array $skus): void;
 
     /**
      * @param string $sku
@@ -26,7 +34,7 @@ interface ProductBundleCacheInterface
     /**
      * @param string $sku
      *
-     * @return \Generated\Shared\Transfer\ProductForBundleTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductForBundleTransfer>
      */
     public function getProductForBundleTransfersBySku(string $sku): array;
 

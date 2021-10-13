@@ -17,18 +17,39 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class SaveController extends AbstractController
 {
+    /**
+     * @var string
+     */
     public const PARAM_ID_PRODUCT_ABSTRACT = 'id-product-abstract';
+    /**
+     * @var string
+     */
     public const PARAM_ID_PRODUCT = 'id-product';
+    /**
+     * @var string
+     */
     public const PARAM_JSON = 'json';
+    /**
+     * @var string
+     */
     public const CSRF_TOKEN_NAME = 'csrf-token';
+    /**
+     * @var string
+     */
     public const MESSAGE_INVALID_CSRF_TOKEN = 'Invalid or missing CSRF token';
+    /**
+     * @var string
+     */
     public const MESSAGE_PRODUCT_ABSTRACT_ATTRIBUTES_SAVED = 'Product abstract attributes saved';
+    /**
+     * @var string
+     */
     public const MESSAGE_PRODUCT_ATTRIBUTES_SAVED = 'Product attributes saved';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\JsonResponse
+     * @return \Symfony\Component\HttpFoundation\JsonResponse|array
      */
     public function productAbstractAction(Request $request)
     {
@@ -53,7 +74,7 @@ class SaveController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\JsonResponse
+     * @return \Symfony\Component\HttpFoundation\JsonResponse|array
      */
     public function productAction(Request $request)
     {

@@ -40,7 +40,13 @@ use SprykerTest\Zed\CmsStorage\CmsStorageConfigMock;
  */
 class CmsStorageListenerTest extends Unit
 {
+    /**
+     * @var int
+     */
     public const NUMBER_OF_LOCALES = 2;
+    /**
+     * @var int
+     */
     public const NUMBER_OF_STORES = 3;
 
     /**

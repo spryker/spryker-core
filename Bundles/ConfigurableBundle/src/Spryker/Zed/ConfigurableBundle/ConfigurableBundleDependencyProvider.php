@@ -22,14 +22,35 @@ use Spryker\Zed\Kernel\Container;
  */
 class ConfigurableBundleDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_GLOSSARY = 'FACADE_GLOSSARY';
+    /**
+     * @var string
+     */
     public const FACADE_LOCALE = 'FACADE_LOCALE';
+    /**
+     * @var string
+     */
     public const FACADE_EVENT = 'FACADE_EVENT';
+    /**
+     * @var string
+     */
     public const FACADE_PRODUCT_LIST = 'FACADE_PRODUCT_LIST';
+    /**
+     * @var string
+     */
     public const FACADE_PRODUCT_IMAGE = 'FACADE_PRODUCT_IMAGE';
 
+    /**
+     * @var string
+     */
     public const SERVICE_UTIL_TEXT = 'SERVICE_UTIL_TEXT';
 
+    /**
+     * @var string
+     */
     public const PROPEL_QUERY_PRODUCT_IMAGE_SET = 'PROPEL_QUERY_PRODUCT_IMAGE_SET';
 
     /**

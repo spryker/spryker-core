@@ -33,7 +33,7 @@ class ProductLabelDiscountConnectorBusinessTester extends Actor
     use _generated\ProductLabelDiscountConnectorBusinessTesterActions;
 
     /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteTransfers
+     * @param array<\Generated\Shared\Transfer\ProductConcreteTransfer> $productConcreteTransfers
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */

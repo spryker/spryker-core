@@ -22,9 +22,18 @@ class DataExportConsole extends Console
 {
     use BundleConfigResolverAwareTrait;
 
+    /**
+     * @var string
+     */
     protected const COMMAND_NAME = 'data:export';
 
+    /**
+     * @var string
+     */
     protected const OPTION_CONFIG = 'config';
+    /**
+     * @var string
+     */
     protected const OPTION_SHORTCUT_CONFIG = 'c';
 
     /**
@@ -54,7 +63,8 @@ class DataExportConsole extends Console
         }
 
         $exportConfigurationsPath = $this->getConfig()
-                ->getExportConfigurationsPath() . DIRECTORY_SEPARATOR . $input->getOption(static::OPTION_CONFIG);
+                ->getExportConfigurationsPath() . DIRECTORY_SEPARATOR . $this->getConfigOption($input);
+
         $exportConfigurations = $this->getFactory()
             ->getDataExportService()
             ->parseConfiguration($exportConfigurationsPath);
@@ -65,8 +75,21 @@ class DataExportConsole extends Console
     }
 
     /**
+     * @param \Symfony\Component\Console\Input\InputInterface $input
+     *
+     * @return string
+     */
+    protected function getConfigOption(InputInterface $input): string
+    {
+        /** @var string $configOption */
+        $configOption = $input->getOption(static::OPTION_CONFIG);
+
+        return $configOption;
+    }
+
+    /**
      * @param \Symfony\Component\Console\Output\OutputInterface $output
-     * @param \Generated\Shared\Transfer\DataExportReportTransfer[] $dataExportReportTransfers
+     * @param array<\Generated\Shared\Transfer\DataExportReportTransfer> $dataExportReportTransfers
      *
      * @return int
      */

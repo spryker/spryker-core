@@ -10,17 +10,17 @@ namespace Spryker\Zed\SalesReturnSearch\Dependency\Facade;
 interface SalesReturnSearchToGlossaryFacadeInterface
 {
     /**
-     * @param string[] $glossaryKeys
-     * @param \Generated\Shared\Transfer\LocaleTransfer[] $localeTransfers
+     * @param array<string> $glossaryKeys
+     * @param array<\Generated\Shared\Transfer\LocaleTransfer> $localeTransfers
      *
-     * @return \Generated\Shared\Transfer\TranslationTransfer[]
+     * @return array<\Generated\Shared\Transfer\TranslationTransfer>
      */
     public function getTranslationsByGlossaryKeysAndLocaleTransfers(array $glossaryKeys, array $localeTransfers): array;
 
     /**
-     * @param string[] $glossaryKeys
+     * @param array<string> $glossaryKeys
      *
-     * @return \Generated\Shared\Transfer\GlossaryKeyTransfer[]
+     * @return array<\Generated\Shared\Transfer\GlossaryKeyTransfer>
      */
     public function getGlossaryKeyTransfersByGlossaryKeys(array $glossaryKeys): array;
 }

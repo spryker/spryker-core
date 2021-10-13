@@ -29,7 +29,13 @@ use Symfony\Component\Finder\SplFileInfo;
  */
 class PropelSchemaParserTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const GENERATED_SCHEMA_FILES = 'SchemaFiles';
+    /**
+     * @var string
+     */
     protected const PROPEL_SCHEMA_PATH_PATTERN = '*/%s';
 
     /**

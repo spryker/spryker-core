@@ -22,11 +22,26 @@ use Symfony\Component\Validator\Constraints\Regex;
  */
 class OrderItemSplitForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const FIELD_QUANTITY = 'quantity';
+    /**
+     * @var string
+     */
     public const FIELD_ID_ORDER_ITEM = 'id_sales_order_item';
+    /**
+     * @var string
+     */
     public const FIELD_ID_ORDER = 'id_sales_order';
 
+    /**
+     * @var string
+     */
     public const VALIDATE_MESSAGE_NUMERIC = 'Please provide numeric value.';
+    /**
+     * @var string
+     */
     public const VALIDATION_MESSAGE_QUANTITY = 'Please provide quantity.';
 
     /**

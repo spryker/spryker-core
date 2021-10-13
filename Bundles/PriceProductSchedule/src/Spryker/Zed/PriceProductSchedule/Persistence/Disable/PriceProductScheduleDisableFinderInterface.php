@@ -16,9 +16,16 @@ interface PriceProductScheduleDisableFinderInterface
      * @module PriceProduct
      * @module Currency
      *
-     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductScheduleTransfer>
      */
     public function findPriceProductSchedulesToDisable(): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductScheduleTransfer $priceProductScheduleTransfer
+     *
+     * @return bool
+     */
+    public function isScheduledPriceForSwitchExists(PriceProductScheduleTransfer $priceProductScheduleTransfer): bool;
 
     /**
      * @module Product
@@ -27,7 +34,7 @@ interface PriceProductScheduleDisableFinderInterface
      *
      * @param int $idProductAbstract
      *
-     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductScheduleTransfer>
      */
     public function findPriceProductSchedulesToDisableByIdProductAbstract(int $idProductAbstract): array;
 
@@ -38,7 +45,7 @@ interface PriceProductScheduleDisableFinderInterface
      *
      * @param int $idProductConcrete
      *
-     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductScheduleTransfer>
      */
     public function findPriceProductSchedulesToDisableByIdProductConcrete(int $idProductConcrete): array;
 
@@ -49,7 +56,7 @@ interface PriceProductScheduleDisableFinderInterface
      *
      * @param \Generated\Shared\Transfer\PriceProductScheduleTransfer $priceProductScheduleTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductScheduleTransfer>
      */
     public function findSimilarPriceProductSchedulesToDisable(PriceProductScheduleTransfer $priceProductScheduleTransfer): array;
 }

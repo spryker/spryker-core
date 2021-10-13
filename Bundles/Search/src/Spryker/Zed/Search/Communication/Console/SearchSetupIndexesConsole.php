@@ -19,8 +19,17 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class SearchSetupIndexesConsole extends Console
 {
+    /**
+     * @var string
+     */
     public const COMMAND_NAME = 'search:setup:indexes';
+    /**
+     * @var string
+     */
     public const DESCRIPTION = 'This command will create the search indexes.';
+    /**
+     * @var string
+     */
     public const COMMAND_NAME_SETUP_SEARCH_ALIAS = 'setup:search:indexes';
 
     /**

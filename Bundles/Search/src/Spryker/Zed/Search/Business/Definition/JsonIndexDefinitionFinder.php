@@ -12,6 +12,9 @@ use Symfony\Component\Finder\Finder;
 
 class JsonIndexDefinitionFinder implements IndexDefinitionFinderInterface
 {
+    /**
+     * @var string
+     */
     protected const FILE_EXTENSION = '.json';
 
     /**
@@ -25,7 +28,7 @@ class JsonIndexDefinitionFinder implements IndexDefinitionFinderInterface
     protected $indexDefinitionMapper;
 
     /**
-     * @param string[] $sourceDirectories
+     * @param array<string> $sourceDirectories
      * @param \Spryker\Zed\Search\Business\Definition\IndexDefinitionMapperInterface $indexDefinitionMapper
      */
     public function __construct(
@@ -37,7 +40,7 @@ class JsonIndexDefinitionFinder implements IndexDefinitionFinderInterface
     }
 
     /**
-     * @return \Generated\Shared\Transfer\IndexDefinitionFileTransfer[]
+     * @return array<\Generated\Shared\Transfer\IndexDefinitionFileTransfer>
      */
     public function getSortedIndexDefinitionFileTransfers(): array
     {

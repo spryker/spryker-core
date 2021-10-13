@@ -13,6 +13,9 @@ use Spryker\Zed\Customer\CustomerConfig;
 
 class CharacterSetCustomerPasswordPolicy implements CustomerPasswordPolicyInterface
 {
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_PASSWORD_POLICY_ERROR_CHARACTER_SET = 'customer.password.error.character_set';
 
     /**

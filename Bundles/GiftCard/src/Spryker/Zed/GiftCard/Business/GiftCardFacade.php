@@ -16,6 +16,7 @@ use Generated\Shared\Transfer\GiftCardTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\PaymentMethodsTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\SaveOrderTransfer;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -147,6 +148,8 @@ class GiftCardFacade extends AbstractFacade implements GiftCardFacadeInterface
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\GiftCard\Business\GiftCardFacade::saveOrderGiftCards()} instead.
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
      *
@@ -154,10 +157,26 @@ class GiftCardFacade extends AbstractFacade implements GiftCardFacadeInterface
      */
     public function saveGiftCardPayments(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse)
     {
-        $this
-            ->getFactory()
-            ->createSalesOrderSaver()
+        $this->getFactory()
+            ->createSalesOrderPaymentSaver()
             ->saveGiftCardPayments($quoteTransfer, $checkoutResponse);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
+     *
+     * @return void
+     */
+    public function saveOrderGiftCards(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer): void
+    {
+        $this->getFactory()
+            ->createOrderGiftCardsRelationshipWriter()
+            ->saveOrderGiftCards($quoteTransfer, $saveOrderTransfer);
     }
 
     /**
@@ -196,6 +215,8 @@ class GiftCardFacade extends AbstractFacade implements GiftCardFacadeInterface
      * {@inheritDoc}
      *
      * @api
+     *
+     * @deprecated Use {@link \Spryker\Zed\GiftCard\Business\GiftCardFacade::saveOrderGiftCards()} instead.
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
@@ -248,10 +269,10 @@ class GiftCardFacade extends AbstractFacade implements GiftCardFacadeInterface
      *
      * @deprecated Use {@link \Spryker\Zed\GiftCard\Business\GiftCardFacadeInterface::filterShipmentGroupMethods()} instead.
      *
-     * @param \ArrayObject|\Generated\Shared\Transfer\ShipmentMethodTransfer[] $shipmentMethods
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ShipmentMethodTransfer> $shipmentMethods
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ShipmentMethodTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\ShipmentMethodTransfer>
      */
     public function filterShipmentMethods(ArrayObject $shipmentMethods, QuoteTransfer $quoteTransfer)
     {
@@ -267,7 +288,7 @@ class GiftCardFacade extends AbstractFacade implements GiftCardFacadeInterface
      *
      * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ShipmentMethodTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\ShipmentMethodTransfer>
      */
     public function filterShipmentGroupMethods(ShipmentGroupTransfer $shipmentGroupTransfer): ArrayObject
     {
@@ -281,7 +302,7 @@ class GiftCardFacade extends AbstractFacade implements GiftCardFacadeInterface
      *
      * @param int $idSalesOrder
      *
-     * @return \Generated\Shared\Transfer\GiftCardTransfer[]
+     * @return array<\Generated\Shared\Transfer\GiftCardTransfer>
      */
     public function findGiftCardsByIdSalesOrder($idSalesOrder)
     {
@@ -311,9 +332,9 @@ class GiftCardFacade extends AbstractFacade implements GiftCardFacadeInterface
      *
      * @api
      *
-     * @param iterable|\Generated\Shared\Transfer\ShipmentGroupTransfer[] $shipmentGroupCollection
+     * @param iterable<\Generated\Shared\Transfer\ShipmentGroupTransfer> $shipmentGroupCollection
      *
-     * @return iterable|\Generated\Shared\Transfer\ShipmentGroupTransfer[]
+     * @return iterable<\Generated\Shared\Transfer\ShipmentGroupTransfer>
      */
     public function sanitizeShipmentGroupCollection(iterable $shipmentGroupCollection): iterable
     {

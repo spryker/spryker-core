@@ -12,12 +12,12 @@ use Generated\Shared\Transfer\ApiDataTransfer;
 class ApiValidator implements ApiValidatorInterface
 {
     /**
-     * @var \Spryker\Zed\Api\Dependency\Plugin\ApiValidatorPluginInterface[]
+     * @var array<\Spryker\Zed\Api\Dependency\Plugin\ApiValidatorPluginInterface>
      */
     protected $validatorPlugins;
 
     /**
-     * @param \Spryker\Zed\Api\Dependency\Plugin\ApiValidatorPluginInterface[] $validatorPlugins
+     * @param array<\Spryker\Zed\Api\Dependency\Plugin\ApiValidatorPluginInterface> $validatorPlugins
      */
     public function __construct(array $validatorPlugins)
     {
@@ -28,7 +28,7 @@ class ApiValidator implements ApiValidatorInterface
      * @param string $resourceName
      * @param \Generated\Shared\Transfer\ApiDataTransfer $apiDataTransfer
      *
-     * @return \Generated\Shared\Transfer\ApiValidationErrorTransfer[]
+     * @return array<\Generated\Shared\Transfer\ApiValidationErrorTransfer>
      */
     public function validate($resourceName, ApiDataTransfer $apiDataTransfer)
     {

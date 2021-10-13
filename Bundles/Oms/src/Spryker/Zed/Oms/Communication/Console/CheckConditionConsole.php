@@ -21,14 +21,38 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class CheckConditionConsole extends Console
 {
+    /**
+     * @var string
+     */
     public const COMMAND_NAME = 'oms:check-condition';
+    /**
+     * @var string
+     */
     public const COMMAND_DESCRIPTION = 'Check conditions';
 
+    /**
+     * @var string
+     */
     protected const OPTION_STORE_NAME = 'store-name';
+    /**
+     * @var string
+     */
     protected const OPTION_STORE_NAME_SHORT = 's';
+    /**
+     * @var string
+     */
     protected const OPTION_LIMIT = 'limit';
+    /**
+     * @var string
+     */
     protected const OPTION_LIMIT_SHORT = 'l';
+    /**
+     * @var string
+     */
     protected const OPTION_PROCESSOR_ID = 'processor-id';
+    /**
+     * @var string
+     */
     protected const OPTION_PROCESSOR_ID_SHORT = 'p';
 
     /**
@@ -39,8 +63,8 @@ class CheckConditionConsole extends Console
         $this
             ->setName(static::COMMAND_NAME)
             ->setDescription(static::COMMAND_DESCRIPTION)
-            ->addOption(static::OPTION_STORE_NAME, static::OPTION_STORE_NAME_SHORT, InputOption::VALUE_REQUIRED, 'Defines the store name for which order item timeouts should be checked.')
-            ->addOption(static::OPTION_LIMIT, static::OPTION_LIMIT_SHORT, InputOption::VALUE_REQUIRED, 'Defines the amount of orders for which the order item timeouts should be checked.')
+            ->addOption(static::OPTION_STORE_NAME, static::OPTION_STORE_NAME_SHORT, InputOption::VALUE_REQUIRED, 'Defines the store name for which order item conditions should be checked.')
+            ->addOption(static::OPTION_LIMIT, static::OPTION_LIMIT_SHORT, InputOption::VALUE_REQUIRED, 'Defines the amount of orders for which the order item conditions should be checked.')
             ->addOption(static::OPTION_PROCESSOR_ID, static::OPTION_PROCESSOR_ID_SHORT, InputOption::VALUE_OPTIONAL, 'Defines coma-separated list of the processor identifiers in a multi-thread OMS setup.');
 
         parent::configure();
@@ -90,7 +114,7 @@ class CheckConditionConsole extends Console
     /**
      * @param \Symfony\Component\Console\Input\InputInterface $input
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getOmsProcessorIdentifiers(InputInterface $input): array
     {

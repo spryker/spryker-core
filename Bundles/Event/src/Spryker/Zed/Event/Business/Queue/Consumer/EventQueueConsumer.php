@@ -9,6 +9,7 @@ namespace Spryker\Zed\Event\Business\Queue\Consumer;
 
 use Generated\Shared\Transfer\EventQueueSendMessageBodyTransfer;
 use Generated\Shared\Transfer\QueueReceiveMessageTransfer;
+use Propel\Runtime\Propel;
 use Spryker\Shared\ErrorHandler\ErrorLogger;
 use Spryker\Shared\Event\EventConfig as SharedEventConfig;
 use Spryker\Zed\Event\Business\Exception\MessageTypeNotFoundException;
@@ -21,8 +22,17 @@ use Throwable;
 
 class EventQueueConsumer implements EventQueueConsumerInterface
 {
+    /**
+     * @var string
+     */
     public const EVENT_TRANSFERS = 'eventTransfers';
+    /**
+     * @var string
+     */
     public const EVENT_MESSAGES = 'eventMessages';
+    /**
+     * @var string
+     */
     public const RETRY_KEY = 'retry';
 
     /**
@@ -61,9 +71,9 @@ class EventQueueConsumer implements EventQueueConsumerInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QueueReceiveMessageTransfer[] $queueMessageTransfers
+     * @param array<\Generated\Shared\Transfer\QueueReceiveMessageTransfer> $queueMessageTransfers
      *
-     * @return \Generated\Shared\Transfer\QueueReceiveMessageTransfer[]
+     * @return array<\Generated\Shared\Transfer\QueueReceiveMessageTransfer>
      */
     public function processMessages(array $queueMessageTransfers)
     {
@@ -129,12 +139,22 @@ class EventQueueConsumer implements EventQueueConsumerInterface
             return;
         }
 
+        $isInstancePoolingEnabled = Propel::isInstancePoolingEnabled();
+
+        if (!$this->eventConfig->isInstancePoolingAllowed() && $isInstancePoolingEnabled) {
+            Propel::disableInstancePooling();
+        }
+
         foreach ($eventItems as $eventName => $eventItem) {
             try {
                 $listener->handleBulk($eventItem[static::EVENT_TRANSFERS], $eventName);
             } catch (Throwable $throwable) {
                 $this->handleBulkItemsIndividually($eventItem, $eventName, $listener, $listenerClassName);
             }
+        }
+
+        if ($isInstancePoolingEnabled) {
+            Propel::enableInstancePooling();
         }
     }
 

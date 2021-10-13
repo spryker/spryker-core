@@ -14,6 +14,7 @@ class SessionQuoteStorageStrategy implements QuoteStorageStrategyInterface
 {
     /**
      * @uses \Spryker\Shared\Quote\QuoteConfig::STORAGE_STRATEGY_SESSION
+     * @var string
      */
     protected const STORAGE_STRATEGY = 'session';
 

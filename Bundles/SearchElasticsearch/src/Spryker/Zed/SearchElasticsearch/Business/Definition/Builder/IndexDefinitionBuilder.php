@@ -36,7 +36,7 @@ class IndexDefinitionBuilder implements IndexDefinitionBuilderInterface
     }
 
     /**
-     * @return \Generated\Shared\Transfer\IndexDefinitionTransfer[]
+     * @return array<\Generated\Shared\Transfer\IndexDefinitionTransfer>
      */
     public function build(): array
     {
@@ -74,7 +74,7 @@ class IndexDefinitionBuilder implements IndexDefinitionBuilderInterface
     /**
      * @param array $indexDefinitions
      *
-     * @return \Generated\Shared\Transfer\IndexDefinitionTransfer[]
+     * @return array<\Generated\Shared\Transfer\IndexDefinitionTransfer>
      */
     protected function buildIndexDefinitionTransferCollection(array $indexDefinitions): array
     {

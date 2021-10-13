@@ -90,15 +90,15 @@ class StateMachineQueryContainer extends AbstractQueryContainer implements State
      */
     public function queryItemHistoryByStateItemIdentifier($identifier, $idStateMachineProcess)
     {
-         return $this->getFactory()
-             ->createStateMachineItemStateHistoryQuery()
-             ->useStateQuery()
+        return $this->getFactory()
+            ->createStateMachineItemStateHistoryQuery()
+            ->useStateQuery()
                 ->filterByFkStateMachineProcess($idStateMachineProcess)
-             ->endUse()
-             ->joinState()
-             ->filterByIdentifier($identifier)
-             ->orderByCreatedAt()
-             ->orderByIdStateMachineItemStateHistory();
+            ->endUse()
+            ->joinState()
+            ->filterByIdentifier($identifier)
+            ->orderByCreatedAt()
+            ->orderByIdStateMachineItemStateHistory();
     }
 
     /**
@@ -126,7 +126,7 @@ class StateMachineQueryContainer extends AbstractQueryContainer implements State
      *
      * @param string $stateMachineName
      * @param string $processName
-     * @param string[] $states
+     * @param array<string> $states
      *
      * @return \Orm\Zed\StateMachine\Persistence\SpyStateMachineItemStateQuery
      */
@@ -137,7 +137,6 @@ class StateMachineQueryContainer extends AbstractQueryContainer implements State
     ) {
         return $this->getFactory()
             ->createStateMachineItemStateQuery()
-            ->innerJoinStateHistory()
             ->useProcessQuery()
               ->filterByStateMachineName($stateMachineName)
               ->filterByName($processName)
@@ -154,7 +153,7 @@ class StateMachineQueryContainer extends AbstractQueryContainer implements State
      *
      * @param string $stateMachineName
      * @param string $processName
-     * @param string[] $states
+     * @param array<string> $states
      * @param string $historySortDirection
      *
      * @return \Orm\Zed\StateMachine\Persistence\SpyStateMachineItemStateQuery

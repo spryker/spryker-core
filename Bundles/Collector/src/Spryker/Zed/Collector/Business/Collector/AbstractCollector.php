@@ -170,7 +170,7 @@ abstract class AbstractCollector
      * @param array $collectedSet
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function collectExpiredData(array $collectedSet, LocaleTransfer $locale)
     {
@@ -255,7 +255,7 @@ abstract class AbstractCollector
      * @param string $itemType
      * @param int $offset
      *
-     * @return \Orm\Zed\Touch\Persistence\SpyTouch[]
+     * @return array<\Orm\Zed\Touch\Persistence\SpyTouch>
      */
     protected function getTouchCollectionToDelete($itemType, $offset = 0)
     {

@@ -13,10 +13,22 @@ use Spryker\Zed\DocumentationGeneratorRestApi\Dependency\External\DocumentationG
 
 class GlueControllerFinder implements GlueControllerFinderInterface
 {
+    /**
+     * @var string
+     */
     protected const PATTERN_CONTROLLER_NAMESPACE = '%s\Controller\%s';
+    /**
+     * @var string
+     */
     protected const PATTERN_CONTROLLER_FILENAME = '%s.php';
+    /**
+     * @var string
+     */
     protected const PATTERN_PLUGIN = '\Plugin\\';
 
+    /**
+     * @var string
+     */
     protected const CONTROLLER_SUFFIX = 'Controller';
 
     /**
@@ -52,7 +64,7 @@ class GlueControllerFinder implements GlueControllerFinderInterface
     /**
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
      *
-     * @return \SplFileInfo[]
+     * @return array<\SplFileInfo>
      */
     public function getGlueControllerFilesFromPlugin(ResourceRoutePluginInterface $plugin): array
     {
@@ -91,7 +103,7 @@ class GlueControllerFinder implements GlueControllerFinderInterface
     /**
      * @param string $moduleName
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getControllerSourceDirectories(string $moduleName): array
     {
@@ -105,12 +117,12 @@ class GlueControllerFinder implements GlueControllerFinderInterface
     /**
      * @param array $dirs
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getExistingSourceDirectories(array $dirs): array
     {
         return array_filter($dirs, function ($directory) {
-            return (bool)glob($directory, GLOB_ONLYDIR);
+            return (bool)glob($directory, GLOB_ONLYDIR | GLOB_NOSORT);
         });
     }
 }

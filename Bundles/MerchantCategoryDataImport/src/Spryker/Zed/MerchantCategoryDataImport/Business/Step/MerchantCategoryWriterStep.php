@@ -17,6 +17,9 @@ use Spryker\Zed\MerchantCategoryDataImport\Business\DataSet\MerchantCategoryData
 
 class MerchantCategoryWriterStep extends PublishAwareStep implements DataImportStepInterface
 {
+    /**
+     * @var array
+     */
     protected const REQUIRED_DATA_SET_KEYS = [
         MerchantCategoryDataSetInterface::FK_MERCHANT,
         MerchantCategoryDataSetInterface::ID_CATEGORY,

@@ -19,10 +19,34 @@ use Spryker\Zed\QuoteRequest\Dependency\Service\QuoteRequestToUtilEncodingServic
  */
 class QuoteRequestDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_COMPANY_USER = 'FACADE_COMPANY_USER';
+    /**
+     * @var string
+     */
     public const FACADE_CALCULATION = 'FACADE_CALCULATION';
+    /**
+     * @var string
+     */
     public const FACADE_CART = 'FACADE_CART';
+    /**
+     * @var string
+     */
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
+    /**
+     * @var string
+     */
+    public const PLUGINS_QUOTE_REQUEST_QUOTE_CHECK = 'PLUGINS_QUOTE_REQUEST_QUOTE_CHECK';
+    /**
+     * @var string
+     */
+    public const PLUGINS_QUOTE_REQUEST_VALIDATOR = 'PLUGINS_QUOTE_REQUEST_VALIDATOR';
+    /**
+     * @var string
+     */
+    public const PLUGINS_QUOTE_REQUEST_USER_VALIDATOR = 'PLUGINS_QUOTE_REQUEST_USER_VALIDATOR';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -35,6 +59,9 @@ class QuoteRequestDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCompanyUserFacade($container);
         $container = $this->addCalculationFacade($container);
         $container = $this->addCartFacade($container);
+        $container = $this->addQuoteRequestPreCreateCheckPlugins($container);
+        $container = $this->addQuoteRequestValidatorPlugins($container);
+        $container = $this->addQuoteRequestUserValidatorPlugins($container);
 
         return $container;
     }
@@ -106,5 +133,71 @@ class QuoteRequestDependencyProvider extends AbstractBundleDependencyProvider
         });
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addQuoteRequestPreCreateCheckPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_QUOTE_REQUEST_QUOTE_CHECK, function () {
+            return $this->getQuoteRequestPreCreateCheckPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return array<\Spryker\Zed\QuoteRequestExtension\Dependency\Plugin\QuoteRequestPreCreateCheckPluginInterface>
+     */
+    protected function getQuoteRequestPreCreateCheckPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addQuoteRequestValidatorPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_QUOTE_REQUEST_VALIDATOR, function (): array {
+            return $this->getQuoteRequestValidatorPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return array<\Spryker\Zed\QuoteRequestExtension\Dependency\Plugin\QuoteRequestValidatorPluginInterface>
+     */
+    protected function getQuoteRequestValidatorPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addQuoteRequestUserValidatorPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_QUOTE_REQUEST_USER_VALIDATOR, function (): array {
+            return $this->getQuoteRequestUserValidatorPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return array<\Spryker\Zed\QuoteRequestExtension\Dependency\Plugin\QuoteRequestUserValidatorPluginInterface>
+     */
+    protected function getQuoteRequestUserValidatorPlugins(): array
+    {
+        return [];
     }
 }

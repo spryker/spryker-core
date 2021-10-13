@@ -20,22 +20,78 @@ use Spryker\Shared\Kernel\Container\GlobalContainer;
  */
 class GlueApplicationDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const PLUGIN_RESOURCE_ROUTES = 'PLUGIN_RESOURCE_ROUTES';
+    /**
+     * @var string
+     */
     public const PLUGIN_RESOURCE_RELATIONSHIP = 'PLUGIN_RESOURCE_RELATIONSHIP';
+    /**
+     * @var string
+     */
     public const PLUGIN_VALIDATE_HTTP_REQUEST = 'PLUGIN_VALIDATE_HTTP_REQUEST';
+    /**
+     * @var string
+     */
+    public const PLUGIN_FORMATTED_CONTROLLER_BEFORE_ACTION = 'PLUGIN_FORMATTED_CONTROLLER_BEFORE_ACTION';
+    /**
+     * @var string
+     */
     public const PLUGIN_VALIDATE_REST_REQUEST = 'PLUGIN_VALIDATE_REST_REQUEST';
+    /**
+     * @var string
+     */
     public const PLUGINS_VALIDATE_REST_USER = 'PLUGIN_VALIDATE_REST_USER';
+    /**
+     * @var string
+     */
     public const PLUGIN_REST_REQUEST_VALIDATOR = 'PLUGIN_REST_REQUEST_VALIDATOR';
+    /**
+     * @var string
+     */
     public const PLUGIN_FORMAT_REQUEST = 'PLUGIN_FORMAT_REQUEST';
+    /**
+     * @var string
+     */
     public const PLUGIN_FORMAT_RESPONSE_DATA = 'PLUGIN_FORMAT_RESPONSE_DATA';
+    /**
+     * @var string
+     */
     public const PLUGIN_FORMAT_RESPONSE_HEADERS = 'PLUGIN_FORMAT_RESPONSE_HEADERS';
+    /**
+     * @var string
+     */
     public const PLUGIN_CONTROLLER_BEFORE_ACTION = 'PLUGIN_CONTROLLER_BEFORE_ACTION';
+    /**
+     * @var string
+     */
     public const PLUGIN_CONTROLLER_AFTER_ACTION = 'PLUGIN_CONTROLLER_AFTER_ACTION';
+    /**
+     * @var string
+     */
     public const PLUGINS_APPLICATION = 'PLUGINS_APPLICATION';
+    /**
+     * @var string
+     */
     public const PLUGINS_REST_USER_FINDER = 'PLUGINS_REST_USER_FINDER';
+    /**
+     * @var string
+     */
+    public const PLUGINS_ROUTER_PARAMETER_EXPANDER = 'PLUGINS_ROUTER_PARAMETER_EXPANDER';
 
+    /**
+     * @var string
+     */
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
+    /**
+     * @var string
+     */
     public const CLIENT_STORE = 'CLIENT_STORE';
+    /**
+     * @var string
+     */
     public const APPLICATION_GLUE = 'APPLICATION_GLUE';
 
     /**
@@ -52,6 +108,7 @@ class GlueApplicationDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addResourceRoutePlugins($container);
         $container = $this->addResourceRelationshipPlugins($container);
         $container = $this->addValidateHttpRequestPlugins($container);
+        $container = $this->addFormattedControllerBeforeActionTerminatePlugins($container);
         $container = $this->addValidateRestRequestPlugins($container);
         $container = $this->addRestUserValidatorPlugins($container);
         $container = $this->addRestRequestValidatorPlugins($container);
@@ -62,6 +119,7 @@ class GlueApplicationDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addControllerAfterActionPlugins($container);
         $container = $this->addApplicationPlugins($container);
         $container = $this->addRestUserFinderPlugins($container);
+        $container = $this->addRouterParameterExpanderPlugins($container);
 
         return $container;
     }
@@ -131,6 +189,20 @@ class GlueApplicationDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::PLUGIN_VALIDATE_HTTP_REQUEST, function (Container $container) {
             return $this->getValidateHttpRequestPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Glue\Kernel\Container $container
+     *
+     * @return \Spryker\Glue\Kernel\Container
+     */
+    protected function addFormattedControllerBeforeActionTerminatePlugins(Container $container): Container
+    {
+        $container->set(static::PLUGIN_FORMATTED_CONTROLLER_BEFORE_ACTION, function (Container $container) {
+            return $this->getFormattedControllerBeforeActionTerminatePlugins();
         });
 
         return $container;
@@ -291,7 +363,21 @@ class GlueApplicationDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface[]
+     * @param \Spryker\Glue\Kernel\Container $container
+     *
+     * @return \Spryker\Glue\Kernel\Container
+     */
+    protected function addRouterParameterExpanderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_ROUTER_PARAMETER_EXPANDER, function (Container $container) {
+            return $this->getRouterParameterExpanderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return array<\Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface>
      */
     protected function getApplicationPlugins(): array
     {
@@ -301,7 +387,7 @@ class GlueApplicationDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * Rest resource route plugin stack
      *
-     * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface[]
+     * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface>
      */
     protected function getResourceRoutePlugins(): array
     {
@@ -324,7 +410,7 @@ class GlueApplicationDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * Validate http request plugins
      *
-     * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ValidateHttpRequestPluginInterface[]
+     * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ValidateHttpRequestPluginInterface>
      */
     protected function getValidateHttpRequestPlugins(): array
     {
@@ -332,9 +418,19 @@ class GlueApplicationDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * Plugins that called before processing {@link \Spryker\Glue\Kernel\Controller\FormattedAbstractController}.
+     *
+     * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\FormattedControllerBeforeActionPluginInterface>
+     */
+    protected function getFormattedControllerBeforeActionTerminatePlugins(): array
+    {
+        return [];
+    }
+
+    /**
      * Format/Parse http request to internal rest resource request
      *
-     * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\FormatRequestPluginInterface[]
+     * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\FormatRequestPluginInterface>
      */
     protected function getFormatRequestPlugins(): array
     {
@@ -344,7 +440,7 @@ class GlueApplicationDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * Format response data the data which will send with http response
      *
-     * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\FormatResponseDataPluginInterface[]
+     * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\FormatResponseDataPluginInterface>
      */
     protected function getFormatResponseDataPlugins(): array
     {
@@ -354,7 +450,7 @@ class GlueApplicationDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * Format/add additional response headers
      *
-     * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\FormatResponseHeadersPluginInterface[]
+     * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\FormatResponseHeadersPluginInterface>
      */
     protected function getFormatResponseHeadersPlugins(): array
     {
@@ -362,7 +458,7 @@ class GlueApplicationDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ValidateRestRequestPluginInterface[]
+     * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ValidateRestRequestPluginInterface>
      */
     protected function getValidateRestRequestPlugins(): array
     {
@@ -370,7 +466,7 @@ class GlueApplicationDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RestRequestValidatorPluginInterface[]
+     * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RestRequestValidatorPluginInterface>
      */
     protected function getRestRequestValidatorPlugins(): array
     {
@@ -378,7 +474,7 @@ class GlueApplicationDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RestUserValidatorPluginInterface[]
+     * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RestUserValidatorPluginInterface>
      */
     protected function getRestUserValidatorPlugins(): array
     {
@@ -388,7 +484,7 @@ class GlueApplicationDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * Called before invoking controller action
      *
-     * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ControllerBeforeActionPluginInterface[]
+     * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ControllerBeforeActionPluginInterface>
      */
     protected function getControllerBeforeActionPlugins(): array
     {
@@ -398,7 +494,7 @@ class GlueApplicationDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * Called after done processing controller action
      *
-     * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ControllerAfterActionPluginInterface[]
+     * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ControllerAfterActionPluginInterface>
      */
     protected function getControllerAfterActionPlugins(): array
     {
@@ -406,9 +502,17 @@ class GlueApplicationDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RestUserFinderPluginInterface[]
+     * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RestUserFinderPluginInterface>
      */
     protected function getRestUserFinderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RouterParameterExpanderPluginInterface>
+     */
+    protected function getRouterParameterExpanderPlugins(): array
     {
         return [];
     }

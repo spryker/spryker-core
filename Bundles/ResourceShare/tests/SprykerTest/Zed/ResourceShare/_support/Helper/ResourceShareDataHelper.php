@@ -18,6 +18,9 @@ class ResourceShareDataHelper extends Module
 {
     use LocatorHelperTrait;
 
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_UNABLE_TO_CREATE_RESOURCE_SHARE_WITH_PROVIDED_DATA = 'Unable to create resource share with provided data.';
 
     /**

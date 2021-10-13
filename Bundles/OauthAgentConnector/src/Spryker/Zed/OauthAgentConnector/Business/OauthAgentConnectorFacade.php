@@ -37,7 +37,7 @@ class OauthAgentConnectorFacade extends AbstractFacade implements OauthAgentConn
      *
      * @param \Generated\Shared\Transfer\OauthScopeRequestTransfer $oauthScopeRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\OauthScopeTransfer[]
+     * @return array<\Generated\Shared\Transfer\OauthScopeTransfer>
      */
     public function getScopes(OauthScopeRequestTransfer $oauthScopeRequestTransfer): array
     {

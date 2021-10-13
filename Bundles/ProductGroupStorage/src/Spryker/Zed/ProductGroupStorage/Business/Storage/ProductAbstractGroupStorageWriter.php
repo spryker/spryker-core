@@ -37,7 +37,7 @@ class ProductAbstractGroupStorageWriter implements ProductAbstractGroupStorageWr
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return void
      */
@@ -63,7 +63,7 @@ class ProductAbstractGroupStorageWriter implements ProductAbstractGroupStorageWr
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return void
      */
@@ -142,7 +142,7 @@ class ProductAbstractGroupStorageWriter implements ProductAbstractGroupStorageWr
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      * @param array $groupedProductAbstractIds
      *
      * @return array
@@ -206,7 +206,7 @@ class ProductAbstractGroupStorageWriter implements ProductAbstractGroupStorageWr
 
     /**
      * @param array $groupedProductAbstractIds
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return array
      */
@@ -241,7 +241,7 @@ class ProductAbstractGroupStorageWriter implements ProductAbstractGroupStorageWr
     /**
      * @param array $productGroupIds
      *
-     * @return \Orm\Zed\ProductGroup\Persistence\SpyProductAbstractGroup[]
+     * @return array<\Orm\Zed\ProductGroup\Persistence\SpyProductAbstractGroup>
      */
     protected function findProductGroupAbstractEntitiesByProductGroupIds(array $productGroupIds)
     {
@@ -249,9 +249,9 @@ class ProductAbstractGroupStorageWriter implements ProductAbstractGroupStorageWr
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
-     * @return \Orm\Zed\ProductGroup\Persistence\SpyProductAbstractGroup[]
+     * @return array<\Orm\Zed\ProductGroup\Persistence\SpyProductAbstractGroup>
      */
     protected function findProductGroupAbstractEntitiesByProductAbstractIds(array $productAbstractIds)
     {
@@ -259,7 +259,7 @@ class ProductAbstractGroupStorageWriter implements ProductAbstractGroupStorageWr
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return array
      */
@@ -269,7 +269,7 @@ class ProductAbstractGroupStorageWriter implements ProductAbstractGroupStorageWr
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return array
      */
@@ -279,7 +279,7 @@ class ProductAbstractGroupStorageWriter implements ProductAbstractGroupStorageWr
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return array
      */

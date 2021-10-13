@@ -1,2 +1,5 @@
 parameters:
     checkMissingIterableValueType: false
+    reportUnmatchedIgnoredErrors: false
+    excludePaths:
+        - %rootDir%/../../../vendor/spryker/spryker/Bundles/ProductCustomerPermission/src/Spryker/Client/ProductCustomerPermission/Plugin/ProductCustomerPermissionQueryExpanderPlugin.php

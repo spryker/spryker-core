@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\ReturnReasonSearchTransfer;
 interface SalesReturnSearchEntityManagerInterface
 {
     /**
-     * @param int[] $returnReasonIds
+     * @param array<int> $returnReasonIds
      *
      * @return void
      */

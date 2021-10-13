@@ -12,12 +12,12 @@ use Generated\Shared\Transfer\ProductConfiguratorResponseProcessorResponseTransf
 class ProductConfiguratorCheckSumResponseValidatorComposite implements ProductConfiguratorResponseValidatorInterface
 {
     /**
-     * @var \Spryker\Client\ProductConfiguration\Validator\ProductConfiguratorResponseValidatorInterface[]
+     * @var array<\Spryker\Client\ProductConfiguration\Validator\ProductConfiguratorResponseValidatorInterface>
      */
     protected $productConfiguratorResponseValidators;
 
     /**
-     * @param \Spryker\Client\ProductConfiguration\Validator\ProductConfiguratorResponseValidatorInterface[] $productConfiguratorResponseValidators
+     * @param array<\Spryker\Client\ProductConfiguration\Validator\ProductConfiguratorResponseValidatorInterface> $productConfiguratorResponseValidators
      */
     public function __construct(array $productConfiguratorResponseValidators)
     {

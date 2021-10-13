@@ -15,13 +15,19 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ViewController extends BaseProductRelationController
 {
+    /**
+     * @var string
+     */
     public const URL_PARAM_ID_PRODUCT_RELATION = 'id-product-relation';
+    /**
+     * @var string
+     */
     protected const REDIRECT_URL = '/product-relation-gui/list/index';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function indexAction(Request $request)
     {

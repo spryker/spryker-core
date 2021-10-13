@@ -16,6 +16,9 @@ use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToProductImageFacad
 
 class ProductBundleImageCartExpander implements ProductBundleCartExpanderInterface
 {
+    /**
+     * @var string
+     */
     public const DEFAULT_IMAGE_SET_NAME = 'default';
 
     /**
@@ -77,9 +80,9 @@ class ProductBundleImageCartExpander implements ProductBundleCartExpanderInterfa
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductImageSetTransfer[] $imageSets
+     * @param array<\Generated\Shared\Transfer\ProductImageSetTransfer> $imageSets
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ProductImageTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\ProductImageTransfer>
      */
     protected function getProductImages(array $imageSets)
     {

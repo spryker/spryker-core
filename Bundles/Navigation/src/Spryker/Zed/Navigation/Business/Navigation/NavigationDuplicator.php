@@ -23,7 +23,13 @@ class NavigationDuplicator implements NavigationDuplicatorInterface
 {
     use TransactionTrait;
 
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_NAVIGATION_TREE_NOT_FOUND = 'Navigation tree transfer is not found.';
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_NAVIGATION_KEY_ALREADY_EXISTS = 'Navigation with the same key already exists.';
 
     /**
@@ -120,7 +126,7 @@ class NavigationDuplicator implements NavigationDuplicatorInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\NavigationTreeNodeTransfer[] $navigationTreeNodeTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\NavigationTreeNodeTransfer> $navigationTreeNodeTransfers
      * @param int $idNavigation
      * @param int|null $idParentNavigationNode
      *
@@ -156,9 +162,9 @@ class NavigationDuplicator implements NavigationDuplicatorInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\NavigationNodeLocalizedAttributesTransfer[] $navigationNodeLocalizedAttributesTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\NavigationNodeLocalizedAttributesTransfer> $navigationNodeLocalizedAttributesTransfers
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\NavigationNodeLocalizedAttributesTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\NavigationNodeLocalizedAttributesTransfer>
      */
     protected function duplicateNavigationNodeLocalizedAttributesTransfers(ArrayObject $navigationNodeLocalizedAttributesTransfers): ArrayObject
     {

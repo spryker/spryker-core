@@ -13,6 +13,9 @@ use Spryker\Zed\ProductResourceAliasStorage\Persistence\ProductResourceAliasStor
 
 class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterface
 {
+    /**
+     * @var string
+     */
     protected const KEY_SKU = 'sku';
 
     /**
@@ -38,7 +41,7 @@ class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterf
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return void
      */

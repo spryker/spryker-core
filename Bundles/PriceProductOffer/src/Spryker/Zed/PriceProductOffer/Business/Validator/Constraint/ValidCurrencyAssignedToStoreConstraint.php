@@ -12,7 +12,10 @@ use Symfony\Component\Validator\Constraint as SymfonyConstraint;
 
 class ValidCurrencyAssignedToStoreConstraint extends SymfonyConstraint
 {
-    protected const MESSAGE = 'Currency "{{ currency }}" is not assigned to the store "{{ store }}"';
+    /**
+     * @var string
+     */
+    protected const MESSAGE = 'Currency {{ currency }} is not assigned to the store {{ store }}';
 
     /**
      * @var \Spryker\Zed\PriceProductOffer\Dependency\Facade\PriceProductOfferToStoreFacadeInterface

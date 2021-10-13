@@ -25,9 +25,21 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class PriceProductScheduleImportFormType extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const FIELD_PRICE_PRODUCT_SCHEDULE_NAME = 'priceProductScheduleName';
+    /**
+     * @var int
+     */
     public const FIELD_PRICE_PRODUCT_SCHEDULE_NAME_MAX_LENGTH = 255;
+    /**
+     * @var string
+     */
     public const FIELD_FILE_UPLOAD = 'fileUpload';
+    /**
+     * @var string
+     */
     public const BLOCK_PREFIX = 'priceProductScheduleImport';
 
     /**

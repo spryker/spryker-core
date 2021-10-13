@@ -19,7 +19,13 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class TouchCleanUpConsole extends Console
 {
+    /**
+     * @var string
+     */
     public const COMMAND_NAME = 'touch:cleanup';
+    /**
+     * @var string
+     */
     public const COMMAND_DESCRIPTION = 'Cleans up the Touch tables by removing obsolete touch data';
 
     /**

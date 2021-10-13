@@ -29,6 +29,8 @@ use Spryker\Zed\ProductManagement\Communication\PluginExecutor\AbstractProductEd
 use Spryker\Zed\ProductManagement\Communication\PluginExecutor\AbstractProductEditViewExpanderPluginExecutorInterface;
 use Spryker\Zed\ProductManagement\Communication\PluginExecutor\ProductConcreteEditEditViewExpanderPluginExecutor;
 use Spryker\Zed\ProductManagement\Communication\PluginExecutor\ProductConcreteEditViewExpanderPluginExecutorInterface;
+use Spryker\Zed\ProductManagement\Communication\Reader\ProductAttributeReader;
+use Spryker\Zed\ProductManagement\Communication\Reader\ProductAttributeReaderInterface;
 use Spryker\Zed\ProductManagement\Communication\Table\BundledProductTable;
 use Spryker\Zed\ProductManagement\Communication\Table\ProductGroupTable;
 use Spryker\Zed\ProductManagement\Communication\Table\ProductTable;
@@ -112,10 +114,10 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
             $this->getPriceProductFacade(),
             $this->createLocaleProvider(),
             $currentLocale,
-            $this->getProductAttributeCollection(),
             $this->getProductTaxCollection(),
             $this->getConfig()->getImageUrlPrefix(),
-            $this->getStore()
+            $this->getStore(),
+            $this->createProductAttributeReader()
         );
     }
 
@@ -136,7 +138,6 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
             $this->getPriceProductFacade(),
             $this->createLocaleProvider(),
             $currentLocale,
-            $this->getProductAttributeCollection(),
             $this->getProductTaxCollection(),
             $this->getConfig()->getImageUrlPrefix(),
             $this->getStore()
@@ -155,10 +156,10 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
             $this->getProductFacade(),
             $this->createLocaleProvider(),
             $currentLocale,
-            $this->getProductAttributeCollection(),
             $this->getProductTaxCollection(),
             $this->getStore(),
-            $this->getProductAttributeFacade()
+            $this->getProductAttributeFacade(),
+            $this->createProductAttributeReader()
         );
     }
 
@@ -179,7 +180,6 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
             $this->getPriceProductFacade(),
             $this->createLocaleProvider(),
             $currentLocale,
-            $this->getProductAttributeCollection(),
             $this->getProductTaxCollection(),
             $this->getConfig()->getImageUrlPrefix(),
             $this->getStore(),
@@ -205,7 +205,7 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductManagement\Communication\Plugin\ProductAbstractViewPluginInterface[]
+     * @return array<\Spryker\Zed\ProductManagement\Communication\Plugin\ProductAbstractViewPluginInterface>
      */
     public function getProductAbstractViewPlugins()
     {
@@ -301,13 +301,11 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer[]
+     * @return \Spryker\Zed\ProductManagement\Communication\Reader\ProductAttributeReaderInterface
      */
-    public function getProductAttributeCollection()
+    public function createProductAttributeReader(): ProductAttributeReaderInterface
     {
-        return $this->reindexAttributeCollection(
-            $this->getProductAttributeFacade()->getProductAttributeCollection()
-        );
+        return new ProductAttributeReader($this->getProductAttributeFacade());
     }
 
     /**
@@ -334,21 +332,6 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
             $this->getConfig(),
             $this->getProductFacade()
         );
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductManagementAttributeTransfer[] $attributeCollection
-     *
-     * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer[]
-     */
-    protected function reindexAttributeCollection(array $attributeCollection)
-    {
-        $result = [];
-        foreach ($attributeCollection as $attributeTransfer) {
-            $result[$attributeTransfer->getKey()] = $attributeTransfer;
-        }
-
-        return $result;
     }
 
     /**
@@ -550,7 +533,7 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductTableDataExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductTableDataExpanderPluginInterface>
      */
     protected function getProductTableDataExpanderPlugins(): array
     {
@@ -582,7 +565,7 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductConcreteEditFormExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductConcreteEditFormExpanderPluginInterface>
      */
     public function getProductConcreteEditFormExpanderPlugins(): array
     {
@@ -590,7 +573,7 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductConcreteFormEditDataProviderExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductConcreteFormEditDataProviderExpanderPluginInterface>
      */
     public function getProductConcreteFormEditDataProviderExpanderPlugins(): array
     {
@@ -598,7 +581,7 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductFormTransferMapperExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductFormTransferMapperExpanderPluginInterface>
      */
     public function getProductFormTransferMapperExpanderPlugins(): array
     {
@@ -606,7 +589,7 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductConcreteFormEditTabsExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductConcreteFormEditTabsExpanderPluginInterface>
      */
     public function getProductConcreteFormEditTabsExpanderPlugins(): array
     {
@@ -614,7 +597,7 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductAbstractFormEditTabsExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductAbstractFormEditTabsExpanderPluginInterface>
      */
     public function getProductAbstractFormEditTabsExpanderPlugins(): array
     {
@@ -622,7 +605,7 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductAbstractFormExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductAbstractFormExpanderPluginInterface>
      */
     public function getProductAbstractFormExpanderPlugins(): array
     {
@@ -630,7 +613,7 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductConcreteFormExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductConcreteFormExpanderPluginInterface>
      */
     public function getProductConcreteFormExpanderPlugins(): array
     {
@@ -685,7 +668,7 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductAbstractEditViewExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductAbstractEditViewExpanderPluginInterface>
      */
     public function getAbstractProductEditViewExpanderPlugins(): array
     {
@@ -693,7 +676,7 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductConcreteEditViewExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductConcreteEditViewExpanderPluginInterface>
      */
     public function getProductConcreteEditViewExpanderPlugins(): array
     {
@@ -701,7 +684,7 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductAbstractListActionViewDataExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductAbstractListActionViewDataExpanderPluginInterface>
      */
     public function getProductAbstractListActionViewDataExpanderPlugins(): array
     {
@@ -709,7 +692,7 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductAbstractViewActionViewDataExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductAbstractViewActionViewDataExpanderPluginInterface>
      */
     public function getProductAbstractViewActionViewDataExpanderPlugins(): array
     {

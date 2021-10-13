@@ -17,11 +17,13 @@ class WishlistUpdater implements WishlistUpdaterInterface
 {
     /**
      * @uses \Spryker\Zed\Wishlist\Business\Model\Writer::ERROR_MESSAGE_NAME_ALREADY_EXISTS
+     * @var string
      */
     protected const ERROR_MESSAGE_NAME_ALREADY_EXISTS = 'wishlist.validation.error.name.already_exists';
 
     /**
      * @uses \Spryker\Zed\Wishlist\Business\Model\Writer::ERROR_MESSAGE_NAME_HAS_INCORRECT_FORMAT
+     * @var string
      */
     protected const ERROR_MESSAGE_NAME_HAS_INCORRECT_FORMAT = 'wishlist.validation.error.name.wrong_format';
 
@@ -56,8 +58,10 @@ class WishlistUpdater implements WishlistUpdaterInterface
             return $wishlistResponseTransfer;
         }
 
-        $originalWishlist = $wishlistResponseTransfer->getWishlist();
-        $updatedWishlist = $wishlistRequestTransfer->getWishlist();
+        /** @var \Generated\Shared\Transfer\WishlistTransfer $originalWishlist */
+        $originalWishlist = $wishlistResponseTransfer->requireWishlist()->getWishlist();
+        /** @var \Generated\Shared\Transfer\WishlistTransfer $updatedWishlist */
+        $updatedWishlist = $wishlistRequestTransfer->requireWishlist()->getWishlist();
         $wishlistTransfer = $originalWishlist->fromArray($updatedWishlist->modifiedToArray(), true);
 
         $wishlistResponseTransfer = $this->wishlistFacade->validateAndUpdateWishlist($wishlistTransfer);

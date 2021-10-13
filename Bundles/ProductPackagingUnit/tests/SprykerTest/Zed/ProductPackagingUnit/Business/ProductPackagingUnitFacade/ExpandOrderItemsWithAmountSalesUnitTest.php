@@ -24,7 +24,13 @@ use Spryker\Zed\Sales\SalesDependencyProvider;
  */
 class ExpandOrderItemsWithAmountSalesUnitTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const DEFAULT_OMS_PROCESS_NAME = 'Test01';
+    /**
+     * @var int
+     */
     protected const FAKE_SALES_ORDER_ITEM_ID = 666;
 
     /**

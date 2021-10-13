@@ -44,9 +44,25 @@ use SprykerTest\Zed\StateMachine\Mocks\TestStateMachineHandler;
  */
 class StateMachineFacadeTest extends Unit
 {
+    /**
+     * @var string
+     */
     public const TESTING_SM = 'TestingSm';
+    /**
+     * @var string
+     */
     public const TEST_PROCESS_NAME = 'TestProcess';
+    /**
+     * @var string
+     */
+    public const TEST_PROCESS_WITHOUT_EVENTS_NAME = 'TestProcessWithoutEvent';
+    /**
+     * @var string
+     */
     public const TEST_PROCESS_WITH_LOOP_NAME = 'TestProcessWithLoop';
+    /**
+     * @var int
+     */
     public const TEST_NOT_EXISTING_STATE_MACHINE_PROCESS_ID = 0;
 
     /**
@@ -136,11 +152,13 @@ class StateMachineFacadeTest extends Unit
 
         $processList = $stateMachineFacade->getProcesses(static::TESTING_SM);
 
-        $this->assertCount(1, $processList);
+        $this->assertCount(2, $processList);
 
         /** @var \Generated\Shared\Transfer\StateMachineProcessTransfer $process */
+        $process = current($processList);
+        $this->assertSame(static::TEST_PROCESS_NAME, $process->getProcessName());
         $process = array_pop($processList);
-        $this->assertSame($processName, $process->getProcessName());
+        $this->assertSame(static::TEST_PROCESS_WITHOUT_EVENTS_NAME, $process->getProcessName());
     }
 
     /**
@@ -260,7 +278,7 @@ class StateMachineFacadeTest extends Unit
         $stateMachineHandler = new TestStateMachineHandler();
         $stateMachineFacade = $this->createStateMachineFacade($stateMachineHandler);
 
-        /** @var \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems */
+        /** @var array<\Generated\Shared\Transfer\StateMachineItemTransfer> $stateMachineItems */
         $stateMachineItems = [];
         $stateMachineFacade->triggerForNewStateMachineItem($stateMachineProcessTransfer, $firstItemIdentifier);
         $stateMachineItems[] = $stateMachineHandler->getItemStateUpdated();
@@ -273,7 +291,7 @@ class StateMachineFacadeTest extends Unit
         $stateMachineHandler = new TestStateMachineHandler();
         $stateMachineFacade = $this->createStateMachineFacade($stateMachineHandler);
 
-        /** @var \Generated\Shared\Transfer\StateMachineItemTransfer[] $updatedStateMachineItems */
+        /** @var array<\Generated\Shared\Transfer\StateMachineItemTransfer> $updatedStateMachineItems */
         $updatedStateMachineItems = $stateMachineFacade->getProcessedStateMachineItems($stateMachineItems);
 
         $this->assertCount(2, $updatedStateMachineItems);
@@ -557,7 +575,7 @@ class StateMachineFacadeTest extends Unit
 
         $stateMachineFacade->triggerEvent('check with condition', $stateMachineItemTransfer);
 
-        $stateMachineHandler->setStateMachineItemsByStateIds([$stateMachineItemTransfer]);
+        $stateMachineHandler->setStateMachineItems([$stateMachineItemTransfer]);
 
         $stateMachineFacade->checkConditions(static::TESTING_SM);
 
@@ -753,9 +771,48 @@ class StateMachineFacadeTest extends Unit
         $stateNames = $stateMachineFacade->getProcessStateNames($stateMachineProcessTransfer);
 
         // Assert
-        $this->assertSame('completed', array_pop($stateNames));
-        $this->assertSame('state with condition', array_pop($stateNames));
         $this->assertSame('new', array_shift($stateNames));
+        $this->assertSame('invoice created', array_shift($stateNames));
+        $this->assertSame('invoice sent', array_shift($stateNames));
+        $this->assertSame('Foo 1 - done', array_pop($stateNames));
+        $this->assertSame('Foo 1 - sub process state 2', array_pop($stateNames));
+    }
+
+    /**
+     * @return void
+     */
+    public function testCheckConditionsShouldProcessStatesWithoutConditionAndWithoutEvent(): void
+    {
+        $processName = static::TEST_PROCESS_WITHOUT_EVENTS_NAME;
+        $identifier = 1985;
+
+        $stateMachineProcessEntity = $this->tester->haveStateMachineProcess([
+            'stateMachineName' => static::TESTING_SM,
+            'processName' => $processName,
+        ]);
+
+        $this->tester->haveStateMachineItemState([
+            'name' => 'new',
+            'fkStateMachineProcess' => $stateMachineProcessEntity->getIdStateMachineProcess(),
+        ]);
+
+        $stateMachineProcessTransfer = new StateMachineProcessTransfer();
+        $stateMachineProcessTransfer->setProcessName($processName);
+        $stateMachineProcessTransfer->setStateMachineName(static::TESTING_SM);
+
+        $stateMachineHandler = new TestStateMachineHandler();
+        $stateMachineFacade = $this->createStateMachineFacade($stateMachineHandler);
+
+        $stateMachineFacade->triggerForNewStateMachineItem($stateMachineProcessTransfer, $identifier);
+        $stateMachineItemTransfer = $stateMachineHandler->getItemStateUpdated();
+
+        $stateMachineHandler->setStateMachineItems([$stateMachineItemTransfer]);
+
+        $stateMachineFacade->checkConditions(static::TESTING_SM);
+
+        $stateMachineItemTransfer = $stateMachineHandler->getItemStateUpdated();
+
+        $this->assertSame('ready', $stateMachineItemTransfer->getStateName());
     }
 
     /**
@@ -777,10 +834,10 @@ class StateMachineFacadeTest extends Unit
         };
 
         $container[StateMachineDependencyProvider::PLUGIN_GRAPH] = function () {
-             return new GraphPlugin();
+            return new GraphPlugin();
         };
         $container[StateMachineDependencyProvider::SERVICE_NETWORK] = function () {
-             return new UtilNetworkService();
+            return new UtilNetworkService();
         };
 
         $stateMachineBusinessFactory->setContainer($container);

@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\Wishlist\Business\Transfer;
 
+use ArrayObject;
+use Generated\Shared\Transfer\WishlistItemMetaTransfer;
+use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\Wishlist\Persistence\SpyWishlist;
 use Orm\Zed\Wishlist\Persistence\SpyWishlistItem;
 use Propel\Runtime\Collection\ObjectCollection;
@@ -21,9 +24,9 @@ interface WishlistTransferMapperInterface
     public function convertWishlist(SpyWishlist $wishlistEntity);
 
     /**
-     * @param \Orm\Zed\Wishlist\Persistence\SpyWishlist[]|\Propel\Runtime\Collection\ObjectCollection $wishlistEntityCollection
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Wishlist\Persistence\SpyWishlist> $wishlistEntityCollection
      *
-     * @return \Generated\Shared\Transfer\WishlistTransfer[]
+     * @return array<\Generated\Shared\Transfer\WishlistTransfer>
      */
     public function convertWishlistCollection(ObjectCollection $wishlistEntityCollection);
 
@@ -35,9 +38,31 @@ interface WishlistTransferMapperInterface
     public function convertWishlistItem(SpyWishlistItem $wishlistItemEntity);
 
     /**
-     * @param \Orm\Zed\Wishlist\Persistence\SpyWishlistItem[]|\Propel\Runtime\Collection\ObjectCollection $wishlistItemEntityCollection
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Wishlist\Persistence\SpyWishlistItem> $wishlistItemEntityCollection
      *
-     * @return \Generated\Shared\Transfer\WishlistItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\WishlistItemTransfer>
      */
     public function convertWishlistItemCollection(ObjectCollection $wishlistItemEntityCollection);
+
+    /**
+     * @param \Orm\Zed\Product\Persistence\SpyProduct $productEntity
+     * @param \Generated\Shared\Transfer\WishlistItemMetaTransfer $wishlistItemMetaTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistItemMetaTransfer
+     */
+    public function mapProductEntityToWishlistItemMetaTransfer(
+        SpyProduct $productEntity,
+        WishlistItemMetaTransfer $wishlistItemMetaTransfer
+    ): WishlistItemMetaTransfer;
+
+    /**
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\WishlistItemTransfer> $wishlistItemTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\WishlistItemMetaTransfer> $wishlistItemMetaTransfers
+     *
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\WishlistItemMetaTransfer>
+     */
+    public function mapWishlistItemTransfersToWishlistItemMetaTransfers(
+        ArrayObject $wishlistItemTransfers,
+        ArrayObject $wishlistItemMetaTransfers
+    ): ArrayObject;
 }

@@ -18,6 +18,7 @@ class ContentProductGuiConfig extends AbstractBundleConfig
      * @uses \Spryker\Zed\ContentProduct\ContentProductConfig::MAX_NUMBER_PRODUCTS_IN_PRODUCT_ABSTRACT_LIST
      *
      * Should be more than in max count of list abstract products
+     * @var int
      */
     public const MAX_NUMBER_PRODUCTS_IN_PRODUCT_ABSTRACT_LIST = 30;
 

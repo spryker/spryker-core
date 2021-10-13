@@ -43,10 +43,20 @@ interface SalesOrderThresholdToGlossaryFacadeInterface
     public function saveGlossaryKeyTranslations(KeyTranslationTransfer $keyTranslationTransfer);
 
     /**
-     * @param string $glossaryKey
-     * @param \Generated\Shared\Transfer\LocaleTransfer[] $localeTransfers
+     * @deprecated Use {@link \Spryker\Zed\SalesOrderThreshold\Dependency\Facade\SalesOrderThresholdToGlossaryFacadeInterface::getTranslationsByGlossaryKeysAndLocaleTransfers()} instead.
      *
-     * @return \Generated\Shared\Transfer\TranslationTransfer[]
+     * @param string $glossaryKey
+     * @param array<\Generated\Shared\Transfer\LocaleTransfer> $localeTransfers
+     *
+     * @return array<\Generated\Shared\Transfer\TranslationTransfer>
      */
     public function getTranslationsByGlossaryKeyAndLocales(string $glossaryKey, array $localeTransfers): array;
+
+    /**
+     * @param array<string> $glossaryKeys
+     * @param array<\Generated\Shared\Transfer\LocaleTransfer> $localeTransfers
+     *
+     * @return array<\Generated\Shared\Transfer\TranslationTransfer>
+     */
+    public function getTranslationsByGlossaryKeysAndLocaleTransfers(array $glossaryKeys, array $localeTransfers): array;
 }

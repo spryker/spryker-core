@@ -18,6 +18,9 @@ use Spryker\Zed\ShipmentGuiExtension\Dependency\Plugin\ShipmentOrderItemTemplate
  */
 class MerchantShipmentOrderItemTemplatePlugin extends AbstractPlugin implements ShipmentOrderItemTemplatePluginInterface
 {
+    /**
+     * @var string
+     */
     protected const MERCHANT_NAME = 'merchantName';
 
     /**
@@ -40,9 +43,9 @@ class MerchantShipmentOrderItemTemplatePlugin extends AbstractPlugin implements 
      *
      * @phpstan-param \ArrayObject<int,\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return mixed[]
+     * @return array<mixed>
      */
     public function getTemplateData(ArrayObject $itemTransfers): array
     {

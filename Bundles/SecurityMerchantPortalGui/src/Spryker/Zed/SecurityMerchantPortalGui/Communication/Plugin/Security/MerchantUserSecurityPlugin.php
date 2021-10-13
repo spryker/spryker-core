@@ -20,12 +20,30 @@ use Spryker\Zed\SecurityMerchantPortalGui\SecurityMerchantPortalGuiConfig;
  */
 class MerchantUserSecurityPlugin extends AbstractPlugin implements SecurityPluginInterface
 {
+    /**
+     * @var string
+     */
     protected const SECURITY_FIREWALL_NAME = 'MerchantUser';
 
+    /**
+     * @var string
+     */
     protected const ROUTE_LOGIN = 'security-merchant-portal-gui:login';
+    /**
+     * @var string
+     */
     protected const PATH_LOGOUT = '/security-merchant-portal-gui/logout';
 
+    /**
+     * @var string
+     */
     protected const IS_AUTHENTICATED_ANONYMOUSLY = 'IS_AUTHENTICATED_ANONYMOUSLY';
+
+    /**
+     * @see \Symfony\Component\Form\Extension\Csrf\CsrfExtension::loadTypeExtensions()
+     * @var string
+     */
+    protected const FORM_FIELD_CSRF_TOKEN = '_token';
 
     /**
      * {@inheritDoc}
@@ -64,10 +82,14 @@ class MerchantUserSecurityPlugin extends AbstractPlugin implements SecurityPlugi
                 'check_path' => '/security-merchant-portal-gui/login_check',
                 'username_parameter' => MerchantLoginForm::FORM_NAME . '[' . MerchantLoginForm::FIELD_USERNAME . ']',
                 'password_parameter' => MerchantLoginForm::FORM_NAME . '[' . MerchantLoginForm::FIELD_PASSWORD . ']',
+                'csrf_parameter' => MerchantLoginForm::FORM_NAME . '[' . static::FORM_FIELD_CSRF_TOKEN . ']',
+                'csrf_token_id' => MerchantLoginForm::FORM_NAME,
+                'with_csrf' => true,
             ],
             'logout' => [
                 'logout_path' => static::PATH_LOGOUT,
                 'target_url' => static::ROUTE_LOGIN,
+                'priority' => 65,
             ],
             'users' => function () {
                 return $this->getFactory()->createMerchantUserProvider();

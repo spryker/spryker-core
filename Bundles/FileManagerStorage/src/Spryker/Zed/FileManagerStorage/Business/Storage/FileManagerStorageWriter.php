@@ -22,6 +22,9 @@ class FileManagerStorageWriter implements FileManagerStorageWriterInterface
 {
     use TransactionTrait;
 
+    /**
+     * @var string
+     */
     protected const KEY_DELIMITER = '_';
 
     /**
@@ -55,7 +58,7 @@ class FileManagerStorageWriter implements FileManagerStorageWriterInterface
     }
 
     /**
-     * @param int[] $fileIds
+     * @param array<int> $fileIds
      *
      * @return bool
      */
@@ -70,7 +73,7 @@ class FileManagerStorageWriter implements FileManagerStorageWriterInterface
     }
 
     /**
-     * @param int[] $fileIds
+     * @param array<int> $fileIds
      *
      * @return bool
      */
@@ -84,8 +87,8 @@ class FileManagerStorageWriter implements FileManagerStorageWriterInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\FileTransfer[] $fileTransfers
-     * @param \ArrayObject|\Generated\Shared\Transfer\FileStorageTransfer[] $fileStorageTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\FileTransfer> $fileTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\FileStorageTransfer> $fileStorageTransfers
      *
      * @return bool
      */
@@ -101,7 +104,7 @@ class FileManagerStorageWriter implements FileManagerStorageWriterInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\FileStorageTransfer[] $fileStorageTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\FileStorageTransfer> $fileStorageTransfers
      *
      * @throws \Spryker\Zed\FileManager\Exception\FileStorageNotFoundException
      *
@@ -119,8 +122,8 @@ class FileManagerStorageWriter implements FileManagerStorageWriterInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\FileTransfer[] $fileTransfers
-     * @param \ArrayObject|\Generated\Shared\Transfer\FileStorageTransfer[] $fileStorageTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\FileTransfer> $fileTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\FileStorageTransfer> $fileStorageTransfers
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return void
@@ -131,7 +134,7 @@ class FileManagerStorageWriter implements FileManagerStorageWriterInterface
             $key = $fileTransfer->getIdFile() . static::KEY_DELIMITER . $localeTransfer->getLocaleName();
 
             if (!$fileTransfer->getFileInfo()->count() && isset($fileStorageTransfers[$key])) {
-                $this->unpublish([$fileTransfer->getIdFile()]);
+                $this->unpublish([$fileTransfer->getIdFileOrFail()]);
 
                 continue;
             }
@@ -193,14 +196,17 @@ class FileManagerStorageWriter implements FileManagerStorageWriterInterface
         $latestFileInfo = $this->getLatestFileInfo($fileInfoTransfers);
 
         $fileStorageDataTransfer = new FileStorageDataTransfer();
+        if ($latestFileInfo === null) {
+            return $fileStorageDataTransfer;
+        }
         $fileStorageDataTransfer->fromArray($fileTransfer->toArray(), true);
         $fileStorageDataTransfer->setLocale($localeTransfer->getLocaleName());
-        $fileStorageDataTransfer->setType($latestFileInfo->getType());
-        $fileStorageDataTransfer->setVersion($latestFileInfo->getVersion());
+        $fileStorageDataTransfer->setType($latestFileInfo->getTypeOrFail());
+        $fileStorageDataTransfer->setVersion($latestFileInfo->getVersionOrFail());
         $fileStorageDataTransfer->setVersions($fileInfoTransfers);
-        $fileStorageDataTransfer->setSize($latestFileInfo->getSize());
-        $fileStorageDataTransfer->setStorageName($latestFileInfo->getStorageName());
-        $fileStorageDataTransfer->setStorageFileName($latestFileInfo->getStorageFileName());
+        $fileStorageDataTransfer->setSize($latestFileInfo->getSizeOrFail());
+        $fileStorageDataTransfer->setStorageName($latestFileInfo->getStorageNameOrFail());
+        $fileStorageDataTransfer->setStorageFileName($latestFileInfo->getStorageFileNameOrFail());
         $fileStorageDataTransfer->setFkFile($fileTransfer->getIdFile());
         $this->addLocalizedAttributesToFileStorageDataTransfer($fileStorageDataTransfer, $localizedAttributes, $localeTransfer);
 
@@ -209,7 +215,7 @@ class FileManagerStorageWriter implements FileManagerStorageWriterInterface
 
     /**
      * @param \Generated\Shared\Transfer\FileStorageDataTransfer $fileStorageTransfer
-     * @param \ArrayObject|\Generated\Shared\Transfer\FileLocalizedAttributesTransfer[] $localizedAttributes
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\FileLocalizedAttributesTransfer> $localizedAttributes
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return void
@@ -229,7 +235,7 @@ class FileManagerStorageWriter implements FileManagerStorageWriterInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\FileInfoTransfer[] $fileInfoTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\FileInfoTransfer> $fileInfoTransfers
      *
      * @return \Generated\Shared\Transfer\FileInfoTransfer|null
      */

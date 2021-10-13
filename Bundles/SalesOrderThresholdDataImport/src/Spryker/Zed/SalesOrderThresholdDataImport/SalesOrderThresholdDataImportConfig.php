@@ -12,6 +12,9 @@ use Spryker\Zed\DataImport\DataImportConfig;
 
 class SalesOrderThresholdDataImportConfig extends DataImportConfig
 {
+    /**
+     * @var string
+     */
     public const IMPORT_TYPE_SALES_ORDER_THRESHOLD = 'sales-order-threshold';
 
     /**

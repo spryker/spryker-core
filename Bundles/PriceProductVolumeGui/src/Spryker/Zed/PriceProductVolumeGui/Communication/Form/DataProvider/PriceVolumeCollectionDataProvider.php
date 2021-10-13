@@ -22,18 +22,48 @@ use Spryker\Zed\PriceProductVolumeGui\PriceProductVolumeGuiConfig;
 
 class PriceVolumeCollectionDataProvider
 {
+    /**
+     * @var string
+     */
     public const OPTION_CURRENCY_CODE = 'currency_code';
+    /**
+     * @var string
+     */
     public const OPTION_DIVISOR = 'divisor';
+    /**
+     * @var string
+     */
     public const OPTION_FRACTION_DIGITS = 'fraction_digits';
 
+    /**
+     * @var string
+     */
     protected const VOLUME_PRICES = 'volume_prices';
 
+    /**
+     * @var int
+     */
     protected const EMPTY_ROW_COUNT = 3;
+    /**
+     * @var int
+     */
     protected const FRACTION_POW_BASE = 10;
+    /**
+     * @var int
+     */
     protected const DEFAULT_FRACTION_DIGITS = 2;
+    /**
+     * @var int
+     */
     protected const DEFAULT_DIVISOR = 1;
 
+    /**
+     * @var string
+     */
     protected const MESSAGE_PRICE_PRODUCT_ABSTRACT_NOT_FOUND_ERROR = 'Price Product by chosen criteria is not defined for Product Abstract Id "%d".';
+    /**
+     * @var string
+     */
     protected const MESSAGE_PRICE_PRODUCT_CONCRETE_NOT_FOUND_ERROR = 'Price Product by chosen criteria is not defined for Product Concrete Id "%d".';
 
     /**
@@ -110,6 +140,7 @@ class PriceVolumeCollectionDataProvider
      * @param string $storeName
      * @param string $currencyCode
      * @param array $priceDimension
+     * @param string|null $priceType
      *
      * @throws \Spryker\Zed\PriceProductVolumeGui\Communication\Exception\PriceProductNotFoundException
      *
@@ -120,9 +151,10 @@ class PriceVolumeCollectionDataProvider
         ?int $idProductConcrete,
         string $storeName,
         string $currencyCode,
-        array $priceDimension
+        array $priceDimension,
+        ?string $priceType
     ): PriceProductTransfer {
-        $priceProductCriteriaTransfer = $this->createPriceProductCriteriaTransfer($storeName, $currencyCode, $priceDimension);
+        $priceProductCriteriaTransfer = $this->createPriceProductCriteriaTransfer($storeName, $currencyCode, $priceDimension, $priceType);
         $priceProductTransfers = [];
 
         if ($idProductConcrete !== null) {
@@ -169,7 +201,7 @@ class PriceVolumeCollectionDataProvider
     /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductVolumeItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductVolumeItemTransfer>
      */
     protected function getVolumes(PriceProductTransfer $priceProductTransfer): array
     {
@@ -182,7 +214,7 @@ class PriceVolumeCollectionDataProvider
     /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductVolumeItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductVolumeItemTransfer>
      */
     protected function getPreSavedVolumes(PriceProductTransfer $priceProductTransfer): array
     {
@@ -203,7 +235,7 @@ class PriceVolumeCollectionDataProvider
     /**
      * @param int $quantity
      *
-     * @return \Generated\Shared\Transfer\PriceProductVolumeItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductVolumeItemTransfer>
      */
     protected function generateEmptyPriceProductVolumeItemTransfers(int $quantity): array
     {
@@ -219,11 +251,16 @@ class PriceVolumeCollectionDataProvider
      * @param string $storeName
      * @param string $currencyCode
      * @param array $priceDimension
+     * @param string|null $priceType
      *
      * @return \Generated\Shared\Transfer\PriceProductCriteriaTransfer
      */
-    protected function createPriceProductCriteriaTransfer(string $storeName, string $currencyCode, array $priceDimension): PriceProductCriteriaTransfer
-    {
+    protected function createPriceProductCriteriaTransfer(
+        string $storeName,
+        string $currencyCode,
+        array $priceDimension,
+        ?string $priceType
+    ): PriceProductCriteriaTransfer {
         $idCurrency = $this->getIdCurrencyByCode($currencyCode);
         $idStore = $this->getIdStoreByName($storeName);
 
@@ -232,7 +269,7 @@ class PriceVolumeCollectionDataProvider
         $priceProductCriteriaTransfer = (new PriceProductCriteriaTransfer())
             ->setIdCurrency($idCurrency)
             ->setIdStore($idStore)
-            ->setPriceType($this->config->getPriceTypeDefaultName())
+            ->setPriceType($priceType ?? $this->config->getPriceTypeDefaultName())
             ->setPriceDimension($priceProductDimensionTransfer);
 
         return $priceProductCriteriaTransfer;

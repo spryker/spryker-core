@@ -30,7 +30,7 @@ class View implements ViewInterface, WidgetContainerInterface
 
     /**
      * @param array $data
-     * @param string[] $widgetPlugins
+     * @param array<string> $widgetPlugins
      * @param string|null $template
      */
     public function __construct(array $data = [], array $widgetPlugins = [], ?string $template = null)

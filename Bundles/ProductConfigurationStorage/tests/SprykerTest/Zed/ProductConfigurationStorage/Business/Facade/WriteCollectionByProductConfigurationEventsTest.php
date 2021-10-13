@@ -26,6 +26,9 @@ use Spryker\Client\Queue\QueueDependencyProvider;
  */
 class WriteCollectionByProductConfigurationEventsTest extends Unit
 {
+    /**
+     * @var int
+     */
     protected const FAKE_PRODUCT_CONFIGURATION_ID = 66666;
 
     /**

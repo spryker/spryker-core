@@ -74,7 +74,7 @@ class ReturnReasonSearchWriter implements ReturnReasonSearchWriterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
      *
      * @return void
      */
@@ -86,7 +86,7 @@ class ReturnReasonSearchWriter implements ReturnReasonSearchWriterInterface
     }
 
     /**
-     * @param int[] $returnReasonIds
+     * @param array<int> $returnReasonIds
      *
      * @return void
      */
@@ -121,9 +121,9 @@ class ReturnReasonSearchWriter implements ReturnReasonSearchWriterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ReturnReasonTransfer[] $returnReasonTransfers
-     * @param \Generated\Shared\Transfer\ReturnReasonSearchTransfer[][] $returnReasonSearchTransfers
-     * @param string[][] $returnReasonTranslations
+     * @param array<\Generated\Shared\Transfer\ReturnReasonTransfer> $returnReasonTransfers
+     * @param array<\Generated\Shared\Transfer\ReturnReasonSearchTransfer[]> $returnReasonSearchTransfers
+     * @param array<string[]> $returnReasonTranslations
      *
      * @return void
      */
@@ -146,9 +146,9 @@ class ReturnReasonSearchWriter implements ReturnReasonSearchWriterInterface
 
     /**
      * @param \Generated\Shared\Transfer\ReturnReasonTransfer $returnReasonTransfer
-     * @param \Generated\Shared\Transfer\ReturnReasonSearchTransfer[][] $returnReasonSearchTransfers
-     * @param string[][] $returnReasonTranslations
-     * @param \Generated\Shared\Transfer\LocaleTransfer[] $localeTransfers
+     * @param array<\Generated\Shared\Transfer\ReturnReasonSearchTransfer[]> $returnReasonSearchTransfers
+     * @param array<string[]> $returnReasonTranslations
+     * @param array<\Generated\Shared\Transfer\LocaleTransfer> $localeTransfers
      *
      * @return void
      */
@@ -176,7 +176,7 @@ class ReturnReasonSearchWriter implements ReturnReasonSearchWriterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ReturnReasonSearchTransfer[] $returnReasonSearchTransfers
+     * @param array<\Generated\Shared\Transfer\ReturnReasonSearchTransfer> $returnReasonSearchTransfers
      *
      * @return array
      */

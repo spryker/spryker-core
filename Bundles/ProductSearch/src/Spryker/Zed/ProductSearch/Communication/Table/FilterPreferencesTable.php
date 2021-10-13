@@ -17,9 +17,15 @@ use Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface;
 
 class FilterPreferencesTable extends AbstractTable
 {
+    /**
+     * @var string
+     */
     public const COL_NAME = 'attribute_key';
     public const COL_POSITION = SpyProductSearchAttributeTableMap::COL_POSITION;
     public const COL_FILTER_TYPE = SpyProductSearchAttributeTableMap::COL_FILTER_TYPE;
+    /**
+     * @var string
+     */
     public const ACTIONS = 'actions';
 
     /**
@@ -113,7 +119,7 @@ class FilterPreferencesTable extends AbstractTable
     /**
      * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
-     * @return \Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttribute[]
+     * @return array<\Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttribute>
      */
     protected function getProductSearchAttributes(TableConfiguration $config)
     {

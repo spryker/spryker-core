@@ -1,7 +1,7 @@
 namespace: OmsMultiThread
 
 include:
-  - tests/SprykerTest/Zed/OmsMultiThread
+    - tests/SprykerTest/Zed/OmsMultiThread
 
 paths:
     tests: tests

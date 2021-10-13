@@ -105,7 +105,7 @@ class PriceProductScheduleListRemover implements PriceProductScheduleListRemover
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductScheduleTransfer[] $priceProductScheduleCollection
+     * @param array<\Generated\Shared\Transfer\PriceProductScheduleTransfer> $priceProductScheduleCollection
      *
      * @return void
      */

@@ -9,5 +9,8 @@ namespace Spryker\Zed\CompanyDataImport\Business\Model\DataSet;
 
 interface CompanyDataSet
 {
+    /**
+     * @var string
+     */
     public const COMPANY_KEY = 'key';
 }

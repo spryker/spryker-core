@@ -12,7 +12,13 @@ use Generated\Shared\Transfer\CmsContentWidgetFunctionTransfer;
 
 class ContentWidgetFunctionMatcher implements ContentWidgetFunctionMatcherInterface
 {
+    /**
+     * @var string
+     */
     public const TWIG_FUNCTION_WITH_PARAMETER_REGEXP = '/{{(?:\s)?(?:&nbsp;)?([a-z_-]+)\(\[?(.*?)\]?\)(?:\s)?(?:&nbsp;)?}}/i';
+    /**
+     * @var string
+     */
     public const TRIM_WHITELIST = "'\" \t\n\r\v";
 
     /**

@@ -16,10 +16,22 @@ use Symfony\Component\HttpFoundation\Response;
 
 class OpenApiSpecificationPathGenerator implements PathGeneratorInterface
 {
+    /**
+     * @var string
+     */
     protected const DESCRIPTION_DEFAULT_REQUEST = 'Expected request body.';
+    /**
+     * @var string
+     */
     protected const DESCRIPTION_DEFAULT_RESPONSE = 'Expected response to a bad request.';
+    /**
+     * @var string
+     */
     protected const DESCRIPTION_SUCCESSFUL_RESPONSE = 'Expected response to a valid request.';
 
+    /**
+     * @var string
+     */
     protected const KEY_DEFAULT = 'default';
 
     /**
@@ -98,7 +110,6 @@ class OpenApiSpecificationPathGenerator implements PathGeneratorInterface
         if (!$responseSchemaDataTransfer) {
             $responseSchemaDataTransfer = new PathSchemaDataTransfer();
         }
-
         $responseSchemaDataTransfer = $this->addDefaultSuccessResponseToResponseSchemaDataTransfer(
             $pathMethodDataTransfer,
             $responseSchemaDataTransfer,
@@ -252,7 +263,7 @@ class OpenApiSpecificationPathGenerator implements PathGeneratorInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\PathSchemaDataTransfer[] $responseSchemas
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\PathSchemaDataTransfer> $responseSchemas
      *
      * @return \Generated\Shared\Transfer\PathSchemaDataTransfer|null
      */

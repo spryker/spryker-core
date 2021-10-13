@@ -23,7 +23,7 @@ class PriceProductScheduleGuiToPriceProductFacadeBridge implements PriceProductS
     }
 
     /**
-     * @return \Generated\Shared\Transfer\PriceTypeTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceTypeTransfer>
      */
     public function getPriceTypeValues()
     {

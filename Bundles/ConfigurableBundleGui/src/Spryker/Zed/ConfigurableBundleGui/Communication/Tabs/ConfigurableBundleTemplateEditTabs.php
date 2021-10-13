@@ -12,6 +12,9 @@ use Generated\Shared\Transfer\TabsViewTransfer;
 
 class ConfigurableBundleTemplateEditTabs extends AbstractConfigurableBundleTabs
 {
+    /**
+     * @var string
+     */
     protected const SLOTS_TAB_NAME = 'Slots';
 
     /**

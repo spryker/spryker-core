@@ -28,11 +28,26 @@ use Spryker\Zed\DataImport\Business\Exception\DataImportException;
  */
 class CompanyBusinessUnitUserDataImportPluginTest extends AbstractCompanyBusinessUnitDataImportUnitTest
 {
+    /**
+     * @var string
+     */
     protected const COMPANY_KEY = 'spryker';
+    /**
+     * @var string
+     */
     protected const COMPANY_USER_KEY = 'ComUser--1';
+    /**
+     * @var string
+     */
     protected const COMPANY_BUSINESS_UNIT_KEY = 'Test_HQ';
 
+    /**
+     * @var string
+     */
     protected const IMPORT_COMPANY_BUSINESS_UNIT_USER_CSV = 'import/company_business_unit_user.csv';
+    /**
+     * @var string
+     */
     protected const IMPORT_COMPANY_BUSINESS_UNIT_USER_WITH_INVALID_COMPANY_USER_CSV = 'import/company_business_unit_user_with_invalid_company_user.csv';
 
     /**

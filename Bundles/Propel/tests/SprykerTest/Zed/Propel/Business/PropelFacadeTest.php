@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\Propel\Business;
 
 use Codeception\Test\Unit;
+use Propel\Generator\Model\PropelTypes;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Propel\Runtime\Propel;
 use Spryker\Shared\Config\Config;
@@ -27,9 +28,21 @@ use Spryker\Zed\Propel\PropelConfig;
  */
 class PropelFacadeTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const POSTGRESQL_ADJUSTER_SCHEMA = 'postgresql_adjuster.spy_foo.schema.xml';
+    /**
+     * @var string
+     */
     protected const POSTGRESQL_SCHEMA_DIRECTORY = 'schemas';
+    /**
+     * @var string
+     */
     protected const POSTGRESQL_SCHEMA = 'spy_foo.schema.xml';
+    /**
+     * @var string
+     */
     protected const EXPECTED_POSTGRESQL_ADJUSTER_SCHEMA = 'expected.postgresql_adjuster.spy_foo.schema.xml';
 
     /**
@@ -147,6 +160,41 @@ class PropelFacadeTest extends Unit
 
         // Assert
         $this->assertFalse(is_dir($schemaDirectory));
+    }
+
+    /**
+     * @return void
+     */
+    public function testTableExistsReturnsFalseOnNonExistingTable(): void
+    {
+        //Arrange
+        $tableName = 'foo_bar';
+
+        //Act
+        $result = $this->tester->getFacade()->tableExists($tableName);
+
+        //Assert
+        $this->assertFalse($result);
+    }
+
+    /**
+     * @return void
+     */
+    public function testTableExistsReturnsTrueOnExistingTable(): void
+    {
+        //Arrange
+        $tableName = 'foo_bar';
+        $columnsData = [[
+            'name' => 'col',
+            'type' => PropelTypes::INTEGER,
+        ]];
+        $this->tester->createTable($tableName, $columnsData);
+
+        //Act
+        $result = $this->tester->getFacade()->tableExists($tableName);
+
+        //Assert
+        $this->assertTrue($result);
     }
 
     /**

@@ -14,8 +14,17 @@ use Symfony\Component\HttpFoundation\Request;
 
 class VersionResolver implements VersionResolverInterface
 {
+    /**
+     * @var int
+     */
     public const PART_VERSION_NUMBER = 2;
+    /**
+     * @var int
+     */
     public const PART_VERSION_MINOR = 1;
+    /**
+     * @var int
+     */
     public const PART_VERSION_MAJOR = 0;
 
     /**

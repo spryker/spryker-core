@@ -40,11 +40,26 @@ use Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface;
 
 class Customer implements CustomerInterface
 {
+    /**
+     * @var int
+     */
     protected const BCRYPT_FACTOR = 12;
+    /**
+     * @var string
+     */
     protected const BCRYPT_SALT = '';
 
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_CONFIRM_EMAIL_LINK_INVALID_OR_USED = 'customer.error.confirm_email_link.invalid_or_used';
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_CUSTOMER_AUTHORIZATION_VALIDATE_EMAIL_ADDRESS = 'customer.authorization.validate_email_address';
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_CUSTOMER_REGISTRATION_SUCCESS = 'customer.registration.success';
 
     /**
@@ -88,7 +103,7 @@ class Customer implements CustomerInterface
     protected $customerExpander;
 
     /**
-     * @var \Spryker\Zed\CustomerExtension\Dependency\Plugin\PostCustomerRegistrationPluginInterface[]
+     * @var array<\Spryker\Zed\CustomerExtension\Dependency\Plugin\PostCustomerRegistrationPluginInterface>
      */
     protected $postCustomerRegistrationPlugins;
 
@@ -107,7 +122,7 @@ class Customer implements CustomerInterface
      * @param \Spryker\Shared\Kernel\Store $store
      * @param \Spryker\Zed\Customer\Business\CustomerExpander\CustomerExpanderInterface $customerExpander
      * @param \Spryker\Zed\Customer\Business\CustomerPasswordPolicy\CustomerPasswordPolicyValidatorInterface $customerPasswordPolicyValidator
-     * @param \Spryker\Zed\CustomerExtension\Dependency\Plugin\PostCustomerRegistrationPluginInterface[] $postCustomerRegistrationPlugins
+     * @param array<\Spryker\Zed\CustomerExtension\Dependency\Plugin\PostCustomerRegistrationPluginInterface> $postCustomerRegistrationPlugins
      */
     public function __construct(
         CustomerQueryContainerInterface $queryContainer,

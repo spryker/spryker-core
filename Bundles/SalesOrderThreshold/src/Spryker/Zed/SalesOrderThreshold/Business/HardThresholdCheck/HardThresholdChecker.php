@@ -21,8 +21,17 @@ use Spryker\Zed\SalesOrderThreshold\Dependency\Facade\SalesOrderThresholdToMoney
 
 class HardThresholdChecker implements HardThresholdCheckerInterface
 {
+    /**
+     * @var string
+     */
     protected const THRESHOLD_GLOSSARY_PARAMETER = '{{threshold}}';
+    /**
+     * @var string
+     */
     protected const THRESHOLD_EXPENSE_TYPE = 'THRESHOLD_EXPENSE_TYPE';
+    /**
+     * @var string
+     */
     protected const CHECKOUT_ERROR_REDIRECT = '/checkout/summary';
 
     /**
@@ -164,10 +173,10 @@ class HardThresholdChecker implements HardThresholdCheckerInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SalesOrderThresholdValueTransfer[] $salesOrderThresholdValueTransfers
-     * @param string[] $thresholdGroups
+     * @param array<\Generated\Shared\Transfer\SalesOrderThresholdValueTransfer> $salesOrderThresholdValueTransfers
+     * @param array<string> $thresholdGroups
      *
-     * @return \Generated\Shared\Transfer\SalesOrderThresholdValueTransfer[]
+     * @return array<\Generated\Shared\Transfer\SalesOrderThresholdValueTransfer>
      */
     protected function filterSalesOrderThresholdsByThresholdGroup(array $salesOrderThresholdValueTransfers, array $thresholdGroups): array
     {

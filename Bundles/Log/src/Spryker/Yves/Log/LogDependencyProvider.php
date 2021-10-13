@@ -15,9 +15,18 @@ use Spryker\Yves\Kernel\Container;
  */
 class LogDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_QUEUE = 'queue client';
 
+    /**
+     * @var string
+     */
     public const LOG_PROCESSORS = 'LOG_PROCESSORS';
+    /**
+     * @var string
+     */
     public const LOG_HANDLERS = 'LOG_HANDLERS';
 
     /**

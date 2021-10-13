@@ -16,6 +16,9 @@ use Spryker\Zed\QuoteRequestAgent\Dependency\Facade\QuoteRequestAgentToQuoteRequ
  */
 class QuoteRequestAgentDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_QUOTE_REQUEST = 'FACADE_QUOTE_REQUEST';
 
     /**

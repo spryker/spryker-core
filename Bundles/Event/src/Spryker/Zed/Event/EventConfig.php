@@ -14,10 +14,22 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class EventConfig extends AbstractBundleConfig
 {
+    /**
+     * @var int
+     */
     public const DEFAULT_EVENT_MESSAGE_CHUNK_SIZE = 500;
+    /**
+     * @var int
+     */
     protected const ENQUEUE_EVENT_MESSAGE_CHUNK_SIZE = 500;
 
+    /**
+     * @var int
+     */
     public const DEFAULT_MAX_RETRY = 1;
+    /**
+     * @var int
+     */
     public const NO_RETRY = 0;
 
     /**
@@ -89,6 +101,21 @@ class EventConfig extends AbstractBundleConfig
     }
 
     /**
+     * Keeping instance pooling disallowed helps to avoid caching of used entities inside Propel which keeps
+     * memory consumption minimal.
+     * Allowing instance pooling can help performance. Make sure that the added memory consumption is
+     * not an issue then, though.
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function isInstancePoolingAllowed(): bool
+    {
+        return $this->get(EventConstants::IS_INSTANCE_POOLING_ALLOWED, false);
+    }
+
+    /**
      * @deprecated This is added only for BC reason and will
      * be removed in the next major.
      *
@@ -118,6 +145,7 @@ class EventConfig extends AbstractBundleConfig
     protected function hasEventRetryQueueConfig($config): bool
     {
         $connections = $config->getQueueConnections();
+        /** @var \Generated\Shared\Transfer\QueueConnectionTransfer $defaultConnection */
         $defaultConnection = current($connections);
         foreach ($defaultConnection->getQueueOptionCollection() as $option) {
             if ($option->getQueueName() !== 'event') {

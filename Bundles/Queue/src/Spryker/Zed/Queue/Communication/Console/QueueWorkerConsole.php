@@ -20,10 +20,22 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class QueueWorkerConsole extends Console
 {
+    /**
+     * @var string
+     */
     public const COMMAND_NAME = 'queue:worker:start';
+    /**
+     * @var string
+     */
     public const DESCRIPTION = 'Start queue workers';
 
+    /**
+     * @var string
+     */
     public const OPTION_STOP_WHEN_EMPTY = 'stop-when-empty';
+    /**
+     * @var string
+     */
     public const OPTION_STOP_WHEN_EMPTY_SHORT = 's';
 
     public const QUEUE_RUNNER_COMMAND = APPLICATION_VENDOR_DIR . '/bin/console queue:task:start';

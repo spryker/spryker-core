@@ -11,6 +11,9 @@ use Spryker\Zed\ContentNavigationGui\Dependency\Facade\ContentNavigationGuiToNav
 
 class NavigationContentTermFormDataProvider
 {
+    /**
+     * @var string
+     */
     protected const NAVIGATION_CHOICE_PATTERN = '%s - %s';
 
     /**
@@ -27,7 +30,7 @@ class NavigationContentTermFormDataProvider
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getNavigationChoices(): array
     {

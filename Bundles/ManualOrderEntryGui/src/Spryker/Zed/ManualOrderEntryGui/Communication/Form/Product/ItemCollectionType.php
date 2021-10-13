@@ -20,11 +20,23 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class ItemCollectionType extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const TYPE_NAME = 'items';
 
+    /**
+     * @var string
+     */
     public const FIELD_ITEMS = 'items';
 
+    /**
+     * @var string
+     */
     public const OPTION_ITEM_CLASS_COLLECTION = 'item_class_collection';
+    /**
+     * @var string
+     */
     public const OPTION_ISO_CODE = 'isoCode';
 
     /**

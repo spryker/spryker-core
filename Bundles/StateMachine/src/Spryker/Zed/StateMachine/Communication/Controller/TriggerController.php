@@ -21,16 +21,43 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
  */
 class TriggerController extends AbstractController
 {
+    /**
+     * @var string
+     */
     public const URL_PARAM_IDENTIFIER = 'identifier';
+    /**
+     * @var string
+     */
     public const URL_PARAM_ID_STATE = 'id-state';
+    /**
+     * @var string
+     */
     public const URL_PARAM_ID_PROCESS = 'id-process';
+    /**
+     * @var string
+     */
     public const URL_PARAM_STATE_MACHINE_NAME = 'state-machine-name';
+    /**
+     * @var string
+     */
     public const URL_PARAM_PROCESS_NAME = 'process-name';
+    /**
+     * @var string
+     */
     public const URL_PARAM_REDIRECT = 'redirect';
+    /**
+     * @var string
+     */
     public const URL_PARAM_EVENT = 'event';
 
+    /**
+     * @var string
+     */
     public const DEFAULT_REDIRECT_URL = '/state-machine/list';
 
+    /**
+     * @var string
+     */
     protected const ERROR_INVALID_FORM = 'Form is invalid';
 
     /**

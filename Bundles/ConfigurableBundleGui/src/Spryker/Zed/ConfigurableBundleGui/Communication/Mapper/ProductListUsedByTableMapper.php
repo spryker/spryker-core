@@ -15,9 +15,18 @@ use Spryker\Service\UtilText\Model\Url\Url;
 
 class ProductListUsedByTableMapper implements ProductListUsedByTableMapperInterface
 {
+    /**
+     * @var string
+     */
     protected const ENTITY_TITLE = 'Configurable Bundle Template';
 
+    /**
+     * @var string
+     */
     protected const EDIT_BUTTON_TITLE = 'Edit Slot';
+    /**
+     * @var array
+     */
     protected const EDIT_BUTTON_OPTIONS = [
         'class' => 'btn-edit btn-xs',
         'iconClass' => 'fa fa-pencil-square-o',
@@ -25,8 +34,12 @@ class ProductListUsedByTableMapper implements ProductListUsedByTableMapperInterf
 
     /**
      * @uses \Spryker\Zed\ConfigurableBundleGui\Communication\Controller\SlotController::editAction()
+     * @var string
      */
     protected const ROUTE_EDIT_SLOT = '/configurable-bundle-gui/slot/edit';
+    /**
+     * @var string
+     */
     protected const PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT = 'id-configurable-bundle-template-slot';
 
     /**

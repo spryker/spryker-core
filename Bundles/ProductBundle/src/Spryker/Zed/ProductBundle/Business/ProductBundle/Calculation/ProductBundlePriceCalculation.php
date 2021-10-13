@@ -208,7 +208,7 @@ class ProductBundlePriceCalculation implements ProductBundlePriceCalculationInte
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $salesOrderItemEntity
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $bundledProducts
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $bundledProducts
      *
      * @return array
      */

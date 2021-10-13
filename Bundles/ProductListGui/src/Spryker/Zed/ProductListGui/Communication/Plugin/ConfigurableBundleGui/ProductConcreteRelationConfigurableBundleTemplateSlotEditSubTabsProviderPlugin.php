@@ -16,7 +16,13 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class ProductConcreteRelationConfigurableBundleTemplateSlotEditSubTabsProviderPlugin extends AbstractPlugin implements ConfigurableBundleTemplateSlotEditSubTabsProviderPluginInterface
 {
+    /**
+     * @var string
+     */
     protected const AVAILABLE_PRODUCT_CONCRETE_RELATION_TABS_NAME = 'availableProductConcreteRelationTabs';
+    /**
+     * @var string
+     */
     protected const ASSIGNED_PRODUCT_CONCRETE_RELATION_TABS_NAME = 'assignedProductConcreteRelationTabs';
 
     /**
@@ -25,7 +31,7 @@ class ProductConcreteRelationConfigurableBundleTemplateSlotEditSubTabsProviderPl
      *
      * @api
      *
-     * @return \Spryker\Zed\Gui\Communication\Tabs\TabsInterface[]
+     * @return array<\Spryker\Zed\Gui\Communication\Tabs\TabsInterface>
      */
     public function provideSubTabs(): array
     {

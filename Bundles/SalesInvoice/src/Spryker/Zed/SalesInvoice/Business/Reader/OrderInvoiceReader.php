@@ -33,7 +33,7 @@ class OrderInvoiceReader implements OrderInvoiceReaderInterface
     protected $salesFacade;
 
     /**
-     * @var \Spryker\Zed\SalesInvoiceExtension\Dependency\Plugin\OrderInvoicesExpanderPluginInterface[]
+     * @var array<\Spryker\Zed\SalesInvoiceExtension\Dependency\Plugin\OrderInvoicesExpanderPluginInterface>
      */
     protected $orderInvoicesExpanderPlugins;
 
@@ -41,7 +41,7 @@ class OrderInvoiceReader implements OrderInvoiceReaderInterface
      * @param \Spryker\Zed\SalesInvoice\Persistence\SalesInvoiceRepositoryInterface $repository
      * @param \Spryker\Zed\SalesInvoice\Business\Renderer\OrderInvoiceRendererInterface $orderInvoiceRenderer
      * @param \Spryker\Zed\SalesInvoice\Dependency\Facade\SalesInvoiceToSalesFacadeInterface $salesFacade
-     * @param \Spryker\Zed\SalesInvoiceExtension\Dependency\Plugin\OrderInvoicesExpanderPluginInterface[] $orderInvoicesExpanderPlugins
+     * @param array<\Spryker\Zed\SalesInvoiceExtension\Dependency\Plugin\OrderInvoicesExpanderPluginInterface> $orderInvoicesExpanderPlugins
      */
     public function __construct(
         SalesInvoiceRepositoryInterface $repository,

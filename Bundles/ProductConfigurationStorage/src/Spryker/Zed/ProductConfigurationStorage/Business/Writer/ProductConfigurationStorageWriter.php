@@ -56,7 +56,7 @@ class ProductConfigurationStorageWriter implements ProductConfigurationStorageWr
     }
 
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
      *
      * @return void
      */
@@ -84,7 +84,7 @@ class ProductConfigurationStorageWriter implements ProductConfigurationStorageWr
     }
 
     /**
-     * @param int[] $productConfigurationIds
+     * @param array<int> $productConfigurationIds
      *
      * @return \Generated\Shared\Transfer\ProductConfigurationCollectionTransfer
      */

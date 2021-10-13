@@ -23,6 +23,9 @@ use Spryker\Zed\Url\Persistence\UrlQueryContainerInterface;
  */
 class UrlManager implements UrlManagerInterface
 {
+    /**
+     * @var string
+     */
     public const ITEM_TYPE_URL = 'url';
 
     /**
@@ -226,7 +229,7 @@ class UrlManager implements UrlManagerInterface
     /**
      * @param int $idCategoryNode
      *
-     * @return \Generated\Shared\Transfer\UrlTransfer[]
+     * @return array<\Generated\Shared\Transfer\UrlTransfer>
      */
     public function getResourceUrlCollectionByCategoryNodeId($idCategoryNode)
     {

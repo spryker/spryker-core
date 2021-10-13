@@ -24,7 +24,13 @@ use Generated\Shared\Transfer\ShipmentTransfer;
  */
 class MerchantShipmentFacadeTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const TEST_MERCHANT_REFERENCE = 'test_merchant_reference';
+    /**
+     * @var string
+     */
     protected const TEST_WRONG_MERCHANT_REFERENCE = 'test_wrong_merchant_reference';
 
     /**

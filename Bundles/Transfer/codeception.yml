@@ -18,7 +18,6 @@ settings:
 
 extensions:
     enabled:
-        - SprykerTest\Shared\Testify\Helper\WebDriverHelper
 
     config:
         SprykerTest\Shared\Testify\Helper\WebDriverHelper:

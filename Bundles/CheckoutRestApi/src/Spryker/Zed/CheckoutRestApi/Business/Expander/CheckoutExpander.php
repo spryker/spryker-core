@@ -32,7 +32,7 @@ class CheckoutExpander implements CheckoutExpanderInterface
     protected $addressReader;
 
     /**
-     * @var \Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\CheckoutDataExpanderPluginInterface[]
+     * @var array<\Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\CheckoutDataExpanderPluginInterface>
      */
     protected $checkoutDataExpanderPlugins;
 
@@ -40,7 +40,7 @@ class CheckoutExpander implements CheckoutExpanderInterface
      * @param \Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToShipmentFacadeInterface $shipmentFacade
      * @param \Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToPaymentFacadeInterface $paymentFacade
      * @param \Spryker\Zed\CheckoutRestApi\Business\Checkout\Address\AddressReaderInterface $addressReader
-     * @param \Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\CheckoutDataExpanderPluginInterface[] $checkoutDataExpanderPlugins
+     * @param array<\Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\CheckoutDataExpanderPluginInterface> $checkoutDataExpanderPlugins
      */
     public function __construct(
         CheckoutRestApiToShipmentFacadeInterface $shipmentFacade,

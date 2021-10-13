@@ -24,7 +24,7 @@ interface MoneyToCurrencyInterface
     public function getStoreWithCurrencies();
 
     /**
-     * @return \Generated\Shared\Transfer\StoreWithCurrencyTransfer[]
+     * @return array<\Generated\Shared\Transfer\StoreWithCurrencyTransfer>
      */
     public function getAllStoresWithCurrencies();
 }

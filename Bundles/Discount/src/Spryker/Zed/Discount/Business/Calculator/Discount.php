@@ -9,6 +9,7 @@ namespace Spryker\Zed\Discount\Business\Calculator;
 
 use ArrayObject;
 use Generated\Shared\Transfer\DiscountTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Discount\Persistence\SpyDiscount;
@@ -24,6 +25,11 @@ use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 class Discount implements DiscountInterface
 {
     use LoggerTrait;
+
+    /**
+     * @var string
+     */
+    protected const ITEM_QUANTITY_DECISION_RULE = 'item-quantity';
 
     /**
      * @var \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface
@@ -46,7 +52,7 @@ class Discount implements DiscountInterface
     protected $voucherValidator;
 
     /**
-     * @var \Spryker\Zed\Discount\Dependency\Plugin\DiscountApplicableFilterPluginInterface[]
+     * @var array<\Spryker\Zed\Discount\Dependency\Plugin\DiscountApplicableFilterPluginInterface>
      */
     protected $discountApplicableFilterPlugins = [];
 
@@ -108,7 +114,7 @@ class Discount implements DiscountInterface
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\DiscountTransfer[] $discounts
+     * @param array<\Generated\Shared\Transfer\DiscountTransfer> $discounts
      *
      * @return void
      */
@@ -125,7 +131,7 @@ class Discount implements DiscountInterface
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\CollectedDiscountTransfer[] $collectedDiscounts
+     * @param array<\Generated\Shared\Transfer\CollectedDiscountTransfer> $collectedDiscounts
      *
      * @return void
      */
@@ -147,10 +153,10 @@ class Discount implements DiscountInterface
     }
 
     /**
-     * @param string[] $voucherCodes
+     * @param array<string> $voucherCodes
      * @param int $idStore
      *
-     * @return \Orm\Zed\Discount\Persistence\SpyDiscount[]
+     * @return array<\Orm\Zed\Discount\Persistence\SpyDiscount>
      */
     protected function retrieveActiveCartAndVoucherDiscounts(array $voucherCodes, $idStore): array
     {
@@ -175,7 +181,7 @@ class Discount implements DiscountInterface
      * - Returns array of discounts splitted in two arrays by applicability. Applicable discounts first.
      * - Adds only one of the duplicate discounts to the applicable discounts, the rest to the non applicable.
      *
-     * @param \Orm\Zed\Discount\Persistence\SpyDiscount[] $discounts
+     * @param array<\Orm\Zed\Discount\Persistence\SpyDiscount> $discounts
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return array [\Orm\Zed\Discount\Persistence\SpyDiscount[], \Orm\Zed\Discount\Persistence\SpyDiscount[]]
@@ -219,7 +225,7 @@ class Discount implements DiscountInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getVoucherCodes(QuoteTransfer $quoteTransfer): array
     {
@@ -276,11 +282,18 @@ class Discount implements DiscountInterface
             return true;
         }
 
+        $isDiscountApplicable = false;
+
         try {
             $compositeSpecification = $this->decisionRuleBuilder->buildFromQueryString($queryString);
 
             $minimumItemAmount = $discountEntity->getMinimumItemAmount();
             $matchedProductAmount = 0;
+
+            if ($this->hasDiscountItemQuantityDecisionRule($discountEntity)) {
+                $originalItemsCollection = $this->cloneQuoteOriginalItems($quoteTransfer->getItems());
+                $quoteTransfer = $this->mergeQuoteItemsBySku($quoteTransfer);
+            }
 
             foreach ($discountApplicableItems as $itemTransfer) {
                 if ($compositeSpecification->isSatisfiedBy($quoteTransfer, $itemTransfer) !== true) {
@@ -289,14 +302,18 @@ class Discount implements DiscountInterface
 
                 $matchedProductAmount += $itemTransfer->getQuantity();
                 if ($matchedProductAmount >= $minimumItemAmount) {
-                    return true;
+                    $isDiscountApplicable = true;
+
+                    break;
                 }
             }
+
+            $quoteTransfer->setItems($originalItemsCollection ?? $quoteTransfer->getItems());
         } catch (QueryStringException $exception) {
             $this->getLogger()->warning($exception->getMessage(), ['exception' => $exception]);
         }
 
-        return false;
+        return $isDiscountApplicable;
     }
 
     /**
@@ -313,7 +330,7 @@ class Discount implements DiscountInterface
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param int $idDiscount
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     protected function filterDiscountApplicableItems(QuoteTransfer $quoteTransfer, $idDiscount): array
     {
@@ -330,12 +347,76 @@ class Discount implements DiscountInterface
     }
 
     /**
-     * @param \Spryker\Zed\Discount\Dependency\Plugin\DiscountApplicableFilterPluginInterface[] $discountApplicableFilterPlugins
+     * @param array<\Spryker\Zed\Discount\Dependency\Plugin\DiscountApplicableFilterPluginInterface> $discountApplicableFilterPlugins
      *
      * @return void
      */
     public function setDiscountApplicableFilterPlugins(array $discountApplicableFilterPlugins)
     {
         $this->discountApplicableFilterPlugins = $discountApplicableFilterPlugins;
+    }
+
+    /**
+     * @param \Orm\Zed\Discount\Persistence\SpyDiscount $discountEntity
+     *
+     * @return bool
+     */
+    protected function hasDiscountItemQuantityDecisionRule(SpyDiscount $discountEntity): bool
+    {
+        return str_contains($discountEntity->getDecisionRuleQueryString(), static::ITEM_QUANTITY_DECISION_RULE);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function mergeQuoteItemsBySku(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        $itemTransfers = $quoteTransfer->getItems();
+        $mergedItemsCollection = new ArrayObject();
+
+        foreach ($itemTransfers as $itemTransfer) {
+            $itemSku = $itemTransfer->getSku();
+            if ($mergedItemsCollection->offsetExists($itemSku)) {
+                $mergedItemsCollection[$itemSku] = $this->mergeQuoteItemTransfer($itemTransfer, $mergedItemsCollection[$itemSku]);
+
+                continue;
+            }
+
+            $mergedItemsCollection[$itemSku] = $itemTransfer;
+        }
+
+        $quoteTransfer->setItems($mergedItemsCollection);
+
+        return $quoteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $mergeableItemTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $mergedItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer
+     */
+    protected function mergeQuoteItemTransfer(ItemTransfer $mergeableItemTransfer, ItemTransfer $mergedItemTransfer): ItemTransfer
+    {
+        $mergedItemTransfer->setQuantity($mergeableItemTransfer->getQuantity() + $mergedItemTransfer->getQuantity());
+
+        return $mergedItemTransfer;
+    }
+
+    /**
+     * @param \ArrayObject $quoteItemsCollection
+     *
+     * @return \ArrayObject
+     */
+    protected function cloneQuoteOriginalItems(ArrayObject $quoteItemsCollection): ArrayObject
+    {
+        $originalItemsCollection = new ArrayObject();
+        foreach ($quoteItemsCollection as $itemTransfer) {
+            $originalItemsCollection[] = clone $itemTransfer;
+        }
+
+        return $originalItemsCollection;
     }
 }

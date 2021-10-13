@@ -14,8 +14,17 @@ use Spryker\Shared\StorageRedis\StorageRedisConstants;
 
 class StorageRedisConfig extends AbstractBundleConfig
 {
+    /**
+     * @var string
+     */
     protected const STORAGE_REDIS_CONNECTION_KEY = 'STORAGE_REDIS';
+    /**
+     * @var int
+     */
     protected const REDIS_DEFAULT_DATABASE = 0;
+    /**
+     * @var int
+     */
     protected const SCAN_CHUNK_SIZE = 100;
 
     /**
@@ -68,7 +77,7 @@ class StorageRedisConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function getDataSourceNames(): array
     {

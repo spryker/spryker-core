@@ -21,14 +21,18 @@ class CreateShipmentMethodController extends AbstractController
 {
     /**
      * @uses \Spryker\Zed\ShipmentGui\Communication\Controller\ShipmentMethodController::indexAction()
+     * @var string
      */
     protected const REDIRECT_URL = '/shipment-gui/shipment-method/index';
+    /**
+     * @var string
+     */
     protected const MESSAGE_SUCCESS = 'Shipment method has been successfully saved';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function indexAction(Request $request)
     {

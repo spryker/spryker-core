@@ -12,6 +12,9 @@ use Spryker\Zed\Kernel\Communication\Validator\AbstractConstraintValidator;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
+/**
+ * @method \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ProductOfferMerchantPortalGuiCommunicationFactory getFactory()
+ */
 class ValidFromRangeConstraintValidator extends AbstractConstraintValidator
 {
     /**
@@ -55,7 +58,7 @@ class ValidFromRangeConstraintValidator extends AbstractConstraintValidator
             $this->context->addViolation('The first date cannot be later than the second one.');
         }
 
-        if ($validFrom === $validTo) {
+        if ($validFrom == $validTo) {
             $this->context->addViolation('The first date is the same as the second one.');
         }
     }

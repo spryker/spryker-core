@@ -12,10 +12,22 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class StorageRedisConfig extends AbstractBundleConfig
 {
+    /**
+     * @var int
+     */
     public const DEFAULT_REDIS_DATABASE = 0;
 
+    /**
+     * @var string
+     */
     protected const DEFAULT_RDB_DUMP_PATH = '/var/lib/redis/dump.rdb';
+    /**
+     * @var int
+     */
     protected const DEFAULT_STORAGE_REDIS_PORT = 6379;
+    /**
+     * @var string
+     */
     protected const DEFAULT_STORAGE_REDIS_HOST = '127.0.0.1';
 
     /**

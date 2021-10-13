@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Response;
 class ResponseFormatter implements ResponseFormatterInterface
 {
     /**
-     * @var \Spryker\Glue\GlueApplication\Rest\Serialize\EncoderMatcherInterface $encoderMatcher
+     * @var \Spryker\Glue\GlueApplication\Rest\Serialize\EncoderMatcherInterface
      */
     protected $encoderMatcher;
 
@@ -28,14 +28,14 @@ class ResponseFormatter implements ResponseFormatterInterface
     protected $restResponseBuilder;
 
     /**
-     * @var \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\FormatResponseDataPluginInterface[]
+     * @var array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\FormatResponseDataPluginInterface>
      */
     protected $formatDataResponsePlugins = [];
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Serialize\EncoderMatcherInterface $encoderMatcher
      * @param \Spryker\Glue\GlueApplication\Rest\Response\ResponseBuilderInterface $responseBuilder
-     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\FormatResponseDataPluginInterface[] $formatDataResponsePlugins
+     * @param array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\FormatResponseDataPluginInterface> $formatDataResponsePlugins
      */
     public function __construct(
         EncoderMatcherInterface $encoderMatcher,

@@ -33,6 +33,6 @@ class OfferItemSubtotalAggregationPlugin extends AbstractPlugin implements Calcu
      */
     public function recalculate(CalculableObjectTransfer $calculableObjectTransfer)
     {
-         $this->getFacade()->aggregateOfferItemSubtotal($calculableObjectTransfer);
+        $this->getFacade()->aggregateOfferItemSubtotal($calculableObjectTransfer);
     }
 }

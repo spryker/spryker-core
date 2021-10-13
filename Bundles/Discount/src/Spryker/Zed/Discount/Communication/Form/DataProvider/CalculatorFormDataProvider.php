@@ -13,12 +13,12 @@ use Spryker\Zed\Discount\Communication\Form\CalculatorForm;
 class CalculatorFormDataProvider extends BaseDiscountFormDataProvider
 {
     /**
-     * @var \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface[]
+     * @var array<\Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface>
      */
     protected $calculatorPlugins;
 
     /**
-     * @param \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface[] $calculatorPlugins
+     * @param array<\Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface> $calculatorPlugins
      */
     public function __construct(array $calculatorPlugins)
     {
@@ -28,7 +28,7 @@ class CalculatorFormDataProvider extends BaseDiscountFormDataProvider
     }
 
     /**
-     * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface[]
+     * @return array<\Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface>
      */
     protected function getCalculatorPlugins()
     {

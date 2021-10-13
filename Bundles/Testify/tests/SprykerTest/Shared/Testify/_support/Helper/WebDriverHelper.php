@@ -15,20 +15,56 @@ use Codeception\Module\WebDriver;
 
 class WebDriverHelper extends Extension
 {
+    /**
+     * @var string
+     */
     protected const MODULE_NAME_WEBDRIVER = 'WebDriver';
 
+    /**
+     * @var string
+     */
     protected const KEY_REMOTE_ENABLE = 'remote-enable';
+    /**
+     * @var string
+     */
     protected const KEY_HOST = 'host';
+    /**
+     * @var string
+     */
     protected const KEY_PORT = 'port';
+    /**
+     * @var string
+     */
     protected const KEY_BROWSER = 'browser';
+    /**
+     * @var string
+     */
     protected const KEY_CAPABILITIES = 'capabilities';
 
+    /**
+     * @var string
+     */
     protected const DEFAULT_HOST = '0.0.0.0';
+    /**
+     * @var int
+     */
     protected const DEFAULT_PORT = 4444;
+    /**
+     * @var string
+     */
     protected const DEFAULT_BROWSER = 'phantomjs';
+    /**
+     * @var string
+     */
     protected const DEFAULT_PATH = 'vendor/bin/phantomjs';
+    /**
+     * @var int
+     */
     protected const DEFAULT_TIMEOUT = 10;
 
+    /**
+     * @var array
+     */
     protected const BROWSER_PARAMETERS = [
         'vendor/bin/chromedriver' => [
             'webdriver-port' => '--port',
@@ -61,7 +97,7 @@ class WebDriverHelper extends Extension
     ];
 
     /**
-     * @var string[]
+     * @var array<string>
      */
     public static $events = [
         Events::SUITE_INIT => 'suiteInit',
@@ -284,7 +320,7 @@ class WebDriverHelper extends Extension
     /**
      * @throws \Codeception\Exception\ExtensionException
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getCommandParametersMapping(): array
     {
@@ -326,7 +362,7 @@ class WebDriverHelper extends Extension
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function getWebDriverConfig(): array
     {

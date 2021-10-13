@@ -46,10 +46,10 @@ class ConfigurableBundleTemplateImageStorageExpander implements ConfigurableBund
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer[] $configurableBundleTemplateStorageTransfers
+     * @param array<\Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer> $configurableBundleTemplateStorageTransfers
      * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer>
      */
     public function expandConfigurableBundleTemplatesStorageWithImageSets(
         array $configurableBundleTemplateStorageTransfers,
@@ -75,9 +75,9 @@ class ConfigurableBundleTemplateImageStorageExpander implements ConfigurableBund
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer[] $configurableBundleTemplateStorageTransfers
+     * @param array<\Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer> $configurableBundleTemplateStorageTransfers
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getConfigurableBundleTemplateIds(array $configurableBundleTemplateStorageTransfers): array
     {
@@ -91,9 +91,9 @@ class ConfigurableBundleTemplateImageStorageExpander implements ConfigurableBund
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateImageStorageTransfer[] $configurableBundleTemplateImageStorageTransfers
+     * @param array<\Generated\Shared\Transfer\ConfigurableBundleTemplateImageStorageTransfer> $configurableBundleTemplateImageStorageTransfers
      *
-     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateImageStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\ConfigurableBundleTemplateImageStorageTransfer>
      */
     protected function mapConfigurableBundleTemplateImageStorageTransfers(array $configurableBundleTemplateImageStorageTransfers): array
     {

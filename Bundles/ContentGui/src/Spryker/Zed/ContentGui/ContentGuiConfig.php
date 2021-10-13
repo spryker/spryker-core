@@ -11,16 +11,49 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class ContentGuiConfig extends AbstractBundleConfig
 {
+    /**
+     * @var string
+     */
     protected const PARAMETER_ID = '%ID%';
+    /**
+     * @var string
+     */
     protected const PARAMETER_KEY = '%KEY%';
+    /**
+     * @var string
+     */
     protected const PARAMETER_TYPE = '%TYPE%';
+    /**
+     * @var string
+     */
     protected const PARAMETER_DISPLAY_TYPE = '%DISPLAY_TYPE%';
+    /**
+     * @var string
+     */
     protected const PARAMETER_TEMPLATE = '%TEMPLATE%';
+    /**
+     * @var string
+     */
     protected const PARAMETER_TWIG_EXPRESSION = '%TWIG_EXPRESSION%';
+    /**
+     * @var string
+     */
     protected const PARAMETER_NAME = '%NAME%';
+    /**
+     * @var string
+     */
     protected const PARAMETER_TEMPLATE_DISPLAY_NAME = '%TEMPLATE_DISPLAY_NAME%';
+    /**
+     * @var string
+     */
     protected const EDITOR_CONTENT_WIDGET_WRAPPER = '<p>%s</p>';
+    /**
+     * @var int
+     */
     protected const MAX_WIDGET_NUMBER = 10000;
+    /**
+     * @var string
+     */
     protected const DOM_PATH_WIDGET_QUERY = '//span[@contenteditable="false"][@data-key][@data-twig-expression][@data-template][@data-type]';
 
     /**

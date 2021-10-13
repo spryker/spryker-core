@@ -26,7 +26,13 @@ use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Stub\Plugin\TestResou
  */
 class ResourceRelationshipsPluginAnalyzerTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const RELATIONSHIP_VALUE = 'test-resource-with-relationship';
+    /**
+     * @var string
+     */
     protected const RELATIONSHIP_RESOURCE = 'test-resource';
 
     /**

@@ -24,6 +24,9 @@ use Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchQueryContainer;
  */
 class ProductCategoryPageDataExpanderPlugin extends AbstractPlugin implements ProductPageDataExpanderInterface
 {
+    /**
+     * @var string
+     */
     public const RESULT_FIELD_PRODUCT_ORDER = 'product_order';
 
     /**
@@ -223,10 +226,10 @@ class ProductCategoryPageDataExpanderPlugin extends AbstractPlugin implements Pr
     }
 
     /**
-     * @param int[] $directParentCategories
+     * @param array<int> $directParentCategories
      * @param int $idProductAbstract
      *
-     * @return \Orm\Zed\ProductCategory\Persistence\SpyProductCategory[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductCategory\Persistence\SpyProductCategory>
      */
     protected function findNodeEntitiesWithProductOrderPosition(array $directParentCategories, $idProductAbstract)
     {

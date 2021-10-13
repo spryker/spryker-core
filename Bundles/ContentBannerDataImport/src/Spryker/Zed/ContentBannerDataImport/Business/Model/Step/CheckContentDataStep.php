@@ -16,6 +16,9 @@ use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 
 class CheckContentDataStep implements DataImportStepInterface
 {
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE = 'Failed to import content banner: %s';
 
     /**
@@ -62,7 +65,7 @@ class CheckContentDataStep implements DataImportStepInterface
     /**
      * @param \Generated\Shared\Transfer\ContentValidationResponseTransfer $contentValidationResponseTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getErrorMessages(ContentValidationResponseTransfer $contentValidationResponseTransfer): array
     {

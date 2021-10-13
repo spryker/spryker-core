@@ -17,13 +17,13 @@ use Generated\Shared\Transfer\FileSystemDeleteTransfer;
 use Generated\Shared\Transfer\FileSystemListTransfer;
 use Generated\Shared\Transfer\FileSystemQueryTransfer;
 use Generated\Shared\Transfer\FileSystemRenameTransfer;
-use Generated\Shared\Transfer\FileSystemResourceMetadataTransfer;
 use Generated\Shared\Transfer\FileSystemStreamTransfer;
 use Generated\Shared\Transfer\FileSystemVisibilityTransfer;
-use Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException;
+use PHPUnit\Framework\Assert;
 use Spryker\Service\FileSystem\FileSystemDependencyProvider;
 use Spryker\Service\FileSystem\FileSystemService;
 use Spryker\Service\FileSystem\FileSystemServiceFactory;
+use Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemReadException;
 use Spryker\Service\Flysystem\FlysystemDependencyProvider;
 use Spryker\Service\Flysystem\FlysystemService;
 use Spryker\Service\Flysystem\FlysystemServiceFactory;
@@ -46,18 +46,45 @@ use SprykerTest\Service\FileSystem\Stub\FlysystemConfigStub;
  */
 class FileSystemServiceTest extends Unit
 {
+    /**
+     * @var string
+     */
     public const RESOURCE_FILE_NAME = 'fileName.jpg';
 
+    /**
+     * @var string
+     */
     public const FILE_SYSTEM_DOCUMENT = 'customerFileSystem';
+    /**
+     * @var string
+     */
     public const FILE_SYSTEM_PRODUCT_IMAGE = 'productFileSystem';
 
+    /**
+     * @var string
+     */
     public const ROOT_DIRECTORY = 'fileSystemRoot/uploads/';
+    /**
+     * @var string
+     */
     public const PATH_DOCUMENT = 'documents/';
+    /**
+     * @var string
+     */
     public const PATH_PRODUCT_IMAGE = 'images/product/';
 
+    /**
+     * @var string
+     */
     public const FILE_DOCUMENT = 'customer.txt';
+    /**
+     * @var string
+     */
     public const FILE_PRODUCT_IMAGE = 'image.png';
 
+    /**
+     * @var string
+     */
     public const FILE_CONTENT = 'Hello World';
 
     /**
@@ -205,19 +232,6 @@ class FileSystemServiceTest extends Unit
     /**
      * @return void
      */
-    public function testPut(): void
-    {
-        $fileSystemContentTransfer = $this->createContentTransfer();
-        $this->createDocumentFile('Lorem Ipsum');
-
-        $this->fileSystemService->put($fileSystemContentTransfer);
-
-        $this->assertSame(static::FILE_CONTENT, $this->getDocumentFileContent());
-    }
-
-    /**
-     * @return void
-     */
     public function testWrite(): void
     {
         $fileSystemContentTransfer = $this->createContentTransfer();
@@ -239,7 +253,7 @@ class FileSystemServiceTest extends Unit
 
         $this->fileSystemService->delete($fileSystemDeleteTransfer);
 
-        $this->assertFileNotExists($this->getDocumentFIleName());
+        $this->assertFileDoesNotExist($this->getDocumentFIleName());
     }
 
     /**
@@ -258,21 +272,8 @@ class FileSystemServiceTest extends Unit
         $originalFile = $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/' . static::FILE_DOCUMENT;
         $renamedFile = $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/NEW_' . static::FILE_DOCUMENT;
 
-        $this->assertFileNotExists($originalFile);
+        $this->assertFileDoesNotExist($originalFile);
         $this->assertFileExists($renamedFile);
-    }
-
-    /**
-     * @return void
-     */
-    public function testUpdate(): void
-    {
-        $this->createDocumentFile('Foo Bar');
-        $fileSystemContentTransfer = $this->createContentTransfer();
-
-        $this->fileSystemService->update($fileSystemContentTransfer);
-
-        $this->assertSame(static::FILE_CONTENT, $this->getDocumentFileContent());
     }
 
     /**
@@ -293,19 +294,6 @@ class FileSystemServiceTest extends Unit
 
         $this->assertFileExists($originalFile);
         $this->assertFileExists($copiedFile);
-    }
-
-    /**
-     * @return void
-     */
-    public function testGetMetadata(): void
-    {
-        $this->createDocumentFile();
-        $fileSystemQueryTransfer = $this->createDocumentQueryTransfer();
-
-        $metadataTransfer = $this->fileSystemService->getMetadata($fileSystemQueryTransfer);
-
-        $this->assertInstanceOf(FileSystemResourceMetadataTransfer::class, $metadataTransfer);
     }
 
     /**
@@ -429,31 +417,26 @@ class FileSystemServiceTest extends Unit
 
         $this->fileSystemService->deleteDirectory($fileSystemDeleteDirectoryTransfer);
 
-        $this->assertDirectoryNotExists($dir);
+        $this->assertDirectoryDoesNotExist($dir);
     }
 
     /**
+     * @deprecated Will be removed once PHPUnit 8 support is dropped.
+     *
+     * @param string $directory
+     * @param string $message
+     *
      * @return void
      */
-    public function testPutStream(): void
+    public static function assertDirectoryDoesNotExist(string $directory, string $message = ''): void
     {
-        $fileSystemStreamTransfer = $this->createStreamTransfer();
+        if (method_exists(Assert::class, 'assertDirectoryDoesNotExist')) {
+            parent::assertDirectoryDoesNotExist($directory, $message);
 
-        $stream = tmpfile();
-        fwrite($stream, static::FILE_CONTENT);
-        rewind($stream);
-
-        $this->fileSystemService->putStream($fileSystemStreamTransfer, $stream);
-
-        if ($stream !== false) {
-            fclose($stream);
+            return;
         }
 
-        $file = $this->getDocumentFIleName();
-        $content = file_get_contents($file);
-
-        $this->assertFileExists($file);
-        $this->assertSame(static::FILE_CONTENT, $content);
+        static::assertDirectoryNotExists($directory, $message);
     }
 
     /**
@@ -472,31 +455,6 @@ class FileSystemServiceTest extends Unit
         }
 
         $this->assertSame(static::FILE_CONTENT, $content);
-    }
-
-    /**
-     * @return void
-     */
-    public function testUpdateStream(): void
-    {
-        $fileSystemStreamTransfer = $this->createStreamTransfer();
-        $this->createDocumentFile();
-        $this->createDocumentFileInRoot('Lorem Ipsum');
-
-        $file = $this->testDataFileSystemRootDirectory . static::FILE_DOCUMENT;
-        $stream = fopen($file, 'r+');
-
-        $this->fileSystemService->updateStream($fileSystemStreamTransfer, $stream);
-
-        if ($stream !== false) {
-            fclose($stream);
-        }
-
-        $file = $this->getDocumentFIleName();
-        $content = file_get_contents($file);
-
-        $this->assertFileExists($file);
-        $this->assertSame('Lorem Ipsum', $content);
     }
 
     /**
@@ -608,7 +566,7 @@ class FileSystemServiceTest extends Unit
     }
 
     /**
-     * @return bool|string
+     * @return string|bool
      */
     protected function getDocumentFileContent()
     {

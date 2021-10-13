@@ -7,12 +7,26 @@
 
 namespace Spryker\Zed\PriceCartConnector;
 
+use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class PriceCartConnectorConfig extends AbstractBundleConfig
 {
     /**
      * @uses \Spryker\Zed\Cart\CartConfig::OPERATION_REMOVE
+     * @var string
      */
     public const OPERATION_REMOVE = 'remove';
+
+    /**
+     * @api
+     *
+     * @return array<string>
+     */
+    public function getItemFieldsForIsSameItemComparison()
+    {
+        return [
+            ItemTransfer::SKU,
+        ];
+    }
 }

@@ -18,6 +18,7 @@ class ProductBundleStorageWriter implements ProductBundleStorageWriterInterface
 {
     /**
      * @uses \Orm\Zed\Product\Persistence\Map\SpyProductTableMap::COL_IS_ACTIVE
+     * @var string
      */
     protected const COL_PRODUCT_CONCRETE_IS_ACTIVE = 'spy_product.is_active';
 
@@ -52,7 +53,7 @@ class ProductBundleStorageWriter implements ProductBundleStorageWriterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
      *
      * @return void
      */
@@ -68,7 +69,7 @@ class ProductBundleStorageWriter implements ProductBundleStorageWriterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
      *
      * @return void
      */
@@ -85,7 +86,7 @@ class ProductBundleStorageWriter implements ProductBundleStorageWriterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
      *
      * @return void
      */
@@ -108,7 +109,7 @@ class ProductBundleStorageWriter implements ProductBundleStorageWriterInterface
     }
 
     /**
-     * @param int[] $productConcreteBundleIds
+     * @param array<int> $productConcreteBundleIds
      *
      * @return void
      */
@@ -137,9 +138,9 @@ class ProductBundleStorageWriter implements ProductBundleStorageWriterInterface
     }
 
     /**
-     * @param int[] $bundledProductIds
+     * @param array<int> $bundledProductIds
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getProductConcreteBundleIds(array $bundledProductIds): array
     {

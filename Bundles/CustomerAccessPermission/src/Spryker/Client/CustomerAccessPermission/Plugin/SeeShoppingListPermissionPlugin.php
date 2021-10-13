@@ -16,6 +16,9 @@ use Spryker\Shared\PermissionExtension\Dependency\Plugin\PermissionPluginInterfa
  */
 class SeeShoppingListPermissionPlugin extends AbstractPlugin implements PermissionPluginInterface, InfrastructuralPermissionPluginInterface
 {
+    /**
+     * @var string
+     */
     public const KEY = 'SeeShoppingListPermissionPlugin';
 
     /**

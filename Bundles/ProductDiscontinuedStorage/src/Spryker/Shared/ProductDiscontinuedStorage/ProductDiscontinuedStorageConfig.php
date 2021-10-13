@@ -16,6 +16,7 @@ class ProductDiscontinuedStorageConfig extends AbstractBundleConfig
      * - Key generation resource name of product discontinued.
      *
      * @api
+     * @var string
      */
     public const PRODUCT_DISCONTINUED_RESOURCE_NAME = 'product_discontinued';
 
@@ -24,6 +25,7 @@ class ProductDiscontinuedStorageConfig extends AbstractBundleConfig
      * - Queue name as used for processing product discontinued messages.
      *
      * @api
+     * @var string
      */
     public const PRODUCT_DISCONTINUED_SYNC_STORAGE_QUEUE = 'sync.storage.product';
 
@@ -32,6 +34,7 @@ class ProductDiscontinuedStorageConfig extends AbstractBundleConfig
      * - Queue name as used for processing product discontinued messages.
      *
      * @api
+     * @var string
      */
     public const PRODUCT_DISCONTINUED_SYNC_STORAGE_ERROR_QUEUE = 'sync.storage.product.error';
 }

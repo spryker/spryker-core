@@ -17,23 +17,32 @@ use Symfony\Component\HttpFoundation\Response;
 
 class RestRequestValidator implements RestRequestValidatorInterface
 {
+    /**
+     * @var string
+     */
     protected const EXCEPTION_MESSAGE_POST_DATA_IS_INVALID = 'Post data is invalid.';
+    /**
+     * @var string
+     */
     protected const EXCEPTION_MESSAGE_RESOURCE_TYPE_IS_INVALID = 'Invalid type.';
+    /**
+     * @var string
+     */
     protected const EXCEPTION_MESSAGE_RESOURCE_ID_IS_NOT_SPECIFIED = 'Resource id is not specified.';
 
     /**
-     * @var \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ValidateRestRequestPluginInterface[]
+     * @var array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ValidateRestRequestPluginInterface>
      */
     protected $validateRestRequestPlugins = [];
 
     /**
-     * @var array|\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RestRequestValidatorPluginInterface[]
+     * @var array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RestRequestValidatorPluginInterface>
      */
     protected $restRequestValidatorPlugins = [];
 
     /**
-     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ValidateRestRequestPluginInterface[] $validateRestRequestPlugins
-     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RestRequestValidatorPluginInterface[] $restRequestValidatorPlugins
+     * @param array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ValidateRestRequestPluginInterface> $validateRestRequestPlugins
+     * @param array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RestRequestValidatorPluginInterface> $restRequestValidatorPlugins
      */
     public function __construct(array $validateRestRequestPlugins, array $restRequestValidatorPlugins)
     {

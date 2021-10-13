@@ -18,6 +18,7 @@ interface CmsGuiConstants
      * - Optional: a numerical placeholder for idCmsPage can be inserted in sprintf format
      *
      * @api
+     * @var string
      */
     public const CMS_PAGE_PREVIEW_URI = 'CMS_PAGE_PREVIEW_URI';
 
@@ -26,6 +27,7 @@ interface CmsGuiConstants
      * - Defines the path of CMS templates.
      *
      * @api
+     * @var string
      */
     public const CMS_FOLDER_PATH = 'CMS_FOLDER_PATH';
 }

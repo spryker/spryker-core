@@ -13,7 +13,7 @@ use Spryker\Service\UtilDataReader\Model\Reader\Csv\CsvReaderInterface;
 class HeaderValidator implements HeaderValidatorInterface
 {
     /**
-     * @param string[] $columns
+     * @param array<string> $columns
      * @param \Spryker\Service\UtilDataReader\Model\Reader\Csv\CsvReaderInterface $csvReader
      *
      * @return \Generated\Shared\Transfer\HeaderValidatorResponseTransfer

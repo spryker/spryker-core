@@ -23,9 +23,21 @@ use Symfony\Component\Finder\SplFileInfo;
 
 class ComposerDependencyParser implements ComposerDependencyParserInterface
 {
+    /**
+     * @var string
+     */
     public const TYPE_INCLUDE = 'include';
+    /**
+     * @var string
+     */
     public const TYPE_EXCLUDE = 'exclude';
+    /**
+     * @var string
+     */
     public const TYPE_INCLUDE_DEV = 'include-dev';
+    /**
+     * @var string
+     */
     public const TYPE_EXCLUDE_DEV = 'exclude-dev';
 
     /**
@@ -76,11 +88,11 @@ class ComposerDependencyParser implements ComposerDependencyParserInterface
                 'composerName' => $composerName,
                 'types' => $this->getDependencyTypes($composerName, $dependencyCollectionTransfer),
                 'isOptional' => $this->getIsOptional($composerName, $dependencyCollectionTransfer),
-                'src' => in_array($composerName, $composerNamesInSrc) ? $composerName : '',
-                'tests' => in_array($composerName, $composerNamesInTests) ? $composerName : '',
-                'composerRequire' => in_array($composerName, $composerRequiredNames) ? $composerName : '',
-                'composerRequireDev' => in_array($composerName, $composerRequiredDevNames) ? $composerName : '',
-                'suggested' => in_array($composerName, $composerSuggestedNames) ? $composerName : '',
+                'src' => in_array($composerName, $composerNamesInSrc, true) ? $composerName : '',
+                'tests' => in_array($composerName, $composerNamesInTests, true) ? $composerName : '',
+                'composerRequire' => in_array($composerName, $composerRequiredNames, true) ? $composerName : '',
+                'composerRequireDev' => in_array($composerName, $composerRequiredDevNames, true) ? $composerName : '',
+                'suggested' => in_array($composerName, $composerSuggestedNames, true) ? $composerName : '',
                 'isOwnExtensionModule' => $this->isOwnExtensionModule($composerName, $dependencyCollectionTransfer),
             ];
         }
@@ -118,7 +130,7 @@ class ComposerDependencyParser implements ComposerDependencyParserInterface
      * @param string $composerName
      * @param \Generated\Shared\Transfer\DependencyCollectionTransfer $moduleDependencyCollectionTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getDependencyTypes($composerName, DependencyCollectionTransfer $moduleDependencyCollectionTransfer): array
     {
@@ -245,15 +257,45 @@ class ComposerDependencyParser implements ComposerDependencyParserInterface
 
         $dependencyCollectionTransfer->setDependencyModules(new ArrayObject());
         foreach ($dependencyModulesCollectionTransfer as $moduleDependencyTransfer) {
-            if (!in_array($moduleDependencyTransfer->getComposerName(), $excluded)) {
+            if (!in_array($moduleDependencyTransfer->getComposerName(), $excluded, true)) {
                 $dependencyCollectionTransfer->addDependencyModule($moduleDependencyTransfer);
             }
         }
+
+        $overwrittenRequiredDependencies = [];
         foreach ($declaredDependencies[static::TYPE_INCLUDE] as $declaredDependency) {
             $dependencyCollectionTransfer = $this->addDeclaredDependency($dependencyCollectionTransfer, $declaredDependency);
+            $overwrittenRequiredDependencies[] = $declaredDependency;
         }
+
         foreach ($declaredDependencies[static::TYPE_INCLUDE_DEV] as $declaredDependency) {
             $dependencyCollectionTransfer = $this->addDeclaredDependency($dependencyCollectionTransfer, $declaredDependency, true);
+        }
+
+        $dependencyCollectionTransfer = $this->addNonOverwrittenRequiredDependencies($dependencyCollectionTransfer, $overwrittenRequiredDependencies);
+
+        return $dependencyCollectionTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DependencyCollectionTransfer $dependencyCollectionTransfer
+     * @param array<string> $overwrittenRequiredDependencies
+     *
+     * @return \Generated\Shared\Transfer\DependencyCollectionTransfer
+     */
+    protected function addNonOverwrittenRequiredDependencies(
+        DependencyCollectionTransfer $dependencyCollectionTransfer,
+        array $overwrittenRequiredDependencies
+    ): DependencyCollectionTransfer {
+        $composerDependencyCollectionTransfer = $this->parseComposerJson($dependencyCollectionTransfer->getModule());
+
+        foreach ($composerDependencyCollectionTransfer->getComposerDependencies() as $composerDependency) {
+            if (
+                $composerDependency->getName() && $composerDependency->getIsDev() === false &&
+                !in_array($composerDependency->getName(), $overwrittenRequiredDependencies)
+            ) {
+                $dependencyCollectionTransfer = $this->addDeclaredDependency($dependencyCollectionTransfer, $composerDependency->getName());
+            }
         }
 
         return $dependencyCollectionTransfer;

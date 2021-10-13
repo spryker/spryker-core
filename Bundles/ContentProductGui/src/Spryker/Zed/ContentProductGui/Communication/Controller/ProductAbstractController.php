@@ -16,6 +16,9 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ProductAbstractController extends AbstractController
 {
+    /**
+     * @var string
+     */
     public const PARAM_IDS = 'ids';
 
     /**

@@ -20,10 +20,25 @@ use Spryker\Zed\Kernel\Container;
  */
 class CompanyRoleGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_COMPANY = 'FACADE_COMPANY';
+    /**
+     * @var string
+     */
     public const FACADE_COMPANY_ROLE = 'FACADE_COMPANY_ROLE';
+    /**
+     * @var string
+     */
     public const PROPEL_QUERY_COMPANY_ROLE = 'PROPEL_QUERY_COMPANY_ROLE';
+    /**
+     * @var string
+     */
     public const FACADE_GLOSSARY = 'FACADE_GLOSSARY';
+    /**
+     * @var string
+     */
     public const FACADE_PERMISSION = 'FACADE_PERMISSION';
 
     /**

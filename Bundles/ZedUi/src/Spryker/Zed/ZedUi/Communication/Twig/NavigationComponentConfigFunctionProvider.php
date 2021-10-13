@@ -13,7 +13,13 @@ use Spryker\Zed\ZedUi\Dependency\Service\ZedUiToUtilEncodingServiceInterface;
 
 class NavigationComponentConfigFunctionProvider extends TwigFunctionProvider
 {
+    /**
+     * @var string
+     */
     protected const NAVIGATION_COMPONENT_CONFIG_FUNCTION_NAME = 'render_navigation_component_config';
+    /**
+     * @var string
+     */
     protected const DEFAULT_ITEM_ICON = 'fa-angle-double-right';
 
     /**
@@ -61,7 +67,7 @@ class NavigationComponentConfigFunctionProvider extends TwigFunctionProvider
     /**
      * @param array $navigationItems
      *
-     * @return \Spryker\Zed\ZedUi\Communication\Twig\NavigationItem[]
+     * @return array<\Spryker\Zed\ZedUi\Communication\Twig\NavigationItem>
      */
     protected function getMenuTree(array $navigationItems = []): array
     {

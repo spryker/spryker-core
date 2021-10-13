@@ -33,20 +33,62 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  */
 class CustomerForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const OPTION_SALUTATION_CHOICES = 'salutation_choices';
+    /**
+     * @var string
+     */
     public const OPTION_GENDER_CHOICES = 'gender_choices';
+    /**
+     * @var string
+     */
     public const OPTION_LOCALE_CHOICES = 'locale_choices';
 
+    /**
+     * @var string
+     */
     public const FIELD_EMAIL = 'email';
+    /**
+     * @var string
+     */
     public const FIELD_SALUTATION = 'salutation';
+    /**
+     * @var string
+     */
     public const FIELD_FIRST_NAME = 'first_name';
+    /**
+     * @var string
+     */
     public const FIELD_LAST_NAME = 'last_name';
+    /**
+     * @var string
+     */
     public const FIELD_GENDER = 'gender';
+    /**
+     * @var string
+     */
     public const FIELD_SEND_PASSWORD_TOKEN = 'send_password_token';
+    /**
+     * @var string
+     */
     public const FIELD_ID_CUSTOMER = 'id_customer';
+    /**
+     * @var string
+     */
     public const FIELD_COMPANY = 'company';
+    /**
+     * @var string
+     */
     public const FIELD_PHONE = 'phone';
+    /**
+     * @var string
+     */
     public const FIELD_DATE_OF_BIRTH = 'date_of_birth';
+    /**
+     * @var string
+     */
     public const FIELD_LOCALE = 'locale';
 
     /**

@@ -18,9 +18,21 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class BaseOptionController extends AbstractController
 {
+    /**
+     * @var string
+     */
     public const URL_PARAM_ID_PRODUCT_OPTION_GROUP = 'id-product-option-group';
+    /**
+     * @var string
+     */
     public const URL_PARAM_ACTIVE = 'active';
+    /**
+     * @var string
+     */
     public const URL_PARAM_REDIRECT_URL = 'redirect-url';
+    /**
+     * @var string
+     */
     public const URL_PARAM_TABLE_CONTEXT = 'table-context';
 
     /**

@@ -20,15 +20,39 @@ use Spryker\Client\PriceProductStorage\Dependency\Service\PriceProductStorageToS
  */
 class PriceProductStorageDependencyProvider extends AbstractDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_PRICE_PRODUCT = 'CLIENT_PRICE_PRODUCT';
+    /**
+     * @var string
+     */
     public const CLIENT_STORAGE = 'CLIENT_STORAGE';
+    /**
+     * @var string
+     */
     public const CLIENT_STORE = 'CLIENT_STORE';
 
+    /**
+     * @var string
+     */
     public const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
+    /**
+     * @var string
+     */
     public const SERVICE_PRICE_PRODUCT = 'SERVICE_PRICE_PRODUCT';
 
+    /**
+     * @var string
+     */
     public const PLUGIN_STORAGE_PRICE_DIMENSION = 'PLUGIN_STORAGE_PRICE_DIMENSION';
+    /**
+     * @var string
+     */
     public const PLUGIN_PRICE_PRODUCT_PRICES_EXTRACTOR = 'PLUGIN_PRICE_PRODUCT_PRICES_EXTRACTOR';
+    /**
+     * @var string
+     */
     public const PLUGIN_PRICE_PRODUCT_FILTER_EXPANDER = 'PLUGIN_PRICE_PRODUCT_FILTER_EXPANDER';
 
     /**
@@ -135,7 +159,7 @@ class PriceProductStorageDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @return \Spryker\Client\PriceProductStorageExtension\Dependency\Plugin\PriceProductStoragePriceDimensionPluginInterface[]
+     * @return array<\Spryker\Client\PriceProductStorageExtension\Dependency\Plugin\PriceProductStoragePriceDimensionPluginInterface>
      */
     public function getPriceDimensionStorageReaderPlugins(): array
     {
@@ -157,7 +181,7 @@ class PriceProductStorageDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @return \Spryker\Client\PriceProductStorageExtension\Dependency\Plugin\PriceProductStoragePricesExtractorPluginInterface[]
+     * @return array<\Spryker\Client\PriceProductStorageExtension\Dependency\Plugin\PriceProductStoragePricesExtractorPluginInterface>
      */
     protected function getPriceProductPricesExtractorPlugins(): array
     {
@@ -179,7 +203,7 @@ class PriceProductStorageDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @return \Spryker\Client\PriceProductStorageExtension\Dependency\Plugin\PriceProductFilterExpanderPluginInterface[]
+     * @return array<\Spryker\Client\PriceProductStorageExtension\Dependency\Plugin\PriceProductFilterExpanderPluginInterface>
      */
     protected function getPriceProductFilterExpanderPlugins(): array
     {

@@ -16,7 +16,13 @@ use Spryker\Glue\ShipmentsRestApi\Dependency\Service\ShipmentsRestApiToShipmentS
  */
 class ShipmentsRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const SERVICE_SHIPMENT = 'SERVICE_SHIPMENT';
+    /**
+     * @var string
+     */
     public const PLUGINS_ADDRESS_SOURCE_CHECKER = 'PLUGINS_ADDRESS_SOURCE_CHECKER';
 
     /**
@@ -62,7 +68,7 @@ class ShipmentsRestApiDependencyProvider extends AbstractBundleDependencyProvide
     }
 
     /**
-     * @return \Spryker\Glue\ShipmentsRestApiExtension\Dependency\Plugin\AddressSourceCheckerPluginInterface[]
+     * @return array<\Spryker\Glue\ShipmentsRestApiExtension\Dependency\Plugin\AddressSourceCheckerPluginInterface>
      */
     protected function getAddressSourceCheckerPlugins(): array
     {

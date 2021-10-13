@@ -9,7 +9,13 @@ namespace Spryker\Zed\Development\Business\DependencyTree\DependencyGraph;
 
 interface GraphBuilderInterface
 {
+    /**
+     * @var string
+     */
     public const ENGINE_BUNDLE_FONT_COLOR = 'grey';
+    /**
+     * @var string
+     */
     public const ENGINE_BUNDLE_INFO_TEXT = '<br/><font point-size="8">(engine)</font>';
 
     /**

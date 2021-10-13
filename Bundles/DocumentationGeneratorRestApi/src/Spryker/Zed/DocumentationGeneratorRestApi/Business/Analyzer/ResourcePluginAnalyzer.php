@@ -19,17 +19,50 @@ use Symfony\Component\HttpFoundation\Request;
 
 class ResourcePluginAnalyzer implements ResourcePluginAnalyzerInterface
 {
+    /**
+     * @var string
+     */
     protected const KEY_IS_PROTECTED = 'is_protected';
+    /**
+     * @var string
+     */
     protected const KEY_NAME = 'name';
+    /**
+     * @var string
+     */
     protected const KEY_ID = 'id';
+    /**
+     * @var string
+     */
     protected const KEY_PARENT = 'parent';
+    /**
+     * @var string
+     */
     protected const KEY_PATHS = 'paths';
+    /**
+     * @var string
+     */
     protected const KEY_TAGS = 'tags';
+    /**
+     * @var string
+     */
     protected const KEY_SCHEMAS = 'schemas';
+    /**
+     * @var string
+     */
     protected const KEY_SECURITY_SCHEMES = 'securitySchemes';
+    /**
+     * @var string
+     */
     protected const KEY_PARAMETERS = 'parameters';
 
+    /**
+     * @var string
+     */
     protected const PATTERN_PATH_WITH_PARENT = '/%s/%s%s';
+    /**
+     * @var string
+     */
     protected const PATTERN_PATH_ID = '{%sId}';
 
     /**
@@ -43,7 +76,7 @@ class ResourcePluginAnalyzer implements ResourcePluginAnalyzerInterface
     protected $resourceRouteCollection;
 
     /**
-     * @var \Spryker\Glue\DocumentationGeneratorRestApiExtension\Dependency\Plugin\ResourceRoutePluginsProviderPluginInterface[]
+     * @var array<\Spryker\Glue\DocumentationGeneratorRestApiExtension\Dependency\Plugin\ResourceRoutePluginsProviderPluginInterface>
      */
     protected $resourceRoutesPluginsProviderPlugins;
 
@@ -64,7 +97,7 @@ class ResourcePluginAnalyzer implements ResourcePluginAnalyzerInterface
 
     /**
      * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Processor\HttpMethodProcessorInterface $httpMethodProcessor
-     * @param \Spryker\Glue\DocumentationGeneratorRestApiExtension\Dependency\Plugin\ResourceRoutePluginsProviderPluginInterface[] $resourceRoutesPluginsProviderPlugins
+     * @param array<\Spryker\Glue\DocumentationGeneratorRestApiExtension\Dependency\Plugin\ResourceRoutePluginsProviderPluginInterface> $resourceRoutesPluginsProviderPlugins
      * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\GlueAnnotationAnalyzerInterface $glueAnnotationsAnalyser
      * @param \Spryker\Zed\DocumentationGeneratorRestApi\Dependency\External\DocumentationGeneratorRestApiToTextInflectorInterface $textInflector
      * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Processor\ResourceSchemaNameStorageProcessorInterface $resourceSchemaNameStorageProcessor

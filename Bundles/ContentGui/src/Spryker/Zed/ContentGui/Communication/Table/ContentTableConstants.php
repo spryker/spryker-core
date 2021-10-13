@@ -20,8 +20,20 @@ interface ContentTableConstants
     public const COL_CREATED_AT = SpyContentTableMap::COL_CREATED_AT;
     public const COL_KEY = SpyContentTableMap::COL_KEY;
 
+    /**
+     * @var string
+     */
     public const REQUEST_ID_CONTENT = 'id-content';
+    /**
+     * @var string
+     */
     public const REQUEST_TERM_KEY = 'term-key';
+    /**
+     * @var string
+     */
     public const URL_CONTENT_EDIT = '/content-gui/edit-content';
+    /**
+     * @var string
+     */
     public const COL_ACTIONS = 'actions';
 }

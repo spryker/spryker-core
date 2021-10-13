@@ -49,9 +49,9 @@ class PriceProductOfferBusinessTester extends Actor
     public function getPriceProductOfferByIdProductOffer(int $idProductOffer): PriceProductOfferTransfer
     {
         $priceProductOfferEntity = $this->getPriceProductOfferPropelQuery()
-           ->filterByFkProductOffer($idProductOffer)
-           ->orderByFkPriceProductStore()
-           ->findOne();
+            ->filterByFkProductOffer($idProductOffer)
+            ->orderByFkPriceProductStore()
+            ->findOne();
 
         $priceProductOfferTransfer = (new PriceProductOfferTransfer())->fromArray($priceProductOfferEntity->toArray(), true);
 
@@ -59,7 +59,7 @@ class PriceProductOfferBusinessTester extends Actor
     }
 
     /**
-     * @param mixed[]|null $priceProductOverride
+     * @param array<mixed>|null $priceProductOverride
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer
      */
@@ -69,9 +69,14 @@ class PriceProductOfferBusinessTester extends Actor
         $priceProductTransfer = $this->havePriceProduct($priceProductOverride);
         $priceProductDimensionTransfer = $priceProductTransfer->getPriceDimension();
         $priceProductDimensionTransfer->setIdProductOffer($productOfferTransfer->getIdProductOffer());
+        $priceProductDimensionTransfer->setProductOfferReference($productOfferTransfer->getProductOfferReference());
         $priceProductTransfer->setPriceDimension($priceProductDimensionTransfer);
 
         $this->getFacade()->savePriceProductOfferRelation($priceProductTransfer);
+
+        if (!$priceProductTransfer->getPriceDimension()->getProductOfferReference()) {
+            $priceProductTransfer->getPriceDimension()->setProductOfferReference($productOfferTransfer->getProductOfferReference());
+        }
 
         return $priceProductTransfer;
     }

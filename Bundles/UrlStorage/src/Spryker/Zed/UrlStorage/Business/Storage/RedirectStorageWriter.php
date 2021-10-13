@@ -13,7 +13,13 @@ use Spryker\Zed\UrlStorage\Persistence\UrlStorageQueryContainerInterface;
 
 class RedirectStorageWriter implements RedirectStorageWriterInterface
 {
+    /**
+     * @var string
+     */
     public const ID_URL_REDIRECT = 'id_url_redirect';
+    /**
+     * @var string
+     */
     public const FK_URL_REDIRECT = 'fkUrlRedirect';
 
     /**
@@ -59,7 +65,7 @@ class RedirectStorageWriter implements RedirectStorageWriterInterface
     }
 
     /**
-     * @param int[] $redirectIds
+     * @param array<int> $redirectIds
      *
      * @return void
      */
@@ -110,7 +116,7 @@ class RedirectStorageWriter implements RedirectStorageWriterInterface
     }
 
     /**
-     * @param int[] $redirectIds
+     * @param array<int> $redirectIds
      *
      * @return array
      */
@@ -120,7 +126,7 @@ class RedirectStorageWriter implements RedirectStorageWriterInterface
     }
 
     /**
-     * @param int[] $redirectIds
+     * @param array<int> $redirectIds
      *
      * @return array
      */

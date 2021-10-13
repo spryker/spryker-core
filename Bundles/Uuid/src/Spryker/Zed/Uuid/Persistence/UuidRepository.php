@@ -15,6 +15,9 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
  */
 class UuidRepository extends AbstractRepository implements UuidRepositoryInterface
 {
+    /**
+     * @var string
+     */
     protected const COLUMN_UUID = 'uuid';
 
     /**

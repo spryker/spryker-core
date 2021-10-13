@@ -15,14 +15,20 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ViewWarehouseController extends AbstractController
 {
+    /**
+     * @var string
+     */
     public const PARAM_ID_STOCK = 'id-stock';
 
+    /**
+     * @var string
+     */
     protected const REDIRECT_URL = '/stock-gui/warehouse/list';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function indexAction(Request $request)
     {

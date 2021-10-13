@@ -16,6 +16,9 @@ use Spryker\Zed\ShoppingList\Communication\Plugin\ReadShoppingListPermissionPlug
 
 class ShoppingListConfig extends AbstractBundleConfig
 {
+    /**
+     * @var string
+     */
     protected const DEFAULT_SHOPPING_LIST_NAME = 'Shopping List';
 
     /**
@@ -31,7 +34,7 @@ class ShoppingListConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return \Generated\Shared\Transfer\ShoppingListPermissionGroupTransfer[]
+     * @return array<\Generated\Shared\Transfer\ShoppingListPermissionGroupTransfer>
      */
     public function getShoppingListPermissionGroups(): array
     {
@@ -39,6 +42,19 @@ class ShoppingListConfig extends AbstractBundleConfig
             $this->getReadOnlyPermissionGroup(),
             $this->getFullAccessPermissionGroup(),
         ];
+    }
+
+    /**
+     * Specification:
+     * - Controls whether shopping lists overview loads all shopping lists.
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function isShoppingListOverviewWithShoppingLists(): bool
+    {
+        return true;
     }
 
     /**

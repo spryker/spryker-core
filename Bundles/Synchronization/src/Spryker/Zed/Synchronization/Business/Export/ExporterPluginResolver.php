@@ -13,11 +13,17 @@ use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataRe
 
 class ExporterPluginResolver implements ExporterPluginResolverInterface
 {
+    /**
+     * @var string
+     */
     public const REPOSITORY_SYNCHRONIZATION_PLUGINS = 'repository';
+    /**
+     * @var string
+     */
     public const QUERY_CONTAINER_SYNCHRONIZATION_PLUGINS = 'query_container';
 
     /**
-     * @var \Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataPluginInterface[]
+     * @var array<\Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataPluginInterface>
      */
     protected $synchronizationDataPlugins;
 
@@ -32,7 +38,7 @@ class ExporterPluginResolver implements ExporterPluginResolverInterface
     protected $repositoryExporter;
 
     /**
-     * @param \Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataPluginInterface[] $synchronizationDataPlugins
+     * @param array<\Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataPluginInterface> $synchronizationDataPlugins
      * @param \Spryker\Zed\Synchronization\Business\Export\QueryContainerExporter $queryContainerExporter
      * @param \Spryker\Zed\Synchronization\Business\Export\RepositoryExporter $repositoryExporter
      */
@@ -49,7 +55,7 @@ class ExporterPluginResolver implements ExporterPluginResolverInterface
     /**
      * @deprecated Use {@link \Spryker\Zed\Synchronization\Business\Export\ExporterPluginResolver::executeResolvedPluginsBySourcesWithIds()} instead.
      *
-     * @param string[] $resources
+     * @param array<string> $resources
      *
      * @return void
      */
@@ -61,8 +67,8 @@ class ExporterPluginResolver implements ExporterPluginResolverInterface
     }
 
     /**
-     * @param string[] $resources
-     * @param int[] $ids
+     * @param array<string> $resources
+     * @param array<int> $ids
      *
      * @return void
      */
@@ -74,7 +80,7 @@ class ExporterPluginResolver implements ExporterPluginResolverInterface
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getAvailableResourceNames(): array
     {
@@ -89,7 +95,7 @@ class ExporterPluginResolver implements ExporterPluginResolverInterface
     }
 
     /**
-     * @param string[] $resources
+     * @param array<string> $resources
      *
      * @return array
      */
@@ -110,10 +116,10 @@ class ExporterPluginResolver implements ExporterPluginResolverInterface
     }
 
     /**
-     * @param string[] $resources
-     * @param \Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataPluginInterface[][] $synchronizationDataPlugins
+     * @param array<string> $resources
+     * @param array<\Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataPluginInterface[]> $synchronizationDataPlugins
      *
-     * @return \Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataPluginInterface[][]
+     * @return array<\Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataPluginInterface[]>
      */
     protected function filterEffectivePlugins(array $resources, array $synchronizationDataPlugins): array
     {
@@ -132,9 +138,9 @@ class ExporterPluginResolver implements ExporterPluginResolverInterface
     }
 
     /**
-     * @param \Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataPluginInterface[] $synchronizationDataPlugins
+     * @param array<\Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataPluginInterface> $synchronizationDataPlugins
      *
-     * @return \Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataPluginInterface[][]
+     * @return array<\Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataPluginInterface[]>
      */
     protected function mapPluginsByResourceAndQueueName(array $synchronizationDataPlugins): array
     {
@@ -147,7 +153,7 @@ class ExporterPluginResolver implements ExporterPluginResolverInterface
     }
 
     /**
-     * @param \Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataPluginInterface[]|\Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataBulkRepositoryPluginInterface[] $effectivePlugins
+     * @param array<\Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataPluginInterface|\Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataBulkRepositoryPluginInterface> $effectivePlugins
      * @param array $pluginsPerExporter
      *
      * @return array

@@ -11,6 +11,10 @@ use Symfony\Component\Form\DataTransformerInterface;
 
 class StringToArrayTransformer implements DataTransformerInterface
 {
+    /**
+     * @phpstan-var non-empty-string
+     * @var string
+     */
     public const VALUE_SEPARATOR = ',';
 
     /**

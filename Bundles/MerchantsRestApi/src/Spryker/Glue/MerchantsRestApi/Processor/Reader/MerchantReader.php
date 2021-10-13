@@ -9,6 +9,7 @@ namespace Spryker\Glue\MerchantsRestApi\Processor\Reader;
 
 use Generated\Shared\Transfer\MerchantSearchCollectionTransfer;
 use Generated\Shared\Transfer\MerchantSearchRequestTransfer;
+use Generated\Shared\Transfer\MerchantStorageCriteriaTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\MerchantsRestApi\Dependency\Client\MerchantsRestApiToMerchantSearchClientInterface;
@@ -20,16 +21,19 @@ class MerchantReader implements MerchantReaderInterface
 {
     /**
      * @uses \Spryker\Client\MerchantSearch\Plugin\Elasticsearch\Query\PaginatedMerchantSearchQueryExpanderPlugin::PARAMETER_OFFSET
+     * @var string
      */
     protected const PARAMETER_OFFSET = 'offset';
 
     /**
      * @uses \Spryker\Client\MerchantSearch\Plugin\Elasticsearch\Query\PaginatedMerchantSearchQueryExpanderPlugin::PARAMETER_LIMIT
+     * @var string
      */
     protected const PARAMETER_LIMIT = 'limit';
 
     /**
      * @uses \Spryker\Client\MerchantSearch\Plugin\Elasticsearch\ResultFormatter\MerchantSearchResultFormatterPlugin::NAME
+     * @var string
      */
     protected const KEY_MERCHANT_SEARCH_COLLECTION = 'MerchantSearchCollection';
 
@@ -72,14 +76,16 @@ class MerchantReader implements MerchantReaderInterface
     }
 
     /**
-     * @param string[] $merchantReferences
+     * @param array<string> $merchantReferences
      * @param string $localeName
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>
      */
     public function getMerchantsResources(array $merchantReferences, string $localeName): array
     {
-        $merchantStorageTransfers = $this->merchantStorageClient->getByMerchantReferences($merchantReferences);
+        $merchantStorageTransfers = $this->merchantStorageClient->get(
+            (new MerchantStorageCriteriaTransfer())->setMerchantReferences($merchantReferences)
+        );
 
         $translatedMerchantStorageTransfers = $this->merchantTranslator->translateMerchantStorageTransfers(
             $merchantStorageTransfers,
@@ -100,7 +106,9 @@ class MerchantReader implements MerchantReaderInterface
          * @var string $merchantReference
          */
         $merchantReference = $restRequest->getResource()->getId();
-        $merchantStorageTransfer = $this->merchantStorageClient->findOneByMerchantReference($merchantReference);
+        $merchantStorageTransfer = $this->merchantStorageClient->findOne(
+            (new MerchantStorageCriteriaTransfer())->addMerchantReference($merchantReference)
+        );
 
         if (!$merchantStorageTransfer) {
             return $this->merchantRestResponseBuilder->createMerchantNotFoundErrorResponse();
@@ -132,9 +140,11 @@ class MerchantReader implements MerchantReaderInterface
         /** @var \Generated\Shared\Transfer\MerchantSearchCollectionTransfer $merchantSearchCollectionTransfer */
         $merchantSearchCollectionTransfer = $searchResult[static::KEY_MERCHANT_SEARCH_COLLECTION];
 
-        $merchantStorageTransfers = $this->merchantStorageClient->get(
+        $merchantStorageCriteriaTransfer = (new MerchantStorageCriteriaTransfer())->setMerchantIds(
             $this->extractMerchantIds($merchantSearchCollectionTransfer)
         );
+
+        $merchantStorageTransfers = $this->merchantStorageClient->get($merchantStorageCriteriaTransfer);
 
         $merchantStorageTransfers = $this->merchantTranslator->translateMerchantStorageTransfers(
             $merchantStorageTransfers,
@@ -152,7 +162,7 @@ class MerchantReader implements MerchantReaderInterface
     /**
      * @param \Generated\Shared\Transfer\MerchantSearchCollectionTransfer $merchantSearchCollectionTransfer
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function extractMerchantIds(MerchantSearchCollectionTransfer $merchantSearchCollectionTransfer): array
     {

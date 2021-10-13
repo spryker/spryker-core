@@ -14,13 +14,17 @@ use Spryker\Glue\ShipmentsRestApi\ShipmentsRestApiConfig;
 
 class ShipmentMethodSorter implements ShipmentMethodSorterInterface
 {
+    /**
+     * @phpstan-var non-empty-string
+     * @var string
+     */
     protected const SORT_VALUE_DELIMITER = '.';
 
     /**
-     * @param \Generated\Shared\Transfer\RestShipmentMethodsAttributesTransfer[] $restShipmentMethodAttributeTransfers
+     * @param array<\Generated\Shared\Transfer\RestShipmentMethodsAttributesTransfer> $restShipmentMethodAttributeTransfers
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
-     * @return \Generated\Shared\Transfer\RestShipmentMethodsAttributesTransfer[]
+     * @return array<\Generated\Shared\Transfer\RestShipmentMethodsAttributesTransfer>
      */
     public function sortRestShipmentMethodsAttributesTransfers(
         array $restShipmentMethodAttributeTransfers,
@@ -83,10 +87,10 @@ class ShipmentMethodSorter implements ShipmentMethodSorterInterface
     }
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\SortInterface[] $sorts
+     * @param array<\Spryker\Glue\GlueApplication\Rest\Request\Data\SortInterface> $sorts
      * @param string $resource
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\Request\Data\SortInterface[]
+     * @return array<\Spryker\Glue\GlueApplication\Rest\Request\Data\SortInterface>
      */
     protected function filterSortsByResource(array $sorts, string $resource): array
     {

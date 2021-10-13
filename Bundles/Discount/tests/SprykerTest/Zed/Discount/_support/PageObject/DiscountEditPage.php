@@ -11,6 +11,9 @@ use SprykerTest\Zed\Discount\DiscountPresentationTester;
 
 class DiscountEditPage
 {
+    /**
+     * @var string
+     */
     public const URL = '/discount/index/edit';
 
     /**
@@ -34,7 +37,7 @@ class DiscountEditPage
     }
 
     /**
-     * @param int|string $identifier
+     * @param string|int $identifier
      *
      * @return void
      */
@@ -44,7 +47,7 @@ class DiscountEditPage
     }
 
     /**
-     * @param int|string $identifier
+     * @param string|int $identifier
      *
      * @return string
      */

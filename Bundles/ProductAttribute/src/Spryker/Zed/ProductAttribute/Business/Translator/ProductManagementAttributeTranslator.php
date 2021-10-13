@@ -56,9 +56,9 @@ class ProductManagementAttributeTranslator implements ProductManagementAttribute
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ProductManagementAttributeTransfer[] $productManagementAttributeTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ProductManagementAttributeTransfer> $productManagementAttributeTransfers
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ProductManagementAttributeTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\ProductManagementAttributeTransfer>
      */
     public function translateProductManagementAttributes(ArrayObject $productManagementAttributeTransfers): ArrayObject
     {
@@ -86,8 +86,8 @@ class ProductManagementAttributeTranslator implements ProductManagementAttribute
 
     /**
      * @param \Generated\Shared\Transfer\ProductManagementAttributeTransfer $productManagementAttributeTransfer
-     * @param \Generated\Shared\Transfer\LocaleTransfer[] $localeTransfers
-     * @param string[][] $translationsByLocaleNameAndGlossaryKey
+     * @param array<\Generated\Shared\Transfer\LocaleTransfer> $localeTransfers
+     * @param array<string[]> $translationsByLocaleNameAndGlossaryKey
      *
      * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer
      */
@@ -111,9 +111,9 @@ class ProductManagementAttributeTranslator implements ProductManagementAttribute
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ProductManagementAttributeTransfer[] $productManagementAttributeTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ProductManagementAttributeTransfer> $productManagementAttributeTransfers
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function prepareGlossaryKeys(ArrayObject $productManagementAttributeTransfers): array
     {

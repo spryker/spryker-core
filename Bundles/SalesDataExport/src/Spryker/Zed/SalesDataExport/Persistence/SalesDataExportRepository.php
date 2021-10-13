@@ -23,13 +23,34 @@ use Spryker\Zed\SalesDataExport\Persistence\Propel\Mapper\SalesOrderMapper;
  */
 class SalesDataExportRepository extends AbstractRepository implements SalesDataExportRepositoryInterface
 {
+    /**
+     * @var string
+     */
     public const FILTER_CRITERIA_KEY_STORE_NAME = 'store_name';
+    /**
+     * @var string
+     */
     public const FILTER_CRITERIA_KEY_ORDER_CREATED_AT = 'order_created_at';
+    /**
+     * @var string
+     */
     public const FILTER_CRITERIA_KEY_ORDER_UPDATED_AT = 'order_updated_at';
+    /**
+     * @var string
+     */
     public const FILTER_CRITERIA_PARAM_DATE_FROM = 'from';
+    /**
+     * @var string
+     */
     public const FILTER_CRITERIA_PARAM_DATE_TO = 'to';
 
+    /**
+     * @var string
+     */
     public const PROPEL_CRITERIA_BETWEEN_MIN = 'min';
+    /**
+     * @var string
+     */
     public const PROPEL_CRITERIA_BETWEEN_MAX = 'max';
 
     /**
@@ -314,7 +335,7 @@ class SalesDataExportRepository extends AbstractRepository implements SalesDataE
      *
      * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer $dataExportConfigurationTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getSalesOrderSelectedColumns(DataExportConfigurationTransfer $dataExportConfigurationTransfer): array
     {
@@ -330,7 +351,7 @@ class SalesDataExportRepository extends AbstractRepository implements SalesDataE
      *
      * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer $dataExportConfigurationTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getSalesOrderItemSelectedColumns(DataExportConfigurationTransfer $dataExportConfigurationTransfer): array
     {
@@ -346,7 +367,7 @@ class SalesDataExportRepository extends AbstractRepository implements SalesDataE
      *
      * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer $dataExportConfigurationTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getSalesExpenseSelectedColumns(DataExportConfigurationTransfer $dataExportConfigurationTransfer): array
     {
@@ -358,9 +379,9 @@ class SalesDataExportRepository extends AbstractRepository implements SalesDataE
     }
 
     /**
-     * @param int[] $salesOrderIds
+     * @param array<int> $salesOrderIds
      *
-     * @return \Generated\Shared\Transfer\CommentTransfer[]
+     * @return array<\Generated\Shared\Transfer\CommentTransfer>
      */
     public function getCommentsByOrderId(array $salesOrderIds): array
     {
@@ -382,7 +403,7 @@ class SalesDataExportRepository extends AbstractRepository implements SalesDataE
      * - Compensates magic functionality of propel, so single-column select returns the same format as a multi-columns select
      *
      * @param array $rows
-     * @param string[] $selectedColumns
+     * @param array<string> $selectedColumns
      *
      * @return array
      */

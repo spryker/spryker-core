@@ -15,7 +15,13 @@ use Spryker\Shared\Search\SearchConfig;
 
 class RatingFacetConfigTransferBuilderPlugin extends AbstractPlugin implements FacetConfigTransferBuilderPluginInterface
 {
+    /**
+     * @var string
+     */
     public const NAME = 'rating';
+    /**
+     * @var string
+     */
     public const PARAMETER_NAME = 'rating';
 
     /**

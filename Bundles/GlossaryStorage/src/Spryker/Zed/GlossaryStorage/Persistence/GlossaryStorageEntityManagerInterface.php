@@ -10,7 +10,7 @@ namespace Spryker\Zed\GlossaryStorage\Persistence;
 interface GlossaryStorageEntityManagerInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\SpyGlossaryStorageEntityTransfer[] $glossaryStorageEntityTransfers
+     * @param array<\Generated\Shared\Transfer\SpyGlossaryStorageEntityTransfer> $glossaryStorageEntityTransfers
      *
      * @return void
      */

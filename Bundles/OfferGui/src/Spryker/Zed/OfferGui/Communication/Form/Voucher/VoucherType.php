@@ -19,7 +19,13 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 class VoucherType extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const FIELD_VOUCHER_CODE = 'voucherCode';
+    /**
+     * @var string
+     */
     public const FIELD_AMOUNT = 'amount';
 
     /**

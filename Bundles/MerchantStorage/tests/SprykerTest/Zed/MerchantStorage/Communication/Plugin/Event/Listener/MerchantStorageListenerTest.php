@@ -37,6 +37,12 @@ class MerchantStorageListenerTest extends Unit
     protected $tester;
 
     /**
+     * @uses \Spryker\Zed\Merchant\MerchantConfig::STATUS_APPROVED
+     * @var string
+     */
+    protected const MERCHANT_STATUS_APPROVED = 'approved';
+
+    /**
      * @return void
      */
     protected function setUp(): void
@@ -60,6 +66,7 @@ class MerchantStorageListenerTest extends Unit
         $merchantTransfer = $this->tester->haveMerchant([
             MerchantTransfer::IS_ACTIVE => true,
             MerchantTransfer::STORE_RELATION => $storeRelationTransfer->toArray(),
+            MerchantTransfer::STATUS => static::MERCHANT_STATUS_APPROVED,
         ]);
 
         // Act
@@ -87,14 +94,17 @@ class MerchantStorageListenerTest extends Unit
         $merchantTransfer1 = $this->tester->haveMerchant([
             MerchantTransfer::IS_ACTIVE => true,
             MerchantTransfer::STORE_RELATION => $storeRelationTransfer->toArray(),
+            MerchantTransfer::STATUS => static::MERCHANT_STATUS_APPROVED,
         ]);
         $merchantTransfer2 = $this->tester->haveMerchant([
             MerchantTransfer::IS_ACTIVE => true,
             MerchantTransfer::STORE_RELATION => $storeRelationTransfer->toArray(),
+            MerchantTransfer::STATUS => static::MERCHANT_STATUS_APPROVED,
         ]);
         $merchantTransfer3 = $this->tester->haveMerchant([
             MerchantTransfer::IS_ACTIVE => true,
             MerchantTransfer::STORE_RELATION => $storeRelationTransfer->toArray(),
+            MerchantTransfer::STATUS => static::MERCHANT_STATUS_APPROVED,
         ]);
 
         $eventTransfers = [

@@ -18,10 +18,10 @@ interface UniqueOrderItemsExpanderPluginInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemsTransfers
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemsTransfers
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     public function expand(array $itemsTransfers, OrderTransfer $orderTransfer): array;
 }

@@ -13,12 +13,12 @@ use Generated\Shared\Transfer\ProductListUsedByTableTransfer;
 class ProductListUsedByTableProvider implements ProductListUsedByTableProviderInterface
 {
     /**
-     * @var \Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListUsedByTableExpanderPluginInterface[]
+     * @var array<\Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListUsedByTableExpanderPluginInterface>
      */
     protected $productListUsedByTableExpanderPlugins;
 
     /**
-     * @param \Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListUsedByTableExpanderPluginInterface[] $productListUsedByTableExpanderPlugins
+     * @param array<\Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListUsedByTableExpanderPluginInterface> $productListUsedByTableExpanderPlugins
      */
     public function __construct(array $productListUsedByTableExpanderPlugins)
     {

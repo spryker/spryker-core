@@ -8,9 +8,11 @@
 namespace Spryker\Zed\Product\Persistence\Mapper;
 
 use Generated\Shared\Transfer\ProductAbstractTransfer;
+use Generated\Shared\Transfer\ProductConcreteCollectionTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
+use Propel\Runtime\Collection\Collection;
 
 interface ProductMapperInterface
 {
@@ -68,4 +70,26 @@ interface ProductMapperInterface
         SpyProductAbstract $productAbstractEntity,
         ProductAbstractTransfer $productAbstractTransfer
     ): ProductAbstractTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     * @param \Orm\Zed\Product\Persistence\SpyProduct $productEntity
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProduct
+     */
+    public function mapProductConcreteTransferToProductEntity(
+        ProductConcreteTransfer $productConcreteTransfer,
+        SpyProduct $productEntity
+    ): SpyProduct;
+
+    /**
+     * @param \Propel\Runtime\Collection\Collection $productEntityCollection
+     * @param \Generated\Shared\Transfer\ProductConcreteCollectionTransfer $productConcreteCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteCollectionTransfer
+     */
+    public function mapProductEntityCollectionPrimaryKeysToProductConcreteCollectionTransfer(
+        Collection $productEntityCollection,
+        ProductConcreteCollectionTransfer $productConcreteCollectionTransfer
+    ): ProductConcreteCollectionTransfer;
 }

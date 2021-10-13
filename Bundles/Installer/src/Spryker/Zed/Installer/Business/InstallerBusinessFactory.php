@@ -16,7 +16,7 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 class InstallerBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\Installer\Dependency\Plugin\InstallerPluginInterface[]
+     * @return array<\Spryker\Zed\Installer\Dependency\Plugin\InstallerPluginInterface>
      */
     public function getInstallerPlugins()
     {

@@ -210,7 +210,7 @@ class ProductDataHelper extends Module
 
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     * @param \Generated\Shared\Transfer\LocalizedAttributesTransfer[] $localizedAttributes
+     * @param array<\Generated\Shared\Transfer\LocalizedAttributesTransfer> $localizedAttributes
      *
      * @return void
      */
@@ -225,7 +225,7 @@ class ProductDataHelper extends Module
 
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     * @param \Generated\Shared\Transfer\LocalizedAttributesTransfer[] $localizedAttributes
+     * @param array<\Generated\Shared\Transfer\LocalizedAttributesTransfer> $localizedAttributes
      *
      * @return void
      */

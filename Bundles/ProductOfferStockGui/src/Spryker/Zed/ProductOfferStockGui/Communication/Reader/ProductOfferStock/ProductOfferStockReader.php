@@ -21,13 +21,13 @@ class ProductOfferStockReader implements ProductOfferStockReaderInterface
     protected $productOfferStockFacade;
 
     /**
-     * @var \Spryker\Zed\ProductOfferStockGuiExtension\Dependeency\Plugin\ProductOfferStockTableExpanderPluginInterface[]
+     * @var array<\Spryker\Zed\ProductOfferStockGuiExtension\Dependeency\Plugin\ProductOfferStockTableExpanderPluginInterface>
      */
     protected $productOfferStockTableExpanderPlugins;
 
     /**
      * @param \Spryker\Zed\ProductOfferStockGui\Dependency\Facade\ProductOfferStockGuiToProductOfferStockFacadeInterface $productOfferStockFacade
-     * @param \Spryker\Zed\ProductOfferStockGuiExtension\Dependeency\Plugin\ProductOfferStockTableExpanderPluginInterface[] $productOfferStockTableExpanderPlugins
+     * @param array<\Spryker\Zed\ProductOfferStockGuiExtension\Dependeency\Plugin\ProductOfferStockTableExpanderPluginInterface> $productOfferStockTableExpanderPlugins
      */
     public function __construct(
         ProductOfferStockGuiToProductOfferStockFacadeInterface $productOfferStockFacade,
@@ -53,16 +53,20 @@ class ProductOfferStockReader implements ProductOfferStockReaderInterface
         foreach ($productOfferTransfer->getStores() as $storeTransfer) {
             $productOfferStockRequestTransfer->setStore($storeTransfer);
 
-            $productOfferStockTransfer = $this->productOfferStockFacade
-                ->getProductOfferStock($productOfferStockRequestTransfer);
+            $productOfferStockTransfers = $this->productOfferStockFacade
+                ->getProductOfferStocks($productOfferStockRequestTransfer);
+            foreach ($productOfferStockTransfers as $productOfferStockTransfer) {
+                /** @var \Generated\Shared\Transfer\StockTransfer $stockTransfer */
+                $stockTransfer = $productOfferStockTransfer->getStock();
 
-            $productOfferStocks[] = [
-                'name' => $productOfferStockTransfer->getStock()->getName(),
-                'quantity' => $productOfferStockTransfer->getQuantity(),
-                'isNeverOutOfStock' => $productOfferStockTransfer->getIsNeverOutOfStock(),
-                'storeName' => $storeTransfer->getName(),
-                'additionalColumns' => $this->executeProductOfferStockTableExpanderPlugins($productOfferStockTransfer, $storeTransfer),
-            ];
+                $productOfferStocks[] = [
+                    'name' => $stockTransfer->getName(),
+                    'quantity' => $productOfferStockTransfer->getQuantity(),
+                    'isNeverOutOfStock' => $productOfferStockTransfer->getIsNeverOutOfStock(),
+                    'storeName' => $storeTransfer->getName(),
+                    'additionalColumns' => $this->executeProductOfferStockTableExpanderPlugins($productOfferStockTransfer, $storeTransfer),
+                ];
+            }
         }
 
         return [

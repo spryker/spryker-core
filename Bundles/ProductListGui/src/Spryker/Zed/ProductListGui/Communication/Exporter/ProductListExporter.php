@@ -15,7 +15,13 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class ProductListExporter implements ProductListExporterInterface
 {
+    /**
+     * @var string
+     */
     protected const FILE_HEADER = 'Sku';
+    /**
+     * @var string
+     */
     protected const FORMAT_FILE_NAME = '%s.csv';
 
     /**

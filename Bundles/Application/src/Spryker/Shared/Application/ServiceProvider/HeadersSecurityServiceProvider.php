@@ -19,22 +19,22 @@ use Symfony\Component\HttpKernel\KernelEvents;
 class HeadersSecurityServiceProvider implements ServiceProviderInterface
 {
     /**
-     * @const string
+     * @var string
      */
     public const HEADER_X_FRAME_OPTIONS = 'X-Frame-Options';
 
     /**
-     * @const string
+     * @var string
      */
     public const HEADER_CONTENT_SECURITY_POLICY = 'Content-Security-Policy';
 
     /**
-     * @const string
+     * @var string
      */
     public const HEADER_X_CONTENT_TYPE_OPTIONS = 'X-Content-Type-Options';
 
     /**
-     * @const string
+     * @var string
      */
     public const HEADER_X_XSS_PROTECTION = 'X-XSS-Protection';
 

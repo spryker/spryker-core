@@ -18,12 +18,30 @@ use Spryker\Zed\ProductOffer\Dependency\Facade\ProductOfferToStoreFacadeBridge;
  */
 class ProductOfferDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_MESSENGER = 'FACADE_MESSENGER';
+    /**
+     * @var string
+     */
     public const FACADE_STORE = 'FACADE_STORE';
+    /**
+     * @var string
+     */
     public const PROPEL_QUERY_STORE = 'PROPEL_QUERY_STORE';
 
+    /**
+     * @var string
+     */
     public const PLUGINS_PRODUCT_OFFER_POST_CREATE = 'PLUGINS_PRODUCT_OFFER_POST_CREATE';
+    /**
+     * @var string
+     */
     public const PLUGINS_PRODUCT_OFFER_POST_UPDATE = 'PLUGINS_PRODUCT_OFFER_POST_UPDATE';
+    /**
+     * @var string
+     */
     public const PLUGINS_PRODUCT_OFFER_EXPANDER = 'PLUGINS_PRODUCT_OFFER_EXPANDER';
 
     /**
@@ -143,7 +161,7 @@ class ProductOfferDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\ProductOfferExtension\Dependency\Plugin\ProductOfferPostCreatePluginInterface[]
+     * @return array<\Spryker\Zed\ProductOfferExtension\Dependency\Plugin\ProductOfferPostCreatePluginInterface>
      */
     protected function getProductOfferPostCreatePlugins(): array
     {
@@ -151,7 +169,7 @@ class ProductOfferDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\ProductOfferExtension\Dependency\Plugin\ProductOfferPostUpdatePluginInterface[]
+     * @return array<\Spryker\Zed\ProductOfferExtension\Dependency\Plugin\ProductOfferPostUpdatePluginInterface>
      */
     protected function getProductOfferPostUpdatePlugins(): array
     {
@@ -159,7 +177,7 @@ class ProductOfferDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\ProductOfferExtension\Dependency\Plugin\ProductOfferExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\ProductOfferExtension\Dependency\Plugin\ProductOfferExpanderPluginInterface>
      */
     protected function getProductOfferExpanderPlugins(): array
     {

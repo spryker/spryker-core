@@ -23,6 +23,9 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
  */
 class CmsBlockQueryContainer extends AbstractQueryContainer implements CmsBlockQueryContainerInterface
 {
+    /**
+     * @var string
+     */
     public const COLUMN_TEMPLATE_NAME = 'template_name';
 
     /**
@@ -220,7 +223,7 @@ class CmsBlockQueryContainer extends AbstractQueryContainer implements CmsBlockQ
      * @api
      *
      * @param int $idCmsBlock
-     * @param int[] $idStores
+     * @param array<int> $idStores
      *
      * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockStoreQuery
      */

@@ -29,6 +29,6 @@ class ProductBundleToStockQueryContainerBridge implements ProductBundleToStockQu
      */
     public function queryStockByProducts($idProduct)
     {
-         return $this->stockQueryContainer->queryStockByProducts($idProduct);
+        return $this->stockQueryContainer->queryStockByProducts($idProduct);
     }
 }

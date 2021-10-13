@@ -15,6 +15,9 @@ use Spryker\Shared\GuiTable\Dependency\Service\GuiTableToUtilDateTimeServiceInte
 
 class DataResponseFormatter implements DataResponseFormatterInterface
 {
+    /**
+     * @var string
+     */
     protected const KEY_DATA_RESPONSE_ARRAY_DATA = 'data';
 
     /**
@@ -34,7 +37,7 @@ class DataResponseFormatter implements DataResponseFormatterInterface
      * @param \Generated\Shared\Transfer\GuiTableDataResponseTransfer $guiTableDataResponseTransfer
      * @param \Generated\Shared\Transfer\GuiTableConfigurationTransfer $guiTableConfigurationTransfer
      *
-     * @return mixed[]
+     * @return array<mixed>
      */
     public function formatGuiTableDataResponse(
         GuiTableDataResponseTransfer $guiTableDataResponseTransfer,
@@ -52,10 +55,10 @@ class DataResponseFormatter implements DataResponseFormatterInterface
     }
 
     /**
-     * @param mixed[] $guiTableDataResponseArray
+     * @param array<mixed> $guiTableDataResponseArray
      * @param \Generated\Shared\Transfer\GuiTableConfigurationTransfer $guiTableConfigurationTransfer
      *
-     * @return mixed[]
+     * @return array<mixed>
      */
     protected function formatValues(
         array $guiTableDataResponseArray,
@@ -81,13 +84,13 @@ class DataResponseFormatter implements DataResponseFormatterInterface
     /**
      * @param \Generated\Shared\Transfer\GuiTableConfigurationTransfer $guiTableConfigurationTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getIndexedColumnTypesByColumnIds(GuiTableConfigurationTransfer $guiTableConfigurationTransfer): array
     {
         $indexedColumnTypes = [];
         foreach ($guiTableConfigurationTransfer->getColumns() as $guiTableColumnConfigurationTransfer) {
-            $indexedColumnTypes[$guiTableColumnConfigurationTransfer->getId()] = $guiTableColumnConfigurationTransfer->getType();
+            $indexedColumnTypes[$guiTableColumnConfigurationTransfer->getId()] = $guiTableColumnConfigurationTransfer->getTypeOrFail();
         }
 
         return $indexedColumnTypes;

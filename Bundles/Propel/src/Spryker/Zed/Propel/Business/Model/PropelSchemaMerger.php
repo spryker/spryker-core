@@ -20,10 +20,22 @@ use Symfony\Component\Finder\SplFileInfo;
 
 class PropelSchemaMerger implements PropelSchemaMergerInterface
 {
+    /**
+     * @var int
+     */
     protected const RANDOM_STRING_LENGTH = 32;
+    /**
+     * @var string
+     */
     protected const PATTERN_ANONYMOUS_ELEMENT = 'anonymous_%s';
 
+    /**
+     * @var string
+     */
     protected const SOURCE_CORE = 'core';
+    /**
+     * @var string
+     */
     protected const SOURCE_PROJECT = 'project';
 
     /**
@@ -57,7 +69,7 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
     }
 
     /**
-     * @param \Symfony\Component\Finder\SplFileInfo[] $schemaFiles
+     * @param array<\Symfony\Component\Finder\SplFileInfo> $schemaFiles
      *
      * @throws \Spryker\Zed\Propel\Business\Exception\SchemaMergeException
      *
@@ -77,7 +89,7 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
     }
 
     /**
-     * @param \Symfony\Component\Finder\SplFileInfo[] $schemaFiles
+     * @param array<\Symfony\Component\Finder\SplFileInfo> $schemaFiles
      *
      * @throws \Spryker\Zed\Propel\Business\Exception\SchemaMergeException
      *
@@ -161,9 +173,9 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
     }
 
     /**
-     * @param \Symfony\Component\Finder\SplFileInfo[] $schemaFiles
+     * @param array<\Symfony\Component\Finder\SplFileInfo> $schemaFiles
      *
-     * @return \SimpleXMLElement[]|\ArrayObject
+     * @return \ArrayObject<int, \SimpleXMLElement>
      */
     private function createSchemaXmlElements(array $schemaFiles)
     {
@@ -193,7 +205,7 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
 
     /**
      * @param \SimpleXMLElement $mergeTargetXmlElement
-     * @param \SimpleXMLElement[]|\ArrayObject $schemaXmlElements
+     * @param \ArrayObject<int, \SimpleXMLElement> $schemaXmlElements
      *
      * @return string
      */
@@ -331,7 +343,7 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
     /**
      * @param \SimpleXMLElement $toXmlElement
      *
-     * @return \ArrayObject|\SimpleXMLElement[]
+     * @return \ArrayObject<int, \SimpleXMLElement>
      */
     private function retrieveToXmlElements(SimpleXMLElement $toXmlElement)
     {

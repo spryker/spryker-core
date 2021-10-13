@@ -15,7 +15,13 @@ use Propel\Runtime\Collection\Collection;
 
 class ProductAlternativeMapper implements ProductAlternativeMapperInterface
 {
+    /**
+     * @var string
+     */
     public const PRODUCT_TYPE_ABSTRACT = 'Abstract';
+    /**
+     * @var string
+     */
     public const PRODUCT_TYPE_CONCRETE = 'Concrete';
 
     /**

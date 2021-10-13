@@ -18,9 +18,16 @@ class ProductConcreteReviewResourceRelationshipExpander implements ProductConcre
 {
     /**
      * @uses \Spryker\Client\ProductStorage\Mapper\ProductStorageToProductConcreteTransferDataMapper::ID_PRODUCT_ABSTRACT
+     * @var string
      */
     protected const KEY_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
+    /**
+     * @var string
+     */
     protected const KEY_SKU = 'sku';
+    /**
+     * @var string
+     */
     protected const PRODUCT_MAPPING_TYPE = 'sku';
 
     /**
@@ -54,7 +61,7 @@ class ProductConcreteReviewResourceRelationshipExpander implements ProductConcre
     }
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
+     * @param array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface> $resources
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return void
@@ -95,7 +102,7 @@ class ProductConcreteReviewResourceRelationshipExpander implements ProductConcre
      * @param int $idProductAbstract
      * @param array $productConcreteDataCollection
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $resource
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $productReviewsRestResources
+     * @param array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface> $productReviewsRestResources
      *
      * @return void
      */
@@ -122,9 +129,9 @@ class ProductConcreteReviewResourceRelationshipExpander implements ProductConcre
     }
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
+     * @param array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface> $resources
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getAllSkus(array $resources): array
     {
@@ -148,7 +155,7 @@ class ProductConcreteReviewResourceRelationshipExpander implements ProductConcre
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $resource
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $productReviewsRestResources
+     * @param array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface> $productReviewsRestResources
      *
      * @return void
      */

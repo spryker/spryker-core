@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\MerchantUserTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\UserCriteriaTransfer;
 use Generated\Shared\Transfer\UserTransfer;
-use Spryker\Zed\MerchantUser\Business\AclGroup\AclGroupAdderInterface;
 use Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToUserFacadeInterface;
 use Spryker\Zed\MerchantUser\Dependency\Service\MerchantUserToUtilTextServiceInterface;
 use Spryker\Zed\MerchantUser\MerchantUserConfig;
@@ -22,8 +21,14 @@ use Spryker\Zed\MerchantUser\Persistence\MerchantUserRepositoryInterface;
 
 class MerchantUserCreator implements MerchantUserCreatorInterface
 {
+    /**
+     * @var string
+     */
     protected const USER_HAVE_ANOTHER_MERCHANT_ERROR_MESSAGE = 'A user with the same email is already connected to another merchant.';
 
+    /**
+     * @var int
+     */
     protected const USER_CREATION_DEFAULT_PASSWORD_LENGTH = 64;
 
     /**
@@ -35,11 +40,6 @@ class MerchantUserCreator implements MerchantUserCreatorInterface
      * @var \Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToUserFacadeInterface
      */
     protected $userFacade;
-
-    /**
-     * @var \Spryker\Zed\MerchantUser\Business\AclGroup\AclGroupAdderInterface
-     */
-    protected $aclGroupAdder;
 
     /**
      * @var \Spryker\Zed\MerchantUser\Persistence\MerchantUserEntityManagerInterface
@@ -57,27 +57,32 @@ class MerchantUserCreator implements MerchantUserCreatorInterface
     protected $merchantUserConfig;
 
     /**
+     * @var array<\Spryker\Zed\MerchantUserExtension\Dependency\Plugin\MerchantUserPostCreatePluginInterface>
+     */
+    protected $merchantUserPostCreatePlugins;
+
+    /**
      * @param \Spryker\Zed\MerchantUser\Dependency\Service\MerchantUserToUtilTextServiceInterface $utilTextService
      * @param \Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToUserFacadeInterface $userFacade
-     * @param \Spryker\Zed\MerchantUser\Business\AclGroup\AclGroupAdderInterface $aclGroupAdder
      * @param \Spryker\Zed\MerchantUser\Persistence\MerchantUserEntityManagerInterface $merchantUserEntityManager
      * @param \Spryker\Zed\MerchantUser\Persistence\MerchantUserRepositoryInterface $merchantUserRepository
      * @param \Spryker\Zed\MerchantUser\MerchantUserConfig $merchantUserConfig
+     * @param array<\Spryker\Zed\MerchantUserExtension\Dependency\Plugin\MerchantUserPostCreatePluginInterface> $merchantUserPostCreatePlugins
      */
     public function __construct(
         MerchantUserToUtilTextServiceInterface $utilTextService,
         MerchantUserToUserFacadeInterface $userFacade,
-        AclGroupAdderInterface $aclGroupAdder,
         MerchantUserEntityManagerInterface $merchantUserEntityManager,
         MerchantUserRepositoryInterface $merchantUserRepository,
-        MerchantUserConfig $merchantUserConfig
+        MerchantUserConfig $merchantUserConfig,
+        array $merchantUserPostCreatePlugins
     ) {
         $this->utilTextService = $utilTextService;
         $this->userFacade = $userFacade;
-        $this->aclGroupAdder = $aclGroupAdder;
         $this->merchantUserEntityManager = $merchantUserEntityManager;
         $this->merchantUserRepository = $merchantUserRepository;
         $this->merchantUserConfig = $merchantUserConfig;
+        $this->merchantUserPostCreatePlugins = $merchantUserPostCreatePlugins;
     }
 
     /**
@@ -105,10 +110,7 @@ class MerchantUserCreator implements MerchantUserCreatorInterface
 
         $merchantUserTransfer = $this->merchantUserEntityManager->create($merchantUserTransfer);
 
-        $this->aclGroupAdder->addMerchantAdminToGroup(
-            $merchantUserTransfer,
-            $this->merchantUserConfig->getMerchantAdminGroupReference()
-        );
+        $merchantUserTransfer = $this->executeMerchantUserPostCreatePlugins($merchantUserTransfer);
 
         return $merchantUserResponseTransfer->setIsSuccessful(true)->setMerchantUser($merchantUserTransfer);
     }
@@ -175,5 +177,19 @@ class MerchantUserCreator implements MerchantUserCreatorInterface
         $existingUserTransfer->fromArray($userTransfer->modifiedToArray(), true);
 
         return $this->userFacade->updateUser($existingUserTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantUserTransfer $merchantUserTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantUserTransfer
+     */
+    protected function executeMerchantUserPostCreatePlugins(MerchantUserTransfer $merchantUserTransfer): MerchantUserTransfer
+    {
+        foreach ($this->merchantUserPostCreatePlugins as $merchantUserPostCreatePlugin) {
+            $merchantUserTransfer = $merchantUserPostCreatePlugin->postCreate($merchantUserTransfer);
+        }
+
+        return $merchantUserTransfer;
     }
 }

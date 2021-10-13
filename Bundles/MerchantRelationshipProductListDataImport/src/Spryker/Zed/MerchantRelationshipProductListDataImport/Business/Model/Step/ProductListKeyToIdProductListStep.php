@@ -18,7 +18,7 @@ use Spryker\Zed\MerchantRelationshipProductListDataImport\Business\Model\DataSet
 class ProductListKeyToIdProductListStep implements DataImportStepInterface
 {
     /**
-     * @var int[]
+     * @var array<int>
      */
     protected $idProductListCache = [];
 

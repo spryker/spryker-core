@@ -16,12 +16,36 @@ use Spryker\Client\Wishlist\Dependency\Client\WishlistToProductBridge;
 
 class WishlistDependencyProvider extends AbstractDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const SERVICE_ZED = 'SERVICE_ZED';
 
+    /**
+     * @var string
+     */
     public const CLIENT_CART = 'CLIENT_CART';
+    /**
+     * @var string
+     */
     public const CLIENT_PRODUCT = 'CLIENT_PRODUCT';
+    /**
+     * @var string
+     */
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
+    /**
+     * @var string
+     */
     public const CLIENT_PRICE_PRODUCT = 'CLIENT_PRICE_PRODUCT';
+
+    /**
+     * @var string
+     */
+    public const PLUGINS_WISHLIST_POST_MOVE_TO_CART_COLLECTION_EXPANDER = 'PLUGINS_WISHLIST_POST_MOVE_TO_CART_COLLECTION_EXPANDER';
+    /**
+     * @var string
+     */
+    public const PLUGINS_WISHLIST_COLLECTION_TO_REMOVE_EXPANDER = 'PLUGINS_WISHLIST_COLLECTION_TO_REMOVE_EXPANDER';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -35,6 +59,8 @@ class WishlistDependencyProvider extends AbstractDependencyProvider
         $container = $this->addCartClient($container);
         $container = $this->addCustomerClient($container);
         $container = $this->addPriceProductClient($container);
+        $container = $this->addWishlistPostMoveToCartCollectionExpanderPlugins($container);
+        $container = $this->addWishlistCollectionToRemoveExpanderPlugins($container);
 
         return $container;
     }
@@ -107,5 +133,49 @@ class WishlistDependencyProvider extends AbstractDependencyProvider
         });
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addWishlistPostMoveToCartCollectionExpanderPlugins(Container $container)
+    {
+        $container->set(static::PLUGINS_WISHLIST_POST_MOVE_TO_CART_COLLECTION_EXPANDER, function (Container $container) {
+            return $this->getWishlistPostMoveToCartCollectionExpanderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return array<\Spryker\Client\WishlistExtension\Dependency\Plugin\WishlistPostMoveToCartCollectionExpanderPluginInterface>
+     */
+    protected function getWishlistPostMoveToCartCollectionExpanderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addWishlistCollectionToRemoveExpanderPlugins(Container $container)
+    {
+        $container->set(static::PLUGINS_WISHLIST_COLLECTION_TO_REMOVE_EXPANDER, function (Container $container) {
+            return $this->getWishlistCollectionToRemoveExpanderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return array<\Spryker\Client\WishlistExtension\Dependency\Plugin\WishlistCollectionToRemoveExpanderPluginInterface>
+     */
+    protected function getWishlistCollectionToRemoveExpanderPlugins(): array
+    {
+        return [];
     }
 }

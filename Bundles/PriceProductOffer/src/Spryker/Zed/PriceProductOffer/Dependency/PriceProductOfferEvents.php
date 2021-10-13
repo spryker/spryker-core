@@ -14,6 +14,7 @@ class PriceProductOfferEvents
      * - This events will be used for spy_price_product_offer entity creation.
      *
      * @api
+     * @var string
      */
     public const ENTITY_SPY_PRICE_PRODUCT_OFFER_CREATE = 'Entity.spy_price_product_offer.create';
 
@@ -22,6 +23,7 @@ class PriceProductOfferEvents
      * - This events will be used for spy_price_product_offer entity changes.
      *
      * @api
+     * @var string
      */
     public const ENTITY_SPY_PRICE_PRODUCT_OFFER_UPDATE = 'Entity.spy_price_product_offer.update';
 
@@ -30,6 +32,7 @@ class PriceProductOfferEvents
      * - This events will be used for spy_price_product_offer entity deletion.
      *
      * @api
+     * @var string
      */
     public const ENTITY_SPY_PRICE_PRODUCT_OFFER_DELETE = 'Entity.spy_price_product_offer.delete';
 
@@ -38,6 +41,7 @@ class PriceProductOfferEvents
      * - This events will be used for spy_price_product_offer publishing.
      *
      * @api
+     * @var string
      */
     public const ENTITY_SPY_PRICE_PRODUCT_OFFER_PUBLISH = 'Entity.spy_price_product_offer.publish';
 
@@ -46,6 +50,7 @@ class PriceProductOfferEvents
      * - This events will be used for spy_price_product_offer un-publishing.
      *
      * @api
+     * @var string
      */
     public const ENTITY_SPY_PRICE_PRODUCT_OFFER_UNPUBLISH = 'Entity.spy_price_product_offer.unpublish';
 }

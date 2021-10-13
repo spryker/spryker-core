@@ -11,10 +11,25 @@ use Generated\Shared\Transfer\ProductOfferAvailabilityRequestTransfer;
 
 interface ProductOfferAvailabilityStorageMapperInterface
 {
+    /**
+     * @var string
+     */
     public const COL_ALIAS_STORE_NAME = 'store_name';
+    /**
+     * @var string
+     */
     public const COL_ALIAS_SKU = 'sku';
+    /**
+     * @var string
+     */
     public const COL_ALIAS_QUANTITY = 'quantity';
+    /**
+     * @var string
+     */
     public const COL_ALIAS_ID_STORE = 'id_store';
+    /**
+     * @var string
+     */
     public const COL_ALIAS_PRODUCT_OFFER_REFERENCE = 'product_offer_reference';
 
     /**

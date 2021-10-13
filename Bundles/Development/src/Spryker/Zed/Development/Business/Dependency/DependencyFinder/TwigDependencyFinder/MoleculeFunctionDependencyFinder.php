@@ -13,6 +13,9 @@ use Spryker\Zed\Development\Business\Dependency\DependencyFinder\TwigDependencyF
 
 class MoleculeFunctionDependencyFinder implements TwigDependencyFinderInterface
 {
+    /**
+     * @var string
+     */
     protected const TEMPLATE_FUNCTION_PATTERN = '/molecule\(\'(.*?),\s\'(.*?)\'/';
 
     /**

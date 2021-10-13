@@ -16,6 +16,9 @@ use Spryker\Shared\PermissionExtension\Dependency\Plugin\PermissionPluginInterfa
  */
 class SeeWishlistPermissionPlugin extends AbstractPlugin implements PermissionPluginInterface, InfrastructuralPermissionPluginInterface
 {
+    /**
+     * @var string
+     */
     public const KEY = 'SeeWishlistPermissionPlugin';
 
     /**

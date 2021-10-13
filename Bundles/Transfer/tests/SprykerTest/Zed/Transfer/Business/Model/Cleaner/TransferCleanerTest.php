@@ -24,6 +24,9 @@ use Spryker\Zed\Transfer\Business\Model\TransferCleaner;
  */
 class TransferCleanerTest extends Unit
 {
+    /**
+     * @var string
+     */
     public const TEST_FILE_NAME = 'TestTransfer.php';
 
     /**

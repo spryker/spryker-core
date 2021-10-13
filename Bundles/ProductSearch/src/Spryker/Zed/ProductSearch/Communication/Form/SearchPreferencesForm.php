@@ -20,10 +20,25 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 class SearchPreferencesForm extends AbstractAttributeKeyForm
 {
+    /**
+     * @var string
+     */
     public const FIELD_ID_PRODUCT_ATTRIBUTE_KEY = 'idProductAttributeKey';
+    /**
+     * @var string
+     */
     public const FIELD_FULL_TEXT = 'fullText';
+    /**
+     * @var string
+     */
     public const FIELD_FULL_TEXT_BOOSTED = 'fullTextBoosted';
+    /**
+     * @var string
+     */
     public const FIELD_SUGGESTION_TERMS = 'suggestionTerms';
+    /**
+     * @var string
+     */
     public const FIELD_COMPLETION_TERMS = 'completionTerms';
 
     /**

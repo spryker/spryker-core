@@ -14,9 +14,9 @@ use Orm\Zed\Product\Persistence\SpyProductAbstract;
 class TaxProductStorageMapper
 {
     /**
-     * @param \Orm\Zed\Product\Persistence\SpyProductAbstract[] $spyProductAbstracts
+     * @param array<\Orm\Zed\Product\Persistence\SpyProductAbstract> $spyProductAbstracts
      *
-     * @return \Generated\Shared\Transfer\TaxProductStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\TaxProductStorageTransfer>
      */
     public function mapSpyProductAbstractsToTaxProductStorageTransfers(array $spyProductAbstracts): array
     {
@@ -32,9 +32,9 @@ class TaxProductStorageMapper
     }
 
     /**
-     * @param \Orm\Zed\TaxProductStorage\Persistence\SpyTaxProductStorage[] $taxProductStorageEntities
+     * @param array<\Orm\Zed\TaxProductStorage\Persistence\SpyTaxProductStorage> $taxProductStorageEntities
      *
-     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     * @return array<\Generated\Shared\Transfer\SynchronizationDataTransfer>
      */
     public function mapSpyTaxProductStorageToSynchronizationDataTransfer(array $taxProductStorageEntities): array
     {

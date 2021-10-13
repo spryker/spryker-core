@@ -31,6 +31,9 @@ class GlueRouterTest extends Unit
      */
     protected $tester;
 
+    /**
+     * @var string
+     */
     protected const ERROR_ROUTE = 'GlueApplication/ErrorRest/resource-not-found';
 
     /**

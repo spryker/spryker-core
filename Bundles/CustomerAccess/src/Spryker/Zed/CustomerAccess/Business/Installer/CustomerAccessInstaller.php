@@ -13,6 +13,9 @@ use Spryker\Zed\CustomerAccess\CustomerAccessConfig;
 
 class CustomerAccessInstaller implements CustomerAccessInstallerInterface
 {
+    /**
+     * @var string
+     */
     protected const ALERT_MESSAGE = 'You need to clean up table spy_unauthenticated_customer_access to get %s access config update.';
 
     /**

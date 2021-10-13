@@ -26,12 +26,27 @@ use Spryker\Zed\SalesOrderThreshold\Persistence\SalesOrderThresholdRepository;
  */
 class SalesOrderThresholdRepositoryTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const COUNTRY_ISO2_CODE = 'DE';
 
+    /**
+     * @var string
+     */
     protected const TAX_SET_NAME_1 = 'TAX_SET_NAME_1';
+    /**
+     * @var int
+     */
     protected const TAX_RATE_1 = 1;
 
+    /**
+     * @var string
+     */
     protected const TAX_SET_NAME_2 = 'TAX_SET_NAME_2';
+    /**
+     * @var int
+     */
     protected const TAX_RATE_2 = 2;
 
     /**

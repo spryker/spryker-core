@@ -9,6 +9,7 @@ namespace Spryker\Zed\Discount\Business\Persistence;
 
 use ArrayObject;
 use Generated\Shared\Transfer\CalculatedDiscountTransfer;
+use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesDiscount;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
@@ -40,6 +41,7 @@ class DiscountOrderHydrate implements DiscountOrderHydrateInterface
         $salesOrderDiscounts = $this->getSalesOrderDiscounts($orderTransfer->getIdSalesOrder());
 
         $groupedDiscounts = [];
+        $groupedDiscountVouchers = [];
         foreach ($salesOrderDiscounts as $salesOrderDiscountEntity) {
             $calculatedDiscountTransfer = $this->hydrateCalculatedDiscountTransfer($salesOrderDiscountEntity);
 
@@ -57,10 +59,15 @@ class DiscountOrderHydrate implements DiscountOrderHydrateInterface
                 );
             }
             $calculatedDiscountTransfer->setUnitAmount(null);
+            if ($calculatedDiscountTransfer->getVoucherCode()) {
+                $discountVoucherTransfer = (new DiscountTransfer())->fromArray($calculatedDiscountTransfer->toArray(), true);
+                $groupedDiscountVouchers[$discountVoucherTransfer->getDisplayName()] = $discountVoucherTransfer;
+            }
             $groupedDiscounts[$salesOrderDiscountEntity->getDisplayName()] = $calculatedDiscountTransfer;
         }
 
         $orderTransfer->setCalculatedDiscounts(new ArrayObject($groupedDiscounts));
+        $orderTransfer->setVoucherDiscounts(new ArrayObject($groupedDiscountVouchers));
 
         return $orderTransfer;
     }
@@ -68,7 +75,7 @@ class DiscountOrderHydrate implements DiscountOrderHydrateInterface
     /**
      * @param int $idSalesOrder
      *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesDiscount[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Sales\Persistence\SpySalesDiscount>
      */
     protected function getSalesOrderDiscounts($idSalesOrder)
     {

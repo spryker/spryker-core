@@ -14,11 +14,15 @@ class ProductMeasurementUnitConfig extends AbstractBundleConfig
 {
     /**
      * Default measurement unit code.
+     *
+     * @var string
      */
     public const DEFAULT_MEASUREMENT_UNIT_CODE = 'ITEM';
 
     /**
      * Infrastructural measurement units list.
+     *
+     * @var array
      */
     public const INFRASTRUCTURAL_MEASUREMENT_UNITS = [
         [
@@ -31,7 +35,7 @@ class ProductMeasurementUnitConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductMeasurementUnitTransfer>
      */
     public function getInfrastructuralMeasurementUnits(): array
     {

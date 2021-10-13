@@ -26,12 +26,19 @@ use Spryker\Glue\CatalogSearchRestApi\Processor\Mapper\CatalogSearchSuggestionsR
  */
 class CatalogSearchSuggestionsResourceMapperTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const REQUESTED_CURRENCY = 'CHF';
 
     /**
      * @deprecated Will be removed in next major release.
+     * @var string
      */
     protected const KEY_PRODUCTS = 'products';
+    /**
+     * @var string
+     */
     protected const KEY_ABSTRACT_PRODUCTS = 'abstractProducts';
 
     /**

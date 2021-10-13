@@ -15,11 +15,26 @@ use Spryker\Shared\Kernel\KernelSharedFactory;
 
 abstract class AbstractClassResolver
 {
+    /**
+     * @var string
+     */
     public const KEY_NAMESPACE = '%namespace%';
+    /**
+     * @var string
+     */
     public const KEY_BUNDLE = '%bundle%';
+    /**
+     * @var string
+     */
     public const KEY_CODE_BUCKET = '%codeBucket%';
 
+    /**
+     * @var string|null
+     */
     protected const CLASS_NAME_PATTERN = null;
+    /**
+     * @var string|null
+     */
     protected const RESOLVABLE_TYPE = null;
 
     /**
@@ -63,7 +78,7 @@ abstract class AbstractClassResolver
     protected static $sharedFactory;
 
     /**
-     * @var string[]|null
+     * @var array<string>|null
      */
     protected static $resolvableTypeClassNamePatternMap;
 
@@ -78,12 +93,12 @@ abstract class AbstractClassResolver
     protected $resolvedClassName;
 
     /**
-     * @var \Spryker\Shared\Kernel\ClassResolver\ClassInfo
+     * @var \Spryker\Shared\Kernel\ClassResolver\ClassInfo|null
      */
     protected $classInfo;
 
     /**
-     * @var object[]
+     * @var array<object>
      */
     protected static $cachedInstances = [];
 
@@ -246,7 +261,7 @@ abstract class AbstractClassResolver
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function getResolvableTypeClassNamePatternMap(): array
     {
@@ -498,7 +513,7 @@ abstract class AbstractClassResolver
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     private function buildClassNames()
     {
@@ -511,9 +526,9 @@ abstract class AbstractClassResolver
     }
 
     /**
-     * @param string[] $classNames
+     * @param array<string> $classNames
      *
-     * @return string[]
+     * @return array<string>
      */
     private function addProjectClassNames(array $classNames)
     {
@@ -542,9 +557,9 @@ abstract class AbstractClassResolver
     }
 
     /**
-     * @param string[] $classNames
+     * @param array<string> $classNames
      *
-     * @return string[]
+     * @return array<string>
      */
     private function addCoreClassNames(array $classNames)
     {
@@ -556,7 +571,7 @@ abstract class AbstractClassResolver
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function getProjectNamespaces()
     {
@@ -568,7 +583,7 @@ abstract class AbstractClassResolver
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function getCoreNamespaces()
     {

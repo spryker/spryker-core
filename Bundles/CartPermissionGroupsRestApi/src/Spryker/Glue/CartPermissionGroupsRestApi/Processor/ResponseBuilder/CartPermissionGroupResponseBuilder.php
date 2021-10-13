@@ -51,7 +51,7 @@ class CartPermissionGroupResponseBuilder implements CartPermissionGroupResponseB
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\QuotePermissionGroupTransfer[] $quotePermissionGroups
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\QuotePermissionGroupTransfer> $quotePermissionGroups
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */

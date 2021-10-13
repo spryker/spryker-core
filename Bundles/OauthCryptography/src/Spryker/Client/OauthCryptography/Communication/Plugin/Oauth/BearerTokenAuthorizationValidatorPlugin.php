@@ -30,7 +30,7 @@ class BearerTokenAuthorizationValidatorPlugin extends AbstractPlugin implements 
      * @api
      *
      * @param \Psr\Http\Message\ServerRequestInterface $request
-     * @param \League\OAuth2\Server\CryptKey[] $publicKeys
+     * @param array<\League\OAuth2\Server\CryptKey> $publicKeys
      * @param \League\OAuth2\Server\Repositories\AccessTokenRepositoryInterface $accessTokenRepository
      *
      * @throws \League\OAuth2\Server\Exception\OAuthServerException

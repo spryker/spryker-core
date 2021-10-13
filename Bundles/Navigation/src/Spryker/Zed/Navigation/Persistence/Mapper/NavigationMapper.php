@@ -14,10 +14,10 @@ use Propel\Runtime\Collection\ObjectCollection;
 class NavigationMapper
 {
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Navigation\Persistence\SpyNavigation[] $navigationEntities
-     * @param \Generated\Shared\Transfer\NavigationTransfer[] $navigationTransfers
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Navigation\Persistence\SpyNavigation> $navigationEntities
+     * @param array<\Generated\Shared\Transfer\NavigationTransfer> $navigationTransfers
      *
-     * @return \Generated\Shared\Transfer\NavigationTransfer[]
+     * @return array<\Generated\Shared\Transfer\NavigationTransfer>
      */
     public function mapNavigationEntitiesToNavigationTransfers(
         ObjectCollection $navigationEntities,

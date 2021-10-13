@@ -3,22 +3,40 @@
 #}
 
 {% extends '@ZedUi/Layout/merchant-layout-main.twig' %}
+{% import _self as view %}
 
 {% block headTitle %}
     {{ 'Products' | trans }}
 {% endblock %}
 
 {% block content %}
+    {% set actionConfig = '{
+        "type": "drawer",
+        "component": "ajax-form",
+        "options": {
+            "inputs": {
+                "action": "' ~ url(urlCreateProductAbstract) ~ '"
+            }
+        }
+    }' %}
+
     <web-mp-product-list
         cloak
-        table-id="web-mp-product-list"
+        table-id="{{ idTableProductList }}"
         table-config='{{ guiTableConfiguration(productAbstractTableConfiguration) }}'>
         <span title>{{ 'Products' | trans }}</span>
+        <web-spy-button-action
+            button-action
+            type="button"
+            size="lg"
+            variant="primary"
+            action="{{ actionConfig }}">
+            {{ 'Create Product' | trans }}
+        </web-spy-button-action>
     </web-mp-product-list>
 {% endblock %}
 
 {% block footerJs %}
-    <script src="{{ assetsPath('js/mp/spy/product-merchant-portal-gui-es2015.js') }}" type="module"></script>
-    <script src="{{ assetsPath('js/mp/spy/product-merchant-portal-gui-es5.js') }}" nomodule defer></script>
+    {{ view.importJsBundle('product-merchant-portal-gui', importConfig) }}
     {{ parent() }}
 {% endblock %}

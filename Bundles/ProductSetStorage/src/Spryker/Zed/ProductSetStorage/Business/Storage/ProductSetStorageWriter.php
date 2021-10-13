@@ -16,7 +16,13 @@ use Spryker\Zed\ProductSetStorage\Persistence\ProductSetStorageQueryContainerInt
 
 class ProductSetStorageWriter implements ProductSetStorageWriterInterface
 {
+    /**
+     * @var string
+     */
     public const COL_ID_PRODUCT_SET = 'id_product_set';
+    /**
+     * @var string
+     */
     public const COL_IS_ACTIVE = 'is_active';
 
     /**
@@ -141,7 +147,7 @@ class ProductSetStorageWriter implements ProductSetStorageWriterInterface
     /**
      * @param array $productSetLocalizedEntity
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function extractProductAbstractIdsFromProductSetLocalizedEntity(array $productSetLocalizedEntity): array
     {
@@ -189,7 +195,7 @@ class ProductSetStorageWriter implements ProductSetStorageWriterInterface
     /**
      * @param array $spyProductSetLocalizedEntity
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ProductImageSetStorageTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\ProductImageSetStorageTransfer>
      */
     protected function getProductImageSets(array $spyProductSetLocalizedEntity)
     {

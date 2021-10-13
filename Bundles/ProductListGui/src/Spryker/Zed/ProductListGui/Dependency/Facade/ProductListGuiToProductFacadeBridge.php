@@ -23,9 +23,9 @@ class ProductListGuiToProductFacadeBridge implements ProductListGuiToProductFaca
     }
 
     /**
-     * @param string[] $skus
+     * @param array<string> $skus
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getProductConcreteIdsByConcreteSkus(array $skus): array
     {
@@ -33,7 +33,7 @@ class ProductListGuiToProductFacadeBridge implements ProductListGuiToProductFaca
     }
 
     /**
-     * @param int[] $productIds
+     * @param array<int> $productIds
      *
      * @return array
      */

@@ -13,9 +13,21 @@ use Spryker\Zed\Product\Dependency\Service\ProductToUtilTextInterface;
 
 class SkuGenerator implements SkuGeneratorInterface
 {
+    /**
+     * @var string
+     */
     public const SKU_ABSTRACT_SEPARATOR = '-';
+    /**
+     * @var string
+     */
     public const SKU_TYPE_SEPARATOR = '-';
+    /**
+     * @var string
+     */
     public const SKU_VALUE_SEPARATOR = '_';
+    /**
+     * @var int
+     */
     public const SKU_MAX_LENGTH = 255;
 
     /**

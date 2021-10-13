@@ -36,7 +36,7 @@ class ProductResourceAliasStorageClient extends AbstractClient implements Produc
      *
      * @api
      *
-     * @param string[] $skus
+     * @param array<string> $skus
      * @param string $localeName
      *
      * @return array

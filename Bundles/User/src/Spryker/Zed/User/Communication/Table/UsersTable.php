@@ -19,17 +19,36 @@ use Spryker\Zed\User\Persistence\UserQueryContainerInterface;
 
 class UsersTable extends AbstractTable
 {
+    /**
+     * @var string
+     */
     public const ACTION = 'Action';
+    /**
+     * @var string
+     */
     public const UPDATE_USER_URL = '/user/edit/update';
+    /**
+     * @var string
+     */
     public const DEACTIVATE_USER_URL = '/user/edit/deactivate-user';
+    /**
+     * @var string
+     */
     public const ACTIVATE_USER_URL = '/user/edit/activate-user';
+    /**
+     * @var string
+     */
     public const DELETE_USER_URL = '/user/edit/delete';
 
     /**
      * @see \Spryker\Zed\User\Communication\Controller\EditController::confirmDeleteAction()
+     * @var string
      */
     public const CONFIRM_DELETE_USER_URL = '/user/edit/confirm-delete';
 
+    /**
+     * @var string
+     */
     public const PARAM_ID_USER = 'id-user';
 
     /**
@@ -157,7 +176,7 @@ class UsersTable extends AbstractTable
             Url::generate(self::UPDATE_USER_URL, [
                 self::PARAM_ID_USER => $user[SpyUserTableMap::COL_ID_USER],
             ]),
-            'Edit'
+            'Edit',
         );
 
         $urls[] = $this->createStatusButton($user);
@@ -203,7 +222,7 @@ class UsersTable extends AbstractTable
                     static::PARAM_ID_USER => $user[SpyUserTableMap::COL_ID_USER],
                 ]),
                 'Activate',
-                ActivateUserForm::class
+                ActivateUserForm::class,
             );
         }
 
@@ -212,14 +231,17 @@ class UsersTable extends AbstractTable
                 static::PARAM_ID_USER => $user[SpyUserTableMap::COL_ID_USER],
             ]),
             'Deactivate',
-            DeactivateUserForm::class
+            DeactivateUserForm::class,
+            [
+                static::BUTTON_CLASS => 'btn-outline btn-danger',
+            ]
         );
     }
 
     /**
      * @param array $user
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function generateUsersTableExpanderPluginsActionButtons(array $user)
     {
@@ -228,8 +250,8 @@ class UsersTable extends AbstractTable
         $actionButtons = [];
         foreach ($buttonTransfers as $buttonTransfer) {
             $actionButtons[] = $this->generateButton(
-                $buttonTransfer->getUrl(),
-                $buttonTransfer->getTitle(),
+                $buttonTransfer->getUrlOrFail(),
+                $buttonTransfer->getTitleOrFail(),
                 $buttonTransfer->getDefaultOptions(),
                 $buttonTransfer->getCustomOptions()
             );

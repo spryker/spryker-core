@@ -19,6 +19,9 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class WriteSharedCartPermissionPlugin extends AbstractPlugin implements ExecutablePermissionPluginInterface, InfrastructuralPermissionPluginInterface
 {
+    /**
+     * @var string
+     */
     public const KEY = 'WriteSharedCartPermissionPlugin';
 
     /**

@@ -13,20 +13,44 @@ use Spryker\Zed\Discount\Business\QueryString\Comparator\ComparatorInterface;
 
 class ComparatorOperators implements ComparatorOperatorsInterface
 {
+    /**
+     * @var string
+     */
     public const MATCH_ALL_IDENTIFIER = '*';
+
+    /**
+     * @var string
+     */
     public const TYPE_NUMBER = 'number';
+
+    /**
+     * @var string
+     */
     public const TYPE_STRING = 'string';
+
+    /**
+     * @var string
+     */
     public const TYPE_LIST = 'list';
+
+    /**
+     * @var string
+     */
     public const NUMBER_REGEXP = '/[0-9\.\,]+/';
+
+    /**
+     * @phpstan-var non-empty-string
+     * @var string
+     */
     public const LIST_DELIMITER = ';';
 
     /**
-     * @var \Spryker\Zed\Discount\Business\QueryString\Comparator\ComparatorInterface[]
+     * @var array<\Spryker\Zed\Discount\Business\QueryString\Comparator\ComparatorInterface>
      */
     protected $operators = [];
 
     /**
-     * @param \Spryker\Zed\Discount\Business\QueryString\Comparator\ComparatorInterface[] $operators
+     * @param array<\Spryker\Zed\Discount\Business\QueryString\Comparator\ComparatorInterface> $operators
      */
     public function __construct(array $operators)
     {
@@ -70,9 +94,9 @@ class ComparatorOperators implements ComparatorOperatorsInterface
     }
 
     /**
-     * @param string[] $acceptedTypes
+     * @param array<string> $acceptedTypes
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getOperatorExpressionsByTypes(array $acceptedTypes)
     {
@@ -88,7 +112,7 @@ class ComparatorOperators implements ComparatorOperatorsInterface
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getAvailableComparatorExpressions()
     {
@@ -117,7 +141,7 @@ class ComparatorOperators implements ComparatorOperatorsInterface
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getCompoundComparatorExpressions()
     {
@@ -153,7 +177,7 @@ class ComparatorOperators implements ComparatorOperatorsInterface
     }
 
     /**
-     * @param string[] $withTypes
+     * @param array<string> $withTypes
      * @param \Spryker\Zed\Discount\Business\QueryString\Comparator\ComparatorInterface $operator
      *
      * @throws \Spryker\Zed\Discount\Business\Exception\ComparatorException

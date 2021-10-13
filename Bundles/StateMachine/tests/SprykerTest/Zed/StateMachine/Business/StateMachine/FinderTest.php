@@ -35,6 +35,9 @@ use SprykerTest\Zed\StateMachine\Mocks\StateMachineMocks;
  */
 class FinderTest extends StateMachineMocks
 {
+    /**
+     * @var string
+     */
     public const TEST_STATE_MACHINE_NAME = 'TestStateMachine';
 
     /**
@@ -73,10 +76,10 @@ class FinderTest extends StateMachineMocks
     public function testGetManualEventsForStateMachineItemsShouldReturnManualEventsForGivenItems(): void
     {
         $manualEvents = [
-           'state name' => [
-               'event1',
-               'event2',
-           ],
+            'state name' => [
+                'event1',
+                'event2',
+            ],
         ];
 
         $processMock = $this->createProcessMock();

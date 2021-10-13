@@ -16,6 +16,8 @@ use Spryker\Zed\MerchantProductOfferDataImport\Business\Model\DataSet\MerchantPr
 
 class ConcreteSkuValidationStep implements DataImportStepInterface
 {
+    protected const CONCRETE_SKU = MerchantProductOfferDataSetInterface::CONCRETE_SKU;
+
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
      *
@@ -26,10 +28,10 @@ class ConcreteSkuValidationStep implements DataImportStepInterface
      */
     public function execute(DataSetInterface $dataSet): void
     {
-        $concreteProductSku = $dataSet[MerchantProductOfferDataSetInterface::CONCRETE_SKU];
+        $concreteProductSku = $dataSet[static::CONCRETE_SKU];
 
         if (!$concreteProductSku) {
-            throw new InvalidDataException('"' . MerchantProductOfferDataSetInterface::CONCRETE_SKU . '" is required.');
+            throw new InvalidDataException('"' . static::CONCRETE_SKU . '" is required.');
         }
 
         /** @var \Orm\Zed\Product\Persistence\SpyProductQuery $productQuery */

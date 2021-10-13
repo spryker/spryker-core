@@ -17,7 +17,13 @@ use Spryker\Zed\Kernel\Container;
  */
 class CmsSlotDataImportDependencyProvider extends DataImportDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_CMS_SLOT = 'FACADE_CMS_SLOT';
+    /**
+     * @var string
+     */
     public const SERVICE_UTIL_TEXT = 'SERVICE_UTIL_TEXT';
 
     /**

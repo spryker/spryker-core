@@ -17,6 +17,9 @@ use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
 
 class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandlerInterface
 {
+    /**
+     * @var int
+     */
     protected const DIVISION_SCALE = 10;
 
     /**
@@ -108,7 +111,7 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
     /**
      * @param int $idConcreteProduct
      *
-     * @return \Orm\Zed\ProductBundle\Persistence\SpyProductBundle[]
+     * @return array<\Orm\Zed\ProductBundle\Persistence\SpyProductBundle>
      */
     protected function getBundleItemsByIdProduct($idConcreteProduct): array
     {
@@ -125,7 +128,7 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
     /**
      * @param string $bundledProductSku
      *
-     * @return \Orm\Zed\ProductBundle\Persistence\SpyProductBundle[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductBundle\Persistence\SpyProductBundle>
      */
     protected function getBundlesUsingProductBySku($bundledProductSku)
     {
@@ -139,7 +142,7 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
     }
 
     /**
-     * @param \Orm\Zed\ProductBundle\Persistence\SpyProductBundle[] $bundleItems
+     * @param array<\Orm\Zed\ProductBundle\Persistence\SpyProductBundle> $bundleItems
      * @param string $bundleProductSku
      *
      * @return void
@@ -208,7 +211,7 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
     }
 
     /**
-     * @param \Orm\Zed\ProductBundle\Persistence\SpyProductBundle[] $bundleItems
+     * @param array<\Orm\Zed\ProductBundle\Persistence\SpyProductBundle> $bundleItems
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return \Spryker\DecimalObject\Decimal

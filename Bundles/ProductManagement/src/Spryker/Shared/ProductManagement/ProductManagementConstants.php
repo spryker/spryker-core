@@ -12,12 +12,16 @@ namespace Spryker\Shared\ProductManagement;
  */
 interface ProductManagementConstants
 {
+    /**
+     * @var string
+     */
     public const PRODUCT_MANAGEMENT_DEFAULT_LOCALE = 'default';
 
     /**
      * Base URL for Yves including scheme and port (e.g. http://www.de.demoshop.local:8080)
      *
      * @api
+     * @var string
      */
     public const BASE_URL_YVES = 'PRODUCT_MANAGEMENT:BASE_URL_YVES';
 }

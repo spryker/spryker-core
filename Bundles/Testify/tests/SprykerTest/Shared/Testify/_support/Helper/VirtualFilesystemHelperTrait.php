@@ -12,7 +12,7 @@ trait VirtualFilesystemHelperTrait
     /**
      * @return \SprykerTest\Shared\Testify\Helper\VirtualFilesystemHelper
      */
-    private function getVirtualFilesystemHelper(): VirtualFilesystemHelper
+    protected function getVirtualFilesystemHelper(): VirtualFilesystemHelper
     {
         /** @var \SprykerTest\Shared\Testify\Helper\VirtualFilesystemHelper $virtualFilesystemHelper */
         $virtualFilesystemHelper = $this->getModule('\\' . VirtualFilesystemHelper::class);

@@ -26,58 +26,99 @@ class SlotController extends AbstractController
 {
     /**
      * @uses \Spryker\Zed\ProductListGui\Communication\Plugin\ConfigurableBundleGui\ProductConcreteRelationConfigurableBundleTemplateSlotEditSubTabsProviderPlugin::AVAILABLE_PRODUCT_CONCRETE_RELATION_TABS_NAME
+     * @var string
      */
     protected const AVAILABLE_PRODUCT_CONCRETE_RELATION_TABS_NAME = 'availableProductConcreteRelationTabs';
 
     /**
      * @uses \Spryker\Zed\ProductListGui\Communication\Plugin\ConfigurableBundleGui\ProductConcreteRelationConfigurableBundleTemplateSlotEditSubTabsProviderPlugin::ASSIGNED_PRODUCT_CONCRETE_RELATION_TABS_NAME
+     * @var string
      */
     protected const ASSIGNED_PRODUCT_CONCRETE_RELATION_TABS_NAME = 'assignedProductConcreteRelationTabs';
 
     /**
      * @uses \Spryker\Zed\ProductListGui\Communication\Plugin\ConfigurableBundleGui\ProductConcreteRelationConfigurableBundleTemplateSlotEditTablesProviderPlugin::AVAILABLE_PRODUCT_CONCRETE_TABLE_NAME
+     * @var string
      */
     protected const AVAILABLE_PRODUCT_CONCRETE_TABLE_NAME = 'availableProductConcreteTable';
 
     /**
      * @uses \Spryker\Zed\ProductListGui\Communication\Plugin\ConfigurableBundleGui\ProductConcreteRelationConfigurableBundleTemplateSlotEditTablesProviderPlugin::ASSIGNED_PRODUCT_CONCRETE_TABLE_NAME
+     * @var string
      */
     protected const ASSIGNED_PRODUCT_CONCRETE_TABLE_NAME = 'assignedProductConcreteTable';
 
     /**
      * @uses \Spryker\Zed\ProductListGui\Communication\Controller\ProductListAbstractController::URL_PARAM_ID_PRODUCT_LIST
+     * @var string
      */
     protected const URL_PARAM_ID_PRODUCT_LIST = 'id-product-list';
 
     /**
      * @uses \Spryker\Zed\ConfigurableBundleGui\Communication\Controller\SlotController::editAction()
+     * @var string
      */
     protected const ROUTE_EDIT_TEMPLATE_SLOT = '/configurable-bundle-gui/slot/edit';
 
     /**
      * @uses \Spryker\Zed\ConfigurableBundleGui\Communication\Controller\TemplateController::indexAction()
+     * @var string
      */
     protected const ROUTE_TEMPLATES_LIST = '/configurable-bundle-gui/template';
 
     /**
      * @uses \Spryker\Zed\ConfigurableBundleGui\Communication\Controller\TemplateController::editAction()
+     * @var string
      */
     protected const ROUTE_EDIT_TEMPLATE = '/configurable-bundle-gui/template/edit';
 
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_SLOT_NOT_FOUND = 'Configurable bundle template slot with id "%id%" was not found.';
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_SLOT_CREATE_FAIL = 'Configurable bundle template slot has not been created.';
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_SLOT_UPDATE_FAIL = 'Configurable bundle template slot has not been updated.';
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_SLOT_DELETE_FAIL = 'Configurable bundle template slot has not been deleted.';
 
+    /**
+     * @var string
+     */
     protected const SUCCESS_MESSAGE_SLOT_CREATED = 'Configurable bundle template slot was successfully created.';
+    /**
+     * @var string
+     */
     protected const SUCCESS_MESSAGE_SLOT_UPDATED = 'Configurable bundle template slot was successfully updated.';
+    /**
+     * @var string
+     */
     protected const SUCCESS_MESSAGE_SLOT_DELETED = 'Configurable bundle template slot was successfully deleted.';
 
+    /**
+     * @var string
+     */
     protected const SLOTS_TAB_ANCHOR = '#tab-content-slots';
 
+    /**
+     * @var string
+     */
     protected const PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE = 'id-configurable-bundle-template';
+    /**
+     * @var string
+     */
     protected const PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT = 'id-configurable-bundle-template-slot';
 
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_PARAM_ID = '%id%';
 
     /**

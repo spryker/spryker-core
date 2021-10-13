@@ -46,7 +46,7 @@ class RestRequestValidatorToFinderAdapter implements RestRequestValidatorToFinde
     }
 
     /**
-     * @return \Iterator|\SplFileInfo[]
+     * @return \Iterator<\SplFileInfo>
      */
     public function getIterator()
     {

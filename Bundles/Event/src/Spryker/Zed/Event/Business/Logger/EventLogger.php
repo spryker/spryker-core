@@ -45,7 +45,7 @@ class EventLogger implements EventLoggerInterface
     public function log($message)
     {
         if (!$this->eventConfig->isLoggerActivated()) {
-             return;
+            return;
         }
 
         $this->getLogger($this->loggerConfig)

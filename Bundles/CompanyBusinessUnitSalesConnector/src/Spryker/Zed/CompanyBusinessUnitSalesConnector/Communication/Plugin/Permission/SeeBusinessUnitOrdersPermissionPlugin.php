@@ -14,6 +14,9 @@ use Spryker\Shared\PermissionExtension\Dependency\Plugin\PermissionPluginInterfa
  */
 class SeeBusinessUnitOrdersPermissionPlugin implements PermissionPluginInterface
 {
+    /**
+     * @var string
+     */
     protected const KEY = 'SeeBusinessUnitOrdersPermissionPlugin';
 
     /**

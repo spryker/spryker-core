@@ -14,6 +14,9 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 class PriceProductSchedulePriceConstraintValidator extends ConstraintValidator
 {
+    /**
+     * @var string
+     */
     protected const NET_AMOUNT_PATH = 'priceProduct.moneyValue.netAmount';
 
     /**

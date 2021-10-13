@@ -38,6 +38,9 @@ class ShoppingListNoteFacadeTest extends Unit
 {
     use LocatorHelperTrait;
 
+    /**
+     * @var string
+     */
     protected const CART_TEST_NOTE = 'CART_TEST_NOTE';
 
     /**

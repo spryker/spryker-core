@@ -46,7 +46,7 @@ class ZedResolverTest extends Unit
     protected $tester;
 
     /**
-     * @return string[][]
+     * @return array<string[]>
      */
     public function resolverDataProvider(): array
     {
@@ -64,7 +64,7 @@ class ZedResolverTest extends Unit
     }
 
     /**
-     * @return string[][]
+     * @return array<string[]>
      */
     public function resolverExceptionDataProvider(): array
     {

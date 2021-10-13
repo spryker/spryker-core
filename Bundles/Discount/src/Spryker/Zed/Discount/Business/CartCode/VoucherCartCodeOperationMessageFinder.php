@@ -12,16 +12,24 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 class VoucherCartCodeOperationMessageFinder implements VoucherCartCodeOperationMessageFinderInterface
 {
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_VOUCHER_NON_APPLICABLE = 'cart.voucher.apply.non_applicable';
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_VOUCHER_APPLY_SUCCESSFUL = 'cart.voucher.apply.successful';
 
     /**
      * @uses \Spryker\Shared\CartCode\CartCodesConfig::MESSAGE_TYPE_SUCCESS
+     * @var string
      */
     protected const MESSAGE_TYPE_SUCCESS = 'success';
 
     /**
      * @uses \Spryker\Shared\CartCode\CartCodesConfig::MESSAGE_TYPE_ERROR
+     * @var string
      */
     protected const MESSAGE_TYPE_ERROR = 'error';
 

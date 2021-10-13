@@ -14,5 +14,5 @@ interface MerchantUserGuiToRouterFacadeInterface
     /**
      * @return \Spryker\Zed\Router\Business\Router\ChainRouter
      */
-    public function getRouter(): ChainRouter;
+    public function getBackofficeChainRouter(): ChainRouter;
 }

@@ -32,7 +32,7 @@ use Twig\Profiler\Profile;
 class WebProfilerCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
-     * @return \Silex\ServiceProviderInterface[]
+     * @return array<\Silex\ServiceProviderInterface>
      */
     public function getWebProfiler()
     {
@@ -48,7 +48,7 @@ class WebProfilerCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Shared\WebProfilerExtension\Dependency\Plugin\WebProfilerDataCollectorPluginInterface[]
+     * @return array<\Spryker\Shared\WebProfilerExtension\Dependency\Plugin\WebProfilerDataCollectorPluginInterface>
      */
     public function getDataCollectorPlugins(): array
     {

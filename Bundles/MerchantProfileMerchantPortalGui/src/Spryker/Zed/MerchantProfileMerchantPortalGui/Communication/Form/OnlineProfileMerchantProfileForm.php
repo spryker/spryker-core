@@ -28,27 +28,68 @@ use Symfony\Component\Validator\Constraints\Regex;
  */
 class OnlineProfileMerchantProfileForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     protected const FIELD_LOGO_URL = 'logo_url';
+    /**
+     * @var string
+     */
     protected const FIELD_PUBLIC_EMAIL = 'public_email';
+    /**
+     * @var string
+     */
     protected const FIELD_PUBLIC_PHONE = 'public_phone';
+    /**
+     * @var string
+     */
     protected const FIELD_MERCHANT_PROFILE_LOCALIZED_GLOSSARY_ATTRIBUTES = 'merchantProfileLocalizedGlossaryAttributes';
+    /**
+     * @var string
+     */
     protected const FIELD_ADDRESS_COLLECTION = 'addressCollection';
+    /**
+     * @var string
+     */
     protected const FIELD_IS_ACTIVE = 'is_active';
+    /**
+     * @var string
+     */
     protected const FIELD_URL_COLLECTION = 'urlCollection';
-    protected const FIELD_LATITUDE = 'latitude';
-    protected const FIELD_LONGITUDE = 'longitude';
+    /**
+     * @var string
+     */
     protected const FIELD_FAX_NUMBER = 'fax_number';
 
+    /**
+     * @var string
+     */
     protected const LABEL_LOGO_URL = 'Logo URL';
+    /**
+     * @var string
+     */
     protected const LABEL_PUBLIC_EMAIL = 'Email';
+    /**
+     * @var string
+     */
     protected const LABEL_PUBLIC_PHONE = 'Phone Number';
+    /**
+     * @var string
+     */
     protected const LABEL_IS_ACTIVE = 'Is Active';
-    protected const LABEL_LATITUDE = 'Latitude';
-    protected const LABEL_LONGITUDE = 'Longitude';
+    /**
+     * @var string
+     */
     protected const LABEL_FAX_NUMBER = 'Fax number';
 
+    /**
+     * @var string
+     */
     protected const PLACEHOLDER_LOGO_URL = 'Provide a logo URL';
 
+    /**
+     * @var string
+     */
     protected const URL_PATH_PATTERN = '#^([^\s\\\\]+)$#i';
 
     /**
@@ -66,8 +107,6 @@ class OnlineProfileMerchantProfileForm extends AbstractType
             ->addUrlCollectionField($builder)
             ->addMerchantProfileLocalizedGlossaryAttributesSubform($builder)
             ->addFaxNumberField($builder)
-            ->addLatitudeField($builder)
-            ->addLongitudeField($builder)
             ->addAddressCollectionSubform($builder);
     }
 
@@ -202,7 +241,7 @@ class OnlineProfileMerchantProfileForm extends AbstractType
     }
 
     /**
-     * @return \Symfony\Component\Validator\Constraint[]
+     * @return array<\Symfony\Component\Validator\Constraint>
      */
     protected function getTextFieldConstraints(): array
     {
@@ -212,7 +251,7 @@ class OnlineProfileMerchantProfileForm extends AbstractType
     }
 
     /**
-     * @return \Symfony\Component\Validator\Constraint[]
+     * @return array<\Symfony\Component\Validator\Constraint>
      */
     protected function getRequiredTextFieldConstraints(): array
     {
@@ -225,7 +264,7 @@ class OnlineProfileMerchantProfileForm extends AbstractType
     /**
      * @param array $choices
      *
-     * @return \Symfony\Component\Validator\Constraint[]
+     * @return array<\Symfony\Component\Validator\Constraint>
      */
     protected function getUrlFieldConstraints(array $choices = []): array
     {
@@ -236,54 +275,6 @@ class OnlineProfileMerchantProfileForm extends AbstractType
                 'message' => 'Invalid URL provided. "Space" and "\" character is not allowed.',
             ]),
         ];
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return $this
-     */
-    protected function addLongitudeField(FormBuilderInterface $builder)
-    {
-        $builder->add(static::FIELD_LONGITUDE, TextType::class, [
-            'label' => static::LABEL_LONGITUDE,
-            'required' => false,
-            'constraints' => [
-                new Length([
-                    'max' => 255,
-                ]),
-                new Regex([
-                    'pattern' => '/^(\\+|-)?(?:180(?:(?:\\.0{1,6})?)|(?:[0-9]|[1-9][0-9]|1[0-7][0-9])(?:(?:\\.[0-9]{1,6})?))$/',
-                ]),
-            ],
-            'property_path' => 'merchantProfile.longitude',
-        ]);
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return $this
-     */
-    protected function addLatitudeField(FormBuilderInterface $builder)
-    {
-        $builder->add(static::FIELD_LATITUDE, TextType::class, [
-            'label' => static::LABEL_LATITUDE,
-            'required' => false,
-            'constraints' => [
-                new Length([
-                    'max' => 255,
-                ]),
-                new Regex([
-                    'pattern' => '/^(\\+|-)?(?:90(?:(?:\\.0{1,6})?)|(?:[0-9]|[1-8][0-9])(?:(?:\\.[0-9]{1,6})?))$/',
-                ]),
-            ],
-            'property_path' => 'merchantProfile.latitude',
-        ]);
-
-        return $this;
     }
 
     /**

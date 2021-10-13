@@ -14,6 +14,9 @@ use Spryker\Client\ShoppingListExtension\Dependency\Plugin\ShoppingListItemMappe
 
 class ShoppingListItemProductOptionRequestMapperPlugin extends AbstractPlugin implements ShoppingListItemMapperPluginInterface
 {
+    /**
+     * @var string
+     */
     protected const REQUEST_PARAM_PRODUCT_OPTION = 'product-option';
 
     /**

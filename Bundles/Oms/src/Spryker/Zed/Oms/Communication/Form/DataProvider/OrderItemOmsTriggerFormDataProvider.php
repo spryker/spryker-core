@@ -11,6 +11,9 @@ use Spryker\Zed\Oms\Communication\Form\OmsTriggerForm;
 
 class OrderItemOmsTriggerFormDataProvider extends AbstractOmsTriggerFormDataProvider
 {
+    /**
+     * @var string
+     */
     public const ROUTE_REDIRECT = '/sales/detail';
 
     /**

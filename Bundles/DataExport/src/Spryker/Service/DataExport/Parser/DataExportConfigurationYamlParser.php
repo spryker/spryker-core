@@ -14,7 +14,13 @@ use Spryker\Service\DataExport\Mapper\DataExportConfigurationMapperInterface;
 
 class DataExportConfigurationYamlParser implements DataExportConfigurationParserInterface
 {
+    /**
+     * @var string
+     */
     protected const HOOK_KEY_TIMESTAMP = 'timestamp';
+    /**
+     * @var string
+     */
     protected const HOOK_KEY_APPLICATION_ROOT_DIR = 'application_root_dir';
 
     /**

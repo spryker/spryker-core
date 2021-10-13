@@ -17,6 +17,7 @@ interface DatasetConstants
      * - Maximum allowed size for uploaded files
      *
      * @api
+     * @var string
      */
     public const DATASET_FILE_SIZE = 'DATASET:FILE_SIZE';
 }

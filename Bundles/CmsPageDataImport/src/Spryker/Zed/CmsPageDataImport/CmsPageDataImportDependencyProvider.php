@@ -16,6 +16,9 @@ use Spryker\Zed\Kernel\Container;
  */
 class CmsPageDataImportDependencyProvider extends DataImportDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_CMS = 'cms facade';
 
     /**

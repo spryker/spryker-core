@@ -122,7 +122,7 @@ interface OmsQueryContainerInterface extends QueryContainerInterface
      *
      * @deprecated Use {@link \Spryker\Zed\Oms\Persistence\OmsRepositoryInterface::getSalesOrderItemsBySkuAndStatesNames()} instead.
      *
-     * @param \Spryker\Zed\Oms\Business\Process\StateInterface[] $states
+     * @param array<\Spryker\Zed\Oms\Business\Process\StateInterface> $states
      * @param string $sku
      * @param bool $returnTest
      *
@@ -138,7 +138,7 @@ interface OmsQueryContainerInterface extends QueryContainerInterface
      *
      * @deprecated Use {@link \Spryker\Zed\Oms\Persistence\OmsRepositoryInterface::getSalesOrderItemsBySkuAndStatesNames()} instead.
      *
-     * @param \Spryker\Zed\Oms\Business\Process\StateInterface[] $states
+     * @param array<\Spryker\Zed\Oms\Business\Process\StateInterface> $states
      * @param string $sku
      * @param string $storeName
      * @param bool $returnTest
@@ -160,7 +160,7 @@ interface OmsQueryContainerInterface extends QueryContainerInterface
      *
      * @api
      *
-     * @param \Spryker\Zed\Oms\Business\Process\StateInterface[] $states
+     * @param array<\Spryker\Zed\Oms\Business\Process\StateInterface> $states
      * @param string $sku
      * @param bool $returnTest
      *
@@ -198,7 +198,7 @@ interface OmsQueryContainerInterface extends QueryContainerInterface
      *
      * @api
      *
-     * @param string[] $activeProcesses
+     * @param array<string> $activeProcesses
      *
      * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderProcessQuery
      */
@@ -237,8 +237,8 @@ interface OmsQueryContainerInterface extends QueryContainerInterface
      *
      * @api
      *
-     * @param int[] $processIds
-     * @param int[] $stateBlacklist
+     * @param array<int> $processIds
+     * @param array<int> $stateBlacklist
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
      */
@@ -250,7 +250,7 @@ interface OmsQueryContainerInterface extends QueryContainerInterface
      *
      * @api
      *
-     * @param string[] $orderItemStates
+     * @param array<string> $orderItemStates
      *
      * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateQuery
      */

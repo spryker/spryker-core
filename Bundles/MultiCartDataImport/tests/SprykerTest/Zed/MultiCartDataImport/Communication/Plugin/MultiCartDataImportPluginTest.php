@@ -31,7 +31,13 @@ use Spryker\Zed\MultiCartDataImport\MultiCartDataImportConfig;
  */
 class MultiCartDataImportPluginTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const TEST_CUSTOMER_REFERENCE = 'DE-test';
+    /**
+     * @var string
+     */
     protected const TEST_CUSTOMER_REFERENCE_STORE = 'DE-test-store';
 
     /**

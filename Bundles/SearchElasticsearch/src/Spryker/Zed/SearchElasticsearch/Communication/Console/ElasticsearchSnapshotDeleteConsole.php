@@ -18,11 +18,26 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class ElasticsearchSnapshotDeleteConsole extends Console
 {
+    /**
+     * @var string
+     */
     public const COMMAND_NAME = 'elasticsearch:snapshot:delete';
+    /**
+     * @var string
+     */
     public const COMMAND_ALIAS = 'search:snapshot:delete';
+    /**
+     * @var string
+     */
     public const DESCRIPTION = 'This command will delete an Elasticsearch snapshot if it exists.';
 
+    /**
+     * @var string
+     */
     public const ARGUMENT_SNAPSHOT_REPOSITORY = 'snapshot-repository';
+    /**
+     * @var string
+     */
     public const ARGUMENT_SNAPSHOT_NAME = 'snapshot-name';
 
     /**

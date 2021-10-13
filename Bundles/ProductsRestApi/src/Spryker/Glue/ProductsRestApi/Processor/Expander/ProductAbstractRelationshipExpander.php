@@ -15,6 +15,9 @@ use Spryker\Glue\ProductsRestApi\Processor\AbstractProducts\AbstractProductsRead
 
 class ProductAbstractRelationshipExpander implements ProductAbstractRelationshipExpanderInterface
 {
+    /**
+     * @var string
+     */
     protected const KEY_SKU = 'sku';
 
     /**
@@ -31,7 +34,7 @@ class ProductAbstractRelationshipExpander implements ProductAbstractRelationship
     }
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
+     * @param array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface> $resources
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return void
@@ -59,7 +62,7 @@ class ProductAbstractRelationshipExpander implements ProductAbstractRelationship
     }
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
+     * @param array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface> $resources
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return void
@@ -88,9 +91,9 @@ class ProductAbstractRelationshipExpander implements ProductAbstractRelationship
     }
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
+     * @param array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface> $resources
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getProductAbstractSkuList(array $resources): array
     {
@@ -123,9 +126,9 @@ class ProductAbstractRelationshipExpander implements ProductAbstractRelationship
     }
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
+     * @param array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface> $resources
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getProductAbstractSkus(array $resources): array
     {
@@ -134,7 +137,7 @@ class ProductAbstractRelationshipExpander implements ProductAbstractRelationship
             $productAbstractSkuList[] = $this->findProductAbstractSkuInAttributes($resource);
         }
 
-        return array_filter($productAbstractSkuList);
+        return array_unique(array_filter($productAbstractSkuList));
     }
 
     /**

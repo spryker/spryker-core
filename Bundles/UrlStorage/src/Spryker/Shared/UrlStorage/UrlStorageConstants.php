@@ -17,6 +17,7 @@ class UrlStorageConstants
      * - Queue name as used for processing url messages
      *
      * @api
+     * @var string
      */
     public const URL_SYNC_STORAGE_QUEUE = 'sync.storage.url';
 
@@ -25,6 +26,7 @@ class UrlStorageConstants
      * - Queue name as used for processing URL messages
      *
      * @api
+     * @var string
      */
     public const URL_SYNC_STORAGE_ERROR_QUEUE = 'sync.storage.url.error';
 
@@ -33,6 +35,7 @@ class UrlStorageConstants
      * - Resource name, this will use for key generating
      *
      * @api
+     * @var string
      */
     public const URL_RESOURCE_NAME = 'url';
 
@@ -41,6 +44,7 @@ class UrlStorageConstants
      * - Resource name, this will use for key generating
      *
      * @api
+     * @var string
      */
     public const REDIRECT_RESOURCE_NAME = 'redirect';
 }

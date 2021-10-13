@@ -23,9 +23,9 @@ class ShoppingListStorageToCompanyUserFacadeBridge implements ShoppingListStorag
     }
 
     /**
-     * @param int[] $companyUserIds
+     * @param array<int> $companyUserIds
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getCustomerReferencesByCompanyUserIds(array $companyUserIds): array
     {

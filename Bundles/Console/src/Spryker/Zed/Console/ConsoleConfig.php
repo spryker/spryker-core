@@ -15,6 +15,11 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class ConsoleConfig extends AbstractBundleConfig
 {
     /**
+     * @var string
+     */
+    protected const SAPI_NAME_CONSOLE = 'cli';
+
+    /**
      * @api
      *
      * @return bool
@@ -32,5 +37,15 @@ class ConsoleConfig extends AbstractBundleConfig
     public function isDebugModeEnabled(): bool
     {
         return $this->getSharedConfig()->isDebugModeEnabled();
+    }
+
+    /**
+     * @api
+     *
+     * @return bool
+     */
+    public function isPhpSapiEqualCli(): bool
+    {
+        return PHP_SAPI === static::SAPI_NAME_CONSOLE;
     }
 }

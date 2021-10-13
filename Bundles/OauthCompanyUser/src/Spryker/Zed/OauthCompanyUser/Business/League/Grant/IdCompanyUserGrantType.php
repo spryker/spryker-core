@@ -19,7 +19,13 @@ use Spryker\Zed\OauthCompanyUser\OauthCompanyUserConfig;
 
 class IdCompanyUserGrantType extends AbstractGrant implements GrantTypeInterface
 {
+    /**
+     * @var string
+     */
     protected const REQUEST_PARAMETER_CUSTOMER_REFERENCE = 'customer_reference';
+    /**
+     * @var string
+     */
     protected const REQUEST_PARAMETER_ID_COMPANY_USER = 'id_company_user';
 
     /**

@@ -31,7 +31,13 @@ class CompanyBusinessUnitTester extends Actor
 {
     use _generated\CompanyBusinessUnitTesterActions;
 
+    /**
+     * @var string
+     */
     protected const LEVEL = 'level';
+    /**
+     * @var string
+     */
     protected const CHILDREN = 'children';
 
     /**
@@ -115,7 +121,7 @@ class CompanyBusinessUnitTester extends Actor
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTreeNodeTransfer[]|\ArrayObject $customerCompanyBusinessUnitTreeNodes
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\CompanyBusinessUnitTreeNodeTransfer> $customerCompanyBusinessUnitTreeNodes
      *
      * @return array
      */

@@ -13,7 +13,13 @@ use Throwable;
 
 class QueueMessageProcessor implements QueueMessageProcessorInterface
 {
+    /**
+     * @var string
+     */
     protected const TYPE_WRITE = 'write';
+    /**
+     * @var string
+     */
     protected const TYPE_DELETE = 'delete';
 
     /**
@@ -37,7 +43,7 @@ class QueueMessageProcessor implements QueueMessageProcessorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QueueReceiveMessageTransfer[] $queueMessageTransfers
+     * @param array<\Generated\Shared\Transfer\QueueReceiveMessageTransfer> $queueMessageTransfers
      *
      * @return array
      */

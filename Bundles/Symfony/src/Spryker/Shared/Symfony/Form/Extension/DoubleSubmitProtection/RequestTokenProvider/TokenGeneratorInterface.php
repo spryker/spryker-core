@@ -12,6 +12,9 @@ namespace Spryker\Shared\Symfony\Form\Extension\DoubleSubmitProtection\RequestTo
  */
 interface TokenGeneratorInterface
 {
+    /**
+     * @var string
+     */
     public const DEFAULT_ALGORITHM = 'sha256';
 
     /**

@@ -26,6 +26,9 @@ use Spryker\Zed\ProductRelationDataImport\Communication\Plugin\ProductRelationDa
  */
 class ProductRelationDataImportPluginTest extends Unit
 {
+    /**
+     * @var int
+     */
     protected const EXPECTED_IMPORT_COUNT = 2;
 
     /**

@@ -18,10 +18,22 @@ use Spryker\Zed\ProductDiscountConnector\Dependency\Facade\ProductDiscountConnec
  */
 class ProductDiscountConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_DISCOUNT = 'FACADE_DISCOUNT';
+    /**
+     * @var string
+     */
     public const FACADE_LOCALE = 'FACADE_LOCALE';
+    /**
+     * @var string
+     */
     public const FACADE_PRODUCT = 'FACADE_PRODUCT';
 
+    /**
+     * @var string
+     */
     public const QUERY_CONTAINER_PRODUCT = 'QUERY_CONTAINER_PRODUCT';
 
     /**

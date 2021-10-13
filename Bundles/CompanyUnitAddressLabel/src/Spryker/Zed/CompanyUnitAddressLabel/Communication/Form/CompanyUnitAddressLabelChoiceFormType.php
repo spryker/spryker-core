@@ -25,6 +25,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class CompanyUnitAddressLabelChoiceFormType extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const OPTION_VALUES_LABEL_CHOICES = 'company_unit_address_label_value_options';
 
     /**

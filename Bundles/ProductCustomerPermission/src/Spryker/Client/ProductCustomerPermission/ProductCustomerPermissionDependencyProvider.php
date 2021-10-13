@@ -15,8 +15,17 @@ use Spryker\Client\ProductCustomerPermission\Dependency\Client\ProductCustomerPe
 
 class ProductCustomerPermissionDependencyProvider extends AbstractDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
+    /**
+     * @var string
+     */
     public const CLIENT_LOCALE = 'CLIENT_LOCALE';
+    /**
+     * @var string
+     */
     public const CLIENT_STORAGE = 'CLIENT_STORAGE';
 
     /**

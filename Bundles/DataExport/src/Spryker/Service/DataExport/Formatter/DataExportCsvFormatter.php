@@ -15,8 +15,14 @@ use Spryker\Service\DataExport\Dependency\External\DataExportToCsvFormatterInter
 
 class DataExportCsvFormatter implements DataExportFormatterInterface
 {
+    /**
+     * @var string
+     */
     protected const MESSAGE_INVALID_DATA_SET = 'Invalid data set provided.';
 
+    /**
+     * @var string
+     */
     protected const EXTENSION_CSV = 'csv';
 
     /**
@@ -79,9 +85,9 @@ class DataExportCsvFormatter implements DataExportFormatterInterface
     }
 
     /**
-     * @param string[] $rowData
+     * @param array<string> $rowData
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function filterOutNewlines(array $rowData): array
     {

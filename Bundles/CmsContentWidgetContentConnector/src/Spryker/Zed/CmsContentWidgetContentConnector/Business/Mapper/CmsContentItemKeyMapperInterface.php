@@ -12,9 +12,9 @@ interface CmsContentItemKeyMapperInterface
     /**
      * @phpstan-return array<string, string>
      *
-     * @param string[] $contentItemKeys
+     * @param array<string> $contentItemKeys
      *
-     * @return string[]
+     * @return array<string>
      */
     public function mapContentItemKeys(array $contentItemKeys): array;
 }

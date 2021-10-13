@@ -1,0 +1,4 @@
+agent-quote-requests:
+    post:
+        companyUserUuid:
+            - NotBlank

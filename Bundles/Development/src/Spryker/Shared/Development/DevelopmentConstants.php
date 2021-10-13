@@ -12,17 +12,28 @@ namespace Spryker\Shared\Development;
  */
 interface DevelopmentConstants
 {
+    /**
+     * @var string
+     */
     public const COMPOSER_REQUIRE_VERSION = 'COMPOSER_REQUIRE_VERSION';
+    /**
+     * @var string
+     */
     public const COMPOSER_REQUIRE_VERSION_EXTERNAL = 'COMPOSER_REQUIRE_VERSION_EXTERNAL';
+    /**
+     * @var string
+     */
     public const COMPOSER_BRANCH_ALIAS = 'COMPOSER_BRANCH_ALIAS';
 
     /**
      * @see \Spryker\Shared\Kernel\KernelConstants::PROJECT_NAMESPACES
+     * @var string
      */
     public const PROJECT_NAMESPACES = 'PROJECT_NAMESPACES';
 
     /**
      * @see \Spryker\Shared\Kernel\KernelConstants::CORE_NAMESPACES
+     * @var string
      */
     public const CORE_NAMESPACES = 'CORE_NAMESPACES';
 
@@ -31,6 +42,7 @@ interface DevelopmentConstants
      * - Sets the permission mode for generated directories.
      *
      * @api
+     * @var string
      */
     public const DIRECTORY_PERMISSION = 'DEVELOPMENT:DIRECTORY_PERMISSION';
 }

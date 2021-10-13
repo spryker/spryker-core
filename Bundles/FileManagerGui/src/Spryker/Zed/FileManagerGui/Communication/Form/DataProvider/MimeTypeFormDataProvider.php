@@ -41,7 +41,7 @@ class MimeTypeFormDataProvider
         $mimeTypeResponseTransfer = $this->fileManagerFacade->findMimeType($idMimeType);
 
         if ($mimeTypeResponseTransfer->getIsSuccessful()) {
-            $mimeTypeTransfer = $mimeTypeResponseTransfer->getMimeType();
+            $mimeTypeTransfer = $mimeTypeResponseTransfer->getMimeTypeOrFail();
         }
 
         return $mimeTypeTransfer;

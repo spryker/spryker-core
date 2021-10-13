@@ -24,7 +24,7 @@ class MonitoringServiceFactory extends AbstractServiceFactory
     }
 
     /**
-     * @return \Spryker\Service\MonitoringExtension\Dependency\Plugin\MonitoringExtensionPluginInterface[]
+     * @return array<\Spryker\Service\MonitoringExtension\Dependency\Plugin\MonitoringExtensionPluginInterface>
      */
     public function getMonitoringExtensions(): array
     {

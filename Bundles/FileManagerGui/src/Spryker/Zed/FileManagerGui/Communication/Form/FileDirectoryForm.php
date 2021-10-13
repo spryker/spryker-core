@@ -23,10 +23,22 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class FileDirectoryForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const FIELD_NAME = 'name';
+    /**
+     * @var string
+     */
     public const FIELD_FILE_DIRECTORY_LOCALIZED_ATTRIBUTES = 'fileDirectoryLocalizedAttributes';
 
+    /**
+     * @var string
+     */
     public const OPTION_DATA_CLASS = 'data_class';
+    /**
+     * @var string
+     */
     public const OPTION_AVAILABLE_LOCALES = 'option_available_locales';
 
     /**
@@ -78,11 +90,11 @@ class FileDirectoryForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array|null $options
+     * @param mixed|null $options
      *
      * @return $this
      */
-    protected function addFileDirectoryLocalizedAttributesForms(FormBuilderInterface $builder, ?array $options = null)
+    protected function addFileDirectoryLocalizedAttributesForms(FormBuilderInterface $builder, $options = null)
     {
         $builder->add(static::FIELD_FILE_DIRECTORY_LOCALIZED_ATTRIBUTES, CollectionType::class, [
             'entry_type' => FileDirectoryLocalizedAttributesForm::class,

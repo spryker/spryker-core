@@ -17,11 +17,29 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class EditContentController extends AbstractController
 {
+    /**
+     * @var string
+     */
     protected const PARAM_ID_CONTENT = 'id-content';
+    /**
+     * @var string
+     */
     protected const PARAM_TERM_KEY = 'term-key';
+    /**
+     * @var string
+     */
     protected const PARAM_REDIRECT_URL = 'redirect-url';
+    /**
+     * @var string
+     */
     protected const URL_REDIRECT_CONTENT_LIST_PAGE = '/content-gui/list-content';
+    /**
+     * @var string
+     */
     protected const MESSAGE_SUCCESS_CONTENT_UPDATE = 'Content item has been successfully updated.';
+    /**
+     * @var string
+     */
     protected const MESSAGE_ERROR_CONTENT_EDIT = 'Content item not found for id %d.';
 
     /**
@@ -29,7 +47,7 @@ class EditContentController extends AbstractController
      *
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function indexAction(Request $request)
     {

@@ -16,6 +16,9 @@ use Spryker\Zed\StorageRedis\Dependency\Facade\StorageRedisToRedisFacadeBridge;
  */
 class StorageRedisDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_REDIS = 'FACADE_REDIS';
 
     /**

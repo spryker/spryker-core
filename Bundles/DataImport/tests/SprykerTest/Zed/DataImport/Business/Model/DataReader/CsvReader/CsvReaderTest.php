@@ -15,6 +15,7 @@ use Spryker\Zed\DataImport\Business\Exception\DataReaderException;
 use Spryker\Zed\DataImport\Business\Exception\DataSetWithHeaderCombineFailedException;
 use Spryker\Zed\DataImport\Business\Model\DataReader\CsvReader\CsvReaderConfiguration;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSet;
+use ValueError;
 
 /**
  * Auto-generated group annotations
@@ -31,7 +32,13 @@ use Spryker\Zed\DataImport\Business\Model\DataSet\DataSet;
  */
 class CsvReaderTest extends Unit
 {
+    /**
+     * @var int
+     */
     public const EXPECTED_NUMBER_OF_DATA_SETS_IN_CSV = 3;
+    /**
+     * @var int
+     */
     public const EXPECTED_NUMBER_OF_COLUMNS_IN_DATA_SET = 3;
 
     /**
@@ -219,7 +226,10 @@ class CsvReaderTest extends Unit
      */
     public function testThrowsExceptionWhenHeaderAndDataSetLengthDoesNotMatch(): void
     {
-        $this->expectException(DataSetWithHeaderCombineFailedException::class);
+        $exceptionClass = version_compare(PHP_VERSION, '8.0.0', '<')
+            ? DataSetWithHeaderCombineFailedException::class
+            : ValueError::class;
+        $this->expectException($exceptionClass);
         $csvReader = $this->getCsvReader(Configuration::dataDir() . 'import-header-dataset-length-missmatch.csv');
 
         $csvReader->current();

@@ -12,10 +12,13 @@ use Spryker\Zed\Money\Dependency\Facade\MoneyToStoreInterface;
 
 class MoneyDataProvider
 {
+    /**
+     * @var int
+     */
     public const DEFAULT_SCALE = 2;
 
     /**
-     * @var \Generated\Shared\Transfer\StoreTransfer[]
+     * @var array<\Generated\Shared\Transfer\StoreTransfer>
      */
     protected static $storeCache = [];
 

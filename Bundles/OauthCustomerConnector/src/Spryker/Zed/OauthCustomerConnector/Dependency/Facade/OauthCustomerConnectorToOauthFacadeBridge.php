@@ -68,9 +68,9 @@ class OauthCustomerConnectorToOauthFacadeBridge implements OauthCustomerConnecto
     }
 
     /**
-     * @param string[] $customerScopes
+     * @param array<string> $customerScopes
      *
-     * @return \Generated\Shared\Transfer\OauthScopeTransfer[]
+     * @return array<\Generated\Shared\Transfer\OauthScopeTransfer>
      */
     public function getScopesByIdentifiers(array $customerScopes): array
     {

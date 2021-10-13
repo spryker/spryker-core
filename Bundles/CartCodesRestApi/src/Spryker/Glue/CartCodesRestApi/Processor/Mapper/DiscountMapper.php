@@ -13,12 +13,12 @@ use Generated\Shared\Transfer\RestDiscountsAttributesTransfer;
 class DiscountMapper implements DiscountMapperInterface
 {
     /**
-     * @var \Spryker\Glue\CartCodesRestApiExtension\Dependency\Plugin\DiscountMapperPluginInterface[]
+     * @var array<\Spryker\Glue\CartCodesRestApiExtension\Dependency\Plugin\DiscountMapperPluginInterface>
      */
     protected $discountMapperPlugins;
 
     /**
-     * @param \Spryker\Glue\CartCodesRestApiExtension\Dependency\Plugin\DiscountMapperPluginInterface[] $discountMapperPlugins
+     * @param array<\Spryker\Glue\CartCodesRestApiExtension\Dependency\Plugin\DiscountMapperPluginInterface> $discountMapperPlugins
      */
     public function __construct(array $discountMapperPlugins)
     {

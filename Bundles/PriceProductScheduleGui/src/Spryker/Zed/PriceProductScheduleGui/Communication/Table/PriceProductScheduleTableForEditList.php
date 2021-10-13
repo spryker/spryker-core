@@ -16,6 +16,9 @@ use Spryker\Zed\PriceProductScheduleGui\Communication\Formatter\RowFormatterInte
 
 class PriceProductScheduleTableForEditList extends AbstractPriceProductScheduleTable
 {
+    /**
+     * @var string
+     */
     protected const COL_ACTIONS = 'actions';
 
     /**
@@ -74,7 +77,7 @@ class PriceProductScheduleTableForEditList extends AbstractPriceProductScheduleT
     /**
      * @param \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductSchedule $item
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function createActionColumn(SpyPriceProductSchedule $item): array
     {

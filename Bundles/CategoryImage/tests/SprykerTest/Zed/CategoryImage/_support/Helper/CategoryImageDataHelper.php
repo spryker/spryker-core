@@ -27,6 +27,9 @@ class CategoryImageDataHelper extends Module
     use LocatorHelperTrait;
     use DataCleanupHelperTrait;
 
+    /**
+     * @var string
+     */
     public const NAMESPACE_ROOT = '\\';
 
     /**
@@ -89,7 +92,7 @@ class CategoryImageDataHelper extends Module
     }
 
     /**
-     * @param int[] $sortOrders
+     * @param array<int> $sortOrders
      *
      * @return \Generated\Shared\Transfer\CategoryImageSetTransfer
      */

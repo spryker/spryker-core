@@ -16,7 +16,7 @@ interface OrderShipmentMapperInterface
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param \ArrayObject $restOrderShipmentTransfers
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\RestOrderShipmentTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\RestOrderShipmentTransfer>
      */
     public function mapOrderTransferToRestOrderShipmentTransfers(
         OrderTransfer $orderTransfer,

@@ -14,8 +14,14 @@ use Generated\Shared\Transfer\FacetConfigTransfer;
  */
 abstract class AbstractAggregationExtractor implements AggregationExtractorInterface
 {
+    /**
+     * @var string
+     */
     public const PATH_SEPARATOR = '.';
 
+    /**
+     * @var string
+     */
     public const DOC_COUNT = 'doc_count';
 
     /**

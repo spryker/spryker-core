@@ -14,15 +14,19 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class ConfigurableBundleTemplateSlotEditFormFileUploadHandler implements ConfigurableBundleTemplateSlotEditFormFileUploadHandlerInterface
 {
+    /**
+     * @phpstan-var non-empty-string
+     * @var string
+     */
     protected const FIELD_PATH_SEPARATOR = '.';
 
     /**
-     * @var \Spryker\Zed\ConfigurableBundleGuiExtension\Dependency\Plugin\ConfigurableBundleTemplateSlotEditFormFileUploadHandlerPluginInterface[]
+     * @var array<\Spryker\Zed\ConfigurableBundleGuiExtension\Dependency\Plugin\ConfigurableBundleTemplateSlotEditFormFileUploadHandlerPluginInterface>
      */
     protected $configurableBundleTemplateSlotEditFormFileUploadHandlerPlugins;
 
     /**
-     * @param \Spryker\Zed\ConfigurableBundleGuiExtension\Dependency\Plugin\ConfigurableBundleTemplateSlotEditFormFileUploadHandlerPluginInterface[] $configurableBundleTemplateSlotEditFormFileUploadHandlerPlugins
+     * @param array<\Spryker\Zed\ConfigurableBundleGuiExtension\Dependency\Plugin\ConfigurableBundleTemplateSlotEditFormFileUploadHandlerPluginInterface> $configurableBundleTemplateSlotEditFormFileUploadHandlerPlugins
      */
     public function __construct(array $configurableBundleTemplateSlotEditFormFileUploadHandlerPlugins)
     {

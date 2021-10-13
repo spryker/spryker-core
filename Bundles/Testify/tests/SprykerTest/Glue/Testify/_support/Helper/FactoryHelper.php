@@ -23,11 +23,17 @@ class FactoryHelper extends Module
     use DependencyProviderHelperTrait;
     use ConfigHelperTrait;
 
+    /**
+     * @var string
+     */
     protected const FACTORY_CLASS_NAME_PATTERN = '\%1$s\Glue\%2$s\%2$sFactory';
+    /**
+     * @var int
+     */
     protected const MODULE_NAME_POSITION = 2;
 
     /**
-     * @var \Spryker\Glue\Kernel\AbstractFactory[]
+     * @var array<\Spryker\Glue\Kernel\AbstractFactory>
      */
     protected $factoryStubs = [];
 

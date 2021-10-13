@@ -20,10 +20,22 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class SearchDeleteSnapshotConsole extends Console
 {
+    /**
+     * @var string
+     */
     public const COMMAND_NAME = 'search:snapshot:delete';
+    /**
+     * @var string
+     */
     public const DESCRIPTION = 'This command will delete a snapshot if it exists.';
 
+    /**
+     * @var string
+     */
     public const ARGUMENT_SNAPSHOT_REPOSITORY = 'snapshot-repository';
+    /**
+     * @var string
+     */
     public const ARGUMENT_SNAPSHOT_NAME = 'snapshot-name';
 
     /**

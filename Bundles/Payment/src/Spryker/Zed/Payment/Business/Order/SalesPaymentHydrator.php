@@ -14,6 +14,9 @@ use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Payment\Dependency\Plugin\Sales\PaymentHydratorPluginCollectionInterface;
 use Spryker\Zed\Payment\Persistence\PaymentQueryContainerInterface;
 
+/**
+ * @deprecated The functionality moved to SalesPayment module.
+ */
 class SalesPaymentHydrator implements SalesPaymentHydratorInterface
 {
     /**
@@ -69,7 +72,7 @@ class SalesPaymentHydrator implements SalesPaymentHydratorInterface
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Payment\Persistence\SpySalesPayment[] $objectCollection
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Payment\Persistence\SpySalesPayment> $objectCollection
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
@@ -131,7 +134,7 @@ class SalesPaymentHydrator implements SalesPaymentHydratorInterface
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return \Orm\Zed\Payment\Persistence\SpySalesPayment[]|\Propel\Runtime\Collection\ObjectCollection|mixed
+     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Payment\Persistence\SpySalesPayment>
      */
     protected function findSalesPaymentByIdSalesOrder(OrderTransfer $orderTransfer)
     {

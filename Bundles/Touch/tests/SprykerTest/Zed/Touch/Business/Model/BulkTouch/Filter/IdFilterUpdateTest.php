@@ -26,6 +26,9 @@ use Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface;
  */
 class IdFilterUpdateTest extends Unit
 {
+    /**
+     * @var string
+     */
     public const ITEM_EVENT_ACTIVE = 'active';
 
     /**

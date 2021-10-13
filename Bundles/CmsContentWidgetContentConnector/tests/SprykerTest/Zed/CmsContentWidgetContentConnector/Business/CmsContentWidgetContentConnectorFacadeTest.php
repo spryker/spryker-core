@@ -28,6 +28,9 @@ class CmsContentWidgetContentConnectorFacadeTest extends Unit
      */
     protected $tester;
 
+    /**
+     * @var string
+     */
     protected const CONTENT_KEY = 'test-key';
 
     /**

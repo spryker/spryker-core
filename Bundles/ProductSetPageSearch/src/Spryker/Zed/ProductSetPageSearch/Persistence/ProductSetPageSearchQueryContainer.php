@@ -21,6 +21,9 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
  */
 class ProductSetPageSearchQueryContainer extends AbstractQueryContainer implements ProductSetPageSearchQueryContainerInterface
 {
+    /**
+     * @var string
+     */
     public const FK_PRODUCT_RESOURCE_SET = 'fkProductSet';
 
     /**
@@ -115,7 +118,7 @@ class ProductSetPageSearchQueryContainer extends AbstractQueryContainer implemen
      *
      * @api
      *
-     * @param int[] $ids
+     * @param array<int> $ids
      *
      * @return \Orm\Zed\ProductSet\Persistence\SpyProductSetQuery
      */

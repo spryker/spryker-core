@@ -12,6 +12,9 @@ use Spryker\Client\Kernel\Container;
 
 class GlossaryDependencyProvider extends AbstractDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const KV_STORAGE = 'kv storage';
 
     /**

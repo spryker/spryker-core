@@ -14,7 +14,13 @@ use Spryker\Client\ProductReviewStorage\Dependency\Service\ProductReviewStorageT
 
 class ProductReviewStorageDependencyProvider extends AbstractDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_STORAGE = 'CLIENT_STORAGE';
+    /**
+     * @var string
+     */
     public const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
 
     /**

@@ -18,10 +18,15 @@ use Spryker\Yves\Kernel\AbstractPlugin;
  */
 class LocaleApplicationPlugin extends AbstractPlugin implements ApplicationPluginInterface
 {
+    /**
+     * @var string
+     */
     protected const SERVICE_LOCALE = 'locale';
 
     /**
      * Added for BC reason only.
+     *
+     * @var string
      */
     protected const BC_FEATURE_FLAG_LOCALE_LISTENER = 'BC_FEATURE_FLAG_LOCALE_LISTENER';
 

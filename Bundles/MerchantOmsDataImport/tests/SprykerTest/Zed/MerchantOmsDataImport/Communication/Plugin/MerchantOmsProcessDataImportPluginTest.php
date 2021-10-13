@@ -26,7 +26,10 @@ use Spryker\Zed\MerchantOmsDataImport\Communication\Plugin\DataImport\MerchantOm
  */
 class MerchantOmsProcessDataImportPluginTest extends Unit
 {
-    public const MERCHANT_KEY = 'merchant-profile-data-import-test-key';
+    /**
+     * @var string
+     */
+    public const MERCHANT_REFERENCE = 'merchant-profile-data-import-test-reference';
 
     /**
      * @var \SprykerTest\Zed\MerchantOmsDataImport\MerchantOmsDataImportCommunicationTester
@@ -39,9 +42,9 @@ class MerchantOmsProcessDataImportPluginTest extends Unit
     public function testMerchantOmsProcessImport(): void
     {
         // Arrange
-        if (!$this->tester->findMerchantByKey(static::MERCHANT_KEY)) {
+        if (!$this->tester->findMerchantByReference(static::MERCHANT_REFERENCE)) {
             $this->tester->haveMerchant([
-                'merchant_key' => static::MERCHANT_KEY,
+                'merchant_reference' => static::MERCHANT_REFERENCE,
             ]);
         }
 
@@ -54,7 +57,7 @@ class MerchantOmsProcessDataImportPluginTest extends Unit
         // Act
         $merchantOmsProcessDataImportPlugin = new MerchantOmsProcessDataImportPlugin();
         $dataImporterReportTransfer = $merchantOmsProcessDataImportPlugin->import($dataImportConfigurationTransfer);
-        $merchantEntity = $this->tester->findMerchantByKey(static::MERCHANT_KEY);
+        $merchantEntity = $this->tester->findMerchantByReference(static::MERCHANT_REFERENCE);
 
         // Assert
         $this->assertInstanceOf(DataImporterReportTransfer::class, $dataImporterReportTransfer);

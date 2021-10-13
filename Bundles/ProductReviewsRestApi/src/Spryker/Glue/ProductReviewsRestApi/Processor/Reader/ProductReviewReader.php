@@ -22,17 +22,25 @@ use Spryker\Glue\ProductReviewsRestApi\ProductReviewsRestApiConfig;
 
 class ProductReviewReader implements ProductReviewReaderInterface
 {
+    /**
+     * @var string
+     */
     protected const PRODUCT_ABSTRACT_MAPPING_TYPE = 'sku';
 
+    /**
+     * @var string
+     */
     protected const KEY_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
 
     /**
      * @uses \Spryker\Client\ProductReview\Plugin\Elasticsearch\ResultFormatter\ProductReviewsResultFormatterPlugin::NAME
+     * @var string
      */
     protected const PRODUCT_REVIEWS = 'productReviews';
 
     /**
      * @uses \Spryker\Client\ProductReview\Plugin\Elasticsearch\ResultFormatter\PaginatedProductReviewsResultFormatterPlugin::NAME
+     * @var string
      */
     protected const PAGINATION = 'pagination';
 
@@ -110,14 +118,14 @@ class ProductReviewReader implements ProductReviewReaderInterface
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[][]
+     * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]>
      */
     public function getProductReviewsResourceCollection(array $productAbstractIds, FilterTransfer $filterTransfer): array
     {
-        /** @var \Generated\Shared\Transfer\ProductReviewTransfer[] $productReviewTransfers */
+        /** @var array<\Generated\Shared\Transfer\ProductReviewTransfer> $productReviewTransfers */
         $productReviewTransfers = $this->getBulkProductReviewsInSearch(
             $productAbstractIds,
             $filterTransfer
@@ -159,7 +167,7 @@ class ProductReviewReader implements ProductReviewReaderInterface
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      *
      * @return array

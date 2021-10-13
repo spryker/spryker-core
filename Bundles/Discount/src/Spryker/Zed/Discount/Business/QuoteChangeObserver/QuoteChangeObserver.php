@@ -17,8 +17,17 @@ use Spryker\Zed\Discount\DiscountDependencyProvider;
 
 class QuoteChangeObserver implements QuoteChangeObserverInterface
 {
+    /**
+     * @var string
+     */
     public const GLOSSARY_KEY_DISCOUNT_QUOTE_CHANGE_DISCOUNT_NOT_AVAILABLE = 'discount.quote_change.discount.not_available';
+    /**
+     * @var string
+     */
     public const GLOSSARY_KEY_DISCOUNT_QUOTE_CHANGE_DISCOUNT_AMOUNT_CHANGED = 'discount.quote_change.discount.amount_changed';
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_DISCOUNT_QUOTE_CHANGE_DOES_NOT_APPLY_FOR_CURRENCY = 'discount.quote_change.does_not_apply_for_currency';
 
     /**
@@ -67,11 +76,11 @@ class QuoteChangeObserver implements QuoteChangeObserverInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\DiscountTransfer[] $indexResultDiscountTransferCollection
-     * @param \Generated\Shared\Transfer\DiscountTransfer[] $indexSourceDiscountTransferCollection
+     * @param array<\Generated\Shared\Transfer\DiscountTransfer> $indexResultDiscountTransferCollection
+     * @param array<\Generated\Shared\Transfer\DiscountTransfer> $indexSourceDiscountTransferCollection
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function checkRemovedDiscountsItemsSku(
         array $indexResultDiscountTransferCollection,
@@ -92,11 +101,11 @@ class QuoteChangeObserver implements QuoteChangeObserverInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\DiscountTransfer[] $indexResultDiscountTransferCollection
-     * @param \Generated\Shared\Transfer\DiscountTransfer[] $indexSourceDiscountTransferCollection
+     * @param array<\Generated\Shared\Transfer\DiscountTransfer> $indexResultDiscountTransferCollection
+     * @param array<\Generated\Shared\Transfer\DiscountTransfer> $indexSourceDiscountTransferCollection
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function checkCurrentDiscountsDiffItemsSku(
         array $indexResultDiscountTransferCollection,
@@ -120,9 +129,9 @@ class QuoteChangeObserver implements QuoteChangeObserverInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\DiscountTransfer[] $discountTransferCollection
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\DiscountTransfer> $discountTransferCollection
      *
-     * @return \Generated\Shared\Transfer\DiscountTransfer[]
+     * @return array<\Generated\Shared\Transfer\DiscountTransfer>
      */
     protected function indexDiscountTransferCollection(ArrayObject $discountTransferCollection): array
     {
@@ -141,7 +150,7 @@ class QuoteChangeObserver implements QuoteChangeObserverInterface
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param int $idDiscount
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function findItemsWithAppliedDiscounts(QuoteTransfer $quoteTransfer, int $idDiscount): array
     {

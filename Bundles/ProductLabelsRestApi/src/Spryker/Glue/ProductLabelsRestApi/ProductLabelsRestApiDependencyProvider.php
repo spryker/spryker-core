@@ -17,7 +17,13 @@ use Spryker\Glue\ProductLabelsRestApi\Dependency\Client\ProductLabelsRestApiToPr
  */
 class ProductLabelsRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE';
+    /**
+     * @var string
+     */
     public const CLIENT_PRODUCT_LABEL_STORAGE = 'CLIENT_PRODUCT_LABEL_STORAGE';
 
     /**

@@ -39,7 +39,7 @@ class ProductConcreteImageEventResourceQueryContainerPlugin extends AbstractPlug
      *
      * @api
      *
-     * @param int[] $ids
+     * @param array<int> $ids
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria|null
      */
@@ -53,7 +53,7 @@ class ProductConcreteImageEventResourceQueryContainerPlugin extends AbstractPlug
             $query->innerJoinSpyProductImageSet();
         }
 
-        return $query;
+        return $query->distinct();
     }
 
     /**

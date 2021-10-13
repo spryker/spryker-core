@@ -22,6 +22,7 @@ class MerchantProfileWriterStep extends PublishAwareStep implements DataImportSt
 {
     /**
      * @uses \Spryker\Shared\GlossaryStorage\GlossaryStorageConfig::GLOSSARY_KEY_PUBLISH_WRITE
+     * @var string
      */
     protected const GLOSSARY_KEY_PUBLISH_WRITE = 'Glossary.key.publish';
 
@@ -116,6 +117,6 @@ class MerchantProfileWriterStep extends PublishAwareStep implements DataImportSt
      */
     protected function generateMerchantGlossaryKey(string $field, int $idMerchant): string
     {
-         return sprintf('merchant.%s.%s', $field, $idMerchant);
+        return sprintf('merchant.%s.%s', $field, $idMerchant);
     }
 }

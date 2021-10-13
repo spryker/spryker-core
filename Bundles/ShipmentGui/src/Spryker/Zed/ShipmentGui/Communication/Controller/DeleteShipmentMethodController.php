@@ -16,17 +16,29 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class DeleteShipmentMethodController extends AbstractController
 {
+    /**
+     * @var string
+     */
     protected const PARAM_ID_SHIPMENT_METHOD = 'id-shipment-method';
 
+    /**
+     * @var string
+     */
     protected const REDIRECT_URL = '/shipment-gui/shipment-method';
 
+    /**
+     * @var string
+     */
     protected const MESSAGE_DELIVERY_METHOD_NOT_FOUND = 'Delivery method not found.';
+    /**
+     * @var string
+     */
     protected const MESSAGE_SUCCESS = 'Delivery method was deleted successfully.';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function indexAction(Request $request)
     {

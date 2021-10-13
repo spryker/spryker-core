@@ -11,12 +11,15 @@ use Spryker\Zed\Oms\Communication\Form\OmsTriggerForm;
 
 class OrderItemsOmsTriggerFormDataProvider
 {
+    /**
+     * @var string
+     */
     protected const QUERY_PARAM_ITEMS = 'items';
 
     /**
      * @param string $redirectUrl
      * @param string $event
-     * @param int[] $salesOrderItemIds
+     * @param array<int> $salesOrderItemIds
      *
      * @return array
      */

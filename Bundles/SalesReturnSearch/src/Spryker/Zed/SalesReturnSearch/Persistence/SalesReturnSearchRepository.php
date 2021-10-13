@@ -20,9 +20,9 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 class SalesReturnSearchRepository extends AbstractRepository implements SalesReturnSearchRepositoryInterface
 {
     /**
-     * @param int[] $returnReasonIds
+     * @param array<int> $returnReasonIds
      *
-     * @return \Generated\Shared\Transfer\ReturnReasonSearchTransfer[]
+     * @return array<\Generated\Shared\Transfer\ReturnReasonSearchTransfer>
      */
     public function getReturnReasonSearchTransfersByReturnReasonIds(array $returnReasonIds): array
     {
@@ -52,9 +52,9 @@ class SalesReturnSearchRepository extends AbstractRepository implements SalesRet
 
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     * @param int[] $returnReasonIds
+     * @param array<int> $returnReasonIds
      *
-     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     * @return array<\Generated\Shared\Transfer\SynchronizationDataTransfer>
      */
     public function getReturnReasonSynchronizationDataTransfersByIds(FilterTransfer $filterTransfer, array $returnReasonIds = []): array
     {
@@ -82,7 +82,7 @@ class SalesReturnSearchRepository extends AbstractRepository implements SalesRet
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      * @param array $returnReasonIds
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\SalesReturnSearch\Persistence\SpySalesReturnReasonSearch[]
+     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\SalesReturnSearch\Persistence\SpySalesReturnReasonSearch>
      */
     protected function getReturnReasonSearchEntityCollection(
         FilterTransfer $filterTransfer,

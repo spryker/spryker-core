@@ -57,7 +57,7 @@ class ProductPricesRestApiToPriceClientBridge implements ProductPricesRestApiToP
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getPriceModes()
     {

@@ -72,11 +72,25 @@ class QuoteApprovalFacade extends AbstractFacade implements QuoteApprovalFacadeI
      *
      * @param int $idQuote
      *
-     * @return \Generated\Shared\Transfer\QuoteApprovalTransfer[]
+     * @return array<\Generated\Shared\Transfer\QuoteApprovalTransfer>
      */
     public function getQuoteApprovalsByIdQuote(int $idQuote): array
     {
         return $this->getFactory()->getQuoteApprovalRepository()->getQuoteApprovalsByIdQuote($idQuote);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteApprovalRequestTransfer $quoteApprovalsRequestTransfer
+     *
+     * @return array<\Generated\Shared\Transfer\QuoteApprovalTransfer>
+     */
+    public function getQuoteApprovals(QuoteApprovalRequestTransfer $quoteApprovalsRequestTransfer): array
+    {
+        return $this->getFactory()->getQuoteApprovalRepository()->getQuoteApprovalsIdexedByQuoteId($quoteApprovalsRequestTransfer);
     }
 
     /**
@@ -165,7 +179,7 @@ class QuoteApprovalFacade extends AbstractFacade implements QuoteApprovalFacadeI
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getQuoteFieldsAllowedForSavingByQuoteApprovalStatus(QuoteTransfer $quoteTransfer): array
     {
@@ -188,5 +202,21 @@ class QuoteApprovalFacade extends AbstractFacade implements QuoteApprovalFacadeI
         return $this->getFactory()
             ->createQuoteStatusChecker()
             ->isQuoteInApprovalProcess($quoteTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    public function isQuoteWaitingForApproval(QuoteTransfer $quoteTransfer): bool
+    {
+        return $this->getFactory()
+            ->createQuoteStatusChecker()
+            ->isQuoteWaitingForApproval($quoteTransfer);
     }
 }

@@ -45,7 +45,7 @@ interface ResourceRelationshipCollectionInterface
      *
      * @param string $resourceType
      *
-     * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipPluginInterface[]
+     * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipPluginInterface>
      */
     public function getRelationships(string $resourceType): array;
 }

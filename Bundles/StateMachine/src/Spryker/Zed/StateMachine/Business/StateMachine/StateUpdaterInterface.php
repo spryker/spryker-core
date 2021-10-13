@@ -10,9 +10,9 @@ namespace Spryker\Zed\StateMachine\Business\StateMachine;
 interface StateUpdaterInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems
-     * @param \Spryker\Zed\StateMachine\Business\Process\ProcessInterface[] $processes
-     * @param string[] $sourceStates
+     * @param array<\Generated\Shared\Transfer\StateMachineItemTransfer> $stateMachineItems
+     * @param array<\Spryker\Zed\StateMachine\Business\Process\ProcessInterface> $processes
+     * @param array<string> $sourceStates
      *
      * @return void
      */

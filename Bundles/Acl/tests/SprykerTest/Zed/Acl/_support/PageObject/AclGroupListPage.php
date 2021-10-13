@@ -9,5 +9,8 @@ namespace SprykerTest\Zed\Acl\PageObject;
 
 class AclGroupListPage
 {
+    /**
+     * @var string
+     */
     public const URL = '/acl/group';
 }

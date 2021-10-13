@@ -10,7 +10,12 @@ describe('ZedMerchantLayoutCentralComponent', () => {
 
     @Component({
         selector: 'test',
-        template: ` <mp-merchant-layout-centered>Content</mp-merchant-layout-centered> `,
+        template: `
+            <mp-merchant-layout-centered>
+                <div class="default-content"></div>
+                <div footer class="footer-content"></div>
+            </mp-merchant-layout-centered>
+        `,
     })
     class TestComponent {}
 
@@ -36,5 +41,17 @@ describe('ZedMerchantLayoutCentralComponent', () => {
         const centeredLayoutElem = fixture.debugElement.query(By.css('mp-layout-centered'));
 
         expect(centeredLayoutElem).toBeTruthy();
+    });
+
+    it('should render default content in the `mp-layout-centered` component', () => {
+        const defaultContentElem = fixture.debugElement.query(By.css('mp-layout-centered .default-content'));
+
+        expect(defaultContentElem).toBeTruthy();
+    });
+
+    it('should render footer content in the `mp-layout-centered__footer` element', () => {
+        const footerContentElem = fixture.debugElement.query(By.css('.mp-layout-centered__footer .footer-content'));
+
+        expect(footerContentElem).toBeTruthy();
     });
 });

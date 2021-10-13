@@ -44,25 +44,55 @@ class ProductBundleBusinessTester extends Actor
 {
     use _generated\ProductBundleBusinessTesterActions;
 
+    /**
+     * @var string
+     */
     public const SKU_BUNDLED_1 = 'sku-1-test-tester';
+    /**
+     * @var string
+     */
     public const SKU_BUNDLED_2 = 'sku-2-test-tester';
+    /**
+     * @var string
+     */
     public const BUNDLE_SKU_3 = 'sku-3-test-tester';
+    /**
+     * @var int
+     */
     public const BUNDLED_PRODUCT_PRICE_1 = 50;
+    /**
+     * @var int
+     */
     public const BUNDLED_PRODUCT_PRICE_2 = 100;
 
+    /**
+     * @var string
+     */
     public const FAKE_BUNDLE_ITEM_IDENTIFIER_1 = 'FAKE_BUNDLE_ITEM_IDENTIFIER_1';
+    /**
+     * @var string
+     */
     public const FAKE_BUNDLE_ITEM_IDENTIFIER_2 = 'FAKE_BUNDLE_ITEM_IDENTIFIER_2';
 
+    /**
+     * @var string
+     */
     public const FAKE_PRODUCT_OPTION_SKU_1 = 'FAKE_PRODUCT_OPTION_SKU_1';
+    /**
+     * @var string
+     */
     public const FAKE_PRODUCT_OPTION_SKU_2 = 'FAKE_PRODUCT_OPTION_SKU_2';
 
+    /**
+     * @var string
+     */
     protected const STORE_NAME_DE = 'DE';
 
     /**
      * @param int $bundlePrice
      * @param bool $isAlwaysAvailable
      * @param bool $isNeverOutOfStock
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productsToAssign
+     * @param array<\Generated\Shared\Transfer\ProductConcreteTransfer> $productsToAssign
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
@@ -194,7 +224,7 @@ class ProductBundleBusinessTester extends Actor
     }
 
     /**
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     public function createBundleItemsWithOptions(): array
     {

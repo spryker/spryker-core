@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\SecurityGui\Communication\Controller;
 
+use Generated\Shared\Transfer\UserPasswordResetRequestTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Spryker\Zed\SecurityGui\Communication\Form\ResetPasswordForm;
 use Spryker\Zed\SecurityGui\Communication\Form\ResetPasswordRequestForm;
@@ -18,6 +19,9 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class PasswordController extends AbstractController
 {
+    /**
+     * @var string
+     */
     public const PARAM_TOKEN = 'token';
 
     /**
@@ -34,7 +38,10 @@ class PasswordController extends AbstractController
             $formData = $resetRequestForm->getData();
             $this->getFactory()
                 ->getUserPasswordResetFacade()
-                ->requestPasswordReset($formData[ResetPasswordRequestForm::FIELD_EMAIL]);
+                ->requestPasswordReset(
+                    (new UserPasswordResetRequestTransfer())
+                        ->setEmail($formData[ResetPasswordRequestForm::FIELD_EMAIL])
+                );
 
             $this->addSuccessMessage(
                 'If there is an account associated with this email, you will receive an Email with further instructions.'
@@ -49,11 +56,11 @@ class PasswordController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function resetAction(Request $request)
     {
-        $token = $request->query->get(self::PARAM_TOKEN);
+        $token = (string)$request->query->get(self::PARAM_TOKEN);
         if (!$token) {
             $this->addErrorMessage('Request token is missing!');
 

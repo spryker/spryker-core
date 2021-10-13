@@ -39,9 +39,9 @@ class ProductOptionExpander implements ProductOptionExpanderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     public function expandItemProductBundlesWithProductOptions(array $itemTransfers): array
     {
@@ -61,9 +61,9 @@ class ProductOptionExpander implements ProductOptionExpanderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     protected function extractMappedProductBundlesWithProductOptions(array $itemTransfers): array
     {
@@ -86,9 +86,9 @@ class ProductOptionExpander implements ProductOptionExpanderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $productBundles
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $productBundles
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     protected function sortProductBundlesProductOptions(array $productBundles): array
     {
@@ -159,9 +159,9 @@ class ProductOptionExpander implements ProductOptionExpanderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductOptionTransfer[] $productOptionTransfers
+     * @param array<\Generated\Shared\Transfer\ProductOptionTransfer> $productOptionTransfers
      *
-     * @return \Generated\Shared\Transfer\ProductOptionTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductOptionTransfer>
      */
     protected function sortBundleProductOptions(array $productOptionTransfers): array
     {

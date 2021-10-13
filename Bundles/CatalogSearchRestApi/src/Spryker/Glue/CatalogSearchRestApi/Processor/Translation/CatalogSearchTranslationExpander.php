@@ -12,7 +12,13 @@ use Spryker\Glue\CatalogSearchRestApi\Dependency\Client\CatalogSearchRestApiToGl
 
 class CatalogSearchTranslationExpander implements CatalogSearchTranslationExpanderInterface
 {
+    /**
+     * @var string
+     */
     protected const GLOSSARY_SORT_PARAM_NAME_KEY_PREFIX = 'catalog.sort.';
+    /**
+     * @var string
+     */
     protected const GLOSSARY_FACET_NAME_KEY_PREFIX = 'product.filter.';
 
     /**

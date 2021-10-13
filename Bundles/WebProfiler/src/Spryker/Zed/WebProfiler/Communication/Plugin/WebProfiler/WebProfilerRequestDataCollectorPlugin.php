@@ -14,7 +14,13 @@ use Symfony\Component\HttpKernel\DataCollector\RequestDataCollector;
 
 class WebProfilerRequestDataCollectorPlugin implements WebProfilerDataCollectorPluginInterface
 {
+    /**
+     * @var string
+     */
     protected const NAME = 'request';
+    /**
+     * @var string
+     */
     protected const TEMPLATE = '@WebProfiler/Collector/request.html.twig';
 
     /**

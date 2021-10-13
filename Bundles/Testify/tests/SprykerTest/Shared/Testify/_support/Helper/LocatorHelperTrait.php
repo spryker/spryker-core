@@ -10,19 +10,22 @@ namespace SprykerTest\Shared\Testify\Helper;
 trait LocatorHelperTrait
 {
     /**
-     * @return \Generated\Service\Ide\AutoCompletion|\Generated\Zed\Ide\AutoCompletion|\Spryker\Shared\Kernel\LocatorLocatorInterface
+     * @return \Generated\Service\Ide\AutoCompletion&\Generated\Zed\Ide\AutoCompletion&\Spryker\Shared\Kernel\LocatorLocatorInterface
      */
-    private function getLocator()
+    protected function getLocator()
     {
         return $this->getLocatorHelper()->getLocator();
     }
 
     /**
-     * @return \Codeception\Module|\SprykerTest\Shared\Testify\Helper\LocatorHelper
+     * @return \SprykerTest\Shared\Testify\Helper\LocatorHelper
      */
-    private function getLocatorHelper()
+    protected function getLocatorHelper(): LocatorHelper
     {
-        return $this->getModule('\\' . LocatorHelper::class);
+        /** @var \SprykerTest\Shared\Testify\Helper\LocatorHelper $locatorHelper */
+        $locatorHelper = $this->getModule('\\' . LocatorHelper::class);
+
+        return $locatorHelper;
     }
 
     /**

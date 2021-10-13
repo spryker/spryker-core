@@ -1,0 +1,13 @@
+<div class="mp-create-concrete-products-overlay__header">
+    <spy-headline>
+        <div class="mp-create-concrete-products-overlay__title">
+            <ng-content select="[title]"></ng-content>
+        </div>
+        <h3 class="mp-create-concrete-products-overlay__sub-title">{{ product.sku }}, {{ product.name }}</h3>
+        <ng-content select="[action]" actions></ng-content>
+    </spy-headline>
+</div>
+
+<div class="mp-create-concrete-products-overlay__content">
+    <ng-content></ng-content>
+</div>

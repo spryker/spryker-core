@@ -27,6 +27,9 @@ use Spryker\Zed\ProductDiscontinued\Persistence\ProductDiscontinuedEntityManager
  */
 class ProductDiscontinuedFacadeTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const NOTE_TEST = 'NOTE_TEST';
 
     /**
@@ -188,7 +191,7 @@ class ProductDiscontinuedFacadeTest extends Unit
         $this->tester->getFacade()->markProductAsDiscontinued($productDiscontinueRequestTransfer);
 
         // Act
-        $result = $this->tester->getFacade()->findProductAbstractIdsWithDiscontinuedConcrete();
+        $result = array_map('intval', $this->tester->getFacade()->findProductAbstractIdsWithDiscontinuedConcrete());
 
         // Assert
         $this->assertContains($this->productConcrete->getFkProductAbstract(), $result);

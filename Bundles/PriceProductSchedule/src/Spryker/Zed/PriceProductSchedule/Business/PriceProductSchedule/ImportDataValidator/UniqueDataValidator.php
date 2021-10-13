@@ -15,6 +15,9 @@ use Spryker\Zed\PriceProductSchedule\Persistence\PriceProductScheduleRepositoryI
 
 class UniqueDataValidator extends AbstractImportDataValidator
 {
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_SCHEDULED_PRICE_ALREADY_EXISTS = 'Scheduled price already exists.';
 
     /**

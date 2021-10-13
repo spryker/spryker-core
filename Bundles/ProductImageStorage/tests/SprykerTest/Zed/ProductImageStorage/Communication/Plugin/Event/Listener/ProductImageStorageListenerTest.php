@@ -175,6 +175,8 @@ class ProductImageStorageListenerTest extends Unit
             (new EventEntityTransfer())->setId($this->productAbstractTransfer->getIdProductAbstract()),
         ];
 
+        $this->tester->deleteProductImageSetToProductImage($this->productImageSetTransfer->getIdProductImageSet());
+
         // Act
         $productImageAbstractUnpublishStorageListener->handleBulk($eventTransfers, ProductImageEvents::PRODUCT_IMAGE_PRODUCT_ABSTRACT_PUBLISH);
 
@@ -246,6 +248,8 @@ class ProductImageStorageListenerTest extends Unit
         foreach ($this->productImageSetTransfer->getProductImages() as $productImageTransfer) {
             $eventTransfers[] = (new EventEntityTransfer())->setId($productImageTransfer->getIdProductImage());
         }
+
+        $this->tester->deleteProductImageSetToProductImage($this->productImageSetTransfer->getIdProductImageSet());
 
         // Act
         $productImageAbstractUnpublishStorageListener->handleBulk($eventTransfers, ProductImageEvents::ENTITY_SPY_PRODUCT_IMAGE_DELETE);
@@ -319,6 +323,8 @@ class ProductImageStorageListenerTest extends Unit
             ]),
         ];
 
+        $this->tester->deleteProductImageSetToProductImage($this->productImageSetTransfer->getIdProductImageSet());
+
         // Act
         $productAbstractImageSetStorageUnpublishListener->handleBulk($eventTransfers, ProductImageEvents::ENTITY_SPY_PRODUCT_IMAGE_SET_DELETE);
 
@@ -338,7 +344,7 @@ class ProductImageStorageListenerTest extends Unit
         $productAbstractImageSetProductImageStorageListener = new ProductAbstractImageSetProductImageStorageListener();
         $productAbstractImageSetProductImageStorageListener->setFacade($this->getProductImageStorageFacade());
 
-        $productImageSetToProductImage = SpyProductImageSetToProductImageQuery::create()->findOneByFkProductImageSet(
+        $productImageSetToProductImage = $this->tester->findProductImageSetToProductImage(
             $this->productImageSetTransfer->getIdProductImageSet()
         );
 
@@ -367,7 +373,7 @@ class ProductImageStorageListenerTest extends Unit
         $productAbstractImageSetProductImageStoragePublishListener = new ProductAbstractImageSetProductImageStoragePublishListener();
         $productAbstractImageSetProductImageStoragePublishListener->setFacade($this->getProductImageStorageFacade());
 
-        $productImageSetToProductImage = SpyProductImageSetToProductImageQuery::create()->findOneByFkProductImageSet(
+        $productImageSetToProductImage = $this->tester->findProductImageSetToProductImage(
             $this->productImageSetTransfer->getIdProductImageSet()
         );
 
@@ -393,7 +399,7 @@ class ProductImageStorageListenerTest extends Unit
         $productAbstractImageSetProductImageStorageUnpublishListener = new ProductAbstractImageSetProductImageStorageUnpublishListener();
         $productAbstractImageSetProductImageStorageUnpublishListener->setFacade($this->getProductImageStorageFacade());
 
-        $productImageSetToProductImage = SpyProductImageSetToProductImageQuery::create()->findOneByFkProductImageSet(
+        $productImageSetToProductImage = $this->tester->findProductImageSetToProductImage(
             $this->productImageSetTransfer->getIdProductImageSet()
         );
 
@@ -402,6 +408,8 @@ class ProductImageStorageListenerTest extends Unit
         if ($productImageSetToProductImage) {
             $eventTransfers[] = (new EventEntityTransfer())->setId($productImageSetToProductImage->getIdProductImageSetToProductImage());
         }
+
+        $this->tester->deleteProductImageSetToProductImage($this->productImageSetTransfer->getIdProductImageSet());
 
         // Act
         $productAbstractImageSetProductImageStorageUnpublishListener->handleBulk($eventTransfers, ProductImageEvents::ENTITY_SPY_PRODUCT_IMAGE_SET_TO_PRODUCT_IMAGE_DELETE);
@@ -543,9 +551,7 @@ class ProductImageStorageListenerTest extends Unit
             $eventTransfers[] = (new EventEntityTransfer())->setId($productImageTransfer->getIdProductImage());
         }
 
-        SpyProductImageSetToProductImageQuery::create()->findOneByFkProductImageSet(
-            $this->productImageSetTransfer->getIdProductImageSet()
-        )->delete();
+        $this->tester->deleteProductImageSetToProductImage($this->productImageSetTransfer->getIdProductImageSet());
 
         // Act
         $productConcreteImageStorageUnpublishListener->handleBulk($eventTransfers, ProductImageEvents::ENTITY_SPY_PRODUCT_IMAGE_DELETE);
@@ -639,7 +645,9 @@ class ProductImageStorageListenerTest extends Unit
         $productConcreteImageSetProductImageStorageListener = new ProductConcreteImageSetProductImageStorageListener();
         $productConcreteImageSetProductImageStorageListener->setFacade($this->getProductImageStorageFacade());
 
-        $productImageSetToProductImage = SpyProductImageSetToProductImageQuery::create()->findOneByFkProductImageSet($this->productImageSetTransfer->getIdProductImageSet());
+        $productImageSetToProductImage = $this->tester->findProductImageSetToProductImage(
+            $this->productImageSetTransfer->getIdProductImageSet()
+        );
 
         $eventTransfers = [];
 
@@ -666,7 +674,9 @@ class ProductImageStorageListenerTest extends Unit
         $productConcreteImageSetProductImageStoragePublishListener = new ProductConcreteImageSetProductImageStoragePublishListener();
         $productConcreteImageSetProductImageStoragePublishListener->setFacade($this->getProductImageStorageFacade());
 
-        $productImageSetToProductImage = SpyProductImageSetToProductImageQuery::create()->findOneByFkProductImageSet($this->productImageSetTransfer->getIdProductImageSet());
+        $productImageSetToProductImage = $this->tester->findProductImageSetToProductImage(
+            $this->productImageSetTransfer->getIdProductImageSet()
+        );
 
         $eventTransfers = [];
 
@@ -690,7 +700,9 @@ class ProductImageStorageListenerTest extends Unit
         $productConcreteImageSetProductImageStorageUnpublishListener = new ProductConcreteImageSetProductImageStorageUnpublishListener();
         $productConcreteImageSetProductImageStorageUnpublishListener->setFacade($this->getProductImageStorageFacade());
 
-        $productImageSetToProductImage = SpyProductImageSetToProductImageQuery::create()->findOneByFkProductImageSet($this->productImageSetTransfer->getIdProductImageSet());
+        $productImageSetToProductImage = $this->tester->findProductImageSetToProductImage(
+            $this->productImageSetTransfer->getIdProductImageSet()
+        );
 
         $eventTransfers = [];
 
@@ -698,9 +710,7 @@ class ProductImageStorageListenerTest extends Unit
             $eventTransfers[] = (new EventEntityTransfer())->setId($productImageSetToProductImage->getIdProductImageSetToProductImage());
         }
 
-        SpyProductImageSetToProductImageQuery::create()->findOneByFkProductImageSet(
-            $this->productImageSetTransfer->getIdProductImageSet()
-        )->delete();
+        $this->tester->deleteProductImageSetToProductImage($this->productImageSetTransfer->getIdProductImageSet());
 
         // Act
         $productConcreteImageSetProductImageStorageUnpublishListener->handleBulk($eventTransfers, ProductImageEvents::ENTITY_SPY_PRODUCT_IMAGE_SET_TO_PRODUCT_IMAGE_DELETE);

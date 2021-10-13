@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Discount\Business\Distributor\DiscountableItem;
 
 use Generated\Shared\Transfer\CalculatedDiscountTransfer;
+use Generated\Shared\Transfer\DiscountableItemTransfer;
 use Generated\Shared\Transfer\DiscountableItemTransformerTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 
@@ -42,7 +43,14 @@ class DiscountableItemTransformer implements DiscountableItemTransformerInterfac
             $distributedDiscountTransfer->setUnitAmount($itemDiscountAmountRounded);
             $distributedDiscountTransfer->setQuantity(1);
 
-            $discountableItemTransfer->getOriginalItemCalculatedDiscounts()->append($distributedDiscountTransfer);
+            $isCalculatedDiscountAddable = $this->isCalculatedDiscountAddable(
+                $discountableItemTransfer,
+                $distributedDiscountTransfer
+            );
+
+            if ($isCalculatedDiscountAddable) {
+                $discountableItemTransfer->getOriginalItemCalculatedDiscounts()->append($distributedDiscountTransfer);
+            }
         }
 
         $discountableItemTransformerTransfer
@@ -50,6 +58,33 @@ class DiscountableItemTransformer implements DiscountableItemTransformerInterfac
             ->setDiscountableItem($discountableItemTransfer);
 
         return $discountableItemTransformerTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DiscountableItemTransfer $discountableItemTransfer
+     * @param \Generated\Shared\Transfer\CalculatedDiscountTransfer $distributedCalculatedDiscountTransfer
+     *
+     * @return bool
+     */
+    protected function isCalculatedDiscountAddable(
+        DiscountableItemTransfer $discountableItemTransfer,
+        CalculatedDiscountTransfer $distributedCalculatedDiscountTransfer
+    ): bool {
+        if ($discountableItemTransfer->getOriginalItem()) {
+            return true;
+        }
+
+        foreach ($discountableItemTransfer->getOriginalItemCalculatedDiscounts() as $calculatedDiscountTransfer) {
+            if ($calculatedDiscountTransfer->getVoucherCode() === $distributedCalculatedDiscountTransfer->getVoucherCode()) {
+                return false;
+            }
+
+            if ($calculatedDiscountTransfer->getIdDiscount() === $distributedCalculatedDiscountTransfer->getIdDiscount()) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     /**

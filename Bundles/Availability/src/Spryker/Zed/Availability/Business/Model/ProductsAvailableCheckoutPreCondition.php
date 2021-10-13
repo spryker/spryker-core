@@ -18,6 +18,9 @@ use Spryker\Zed\Availability\AvailabilityConfig;
 
 class ProductsAvailableCheckoutPreCondition implements ProductsAvailableCheckoutPreConditionInterface
 {
+    /**
+     * @var string
+     */
     protected const CHECKOUT_PRODUCT_UNAVAILABLE_TRANSLATION_KEY = 'product.unavailable';
 
     /**
@@ -31,14 +34,14 @@ class ProductsAvailableCheckoutPreCondition implements ProductsAvailableCheckout
     protected $availabilityConfig;
 
     /**
-     * @var \Spryker\Zed\AvailabilityExtension\Dependency\Plugin\CartItemQuantityCounterStrategyPluginInterface[]
+     * @var array<\Spryker\Zed\AvailabilityExtension\Dependency\Plugin\CartItemQuantityCounterStrategyPluginInterface>
      */
     protected $cartItemQuantityCounterStrategyPlugins;
 
     /**
      * @param \Spryker\Zed\Availability\Business\Model\SellableInterface $sellable
      * @param \Spryker\Zed\Availability\AvailabilityConfig $availabilityConfig
-     * @param \Spryker\Zed\AvailabilityExtension\Dependency\Plugin\CartItemQuantityCounterStrategyPluginInterface[] $cartItemQuantityCounterStrategyPlugins
+     * @param array<\Spryker\Zed\AvailabilityExtension\Dependency\Plugin\CartItemQuantityCounterStrategyPluginInterface> $cartItemQuantityCounterStrategyPlugins
      */
     public function __construct(
         SellableInterface $sellable,
@@ -60,7 +63,8 @@ class ProductsAvailableCheckoutPreCondition implements ProductsAvailableCheckout
     {
         $quoteTransfer->requireStore();
         $isPassed = true;
-        $storeTransfer = $quoteTransfer->getStore();
+        /** @var \Generated\Shared\Transfer\StoreTransfer $storeTransfer */
+        $storeTransfer = $quoteTransfer->requireStore()->getStore();
 
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             $quantity = $this->getAccumulatedItemQuantityForGivenItemSku($quoteTransfer, $itemTransfer);
@@ -68,11 +72,14 @@ class ProductsAvailableCheckoutPreCondition implements ProductsAvailableCheckout
             $productAvailabilityCriteriaTransfer = (new ProductAvailabilityCriteriaTransfer())
                 ->fromArray($itemTransfer->toArray(), true);
 
-            if ($this->sellable->isProductSellableForStore($itemTransfer->getSku(), $quantity, $storeTransfer, $productAvailabilityCriteriaTransfer)) {
+            /** @var string $sku */
+            $sku = $itemTransfer->requireSku()->getSku();
+
+            if ($this->sellable->isProductSellableForStore($sku, $quantity, $storeTransfer, $productAvailabilityCriteriaTransfer)) {
                 continue;
             }
 
-            $this->addAvailabilityErrorToCheckoutResponse($checkoutResponse, $itemTransfer->getSku());
+            $this->addAvailabilityErrorToCheckoutResponse($checkoutResponse, $sku);
             $isPassed = false;
         }
 
@@ -92,10 +99,16 @@ class ProductsAvailableCheckoutPreCondition implements ProductsAvailableCheckout
         $cartItemQuantity = $this->executeCartItemQuantityCounterStrategyPlugin($quoteTransfer, $itemTransfer);
 
         if ($cartItemQuantity) {
-            return (new Decimal(0))->add($cartItemQuantity->getQuantity());
+            /** @var int $quantity */
+            $quantity = $cartItemQuantity->getQuantity();
+
+            return (new Decimal(0))->add($quantity);
         }
 
-        return $this->calculateCurrentCartQuantityForGivenSku($quoteTransfer, $itemTransfer->getSku());
+        /** @var string $sku */
+        $sku = $itemTransfer->requireSku()->getSku();
+
+        return $this->calculateCurrentCartQuantityForGivenSku($quoteTransfer, $sku);
     }
 
     /**
@@ -113,7 +126,10 @@ class ProductsAvailableCheckoutPreCondition implements ProductsAvailableCheckout
                 continue;
             }
 
-            $quantity = $quantity->add($itemTransfer->getQuantity());
+            /** @var int $itemQuantity */
+            $itemQuantity = $itemTransfer->getQuantity();
+
+            $quantity = $quantity->add($itemQuantity);
         }
 
         return $quantity;
@@ -142,9 +158,9 @@ class ProductsAvailableCheckoutPreCondition implements ProductsAvailableCheckout
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     protected function filterItemsWithAmount(array $itemTransfers): array
     {

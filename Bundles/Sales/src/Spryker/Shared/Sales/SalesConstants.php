@@ -12,15 +12,29 @@ namespace Spryker\Shared\Sales;
  */
 interface SalesConstants
 {
+    /**
+     * @var string
+     */
     public const NAME_ORDER_REFERENCE = 'OrderReference';
+    /**
+     * @var string
+     */
     public const ENVIRONMENT_PREFIX = 'ENVIRONMENT_PREFIX';
 
     /**
      * Specification:
      * - Mapping payment methods to statemachine
      * - Shared config: don't change its name: PAYMENT_METHOD_STATEMACHINE_MAPPING
+     * - Returns a map of the payment methods and state machine's processes names.
      *
      * @api
+     *
+     * @example The format of returned array is:
+     * [
+     *    'PAYMENT_METHOD_1' => 'StateMachineProcess_1',
+     *    'PAYMENT_METHOD_2' => 'StateMachineProcess_2',
+     * ]
+     * @var string
      */
     public const PAYMENT_METHOD_STATEMACHINE_MAPPING = 'PAYMENT_METHOD_STATEMACHINE_MAPPING';
 }

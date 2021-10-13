@@ -8,6 +8,8 @@
 namespace Spryker\Zed\ProductReviewCollector\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\ProductReviewCollector\Business\Collector\ProductReviewCollectorRunner;
+use Spryker\Zed\ProductReviewCollector\Business\Collector\ProductReviewCollectorRunnerInterface;
 use Spryker\Zed\ProductReviewCollector\Business\Collector\Search\ProductReviewCollector as ProductReviewSearchCollector;
 use Spryker\Zed\ProductReviewCollector\Business\Collector\Storage\ProductAbstractReviewCollector as ProductAbstractReviewStorageCollector;
 use Spryker\Zed\ProductReviewCollector\Persistence\Search\Propel\ProductReviewSearchCollectorQuery;
@@ -91,7 +93,7 @@ class ProductReviewCollectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Collector\Business\CollectorFacadeInterface
+     * @return \Spryker\Zed\ProductReviewCollector\Dependency\Facade\ProductReviewCollectorToCollectorInterface
      */
     public function getCollectorFacade()
     {
@@ -104,5 +106,27 @@ class ProductReviewCollectorBusinessFactory extends AbstractBusinessFactory
     protected function getSearchFacade()
     {
         return $this->getProvidedDependency(ProductReviewCollectorDependencyProvider::FACADE_SEARCH);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductReviewCollector\Business\Collector\ProductReviewCollectorRunnerInterface
+     */
+    public function createSearchProductReviewCollectorRunner(): ProductReviewCollectorRunnerInterface
+    {
+        return new ProductReviewCollectorRunner(
+            $this->createSearchProductReviewCollector(),
+            $this->getCollectorFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductReviewCollector\Business\Collector\ProductReviewCollectorRunnerInterface
+     */
+    public function createStorageProductAbstractReviewCollectorRunner(): ProductReviewCollectorRunnerInterface
+    {
+        return new ProductReviewCollectorRunner(
+            $this->createStorageProductAbstractReviewCollector(),
+            $this->getCollectorFacade()
+        );
     }
 }

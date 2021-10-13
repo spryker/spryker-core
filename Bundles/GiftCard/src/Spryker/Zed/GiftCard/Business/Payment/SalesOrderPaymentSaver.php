@@ -11,6 +11,7 @@ use ArrayObject;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\SaveOrderTransfer;
 use Orm\Zed\GiftCard\Persistence\SpyPaymentGiftCard;
 use Spryker\Zed\GiftCard\GiftCardConfig;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
@@ -20,7 +21,7 @@ class SalesOrderPaymentSaver implements SalesOrderPaymentSaverInterface
     use DatabaseTransactionHandlerTrait;
 
     /**
-     * @var \Spryker\Zed\GiftCard\Dependency\Plugin\GiftCardPaymentSaverPluginInterface[]
+     * @var array<\Spryker\Zed\GiftCard\Dependency\Plugin\GiftCardPaymentSaverPluginInterface>
      */
     protected $giftCardPaymentSaverPlugins;
 
@@ -30,7 +31,7 @@ class SalesOrderPaymentSaver implements SalesOrderPaymentSaverInterface
     protected $giftCardConfig;
 
     /**
-     * @param \Spryker\Zed\GiftCard\Dependency\Plugin\GiftCardPaymentSaverPluginInterface[] $giftCardPaymentSaverPlugins
+     * @param array<\Spryker\Zed\GiftCard\Dependency\Plugin\GiftCardPaymentSaverPluginInterface> $giftCardPaymentSaverPlugins
      * @param \Spryker\Zed\GiftCard\GiftCardConfig $giftCardConfig
      */
     public function __construct(
@@ -42,12 +43,40 @@ class SalesOrderPaymentSaver implements SalesOrderPaymentSaverInterface
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\GiftCard\Business\Payment\SalesOrderPaymentSaver::saveGiftCardOrderPayments()} instead.
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
      *
      * @return void
      */
     public function saveGiftCardPayments(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse)
+    {
+        $this->executeSaveGiftCardPaymentsTransaction($quoteTransfer, $checkoutResponse);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
+     *
+     * @return void
+     */
+    public function saveGiftCardOrderPayments(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer): void
+    {
+        // For BC reasons only, will not be used in the future.
+        $checkoutResponse = new CheckoutResponseTransfer();
+        $checkoutResponse->setSaveOrder($saveOrderTransfer);
+
+        $this->executeSaveGiftCardPaymentsTransaction($quoteTransfer, $checkoutResponse);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
+     *
+     * @return void
+     */
+    protected function executeSaveGiftCardPaymentsTransaction(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse): void
     {
         $giftCardPayments = $this->getGiftCardPayments($quoteTransfer);
 
@@ -59,15 +88,15 @@ class SalesOrderPaymentSaver implements SalesOrderPaymentSaverInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\PaymentTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\PaymentTransfer>
      */
-    protected function getGiftCardPayments(QuoteTransfer $quoteTransfer)
+    protected function getGiftCardPayments(QuoteTransfer $quoteTransfer): ArrayObject
     {
         $result = new ArrayObject();
 
         foreach ($quoteTransfer->getPayments() as $paymentTransfer) {
             if ($paymentTransfer->getPaymentProvider() === $this->giftCardConfig->getPaymentProviderName()) {
-                $result[] = $paymentTransfer;
+                $result->append($paymentTransfer);
             }
         }
 
@@ -75,13 +104,17 @@ class SalesOrderPaymentSaver implements SalesOrderPaymentSaverInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\PaymentTransfer[] $paymentTransferCollection
+     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\PaymentTransfer> $paymentTransferCollection
+     *
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\PaymentTransfer> $paymentTransferCollection
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
      *
      * @return void
      */
-    protected function runGiftCardPaymentSavers(ArrayObject $paymentTransferCollection, CheckoutResponseTransfer $checkoutResponse)
-    {
+    protected function runGiftCardPaymentSavers(
+        ArrayObject $paymentTransferCollection,
+        CheckoutResponseTransfer $checkoutResponse
+    ): void {
         foreach ($paymentTransferCollection as $giftCardPayment) {
             if (!$giftCardPayment->getGiftCard()) {
                 continue;
@@ -91,10 +124,8 @@ class SalesOrderPaymentSaver implements SalesOrderPaymentSaverInterface
                 continue;
             }
 
-            $salesOrderGiftCardEntity = $this->createSalesOrderGiftCardEntityFromTransfer($giftCardPayment);
-            $salesOrderGiftCardEntity->save();
-
-            $this->runSaversForPayment($giftCardPayment, $checkoutResponse);
+            $this->saveGiftGardPayment($giftCardPayment);
+            $this->runSaverPluginsForPayment($giftCardPayment, $checkoutResponse);
         }
     }
 
@@ -104,7 +135,7 @@ class SalesOrderPaymentSaver implements SalesOrderPaymentSaverInterface
      *
      * @return void
      */
-    protected function runSaversForPayment(PaymentTransfer $paymentTransfer, CheckoutResponseTransfer $checkoutResponse)
+    protected function runSaverPluginsForPayment(PaymentTransfer $paymentTransfer, CheckoutResponseTransfer $checkoutResponse)
     {
         foreach ($this->giftCardPaymentSaverPlugins as $giftCardPaymentSaverPlugin) {
             $giftCardPaymentSaverPlugin->savePayment($paymentTransfer, $checkoutResponse);
@@ -116,15 +147,16 @@ class SalesOrderPaymentSaver implements SalesOrderPaymentSaverInterface
      *
      * @return \Orm\Zed\GiftCard\Persistence\SpyPaymentGiftCard
      */
-    protected function createSalesOrderGiftCardEntityFromTransfer(PaymentTransfer $paymentTransfer)
+    protected function saveGiftGardPayment(PaymentTransfer $paymentTransfer)
     {
         $paymentTransfer->requireIdSalesPayment();
         $paymentTransfer->requireGiftCard();
 
-        $salesOrderGiftCardEntity = new SpyPaymentGiftCard();
-        $salesOrderGiftCardEntity->fromArray($paymentTransfer->getGiftCard()->toArray());
-        $salesOrderGiftCardEntity->setFkSalesPayment($paymentTransfer->getIdSalesPayment());
+        $paymentGiftCardEntity = new SpyPaymentGiftCard();
+        $paymentGiftCardEntity->fromArray($paymentTransfer->getGiftCard()->toArray());
+        $paymentGiftCardEntity->setFkSalesPayment($paymentTransfer->getIdSalesPayment());
+        $paymentGiftCardEntity->save();
 
-        return $salesOrderGiftCardEntity;
+        return $paymentGiftCardEntity;
     }
 }

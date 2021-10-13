@@ -61,7 +61,10 @@ class AgentAuthorizationHeaderReader implements AgentAuthorizationHeaderReaderIn
      */
     public function extractToken(string $authorizationToken): ?string
     {
-        return preg_split('/\s+/', $authorizationToken)[1] ?? null;
+        /** @var array<string> $pieces */
+        $pieces = preg_split('/\s+/', $authorizationToken);
+
+        return $pieces[1] ?? null;
     }
 
     /**
@@ -71,6 +74,9 @@ class AgentAuthorizationHeaderReader implements AgentAuthorizationHeaderReaderIn
      */
     public function extractTokenType(string $authorizationToken): ?string
     {
-        return preg_split('/\s+/', $authorizationToken)[0] ?? null;
+        /** @var array<string> $pieces */
+        $pieces = preg_split('/\s+/', $authorizationToken);
+
+        return $pieces[0] ?? null;
     }
 }

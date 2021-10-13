@@ -14,6 +14,7 @@ interface CompanyUserEvents
      *  - This event will be used for company_user publishing.
      *
      * @api
+     * @var string
      */
     public const COMPANY_USER_PUBLISH = 'Entity.company_user.publish';
 
@@ -22,6 +23,7 @@ interface CompanyUserEvents
      *  - This event will be used for company_user un-publishing.
      *
      * @api
+     * @var string
      */
     public const COMPANY_USER_UNPUBLISH = 'Entity.company_user.unpublish';
 
@@ -30,6 +32,7 @@ interface CompanyUserEvents
      *  - This event will be used for company_user entity creation.
      *
      * @api
+     * @var string
      */
     public const ENTITY_SPY_COMPANY_USER_CREATE = 'Entity.spy_company_user.create';
 
@@ -38,6 +41,7 @@ interface CompanyUserEvents
      * - This event will be used for company_user entity update.
      *
      * @api
+     * @var string
      */
     public const ENTITY_SPY_COMPANY_USER_UPDATE = 'Entity.spy_company_user.update';
 
@@ -46,6 +50,7 @@ interface CompanyUserEvents
      * - This event will be used for company_user entity delete.
      *
      * @api
+     * @var string
      */
     public const ENTITY_SPY_COMPANY_USER_DELETE = 'Entity.spy_company_user.delete';
 }

@@ -17,7 +17,13 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class RemoveDataBuilderConsole extends Console
 {
+    /**
+     * @var string
+     */
     public const COMMAND_NAME = 'transfer:databuilder:remove';
+    /**
+     * @var string
+     */
     public const COMMAND_DESCRIPTION = 'Removes the generated data builders';
 
     /**

@@ -12,7 +12,13 @@ use Spryker\Zed\DataImport\Dependency\Service\DataImportToUtilEncodingServiceInt
 
 class QueueMessageHelper implements QueueMessageHelperInterface
 {
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE = 'errorMessage';
+    /**
+     * @var string
+     */
     protected const MESSAGE_ROUTING_KEY_ERROR = 'error';
 
     /**

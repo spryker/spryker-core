@@ -160,7 +160,7 @@ class Dispatcher implements DispatcherInterface
     /**
      * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\ApiValidationErrorTransfer[]
+     * @return array<\Generated\Shared\Transfer\ApiValidationErrorTransfer>
      */
     protected function getValidationErrors(ApiRequestTransfer $apiRequestTransfer)
     {

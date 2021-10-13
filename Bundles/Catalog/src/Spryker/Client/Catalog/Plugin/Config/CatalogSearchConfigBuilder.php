@@ -21,9 +21,21 @@ use Spryker\Client\Search\Dependency\Plugin\SortConfigBuilderInterface;
  */
 class CatalogSearchConfigBuilder extends AbstractPlugin implements SearchConfigBuilderInterface
 {
+    /**
+     * @var int
+     */
     public const DEFAULT_ITEMS_PER_PAGE = 12;
+    /**
+     * @var array
+     */
     public const VALID_ITEMS_PER_PAGE_OPTIONS = [12, 24, 36];
+    /**
+     * @var string
+     */
     public const PARAMETER_NAME_PAGE = 'page';
+    /**
+     * @var string
+     */
     public const PARAMETER_NAME_ITEMS_PER_PAGE = 'ipp';
 
     /**

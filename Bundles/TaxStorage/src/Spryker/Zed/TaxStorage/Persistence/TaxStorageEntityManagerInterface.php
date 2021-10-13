@@ -10,14 +10,14 @@ namespace Spryker\Zed\TaxStorage\Persistence;
 interface TaxStorageEntityManagerInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\TaxSetStorageTransfer[] $taxSetStorageTransfers
+     * @param array<\Generated\Shared\Transfer\TaxSetStorageTransfer> $taxSetStorageTransfers
      *
      * @return void
      */
     public function saveTaxSetStorage(array $taxSetStorageTransfers): void;
 
     /**
-     * @param int[] $taxSetIds
+     * @param array<int> $taxSetIds
      *
      * @return void
      */

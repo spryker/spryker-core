@@ -11,6 +11,9 @@ use Spryker\Zed\AvailabilityNotification\Dependency\Service\AvailabilityNotifica
 
 class AvailabilityNotificationSubscriptionKeyGenerator implements AvailabilityNotificationSubscriptionKeyGeneratorInterface
 {
+    /**
+     * @var int
+     */
     public const DEFAULT_STRING_LENGTH = 32;
 
     /**

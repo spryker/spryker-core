@@ -16,6 +16,9 @@ use Spryker\Zed\ProductOfferReservationGui\Dependency\Facade\ProductOfferReserva
  */
 class ProductOfferReservationGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_OMS_PRODUCT_OFFER_RESERVATION = 'FACADE_OMS_PRODUCT_OFFER_RESERVATION';
 
     /**

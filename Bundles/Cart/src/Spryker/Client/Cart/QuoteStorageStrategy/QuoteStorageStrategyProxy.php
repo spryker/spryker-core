@@ -24,6 +24,9 @@ use Spryker\Client\CartExtension\Dependency\Plugin\ReplaceableQuoteItemStorageSt
 
 class QuoteStorageStrategyProxy implements QuoteStorageStrategyProxyInterface
 {
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_LOCKED_CART_CHANGE_DENIED = 'cart.locked.change_denied';
 
     /**
@@ -84,7 +87,7 @@ class QuoteStorageStrategyProxy implements QuoteStorageStrategyProxyInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      * @param array $params
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
@@ -123,7 +126,7 @@ class QuoteStorageStrategyProxy implements QuoteStorageStrategyProxyInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $items
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */

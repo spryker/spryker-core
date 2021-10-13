@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\CmsSlotBlockCriteriaTransfer;
 interface CmsSlotBlockEntityManagerInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\CmsSlotBlockTransfer[] $cmsSlotBlockTransfers
+     * @param array<\Generated\Shared\Transfer\CmsSlotBlockTransfer> $cmsSlotBlockTransfers
      *
      * @return \Generated\Shared\Transfer\CmsSlotBlockCollectionTransfer
      */

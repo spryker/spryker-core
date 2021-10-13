@@ -56,9 +56,9 @@ class PriceProductPageExpander implements PriceProductPageExpanderInterface
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[][][]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer[][]>
      */
     protected function findPricesByIdProductAbstractIn(array $productAbstractIds): array
     {
@@ -80,9 +80,9 @@ class PriceProductPageExpander implements PriceProductPageExpanderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $productPrices
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $productPrices
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[][][]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer[][]>
      */
     protected function getProductPricesMappedByIdAndStoreName(array $productPrices): array
     {
@@ -101,10 +101,10 @@ class PriceProductPageExpander implements PriceProductPageExpanderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductPayloadTransfer[] $productPageLoadTransfers
+     * @param array<\Generated\Shared\Transfer\ProductPayloadTransfer> $productPageLoadTransfers
      * @param array $pricesByStoreList
      *
-     * @return \Generated\Shared\Transfer\ProductPayloadTransfer[] updated payload transfers
+     * @return array<\Generated\Shared\Transfer\ProductPayloadTransfer> updated payload transfers
      */
     protected function updatePayloadTransfers(array $productPageLoadTransfers, array $pricesByStoreList): array
     {
@@ -117,7 +117,7 @@ class PriceProductPageExpander implements PriceProductPageExpanderInterface
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function getStoreNameByIdMap(): array
     {

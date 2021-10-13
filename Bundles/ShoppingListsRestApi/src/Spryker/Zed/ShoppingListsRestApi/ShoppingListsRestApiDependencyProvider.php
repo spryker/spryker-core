@@ -16,6 +16,9 @@ use Spryker\Zed\ShoppingListsRestApi\Dependency\Facade\ShoppingListsRestApiToSho
  */
 class ShoppingListsRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_SHOPPING_LIST = 'FACADE_SHOPPING_LIST';
 
     /**

@@ -19,7 +19,9 @@ use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\Choice;
 use Symfony\Component\Validator\Constraints\Email;
+use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\NotCompromisedPassword;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
@@ -30,14 +32,38 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  */
 class UserForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const OPTION_GROUP_CHOICES = 'group_choices';
+    /**
+     * @var string
+     */
     public const GROUP_UNIQUE_USERNAME_CHECK = 'unique_email_check';
 
+    /**
+     * @var string
+     */
     public const FIELD_USERNAME = 'username';
+    /**
+     * @var string
+     */
     public const FIELD_GROUP = 'group';
+    /**
+     * @var string
+     */
     public const FIELD_FIRST_NAME = 'first_name';
+    /**
+     * @var string
+     */
     public const FIELD_LAST_NAME = 'last_name';
+    /**
+     * @var string
+     */
     public const FIELD_PASSWORD = 'password';
+    /**
+     * @var string
+     */
     public const FIELD_STATUS = 'status';
 
     /**
@@ -142,7 +168,7 @@ class UserForm extends AbstractType
                 'label' => 'E-mail',
                 'constraints' => [
                     new NotBlank(),
-                    new Email(),
+                    new Email(['mode' => Email::VALIDATION_MODE_HTML5]),
                     $this->createUniqueEmailConstraint(),
                 ],
             ]);
@@ -161,6 +187,11 @@ class UserForm extends AbstractType
             ->add(self::FIELD_PASSWORD, RepeatedType::class, [
                 'constraints' => [
                     new NotBlank(),
+                    new Length([
+                        'min' => $this->getConfig()->getUserPasswordMinLength(),
+                        'max' => $this->getConfig()->getUserPasswordMaxLength(),
+                    ]),
+                    new NotCompromisedPassword(),
                 ],
                 'invalid_message' => 'The password fields must match.',
                 'first_options' => ['label' => 'Password', 'attr' => ['autocomplete' => 'off']],

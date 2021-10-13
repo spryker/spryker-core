@@ -12,5 +12,8 @@ namespace Spryker\Shared\Quote;
  */
 interface QuoteConstants
 {
+    /**
+     * @var string
+     */
     public const GUEST_QUOTE_LIFETIME = 'QUOTE:GUEST_QUOTE_LIFETIME';
 }

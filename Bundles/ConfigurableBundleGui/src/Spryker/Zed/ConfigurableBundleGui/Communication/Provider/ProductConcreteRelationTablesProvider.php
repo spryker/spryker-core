@@ -11,18 +11,21 @@ use Spryker\Zed\ConfigurableBundleGui\Communication\Exception\MissingTablesExcep
 
 class ProductConcreteRelationTablesProvider implements ProductConcreteRelationTablesProviderInterface
 {
+    /**
+     * @var array
+     */
     protected const REQUIRED_TABLES = [
         'availableProductConcreteTable',
         'assignedProductConcreteTable',
     ];
 
     /**
-     * @var \Spryker\Zed\ConfigurableBundleGuiExtension\Dependency\Plugin\ConfigurableBundleTemplateSlotEditTablesProviderPluginInterface[]
+     * @var array<\Spryker\Zed\ConfigurableBundleGuiExtension\Dependency\Plugin\ConfigurableBundleTemplateSlotEditTablesProviderPluginInterface>
      */
     protected $configurableBundleTemplateSlotEditTablesProviderPlugins;
 
     /**
-     * @param \Spryker\Zed\ConfigurableBundleGuiExtension\Dependency\Plugin\ConfigurableBundleTemplateSlotEditTablesProviderPluginInterface[] $configurableBundleTemplateSlotEditTablesProviderPlugins
+     * @param array<\Spryker\Zed\ConfigurableBundleGuiExtension\Dependency\Plugin\ConfigurableBundleTemplateSlotEditTablesProviderPluginInterface> $configurableBundleTemplateSlotEditTablesProviderPlugins
      */
     public function __construct(array $configurableBundleTemplateSlotEditTablesProviderPlugins)
     {
@@ -30,11 +33,11 @@ class ProductConcreteRelationTablesProvider implements ProductConcreteRelationTa
     }
 
     /**
-     * @return \Spryker\Zed\Gui\Communication\Table\AbstractTable[]
+     * @return array<\Spryker\Zed\Gui\Communication\Table\AbstractTable>
      */
     public function getTables(): array
     {
-        /** @var \Spryker\Zed\Gui\Communication\Table\AbstractTable[] $configurableBundleTemplateSlotEditTables */
+        /** @var array<\Spryker\Zed\Gui\Communication\Table\AbstractTable> $configurableBundleTemplateSlotEditTables */
         $configurableBundleTemplateSlotEditTables = [];
 
         foreach ($this->configurableBundleTemplateSlotEditTablesProviderPlugins as $configurableBundleTemplateSlotEditTablesProviderPlugin) {
@@ -47,7 +50,7 @@ class ProductConcreteRelationTablesProvider implements ProductConcreteRelationTa
     }
 
     /**
-     * @param \Spryker\Zed\Gui\Communication\Table\AbstractTable[] $configurableBundleTemplateSlotEditTables
+     * @param array<\Spryker\Zed\Gui\Communication\Table\AbstractTable> $configurableBundleTemplateSlotEditTables
      *
      * @throws \Spryker\Zed\ConfigurableBundleGui\Communication\Exception\MissingTablesException
      *

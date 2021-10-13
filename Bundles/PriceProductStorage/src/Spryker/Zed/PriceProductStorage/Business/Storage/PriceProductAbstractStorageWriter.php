@@ -44,7 +44,7 @@ class PriceProductAbstractStorageWriter implements PriceProductAbstractStorageWr
     protected $isSendingToQueue = true;
 
     /**
-     * @var string[] Keys are store ids, values are store names.
+     * @var array<string> Keys are store ids, values are store names.
      */
     protected $storeNameMapBuffer;
 
@@ -67,7 +67,7 @@ class PriceProductAbstractStorageWriter implements PriceProductAbstractStorageWr
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return void
      */
@@ -82,7 +82,7 @@ class PriceProductAbstractStorageWriter implements PriceProductAbstractStorageWr
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return void
      */
@@ -201,9 +201,9 @@ class PriceProductAbstractStorageWriter implements PriceProductAbstractStorageWr
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
-     * @return \Orm\Zed\PriceProductStorage\Persistence\SpyPriceProductAbstractStorage[]
+     * @return array<\Orm\Zed\PriceProductStorage\Persistence\SpyPriceProductAbstractStorage>
      */
     protected function findPriceProductAbstractStorageEntities(array $productAbstractIds)
     {
@@ -214,7 +214,7 @@ class PriceProductAbstractStorageWriter implements PriceProductAbstractStorageWr
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return array
      */
@@ -275,7 +275,7 @@ class PriceProductAbstractStorageWriter implements PriceProductAbstractStorageWr
     }
 
     /**
-     * @param \Orm\Zed\PriceProductStorage\Persistence\SpyPriceProductAbstractStorage[] $priceProductAbstractStorageEntities
+     * @param array<\Orm\Zed\PriceProductStorage\Persistence\SpyPriceProductAbstractStorage> $priceProductAbstractStorageEntities
      *
      * @return array
      */

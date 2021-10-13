@@ -24,7 +24,7 @@ interface ProductImageSetsRestApiToProductImageStorageClientInterface
      * @param int $idProductAbstract
      * @param string $locale
      *
-     * @return \Generated\Shared\Transfer\ProductImageSetStorageTransfer[]|null
+     * @return array<\Generated\Shared\Transfer\ProductImageSetStorageTransfer>|null
      */
     public function resolveProductImageSetStorageTransfers(
         int $idProductConcrete,

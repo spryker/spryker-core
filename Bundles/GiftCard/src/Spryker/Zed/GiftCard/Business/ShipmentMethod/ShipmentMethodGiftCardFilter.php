@@ -36,9 +36,9 @@ class ShipmentMethodGiftCardFilter implements ShipmentMethodGiftCardFilterInterf
 
     /**
      * @param \Generated\Shared\Transfer\ShipmentMethodsTransfer $shipmentMethodsTransfer
-     * @param string[] $giftCardOnlyShipmentMethods
+     * @param array<string> $giftCardOnlyShipmentMethods
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ShipmentMethodTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\ShipmentMethodTransfer>
      */
     public function filter(ShipmentMethodsTransfer $shipmentMethodsTransfer, array $giftCardOnlyShipmentMethods): ArrayObject
     {

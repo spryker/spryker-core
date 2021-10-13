@@ -17,7 +17,13 @@ use Spryker\Zed\SalesOms\Dependency\Service\SalesOmsToUtilDataReaderServiceBridg
  */
 class SalesOmsDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const SERVICE_UTIL_DATA_READER = 'SERVICE_UTIL_DATA_READER';
+    /**
+     * @var string
+     */
     public const FACADE_OMS = 'FACADE_OMS';
 
     /**

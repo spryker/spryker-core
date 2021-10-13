@@ -68,7 +68,7 @@ class ResourceShareBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ResourceShareExtension\Dependency\Plugin\ResourceShareZedActivatorStrategyPluginInterface[]
+     * @return array<\Spryker\Zed\ResourceShareExtension\Dependency\Plugin\ResourceShareZedActivatorStrategyPluginInterface>
      */
     public function getResourceShareActivatorStrategyPlugins(): array
     {

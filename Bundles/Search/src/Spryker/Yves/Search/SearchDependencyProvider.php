@@ -15,6 +15,9 @@ use Spryker\Yves\Kernel\Container;
  */
 class SearchDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_SEARCH = 'CLIENT_SEARCH';
 
     /**

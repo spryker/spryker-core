@@ -16,6 +16,9 @@ use Spryker\Zed\ShoppingListProductOptionConnector\Dependency\Facade\ShoppingLis
  */
 class ShoppingListProductOptionConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_PRODUCT_OPTION = 'FACADE_PRODUCT_OPTION';
 
     /**

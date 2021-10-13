@@ -20,11 +20,26 @@ use Spryker\Zed\ProductSet\Dependency\QueryContainer\ProductSetToUrlBridge as Pr
  */
 class ProductSetDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_TOUCH = 'FACADE_TOUCH';
+    /**
+     * @var string
+     */
     public const FACADE_URL = 'FACADE_URL';
+    /**
+     * @var string
+     */
     public const FACADE_PRODUCT_IMAGE = 'FACADE_PRODUCT_IMAGE';
 
+    /**
+     * @var string
+     */
     public const QUERY_CONTAINER_URL = 'QUERY_CONTAINER_URL';
+    /**
+     * @var string
+     */
     public const QUERY_CONTAINER_PRODUCT_IMAGE = 'QUERY_CONTAINER_PRODUCT_IMAGE';
 
     /**

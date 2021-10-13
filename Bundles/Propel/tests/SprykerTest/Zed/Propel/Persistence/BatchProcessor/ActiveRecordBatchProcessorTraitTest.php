@@ -29,6 +29,9 @@ use Throwable;
  */
 class ActiveRecordBatchProcessorTraitTest extends Unit
 {
+    /**
+     * @var array
+     */
     protected const MODULES_TO_EXCLUDE = [
         'Payone',
     ];
@@ -44,7 +47,7 @@ class ActiveRecordBatchProcessorTraitTest extends Unit
     protected $queryClasses;
 
     /**
-     * @return array[]
+     * @return array<array>
      */
     public function dataProvider(): array
     {
@@ -147,6 +150,49 @@ class ActiveRecordBatchProcessorTraitTest extends Unit
     }
 
     /**
+     * @dataProvider dataProvider()
+     *
+     * @group insert
+     *
+     * @param string $entityClassName
+     *
+     * @throws \PHPUnit\Framework\ExpectationFailedException
+     *
+     * @return void
+     */
+    public function testCommitIdenticalShouldInsertEntitiesInBatch(string $entityClassName)
+    {
+        codecept_debug($entityClassName);
+
+        try {
+            $batchProcessor = $this->getActiveRecordBatchProcessor();
+
+            foreach ($this->tester->getEntityCollectionForInsert($entityClassName) as $entity) {
+                $batchProcessor->persist($entity);
+            }
+
+            $this->assertTrue($batchProcessor->commitIdentical());
+        } catch (Throwable $throwable) {
+            $message = $throwable->getMessage();
+
+            if (
+                strpos($message, 'Unique violation') !== false
+                || strpos($message, 'Duplicate entry') !== false
+                || strpos($message, 'Cannot assign bundle product or use bundled product as a bundle') !== false
+                || strpos($message, 'Insert value list does not match column list') !== false
+                || strpos($message, 'INSERT has more expressions than target columns') !== false
+                || strpos($message, 'INSERT has more target columns than expressions') !== false
+            ) {
+                codecept_debug($throwable->getMessage());
+
+                return;
+            }
+
+            throw new ExpectationFailedException($throwable->getMessage(), null, $throwable);
+        }
+    }
+
+    /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Propel\Persistence\BatchProcessor\ActiveRecordBatchProcessorTrait
      */
     protected function getActiveRecordBatchProcessor()
@@ -223,7 +269,7 @@ class ActiveRecordBatchProcessorTraitTest extends Unit
     }
 
     /**
-     * @param \Propel\Runtime\Map\ColumnMap[] $columnMapCollection
+     * @param array<\Propel\Runtime\Map\ColumnMap> $columnMapCollection
      * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface $entity
      *
      * @return \Propel\Runtime\ActiveRecord\ActiveRecordInterface

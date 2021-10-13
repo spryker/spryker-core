@@ -14,12 +14,12 @@ interface ShoppingListProductOptionConnectorRepositoryInterface
     /**
      * @param int $idShoppingListItem
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getShoppingListItemProductOptionIdsByIdShoppingListItem(int $idShoppingListItem): array;
 
     /**
-     * @param int[] $shoppingListItemIds
+     * @param array<int> $shoppingListItemIds
      *
      * @return \Generated\Shared\Transfer\ShoppingListProductOptionCollectionTransfer
      */

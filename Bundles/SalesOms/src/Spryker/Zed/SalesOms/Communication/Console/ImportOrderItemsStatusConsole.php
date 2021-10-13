@@ -23,18 +23,54 @@ use Throwable;
  */
 class ImportOrderItemsStatusConsole extends Console
 {
+    /**
+     * @var string
+     */
     protected const COMMAND_NAME = 'order-oms:status-import';
+    /**
+     * @var string
+     */
     protected const COMMAND_DESCRIPTION = 'Import order item status for order items from given file.';
+    /**
+     * @var string
+     */
     protected const ARGUMENT_FILE_PATH = 'file-path';
+    /**
+     * @var string
+     */
     protected const OPTION_IGNORE_ERRORS = 'ignore-errors';
+    /**
+     * @var string
+     */
     protected const OPTION_START_FROM = 'start-from';
 
+    /**
+     * @var string
+     */
     protected const TABLE_HEADER_COLUMN_ROW_NUMBER = 'row_number';
+    /**
+     * @var string
+     */
     protected const TABLE_HEADER_COLUMN_ORDER_REFERENCE = 'order_reference';
+    /**
+     * @var string
+     */
     protected const TABLE_HEADER_COLUMN_ORDER_ITEM_REFERENCE = 'order_item_reference';
+    /**
+     * @var string
+     */
     protected const TABLE_HEADER_COLUMN_ORDER_ITEM_EVENT_OMS = 'order_item_event_oms';
+    /**
+     * @var string
+     */
     protected const TABLE_HEADER_COLUMN_COUNT_TRANSITIONED_ITEM = 'count_transitioned_item';
+    /**
+     * @var string
+     */
     protected const TABLE_HEADER_COLUMN_RESULT = 'result';
+    /**
+     * @var string
+     */
     protected const TABLE_HEADER_COLUMN_MESSAGE = 'message';
 
     /**
@@ -48,7 +84,7 @@ class ImportOrderItemsStatusConsole extends Console
     protected $outputTable;
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function getMandatoryColumns(): array
     {
@@ -178,9 +214,11 @@ class ImportOrderItemsStatusConsole extends Console
      */
     protected function resolveFilePath(): ?string
     {
+        /** @var string $filePath */
+        $filePath = $this->input->getArgument(static::ARGUMENT_FILE_PATH);
         $filePathResolverResponseTransfer = $this->getFactory()
             ->createFilePathResolver()
-            ->resolveFilePath($this->input->getArgument(static::ARGUMENT_FILE_PATH));
+            ->resolveFilePath($filePath);
 
         if (!$filePathResolverResponseTransfer->getIsSuccessful()) {
             $this->error($filePathResolverResponseTransfer->getMessage()->getMessage());

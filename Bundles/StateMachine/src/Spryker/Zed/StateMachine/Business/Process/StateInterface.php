@@ -10,14 +10,14 @@ namespace Spryker\Zed\StateMachine\Business\Process;
 interface StateInterface
 {
     /**
-     * @param \Spryker\Zed\StateMachine\Business\Process\TransitionInterface[] $incomingTransitions
+     * @param array<\Spryker\Zed\StateMachine\Business\Process\TransitionInterface> $incomingTransitions
      *
      * @return $this
      */
     public function setIncomingTransitions(array $incomingTransitions);
 
     /**
-     * @return \Spryker\Zed\StateMachine\Business\Process\TransitionInterface[]
+     * @return array<\Spryker\Zed\StateMachine\Business\Process\TransitionInterface>
      */
     public function getIncomingTransitions();
 
@@ -27,14 +27,14 @@ interface StateInterface
     public function hasIncomingTransitions();
 
     /**
-     * @param \Spryker\Zed\StateMachine\Business\Process\TransitionInterface[] $outgoingTransitions
+     * @param array<\Spryker\Zed\StateMachine\Business\Process\TransitionInterface> $outgoingTransitions
      *
      * @return $this
      */
     public function setOutgoingTransitions(array $outgoingTransitions);
 
     /**
-     * @return \Spryker\Zed\StateMachine\Business\Process\TransitionInterface[]
+     * @return array<\Spryker\Zed\StateMachine\Business\Process\TransitionInterface>
      */
     public function getOutgoingTransitions();
 
@@ -46,12 +46,12 @@ interface StateInterface
     /**
      * @param \Spryker\Zed\StateMachine\Business\Process\EventInterface $event
      *
-     * @return \Spryker\Zed\StateMachine\Business\Process\TransitionInterface[]
+     * @return array<\Spryker\Zed\StateMachine\Business\Process\TransitionInterface>
      */
     public function getOutgoingTransitionsByEvent(EventInterface $event);
 
     /**
-     * @return \Spryker\Zed\StateMachine\Business\Process\EventInterface[]
+     * @return array<\Spryker\Zed\StateMachine\Business\Process\EventInterface>
      */
     public function getEvents();
 
@@ -134,7 +134,7 @@ interface StateInterface
     /**
      * @throws \Exception
      *
-     * @return \Spryker\Zed\StateMachine\Business\Process\EventInterface[]
+     * @return array<\Spryker\Zed\StateMachine\Business\Process\EventInterface>
      */
     public function getTimeoutEvents();
 

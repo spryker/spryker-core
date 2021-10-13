@@ -11,16 +11,40 @@ use SprykerTest\Zed\Sales\SalesPresentationTester;
 
 class SalesDetailPage
 {
+    /**
+     * @var string
+     */
     public const URL = '/sales/detail?id-sales-order=';
 
+    /**
+     * @var string
+     */
     public const SELECTOR_ID_SALES_ORDER_ITEM = '//div[@id="items"]//table/tbody/tr/td[{{position}}]/input';
+    /**
+     * @var string
+     */
     public const SELECTOR_SALES_ORDER_ROW = '//div[@id="items"]//table/tbody/tr/td[{{position}}]/input';
+    /**
+     * @var string
+     */
     public const SELECTOR_ITEM_TOTAL_ELEMENT = '//table[@data-qa="order-item-list"]/tbody/tr[@data-qa-item-row="{{idSalesOrderItem}}"]/td[@data-qa="item-total-amount"]';
+    /**
+     * @var string
+     */
     public const SELECTOR_CURRENT_STATE = '//td[@data-qa-item-current-state={{idSalesOrderItem}}]';
 
+    /**
+     * @var string
+     */
     public const SELECTOR_GRAND_TOTAL = '//td[@data-qa="grand-total"]';
 
+    /**
+     * @var string
+     */
     public const ATTRIBUTE_ITEM_TOTAL_RAW = 'data-qa-raw';
+    /**
+     * @var string
+     */
     public const ATTRIBUTE_GRAND_TOTAL_RAW = 'data-qa-grand-total-raw';
 
     /**

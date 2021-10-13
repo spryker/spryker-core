@@ -12,6 +12,9 @@ use Generated\Shared\Transfer\ValidationMessageTransfer;
 
 class ComposerJsonUnboundRequireConstraintValidator implements ComposerJsonValidatorInterface
 {
+    /**
+     * @var string
+     */
     protected const REQUIRE = 'require';
 
     /**

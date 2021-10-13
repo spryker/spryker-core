@@ -12,7 +12,15 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class AvailabilityNotificationConfig extends AbstractBundleConfig
 {
+    /**
+     * @var string
+     */
     protected const AVAILABILITY_NOTIFICATION_UNSUBSCRIBE_BY_KEY_URI = '/%s/availability-notification/unsubscribe-by-key/%s';
+
+    /**
+     * @var bool
+     */
+    protected const AVAILABILITY_NOTIFICATION_CHECK_PRODUCT_EXISTS = false;
 
     /**
      * @api
@@ -43,5 +51,15 @@ class AvailabilityNotificationConfig extends AbstractBundleConfig
     public function getUnsubscribeUri(): string
     {
         return static::AVAILABILITY_NOTIFICATION_UNSUBSCRIBE_BY_KEY_URI;
+    }
+
+    /**
+     * @api
+     *
+     * @return bool
+     */
+    public function availabilityNotificationCheckProductExists(): bool
+    {
+        return static::AVAILABILITY_NOTIFICATION_CHECK_PRODUCT_EXISTS;
     }
 }

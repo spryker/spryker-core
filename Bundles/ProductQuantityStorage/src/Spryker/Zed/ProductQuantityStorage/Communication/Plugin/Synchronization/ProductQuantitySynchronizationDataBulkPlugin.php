@@ -55,9 +55,9 @@ class ProductQuantitySynchronizationDataBulkPlugin extends AbstractPlugin implem
      *
      * @param int $offset
      * @param int $limit
-     * @param int[] $ids
+     * @param array<int> $ids
      *
-     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     * @return array<\Generated\Shared\Transfer\SynchronizationDataTransfer>
      */
     public function getData(int $offset, int $limit, array $ids = []): array
     {

@@ -25,7 +25,7 @@ class TaxSetStoragePublishListener extends AbstractPlugin implements EventBulkHa
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
      * @param string $eventName
      *
      * @return void

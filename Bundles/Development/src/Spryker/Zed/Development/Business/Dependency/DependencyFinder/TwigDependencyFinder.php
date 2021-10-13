@@ -12,10 +12,13 @@ use Spryker\Zed\Development\Business\Dependency\DependencyFinder\Context\Depende
 
 class TwigDependencyFinder implements DependencyFinderInterface
 {
+    /**
+     * @var string
+     */
     public const TYPE_TWIG = 'twig';
 
     /**
-     * @var \Spryker\Zed\Development\Business\Dependency\DependencyFinder\TwigDependencyFinder\TwigDependencyFinderInterface[]
+     * @var array<\Spryker\Zed\Development\Business\Dependency\DependencyFinder\TwigDependencyFinder\TwigDependencyFinderInterface>
      */
     protected $twigDependencyFinder;
 

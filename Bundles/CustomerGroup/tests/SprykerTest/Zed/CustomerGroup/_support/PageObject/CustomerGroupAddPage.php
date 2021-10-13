@@ -9,5 +9,8 @@ namespace SprykerTest\Zed\CustomerGroup\PageObject;
 
 class CustomerGroupAddPage
 {
+    /**
+     * @var string
+     */
     public const URL = '/customer-group/add';
 }

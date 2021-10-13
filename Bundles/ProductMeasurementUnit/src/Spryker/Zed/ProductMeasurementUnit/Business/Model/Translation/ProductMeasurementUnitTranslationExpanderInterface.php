@@ -21,9 +21,9 @@ interface ProductMeasurementUnitTranslationExpanderInterface
     ): ProductMeasurementSalesUnitTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[] $productMeasurementSalesUnitTransfers
+     * @param array<\Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer> $productMeasurementSalesUnitTransfers
      *
-     * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer>
      */
     public function translateProductMeasurementSalesUnits(array $productMeasurementSalesUnitTransfers): array;
 }

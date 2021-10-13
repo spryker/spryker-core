@@ -130,7 +130,7 @@ class ContentGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\ContentGuiExtension\Dependency\Plugin\ContentPluginInterface[]
+     * @return array<\Spryker\Zed\ContentGuiExtension\Dependency\Plugin\ContentPluginInterface>
      */
     public function getContentPlugins(): array
     {
@@ -146,7 +146,7 @@ class ContentGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\ContentGuiExtension\Dependency\Plugin\ContentGuiEditorPluginInterface[]
+     * @return array<\Spryker\Zed\ContentGuiExtension\Dependency\Plugin\ContentGuiEditorPluginInterface>
      */
     public function getContentEditorPlugins(): array
     {

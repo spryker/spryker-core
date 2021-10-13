@@ -9,7 +9,13 @@ namespace SprykerTest\Zed\Customer\PageObject;
 
 class CustomerAddPage
 {
+    /**
+     * @var string
+     */
     public const URL = '/customer/add';
 
+    /**
+     * @var string
+     */
     public const SELECTOR_TABLE = '#customer';
 }

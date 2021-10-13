@@ -17,9 +17,18 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ProductAutocompleteController extends AbstractController
 {
+    /**
+     * @var string
+     */
     protected const REQUEST_PARAM_SUGGESTION = 'term';
+    /**
+     * @var string
+     */
     protected const REQUEST_PARAM_PAGE = 'page';
 
+    /**
+     * @var int
+     */
     protected const DEFAULT_PAGE = 1;
 
     /**

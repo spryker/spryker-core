@@ -18,7 +18,7 @@ interface PriceFacadeInterface
      *
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getPriceModes();
 

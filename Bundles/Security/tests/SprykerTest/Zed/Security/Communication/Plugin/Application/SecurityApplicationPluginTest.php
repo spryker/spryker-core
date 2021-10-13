@@ -38,42 +38,72 @@ class SecurityApplicationPluginTest extends Unit
 {
     /**
      * @uses \Spryker\Zed\Security\Communication\Plugin\Application\SecurityApplicationPlugin::SERVICE_SECURITY_FIREWALL
+     * @var string
      */
     protected const SERVICE_SECURITY_FIREWALL = 'security.firewall';
 
     /**
      * @uses \Spryker\Zed\Security\Communication\Plugin\Application\SecurityApplicationPlugin::SERVICE_SECURITY_AUTHORIZATION_CHECKER
+     * @var string
      */
     protected const SERVICE_SECURITY_AUTHORIZATION_CHECKER = 'security.authorization_checker';
 
     /**
      * @uses \Spryker\Zed\Security\Communication\Plugin\Application\SecurityApplicationPlugin::SERVICE_SECURITY_LAST_ERROR
+     * @var string
      */
     protected const SERVICE_SECURITY_LAST_ERROR = 'security.last_error';
 
     /**
      * @uses \Spryker\Zed\Security\Communication\Plugin\Application\SecurityApplicationPlugin::SERVICE_SECURITY_TOKEN_STORAGE
+     * @var string
      */
     protected const SERVICE_SECURITY_TOKEN_STORAGE = 'security.token_storage';
 
     /**
      * @uses \Spryker\Zed\Security\Communication\Plugin\Application\SecurityApplicationPlugin::SERVICE_SECURITY_USER_PROVIDER_INMEMORY_PROTO
+     * @var string
      */
     protected const SERVICE_SECURITY_USER_PROVIDER_INMEMORY_PROTO = 'security.user_provider.inmemory._proto';
 
     /**
      * @uses \Spryker\Zed\Security\Communication\Plugin\Application\SecurityApplicationPlugin::SERVICE_SECURITY_ACCESS_MAP
+     * @var string
      */
     protected const SERVICE_SECURITY_ACCESS_MAP = 'security.access_map';
 
+    /**
+     * @var string
+     */
     protected const HOMEPAGE_PATH = '/homepage';
+    /**
+     * @var string
+     */
     protected const USER_PAGE_PATH = '/homepage/user';
+    /**
+     * @var string
+     */
     protected const LOGIN_PATH = '/login';
 
+    /**
+     * @var string
+     */
     protected const USER_NAME = 'user';
+    /**
+     * @var string
+     */
     protected const USER_PASSWORD = 'foo';
+    /**
+     * @var string
+     */
     protected const USER_ENCODED_PASSWORD = '$2y$15$lzUNsTegNXvZW3qtfucV0erYBcEqWVeyOmjolB7R1uodsAVJ95vvu';
+    /**
+     * @var string
+     */
     protected const USER_INVALID_PASSWORD = 'bar';
+    /**
+     * @var string
+     */
     protected const ROLE_USER = 'ROLE_USER';
 
     /**
@@ -146,7 +176,8 @@ class SecurityApplicationPluginTest extends Unit
         $this->assertSame('ANONYMOUS', $httpKernelBrowser->getResponse()->getContent());
 
         $httpKernelBrowser->request('post', static::HOMEPAGE_PATH . '/login_check', ['_username' => static::USER_NAME, '_password' => static::USER_INVALID_PASSWORD]);
-        $this->assertStringContainsString('Bad credentials', $container->get(static::SERVICE_SECURITY_LAST_ERROR)($httpKernelBrowser->getRequest()));
+        $lastError = $container->get('security.last_error')($httpKernelBrowser->getRequest());
+        $this->assertMatchesRegularExpression('/(Bad credentials|The presented password is invalid)/', $lastError);
         // hack to re-close the session as the previous assertions re-opens it
         $httpKernelBrowser->getRequest()->getSession()->save();
 
@@ -192,7 +223,7 @@ class SecurityApplicationPluginTest extends Unit
 
         $httpKernelBrowser->request('get', static::HOMEPAGE_PATH, [], [], ['HTTP_X_AUTH_TOKEN' => sprintf('%s:%s', 'customer', static::USER_INVALID_PASSWORD)]);
         $this->assertSame(403, $httpKernelBrowser->getResponse()->getStatusCode(), 'User not found');
-        $this->assertSame('{"message":"Username could not be found."}', $httpKernelBrowser->getResponse()->getContent());
+        $this->assertMatchesRegularExpression('/(Username could not be found|Invalid credentials)/', $httpKernelBrowser->getResponse()->getContent());
 
         $httpKernelBrowser->request('get', static::HOMEPAGE_PATH, [], [], ['HTTP_X_AUTH_TOKEN' => sprintf('%s:%s', static::USER_NAME, static::USER_INVALID_PASSWORD)]);
         $this->assertSame(403, $httpKernelBrowser->getResponse()->getStatusCode(), 'Invalid credentials');

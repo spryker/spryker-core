@@ -87,10 +87,10 @@ class ShipmentTaxRateCalculator implements CalculatorInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
-     * @param \ArrayObject|\Generated\Shared\Transfer\ExpenseTransfer[] $expenseTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $itemTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ExpenseTransfer> $expenseTransfers
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ExpenseTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\ExpenseTransfer>
      */
     protected function recalculateByItemTransfersAndExpenseTransfers(ArrayObject $itemTransfers, ArrayObject $expenseTransfers): ArrayObject
     {
@@ -115,7 +115,7 @@ class ShipmentTaxRateCalculator implements CalculatorInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ExpenseTransfer[] $expenseTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ExpenseTransfer> $expenseTransfers
      * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
      *
      * @return \Generated\Shared\Transfer\ExpenseTransfer|null

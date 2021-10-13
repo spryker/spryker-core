@@ -21,7 +21,7 @@ class TaxStorageFacade extends AbstractFacade implements TaxStorageFacadeInterfa
      *
      * @api
      *
-     * @param int[] $taxSetIds
+     * @param array<int> $taxSetIds
      *
      * @return void
      */
@@ -35,7 +35,7 @@ class TaxStorageFacade extends AbstractFacade implements TaxStorageFacadeInterfa
      *
      * @api
      *
-     * @param int[] $taxSetIds
+     * @param array<int> $taxSetIds
      *
      * @return void
      */
@@ -49,7 +49,7 @@ class TaxStorageFacade extends AbstractFacade implements TaxStorageFacadeInterfa
      *
      * @api
      *
-     * @param int[] $taxRateIds
+     * @param array<int> $taxRateIds
      *
      * @return void
      */

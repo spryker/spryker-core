@@ -11,6 +11,9 @@ use Spryker\Shared\Kernel\CodeBucket\Exception\InvalidCodeBucketException;
 
 abstract class AbstractCodeBucketConfig implements CodeBucketConfigInterface
 {
+    /**
+     * @var string
+     */
     protected const SPRYKER_CODE_BUCKET = 'SPRYKER_CODE_BUCKET';
 
     /**
@@ -30,7 +33,7 @@ abstract class AbstractCodeBucketConfig implements CodeBucketConfigInterface
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     abstract public function getCodeBuckets(): array;
 

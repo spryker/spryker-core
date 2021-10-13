@@ -17,9 +17,18 @@ use Spryker\Zed\Kernel\Container;
  */
 class CompanyUserStorageDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const PLUGINS_COMPANY_USER_STORAGE_EXPANDER = 'PLUGINS_COMPANY_USER_STORAGE_EXPANDER';
 
+    /**
+     * @var string
+     */
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
+    /**
+     * @var string
+     */
     public const FACADE_COMPANY_USER = 'FACADE_COMPANY_USER';
 
     /**
@@ -97,7 +106,7 @@ class CompanyUserStorageDependencyProvider extends AbstractBundleDependencyProvi
     }
 
     /**
-     * @return \Spryker\Zed\CompanyUserStorageExtension\Dependency\Plugin\CompanyUserStorageExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\CompanyUserStorageExtension\Dependency\Plugin\CompanyUserStorageExpanderPluginInterface>
      */
     protected function getCompanyUserStorageExpanderPlugins(): array
     {

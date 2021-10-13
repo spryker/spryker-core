@@ -14,6 +14,8 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraint;
@@ -28,18 +30,51 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  */
 class AttributeForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const FIELD_ID_PRODUCT_MANAGEMENT_ATTRIBUTE = 'id_product_management_attribute';
+    /**
+     * @var string
+     */
     public const FIELD_KEY = 'key';
+    /**
+     * @var string
+     */
     public const FIELD_INPUT_TYPE = 'input_type';
+    /**
+     * @var string
+     */
     public const FIELD_ALLOW_INPUT = 'allow_input';
+    /**
+     * @var string
+     */
     public const FIELD_IS_SUPER = 'is_super';
+    /**
+     * @var string
+     */
     public const FIELD_VALUES = 'values';
 
+    /**
+     * @var string
+     */
     public const OPTION_ATTRIBUTE_TYPE_CHOICES = 'attribute_type_choices';
+    /**
+     * @var string
+     */
     public const OPTION_VALUES_CHOICES = 'values_choices';
+    /**
+     * @var string
+     */
     public const OPTION_IS_UPDATE = 'is_update';
 
+    /**
+     * @var string
+     */
     public const GROUP_VALUES = 'values_group';
+    /**
+     * @var string
+     */
     public const GROUP_UNIQUE_KEY = 'unique_key_group';
 
     /**
@@ -51,7 +86,7 @@ class AttributeForm extends AbstractType
     {
         $resolver->setRequired([
             self::OPTION_ATTRIBUTE_TYPE_CHOICES,
-            self::OPTION_VALUES_CHOICES,
+            static::OPTION_VALUES_CHOICES,
         ]);
 
         $resolver->setDefaults([
@@ -66,7 +101,7 @@ class AttributeForm extends AbstractType
                     !isset($submittedData[self::FIELD_ALLOW_INPUT]) || !$submittedData[self::FIELD_ALLOW_INPUT] ||
                     (isset($submittedData[self::FIELD_IS_SUPER]) && $submittedData[self::FIELD_IS_SUPER])
                 ) {
-                    $groups[] = self::GROUP_VALUES;
+                    $groups[] = static::GROUP_VALUES;
                 }
 
                 if (!isset($originalData[self::FIELD_KEY]) || $submittedData[self::FIELD_KEY] !== $originalData[self::FIELD_KEY]) {
@@ -188,20 +223,54 @@ class AttributeForm extends AbstractType
      */
     protected function addValuesField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(self::FIELD_VALUES, Select2ComboBoxType::class, [
+        $builder->add(static::FIELD_VALUES, Select2ComboBoxType::class, [
             'label' => 'Predefined Values',
-            'choices' => $options[self::OPTION_VALUES_CHOICES],
+            'choices' => $options[static::OPTION_VALUES_CHOICES],
             'multiple' => true,
             'constraints' => [
                 new NotBlank([
-                    'groups' => self::GROUP_VALUES,
+                    'groups' => static::GROUP_VALUES,
                 ]),
             ],
         ]);
 
-        $builder->get(self::FIELD_VALUES)->resetViewTransformers();
+        $builder->addEventListener(
+            FormEvents::PRE_SUBMIT,
+            function (FormEvent $event) use ($options) {
+                $this->addValuesFieldChoices($event, $options);
+            }
+        );
 
         return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormEvent $event
+     * @param array $options
+     *
+     * @return void
+     */
+    protected function addValuesFieldChoices(FormEvent $event, array $options): void
+    {
+        $form = $event->getForm();
+        $data = $event->getData();
+        $data = $data[static::FIELD_VALUES] ?? [];
+        $choices = $options[static::OPTION_VALUES_CHOICES];
+
+        foreach ($data as $choice) {
+            $choices[$choice] = $choice;
+        }
+
+        $form->add(static::FIELD_VALUES, Select2ComboBoxType::class, [
+            'label' => 'Predefined Values',
+            'choices' => $choices,
+            'multiple' => true,
+            'constraints' => [
+                new NotBlank([
+                    'groups' => static::GROUP_VALUES,
+                ]),
+            ],
+        ]);
     }
 
     /**

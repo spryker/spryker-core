@@ -40,7 +40,7 @@ class RedisReadWrite extends RedisRead implements ReadWriteInterface
      *
      * @throws \Exception
      *
-     * @return bool|mixed
+     * @return mixed|bool
      */
     public function setMulti(array $items, $prefix = self::KV_PREFIX)
     {

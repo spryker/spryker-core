@@ -15,7 +15,13 @@ use Symfony\Component\HttpKernel\DataCollector\LoggerDataCollector;
 
 class WebProfilerLoggerDataCollectorPlugin implements WebProfilerDataCollectorPluginInterface
 {
+    /**
+     * @var string
+     */
     protected const NAME = 'logger';
+    /**
+     * @var string
+     */
     protected const TEMPLATE = '@WebProfiler/Collector/logger.html.twig';
 
     /**

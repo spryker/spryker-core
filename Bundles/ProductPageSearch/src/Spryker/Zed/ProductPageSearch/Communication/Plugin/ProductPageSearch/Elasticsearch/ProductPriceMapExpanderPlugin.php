@@ -22,7 +22,13 @@ use Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductAbstractMapE
  */
 class ProductPriceMapExpanderPlugin extends AbstractPlugin implements ProductAbstractMapExpanderPluginInterface
 {
+    /**
+     * @var string
+     */
     protected const KEY_PRICE = 'price';
+    /**
+     * @var string
+     */
     protected const KEY_PRICES = 'prices';
 
     /**

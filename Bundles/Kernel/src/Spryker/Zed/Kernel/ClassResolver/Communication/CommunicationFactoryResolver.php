@@ -11,6 +11,9 @@ use Spryker\Zed\Kernel\ClassResolver\AbstractClassResolver;
 
 class CommunicationFactoryResolver extends AbstractClassResolver
 {
+    /**
+     * @var string
+     */
     protected const RESOLVABLE_TYPE = 'ZedFactoryCommunication';
 
     /**

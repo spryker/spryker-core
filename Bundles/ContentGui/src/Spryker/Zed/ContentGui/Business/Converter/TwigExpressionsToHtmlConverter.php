@@ -17,6 +17,9 @@ use Spryker\Zed\ContentGui\Dependency\Facade\ContentGuiToTranslatorFacadeInterfa
 
 class TwigExpressionsToHtmlConverter implements TwigExpressionsToHtmlConverterInterface
 {
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_MAX_WIDGET_NUMBER = 'Limit exceeded, maximum number of widgets %d';
 
     /**
@@ -35,7 +38,7 @@ class TwigExpressionsToHtmlConverter implements TwigExpressionsToHtmlConverterIn
     protected $translatorFacade;
 
     /**
-     * @var \Spryker\Zed\ContentGuiExtension\Dependency\Plugin\ContentGuiEditorPluginInterface[]
+     * @var array<\Spryker\Zed\ContentGuiExtension\Dependency\Plugin\ContentGuiEditorPluginInterface>
      */
     protected $contentEditorPlugins;
 
@@ -43,7 +46,7 @@ class TwigExpressionsToHtmlConverter implements TwigExpressionsToHtmlConverterIn
      * @param \Spryker\Zed\ContentGui\Dependency\Facade\ContentGuiToContentFacadeInterface $contentFacade
      * @param \Spryker\Zed\ContentGui\ContentGuiConfig $contentGuiConfig
      * @param \Spryker\Zed\ContentGui\Dependency\Facade\ContentGuiToTranslatorFacadeInterface $translatorFacade
-     * @param \Spryker\Zed\ContentGuiExtension\Dependency\Plugin\ContentGuiEditorPluginInterface[] $contentEditorPlugins
+     * @param array<\Spryker\Zed\ContentGuiExtension\Dependency\Plugin\ContentGuiEditorPluginInterface> $contentEditorPlugins
      */
     public function __construct(
         ContentGuiToContentFacadeInterface $contentFacade,
@@ -88,7 +91,7 @@ class TwigExpressionsToHtmlConverter implements TwigExpressionsToHtmlConverterIn
     /**
      * @param string $html
      *
-     * @return \Generated\Shared\Transfer\TwigExpressionTransfer[]
+     * @return array<\Generated\Shared\Transfer\TwigExpressionTransfer>
      */
     protected function findTwigExpressions(string $html): array
     {
@@ -119,11 +122,11 @@ class TwigExpressionsToHtmlConverter implements TwigExpressionsToHtmlConverterIn
     }
 
     /**
-     * @param string[][] $twigExpressionMatches
-     * @param \Generated\Shared\Transfer\ContentWidgetTemplateTransfer[] $contentWidgetTemplateTransfers
-     * @param \Generated\Shared\Transfer\TwigExpressionTransfer[] $twigExpressionTransfers
+     * @param array<string[]> $twigExpressionMatches
+     * @param array<\Generated\Shared\Transfer\ContentWidgetTemplateTransfer> $contentWidgetTemplateTransfers
+     * @param array<\Generated\Shared\Transfer\TwigExpressionTransfer> $twigExpressionTransfers
      *
-     * @return \Generated\Shared\Transfer\TwigExpressionTransfer[]
+     * @return array<\Generated\Shared\Transfer\TwigExpressionTransfer>
      */
     protected function mapTwigExpressionsToTransfers(
         array $twigExpressionMatches,
@@ -175,7 +178,7 @@ class TwigExpressionsToHtmlConverter implements TwigExpressionsToHtmlConverterIn
 
     /**
      * @param string $templateIdentifier
-     * @param \Generated\Shared\Transfer\ContentWidgetTemplateTransfer[] $contentWidgetTemplateTransfers
+     * @param array<\Generated\Shared\Transfer\ContentWidgetTemplateTransfer> $contentWidgetTemplateTransfers
      *
      * @return \Generated\Shared\Transfer\ContentWidgetTemplateTransfer
      */
@@ -198,7 +201,7 @@ class TwigExpressionsToHtmlConverter implements TwigExpressionsToHtmlConverterIn
 
     /**
      * @param string $html
-     * @param \Generated\Shared\Transfer\TwigExpressionTransfer[] $twigExpressionTransfers
+     * @param array<\Generated\Shared\Transfer\TwigExpressionTransfer> $twigExpressionTransfers
      *
      * @return string
      */

@@ -59,7 +59,7 @@ class ProductPageSearchToProductBridge implements ProductPageSearchToProductInte
     /**
      * @param int $idProductAbstract
      *
-     * @return int[]
+     * @return array<int>
      */
     public function findProductConcreteIdsByAbstractProductId(int $idProductAbstract): array
     {
@@ -67,9 +67,9 @@ class ProductPageSearchToProductBridge implements ProductPageSearchToProductInte
     }
 
     /**
-     * @param int[] $productIds
+     * @param array<int> $productIds
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
      */
     public function getProductConcreteTransfersByProductIds(array $productIds): array
     {
@@ -77,9 +77,9 @@ class ProductPageSearchToProductBridge implements ProductPageSearchToProductInte
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
      */
     public function getProductConcreteTransfersByProductAbstractIds(array $productAbstractIds): array
     {
@@ -89,7 +89,7 @@ class ProductPageSearchToProductBridge implements ProductPageSearchToProductInte
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
      */
     public function getRawProductConcreteTransfersByFilter(FilterTransfer $filterTransfer): array
     {

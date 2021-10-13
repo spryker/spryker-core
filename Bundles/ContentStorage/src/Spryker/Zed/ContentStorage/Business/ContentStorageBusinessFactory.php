@@ -11,6 +11,7 @@ use Spryker\Zed\ContentStorage\Business\ContentStorage\ContentStorageWriter;
 use Spryker\Zed\ContentStorage\Business\ContentStorage\ContentStorageWriterInterface;
 use Spryker\Zed\ContentStorage\ContentStorageDependencyProvider;
 use Spryker\Zed\ContentStorage\Dependency\Facade\ContentStorageToLocaleFacadeInterface;
+use Spryker\Zed\ContentStorage\Dependency\Facade\ContentStorageToStoreFacadeInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
@@ -28,8 +29,8 @@ class ContentStorageBusinessFactory extends AbstractBusinessFactory
         return new ContentStorageWriter(
             $this->getRepository(),
             $this->getEntityManager(),
-            $this->getLocaleFacade(),
-            $this->getUtilEncoding()
+            $this->getUtilEncoding(),
+            $this->getStoreFacade()
         );
     }
 
@@ -47,5 +48,13 @@ class ContentStorageBusinessFactory extends AbstractBusinessFactory
     public function getUtilEncoding()
     {
         return $this->getProvidedDependency(ContentStorageDependencyProvider::SERVICE_UTIL_ENCODING);
+    }
+
+    /**
+     * @return \Spryker\Zed\ContentStorage\Dependency\Facade\ContentStorageToStoreFacadeInterface
+     */
+    public function getStoreFacade(): ContentStorageToStoreFacadeInterface
+    {
+        return $this->getProvidedDependency(ContentStorageDependencyProvider::FACADE_STORE);
     }
 }

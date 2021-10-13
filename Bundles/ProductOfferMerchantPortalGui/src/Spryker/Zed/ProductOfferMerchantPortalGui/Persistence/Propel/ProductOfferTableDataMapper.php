@@ -24,64 +24,85 @@ class ProductOfferTableDataMapper
 {
     /**
      * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductOfferGuiTableConfigurationProvider::COL_KEY_OFFER_REFERENCE
+     * @var string
      */
     protected const COL_KEY_OFFER_REFERENCE = 'offerReference';
 
     /**
      * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductOfferGuiTableConfigurationProvider::COL_KEY_MERCHANT_SKU
+     * @var string
      */
     protected const COL_KEY_MERCHANT_SKU = 'merchantSku';
 
     /**
      * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductOfferGuiTableConfigurationProvider::COL_KEY_CONCRETE_SKU
+     * @var string
      */
     protected const COL_KEY_CONCRETE_SKU = 'concreteSku';
 
     /**
      * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductOfferGuiTableConfigurationProvider::COL_KEY_IMAGE
+     * @var string
      */
     protected const COL_KEY_IMAGE = 'image';
 
     /**
      * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductOfferGuiTableConfigurationProvider::COL_KEY_PRODUCT_NAME
+     * @var string
      */
     protected const COL_KEY_PRODUCT_NAME = 'productName';
 
     /**
      * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductOfferGuiTableConfigurationProvider::COL_KEY_STORES
+     * @var string
      */
     protected const COL_KEY_STORES = 'stores';
 
     /**
      * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductOfferGuiTableConfigurationProvider::COL_KEY_STOCK
+     * @var string
      */
     protected const COL_KEY_STOCK = 'stock';
 
     /**
-     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductOfferGuiTableConfigurationProvider::COL_KEY_VISIBILITY
+     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductOfferGuiTableConfigurationProvider::COL_KEY_STATUS
+     * @var string
      */
-    protected const COL_KEY_VISIBILITY = 'visibility';
+    protected const COL_KEY_STATUS = 'status';
+
+    /**
+     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductOfferGuiTableConfigurationProvider::COL_KEY_APPROVAL_STATUS
+     * @var string
+     */
+    protected const COL_KEY_APPROVAL_STATUS = 'approvalStatus';
 
     /**
      * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductOfferGuiTableConfigurationProvider::COL_KEY_VALID_FROM
+     * @var string
      */
     protected const COL_KEY_VALID_FROM = 'validFrom';
 
     /**
      * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductOfferGuiTableConfigurationProvider::COL_KEY_VALID_TO
+     * @var string
      */
     protected const COL_KEY_VALID_TO = 'validTo';
 
     /**
      * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductOfferGuiTableConfigurationProvider::COL_KEY_CREATED_AT
+     * @var string
      */
     protected const COL_KEY_CREATED_AT = 'createdAt';
 
     /**
      * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductOfferGuiTableConfigurationProvider::COL_KEY_UPDATED_AT
+     * @var string
      */
     protected const COL_KEY_UPDATED_AT = 'updatedAt';
 
+    /**
+     * @var array
+     */
     public const PRODUCT_OFFER_DATA_COLUMN_MAP = [
         self::COL_KEY_OFFER_REFERENCE => SpyProductOfferTableMap::COL_PRODUCT_OFFER_REFERENCE,
         self::COL_KEY_MERCHANT_SKU => SpyProductOfferTableMap::COL_MERCHANT_SKU,
@@ -90,7 +111,8 @@ class ProductOfferTableDataMapper
         self::COL_KEY_PRODUCT_NAME => LocalizedAttributesTransfer::NAME,
         self::COL_KEY_STORES => ProductOfferTransfer::STORES,
         self::COL_KEY_STOCK => SpyProductOfferStockTableMap::COL_QUANTITY,
-        self::COL_KEY_VISIBILITY => SpyProductOfferTableMap::COL_IS_ACTIVE,
+        self::COL_KEY_STATUS => SpyProductOfferTableMap::COL_IS_ACTIVE,
+        self::COL_KEY_APPROVAL_STATUS => SpyProductOfferTableMap::COL_APPROVAL_STATUS,
         self::COL_KEY_VALID_FROM => SpyProductOfferValidityTableMap::COL_VALID_FROM,
         self::COL_KEY_VALID_TO => SpyProductOfferValidityTableMap::COL_VALID_TO,
         self::COL_KEY_CREATED_AT => SpyProductOfferTableMap::COL_CREATED_AT,
@@ -111,9 +133,7 @@ class ProductOfferTableDataMapper
     }
 
     /**
-     * @phpstan-param array<mixed> $productOfferTableDataArray
-     *
-     * @param array $productOfferTableDataArray
+     * @param array<mixed> $productOfferTableDataArray
      * @param \Generated\Shared\Transfer\ProductOfferCollectionTransfer $productOfferCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\ProductOfferCollectionTransfer
@@ -145,13 +165,9 @@ class ProductOfferTableDataMapper
     }
 
     /**
-     * @phpstan-param array<mixed> $productOfferTableRowDataArray
+     * @param array<mixed> $productOfferTableRowDataArray
      *
-     * @phpstan-return array<mixed>
-     *
-     * @param array $productOfferTableRowDataArray
-     *
-     * @return array
+     * @return array<mixed>
      */
     protected function prepareProductOfferStoresTableData(array $productOfferTableRowDataArray): array
     {
@@ -169,13 +185,9 @@ class ProductOfferTableDataMapper
     }
 
     /**
-     * @phpstan-param array<mixed> $productOfferTableRowDataArray
+     * @param array<mixed> $productOfferTableRowDataArray
      *
-     * @phpstan-return array<mixed>
-     *
-     * @param array $productOfferTableRowDataArray
-     *
-     * @return array
+     * @return array<mixed>
      */
     protected function prepareProductOfferAttributesTableData(array $productOfferTableRowDataArray): array
     {
@@ -202,9 +214,7 @@ class ProductOfferTableDataMapper
     }
 
     /**
-     * @phpstan-param array<mixed> $productOfferTableRowDataArray
-     *
-     * @param array $productOfferTableRowDataArray
+     * @param array<mixed> $productOfferTableRowDataArray
      * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
      *
      * @return \Generated\Shared\Transfer\ProductOfferTransfer
@@ -222,9 +232,7 @@ class ProductOfferTableDataMapper
     }
 
     /**
-     * @phpstan-param array<mixed> $productOfferTableRowDataArray
-     *
-     * @param array $productOfferTableRowDataArray
+     * @param array<mixed> $productOfferTableRowDataArray
      * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
      *
      * @return \Generated\Shared\Transfer\ProductOfferTransfer
@@ -242,9 +250,7 @@ class ProductOfferTableDataMapper
     }
 
     /**
-     * @phpstan-param array<mixed> $productOfferTableRowDataArray
-     *
-     * @param array $productOfferTableRowDataArray
+     * @param array<mixed> $productOfferTableRowDataArray
      * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
      *
      * @return \Generated\Shared\Transfer\ProductOfferTransfer

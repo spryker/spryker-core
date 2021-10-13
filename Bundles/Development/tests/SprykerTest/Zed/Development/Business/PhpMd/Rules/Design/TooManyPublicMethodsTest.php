@@ -27,8 +27,17 @@ use Spryker\Zed\Development\Business\PhpMd\Rules\Design\TooManyPublicMethods;
  */
 class TooManyPublicMethodsTest extends Unit
 {
+    /**
+     * @var int
+     */
     public const THRESHOLD_LOW = 1;
+    /**
+     * @var int
+     */
     public const THRESHOLD_HIGH = 3;
+    /**
+     * @var int
+     */
     public const NUMBER_OF_METHODS = 2;
 
     /**

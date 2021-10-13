@@ -20,21 +20,46 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class OmsTriggerController extends AbstractController
 {
+    /**
+     * @var string
+     */
     protected const URL_PARAM_MERCHANT_SALES_ORDER_ITEM_REFERENCE = 'merchant-sales-order-item-reference';
+    /**
+     * @var string
+     */
     protected const URL_PARAM_ID_MERCHANT_SALES_ORDER = 'id-merchant-sales-order';
+    /**
+     * @var string
+     */
     protected const URL_PARAM_REDIRECT = 'redirect';
+    /**
+     * @var string
+     */
     protected const URL_PARAM_EVENT = 'event';
 
+    /**
+     * @var string
+     */
     protected const MESSAGE_STATUS_CHANGED_SUCCESSFULLY = 'Status change triggered successfully.';
 
+    /**
+     * @var string
+     */
     protected const ERROR_INVALID_REQUEST = 'Request is invalid';
 
     /**
      * @uses \Spryker\Zed\MerchantSalesOrderMerchantUserGui\Communication\Controller\DetailController::ROUTE_REDIRECT
+     * @var string
      */
     protected const REDIRECT_URL_DEFAULT = '/merchant-sales-order-merchant-user-gui/detail';
 
+    /**
+     * @var string
+     */
     protected const MESSAGE_ORDER_NOT_FOUND_ERROR = 'Merchant sales order #%d not found.';
+    /**
+     * @var string
+     */
     protected const MESSAGE_REDIRECT_NOT_FOUND_ERROR = 'Parameter redirect not found.';
 
     /**
@@ -44,7 +69,7 @@ class OmsTriggerController extends AbstractController
      */
     public function submitTriggerEventAction(Request $request): RedirectResponse
     {
-        $redirect = $request->query->get('redirect', static::URL_PARAM_REDIRECT);
+        $redirect = (string)$request->query->get('redirect', static::URL_PARAM_REDIRECT);
 
         if (!$redirect) {
             $this->addErrorMessage(static::MESSAGE_REDIRECT_NOT_FOUND_ERROR);
@@ -63,7 +88,7 @@ class OmsTriggerController extends AbstractController
             return $this->redirectResponse($redirect);
         }
 
-        $event = $request->query->get(static::URL_PARAM_EVENT);
+        $event = (string)$request->query->get(static::URL_PARAM_EVENT);
         $idMerchantOrder = $request->query->getInt(static::URL_PARAM_ID_MERCHANT_SALES_ORDER);
 
         $merchantOrderTransfer = $this->findMerchantOrder($idMerchantOrder);
@@ -101,7 +126,7 @@ class OmsTriggerController extends AbstractController
      */
     public function submitTriggerEventItemAction(Request $request): RedirectResponse
     {
-        $redirect = $request->query->get('redirect', static::URL_PARAM_REDIRECT);
+        $redirect = (string)$request->query->get('redirect', static::URL_PARAM_REDIRECT);
 
         if (!$redirect) {
             $this->addErrorMessage(static::MESSAGE_REDIRECT_NOT_FOUND_ERROR);
@@ -119,8 +144,9 @@ class OmsTriggerController extends AbstractController
 
             return $this->redirectResponse($redirect);
         }
-        $event = $request->query->get(static::URL_PARAM_EVENT);
-        $merchantSalesOrderItemReference = $request->query->get(static::URL_PARAM_MERCHANT_SALES_ORDER_ITEM_REFERENCE);
+
+        $event = (string)$request->query->get(static::URL_PARAM_EVENT);
+        $merchantSalesOrderItemReference = (string)$request->query->get(static::URL_PARAM_MERCHANT_SALES_ORDER_ITEM_REFERENCE);
 
         $merchantOmsTriggerResponseTransfer = $this->getFactory()
             ->getMerchantOmsFacade()
@@ -129,6 +155,7 @@ class OmsTriggerController extends AbstractController
                     ->setMerchantOmsEventName($event)
                     ->setMerchantOrderItemReference($merchantSalesOrderItemReference)
             );
+
         if (!$merchantOmsTriggerResponseTransfer->getIsSuccessful()) {
             /** @var string $message */
             $message = $merchantOmsTriggerResponseTransfer->requireMessage()->getMessage();

@@ -61,7 +61,7 @@ class SubTotalDecisionRulePlugin extends AbstractPlugin implements DecisionRuleP
      *
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function acceptedDataTypes()
     {

@@ -12,6 +12,9 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class DatasetConfig extends AbstractBundleConfig
 {
+    /**
+     * @var string
+     */
     protected const DEFAULT_SIZE = '1M';
 
     /**

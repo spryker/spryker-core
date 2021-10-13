@@ -19,9 +19,21 @@ use Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\Produc
  */
 class ProductAlternativeProductLabelConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_PRODUCT_LABEL = 'FACADE_PRODUCT_LABEL';
+    /**
+     * @var string
+     */
     public const FACADE_PRODUCT_ALTERNATIVE = 'FACADE_PRODUCT_ALTERNATIVE';
+    /**
+     * @var string
+     */
     public const FACADE_PRODUCT = 'FACADE_PRODUCT';
+    /**
+     * @var string
+     */
     public const FACADE_LOCALE = 'FACADE_LOCALE';
 
     /**

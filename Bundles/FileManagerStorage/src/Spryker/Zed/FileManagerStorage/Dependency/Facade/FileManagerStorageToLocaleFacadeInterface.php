@@ -10,7 +10,7 @@ namespace Spryker\Zed\FileManagerStorage\Dependency\Facade;
 interface FileManagerStorageToLocaleFacadeInterface
 {
     /**
-     * @return \Generated\Shared\Transfer\LocaleTransfer[]
+     * @return array<\Generated\Shared\Transfer\LocaleTransfer>
      */
     public function getLocaleCollection();
 }

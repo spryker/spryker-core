@@ -21,14 +21,23 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class AddressController extends AbstractController
 {
+    /**
+     * @var string
+     */
     protected const URL_CUSTOMER_LIST = '/customer';
+    /**
+     * @var string
+     */
     protected const URL_CUSTOMER_VIEW = '/customer/view';
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_CUSTOMER_ADDRESS_DOES_NOT_EXIST = 'Customer Address with ID = %d does not exist';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function editAction(Request $request)
     {
@@ -90,7 +99,7 @@ class AddressController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function addAction(Request $request)
     {

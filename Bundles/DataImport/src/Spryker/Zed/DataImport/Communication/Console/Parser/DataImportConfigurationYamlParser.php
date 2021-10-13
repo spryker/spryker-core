@@ -13,6 +13,9 @@ use Spryker\Zed\DataImport\Dependency\Service\DataImportToUtilDataReaderServiceI
 
 class DataImportConfigurationYamlParser implements DataImportConfigurationParserInterface
 {
+    /**
+     * @var string
+     */
     protected const CONFIGURATION_KEY_ACTIONS = 'actions';
 
     /**

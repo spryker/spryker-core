@@ -19,14 +19,20 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class SetController extends AbstractController
 {
+    /**
+     * @var string
+     */
     public const PARAM_URL_ID_TAX_SET = 'id-tax-set';
 
+    /**
+     * @var string
+     */
     public const REDIRECT_URL_DEFAULT = '/tax/set/list';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function createAction(Request $request)
     {
@@ -51,7 +57,7 @@ class SetController extends AbstractController
         }
 
         return [
-          'form' => $taxSetForm->createView(),
+            'form' => $taxSetForm->createView(),
         ];
     }
 

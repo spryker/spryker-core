@@ -19,8 +19,14 @@ use Spryker\Zed\Kernel\Container;
  */
 class ContentNavigationDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_NAVIGATION = 'FACADE_NAVIGATION';
 
+    /**
+     * @var string
+     */
     public const ADAPTER_VALIDATION = 'ADAPTER_VALIDATION';
 
     /**

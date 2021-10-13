@@ -20,6 +20,9 @@ use Spryker\Zed\GiftCard\Persistence\GiftCardRepositoryInterface;
 
 class GiftCardReader implements GiftCardReaderInterface
 {
+    /**
+     * @var string
+     */
     public const ATTRIBUTES = 'attributes';
 
     /**
@@ -166,9 +169,9 @@ class GiftCardReader implements GiftCardReaderInterface
     }
 
     /**
-     * @param \Orm\Zed\GiftCard\Persistence\SpyGiftCard[] $giftCardEntities
+     * @param array<\Orm\Zed\GiftCard\Persistence\SpyGiftCard> $giftCardEntities
      *
-     * @return \Generated\Shared\Transfer\GiftCardTransfer[]
+     * @return array<\Generated\Shared\Transfer\GiftCardTransfer>
      */
     protected function getGiftCardTransfersFromEntities(array $giftCardEntities)
     {
@@ -270,7 +273,7 @@ class GiftCardReader implements GiftCardReaderInterface
     /**
      * @param int $idSalesOrder
      *
-     * @return \Orm\Zed\GiftCard\Persistence\SpyPaymentGiftCard[]
+     * @return array<\Orm\Zed\GiftCard\Persistence\SpyPaymentGiftCard>
      */
     public function getGiftCardPaymentsForOrder($idSalesOrder)
     {
@@ -283,7 +286,7 @@ class GiftCardReader implements GiftCardReaderInterface
     /**
      * @param int $idSalesOrder
      *
-     * @return \Generated\Shared\Transfer\GiftCardTransfer[]
+     * @return array<\Generated\Shared\Transfer\GiftCardTransfer>
      */
     public function findGiftCardsByIdSalesOrder($idSalesOrder)
     {
@@ -311,7 +314,7 @@ class GiftCardReader implements GiftCardReaderInterface
     }
 
     /**
-     * @param \Orm\Zed\GiftCard\Persistence\SpyGiftCard[] $giftCardCodes
+     * @param array<\Orm\Zed\GiftCard\Persistence\SpyGiftCard> $giftCardCodes
      *
      * @return array
      */
@@ -340,9 +343,9 @@ class GiftCardReader implements GiftCardReaderInterface
     }
 
     /**
-     * @param string[] $abstractSkus
+     * @param array<string> $abstractSkus
      *
-     * @return \Generated\Shared\Transfer\GiftCardAbstractProductConfigurationForProductAbstractTransfer[]
+     * @return array<\Generated\Shared\Transfer\GiftCardAbstractProductConfigurationForProductAbstractTransfer>
      */
     public function getGiftCardAbstractConfigurationsForProductAbstractByAbstractSkus(array $abstractSkus): array
     {
@@ -350,9 +353,9 @@ class GiftCardReader implements GiftCardReaderInterface
     }
 
     /**
-     * @param string[] $concreteSkus
+     * @param array<string> $concreteSkus
      *
-     * @return \Generated\Shared\Transfer\GiftCardProductConfigurationForProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\GiftCardProductConfigurationForProductTransfer>
      */
     public function getGiftCardConcreteConfigurationsForProductConcreteByConcreteSkus(array $concreteSkus): array
     {

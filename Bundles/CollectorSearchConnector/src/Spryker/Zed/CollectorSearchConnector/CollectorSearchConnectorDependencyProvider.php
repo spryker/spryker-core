@@ -13,6 +13,9 @@ use Spryker\Zed\Kernel\Container;
 
 class CollectorSearchConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_COLLECTOR = 'collector facade';
 
     /**

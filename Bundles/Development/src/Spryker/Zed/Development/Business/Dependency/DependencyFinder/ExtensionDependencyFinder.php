@@ -13,6 +13,9 @@ use Spryker\Zed\Development\Dependency\Facade\DevelopmentToModuleFinderFacadeInt
 
 class ExtensionDependencyFinder extends AbstractFileDependencyFinder
 {
+    /**
+     * @var string
+     */
     public const TYPE_EXTENSION = 'extension';
 
     /**

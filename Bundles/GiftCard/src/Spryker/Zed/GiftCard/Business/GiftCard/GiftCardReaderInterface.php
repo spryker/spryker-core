@@ -70,14 +70,14 @@ interface GiftCardReaderInterface
     /**
      * @param int $idSalesOrder
      *
-     * @return \Orm\Zed\GiftCard\Persistence\SpyPaymentGiftCard[]
+     * @return array<\Orm\Zed\GiftCard\Persistence\SpyPaymentGiftCard>
      */
     public function getGiftCardPaymentsForOrder($idSalesOrder);
 
     /**
      * @param int $idSalesOrder
      *
-     * @return \Generated\Shared\Transfer\GiftCardTransfer[]
+     * @return array<\Generated\Shared\Transfer\GiftCardTransfer>
      */
     public function findGiftCardsByIdSalesOrder($idSalesOrder);
 
@@ -89,16 +89,16 @@ interface GiftCardReaderInterface
     public function findGiftCardByIdSalesOrderItem($idSalesOrderItem);
 
     /**
-     * @param string[] $abstractSkus
+     * @param array<string> $abstractSkus
      *
-     * @return \Generated\Shared\Transfer\GiftCardAbstractProductConfigurationForProductAbstractTransfer[]
+     * @return array<\Generated\Shared\Transfer\GiftCardAbstractProductConfigurationForProductAbstractTransfer>
      */
     public function getGiftCardAbstractConfigurationsForProductAbstractByAbstractSkus(array $abstractSkus): array;
 
     /**
-     * @param string[] $concreteSkus
+     * @param array<string> $concreteSkus
      *
-     * @return \Generated\Shared\Transfer\GiftCardProductConfigurationForProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\GiftCardProductConfigurationForProductTransfer>
      */
     public function getGiftCardConcreteConfigurationsForProductConcreteByConcreteSkus(array $concreteSkus): array;
 }

@@ -31,5 +31,5 @@ interface UserPasswordResetToUserFacadeInterface
      *
      * @return \Generated\Shared\Transfer\UserTransfer
      */
-    public function getUserById(int $idUser);
+    public function getUserById($idUser);
 }

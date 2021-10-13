@@ -13,10 +13,13 @@ use Spryker\Zed\Customer\CustomerConfig;
 
 class DenyListCustomerPasswordPolicy implements CustomerPasswordPolicyInterface
 {
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_PASSWORD_POLICY_ERROR_DENY_LIST = 'customer.password.error.deny_list';
 
     /**
-     * @var string[]
+     * @var array<string>
      */
     protected $customerPasswordDenyList = [];
 

@@ -1,6 +1,6 @@
 # Assertion Module
-[![Build Status](https://travis-ci.org/spryker/assertion.svg)](https://travis-ci.org/spryker/assertion)
-[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
+[![Latest Stable Version](https://poser.pugx.org/spryker/assertion/v/stable.svg)](https://packagist.org/packages/spryker/assertion)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.4-8892BF.svg)](https://php.net/)
 
 Assertion provides basic Assertion utility functions like asserting alphanumeric strings or numeric and non zero values.
 

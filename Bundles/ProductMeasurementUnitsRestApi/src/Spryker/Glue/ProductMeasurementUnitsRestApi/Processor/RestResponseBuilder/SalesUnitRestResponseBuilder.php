@@ -81,7 +81,7 @@ class SalesUnitRestResponseBuilder implements SalesUnitRestResponseBuilderInterf
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[] $productMeasurementSalesUnitTransfers
+     * @param array<\Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer> $productMeasurementSalesUnitTransfers
      * @param string $concreteProductResourceId
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface

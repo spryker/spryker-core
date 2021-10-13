@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\MerchantProductOfferStorage\Business\Writer;
 
-use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
 use Orm\Zed\ProductOffer\Persistence\Map\SpyProductOfferTableMap;
 use Spryker\Zed\MerchantProductOfferStorage\Business\Deleter\ProductOfferStorageDeleterInterface;
@@ -16,10 +15,14 @@ use Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOff
 use Spryker\Zed\MerchantProductOfferStorage\Persistence\MerchantProductOfferStorageEntityManagerInterface;
 use Spryker\Zed\MerchantProductOfferStorage\Persistence\MerchantProductOfferStorageRepositoryInterface;
 
+/**
+ * @method \Spryker\Zed\MerchantProductOfferStorage\Business\MerchantProductOfferStorageBusinessFactory getFactory()
+ */
 class ProductOfferStorageWriter implements ProductOfferStorageWriterInterface
 {
     /**
      * @uses \Spryker\Shared\ProductOffer\ProductOfferConfig::STATUS_APPROVED
+     * @var string
      */
     protected const STATUS_APPROVED = 'approved';
 
@@ -49,9 +52,14 @@ class ProductOfferStorageWriter implements ProductOfferStorageWriterInterface
     protected $storeFacade;
 
     /**
-     * @var \Generated\Shared\Transfer\StoreTransfer[]
+     * @var array<\Generated\Shared\Transfer\StoreTransfer>
      */
     protected $storeTransfers;
+
+    /**
+     * @var \Spryker\Zed\MerchantProductOfferStorage\Business\Writer\ProductOfferCriteriaTransferProviderInterface
+     */
+    protected $productOfferCriteriaTransferProvider;
 
     /**
      * @param \Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToEventBehaviorFacadeInterface $eventBehaviorFacade
@@ -59,23 +67,26 @@ class ProductOfferStorageWriter implements ProductOfferStorageWriterInterface
      * @param \Spryker\Zed\MerchantProductOfferStorage\Persistence\MerchantProductOfferStorageRepositoryInterface $merchantProductOfferStorageRepository
      * @param \Spryker\Zed\MerchantProductOfferStorage\Business\Deleter\ProductOfferStorageDeleterInterface $productOfferStorageDeleter
      * @param \Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToStoreFacadeInterface $storeFacade
+     * @param \Spryker\Zed\MerchantProductOfferStorage\Business\Writer\ProductOfferCriteriaTransferProviderInterface $productOfferCriteriaTransferProvider
      */
     public function __construct(
         MerchantProductOfferStorageToEventBehaviorFacadeInterface $eventBehaviorFacade,
         MerchantProductOfferStorageEntityManagerInterface $merchantProductOfferStorageEntityManager,
         MerchantProductOfferStorageRepositoryInterface $merchantProductOfferStorageRepository,
         ProductOfferStorageDeleterInterface $productOfferStorageDeleter,
-        MerchantProductOfferStorageToStoreFacadeInterface $storeFacade
+        MerchantProductOfferStorageToStoreFacadeInterface $storeFacade,
+        ProductOfferCriteriaTransferProviderInterface $productOfferCriteriaTransferProvider
     ) {
         $this->eventBehaviorFacade = $eventBehaviorFacade;
         $this->merchantProductOfferStorageEntityManager = $merchantProductOfferStorageEntityManager;
         $this->merchantProductOfferStorageRepository = $merchantProductOfferStorageRepository;
         $this->productOfferStorageDeleter = $productOfferStorageDeleter;
         $this->storeFacade = $storeFacade;
+        $this->productOfferCriteriaTransferProvider = $productOfferCriteriaTransferProvider;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
      *
      * @return void
      */
@@ -91,34 +102,29 @@ class ProductOfferStorageWriter implements ProductOfferStorageWriterInterface
     }
 
     /**
-     * @param string[] $productOfferReferences
+     * @param array<string> $productOfferReferences
      *
      * @return void
      */
     protected function writeByProductOfferReferences(array $productOfferReferences): void
     {
-        $productOfferCriteriaFilterTransfer = $this->createProductOfferCriteriaFilterTransfer($productOfferReferences);
+        $sellableProductOfferCriteriaTransfer = $this->productOfferCriteriaTransferProvider->createSellableProductOfferCriteriaTransfer()
+            ->setProductOfferReferences($productOfferReferences);
+
         $productOfferCollectionTransfer = $this->merchantProductOfferStorageRepository
-            ->getProductOffersByFilterCriteria($productOfferCriteriaFilterTransfer);
+            ->getProductOffers($sellableProductOfferCriteriaTransfer);
+
+        $sellableProductOfferReferences = [];
 
         foreach ($productOfferCollectionTransfer->getProductOffers() as $productOfferTransfer) {
             $this->merchantProductOfferStorageEntityManager->saveProductOfferStorage($productOfferTransfer);
+            $sellableProductOfferReferences[] = $productOfferTransfer->getProductOfferReference();
             $this->deleteProductOfferReferenceByStore($productOfferTransfer);
         }
-    }
 
-    /**
-     * @param string[] $productOfferReferences
-     *
-     * @return \Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer
-     */
-    protected function createProductOfferCriteriaFilterTransfer(array $productOfferReferences): ProductOfferCriteriaFilterTransfer
-    {
-        return (new ProductOfferCriteriaFilterTransfer())
-            ->setProductOfferReferences($productOfferReferences)
-            ->setIsActive(true)
-            ->setIsActiveConcreteProduct(true)
-            ->addApprovalStatus(static::STATUS_APPROVED);
+        $this->productOfferStorageDeleter->deleteCollectionByProductOfferReferences(
+            array_diff($productOfferReferences, $sellableProductOfferReferences)
+        );
     }
 
     /**
@@ -156,7 +162,7 @@ class ProductOfferStorageWriter implements ProductOfferStorageWriterInterface
     }
 
     /**
-     * @return \Generated\Shared\Transfer\StoreTransfer[]
+     * @return array<\Generated\Shared\Transfer\StoreTransfer>
      */
     protected function getStoreTransfers(): array
     {

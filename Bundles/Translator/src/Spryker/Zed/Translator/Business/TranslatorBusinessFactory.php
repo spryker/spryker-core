@@ -44,7 +44,7 @@ class TranslatorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Translator\Business\TranslationResource\TranslationResourceFileLoaderInterface[]
+     * @return array<\Spryker\Zed\Translator\Business\TranslationResource\TranslationResourceFileLoaderInterface>
      */
     public function getTranslationResourceFileLoaderCollection(): array
     {
@@ -99,7 +99,7 @@ class TranslatorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Translator\Business\Translator\TranslatorInterface[]
+     * @return array<\Spryker\Zed\Translator\Business\Translator\TranslatorInterface>
      */
     public function createTranslatorCollection(): array
     {

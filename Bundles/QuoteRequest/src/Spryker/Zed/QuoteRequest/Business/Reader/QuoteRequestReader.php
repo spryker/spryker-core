@@ -20,6 +20,9 @@ use Spryker\Zed\QuoteRequest\Persistence\QuoteRequestRepositoryInterface;
 
 class QuoteRequestReader implements QuoteRequestReaderInterface
 {
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_QUOTE_REQUEST_NOT_EXISTS = 'quote_request.validation.error.not_exists';
 
     /**
@@ -75,6 +78,16 @@ class QuoteRequestReader implements QuoteRequestReaderInterface
                 ->addMessage((new MessageTransfer())->setValue(static::GLOSSARY_KEY_QUOTE_REQUEST_NOT_EXISTS));
         }
 
+        if ($quoteRequestFilterTransfer->getWithVersions()) {
+            $quoteRequestVersionFilterTransfer = (new QuoteRequestVersionFilterTransfer())
+                ->setQuoteRequest($quoteRequestTransfer);
+
+            $quoteRequestVersions = $this->getQuoteRequestVersionCollectionByFilter($quoteRequestVersionFilterTransfer)
+                ->getQuoteRequestVersions();
+
+            $quoteRequestTransfer->setQuoteRequestVersions($quoteRequestVersions);
+        }
+
         return (new QuoteRequestResponseTransfer())
             ->setIsSuccessful(true)
             ->setQuoteRequest($quoteRequestTransfer);
@@ -90,7 +103,11 @@ class QuoteRequestReader implements QuoteRequestReaderInterface
         $quoteRequestCollectionTransfer = $this->quoteRequestRepository
             ->getQuoteRequestCollectionByFilter($quoteRequestFilterTransfer);
 
-        $quoteRequestCollectionTransfer = $this->expandQuoteRequestCollectionWithVersions($quoteRequestCollectionTransfer);
+        $quoteRequestCollectionTransfer = $this->expandQuoteRequestCollection(
+            $quoteRequestCollectionTransfer,
+            (bool)$quoteRequestFilterTransfer->getWithVersions()
+        );
+
         $quoteRequestCollectionTransfer = $this->expandQuoteRequestCollectionWithBusinessUnits($quoteRequestCollectionTransfer);
 
         return $quoteRequestCollectionTransfer;
@@ -123,11 +140,13 @@ class QuoteRequestReader implements QuoteRequestReaderInterface
 
     /**
      * @param \Generated\Shared\Transfer\QuoteRequestCollectionTransfer $quoteRequestCollectionTransfer
+     * @param bool $withVersions
      *
      * @return \Generated\Shared\Transfer\QuoteRequestCollectionTransfer
      */
-    protected function expandQuoteRequestCollectionWithVersions(
-        QuoteRequestCollectionTransfer $quoteRequestCollectionTransfer
+    protected function expandQuoteRequestCollection(
+        QuoteRequestCollectionTransfer $quoteRequestCollectionTransfer,
+        bool $withVersions = false
     ): QuoteRequestCollectionTransfer {
         foreach ($quoteRequestCollectionTransfer->getQuoteRequests() as $quoteRequestTransfer) {
             $quoteRequestVersionFilterTransfer = (new QuoteRequestVersionFilterTransfer())
@@ -136,6 +155,10 @@ class QuoteRequestReader implements QuoteRequestReaderInterface
             $quoteRequestVersionTransfers = $this->quoteRequestRepository
                 ->getQuoteRequestVersionCollectionByFilter($quoteRequestVersionFilterTransfer)
                 ->getQuoteRequestVersions();
+
+            if ($withVersions) {
+                $quoteRequestTransfer->setQuoteRequestVersions($quoteRequestVersionTransfers);
+            }
 
             $quoteRequestTransfer->setLatestVersion($quoteRequestVersionTransfers->offsetGet(0));
 
@@ -190,9 +213,9 @@ class QuoteRequestReader implements QuoteRequestReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CompanyUserTransfer[] $companyUserTransfers
+     * @param array<\Generated\Shared\Transfer\CompanyUserTransfer> $companyUserTransfers
      *
-     * @return \Generated\Shared\Transfer\CompanyUserTransfer[]
+     * @return array<\Generated\Shared\Transfer\CompanyUserTransfer>
      */
     protected function mapCompanyUsers(array $companyUserTransfers): array
     {

@@ -13,6 +13,8 @@ use Spryker\Zed\Category\Dependency\Plugin\CategoryRelationReadPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
+ * @deprecated Use {@link \Spryker\Zed\ProductCategory\Communication\Plugin\CategoryGui\ProductCategoryRelationReadPlugin} instead.
+ *
  * @method \Spryker\Zed\ProductCategory\Business\ProductCategoryFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductCategory\Communication\ProductCategoryCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductCategory\ProductCategoryConfig getConfig()
@@ -40,7 +42,7 @@ class ReadProductCategoryRelationPlugin extends AbstractPlugin implements Catego
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getRelations(CategoryTransfer $categoryTransfer, LocaleTransfer $localeTransfer)
     {

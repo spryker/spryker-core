@@ -54,7 +54,7 @@ class StoreCurrencyFinder implements StoreCurrencyFinderInterface
             return $this->currencyFacade->fromIsoCode($currencyTransfer->getCode());
         }
 
-        [$_, $currencyCode] = explode(
+        [, $currencyCode] = explode(
             SalesOrderThresholdGuiConfig::STORE_CURRENCY_DELIMITER,
             $storeCurrencyRequestParam
         );

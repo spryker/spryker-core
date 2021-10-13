@@ -22,7 +22,13 @@ use Symfony\Component\Validator\ConstraintViolationListInterface;
 
 class RestRequestValidator implements RestRequestValidatorInterface
 {
+    /**
+     * @var array
+     */
     protected const ERROR_DETAIL_REPLACED_SYMBOLS = ['][', '[', ']'];
+    /**
+     * @var array
+     */
     protected const ERROR_DETAIL_REPLACING_SYMBOLS = ['.', '', ''];
 
     /**

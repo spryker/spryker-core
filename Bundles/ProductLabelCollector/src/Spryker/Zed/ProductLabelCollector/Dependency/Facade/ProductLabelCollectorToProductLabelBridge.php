@@ -23,7 +23,7 @@ class ProductLabelCollectorToProductLabelBridge implements ProductLabelCollector
     }
 
     /**
-     * @return \Generated\Shared\Transfer\ProductLabelTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductLabelTransfer>
      */
     public function findAllLabels()
     {

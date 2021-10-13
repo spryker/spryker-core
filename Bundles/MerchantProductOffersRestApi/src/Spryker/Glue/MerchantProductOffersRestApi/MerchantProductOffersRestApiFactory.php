@@ -15,6 +15,8 @@ use Spryker\Glue\MerchantProductOffersRestApi\Processor\CartItem\Mapper\CartItem
 use Spryker\Glue\MerchantProductOffersRestApi\Processor\CartItem\Mapper\CartItemsAttributesMapperInterface;
 use Spryker\Glue\MerchantProductOffersRestApi\Processor\Expander\ProductOfferExpander;
 use Spryker\Glue\MerchantProductOffersRestApi\Processor\Expander\ProductOfferExpanderInterface;
+use Spryker\Glue\MerchantProductOffersRestApi\Processor\Expander\QuoteRequestItemExpander;
+use Spryker\Glue\MerchantProductOffersRestApi\Processor\Expander\QuoteRequestItemExpanderInterface;
 use Spryker\Glue\MerchantProductOffersRestApi\Processor\Reader\ProductOfferReader;
 use Spryker\Glue\MerchantProductOffersRestApi\Processor\Reader\ProductOfferReaderInterface;
 use Spryker\Glue\MerchantProductOffersRestApi\Processor\RestResponseBuilder\ProductOfferRestResponseBuilder;
@@ -73,5 +75,13 @@ class MerchantProductOffersRestApiFactory extends AbstractFactory
     public function getMerchantProductOfferStorageClient(): MerchantProductOffersRestApiToMerchantProductOfferStorageClientInterface
     {
         return $this->getProvidedDependency(MerchantProductOffersRestApiDependencyProvider::CLIENT_MERCHANT_PRODUCT_OFFER_STORAGE);
+    }
+
+    /**
+     * @return \Spryker\Glue\MerchantProductOffersRestApi\Processor\Expander\QuoteRequestItemExpanderInterface
+     */
+    public function createQuoteRequestItemExpander(): QuoteRequestItemExpanderInterface
+    {
+        return new QuoteRequestItemExpander();
     }
 }

@@ -56,7 +56,7 @@ class IndexGeneratorFacadeTest extends Unit
         $indexGeneratorFacade->removeIndexSchemaFiles();
         $indexGeneratorFacade->generateIndexSchemaFiles();
 
-        $this->tester->assertSchemaFileNotExists();
+        $this->assertFileDoesNotExist($this->tester->getPathToGeneratedSchema());
     }
 
     /**
@@ -70,7 +70,7 @@ class IndexGeneratorFacadeTest extends Unit
         $indexGeneratorFacade->removeIndexSchemaFiles();
         $indexGeneratorFacade->generateIndexSchemaFiles();
 
-        $this->tester->assertSchemaFileNotExists();
+        $this->assertFileDoesNotExist($this->tester->getPathToGeneratedSchema());
     }
 
     /**
@@ -84,7 +84,7 @@ class IndexGeneratorFacadeTest extends Unit
         $indexGeneratorFacade->removeIndexSchemaFiles();
         $indexGeneratorFacade->generateIndexSchemaFiles();
 
-        $this->tester->assertSchemaFileNotExists();
+        $this->assertFileDoesNotExist($this->tester->getPathToGeneratedSchema());
     }
 
     /**

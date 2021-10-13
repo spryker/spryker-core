@@ -111,7 +111,7 @@ class CommentClient extends AbstractClient implements CommentClientInterface
      *
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getAvailableCommentTags(): array
     {

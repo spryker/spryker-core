@@ -21,7 +21,12 @@ use Spryker\Glue\OrdersRestApi\Processor\Order\OrderReader;
 use Spryker\Glue\OrdersRestApi\Processor\Order\OrderReaderInterface;
 use Spryker\Glue\OrdersRestApi\Processor\RestResponseBuilder\OrderRestResponseBuilder;
 use Spryker\Glue\OrdersRestApi\Processor\RestResponseBuilder\OrderRestResponseBuilderInterface;
+use Spryker\Glue\OrdersRestApi\Processor\Validator\OrdersRestApiValidator;
+use Spryker\Glue\OrdersRestApi\Processor\Validator\OrdersRestApiValidatorInterface;
 
+/**
+ * @method \Spryker\Glue\OrdersRestApi\OrdersRestApiConfig getConfig()
+ */
 class OrdersRestApiFactory extends AbstractFactory
 {
     /**
@@ -31,7 +36,8 @@ class OrdersRestApiFactory extends AbstractFactory
     {
         return new OrderReader(
             $this->getSalesClient(),
-            $this->createOrderRestResponseBuilder()
+            $this->createOrderRestResponseBuilder(),
+            $this->createOrdersRestApiValidator()
         );
     }
 
@@ -94,7 +100,7 @@ class OrdersRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\OrdersRestApiExtension\Dependency\Plugin\RestOrderItemsAttributesMapperPluginInterface[]
+     * @return array<\Spryker\Glue\OrdersRestApiExtension\Dependency\Plugin\RestOrderItemsAttributesMapperPluginInterface>
      */
     public function getRestOrderItemsAttributesMapperPlugins(): array
     {
@@ -102,10 +108,18 @@ class OrdersRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\OrdersRestApiExtension\Dependency\Plugin\RestOrderDetailsAttributesMapperPluginInterface[]
+     * @return array<\Spryker\Glue\OrdersRestApiExtension\Dependency\Plugin\RestOrderDetailsAttributesMapperPluginInterface>
      */
     public function getRestOrderDetailsAttributesMapperPlugins(): array
     {
         return $this->getProvidedDependency(OrdersRestApiDependencyProvider::PLUGINS_REST_ORDER_DETAILS_ATTRIBUTES_MAPPER);
+    }
+
+    /**
+     * @return \Spryker\Glue\OrdersRestApi\Processor\Validator\OrdersRestApiValidatorInterface
+     */
+    public function createOrdersRestApiValidator(): OrdersRestApiValidatorInterface
+    {
+        return new OrdersRestApiValidator();
     }
 }

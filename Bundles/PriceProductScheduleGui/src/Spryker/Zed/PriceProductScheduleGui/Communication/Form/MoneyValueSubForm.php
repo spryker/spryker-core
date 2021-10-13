@@ -25,9 +25,21 @@ use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
  */
 class MoneyValueSubForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const FIELD_NET_AMOUNT = 'netAmount';
+    /**
+     * @var string
+     */
     public const FIELD_GROSS_AMOUNT = 'grossAmount';
+    /**
+     * @var string
+     */
     public const FIELD_CURRENCY = 'currency';
+    /**
+     * @var string
+     */
     public const FIELD_STORE = 'store';
 
     /**

@@ -17,7 +17,13 @@ use Spryker\Zed\OauthPermission\Dependency\Facade\OauthPermissionToPermissionFac
  */
 class OauthPermissionDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_PERMISSION = 'FACADE_PERMISSION';
+    /**
+     * @var string
+     */
     public const FACADE_COMPANY_USER = 'FACADE_COMPANY_USER';
 
     /**

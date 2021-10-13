@@ -34,7 +34,7 @@ class LockedOrderStateMachine implements OrderStateMachineInterface
 
     /**
      * @param string $eventId
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
+     * @param array<\Orm\Zed\Sales\Persistence\SpySalesOrderItem> $orderItems
      * @param array $data
      *
      * @return array|null
@@ -54,7 +54,7 @@ class LockedOrderStateMachine implements OrderStateMachineInterface
     }
 
     /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
+     * @param array<\Orm\Zed\Sales\Persistence\SpySalesOrderItem> $orderItems
      * @param array $data
      *
      * @return array|null
@@ -171,7 +171,7 @@ class LockedOrderStateMachine implements OrderStateMachineInterface
     }
 
     /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
+     * @param array<\Orm\Zed\Sales\Persistence\SpySalesOrderItem> $orderItems
      *
      * @return array
      */

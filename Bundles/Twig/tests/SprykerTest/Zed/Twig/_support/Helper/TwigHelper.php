@@ -39,17 +39,26 @@ class TwigHelper extends Module
     use DependencyProviderHelperTrait;
     use EventDispatcherHelperTrait;
 
+    /**
+     * @var string
+     */
     protected const MODULE_NAME = 'Twig';
+    /**
+     * @var string
+     */
     protected const CONFIG_KEY_TWIG_PLUGINS = 'twigPlugins';
+    /**
+     * @var string
+     */
     protected const CONFIG_KEY_LOADER_PLUGINS = 'loaderPlugins';
 
     /**
-     * @var \Spryker\Shared\TwigExtension\Dependency\Plugin\TwigPluginInterface[]
+     * @var array<\Spryker\Shared\TwigExtension\Dependency\Plugin\TwigPluginInterface>
      */
     protected $twigPlugins = [];
 
     /**
-     * @var \Spryker\Shared\TwigExtension\Dependency\Plugin\TwigLoaderPluginInterface[]
+     * @var array<\Spryker\Shared\TwigExtension\Dependency\Plugin\TwigLoaderPluginInterface>
      */
     protected $loaderPlugins = [];
 
@@ -62,7 +71,7 @@ class TwigHelper extends Module
     ];
 
     /**
-     * @var string[]
+     * @var array<string>
      */
     protected $defaultTwigPlugins = [
         DebugTwigPlugin::class,
@@ -72,7 +81,7 @@ class TwigHelper extends Module
     ];
 
     /**
-     * @var string[]
+     * @var array<string>
      */
     protected $defaultLoaderPlugins = [
         FilesystemTwigLoaderPlugin::class,

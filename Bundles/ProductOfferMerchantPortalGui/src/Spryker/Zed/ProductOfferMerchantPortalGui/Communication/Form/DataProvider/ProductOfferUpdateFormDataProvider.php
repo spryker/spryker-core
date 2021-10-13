@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Form\DataProvider;
 
-use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
+use Generated\Shared\Transfer\ProductOfferCriteriaTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToMerchantStockFacadeInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToMerchantUserFacadeInterface;
@@ -44,11 +44,14 @@ class ProductOfferUpdateFormDataProvider extends AbstractProductOfferFormDataPro
      */
     public function getData(int $idProductOffer): ?ProductOfferTransfer
     {
-        /** @var int $currentMerchantId */
-        $currentMerchantId = $this->merchantUserFacade->getCurrentMerchantUser()->getIdMerchantOrFail();
+        $currentMerchantReference = $this->merchantUserFacade
+            ->getCurrentMerchantUser()
+            ->getMerchantOrFail()
+            ->getMerchantReferenceOrFail();
         $productOfferTransfer = $this->productOfferFacade->findOne(
-            (new ProductOfferCriteriaFilterTransfer())->setIdProductOffer($idProductOffer)
-                ->addIdMerchant($currentMerchantId)
+            (new ProductOfferCriteriaTransfer())
+                ->setIdProductOffer($idProductOffer)
+                ->addMerchantReference($currentMerchantReference)
         );
 
         if (!$productOfferTransfer) {
@@ -59,8 +62,6 @@ class ProductOfferUpdateFormDataProvider extends AbstractProductOfferFormDataPro
         $sku = $productOfferTransfer->requireConcreteSku()->getConcreteSku();
         /** @var int $idProductConcrete */
         $idProductConcrete = $this->productFacade->findProductConcreteIdBySku($sku);
-        /** @var \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer */
-        $productConcreteTransfer = $this->productFacade->findProductConcreteById($idProductConcrete);
 
         $productOfferTransfer->setIdProductConcrete($idProductConcrete);
         $productOfferTransfer = $this->setDefaultMerchantStock($productOfferTransfer);

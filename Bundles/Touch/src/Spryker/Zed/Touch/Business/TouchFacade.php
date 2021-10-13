@@ -139,7 +139,7 @@ class TouchFacade extends AbstractFacade implements TouchFacadeInterface
      *
      * @param string $itemType
      *
-     * @return \Generated\Shared\Transfer\TouchTransfer[]
+     * @return array<\Generated\Shared\Transfer\TouchTransfer>
      */
     public function getItemsByType($itemType)
     {
@@ -176,5 +176,17 @@ class TouchFacade extends AbstractFacade implements TouchFacadeInterface
         return $this->getFactory()
             ->createTouchWriter()
             ->cleanTouchEntitiesForDeletedItemEvent();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function isTouchEnabled(): bool
+    {
+        return $this->getFactory()->getConfig()->isTouchEnabled();
     }
 }

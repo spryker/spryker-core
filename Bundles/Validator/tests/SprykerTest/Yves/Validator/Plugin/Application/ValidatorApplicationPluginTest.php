@@ -26,6 +26,9 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
  */
 class ValidatorApplicationPluginTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const SERVICE_VALIDATOR = 'validator';
 
     /**

@@ -11,5 +11,8 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class ProductApiConfig extends AbstractBundleConfig
 {
+    /**
+     * @var string
+     */
     public const RESOURCE_PRODUCTS = 'products';
 }

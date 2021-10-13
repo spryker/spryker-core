@@ -19,7 +19,13 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class DeleteController extends AbstractController
 {
+    /**
+     * @var string
+     */
     protected const URL_PARAM_ID_DATASET = 'id-dataset';
+    /**
+     * @var string
+     */
     protected const REFERER_PARAM = 'referer';
 
     /**

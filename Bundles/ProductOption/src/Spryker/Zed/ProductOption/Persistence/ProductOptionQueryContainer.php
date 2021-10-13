@@ -30,8 +30,17 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class ProductOptionQueryContainer extends AbstractQueryContainer implements ProductOptionQueryContainerInterface
 {
+    /**
+     * @var string
+     */
     public const COL_MAX_TAX_RATE = 'MaxTaxRate';
+    /**
+     * @var string
+     */
     public const COL_ID_PRODUCT_OPTION_VALUE = 'idProductOptionValue';
+    /**
+     * @var string
+     */
     public const COL_COUNTRY_ISO2_CODE = 'countryIso2Code';
 
     /**
@@ -434,7 +443,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
      *
      * @deprecated Use {@link queryTaxSetByIdProductOptionValueAndCountryIso2Codes()} instead.
      *
-     * @param int[] $allIdOptionValueUsages
+     * @param array<int> $allIdOptionValueUsages
      * @param string $countryIso2Code
      *
      * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery|\Propel\Runtime\ActiveQuery\ModelCriteria
@@ -465,7 +474,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     }
 
     /**
-     * @param string[] $countryIso2Codes
+     * @param array<string> $countryIso2Codes
      *
      * @return \Orm\Zed\Country\Persistence\SpyCountryQuery
      */
@@ -482,8 +491,8 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
      *
      * @api
      *
-     * @param int[] $idProductOptionValues
-     * @param string[] $countryIso2Codes
+     * @param array<int> $idProductOptionValues
+     * @param array<string> $countryIso2Codes
      *
      * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionValueQuery
      */

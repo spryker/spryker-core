@@ -130,7 +130,7 @@ class AttributeTranslator implements AttributeTranslatorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductManagementAttributeValueTransfer[]|\ArrayObject $attributeValueTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ProductManagementAttributeValueTransfer> $attributeValueTransfers
      *
      * @return void
      */

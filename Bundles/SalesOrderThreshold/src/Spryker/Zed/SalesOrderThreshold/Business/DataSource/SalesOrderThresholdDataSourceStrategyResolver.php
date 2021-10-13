@@ -13,7 +13,7 @@ use Spryker\Zed\SalesOrderThreshold\Business\SalesOrderThreshold\SalesOrderThres
 class SalesOrderThresholdDataSourceStrategyResolver implements SalesOrderThresholdDataSourceStrategyResolverInterface
 {
     /**
-     * @var \Spryker\Zed\SalesOrderThresholdExtension\Dependency\Plugin\SalesOrderThresholdDataSourceStrategyPluginInterface[]
+     * @var array<\Spryker\Zed\SalesOrderThresholdExtension\Dependency\Plugin\SalesOrderThresholdDataSourceStrategyPluginInterface>
      */
     protected $salesOrderThresholdDataSourceStrategyPlugins;
 
@@ -23,7 +23,7 @@ class SalesOrderThresholdDataSourceStrategyResolver implements SalesOrderThresho
     protected $salesOrderThresholdReader;
 
     /**
-     * @param \Spryker\Zed\SalesOrderThresholdExtension\Dependency\Plugin\SalesOrderThresholdDataSourceStrategyPluginInterface[] $salesOrderThresholdDataSourceStrategyPlugins
+     * @param array<\Spryker\Zed\SalesOrderThresholdExtension\Dependency\Plugin\SalesOrderThresholdDataSourceStrategyPluginInterface> $salesOrderThresholdDataSourceStrategyPlugins
      * @param \Spryker\Zed\SalesOrderThreshold\Business\SalesOrderThreshold\SalesOrderThresholdReaderInterface $salesOrderThresholdReader
      */
     public function __construct(
@@ -37,7 +37,7 @@ class SalesOrderThresholdDataSourceStrategyResolver implements SalesOrderThresho
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\SalesOrderThresholdValueTransfer[]
+     * @return array<\Generated\Shared\Transfer\SalesOrderThresholdValueTransfer>
      */
     public function findApplicableThresholds(QuoteTransfer $quoteTransfer): array
     {

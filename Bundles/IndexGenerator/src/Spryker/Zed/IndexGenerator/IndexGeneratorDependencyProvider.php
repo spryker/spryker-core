@@ -16,6 +16,9 @@ use Spryker\Zed\Kernel\Container;
  */
 class IndexGeneratorDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_PROPEL = 'FACADE_PROPEL';
 
     /**

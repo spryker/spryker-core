@@ -11,6 +11,9 @@ use Spryker\Shared\CmsContentWidget\Dependency\CmsContentWidgetConfigurationProv
 
 class CmsContentWidgetCmsBlockConnectorConfigurationProvider implements CmsContentWidgetCmsBlockConnectorConfigurationProviderInterface
 {
+    /**
+     * @var string
+     */
     public const FUNCTION_NAME = 'cms_block';
 
     /**
@@ -22,7 +25,7 @@ class CmsContentWidgetCmsBlockConnectorConfigurationProvider implements CmsConte
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getAvailableTemplates(): array
     {

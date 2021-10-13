@@ -37,16 +37,6 @@ class WishlistToProductBridge implements WishlistToProductInterface
     /**
      * @param string $sku
      *
-     * @return int
-     */
-    public function getProductConcreteIdBySku($sku)
-    {
-        return $this->productFacade->findProductConcreteIdBySku($sku);
-    }
-
-    /**
-     * @param string $sku
-     *
      * @return bool
      */
     public function hasProductConcrete($sku)
@@ -61,6 +51,6 @@ class WishlistToProductBridge implements WishlistToProductInterface
      */
     public function isProductConcreteActive(ProductConcreteTransfer $productConcreteTransfer): bool
     {
-         return $this->productFacade->isProductConcreteActive($productConcreteTransfer);
+        return $this->productFacade->isProductConcreteActive($productConcreteTransfer);
     }
 }

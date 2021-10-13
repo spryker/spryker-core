@@ -18,12 +18,12 @@ use Symfony\Component\Form\AbstractExtension;
 class DoubleSubmitProtectionExtension extends AbstractExtension
 {
     /**
-     * @var \Spryker\Shared\Symfony\Form\Extension\DoubleSubmitProtection\RequestTokenProvider\TokenGeneratorInterface $tokenProvider
+     * @var \Spryker\Shared\Symfony\Form\Extension\DoubleSubmitProtection\RequestTokenProvider\TokenGeneratorInterface
      */
     protected $tokenGenerator;
 
     /**
-     * @var \Spryker\Shared\Symfony\Form\Extension\DoubleSubmitProtection\RequestTokenProvider\StorageInterface $tokenProvider
+     * @var \Spryker\Shared\Symfony\Form\Extension\DoubleSubmitProtection\RequestTokenProvider\StorageInterface
      */
     protected $tokenStorage;
 

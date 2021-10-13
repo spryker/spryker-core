@@ -23,6 +23,10 @@ use Spryker\Zed\Search\SearchConfig;
  */
 class IndexInstaller implements SearchInstallerInterface
 {
+    /**
+     * @phpstan-var non-empty-string
+     * @var string
+     */
     protected const SETTING_PATH_DELIMITER = '.';
 
     /**
@@ -220,7 +224,7 @@ class IndexInstaller implements SearchInstallerInterface
     }
 
     /**
-     * @param string[] $settings
+     * @param array<string> $settings
      *
      * @return bool
      */
@@ -235,9 +239,9 @@ class IndexInstaller implements SearchInstallerInterface
 
     /**
      * @param string $indexState
-     * @param string[] $settings
+     * @param array<string> $settings
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function filterSettingsByIndexState(string $indexState, array $settings): array
     {

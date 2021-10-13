@@ -9,6 +9,8 @@ namespace Spryker\Zed\ProductSetCollector\Business;
 
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\ProductSetCollector\Business\Collector\ProductSetCollectorRunner;
+use Spryker\Zed\ProductSetCollector\Business\Collector\ProductSetCollectorRunnerInterface;
 use Spryker\Zed\ProductSetCollector\Business\Collector\Search\ProductSetCollector as ProductSetSearchCollector;
 use Spryker\Zed\ProductSetCollector\Business\Collector\Storage\ProductSetCollector as ProductSetStorageCollector;
 use Spryker\Zed\ProductSetCollector\Business\Image\StorageProductImageReader;
@@ -103,7 +105,7 @@ class ProductSetCollectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Collector\Business\CollectorFacadeInterface
+     * @return \Spryker\Zed\ProductSetCollector\Dependency\Facade\ProductSetCollectorToCollectorInterface
      */
     public function getCollectorFacade()
     {
@@ -124,5 +126,27 @@ class ProductSetCollectorBusinessFactory extends AbstractBusinessFactory
     protected function getProductSetFacade()
     {
         return $this->getProvidedDependency(ProductSetCollectorDependencyProvider::FACADE_PRODUCT_SET);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductSetCollector\Business\Collector\ProductSetCollectorRunnerInterface
+     */
+    public function createSearchProductSetCollectorRunner(): ProductSetCollectorRunnerInterface
+    {
+        return new ProductSetCollectorRunner(
+            $this->createSearchProductSetCollector(),
+            $this->getCollectorFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductSetCollector\Business\Collector\ProductSetCollectorRunnerInterface
+     */
+    public function createStorageProductSetCollectorRunner(): ProductSetCollectorRunnerInterface
+    {
+        return new ProductSetCollectorRunner(
+            $this->createStorageProductSetCollector(),
+            $this->getCollectorFacade()
+        );
     }
 }

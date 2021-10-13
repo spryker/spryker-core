@@ -18,7 +18,13 @@ use Spryker\Yves\CartVariant\Dependency\Client\CartVariantToProductClientBridgeI
 
 class CartItemsAttributeMapper implements CartItemsMapperInterface
 {
+    /**
+     * @var string
+     */
     public const CONCRETE_PRODUCTS_AVAILABILITY = 'concrete_products_availability';
+    /**
+     * @var string
+     */
     public const CONCRETE_PRODUCT_AVAILABLE_ITEMS = 'concrete_product_available_items';
 
     /**
@@ -42,7 +48,7 @@ class CartItemsAttributeMapper implements CartItemsMapperInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[]|\ArrayObject $items
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $items
      *
      * @return array
      */

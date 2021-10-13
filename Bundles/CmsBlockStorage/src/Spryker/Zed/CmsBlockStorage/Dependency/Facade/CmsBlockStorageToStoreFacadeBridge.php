@@ -31,7 +31,7 @@ class CmsBlockStorageToStoreFacadeBridge implements CmsBlockStorageToStoreFacade
     }
 
     /**
-     * @return \Generated\Shared\Transfer\StoreTransfer[]
+     * @return array<\Generated\Shared\Transfer\StoreTransfer>
      */
     public function getAllStores()
     {

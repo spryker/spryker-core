@@ -21,7 +21,7 @@ class PriceCalculationHelper implements PriceCalculationHelperInterface
      *
      * @throws \Spryker\Zed\Tax\Business\Model\Exception\CalculationException
      *
-     * @return int|float
+     * @return float|int
      */
     public function getTaxValueFromPrice($price, $taxPercentage, $round = true)
     {
@@ -49,7 +49,7 @@ class PriceCalculationHelper implements PriceCalculationHelperInterface
      *
      * @throws \Spryker\Zed\Tax\Business\Model\Exception\CalculationException
      *
-     * @return int|float
+     * @return float|int
      */
     public function getNetValueFromPrice($price, $taxPercentage, $round = true)
     {

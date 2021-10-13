@@ -14,7 +14,7 @@ trait ClassResolverTrait
     use LocatorHelperTrait;
 
     /**
-     * @var string[]
+     * @var array<string>
      */
     protected $coreNamespaces = [
         'Spryker',
@@ -61,7 +61,7 @@ trait ClassResolverTrait
      * @param string $classNamePattern
      * @param string $moduleName
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getClassNameCandidates(string $classNamePattern, string $moduleName): array
     {

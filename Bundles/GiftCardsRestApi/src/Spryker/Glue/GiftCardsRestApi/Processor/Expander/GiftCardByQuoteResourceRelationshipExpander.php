@@ -28,7 +28,7 @@ class GiftCardByQuoteResourceRelationshipExpander implements GiftCardByQuoteReso
     }
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
+     * @param array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface> $resources
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return void
@@ -56,7 +56,7 @@ class GiftCardByQuoteResourceRelationshipExpander implements GiftCardByQuoteReso
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $resource
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $giftCardsRestResources
+     * @param array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface> $giftCardsRestResources
      *
      * @return void
      */

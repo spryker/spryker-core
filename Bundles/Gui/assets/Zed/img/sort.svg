@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="10px" height="15px" viewBox="0 0 10 15" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Sort</title>
+    <defs>
+        <path d="M12.428347,7.16666667 L3.57165299,7.16666667 C3.47743841,7.16619612 3.3922373,7.10585163 3.35397272,7.01249255 C3.31570815,6.91913348 3.33149491,6.81011871 3.3943063,6.73397078 L7.8279737,1.41854214 C7.87335596,1.3642802 7.93776627,1.33333333 8.0053204,1.33333333 C8.07287453,1.33333333 8.13728484,1.3642802 8.1826671,1.41854214 L12.6056937,6.73397078 C12.6685051,6.81011871 12.6842918,6.91913348 12.6460273,7.01249255 C12.6077627,7.10585163 12.5225616,7.16619612 12.428347,7.16666667 Z" id="path-1"></path>
+        <path d="M3.57165299,9.5 L12.428347,9.5 C12.5225616,9.50047055 12.6077627,9.56081504 12.6460273,9.65417411 C12.6842918,9.74753319 12.6685051,9.85654796 12.6056937,9.93269589 L8.1720263,15.2481245 C8.12664404,15.3023865 8.06223373,15.3333333 7.9946796,15.3333333 C7.92712547,15.3333333 7.86271516,15.3023865 7.8173329,15.2481245 L3.3943063,9.93269589 C3.33149491,9.85654796 3.31570815,9.74753319 3.35397272,9.65417411 C3.3922373,9.56081504 3.47743841,9.50047055 3.57165299,9.5 Z" id="path-3"></path>
+    </defs>
+    <g id="table" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="table-/-column-title-/-no-sorting-applied" transform="translate(-39.000000, -1.000000)">
+            <g id="Icon-/-action-/-sort" transform="translate(36.000000, 0.000000)">
+                <g id="Arrow-up">
+                    <mask id="mask-2" fill="white">
+                        <use xlink:href="#path-1"></use>
+                    </mask>
+                    <use id="Path" fill="#D4D5D7" xlink:href="#path-1"></use>
+                    <g id="Group" mask="url(#mask-2)" fill="#9EA1A7">
+                        <g id="Arrow-up-color">
+                            <rect id="Colour-/-Grey-/-Dark" x="0" y="0" width="16" height="16"></rect>
+                        </g>
+                    </g>
+                </g>
+                <g id="Arrow-down">
+                    <mask id="mask-4" fill="white">
+                        <use xlink:href="#path-3"></use>
+                    </mask>
+                    <use id="Path" fill="#D4D5D7" xlink:href="#path-3"></use>
+                    <g id="Group" mask="url(#mask-4)" fill="#9EA1A7">
+                        <g id="Arrow-up-color">
+                            <rect id="Colour-/-Grey-/-Dark" x="0" y="0" width="16" height="16"></rect>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

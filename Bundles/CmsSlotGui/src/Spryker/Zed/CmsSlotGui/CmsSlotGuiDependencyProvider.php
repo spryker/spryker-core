@@ -16,9 +16,21 @@ use Spryker\Zed\Kernel\Container;
 
 class CmsSlotGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const PROPER_QUERY_CMS_SLOT_TEMPLATE = 'PROPER_QUERY_CMS_SLOT_TEMPLATE';
+    /**
+     * @var string
+     */
     public const PROPER_QUERY_CMS_SLOT = 'PROPER_QUERY_CMS_SLOT';
+    /**
+     * @var string
+     */
     public const FACADE_CMS_SLOT = 'FACADE_CMS_SLOT';
+    /**
+     * @var string
+     */
     public const FACADE_TRANSLATOR = 'FACADE_TRANSLATOR';
 
     /**

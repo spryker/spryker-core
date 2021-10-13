@@ -16,9 +16,21 @@ use Spryker\Zed\Propel\PropelConfig;
 
 class StorageDatabaseHelper extends Module
 {
+    /**
+     * @var string
+     */
     public const FIXTURE_TABLE_NAME = 'spy_test_fixture_storage';
+    /**
+     * @var string
+     */
     public const COLUMN_DATA = 'data';
+    /**
+     * @var string
+     */
     public const COLUMN_KEY = 'key';
+    /**
+     * @var string
+     */
     public const COLUMN_ALIAS_KEYS = 'alias_keys';
 
     /**

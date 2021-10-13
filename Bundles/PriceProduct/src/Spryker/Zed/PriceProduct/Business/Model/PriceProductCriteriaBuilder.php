@@ -7,13 +7,12 @@
 
 namespace Spryker\Zed\PriceProduct\Business\Model;
 
-use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\Zed\PriceProduct\Business\Currency\CurrencyReaderInterface;
 use Spryker\Zed\PriceProduct\Business\Model\PriceType\PriceProductTypeReaderInterface;
-use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToCurrencyFacadeInterface;
 use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToPriceFacadeInterface;
 use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToStoreFacadeInterface;
 use Spryker\Zed\PriceProduct\PriceProductConfig;
@@ -21,9 +20,9 @@ use Spryker\Zed\PriceProduct\PriceProductConfig;
 class PriceProductCriteriaBuilder implements PriceProductCriteriaBuilderInterface
 {
     /**
-     * @var \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToCurrencyFacadeInterface
+     * @var \Spryker\Zed\PriceProduct\Business\Currency\CurrencyReaderInterface
      */
-    protected $currencyFacade;
+    protected $currencyReader;
 
     /**
      * @var \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToPriceFacadeInterface
@@ -61,20 +60,20 @@ class PriceProductCriteriaBuilder implements PriceProductCriteriaBuilderInterfac
     protected static $defaultCurrencyTransferForCurrentStoreCache;
 
     /**
-     * @param \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToCurrencyFacadeInterface $currencyFacade
+     * @param \Spryker\Zed\PriceProduct\Business\Currency\CurrencyReaderInterface $currencyReader
      * @param \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToPriceFacadeInterface $priceFacade
      * @param \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToStoreFacadeInterface $storeFacade
      * @param \Spryker\Zed\PriceProduct\Business\Model\PriceType\PriceProductTypeReaderInterface $priceProductTypeReader
      * @param \Spryker\Zed\PriceProduct\PriceProductConfig $config
      */
     public function __construct(
-        PriceProductToCurrencyFacadeInterface $currencyFacade,
+        CurrencyReaderInterface $currencyReader,
         PriceProductToPriceFacadeInterface $priceFacade,
         PriceProductToStoreFacadeInterface $storeFacade,
         PriceProductTypeReaderInterface $priceProductTypeReader,
         PriceProductConfig $config
     ) {
-        $this->currencyFacade = $currencyFacade;
+        $this->currencyReader = $currencyReader;
         $this->priceFacade = $priceFacade;
         $this->storeFacade = $storeFacade;
         $this->priceProductTypeReader = $priceProductTypeReader;
@@ -116,21 +115,21 @@ class PriceProductCriteriaBuilder implements PriceProductCriteriaBuilderInterfac
     public function buildCriteriaWithDefaultValues($priceTypeName = null): PriceProductCriteriaTransfer
     {
         return (new PriceProductCriteriaTransfer())
-        ->setPriceMode(
-            $this->priceFacade->getDefaultPriceMode()
-        )
-        ->setIdCurrency(
-            $this->currencyFacade->getDefaultCurrencyForCurrentStore()->getIdCurrency()
-        )
-        ->setIdStore(
-            $this->storeFacade->getCurrentStore()->getIdStore()
-        )
-        ->setPriceType(
-            $this->priceProductTypeReader->handleDefaultPriceType($priceTypeName)
-        )
-        ->setPriceDimension(
-            (new PriceProductDimensionTransfer())->setType($this->config->getPriceDimensionDefault())
-        );
+            ->setPriceMode(
+                $this->priceFacade->getDefaultPriceMode()
+            )
+            ->setIdCurrency(
+                $this->currencyReader->getDefaultCurrencyTransfer()->getIdCurrency()
+            )
+            ->setIdStore(
+                $this->storeFacade->getCurrentStore()->getIdStore()
+            )
+            ->setPriceType(
+                $this->priceProductTypeReader->handleDefaultPriceType($priceTypeName)
+            )
+            ->setPriceDimension(
+                (new PriceProductDimensionTransfer())->setType($this->config->getPriceDimensionDefault())
+            );
     }
 
     /**
@@ -156,10 +155,13 @@ class PriceProductCriteriaBuilder implements PriceProductCriteriaBuilderInterfac
     protected function getCurrencyFromFilter(PriceProductFilterTransfer $priceFilterTransfer)
     {
         if ($priceFilterTransfer->getCurrencyIsoCode()) {
-            return $this->currencyFacade->fromIsoCode($priceFilterTransfer->getCurrencyIsoCode());
+            /** @var string $currencyIsoCode */
+            $currencyIsoCode = $priceFilterTransfer->getCurrencyIsoCode();
+
+            return $this->currencyReader->getCurrencyTransferFromIsoCode($currencyIsoCode);
         }
 
-        return $this->currencyFacade->getDefaultCurrencyForCurrentStore();
+        return $this->currencyReader->getDefaultCurrencyTransfer();
     }
 
     /**
@@ -170,16 +172,19 @@ class PriceProductCriteriaBuilder implements PriceProductCriteriaBuilderInterfac
     protected function getStoreFromFilter(PriceProductFilterTransfer $priceFilterTransfer)
     {
         if ($priceFilterTransfer->getStoreName()) {
-            return $this->storeFacade->getStoreByName($priceFilterTransfer->getStoreName());
+            /** @var string $storeName */
+            $storeName = $priceFilterTransfer->getStoreName();
+
+            return $this->storeFacade->getStoreByName($storeName);
         }
 
         return $this->storeFacade->getCurrentStore();
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer[] $priceProductFilterTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductFilterTransfer> $priceProductFilterTransfers
      *
-     * @return \Generated\Shared\Transfer\PriceProductCriteriaTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductCriteriaTransfer>
      */
     public function buildCriteriaTransfersFromFilterTransfers(array $priceProductFilterTransfers): array
     {
@@ -191,7 +196,7 @@ class PriceProductCriteriaBuilder implements PriceProductCriteriaBuilderInterfac
 
         $priceProductCriteriaTransfers = [];
         foreach ($priceProductFilterTransfers as $priceProductFilterTransfer) {
-            $currencyTransfer = $currencyTransfers[$priceProductFilterTransfer->getCurrencyIsoCode()] ?? $this->getDefaultCurrencyForCurrentStore();
+            $currencyTransfer = $currencyTransfers[$priceProductFilterTransfer->getCurrencyIsoCode()] ?? $this->currencyReader->getDefaultCurrencyTransfer();
             $storeTransfer = $storeTransfers[$priceProductFilterTransfer->getStoreName()] ?? $this->getCurrentStore();
 
             $priceProductCriteriaTransfer = (new PriceProductCriteriaTransfer())
@@ -222,9 +227,9 @@ class PriceProductCriteriaBuilder implements PriceProductCriteriaBuilderInterfac
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer[] $priceProductFilterTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductFilterTransfer> $priceProductFilterTransfers
      *
-     * @return \Generated\Shared\Transfer\StoreTransfer[]
+     * @return array<\Generated\Shared\Transfer\StoreTransfer>
      */
     protected function getStoreTransfersForPriceProductFilters(array $priceProductFilterTransfers): array
     {
@@ -238,9 +243,9 @@ class PriceProductCriteriaBuilder implements PriceProductCriteriaBuilderInterfac
     }
 
     /**
-     * @param \Generated\Shared\Transfer\StoreTransfer[] $storeTransfers
+     * @param array<\Generated\Shared\Transfer\StoreTransfer> $storeTransfers
      *
-     * @return \Generated\Shared\Transfer\StoreTransfer[]
+     * @return array<\Generated\Shared\Transfer\StoreTransfer>
      */
     protected function indexStoreTransfersByStoreName(array $storeTransfers): array
     {
@@ -253,9 +258,9 @@ class PriceProductCriteriaBuilder implements PriceProductCriteriaBuilderInterfac
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer[] $priceProductFilterTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductFilterTransfer> $priceProductFilterTransfers
      *
-     * @return \Generated\Shared\Transfer\CurrencyTransfer[]
+     * @return array<\Generated\Shared\Transfer\CurrencyTransfer>
      */
     protected function getCurrencyTransfersForPriceProductFilters(array $priceProductFilterTransfers): array
     {
@@ -265,13 +270,13 @@ class PriceProductCriteriaBuilder implements PriceProductCriteriaBuilderInterfac
 
         $isoCodes = array_filter($isoCodes);
 
-        return $this->currencyFacade->getCurrencyTransfersByIsoCodes($isoCodes);
+        return $this->currencyReader->getCurrencyTransfersFromIsoCodes($isoCodes);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CurrencyTransfer[] $currencyTransfers
+     * @param array<\Generated\Shared\Transfer\CurrencyTransfer> $currencyTransfers
      *
-     * @return \Generated\Shared\Transfer\CurrencyTransfer[]
+     * @return array<\Generated\Shared\Transfer\CurrencyTransfer>
      */
     protected function indexCurrencyTransfersByIsoCode(array $currencyTransfers): array
     {
@@ -305,17 +310,5 @@ class PriceProductCriteriaBuilder implements PriceProductCriteriaBuilderInterfac
         }
 
         return static::$currentStoreCache;
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\CurrencyTransfer
-     */
-    protected function getDefaultCurrencyForCurrentStore(): CurrencyTransfer
-    {
-        if (!static::$defaultCurrencyTransferForCurrentStoreCache) {
-            static::$defaultCurrencyTransferForCurrentStoreCache = $this->currencyFacade->getDefaultCurrencyForCurrentStore();
-        }
-
-        return static::$defaultCurrencyTransferForCurrentStoreCache;
     }
 }

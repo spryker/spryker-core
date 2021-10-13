@@ -69,6 +69,6 @@ class FileDirectorySaver implements FileDirectorySaverInterface
         $this->entityManager->saveFileDirectory($fileDirectoryTransfer);
         $this->attributesSaver->save($fileDirectoryTransfer);
 
-        return $fileDirectoryTransfer->getIdFileDirectory();
+        return $fileDirectoryTransfer->getIdFileDirectoryOrFail();
     }
 }

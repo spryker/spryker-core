@@ -32,8 +32,14 @@ use Throwable;
  */
 class ProductPackagingUnitDataImportPluginTest extends Unit
 {
+    /**
+     * @var int
+     */
     protected const EXPECTED_AMOUNT = 4;
 
+    /**
+     * @var array
+     */
     protected const PRODUCT_SKUS = [
         'concrete_sku_example_1',
         'concrete_sku_example_2',
@@ -42,7 +48,13 @@ class ProductPackagingUnitDataImportPluginTest extends Unit
         'concrete_sku_example_5',
     ];
 
+    /**
+     * @var string
+     */
     protected const PACKAGING_TYPE_DEFAULT = 'item';
+    /**
+     * @var string
+     */
     protected const PACKAGING_TYPE = 'box';
 
     /**

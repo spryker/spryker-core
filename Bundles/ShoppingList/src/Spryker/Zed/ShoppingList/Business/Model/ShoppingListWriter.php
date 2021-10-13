@@ -24,9 +24,21 @@ class ShoppingListWriter implements ShoppingListWriterInterface
     use TransactionTrait;
     use PermissionAwareTrait;
 
+    /**
+     * @var string
+     */
     protected const DUPLICATE_NAME_SHOPPING_LIST = 'customer.account.shopping_list.error.duplicate_name';
+    /**
+     * @var string
+     */
     protected const CANNOT_UPDATE_SHOPPING_LIST = 'customer.account.shopping_list.error.cannot_update';
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_DELETE_FAILED = 'customer.account.shopping_list.delete.failed';
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_SHOPPING_LIST_NOT_FOUND = 'shopping_list.not_found';
 
     /**

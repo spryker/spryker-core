@@ -17,18 +17,20 @@ class UniqueProductRelationByProductAbstractAndRelationTypeAndStoresConstraintVa
 {
     /**
      * @uses \Orm\Zed\Store\Persistence\Map\SpyStoreTableMap::COL_ID_STORE
+     * @var string
      */
     protected const COL_ID_STORE = 'spy_store.id_store';
 
     /**
      * @uses \Orm\Zed\Store\Persistence\Map\SpyStoreTableMap::COL_NAME
+     * @var string
      */
     protected const COL_STORE_NAME = 'spy_store.name';
 
     /**
      * Checks if the passed productRelationTransfer is valid.
      *
-     * @param mixed|\Generated\Shared\Transfer\ProductRelationTransfer $value The productRelationTransfer that should be validated
+     * @param \Generated\Shared\Transfer\ProductRelationTransfer|mixed $value The productRelationTransfer that should be validated
      * @param \Symfony\Component\Validator\Constraint $constraint The constraint for the validation
      *
      * @throws \Symfony\Component\Form\Exception\UnexpectedTypeException
@@ -80,7 +82,7 @@ class UniqueProductRelationByProductAbstractAndRelationTypeAndStoresConstraintVa
     /**
      * @param array $storeData
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function groupStoresById(array $storeData): array
     {
@@ -94,7 +96,7 @@ class UniqueProductRelationByProductAbstractAndRelationTypeAndStoresConstraintVa
     }
 
     /**
-     * @param string[] $storeData
+     * @param array<string> $storeData
      *
      * @return void
      */

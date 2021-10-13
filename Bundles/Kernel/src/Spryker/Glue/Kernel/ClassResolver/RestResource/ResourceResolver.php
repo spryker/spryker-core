@@ -11,6 +11,9 @@ use Spryker\Service\Kernel\ClassResolver\AbstractClassResolver;
 
 class ResourceResolver extends AbstractClassResolver
 {
+    /**
+     * @var string
+     */
     protected const RESOLVABLE_TYPE = 'GlueResource';
 
     /**

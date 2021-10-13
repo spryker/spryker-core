@@ -16,6 +16,9 @@ use Spryker\Glue\ProductMeasurementUnitsRestApi\ProductMeasurementUnitsRestApiCo
 
 class SalesUnitReader implements SalesUnitReaderInterface
 {
+    /**
+     * @var string
+     */
     protected const PRODUCT_CONCRETE_MAPPING_TYPE = 'sku';
 
     /**

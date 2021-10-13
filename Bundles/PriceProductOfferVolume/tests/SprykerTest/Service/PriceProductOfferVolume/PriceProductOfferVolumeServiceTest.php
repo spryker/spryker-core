@@ -2,12 +2,14 @@
 
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
 namespace SprykerTest\Service\PriceProductOfferVolume;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\MoneyValueTransfer;
+use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 
@@ -22,6 +24,23 @@ use Generated\Shared\Transfer\PriceProductTransfer;
  */
 class PriceProductOfferVolumeServiceTest extends Unit
 {
+    /**
+     * @var string
+     */
+    protected const PRICE_DATA_VOLUME = '{"volume_prices":[{"quantity":3,"net_price":350,"gross_price":385},{"quantity":8,"net_price":340,"gross_price":375}]}';
+    /**
+     * @var int
+     */
+    protected const MONEY_VALUE = 10000;
+    /**
+     * @var string
+     */
+    protected const PRICE_DIMENSION_TYPE = 'PRODUCT_OFFER';
+    /**
+     * @var string
+     */
+    protected const PRICE_TYPE_DEFAULT = 'DEFAULT';
+
     /**
      * @var \SprykerTest\Service\PriceProductOfferVolume\PriceProductOfferVolumeServiceTester
      */
@@ -119,5 +138,34 @@ class PriceProductOfferVolumeServiceTest extends Unit
         // Assert
         $this->assertCount(1, $minPriceProductTransfers);
         $this->assertSame($priceProductTransfer1, $minPriceProductTransfers[0]);
+    }
+
+    /**
+     * @return void
+     */
+    public function testExtractVolumePrices(): void
+    {
+        // Arrange
+        $priceDimensionTransfer = (new PriceProductDimensionTransfer())
+            ->setType(static::PRICE_DIMENSION_TYPE);
+
+        $priceProductTransfer = (new PriceProductTransfer())
+            ->setPriceTypeName(static::PRICE_TYPE_DEFAULT)
+            ->setPriceDimension($priceDimensionTransfer);
+
+        $moneyValueTransfer = (new MoneyValueTransfer())
+            ->setNetAmount(static::MONEY_VALUE)
+            ->setGrossAmount(static::MONEY_VALUE)
+            ->setPriceData(static::PRICE_DATA_VOLUME);
+
+        $priceProductTransfer->setMoneyValue($moneyValueTransfer);
+
+        // Act
+        $volumePrices = $this->tester
+            ->getPriceProductOfferVolumeService()
+            ->extractVolumePrices([$priceProductTransfer]);
+
+        // Assert
+        $this->assertCount(2, $volumePrices);
     }
 }

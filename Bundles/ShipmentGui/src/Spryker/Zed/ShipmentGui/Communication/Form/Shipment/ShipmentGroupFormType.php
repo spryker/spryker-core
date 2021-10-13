@@ -22,14 +22,26 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class ShipmentGroupFormType extends AbstractType
 {
     public const FIELD_ID_SALES_SHIPMENT = ShipmentFormType::FIELD_ID_SALES_SHIPMENT;
+    /**
+     * @var string
+     */
     public const FIELD_ID_SALES_ORDER = 'id_sales_order';
+    /**
+     * @var string
+     */
     public const FIELD_ID_CUSTOMER_ADDRESS = 'id_customer_address';
     public const FIELD_SHIPMENT_SELECTED_ITEMS = ItemFormType::FIELD_SHIPMENT_SELECTED_ITEMS;
     public const OPTION_SHIPMENT_ADDRESS_CHOICES = ShipmentFormType::OPTION_SHIPMENT_ADDRESS_CHOICES;
     public const FIELD_ID_SHIPMENT_METHOD = ShipmentMethodFormType::FIELD_ID_SHIPMENT_METHOD;
     public const OPTION_ORDER_ITEMS_CHOICES = ItemFormType::OPTION_ORDER_ITEMS_CHOICES;
 
+    /**
+     * @var string
+     */
     public const FIELD_SHIPMENT_FORM = 'shipment';
+    /**
+     * @var string
+     */
     public const FIELD_SALES_ORDER_ITEMS_FORM = 'items';
 
     public const OPTION_SHIPMENT_METHOD_CHOICES = ShipmentMethodFormType::OPTION_SHIPMENT_METHOD_CHOICES;

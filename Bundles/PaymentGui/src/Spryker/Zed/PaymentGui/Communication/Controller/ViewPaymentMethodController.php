@@ -16,13 +16,19 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ViewPaymentMethodController extends AbstractController
 {
+    /**
+     * @var string
+     */
     protected const PARAM_ID_PAYMENT_METHOD = 'id-payment-method';
+    /**
+     * @var string
+     */
     protected const REDIRECT_URL = '/payment-gui/payment-method';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function indexAction(Request $request)
     {

@@ -7,9 +7,11 @@
 
 namespace Spryker\Client\SearchElasticsearch\Plugin;
 
+use Generated\Shared\Transfer\SearchConnectionResponseTransfer;
 use Generated\Shared\Transfer\SearchContextTransfer;
 use Generated\Shared\Transfer\SearchDocumentTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
+use Spryker\Client\SearchExtension\Dependency\Plugin\ConnectionCheckerAdapterPluginInterface;
 use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
 use Spryker\Client\SearchExtension\Dependency\Plugin\SearchAdapterPluginInterface;
 
@@ -17,8 +19,11 @@ use Spryker\Client\SearchExtension\Dependency\Plugin\SearchAdapterPluginInterfac
  * @method \Spryker\Client\SearchElasticsearch\SearchElasticsearchClientInterface getClient()
  * @method \Spryker\Client\SearchElasticsearch\SearchElasticsearchFactory getFactory()()
  */
-class ElasticsearchSearchAdapterPlugin extends AbstractPlugin implements SearchAdapterPluginInterface
+class ElasticsearchSearchAdapterPlugin extends AbstractPlugin implements SearchAdapterPluginInterface, ConnectionCheckerAdapterPluginInterface
 {
+    /**
+     * @var string
+     */
     protected const NAME = 'elasticsearch';
 
     /**
@@ -28,10 +33,10 @@ class ElasticsearchSearchAdapterPlugin extends AbstractPlugin implements SearchA
      * @api
      *
      * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface $searchQuery
-     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface[] $resultFormatters
+     * @param array<\Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface> $resultFormatters
      * @param array $requestParameters
      *
-     * @return array|\Elastica\ResultSet
+     * @return \Elastica\ResultSet|array
      */
     public function search(QueryInterface $searchQuery, array $resultFormatters = [], array $requestParameters = [])
     {
@@ -72,13 +77,13 @@ class ElasticsearchSearchAdapterPlugin extends AbstractPlugin implements SearchA
      * {@inheritDoc}
      * - Writes multiple documents to Elasticsearch.
      *
-     * @param \Generated\Shared\Transfer\SearchDocumentTransfer[] $searchContextTransfers
+     * @param array<\Generated\Shared\Transfer\SearchDocumentTransfer> $searchDocumentTransfers
      *
      * @return bool
      */
-    public function writeDocuments(array $searchContextTransfers): bool
+    public function writeDocuments(array $searchDocumentTransfers): bool
     {
-        return $this->getClient()->writeDocuments($searchContextTransfers);
+        return $this->getClient()->writeDocuments($searchDocumentTransfers);
     }
 
     /**
@@ -101,7 +106,7 @@ class ElasticsearchSearchAdapterPlugin extends AbstractPlugin implements SearchA
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\SearchDocumentTransfer[] $searchDocumentTransfers
+     * @param array<\Generated\Shared\Transfer\SearchDocumentTransfer> $searchDocumentTransfers
      *
      * @return bool
      */
@@ -134,5 +139,17 @@ class ElasticsearchSearchAdapterPlugin extends AbstractPlugin implements SearchA
     public function getName(): string
     {
         return static::NAME;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\SearchConnectionResponseTransfer
+     */
+    public function checkConnection(): SearchConnectionResponseTransfer
+    {
+        return $this->getClient()->checkConnection();
     }
 }

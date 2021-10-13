@@ -30,7 +30,13 @@ use Spryker\Zed\Propel\PropelConfig;
  */
 class SessionHandlerMysqlTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const SESSION_ID = 'SESSION_ID';
+    /**
+     * @var string
+     */
     protected const SESSION_DATA = 'SESSION_DATA';
 
     /**

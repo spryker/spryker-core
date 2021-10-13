@@ -17,7 +17,13 @@ use Spryker\Zed\ProductBundleStorage\Dependency\Facade\ProductBundleStorageToPro
  */
 class ProductBundleStorageDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_PRODUCT_BUNDLE = 'FACADE_PRODUCT_BUNDLE';
+    /**
+     * @var string
+     */
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
 
     /**

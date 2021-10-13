@@ -25,7 +25,13 @@ use Generated\Shared\Transfer\ItemTransfer;
  */
 class ExpandCartChangeShipmentWithMerchantReferenceTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const TEST_MERCHANT_REFERENCE1 = 'merchant-reference-1';
+    /**
+     * @var string
+     */
     protected const TEST_MERCHANT_REFERENCE2 = 'merchant-reference-2';
 
     /**

@@ -18,9 +18,18 @@ use Spryker\Zed\ProductLabelDiscountConnector\Dependency\QueryContainer\ProductL
  */
 class ProductLabelDiscountConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_PRODUCT_LABEL = 'FACADE_PRODUCT_LABEL';
+    /**
+     * @var string
+     */
     public const FACADE_DISCOUNT = 'FACADE_DISCOUNT';
 
+    /**
+     * @var string
+     */
     public const QUERY_CONTAINER_PRODUCT_LABEL = 'QUERY_CONTAINER_PRODUCT_LABEL';
 
     /**

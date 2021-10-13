@@ -17,19 +17,52 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class SchedulerResumeConsole extends AbstractSchedulerConsole
 {
+    /**
+     * @var string
+     */
     public const COMMAND_NAME = 'scheduler:resume';
+    /**
+     * @var string
+     */
     public const DESCRIPTION = 'Resumes scheduler job(s)';
 
+    /**
+     * @var string
+     */
     protected const ROLES_OPTION = 'roles';
+    /**
+     * @var string
+     */
     protected const ROLES_OPTION_SHORTCUT = 'r';
+    /**
+     * @var string
+     */
     protected const ROLES_OPTION_DESCRIPTION = 'Job roles to include.';
 
+    /**
+     * @var string
+     */
     protected const SCHEDULERS_OPTION = 'schedulers';
+    /**
+     * @var string
+     */
     protected const SCHEDULERS_OPTION_SHORTCUT = 's';
+    /**
+     * @var string
+     */
     protected const SCHEDULERS_OPTION_DESCRIPTION = 'Schedulers that will be executed.';
 
+    /**
+     * @var string
+     */
     protected const JOBS_OPTION = 'jobs';
+    /**
+     * @var string
+     */
     protected const JOBS_OPTION_SHORTCUT = 'j';
+    /**
+     * @var string
+     */
     protected const JOBS_OPTION_DESCRIPTION = 'Scheduler job(s) that will be enabled.';
 
     /**
@@ -75,9 +108,12 @@ class SchedulerResumeConsole extends AbstractSchedulerConsole
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $roles = $input->getOption(static::ROLES_OPTION);
-        $schedulers = $input->getOption(static::SCHEDULERS_OPTION);
-        $jobNames = $input->getOption(static::JOBS_OPTION);
+        /** @var array<string> $roles */
+        $roles = (array)$input->getOption(static::ROLES_OPTION);
+        /** @var array<string> $schedulers */
+        $schedulers = (array)$input->getOption(static::SCHEDULERS_OPTION);
+        /** @var array<string> $jobNames */
+        $jobNames = (array)$input->getOption(static::JOBS_OPTION);
 
         $schedulerFilterTransfer = $this->createSchedulerFilterTransfer($roles, $schedulers, $jobNames);
         $responseCollectionTransfer = $this->getFacade()->resume($schedulerFilterTransfer);

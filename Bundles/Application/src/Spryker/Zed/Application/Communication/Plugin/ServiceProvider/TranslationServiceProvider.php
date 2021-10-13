@@ -25,6 +25,8 @@ class TranslationServiceProvider extends AbstractPlugin implements ServiceProvid
 {
     /**
      * Added for BC reason only.
+     *
+     * @var string
      */
     protected const BC_FEATURE_FLAG_TWIG_TRANSLATOR = 'BC_FEATURE_FLAG_TWIG_TRANSLATOR';
 

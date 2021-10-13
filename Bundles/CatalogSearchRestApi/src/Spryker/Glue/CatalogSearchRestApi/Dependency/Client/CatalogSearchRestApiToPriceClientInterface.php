@@ -32,7 +32,7 @@ interface CatalogSearchRestApiToPriceClientInterface
     public function getNetPriceModeIdentifier();
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getPriceModes();
 }

@@ -15,6 +15,9 @@ use Spryker\Glue\Kernel\Container;
  */
 class RouterDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const PLUGINS_ROUTER = 'PLUGINS_ROUTER';
 
     /**
@@ -44,7 +47,7 @@ class RouterDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Glue\RouterExtension\Dependency\Plugin\RouterPluginInterface[]
+     * @return array<\Spryker\Glue\RouterExtension\Dependency\Plugin\RouterPluginInterface>
      */
     protected function getRouterPlugins(): array
     {

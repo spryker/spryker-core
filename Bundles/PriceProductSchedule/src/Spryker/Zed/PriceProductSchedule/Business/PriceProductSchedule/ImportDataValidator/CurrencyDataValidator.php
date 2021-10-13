@@ -13,6 +13,9 @@ use Spryker\Zed\PriceProductSchedule\Business\Currency\CurrencyFinderInterface;
 
 class CurrencyDataValidator extends AbstractImportDataValidator
 {
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_CURRENCY_NOT_FOUND = 'Currency was not found by provided ISO code %isoCode%.';
 
     /**

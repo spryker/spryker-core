@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\HealthCheckResponseTransfer;
 interface ResponseProcessorInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\HealthCheckServiceResponseTransfer[] $healthCheckServiceResponseTransfers
+     * @param array<\Generated\Shared\Transfer\HealthCheckServiceResponseTransfer> $healthCheckServiceResponseTransfers
      *
      * @return \Generated\Shared\Transfer\HealthCheckResponseTransfer
      */

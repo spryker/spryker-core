@@ -11,6 +11,9 @@ use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 
 class Transfer extends AbstractTransfer
 {
+    /**
+     * @var string
+     */
     public const KEY = 'key';
 
     /**

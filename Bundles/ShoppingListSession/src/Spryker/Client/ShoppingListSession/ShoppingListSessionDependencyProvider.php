@@ -14,9 +14,21 @@ use Spryker\Client\ShoppingListSession\Dependency\Client\ShoppingListSessionToSh
 
 class ShoppingListSessionDependencyProvider extends AbstractDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const SHOPPING_LIST_SESSION_STORAGE_CLIENT = 'SHOPPING_LIST_SESSION_STORAGE_CLIENT';
+    /**
+     * @var string
+     */
     public const SHOPPING_LIST_SESSION_SESSION_CLIENT = 'SHOPPING_LIST_SESSION_SESSION_CLIENT';
+    /**
+     * @var string
+     */
     public const SHOPPING_LIST_SESSION_SHOPPING_LIST_CLIENT = 'SHOPPING_LIST_SESSION_SHOPPING_LIST_CLIENT';
+    /**
+     * @var string
+     */
     public const SHOPPING_LIST_SESSION_COLLECTION_OUTDATED_PLUGINS = 'SHOPPING_LIST_SESSION_COLLECTION_OUTDATED_PLUGINS';
 
     /**
@@ -78,7 +90,7 @@ class ShoppingListSessionDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @return \Spryker\Client\ShoppingListSessionExtension\Dependency\Plugin\ShoppingListCollectionOutdatedPluginInterface[]
+     * @return array<\Spryker\Client\ShoppingListSessionExtension\Dependency\Plugin\ShoppingListCollectionOutdatedPluginInterface>
      */
     protected function getShoppingListCollectionOutdatedPlugins(): array
     {

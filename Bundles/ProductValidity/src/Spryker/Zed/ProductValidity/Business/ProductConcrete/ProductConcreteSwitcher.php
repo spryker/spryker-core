@@ -85,7 +85,7 @@ class ProductConcreteSwitcher implements ProductConcreteSwitcherInterface
     }
 
     /**
-     * @return \Orm\Zed\ProductValidity\Persistence\SpyProductValidity[]|\Traversable
+     * @return \Traversable<\Orm\Zed\ProductValidity\Persistence\SpyProductValidity>
      */
     protected function findProductsBecomingActive(): Traversable
     {
@@ -96,7 +96,7 @@ class ProductConcreteSwitcher implements ProductConcreteSwitcherInterface
     }
 
     /**
-     * @return \Orm\Zed\ProductValidity\Persistence\SpyProductValidity[]|\Traversable
+     * @return \Traversable<\Orm\Zed\ProductValidity\Persistence\SpyProductValidity>
      */
     protected function findProductsBecomingInactive(): Traversable
     {
@@ -107,8 +107,8 @@ class ProductConcreteSwitcher implements ProductConcreteSwitcherInterface
     }
 
     /**
-     * @param \Orm\Zed\ProductValidity\Persistence\SpyProductValidity[]|\Traversable $productsBecomingActive
-     * @param \Orm\Zed\ProductValidity\Persistence\SpyProductValidity[]|\Traversable $productsBecomingInactive
+     * @param \Traversable<\Orm\Zed\ProductValidity\Persistence\SpyProductValidity> $productsBecomingActive
+     * @param \Traversable<\Orm\Zed\ProductValidity\Persistence\SpyProductValidity> $productsBecomingInactive
      *
      * @return void
      */
@@ -121,7 +121,7 @@ class ProductConcreteSwitcher implements ProductConcreteSwitcherInterface
     }
 
     /**
-     * @param \Orm\Zed\ProductValidity\Persistence\SpyProductValidity[]|\Traversable $productValidityEntities
+     * @param \Traversable<\Orm\Zed\ProductValidity\Persistence\SpyProductValidity> $productValidityEntities
      *
      * @return void
      */
@@ -136,7 +136,7 @@ class ProductConcreteSwitcher implements ProductConcreteSwitcherInterface
     }
 
     /**
-     * @param \Orm\Zed\ProductValidity\Persistence\SpyProductValidity[]|\Traversable $productValidityEntities
+     * @param \Traversable<\Orm\Zed\ProductValidity\Persistence\SpyProductValidity> $productValidityEntities
      *
      * @return void
      */

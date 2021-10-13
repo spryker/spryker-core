@@ -23,15 +23,42 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class CompanyBusinessUnitForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const OPTION_COMPANY_CHOICES = 'company_choices';
+    /**
+     * @var string
+     */
     public const OPTION_PARENT_CHOICES_VALUES = 'parent_choices_values';
+    /**
+     * @var string
+     */
     public const OPTION_PARENT_CHOICES_ATTRIBUTES = 'parent_choices_attributes';
 
+    /**
+     * @var string
+     */
     public const FIELD_ID_COMPANY_BUSINESS_UNIT = 'id_company_business_unit';
+    /**
+     * @var string
+     */
     public const FIELD_FK_COMPANY = 'fk_company';
+    /**
+     * @var string
+     */
     public const FIELD_FK_PARENT_COMPANY_BUSINESS_UNIT = 'fk_parent_company_business_unit';
+    /**
+     * @var string
+     */
     public const FIELD_NAME = 'name';
+    /**
+     * @var string
+     */
     public const FIELD_IBAN = 'iban';
+    /**
+     * @var string
+     */
     public const FIELD_BIC = 'bic';
 
     /**
@@ -90,8 +117,8 @@ class CompanyBusinessUnitForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param string[] $choicesValues [unitKey => idUnit]
-     * @param array[] $choicesAttributes [unitKey => ['data-id_company' => idCompany]
+     * @param array<string> $choicesValues [unitKey => idUnit]
+     * @param array<array> $choicesAttributes [unitKey => ['data-id_company' => idCompany]
      *
      * @return $this
      */

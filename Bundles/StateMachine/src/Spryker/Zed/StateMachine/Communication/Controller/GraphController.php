@@ -21,11 +21,29 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class GraphController extends AbstractController
 {
+    /**
+     * @var string
+     */
     public const URL_PARAM_PROCESS = 'process';
+    /**
+     * @var string
+     */
     public const URL_PARAM_FORMAT = 'format';
+    /**
+     * @var string
+     */
     public const URL_PARAM_FONT_SIZE = 'font';
+    /**
+     * @var string
+     */
     public const URL_PARAM_HIGHLIGHT_STATE = 'highlight-state';
+    /**
+     * @var string
+     */
     public const URL_PARAM_STATE_MACHINE = 'state-machine';
+    /**
+     * @var string
+     */
     public const URL_STATE_MACHINE_LIST = '/state-machine/list';
 
     /**
@@ -35,15 +53,15 @@ class GraphController extends AbstractController
      */
     public function drawAction(Request $request)
     {
-        $processName = $request->query->get(self::URL_PARAM_PROCESS);
+        $processName = (string)$request->query->get(self::URL_PARAM_PROCESS) ?: null;
         if ($processName === null) {
             return $this->redirectResponse(self::URL_STATE_MACHINE_LIST);
         }
 
-        $format = $request->query->get(self::URL_PARAM_FORMAT);
+        $format = (string)$request->query->get(self::URL_PARAM_FORMAT) ?: null;
         $fontSize = $request->query->getInt(self::URL_PARAM_FONT_SIZE);
-        $highlightState = $request->query->get(self::URL_PARAM_HIGHLIGHT_STATE);
-        $stateMachine = $request->query->get(self::URL_PARAM_STATE_MACHINE);
+        $highlightState = (string)$request->query->get(self::URL_PARAM_HIGHLIGHT_STATE);
+        $stateMachine = (string)$request->query->get(self::URL_PARAM_STATE_MACHINE);
 
         $reload = false;
         $stateMachineBundleConfig = $this->getFactory()->getConfig();
@@ -115,7 +133,7 @@ class GraphController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function drawPreviewVersionAction(Request $request)
     {
@@ -135,7 +153,7 @@ class GraphController extends AbstractController
     /**
      * @param string $format
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getStreamedResponseHeaders($format)
     {

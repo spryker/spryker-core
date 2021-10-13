@@ -13,7 +13,13 @@ use RuntimeException;
 
 class DateRangeRequestFilterValueNormalizer implements DateRangeRequestFilterValueNormalizerInterface
 {
+    /**
+     * @var string
+     */
     protected const FILTER_DATE_TIME_FORMAT = 'Y-m-d\TH:i:s.uP';
+    /**
+     * @var string
+     */
     protected const DATE_TIME_FORMAT = 'Y-m-d H:i:s';
 
     /**
@@ -21,7 +27,7 @@ class DateRangeRequestFilterValueNormalizer implements DateRangeRequestFilterVal
      *
      * @return \Generated\Shared\Transfer\CriteriaRangeFilterTransfer|null
      */
-    public function normalizeFilterValue($value)
+    public function normalizeFilterValue($value): ?CriteriaRangeFilterTransfer
     {
         if (!$value || !is_array($value) || (!isset($value['from']) && !isset($value['to']))) {
             return null;

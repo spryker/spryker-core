@@ -11,16 +11,23 @@ use Generated\Shared\Transfer\GuiTableColumnConfigurationTransfer;
 use Generated\Shared\Transfer\GuiTableConfigurationTransfer;
 use Generated\Shared\Transfer\GuiTableDataResponseTransfer;
 use Generated\Shared\Transfer\ProductOfferCollectionTransfer;
-use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
+use Generated\Shared\Transfer\ProductOfferCriteriaTransfer;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToProductOfferFacadeInterface;
 
 class MerchantOrderItemTableExpander implements MerchantOrderItemTableExpanderInterface
 {
+    /**
+     * @var string
+     */
     protected const COL_KEY_MERCHANT_SKU = 'merchantSku';
+    /**
+     * @var string
+     */
     protected const COL_KEY_PRODUCT_OFFER_REFERENCE = 'productOfferReference';
 
     /**
      * @uses \Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface::COLUMN_TYPE_TEXT
+     * @var string
      */
     protected const COLUMN_TYPE_TEXT = 'text';
 
@@ -95,8 +102,8 @@ class MerchantOrderItemTableExpander implements MerchantOrderItemTableExpanderIn
             return $guiTableDataResponseTransfer;
         }
 
-        $productOfferCollectionTransfer = $this->productOfferFacade->find(
-            (new ProductOfferCriteriaFilterTransfer())->setProductOfferReferences($productOfferReferences)
+        $productOfferCollectionTransfer = $this->productOfferFacade->get(
+            (new ProductOfferCriteriaTransfer())->setProductOfferReferences($productOfferReferences)
         );
         $merchantSkus = $this->getMerchantSkusIndexedByProductOfferReferences($productOfferCollectionTransfer);
 
@@ -123,17 +130,20 @@ class MerchantOrderItemTableExpander implements MerchantOrderItemTableExpanderIn
      *
      * @param \Generated\Shared\Transfer\ProductOfferCollectionTransfer $productOfferCollectionTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getMerchantSkusIndexedByProductOfferReferences(
         ProductOfferCollectionTransfer $productOfferCollectionTransfer
     ): array {
         $merchantSkus = [];
         foreach ($productOfferCollectionTransfer->getProductOffers() as $productOfferTransfer) {
-            /** @var string $productOfferReference */
-            $productOfferReference = $productOfferTransfer->requireProductOfferReference()->getProductOfferReference();
-            /** @var string $merchantSku */
-            $merchantSku = $productOfferTransfer->requireMerchantSku()->getMerchantSku();
+            $productOfferReference = $productOfferTransfer->getProductOfferReferenceOrFail();
+            $merchantSku = $productOfferTransfer->getMerchantSku();
+
+            if (!$merchantSku) {
+                continue;
+            }
+
             $merchantSkus[$productOfferReference] = $merchantSku;
         }
 

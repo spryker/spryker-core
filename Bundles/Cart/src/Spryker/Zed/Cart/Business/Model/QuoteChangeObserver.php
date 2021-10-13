@@ -15,6 +15,9 @@ use Spryker\Zed\Cart\Dependency\Facade\CartToMessengerInterface;
 
 class QuoteChangeObserver implements QuoteChangeObserverInterface
 {
+    /**
+     * @var string
+     */
     public const CART_SYNCHRONIZE_ITEMS_PRICE_CHANGED = 'cart.validate.items.price.changed';
 
     /**
@@ -23,13 +26,13 @@ class QuoteChangeObserver implements QuoteChangeObserverInterface
     protected $messengerFacade;
 
     /**
-     * @var array|\Spryker\Zed\CartExtension\Dependency\Plugin\QuoteChangeObserverPluginInterface[]
+     * @var array<\Spryker\Zed\CartExtension\Dependency\Plugin\QuoteChangeObserverPluginInterface>
      */
     protected $quoteChangeObserverPlugins;
 
     /**
      * @param \Spryker\Zed\Cart\Dependency\Facade\CartToMessengerInterface $messengerFacade
-     * @param \Spryker\Zed\CartExtension\Dependency\Plugin\QuoteChangeObserverPluginInterface[] $quoteChangeObserverPlugins
+     * @param array<\Spryker\Zed\CartExtension\Dependency\Plugin\QuoteChangeObserverPluginInterface> $quoteChangeObserverPlugins
      */
     public function __construct(CartToMessengerInterface $messengerFacade, array $quoteChangeObserverPlugins)
     {
@@ -64,7 +67,7 @@ class QuoteChangeObserver implements QuoteChangeObserverInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $cartItems
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $cartItems
      *
      * @return array
      */

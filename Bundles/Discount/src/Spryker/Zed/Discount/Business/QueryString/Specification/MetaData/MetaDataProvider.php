@@ -16,7 +16,7 @@ use Spryker\Zed\Discount\Dependency\Plugin\DiscountRuleWithValueOptionsPluginInt
 class MetaDataProvider implements MetaDataProviderInterface
 {
     /**
-     * @var array|\Spryker\Zed\Discount\Dependency\Plugin\DecisionRulePluginInterface[]|\Spryker\Zed\Discount\Dependency\Plugin\CollectorPluginInterface[]
+     * @var array<\Spryker\Zed\Discount\Dependency\Plugin\DecisionRulePluginInterface|\Spryker\Zed\Discount\Dependency\Plugin\CollectorPluginInterface>
      */
     protected $specificationPlugins = [];
 
@@ -31,19 +31,19 @@ class MetaDataProvider implements MetaDataProviderInterface
     protected $logicalComparators;
 
     /**
-     * @var string[]|null Numerical array of available fields.
+     * @var array<string>|null Numerical array of available fields.
      */
     protected $availableFieldsBuffer;
 
     /**
      * @see MetaDataProvider::availableFieldsBuffer
      *
-     * @var array|null Each key is an available field. Contains the flipped $availableFieldsBuffer variable for performance reason.
+     * @var array<string, mixed>|null Each key is an available field. Contains the flipped $availableFieldsBuffer variable for performance reason.
      */
     protected $availableFieldsMapBuffer;
 
     /**
-     * @param \Spryker\Zed\Discount\Dependency\Plugin\DecisionRulePluginInterface[]|\Spryker\Zed\Discount\Dependency\Plugin\CollectorPluginInterface[] $specificationPlugins
+     * @param array<\Spryker\Zed\Discount\Dependency\Plugin\DecisionRulePluginInterface|\Spryker\Zed\Discount\Dependency\Plugin\CollectorPluginInterface> $specificationPlugins
      * @param \Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface $comparatorOperators
      * @param \Spryker\Zed\Discount\Business\QueryString\LogicalComparators $logicalComparators
      */
@@ -58,7 +58,7 @@ class MetaDataProvider implements MetaDataProviderInterface
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getAvailableFields()
     {
@@ -109,7 +109,7 @@ class MetaDataProvider implements MetaDataProviderInterface
      *
      * @throws \Spryker\Zed\Discount\Business\Exception\QueryStringException
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getAcceptedTypesByFieldName($fieldName)
     {
@@ -132,7 +132,7 @@ class MetaDataProvider implements MetaDataProviderInterface
     /**
      * @param string $fieldName
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getAvailableOperatorExpressionsForField($fieldName)
     {
@@ -142,7 +142,7 @@ class MetaDataProvider implements MetaDataProviderInterface
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getAvailableComparatorExpressions()
     {
@@ -150,7 +150,7 @@ class MetaDataProvider implements MetaDataProviderInterface
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getLogicalComparators()
     {
@@ -158,7 +158,7 @@ class MetaDataProvider implements MetaDataProviderInterface
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getCompoundExpressions()
     {

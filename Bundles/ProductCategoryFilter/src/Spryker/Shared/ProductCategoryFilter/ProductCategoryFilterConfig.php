@@ -9,5 +9,8 @@ namespace Spryker\Shared\ProductCategoryFilter;
 
 class ProductCategoryFilterConfig
 {
+    /**
+     * @var string
+     */
     public const RESOURCE_TYPE_PRODUCT_CATEGORY_FILTER = 'product_category_filter';
 }

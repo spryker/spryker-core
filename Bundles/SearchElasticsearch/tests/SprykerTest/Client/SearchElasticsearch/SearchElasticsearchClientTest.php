@@ -33,6 +33,9 @@ use SprykerTest\Shared\SearchElasticsearch\Helper\ElasticsearchHelper;
  */
 class SearchElasticsearchClientTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const INDEX_NAME = 'index_name_devtest';
 
     /**
@@ -271,6 +274,17 @@ class SearchElasticsearchClientTest extends Unit
         foreach ([$documentId, $anotherDocumentId] as $id) {
             $this->tester->assertDocumentDoesNotExist($id, static::INDEX_NAME);
         }
+    }
+
+    /**
+     * @return void
+     */
+    public function testCanCheckConnection()
+    {
+        $searchConnectionResponseTransfer = $this->tester->getClient()->checkConnection();
+
+        $this->assertTrue($searchConnectionResponseTransfer->getIsSuccessfull());
+        $this->assertNotEmpty($searchConnectionResponseTransfer->getRawResponse());
     }
 
     /**

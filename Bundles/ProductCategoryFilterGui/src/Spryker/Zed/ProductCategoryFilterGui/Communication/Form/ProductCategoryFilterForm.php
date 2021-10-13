@@ -19,7 +19,13 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 class ProductCategoryFilterForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const FIELD_FILTER_AUTOCOMPLETE = 'filter-autocomplete';
+    /**
+     * @var string
+     */
     public const FIELD_FILTERS = 'filters';
 
     /**

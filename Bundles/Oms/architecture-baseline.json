@@ -1,0 +1,51 @@
+[
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/Oms/src/Spryker/Zed/Oms/Business/OmsFacade.php",
+        "description": "\n      Zed Business Layer - Facade: The Spryker\\Zed\\Oms\\Business\\OmsFacade::sumReservedProductQuantitiesForSku() is using an invalid return type \"\\Spryker\\DecimalObject\\Decimal\" which violates the rule \"Every Facade should only return native types or transfer objects.\"\n    ",
+        "rule": "FacadeReturnValueRule",
+        "ruleset": "Spryker Zed",
+        "priority": "1"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/Oms/src/Spryker/Zed/Oms/Business/OmsFacade.php",
+        "description": "\n      Zed Business Layer - Facade: The Spryker\\Zed\\Oms\\Business\\OmsFacade::getOmsReservedProductQuantityForSku() is using an invalid return type \"\\Spryker\\DecimalObject\\Decimal\" which violates the rule \"Every Facade should only return native types or transfer objects.\"\n    ",
+        "rule": "FacadeReturnValueRule",
+        "ruleset": "Spryker Zed",
+        "priority": "1"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/Oms/src/Spryker/Zed/Oms/Business/OmsFacade.php",
+        "description": "\n      Zed Business Layer - Facade: The Spryker\\Zed\\Oms\\Business\\OmsFacade::getOmsReservedProductQuantityForSkus() is using an invalid return type \"\\Spryker\\DecimalObject\\Decimal\" which violates the rule \"Every Facade should only return native types or transfer objects.\"\n    ",
+        "rule": "FacadeReturnValueRule",
+        "ruleset": "Spryker Zed",
+        "priority": "1"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/Oms/src/Spryker/Zed/Oms/Business/OmsFacade.php",
+        "description": "\n      Zed Business Layer - Facade: The Spryker\\Zed\\Oms\\Business\\OmsFacade::getProcessEntity() is using an invalid return type \"\\Orm\\Zed\\Oms\\Persistence\\SpyOmsOrderProcess\" which violates the rule \"Every Facade should only return native types or transfer objects.\"\n    ",
+        "rule": "FacadeReturnValueRule",
+        "ruleset": "Spryker Zed",
+        "priority": "1"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/Oms/src/Spryker/Zed/Oms/Business/OmsFacade.php",
+        "description": "\n      Zed Business Layer - Facade: The Spryker\\Zed\\Oms\\Business\\OmsFacade::getInitialStateEntity() is using an invalid return type \"\\Orm\\Zed\\Oms\\Persistence\\SpyOmsOrderItemState\" which violates the rule \"Every Facade should only return native types or transfer objects.\"\n    ",
+        "rule": "FacadeReturnValueRule",
+        "ruleset": "Spryker Zed",
+        "priority": "1"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/Oms/src/Spryker/Zed/Oms/Business/OmsFacade.php",
+        "description": "\n      Zed Business Layer - Facade: The Spryker\\Zed\\Oms\\Business\\OmsFacade::getReservationsFromOtherStores() is using an invalid return type \"\\Spryker\\DecimalObject\\Decimal\" which violates the rule \"Every Facade should only return native types or transfer objects.\"\n    ",
+        "rule": "FacadeReturnValueRule",
+        "ruleset": "Spryker Zed",
+        "priority": "1"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/Oms/src/Spryker/Zed/Oms/Dependency/Service/OmsToUtilTextBridge.php",
+        "description": "\n      Bridges: The bridge has incorrect method 'generateRandomString' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    }
+]

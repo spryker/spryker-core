@@ -58,9 +58,9 @@ interface CompanyUnitAddressMapperInterface
     ): SpyCompanyUnitAddress;
 
     /**
-     * @param \Generated\Shared\Transfer\SpyCompanyUnitAddressToCompanyBusinessUnitEntityTransfer[] $companyUnitAddressToCompanyBusinessUnitEntities
+     * @param array<\Generated\Shared\Transfer\SpyCompanyUnitAddressToCompanyBusinessUnitEntityTransfer> $companyUnitAddressToCompanyBusinessUnitEntities
      *
-     * @return \Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer[]
+     * @return array<\Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer>
      */
     public function mapEntitiesToCompanyBusinessUnitTransfers(
         array $companyUnitAddressToCompanyBusinessUnitEntities

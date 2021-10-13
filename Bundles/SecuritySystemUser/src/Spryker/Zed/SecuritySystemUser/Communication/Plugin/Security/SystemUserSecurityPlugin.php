@@ -21,7 +21,13 @@ use Spryker\Zed\SecuritySystemUser\SecuritySystemUserConfig;
  */
 class SystemUserSecurityPlugin extends AbstractPlugin implements SecurityPluginInterface
 {
+    /**
+     * @var string
+     */
     protected const SECURITY_FIREWALL_NAME = 'SystemUser';
+    /**
+     * @var string
+     */
     protected const SECURITY_SYSTEM_USER_TOKEN_AUTHENTICATOR = 'security.system_user.token.authenticator';
 
     /**

@@ -15,6 +15,10 @@ use Symfony\Component\HttpFoundation\Request;
 
 class StoreFormHandler implements FormHandlerInterface
 {
+    /**
+     * @phpstan-var non-empty-string
+     * @var string
+     */
     public const STORE_CURRENCY_DELIMITER = ';';
 
     /**

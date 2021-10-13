@@ -35,7 +35,7 @@ interface SearchClientInterface
      * @api
      *
      * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface $searchQuery
-     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryExpanderPluginInterface[] $searchQueryExpanders
+     * @param array<\Spryker\Client\SearchExtension\Dependency\Plugin\QueryExpanderPluginInterface> $searchQueryExpanders
      * @param array $requestParameters
      *
      * @return \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface
@@ -51,12 +51,87 @@ interface SearchClientInterface
      * @api
      *
      * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface $searchQuery
-     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface[] $resultFormatters
+     * @param array<\Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface> $resultFormatters
      * @param array $requestParameters
      *
-     * @return array|\Elastica\ResultSet|mixed (@deprecated Only mixed will be supported with the next major)
+     * @return \Elastica\ResultSet|mixed|array (@deprecated Only mixed will be supported with the next major)
      */
     public function search(QueryInterface $searchQuery, array $resultFormatters = [], array $requestParameters = []);
+
+    /**
+     * Specification:
+     * - Runs a simple full text search for the given search string
+     * - Returns the raw result set ordered by relevance
+     *
+     * @api
+     *
+     * @param string $searchString
+     * @param int|null $limit
+     * @param int|null $offset
+     *
+     * @return \Elastica\ResultSet|mixed|array (@deprecated Only mixed will be supported with the next major)
+     */
+    public function searchKeys($searchString, $limit = null, $offset = null);
+
+    /**
+     * Specification:
+     * - Returns data from an external search service (e.g Elasticsearch)
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SearchDocumentTransfer $searchDocumentTransfer
+     *
+     * @return mixed
+     */
+    public function readDocument(SearchDocumentTransfer $searchDocumentTransfer);
+
+    /**
+     * Specification:
+     * - Writes data into an external search service (e.g Elasticsearch).
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SearchDocumentTransfer $searchDocumentTransfer
+     *
+     * @return bool
+     */
+    public function writeDocument(SearchDocumentTransfer $searchDocumentTransfer): bool;
+
+    /**
+     * Specification:
+     * - Writes data into an external search service in bulk mode.
+     *
+     * @api
+     *
+     * @param array<\Generated\Shared\Transfer\SearchDocumentTransfer> $searchDocumentTransfers
+     *
+     * @return bool
+     */
+    public function writeDocuments(array $searchDocumentTransfers): bool;
+
+    /**
+     * Specification:
+     * - Deletes data from an external search service (e.g Elasticsearch).
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SearchDocumentTransfer $searchDocumentTransfer
+     *
+     * @return bool
+     */
+    public function deleteDocument(SearchDocumentTransfer $searchDocumentTransfer): bool;
+
+    /**
+     * Specification:
+     * - Deletes data from an external search service (e.g Elasticsearch) in bulk mode.
+     *
+     * @api
+     *
+     * @param array<\Generated\Shared\Transfer\SearchDocumentTransfer> $searchDocumentTransfers
+     *
+     * @return bool
+     */
+    public function deleteDocuments(array $searchDocumentTransfers): bool;
 
     /**
      * Specification:
@@ -74,21 +149,6 @@ interface SearchClientInterface
 
     /**
      * Specification:
-     * - Runs a simple full text search for the given search string
-     * - Returns the raw result set ordered by relevance
-     *
-     * @api
-     *
-     * @param string $searchString
-     * @param int|null $limit
-     * @param int|null $offset
-     *
-     * @return array|\Elastica\ResultSet|mixed (@deprecated Only mixed will be supported with the next major)
-     */
-    public function searchKeys($searchString, $limit = null, $offset = null);
-
-    /**
-     * Specification:
      * - Runs a string search for the given search string
      * - @see https://www.elastic.co/guide/en/elasticsearch/reference/2.4/query-dsl-query-string-query.html
      * - Returns the raw result set ordered by relevance
@@ -101,7 +161,7 @@ interface SearchClientInterface
      * @param int|null $limit
      * @param int|null $offset
      *
-     * @return array|\Elastica\ResultSet|mixed (@deprecated Only mixed will be supported with the next major)
+     * @return \Elastica\ResultSet|mixed|array (@deprecated Only mixed will be supported with the next major)
      */
     public function searchQueryString($searchString, $limit = null, $offset = null);
 
@@ -123,18 +183,6 @@ interface SearchClientInterface
 
     /**
      * Specification:
-     * - Returns data from an external search service (e.g Elasticsearch)
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\SearchDocumentTransfer $searchDocumentTransfer
-     *
-     * @return mixed
-     */
-    public function readDocument(SearchDocumentTransfer $searchDocumentTransfer);
-
-    /**
-     * Specification:
      * - Writes data into an external search service (e.g Elasticsearch)
      *
      * @api
@@ -151,41 +199,17 @@ interface SearchClientInterface
 
     /**
      * Specification:
-     * - Writes data into an external search service (e.g Elasticsearch).
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\SearchDocumentTransfer $searchDocumentTransfer
-     *
-     * @return bool
-     */
-    public function writeDocument(SearchDocumentTransfer $searchDocumentTransfer): bool;
-
-    /**
-     * Specification:
      * - Writes data into an external search service in bulk mode.
      *
      * @api
      *
      * @deprecated Use {@link \Spryker\Client\Search\SearchClientInterface::writeDocuments()} instead.
      *
-     * @param \Generated\Shared\Transfer\SearchDocumentTransfer[] $searchDocumentTransfers
+     * @param array<\Generated\Shared\Transfer\SearchDocumentTransfer> $searchDocumentTransfers
      *
      * @return bool
      */
     public function writeBulk(array $searchDocumentTransfers): bool;
-
-    /**
-     * Specification:
-     * - Writes data into an external search service in bulk mode.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\SearchDocumentTransfer[] $searchDocumentTransfers
-     *
-     * @return bool
-     */
-    public function writeDocuments(array $searchDocumentTransfers): bool;
 
     /**
      * Specification:
@@ -205,39 +229,15 @@ interface SearchClientInterface
 
     /**
      * Specification:
-     * - Deletes data from an external search service (e.g Elasticsearch).
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\SearchDocumentTransfer $searchDocumentTransfer
-     *
-     * @return bool
-     */
-    public function deleteDocument(SearchDocumentTransfer $searchDocumentTransfer): bool;
-
-    /**
-     * Specification:
      * - Deletes data from an external search service (e.g Elasticsearch) in bulk mode.
      *
      * @api
      *
      * @deprecated Use {@link \Spryker\Client\Search\SearchClientInterface::deleteDocuments()} instead.
      *
-     * @param \Generated\Shared\Transfer\SearchDocumentTransfer[] $searchDocumentTransfers
+     * @param array<\Generated\Shared\Transfer\SearchDocumentTransfer> $searchDocumentTransfers
      *
      * @return bool
      */
     public function deleteBulk(array $searchDocumentTransfers): bool;
-
-    /**
-     * Specification:
-     * - Deletes data from an external search service (e.g Elasticsearch) in bulk mode.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\SearchDocumentTransfer[] $searchDocumentTransfers
-     *
-     * @return bool
-     */
-    public function deleteDocuments(array $searchDocumentTransfers): bool;
 }

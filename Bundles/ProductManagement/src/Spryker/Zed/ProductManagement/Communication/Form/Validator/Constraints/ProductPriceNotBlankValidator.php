@@ -55,7 +55,7 @@ class ProductPriceNotBlankValidator extends ConstraintValidator
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceGroup
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceGroup
      *
      * @return bool
      */
@@ -73,19 +73,19 @@ class ProductPriceNotBlankValidator extends ConstraintValidator
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[] $productPrices
+     * @param \ArrayObject<string, \Generated\Shared\Transfer\PriceProductTransfer> $productPrices
      *
-     * @return array
+     * @return array<string, array<int, \Generated\Shared\Transfer\PriceProductTransfer>>
      */
     protected function getGrouppedPricesArray(ArrayObject $productPrices)
     {
-        $grouppedPrices = [];
+        $groupedPrices = [];
 
         foreach ($productPrices as $compositeKey => $priceProductTransfer) {
-            $grouppedPrices[$this->getGroupKeyFromCompositePriceKey($compositeKey)][] = $priceProductTransfer;
+            $groupedPrices[$this->getGroupKeyFromCompositePriceKey($compositeKey)][] = $priceProductTransfer;
         }
 
-        return $grouppedPrices;
+        return $groupedPrices;
     }
 
     /**

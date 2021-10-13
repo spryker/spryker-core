@@ -20,7 +20,7 @@ class ProductPackagingUnitOmsReservationAggregationPlugin extends AbstractPlugin
 {
     /**
      * {@inheritDoc}
-     * - Aggregates reservations for product offers.
+     * - Aggregates reservations for provided SKU both with or without packaging unit.
      * - Requires ReservationRequestTransfer.sku transfer field to be set.
      * - Requires ReservationRequestTransfer.reservedStates transfer field to be set.
      *
@@ -28,7 +28,7 @@ class ProductPackagingUnitOmsReservationAggregationPlugin extends AbstractPlugin
      *
      * @param \Generated\Shared\Transfer\ReservationRequestTransfer $reservationRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer[]
+     * @return array<\Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer>
      */
     public function aggregateReservations(ReservationRequestTransfer $reservationRequestTransfer): array
     {

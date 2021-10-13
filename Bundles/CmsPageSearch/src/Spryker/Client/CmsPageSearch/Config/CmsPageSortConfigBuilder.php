@@ -11,13 +11,22 @@ use Generated\Shared\Transfer\SortConfigTransfer;
 
 class CmsPageSortConfigBuilder implements SortConfigBuilderInterface
 {
+    /**
+     * @var string
+     */
     protected const DIRECTION_ASC = 'asc';
+    /**
+     * @var string
+     */
     protected const DIRECTION_DESC = 'desc';
 
+    /**
+     * @var string
+     */
     protected const DEFAULT_SORT_PARAM_KEY = 'sort';
 
     /**
-     * @var \Generated\Shared\Transfer\SortConfigTransfer[]
+     * @var array<\Generated\Shared\Transfer\SortConfigTransfer>
      */
     protected $sortConfigTransfers = [];
 
@@ -59,7 +68,7 @@ class CmsPageSortConfigBuilder implements SortConfigBuilderInterface
     }
 
     /**
-     * @return \Generated\Shared\Transfer\SortConfigTransfer[]
+     * @return array<\Generated\Shared\Transfer\SortConfigTransfer>
      */
     public function getAllSortConfigTransfers(): array
     {

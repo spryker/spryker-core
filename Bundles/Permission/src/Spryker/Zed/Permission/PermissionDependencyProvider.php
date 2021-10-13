@@ -15,8 +15,17 @@ use Spryker\Zed\Kernel\Container;
  */
 class PermissionDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_PERMISSION = 'CLIENT_PERMISSION';
+    /**
+     * @var string
+     */
     public const PLUGINS_PERMISSION = 'PLUGINS_PERMISSION';
+    /**
+     * @var string
+     */
     public const PLUGINS_PERMISSION_STORAGE = 'PLUGINS_PERMISSION_STORAGE';
 
     /**
@@ -49,7 +58,7 @@ class PermissionDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Shared\PermissionExtension\Dependency\Plugin\PermissionPluginInterface[]
+     * @return array<\Spryker\Shared\PermissionExtension\Dependency\Plugin\PermissionPluginInterface>
      */
     protected function getPermissionPlugins()
     {
@@ -71,7 +80,7 @@ class PermissionDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\PermissionExtension\Dependency\Plugin\PermissionStoragePluginInterface[]
+     * @return array<\Spryker\Zed\PermissionExtension\Dependency\Plugin\PermissionStoragePluginInterface>
      */
     protected function getPermissionStoragePlugins(): array
     {

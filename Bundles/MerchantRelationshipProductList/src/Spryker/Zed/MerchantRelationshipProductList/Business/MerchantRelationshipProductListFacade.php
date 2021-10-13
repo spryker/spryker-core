@@ -106,7 +106,7 @@ class MerchantRelationshipProductListFacade extends AbstractFacade implements Me
      *
      * @param int $idProductList
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getMerchantRelationshipIdsByProductListId(int $idProductList): array
     {

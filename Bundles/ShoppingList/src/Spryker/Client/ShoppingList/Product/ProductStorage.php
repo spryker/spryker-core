@@ -97,7 +97,7 @@ class ProductStorage implements ProductStorageInterface
     /**
      * @param array $productSkuCollection
      *
-     * @return \Generated\Shared\Transfer\StorageProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\StorageProductTransfer>
      */
     protected function getStorageProductCollection(array $productSkuCollection): array
     {

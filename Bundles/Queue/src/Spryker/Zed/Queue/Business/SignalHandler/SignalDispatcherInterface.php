@@ -10,7 +10,7 @@ namespace Spryker\Zed\Queue\Business\SignalHandler;
 interface SignalDispatcherInterface
 {
     /**
-     * @param int[] $signals
+     * @param array<int> $signals
      *
      * @return void
      */

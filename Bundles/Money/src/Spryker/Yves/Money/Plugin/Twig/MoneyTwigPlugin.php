@@ -21,9 +21,18 @@ use Twig\TwigFilter;
  */
 class MoneyTwigPlugin extends AbstractPlugin implements TwigPluginInterface
 {
+    /**
+     * @var string
+     */
     protected const FILTER_NAME_MONEY = 'money';
+    /**
+     * @var string
+     */
     protected const FILTER_NAME_MONEY_RAW = 'moneyRaw';
 
+    /**
+     * @var string
+     */
     protected const WRONG_MONEY_TYPE_ERROR_MESSAGE = 'Argument 1 passed to %s::getMoneyTransfer() must be of the type integer, string or float, %s given.';
 
     /**

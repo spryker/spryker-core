@@ -9,6 +9,12 @@ namespace SprykerTest\Zed\Dashboard\PageObject;
 
 class DashboardPage
 {
+    /**
+     * @var string
+     */
     public const URL = '/dashboard';
+    /**
+     * @var string
+     */
     public const TITLE = 'Dashboard';
 }

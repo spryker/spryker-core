@@ -12,8 +12,17 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class SchedulerConfig extends AbstractBundleConfig
 {
+    /**
+     * @var string
+     */
     public const ROLE_ADMIN = 'admin';
+    /**
+     * @var string
+     */
     public const ROLE_REPORTING = 'reporting';
+    /**
+     * @var string
+     */
     public const ROLE_EMPTY = 'empty';
 
     /**
@@ -40,7 +49,7 @@ class SchedulerConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getRoles(): array
     {
@@ -64,7 +73,7 @@ class SchedulerConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getEnabledSchedulers(): array
     {

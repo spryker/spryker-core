@@ -67,7 +67,7 @@ class DocumentationGeneratorRestApiToSymfonyFinderAdapter implements Documentati
     }
 
     /**
-     * @return \Iterator|\SplFileInfo[]
+     * @return \Iterator<\SplFileInfo>
      */
     public function getIterator()
     {

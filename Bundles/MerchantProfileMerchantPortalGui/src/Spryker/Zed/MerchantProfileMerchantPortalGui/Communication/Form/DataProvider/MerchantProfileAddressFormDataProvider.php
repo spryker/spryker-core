@@ -25,7 +25,7 @@ class MerchantProfileAddressFormDataProvider implements MerchantProfileAddressFo
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getCountryChoices(): array
     {

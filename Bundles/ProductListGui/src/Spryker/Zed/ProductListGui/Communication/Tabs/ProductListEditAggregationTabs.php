@@ -12,8 +12,17 @@ use Generated\Shared\Transfer\TabsViewTransfer;
 
 class ProductListEditAggregationTabs extends AbstractProductListAggregationTabs
 {
+    /**
+     * @var string
+     */
     protected const USED_BY_TAB_NAME = 'used_by';
+    /**
+     * @var string
+     */
     protected const USED_BY_TAB_TITLE = 'Used By';
+    /**
+     * @var string
+     */
     protected const USED_BY_TAB_TEMPLATE = '@ProductListGui/_partials/_tabs/used-by.twig';
 
     /**

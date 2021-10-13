@@ -12,7 +12,7 @@ use Twig\Loader\FilesystemLoader as TwigFilesystemLoader;
 class FilesystemLoader extends TwigFilesystemLoader implements FilesystemLoaderInterface
 {
     /**
-     * @param string|array $paths A path or an array of paths where to look for templates
+     * @param array|string $paths A path or an array of paths where to look for templates
      * @param string|null $namespace A path namespace
      * @param string|null $rootPath The root path common to all relative paths (null for getcwd())
      */

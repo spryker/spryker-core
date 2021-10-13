@@ -15,8 +15,17 @@ use Spryker\Zed\Kernel\Container;
  */
 class MerchantRelationshipDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const PLUGINS_MERCHANT_RELATIONSHIP_PRE_DELETE = 'PLUGINS_MERCHANT_RELATIONSHIP_PRE_DELETE';
+    /**
+     * @var string
+     */
     public const PLUGINS_MERCHANT_RELATIONSHIP_POST_UPDATE = 'PLUGINS_MERCHANT_RELATIONSHIP_POST_UPDATE';
+    /**
+     * @var string
+     */
     public const PLUGINS_MERCHANT_RELATIONSHIP_POST_CREATE = 'PLUGINS_MERCHANT_RELATIONSHIP_POST_CREATE';
 
     /**
@@ -77,7 +86,7 @@ class MerchantRelationshipDependencyProvider extends AbstractBundleDependencyPro
     }
 
     /**
-     * @return \Spryker\Zed\MerchantRelationshipExtension\Dependency\Plugin\MerchantRelationshipPreDeletePluginInterface[]
+     * @return array<\Spryker\Zed\MerchantRelationshipExtension\Dependency\Plugin\MerchantRelationshipPreDeletePluginInterface>
      */
     protected function getMerchantRelationshipPreDeletePlugins(): array
     {
@@ -85,7 +94,7 @@ class MerchantRelationshipDependencyProvider extends AbstractBundleDependencyPro
     }
 
     /**
-     * @return \Spryker\Zed\MerchantRelationshipExtension\Dependency\Plugin\MerchantRelationshipPostCreatePluginInterface[]
+     * @return array<\Spryker\Zed\MerchantRelationshipExtension\Dependency\Plugin\MerchantRelationshipPostCreatePluginInterface>
      */
     protected function getMerchantRelationshipPostCreatePlugins(): array
     {
@@ -93,7 +102,7 @@ class MerchantRelationshipDependencyProvider extends AbstractBundleDependencyPro
     }
 
     /**
-     * @return \Spryker\Zed\MerchantRelationshipExtension\Dependency\Plugin\MerchantRelationshipPostUpdatePluginInterface[]
+     * @return array<\Spryker\Zed\MerchantRelationshipExtension\Dependency\Plugin\MerchantRelationshipPostUpdatePluginInterface>
      */
     protected function getMerchantRelationshipPostUpdatePlugins(): array
     {

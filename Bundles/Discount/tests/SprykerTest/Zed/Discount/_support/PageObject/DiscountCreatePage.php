@@ -13,21 +13,54 @@ use SprykerTest\Zed\Discount\DiscountPresentationTester;
 
 class DiscountCreatePage
 {
+    /**
+     * @var string
+     */
     public const URL = '/discount/index/create';
 
+    /**
+     * @var string
+     */
     public const MESSAGE_SUCCESSFUL_ALERT_CREATION = 'Discount successfully created, but not activated.';
+    /**
+     * @var string
+     */
     public const MESSAGE_SUCCESSFUL_ALERT_ACTIVATION = 'Discount successfully activated.';
 
     // DATA
+    /**
+     * @var string
+     */
     public const DISCOUNT_VALID_EXCLUSIVE = 'validExclusiveDiscount';
+    /**
+     * @var string
+     */
     public const EMPTY_DISCOUNT = 'emptyDiscount';
+    /**
+     * @var string
+     */
     public const DISCOUNT_VALID_NOT_EXCLUSIVE = 'validNotExclusiveDiscount';
 
     // Locators: Discount Tab
+    /**
+     * @var string
+     */
     public const BTN_CALCULATION_GET = '#btn-calculation-get';
+    /**
+     * @var string
+     */
     public const FIELD_DISCOUNT_QUERY = '#discount_discountCalculator_collector_query_string';
+    /**
+     * @var string
+     */
     public const DISCOUNT_CALCULATION_GROUP = '#builder_calculation_group_0';
+    /**
+     * @var string
+     */
     public const CURRENT_TAB = '.nav-tabs li.active';
+    /**
+     * @var string
+     */
     public const CURRENT_TAB_ERROR = '.nav-tabs li.active.error';
 
     /**
@@ -140,7 +173,10 @@ class DiscountCreatePage
 
         $this->tab('tab-content-conditions');
         $i->click('#btn-condition-get');
+
+        $i->waitForElement('#discount_discountCondition_decision_rule_query_string');
         $i->fillField('#discount_discountCondition_decision_rule_query_string', $data['applyWhen']);
+
         $i->click('#create-discount-button');
     }
 

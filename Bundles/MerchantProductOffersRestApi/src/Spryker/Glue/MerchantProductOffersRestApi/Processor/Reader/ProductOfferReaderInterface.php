@@ -27,9 +27,9 @@ interface ProductOfferReaderInterface
     public function getProductOffers(RestRequestInterface $restRequest): RestResponseInterface;
 
     /**
-     * @param string[] $productConcreteSkus
+     * @param array<string> $productConcreteSkus
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[][]
+     * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]>
      */
     public function getProductOfferResourcesByProductConcreteSkus(array $productConcreteSkus): array;
 }

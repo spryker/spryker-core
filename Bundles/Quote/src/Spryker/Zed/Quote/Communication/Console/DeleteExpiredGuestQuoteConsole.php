@@ -17,7 +17,13 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class DeleteExpiredGuestQuoteConsole extends Console
 {
+    /**
+     * @var string
+     */
     protected const COMMAND_NAME = 'quote:delete-expired-guest-quotes';
+    /**
+     * @var string
+     */
     protected const COMMAND_DESCRIPTION = 'Delete all expired guest quotes.';
 
     /**

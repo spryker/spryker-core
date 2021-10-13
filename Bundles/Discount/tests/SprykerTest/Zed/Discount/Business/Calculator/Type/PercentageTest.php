@@ -28,9 +28,21 @@ use Spryker\Zed\Discount\Business\Exception\CalculatorException;
  */
 class PercentageTest extends Unit
 {
+    /**
+     * @var int
+     */
     public const ITEM_GROSS_PRICE_1000 = 1000;
+    /**
+     * @var int
+     */
     public const DISCOUNT_PERCENTAGE_10 = 1000;
+    /**
+     * @var int
+     */
     public const DISCOUNT_PERCENTAGE_100 = 10000;
+    /**
+     * @var int
+     */
     public const DISCOUNT_PERCENTAGE_200 = 20000;
 
     /**
@@ -135,7 +147,7 @@ class PercentageTest extends Unit
     /**
      * @param array $grossPrices
      *
-     * @return \Generated\Shared\Transfer\DiscountableItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\DiscountableItemTransfer>
      */
     protected function getDiscountableItems(array $grossPrices): array
     {

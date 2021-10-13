@@ -31,7 +31,7 @@ interface SenderInterface
      * @api
      *
      * @param string $queueName
-     * @param \Generated\Shared\Transfer\QueueSendMessageTransfer[] $queueSendMessageTransfers
+     * @param array<\Generated\Shared\Transfer\QueueSendMessageTransfer> $queueSendMessageTransfers
      *
      * @return void
      */

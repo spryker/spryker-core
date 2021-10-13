@@ -29,6 +29,9 @@ use Spryker\Zed\GiftCard\Communication\Plugin\CartCode\GiftCardCartCodePlugin;
  */
 class CartCodeFacadeTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const CODE = 'testCode1';
 
     /**
@@ -269,7 +272,7 @@ class CartCodeFacadeTest extends Unit
     }
 
     /**
-     * @param \Spryker\Zed\CartCodeExtension\Dependency\Plugin\CartCodePluginInterface[] $pluginStack
+     * @param array<\Spryker\Zed\CartCodeExtension\Dependency\Plugin\CartCodePluginInterface> $pluginStack
      *
      * @return void
      */

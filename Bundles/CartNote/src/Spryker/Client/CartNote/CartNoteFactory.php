@@ -41,7 +41,7 @@ class CartNoteFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\CartNote\QuoteStorageStrategy\QuoteStorageStrategyInterface[]
+     * @return array<\Spryker\Client\CartNote\QuoteStorageStrategy\QuoteStorageStrategyInterface>
      */
     public function getQuoteStorageStrategyProviders(): array
     {

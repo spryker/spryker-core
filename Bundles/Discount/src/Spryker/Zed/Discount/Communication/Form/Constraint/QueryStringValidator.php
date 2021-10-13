@@ -46,7 +46,7 @@ class QueryStringValidator extends ConstraintValidator
      * @param string $queryString
      * @param \Spryker\Zed\Discount\Communication\Form\Constraint\QueryString $constraint
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function validateQueryString($queryString, QueryString $constraint)
     {

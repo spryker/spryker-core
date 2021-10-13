@@ -22,9 +22,18 @@ class OauthRefreshTokenRevoker implements OauthRefreshTokenRevokerInterface
 {
     use CryptTrait;
 
+    /**
+     * @var string
+     */
     protected const REFRESH_TOKEN_INVALID_ERROR_MESSAGE = 'Invalid Refresh Token';
+    /**
+     * @var string
+     */
     protected const REFRESH_TOKEN_NOT_FOUND_ERROR_MESSAGE = 'Refresh Token not found';
 
+    /**
+     * @var string
+     */
     protected const KEY_REFRESH_TOKEN_ID = 'refresh_token_id';
 
     /**
@@ -38,12 +47,12 @@ class OauthRefreshTokenRevoker implements OauthRefreshTokenRevokerInterface
     protected $utilEncodingService;
 
     /**
-     * @var \Spryker\Zed\OauthExtension\Dependency\Plugin\OauthRefreshTokenReaderPluginInterface[]
+     * @var array<\Spryker\Zed\OauthExtension\Dependency\Plugin\OauthRefreshTokenReaderPluginInterface>
      */
     protected $oauthRefreshTokenReaderPlugins;
 
     /**
-     * @var \Spryker\Zed\OauthExtension\Dependency\Plugin\OauthRefreshTokensReaderPluginInterface[]
+     * @var array<\Spryker\Zed\OauthExtension\Dependency\Plugin\OauthRefreshTokensReaderPluginInterface>
      */
     protected $oauthRefreshTokensReaderPlugins;
 
@@ -51,8 +60,8 @@ class OauthRefreshTokenRevoker implements OauthRefreshTokenRevokerInterface
      * @param \Spryker\Zed\Oauth\Business\Model\League\Repositories\RefreshTokenRepositoryInterface $refreshTokenRepository
      * @param \Spryker\Zed\Oauth\Dependency\Service\OauthToUtilEncodingServiceInterface $utilEncodingService
      * @param \Spryker\Zed\Oauth\OauthConfig $oauthConfig
-     * @param \Spryker\Zed\OauthExtension\Dependency\Plugin\OauthRefreshTokenReaderPluginInterface[] $oauthRefreshTokenReaderPlugins
-     * @param \Spryker\Zed\OauthExtension\Dependency\Plugin\OauthRefreshTokensReaderPluginInterface[] $oauthRefreshTokensReaderPlugins
+     * @param array<\Spryker\Zed\OauthExtension\Dependency\Plugin\OauthRefreshTokenReaderPluginInterface> $oauthRefreshTokenReaderPlugins
+     * @param array<\Spryker\Zed\OauthExtension\Dependency\Plugin\OauthRefreshTokensReaderPluginInterface> $oauthRefreshTokensReaderPlugins
      */
     public function __construct(
         RefreshTokenRepositoryInterface $refreshTokenRepository,
@@ -149,7 +158,7 @@ class OauthRefreshTokenRevoker implements OauthRefreshTokenRevokerInterface
     /**
      * @param \Generated\Shared\Transfer\OauthTokenCriteriaFilterTransfer $oauthTokenCriteriaFilterTransfer
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\OauthRefreshTokenTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\OauthRefreshTokenTransfer>
      */
     protected function getOauthRefreshTokens(OauthTokenCriteriaFilterTransfer $oauthTokenCriteriaFilterTransfer): ArrayObject
     {

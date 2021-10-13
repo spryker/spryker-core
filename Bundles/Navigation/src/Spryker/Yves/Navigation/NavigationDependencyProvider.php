@@ -16,11 +16,13 @@ class NavigationDependencyProvider extends AbstractBundleDependencyProvider
 {
     /**
      * @deprecated Will be removed without replacement.
+     * @var string
      */
     public const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
 
     /**
      * @uses \Spryker\Yves\Locale\Plugin\Application\LocaleApplicationPlugin::SERVICE_LOCALE
+     * @var string
      */
     public const SERVICE_LOCALE = 'locale';
 

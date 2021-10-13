@@ -31,10 +31,19 @@ class CartCodeBusinessTester extends Actor
 {
     use _generated\CartCodeBusinessTesterActions;
 
+    /**
+     * @var string
+     */
     public const TEST_QUOTE_UUID = 'test-quote-uuid';
 
+    /**
+     * @var string
+     */
     public const TEST_CUSTOMER_REFERENCE = 'DE--666';
 
+    /**
+     * @var array
+     */
     public const ITEMS = [
         [
             'sku' => 'test sku',

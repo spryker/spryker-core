@@ -25,7 +25,7 @@ class ProductAlternativeGuiToProductFacadeBridge implements ProductAlternativeGu
     /**
      * @param string $suggestion
      *
-     * @return string[]
+     * @return array<string>
      */
     public function suggestProductAbstract(string $suggestion): array
     {
@@ -36,7 +36,7 @@ class ProductAlternativeGuiToProductFacadeBridge implements ProductAlternativeGu
     /**
      * @param string $suggestion
      *
-     * @return string[]
+     * @return array<string>
      */
     public function suggestProductConcrete(string $suggestion): array
     {

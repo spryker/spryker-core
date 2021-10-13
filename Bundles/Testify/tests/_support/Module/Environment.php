@@ -16,9 +16,18 @@ use Codeception\Module;
  */
 class Environment extends Module
 {
+    /**
+     * @var string
+     */
     public const MODE_ISOLATED = 'isolated';
 
+    /**
+     * @var string
+     */
     public const MODE_DEFAULT_ROOT = '../../../../..';
+    /**
+     * @var string
+     */
     public const MODE_ISOLATED_ROOT = 'vendor/spryker/testify';
 
     /**

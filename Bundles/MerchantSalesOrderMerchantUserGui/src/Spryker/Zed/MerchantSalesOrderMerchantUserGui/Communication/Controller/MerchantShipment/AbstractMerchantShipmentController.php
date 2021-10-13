@@ -22,23 +22,35 @@ use Symfony\Component\Form\FormInterface;
  */
 abstract class AbstractMerchantShipmentController extends AbstractController
 {
+    /**
+     * @var string
+     */
     protected const PARAM_ID_MERCHANT_SALES_ORDER = 'id-merchant-sales-order';
+    /**
+     * @var string
+     */
     protected const MESSAGE_MERCHANT_NOT_FOUND_ERROR = 'Merchant for current user not found.';
 
     /**
      * @uses \Spryker\Zed\MerchantSalesOrderMerchantUserGui\Communication\Controller\DetailController::ROUTE_REDIRECT
+     * @var string
      */
     protected const REDIRECT_URL_DEFAULT = '/merchant-sales-order-merchant-user-gui/detail';
 
+    /**
+     * @var string
+     */
     protected const MESSAGE_ORDER_NOT_FOUND_ERROR = 'Merchant sales order #%d not found.';
 
     /**
      * @uses \Spryker\Zed\MerchantSalesOrderMerchantUserGui\Communication\Form\Shipment\MerchantShipmentGroupFormType::FIELD_SALES_ORDER_ITEMS_FORM
+     * @var string
      */
     protected const FIELD_SALES_ORDER_ITEMS_FORM = 'items';
 
     /**
      * @uses \Spryker\Zed\ShipmentGui\Communication\Form\Item\ItemFormType::FIELD_IS_UPDATED
+     * @var string
      */
     protected const FIELD_IS_UPDATED = 'is_updated';
 
@@ -69,8 +81,9 @@ abstract class AbstractMerchantShipmentController extends AbstractController
         if (!$merchantOrderTransfer) {
             return null;
         }
-
+        /** @var array<int> $merchantOrderItemIds */
         $merchantOrderItemIds = $this->extractMerchantOrderItemIds($merchantOrderTransfer->getMerchantOrderItems());
+
         $merchantOrderItemsStateHistory = $this->getFactory()
             ->getMerchantOmsFacade()
             ->getMerchantOrderItemsStateHistory($merchantOrderItemIds);
@@ -131,7 +144,7 @@ abstract class AbstractMerchantShipmentController extends AbstractController
      *
      * @param \Symfony\Component\Form\FormInterface $form
      *
-     * @return bool[]
+     * @return array<bool>
      */
     protected function getItemListUpdatedStatus(FormInterface $form): array
     {
@@ -178,9 +191,11 @@ abstract class AbstractMerchantShipmentController extends AbstractController
     /**
      * @phpstan-param \ArrayObject<int,\Generated\Shared\Transfer\MerchantOrderItemTransfer> $merchantOrderItems
      *
-     * @param \ArrayObject|\Generated\Shared\Transfer\MerchantOrderItemTransfer[] $merchantOrderItems
+     * @phpstan-return array<int, int|null>
      *
-     * @return int[]
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\MerchantOrderItemTransfer> $merchantOrderItems
+     *
+     * @return array<int>
      */
     protected function extractMerchantOrderItemIds(ArrayObject $merchantOrderItems): array
     {

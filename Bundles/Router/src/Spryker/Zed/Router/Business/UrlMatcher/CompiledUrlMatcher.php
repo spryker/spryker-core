@@ -15,12 +15,12 @@ use Symfony\Component\Routing\Matcher\RedirectableUrlMatcherInterface;
 class CompiledUrlMatcher extends SymfonyCompiledUrlMatcher implements RouterEnhancerAwareInterface, RedirectableUrlMatcherInterface
 {
     /**
-     * @var \Spryker\Zed\RouterExtension\Dependency\Plugin\RouterEnhancerPluginInterface[]
+     * @var array<\Spryker\Zed\RouterExtension\Dependency\Plugin\RouterEnhancerPluginInterface>
      */
     protected $routerEnhancerPlugins;
 
     /**
-     * @param \Spryker\Zed\RouterExtension\Dependency\Plugin\RouterEnhancerPluginInterface[] $routerEnhancerPlugins
+     * @param array<\Spryker\Zed\RouterExtension\Dependency\Plugin\RouterEnhancerPluginInterface> $routerEnhancerPlugins
      *
      * @return void
      */

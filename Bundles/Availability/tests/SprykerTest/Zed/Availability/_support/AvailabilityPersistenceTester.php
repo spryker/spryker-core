@@ -40,7 +40,7 @@ class AvailabilityPersistenceTester extends Actor
     /**
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     * @param \Generated\Shared\Transfer\StockTransfer[] $stockTransfers
+     * @param array<\Generated\Shared\Transfer\StockTransfer> $stockTransfers
      * @param int $productQuantity
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer

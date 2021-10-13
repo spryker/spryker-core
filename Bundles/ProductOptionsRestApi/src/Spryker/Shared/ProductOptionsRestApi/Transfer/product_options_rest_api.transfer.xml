@@ -1,7 +1,5 @@
 <?xml version="1.0"?>
-<transfers xmlns="spryker:transfer-01"
-           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-           xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+<transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="RestProductOptionsAttributes">
         <property name="optionGroupName" type="string"/>
@@ -9,6 +7,11 @@
         <property name="optionName" type="string"/>
         <property name="price" type="int"/>
         <property name="currencyIsoCode" type="string"/>
+    </transfer>
+
+    <transfer name="RestQuoteRequestItem">
+        <property name="selectedProductOptions" type="RestQuoteRequestProductOption[]" singular="selectedProductOption"/>
+        <property name="groupKey" type="string"/>
     </transfer>
 
     <transfer name="RestItemProductOptions">
@@ -65,6 +68,7 @@
     <transfer name="Item">
         <property name="productOptions" type="ProductOption[]" singular="productOption"/>
         <property name="sku" type="string"/>
+        <property name="groupKey" type="string"/>
     </transfer>
 
     <transfer name="ProductOption">
@@ -81,6 +85,39 @@
 
     <transfer name="Currency">
         <property name="code" type="string"/>
+    </transfer>
+
+    <transfer name="RestQuoteRequestProductOption">
+        <property name="optionGroupName" type="string"/>
+        <property name="sku" type="string"/>
+        <property name="optionName" type="string"/>
+        <property name="price" type="int"/>
+    </transfer>
+
+    <transfer name="QuoteRequest">
+        <property name="quoteRequestReference" type="string"/>
+        <property name="latestVersion" type="QuoteRequestVersion"/>
+    </transfer>
+
+    <transfer name="RestQuoteRequestsAttributes">
+        <property name="shownVersion" type="RestQuoteRequestVersion"/>
+        <property name="quoteRequestReference" type="string"/>
+    </transfer>
+
+    <transfer name="QuoteRequestVersion">
+        <property name="quote" type="Quote"/>
+    </transfer>
+
+    <transfer name="RestQuoteRequestVersion">
+        <property name="cart" type="RestQuoteRequestsCart"/>
+    </transfer>
+
+    <transfer name="Quote">
+        <property name="items" type="Item[]" singular="item"/>
+    </transfer>
+
+    <transfer name="RestQuoteRequestsCart">
+        <property name="items" type="RestQuoteRequestItem[]" singular="item"/>
     </transfer>
 
 </transfers>

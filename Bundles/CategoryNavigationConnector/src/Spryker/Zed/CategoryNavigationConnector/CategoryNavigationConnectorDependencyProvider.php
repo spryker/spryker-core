@@ -18,8 +18,17 @@ use Spryker\Zed\Kernel\Container;
  */
 class CategoryNavigationConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_NAVIGATION = 'FACADE_NAVIGATION';
+    /**
+     * @var string
+     */
     public const QUERY_CONTAINER_CATEGORY = 'QUERY_CONTAINER_CATEGORY';
+    /**
+     * @var string
+     */
     public const QUERY_CONTAINER_NAVIGATION = 'QUERY_CONTAINER_NAVIGATION';
 
     /**

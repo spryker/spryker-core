@@ -22,7 +22,13 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class ProductCategoryQueryContainer extends AbstractQueryContainer implements ProductCategoryQueryContainerInterface
 {
+    /**
+     * @var string
+     */
     public const COL_CATEGORY_NAME = 'category_name';
+    /**
+     * @var string
+     */
     public const VIRTUAL_COLUMN_ID_CATEGORY_NODE = 'id_category_node';
 
     /**

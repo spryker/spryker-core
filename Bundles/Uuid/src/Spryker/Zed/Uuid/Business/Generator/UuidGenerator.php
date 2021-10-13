@@ -16,6 +16,9 @@ use Spryker\Zed\Uuid\UuidConfig;
 
 class UuidGenerator implements UuidGeneratorInterface
 {
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_UUID = 'Table %s does not contain uuid field.';
 
     /**

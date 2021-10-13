@@ -14,6 +14,9 @@ use Spryker\Shared\Kernel\Locale\LocaleNotFoundException;
 
 class Store
 {
+    /**
+     * @var string
+     */
     public const APPLICATION_ZED = 'ZED';
 
     /**
@@ -29,7 +32,7 @@ class Store
     /**
      * List of all storeNames
      *
-     * @var string[]
+     * @var array<string>
      */
     protected $allStoreNames;
 
@@ -43,14 +46,14 @@ class Store
      *
      * E.g: "de" => "de_DE"
      *
-     * @var string[]
+     * @var array<string>
      */
     protected $locales;
 
     /**
      * List of countries
      *
-     * @var string[]
+     * @var array<string>
      */
     protected $countries;
 
@@ -95,7 +98,7 @@ class Store
     protected $currencyIsoCode;
 
     /**
-     * @var string[]
+     * @var array<string>
      */
     protected $currencyIsoCodes = [];
 
@@ -105,7 +108,7 @@ class Store
     protected $queuePools = [];
 
     /**
-     * @var string[]
+     * @var array<string>
      */
     protected $storesWithSharedPersistence = [];
 
@@ -256,7 +259,7 @@ class Store
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getAllowedStores()
     {
@@ -264,7 +267,7 @@ class Store
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getInactiveStores()
     {
@@ -279,7 +282,7 @@ class Store
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getLocales()
     {
@@ -289,7 +292,7 @@ class Store
     /**
      * @param string $storeName
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getLocalesPerStore($storeName)
     {
@@ -345,7 +348,7 @@ class Store
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getCountries()
     {
@@ -410,7 +413,7 @@ class Store
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getCurrencyIsoCodes()
     {
@@ -457,7 +460,7 @@ class Store
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getStoresWithSharedPersistence()
     {

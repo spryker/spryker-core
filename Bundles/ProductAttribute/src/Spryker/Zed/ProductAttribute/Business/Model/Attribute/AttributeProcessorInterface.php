@@ -52,7 +52,7 @@ interface AttributeProcessorInterface
     public function setConcreteLocalizedAttributes(array $concreteLocalizedAttributes);
 
     /**
-     * @return \Generated\Shared\Transfer\LocalizedAttributesTransfer[]
+     * @return array<\Generated\Shared\Transfer\LocalizedAttributesTransfer>
      */
     public function getAbstractLocalizedAttributes();
 

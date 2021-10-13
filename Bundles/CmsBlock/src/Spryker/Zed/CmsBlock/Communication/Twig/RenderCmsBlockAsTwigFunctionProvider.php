@@ -15,6 +15,9 @@ use Twig\Environment;
 
 class RenderCmsBlockAsTwigFunctionProvider extends TwigFunctionProvider
 {
+    /**
+     * @var string
+     */
     protected const FUNCTION_NAME = 'renderCmsBlockAsTwig';
 
     /**
@@ -32,11 +35,11 @@ class RenderCmsBlockAsTwigFunctionProvider extends TwigFunctionProvider
 
     /**
      * @param \Twig\Environment $environment
-     * @param mixed[] $context
+     * @param array<mixed> $context
      * @param string $cmsBlockName
      * @param string $storeName
      * @param string $localeName
-     * @param mixed[]|null $providedData
+     * @param array<mixed>|null $providedData
      *
      * @throws \Spryker\Zed\CmsBlock\Communication\Exception\MissingCmsBlockException
      *
@@ -81,9 +84,9 @@ class RenderCmsBlockAsTwigFunctionProvider extends TwigFunctionProvider
     /**
      * @param \Twig\Environment $environment
      * @param \Generated\Shared\Transfer\CmsBlockGlossaryTransfer $cmsBlockGlossaryTransfer
-     * @param mixed[] $templateContext
+     * @param array<mixed> $templateContext
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getPlaceholdersContent(
         Environment $environment,
@@ -113,7 +116,7 @@ class RenderCmsBlockAsTwigFunctionProvider extends TwigFunctionProvider
     }
 
     /**
-     * @return array|callable
+     * @return callable|array
      */
     public function getFunction()
     {
@@ -121,7 +124,7 @@ class RenderCmsBlockAsTwigFunctionProvider extends TwigFunctionProvider
     }
 
     /**
-     * @return mixed[]
+     * @return array<mixed>
      */
     public function getOptions()
     {

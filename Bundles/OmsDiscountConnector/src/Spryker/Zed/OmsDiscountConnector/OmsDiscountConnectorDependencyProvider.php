@@ -16,6 +16,9 @@ use Spryker\Zed\OmsDiscountConnector\Dependency\Facade\OmsDiscountConnectorToDis
  */
 class OmsDiscountConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_DISCOUNT = 'facade discount';
 
     /**

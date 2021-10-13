@@ -12,17 +12,23 @@ use Symfony\Component\Validator\Exception\ConstraintDefinitionException;
 
 class TransferConstraint extends Composite
 {
+    /**
+     * @var string
+     */
     protected const FIELDS = 'fields';
 
+    /**
+     * @var string
+     */
     protected const MISSING_FIELD_MESSAGE = 'This field is missing.';
 
     /**
-     * @var mixed[]
+     * @var array<mixed>
      */
     public $fields = [];
 
     /**
-     * @param \Symfony\Component\Validator\Constraint[]|null $options
+     * @param array<\Symfony\Component\Validator\Constraint>|null $options
      */
     public function __construct($options = null)
     {
@@ -50,7 +56,7 @@ class TransferConstraint extends Composite
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getRequiredOptions()
     {

@@ -12,10 +12,10 @@ use Generated\Shared\Transfer\HealthCheckRequestTransfer;
 interface ChainFilterInterface
 {
     /**
-     * @param \Spryker\Shared\HealthCheckExtension\Dependency\Plugin\HealthCheckPluginInterface[] $healthCheckPlugins
+     * @param array<\Spryker\Shared\HealthCheckExtension\Dependency\Plugin\HealthCheckPluginInterface> $healthCheckPlugins
      * @param \Generated\Shared\Transfer\HealthCheckRequestTransfer $healthCheckRequestTransfer
      *
-     * @return \Spryker\Shared\HealthCheckExtension\Dependency\Plugin\HealthCheckPluginInterface[]
+     * @return array<\Spryker\Shared\HealthCheckExtension\Dependency\Plugin\HealthCheckPluginInterface>
      */
     public function filter(array $healthCheckPlugins, HealthCheckRequestTransfer $healthCheckRequestTransfer): array;
 }

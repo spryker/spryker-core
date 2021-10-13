@@ -16,6 +16,9 @@ use Spryker\Client\Search\Plugin\Elasticsearch\ResultFormatter\AbstractElasticse
  */
 class SortedCmsPageSearchResultFormatterPlugin extends AbstractElasticsearchResultFormatterPlugin
 {
+    /**
+     * @var string
+     */
     public const NAME = 'sort';
 
     /**

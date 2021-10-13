@@ -17,8 +17,17 @@ use Spryker\Zed\ProductDiscontinued\Persistence\ProductDiscontinuedRepositoryInt
 
 class CartChangePreCheck implements CartChangePreCheckInterface
 {
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_CART_PRE_CHECK_PRODUCT_DISCONTINUED = 'cart.pre.check.product_discontinued';
+    /**
+     * @var string
+     */
     protected const GLOSSARY_PARAM_NAME = '%name%';
+    /**
+     * @var string
+     */
     protected const GLOSSARY_PARAM_SKU = '%sku%';
 
     /**
@@ -83,7 +92,7 @@ class CartChangePreCheck implements CartChangePreCheckInterface
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param \Generated\Shared\Transfer\ProductDiscontinuedTransfer[] $indexedProductDiscontinuedTransfers
+     * @param array<\Generated\Shared\Transfer\ProductDiscontinuedTransfer> $indexedProductDiscontinuedTransfers
      *
      * @return bool
      */
@@ -112,7 +121,7 @@ class CartChangePreCheck implements CartChangePreCheckInterface
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getSkusFromCartChangeTransfer(CartChangeTransfer $cartChangeTransfer): array
     {
@@ -128,7 +137,7 @@ class CartChangePreCheck implements CartChangePreCheckInterface
     /**
      * @param \Generated\Shared\Transfer\ProductDiscontinuedCollectionTransfer $productDiscontinuedCollectionTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductDiscontinuedTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductDiscontinuedTransfer>
      */
     protected function indexProductDiscontinuedTransfersBySku(ProductDiscontinuedCollectionTransfer $productDiscontinuedCollectionTransfer): array
     {
@@ -142,7 +151,7 @@ class CartChangePreCheck implements CartChangePreCheckInterface
     }
 
     /**
-     * @param string[] $skus
+     * @param array<string> $skus
      *
      * @return \Generated\Shared\Transfer\ProductDiscontinuedCriteriaFilterTransfer
      */

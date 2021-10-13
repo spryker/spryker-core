@@ -27,7 +27,7 @@ class UpSellingProductsRestApiToProductRelationStorageClientBridge implements Up
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return int[]
+     * @return array<int>
      */
     public function findUpSellingAbstractProductIds(QuoteTransfer $quoteTransfer): array
     {

@@ -44,7 +44,7 @@ class RestRequestValidatorSchemaFinder implements RestRequestValidatorSchemaFind
     }
 
     /**
-     * @param string[] $paths
+     * @param array<string> $paths
      *
      * @return \Spryker\Zed\RestRequestValidator\Dependency\External\RestRequestValidatorToFinderAdapterInterface
      */
@@ -61,14 +61,14 @@ class RestRequestValidatorSchemaFinder implements RestRequestValidatorSchemaFind
     /**
      * @param string $storeName
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getPaths(string $storeName): array
     {
         $paths = [];
         foreach ($this->config->getValidationSchemaPathPattern() as $pathPattern) {
             $pathPattern = $this->preparePathPattern($storeName, $pathPattern);
-            $currentLevelPaths = $this->excludeStoreModules($pathPattern, glob($pathPattern));
+            $currentLevelPaths = $this->excludeStoreModules($pathPattern, glob($pathPattern, GLOB_NOSORT));
             $paths = array_merge($paths, $currentLevelPaths);
         }
 
@@ -138,9 +138,9 @@ class RestRequestValidatorSchemaFinder implements RestRequestValidatorSchemaFind
 
     /**
      * @param string $pathPattern
-     * @param string[] $currentLevelPaths
+     * @param array<string> $currentLevelPaths
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function excludeStoreModules(string $pathPattern, array $currentLevelPaths): array
     {

@@ -22,12 +22,21 @@ use Spryker\Zed\ProductPackagingUnitDataImport\Business\Model\DataSet\ProductPac
 
 class ProductPackagingUnitWriterStep extends PublishAwareStep implements DataImportStepInterface
 {
+    /**
+     * @var int
+     */
     protected const AMOUNT_INTERVAL_DEFAULT = 1;
+    /**
+     * @var int
+     */
     protected const HEAP_LIMIT = 500;
+    /**
+     * @var string
+     */
     protected const PRODUCT_CONCRETE_ID = 'PRODUCT_CONCRETE_ID';
 
     /**
-     * @var int[] Keys are product packaging unit type names.
+     * @var array<int> Keys are product packaging unit type names.
      */
     protected static $idProductPackagingUnitTypeHeap = [];
 
@@ -47,7 +56,7 @@ class ProductPackagingUnitWriterStep extends PublishAwareStep implements DataImp
     protected static $productHeapCurrentSize = 0;
 
     /**
-     * @var bool[] Keys are product SKUs, values boolean representing if this product have a MeasurementSalesUnit or not.
+     * @var array<bool> Keys are product SKUs, values boolean representing if this product have a MeasurementSalesUnit or not.
      */
     protected static $productMeasurementSalesUnitHeap = [];
 

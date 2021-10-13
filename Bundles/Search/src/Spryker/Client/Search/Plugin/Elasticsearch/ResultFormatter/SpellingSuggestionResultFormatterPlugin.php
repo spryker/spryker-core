@@ -17,6 +17,9 @@ use Spryker\Client\Search\Plugin\Elasticsearch\QueryExpander\SpellingSuggestionQ
  */
 class SpellingSuggestionResultFormatterPlugin extends AbstractElasticsearchResultFormatterPlugin
 {
+    /**
+     * @var string
+     */
     public const NAME = 'spellingSuggestion';
 
     /**

@@ -1,6 +1,6 @@
 # PriceProductVolume Module
-[![Build Status](https://travis-ci.org/spryker/price-product-volume.svg)](https://travis-ci.org/spryker/price-product-volume)
-[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
+[![Latest Stable Version](https://poser.pugx.org/spryker/price-product-volume/v/stable.svg)](https://packagist.org/packages/spryker/price-product-volume)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.4-8892BF.svg)](https://php.net/)
 
 PriceProductVolume provides functionality to handle volume prices for product.
 

@@ -35,7 +35,7 @@ interface CartRestResponseBuilderInterface
     ): RestResponseInterface;
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteErrorTransfer[]|\ArrayObject $errors
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\QuoteErrorTransfer> $errors
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
@@ -50,4 +50,9 @@ interface CartRestResponseBuilderInterface
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function createCartIdMissingErrorResponse(): RestResponseInterface;
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function createCustomerUnauthorizedErrorResponse(): RestResponseInterface;
 }

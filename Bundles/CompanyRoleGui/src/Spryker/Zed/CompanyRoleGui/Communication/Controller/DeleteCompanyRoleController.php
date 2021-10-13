@@ -18,14 +18,35 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class DeleteCompanyRoleController extends AbstractController
 {
+    /**
+     * @var string
+     */
     protected const PARAMETER_ID_COMPANY_ROLE = 'id-company-role';
 
+    /**
+     * @var string
+     */
     protected const MESSAGE_DEFAULT_COMPANY_ROLE_DELETE_ERROR = 'You can not delete a default role, please set another default role before delete action';
+    /**
+     * @var string
+     */
     protected const MESSAGE_COMPANY_ROLE_DELETE_SUCCESS = 'Company role has been successfully removed';
+    /**
+     * @var string
+     */
     protected const MESSAGE_COMPANY_ROLE_DELETE_ERROR = 'Company role can not be removed';
+    /**
+     * @var string
+     */
     protected const MESSAGE_COMPANY_ROLE_WITHOUT_ID_ERROR = 'No company role ID provided';
 
+    /**
+     * @var string
+     */
     protected const PARAM_REFERER = 'referer';
+    /**
+     * @var string
+     */
     protected const REDIRECT_URL_DEFAULT = '/company-role-gui/list-company-role';
 
     /**
@@ -69,7 +90,7 @@ class DeleteCompanyRoleController extends AbstractController
      *
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function confirmDeleteAction(Request $request)
     {

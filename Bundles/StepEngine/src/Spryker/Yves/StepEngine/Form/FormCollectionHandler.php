@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
 class FormCollectionHandler implements FormCollectionHandlerInterface
 {
     /**
-     * @var (\Symfony\Component\Form\FormTypeInterface|string)[]
+     * @var array<\Symfony\Component\Form\FormTypeInterface|string>
      */
     protected $formTypes;
 
@@ -32,12 +32,12 @@ class FormCollectionHandler implements FormCollectionHandlerInterface
     protected $dataProvider;
 
     /**
-     * @var \Symfony\Component\Form\FormInterface[]
+     * @var array<\Symfony\Component\Form\FormInterface>
      */
     protected $forms = [];
 
     /**
-     * @param (\Symfony\Component\Form\FormTypeInterface|string)[] $formTypes
+     * @param array<\Symfony\Component\Form\FormTypeInterface|string> $formTypes
      * @param \Symfony\Component\Form\FormFactoryInterface $formFactory
      * @param \Spryker\Yves\StepEngine\Dependency\Form\StepEngineFormDataProviderInterface|null $dataProvider
      */
@@ -54,7 +54,7 @@ class FormCollectionHandler implements FormCollectionHandlerInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Symfony\Component\Form\FormInterface[]
+     * @return array<\Symfony\Component\Form\FormInterface>
      */
     public function getForms(AbstractTransfer $quoteTransfer)
     {
@@ -134,7 +134,7 @@ class FormCollectionHandler implements FormCollectionHandlerInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Symfony\Component\Form\FormInterface[]
+     * @return array<\Symfony\Component\Form\FormInterface>
      */
     protected function createForms(AbstractTransfer $quoteTransfer)
     {

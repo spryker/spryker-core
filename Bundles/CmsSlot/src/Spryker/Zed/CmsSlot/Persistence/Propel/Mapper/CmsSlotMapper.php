@@ -41,7 +41,7 @@ class CmsSlotMapper
     /**
      * @param \Propel\Runtime\Collection\Collection $cmsSlotEntities
      *
-     * @return \Generated\Shared\Transfer\CmsSlotTransfer[]
+     * @return array<\Generated\Shared\Transfer\CmsSlotTransfer>
      */
     public function mapCmsSlotEntityCollectionToTransferCollection(Collection $cmsSlotEntities): array
     {

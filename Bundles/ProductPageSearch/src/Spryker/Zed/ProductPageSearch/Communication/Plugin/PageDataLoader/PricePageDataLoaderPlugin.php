@@ -24,25 +24,25 @@ class PricePageDataLoaderPlugin extends AbstractPlugin implements ProductPageDat
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductPageLoadTransfer $loadTransfer
+     * @param \Generated\Shared\Transfer\ProductPageLoadTransfer $productPageLoadTransfer
      *
      * @return \Generated\Shared\Transfer\ProductPageLoadTransfer
      */
-    public function expandProductPageDataTransfer(ProductPageLoadTransfer $loadTransfer)
+    public function expandProductPageDataTransfer(ProductPageLoadTransfer $productPageLoadTransfer)
     {
-        $productAbstractIds = $loadTransfer->getProductAbstractIds();
+        $productAbstractIds = $productPageLoadTransfer->getProductAbstractIds();
 
         $pricesByIdProductAbstract = $this->findPricesByIdProductAbstractIn($productAbstractIds);
 
-        $loadTransfer->setPayloadTransfers(
-            $this->updatePayloadTransfers($loadTransfer->getPayloadTransfers(), $pricesByIdProductAbstract)
+        $productPageLoadTransfer->setPayloadTransfers(
+            $this->updatePayloadTransfers($productPageLoadTransfer->getPayloadTransfers(), $pricesByIdProductAbstract)
         );
 
-        return $loadTransfer;
+        return $productPageLoadTransfer;
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return array
      */
@@ -65,9 +65,9 @@ class PricePageDataLoaderPlugin extends AbstractPlugin implements ProductPageDat
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $productPrices
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $productPrices
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[][][]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer[][]>
      */
     protected function getProductPricesMappedByIdAndStoreName(array $productPrices): array
     {
@@ -86,10 +86,10 @@ class PricePageDataLoaderPlugin extends AbstractPlugin implements ProductPageDat
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductPayloadTransfer[] $payloadTransfers
+     * @param array<\Generated\Shared\Transfer\ProductPayloadTransfer> $payloadTransfers
      * @param array $pricesByStoreList
      *
-     * @return \Generated\Shared\Transfer\ProductPayloadTransfer[] updated payload transfers
+     * @return array<\Generated\Shared\Transfer\ProductPayloadTransfer> updated payload transfers
      */
     protected function updatePayloadTransfers(array $payloadTransfers, array $pricesByStoreList): array
     {

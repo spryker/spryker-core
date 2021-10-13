@@ -69,7 +69,7 @@ class ReturnMapper
     /**
      * @param \Propel\Runtime\Collection\ObjectCollection $salesReturnItemEntities
      *
-     * @return \Generated\Shared\Transfer\ReturnItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ReturnItemTransfer>
      */
     public function mapReturnItemEntityCollectionToReturnTransfers(ObjectCollection $salesReturnItemEntities): array
     {

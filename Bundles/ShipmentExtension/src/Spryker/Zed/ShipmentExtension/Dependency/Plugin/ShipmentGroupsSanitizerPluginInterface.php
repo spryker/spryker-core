@@ -15,9 +15,9 @@ interface ShipmentGroupsSanitizerPluginInterface
      *
      * @api
      *
-     * @param iterable|\Generated\Shared\Transfer\ShipmentGroupTransfer[] $shipmentGroupCollection
+     * @param iterable<\Generated\Shared\Transfer\ShipmentGroupTransfer> $shipmentGroupCollection
      *
-     * @return iterable|\Generated\Shared\Transfer\ShipmentGroupTransfer[]
+     * @return iterable<\Generated\Shared\Transfer\ShipmentGroupTransfer>
      */
     public function sanitizeShipmentGroupCollection(iterable $shipmentGroupCollection): iterable;
 }

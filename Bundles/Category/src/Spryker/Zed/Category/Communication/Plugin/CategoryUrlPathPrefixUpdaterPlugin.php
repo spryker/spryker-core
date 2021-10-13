@@ -8,22 +8,20 @@
 namespace Spryker\Zed\Category\Communication\Plugin;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Spryker\Zed\Category\Business\Generator\UrlPathGenerator;
-use Spryker\Zed\Category\Dependency\Plugin\CategoryUrlPathPluginInterface;
+use Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryUrlPathPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\Category\Business\CategoryFacadeInterface getFacade()
- * @method \Spryker\Zed\Category\Communication\CategoryCommunicationFactory getFactory()
  * @method \Spryker\Zed\Category\CategoryConfig getConfig()
+ * @method \Spryker\Zed\Category\Communication\CategoryCommunicationFactory getFactory()
  * @method \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface getQueryContainer()
  */
 class CategoryUrlPathPrefixUpdaterPlugin extends AbstractPlugin implements CategoryUrlPathPluginInterface
 {
     /**
      * {@inheritDoc}
-     * Specification:
-     * - Update category url paths returned array
+     * - Adds language identifier to category URL paths.
      *
      * @api
      *
@@ -34,24 +32,8 @@ class CategoryUrlPathPrefixUpdaterPlugin extends AbstractPlugin implements Categ
      */
     public function update(array $paths, LocaleTransfer $localeTransfer)
     {
-        $languageIdentifier = $this->getLanguageIdentifierFromLocale($localeTransfer);
-        array_unshift(
-            $paths,
-            [
-                UrlPathGenerator::CATEGORY_NAME => $languageIdentifier,
-            ]
-        );
-
-        return $paths;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     *
-     * @return string
-     */
-    protected function getLanguageIdentifierFromLocale(LocaleTransfer $localeTransfer)
-    {
-        return mb_substr($localeTransfer->getLocaleName(), 0, 2);
+        return $this->getFactory()
+            ->createCategoryUrlUpdater()
+            ->updateCategoryUrlPath($paths, $localeTransfer);
     }
 }

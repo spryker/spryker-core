@@ -12,6 +12,9 @@ use Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface;
 
 class SortByQueryFilterPreProcessor implements PreProcessorInterface
 {
+    /**
+     * @var string
+     */
     public const SORT = 'sort';
 
     /**

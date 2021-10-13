@@ -15,15 +15,23 @@ use Spryker\Zed\CmsBlockProductStorage\Persistence\CmsBlockProductStorageQueryCo
 
 class CmsBlockProductStorageWriter implements CmsBlockProductStorageWriterInterface
 {
+    /**
+     * @var string
+     */
     protected const KEYS = 'keys';
+    /**
+     * @var string
+     */
     protected const NAMES = 'names';
     /**
      * @uses \Spryker\Zed\CmsBlockProductStorage\Persistence\CmsBlockProductStorageQueryContainer::NAME
+     * @var string
      */
     protected const COLUMN_BLOCK_NAME = 'name';
 
     /**
      * @uses \Spryker\Zed\CmsBlockProductStorage\Persistence\CmsBlockProductStorageQueryContainer::BLOCK_KEY
+     * @var string
      */
     protected const COLUMN_BLOCK_KEY = 'block_key';
 
@@ -68,7 +76,7 @@ class CmsBlockProductStorageWriter implements CmsBlockProductStorageWriterInterf
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return void
      */
@@ -80,7 +88,7 @@ class CmsBlockProductStorageWriter implements CmsBlockProductStorageWriterInterf
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return void
      */
@@ -101,7 +109,7 @@ class CmsBlockProductStorageWriter implements CmsBlockProductStorageWriterInterf
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CmsBlockProductTransfer[] $cmsBlockProductsTransfer
+     * @param array<\Generated\Shared\Transfer\CmsBlockProductTransfer> $cmsBlockProductsTransfer
      * @param array $spyCmsBlockProductStorageEntities
      *
      * @return void
@@ -139,7 +147,7 @@ class CmsBlockProductStorageWriter implements CmsBlockProductStorageWriterInterf
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return array
      */
@@ -164,7 +172,7 @@ class CmsBlockProductStorageWriter implements CmsBlockProductStorageWriterInterf
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return array
      */
@@ -188,7 +196,7 @@ class CmsBlockProductStorageWriter implements CmsBlockProductStorageWriterInterf
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return array
      */

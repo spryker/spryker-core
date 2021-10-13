@@ -18,6 +18,9 @@ use Spryker\Client\Search\Plugin\Elasticsearch\QueryExpander\SuggestionByTypeQue
  */
 class SuggestionByTypeResultFormatterPlugin extends AbstractElasticsearchResultFormatterPlugin
 {
+    /**
+     * @var string
+     */
     public const NAME = 'suggestionByType';
 
     /**

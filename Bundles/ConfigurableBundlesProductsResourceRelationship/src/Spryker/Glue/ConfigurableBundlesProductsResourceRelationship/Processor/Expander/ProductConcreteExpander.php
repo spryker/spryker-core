@@ -37,7 +37,7 @@ class ProductConcreteExpander implements ProductConcreteExpanderInterface
     }
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
+     * @param array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface> $resources
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return void
@@ -59,9 +59,9 @@ class ProductConcreteExpander implements ProductConcreteExpanderInterface
     }
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
+     * @param array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface> $resources
      *
-     * @return int[][]
+     * @return array<int[]>
      */
     protected function getMappedProductConcreteIdsByProductListId(array $resources): array
     {
@@ -86,9 +86,9 @@ class ProductConcreteExpander implements ProductConcreteExpanderInterface
     }
 
     /**
-     * @param int[][] $mappedProductConcreteIds
+     * @param array<int[]> $mappedProductConcreteIds
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function mergeProductConcreteIds(array $mappedProductConcreteIds): array
     {
@@ -102,10 +102,10 @@ class ProductConcreteExpander implements ProductConcreteExpanderInterface
     }
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $productConcreteRestResources
-     * @param int[][] $mappedProductConcreteIdsBySku
+     * @param array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface> $productConcreteRestResources
+     * @param array<int[]> $mappedProductConcreteIdsBySku
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[][]
+     * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]>
      */
     protected function mapProductConcreteRestResourcesByProductId(
         array $productConcreteRestResources,
@@ -127,8 +127,8 @@ class ProductConcreteExpander implements ProductConcreteExpanderInterface
     }
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[][] $mappedProductConcreteRestResources
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
+     * @param array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]> $mappedProductConcreteRestResources
+     * @param array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface> $resources
      *
      * @return void
      */

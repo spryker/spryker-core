@@ -82,7 +82,7 @@ class ProductPageSearchCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @deprecated Use {@link \Spryker\Zed\ProductPageSearch\Business\ProductPageSearchBusinessFactory::getProductAbstractPageMapExpanderPlugins()} instead.
      *
-     * @return \Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageMapExpanderInterface[]
+     * @return array<\Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageMapExpanderInterface>
      */
     public function getProductPageMapExpanderPlugins()
     {
@@ -92,7 +92,7 @@ class ProductPageSearchCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @deprecated Will be removed without replacement.
      *
-     * @return \Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageMapExpanderInterface[]
+     * @return array<\Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageMapExpanderInterface>
      */
     public function getProductConcretePageMapExpanderPlugins(): array
     {
@@ -100,7 +100,7 @@ class ProductPageSearchCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductConcretePageMapExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductConcretePageMapExpanderPluginInterface>
      */
     public function getConcreteProductPageMapExpanderPlugins(): array
     {

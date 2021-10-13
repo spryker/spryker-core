@@ -21,12 +21,33 @@ use Spryker\Zed\Offer\Dependency\Service\OfferToUtilEncodingServiceBridge;
  */
 class OfferDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_CART = 'FACADE_CART';
+    /**
+     * @var string
+     */
     public const FACADE_SALES = 'FACADE_SALES';
+    /**
+     * @var string
+     */
     public const FACADE_MESSENGER = 'FACADE_MESSENGER';
+    /**
+     * @var string
+     */
     public const FACADE_CUSTOMER = 'FACADE_CUSTOMER';
+    /**
+     * @var string
+     */
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
+    /**
+     * @var string
+     */
     public const PLUGINS_OFFER_HYDRATOR = 'PLUGINS_OFFER_HYDRATOR';
+    /**
+     * @var string
+     */
     public const PLUGINS_OFFER_DO_UPDATE = 'PLUGINS_OFFER_DO_UPDATE';
 
     /**
@@ -159,7 +180,7 @@ class OfferDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\OfferExtension\Dependency\Plugin\OfferHydratorPluginInterface[]
+     * @return array<\Spryker\Zed\OfferExtension\Dependency\Plugin\OfferHydratorPluginInterface>
      */
     protected function getOfferHydratorPlugins(): array
     {
@@ -183,7 +204,7 @@ class OfferDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\Offer\Dependency\Plugin\OfferDoUpdatePluginInterface[]
+     * @return array<\Spryker\Zed\Offer\Dependency\Plugin\OfferDoUpdatePluginInterface>
      */
     protected function getOfferDoUpdatePlugins(): array
     {

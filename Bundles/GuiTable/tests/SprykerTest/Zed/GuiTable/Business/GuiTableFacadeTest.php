@@ -36,28 +36,77 @@ class GuiTableFacadeTest extends Unit
 {
     /**
      * @uses \Spryker\Zed\GuiTable\Business\ResponseFormatter\DataResponseFormatter::KEY_DATA_RESPONSE_ARRAY_DATA
+     * @var string
      */
     protected const KEY_DATA_RESPONSE_ARRAY_DATA = 'data';
 
+    /**
+     * @var string
+     */
     protected const TEST_PARAM_SEARCH = 'search string';
+    /**
+     * @var string
+     */
     protected const TEST_PARAM_SORT_BY = 'column1';
+    /**
+     * @var string
+     */
     protected const TEST_PARAM_SORT_DIRECTION_ASC = 'ASC';
+    /**
+     * @var string
+     */
     protected const TEST_PARAM_SORT_DIRECTION_DESC = 'DESC';
+    /**
+     * @var int
+     */
     protected const TEST_PARAM_PAGE = 3;
+    /**
+     * @var int
+     */
     protected const TEST_PARAM_PAGE_SIZE = 5;
+    /**
+     * @var int
+     */
     protected const TEST_PARAM_TOTAL = 100;
+    /**
+     * @var string
+     */
     protected const TEST_DATE_FROM = '2020-05-31T21:00:00.437Z';
+    /**
+     * @var string
+     */
     protected const TEST_DATE_TO = '2020-06-18T20:59:59.027Z';
+    /**
+     * @var array
+     */
     protected const TEST_PARAM_FILTER = ['filterId' => 'filterValue'];
+    /**
+     * @var int
+     */
     protected const TEST_ID_LOCALE = 1;
 
+    /**
+     * @var string
+     */
     protected const TEST_COLUMN_ID_1 = 'columnId1';
+    /**
+     * @var string
+     */
     protected const TEST_COLUMN_ID_2 = 'columnId2';
+    /**
+     * @var array
+     */
     protected const TEST_TABLE_DATA = [
         [self::TEST_COLUMN_ID_1 => 'value1', self::TEST_COLUMN_ID_2 => 'value1'],
         [self::TEST_COLUMN_ID_1 => 'value2', self::TEST_COLUMN_ID_2 => 'value2'],
     ];
+    /**
+     * @var string
+     */
     protected const TEST_TYPE_DATE = 'date';
+    /**
+     * @var string
+     */
     protected const TEST_VALUE_DATE_FORMATTED = 'date_formatted';
 
     /**

@@ -32,7 +32,7 @@ class OrderTaxTotalCalculator implements CalculatorInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $items
      *
      * @return int
      */
@@ -48,7 +48,7 @@ class OrderTaxTotalCalculator implements CalculatorInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ExpenseTransfer[] $expenses
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ExpenseTransfer> $expenses
      *
      * @return int
      */

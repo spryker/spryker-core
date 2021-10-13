@@ -35,16 +35,16 @@ interface ShipmentRepositoryInterface
      *
      * @throws \Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException
      *
-     * @return \Generated\Shared\Transfer\ShipmentTransfer[]
+     * @return array<\Generated\Shared\Transfer\ShipmentTransfer>
      */
     public function findShipmentTransfersByOrder(OrderTransfer $orderTransfer): array;
 
     /**
-     * @param \Generated\Shared\Transfer\ShipmentTransfer[] $shipmentTransfers
+     * @param array<\Generated\Shared\Transfer\ShipmentTransfer> $shipmentTransfers
      *
      * @throws \Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException
      *
-     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer[]
+     * @return array<\Generated\Shared\Transfer\ShipmentMethodTransfer>
      */
     public function findShipmentMethodTransfersByShipment(array $shipmentTransfers): array;
 
@@ -52,7 +52,7 @@ interface ShipmentRepositoryInterface
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param \Generated\Shared\Transfer\ShipmentTransfer|null $defaultShipmentTransfer
      *
-     * @return int[][]
+     * @return array<int[]>
      */
     public function getItemIdsGroupedByShipmentIds(
         OrderTransfer $orderTransfer,
@@ -124,14 +124,14 @@ interface ShipmentRepositoryInterface
     public function findShipmentById(int $idShipmentMethod): ?ShipmentTransfer;
 
     /**
-     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer[]
+     * @return array<\Generated\Shared\Transfer\ShipmentMethodTransfer>
      */
     public function getActiveShipmentMethods(): array;
 
     /**
      * @param int $idStore
      *
-     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer[]
+     * @return array<\Generated\Shared\Transfer\ShipmentMethodTransfer>
      */
     public function getActiveShipmentMethodsForStore(int $idStore): array;
 
@@ -148,7 +148,7 @@ interface ShipmentRepositoryInterface
      * @param int $idSalesOrder
      * @param int $idSalesShipment
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer>
      */
     public function findSalesOrderItemsBySalesShipmentId(int $idSalesOrder, int $idSalesShipment): ArrayObject;
 
@@ -167,7 +167,7 @@ interface ShipmentRepositoryInterface
     public function getStoreRelationByIdShipmentMethod(int $idShipmentMethod): StoreRelationTransfer;
 
     /**
-     * @return \Generated\Shared\Transfer\ShipmentCarrierTransfer[]
+     * @return array<\Generated\Shared\Transfer\ShipmentCarrierTransfer>
      */
     public function getActiveShipmentCarriers(): array;
 }

@@ -21,7 +21,7 @@ class OauthCryptographyClient extends AbstractClient implements OauthCryptograph
      *
      * @api
      *
-     * @return \League\OAuth2\Server\CryptKey[]
+     * @return array<\League\OAuth2\Server\CryptKey>
      */
     public function loadPublicKeys(): array
     {
@@ -34,7 +34,7 @@ class OauthCryptographyClient extends AbstractClient implements OauthCryptograph
      * @api
      *
      * @param \Psr\Http\Message\ServerRequestInterface $request
-     * @param \League\OAuth2\Server\CryptKey[] $publicKeys
+     * @param array<\League\OAuth2\Server\CryptKey> $publicKeys
      * @param \League\OAuth2\Server\Repositories\AccessTokenRepositoryInterface $accessTokenRepository
      *
      * @throws \League\OAuth2\Server\Exception\OAuthServerException

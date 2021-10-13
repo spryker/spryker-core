@@ -26,16 +26,35 @@ use Swift_SmtpTransport;
  */
 class MailDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const MAIL_PROVIDER_COLLECTION = 'mail provider collection';
+    /**
+     * @var string
+     */
     public const MAIL_TYPE_COLLECTION = 'mail collection';
+    /**
+     * @var string
+     */
     public const FACADE_GLOSSARY = 'glossary facade';
+    /**
+     * @var string
+     */
     public const RENDERER = 'twig';
+    /**
+     * @var string
+     */
     public const MAILER = 'mailer';
 
+    /**
+     * @var string
+     */
     protected const SWIFT_MAILER = 'SWIFT_MAILER';
 
     /**
      * @uses \Spryker\Zed\Twig\Communication\Plugin\Application\TwigApplicationPlugin::SERVICE_TWIG
+     * @var string
      */
     public const SERVICE_TWIG = 'twig';
 

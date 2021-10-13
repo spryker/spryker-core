@@ -124,13 +124,14 @@ class ProductOptionValueReader implements ProductOptionValueReaderInterface
         $productOptionTransfer->setUnitGrossPrice($this->productOptionValuePriceReader->getCurrentGrossPrice($productOptionValueEntity, $currencyCode));
         $productOptionTransfer->setUnitNetPrice($this->productOptionValuePriceReader->getCurrentNetPrice($productOptionValueEntity, $currencyCode));
         $productOptionTransfer->setUnitPrice($this->productOptionValuePriceReader->resolveUnitPrice($productOptionTransfer, $priceMode));
+        $productOptionTransfer->setIdGroup($productOptionValueEntity->getFkProductOptionGroup());
 
         return $productOptionTransfer;
     }
 
     /**
      * @param \Generated\Shared\Transfer\ProductOptionCollectionTransfer $productOptionCollectionTransfer
-     * @param \Orm\Zed\ProductOption\Persistence\SpyProductOptionValue[] $productOptionValueEntities
+     * @param array<\Orm\Zed\ProductOption\Persistence\SpyProductOptionValue> $productOptionValueEntities
      * @param \Generated\Shared\Transfer\ProductOptionCriteriaTransfer $productOptionCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\ProductOptionCollectionTransfer

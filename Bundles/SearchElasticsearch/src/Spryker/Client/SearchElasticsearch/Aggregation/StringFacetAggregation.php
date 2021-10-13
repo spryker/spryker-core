@@ -13,6 +13,9 @@ use Spryker\Client\SearchElasticsearch\SearchElasticsearchConfig;
 
 class StringFacetAggregation extends AbstractFacetAggregation
 {
+    /**
+     * @var string
+     */
     public const VALUE_SUFFIX = '-value';
 
     /**

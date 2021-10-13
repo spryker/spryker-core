@@ -41,7 +41,7 @@ class GlossaryEventResourceQueryContainerPlugin extends AbstractPlugin implement
      *
      * @api
      *
-     * @param int[] $ids
+     * @param array<int> $ids
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria|null
      */

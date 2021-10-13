@@ -12,6 +12,9 @@ use Symfony\Component\Validator\Constraint as SymfonyConstraint;
 
 class UniqueUrl extends SymfonyConstraint
 {
+    /**
+     * @var string
+     */
     public const OPTION_URL_FACADE = 'urlFacade';
 
     /**

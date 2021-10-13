@@ -18,11 +18,23 @@ use Spryker\Zed\OauthCustomerConnector\Dependency\Service\OauthCustomerConnector
  */
 class OauthCustomerConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_CUSTOMER = 'FACADE_CUSTOMER';
+    /**
+     * @var string
+     */
     public const FACADE_OAUTH = 'FACADE_OAUTH';
 
+    /**
+     * @var string
+     */
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
+    /**
+     * @var string
+     */
     public const PLUGINS_OAUTH_CUSTOMER_IDENTIFIER_EXPANDER = 'PLUGINS_OAUTH_CUSTOMER_IDENTIFIER_EXPANDER';
 
     /**
@@ -97,7 +109,7 @@ class OauthCustomerConnectorDependencyProvider extends AbstractBundleDependencyP
     }
 
     /**
-     * @return \Spryker\Zed\OauthCustomerConnectorExtension\Dependency\Plugin\OauthCustomerIdentifierExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\OauthCustomerConnectorExtension\Dependency\Plugin\OauthCustomerIdentifierExpanderPluginInterface>
      */
     protected function getOauthCustomerIdentifierExpanderPlugins(): array
     {

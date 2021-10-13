@@ -10,9 +10,9 @@ namespace Spryker\Zed\ProductPageSearch\Business\Reader;
 interface AddToCartSkuReaderInterface
 {
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getProductAbstractAddToCartSkus(array $productAbstractIds): array;
 }

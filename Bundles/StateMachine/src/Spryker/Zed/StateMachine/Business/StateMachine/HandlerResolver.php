@@ -12,12 +12,12 @@ use Spryker\Zed\StateMachine\Business\Exception\StateMachineHandlerNotFound;
 class HandlerResolver implements HandlerResolverInterface
 {
     /**
-     * @var \Spryker\Zed\StateMachine\Dependency\Plugin\StateMachineHandlerInterface[]
+     * @var array<\Spryker\Zed\StateMachine\Dependency\Plugin\StateMachineHandlerInterface>
      */
     protected $handlers = [];
 
     /**
-     * @param \Spryker\Zed\StateMachine\Dependency\Plugin\StateMachineHandlerInterface[] $handlers
+     * @param array<\Spryker\Zed\StateMachine\Dependency\Plugin\StateMachineHandlerInterface> $handlers
      */
     public function __construct(array $handlers)
     {

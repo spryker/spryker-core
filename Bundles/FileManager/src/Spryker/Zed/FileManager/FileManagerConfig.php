@@ -12,6 +12,9 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class FileManagerConfig extends AbstractBundleConfig
 {
+    /**
+     * @var string
+     */
     protected const FILE_NAME_VERSION_DELIMITER = '-';
 
     /**

@@ -113,7 +113,7 @@ interface PropelFacadeInterface
      *
      * @api
      *
-     * @return \Symfony\Component\Console\Command\Command[]
+     * @return array<\Symfony\Component\Console\Command\Command>
      */
     public function getConsoleCommands();
 
@@ -239,4 +239,28 @@ interface PropelFacadeInterface
      * @return \Generated\Shared\Transfer\HealthCheckServiceResponseTransfer
      */
     public function executeDatabaseHealthCheck(): HealthCheckServiceResponseTransfer;
+
+    /**
+     * Specification:
+     * - Checks if table with provided name exists.
+     * - Will return false value if can't connect to the database.
+     *
+     * @api
+     *
+     * @param string $tableName
+     *
+     * @return bool
+     */
+    public function tableExists(string $tableName): bool;
+
+    /**
+     * Specification:
+     * - Loads the propel-table-map.
+     * - Will return false if the table-map-file does not exists.
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function loadPropelTableMap(): bool;
 }

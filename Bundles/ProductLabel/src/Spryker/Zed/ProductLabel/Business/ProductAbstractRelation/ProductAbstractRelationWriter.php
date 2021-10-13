@@ -40,7 +40,7 @@ class ProductAbstractRelationWriter implements ProductAbstractRelationWriterInte
 
     /**
      * @param int $idProductLabel
-     * @param int[] $idsProductAbstract
+     * @param array<int> $idsProductAbstract
      * @param bool $isTouchEnabled
      *
      * @return void
@@ -54,7 +54,7 @@ class ProductAbstractRelationWriter implements ProductAbstractRelationWriterInte
 
     /**
      * @param int $idProductLabel
-     * @param int[] $idsProductAbstract
+     * @param array<int> $idsProductAbstract
      * @param bool $isTouchEnabled
      *
      * @return void

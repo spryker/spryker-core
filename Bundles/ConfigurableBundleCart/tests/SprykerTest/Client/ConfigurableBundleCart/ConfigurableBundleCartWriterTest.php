@@ -36,30 +36,60 @@ use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
  */
 class ConfigurableBundleCartWriterTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const FAKE_CONFIGURABLE_BUNDLE_GROUP_KEY_1 = 'FAKE_CONFIGURABLE_BUNDLE_GROUP_KEY_1';
+    /**
+     * @var string
+     */
     protected const FAKE_CONFIGURABLE_BUNDLE_GROUP_KEY_2 = 'FAKE_CONFIGURABLE_BUNDLE_GROUP_KEY_2';
 
+    /**
+     * @var string
+     */
     protected const FAKE_CONFIGURABLE_BUNDLE_UUID_1 = 'FAKE_CONFIGURABLE_BUNDLE_UUID_1';
+    /**
+     * @var string
+     */
     protected const FAKE_CONFIGURABLE_BUNDLE_UUID_2 = 'FAKE_CONFIGURABLE_BUNDLE_UUID_2';
 
+    /**
+     * @var string
+     */
     protected const FAKE_CONFIGURABLE_BUNDLE_SLOT_UUID_1 = 'FAKE_CONFIGURABLE_BUNDLE_SLOT_UUID_1';
+    /**
+     * @var string
+     */
     protected const FAKE_CONFIGURABLE_BUNDLE_SLOT_UUID_2 = 'FAKE_CONFIGURABLE_BUNDLE_SLOT_UUID_2';
+    /**
+     * @var string
+     */
     protected const FAKE_CONFIGURABLE_BUNDLE_SLOT_UUID_3 = 'FAKE_CONFIGURABLE_BUNDLE_SLOT_UUID_3';
+    /**
+     * @var string
+     */
     protected const FAKE_CONFIGURABLE_BUNDLE_SLOT_UUID_4 = 'FAKE_CONFIGURABLE_BUNDLE_SLOT_UUID_4';
+    /**
+     * @var string
+     */
     protected const FAKE_CONFIGURABLE_BUNDLE_SLOT_UUID_5 = 'FAKE_CONFIGURABLE_BUNDLE_SLOT_UUID_5';
 
     /**
      * @see \Spryker\Client\ConfigurableBundleCart\Writer\CartWriter::GLOSSARY_KEY_CONFIGURED_BUNDLE_NOT_FOUND
+     * @var string
      */
     protected const GLOSSARY_KEY_CONFIGURED_BUNDLE_NOT_FOUND = 'configured_bundle_cart.error.configured_bundle_not_found';
 
     /**
      * @see \Spryker\Client\ConfigurableBundleCart\Writer\CartWriter::GLOSSARY_KEY_CONFIGURED_BUNDLE_CANNOT_BE_REMOVED
+     * @var string
      */
     protected const GLOSSARY_KEY_CONFIGURED_BUNDLE_CANNOT_BE_REMOVED = 'configured_bundle_cart.error.configured_bundle_cannot_be_removed';
 
     /**
      * @see \Spryker\Client\ConfigurableBundleCart\Writer\CartWriter::GLOSSARY_KEY_CONFIGURED_BUNDLE_CANNOT_BE_UPDATED
+     * @var string
      */
     protected const GLOSSARY_KEY_CONFIGURED_BUNDLE_CANNOT_BE_UPDATED = 'configured_bundle_cart.error.configured_bundle_cannot_be_updated';
 

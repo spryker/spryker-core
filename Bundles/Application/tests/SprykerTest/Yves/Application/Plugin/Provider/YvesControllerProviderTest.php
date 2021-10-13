@@ -25,7 +25,13 @@ use SprykerTest\Yves\Application\Plugin\Provider\Fixtures\ControllerProviderMock
  */
 class YvesControllerProviderTest extends Unit
 {
+    /**
+     * @var string
+     */
     public const METHOD_REQUIRE_HTTP = 'requireHttp';
+    /**
+     * @var string
+     */
     public const METHOD_REQUIRE_HTTPS = 'requireHttps';
 
     /**

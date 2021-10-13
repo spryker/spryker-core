@@ -12,6 +12,9 @@ use Spryker\Shared\PermissionExtension\Dependency\Plugin\ExecutablePermissionPlu
 
 class MockPermissionPlugin extends AbstractPlugin implements ExecutablePermissionPluginInterface
 {
+    /**
+     * @var string
+     */
     public const KEY = 'MockPermissionPlugin';
 
     /**

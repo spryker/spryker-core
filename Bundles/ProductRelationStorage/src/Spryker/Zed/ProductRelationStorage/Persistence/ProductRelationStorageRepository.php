@@ -23,7 +23,7 @@ use Spryker\Zed\Synchronization\Persistence\Propel\Formatter\SynchronizationData
 class ProductRelationStorageRepository extends AbstractRepository implements ProductRelationStorageRepositoryInterface
 {
     /**
-     * @param int[] $relationIds
+     * @param array<int> $relationIds
      *
      * @return array
      */
@@ -53,9 +53,9 @@ class ProductRelationStorageRepository extends AbstractRepository implements Pro
 
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     * @param int[] $ids
+     * @param array<int> $ids
      *
-     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     * @return array<\Generated\Shared\Transfer\SynchronizationDataTransfer>
      */
     public function findProductRelationStorageDataTransferByIds(FilterTransfer $filterTransfer, array $ids): array
     {
@@ -75,7 +75,7 @@ class ProductRelationStorageRepository extends AbstractRepository implements Pro
     /**
      * @param int $idProductAbstract
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getStoresByIdProductAbstractFromStorage(int $idProductAbstract): array
     {

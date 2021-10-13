@@ -17,6 +17,7 @@ interface HealthCheckConstants
      * - Defines if health check is enabled.
      *
      * @api
+     * @var string
      */
     public const HEALTH_CHECK_ENABLED = 'HEALTH_CHECK:HEALTH_CHECK_ENABLED';
 }

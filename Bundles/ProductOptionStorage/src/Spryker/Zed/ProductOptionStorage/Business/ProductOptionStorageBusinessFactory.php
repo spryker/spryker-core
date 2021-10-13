@@ -27,8 +27,17 @@ class ProductOptionStorageBusinessFactory extends AbstractBusinessFactory
             $this->getProductOptionFacade(),
             $this->getStoreFacade(),
             $this->getQueryContainer(),
-            $this->getConfig()->isSendingToQueue()
+            $this->getConfig()->isSendingToQueue(),
+            $this->getProductOptionCollectionFilterPlugins()
         );
+    }
+
+    /**
+     * @return array<\Spryker\Zed\ProductOptionStorageExtension\Dependency\Plugin\ProductOptionCollectionFilterPluginInterface>
+     */
+    public function getProductOptionCollectionFilterPlugins(): array
+    {
+        return $this->getProvidedDependency(ProductOptionStorageDependencyProvider::PLUGINS_PRODUCT_OPTION_COLLECTION_FILTER);
     }
 
     /**

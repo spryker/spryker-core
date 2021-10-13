@@ -40,6 +40,9 @@ class SalesReturnBusinessTester extends Actor
 {
     use _generated\SalesReturnBusinessTesterActions;
 
+    /**
+     * @var string
+     */
     protected const SHIPPED_STATE_NAME = 'shipped';
 
     /**

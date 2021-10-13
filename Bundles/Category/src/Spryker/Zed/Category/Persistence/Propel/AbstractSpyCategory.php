@@ -25,7 +25,7 @@ abstract class AbstractSpyCategory extends BaseSpyCategory
     /**
      * @param int $idLocale
      *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryAttribute[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Category\Persistence\SpyCategoryAttribute>
      */
     public function getLocalisedAttributes($idLocale)
     {

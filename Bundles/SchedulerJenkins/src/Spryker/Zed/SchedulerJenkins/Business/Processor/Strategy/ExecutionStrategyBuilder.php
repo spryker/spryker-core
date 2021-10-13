@@ -14,7 +14,13 @@ use Spryker\Zed\SchedulerJenkins\Dependency\Service\SchedulerJenkinsToUtilEncodi
 
 class ExecutionStrategyBuilder implements ExecutionStrategyBuilderInterface
 {
+    /**
+     * @var string
+     */
     protected const KEY_JOBS = 'jobs';
+    /**
+     * @var string
+     */
     protected const KEY_NAME = 'name';
 
     /**

@@ -11,7 +11,7 @@ use Spryker\Shared\Kernel\KernelConfig;
 
 class CacheReaderPhp implements CacheReaderInterface
 {
-    /***
+    /**
      * @var \Spryker\Shared\Kernel\KernelConfig
      */
     protected $config;
@@ -25,7 +25,7 @@ class CacheReaderPhp implements CacheReaderInterface
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function read(): array
     {

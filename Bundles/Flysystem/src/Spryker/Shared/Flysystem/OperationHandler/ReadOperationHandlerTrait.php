@@ -9,7 +9,7 @@ namespace Spryker\Shared\Flysystem\OperationHandler;
 
 use Closure;
 use Exception;
-use Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException;
+use Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemReadException;
 use Throwable;
 
 trait ReadOperationHandlerTrait
@@ -17,7 +17,7 @@ trait ReadOperationHandlerTrait
     /**
      * @param \Closure $callback
      *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
+     * @throws \Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemReadException
      * @throws \Exception
      *
      * @return mixed
@@ -26,13 +26,12 @@ trait ReadOperationHandlerTrait
     {
         try {
             $result = $callback();
+
             if (is_bool($result) && !$result) {
                 throw new Exception('Read operation failed');
             }
 
             return $result;
-        } catch (Exception $exception) {
-            throw new FileSystemReadException($exception->getMessage(), $exception->getCode(), $exception);
         } catch (Throwable $exception) {
             throw new FileSystemReadException($exception->getMessage(), $exception->getCode(), $exception);
         }

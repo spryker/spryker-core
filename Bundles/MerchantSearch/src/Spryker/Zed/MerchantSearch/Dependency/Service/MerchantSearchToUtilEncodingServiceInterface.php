@@ -10,7 +10,7 @@ namespace Spryker\Zed\MerchantSearch\Dependency\Service;
 interface MerchantSearchToUtilEncodingServiceInterface
 {
     /**
-     * @param mixed[] $value
+     * @param array<mixed> $value
      * @param int|null $options
      * @param int|null $depth
      *

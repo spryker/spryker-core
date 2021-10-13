@@ -49,8 +49,17 @@ class ProductLabelStorageListenerTest extends Unit
 {
     use LocatorHelperTrait;
 
+    /**
+     * @var string
+     */
     protected const STORE_NAME_DE = 'DE';
+    /**
+     * @var string
+     */
     protected const STORE_NAME_AT = 'AT';
+    /**
+     * @var string
+     */
     protected const LOCALE_NAME_EN = 'en_US';
 
     /**

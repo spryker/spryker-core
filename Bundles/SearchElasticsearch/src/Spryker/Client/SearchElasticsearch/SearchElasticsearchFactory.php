@@ -27,6 +27,8 @@ use Spryker\Client\SearchElasticsearch\Config\SearchConfigBuilderInterface;
 use Spryker\Client\SearchElasticsearch\Config\SearchConfigInterface;
 use Spryker\Client\SearchElasticsearch\Config\SortConfig;
 use Spryker\Client\SearchElasticsearch\Config\SortConfigInterface;
+use Spryker\Client\SearchElasticsearch\Connection\Connection;
+use Spryker\Client\SearchElasticsearch\Connection\ConnectionInterface;
 use Spryker\Client\SearchElasticsearch\Dependency\Client\SearchElasticsearchToMoneyClientInterface;
 use Spryker\Client\SearchElasticsearch\Dependency\Client\SearchElasticsearchToStoreClientInterface;
 use Spryker\Client\SearchElasticsearch\Index\IndexNameResolver\IndexNameResolver;
@@ -91,6 +93,16 @@ class SearchElasticsearchFactory extends AbstractFactory
     }
 
     /**
+     * @return \Spryker\Client\SearchElasticsearch\Connection\ConnectionInterface
+     */
+    public function createConnection(): ConnectionInterface
+    {
+        return new Connection(
+            $this->getElasticaClient()
+        );
+    }
+
+    /**
      * @return \Spryker\Client\SearchElasticsearch\Search\SearchInterface
      */
     public function createLoggableSearchClient(): SearchInterface
@@ -118,7 +130,8 @@ class SearchElasticsearchFactory extends AbstractFactory
     public function createIndexNameResolver(): IndexNameResolverInterface
     {
         return new IndexNameResolver(
-            $this->getStoreClient()
+            $this->getStoreClient(),
+            $this->getConfig()
         );
     }
 
@@ -225,7 +238,7 @@ class SearchElasticsearchFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\SearchExtension\Dependency\Plugin\SearchConfigExpanderPluginInterface[]
+     * @return array<\Spryker\Client\SearchExtension\Dependency\Plugin\SearchConfigExpanderPluginInterface>
      */
     public function getSearchConfigExpanderPlugins()
     {
@@ -338,7 +351,7 @@ class SearchElasticsearchFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\SearchExtension\Dependency\Plugin\SearchConfigBuilderPluginInterface[]
+     * @return array<\Spryker\Client\SearchExtension\Dependency\Plugin\SearchConfigBuilderPluginInterface>
      */
     public function getSearchConfigBuilderPlugins(): array
     {

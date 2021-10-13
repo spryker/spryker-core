@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Company\Persistence;
 
 use Generated\Shared\Transfer\CompanyCollectionTransfer;
+use Generated\Shared\Transfer\CompanyCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyTransfer;
 
 interface CompanyRepositoryInterface
@@ -28,7 +29,7 @@ interface CompanyRepositoryInterface
      *
      * @param int $idCompany
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\StoreTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\StoreTransfer>
      */
     public function getRelatedStoresByCompanyId(int $idCompany);
 
@@ -53,4 +54,11 @@ interface CompanyRepositoryInterface
      * @return \Generated\Shared\Transfer\CompanyTransfer|null
      */
     public function findCompanyByUuid(string $companyUuid): ?CompanyTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyCriteriaFilterTransfer $companyCriteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyCollectionTransfer
+     */
+    public function getCompanyCollection(CompanyCriteriaFilterTransfer $companyCriteriaFilterTransfer): CompanyCollectionTransfer;
 }

@@ -16,13 +16,37 @@ use Spryker\Zed\Kernel\Container;
 
 class CompanyUnitAddressGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_COMPANY_UNIT_ADDRESS = 'FACADE_COMPANY_UNIT_ADDRESS';
+    /**
+     * @var string
+     */
     public const PLUGINS_COMPANY_UNIT_ADDRESS_FORM = 'PLUGINS_COMPANY_UNIT_ADDRESS_FORM';
+    /**
+     * @var string
+     */
     public const PLUGINS_COMPANY_UNIT_ADDRESS_TABLE_CONFIG_EXPANDER = 'PLUGINS_COMPANY_UNIT_ADDRESS_TABLE_CONFIG_EXPANDER';
+    /**
+     * @var string
+     */
     public const PLUGINS_COMPANY_UNIT_ADDRESS_TABLE_HEADER_EXPANDER = 'PLUGINS_COMPANY_UNIT_ADDRESS_TABLE_HEADER_EXPANDER';
+    /**
+     * @var string
+     */
     public const PLUGINS_COMPANY_UNIT_ADDRESS_TABLE_DATA_EXPANDER = 'PLUGINS_COMPANY_UNIT_ADDRESS_TABLE_DATA_EXPANDER';
+    /**
+     * @var string
+     */
     public const FACADE_COMPANY = 'FACADE_COMPANY';
+    /**
+     * @var string
+     */
     public const FACADE_COUNTRY = 'FACADE_COUNTRY';
+    /**
+     * @var string
+     */
     public const PROPEL_QUERY_COMPANY_UNIT_ADDRESS = 'PROPEL_QUERY_COMPANY_UNIT_ADDRESS';
 
     /**
@@ -122,7 +146,7 @@ class CompanyUnitAddressGuiDependencyProvider extends AbstractBundleDependencyPr
     }
 
     /**
-     * @return \Spryker\Zed\CompanyUnitAddressGuiExtension\Dependency\Plugin\CompanyUnitAddressEditFormExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\CompanyUnitAddressGuiExtension\Dependency\Plugin\CompanyUnitAddressEditFormExpanderPluginInterface>
      */
     protected function getCompanyUnitAddressFormPlugins(): array
     {
@@ -144,7 +168,7 @@ class CompanyUnitAddressGuiDependencyProvider extends AbstractBundleDependencyPr
     }
 
     /**
-     * @return \Spryker\Zed\CompanyUnitAddressGuiExtension\Dependency\Plugin\CompanyUnitAddressTableConfigExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\CompanyUnitAddressGuiExtension\Dependency\Plugin\CompanyUnitAddressTableConfigExpanderPluginInterface>
      */
     protected function getCompanyUnitAddressTableConfigExpanderPlugins(): array
     {
@@ -166,7 +190,7 @@ class CompanyUnitAddressGuiDependencyProvider extends AbstractBundleDependencyPr
     }
 
     /**
-     * @return \Spryker\Zed\CompanyUnitAddressGuiExtension\Dependency\Plugin\CompanyUnitAddressTableHeaderExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\CompanyUnitAddressGuiExtension\Dependency\Plugin\CompanyUnitAddressTableHeaderExpanderPluginInterface>
      */
     protected function getCompanyUnitAddressTableHeaderExpanderPlugins(): array
     {
@@ -188,7 +212,7 @@ class CompanyUnitAddressGuiDependencyProvider extends AbstractBundleDependencyPr
     }
 
     /**
-     * @return \Spryker\Zed\CompanyUnitAddressGuiExtension\Dependency\Plugin\CompanyUnitAddressTableDataExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\CompanyUnitAddressGuiExtension\Dependency\Plugin\CompanyUnitAddressTableDataExpanderPluginInterface>
      */
     protected function getCompanyUnitAddressTableDataExpanderPlugins(): array
     {

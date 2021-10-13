@@ -15,6 +15,9 @@ use Symfony\Component\Finder\SplFileInfo;
 
 class PropelSchemaParser implements PropelSchemaParserInterface
 {
+    /**
+     * @var string
+     */
     protected const PROPEL_SCHEMA_PATH_PATTERN = '*/src/%s/Zed/*/Persistence/Propel/Schema';
 
     /**
@@ -23,12 +26,12 @@ class PropelSchemaParser implements PropelSchemaParserInterface
     protected $config;
 
     /**
-     * @var string[]
+     * @var array<string>
      */
     protected static $idFieldToModuleNameMap;
 
     /**
-     * @var string[]
+     * @var array<string>
      */
     protected static $uniqueFieldToModuleNameMap;
 
@@ -146,7 +149,7 @@ class PropelSchemaParser implements PropelSchemaParserInterface
     }
 
     /**
-     * @return \Symfony\Component\Finder\Finder|\Symfony\Component\Finder\SplFileInfo[]
+     * @return \Symfony\Component\Finder\Finder<\Symfony\Component\Finder\SplFileInfo>
      */
     protected function getSchemaFileFinder(): Finder
     {
@@ -161,7 +164,7 @@ class PropelSchemaParser implements PropelSchemaParserInterface
     /**
      * @param \Symfony\Component\Finder\SplFileInfo $splFileInfo
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getIdColumnNames(SplFileInfo $splFileInfo): array
     {
@@ -196,7 +199,7 @@ class PropelSchemaParser implements PropelSchemaParserInterface
     /**
      * @param \Symfony\Component\Finder\SplFileInfo $splFileInfo
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getUniqueColumnNames(SplFileInfo $splFileInfo): array
     {
@@ -231,7 +234,7 @@ class PropelSchemaParser implements PropelSchemaParserInterface
     /**
      * @param \Symfony\Component\Finder\SplFileInfo $splFileInfo
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getRequiredColumnNames(SplFileInfo $splFileInfo): array
     {
@@ -276,7 +279,7 @@ class PropelSchemaParser implements PropelSchemaParserInterface
      *
      * @throws \Spryker\Zed\Development\Business\Exception\Dependency\PropelSchemaParserException
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function addIdColumnNames(array $idFieldToModuleNameMap, array $idColumnNames, string $module): array
     {
@@ -292,20 +295,20 @@ class PropelSchemaParser implements PropelSchemaParserInterface
 
     /**
      * @param array $uniqueFieldToModuleNameMap
-     * @param string[] $requiredColumnNames
-     * @param string[] $uniqueColumnNames
+     * @param array<string> $requiredColumnNames
+     * @param array<string> $uniqueColumnNames
      * @param string $module
      *
      * @throws \Spryker\Zed\Development\Business\Exception\Dependency\PropelSchemaParserException
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function addUniqueColumnNames(array $uniqueFieldToModuleNameMap, array $requiredColumnNames, array $uniqueColumnNames, string $module): array
     {
         foreach ($uniqueColumnNames as $uniqueColumnName) {
             if (
                 isset($uniqueFieldToModuleNameMap[$uniqueColumnName]) && $uniqueFieldToModuleNameMap[$uniqueColumnName] !== $module &&
-                in_array($module . '.' . $uniqueColumnName, $requiredColumnNames)
+                in_array($module . '.' . $uniqueColumnName, $requiredColumnNames, true)
             ) {
                 throw new PropelSchemaParserException(sprintf('Unique column "%s" was already found in the module "%s".', $uniqueColumnName, $uniqueFieldToModuleNameMap[$uniqueColumnName]));
             }
@@ -316,7 +319,7 @@ class PropelSchemaParser implements PropelSchemaParserInterface
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function computeLookupPaths(): array
     {
@@ -336,7 +339,7 @@ class PropelSchemaParser implements PropelSchemaParserInterface
      */
     protected function hasNamespaceInSchema(SimpleXMLElement $simpleXmlElement): bool
     {
-        if (in_array('spryker:schema-01', $simpleXmlElement->getNamespaces())) {
+        if (in_array('spryker:schema-01', $simpleXmlElement->getNamespaces(), true)) {
             return true;
         }
 

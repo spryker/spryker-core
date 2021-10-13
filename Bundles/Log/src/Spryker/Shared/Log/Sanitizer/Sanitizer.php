@@ -48,7 +48,7 @@ class Sanitizer implements SanitizerInterface
     /**
      * @param array $data
      * @param string $key
-     * @param string|array $value
+     * @param array|string $value
      *
      * @return void
      */
@@ -62,7 +62,7 @@ class Sanitizer implements SanitizerInterface
     /**
      * @param array $data
      * @param string $key
-     * @param string|array $value
+     * @param array|string $value
      *
      * @return void
      */

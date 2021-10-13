@@ -1,6 +1,6 @@
 # OauthCryptography Module
-[![Build Status](https://travis-ci.org/spryker/oauth-cryptography.svg)](https://travis-ci.org/spryker/oauth-cryptography)
-[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
+[![Latest Stable Version](https://poser.pugx.org/spryker/oauth-cryptography/v/stable.svg)](https://packagist.org/packages/spryker/oauth-cryptography)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.4-8892BF.svg)](https://php.net/)
 
 OauthCryptography module is responsible for handling cryptographic keys for the Oauth.
 

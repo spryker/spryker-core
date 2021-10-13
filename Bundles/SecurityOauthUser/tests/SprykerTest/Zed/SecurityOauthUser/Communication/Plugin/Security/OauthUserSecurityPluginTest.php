@@ -5,12 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\SecurityGui\Communication\Plugin\Security;
+namespace SprykerTest\Zed\SecurityOauthUser\Communication\Plugin\Security;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ResourceOwnerResponseTransfer;
 use Generated\Shared\Transfer\ResourceOwnerTransfer;
 use Generated\Shared\Transfer\UserTransfer;
+use Spryker\Shared\Security\Configuration\SecurityConfiguration;
 use Spryker\Zed\SecurityOauthUser\Communication\Plugin\Security\OauthUserSecurityPlugin;
 use Spryker\Zed\SecurityOauthUserExtension\Dependency\Plugin\OauthUserClientStrategyPluginInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,7 +21,7 @@ use Symfony\Component\HttpFoundation\Response;
  *
  * @group SprykerTest
  * @group Zed
- * @group SecurityGui
+ * @group SecurityOauthUser
  * @group Communication
  * @group Plugin
  * @group Security
@@ -31,22 +32,51 @@ class OauthUserSecurityPluginTest extends Unit
 {
     /**
      * @uses \Spryker\Zed\Session\Communication\Plugin\Application\SessionApplicationPlugin::SERVICE_SESSION
+     * @var string
      */
     protected const SERVICE_SESSION = 'session';
 
     /**
      * @uses \Spryker\Zed\Security\Communication\Plugin\Application\SecurityApplicationPlugin::SERVICE_SECURITY_TOKEN_STORAGE
+     * @var string
      */
     protected const SERVICE_SECURITY_TOKEN_STORAGE = 'security.token_storage';
 
+    /**
+     * @var string
+     */
     protected const SOME_EMAIL = 'some@email.com';
 
+    /**
+     * @var string
+     */
     protected const SOME_CODE = 'SOME_CODE';
 
+    /**
+     * @var string
+     */
     protected const SOME_STATE = 'SOME_STATE';
 
     /**
-     * @var \SprykerTest\Zed\SecurityGui\SecurityGuiCommunicationTester
+     * @uses \Spryker\Zed\SecurityOauthUser\Communication\Plugin\Security\OauthUserSecurityPlugin::SECURITY_FIREWALL_NAME
+     * @var string
+     */
+    protected const SECURITY_FIREWALL_NAME = 'OauthUser';
+
+    /**
+     * @uses \Spryker\Zed\SecurityGui\Communication\Plugin\Security\UserSecurityPlugin::SECURITY_FIREWALL_NAME
+     * @var string
+     */
+    protected const SECURITY_USER_FIREWALL_NAME = 'User';
+
+    /**
+     * @uses \Spryker\Zed\SecurityOauthUser\Communication\Plugin\Security\OauthUserSecurityPlugin::SECURITY_OAUTH_USER_TOKEN_AUTHENTICATOR
+     * @var string
+     */
+    protected const SECURITY_OAUTH_USER_TOKEN_AUTHENTICATOR = 'security.oauth_user.token.authenticator';
+
+    /**
+     * @var \SprykerTest\Zed\SecurityOauthUser\SecurityOauthUserCommunicationTester
      */
     protected $tester;
 
@@ -107,9 +137,58 @@ class OauthUserSecurityPluginTest extends Unit
         );
 
         // Assert
-        /** @var \Spryker\Zed\SecurityGui\Communication\Security\User $user */
+        /** @var \Spryker\Zed\SecurityOauthUser\Communication\Security\SecurityOauthUser $user */
         $user = $container->get(static::SERVICE_SECURITY_TOKEN_STORAGE)->getToken()->getUser();
         $this->assertSame($userTransfer->getUsername(), $user->getUsername(), 'Expected that usernames match.');
+    }
+
+    /**
+     * @return void
+     */
+    public function testOauthUserFirewallExpandUserFirewall(): void
+    {
+        // Arrange
+        $securityPlugin = new OauthUserSecurityPlugin();
+        $securityPlugin->setFactory($this->tester->getCommunicationFactory());
+
+        $securityBuilder = (new SecurityConfiguration())
+            ->addFirewall('User', []);
+
+        // Act
+        $securityBuilder = $securityPlugin->extend($securityBuilder, $this->tester->getContainer());
+
+        // Assert
+        $firewalls = $securityBuilder->getConfiguration()->getFirewalls();
+
+        $this->assertNull($firewalls[static::SECURITY_FIREWALL_NAME] ?? null);
+        $this->assertNotNull($firewalls[static::SECURITY_USER_FIREWALL_NAME]['users']);
+        $this->assertSame(
+            static::SECURITY_OAUTH_USER_TOKEN_AUTHENTICATOR,
+            $firewalls[static::SECURITY_USER_FIREWALL_NAME]['guard']['authenticators'][0]
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testOauthUserFirewallAddOauthUserFirwallToSecurityService(): void
+    {
+        // Arrange
+        $securityPlugin = new OauthUserSecurityPlugin();
+        $securityPlugin->setFactory($this->tester->getCommunicationFactory());
+
+        // Act
+        $securityBuilder = $securityPlugin->extend(new SecurityConfiguration(), $this->tester->getContainer());
+
+        // Assert
+        $firewalls = $securityBuilder->getConfiguration()->getFirewalls();
+
+        $this->assertNull($firewalls[static::SECURITY_USER_FIREWALL_NAME] ?? null);
+        $this->assertNotNull($firewalls[static::SECURITY_FIREWALL_NAME]['users']);
+        $this->assertSame(
+            static::SECURITY_OAUTH_USER_TOKEN_AUTHENTICATOR,
+            $firewalls[static::SECURITY_FIREWALL_NAME]['guard']['authenticators'][0]
+        );
     }
 
     /**

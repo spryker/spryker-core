@@ -28,6 +28,9 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
  */
 abstract class AbstractSpySalesOrder extends BaseSpySalesOrder
 {
+    /**
+     * @var string
+     */
     public const COL_FK_CUSTOMER = 'fk_customer';
 
     /**

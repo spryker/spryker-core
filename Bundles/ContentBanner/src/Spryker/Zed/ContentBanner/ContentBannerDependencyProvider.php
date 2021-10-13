@@ -16,6 +16,9 @@ use Spryker\Zed\Kernel\Container;
  */
 class ContentBannerDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const ADAPTER_VALIDATION = 'ADAPTER_VALIDATION';
 
     /**

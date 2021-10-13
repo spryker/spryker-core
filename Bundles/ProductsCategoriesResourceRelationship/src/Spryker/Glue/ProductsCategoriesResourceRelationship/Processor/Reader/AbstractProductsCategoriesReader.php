@@ -9,11 +9,21 @@ namespace Spryker\Glue\ProductsCategoriesResourceRelationship\Processor\Reader;
 
 use Spryker\Glue\ProductsCategoriesResourceRelationship\Dependency\Client\ProductsCategoriesResourceRelationshipToProductCategoryStorageClientInterface;
 use Spryker\Glue\ProductsCategoriesResourceRelationship\Dependency\Client\ProductsCategoriesResourceRelationshipToProductStorageClientInterface;
+use Spryker\Glue\ProductsCategoriesResourceRelationship\Dependency\Client\ProductsCategoriesResourceRelationshipToStoreClientInterface;
 
 class AbstractProductsCategoriesReader implements AbstractProductsCategoriesReaderInterface
 {
+    /**
+     * @var string
+     */
     protected const PRODUCT_ABSTRACT_MAPPING_TYPE = 'sku';
+    /**
+     * @var string
+     */
     protected const KEY_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
+    /**
+     * @var string
+     */
     protected const KEY_SKU = 'sku';
 
     /**
@@ -27,22 +37,30 @@ class AbstractProductsCategoriesReader implements AbstractProductsCategoriesRead
     protected $productCategoryStorageClient;
 
     /**
+     * @var \Spryker\Glue\ProductsCategoriesResourceRelationship\Dependency\Client\ProductsCategoriesResourceRelationshipToStoreClientInterface
+     */
+    protected $storeClient;
+
+    /**
      * @param \Spryker\Glue\ProductsCategoriesResourceRelationship\Dependency\Client\ProductsCategoriesResourceRelationshipToProductStorageClientInterface $productStorageClient
      * @param \Spryker\Glue\ProductsCategoriesResourceRelationship\Dependency\Client\ProductsCategoriesResourceRelationshipToProductCategoryStorageClientInterface $productCategoryStorageClient
+     * @param \Spryker\Glue\ProductsCategoriesResourceRelationship\Dependency\Client\ProductsCategoriesResourceRelationshipToStoreClientInterface $storeClient
      */
     public function __construct(
         ProductsCategoriesResourceRelationshipToProductStorageClientInterface $productStorageClient,
-        ProductsCategoriesResourceRelationshipToProductCategoryStorageClientInterface $productCategoryStorageClient
+        ProductsCategoriesResourceRelationshipToProductCategoryStorageClientInterface $productCategoryStorageClient,
+        ProductsCategoriesResourceRelationshipToStoreClientInterface $storeClient
     ) {
         $this->productStorageClient = $productStorageClient;
         $this->productCategoryStorageClient = $productCategoryStorageClient;
+        $this->storeClient = $storeClient;
     }
 
     /**
      * @param string $sku
      * @param string $localeName
      *
-     * @return int[]|null
+     * @return array<int>|null
      */
     public function findProductCategoryNodeIds(string $sku, string $localeName): ?array
     {
@@ -60,7 +78,7 @@ class AbstractProductsCategoriesReader implements AbstractProductsCategoriesRead
     }
 
     /**
-     * @param string[] $productAbstractSkus
+     * @param array<string> $productAbstractSkus
      * @param string $localeName
      *
      * @return array
@@ -90,8 +108,11 @@ class AbstractProductsCategoriesReader implements AbstractProductsCategoriesRead
     {
         $productCategoryNodeIds = [];
         $idProductAbstract = $abstractProductData[static::KEY_ID_PRODUCT_ABSTRACT];
-        $productCategories = $this->productCategoryStorageClient
-            ->findProductAbstractCategory($idProductAbstract, $locale);
+        $productCategories = $this->productCategoryStorageClient->findProductAbstractCategory(
+            $idProductAbstract,
+            $locale,
+            $this->storeClient->getCurrentStore()->getName()
+        );
 
         if ($productCategories) {
             foreach ($productCategories->getCategories() as $productCategory) {
@@ -115,8 +136,11 @@ class AbstractProductsCategoriesReader implements AbstractProductsCategoriesRead
             $productAbstractIds[(int)$item[static::KEY_ID_PRODUCT_ABSTRACT]] = $item[static::KEY_SKU];
         }
 
-        $productAbstractCategoryStorageTransfers = $this->productCategoryStorageClient
-            ->findBulkProductAbstractCategory(array_keys($productAbstractIds), $localeName);
+        $productAbstractCategoryStorageTransfers = $this->productCategoryStorageClient->findBulkProductAbstractCategory(
+            array_keys($productAbstractIds),
+            $localeName,
+            $this->storeClient->getCurrentStore()->getName()
+        );
 
         $productCategoryNodeIds = [];
         foreach ($productAbstractCategoryStorageTransfers as $productAbstractCategoryStorageTransfer) {

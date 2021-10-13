@@ -14,6 +14,9 @@ use Spryker\Shared\CmsContentWidget\Dependency\CmsContentWidgetConfigurationProv
  */
 class CmsProductGroupContentWidgetConfigurationProvider implements CmsContentWidgetConfigurationProviderInterface
 {
+    /**
+     * @var string
+     */
     public const FUNCTION_NAME = 'product_group';
 
     /**
@@ -25,7 +28,7 @@ class CmsProductGroupContentWidgetConfigurationProvider implements CmsContentWid
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getAvailableTemplates()
     {

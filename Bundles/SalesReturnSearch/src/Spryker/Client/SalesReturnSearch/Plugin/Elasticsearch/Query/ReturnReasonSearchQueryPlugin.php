@@ -9,7 +9,7 @@ namespace Spryker\Client\SalesReturnSearch\Plugin\Elasticsearch\Query;
 
 use Elastica\Query;
 use Elastica\Query\BoolQuery;
-use Elastica\Query\Match;
+use Elastica\Query\MatchQuery;
 use Generated\Shared\Search\ReturnReasonIndexMap;
 use Generated\Shared\Transfer\SearchContextTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
@@ -22,6 +22,9 @@ use Spryker\Shared\SalesReturnSearch\SalesReturnSearchConfig;
  */
 class ReturnReasonSearchQueryPlugin extends AbstractPlugin implements QueryInterface, SearchContextAwareQueryInterface
 {
+    /**
+     * @var string
+     */
     protected const SOURCE_IDENTIFIER = 'return_reason';
 
     /**
@@ -117,8 +120,7 @@ class ReturnReasonSearchQueryPlugin extends AbstractPlugin implements QueryInter
      */
     protected function setTypeFilter(BoolQuery $boolQuery): BoolQuery
     {
-        $typeFilter = new Match();
-        $typeFilter->setField(ReturnReasonIndexMap::TYPE, SalesReturnSearchConfig::RETURN_REASON_RESOURCE_NAME);
+        $typeFilter = $this->getMatchQuery()->setField(ReturnReasonIndexMap::TYPE, SalesReturnSearchConfig::RETURN_REASON_RESOURCE_NAME);
 
         return $boolQuery->addMust($typeFilter);
     }
@@ -140,5 +142,19 @@ class ReturnReasonSearchQueryPlugin extends AbstractPlugin implements QueryInter
     protected function hasSearchContext(): bool
     {
         return (bool)$this->searchContextTransfer;
+    }
+
+    /**
+     * For compatibility with PHP 8.
+     *
+     * @return \Elastica\Query\MatchQuery|\Elastica\Query\Match
+     */
+    protected function getMatchQuery()
+    {
+        $matchQueryClassName = class_exists(MatchQuery::class)
+            ? MatchQuery::class
+            : '\Elastica\Query\Match';
+
+        return new $matchQueryClassName();
     }
 }

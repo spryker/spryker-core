@@ -28,13 +28,13 @@ class FileFinder implements FinderInterface
     /**
      * @param string $module
      *
-     * @return \Symfony\Component\Finder\SplFileInfo[]
+     * @return array<\Symfony\Component\Finder\SplFileInfo>
      */
     public function find(string $module): array
     {
         $directories = $this->pathBuilder->buildPaths($module);
         $directories = array_filter($directories, function (string $directory) {
-            return glob($directory);
+            return glob($directory, GLOB_NOSORT);
         });
 
         if (count($directories) === 0) {
@@ -44,7 +44,7 @@ class FileFinder implements FinderInterface
         $res = [];
         foreach ($directories as $directory) {
             $finder = new Finder();
-            $finder->files()->in($directory);
+            $finder->files()->ignoreVCSIgnored(true)->in($directory);
 
             $finder->name('*.php');
             $res = array_merge($res, iterator_to_array($finder));

@@ -16,6 +16,9 @@ use Spryker\Glue\RestRequestValidator\RestRequestValidatorConfig;
 
 class RestRequestValidatorConfigReader implements RestRequestValidatorConfigReaderInterface
 {
+    /**
+     * @var string
+     */
     protected const EXCEPTION_MESSAGE_CACHE_FILE_NOT_FOUND = 'Validation cache is enabled, but cache file is not found.';
 
     /**

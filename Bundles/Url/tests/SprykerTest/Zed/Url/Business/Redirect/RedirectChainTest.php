@@ -57,7 +57,7 @@ class RedirectChainTest extends Unit
     }
 
     /**
-     * @return \Generated\Shared\Transfer\UrlTransfer[]
+     * @return array<\Generated\Shared\Transfer\UrlTransfer>
      */
     protected function prepareTestData(): array
     {

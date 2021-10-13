@@ -18,11 +18,10 @@ class FlysystemFtpFileSystemServiceFactory extends AbstractServiceFactory
 {
     /**
      * @param \Generated\Shared\Transfer\FlysystemConfigTransfer $configTransfer
-     * @param \League\Flysystem\PluginInterface[] $flysystemPluginCollection
      *
      * @return \Spryker\Service\FlysystemFtpFileSystem\Model\Builder\Filesystem\FtpFilesystemBuilder
      */
-    public function createFlysystemFtpFileSystemBuilder(FlysystemConfigTransfer $configTransfer, array $flysystemPluginCollection = [])
+    public function createFlysystemFtpFileSystemBuilder(FlysystemConfigTransfer $configTransfer)
     {
         return new FtpFilesystemBuilder($configTransfer);
     }

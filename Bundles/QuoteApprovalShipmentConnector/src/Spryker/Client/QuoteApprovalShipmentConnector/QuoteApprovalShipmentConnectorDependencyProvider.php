@@ -13,6 +13,9 @@ use Spryker\Client\QuoteApprovalShipmentConnector\Dependency\Service\QuoteApprov
 
 class QuoteApprovalShipmentConnectorDependencyProvider extends AbstractDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const SERVICE_SHIPMENT = 'SERVICE_SHIPMENT';
 
     /**

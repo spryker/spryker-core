@@ -19,10 +19,22 @@ use Spryker\Glue\UpSellingProductsRestApi\Dependency\RestApiResource\UpSellingPr
  */
 class UpSellingProductsRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_PRODUCT_RELATION_STORAGE = 'CLIENT_PRODUCT_RELATION_STORAGE';
+    /**
+     * @var string
+     */
     public const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE';
+    /**
+     * @var string
+     */
     public const CLIENT_CARTS_REST_API = 'CLIENT_CARTS_REST_API';
 
+    /**
+     * @var string
+     */
     public const RESOURCE_PRODUCTS_REST_API = 'RESOURCE_PRODUCTS_REST_API';
 
     /**

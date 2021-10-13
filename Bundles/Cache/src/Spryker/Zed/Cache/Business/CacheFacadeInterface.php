@@ -17,7 +17,7 @@ interface CacheFacadeInterface
      *
      * @deprecated Use {@link emptyCache()} instead
      *
-     * @return string[]
+     * @return array<string>
      */
     public function deleteAllFiles();
 
@@ -27,7 +27,7 @@ interface CacheFacadeInterface
      *
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function emptyCache();
 
@@ -59,7 +59,7 @@ interface CacheFacadeInterface
      *
      * @deprecated Use {@link emptyAutoLoaderCache()} instead
      *
-     * @return string[]
+     * @return array<string>
      */
     public function deleteAllAutoloaderFiles();
 
@@ -69,7 +69,7 @@ interface CacheFacadeInterface
      *
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function emptyAutoLoaderCache();
 
@@ -79,7 +79,7 @@ interface CacheFacadeInterface
      *
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function emptyProjectSpecificCache(): array;
 }

@@ -27,41 +27,124 @@ use Symfony\Component\Validator\Constraints\Regex;
  */
 class MerchantProfileFormType extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const SALUTATION_CHOICES_OPTION = 'salutation_choices';
 
+    /**
+     * @var string
+     */
     protected const FIELD_ID_MERCHANT_PROFILE = 'id_merchant_profile';
+    /**
+     * @var string
+     */
     protected const FIELD_CONTACT_PERSON_ROLE = 'contact_person_role';
+    /**
+     * @var string
+     */
     protected const FIELD_CONTACT_PERSON_TITLE = 'contact_person_title';
+    /**
+     * @var string
+     */
     protected const FIELD_CONTACT_PERSON_FIRST_NAME = 'contact_person_first_name';
+    /**
+     * @var string
+     */
     protected const FIELD_CONTACT_PERSON_LAST_NAME = 'contact_person_last_name';
+    /**
+     * @var string
+     */
     protected const FIELD_CONTACT_PERSON_PHONE = 'contact_person_phone';
+    /**
+     * @var string
+     */
     protected const FIELD_LOGO_URL = 'logo_url';
+    /**
+     * @var string
+     */
     protected const FIELD_PUBLIC_EMAIL = 'public_email';
+    /**
+     * @var string
+     */
     protected const FIELD_PUBLIC_PHONE = 'public_phone';
+    /**
+     * @var string
+     */
     protected const FIELD_MERCHANT_PROFILE_LOCALIZED_GLOSSARY_ATTRIBUTES = 'merchantProfileLocalizedGlossaryAttributes';
+    /**
+     * @var string
+     */
     protected const FIELD_DESCRIPTION_GLOSSARY_KEY = 'description_glossary_key';
+    /**
+     * @var string
+     */
     protected const FIELD_BANNER_URL_GLOSSARY_KEY = 'banner_url_glossary_key';
+    /**
+     * @var string
+     */
     protected const FIELD_DELIVERY_TIME_GLOSSARY_KEY = 'delivery_time_glossary_key';
+    /**
+     * @var string
+     */
     protected const FIELD_TERMS_CONDITIONS_GLOSSARY_KEY = 'terms_conditions_glossary_key';
+    /**
+     * @var string
+     */
     protected const FIELD_CANCELLATION_POLICY_GLOSSARY_KEY = 'cancellation_policy_glossary_key';
+    /**
+     * @var string
+     */
     protected const FIELD_IMPRINT_GLOSSARY_KEY = 'imprint_glossary_key';
+    /**
+     * @var string
+     */
     protected const FIELD_DATA_PRIVACY_GLOSSARY_KEY = 'data_privacy_glossary_key';
-    protected const FIELD_LATITUDE = 'latitude';
-    protected const FIELD_LONGITUDE = 'longitude';
+    /**
+     * @var string
+     */
     protected const FIELD_FAX_NUMBER = 'fax_number';
 
+    /**
+     * @var string
+     */
     protected const LABEL_CONTACT_PERSON_ROLE = 'Role';
+    /**
+     * @var string
+     */
     protected const LABEL_CONTACT_PERSON_TITLE = 'Title';
+    /**
+     * @var string
+     */
     protected const LABEL_CONTACT_PERSON_FIRST_NAME = 'First Name';
+    /**
+     * @var string
+     */
     protected const LABEL_CONTACT_PERSON_LAST_NAME = 'Last Name';
+    /**
+     * @var string
+     */
     protected const LABEL_CONTACT_PERSON_PHONE = 'Phone';
+    /**
+     * @var string
+     */
     protected const LABEL_LOGO_URL = 'Logo URL';
+    /**
+     * @var string
+     */
     protected const LABEL_PUBLIC_EMAIL = 'Public Email';
+    /**
+     * @var string
+     */
     protected const LABEL_PUBLIC_PHONE = 'Public Phone';
-    protected const LABEL_LATITUDE = 'Latitude';
-    protected const LABEL_LONGITUDE = 'Longitude';
+    /**
+     * @var string
+     */
     protected const LABEL_FAX_NUMBER = 'Fax number';
 
+    /**
+     * @var string
+     */
     protected const URL_PATH_PATTERN = '#^([^\s\\\\]+)$#i';
 
     /**
@@ -106,8 +189,6 @@ class MerchantProfileFormType extends AbstractType
             ->addDataPrivacyGlossaryKeyField($builder)
             ->addMerchantProfileLocalizedGlossaryAttributesSubform($builder)
             ->addFaxNumber($builder)
-            ->addLatitudeField($builder)
-            ->addLongitudeField($builder)
             ->addAddressCollectionSubform($builder);
     }
 
@@ -375,7 +456,7 @@ class MerchantProfileFormType extends AbstractType
     }
 
     /**
-     * @return \Symfony\Component\Validator\Constraint[]
+     * @return array<\Symfony\Component\Validator\Constraint>
      */
     protected function getTextFieldConstraints(): array
     {
@@ -385,7 +466,7 @@ class MerchantProfileFormType extends AbstractType
     }
 
     /**
-     * @return \Symfony\Component\Validator\Constraint[]
+     * @return array<\Symfony\Component\Validator\Constraint>
      */
     protected function getRequiredTextFieldConstraints(): array
     {
@@ -398,7 +479,7 @@ class MerchantProfileFormType extends AbstractType
     /**
      * @param array $choices
      *
-     * @return \Symfony\Component\Validator\Constraint[]
+     * @return array<\Symfony\Component\Validator\Constraint>
      */
     protected function getUrlFieldConstraints(array $choices = []): array
     {
@@ -416,62 +497,12 @@ class MerchantProfileFormType extends AbstractType
      *
      * @return $this
      */
-    protected function addLongitudeField(FormBuilderInterface $builder)
-    {
-        $builder->add(static::FIELD_LONGITUDE, TextType::class, [
-            'label' => static::LABEL_LONGITUDE,
-            'required' => false,
-            'constraints' => [
-                new Length([
-                    'max' => 255,
-                ]),
-                new Regex([
-                    'pattern' => '/^(\\+|-)?(?:180(?:(?:\\.0{1,6})?)|(?:[0-9]|[1-9][0-9]|1[0-7][0-9])(?:(?:\\.[0-9]{1,6})?))$/',
-                ]),
-            ],
-        ]);
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return $this
-     */
-    protected function addLatitudeField(FormBuilderInterface $builder)
-    {
-        $builder->add(static::FIELD_LATITUDE, TextType::class, [
-            'label' => static::LABEL_LATITUDE,
-            'required' => false,
-            'constraints' => [
-                new Length([
-                    'max' => 255,
-                ]),
-                new Regex([
-                    'pattern' => '/^(\\+|-)?(?:90(?:(?:\\.0{1,6})?)|(?:[0-9]|[1-8][0-9])(?:(?:\\.[0-9]{1,6})?))$/',
-                ]),
-            ],
-        ]);
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return $this
-     */
     protected function addFaxNumber(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_FAX_NUMBER, TextType::class, [
             'label' => static::LABEL_FAX_NUMBER,
             'required' => false,
-            'constraints' => [
-                new Length([
-                    'max' => 255,
-                ]),
-            ],
+            'constraints' => [new Length(['max' => 255])],
         ]);
 
         return $this;

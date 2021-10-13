@@ -13,9 +13,18 @@ use Spryker\Zed\Gui\Communication\Tabs\AbstractTabs;
 
 class AbstractConfigurableBundleTabs extends AbstractTabs
 {
+    /**
+     * @var string
+     */
     protected const GENERAL_TAB_NAME = 'General';
+    /**
+     * @var string
+     */
     protected const GENERAL_TAB_TEMPLATE = '@ConfigurableBundleGui/Template/tabs/general-tab.twig';
 
+    /**
+     * @var string
+     */
     protected const FOOTER_TEMPLATE = '@ConfigurableBundleGui/Template/_partials/submit-button.twig';
 
     /**

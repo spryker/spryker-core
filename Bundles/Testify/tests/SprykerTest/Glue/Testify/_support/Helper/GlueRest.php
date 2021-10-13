@@ -19,6 +19,9 @@ class GlueRest extends REST implements LastConnectionProviderInterface
 {
     use ModuleLocatorTrait;
 
+    /**
+     * @var string
+     */
     public const DEFAULT_PASSWORD = 'Pass$.123456';
 
     /**
@@ -112,7 +115,7 @@ class GlueRest extends REST implements LastConnectionProviderInterface
      *
      * @param string $jsonPath
      *
-     * @return array|mixed
+     * @return mixed|array
      */
     public function grabDataFromResponseByJsonPath($jsonPath)
     {
@@ -262,7 +265,7 @@ class GlueRest extends REST implements LastConnectionProviderInterface
      * @param string $resourceName
      * @param string $identifier
      *
-     * @return array|mixed
+     * @return mixed|array
      */
     public function grabIncludedByTypeAndId(string $resourceName, string $identifier)
     {

@@ -94,8 +94,8 @@ class RestRequestValidatorTest extends Unit
     protected function createValidateRestRequestPluginMock(): ValidateRestRequestPluginInterface
     {
         return $this->getMockBuilder(ValidateRestRequestPluginInterface::class)
-           ->setMethods(['validate'])
-           ->getMock();
+            ->setMethods(['validate'])
+            ->getMock();
     }
 
     /**
@@ -104,8 +104,8 @@ class RestRequestValidatorTest extends Unit
     protected function createRestRequestValidatorPluginMock(): RestRequestValidatorPluginInterface
     {
         return $this->getMockBuilder(RestRequestValidatorPluginInterface::class)
-           ->setMethods(['validate'])
-           ->getMock();
+            ->setMethods(['validate'])
+            ->getMock();
     }
 
     /**

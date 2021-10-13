@@ -28,14 +28,13 @@ class FtpFilesystemBuilderPlugin extends AbstractPlugin implements FlysystemFile
 
     /**
      * @param \Generated\Shared\Transfer\FlysystemConfigTransfer $configTransfer
-     * @param \League\Flysystem\PluginInterface[] $flysystemPluginCollection
      *
      * @return \League\Flysystem\Filesystem
      */
-    public function build(FlysystemConfigTransfer $configTransfer, array $flysystemPluginCollection = [])
+    public function build(FlysystemConfigTransfer $configTransfer)
     {
         return $this->getFactory()
-            ->createFlysystemFtpFileSystemBuilder($configTransfer, $flysystemPluginCollection)
+            ->createFlysystemFtpFileSystemBuilder($configTransfer)
             ->build();
     }
 }

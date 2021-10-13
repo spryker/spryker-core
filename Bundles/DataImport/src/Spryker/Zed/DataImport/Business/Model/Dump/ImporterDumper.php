@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\DataImport\Business\Model\Dump;
 
+use Generated\Shared\Transfer\DataImportConfigurationActionTransfer;
+use Generated\Shared\Transfer\DataImportConfigurationTransfer;
 use ReflectionClass;
 use Spryker\Zed\DataImport\Business\Model\DataImporterCollectionInterface;
 
@@ -18,15 +20,34 @@ class ImporterDumper implements ImporterDumperInterface
     protected $dataImporterCollection;
 
     /**
-     * @param \Spryker\Zed\DataImport\Business\Model\DataImporterCollectionInterface $dataImporterCollection
+     * @var \Spryker\Zed\DataImport\Business\Model\Dump\DataImporterAccessFactoryInterface
      */
-    public function __construct(DataImporterCollectionInterface $dataImporterCollection)
-    {
+    protected $dataImporterAccessFactory;
+
+    /**
+     * @var array<\Spryker\Zed\DataImport\Dependency\Plugin\DataImportPluginInterface>
+     */
+    protected $dataImporterPlugins;
+
+    /**
+     * @param \Spryker\Zed\DataImport\Business\Model\DataImporterCollectionInterface $dataImporterCollection
+     * @param \Spryker\Zed\DataImport\Business\Model\Dump\DataImporterAccessFactoryInterface $dataImporterAccessFactory
+     * @param array<\Spryker\Zed\DataImport\Dependency\Plugin\DataImportPluginInterface> $dataImporterPlugins
+     */
+    public function __construct(
+        DataImporterCollectionInterface $dataImporterCollection,
+        DataImporterAccessFactoryInterface $dataImporterAccessFactory,
+        array $dataImporterPlugins
+    ) {
         $this->dataImporterCollection = $dataImporterCollection;
+        $this->dataImporterAccessFactory = $dataImporterAccessFactory;
+        $this->dataImporterPlugins = $dataImporterPlugins;
     }
 
     /**
-     * @return string[]
+     * @deprecated Use {@link \Spryker\Zed\DataImport\Business\Model\Dump\ImporterDumper::getImportersDumpByConfiguration()} instead.
+     *
+     * @return array<string>
      */
     public function dump(): array
     {
@@ -41,7 +62,64 @@ class ImporterDumper implements ImporterDumperInterface
     }
 
     /**
-     * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface[]
+     * @param \Generated\Shared\Transfer\DataImportConfigurationTransfer $dataImportConfigurationTransfer
+     *
+     * @return array<string>
+     */
+    public function getImportersDumpByConfiguration(DataImportConfigurationTransfer $dataImportConfigurationTransfer): array
+    {
+        $availableImporters = [];
+        foreach ($dataImportConfigurationTransfer->getActions() as $dataImportConfigurationActionTransfer) {
+            $importerType = $dataImportConfigurationActionTransfer->getDataEntityOrFail();
+            $importerClassName = $this->getDataImporterClassNameByImporterType($dataImportConfigurationActionTransfer);
+            if ($importerClassName) {
+                $availableImporters[$importerType] = $importerClassName;
+
+                continue;
+            }
+
+            $importerClassName = $this->getImporterPluginClassNameByImporterType($importerType);
+            if ($importerClassName) {
+                $availableImporters[$importerType] = $importerClassName;
+            }
+        }
+
+        ksort($availableImporters);
+
+        return $availableImporters;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DataImportConfigurationActionTransfer $dataImportConfigurationActionTransfer
+     *
+     * @return string|null
+     */
+    protected function getDataImporterClassNameByImporterType(
+        DataImportConfigurationActionTransfer $dataImportConfigurationActionTransfer
+    ): ?string {
+        $importer = $this->dataImporterAccessFactory->getDataImporterByType($dataImportConfigurationActionTransfer);
+
+        return $importer ? get_class($importer) : null;
+    }
+
+    /**
+     * @param string $importerType
+     *
+     * @return string|null
+     */
+    protected function getImporterPluginClassNameByImporterType(string $importerType): ?string
+    {
+        foreach ($this->dataImporterPlugins as $dataImporterPlugin) {
+            if ($dataImporterPlugin->getImportType() === $importerType) {
+                return get_class($dataImporterPlugin);
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * @return array<\Spryker\Zed\DataImport\Business\Model\DataImporterInterface>
      */
     protected function getDataImporterFromCollection(): array
     {

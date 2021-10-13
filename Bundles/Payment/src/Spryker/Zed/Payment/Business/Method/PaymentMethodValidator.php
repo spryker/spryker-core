@@ -14,6 +14,9 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 class PaymentMethodValidator implements PaymentMethodValidatorInterface
 {
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_CHECKOUT_PAYMENT_METHOD_INVALID = 'checkout.payment_method.invalid';
 
     /**
@@ -59,7 +62,7 @@ class PaymentMethodValidator implements PaymentMethodValidatorInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getQuotePaymentMethodsKeys(QuoteTransfer $quoteTransfer): array
     {
@@ -78,7 +81,7 @@ class PaymentMethodValidator implements PaymentMethodValidatorInterface
     /**
      * @param \Generated\Shared\Transfer\PaymentMethodsTransfer $availablePaymentMethods
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getPaymentSelections(PaymentMethodsTransfer $availablePaymentMethods): array
     {
@@ -86,7 +89,7 @@ class PaymentMethodValidator implements PaymentMethodValidatorInterface
 
         $paymentSelections = [];
         foreach ($paymentMethods as $paymentMethod) {
-            $paymentSelections[] = $paymentMethod->getMethodName();
+            $paymentSelections[] = $paymentMethod->getPaymentMethodKey();
         }
 
         return $paymentSelections;

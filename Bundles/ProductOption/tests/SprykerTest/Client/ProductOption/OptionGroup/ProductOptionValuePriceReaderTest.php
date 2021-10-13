@@ -29,9 +29,21 @@ use Spryker\Shared\ProductOption\ProductOptionConstants;
  */
 class ProductOptionValuePriceReaderTest extends Unit
 {
+    /**
+     * @var string
+     */
     public const CURRENT_CURRENCY_CODE = 'EUR';
+    /**
+     * @var string
+     */
     public const OTHER_CURRENCY_CODE = 'USD';
+    /**
+     * @var string
+     */
     public const CURRENT_PRICE_MODE = 'price_mode_net';
+    /**
+     * @var string
+     */
     public const OTHER_PRICE_MODE = 'price_mode_gross';
 
     /**

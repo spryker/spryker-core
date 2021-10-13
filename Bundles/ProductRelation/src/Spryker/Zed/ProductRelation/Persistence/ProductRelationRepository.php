@@ -23,7 +23,13 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
  */
 class ProductRelationRepository extends AbstractRepository implements ProductRelationRepositoryInterface
 {
+    /**
+     * @var string
+     */
     protected const COL_IS_ACTIVE_AGGREGATION = 'is_active_aggregation';
+    /**
+     * @var string
+     */
     protected const COL_ASSIGNED_CATEGORIES = 'assignedCategories';
 
     /**
@@ -132,7 +138,7 @@ class ProductRelationRepository extends AbstractRepository implements ProductRel
     /**
      * @param \Generated\Shared\Transfer\ProductRelationCriteriaFilterTransfer $productRelationCriteriaFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductAbstractTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductAbstractTransfer>
      */
     public function getRelatedProductsByCriteriaFilter(ProductRelationCriteriaFilterTransfer $productRelationCriteriaFilterTransfer): array
     {
@@ -171,13 +177,18 @@ class ProductRelationRepository extends AbstractRepository implements ProductRel
     }
 
     /**
-     * @return \Generated\Shared\Transfer\ProductRelationTransfer[]
+     * @param \Generated\Shared\Transfer\ProductRelationCriteriaFilterTransfer $productRelationCriteriaFilterTransfer
+     *
+     * @return array<\Generated\Shared\Transfer\ProductRelationTransfer>
      */
-    public function getActiveProductRelations(): array
-    {
+    public function getActiveProductRelations(
+        ProductRelationCriteriaFilterTransfer $productRelationCriteriaFilterTransfer
+    ): array {
         $productRelationEntities = $this->getFactory()
             ->getProductRelationQueryContainer()
             ->queryActiveAndScheduledRelations()
+            ->limit($productRelationCriteriaFilterTransfer->getLimit())
+            ->offset($productRelationCriteriaFilterTransfer->getOffset())
             ->find();
 
         if (!$productRelationEntities->getData()) {
@@ -190,7 +201,18 @@ class ProductRelationRepository extends AbstractRepository implements ProductRel
     }
 
     /**
-     * @return \Generated\Shared\Transfer\ProductRelationTypeTransfer[]
+     * @return int
+     */
+    public function getActiveProductRelationCount(): int
+    {
+        return $this->getFactory()
+            ->getProductRelationQueryContainer()
+            ->queryActiveAndScheduledRelations()
+            ->count();
+    }
+
+    /**
+     * @return array<\Generated\Shared\Transfer\ProductRelationTypeTransfer>
      */
     public function getProductRelationTypes(): array
     {
@@ -211,9 +233,9 @@ class ProductRelationRepository extends AbstractRepository implements ProductRel
     }
 
     /**
-     * @param int[] $idProductAbstracts
+     * @param array<int> $idProductAbstracts
      *
-     * @return \Generated\Shared\Transfer\ProductRelationTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductRelationTransfer>
      */
     public function getProductRelationsByProductAbstractIds(array $idProductAbstracts): array
     {
@@ -237,9 +259,9 @@ class ProductRelationRepository extends AbstractRepository implements ProductRel
     }
 
     /**
-     * @param int[] $productRelationIds
+     * @param array<int> $productRelationIds
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getProductAbstractIdsByProductRelationIds(
         array $productRelationIds
@@ -257,7 +279,7 @@ class ProductRelationRepository extends AbstractRepository implements ProductRel
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductRelationTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductRelationTransfer>
      */
     public function findProductRelationsForFilter(FilterTransfer $filterTransfer): array
     {

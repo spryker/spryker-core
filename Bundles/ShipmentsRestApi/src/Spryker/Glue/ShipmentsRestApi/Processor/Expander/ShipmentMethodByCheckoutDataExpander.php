@@ -48,7 +48,7 @@ class ShipmentMethodByCheckoutDataExpander implements ShipmentMethodByCheckoutDa
     }
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
+     * @param array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface> $resources
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return void
@@ -82,7 +82,7 @@ class ShipmentMethodByCheckoutDataExpander implements ShipmentMethodByCheckoutDa
     /**
      * @param \Generated\Shared\Transfer\ShipmentMethodsTransfer $shipmentMethodsTransfer
      *
-     * @return \Generated\Shared\Transfer\RestShipmentMethodsAttributesTransfer[]
+     * @return array<\Generated\Shared\Transfer\RestShipmentMethodsAttributesTransfer>
      */
     protected function mapRestShipmentMethodsAttributesTransfers(
         ShipmentMethodsTransfer $shipmentMethodsTransfer
@@ -94,10 +94,10 @@ class ShipmentMethodByCheckoutDataExpander implements ShipmentMethodByCheckoutDa
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RestShipmentMethodsAttributesTransfer[] $restShipmentMethodsAttributesTransfers
+     * @param array<\Generated\Shared\Transfer\RestShipmentMethodsAttributesTransfer> $restShipmentMethodsAttributesTransfers
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
-     * @return \Generated\Shared\Transfer\RestShipmentMethodsAttributesTransfer[]
+     * @return array<\Generated\Shared\Transfer\RestShipmentMethodsAttributesTransfer>
      */
     protected function sortRestShipmentMethodsAttributesTransfers(
         array $restShipmentMethodsAttributesTransfers,
@@ -108,7 +108,7 @@ class ShipmentMethodByCheckoutDataExpander implements ShipmentMethodByCheckoutDa
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RestShipmentMethodsAttributesTransfer[] $restShipmentMethodAttributesTransfers
+     * @param array<\Generated\Shared\Transfer\RestShipmentMethodsAttributesTransfer> $restShipmentMethodAttributesTransfers
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $resource
      *
      * @return void

@@ -49,7 +49,7 @@ class DatabaseStorageStrategy implements StorageStrategyInterface
     protected $quoteLocker;
 
     /**
-     * @var \Spryker\Client\QuoteExtension\Dependency\Plugin\DatabaseStrategyPreCheckPluginInterface[]
+     * @var array<\Spryker\Client\QuoteExtension\Dependency\Plugin\DatabaseStrategyPreCheckPluginInterface>
      */
     protected $databaseStrategyPreCheckPlugins;
 
@@ -60,7 +60,7 @@ class DatabaseStorageStrategy implements StorageStrategyInterface
      * @param \Spryker\Client\Quote\QuoteValidator\QuoteLockStatusValidatorInterface $quoteLockStatusValidator
      * @param \Spryker\Client\Quote\QuoteValidator\QuoteEditStatusValidatorInterface $quoteEditStatusValidator
      * @param \Spryker\Client\Quote\QuoteLocker\QuoteLockerInterface $quoteLocker
-     * @param \Spryker\Client\QuoteExtension\Dependency\Plugin\DatabaseStrategyPreCheckPluginInterface[] $databaseStrategyPreCheckPlugins
+     * @param array<\Spryker\Client\QuoteExtension\Dependency\Plugin\DatabaseStrategyPreCheckPluginInterface> $databaseStrategyPreCheckPlugins
      */
     public function __construct(
         QuoteToCustomerClientInterface $customerClient,

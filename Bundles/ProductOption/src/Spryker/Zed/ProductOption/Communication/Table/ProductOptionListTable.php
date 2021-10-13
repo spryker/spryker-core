@@ -20,23 +20,60 @@ use Spryker\Zed\ProductOption\Communication\Form\ToggleActiveProductOptionForm;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToCurrencyFacadeInterface;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToMoneyFacadeInterface;
 use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface;
+use Spryker\Zed\ProductOption\Persistence\ProductOptionRepositoryInterface;
 
 class ProductOptionListTable extends AbstractTable
 {
+    /**
+     * @var string
+     */
     public const TABLE_COL_PRICE = 'price';
+    /**
+     * @var string
+     */
     public const TABLE_COL_GROSS_PRICE = 'gross_price';
+    /**
+     * @var string
+     */
     public const TABLE_COL_NET_PRICE = 'net_price';
+    /**
+     * @var string
+     */
     public const TABLE_COL_SKU = 'sku';
+    /**
+     * @var string
+     */
     public const TABLE_COL_NAME = 'name';
+    /**
+     * @var string
+     */
     public const TABLE_COL_ACTIONS = 'Actions';
 
+    /**
+     * @var string
+     */
     public const URL_PARAM_ID_PRODUCT_OPTION_GROUP = 'id-product-option-group';
+    /**
+     * @var string
+     */
     public const URL_PARAM_ACTIVE = 'active';
+    /**
+     * @var string
+     */
     public const URL_PARAM_REDIRECT_URL = 'redirect-url';
 
+    /**
+     * @var string
+     */
     public const PRICE_NET = 'PRICE_NET';
+    /**
+     * @var string
+     */
     public const PRICE_GROSS = 'PRICE_GROSS';
 
+    /**
+     * @var string
+     */
     public const PRICE_LABEL = '<span class="label label-info">%s</span>';
 
     /**
@@ -55,6 +92,11 @@ class ProductOptionListTable extends AbstractTable
     protected $moneyFacade;
 
     /**
+     * @var \Spryker\Zed\ProductOption\Persistence\ProductOptionRepositoryInterface
+     */
+    protected $productOptionRepository;
+
+    /**
      * @var array Keys are currency ids, values are currency transfer objects in array format.
      */
     protected static $currencyBuffer = [];
@@ -63,15 +105,18 @@ class ProductOptionListTable extends AbstractTable
      * @param \Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface $productOptionQueryContainer
      * @param \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToCurrencyFacadeInterface $currencyFacade
      * @param \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToMoneyFacadeInterface $moneyFacade
+     * @param \Spryker\Zed\ProductOption\Persistence\ProductOptionRepositoryInterface $productOptionRepository
      */
     public function __construct(
         ProductOptionQueryContainerInterface $productOptionQueryContainer,
         ProductOptionToCurrencyFacadeInterface $currencyFacade,
-        ProductOptionToMoneyFacadeInterface $moneyFacade
+        ProductOptionToMoneyFacadeInterface $moneyFacade,
+        ProductOptionRepositoryInterface $productOptionRepository
     ) {
         $this->productOptionQueryContainer = $productOptionQueryContainer;
         $this->currencyFacade = $currencyFacade;
         $this->moneyFacade = $moneyFacade;
+        $this->productOptionRepository = $productOptionRepository;
     }
 
     /**
@@ -81,7 +126,7 @@ class ProductOptionListTable extends AbstractTable
      */
     protected function configure(TableConfiguration $config)
     {
-        $url = Url::generate('list-table')->build();
+        $url = Url::generate('/list-table', $this->getRequest()->query->all())->build();
         $config->setUrl($url);
 
         $config->setHeader([
@@ -130,13 +175,16 @@ class ProductOptionListTable extends AbstractTable
     {
         $result = [];
 
-        $productQuery = $this->productOptionQueryContainer
+        $productOptionGroupQuery = $this->productOptionQueryContainer
             ->queryAllProductOptionGroups()
             ->joinSpyProductOptionValue()
             ->groupByIdProductOptionGroup();
 
-        /** @var \Orm\Zed\ProductOption\Persistence\SpyProductOptionGroup[] $queryResult */
-        $queryResult = $this->runQuery($productQuery, $config, true);
+        $productOptionGroupQuery = $this->productOptionRepository
+            ->expandProductOptionGroupQuery($productOptionGroupQuery);
+
+        /** @var array<\Orm\Zed\ProductOption\Persistence\SpyProductOptionGroup> $queryResult */
+        $queryResult = $this->runQuery($productOptionGroupQuery, $config, true);
 
         foreach ($queryResult as $productOptionGroupEntity) {
             $formattedPrices = $this->getFormattedPrices($productOptionGroupEntity);
@@ -171,7 +219,7 @@ class ProductOptionListTable extends AbstractTable
      *   third level keys are simple numerical indexes for each price,
      *   values are formatted prices with symbol.
      *
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductOption\Persistence\SpyProductOptionValue[] $productOptionValueCollection
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductOption\Persistence\SpyProductOptionValue> $productOptionValueCollection
      *
      * @return array
      */
@@ -231,7 +279,7 @@ class ProductOptionListTable extends AbstractTable
     /**
      * @param \Orm\Zed\ProductOption\Persistence\SpyProductOptionGroup $entity
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getFormattedPrices(SpyProductOptionGroup $entity)
     {

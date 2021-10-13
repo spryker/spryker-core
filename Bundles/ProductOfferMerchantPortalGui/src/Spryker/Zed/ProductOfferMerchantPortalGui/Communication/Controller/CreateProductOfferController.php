@@ -23,7 +23,15 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class CreateProductOfferController extends AbstractProductOfferController
 {
+    /**
+     * @var string
+     */
     protected const PARAM_ID_PRODUCT = 'product-id';
+
+    /**
+     * @var string
+     */
+    protected const RESPONSE_ACTION_REDIRECT_URL = '/product-offer-merchant-portal-gui/product-offers';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -65,14 +73,19 @@ class CreateProductOfferController extends AbstractProductOfferController
             ->addPriceProductOffer($priceProductOfferTransfer);
 
         $validationResponseTransfer = $this->getFactory()
-            ->getPriceProductOfferFacade()
-            ->validateProductOfferPrices($priceProductOfferCollectionTransfer);
+            ->createPriceProductOfferValidator()
+            ->validatePriceProductOfferCollection($priceProductOfferCollectionTransfer);
 
         if (!$productOfferForm->isValid() || !$validationResponseTransfer->getIsSuccess()) {
+            $validationResponseTransfer = $this->getFactory()
+                ->createValidationResponseTranslator()
+                ->translateValidationResponse($validationResponseTransfer);
+
             $initialData = $this->getFactory()
                 ->createPriceProductOfferMapper()
                 ->mapValidationResponseTransferToInitialDataErrors(
                     $validationResponseTransfer,
+                    $priceProductOfferCollectionTransfer,
                     $initialData
                 );
 
@@ -105,12 +118,11 @@ class CreateProductOfferController extends AbstractProductOfferController
 
     /**
      * @phpstan-param \Symfony\Component\Form\FormInterface<mixed> $productOfferForm
-     * @phpstan-param array<mixed> $initialData
      *
      * @param \Symfony\Component\Form\FormInterface $productOfferForm
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     * @param array $initialData
+     * @param array<mixed> $initialData
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
@@ -145,18 +157,31 @@ class CreateProductOfferController extends AbstractProductOfferController
         }
 
         if ($productOfferForm->isValid() && $isPriceProductOffersValid) {
-            $responseData['postActions'] = [[
-                'type' => 'redirect',
-                'url' => '/product-offer-merchant-portal-gui/product-offers',
-            ]];
-
             $this->addSuccessMessage('The Offer is saved.');
+
+            $responseData = $this->addSuccessResponseDataToResponse($responseData);
 
             return new JsonResponse($responseData);
         }
 
-        $responseData = $this->addValidationNotifications($responseData);
+        $responseData = $this->addErrorResponseDataToResponse($responseData);
 
         return new JsonResponse($responseData);
+    }
+
+    /**
+     * @param array<mixed> $responseData
+     *
+     * @return array<mixed>
+     */
+    protected function addSuccessResponseDataToResponse(array $responseData): array
+    {
+        $zedUiFormResponseTransfer = $this->getFactory()
+            ->getZedUiFactory()
+            ->createZedUiFormResponseBuilder()
+            ->addActionRedirect(static::RESPONSE_ACTION_REDIRECT_URL)
+            ->createResponse();
+
+        return array_merge($responseData, $zedUiFormResponseTransfer->toArray());
     }
 }

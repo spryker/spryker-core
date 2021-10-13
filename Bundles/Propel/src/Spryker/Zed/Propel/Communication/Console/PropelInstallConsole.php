@@ -18,11 +18,26 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class PropelInstallConsole extends Console
 {
+    /**
+     * @var string
+     */
     public const OPTION_NO_DIFF = 'no-diff';
+    /**
+     * @var string
+     */
     public const OPTION_NO_DIFF_SHORTCUT = 'o';
+    /**
+     * @var string
+     */
     public const OPTION_NO_DIFF_DESCRIPTION = 'Runs without propel:diff';
 
+    /**
+     * @var string
+     */
     public const COMMAND_NAME = 'propel:install';
+    /**
+     * @var string
+     */
     public const DESCRIPTION = 'Runs config convert, create database, postgres compatibility, copy schemas, runs Diff, build models and migrate tasks';
 
     /**
@@ -65,7 +80,7 @@ class PropelInstallConsole extends Console
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function getDependingCommands()
     {
@@ -87,9 +102,9 @@ class PropelInstallConsole extends Console
     }
 
     /**
-     * @param string[] $commands
+     * @param array<string> $commands
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function filterOutNonRegisteredCommands(array $commands): array
     {

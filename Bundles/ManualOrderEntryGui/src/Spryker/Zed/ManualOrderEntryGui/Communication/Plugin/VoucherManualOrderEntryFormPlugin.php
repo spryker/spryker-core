@@ -23,7 +23,13 @@ class VoucherManualOrderEntryFormPlugin extends AbstractPlugin implements Manual
 {
     use UniqueFlashMessagesTrait;
 
+    /**
+     * @var string
+     */
     protected const MESSAGE_ERROR = 'Voucher code \'%s\' has not been applied';
+    /**
+     * @var string
+     */
     protected const MESSAGE_SUCCESS = 'Voucher code \'%s\' has been applied';
 
     /**

@@ -18,13 +18,19 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class EditController extends AbstractController
 {
+    /**
+     * @var string
+     */
     public const PARAM_ID_CUSTOMER_GROUP = 'id-customer-group';
+    /**
+     * @var string
+     */
     public const MESSAGE_CUSTOMER_GROUP_UPDATE_SUCCESS = 'Customer group was updated successfully.';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function indexAction(Request $request)
     {

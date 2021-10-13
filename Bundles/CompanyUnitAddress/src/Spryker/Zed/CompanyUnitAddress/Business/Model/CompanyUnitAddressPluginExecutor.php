@@ -12,18 +12,18 @@ use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
 class CompanyUnitAddressPluginExecutor implements CompanyUnitAddressPluginExecutorInterface
 {
     /**
-     * @var \Spryker\Zed\CompanyUnitAddressExtension\Dependency\Plugin\CompanyUnitAddressHydratePluginInterface[]
+     * @var array<\Spryker\Zed\CompanyUnitAddressExtension\Dependency\Plugin\CompanyUnitAddressHydratePluginInterface>
      */
     protected $companyUnitAddressHydratePlugins;
 
     /**
-     * @var \Spryker\Zed\CompanyUnitAddressExtension\Dependency\Plugin\CompanyUnitAddressPostSavePluginInterface[]
+     * @var array<\Spryker\Zed\CompanyUnitAddressExtension\Dependency\Plugin\CompanyUnitAddressPostSavePluginInterface>
      */
     protected $companyUnitAddressPostSavePlugins;
 
     /**
-     * @param \Spryker\Zed\CompanyUnitAddressExtension\Dependency\Plugin\CompanyUnitAddressHydratePluginInterface[] $companyUnitAddressHydratePlugins
-     * @param \Spryker\Zed\CompanyUnitAddressExtension\Dependency\Plugin\CompanyUnitAddressPostSavePluginInterface[] $companyUnitAddressPostSavePlugins
+     * @param array<\Spryker\Zed\CompanyUnitAddressExtension\Dependency\Plugin\CompanyUnitAddressHydratePluginInterface> $companyUnitAddressHydratePlugins
+     * @param array<\Spryker\Zed\CompanyUnitAddressExtension\Dependency\Plugin\CompanyUnitAddressPostSavePluginInterface> $companyUnitAddressPostSavePlugins
      */
     public function __construct(
         array $companyUnitAddressHydratePlugins,

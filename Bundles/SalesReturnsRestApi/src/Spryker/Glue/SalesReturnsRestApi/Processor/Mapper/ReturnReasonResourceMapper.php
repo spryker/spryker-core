@@ -13,10 +13,10 @@ use Generated\Shared\Transfer\RestReturnReasonsAttributesTransfer;
 class ReturnReasonResourceMapper implements ReturnReasonResourceMapperInterface
 {
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ReturnReasonSearchTransfer[] $returnReasonSearchTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ReturnReasonSearchTransfer> $returnReasonSearchTransfers
      * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\RestReturnReasonsAttributesTransfer[]
+     * @return array<\Generated\Shared\Transfer\RestReturnReasonsAttributesTransfer>
      */
     public function mapReturnReasonSearchTransfersToRestReturnReasonsAttributesTransfers(
         ArrayObject $returnReasonSearchTransfers,

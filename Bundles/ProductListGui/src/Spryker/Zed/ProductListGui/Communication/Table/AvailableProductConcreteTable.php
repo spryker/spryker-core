@@ -13,6 +13,9 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
 class AvailableProductConcreteTable extends AbstractProductConcreteTable
 {
+    /**
+     * @var string
+     */
     protected const DEFAULT_URL = 'available-product-concrete-table';
     protected const TABLE_IDENTIFIER = self::DEFAULT_URL;
 

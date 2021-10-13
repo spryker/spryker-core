@@ -23,13 +23,31 @@ use Symfony\Component\Validator\Constraints\Regex;
  */
 class CmsPageAttributesFormType extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const FIELD_NAME = 'name';
+    /**
+     * @var string
+     */
     public const FIELD_URL = 'url';
+    /**
+     * @var string
+     */
     public const FIELD_LOCALE_NAME = 'localeName';
+    /**
+     * @var string
+     */
     public const FIELD_ID_CMS_PAGE_LOCALIZED_ATTRIBUTES = 'idCmsPageLocalizedAttributes';
 
+    /**
+     * @var string
+     */
     public const OPTION_AVAILABLE_LOCALES = 'option_available_locales';
 
+    /**
+     * @var string
+     */
     public const URL_PATH_PATTERN = '#^([^\s\\\\]+)$#i';
 
     /**

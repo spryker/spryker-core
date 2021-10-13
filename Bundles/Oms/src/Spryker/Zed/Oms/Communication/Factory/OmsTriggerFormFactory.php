@@ -56,7 +56,7 @@ class OmsTriggerFormFactory implements OmsTriggerFormFactoryInterface
     /**
      * @param string $redirectUrl
      * @param string $event
-     * @param int[] $salesOrderItemIds
+     * @param array<int> $salesOrderItemIds
      *
      * @return \Symfony\Component\Form\FormInterface
      */

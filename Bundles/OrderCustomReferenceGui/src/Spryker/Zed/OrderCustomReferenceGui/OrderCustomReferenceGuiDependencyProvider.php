@@ -13,6 +13,9 @@ use Spryker\Zed\OrderCustomReferenceGui\Dependency\Facade\OrderCustomReferenceGu
 
 class OrderCustomReferenceGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_ORDER_CUSTOM_REFERENCE = 'FACADE_ORDER_CUSTOM_REFERENCE';
 
     /**

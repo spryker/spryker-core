@@ -13,7 +13,7 @@ use Spryker\Client\CartNote\Exception\QuoteStorageStrategyPluginNotFound;
 class QuoteStorageStrategyProvider implements QuoteStorageStrategyProviderInterface
 {
     /**
-     * @var \Spryker\Client\CartNote\QuoteStorageStrategy\QuoteStorageStrategyInterface[]
+     * @var array<\Spryker\Client\CartNote\QuoteStorageStrategy\QuoteStorageStrategyInterface>
      */
     protected $quoteStorageStrategyPlugins;
 
@@ -24,7 +24,7 @@ class QuoteStorageStrategyProvider implements QuoteStorageStrategyProviderInterf
 
     /**
      * @param \Spryker\Client\CartNote\Dependency\Client\CartNoteToQuoteClientInterface $quoteClient
-     * @param \Spryker\Client\CartNote\QuoteStorageStrategy\QuoteStorageStrategyInterface[] $quoteStorageStrategyPlugins
+     * @param array<\Spryker\Client\CartNote\QuoteStorageStrategy\QuoteStorageStrategyInterface> $quoteStorageStrategyPlugins
      */
     public function __construct(CartNoteToQuoteClientInterface $quoteClient, array $quoteStorageStrategyPlugins)
     {

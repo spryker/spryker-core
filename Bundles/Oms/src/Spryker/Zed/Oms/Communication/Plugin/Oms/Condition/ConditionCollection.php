@@ -17,7 +17,7 @@ use Spryker\Zed\Oms\Exception\ConditionNotFoundException;
 class ConditionCollection implements ConditionCollectionInterface, HasAwareCollectionInterface, ArrayAccess
 {
     /**
-     * @var \Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionInterface[]|\Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionInterface[]
+     * @var array<\Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionInterface|\Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionInterface>
      */
     protected $conditions = [];
 

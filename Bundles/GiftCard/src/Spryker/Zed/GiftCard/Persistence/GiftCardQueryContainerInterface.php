@@ -73,7 +73,7 @@ interface GiftCardQueryContainerInterface
      *
      * @api
      *
-     * @param string[] $codes
+     * @param array<string> $codes
      *
      * @return \Orm\Zed\GiftCard\Persistence\SpyGiftCardQuery
      */

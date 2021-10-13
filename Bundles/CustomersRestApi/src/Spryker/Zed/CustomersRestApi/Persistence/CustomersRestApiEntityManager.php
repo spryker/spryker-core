@@ -15,6 +15,9 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
  */
 class CustomersRestApiEntityManager extends AbstractEntityManager implements CustomersRestApiEntityManagerInterface
 {
+    /**
+     * @var int
+     */
     protected const BATCH_SIZE = 200;
 
     /**

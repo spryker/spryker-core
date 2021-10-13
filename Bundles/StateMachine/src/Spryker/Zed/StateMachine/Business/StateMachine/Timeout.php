@@ -17,12 +17,12 @@ use Spryker\Zed\StateMachine\Business\Process\ProcessInterface;
 class Timeout implements TimeoutInterface
 {
     /**
-     * @var \DateTime[]
+     * @var array<\DateTime>
      */
     protected $eventToTimeoutBuffer = [];
 
     /**
-     * @var \Spryker\Zed\StateMachine\Business\Process\StateInterface[]
+     * @var array<\Spryker\Zed\StateMachine\Business\Process\StateInterface>
      */
     protected $stateIdToModelBuffer = [];
 

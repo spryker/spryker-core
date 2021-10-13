@@ -39,10 +39,10 @@ class AbstractProductPricesRelationshipExpander implements AbstractProductPrices
     }
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
+     * @param array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface> $resources
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>
      */
     public function addResourceRelationshipsByResourceId(array $resources, RestRequestInterface $restRequest): array
     {
@@ -51,8 +51,10 @@ class AbstractProductPricesRelationshipExpander implements AbstractProductPrices
         }
 
         foreach ($resources as $resource) {
+            /** @var string $sku */
+            $sku = $resource->getId();
             $abstractProductPricesResource = $this->abstractProductPricesReader
-                ->findAbstractProductPricesBySku($resource->getId(), $restRequest);
+                ->findAbstractProductPricesBySku($sku, $restRequest);
             if ($abstractProductPricesResource) {
                 $resource->addRelationship($abstractProductPricesResource);
             }

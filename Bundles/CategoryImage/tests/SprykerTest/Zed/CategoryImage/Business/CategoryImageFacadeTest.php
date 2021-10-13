@@ -27,7 +27,13 @@ use Generated\Shared\Transfer\LocaleTransfer;
  */
 class CategoryImageFacadeTest extends Test
 {
+    /**
+     * @var int
+     */
     public const DEFAULT_CATEGORY_IMAGE_SET_COUNT = 1;
+    /**
+     * @var int
+     */
     public const MAX_CATEGORY_IMAGE_SET_COUNT = 5;
 
     /**
@@ -243,7 +249,7 @@ class CategoryImageFacadeTest extends Test
     /**
      * @param int $size
      *
-     * @return \Generated\Shared\Transfer\CategoryImageSetTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractTransfer[]
+     * @return array<\Generated\Shared\Transfer\CategoryImageSetTransfer|\Spryker\Shared\Kernel\Transfer\AbstractTransfer>
      */
     protected function buildCategoryImageSetTransferCollection(int $size): array
     {
@@ -274,7 +280,7 @@ class CategoryImageFacadeTest extends Test
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CategoryImageSetTransfer[] $categoryImageSetCollection
+     * @param array<\Generated\Shared\Transfer\CategoryImageSetTransfer> $categoryImageSetCollection
      *
      * @return array
      */

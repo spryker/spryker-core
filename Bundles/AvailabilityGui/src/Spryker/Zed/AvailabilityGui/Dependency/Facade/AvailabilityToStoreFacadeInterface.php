@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\StoreTransfer;
 interface AvailabilityToStoreFacadeInterface
 {
     /**
-     * @return \Generated\Shared\Transfer\StoreTransfer[]
+     * @return array<\Generated\Shared\Transfer\StoreTransfer>
      */
     public function getAllStores();
 
@@ -38,7 +38,7 @@ interface AvailabilityToStoreFacadeInterface
     /**
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return \Generated\Shared\Transfer\StoreTransfer[]
+     * @return array<\Generated\Shared\Transfer\StoreTransfer>
      */
     public function getStoresWithSharedPersistence(StoreTransfer $storeTransfer);
 }

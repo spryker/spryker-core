@@ -25,7 +25,13 @@ use Generated\Shared\Transfer\OrderTransfer;
  */
 class ExpandUniqueOrderItemsWithProductBundlesTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const FAKE_BUNDLE_ITEM_IDENTIFIER_1 = 'FAKE_BUNDLE_ITEM_IDENTIFIER_1';
+    /**
+     * @var string
+     */
     protected const FAKE_BUNDLE_ITEM_IDENTIFIER_2 = 'FAKE_BUNDLE_ITEM_IDENTIFIER_2';
 
     /**

@@ -1,0 +1,6 @@
+parameters:
+    ignoreErrors:
+        -
+            message: "#^Method Spryker\\\\Service\\\\DataExport\\\\Merger\\\\DataExportConfigurationMerger\\:\\:mergeDataExportConfigurationTransfers\\(\\) should return Generated\\\\Shared\\\\Transfer\\\\DataExportConfigurationTransfer but returns Generated\\\\Shared\\\\Transfer\\\\DataExportConfigurationTransfer\\|null\\.$#"
+            count: 1
+            path: %rootDir%/../../../vendor/spryker/spryker/Bundles/DataExport/src/Spryker/Service/DataExport/Merger/DataExportConfigurationMerger.php

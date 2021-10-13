@@ -21,6 +21,9 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class CmsPageTable extends AbstractTable
 {
+    /**
+     * @var string
+     */
     protected const BUTTON_LABEL_EDIT = 'Edit';
 
     /**
@@ -44,7 +47,7 @@ class CmsPageTable extends AbstractTable
     protected $cmsFacade;
 
     /**
-     * @var \Spryker\Zed\CmsGui\Dependency\Plugin\CmsPageTableExpanderPluginInterface[]
+     * @var array<\Spryker\Zed\CmsGui\Dependency\Plugin\CmsPageTableExpanderPluginInterface>
      */
     protected $cmsPageTableExpanderPlugins;
 
@@ -53,7 +56,7 @@ class CmsPageTable extends AbstractTable
      * @param \Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToLocaleInterface $localeFacade
      * @param \Spryker\Zed\CmsGui\CmsGuiConfig $cmsGuiConfig
      * @param \Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToCmsInterface $cmsFacade
-     * @param \Spryker\Zed\CmsGui\Dependency\Plugin\CmsPageTableExpanderPluginInterface[] $cmsPageTableExpanderPlugins
+     * @param array<\Spryker\Zed\CmsGui\Dependency\Plugin\CmsPageTableExpanderPluginInterface> $cmsPageTableExpanderPlugins
      */
     public function __construct(
         CmsGuiToCmsQueryContainerInterface $cmsQueryContainer,
@@ -239,7 +242,7 @@ class CmsPageTable extends AbstractTable
      * @param array $item
      * @param string $urlPrefix
      *
-     * @return string|array
+     * @return array|string
      */
     protected function createViewInShopButtonItem(array $item, $urlPrefix)
     {
@@ -438,7 +441,7 @@ class CmsPageTable extends AbstractTable
     /**
      * @param array $item
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function extractUrls(array $item)
     {
@@ -552,7 +555,7 @@ class CmsPageTable extends AbstractTable
     /**
      * @param array $item
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function extractNames(array $item): array
     {

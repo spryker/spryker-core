@@ -211,7 +211,7 @@ class SharedCartBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\SharedCart\Business\QuoteResponseExpander\QuoteResponseExpanderInterface[]
+     * @return array<\Spryker\Zed\SharedCart\Business\QuoteResponseExpander\QuoteResponseExpanderInterface>
      */
     protected function getQuoteResponseExpanderList(): array
     {

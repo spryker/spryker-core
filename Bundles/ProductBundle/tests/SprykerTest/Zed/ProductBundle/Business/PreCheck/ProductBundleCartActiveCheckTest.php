@@ -28,7 +28,13 @@ use Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleReaderInterfac
  */
 class ProductBundleCartActiveCheckTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const PRODUCT_SKU_INACTIVE = 'inactive';
+    /**
+     * @var string
+     */
     protected const PRODUCT_SKU_ACTIVE = 'active';
 
     /**

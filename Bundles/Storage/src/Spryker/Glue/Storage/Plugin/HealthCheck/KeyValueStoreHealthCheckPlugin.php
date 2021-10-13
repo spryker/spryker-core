@@ -16,6 +16,9 @@ use Spryker\Shared\HealthCheckExtension\Dependency\Plugin\HealthCheckPluginInter
  */
 class KeyValueStoreHealthCheckPlugin extends AbstractPlugin implements HealthCheckPluginInterface
 {
+    /**
+     * @var string
+     */
     protected const STORAGE_HEALTH_CHECK_SERVICE_NAME = 'storage';
 
     /**

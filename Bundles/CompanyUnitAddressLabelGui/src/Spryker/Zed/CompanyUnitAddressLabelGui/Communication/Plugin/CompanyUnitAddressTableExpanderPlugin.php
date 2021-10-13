@@ -25,6 +25,9 @@ class CompanyUnitAddressTableExpanderPlugin extends AbstractPlugin implements
     CompanyUnitAddressTableDataExpanderPluginInterface
 {
     protected const ID_COMPANY_UNIT_ADDRESS = SpyCompanyUnitAddressTableMap::COL_ID_COMPANY_UNIT_ADDRESS;
+    /**
+     * @var string
+     */
     protected const COL_COMPANY_UNIT_ADDRESS_LABELS = 'Labels';
 
     /**

@@ -23,6 +23,9 @@ class ProductListTable extends AbstractTable
     protected const COLUMN_ID_PRODUCT_LIST = SpyProductListTableMap::COL_ID_PRODUCT_LIST;
     protected const COLUMN_TITLE = SpyProductListTableMap::COL_TITLE;
     protected const COLUMN_TYPE = SpyProductListTableMap::COL_TYPE;
+    /**
+     * @var string
+     */
     protected const COLUMN_ACTIONS = 'actions';
 
     public const URL_PRODUCT_LIST_EDIT = RoutingConstants::URL_EDIT;
@@ -143,10 +146,10 @@ class ProductListTable extends AbstractTable
     protected function generateTypeLabels(array $item): string
     {
         if ($item[SpyProductListTableMap::COL_TYPE] === SpyProductListTableMap::COL_TYPE_WHITELIST) {
-            return $this->generateLabel('Whitelist', 'label-info');
+            return $this->generateLabel('Whitelist', 'label-success');
         }
 
-        return $this->generateLabel('Blacklist', 'label-warning');
+        return $this->generateLabel('Blacklist', 'label-danger');
     }
 
     /**
@@ -195,7 +198,7 @@ class ProductListTable extends AbstractTable
         }
 
         /**
-         * @var \ArrayObject|\Generated\Shared\Transfer\QueryJoinTransfer[]|null
+         * @var \ArrayObject<int, \Generated\Shared\Transfer\QueryJoinTransfer>|null
          */
         $queryCriteriaTransferJoins = $queryCriteriaTransfer->getJoins();
 

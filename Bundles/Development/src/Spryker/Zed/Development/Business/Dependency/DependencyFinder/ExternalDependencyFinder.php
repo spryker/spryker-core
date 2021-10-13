@@ -17,6 +17,9 @@ use Spryker\Zed\Development\DevelopmentConfig;
 
 class ExternalDependencyFinder extends AbstractFileDependencyFinder
 {
+    /**
+     * @var string
+     */
     public const TYPE_EXTERNAL = 'external';
 
     /**

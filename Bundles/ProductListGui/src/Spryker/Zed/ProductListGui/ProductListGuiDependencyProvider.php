@@ -22,24 +22,66 @@ use Spryker\Zed\ProductListGui\Dependency\Service\ProductListGuiToUtilCsvService
  */
 class ProductListGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const PROPEL_QUERY_PRODUCT = 'PROPEL_QUERY_PRODUCT';
+    /**
+     * @var string
+     */
     public const PROPEL_QUERY_PRODUCT_LIST = 'PROPEL_QUERY_PRODUCT_LIST';
 
+    /**
+     * @var string
+     */
     public const FACADE_PRODUCT_LIST = 'FACADE_PRODUCT_LIST';
+    /**
+     * @var string
+     */
     public const FACADE_LOCALE = 'FACADE_LOCALE';
+    /**
+     * @var string
+     */
     public const FACADE_CATEGORY = 'FACADE_CATEGORY';
+    /**
+     * @var string
+     */
     public const FACADE_PRODUCT = 'FACADE_PRODUCT';
 
+    /**
+     * @var string
+     */
     public const SERVICE_UTIL_CSV = 'SERVICE_UTIL_CSV';
 
+    /**
+     * @var string
+     */
     public const PLUGINS_PRODUCT_LIST_TABLE_ACTION_EXPANDER = 'PLUGINS_PRODUCT_LIST_TABLE_ACTION_EXPANDER';
+    /**
+     * @var string
+     */
     public const PLUGINS_PRODUCT_LIST_TABLE_CONFIG_EXPANDER = 'PLUGINS_PRODUCT_LIST_TABLE_CONFIG_EXPANDER';
+    /**
+     * @var string
+     */
     public const PLUGINS_PRODUCT_LIST_TABLE_QUERY_CRITERIA_EXPANDER = 'PLUGINS_PRODUCT_LIST_TABLE_QUERY_CRITERIA_EXPANDER';
+    /**
+     * @var string
+     */
     public const PLUGINS_PRODUCT_LIST_TABLE_DATA_EXPANDER = 'PLUGINS_PRODUCT_LIST_TABLE_DATA_EXPANDER';
+    /**
+     * @var string
+     */
     public const PLUGINS_PRODUCT_LIST_TABLE_HEADER_EXPANDER = 'PLUGINS_PRODUCT_LIST_TABLE_DATA_EXPANDER';
 
+    /**
+     * @var string
+     */
     public const PLUGINS_PRODUCT_LIST_TOP_BUTTONS_EXPANDER = 'PLUGINS_PRODUCT_LIST_TOP_BUTTONS_EXPANDER';
 
+    /**
+     * @var string
+     */
     public const PLUGINS_PRODUCT_LIST_USED_BY_TABLE_EXPANDER = 'PLUGINS_PRODUCT_LIST_USED_BY_TABLE_EXPANDER';
 
     /**
@@ -271,7 +313,7 @@ class ProductListGuiDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListTableActionExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListTableActionExpanderPluginInterface>
      */
     protected function getProductListTableActionExpanderPlugins(): array
     {
@@ -279,7 +321,7 @@ class ProductListGuiDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListTableConfigExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListTableConfigExpanderPluginInterface>
      */
     protected function getProductListTableConfigExpanderPlugins(): array
     {
@@ -287,7 +329,7 @@ class ProductListGuiDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListTableQueryCriteriaExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListTableQueryCriteriaExpanderPluginInterface>
      */
     protected function getProductListTableQueryCriteriaExpanderPlugins(): array
     {
@@ -295,7 +337,7 @@ class ProductListGuiDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListTableDataExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListTableDataExpanderPluginInterface>
      */
     protected function getProductListTableDataExpanderPlugins(): array
     {
@@ -303,7 +345,7 @@ class ProductListGuiDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListTableDataExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListTableDataExpanderPluginInterface>
      */
     protected function getProductListTableHeaderExpanderPlugins(): array
     {
@@ -311,7 +353,7 @@ class ProductListGuiDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListTopButtonsExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListTopButtonsExpanderPluginInterface>
      */
     protected function getProductListTopButtonsExpanderPlugins(): array
     {
@@ -319,7 +361,7 @@ class ProductListGuiDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListUsedByTableExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListUsedByTableExpanderPluginInterface>
      */
     protected function getProductListUsedByTableExpanderPlugins(): array
     {

@@ -21,11 +21,23 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class ProductCollectionType extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const TYPE_NAME = 'products';
 
+    /**
+     * @var string
+     */
     public const FIELD_PRODUCTS = 'products';
+    /**
+     * @var string
+     */
     public const FIELD_IS_PRODUCT_POSTED = 'isProductPosted';
 
+    /**
+     * @var string
+     */
     public const OPTION_PRODUCT_CLASS_COLLECTION = 'OPTION_PRODUCT_CLASS_COLLECTION';
 
     /**

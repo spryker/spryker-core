@@ -16,9 +16,21 @@ use Spryker\Client\Kernel\Container;
 
 class CatalogPriceProductConnectorDependencyProvider extends AbstractDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_PRICE_PRODUCT = 'CLIENT_PRICE_PRODUCT';
+    /**
+     * @var string
+     */
     public const CLIENT_PRICE = 'CLIENT_PRICE';
+    /**
+     * @var string
+     */
     public const CLIENT_CURRENCY = 'CLIENT_CURRENCY';
+    /**
+     * @var string
+     */
     public const CLIENT_PRICE_PRODUCT_STORAGE = 'CLIENT_PRICE_PRODUCT_STORAGE';
 
     /**

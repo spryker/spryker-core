@@ -11,6 +11,7 @@ use Propel\Runtime\Propel;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\DataImport\Dependency\Client\DataImportToQueueClientBridge;
 use Spryker\Zed\DataImport\Dependency\Facade\DataImportToEventBridge;
+use Spryker\Zed\DataImport\Dependency\Facade\DataImportToGracefulRunnerBridge;
 use Spryker\Zed\DataImport\Dependency\Facade\DataImportToTouchBridge;
 use Spryker\Zed\DataImport\Dependency\Propel\DataImportToPropelConnectionBridge;
 use Spryker\Zed\DataImport\Dependency\Service\DataImportToUtilDataReaderServiceBridge;
@@ -23,20 +24,57 @@ use Spryker\Zed\Kernel\Container;
  */
 class DataImportDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_TOUCH = 'touch facade';
+    /**
+     * @var string
+     */
     public const FACADE_EVENT = 'event facade';
+    /**
+     * @var string
+     */
+    public const FACADE_GRACEFUL_RUNNER = 'FACADE_GRACEFUL_RUNNER';
 
+    /**
+     * @var string
+     */
     public const DATA_IMPORTER_PLUGINS = 'IMPORTER_PLUGINS';
+    /**
+     * @var string
+     */
     public const DATA_IMPORT_BEFORE_HOOK_PLUGINS = 'DATA_IMPORT_BEFORE_HOOK_PLUGINS';
+    /**
+     * @var string
+     */
     public const DATA_IMPORT_AFTER_HOOK_PLUGINS = 'DATA_IMPORT_AFTER_HOOK_PLUGINS';
+    /**
+     * @var string
+     */
     public const DATA_IMPORT_DEFAULT_WRITER_PLUGINS = 'DATA_IMPORT_DEFAULT_WRITER_PLUGINS';
 
+    /**
+     * @var string
+     */
     public const PROPEL_CONNECTION = 'propel connection';
+    /**
+     * @var string
+     */
     public const STORE = 'store';
 
+    /**
+     * @var string
+     */
     public const CLIENT_QUEUE = 'CLIENT_QUEUE';
 
+    /**
+     * @var string
+     */
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
+    /**
+     * @var string
+     */
     public const SERVICE_UTIL_DATA_READER = 'SERVICE_UTIL_DATA_READER';
 
     /**
@@ -48,6 +86,7 @@ class DataImportDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = $this->addTouchFacade($container);
         $container = $this->addEventFacade($container);
+        $container = $this->addGracefulRunnerFacade($container);
         $container = $this->addPropelConnection($container);
         $container = $this->addDataImporterPlugins($container);
         $container = $this->addStore($container);
@@ -99,6 +138,22 @@ class DataImportDependencyProvider extends AbstractBundleDependencyProvider
         $container->set(static::FACADE_EVENT, function (Container $container) {
             return new DataImportToEventBridge(
                 $container->getLocator()->event()->facade()
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addGracefulRunnerFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_GRACEFUL_RUNNER, function (Container $container) {
+            return new DataImportToGracefulRunnerBridge(
+                $container->getLocator()->gracefulRunner()->facade()
             );
         });
 
@@ -216,7 +271,7 @@ class DataImportDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\DataImportExtension\Dependency\Plugin\DataSetWriterPluginInterface[]
+     * @return array<\Spryker\Zed\DataImportExtension\Dependency\Plugin\DataSetWriterPluginInterface>
      */
     protected function getDataImportDefaultWriterPlugins(): array
     {

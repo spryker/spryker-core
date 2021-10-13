@@ -141,7 +141,7 @@ class FileManagerRepository extends AbstractRepository implements FileManagerRep
     /**
      * @param int $idFileDirectory
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\FileTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\FileTransfer>
      */
     public function getDirectoryFiles(int $idFileDirectory)
     {
@@ -166,7 +166,7 @@ class FileManagerRepository extends AbstractRepository implements FileManagerRep
     /**
      * @param int|null $idParentFileDirectory
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\FileDirectoryTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\FileDirectoryTransfer>
      */
     public function getFileDirectories(?int $idParentFileDirectory = null)
     {
@@ -267,9 +267,9 @@ class FileManagerRepository extends AbstractRepository implements FileManagerRep
     }
 
     /**
-     * @param int[] $idFiles
+     * @param array<int> $idFiles
      *
-     * @return \Generated\Shared\Transfer\FileTransfer[]
+     * @return array<\Generated\Shared\Transfer\FileTransfer>
      */
     public function getFilesByIds(array $idFiles): array
     {

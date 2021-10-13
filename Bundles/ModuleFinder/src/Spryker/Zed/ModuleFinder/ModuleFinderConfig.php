@@ -12,7 +12,7 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class ModuleFinderConfig extends AbstractBundleConfig
 {
     /**
-     * @var string[]
+     * @var array<string>
      */
     protected $organizationPathFragments = [
         'spryker',
@@ -25,7 +25,7 @@ class ModuleFinderConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getInternalOrganizations(): array
     {
@@ -56,7 +56,7 @@ class ModuleFinderConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getInternalPackagePathFragments(): array
     {
@@ -70,7 +70,7 @@ class ModuleFinderConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getPathsToInternalOrganizations(): array
     {

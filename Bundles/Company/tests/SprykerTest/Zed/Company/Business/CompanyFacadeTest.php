@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\Company\Business;
 use Codeception\TestCase\Test;
 use Generated\Shared\DataBuilder\CompanyBuilder;
 use Generated\Shared\DataBuilder\StoreRelationBuilder;
+use Generated\Shared\Transfer\CompanyCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
 
@@ -26,8 +27,26 @@ use Generated\Shared\Transfer\StoreRelationTransfer;
  */
 class CompanyFacadeTest extends Test
 {
+    /**
+     * @var string
+     */
     protected const STATUS_PENDING = 'pending';
+    /**
+     * @var string
+     */
     protected const STATUS_APPROVED = 'approved';
+    /**
+     * @var string
+     */
+    protected const TEST_NAME = 'TEST_NAME';
+    /**
+     * @var string
+     */
+    protected const TEST_FAKE_NAME = 'TEST_FAKE_NAME';
+    /**
+     * @var string
+     */
+    protected const TEST_FAKE_ID = '777';
 
     /**
      * @var \SprykerTest\Zed\Company\CompanyBusinessTester
@@ -200,5 +219,90 @@ class CompanyFacadeTest extends Test
 
         // Assert
         $this->assertGreaterThan(0, $companyTypesCollection->getCompanies()->count());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetCompanyCollectionByIdCompanyShouldReturnTransferObject(): void
+    {
+        // Arrange
+        $this->tester->haveCompany();
+        $companyTransfer = $this->tester->haveCompany();
+
+        $companyCriteriaFilterTransfer = (new CompanyCriteriaFilterTransfer())
+            ->setIdCompany($companyTransfer->getIdCompany());
+
+        $fakeCompanyCriteriaFilterTransfer = (new CompanyCriteriaFilterTransfer())
+            ->setIdCompany(static::TEST_FAKE_ID);
+
+        // Act
+        $companyCollectionFilteredById = $this->tester->getFacade()
+            ->getCompanyCollection($companyCriteriaFilterTransfer);
+
+        $companyCollectionFilteredByFakeId = $this->tester->getFacade()
+            ->getCompanyCollection($fakeCompanyCriteriaFilterTransfer);
+
+        // Assert
+        $this->assertEquals(1, $companyCollectionFilteredById->getCompanies()->count());
+        $this->assertEquals(0, $companyCollectionFilteredByFakeId->getCompanies()->count());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetCompanyCollectionByNameShouldReturnTransferObject(): void
+    {
+        // Arrange
+        $companyTransfer = $this->tester->haveCompany([
+            CompanyTransfer::NAME => static::TEST_NAME,
+        ]);
+        $this->tester->haveCompany();
+
+        $companyCriteriaFilterTransfer = (new CompanyCriteriaFilterTransfer())
+            ->setName($companyTransfer->getName());
+
+        $fakeCompanyCriteriaFilterTransfer = (new CompanyCriteriaFilterTransfer())
+            ->setName(static::TEST_FAKE_NAME);
+
+        // Act
+        $companyCollectionFilteredByName = $this->tester->getFacade()
+            ->getCompanyCollection($companyCriteriaFilterTransfer);
+
+        $companyCollectionFilteredByFakeName = $this->tester->getFacade()
+            ->getCompanyCollection($fakeCompanyCriteriaFilterTransfer);
+
+        // Assert
+        $this->assertEquals(1, $companyCollectionFilteredByName->getCompanies()->count());
+        $this->assertEquals(0, $companyCollectionFilteredByFakeName->getCompanies()->count());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetCompanyCollectionByLowercaseNameShouldReturnTransferObject(): void
+    {
+        // Arrange
+        $companyTransfer = $this->tester->haveCompany([
+            CompanyTransfer::NAME => static::TEST_NAME,
+        ]);
+        $this->tester->haveCompany();
+
+        $companyCriteriaFilterTransfer = (new CompanyCriteriaFilterTransfer())
+            ->setName(strtolower($companyTransfer->getName()));
+
+        $fakeCompanyCriteriaFilterTransfer = (new CompanyCriteriaFilterTransfer())
+            ->setName(strtolower(static::TEST_FAKE_NAME));
+
+        // Act
+        $companyCollectionFilteredByName = $this->tester->getFacade()
+            ->getCompanyCollection($companyCriteriaFilterTransfer);
+
+        $companyCollectionFilteredByFakeName = $this->tester->getFacade()
+            ->getCompanyCollection($fakeCompanyCriteriaFilterTransfer);
+
+        // Assert
+        $this->assertEquals(1, $companyCollectionFilteredByName->getCompanies()->count());
+        $this->assertEquals(0, $companyCollectionFilteredByFakeName->getCompanies()->count());
     }
 }

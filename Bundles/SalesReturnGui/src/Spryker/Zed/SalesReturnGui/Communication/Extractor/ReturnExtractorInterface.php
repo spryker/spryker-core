@@ -14,21 +14,21 @@ interface ReturnExtractorInterface
     /**
      * @param \Generated\Shared\Transfer\ReturnTransfer $returnTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     public function extractUniqueOrderReferencesFromReturn(ReturnTransfer $returnTransfer): array;
 
     /**
      * @param \Generated\Shared\Transfer\ReturnTransfer $returnTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     public function extractUniqueItemStateLabelsFromReturn(ReturnTransfer $returnTransfer): array;
 
     /**
      * @param \Generated\Shared\Transfer\ReturnTransfer $returnTransfer
      *
-     * @return int[]
+     * @return array<int>
      */
     public function extractSalesOrderItemIdsFromReturn(ReturnTransfer $returnTransfer): array;
 }

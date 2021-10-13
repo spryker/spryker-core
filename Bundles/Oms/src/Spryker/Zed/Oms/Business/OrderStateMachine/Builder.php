@@ -24,7 +24,7 @@ class Builder implements BuilderInterface
     protected $rootElement;
 
     /**
-     * @var \Spryker\Zed\Oms\Business\Process\ProcessInterface[]
+     * @var array<\Spryker\Zed\Oms\Business\Process\ProcessInterface>
      */
     protected static $processBuffer = [];
 
@@ -49,7 +49,7 @@ class Builder implements BuilderInterface
     protected $process;
 
     /**
-     * @var string|array
+     * @var array|string
      */
     protected $processDefinitionLocation;
 
@@ -63,7 +63,7 @@ class Builder implements BuilderInterface
      * @param \Spryker\Zed\Oms\Business\Process\StateInterface $state
      * @param \Spryker\Zed\Oms\Business\Process\TransitionInterface $transition
      * @param \Spryker\Zed\Oms\Business\Process\ProcessInterface $process
-     * @param string|array $processDefinitionLocation
+     * @param array|string $processDefinitionLocation
      * @param string $subProcessPrefixDelimiter
      */
     public function __construct(
@@ -95,7 +95,7 @@ class Builder implements BuilderInterface
 
             $this->mergeSubProcessFiles();
 
-            /** @var \Spryker\Zed\Oms\Business\Process\ProcessInterface[] $processMap */
+            /** @var array<\Spryker\Zed\Oms\Business\Process\ProcessInterface> $processMap */
             $processMap = [];
 
             [$processMap, $mainProcess] = $this->createSubProcess($processMap);
@@ -145,7 +145,7 @@ class Builder implements BuilderInterface
      */
     protected function recursiveMerge($fromXmlElement, $intoXmlNode, $prefix = null)
     {
-        /** @var \SimpleXMLElement[] $xmlElements */
+        /** @var array<\SimpleXMLElement> $xmlElements */
         $xmlElements = $fromXmlElement->children();
         if (!$xmlElements) {
             return;
@@ -285,7 +285,7 @@ class Builder implements BuilderInterface
     }
 
     /**
-     * @param \Spryker\Zed\Oms\Business\Process\ProcessInterface[] $processMap
+     * @param array<\Spryker\Zed\Oms\Business\Process\ProcessInterface> $processMap
      *
      * @return array
      */
@@ -313,7 +313,7 @@ class Builder implements BuilderInterface
     }
 
     /**
-     * @param \Spryker\Zed\Oms\Business\Process\ProcessInterface[] $processMap
+     * @param array<\Spryker\Zed\Oms\Business\Process\ProcessInterface> $processMap
      *
      * @return void
      */
@@ -337,9 +337,9 @@ class Builder implements BuilderInterface
     }
 
     /**
-     * @param \Spryker\Zed\Oms\Business\Process\ProcessInterface[] $processMap
+     * @param array<\Spryker\Zed\Oms\Business\Process\ProcessInterface> $processMap
      *
-     * @return \Spryker\Zed\Oms\Business\Process\ProcessInterface[]
+     * @return array<\Spryker\Zed\Oms\Business\Process\ProcessInterface>
      */
     protected function createStates(array $processMap)
     {
@@ -379,9 +379,9 @@ class Builder implements BuilderInterface
     }
 
     /**
-     * @param \Spryker\Zed\Oms\Business\Process\ProcessInterface[] $stateToProcessMap
-     * @param \Spryker\Zed\Oms\Business\Process\ProcessInterface[] $processMap
-     * @param \Spryker\Zed\Oms\Business\Process\EventInterface[] $eventMap
+     * @param array<\Spryker\Zed\Oms\Business\Process\ProcessInterface> $stateToProcessMap
+     * @param array<\Spryker\Zed\Oms\Business\Process\ProcessInterface> $processMap
+     * @param array<\Spryker\Zed\Oms\Business\Process\EventInterface> $eventMap
      *
      * @throws \LogicException
      *
@@ -467,7 +467,7 @@ class Builder implements BuilderInterface
     }
 
     /**
-     * @param string|array|null $processDefinitionLocation
+     * @param array|string|null $processDefinitionLocation
      *
      * @return void
      */

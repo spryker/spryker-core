@@ -16,10 +16,17 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * @method \Spryker\Zed\CompanyGui\Communication\CompanyGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\CompanyGui\CompanyGuiConfig getConfig()
  */
 class CompanyForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     protected const FIELD_ID_COMPANY = 'id_company';
+    /**
+     * @var string
+     */
     protected const FIELD_NAME = 'name';
 
     /**
@@ -72,7 +79,7 @@ class CompanyForm extends AbstractType
     }
 
     /**
-     * @return \Symfony\Component\Validator\Constraint[]
+     * @return array<\Symfony\Component\Validator\Constraint>
      */
     protected function getTextFieldConstraints(): array
     {

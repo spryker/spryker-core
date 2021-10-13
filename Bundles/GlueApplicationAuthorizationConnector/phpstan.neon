@@ -1,0 +1,3 @@
+parameters:
+    ignoreErrors:
+        - '#Cannot call method getIdentifier\(\) on Generated\\Shared\\Transfer\\AuthorizationEntityTransfer\|null.#'

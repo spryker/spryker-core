@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\FilterFieldTransfer;
 class FilterFieldChecker implements FilterFieldCheckerInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\FilterFieldTransfer[] $filterFieldTransfers
+     * @param array<\Generated\Shared\Transfer\FilterFieldTransfer> $filterFieldTransfers
      * @param string $type
      *
      * @return bool
@@ -23,7 +23,7 @@ class FilterFieldChecker implements FilterFieldCheckerInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\FilterFieldTransfer[] $filterFieldTransfers
+     * @param array<\Generated\Shared\Transfer\FilterFieldTransfer> $filterFieldTransfers
      * @param string $type
      *
      * @return \Generated\Shared\Transfer\FilterFieldTransfer|null

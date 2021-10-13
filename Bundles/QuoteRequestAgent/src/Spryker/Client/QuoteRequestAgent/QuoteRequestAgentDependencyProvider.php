@@ -18,8 +18,17 @@ use Spryker\Client\QuoteRequestAgent\Dependency\Client\QuoteRequestAgentToZedReq
  */
 class QuoteRequestAgentDependencyProvider extends AbstractDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
+    /**
+     * @var string
+     */
     public const CLIENT_QUOTE = 'CLIENT_QUOTE';
+    /**
+     * @var string
+     */
     public const CLIENT_QUOTE_REQUEST = 'CLIENT_QUOTE_REQUEST';
 
     /**

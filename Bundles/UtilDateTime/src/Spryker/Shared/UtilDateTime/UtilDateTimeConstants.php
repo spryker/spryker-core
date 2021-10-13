@@ -18,6 +18,7 @@ interface UtilDateTimeConstants
      * - @see http://php.net/manual/en/class.datetimezone.php
      *
      * @api
+     * @var string
      */
     public const DATE_TIME_ZONE = 'DATE_TIME_ZONE';
 
@@ -27,6 +28,7 @@ interface UtilDateTimeConstants
      * - @see http://php.net/manual/en/datetime.formats.php
      *
      * @api
+     * @var string
      */
     public const DATE_TIME_FORMAT_DATE = 'DATE_TIME_FORMAT_DATE';
 
@@ -36,6 +38,7 @@ interface UtilDateTimeConstants
      * - @see http://php.net/manual/en/datetime.formats.php
      *
      * @api
+     * @var string
      */
     public const DATE_TIME_FORMAT_DATE_TIME = 'DATE_TIME_FORMAT_DATE_TIME';
 
@@ -45,6 +48,7 @@ interface UtilDateTimeConstants
      * - @see http://php.net/manual/en/datetime.formats.php
      *
      * @api
+     * @var string
      */
     public const DATE_TIME_FORMAT_TIME = 'DATE_TIME_FORMAT_TIME';
 }

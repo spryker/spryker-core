@@ -16,7 +16,13 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class YvesAssetsCleanUpConsole extends Console
 {
+    /**
+     * @var string
+     */
     public const COMMAND_NAME = 'frontend:yves:cleanup-assets';
+    /**
+     * @var string
+     */
     public const DESCRIPTION = 'This command will remove all yves assets.';
 
     /**

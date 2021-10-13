@@ -16,7 +16,13 @@ use Spryker\Zed\ShipmentsRestApi\Dependency\Facade\ShipmentsRestApiToShipmentFac
  */
 class ShipmentsRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_SHIPMENT = 'FACADE_SHIPMENT';
+    /**
+     * @var string
+     */
     public const PLUGINS_ADDRESS_PROVIDER_STRATEGY = 'PLUGINS_ADDRESS_PROVIDER_STRATEGY';
 
     /**
@@ -62,7 +68,7 @@ class ShipmentsRestApiDependencyProvider extends AbstractBundleDependencyProvide
     }
 
     /**
-     * @return \Spryker\Zed\ShipmentsRestApiExtension\Dependency\Plugin\AddressProviderStrategyPluginInterface[]
+     * @return array<\Spryker\Zed\ShipmentsRestApiExtension\Dependency\Plugin\AddressProviderStrategyPluginInterface>
      */
     protected function getAddressProviderStrategyPlugins(): array
     {

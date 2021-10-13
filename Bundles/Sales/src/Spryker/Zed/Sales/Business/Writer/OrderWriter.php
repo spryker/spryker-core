@@ -16,7 +16,13 @@ use Spryker\Zed\Sales\Business\Triggerer\OmsEventTriggererInterface;
 
 class OrderWriter implements OrderWriterInterface
 {
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_CUSTOMER_ORDER_NOT_FOUND = 'sales.error.customer_order_not_found';
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_ORDER_CANNOT_BE_CANCELLED = 'sales.error.order_cannot_be_canceled_due_to_wrong_item_state';
 
     /**

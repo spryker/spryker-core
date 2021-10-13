@@ -17,8 +17,12 @@ class WebProfilerDependencyProvider extends AbstractBundleDependencyProvider
 {
     /**
      * @deprecated Use {@link \Spryker\Zed\WebProfiler\WebProfilerDependencyProvider::PLUGINS_DATA_COLLECTORS} instead.
+     * @var string
      */
     public const PLUGINS_WEB_PROFILER = 'PLUGINS_WEB_PROFILER';
+    /**
+     * @var string
+     */
     public const PLUGINS_DATA_COLLECTORS = 'PLUGINS_DATA_COLLECTORS';
 
     /**
@@ -52,7 +56,7 @@ class WebProfilerDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Shared\WebProfilerExtension\Dependency\Plugin\WebProfilerDataCollectorPluginInterface[]
+     * @return array<\Spryker\Shared\WebProfilerExtension\Dependency\Plugin\WebProfilerDataCollectorPluginInterface>
      */
     public function getDataCollectorPlugins()
     {
@@ -62,7 +66,7 @@ class WebProfilerDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @deprecated Use {@link \Spryker\Zed\WebProfiler\WebProfilerDependencyProvider::getDataCollectorPlugins()} instead.
      *
-     * @return \Silex\ServiceProviderInterface[]
+     * @return array<\Silex\ServiceProviderInterface>
      */
     public function getWebProfilerPlugins()
     {

@@ -13,7 +13,7 @@ interface ProductAbstractRelationReaderInterface
      * @param int $idProductAbstract
      * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\StorageProductLabelTransfer[]
+     * @return array<\Generated\Shared\Transfer\StorageProductLabelTransfer>
      */
     public function findLabelsByIdProductAbstract($idProductAbstract, $localeName);
 }

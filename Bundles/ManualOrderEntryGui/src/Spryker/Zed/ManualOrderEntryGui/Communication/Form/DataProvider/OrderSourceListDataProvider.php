@@ -58,7 +58,7 @@ class OrderSourceListDataProvider implements FormDataProviderInterface
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function getOrderSourceList(): array
     {

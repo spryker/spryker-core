@@ -12,7 +12,7 @@ interface ProductDiscontinuedProductBundleConnectorRepositoryInterface
     /**
      * @param int $idProductDiscontinue
      *
-     * @return int[]
+     * @return array<int>
      */
     public function findRelatedBundleProductsIds(int $idProductDiscontinue): array;
 }

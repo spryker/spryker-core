@@ -36,11 +36,33 @@ interface SalesOrderItemMapperInterface
     ): SpySalesOrderItem;
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $salesOrderItemEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Sales\Persistence\SpySalesOrderItem> $salesOrderItemEntities
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     public function mapSalesOrderItemEntityCollectionToOrderItemTransfers(
         ObjectCollection $salesOrderItemEntities
     ): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer $salesOrderItemEntityTransfer
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $salesOrderItemEntity
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem
+     */
+    public function mapSalesOrderItemEntityTransferToSalesOrderItemEntity(
+        SpySalesOrderItemEntityTransfer $salesOrderItemEntityTransfer,
+        SpySalesOrderItem $salesOrderItemEntity
+    ): SpySalesOrderItem;
+
+    /**
+     * @param \Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer $salesOrderItemEntityTransfer
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $salesOrderItemEntity
+     *
+     * @return \Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer
+     */
+    public function mapSalesOrderItemEntityToSalesOrderItemEntityTransfer(
+        SpySalesOrderItemEntityTransfer $salesOrderItemEntityTransfer,
+        SpySalesOrderItem $salesOrderItemEntity
+    ): SpySalesOrderItemEntityTransfer;
 }

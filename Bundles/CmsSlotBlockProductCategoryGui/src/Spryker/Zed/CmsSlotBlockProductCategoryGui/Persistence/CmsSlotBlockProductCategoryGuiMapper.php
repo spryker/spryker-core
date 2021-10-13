@@ -15,7 +15,7 @@ class CmsSlotBlockProductCategoryGuiMapper
     /**
      * @param \Propel\Runtime\Collection\ObjectCollection $productAbstractEntityCollection
      *
-     * @return \Generated\Shared\Transfer\ProductAbstractTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductAbstractTransfer>
      */
     public function mapProductAbstractCollectionToTransfers(ObjectCollection $productAbstractEntityCollection): array
     {

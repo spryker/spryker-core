@@ -70,7 +70,7 @@ class ProductsRestApiToProductStorageClientBridge implements ProductsRestApiToPr
 
     /**
      * @param string $mappingType
-     * @param string[] $identifiers
+     * @param array<string> $identifiers
      * @param string $localeName
      *
      * @return array
@@ -81,7 +81,7 @@ class ProductsRestApiToProductStorageClientBridge implements ProductsRestApiToPr
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      * @param string $localeName
      * @param string $storeName
      *
@@ -97,7 +97,7 @@ class ProductsRestApiToProductStorageClientBridge implements ProductsRestApiToPr
 
     /**
      * @param string $mappingType
-     * @param string[] $identifiers
+     * @param array<string> $identifiers
      * @param string $localeName
      *
      * @return array
@@ -112,7 +112,7 @@ class ProductsRestApiToProductStorageClientBridge implements ProductsRestApiToPr
     }
 
     /**
-     * @param int[] $productConcreteIds
+     * @param array<int> $productConcreteIds
      * @param string $localeName
      *
      * @return array

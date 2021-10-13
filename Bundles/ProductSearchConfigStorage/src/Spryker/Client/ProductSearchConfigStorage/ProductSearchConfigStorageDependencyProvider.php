@@ -14,7 +14,13 @@ use Spryker\Client\ProductSearchConfigStorage\Dependency\Service\ProductSearchCo
 
 class ProductSearchConfigStorageDependencyProvider extends AbstractDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_STORAGE = 'CLIENT_STORAGE';
+    /**
+     * @var string
+     */
     public const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
 
     /**

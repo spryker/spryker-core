@@ -16,8 +16,8 @@ use Propel\Runtime\Collection\ObjectCollection;
 class ProductLabelDictionaryStorageMapper
 {
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductLabelStorage\Persistence\SpyProductLabelDictionaryStorage[] $productLabelDictionaryStorageEntities
-     * @param \Generated\Shared\Transfer\ProductLabelDictionaryStorageTransfer[] $productLabelDictionaryStorageTransfers
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductLabelStorage\Persistence\SpyProductLabelDictionaryStorage> $productLabelDictionaryStorageEntities
+     * @param array<\Generated\Shared\Transfer\ProductLabelDictionaryStorageTransfer> $productLabelDictionaryStorageTransfers
      *
      * @return array
      */

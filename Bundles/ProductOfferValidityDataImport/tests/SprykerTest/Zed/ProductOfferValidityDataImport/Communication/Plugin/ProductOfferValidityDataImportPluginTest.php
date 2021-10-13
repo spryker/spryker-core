@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReportTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
-use Spryker\Zed\ProductOfferValidityDataImport\Communication\ProductOfferValidityDataImportPlugin;
+use Spryker\Zed\ProductOfferValidityDataImport\Communication\DataImport\ProductOfferValidityDataImportPlugin;
 use Spryker\Zed\ProductOfferValidityDataImport\ProductOfferValidityDataImportConfig;
 
 /**
@@ -27,6 +27,9 @@ use Spryker\Zed\ProductOfferValidityDataImport\ProductOfferValidityDataImportCon
  */
 class ProductOfferValidityDataImportPluginTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const PRODUCT_OFFER_REFERENCE_VALUE = 'offer10';
 
     /**
@@ -42,6 +45,7 @@ class ProductOfferValidityDataImportPluginTest extends Unit
         parent::setUp();
 
         $this->tester->ensureProductOfferValidityTableIsEmpty();
+        $this->tester->ensureProductOfferTableIsEmpty();
     }
 
     /**

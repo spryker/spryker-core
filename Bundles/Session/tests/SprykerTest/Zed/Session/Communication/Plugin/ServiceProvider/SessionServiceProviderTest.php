@@ -47,6 +47,9 @@ class SessionServiceProviderTest extends Unit
 {
     use ConfigHelperTrait;
 
+    /**
+     * @var string
+     */
     protected const DUMMY_SESSION_HANDLER_NAME = 'DUMMY_SESSION_HANDLER_NAME';
 
     /**

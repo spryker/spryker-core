@@ -24,6 +24,9 @@ use Spryker\Client\StorageRedis\Plugin\StorageRedisPlugin;
  */
 class ProductCategoryStorageClientTest extends Unit
 {
+    /**
+     * @var int
+     */
     protected const INVALID_ID_PRODUCT_ABSTRACT = 1234567890;
 
     /**
@@ -48,7 +51,7 @@ class ProductCategoryStorageClientTest extends Unit
     {
         // Act
         $returnValue = $this->createProductCategoryStorageClient()
-            ->findProductAbstractCategory(static::INVALID_ID_PRODUCT_ABSTRACT, 'de_DE');
+            ->findProductAbstractCategory(static::INVALID_ID_PRODUCT_ABSTRACT, 'de_DE', 'DE');
 
         // Assert
         $this->assertNull($returnValue);
@@ -61,7 +64,7 @@ class ProductCategoryStorageClientTest extends Unit
     {
         // Act
         $productAbstractCategoryStorageTransfers = $this->createProductCategoryStorageClient()
-            ->findBulkProductAbstractCategory([static::INVALID_ID_PRODUCT_ABSTRACT], 'de_DE');
+            ->findBulkProductAbstractCategory([static::INVALID_ID_PRODUCT_ABSTRACT], 'de_DE', 'DE');
 
         // Assert
         $this->assertCount(0, $productAbstractCategoryStorageTransfers);

@@ -20,16 +20,46 @@ use Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\SecuritySchemeG
 
 class HttpMethodProcessor implements HttpMethodProcessorInterface
 {
+    /**
+     * @var string
+     */
     protected const PATTERN_SUMMARY_GET_RESOURCE = 'Get %s.';
+    /**
+     * @var string
+     */
     protected const PATTERN_SUMMARY_GET_COLLECTION = 'Get collection of %s.';
+    /**
+     * @var string
+     */
     protected const PATTERN_SUMMARY_POST_RESOURCE = 'Create %s.';
+    /**
+     * @var string
+     */
     protected const PATTERN_SUMMARY_PATCH_RESOURCE = 'Update %s.';
+    /**
+     * @var string
+     */
     protected const PATTERN_SUMMARY_DELETE_RESOURCE = 'Delete %s.';
 
+    /**
+     * @var string
+     */
     protected const PATTERN_OPERATION_ID_GET_RESOURCE = 'get-%s';
+    /**
+     * @var string
+     */
     protected const PATTERN_OPERATION_ID_GET_COLLECTION = 'get-collection-of-%s';
+    /**
+     * @var string
+     */
     protected const PATTERN_OPERATION_ID_POST_RESOURCE = 'create-%s';
+    /**
+     * @var string
+     */
     protected const PATTERN_OPERATION_ID_PATCH_RESOURCE = 'update-%s';
+    /**
+     * @var string
+     */
     protected const PATTERN_OPERATION_ID_DELETE_RESOURCE = 'delete-%s';
 
     /**
@@ -218,6 +248,7 @@ class HttpMethodProcessor implements HttpMethodProcessorInterface
                 $this->getDefaultMethodSummary(static::PATTERN_SUMMARY_POST_RESOURCE, $plugin->getResourceType())
             );
         }
+
         $this->tagGenerator->addTag($pathDataTransfer);
         $this->pathGenerator->addPostPath($pathDataTransfer, $requestSchema, $errorSchema, $responseSchema);
     }
@@ -379,6 +410,7 @@ class HttpMethodProcessor implements HttpMethodProcessorInterface
         $pathDataTransfer->setOperationId($operationId);
 
         if ($annotationTransfer) {
+            $pathDataTransfer->setDeprecated($annotationTransfer->getDeprecated());
             $pathDataTransfer->fromArray($annotationTransfer->modifiedToArray(), true);
             $this->addResponsesToPathData($pathDataTransfer, $errorSchema, $annotationTransfer->getResponses());
         }
@@ -403,7 +435,7 @@ class HttpMethodProcessor implements HttpMethodProcessorInterface
      * @param string $pattern
      * @param string $resourceType
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getDefaultMethodSummary(string $pattern, string $resourceType): array
     {

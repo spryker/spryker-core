@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 use Generated\Shared\Transfer\RestCheckoutResponseTransfer;
 use Spryker\Shared\CheckoutRestApi\CheckoutRestApiConfig;
 use Spryker\Zed\CheckoutRestApi\Business\Validator\CheckoutValidatorInterface;
+use Spryker\Zed\CheckoutRestApi\CheckoutRestApiConfig as ZedCheckoutRestApiConfig;
 use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCalculationFacadeInterface;
 use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCheckoutFacadeInterface;
 use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToQuoteFacadeInterface;
@@ -42,29 +43,37 @@ class PlaceOrderProcessor implements PlaceOrderProcessorInterface
     protected $checkoutValidator;
 
     /**
-     * @var \Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\QuoteMapperPluginInterface[]
+     * @var array<\Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\QuoteMapperPluginInterface>
      */
     protected $quoteMapperPlugins;
+
+    /**
+     * @var \Spryker\Zed\CheckoutRestApi\CheckoutRestApiConfig
+     */
+    protected $config;
 
     /**
      * @param \Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCheckoutFacadeInterface $checkoutFacade
      * @param \Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToQuoteFacadeInterface $quoteFacade
      * @param \Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCalculationFacadeInterface $calculationFacade
      * @param \Spryker\Zed\CheckoutRestApi\Business\Validator\CheckoutValidatorInterface $checkoutValidator
-     * @param \Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\QuoteMapperPluginInterface[] $quoteMapperPlugins
+     * @param array<\Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\QuoteMapperPluginInterface> $quoteMapperPlugins
+     * @param \Spryker\Zed\CheckoutRestApi\CheckoutRestApiConfig $config
      */
     public function __construct(
         CheckoutRestApiToCheckoutFacadeInterface $checkoutFacade,
         CheckoutRestApiToQuoteFacadeInterface $quoteFacade,
         CheckoutRestApiToCalculationFacadeInterface $calculationFacade,
         CheckoutValidatorInterface $checkoutValidator,
-        array $quoteMapperPlugins
+        array $quoteMapperPlugins,
+        ZedCheckoutRestApiConfig $config
     ) {
         $this->checkoutFacade = $checkoutFacade;
         $this->quoteFacade = $quoteFacade;
         $this->calculationFacade = $calculationFacade;
         $this->checkoutValidator = $checkoutValidator;
         $this->quoteMapperPlugins = $quoteMapperPlugins;
+        $this->config = $config;
     }
 
     /**
@@ -101,13 +110,15 @@ class PlaceOrderProcessor implements PlaceOrderProcessorInterface
             return $this->createPlaceOrderErrorResponse($checkoutResponseTransfer);
         }
 
-        $quoteResponseTransfer = $this->quoteFacade->deleteQuote($quoteTransfer);
+        if ($this->config->deleteCartAfterOrderCreation()) {
+            $quoteResponseTransfer = $this->quoteFacade->deleteQuote($quoteTransfer);
 
-        if (!$quoteResponseTransfer->getIsSuccessful()) {
-            return $this->createRestCheckoutResponseError(
-                $quoteResponseTransfer,
-                CheckoutRestApiConfig::ERROR_IDENTIFIER_UNABLE_TO_DELETE_CART
-            );
+            if (!$quoteResponseTransfer->getIsSuccessful()) {
+                return $this->createRestCheckoutResponseError(
+                    $quoteResponseTransfer,
+                    CheckoutRestApiConfig::ERROR_IDENTIFIER_UNABLE_TO_DELETE_CART
+                );
+            }
         }
 
         return $this->createRestCheckoutResponseTransfer($checkoutResponseTransfer);

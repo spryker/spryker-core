@@ -23,13 +23,19 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class DryRunImportController extends AbstractController
 {
+    /**
+     * @var string
+     */
     public const URL_IMPORT_PAGE = '/price-product-schedule-gui/import';
+    /**
+     * @var string
+     */
     protected const PARAM_ID_PRICE_PRODUCT_SCHEDULE_LIST = 'id-price-product-schedule-list';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function indexAction(Request $request)
     {
@@ -59,7 +65,7 @@ class DryRunImportController extends AbstractController
      * @param int|null $idPriceProductScheduleList
      * @param \Symfony\Component\Form\FormInterface $priceProductScheduleImportForm
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     protected function processResponseByPriceProductScheduleList(?int $idPriceProductScheduleList, FormInterface $priceProductScheduleImportForm)
     {

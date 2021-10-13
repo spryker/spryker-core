@@ -125,7 +125,7 @@ class SalesReturnRepository extends AbstractRepository implements SalesReturnRep
     /**
      * @param \Generated\Shared\Transfer\ReturnItemFilterTransfer $returnItemFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\ReturnItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ReturnItemTransfer>
      */
     public function getReturnItemsByFilter(ReturnItemFilterTransfer $returnItemFilterTransfer): array
     {

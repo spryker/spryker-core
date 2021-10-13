@@ -311,9 +311,9 @@ interface ProductOptionFacadeInterface
      *
      * @api
      *
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
-     * @return \Generated\Shared\Transfer\ProductAbstractOptionGroupStatusTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductAbstractOptionGroupStatusTransfer>
      */
     public function getProductAbstractOptionGroupStatusesByProductAbstractIds(array $productAbstractIds): array;
 
@@ -324,9 +324,9 @@ interface ProductOptionFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     public function expandOrderItemsWithProductOptions(array $itemTransfers): array;
 }

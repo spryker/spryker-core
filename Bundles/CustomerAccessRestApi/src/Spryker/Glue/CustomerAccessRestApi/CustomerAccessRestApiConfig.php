@@ -11,8 +11,14 @@ use Spryker\Glue\Kernel\AbstractBundleConfig;
 
 class CustomerAccessRestApiConfig extends AbstractBundleConfig
 {
+    /**
+     * @var string
+     */
     public const RESOURCE_CUSTOMER_ACCESS = 'customer-access';
 
+    /**
+     * @var array
+     */
     protected const CUSTOMER_ACCESS_CONTENT_TYPE_TO_RESOURCE_TYPE_MAPPING = [];
 
     /**

@@ -9,13 +9,16 @@ namespace Spryker\Zed\ProductStorage\Business\Filter;
 
 class SingleValueSuperAttributeFilter implements SingleValueSuperAttributeFilterInterface
 {
+    /**
+     * @var int
+     */
     protected const SINGLE_VALUE_ATTRIBUTE_COUNT = 1;
 
     /**
-     * @param string[][] $productConcreteSuperAttributeMap
-     * @param string[][] $superAttributeVariations
+     * @param array<string[]> $productConcreteSuperAttributeMap
+     * @param array<string[]> $superAttributeVariations
      *
-     * @return string[][]
+     * @return array<string[]>
      */
     public function filterOutSingleValueSuperAttributes(
         array $productConcreteSuperAttributeMap,
@@ -35,10 +38,10 @@ class SingleValueSuperAttributeFilter implements SingleValueSuperAttributeFilter
     }
 
     /**
-     * @param string[] $attributes
-     * @param string[][] $superAttributeVariations
+     * @param array<string> $attributes
+     * @param array<string[]> $superAttributeVariations
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function filterSingleValueSuperAttributes(
         array $attributes,
@@ -57,7 +60,7 @@ class SingleValueSuperAttributeFilter implements SingleValueSuperAttributeFilter
     }
 
     /**
-     * @param string[][] $superAttributeVariations
+     * @param array<string[]> $superAttributeVariations
      * @param string $attributeName
      *
      * @return bool

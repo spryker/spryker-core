@@ -33,7 +33,7 @@ interface AttributeWriterInterface
     public function delete(ProductSearchAttributeTransfer $productSearchAttributeTransfer);
 
     /**
-     * @param \Generated\Shared\Transfer\ProductSearchAttributeTransfer[] $productSearchAttributes
+     * @param array<\Generated\Shared\Transfer\ProductSearchAttributeTransfer> $productSearchAttributes
      *
      * @return void
      */

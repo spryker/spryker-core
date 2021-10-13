@@ -31,7 +31,13 @@ use Spryker\Zed\BusinessOnBehalfDataImport\Communication\Plugin\DataImport\Busin
  */
 class BusinessOnBehalfCompanyUserDataImportPluginTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const COMPANY_KEY = 'test-company';
+    /**
+     * @var string
+     */
     protected const BUSINESS_UNIT_KEY = 'test-business-unit';
 
     /**

@@ -22,6 +22,9 @@ use Symfony\Component\HttpFoundation\Response;
 
 class OrderRestResponseBuilder implements OrderRestResponseBuilderInterface
 {
+    /**
+     * @var string
+     */
     protected const FORMAT_SELF_LINK_ORDER_ITEMS_RESOURCE = '%s/%s/%s/%s';
 
     /**
@@ -80,7 +83,7 @@ class OrderRestResponseBuilder implements OrderRestResponseBuilderInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\OrderTransfer[] $orderTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\OrderTransfer> $orderTransfers
      * @param int $totalItems
      * @param int $limit
      *
@@ -94,13 +97,12 @@ class OrderRestResponseBuilder implements OrderRestResponseBuilderInterface
             $restOrdersAttributesTransfer = $this->orderResourceMapper
                 ->mapOrderTransferToRestOrdersAttributesTransfer($orderTransfer);
 
-            $restResponse = $restResponse->addResource(
-                $this->restResourceBuilder->createRestResource(
-                    OrdersRestApiConfig::RESOURCE_ORDERS,
-                    $orderTransfer->getOrderReference(),
-                    $restOrdersAttributesTransfer
-                )
+            $restResource = $this->restResourceBuilder->createRestResource(
+                OrdersRestApiConfig::RESOURCE_ORDERS,
+                $orderTransfer->getOrderReference(),
+                $restOrdersAttributesTransfer
             );
+            $restResponse = $restResponse->addResource($restResource);
         }
 
         return $restResponse;
@@ -111,18 +113,18 @@ class OrderRestResponseBuilder implements OrderRestResponseBuilderInterface
      */
     public function createOrderNotFoundErrorResponse(): RestResponseInterface
     {
-        $restErrorTransfer = (new RestErrorMessageTransfer())
-            ->setCode(OrdersRestApiConfig::RESPONSE_CODE_CANT_FIND_ORDER)
-            ->setStatus(Response::HTTP_NOT_FOUND)
-            ->setDetail(OrdersRestApiConfig::RESPONSE_DETAIL_CANT_FIND_ORDER);
+        $restErrorPayload = $this->getOrderNotFoundError();
 
-        return $this->restResourceBuilder->createRestResponse()->addError($restErrorTransfer);
+        return $this->createErrorResponse(
+            (new RestErrorMessageTransfer())
+                ->fromArray($restErrorPayload)
+        );
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>
      */
     public function createMappedOrderItemRestResourcesFromOrderItemTransfers(ArrayObject $itemTransfers): array
     {
@@ -133,6 +135,29 @@ class OrderRestResponseBuilder implements OrderRestResponseBuilderInterface
         }
 
         return $restResources;
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function createCustomerUnauthorizedErrorResponse(): RestResponseInterface
+    {
+        $restErrorPayload = $this->getCustomerUnauthorizedRestError();
+
+        return $this->createErrorResponse(
+            (new RestErrorMessageTransfer())
+                ->fromArray($restErrorPayload)
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RestErrorMessageTransfer $restErrorMessageTransfer
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function createErrorResponse(RestErrorMessageTransfer $restErrorMessageTransfer): RestResponseInterface
+    {
+        return $this->restResourceBuilder->createRestResponse()->addError($restErrorMessageTransfer);
     }
 
     /**
@@ -174,5 +199,29 @@ class OrderRestResponseBuilder implements OrderRestResponseBuilderInterface
             OrdersRestApiConfig::RESOURCE_ORDER_ITEMS,
             $idOrderItem
         );
+    }
+
+    /**
+     * @return array<mixed>
+     */
+    protected function getOrderNotFoundError(): array
+    {
+        return [
+            RestErrorMessageTransfer::CODE => OrdersRestApiConfig::RESPONSE_CODE_CANT_FIND_ORDER,
+            RestErrorMessageTransfer::DETAIL => OrdersRestApiConfig::RESPONSE_DETAIL_CANT_FIND_ORDER,
+            RestErrorMessageTransfer::STATUS => Response::HTTP_NOT_FOUND,
+        ];
+    }
+
+    /**
+     * @return array<mixed>
+     */
+    protected function getCustomerUnauthorizedRestError(): array
+    {
+        return [
+            RestErrorMessageTransfer::CODE => OrdersRestApiConfig::RESPONSE_CODE_CUSTOMER_UNAUTHORIZED,
+            RestErrorMessageTransfer::DETAIL => OrdersRestApiConfig::RESPONSE_DETAILS_CUSTOMER_UNAUTHORIZED,
+            RestErrorMessageTransfer::STATUS => Response::HTTP_FORBIDDEN,
+        ];
     }
 }

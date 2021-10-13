@@ -19,9 +19,18 @@ abstract class FileInfoTable extends AbstractTable
     protected const COL_FILE_INFO_VERSION_NAME = SpyFileInfoTableMap::COL_VERSION_NAME;
     protected const COL_FILE_INFO_TYPE = SpyFileInfoTableMap::COL_TYPE;
     protected const COL_FILE_INFO_CREATED_AT = SpyFileInfoTableMap::COL_CREATED_AT;
+    /**
+     * @var string
+     */
     protected const COL_ACTIONS = 'Actions';
 
+    /**
+     * @var string
+     */
     protected const REQUEST_ID_FILE = 'id-file';
+    /**
+     * @var string
+     */
     protected const REQUEST_ID_FILE_INFO = 'id-file-info';
 
     /**

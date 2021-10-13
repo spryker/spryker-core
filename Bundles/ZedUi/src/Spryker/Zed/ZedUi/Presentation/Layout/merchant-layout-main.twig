@@ -1,14 +1,68 @@
-{% extends '@ZedUi/Layout/layout.twig' %}
+{% extends '@ZedUi/Layout/merchant-layout.twig' %}
 
 {% block body %}
-    {% if navigation is defined %}
-        {% set navigationConfig = render_navigation_component_config(navigation.menu) %}
-        <web-mp-merchant-layout-main cloak navigation-config="{{ navigationConfig }}">
-            <web-mp-header name="header"></web-mp-header>
+    {% if app.twig.getFunction('navigation') != false %}
+        {% set navigationConfig = render_navigation_component_config(navigation('main').menu) %}
+        {% set userMenuNavigationItems = navigation('secondary').menu %}
 
-            {% include '@ZedUi/Partials/FlashMessages/flash-messages.twig' %}
+        {% block merchantLayoutMain %}
+            <web-mp-merchant-layout-main cloak navigation-config="{{ navigationConfig }}">
+                {% block logo %}
+                    <web-spy-logo cloak logo></web-spy-logo>
+                {% endblock %}
 
-            {% block content %}{% endblock %}
-        </web-mp-merchant-layout-main>
+                {% block header %}
+                    <web-mp-header cloak header>
+                        {% block headerMenu %}
+                            <web-mp-header-menu cloak menu>
+                                {% block infoPrimary %}
+                                    {% if username is not empty %}
+                                        <span info-primary>{{ username }}</span>
+                                    {% endif %}
+                                {% endblock %}
+
+                                {% block infoSecondary %}
+                                    {% if userEmail is not empty %}
+                                        <span info-secondary>{{ userEmail }}</span>
+                                    {% endif %}
+                                {% endblock %}
+
+                                {% block userMenuList %}
+                                    {% for userMenuNavigationItem in userMenuNavigationItems %}
+                                        {% block userMenuLink %}
+                                            <a href="{{ userMenuNavigationItem.uri }}">
+                                                {% block userMenuLinkInner %}
+                                                    <web-spy-user-menu-link
+                                                        cloak
+                                                        {% if userMenuNavigationItem.type is not empty %}type="{{ userMenuNavigationItem.type }}"{% endif %}>
+                                                        {{ userMenuNavigationItem.title }}
+                                                    </web-spy-user-menu-link>
+                                                {% endblock %}
+                                            </a>
+                                        {% endblock %}
+                                    {% endfor %}
+
+                                    {% block logoutLink %}
+                                        <a href="/security-merchant-portal-gui/logout">
+                                            {% block logoutLinkInner %}
+                                                <web-spy-user-menu-link cloak type="danger">
+                                                    {{ 'Logout' | trans }}
+                                                </web-spy-user-menu-link>
+                                            {% endblock %}
+                                        </a>
+                                    {% endblock %}
+                                {% endblock %}
+                            </web-mp-header-menu>
+                        {% endblock %}
+                    </web-mp-header>
+                {% endblock %}
+
+                {% block flashMessages %}
+                    {% include '@ZedUi/Partials/FlashMessages/flash-messages.twig' %}
+                {% endblock %}
+
+                {% block content %}{% endblock %}
+            </web-mp-merchant-layout-main>
+        {% endblock %}
     {% endif %}
 {% endblock %}

@@ -31,6 +31,9 @@ class CompanyUserBusinessTester extends Actor
 {
     use _generated\CompanyUserBusinessTesterActions;
 
+    /**
+     * @var string
+     */
     protected const STATUS_APPROVED = 'approved';
 
     /**

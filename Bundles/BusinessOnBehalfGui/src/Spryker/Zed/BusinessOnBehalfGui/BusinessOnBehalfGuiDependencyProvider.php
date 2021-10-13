@@ -19,11 +19,26 @@ use Spryker\Zed\Kernel\Container;
  */
 class BusinessOnBehalfGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_COMPANY = 'FACADE_COMPANY';
+    /**
+     * @var string
+     */
     public const FACADE_CUSTOMER = 'FACADE_CUSTOMER';
+    /**
+     * @var string
+     */
     public const FACADE_COMPANY_USER = 'FACADE_COMPANY_USER';
+    /**
+     * @var string
+     */
     public const FACADE_COMPANY_BUSINESS_UNIT = 'FACADE_COMPANY_BUSINESS_UNIT';
 
+    /**
+     * @var string
+     */
     public const PLUGINS_CUSTOMER_BUSINESS_UNIT_ATTACH_FORM_EXPANDER = 'PLUGINS_CUSTOMER_BUSINESS_UNIT_ATTACH_FORM_EXPANDER';
 
     /**
@@ -123,7 +138,7 @@ class BusinessOnBehalfGuiDependencyProvider extends AbstractBundleDependencyProv
     }
 
     /**
-     * @return \Spryker\Zed\BusinessOnBehalfGuiExtension\Dependency\Plugin\CustomerBusinessUnitAttachFormExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\BusinessOnBehalfGuiExtension\Dependency\Plugin\CustomerBusinessUnitAttachFormExpanderPluginInterface>
      */
     protected function getCustomerBusinessUnitAttachFormExpanderPlugins(): array
     {

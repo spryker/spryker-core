@@ -146,7 +146,7 @@ class PhpDocumentorGraphAdapter implements GraphAdapterInterface
         }
         $this->graph->export($type, $fileName);
 
-        return file_get_contents($fileName);
+        return (string)file_get_contents($fileName);
     }
 
     /**
@@ -158,10 +158,10 @@ class PhpDocumentorGraphAdapter implements GraphAdapterInterface
     private function addAttributesTo($attributes, $element)
     {
         foreach ($attributes as $attribute => $value) {
-            $setter = 'set' . ucfirst($attribute);
             if (strip_tags($value) !== $value) {
                 $value = '<' . $value . '>';
             }
+            $setter = 'set' . ucfirst($attribute);
             $element->$setter($value);
         }
     }

@@ -20,8 +20,17 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class CmsBlockCategoryStorageQueryContainer extends AbstractQueryContainer implements CmsBlockCategoryStorageQueryContainerInterface
 {
+    /**
+     * @var string
+     */
     public const POSITION = 'position';
+    /**
+     * @var string
+     */
     public const NAME = 'name';
+    /**
+     * @var string
+     */
     protected const BLOCK_KEY = 'block_key';
 
     /**
@@ -78,7 +87,7 @@ class CmsBlockCategoryStorageQueryContainer extends AbstractQueryContainer imple
      *
      * @deprecated Use {@link \Spryker\Zed\CmsBlockCategoryStorage\Persistence\CmsBlockCategoryStorageQueryContainer::queryCmsBlockCategoriesByCmsCategoryIds()} instead.
      *
-     * @param int[] $cmsBlockCategoriesIds
+     * @param array<int> $cmsBlockCategoriesIds
      *
      * @return \Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryConnectorQuery
      */
@@ -104,7 +113,7 @@ class CmsBlockCategoryStorageQueryContainer extends AbstractQueryContainer imple
      *
      * @api
      *
-     * @param int[] $cmsBlockCategoriesIds
+     * @param array<int> $cmsBlockCategoriesIds
      *
      * @return \Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryConnectorQuery
      */

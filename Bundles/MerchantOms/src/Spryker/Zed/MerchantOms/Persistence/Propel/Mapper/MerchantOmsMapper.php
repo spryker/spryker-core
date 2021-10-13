@@ -14,9 +14,11 @@ use Propel\Runtime\Collection\ObjectCollection;
 class MerchantOmsMapper
 {
     /**
+     * @phpstan-param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItem> $merchantSalesOrderItemEntities
+     *
      * @param \Propel\Runtime\Collection\ObjectCollection $merchantSalesOrderItemEntities
      *
-     * @return \Generated\Shared\Transfer\StateMachineItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\StateMachineItemTransfer>
      */
     public function mapMerchantSalesOrderItemEntityCollectionToStateMachineItemTransfers(
         ObjectCollection $merchantSalesOrderItemEntities
@@ -44,7 +46,9 @@ class MerchantOmsMapper
         SpyMerchantSalesOrderItem $merchantSalesOrderItemEntity,
         StateMachineItemTransfer $stateMachineItemTransfer
     ): StateMachineItemTransfer {
+        /** @var \Orm\Zed\StateMachine\Persistence\SpyStateMachineItemState $stateMachineItemStateEntity */
         $stateMachineItemStateEntity = $merchantSalesOrderItemEntity->getStateMachineItemState();
+
         $stateMachineItemTransfer = $stateMachineItemTransfer->fromArray($merchantSalesOrderItemEntity->toArray(), true)
             ->setIdentifier($merchantSalesOrderItemEntity->getIdMerchantSalesOrderItem())
             ->setIdItemState($merchantSalesOrderItemEntity->getFkStateMachineItemState())

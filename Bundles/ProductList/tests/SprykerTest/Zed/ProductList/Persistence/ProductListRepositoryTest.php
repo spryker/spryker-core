@@ -88,7 +88,10 @@ class ProductListRepositoryTest extends Unit
 
         //Arrange
         $this->assertCount(2, $result);
-        $resultProductConcreteIds = array_column($result, SpyProductListProductConcreteTableMap::COL_FK_PRODUCT);
+        $resultProductConcreteIds = array_map(
+            'intval',
+            array_column($result, SpyProductListProductConcreteTableMap::COL_FK_PRODUCT)
+        );
         $this->assertContains($productConcreteIds[0], $resultProductConcreteIds);
         $this->assertContains($productConcreteIds[1], $resultProductConcreteIds);
     }
@@ -184,7 +187,10 @@ class ProductListRepositoryTest extends Unit
 
         //Arrange
         $this->assertCount(2, $result);
-        $resultProductAbstractIds = array_column($result, ProductListRepository::COL_ID_PRODUCT_ABSTRACT);
+        $resultProductAbstractIds = array_map(
+            'intval',
+            array_column($result, ProductListRepository::COL_ID_PRODUCT_ABSTRACT)
+        );
         $this->assertContains($productAbstractIds[0], $resultProductAbstractIds);
         $this->assertContains($productAbstractIds[1], $resultProductAbstractIds);
     }
@@ -210,7 +216,10 @@ class ProductListRepositoryTest extends Unit
 
         //Arrange
         $this->assertCount(2, $result);
-        $resultProductAbstractIds = array_column($result, ProductListRepository::COL_ID_PRODUCT_ABSTRACT);
+        $resultProductAbstractIds = array_map(
+            'intval',
+            array_column($result, ProductListRepository::COL_ID_PRODUCT_ABSTRACT)
+        );
         $this->assertContains($productAbstractIds[0], $resultProductAbstractIds);
         $this->assertContains($productAbstractIds[1], $resultProductAbstractIds);
     }
@@ -236,7 +245,10 @@ class ProductListRepositoryTest extends Unit
 
         //Arrange
         $this->assertCount(2, $result);
-        $resultProductAbstractIds = array_column($result, ProductListRepository::COL_ID_PRODUCT_ABSTRACT);
+        $resultProductAbstractIds = array_map(
+            'intval',
+            array_column($result, ProductListRepository::COL_ID_PRODUCT_ABSTRACT)
+        );
         $this->assertContains($productAbstractIds[0], $resultProductAbstractIds);
         $this->assertContains($productAbstractIds[1], $resultProductAbstractIds);
     }

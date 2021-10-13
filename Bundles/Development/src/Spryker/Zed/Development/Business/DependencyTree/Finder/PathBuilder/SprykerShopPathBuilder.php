@@ -9,8 +9,14 @@ namespace Spryker\Zed\Development\Business\DependencyTree\Finder\PathBuilder;
 
 class SprykerShopPathBuilder extends AbstractPathBuilder implements PathBuilderInterface
 {
+    /**
+     * @var string
+     */
     protected const ORGANIZATION = 'SprykerShop';
 
+    /**
+     * @var array
+     */
     protected const LOOKUP_NAMESPACES = [
         'src' => 'SprykerShop',
         'tests' => 'SprykerShopTest',

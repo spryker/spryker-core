@@ -28,7 +28,7 @@ class TwigFileFinder implements TwigFileFinderInterface
     /**
      * @param string $module
      *
-     * @return \Symfony\Component\Finder\SplFileInfo[]|\Symfony\Component\Finder\Finder
+     * @return \Symfony\Component\Finder\Finder<\Symfony\Component\Finder\SplFileInfo>
      */
     public function findTwigFiles(string $module): Finder
     {
@@ -62,6 +62,11 @@ class TwigFileFinder implements TwigFileFinderInterface
             $twigFilePaths[] = sprintf($pathPattern, $module);
         }
 
-        return array_filter($twigFilePaths, 'glob');
+        return array_filter(
+            $twigFilePaths,
+            function (string $twigFilePath) {
+                return glob($twigFilePath, GLOB_NOSORT);
+            }
+        );
     }
 }

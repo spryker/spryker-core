@@ -13,12 +13,12 @@ use Generated\Shared\Transfer\RestCompanyBusinessUnitAttributesTransfer;
 class CompanyBusinessUnitMapper implements CompanyBusinessUnitMapperInterface
 {
     /**
-     * @var \Spryker\Glue\CompanyBusinessUnitsRestApiExtension\Dependency\Plugin\CompanyBusinessUnitMapperPluginInterface[]
+     * @var array<\Spryker\Glue\CompanyBusinessUnitsRestApiExtension\Dependency\Plugin\CompanyBusinessUnitMapperPluginInterface>
      */
     protected $companyBusinessUnitMapperPlugins;
 
     /**
-     * @param \Spryker\Glue\CompanyBusinessUnitsRestApiExtension\Dependency\Plugin\CompanyBusinessUnitMapperPluginInterface[] $companyBusinessUnitMapperPlugins
+     * @param array<\Spryker\Glue\CompanyBusinessUnitsRestApiExtension\Dependency\Plugin\CompanyBusinessUnitMapperPluginInterface> $companyBusinessUnitMapperPlugins
      */
     public function __construct(array $companyBusinessUnitMapperPlugins)
     {

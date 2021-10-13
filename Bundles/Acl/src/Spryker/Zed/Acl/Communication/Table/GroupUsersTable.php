@@ -14,16 +14,43 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class GroupUsersTable extends AbstractTable
 {
+    /**
+     * @var string
+     */
     public const REMOVE = 'remove';
 
+    /**
+     * @var string
+     */
     public const PARAMETER_ID_USER = 'id-user';
+    /**
+     * @var string
+     */
     public const PARAMETER_ID_GROUP = 'id-group';
 
+    /**
+     * @var string
+     */
     public const COL_ID_ACL_GROUP = 'id_acl_group';
+    /**
+     * @var string
+     */
     public const COL_ID_USER = 'id_user';
+    /**
+     * @var string
+     */
     public const COL_EMAIL = 'email';
+    /**
+     * @var string
+     */
     public const COL_FIRST_NAME = 'first_name';
+    /**
+     * @var string
+     */
     public const COL_LAST_NAME = 'last_name';
+    /**
+     * @var string
+     */
     public const ACTIONS = 'Actions';
 
     /**
@@ -79,7 +106,7 @@ class GroupUsersTable extends AbstractTable
     {
         $query = $this->aclQueryContainer->queryGroupUsers($this->idGroup);
 
-        /** @var \Orm\Zed\User\Persistence\SpyUser[]|\Propel\Runtime\Collection\ObjectCollection $userCollection */
+        /** @var \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\User\Persistence\SpyUser> $userCollection */
         $userCollection = $this->runQuery($query, $config, true);
 
         $users = [];

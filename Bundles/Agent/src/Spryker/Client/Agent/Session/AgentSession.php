@@ -17,6 +17,9 @@ class AgentSession implements AgentSessionInterface
      */
     protected $sessionClient;
 
+    /**
+     * @var string
+     */
     protected const SESSION_KEY = 'agent-session';
 
     /**

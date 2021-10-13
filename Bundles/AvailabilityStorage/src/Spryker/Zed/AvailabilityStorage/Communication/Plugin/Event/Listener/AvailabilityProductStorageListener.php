@@ -24,12 +24,15 @@ class AvailabilityProductStorageListener extends AbstractPlugin implements Event
 {
     use DatabaseTransactionHandlerTrait;
 
+    /**
+     * @var string
+     */
     public const FK_PRODUCT_ABSTRACT = 'fkProductAbstract';
 
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
      * @param string $eventName
      *
      * @return void
@@ -92,7 +95,7 @@ class AvailabilityProductStorageListener extends AbstractPlugin implements Event
     /**
      * @param array $eventTransfers
      *
-     * @return \Orm\Zed\Product\Persistence\SpyProductAbstract[]
+     * @return array<\Orm\Zed\Product\Persistence\SpyProductAbstract>
      */
     public function findProductAbstracts(array $eventTransfers)
     {
@@ -104,7 +107,7 @@ class AvailabilityProductStorageListener extends AbstractPlugin implements Event
     /**
      * @param array $abstractProductSkus
      *
-     * @return mixed|\Orm\Zed\Availability\Persistence\SpyAvailabilityAbstract[]
+     * @return array<\Orm\Zed\Availability\Persistence\SpyAvailabilityAbstract>
      */
     protected function findAvailabilityAbstractBySkus(array $abstractProductSkus)
     {

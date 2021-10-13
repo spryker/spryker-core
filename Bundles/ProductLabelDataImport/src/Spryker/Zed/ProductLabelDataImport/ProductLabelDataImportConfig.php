@@ -12,8 +12,17 @@ use Spryker\Zed\DataImport\DataImportConfig;
 
 class ProductLabelDataImportConfig extends DataImportConfig
 {
+    /**
+     * @var string
+     */
     public const IMPORT_TYPE_PRODUCT_LABEL = 'product-label';
+    /**
+     * @var string
+     */
     public const IMPORT_TYPE_PRODUCT_LABEL_STORE = 'product-label-store';
+    /**
+     * @var int
+     */
     public const MODULE_ROOT_DIRECTORY_LEVEL = 4;
 
     /**

@@ -26,7 +26,7 @@ class PriceTypeProductConcreteStorageUnpublishListener extends AbstractPlugin im
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
      * @param string $eventName
      *
      * @return void

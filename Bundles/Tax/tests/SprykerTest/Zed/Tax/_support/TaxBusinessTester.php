@@ -30,7 +30,13 @@ class TaxBusinessTester extends Actor
 {
     use _generated\TaxBusinessTesterActions;
 
+    /**
+     * @var int
+     */
     public const DEFAULT_QUANTITY = 1;
+    /**
+     * @var string
+     */
     protected const PRICE_MODE_NET = 'NET_MODE';
 
     /**

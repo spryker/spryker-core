@@ -22,8 +22,17 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class VersionPageController extends AbstractController
 {
+    /**
+     * @var string
+     */
     public const URL_PARAM_ID_CMS_PAGE = 'id-cms-page';
+    /**
+     * @var string
+     */
     public const URL_PARAM_VERSION = 'version';
+    /**
+     * @var string
+     */
     public const URL_PARAM_REDIRECT_URL = 'redirect-url';
 
     /**
@@ -87,7 +96,7 @@ class VersionPageController extends AbstractController
      *
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function historyAction(Request $request)
     {

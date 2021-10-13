@@ -42,6 +42,13 @@ class MerchantHelper extends Module
 
         if (isset($seedData[MerchantTransfer::STATUS])) {
             $merchantTransfer->setStatus($seedData[MerchantTransfer::STATUS]);
+        }
+
+        if (isset($seedData[MerchantTransfer::IS_ACTIVE])) {
+            $merchantTransfer->setIsActive($seedData[MerchantTransfer::IS_ACTIVE]);
+        }
+
+        if (isset($seedData[MerchantTransfer::IS_ACTIVE]) || isset($seedData[MerchantTransfer::STATUS])) {
             $merchantTransfer = $this->getLocator()
                 ->merchant()
                 ->facade()

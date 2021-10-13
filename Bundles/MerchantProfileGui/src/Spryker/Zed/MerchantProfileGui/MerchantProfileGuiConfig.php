@@ -11,6 +11,9 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class MerchantProfileGuiConfig extends AbstractBundleConfig
 {
+    /**
+     * @var array
+     */
     protected const SALUTATION_CHOICES = [
         'Ms' => 'Ms',
         'Mr' => 'Mr',

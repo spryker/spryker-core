@@ -67,9 +67,12 @@ class MerchantOmsEventTrigger implements MerchantOmsEventTriggerInterface
 
         $transitionCount = 0;
         foreach ($merchantOmsTriggerRequestTransfer->getMerchantOrderItems() as $merchantOrderItemTransfer) {
+            /** @var int $idMerchantOrderItem */
+            $idMerchantOrderItem = $merchantOrderItemTransfer->getIdMerchantOrderItem();
+
             $transitionCount += $this->stateMachineFacade->triggerForNewStateMachineItem(
                 $stateMachineProcessTransfer,
-                $merchantOrderItemTransfer->getIdMerchantOrderItem()
+                $idMerchantOrderItem
             );
         }
 
@@ -92,9 +95,11 @@ class MerchantOmsEventTrigger implements MerchantOmsEventTriggerInterface
         foreach ($merchantOmsTriggerRequestTransfer->getMerchantOrderItems() as $merchantOrderItemTransfer) {
             $stateMachineItemTransfers[] = $this->createStateMachineItem($merchantOrderItemTransfer);
         }
+        /** @var string $merchantOmsEventName */
+        $merchantOmsEventName = $merchantOmsTriggerRequestTransfer->getMerchantOmsEventName();
 
         $transitionCount = $this->stateMachineFacade->triggerEventForItems(
-            $merchantOmsTriggerRequestTransfer->getMerchantOmsEventName(),
+            $merchantOmsEventName,
             $stateMachineItemTransfers
         );
 
@@ -120,10 +125,13 @@ class MerchantOmsEventTrigger implements MerchantOmsEventTriggerInterface
         $merchantOrderItemTransfer = $this->merchantSalesOrderFacade->findMerchantOrderItem($merchantOrderItemCriteriaTransfer);
 
         if (!$merchantOrderItemTransfer) {
+            /** @var string $merchantOrderItemReference */
+            $merchantOrderItemReference = $merchantOmsTriggerRequestTransfer->getMerchantOrderItemReference();
+
             return $merchantOmsTriggerResponseTransfer->setIsSuccessful(false)
                 ->setMessage(sprintf(
                     'Merchant order item with reference "%s" was not found.',
-                    $merchantOmsTriggerRequestTransfer->getMerchantOrderItemReference()
+                    $merchantOrderItemReference
                 ));
         }
 
@@ -134,11 +142,17 @@ class MerchantOmsEventTrigger implements MerchantOmsEventTriggerInterface
         );
 
         if (!$transitionedItemsCount) {
+            /** @var string $merchantOmsEventName */
+            $merchantOmsEventName = $merchantOmsTriggerRequestTransfer->getMerchantOmsEventName();
+
+            /** @var string $merchantOrderItemReference */
+            $merchantOrderItemReference = $merchantOmsTriggerRequestTransfer->getMerchantOrderItemReference();
+
             return $merchantOmsTriggerResponseTransfer->setIsSuccessful(false)
                 ->setMessage(sprintf(
                     'Event "%s" was not successfully triggered for merchant order item with reference "%s".',
-                    $merchantOmsTriggerRequestTransfer->getMerchantOmsEventName(),
-                    $merchantOmsTriggerRequestTransfer->getMerchantOrderItemReference()
+                    $merchantOmsEventName,
+                    $merchantOrderItemReference
                 ));
         }
 

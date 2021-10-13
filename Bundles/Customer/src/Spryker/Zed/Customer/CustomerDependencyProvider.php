@@ -25,34 +25,81 @@ use Spryker\Zed\Kernel\Container;
  */
 class CustomerDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_SEQUENCE_NUMBER = 'FACADE_SEQUENCE_NUMBER';
+    /**
+     * @var string
+     */
     public const FACADE_COUNTRY = 'FACADE_COUNTRY';
+    /**
+     * @var string
+     */
     public const FACADE_LOCALE = 'FACADE_LOCALE';
+    /**
+     * @var string
+     */
     public const FACADE_MAIL = 'FACADE_MAIL';
 
     /**
      * @deprecated Use SERVICE_UTIL_DATE_TIME instead.
+     * @var string
      */
     public const SERVICE_DATE_FORMATTER = 'SERVICE_DATE_FORMATTER';
+    /**
+     * @var string
+     */
     public const SERVICE_UTIL_VALIDATE = 'SERVICE_UTIL_VALIDATE';
+    /**
+     * @var string
+     */
     public const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
+    /**
+     * @var string
+     */
     public const SERVICE_UTIL_DATE_TIME = 'SERVICE_UTIL_DATE_TIME';
+    /**
+     * @var string
+     */
     public const SERVICE_CUSTOMER = 'SERVICE_CUSTOMER';
 
     /**
      * @uses \Spryker\Zed\Http\Communication\Plugin\Application\HttpApplicationPlugin::SERVICE_SUB_REQUEST
+     * @var string
      */
     protected const SERVICE_SUB_REQUEST = 'sub_request';
 
+    /**
+     * @var string
+     */
     public const QUERY_CONTAINER_LOCALE = 'QUERY_CONTAINER_LOCALE';
 
+    /**
+     * @var string
+     */
     public const STORE = 'STORE';
 
+    /**
+     * @var string
+     */
     public const PLUGINS_CUSTOMER_ANONYMIZER = 'PLUGINS_CUSTOMER_ANONYMIZER';
+    /**
+     * @var string
+     */
     public const PLUGINS_CUSTOMER_TRANSFER_EXPANDER = 'PLUGINS_CUSTOMER_TRANSFER_EXPANDER';
+    /**
+     * @var string
+     */
     public const PLUGINS_POST_CUSTOMER_REGISTRATION = 'PLUGINS_POST_CUSTOMER_REGISTRATION';
+    /**
+     * @var string
+     */
     public const PLUGINS_CUSTOMER_TABLE_ACTION_EXPANDER = 'PLUGINS_CUSTOMER_TABLE_ACTION_EXPANDER';
 
+    /**
+     * @var string
+     */
     public const SUB_REQUEST_HANDLER = 'SUB_REQUEST_HANDLER';
 
     /**
@@ -125,7 +172,7 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\Customer\Dependency\Plugin\CustomerAnonymizerPluginInterface[]
+     * @return array<\Spryker\Zed\Customer\Dependency\Plugin\CustomerAnonymizerPluginInterface>
      */
     protected function getCustomerAnonymizerPlugins()
     {
@@ -175,7 +222,7 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\Customer\Dependency\Plugin\CustomerTransferExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\Customer\Dependency\Plugin\CustomerTransferExpanderPluginInterface>
      */
     protected function getCustomerTransferExpanderPlugins()
     {
@@ -309,7 +356,7 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\CustomerExtension\Dependency\Plugin\PostCustomerRegistrationPluginInterface[]
+     * @return array<\Spryker\Zed\CustomerExtension\Dependency\Plugin\PostCustomerRegistrationPluginInterface>
      */
     protected function getPostCustomerRegistrationPlugins(): array
     {
@@ -331,7 +378,7 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\CustomerExtension\Dependency\Plugin\CustomerTableActionExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\CustomerExtension\Dependency\Plugin\CustomerTableActionExpanderPluginInterface>
      */
     protected function getCustomerTableActionExpanderPlugins(): array
     {

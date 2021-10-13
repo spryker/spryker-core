@@ -17,7 +17,13 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class MaintenanceController extends AbstractController
 {
+    /**
+     * @var string
+     */
     public const URL_PARAM_INDEX = 'index';
+    /**
+     * @var string
+     */
     public const URL_PARAM_DOCUMENT_ID = 'documentId';
 
     /**

@@ -15,7 +15,13 @@ use Spryker\Zed\Kernel\Container;
  */
 class ChartGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const PLUGIN_TWIG_CHART_GUI_FUNCTIONS = 'PLUGIN_TWIG_CHART_GUI_FUNCTIONS';
+    /**
+     * @var string
+     */
     public const PLUGIN_CHART = 'PLUGIN_CHART';
 
     /**
@@ -60,7 +66,7 @@ class ChartGuiDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Shared\Chart\Dependency\Plugin\TwigChartFunctionPluginInterface[]
+     * @return array<\Spryker\Shared\Chart\Dependency\Plugin\TwigChartFunctionPluginInterface>
      */
     protected function getTwigChartFunctionPlugins(): array
     {
@@ -68,7 +74,7 @@ class ChartGuiDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Shared\Chart\Dependency\Plugin\ChartPluginInterface[]
+     * @return array<\Spryker\Shared\Chart\Dependency\Plugin\ChartPluginInterface>
      */
     protected function getChartPlugins(): array
     {

@@ -16,10 +16,19 @@ use Spryker\Zed\PaymentGui\Dependency\Facade\PaymentGuiToPaymentFacadeBridge;
 
 class PaymentGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const PROPEL_QUERY_PAYMENT_METHOD = 'PROPEL_QUERY_PAYMENT_METHOD';
 
+    /**
+     * @var string
+     */
     public const FACADE_PAYMENT = 'FACADE_PAYMENT';
 
+    /**
+     * @var string
+     */
     public const PLUGIN_STORE_RELATION_FORM_TYPE = 'PLUGIN_STORE_RELATION_FORM_TYPE';
 
     /**

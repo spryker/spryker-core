@@ -31,7 +31,7 @@ class MerchantDataImportCommunicationTester extends Actor
     use _generated\MerchantDataImportCommunicationTesterActions;
 
     /**
-     * @param string[] $references
+     * @param array<string> $references
      *
      * @return void
      */
@@ -58,13 +58,13 @@ class MerchantDataImportCommunicationTester extends Actor
     }
 
     /**
-     * @param string $key
+     * @param string $reference
      *
      * @return void
      */
-    public function deleteMerchantByKey(string $key): void
+    public function deleteMerchantByReference(string $reference): void
     {
-        $merchantQuery = $this->getMerchantQuery()->filterByMerchantKey($key);
+        $merchantQuery = $this->getMerchantQuery()->filterByMerchantReference($reference);
         $merchantQuery->delete();
     }
 

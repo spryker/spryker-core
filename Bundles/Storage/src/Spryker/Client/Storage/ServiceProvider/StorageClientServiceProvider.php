@@ -14,6 +14,9 @@ use Spryker\Shared\Kernel\ContainerGlobals;
 
 class StorageClientServiceProvider implements ServiceProviderInterface
 {
+    /**
+     * @var string
+     */
     public const CLIENT_STORAGE = 'storage client';
 
     /**

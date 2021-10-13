@@ -18,7 +18,7 @@ interface PermissionStoragePluginInterface
      *
      * @api
      *
-     * @param int|string $identifier
+     * @param string|int $identifier
      *
      * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
      */

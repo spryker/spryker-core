@@ -20,8 +20,14 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class VoucherType extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const TYPE_NAME = 'voucher';
 
+    /**
+     * @var string
+     */
     public const FIELD_VOUCHER_CODE = 'voucherCode';
 
     /**

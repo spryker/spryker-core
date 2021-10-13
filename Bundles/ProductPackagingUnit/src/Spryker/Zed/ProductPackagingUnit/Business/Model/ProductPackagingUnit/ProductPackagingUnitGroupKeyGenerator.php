@@ -11,7 +11,13 @@ use Generated\Shared\Transfer\ItemTransfer;
 
 class ProductPackagingUnitGroupKeyGenerator implements ProductPackagingUnitGroupKeyGeneratorInterface
 {
+    /**
+     * @var string
+     */
     protected const AMOUNT_GROUP_KEY_FORMAT = '%s_amount_%s_sales_unit_id_%s';
+    /**
+     * @var int
+     */
     protected const DIVISION_SCALE = 10;
 
     /**

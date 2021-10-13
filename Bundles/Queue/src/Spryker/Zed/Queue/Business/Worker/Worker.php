@@ -18,11 +18,29 @@ use Spryker\Zed\Queue\QueueConfig;
  */
 class Worker implements WorkerInterface
 {
+    /**
+     * @var int
+     */
     public const DEFAULT_MAX_QUEUE_WORKER = 1;
+    /**
+     * @var int
+     */
     public const SECOND_TO_MILLISECONDS = 1000;
+    /**
+     * @var string
+     */
     public const PROCESS_BUSY = 'busy';
+    /**
+     * @var string
+     */
     public const PROCESS_NEW = 'new';
+    /**
+     * @var string
+     */
     public const PROCESSES_INSTANCES = 'processes';
+    /**
+     * @var int
+     */
     public const RETRY_INTERVAL_SECONDS = 5;
 
     /**
@@ -46,7 +64,7 @@ class Worker implements WorkerInterface
     protected $queueClient;
 
     /**
-     * @var array
+     * @var array<string>
      */
     protected $queueNames;
 
@@ -82,9 +100,9 @@ class Worker implements WorkerInterface
 
     /**
      * @param string $command
-     * @param array $options
+     * @param array<string, mixed> $options
      * @param int $round
-     * @param array $processes
+     * @param array<\Symfony\Component\Process\Process> $processes
      *
      * @return void
      */
@@ -123,11 +141,11 @@ class Worker implements WorkerInterface
     }
 
     /**
-     * @param \Symfony\Component\Process\Process[] $processes
+     * @param array<\Symfony\Component\Process\Process> $processes
      * @param string $command
      * @param int $round
      * @param int $delayIntervalSeconds
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -154,9 +172,9 @@ class Worker implements WorkerInterface
     }
 
     /**
-     * @param \Symfony\Component\Process\Process[] $processes
+     * @param array<\Symfony\Component\Process\Process> $processes
      *
-     * @return \Symfony\Component\Process\Process[]
+     * @return array<\Symfony\Component\Process\Process>
      */
     protected function getPendingProcesses(array $processes): array
     {
@@ -173,7 +191,7 @@ class Worker implements WorkerInterface
     /**
      * @param string $command
      *
-     * @return \Symfony\Component\Process\Process[]
+     * @return array<\Symfony\Component\Process\Process>
      */
     protected function executeOperation(string $command): array
     {
@@ -208,7 +226,7 @@ class Worker implements WorkerInterface
      * @param string $command
      * @param string $queue
      *
-     * @return array
+     * @return array<string, mixed>
      */
     protected function startProcesses(string $command, string $queue): array
     {
@@ -259,7 +277,7 @@ class Worker implements WorkerInterface
     /**
      * @param string $queueName
      *
-     * @return array
+     * @return array<string, mixed>
      */
     protected function getQueueAdapterDefaultConfiguration(string $queueName): array
     {
@@ -283,8 +301,8 @@ class Worker implements WorkerInterface
     }
 
     /**
-     * @param array $pendingProcesses
-     * @param array $options
+     * @param array<\Symfony\Component\Process\Process> $pendingProcesses
+     * @param array<string, mixed> $options
      *
      * @return bool
      */
@@ -294,7 +312,7 @@ class Worker implements WorkerInterface
     }
 
     /**
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return bool
      */
@@ -304,7 +322,7 @@ class Worker implements WorkerInterface
     }
 
     /**
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return bool
      */

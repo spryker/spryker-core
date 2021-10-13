@@ -10,14 +10,14 @@ namespace Spryker\Zed\ProductAlternativeStorage\Business\ProductAlternativePubli
 interface ProductReplacementPublisherInterface
 {
     /**
-     * @param int[] $productIds
+     * @param array<int> $productIds
      *
      * @return void
      */
     public function publishAbstractReplacements(array $productIds): void;
 
     /**
-     * @param int[] $productIds
+     * @param array<int> $productIds
      *
      * @return void
      */

@@ -18,10 +18,10 @@ use Generated\Shared\Transfer\ShipmentMethodTransfer;
 class ShipmentMethodMapper implements ShipmentMethodMapperInterface
 {
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ShipmentMethodTransfer[] $shipmentMethodTransfers
-     * @param \Generated\Shared\Transfer\RestShipmentMethodsAttributesTransfer[] $restShipmentMethodsAttributesTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ShipmentMethodTransfer> $shipmentMethodTransfers
+     * @param array<\Generated\Shared\Transfer\RestShipmentMethodsAttributesTransfer> $restShipmentMethodsAttributesTransfers
      *
-     * @return \Generated\Shared\Transfer\RestShipmentMethodsAttributesTransfer[]
+     * @return array<\Generated\Shared\Transfer\RestShipmentMethodsAttributesTransfer>
      */
     public function mapShipmentMethodTransfersToRestShipmentMethodsAttributesTransfers(
         ArrayObject $shipmentMethodTransfers,

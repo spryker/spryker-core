@@ -16,6 +16,8 @@ class CmsBlockCategoryConnectorConfig extends AbstractBundleConfig
      * Specification:
      * - Used to define a storage key
      * - Used in Yves to provide an option name for client
+     *
+     * @var string
      */
     public const OPTION_NAME = 'category';
 
@@ -23,6 +25,8 @@ class CmsBlockCategoryConnectorConfig extends AbstractBundleConfig
      * Specification:
      * - Used to define a storage key
      * - Used in Yves to provide an option name for client
+     *
+     * @var string
      */
     public const OPTION_POSITION_NAME = 'category_position';
 

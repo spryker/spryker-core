@@ -15,14 +15,23 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ViewShipmentMethodController extends AbstractController
 {
+    /**
+     * @var string
+     */
     protected const PARAM_ID_SHIPMENT_METHOD = 'id-shipment-method';
+    /**
+     * @var string
+     */
     protected const REDIRECT_URL = '/shipment-gui/shipment-method';
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_SHIPMENT_METHOD_NOT_FOUND = 'Shipment method is not found';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function indexAction(Request $request)
     {

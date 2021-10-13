@@ -57,7 +57,7 @@ class GlossaryTranslationStorageDeleter implements GlossaryTranslationStorageDel
      *
      * This is added only for BC reasons
      *
-     * @param int[] $glossaryKeyIds
+     * @param array<int> $glossaryKeyIds
      *
      * @return void
      */
@@ -67,7 +67,7 @@ class GlossaryTranslationStorageDeleter implements GlossaryTranslationStorageDel
     }
 
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
      *
      * @return void
      */
@@ -79,7 +79,7 @@ class GlossaryTranslationStorageDeleter implements GlossaryTranslationStorageDel
     }
 
     /**
-     * @param int[] $glossaryKeyIds
+     * @param array<int> $glossaryKeyIds
      *
      * @return void
      */

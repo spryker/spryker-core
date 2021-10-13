@@ -16,9 +16,9 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 class ProductDiscontinuedStorageRepository extends AbstractRepository implements ProductDiscontinuedStorageRepositoryInterface
 {
     /**
-     * @param int[] $productDiscontinuedIds
+     * @param array<int> $productDiscontinuedIds
      *
-     * @return \Orm\Zed\ProductDiscontinuedStorage\Persistence\SpyProductDiscontinuedStorage[]
+     * @return array<\Orm\Zed\ProductDiscontinuedStorage\Persistence\SpyProductDiscontinuedStorage>
      */
     public function findProductDiscontinuedStorageEntitiesByIds(array $productDiscontinuedIds): array
     {
@@ -34,11 +34,11 @@ class ProductDiscontinuedStorageRepository extends AbstractRepository implements
     }
 
     /**
-     * @return \Orm\Zed\ProductDiscontinuedStorage\Persistence\SpyProductDiscontinuedStorage[]
+     * @return array<\Orm\Zed\ProductDiscontinuedStorage\Persistence\SpyProductDiscontinuedStorage>
      */
     public function findAllProductDiscontinuedStorageEntities(): array
     {
-        /** @var \Orm\Zed\ProductDiscontinuedStorage\Persistence\SpyProductDiscontinuedStorage[]|\Propel\Runtime\Collection\ObjectCollection $productDiscontinuedStorageEntities */
+        /** @var \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductDiscontinuedStorage\Persistence\SpyProductDiscontinuedStorage> $productDiscontinuedStorageEntities */
         $productDiscontinuedStorageEntities = $this->getFactory()
             ->createProductDiscontinuedStoragePropelQuery()
             ->find();
@@ -52,9 +52,9 @@ class ProductDiscontinuedStorageRepository extends AbstractRepository implements
 
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     * @param int[] $productDiscontinuedStorageEntityIds
+     * @param array<int> $productDiscontinuedStorageEntityIds
      *
-     * @return \Generated\Shared\Transfer\SpyProductDiscontinuedStorageEntityTransfer[]
+     * @return array<\Generated\Shared\Transfer\SpyProductDiscontinuedStorageEntityTransfer>
      */
     public function findFilteredProductDiscontinuedStorageEntities(FilterTransfer $filterTransfer, array $productDiscontinuedStorageEntityIds = []): array
     {

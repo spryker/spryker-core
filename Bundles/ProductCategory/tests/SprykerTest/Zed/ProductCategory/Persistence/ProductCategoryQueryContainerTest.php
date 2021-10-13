@@ -23,14 +23,35 @@ use Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainer;
  */
 class ProductCategoryQueryContainerTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const LOCALE_NAME = 'en_US';
+    /**
+     * @var string
+     */
     protected const PRODUCT_ABSTRACT_SKU = 'PRODUCT_ABSTRACT';
+    /**
+     * @var string
+     */
     protected const PRODUCT_ATTRIBUTE_NAME = 'PRODUCT_ATTRIBUTE';
 
+    /**
+     * @var string
+     */
     protected const PRODUCT_ABSTRACT_SKU_1 = 'PRODUCT_ABSTRACT_1';
+    /**
+     * @var string
+     */
     protected const PRODUCT_ATTRIBUTE_NAME_1 = 'PRODUCT_ATTRIBUTE_1';
 
+    /**
+     * @var string
+     */
     protected const PRODUCT_ABSTRACT_SKU_2 = 'PRODUCT_ABSTRACT_2';
+    /**
+     * @var string
+     */
     protected const PRODUCT_ATTRIBUTE_NAME_2 = 'PRODUCT_ATTRIBUTE_2';
 
     /**

@@ -15,6 +15,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\Regex;
 
 /**
  * @method \Spryker\Zed\MerchantProfileGui\Communication\MerchantProfileGuiCommunicationFactory getFactory()
@@ -22,22 +23,80 @@ use Symfony\Component\Validator\Constraints\Length;
  */
 class MerchantProfileAddressFormType extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const OPTION_COUNTRY_CHOICES = 'country_choices';
 
+    /**
+     * @var string
+     */
     public const FIELD_ID_MERCHANT_PROFILE_ADDRESS = 'id_merchant_profile_address';
+    /**
+     * @var string
+     */
     public const FIELD_CITY = 'city';
+    /**
+     * @var string
+     */
     public const FIELD_ZIP_CODE = 'zip_code';
+    /**
+     * @var string
+     */
     public const FIELD_FK_COUNTRY = 'fk_country';
+    /**
+     * @var string
+     */
     public const FIELD_ADDRESS_1 = 'address1';
+    /**
+     * @var string
+     */
     public const FIELD_ADDRESS_2 = 'address2';
+    /**
+     * @var string
+     */
     public const FIELD_ADDRESS_3 = 'address3';
+    /**
+     * @var string
+     */
+    public const FIELD_LATITUDE = 'latitude';
+    /**
+     * @var string
+     */
+    public const FIELD_LONGITUDE = 'longitude';
 
+    /**
+     * @var string
+     */
     protected const LABEL_CITY = 'City';
+    /**
+     * @var string
+     */
     protected const LABEL_ZIP_CODE = 'Zip Code';
+    /**
+     * @var string
+     */
     protected const LABEL_FK_COUNTRY = 'Country';
+    /**
+     * @var string
+     */
     protected const LABEL_ADDRESS_1 = 'Street';
+    /**
+     * @var string
+     */
     protected const LABEL_ADDRESS_2 = 'Number';
+    /**
+     * @var string
+     */
     protected const LABEL_ADDRESS_3 = 'Addition to address';
+    /**
+     * @var string
+     */
+    protected const LABEL_LATITUDE = 'Latitude';
+    /**
+     * @var string
+     */
+    protected const LABEL_LONGITUDE = 'Longitude';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -63,7 +122,9 @@ class MerchantProfileAddressFormType extends AbstractType
             ->addAddress2Field($builder)
             ->addZipCodeField($builder)
             ->addCityField($builder)
-            ->addAddress3Field($builder);
+            ->addAddress3Field($builder)
+            ->addLatitudeField($builder)
+            ->addLongitudeField($builder);
 
         $builder->addModelTransformer(new MerchantProfileAddressTransfersToMerchantProfileAddressTransferTransformer());
     }
@@ -190,5 +251,43 @@ class MerchantProfileAddressFormType extends AbstractType
     public function getBlockPrefix(): string
     {
         return 'merchant_profile_address';
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addLongitudeField(FormBuilderInterface $builder)
+    {
+        $builder->add(static::FIELD_LONGITUDE, TextType::class, [
+            'label' => static::LABEL_LONGITUDE,
+            'required' => false,
+            'constraints' => [
+                new Length(['max' => 255]),
+                new Regex(['pattern' => '/^(\\+|-)?(?:180(?:(?:\\.0{1,6})?)|(?:[0-9]|[1-9][0-9]|1[0-7][0-9])(?:(?:\\.[0-9]{1,6})?))$/']),
+            ],
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addLatitudeField(FormBuilderInterface $builder)
+    {
+        $builder->add(static::FIELD_LATITUDE, TextType::class, [
+            'label' => static::LABEL_LATITUDE,
+            'required' => false,
+            'constraints' => [
+                new Length(['max' => 255]),
+                new Regex(['pattern' => '/^(\\+|-)?(?:90(?:(?:\\.0{1,6})?)|(?:[0-9]|[1-8][0-9])(?:(?:\\.[0-9]{1,6})?))$/']),
+            ],
+        ]);
+
+        return $this;
     }
 }

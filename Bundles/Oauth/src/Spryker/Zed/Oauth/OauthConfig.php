@@ -15,7 +15,13 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
  */
 class OauthConfig extends AbstractBundleConfig
 {
+    /**
+     * @var string
+     */
     public const GRANT_TYPE_PASSWORD = 'password';
+    /**
+     * @var string
+     */
     public const GRANT_TYPE_REFRESH_TOKEN = 'refresh_token';
 
     /**

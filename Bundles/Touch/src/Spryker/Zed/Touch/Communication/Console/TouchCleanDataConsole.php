@@ -17,7 +17,13 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class TouchCleanDataConsole extends Console
 {
+    /**
+     * @var string
+     */
     public const COMMAND_NAME = 'touch:clean-data';
+    /**
+     * @var string
+     */
     public const COMMAND_DESCRIPTION = 'Cleans obsolete touch entities in the database.';
 
     /**

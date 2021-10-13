@@ -12,8 +12,17 @@ namespace Spryker\Shared\Shipment;
  */
 interface ShipmentConstants
 {
+    /**
+     * @var string
+     */
     public const PRICE_MODE_NET = 'NET_MODE';
+    /**
+     * @var string
+     */
     public const PRICE_MODE_GROSS = 'GROSS_MODE';
 
+    /**
+     * @var string
+     */
     public const OPTION_AMOUNT_PER_STORE = 'amount_per_store';
 }

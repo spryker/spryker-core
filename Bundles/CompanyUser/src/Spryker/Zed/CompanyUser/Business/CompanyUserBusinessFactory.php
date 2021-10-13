@@ -9,6 +9,8 @@ namespace Spryker\Zed\CompanyUser\Business;
 
 use Spryker\Zed\CompanyUser\Business\CompanyUser\CompanyUserStatusHandler;
 use Spryker\Zed\CompanyUser\Business\CompanyUser\CompanyUserStatusHandlerInterface;
+use Spryker\Zed\CompanyUser\Business\Expander\CustomerExpander;
+use Spryker\Zed\CompanyUser\Business\Expander\CustomerExpanderInterface;
 use Spryker\Zed\CompanyUser\Business\Model\CompanyUser;
 use Spryker\Zed\CompanyUser\Business\Model\CompanyUserInterface;
 use Spryker\Zed\CompanyUser\Business\Model\CompanyUserPluginExecutor;
@@ -72,7 +74,7 @@ class CompanyUserBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\CompanyUserExtension\Dependency\Plugin\CompanyUserPreSavePluginInterface[]
+     * @return array<\Spryker\Zed\CompanyUserExtension\Dependency\Plugin\CompanyUserPreSavePluginInterface>
      */
     protected function getCompanyUserPreSavePlugins(): array
     {
@@ -80,7 +82,7 @@ class CompanyUserBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\CompanyUserExtension\Dependency\Plugin\CompanyUserPostSavePluginInterface[]
+     * @return array<\Spryker\Zed\CompanyUserExtension\Dependency\Plugin\CompanyUserPostSavePluginInterface>
      */
     protected function getCompanyUserPostSavePlugins(): array
     {
@@ -88,7 +90,7 @@ class CompanyUserBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\CompanyUserExtension\Dependency\Plugin\CompanyUserPostCreatePluginInterface[]
+     * @return array<\Spryker\Zed\CompanyUserExtension\Dependency\Plugin\CompanyUserPostCreatePluginInterface>
      */
     protected function getCompanyUserPostCreatePlugins(): array
     {
@@ -96,7 +98,7 @@ class CompanyUserBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\CompanyUserExtension\Dependency\Plugin\CompanyUserHydrationPluginInterface[]
+     * @return array<\Spryker\Zed\CompanyUserExtension\Dependency\Plugin\CompanyUserHydrationPluginInterface>
      */
     protected function getCompanyUserHydrationPlugins(): array
     {
@@ -104,7 +106,7 @@ class CompanyUserBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\CompanyUserExtension\Dependency\Plugin\CompanyUserPreDeletePluginInterface[]
+     * @return array<\Spryker\Zed\CompanyUserExtension\Dependency\Plugin\CompanyUserPreDeletePluginInterface>
      */
     protected function getCompanyUserPreDeletePlugins(): array
     {
@@ -112,10 +114,18 @@ class CompanyUserBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\CompanyUserExtension\Dependency\Plugin\CompanyUserSavePreCheckPluginInterface[]
+     * @return array<\Spryker\Zed\CompanyUserExtension\Dependency\Plugin\CompanyUserSavePreCheckPluginInterface>
      */
     public function getCompanyUserSavePreCheckPlugins(): array
     {
         return $this->getProvidedDependency(CompanyUserDependencyProvider::PLUGINS_COMPANY_USER_SAVE_PRE_CHECK);
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyUser\Business\Expander\CustomerExpanderInterface
+     */
+    public function createCustomerExpander(): CustomerExpanderInterface
+    {
+        return new CustomerExpander($this->getRepository());
     }
 }

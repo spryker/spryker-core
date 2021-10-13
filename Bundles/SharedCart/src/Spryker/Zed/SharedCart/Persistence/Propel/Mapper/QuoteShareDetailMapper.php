@@ -32,8 +32,8 @@ class QuoteShareDetailMapper implements QuoteShareDetailMapperInterface
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\SharedCart\Persistence\SpyQuoteCompanyUser[] $quoteCompanyUserEntities
-     * @param \Generated\Shared\Transfer\QuotePermissionGroupTransfer[] $quotePermissionGroupTransfers
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\SharedCart\Persistence\SpyQuoteCompanyUser> $quoteCompanyUserEntities
+     * @param array<\Generated\Shared\Transfer\QuotePermissionGroupTransfer> $quotePermissionGroupTransfers
      *
      * @return \Generated\Shared\Transfer\ShareDetailCollectionTransfer
      */
@@ -50,8 +50,31 @@ class QuoteShareDetailMapper implements QuoteShareDetailMapperInterface
     }
 
     /**
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\SharedCart\Persistence\SpyQuoteCompanyUser> $quoteCompanyUserEntities
+     * @param array<\Generated\Shared\Transfer\QuotePermissionGroupTransfer> $quotePermissionGroupTransfers
+     *
+     * @return array<\Generated\Shared\Transfer\ShareDetailCollectionTransfer>
+     */
+    public function mapShareDetailCollectionByQuoteId(ObjectCollection $quoteCompanyUserEntities, array $quotePermissionGroupTransfers): array
+    {
+        $shareDetailCollectionByQuoteId = [];
+        $indexedQuotePermissionGroupTransfers = $this->indexQuotePermissionGroupById($quotePermissionGroupTransfers);
+        foreach ($quoteCompanyUserEntities as $quoteCompanyUserEntity) {
+            $idQuote = $quoteCompanyUserEntity->getFkQuote();
+            if (!isset($shareDetailCollectionByQuoteId[$idQuote])) {
+                $shareDetailCollectionByQuoteId[$idQuote] = new ShareDetailCollectionTransfer();
+            }
+
+            $shareDetailTransfer = $this->mapShareDetailTransfer($quoteCompanyUserEntity, $indexedQuotePermissionGroupTransfers);
+            $shareDetailCollectionByQuoteId[$idQuote]->addShareDetail($shareDetailTransfer);
+        }
+
+        return $shareDetailCollectionByQuoteId;
+    }
+
+    /**
      * @param \Orm\Zed\SharedCart\Persistence\SpyQuoteCompanyUser $quoteCompanyUserEntity
-     * @param \Generated\Shared\Transfer\QuotePermissionGroupTransfer[] $indexedQuotePermissionGroupTransfers
+     * @param array<\Generated\Shared\Transfer\QuotePermissionGroupTransfer> $indexedQuotePermissionGroupTransfers
      *
      * @return \Generated\Shared\Transfer\ShareDetailTransfer
      */
@@ -79,9 +102,9 @@ class QuoteShareDetailMapper implements QuoteShareDetailMapperInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuotePermissionGroupTransfer[] $quotePermissionGroupTransfers
+     * @param array<\Generated\Shared\Transfer\QuotePermissionGroupTransfer> $quotePermissionGroupTransfers
      *
-     * @return \Generated\Shared\Transfer\QuotePermissionGroupTransfer[]
+     * @return array<\Generated\Shared\Transfer\QuotePermissionGroupTransfer>
      */
     protected function indexQuotePermissionGroupById(array $quotePermissionGroupTransfers): array
     {

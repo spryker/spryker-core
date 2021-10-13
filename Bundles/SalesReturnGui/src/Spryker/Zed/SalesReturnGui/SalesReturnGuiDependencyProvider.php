@@ -23,17 +23,48 @@ use Spryker\Zed\SalesReturnGui\Dependency\Service\SalesReturnGuiToUtilDateTimeSe
  */
 class SalesReturnGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_SALES_RETURN = 'FACADE_SALES_RETURN';
+    /**
+     * @var string
+     */
     public const FACADE_MONEY = 'FACADE_MONEY';
+    /**
+     * @var string
+     */
     public const FACADE_SALES = 'FACADE_SALES';
+    /**
+     * @var string
+     */
     public const FACADE_GLOSSARY = 'FACADE_GLOSSARY';
+    /**
+     * @var string
+     */
     public const FACADE_CUSTOMER = 'FACADE_CUSTOMER';
+    /**
+     * @var string
+     */
     public const FACADE_OMS = 'FACADE_OMS';
 
+    /**
+     * @var string
+     */
     public const PLUGINS_RETURN_CREATE_FORM_HANDLER = 'PLUGINS_RETURN_CREATE_FORM_HANDLER';
+    /**
+     * @var string
+     */
+    public const PLUGINS_RETURN_CREATE_TEMPLATE = 'PLUGINS_RETURN_CREATE_TEMPLATE';
 
+    /**
+     * @var string
+     */
     public const SERVICE_UTIL_DATE_TIME = 'SERVICE_UTIL_DATE_TIME';
 
+    /**
+     * @var string
+     */
     public const PROPEL_QUERY_SALES_RETURN = 'PROPEL_QUERY_SALES_RETURN';
 
     /**
@@ -55,6 +86,7 @@ class SalesReturnGuiDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addSalesReturnPropelQuery($container);
 
         $container = $this->addReturnCreateFormHandlerPlugins($container);
+        $container = $this->addReturnCreateTemplatePlugins($container);
 
         return $container;
     }
@@ -192,9 +224,31 @@ class SalesReturnGuiDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\SalesReturnGuiExtension\Dependency\Plugin\ReturnCreateFormHandlerPluginInterface[]
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addReturnCreateTemplatePlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_RETURN_CREATE_TEMPLATE, function () {
+            return $this->getReturnCreateTemplatePlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return array<\Spryker\Zed\SalesReturnGuiExtension\Dependency\Plugin\ReturnCreateFormHandlerPluginInterface>
      */
     protected function getReturnCreateFormHandlerPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return array<\Spryker\Zed\SalesReturnGuiExtension\Dependency\Plugin\ReturnCreateTemplatePluginInterface>
+     */
+    protected function getReturnCreateTemplatePlugins(): array
     {
         return [];
     }

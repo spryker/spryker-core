@@ -19,9 +19,21 @@ use Spryker\Glue\Kernel\Container;
  */
 class CatalogSearchRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_CATALOG = 'CLIENT_CATALOG';
+    /**
+     * @var string
+     */
     public const CLIENT_PRICE = 'CLIENT_PRICE';
+    /**
+     * @var string
+     */
     public const CLIENT_CURRENCY = 'CLIENT_CURRENCY';
+    /**
+     * @var string
+     */
     public const CLIENT_GLOSSARY_STORAGE = 'CLIENT_GLOSSARY_STORAGE';
 
     /**

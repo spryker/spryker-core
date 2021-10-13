@@ -12,6 +12,9 @@ use Spryker\Service\Kernel\Container;
 
 class BarcodeDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const PLUGINS_BARCODE_GENERATOR = 'PLUGINS_BARCODE_GENERATOR';
 
     /**
@@ -41,7 +44,7 @@ class BarcodeDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Service\BarcodeExtension\Dependency\Plugin\BarcodeGeneratorPluginInterface[]
+     * @return array<\Spryker\Service\BarcodeExtension\Dependency\Plugin\BarcodeGeneratorPluginInterface>
      */
     protected function getBarcodeGeneratorPlugins(): array
     {

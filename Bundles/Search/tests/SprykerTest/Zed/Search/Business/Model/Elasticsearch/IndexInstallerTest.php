@@ -117,7 +117,7 @@ class IndexInstallerTest extends Unit
     /**
      * @uses IndexDefinitionLoaderInterface::loadIndexDefinitions()
      *
-     * @param \Generated\Shared\Transfer\ElasticsearchIndexDefinitionTransfer[] $indexDefinitions
+     * @param array<\Generated\Shared\Transfer\ElasticsearchIndexDefinitionTransfer> $indexDefinitions
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\IndexDefinitionLoaderInterface
      */

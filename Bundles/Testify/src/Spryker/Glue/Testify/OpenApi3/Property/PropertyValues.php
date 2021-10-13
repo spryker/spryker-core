@@ -16,7 +16,7 @@ use Traversable;
 class PropertyValues implements IteratorAggregate, ArrayAccess, Countable
 {
     /**
-     * @var \Spryker\Glue\Testify\OpenApi3\Property\PropertyValueInterface[]
+     * @var array<\Spryker\Glue\Testify\OpenApi3\Property\PropertyValueInterface>
      */
     protected $properties = [];
 
@@ -38,8 +38,6 @@ class PropertyValues implements IteratorAggregate, ArrayAccess, Countable
 
         return $this;
     }
-
-    // ------------------------------------------------------------------------
 
     /**
      * @return \Traversable
@@ -78,7 +76,10 @@ class PropertyValues implements IteratorAggregate, ArrayAccess, Countable
     }
 
     /**
-     * @inheritDoc
+     * @param string $offset
+     * @param mixed $value
+     *
+     * @return void
      */
     public function offsetSet($offset, $value)
     {
@@ -86,7 +87,9 @@ class PropertyValues implements IteratorAggregate, ArrayAccess, Countable
     }
 
     /**
-     * @inheritDoc
+     * @param string $offset
+     *
+     * @return void
      */
     public function offsetUnset($offset)
     {

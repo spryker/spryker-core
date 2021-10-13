@@ -17,8 +17,17 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class MigrationCheckConsole extends Console
 {
+    /**
+     * @var string
+     */
     public const COMMAND_NAME = 'propel:migration:check';
+    /**
+     * @var string
+     */
     public const COMMAND_DESCRIPTION = 'propel:migration:check';
+    /**
+     * @var int
+     */
     public const CODE_CHANGES = 3;
 
     /**

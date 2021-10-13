@@ -22,16 +22,38 @@ use Twig\Environment;
  */
 class SalesInvoiceDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_MAIL = 'FACADE_MAIL';
+    /**
+     * @var string
+     */
     public const FACADE_STORE = 'FACADE_STORE';
+    /**
+     * @var string
+     */
     public const FACADE_SEQUENCE_NUMBER = 'FACADE_SEQUENCE_NUMBER';
+    /**
+     * @var string
+     */
     public const FACADE_SALES = 'FACADE_SALES';
+    /**
+     * @var string
+     */
     public const TWIG_ENVIRONMENT = 'TWIG_ENVIRONMENT';
+    /**
+     * @var string
+     */
     public const PLUGINS_ORDER_INVOICE_BEFORE_SAVE = 'PLUGINS_ORDER_INVOICE_BEFORE_SAVE';
+    /**
+     * @var string
+     */
     public const PLUGINS_ORDER_INVOICES_EXPANDER = 'PLUGINS_ORDER_INVOICES_EXPANDER';
 
     /**
      * @uses \Spryker\Zed\Twig\Communication\Plugin\Application\TwigApplicationPlugin::SERVICE_TWIG
+     * @var string
      */
     public const SERVICE_TWIG = 'twig';
 
@@ -163,7 +185,7 @@ class SalesInvoiceDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\SalesInvoiceExtension\Dependency\Plugin\OrderInvoiceBeforeSavePluginInterface[]
+     * @return array<\Spryker\Zed\SalesInvoiceExtension\Dependency\Plugin\OrderInvoiceBeforeSavePluginInterface>
      */
     protected function getOrderInvoiceBeforeSavePlugins(): array
     {
@@ -171,7 +193,7 @@ class SalesInvoiceDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\SalesInvoiceExtension\Dependency\Plugin\OrderInvoicesExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\SalesInvoiceExtension\Dependency\Plugin\OrderInvoicesExpanderPluginInterface>
      */
     protected function getOrderInvoicesExpanderPlugins(): array
     {

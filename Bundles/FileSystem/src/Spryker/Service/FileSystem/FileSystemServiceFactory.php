@@ -48,7 +48,7 @@ class FileSystemServiceFactory extends AbstractServiceFactory
     }
 
     /**
-     * @return \Spryker\Service\FileSystem\Dependency\Plugin\FileSystemReaderPluginInterface
+     * @return \Spryker\Service\FileSystemExtension\Dependency\Plugin\FileSystemReaderPluginInterface
      */
     protected function getFileSystemReaderPlugin()
     {
@@ -56,7 +56,7 @@ class FileSystemServiceFactory extends AbstractServiceFactory
     }
 
     /**
-     * @return \Spryker\Service\FileSystem\Dependency\Plugin\FileSystemWriterPluginInterface
+     * @return \Spryker\Service\FileSystemExtension\Dependency\Plugin\FileSystemWriterPluginInterface
      */
     protected function getFileSystemWriterPlugin()
     {
@@ -64,7 +64,7 @@ class FileSystemServiceFactory extends AbstractServiceFactory
     }
 
     /**
-     * @return \Spryker\Service\FileSystem\Dependency\Plugin\FileSystemStreamPluginInterface
+     * @return \Spryker\Service\FileSystemExtension\Dependency\Plugin\FileSystemStreamPluginInterface
      */
     protected function getFileSystemStreamPlugin()
     {

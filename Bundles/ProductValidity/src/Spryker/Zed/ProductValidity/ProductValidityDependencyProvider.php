@@ -13,6 +13,9 @@ use Spryker\Zed\ProductValidity\Dependency\Facade\ProductValidityToProductFacade
 
 class ProductValidityDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_PRODUCT = 'FACADE_PRODUCT';
 
     /**

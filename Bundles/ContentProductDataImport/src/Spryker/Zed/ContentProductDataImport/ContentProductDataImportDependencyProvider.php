@@ -18,8 +18,17 @@ use Spryker\Zed\Kernel\Container;
  */
 class ContentProductDataImportDependencyProvider extends DataImportDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_CONTENT = 'FACADE_CONTENT';
+    /**
+     * @var string
+     */
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
+    /**
+     * @var string
+     */
     public const FACADE_CONTENT_PRODUCT = 'FACADE_CONTENT_PRODUCT';
 
     /**

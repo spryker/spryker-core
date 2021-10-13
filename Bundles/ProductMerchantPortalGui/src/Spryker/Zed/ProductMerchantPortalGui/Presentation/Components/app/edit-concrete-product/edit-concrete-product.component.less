@@ -1,0 +1,155 @@
+@import '~@spryker/styles/src/lib/themes/default/variables/index.less';
+
+@edit-concrete-product-padding: 30px;
+@edit-concrete-product-header-padding: 15px 30px;
+@edit-concrete-product-header-headline-padding-bottom: 0;
+@edit-concrete-product-header-title-margin-bottom: 7px;
+@edit-concrete-product-header-name-margin: 0;
+@edit-concrete-product-header-sub-title-padding-top: 20px;
+@edit-concrete-product-header-chips-margin: 0 10px 5px 0;
+@edit-concrete-product-card-padding-bottom: 20px;
+@edit-concrete-product-card-textarea-min-height: 100px;
+@edit-concrete-product-card-last-padding-bottom: 0;
+@edit-concrete-product-card-table-margin-top: 0;
+@edit-concrete-product-table-padding-inside-card: 3px 5px;
+@edit-concrete-product-status-control-min-height: 0;
+@edit-concrete-product-stock-reserved-margin-bottom: 17px;
+@edit-concrete-product-stock-margin: 0 -17px;
+@edit-concrete-product-stock-row-padding: 0 17px;
+@edit-concrete-product-stock-row-base-width: 275px;
+@edit-concrete-product-stock-form-label-padding: 0;
+@edit-concrete-product-stock-form-label-margin: 0;
+@edit-concrete-product-form-item-width: 130px;
+@edit-concrete-product-calendar-width: 200px;
+@edit-concrete-product-searchability-max-width: 420px;
+
+.@{ajax-form-prefix-cls}-container {
+    overflow-y: auto;
+
+    &--loading {
+        overflow: hidden;
+    }
+}
+
+.mp-edit-concrete-product {
+    display: block;
+    height: 100%;
+    background-color: @gray-lighter;
+    font: @font-default;
+    letter-spacing: @letter-spacing-base;
+    color: @ink;
+    overflow-y: auto;
+
+    &__header {
+        background-color: @white;
+        padding: @edit-concrete-product-header-padding;
+
+        .@{headline-prefix-cls} {
+            padding-bottom: @edit-concrete-product-header-headline-padding-bottom;
+        }
+    }
+
+    &__title {
+        color: @gray-darker;
+        font-size: @font-size-base;
+        font-weight: @font-weight-medium;
+        margin-bottom: @edit-concrete-product-header-title-margin-bottom;
+        letter-spacing: @letter-spacing-base;
+    }
+
+    &__name {
+        font-size: @font-size-lg;
+        font-weight: @font-weight-semi-bold;
+        letter-spacing: @letter-spacing-base;
+        margin: @edit-concrete-product-header-name-margin;
+    }
+
+    &__sub-title {
+        padding-top: @edit-concrete-product-header-sub-title-padding-top;
+        overflow: hidden;
+
+        .@{chips-prefix-cls} {
+            margin: @edit-concrete-product-header-chips-margin;
+            vertical-align: top;
+            white-space: nowrap;
+            float: left;
+        }
+    }
+
+    &__content {
+        display: block;
+        padding: @edit-concrete-product-padding;
+    }
+
+    &__card {
+        display: block;
+        padding-bottom: @edit-concrete-product-card-padding-bottom;
+
+        &:last-child {
+            padding-bottom: @edit-concrete-product-card-last-padding-bottom;
+        }
+
+        .@{table-prefix-cls},
+        .@{table-filters-feature-prefix-cls} {
+            background-color: @gray-lighter;
+            margin-top: @edit-concrete-product-card-table-margin-top;
+        }
+
+        .@{table-prefix-cls} {
+            padding: @edit-concrete-product-table-padding-inside-card;
+        }
+
+        .@{range-calendar-prefix-cls}-col {
+            width: @edit-concrete-product-calendar-width;
+        }
+
+        .@{textarea-prefix-cls}_textfield {
+            min-height: @edit-concrete-product-card-textarea-min-height;
+            height: auto !important;
+        }
+    }
+
+    &__status {
+        .@{form-item-prefix-cls}-control-input {
+            min-height: @edit-concrete-product-status-control-min-height;
+        }
+    }
+
+    &__stock {
+        &-reserved {
+            margin-bottom: @edit-concrete-product-stock-reserved-margin-bottom;
+        }
+
+        &-inner {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: flex-end;
+            margin: @edit-concrete-product-stock-margin;
+
+            &-row {
+                flex-basis: @edit-concrete-product-stock-row-base-width;
+                padding: @edit-concrete-product-stock-row-padding;
+            }
+        }
+
+        .@{form-prefix-cls}-item-label label {
+            font-size: @font-size-sm;
+            font-weight: @font-weight-medium;
+            padding: @edit-concrete-product-stock-form-label-padding;
+
+            label {
+                margin: @edit-concrete-product-stock-form-label-margin;
+            }
+        }
+    }
+
+    &__searchability {
+        .@{select-prefix-cls} {
+            max-width: @edit-concrete-product-searchability-max-width;
+        }
+    }
+
+    .@{table-editable-feature-prefix-cls}__cell .@{form-prefix-cls}-item {
+        width: @edit-concrete-product-form-item-width;
+    }
+}

@@ -33,7 +33,7 @@ class ApiQueryBuilderToApiBridge implements ApiQueryBuilderToApiInterface
     }
 
     /**
-     * @param array|\Spryker\Shared\Kernel\Transfer\AbstractTransfer $data
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|array $data
      *
      * @return \Generated\Shared\Transfer\ApiItemTransfer
      */

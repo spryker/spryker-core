@@ -12,6 +12,9 @@ use Spryker\Shared\Kernel\Store;
 
 class CurrencyPersistence implements CurrencyPersistenceInterface
 {
+    /**
+     * @var string
+     */
     public const CURRENT_CURRENCY_ISO_CODE = 'current-currency-iso-code';
 
     /**

@@ -16,6 +16,7 @@ class ProductMeasurementUnitStorageConfig extends AbstractBundleConfig
      * - Queue name as used for processing price messages
      *
      * @api
+     * @var string
      */
     public const PRODUCT_MEASUREMENT_UNIT_SYNC_STORAGE_QUEUE = 'sync.storage.product';
 
@@ -24,6 +25,7 @@ class ProductMeasurementUnitStorageConfig extends AbstractBundleConfig
      * - Queue name as used for processing price messages
      *
      * @api
+     * @var string
      */
     public const PRODUCT_MEASUREMENT_UNIT_SYNC_STORAGE_ERROR_QUEUE = 'sync.storage.product.error';
 
@@ -32,6 +34,7 @@ class ProductMeasurementUnitStorageConfig extends AbstractBundleConfig
      * - Key generation resource name of product measurement unit.
      *
      * @api
+     * @var string
      */
     public const PRODUCT_MEASUREMENT_UNIT_RESOURCE_NAME = 'product_measurement_unit';
 
@@ -40,6 +43,7 @@ class ProductMeasurementUnitStorageConfig extends AbstractBundleConfig
      * - Key generation resource name of product concrete measurement unit.
      *
      * @api
+     * @var string
      */
     public const PRODUCT_CONCRETE_MEASUREMENT_UNIT_RESOURCE_NAME = 'product_concrete_measurement_unit';
 }

@@ -17,11 +17,29 @@ use Spryker\Zed\Kernel\Container;
  */
 class CollectorDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_LOCALE = 'locale facade';
+    /**
+     * @var string
+     */
     public const QUERY_CONTAINER_TOUCH = 'touch query container';
+    /**
+     * @var string
+     */
     public const SEARCH_PLUGINS = 'search plugins';
+    /**
+     * @var string
+     */
     public const STORAGE_PLUGINS = 'storage plugins';
+    /**
+     * @var string
+     */
     public const FACADE_PROPEL = 'propel facade';
+    /**
+     * @var string
+     */
     public const FACADE_STORE = 'store facade';
 
     /**

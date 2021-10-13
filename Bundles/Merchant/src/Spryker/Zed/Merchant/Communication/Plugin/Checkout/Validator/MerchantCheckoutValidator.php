@@ -15,7 +15,13 @@ use Spryker\Zed\Merchant\Business\MerchantFacadeInterface;
 
 class MerchantCheckoutValidator implements MerchantCheckoutValidatorInterface
 {
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_REMOVED_MERCHANT = 'merchant.message.removed';
+    /**
+     * @var string
+     */
     protected const GLOSSARY_PARAM_SKU = '%sku%';
 
     /**
@@ -84,8 +90,9 @@ class MerchantCheckoutValidator implements MerchantCheckoutValidatorInterface
         if (!$merchantReferences) {
             return $merchantTransfers;
         }
-
+        /** @var array<string> $merchantReferences */
         $merchantReferences = array_unique($merchantReferences);
+
         $merchantCollectionTransfer = $this->merchantFacade->get(
             (new MerchantCriteriaTransfer())
                 ->setMerchantReferences($merchantReferences)

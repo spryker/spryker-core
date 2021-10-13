@@ -12,7 +12,7 @@ interface HtmInterface
     /**
      * Convenience method for htmlspecialchars to use UTF8 by default.
      *
-     * @param string|array|object $text Text to wrap through htmlspecialchars. Also works with arrays, and objects.
+     * @param object|array|string $text Text to wrap through htmlspecialchars. Also works with arrays, and objects.
      *   Arrays will be mapped and have all their elements escaped. Objects will be string cast if they
      *   implement a `__toString` method. Otherwise the class name will be used.
      * @param bool $double Encode existing html entities.

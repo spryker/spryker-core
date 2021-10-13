@@ -19,7 +19,7 @@ use Spryker\Zed\Permission\Persistence\PermissionRepositoryInterface;
 class PermissionFinder implements PermissionFinderInterface
 {
     /**
-     * @var \Spryker\Shared\PermissionExtension\Dependency\Plugin\ExecutablePermissionPluginInterface[]
+     * @var array<\Spryker\Shared\PermissionExtension\Dependency\Plugin\ExecutablePermissionPluginInterface>
      */
     protected $permissionPlugins = [];
 
@@ -34,7 +34,7 @@ class PermissionFinder implements PermissionFinderInterface
     protected $permissionClient;
 
     /**
-     * @var \Spryker\Zed\PermissionExtension\Dependency\Plugin\PermissionStoragePluginInterface[]
+     * @var array<\Spryker\Zed\PermissionExtension\Dependency\Plugin\PermissionStoragePluginInterface>
      */
     protected $permissionStoragePlugins = [];
 
@@ -42,7 +42,7 @@ class PermissionFinder implements PermissionFinderInterface
      * @param array $permissionPlugins
      * @param \Spryker\Zed\Permission\Persistence\PermissionRepositoryInterface $permissionRepository
      * @param \Spryker\Client\Permission\PermissionClientInterface $permissionClient
-     * @param \Spryker\Zed\PermissionExtension\Dependency\Plugin\PermissionStoragePluginInterface[] $permissionStoragePlugins
+     * @param array<\Spryker\Zed\PermissionExtension\Dependency\Plugin\PermissionStoragePluginInterface> $permissionStoragePlugins
      */
     public function __construct(
         array $permissionPlugins,
@@ -134,7 +134,7 @@ class PermissionFinder implements PermissionFinderInterface
     }
 
     /**
-     * @return \Generated\Shared\Transfer\PermissionTransfer[] Keys are permission keys
+     * @return array<\Generated\Shared\Transfer\PermissionTransfer> Keys are permission keys
      */
     protected function getIndexedMergedRegisteredNonInfrastructuralPermissions()
     {
@@ -150,9 +150,9 @@ class PermissionFinder implements PermissionFinderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PermissionTransfer[] $permissions
+     * @param array<\Generated\Shared\Transfer\PermissionTransfer> $permissions
      *
-     * @return \Generated\Shared\Transfer\PermissionTransfer[]
+     * @return array<\Generated\Shared\Transfer\PermissionTransfer>
      */
     protected function filterNonInfrastructuralPermissions(array $permissions)
     {
@@ -162,7 +162,7 @@ class PermissionFinder implements PermissionFinderInterface
     }
 
     /**
-     * @return \Generated\Shared\Transfer\PermissionTransfer[]
+     * @return array<\Generated\Shared\Transfer\PermissionTransfer>
      */
     protected function getZedRegisteredPermissions()
     {
@@ -172,7 +172,7 @@ class PermissionFinder implements PermissionFinderInterface
     }
 
     /**
-     * @return \Generated\Shared\Transfer\PermissionTransfer[]
+     * @return array<\Generated\Shared\Transfer\PermissionTransfer>
      */
     protected function getClientRegisteredPermissions()
     {
@@ -182,9 +182,9 @@ class PermissionFinder implements PermissionFinderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PermissionTransfer[] $permissions
+     * @param array<\Generated\Shared\Transfer\PermissionTransfer> $permissions
      *
-     * @return \Generated\Shared\Transfer\PermissionTransfer[] Keys are permission keys
+     * @return array<\Generated\Shared\Transfer\PermissionTransfer> Keys are permission keys
      */
     protected function indexPermissionTransfers(array $permissions): array
     {
@@ -197,7 +197,7 @@ class PermissionFinder implements PermissionFinderInterface
     }
 
     /**
-     * @param \Spryker\Shared\PermissionExtension\Dependency\Plugin\PermissionPluginInterface[] $permissionPlugins
+     * @param array<\Spryker\Shared\PermissionExtension\Dependency\Plugin\PermissionPluginInterface> $permissionPlugins
      *
      * @return array
      */

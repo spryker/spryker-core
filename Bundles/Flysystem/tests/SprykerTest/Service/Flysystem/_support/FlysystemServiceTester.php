@@ -8,6 +8,10 @@
 namespace SprykerTest\Service\Flysystem;
 
 use Codeception\Actor;
+use Codeception\Stub;
+use League\Flysystem\DirectoryListing;
+use League\Flysystem\Filesystem;
+use Spryker\Service\Flysystem\Model\Provider\FilesystemProviderInterface;
 
 /**
  * @method void wantToTest($text)
@@ -22,8 +26,30 @@ use Codeception\Actor;
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  *
  * @SuppressWarnings(PHPMD)
+ *
+ * @method \Spryker\Service\Flysystem\FlysystemService getService()
  */
 class FlysystemServiceTester extends Actor
 {
     use _generated\FlysystemServiceTesterActions;
+
+    /**
+     * @return void
+     */
+    public function arrangeFilesystemProviderThatReturnsDataWithPropertiesThatAreNotPresentInTheFlysystemResourceTransfer(): void
+    {
+        $this->mockFactoryMethod('createFilesystemProvider', function () {
+            return Stub::makeEmpty(FilesystemProviderInterface::class, [
+                'getFilesystemByName' => function () {
+                    return Stub::make(Filesystem::class, [
+                        'listContents' => function () {
+                            return Stub::make(DirectoryListing::class, [
+                                ['non-existent-transfer-property' => 'foo'],
+                            ]);
+                        },
+                    ]);
+                },
+            ]);
+        });
+    }
 }

@@ -10,7 +10,7 @@ namespace Spryker\Zed\ConfigurableBundleGui\Communication\Provider;
 interface ProductConcreteRelationTablesProviderInterface
 {
     /**
-     * @return \Spryker\Zed\Gui\Communication\Table\AbstractTable[]
+     * @return array<\Spryker\Zed\Gui\Communication\Table\AbstractTable>
      */
     public function getTables(): array;
 }

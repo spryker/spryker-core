@@ -27,9 +27,9 @@ class SalesOrderItemMetadataMapper
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Sales\Persistence\SpySalesOrderItemMetadata[] $salesOrderItemMetadataEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Sales\Persistence\SpySalesOrderItemMetadata> $salesOrderItemMetadataEntities
      *
-     * @return \Generated\Shared\Transfer\ItemMetadataTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemMetadataTransfer>
      */
     public function mapSalesOrderItemMetadataEntityCollectionToItemMetadataTransfers(
         ObjectCollection $salesOrderItemMetadataEntities

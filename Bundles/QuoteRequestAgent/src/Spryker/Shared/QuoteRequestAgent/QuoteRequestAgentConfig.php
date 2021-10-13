@@ -13,38 +13,44 @@ class QuoteRequestAgentConfig extends AbstractSharedConfig
 {
     /**
      * @see \Spryker\Shared\QuoteRequest\QuoteRequestConfig::STATUS_WAITING
+     * @var string
      */
     public const STATUS_WAITING = 'waiting';
 
     /**
      * @see \Spryker\Shared\QuoteRequest\QuoteRequestConfig::STATUS_READY
+     * @var string
      */
     public const STATUS_READY = 'ready';
 
     /**
      * @see \Spryker\Shared\QuoteRequest\QuoteRequestConfig::STATUS_DRAFT
+     * @var string
      */
     public const STATUS_DRAFT = 'draft';
 
     /**
      * @see \Spryker\Shared\QuoteRequest\QuoteRequestConfig::STATUS_CANCELED
+     * @var string
      */
     public const STATUS_CANCELED = 'canceled';
 
     /**
      * @see \Spryker\Shared\QuoteRequest\QuoteRequestConfig::STATUS_IN_PROGRESS
+     * @var string
      */
     public const STATUS_IN_PROGRESS = 'in-progress';
 
     /**
      * @see \Spryker\Shared\QuoteRequest\QuoteRequestConfig::STATUS_CLOSED
+     * @var string
      */
     public const STATUS_CLOSED = 'closed';
 
     /**
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getCancelableStatuses(): array
     {
@@ -59,7 +65,7 @@ class QuoteRequestAgentConfig extends AbstractSharedConfig
     /**
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getRevisableStatuses(): array
     {

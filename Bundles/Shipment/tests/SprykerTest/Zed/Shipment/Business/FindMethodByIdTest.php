@@ -32,13 +32,13 @@ class FindMethodByIdTest extends Unit
     public function testFindMethodByIdShouldFindShipmentMethod(): void
     {
         // Arrange
-         $shipmentMethodTransfer = $this->tester->haveShipmentMethod();
+        $shipmentMethodTransfer = $this->tester->haveShipmentMethod();
 
-         // Act
-         $resultTransfer = $this->tester->getFacade()->findMethodById($shipmentMethodTransfer->getIdShipmentMethod());
+        // Act
+        $resultTransfer = $this->tester->getFacade()->findMethodById($shipmentMethodTransfer->getIdShipmentMethod());
 
-         // Assert
-         $this->assertNotNull($resultTransfer, 'Result should not be null');
+        // Assert
+        $this->assertNotNull($resultTransfer, 'Result should not be null');
     }
 
     /**

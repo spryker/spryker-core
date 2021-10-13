@@ -16,6 +16,9 @@ use Spryker\Service\UtilEncryption\Dependency\Service\UtilEncryptionToUtilTextSe
  */
 class UtilEncryptionDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const SERVICE_UTIL_TEXT = 'SERVICE_UTIL_TEXT';
 
     /**

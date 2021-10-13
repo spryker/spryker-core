@@ -11,6 +11,9 @@ use Symfony\Component\Validator\Constraint;
 
 class PriceProductSchedulePriceConstraint extends Constraint
 {
+    /**
+     * @var string
+     */
     protected const VALIDATION_MESSAGE = 'Net price or gross price must be filled';
 
     /**

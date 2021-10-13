@@ -13,6 +13,9 @@ use Spryker\Zed\Kernel\Container;
 
 class CartNoteProductBundleConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_PRODUCT_BUNDLE = 'FACADE_PRODUCT_BUNDLE';
 
     /**

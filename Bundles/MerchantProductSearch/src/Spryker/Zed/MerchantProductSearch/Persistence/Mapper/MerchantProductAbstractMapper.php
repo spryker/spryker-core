@@ -13,21 +13,25 @@ class MerchantProductAbstractMapper
 {
     /**
      * @uses \Spryker\Zed\MerchantProductOfferSearch\Persistence\MerchantProductOfferSearchRepository::KEY_PRODUCT_ABSTRACT_ID
+     * @var string
      */
     protected const KEY_PRODUCT_ABSTRACT_ID = 'id_product_abstract';
 
     /**
      * @uses \Spryker\Zed\MerchantProductOfferSearch\Persistence\MerchantProductOfferSearchRepository::KEY_MERCHANT_NAME
+     * @var string
      */
     protected const KEY_MERCHANT_NAME = 'merchant_name';
 
     /**
      * @uses \Spryker\Zed\MerchantProductOfferSearch\Persistence\MerchantProductOfferSearchRepository::KEY_MERCHANT_NAMES
+     * @var string
      */
     protected const KEY_MERCHANT_NAMES = 'merchant_names';
 
     /**
      * @uses \Spryker\Zed\MerchantProductOfferSearch\Persistence\MerchantProductOfferSearchRepository::KEY_STORE_NAME
+     * @var string
      */
     protected const KEY_STORE_NAME = 'store_name';
 
@@ -35,9 +39,9 @@ class MerchantProductAbstractMapper
      * @phpstan-param array<int, mixed> $merchantData
      *
      * @param array $merchantData
-     * @param \Generated\Shared\Transfer\ProductAbstractMerchantTransfer[] $productAbstractMerchantTransfers
+     * @param array<\Generated\Shared\Transfer\ProductAbstractMerchantTransfer> $productAbstractMerchantTransfers
      *
-     * @return \Generated\Shared\Transfer\ProductAbstractMerchantTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductAbstractMerchantTransfer>
      */
     public function mapProductAbstractMerchantDataToProductAbstractMerchantTransfers(array $merchantData, array $productAbstractMerchantTransfers = []): array
     {

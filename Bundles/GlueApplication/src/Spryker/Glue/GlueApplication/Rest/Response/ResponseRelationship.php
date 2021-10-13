@@ -32,7 +32,7 @@ class ResponseRelationship implements ResponseRelationshipInterface
 
     /**
      * @param string $resourceName
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
+     * @param array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface> $resources
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      * @param string|null $parentResourceId
      *
@@ -63,7 +63,7 @@ class ResponseRelationship implements ResponseRelationshipInterface
     }
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
+     * @param array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface> $resources
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return array
@@ -90,7 +90,7 @@ class ResponseRelationship implements ResponseRelationshipInterface
         RestRequestInterface $restRequest,
         array &$included
     ): void {
-        /** @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources */
+        /** @var array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface> $resources */
         foreach ($resourceRelationships as $resourceType => $resources) {
             if (!$this->hasRelationship($resourceType, $restRequest)) {
                 continue;
@@ -100,10 +100,29 @@ class ResponseRelationship implements ResponseRelationshipInterface
                     $this->processRelationships($resource->getRelationships(), $restRequest, $included);
                 }
 
-                $resourceIdentifier = $resourceType . ':' . $resource->getId();
-                $included[$resourceIdentifier] = $resource;
+                $resourceId = $resourceType . ':' . $resource->getId();
+                if ($this->isResourceCanBeIncluded($included, $resourceId)) {
+                    $included[$resourceId] = $resource;
+                }
             }
         }
+    }
+
+    /**
+     * @param array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface> $included
+     * @param string $resourceId
+     *
+     * @return bool
+     */
+    protected function isResourceCanBeIncluded(array $included, string $resourceId): bool
+    {
+        if (!isset($included[$resourceId])) {
+            return true;
+        }
+
+        $resource = $included[$resourceId];
+
+        return !$resource->getRelationships();
     }
 
     /**

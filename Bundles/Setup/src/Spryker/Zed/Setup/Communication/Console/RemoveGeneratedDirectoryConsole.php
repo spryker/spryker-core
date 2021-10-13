@@ -19,7 +19,13 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class RemoveGeneratedDirectoryConsole extends Console
 {
+    /**
+     * @var string
+     */
     public const COMMAND_NAME = 'setup:remove-generated-directory';
+    /**
+     * @var string
+     */
     public const DESCRIPTION = 'Remove the directory where generated files are stored';
 
     /**

@@ -11,6 +11,9 @@ use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 
 abstract class AbstractProductTable extends AbstractTable
 {
+    /**
+     * @var string
+     */
     protected const COL_IS_ACTIVE_AGGREGATION = 'is_active_aggregation';
 
     /**

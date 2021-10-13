@@ -16,19 +16,34 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class EditController extends AbstractController
 {
+    /**
+     * @var string
+     */
     public const PARAM_ID_USER = 'id-user';
 
+    /**
+     * @var string
+     */
     public const PAGE_EDIT = '/customer-user-connector-gui/edit';
+    /**
+     * @var string
+     */
     public const PAGE_EDIT_WITH_PARAMS = '/customer-user-connector-gui/edit?%s=%d';
 
+    /**
+     * @var string
+     */
     public const PAGE_USER = '/user';
 
+    /**
+     * @var string
+     */
     protected const MESSAGE_USER_NOT_FOUND = "User couldn't be found";
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function indexAction(Request $request)
     {

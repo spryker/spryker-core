@@ -19,11 +19,26 @@ use Spryker\Zed\SecurityGui\Dependency\Facade\SecurityGuiToUserPasswordResetFaca
  */
 class SecurityGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_USER = 'FACADE_USER';
+    /**
+     * @var string
+     */
     public const FACADE_USER_PASSWORD_RESET = 'FACADE_USER_PASSWORD_RESET';
+    /**
+     * @var string
+     */
     public const FACADE_MESSENGER = 'FACADE_MESSENGER';
+    /**
+     * @var string
+     */
     public const FACADE_SECURITY = 'FACADE_SECURITY';
 
+    /**
+     * @var string
+     */
     public const PLUGINS_AUTHENTICATION_LINK = 'PLUGINS_AUTHENTICATION_LINK';
 
     /**
@@ -137,7 +152,7 @@ class SecurityGuiDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\SecurityGuiExtension\Dependency\Plugin\AuthenticationLinkPluginInterface[]
+     * @return array<\Spryker\Zed\SecurityGuiExtension\Dependency\Plugin\AuthenticationLinkPluginInterface>
      */
     protected function getAuthenticationLinkPlugins(): array
     {

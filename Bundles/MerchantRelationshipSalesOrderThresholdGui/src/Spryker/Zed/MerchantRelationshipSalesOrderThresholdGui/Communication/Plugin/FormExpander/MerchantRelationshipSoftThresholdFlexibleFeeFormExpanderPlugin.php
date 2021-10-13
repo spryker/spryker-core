@@ -23,6 +23,9 @@ use Symfony\Component\Validator\Constraints\Range;
  */
 class MerchantRelationshipSoftThresholdFlexibleFeeFormExpanderPlugin extends AbstractPlugin implements SalesOrderThresholdFormExpanderPluginInterface, SalesOrderThresholdFormFieldDependenciesPluginInterface
 {
+    /**
+     * @var string
+     */
     protected const FIELD_SOFT_FLEXIBLE_FEE = 'flexibleFee';
 
     /**
@@ -146,7 +149,7 @@ class MerchantRelationshipSoftThresholdFlexibleFeeFormExpanderPlugin extends Abs
      *
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getThresholdFieldDependentFieldNames(): array
     {

@@ -19,6 +19,9 @@ use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
  */
 class RulesetController extends AbstractController
 {
+    /**
+     * @var string
+     */
     public const ROLE_UPDATE_URL = '/acl/role/update?id-role=%d';
 
     /**

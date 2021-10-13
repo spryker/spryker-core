@@ -12,14 +12,38 @@ use Spryker\Zed\CompanyGui\Dependency\Facade\CompanyGuiToCompanyFacadeBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\CompanyGui\CompanyGuiConfig getConfig()
+ */
 class CompanyGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const PROPEL_COMPANY_QUERY = 'PROPEL_COMPANY_QUERY';
+    /**
+     * @var string
+     */
     public const FACADE_COMPANY = 'FACADE_COMPANY';
+    /**
+     * @var string
+     */
     public const PLUGINS_COMPANY_TABLE_CONFIG_EXPANDER = 'PLUGINS_COMPANY_TABLE_CONFIG_EXPANDER';
+    /**
+     * @var string
+     */
     public const PLUGINS_COMPANY_TABLE_HEADER_EXPANDER = 'PLUGINS_COMPANY_HEADER_TABLE_EXPANDER';
+    /**
+     * @var string
+     */
     public const PLUGINS_COMPANY_TABLE_DATA_EXPANDER = 'PLUGINS_COMPANY_TABLE_DATA_EXPANDER';
+    /**
+     * @var string
+     */
     public const PLUGINS_COMPANY_TABLE_ACTION_EXPANDER = 'PLUGINS_COMPANY_TABLE_ACTION_EXPANDER';
+    /**
+     * @var string
+     */
     public const PLUGINS_COMPANY_FORM_EXPANDER = 'PLUGINS_COMPANY_FORM_EXPANDER';
 
     /**
@@ -84,7 +108,7 @@ class CompanyGuiDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\CompanyGuiExtension\Dependency\Plugin\CompanyTableConfigExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\CompanyGuiExtension\Dependency\Plugin\CompanyTableConfigExpanderPluginInterface>
      */
     protected function getCompanyTableConfigExpanderPlugins(): array
     {
@@ -106,7 +130,7 @@ class CompanyGuiDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\CompanyGuiExtension\Dependency\Plugin\CompanyTableHeaderExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\CompanyGuiExtension\Dependency\Plugin\CompanyTableHeaderExpanderPluginInterface>
      */
     protected function getCompanyTableHeaderExpanderPlugins(): array
     {
@@ -128,7 +152,7 @@ class CompanyGuiDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\CompanyGuiExtension\Dependency\Plugin\CompanyTableDataExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\CompanyGuiExtension\Dependency\Plugin\CompanyTableDataExpanderPluginInterface>
      */
     protected function getCompanyTableDataExpanderPlugins(): array
     {
@@ -150,7 +174,7 @@ class CompanyGuiDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\CompanyGuiExtension\Dependency\Plugin\CompanyTableActionExpanderInterface[]
+     * @return array<\Spryker\Zed\CompanyGuiExtension\Dependency\Plugin\CompanyTableActionExpanderInterface>
      */
     protected function getCompanyTableActionExpanderPlugins(): array
     {
@@ -172,7 +196,7 @@ class CompanyGuiDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\CompanyGuiExtension\Dependency\Plugin\CompanyFormExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\CompanyGuiExtension\Dependency\Plugin\CompanyFormExpanderPluginInterface>
      */
     protected function getCompanyFormPlugins(): array
     {

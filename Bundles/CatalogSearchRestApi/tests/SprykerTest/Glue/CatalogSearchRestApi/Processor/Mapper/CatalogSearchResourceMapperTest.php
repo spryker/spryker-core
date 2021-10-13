@@ -40,15 +40,31 @@ class CatalogSearchResourceMapperTest extends Unit
 {
     use ArraySubsetAsserts;
 
+    /**
+     * @var string
+     */
     protected const REQUESTED_CURRENCY = 'CHF';
+    /**
+     * @var string
+     */
     protected const GROSS_AMOUNT = 'grossAmount';
+    /**
+     * @var string
+     */
     protected const GROSS_MODE = 'GROSS_MODE';
+    /**
+     * @var string
+     */
     protected const NET_MODE = 'NET_MODE';
 
     /**
      * @deprecated Will be removed in next major release.
+     * @var string
      */
     protected const KEY_PRODUCTS = 'products';
+    /**
+     * @var string
+     */
     protected const KEY_ABSTRACT_PRODUCTS = 'abstractProducts';
 
     /**
@@ -164,7 +180,7 @@ class CatalogSearchResourceMapperTest extends Unit
     }
 
     /**
-     * @return \ArrayObject|\Generated\Shared\Transfer\RestCatalogSearchAbstractProductsTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\RestCatalogSearchAbstractProductsTransfer>
      */
     protected function getProductsFromRestCatalogSearchAttributesTransfer(): ArrayObject
     {

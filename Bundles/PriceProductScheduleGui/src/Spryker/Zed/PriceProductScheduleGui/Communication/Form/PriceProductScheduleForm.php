@@ -24,12 +24,33 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class PriceProductScheduleForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const FIELD_PRICE_PRODUCT = 'priceProduct';
+    /**
+     * @var string
+     */
     public const FIELD_SUBMIT = 'submit';
+    /**
+     * @var string
+     */
     public const FIELD_ACTIVE_FROM = 'activeFrom';
+    /**
+     * @var string
+     */
     public const FIELD_ACTIVE_TO = 'activeTo';
+    /**
+     * @var string
+     */
     protected const PATTERN_DATE_FORMAT = 'Y-m-d H:i:s';
+    /**
+     * @var string
+     */
     public const GROUP_AFTER = 'After';
+    /**
+     * @var string
+     */
     public const GROUP_DEFAULT = 'Default';
 
     /**
@@ -129,6 +150,7 @@ class PriceProductScheduleForm extends AbstractType
             'label' => 'Start from (included)',
             'date_widget' => 'single_text',
             'format' => static::PATTERN_DATE_FORMAT,
+            'html5' => false,
             'time_widget' => 'choice',
             'constraints' => [
                 new NotBlank(),
@@ -152,6 +174,7 @@ class PriceProductScheduleForm extends AbstractType
             'label' => 'Finish at (included)',
             'date_widget' => 'single_text',
             'format' => static::PATTERN_DATE_FORMAT,
+            'html5' => false,
             'time_widget' => 'choice',
             'constraints' => [
                 new NotBlank(),

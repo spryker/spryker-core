@@ -29,7 +29,7 @@ class AgentFacadeTest extends Unit
     protected $tester;
 
     /**
-     * @var \Generated\Shared\Transfer\CustomerTransfer[]
+     * @var array<\Generated\Shared\Transfer\CustomerTransfer>
      */
     protected $customerTransfers;
 

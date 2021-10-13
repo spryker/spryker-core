@@ -15,6 +15,9 @@ use Spryker\Shared\Session\Business\Handler\KeyGenerator\SessionKeyGeneratorInte
  */
 class RedisLockKeyGenerator implements LockKeyGeneratorInterface
 {
+    /**
+     * @var string
+     */
     public const KEY_SUFFIX = ':lock';
 
     /**

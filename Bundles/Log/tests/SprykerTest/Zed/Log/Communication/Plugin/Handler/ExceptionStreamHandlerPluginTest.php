@@ -27,6 +27,9 @@ use Spryker\Zed\Log\Communication\Plugin\Handler\ExceptionStreamHandlerPlugin;
  */
 class ExceptionStreamHandlerPluginTest extends Unit
 {
+    /**
+     * @var string
+     */
     public const FILENAME = 'exception.log';
 
     /**
@@ -39,7 +42,7 @@ class ExceptionStreamHandlerPluginTest extends Unit
      */
     protected function getExceptionStreamHandlerPlugin(): ExceptionStreamHandlerPlugin
     {
-        $this->tester->mockConfigMethod('getExceptionLogFilePath', function () {
+        $this->tester->mockConfigMethod('getExceptionLogDestinationPath', function () {
             return $this->tester->getPathToLogFile(static::FILENAME);
         });
 

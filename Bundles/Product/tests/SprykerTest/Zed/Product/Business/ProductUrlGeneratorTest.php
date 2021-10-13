@@ -31,11 +31,17 @@ use Spryker\Zed\Product\Dependency\Service\ProductToUtilTextBridge;
  */
 class ProductUrlGeneratorTest extends Unit
 {
+    /**
+     * @var array
+     */
     public const PRODUCT_NAME = [
         'en_US' => 'Product name en_US',
         'de_DE' => 'Product name de_DE',
     ];
 
+    /**
+     * @var int
+     */
     public const ID_PRODUCT_ABSTRACT = 1;
 
     /**
@@ -64,7 +70,7 @@ class ProductUrlGeneratorTest extends Unit
     protected $productAbstractTransfer;
 
     /**
-     * @var \Generated\Shared\Transfer\LocaleTransfer[]
+     * @var array<\Generated\Shared\Transfer\LocaleTransfer>
      */
     protected $locales;
 
@@ -98,16 +104,19 @@ class ProductUrlGeneratorTest extends Unit
         ->disableOriginalConstructor()->getMock();
 
         $this->productAbstractNameGenerator
-        ->expects($this->at(0))
+        ->expects($this->exactly(2))
         ->method('getLocalizedProductAbstractName')
-        ->with($this->productAbstractTransfer, $this->locales['de_DE'])
-        ->willReturn(self::PRODUCT_NAME['de_DE']);
-
-        $this->productAbstractNameGenerator
-        ->expects($this->at(1))
-        ->method('getLocalizedProductAbstractName')
-        ->with($this->productAbstractTransfer, $this->locales['en_US'])
-        ->willReturn(self::PRODUCT_NAME['en_US']);
+        ->withConsecutive(
+            [
+                $this->productAbstractTransfer,
+                $this->locales['de_DE'],
+            ],
+            [
+                $this->productAbstractTransfer,
+                $this->locales['en_US'],
+            ],
+        )
+        ->willReturn(self::PRODUCT_NAME['de_DE'], self::PRODUCT_NAME['en_US']);
     }
 
     /**
@@ -173,16 +182,10 @@ class ProductUrlGeneratorTest extends Unit
         );
 
         $this->utilTextService
-        ->expects($this->at(0))
+        ->expects($this->exactly(2))
         ->method('generateSlug')
-        ->with(self::PRODUCT_NAME['de_DE'])
-        ->willReturn('product-name-dede');
-
-        $this->utilTextService
-        ->expects($this->at(1))
-        ->method('generateSlug')
-        ->with(self::PRODUCT_NAME['en_US'])
-        ->willReturn('product-name-enus');
+        ->withConsecutive([self::PRODUCT_NAME['de_DE']], [self::PRODUCT_NAME['en_US']])
+        ->willReturnOnConsecutiveCalls('product-name-dede', 'product-name-enus');
 
         $urlGenerator = new ProductUrlGenerator($this->productAbstractNameGenerator, $this->localeFacade, $this->utilTextService);
         $productUrl = $urlGenerator->generateProductUrl($this->productAbstractTransfer);

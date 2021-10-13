@@ -13,6 +13,9 @@ use Orm\Zed\MerchantRelationshipSalesOrderThreshold\Persistence\SpyMerchantRelat
 
 class MerchantRelationshipSalesOrderThresholdDataImportHelper extends Module
 {
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_EXPECTED = 'Expected at least one entry in the database table `%s` but table is empty.';
 
     /**

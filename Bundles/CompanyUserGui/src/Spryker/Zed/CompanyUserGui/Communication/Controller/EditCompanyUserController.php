@@ -17,18 +17,30 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class EditCompanyUserController extends AbstractController
 {
+    /**
+     * @var string
+     */
     protected const PARAM_REDIRECT_URL = 'redirect-url';
 
+    /**
+     * @var string
+     */
     protected const MESSAGE_SUCCESS_COMPANY_USER_UPDATE = 'Company User has been updated.';
 
+    /**
+     * @var string
+     */
     protected const MESSAGE_COMPANY_USER_NOT_FOUND = 'Company User not found.';
 
+    /**
+     * @var string
+     */
     protected const URL_REDIRECT_COMPANY_USER_PAGE = '/company-user-gui/list-company-user';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function indexAction(Request $request)
     {
@@ -67,7 +79,7 @@ class EditCompanyUserController extends AbstractController
      * @param \Symfony\Component\Form\FormInterface $companyUserForm
      * @param string $redirectUrl
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     protected function updateCompanyUser(FormInterface $companyUserForm, string $redirectUrl)
     {

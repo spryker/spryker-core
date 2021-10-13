@@ -576,7 +576,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Development\Business\Dependency\DependencyFinder\TwigDependencyFinder\TwigDependencyFinderInterface[]
+     * @return array<\Spryker\Zed\Development\Business\Dependency\DependencyFinder\TwigDependencyFinder\TwigDependencyFinderInterface>
      */
     public function getTwigDependencyFinder(): array
     {
@@ -1462,7 +1462,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getEngineBundleList()
     {
@@ -1748,7 +1748,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\MethodBuilder\BundleMethodBuilderInterface[]
+     * @return array<\Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\MethodBuilder\BundleMethodBuilderInterface>
      */
     protected function getYvesIdeAutoCompletionMethodBuilderStack()
     {
@@ -1759,7 +1759,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\MethodBuilder\BundleMethodBuilderInterface[]
+     * @return array<\Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\MethodBuilder\BundleMethodBuilderInterface>
      */
     protected function getZedIdeAutoCompletionMethodBuilderStack()
     {
@@ -1772,7 +1772,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\MethodBuilder\BundleMethodBuilderInterface[]
+     * @return array<\Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\MethodBuilder\BundleMethodBuilderInterface>
      */
     protected function createGlueAutoCompletionMethodBuilderStack()
     {
@@ -1784,7 +1784,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\MethodBuilder\BundleMethodBuilderInterface[]
+     * @return array<\Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\MethodBuilder\BundleMethodBuilderInterface>
      */
     protected function getClientIdeAutoCompletionMethodBuilderStack()
     {
@@ -1795,7 +1795,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\MethodBuilder\BundleMethodBuilderInterface[]
+     * @return array<\Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\MethodBuilder\BundleMethodBuilderInterface>
      */
     protected function getServiceIdeAutoCompletionMethodBuilderStack()
     {
@@ -1875,7 +1875,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     /**
      * @param array $options
      *
-     * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\Generator\GeneratorInterface[]
+     * @return array<\Spryker\Zed\Development\Business\IdeAutoCompletion\Generator\GeneratorInterface>
      */
     protected function getIdeAutoCompletionGeneratorStack(array $options)
     {

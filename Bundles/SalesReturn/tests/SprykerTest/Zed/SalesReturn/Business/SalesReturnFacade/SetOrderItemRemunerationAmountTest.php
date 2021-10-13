@@ -25,7 +25,13 @@ use Spryker\Zed\Sales\Business\SalesFacadeInterface;
  */
 class SetOrderItemRemunerationAmountTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const DEFAULT_OMS_PROCESS_NAME = 'Test01';
+    /**
+     * @var int
+     */
     protected const FAKE_SALES_ORDER_ITEM_ID = 6666;
 
     /**

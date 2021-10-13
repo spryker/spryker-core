@@ -18,8 +18,17 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
  */
 abstract class AbstractCmsBlockController extends AbstractController
 {
+    /**
+     * @var string
+     */
     public const URL_PARAM_ID_CMS_BLOCK = 'id-cms-block';
+    /**
+     * @var string
+     */
     public const REDIRECT_URL_DEFAULT = '/cms-block-gui/list-block';
+    /**
+     * @var string
+     */
     public const MESSAGE_CMS_BLOCK_INVALID_ID_ERROR = 'CMS block with provided ID doesn’t exist.';
 
     /**

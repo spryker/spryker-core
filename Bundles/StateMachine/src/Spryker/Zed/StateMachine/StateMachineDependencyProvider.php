@@ -16,8 +16,17 @@ use Spryker\Zed\Kernel\Container;
  */
 class StateMachineDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const PLUGINS_STATE_MACHINE_HANDLERS = 'PLUGINS_STATE_MACHINE_HANDLERS';
+    /**
+     * @var string
+     */
     public const PLUGIN_GRAPH = 'PLUGIN_GRAPH';
+    /**
+     * @var string
+     */
     public const SERVICE_NETWORK = 'util network service';
 
     /**
@@ -65,7 +74,7 @@ class StateMachineDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\StateMachine\Dependency\Plugin\StateMachineHandlerInterface[]
+     * @return array<\Spryker\Zed\StateMachine\Dependency\Plugin\StateMachineHandlerInterface>
      */
     protected function getStateMachineHandlers()
     {

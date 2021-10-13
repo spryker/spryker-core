@@ -19,6 +19,9 @@ use Spryker\Zed\CompanyRoleGui\Dependency\Facade\CompanyRoleGuiToPermissionFacad
 
 class CompanyRoleCreateDataProvider
 {
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_PREFIX_PERMISSION_NAME = 'permission.name.';
 
     /**
@@ -80,7 +83,7 @@ class CompanyRoleCreateDataProvider
     }
 
     /**
-     * @return array
+     * @return array<mixed>
      */
     public function getOptions(): array
     {
@@ -101,14 +104,19 @@ class CompanyRoleCreateDataProvider
     /**
      * @param \Generated\Shared\Transfer\CompanyCollectionTransfer $companyCollectionTransfer
      *
-     * @return array
+     * @return array<int>
      */
     protected function prepareAvailableCompanies(CompanyCollectionTransfer $companyCollectionTransfer): array
     {
         $preparedCompanies = [];
 
         foreach ($companyCollectionTransfer->getCompanies() as $companyTransfer) {
-            $preparedCompanies[$companyTransfer->getName()] = $companyTransfer->getIdCompany();
+            $key = sprintf(
+                '%s (ID: %d)',
+                $companyTransfer->getName(),
+                $companyTransfer->getIdCompany()
+            );
+            $preparedCompanies[$key] = $companyTransfer->getIdCompany();
         }
 
         return $preparedCompanies;
@@ -117,7 +125,7 @@ class CompanyRoleCreateDataProvider
     /**
      * @param \Generated\Shared\Transfer\PermissionCollectionTransfer $permissionCollectionTransfer
      *
-     * @return array
+     * @return array<int>
      */
     protected function prepareAvailablePermissions(PermissionCollectionTransfer $permissionCollectionTransfer): array
     {

@@ -21,10 +21,14 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class DetailController extends AbstractSalesMerchantPortalGuiController
 {
+    /**
+     * @var string
+     */
     protected const PARAM_ID_MERCHANT_ORDER = 'merchant-order-id';
 
     /**
      * @uses \Spryker\Shared\Shipment\ShipmentConfig::SHIPMENT_EXPENSE_TYPE
+     * @var string
      */
     protected const SHIPMENT_EXPENSE_TYPE = 'SHIPMENT_EXPENSE_TYPE';
 
@@ -95,9 +99,13 @@ class DetailController extends AbstractSalesMerchantPortalGuiController
             (new OrderItemFilterTransfer())->setSalesOrderItemIds($salesOrderItemIds)
         );
 
-        return $this->renderView('@SalesMerchantPortalGui/Partials/order_items_list.twig', [
-            'orderItems' => $itemCollectionTransfer->getItems(),
-        ]);
+        $responseData = [
+            'html' => $this->renderView('@SalesMerchantPortalGui/Partials/order_items_list.twig', [
+                'orderItems' => $itemCollectionTransfer->getItems(),
+            ])->getContent(),
+        ];
+
+        return new JsonResponse($responseData);
     }
 
     /**
@@ -112,7 +120,7 @@ class DetailController extends AbstractSalesMerchantPortalGuiController
         /** @var \Generated\Shared\Transfer\OrderTransfer $orderTransfer */
         $orderTransfer = $merchantOrderTransfer->requireOrder()->getOrder();
         /** @var string $customerReference */
-        $customerReference = $orderTransfer->requireCustomerReference()->getCustomerReference();
+        $customerReference = $orderTransfer->getCustomerReference();
 
         $customerMerchantOrderNumber = $this->getFactory()
             ->getMerchantSalesOrderFacade()
@@ -146,7 +154,7 @@ class DetailController extends AbstractSalesMerchantPortalGuiController
     /**
      * @param \Generated\Shared\Transfer\MerchantOrderTransfer $merchantOrderTransfer
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getSalesOrderItemIds(MerchantOrderTransfer $merchantOrderTransfer): array
     {
@@ -163,7 +171,7 @@ class DetailController extends AbstractSalesMerchantPortalGuiController
     /**
      * @param \Generated\Shared\Transfer\MerchantOrderTransfer $merchantOrderTransfer
      *
-     * @return \Generated\Shared\Transfer\MerchantOrderItemTransfer[][]
+     * @return array<\Generated\Shared\Transfer\MerchantOrderItemTransfer[]>
      */
     protected function getMerchantOrderItemTransfersIndexedByIdShipment(MerchantOrderTransfer $merchantOrderTransfer): array
     {

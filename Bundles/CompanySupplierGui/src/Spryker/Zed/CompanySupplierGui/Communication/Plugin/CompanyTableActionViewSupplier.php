@@ -20,8 +20,17 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class CompanyTableActionViewSupplier extends AbstractPlugin implements CompanyTableActionExpanderInterface
 {
     protected const FK_COMPANY_TYPE = SpyCompanyTableMap::COL_FK_COMPANY_TYPE;
+    /**
+     * @var string
+     */
     protected const BUTTON_URL_FORMAT = '/company-supplier-gui/product-supplier?id-company=%d';
+    /**
+     * @var string
+     */
     protected const BUTTON_TITLE = 'View items';
+    /**
+     * @var array
+     */
     protected const BUTTON_DEFAULT_OPTIONS = [
         'class' => 'btn-view',
         'icon' => 'fa-caret-right',

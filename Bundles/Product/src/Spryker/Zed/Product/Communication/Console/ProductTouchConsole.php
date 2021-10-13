@@ -21,20 +21,56 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class ProductTouchConsole extends Console
 {
+    /**
+     * @var string
+     */
     public const ACTION_ACTIVATE = 'activate';
+    /**
+     * @var string
+     */
     public const ACTION_ACTIVATE_SHORT = 'a';
+    /**
+     * @var string
+     */
     public const ACTION_INACTIVATE = 'inactivate';
+    /**
+     * @var string
+     */
     public const ACTION_INACTIVATE_SHORT = 'i';
+    /**
+     * @var string
+     */
     public const ACTION_DELETE = 'delete';
+    /**
+     * @var string
+     */
     public const ACTION_DELETE_SHORT = 'd';
 
+    /**
+     * @var string
+     */
     public const COMMAND_NAME = 'product:touch';
+    /**
+     * @var string
+     */
     public const DESCRIPTION = 'product:touch <activate|inactivate|delete|a|i|d> <id>';
 
+    /**
+     * @var string
+     */
     public const ARGUMENT_ID_ABSTRACT_PRODUCT = 'id_product_abstract';
+    /**
+     * @var string
+     */
     public const ARGUMENT_ID_ABSTRACT_PRODUCT_DESCRIPTION = 'The `id_product_abstract` id of the record to be touched.';
 
+    /**
+     * @var string
+     */
     public const ARGUMENT_TOUCH_ACTION = 'action';
+    /**
+     * @var string
+     */
     public const ARGUMENT_TOUCH_ACTION_DESCRIPTION = 'The `touch action` can be one of the following: `active`, `inactive`, `deleted` or just the first letter.';
 
     /**

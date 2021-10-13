@@ -9,5 +9,8 @@ namespace SprykerTest\Zed\ProductManagement\PageObject;
 
 class ProductManagementProductViewPage
 {
+    /**
+     * @var string
+     */
     public const URL = '/product-management';
 }

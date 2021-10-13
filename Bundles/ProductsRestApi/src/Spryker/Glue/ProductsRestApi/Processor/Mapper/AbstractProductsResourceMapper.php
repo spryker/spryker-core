@@ -11,9 +11,21 @@ use Generated\Shared\Transfer\AbstractProductsRestAttributesTransfer;
 
 class AbstractProductsResourceMapper implements AbstractProductsResourceMapperInterface
 {
+    /**
+     * @var string
+     */
     protected const KEY_PRODUCT_CONCRETE_IDS = 'product_concrete_ids';
+    /**
+     * @var string
+     */
     protected const KEY_ATTRIBUTE_VARIANTS = 'attribute_variants';
+    /**
+     * @var string
+     */
     protected const KEY_ID_PRODUCT_CONCRETE = 'id_product_concrete';
+    /**
+     * @var string
+     */
     protected const KEY_SUPER_ATTRIBUTES = 'super_attributes';
 
     /**
@@ -55,7 +67,7 @@ class AbstractProductsResourceMapper implements AbstractProductsResourceMapperIn
 
     /**
      * @param array $variants
-     * @param int[] $productConcreteIds
+     * @param array<int> $productConcreteIds
      *
      * @return array
      */

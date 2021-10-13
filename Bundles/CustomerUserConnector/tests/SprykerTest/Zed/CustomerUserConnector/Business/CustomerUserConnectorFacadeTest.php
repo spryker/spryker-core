@@ -73,7 +73,7 @@ class CustomerUserConnectorFacadeTest extends Unit
      * @param int $idUser
      * @param int $numberOfCustomers
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function assignCustomers(int $idUser, int $numberOfCustomers): array
     {
@@ -92,7 +92,7 @@ class CustomerUserConnectorFacadeTest extends Unit
     /**
      * @param int $numberOfCustomers
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function createCustomers(int $numberOfCustomers): array
     {
@@ -114,7 +114,7 @@ class CustomerUserConnectorFacadeTest extends Unit
     /**
      * @param int $idUser
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getAssignedCustomerIds(int $idUser): array
     {

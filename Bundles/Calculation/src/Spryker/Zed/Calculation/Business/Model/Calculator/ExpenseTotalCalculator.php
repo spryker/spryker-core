@@ -27,7 +27,7 @@ class ExpenseTotalCalculator implements CalculatorInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ExpenseTransfer[] $expenses
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ExpenseTransfer> $expenses
      *
      * @return int
      */

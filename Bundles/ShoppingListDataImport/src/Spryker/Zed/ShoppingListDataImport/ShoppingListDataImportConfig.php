@@ -12,9 +12,21 @@ use Spryker\Zed\DataImport\DataImportConfig;
 
 class ShoppingListDataImportConfig extends DataImportConfig
 {
+    /**
+     * @var string
+     */
     public const IMPORT_TYPE_SHOPPING_LIST = 'shopping-list';
+    /**
+     * @var string
+     */
     public const IMPORT_TYPE_SHOPPING_LIST_ITEM = 'shopping-list-item';
+    /**
+     * @var string
+     */
     public const IMPORT_TYPE_SHOPPING_LIST_COMPANY_USER = 'shopping-list-company-user';
+    /**
+     * @var string
+     */
     public const IMPORT_TYPE_SHOPPING_LIST_COMPANY_BUSINESS_UNIT = 'shopping-list-company-business-unit';
 
     /**

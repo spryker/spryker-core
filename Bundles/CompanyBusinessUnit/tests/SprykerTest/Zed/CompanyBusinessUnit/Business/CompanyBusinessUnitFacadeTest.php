@@ -28,6 +28,9 @@ use TypeError;
  */
 class CompanyBusinessUnitFacadeTest extends Test
 {
+    /**
+     * @var string
+     */
     protected const TEST_NAME = 'TEST_NAME';
 
     /**

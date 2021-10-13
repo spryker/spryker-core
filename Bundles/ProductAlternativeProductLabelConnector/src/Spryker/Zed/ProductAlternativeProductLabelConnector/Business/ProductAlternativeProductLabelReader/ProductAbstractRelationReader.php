@@ -17,22 +17,22 @@ use Spryker\Zed\ProductAlternativeProductLabelConnector\ProductAlternativeProduc
 class ProductAbstractRelationReader implements ProductAbstractRelationReaderInterface
 {
     /**
-     * @var \Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToProductInterface $productFacade
+     * @var \Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToProductInterface
      */
     protected $productFacade;
 
     /**
-     * @var \Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToProductLabelFacadeInterface $productLabelFacade
+     * @var \Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToProductLabelFacadeInterface
      */
     protected $productLabelFacade;
 
     /**
-     * @var \Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToProductAlternativeFacadeInterface $productAlternativeFacade
+     * @var \Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToProductAlternativeFacadeInterface
      */
     protected $productAlternativeFacade;
 
     /**
-     * @var \Spryker\Zed\ProductAlternativeProductLabelConnector\ProductAlternativeProductLabelConnectorConfig $config
+     * @var \Spryker\Zed\ProductAlternativeProductLabelConnector\ProductAlternativeProductLabelConnectorConfig
      */
     protected $config;
 
@@ -55,7 +55,7 @@ class ProductAbstractRelationReader implements ProductAbstractRelationReaderInte
     }
 
     /**
-     * @return \Generated\Shared\Transfer\ProductLabelProductAbstractRelationsTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductLabelProductAbstractRelationsTransfer>
      */
     public function findProductLabelProductAbstractRelationChanges(): array
     {
@@ -70,7 +70,7 @@ class ProductAbstractRelationReader implements ProductAbstractRelationReaderInte
     /**
      * @param \Generated\Shared\Transfer\ProductLabelTransfer $productLabelTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductLabelProductAbstractRelationsTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductLabelProductAbstractRelationsTransfer>
      */
     protected function getRelationsData(ProductLabelTransfer $productLabelTransfer): array
     {
@@ -128,8 +128,8 @@ class ProductAbstractRelationReader implements ProductAbstractRelationReaderInte
 
     /**
      * @param int $idProductLabel
-     * @param int[] $idsToAssign
-     * @param int[] $idsToDeAssign
+     * @param array<int> $idsToAssign
+     * @param array<int> $idsToDeAssign
      *
      * @return \Generated\Shared\Transfer\ProductLabelProductAbstractRelationsTransfer
      */

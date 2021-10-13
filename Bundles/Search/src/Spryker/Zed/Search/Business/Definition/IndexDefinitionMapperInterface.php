@@ -10,9 +10,9 @@ namespace Spryker\Zed\Search\Business\Definition;
 interface IndexDefinitionMapperInterface
 {
     /**
-     * @param \Symfony\Component\Finder\SplFileInfo[] $splFiles
+     * @param array<\Symfony\Component\Finder\SplFileInfo> $splFiles
      *
-     * @return \Generated\Shared\Transfer\IndexDefinitionFileTransfer[]
+     * @return array<\Generated\Shared\Transfer\IndexDefinitionFileTransfer>
      */
     public function mapSplFilesToIndexDefinitionFileTransfers(array $splFiles): array;
 }

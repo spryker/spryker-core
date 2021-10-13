@@ -34,7 +34,7 @@ class ContentNavigationContentGuiEditorPlugin extends AbstractPlugin implements 
      *
      * @api
      *
-     * @return \Generated\Shared\Transfer\ContentWidgetTemplateTransfer[]
+     * @return array<\Generated\Shared\Transfer\ContentWidgetTemplateTransfer>
      */
     public function getTemplates(): array
     {

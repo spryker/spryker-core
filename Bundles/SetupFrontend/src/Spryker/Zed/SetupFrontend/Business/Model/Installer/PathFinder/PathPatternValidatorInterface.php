@@ -10,7 +10,7 @@ namespace Spryker\Zed\SetupFrontend\Business\Model\Installer\PathFinder;
 interface PathPatternValidatorInterface
 {
     /**
-     * @param string[] $pathPatterns
+     * @param array<string> $pathPatterns
      *
      * @return void
      */

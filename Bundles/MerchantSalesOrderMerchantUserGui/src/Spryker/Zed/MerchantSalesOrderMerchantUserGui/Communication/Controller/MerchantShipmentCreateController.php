@@ -16,17 +16,29 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class MerchantShipmentCreateController extends AbstractMerchantShipmentController
 {
+    /**
+     * @var string
+     */
     protected const MESSAGE_SHIPMENT_CREATE_SUCCESS = 'Shipment has been successfully created.';
+    /**
+     * @var string
+     */
     protected const MESSAGE_SHIPMENT_CREATE_FAIL = 'Shipment has not been created.';
+    /**
+     * @var string
+     */
     protected const MESSAGE_MERCHANT_REFERENCE_NOT_FOUND = 'Merchant reference not found.';
+    /**
+     * @var string
+     */
     protected const MESSAGE_SHIPMENT_NOT_FOUND = 'Shipment for merchant reference %s not found.';
 
     /**
-     * @phpstan-return array<mixed>|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @phpstan-return \Symfony\Component\HttpFoundation\RedirectResponse|array<mixed>
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function indexAction(Request $request)
     {

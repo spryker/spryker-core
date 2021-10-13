@@ -27,6 +27,9 @@ use Spryker\Zed\SalesMerchantPortalGui\Persistence\SalesMerchantPortalGuiReposit
  */
 class SalesMerchantPortalGuiRepositoryTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const TEST_STATE_MACHINE = 'Test01';
 
     /**

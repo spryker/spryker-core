@@ -23,7 +23,7 @@ class ConfigProfilerServiceProvider extends SharedConfigProfilerServiceProvider
     }
 
     /**
-     * @return bool|string
+     * @return string|bool
      */
     protected function getPathToTemplates()
     {

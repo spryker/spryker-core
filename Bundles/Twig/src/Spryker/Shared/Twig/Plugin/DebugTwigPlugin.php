@@ -14,6 +14,9 @@ use Twig\Extension\DebugExtension;
 
 class DebugTwigPlugin implements TwigPluginInterface
 {
+    /**
+     * @var string
+     */
     protected const SERVICE_DEBUG = 'debug';
 
     /**

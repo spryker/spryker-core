@@ -97,8 +97,8 @@ class ShoppingListItemExpander implements ShoppingListItemExpanderInterface
 
     /**
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
-     * @param int[][] $groupedProductOptionIdsByShoppingListItemIds
-     * @param \Generated\Shared\Transfer\ProductOptionTransfer[] $indexedByIdsUniqueProductOptionTransfers
+     * @param array<int[]> $groupedProductOptionIdsByShoppingListItemIds
+     * @param array<\Generated\Shared\Transfer\ProductOptionTransfer> $indexedByIdsUniqueProductOptionTransfers
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
      */
@@ -126,7 +126,7 @@ class ShoppingListItemExpander implements ShoppingListItemExpanderInterface
     /**
      * @param \Generated\Shared\Transfer\ShoppingListProductOptionCollectionTransfer $shoppingListProductOptionCollectionTransfer
      *
-     * @return int[][]
+     * @return array<int[]>
      */
     protected function groupProductOptionIdsByShoppingListItemIds(
         ShoppingListProductOptionCollectionTransfer $shoppingListProductOptionCollectionTransfer
@@ -145,10 +145,10 @@ class ShoppingListItemExpander implements ShoppingListItemExpanderInterface
     }
 
     /**
-     * @param int[] $uniqueProductOptionIds
+     * @param array<int> $uniqueProductOptionIds
      * @param \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductOptionTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductOptionTransfer>
      */
     protected function indexUniqueProductOptionTransfersByIds(
         array $uniqueProductOptionIds,
@@ -193,7 +193,7 @@ class ShoppingListItemExpander implements ShoppingListItemExpanderInterface
     /**
      * @param \Generated\Shared\Transfer\ProductOptionCollectionTransfer $productOptionCollectionTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductOptionTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductOptionTransfer>
      */
     protected function indexProductOptionTransfersByIds(ProductOptionCollectionTransfer $productOptionCollectionTransfer): array
     {
@@ -208,7 +208,7 @@ class ShoppingListItemExpander implements ShoppingListItemExpanderInterface
     /**
      * @param \Generated\Shared\Transfer\ShoppingListProductOptionCollectionTransfer $shoppingListProductOptionCollectionTransfer
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getUniqueProductOptionIdsFromShoppingListProductOptionCollectionTransfer(
         ShoppingListProductOptionCollectionTransfer $shoppingListProductOptionCollectionTransfer

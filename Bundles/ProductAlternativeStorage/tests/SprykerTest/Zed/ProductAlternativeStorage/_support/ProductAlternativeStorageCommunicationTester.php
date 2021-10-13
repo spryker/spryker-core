@@ -57,7 +57,7 @@ class ProductAlternativeStorageCommunicationTester extends Actor
 
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     * @param string[] $alternativeProductSkus
+     * @param array<string> $alternativeProductSkus
      *
      * @return void
      */

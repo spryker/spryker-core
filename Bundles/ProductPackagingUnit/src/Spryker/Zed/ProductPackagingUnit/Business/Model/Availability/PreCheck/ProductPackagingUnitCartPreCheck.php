@@ -17,9 +17,21 @@ use Spryker\Zed\ProductPackagingUnit\Persistence\ProductPackagingUnitRepositoryI
 
 class ProductPackagingUnitCartPreCheck extends ProductPackagingUnitAvailabilityPreCheck implements ProductPackagingUnitCartPreCheckInterface
 {
+    /**
+     * @var string
+     */
     public const CART_PRE_CHECK_ITEM_AVAILABILITY_LEAD_PRODUCT_FAILED = 'cart.pre.check.availability.failed.lead.product';
+    /**
+     * @var string
+     */
     public const CART_PRE_CHECK_AVAILABILITY_FAILED = 'cart.pre.check.availability.failed';
+    /**
+     * @var string
+     */
     public const STOCK_TRANSLATION_PARAMETER = '%stock%';
+    /**
+     * @var string
+     */
     public const SKU_TRANSLATION_PARAMETER = '%sku%';
 
     /**
@@ -129,10 +141,10 @@ class ProductPackagingUnitCartPreCheck extends ProductPackagingUnitAvailabilityP
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\MessageTransfer[] $cartErrorMessages
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\MessageTransfer> $cartErrorMessages
      * @param \Generated\Shared\Transfer\MessageTransfer|null $messageTransfer
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\MessageTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\MessageTransfer>
      */
     protected function collectCartErrorMessages(
         ArrayObject $cartErrorMessages,
@@ -194,7 +206,7 @@ class ProductPackagingUnitCartPreCheck extends ProductPackagingUnitAvailabilityP
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\MessageTransfer[] $cartErrorMessages
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\MessageTransfer> $cartErrorMessages
      *
      * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
      */

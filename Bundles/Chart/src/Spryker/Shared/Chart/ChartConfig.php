@@ -12,14 +12,23 @@ use Spryker\Shared\Kernel\AbstractSharedConfig;
 
 class ChartConfig extends AbstractSharedConfig
 {
+    /**
+     * @var string
+     */
     public const CHART_TYPE_BAR = 'bar';
+    /**
+     * @var string
+     */
     public const CHART_TYPE_PIE = 'pie';
+    /**
+     * @var string
+     */
     public const CHART_TYPE_LINE = 'scatter';
 
     /**
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getChartTypes(): array
     {

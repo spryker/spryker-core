@@ -25,6 +25,9 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class PriceProductQueryContainer extends AbstractQueryContainer implements PriceProductQueryContainerInterface
 {
+    /**
+     * @var string
+     */
     public const DATE_NOW = 'now';
 
     /**
@@ -79,12 +82,14 @@ class PriceProductQueryContainer extends AbstractQueryContainer implements Price
         $sku,
         PriceProductCriteriaTransfer $priceProductCriteriaTransfer
     ): SpyPriceProductQuery {
-        return $this->getFactory()
+        /** @var \Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery $query */
+        $query = $this->getFactory()
             ->createPriceProductQuery()
             ->usePriceTypeQuery()
                 ->filterByName($priceProductCriteriaTransfer->getPriceType())
-            ->endUse()
-            ->addJoin([
+            ->endUse();
+
+        return $query->addJoin([
                 SpyPriceProductTableMap::COL_FK_PRODUCT_ABSTRACT,
                 SpyProductAbstractTableMap::COL_SKU,
             ], [
@@ -116,12 +121,14 @@ class PriceProductQueryContainer extends AbstractQueryContainer implements Price
         $sku,
         PriceProductCriteriaTransfer $priceProductCriteriaTransfer
     ): SpyPriceProductQuery {
-        return $this->getFactory()
+        /** @var \Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery $query */
+        $query = $this->getFactory()
             ->createPriceProductQuery()
             ->usePriceTypeQuery()
                 ->filterByName($priceProductCriteriaTransfer->getPriceType())
-            ->endUse()
-            ->addJoin([
+            ->endUse();
+
+        return $query->addJoin([
                 SpyPriceProductTableMap::COL_FK_PRODUCT,
                 SpyProductTableMap::COL_SKU,
             ], [
@@ -153,6 +160,9 @@ class PriceProductQueryContainer extends AbstractQueryContainer implements Price
         $idAbstractProduct,
         PriceProductCriteriaTransfer $priceProductCriteriaTransfer
     ): SpyPriceProductStoreQuery {
+        /** @var string $priceType */
+        $priceType = $priceProductCriteriaTransfer->getPriceType();
+
         return $this->getFactory()
             ->createPriceProductStoreQuery()
             ->addJoin([
@@ -169,7 +179,7 @@ class PriceProductQueryContainer extends AbstractQueryContainer implements Price
                 SpyPriceTypeTableMap::COL_NAME,
             ], [
                 SpyPriceTypeTableMap::COL_ID_PRICE_TYPE,
-                $this->getConnection()->quote($priceProductCriteriaTransfer->getPriceType()),
+                $this->getConnection()->quote($priceType),
             ])
             ->where(SpyPriceProductTableMap::COL_FK_PRODUCT_ABSTRACT . ' = ?', $idAbstractProduct, PDO::PARAM_INT);
     }

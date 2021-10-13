@@ -26,7 +26,7 @@ class KeyBuilder
      *
      * @return string
      */
-    protected function buildKey(string $data): string
+    protected function buildKey($data): string
     {
         return 'identifier.' . $data;
     }

@@ -28,7 +28,7 @@ class DependencyTreeBuilder implements DependencyTreeBuilderInterface
     protected $writer;
 
     /**
-     * @var \Spryker\Zed\Development\Business\DependencyTree\DependencyFinder\AbstractDependencyFinder[]
+     * @var array<\Spryker\Zed\Development\Business\DependencyTree\DependencyFinder\AbstractDependencyFinder>
      */
     protected $dependencyChecker = [];
 

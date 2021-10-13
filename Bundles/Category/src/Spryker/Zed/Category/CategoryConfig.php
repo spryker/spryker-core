@@ -8,12 +8,15 @@
 namespace Spryker\Zed\Category;
 
 use Spryker\Shared\Category\CategoryConfig as SharedCategoryConfig;
+use Spryker\Shared\Category\CategoryConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class CategoryConfig extends AbstractBundleConfig
 {
     /**
      * Default available template for category
+     *
+     * @var string
      */
     public const CATEGORY_TEMPLATE_DEFAULT = 'Catalog (default)';
 
@@ -26,14 +29,43 @@ class CategoryConfig extends AbstractBundleConfig
      * Used as `item_type` for touch mechanism.
      */
     public const RESOURCE_TYPE_NAVIGATION = SharedCategoryConfig::RESOURCE_TYPE_NAVIGATION;
+    /**
+     * @var string
+     */
     protected const REDIRECT_URL_DEFAULT = '/category/root';
 
+    /**
+     * @var string
+     */
     protected const REDIRECT_URL_CATEGORY_GUI = '/category-gui/list';
+
+    /**
+     * @var int
+     */
+    protected const DEFAULT_CATEGORY_READ_CHUNK = 10000;
+
+    /**
+     * @var bool
+     */
+    protected const DEFAULT_IS_CLOSURE_TABLE_EVENTS_ENABLED = true;
+
+    /**
+     * Specification:
+     * - Returns the size of the batch retrieval.
+     *
+     * @api
+     *
+     * @return int
+     */
+    public function getCategoryReadChunkSize(): int
+    {
+        return $this->get(CategoryConstants::CATEGORY_READ_CHUNK, static::DEFAULT_CATEGORY_READ_CHUNK);
+    }
 
     /**
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getTemplateList()
     {
@@ -54,5 +86,22 @@ class CategoryConfig extends AbstractBundleConfig
         }
 
         return static::REDIRECT_URL_DEFAULT;
+    }
+
+    /**
+     * Specification:
+     * - Enables Propel events for `spy_category_closure_table` table.
+     * - Impacts category create/update operations.
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function isCategoryClosureTableEventsEnabled(): bool
+    {
+        return $this->get(
+            CategoryConstants::CATEGORY_IS_CLOSURE_TABLE_EVENTS_ENABLED,
+            static::DEFAULT_IS_CLOSURE_TABLE_EVENTS_ENABLED
+        );
     }
 }

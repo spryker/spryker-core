@@ -53,7 +53,7 @@ class Manager implements ManagerInterface
     /**
      * @param string $moduleName
      *
-     * @return \Generated\Shared\Transfer\DependencyModuleViewTransfer[]
+     * @return array<\Generated\Shared\Transfer\DependencyModuleViewTransfer>
      */
     public function parseIncomingDependencies(string $moduleName): array
     {
@@ -149,7 +149,7 @@ class Manager implements ManagerInterface
     }
 
     /**
-     * @return \Symfony\Component\Finder\Finder|\Symfony\Component\Finder\SplFileInfo[]
+     * @return \Symfony\Component\Finder\Finder<\Symfony\Component\Finder\SplFileInfo>
      */
     protected function collectCoreModules()
     {

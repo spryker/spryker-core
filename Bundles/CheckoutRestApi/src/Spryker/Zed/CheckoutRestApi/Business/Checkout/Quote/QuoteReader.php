@@ -49,18 +49,7 @@ class QuoteReader implements QuoteReaderInterface
             return null;
         }
 
-        $customerReference = $restCheckoutRequestAttributesTransfer->getCustomer()->getCustomerReference();
-        if ($quoteResponseTransfer->getQuoteTransfer()->getCustomerReference() !== $customerReference) {
-            return null;
-        }
-
-        $quoteTransfer = $quoteResponseTransfer->getQuoteTransfer();
-        if (!$quoteTransfer->getCustomer()) {
-            $customerTransfer = (new CustomerTransfer())->setCustomerReference($customerReference);
-            $quoteTransfer->setCustomer($customerTransfer);
-        }
-
-        return $quoteTransfer;
+        return $quoteResponseTransfer->getQuoteTransfer();
     }
 
     /**

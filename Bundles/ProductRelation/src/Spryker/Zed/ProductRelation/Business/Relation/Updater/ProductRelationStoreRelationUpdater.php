@@ -72,7 +72,7 @@ class ProductRelationStoreRelationUpdater implements ProductRelationStoreRelatio
     /**
      * @param int $idProductRelation
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getIdStoresByIdProductRelation(int $idProductRelation): array
     {

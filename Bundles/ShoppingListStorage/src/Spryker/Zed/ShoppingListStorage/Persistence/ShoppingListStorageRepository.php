@@ -19,19 +19,37 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
  */
 class ShoppingListStorageRepository extends AbstractRepository implements ShoppingListStorageRepositoryInterface
 {
+    /**
+     * @var string
+     */
     protected const COMPANY_USER_CUSTOMER_ALIAS = 'companyUserCustomer';
+    /**
+     * @var string
+     */
     protected const COMPANY_BUSINESS_UNIT_CUSTOMER_ALIAS = 'companyBusinessUnitCustomer';
+    /**
+     * @var string
+     */
     protected const CUSTOMER_REFERENCE_FIELD = 'customer_reference';
+    /**
+     * @var string
+     */
     protected const COMPANY_USER_REFERENCES_NAME = 'companyUserReferences';
+    /**
+     * @var string
+     */
     protected const COMPANY_BUSINESS_UNIT_REFERENCES_NAME = 'companyBusinessUnitReferences';
+    /**
+     * @var string
+     */
     protected const COMPANY_BUSINESS_UNIT_COMPANY_USER_ALIAS = 'companyBusinessUnitCompanyUser';
 
     /**
      * @module ShoppingList
      *
-     * @param int[] $shoppingListIds
+     * @param array<int> $shoppingListIds
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getCustomerReferencesByShoppingListIds(array $shoppingListIds): array
     {
@@ -56,7 +74,7 @@ class ShoppingListStorageRepository extends AbstractRepository implements Shoppi
     /**
      * @param array $customerReferences
      *
-     * @return \Orm\Zed\ShoppingListStorage\Persistence\SpyShoppingListCustomerStorage[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ShoppingListStorage\Persistence\SpyShoppingListCustomerStorage>
      */
     public function findShoppingListCustomerStorageEntitiesByCustomerReferences(array $customerReferences): ObjectCollection
     {
@@ -67,9 +85,9 @@ class ShoppingListStorageRepository extends AbstractRepository implements Shoppi
     }
 
     /**
-     * @param string[] $customerReferences
+     * @param array<string> $customerReferences
      *
-     * @return \Orm\Zed\ShoppingList\Persistence\SpyShoppingList[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ShoppingList\Persistence\SpyShoppingList>
      */
     public function findShoppingListEntitiesByCustomerReferences(array $customerReferences): ObjectCollection
     {
@@ -82,7 +100,7 @@ class ShoppingListStorageRepository extends AbstractRepository implements Shoppi
     /**
      * @param array $shoppingListCustomerStorageIds
      *
-     * @return \Orm\Zed\ShoppingListStorage\Persistence\SpyShoppingListCustomerStorage[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ShoppingListStorage\Persistence\SpyShoppingListCustomerStorage>
      */
     public function findShoppingListCustomerStorageEntitiesByIds(array $shoppingListCustomerStorageIds): ObjectCollection
     {
@@ -94,9 +112,9 @@ class ShoppingListStorageRepository extends AbstractRepository implements Shoppi
 
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     * @param int[] $shoppingListCustomerStorageEntityIds
+     * @param array<int> $shoppingListCustomerStorageEntityIds
      *
-     * @return \Generated\Shared\Transfer\SpyShoppingListCustomerStorageEntityTransfer[]
+     * @return array<\Generated\Shared\Transfer\SpyShoppingListCustomerStorageEntityTransfer>
      */
     public function findFilteredShoppingListCustomerStorageEntities(FilterTransfer $filterTransfer, array $shoppingListCustomerStorageEntityIds = []): array
     {

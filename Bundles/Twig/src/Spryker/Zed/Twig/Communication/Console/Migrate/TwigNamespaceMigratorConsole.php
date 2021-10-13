@@ -20,8 +20,17 @@ use Symfony\Component\Finder\Finder;
  */
 class TwigNamespaceMigratorConsole extends Console
 {
+    /**
+     * @var string
+     */
     public const COMMAND_NAME = 'twig:migrate:namespace';
+    /**
+     * @var string
+     */
     public const DESCRIPTION = 'This command will migrate all PSR-0 to PSR-4 namespaces.';
+    /**
+     * @var string
+     */
     public const ARGUMENT_PATH = 'path';
 
     /**

@@ -21,9 +21,21 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class ViewShipmentMethodForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const FIELD_STORE_RELATION = 'storeRelation';
+    /**
+     * @var string
+     */
     public const FIELD_PRICES = 'prices';
+    /**
+     * @var string
+     */
     public const FIELD_TAX_SET = 'fkTaxSet';
+    /**
+     * @var string
+     */
     public const OPTION_AMOUNT_PER_STORE = 'amount_per_store';
 
     /**

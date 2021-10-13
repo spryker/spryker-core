@@ -33,6 +33,7 @@ class QuoteRequestAgentConverterTest extends Unit
 {
     /**
      * @uses \Spryker\Client\QuoteRequestAgent\Converter\QuoteRequestAgentConverter::GLOSSARY_KEY_WRONG_QUOTE_REQUEST_STATUS
+     * @var string
      */
     protected const GLOSSARY_KEY_WRONG_QUOTE_REQUEST_STATUS = 'quote_request.checkout.validation.error.wrong_status';
 

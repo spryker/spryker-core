@@ -25,13 +25,13 @@ class ShipmentQuoteItemMapper implements ShipmentQuoteItemMapperInterface
     protected $shipmentFacade;
 
     /**
-     * @var \Spryker\Zed\ShipmentsRestApiExtension\Dependency\Plugin\AddressProviderStrategyPluginInterface[]
+     * @var array<\Spryker\Zed\ShipmentsRestApiExtension\Dependency\Plugin\AddressProviderStrategyPluginInterface>
      */
     protected $addressProviderStrategyPlugins;
 
     /**
      * @param \Spryker\Zed\ShipmentsRestApi\Dependency\Facade\ShipmentsRestApiToShipmentFacadeInterface $shipmentFacade
-     * @param \Spryker\Zed\ShipmentsRestApiExtension\Dependency\Plugin\AddressProviderStrategyPluginInterface[] $addressProviderStrategyPlugins
+     * @param array<\Spryker\Zed\ShipmentsRestApiExtension\Dependency\Plugin\AddressProviderStrategyPluginInterface> $addressProviderStrategyPlugins
      */
     public function __construct(
         ShipmentsRestApiToShipmentFacadeInterface $shipmentFacade,
@@ -92,7 +92,7 @@ class ShipmentQuoteItemMapper implements ShipmentQuoteItemMapperInterface
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param string[] $itemsGroupKeys
+     * @param array<string> $itemsGroupKeys
      * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
@@ -115,7 +115,7 @@ class ShipmentQuoteItemMapper implements ShipmentQuoteItemMapperInterface
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param string[] $itemsGroupKeys
+     * @param array<string> $itemsGroupKeys
      * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
@@ -142,7 +142,7 @@ class ShipmentQuoteItemMapper implements ShipmentQuoteItemMapperInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $bundledItems
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $bundledItems
      * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
      *
      * @return void
@@ -174,7 +174,7 @@ class ShipmentQuoteItemMapper implements ShipmentQuoteItemMapperInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[][]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer[]>
      */
     protected function mapBundledItemsByBundleItemIdentifier(QuoteTransfer $quoteTransfer): array
     {

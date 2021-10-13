@@ -17,6 +17,9 @@ use Spryker\Client\CartCode\Dependency\Client\CartCodeToQuoteClientInterface;
  */
 class QuoteOperationChecker implements QuoteOperationCheckerInterface
 {
+    /**
+     * @var string
+     */
     protected const MESSAGE_TYPE_ERROR = 'error';
 
     /**
@@ -24,6 +27,9 @@ class QuoteOperationChecker implements QuoteOperationCheckerInterface
      */
     protected $quoteClient;
 
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_LOCKED_CART_CHANGE_DENIED = 'cart.locked.change_denied';
 
     /**

@@ -11,6 +11,9 @@ use Symfony\Component\Validator\Constraint as SymfonyConstraint;
 
 class UniqueName extends SymfonyConstraint
 {
+    /**
+     * @var string
+     */
     public const OPTION_CMS_QUERY_CONTAINER = 'cmsQueryContainer';
 
     /**

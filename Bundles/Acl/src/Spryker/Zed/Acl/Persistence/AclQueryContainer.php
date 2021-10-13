@@ -25,15 +25,45 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class AclQueryContainer extends AbstractQueryContainer implements AclQueryContainerInterface
 {
+    /**
+     * @var string
+     */
     public const ROLE_NAME = 'role_name';
+    /**
+     * @var string
+     */
     public const TYPE = 'type';
+    /**
+     * @var string
+     */
     public const BUNDLE = 'bundle';
+    /**
+     * @var string
+     */
     public const CONTROLLER = 'controller';
+    /**
+     * @var string
+     */
     public const ACTION = 'action';
+    /**
+     * @var string
+     */
     public const HAS_ROLE = 'has_role';
+    /**
+     * @var string
+     */
     public const SPY_ACL_GROUPS_HAS_ROLES = 'SpyAclGroupsHasRoles';
+    /**
+     * @var string
+     */
     public const GROUP_NAME = 'group_name';
+    /**
+     * @var string
+     */
     public const ID_ACL_GROUP = 'id_acl_group';
+    /**
+     * @var string
+     */
     public const GROUP_JOIN = 'groupJoin';
 
     /**

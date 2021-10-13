@@ -35,9 +35,9 @@ class GlossaryReader implements GlossaryReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ReturnReasonTransfer[] $returnReasonTransfers
+     * @param array<\Generated\Shared\Transfer\ReturnReasonTransfer> $returnReasonTransfers
      *
-     * @return string[][]
+     * @return array<string[]>
      */
     public function getReturnReasonTranslations(array $returnReasonTransfers): array
     {
@@ -56,7 +56,7 @@ class GlossaryReader implements GlossaryReaderInterface
     }
 
     /**
-     * @return \Generated\Shared\Transfer\LocaleTransfer[]
+     * @return array<\Generated\Shared\Transfer\LocaleTransfer>
      */
     public function getLocaleCollection(): array
     {
@@ -64,10 +64,10 @@ class GlossaryReader implements GlossaryReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\TranslationTransfer[] $translationTransfers
-     * @param \Generated\Shared\Transfer\GlossaryKeyTransfer[] $glossaryKeyTransfers
+     * @param array<\Generated\Shared\Transfer\TranslationTransfer> $translationTransfers
+     * @param array<\Generated\Shared\Transfer\GlossaryKeyTransfer> $glossaryKeyTransfers
      *
-     * @return string[][]
+     * @return array<string[]>
      */
     protected function mapReturnReasonTranslations(array $translationTransfers, array $glossaryKeyTransfers): array
     {
@@ -85,9 +85,9 @@ class GlossaryReader implements GlossaryReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\GlossaryKeyTransfer[] $glossaryKeyTransfers
+     * @param array<\Generated\Shared\Transfer\GlossaryKeyTransfer> $glossaryKeyTransfers
      *
-     * @return \Generated\Shared\Transfer\GlossaryKeyTransfer[]
+     * @return array<\Generated\Shared\Transfer\GlossaryKeyTransfer>
      */
     protected function indexGlossaryKeyTransfersByIdGlossaryKey(array $glossaryKeyTransfers): array
     {
@@ -101,9 +101,9 @@ class GlossaryReader implements GlossaryReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ReturnReasonTransfer[] $returnReasonTransfers
+     * @param array<\Generated\Shared\Transfer\ReturnReasonTransfer> $returnReasonTransfers
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function extractGlossaryKeysFromReturnReasonTransfers(array $returnReasonTransfers): array
     {

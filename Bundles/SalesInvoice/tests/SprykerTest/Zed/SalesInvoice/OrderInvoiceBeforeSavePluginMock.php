@@ -13,6 +13,9 @@ use Spryker\Zed\SalesInvoiceExtension\Dependency\Plugin\OrderInvoiceBeforeSavePl
 
 class OrderInvoiceBeforeSavePluginMock implements OrderInvoiceBeforeSavePluginInterface
 {
+    /**
+     * @var string
+     */
     public const FAKE_REFERENCE_FOR_PLUGIN_CHECK = 'FAKE_REFERENCE_FOR_PLUGIN_CHECK';
 
     /**

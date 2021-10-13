@@ -19,9 +19,18 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class PriceProductMerchantRelationshipDeleteConsole extends Console
 {
+    /**
+     * @var string
+     */
     public const COMMAND_NAME = 'price-product-merchant-relationship:delete';
+    /**
+     * @var string
+     */
     public const COMMAND_DESCRIPTION = 'Will delete all connections between product prices and merchant relations.';
 
+    /**
+     * @var string
+     */
     public const ARGUMENT_MERCHANT_RELATIONSHIP_ID = 'merchant-relationship-id';
 
     /**

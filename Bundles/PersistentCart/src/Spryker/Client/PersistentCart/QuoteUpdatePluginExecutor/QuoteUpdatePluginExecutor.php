@@ -12,12 +12,12 @@ use Generated\Shared\Transfer\QuoteResponseTransfer;
 class QuoteUpdatePluginExecutor implements QuoteUpdatePluginExecutorInterface
 {
     /**
-     * @var array|\Spryker\Client\PersistentCartExtension\Dependency\Plugin\QuoteUpdatePluginInterface[]
+     * @var array<\Spryker\Client\PersistentCartExtension\Dependency\Plugin\QuoteUpdatePluginInterface>
      */
     protected $quoteUpdatePlugins;
 
     /**
-     * @param \Spryker\Client\PersistentCartExtension\Dependency\Plugin\QuoteUpdatePluginInterface[] $quoteUpdatePlugins
+     * @param array<\Spryker\Client\PersistentCartExtension\Dependency\Plugin\QuoteUpdatePluginInterface> $quoteUpdatePlugins
      */
     public function __construct(array $quoteUpdatePlugins)
     {

@@ -11,6 +11,9 @@ use Generated\Shared\Transfer\MerchantRelationshipTransfer;
 
 class MerchantRelationshipExpander implements MerchantRelationshipExpanderInterface
 {
+    /**
+     * @var string
+     */
     protected const FORMAT_NAME = '%s - %s';
 
     /**

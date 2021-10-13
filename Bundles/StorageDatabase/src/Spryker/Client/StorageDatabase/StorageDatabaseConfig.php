@@ -16,8 +16,17 @@ use Spryker\Shared\StorageDatabase\StorageDatabaseConstants;
  */
 class StorageDatabaseConfig extends AbstractBundleConfig
 {
+    /**
+     * @var string
+     */
     protected const DEFAULT_STORAGE_TABLE_PREFIX = 'spy';
+    /**
+     * @var string
+     */
     protected const DEFAULT_STORAGE_TABLE_SUFFIX = 'storage';
+    /**
+     * @var string
+     */
     protected const STORAGE_TABLE_NAME_PART_SEPARATOR = '_';
 
     /**
@@ -61,7 +70,7 @@ class StorageDatabaseConfig extends AbstractBundleConfig
      *
      * @api
      *
-     * @return string[][]
+     * @return array<string[]>
      */
     public function getResourceNameToStorageTableMap(): array
     {

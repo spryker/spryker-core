@@ -18,6 +18,7 @@ class CategoryWritePublisherPlugin extends AbstractPlugin implements PublisherPl
 {
     /**
      * @uses \Spryker\Zed\Category\Dependency\CategoryEvents::CATEGORY_AFTER_PUBLISH_UPDATE
+     * @var string
      */
     public const CATEGORY_AFTER_PUBLISH_UPDATE = 'Category.after.publish_update';
 
@@ -28,7 +29,7 @@ class CategoryWritePublisherPlugin extends AbstractPlugin implements PublisherPl
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
      * @param string $eventName
      *
      * @return void
@@ -43,7 +44,7 @@ class CategoryWritePublisherPlugin extends AbstractPlugin implements PublisherPl
      *
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getSubscribedEvents(): array
     {

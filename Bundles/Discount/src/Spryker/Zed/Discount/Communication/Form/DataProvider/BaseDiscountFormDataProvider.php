@@ -20,7 +20,7 @@ class BaseDiscountFormDataProvider
     protected $data;
 
     /**
-     * @param \Spryker\Zed\Discount\Dependency\Plugin\Form\DiscountFormDataProviderExpanderPluginInterface[] $formExpanderPlugins
+     * @param array<\Spryker\Zed\Discount\Dependency\Plugin\Form\DiscountFormDataProviderExpanderPluginInterface> $formExpanderPlugins
      *
      * @return void
      */

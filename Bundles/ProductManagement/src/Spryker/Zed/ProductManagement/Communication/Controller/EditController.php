@@ -20,15 +20,27 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class EditController extends AddController
 {
+    /**
+     * @var string
+     */
     public const PARAM_ID_PRODUCT_ABSTRACT = 'id-product-abstract';
+    /**
+     * @var string
+     */
     public const PARAM_ID_PRODUCT = 'id-product';
+    /**
+     * @var string
+     */
     public const PARAM_PRODUCT_TYPE = 'type';
+    /**
+     * @var string
+     */
     protected const PARAM_PRICE_DIMENSION = 'price-dimension';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function indexAction(Request $request)
     {
@@ -122,7 +134,7 @@ class EditController extends AddController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function variantAction(Request $request)
     {

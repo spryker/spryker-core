@@ -2,6 +2,9 @@ parameters:
     reportUnmatchedIgnoredErrors: false
     checkGenericClassInNonGenericObjectType: false
     checkMissingIterableValueType: false
+    excludePaths:
+            - %rootDir%/../../../vendor/spryker/spryker/Bundles/Development/src/Spryker/Zed/Development/Business/CodeBuilder/Bridge/BridgeBuilder.php
+            - %rootDir%/../../../vendor/spryker/spryker/Bundles/Development/src/Spryker/Zed/Development/Business/ArchitectureSniffer/ArchitectureSniffer.php
     ignoreErrors:
         - '#Constant T_SEMICOLON not found.#'
         - '#Constant T_OPEN_PARENTHESIS not found.#'

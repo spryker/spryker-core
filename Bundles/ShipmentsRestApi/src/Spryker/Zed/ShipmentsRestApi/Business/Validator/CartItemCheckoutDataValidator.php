@@ -14,7 +14,13 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 class CartItemCheckoutDataValidator implements CartItemCheckoutDataValidatorInterface
 {
+    /**
+     * @var string
+     */
     protected const GLOSSARY_PARAMETER_ID = '%id%';
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_ITEM_NO_SHIPMENT_SELECTED = 'checkout.validation.item.no_shipment_selected';
 
     /**
@@ -42,7 +48,7 @@ class CartItemCheckoutDataValidator implements CartItemCheckoutDataValidatorInte
     /**
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param string[] $itemGroupKeys
+     * @param array<string> $itemGroupKeys
      *
      * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
@@ -69,7 +75,7 @@ class CartItemCheckoutDataValidator implements CartItemCheckoutDataValidatorInte
     /**
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param string[] $itemGroupKeys
+     * @param array<string> $itemGroupKeys
      *
      * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
@@ -96,7 +102,7 @@ class CartItemCheckoutDataValidator implements CartItemCheckoutDataValidatorInte
     /**
      * @param \Generated\Shared\Transfer\CheckoutDataTransfer $checkoutDataTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function extractItemGroupKeys(CheckoutDataTransfer $checkoutDataTransfer): array
     {
@@ -112,7 +118,7 @@ class CartItemCheckoutDataValidator implements CartItemCheckoutDataValidatorInte
     /**
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      * @param string $message
-     * @param string[] $parameters
+     * @param array<string> $parameters
      *
      * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */

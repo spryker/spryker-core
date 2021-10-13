@@ -14,6 +14,7 @@ interface TaxEvents
      *  - This event will be used for tax_set publishing.
      *
      * @api
+     * @var string
      */
     public const TAX_SET_PUBLISH = 'Entity.spy_tax_set.publish';
 
@@ -22,6 +23,7 @@ interface TaxEvents
      *  - This event will be used for tax_set entity creation.
      *
      * @api
+     * @var string
      */
     public const ENTITY_SPY_TAX_SET_CREATE = 'Entity.spy_tax_set.create';
 
@@ -30,6 +32,7 @@ interface TaxEvents
      * - This event will be used for tax_set entity update.
      *
      * @api
+     * @var string
      */
     public const ENTITY_SPY_TAX_SET_UPDATE = 'Entity.spy_tax_set.update';
 
@@ -38,6 +41,7 @@ interface TaxEvents
      * - This event will be used for tax_set entity delete.
      *
      * @api
+     * @var string
      */
     public const ENTITY_SPY_TAX_SET_DELETE = 'Entity.spy_tax_set.delete';
 
@@ -46,6 +50,7 @@ interface TaxEvents
      * - This event will be used for tax_rate entity update.
      *
      * @api
+     * @var string
      */
     public const ENTITY_SPY_TAX_RATE_UPDATE = 'Entity.spy_tax_rate.update';
 
@@ -54,6 +59,7 @@ interface TaxEvents
      * - This event will be used for tax_rate entity delete.
      *
      * @api
+     * @var string
      */
     public const ENTITY_SPY_TAX_RATE_DELETE = 'Entity.spy_tax_rate.delete';
 
@@ -62,6 +68,7 @@ interface TaxEvents
      *  - This event will be used for tax_set_tax entity creation.
      *
      * @api
+     * @var string
      */
     public const ENTITY_SPY_TAX_SET_TAX_CREATE = 'Entity.spy_tax_set_tax.create';
 
@@ -70,6 +77,7 @@ interface TaxEvents
      * - This event will be used for tax_set_tax entity delete.
      *
      * @api
+     * @var string
      */
     public const ENTITY_SPY_TAX_SET_TAX_DELETE = 'Entity.spy_tax_set_tax.delete';
 }

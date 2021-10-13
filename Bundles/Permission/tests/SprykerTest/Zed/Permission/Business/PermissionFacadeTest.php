@@ -28,6 +28,9 @@ use Spryker\Zed\PermissionExtension\Dependency\Plugin\PermissionStoragePluginInt
  */
 class PermissionFacadeTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const PERMISSION_PLUGIN_KEY = 'TestPermissionPlugin';
 
     /**
@@ -74,7 +77,7 @@ class PermissionFacadeTest extends Unit
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\PermissionTransfer[] $availablePermissions
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\PermissionTransfer> $availablePermissions
      *
      * @return bool
      */

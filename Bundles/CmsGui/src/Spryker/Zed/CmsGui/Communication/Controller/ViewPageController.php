@@ -17,12 +17,15 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ViewPageController extends AbstractController
 {
+    /**
+     * @var string
+     */
     public const URL_PARAM_ID_CMS_PAGE = 'id-cms-page';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function indexAction(Request $request)
     {
@@ -79,7 +82,7 @@ class ViewPageController extends AbstractController
     /**
      * @param \Generated\Shared\Transfer\CmsPageTransfer $cmsPageTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getStoreNames(CmsPageTransfer $cmsPageTransfer): array
     {

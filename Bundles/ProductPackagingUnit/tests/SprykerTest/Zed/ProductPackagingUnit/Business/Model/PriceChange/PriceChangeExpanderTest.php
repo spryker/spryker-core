@@ -24,6 +24,9 @@ use Spryker\Zed\ProductPackagingUnit\Business\Model\PriceChange\PriceChangeExpan
  */
 class PriceChangeExpanderTest extends Unit
 {
+    /**
+     * @var int
+     */
     protected const EXPECTED_UNIT_NET_PRICE = 16;
 
     /**

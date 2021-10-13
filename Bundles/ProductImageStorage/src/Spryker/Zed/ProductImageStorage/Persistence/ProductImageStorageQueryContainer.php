@@ -17,7 +17,13 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class ProductImageStorageQueryContainer extends AbstractQueryContainer implements ProductImageStorageQueryContainerInterface
 {
+    /**
+     * @var string
+     */
     public const FK_PRODUCT_ABSTRACT = 'fkProductAbstract';
+    /**
+     * @var string
+     */
     public const FK_PRODUCT = 'fkProduct';
 
     /**
@@ -25,7 +31,7 @@ class ProductImageStorageQueryContainer extends AbstractQueryContainer implement
      *
      * @api
      *
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return \Orm\Zed\ProductImageStorage\Persistence\SpyProductAbstractImageStorageQuery
      */
@@ -63,7 +69,7 @@ class ProductImageStorageQueryContainer extends AbstractQueryContainer implement
      *
      * @api
      *
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributesQuery
      */
@@ -161,7 +167,7 @@ class ProductImageStorageQueryContainer extends AbstractQueryContainer implement
      *
      * @deprecated Will be removed without replacement.
      *
-     * @param int[] $productImageSetToProductImageIds
+     * @param array<int> $productImageSetToProductImageIds
      *
      * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetToProductImageQuery
      */
@@ -179,7 +185,7 @@ class ProductImageStorageQueryContainer extends AbstractQueryContainer implement
      *
      * @api
      *
-     * @param int[] $productImageSetToProductImageIds
+     * @param array<int> $productImageSetToProductImageIds
      *
      * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetToProductImageQuery
      */

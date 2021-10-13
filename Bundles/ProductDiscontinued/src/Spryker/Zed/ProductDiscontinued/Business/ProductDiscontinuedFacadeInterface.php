@@ -75,7 +75,7 @@ interface ProductDiscontinuedFacadeInterface
      *
      * @api
      *
-     * @param int[] $productIds
+     * @param array<int> $productIds
      *
      * @return bool
      */
@@ -87,7 +87,7 @@ interface ProductDiscontinuedFacadeInterface
      *
      * @api
      *
-     * @param int[] $productConcreteIds
+     * @param array<int> $productConcreteIds
      *
      * @return bool
      */
@@ -178,7 +178,7 @@ interface ProductDiscontinuedFacadeInterface
      *
      * @api
      *
-     * @return int[]
+     * @return array<int>
      */
     public function findProductAbstractIdsWithDiscontinuedConcrete(): array;
 

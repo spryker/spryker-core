@@ -17,13 +17,31 @@ use Spryker\Yves\Kernel\Container;
 
 class CurrencyDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const STORE = 'store';
+    /**
+     * @var string
+     */
     public const INTERNATIONALIZATION = 'internationalization';
 
+    /**
+     * @var string
+     */
     public const CLIENT_SESSION = 'CLIENT_SESSION';
+    /**
+     * @var string
+     */
     public const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
+    /**
+     * @var string
+     */
     public const CLIENT_MESSENGER = 'CLIENT_MESSENGER';
 
+    /**
+     * @var string
+     */
     public const PLUGINS_CURRENCY_POST_CHANGE = 'CURRENCY_POST_CHANGE_PLUGINS';
 
     /**
@@ -128,7 +146,7 @@ class CurrencyDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Yves\Currency\Dependency\CurrencyPostChangePluginInterface[]
+     * @return array<\Spryker\Yves\Currency\Dependency\CurrencyPostChangePluginInterface>
      */
     protected function getCurrencyPostChangePlugins()
     {

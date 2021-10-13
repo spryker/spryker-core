@@ -23,16 +23,43 @@ use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
  */
 class GroupController extends AbstractController
 {
+    /**
+     * @var string
+     */
     public const GROUP_LIST_URL = '/acl/group';
 
+    /**
+     * @var string
+     */
     public const USER_LIST_URL = '/acl/users';
+    /**
+     * @var string
+     */
     public const PARAMETER_ID_GROUP = 'id-group';
+    /**
+     * @var string
+     */
     public const PARAMETER_ID_USER = 'id-user';
 
+    /**
+     * @var string
+     */
     public const MESSAGE_GROUP_CREATE_SUCCESS = 'Group was created successfully.';
+    /**
+     * @var string
+     */
     public const MESSAGE_GROUP_UPDATE_SUCCESS = 'Group was updated successfully.';
+    /**
+     * @var string
+     */
     public const MESSAGE_USER_IN_GROUP_DELETE_SUCCESS = 'The User was removed from the group.';
+    /**
+     * @var string
+     */
     public const MESSAGE_USER_IN_GROUP_DELETE_ERROR = 'User and group are not found.';
+    /**
+     * @var string
+     */
     protected const MESSAGE_GROUP_NOT_FOUND = 'Group couldn\'t be found';
 
     /**

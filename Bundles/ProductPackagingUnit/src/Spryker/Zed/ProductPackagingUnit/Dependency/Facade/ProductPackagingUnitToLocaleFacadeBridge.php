@@ -23,7 +23,7 @@ class ProductPackagingUnitToLocaleFacadeBridge implements ProductPackagingUnitTo
     }
 
     /**
-     * @return \Generated\Shared\Transfer\LocaleTransfer[]
+     * @return array<\Generated\Shared\Transfer\LocaleTransfer>
      */
     public function getLocaleCollection()
     {

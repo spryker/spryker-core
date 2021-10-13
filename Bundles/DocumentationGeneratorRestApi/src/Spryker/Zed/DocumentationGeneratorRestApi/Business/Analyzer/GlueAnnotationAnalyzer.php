@@ -32,7 +32,13 @@ use Spryker\Zed\DocumentationGeneratorRestApi\Dependency\Service\DocumentationGe
  */
 class GlueAnnotationAnalyzer implements GlueAnnotationAnalyzerInterface
 {
+    /**
+     * @var string
+     */
     protected const PATTERN_REGEX_GLUE_ANNOTATION = '/(?<=@Glue\()(.|\n)*?(?=(\s\*\n)*?\))/';
+    /**
+     * @var string
+     */
     protected const EXCEPTION_MESSAGE_INVALID_ANNOTATION_FORMAT = 'Invalid JSON format: %s in %s';
 
     /**
@@ -76,6 +82,7 @@ class GlueAnnotationAnalyzer implements GlueAnnotationAnalyzerInterface
         if (!array_filter($parameters)) {
             return $pathAnnotationsTransfer;
         }
+
         $pathAnnotationsTransfer = $pathAnnotationsTransfer->fromArray(array_replace_recursive(...$parameters), true);
 
         return $pathAnnotationsTransfer;

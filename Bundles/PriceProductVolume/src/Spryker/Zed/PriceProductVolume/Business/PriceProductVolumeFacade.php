@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\PriceProductVolume\Business;
 
+use ArrayObject;
+use Generated\Shared\Transfer\ValidationResponseTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -19,9 +21,9 @@ class PriceProductVolumeFacade extends AbstractFacade implements PriceProductVol
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function extractPriceProductVolumesForProductAbstract(array $priceProductTransfers): array
     {
@@ -35,14 +37,48 @@ class PriceProductVolumeFacade extends AbstractFacade implements PriceProductVol
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function extractPriceProductVolumesForProductConcrete(array $priceProductTransfers): array
     {
         return $this->getFactory()
             ->createVolumePriceExtractor()
             ->extractPriceProductVolumesForProductConcrete($priceProductTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
+     *
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
+     */
+    public function extractPriceProductVolumeTransfersFromArray(array $priceProductTransfers): array
+    {
+        return $this->getFactory()
+            ->createVolumePriceExtractor()
+            ->extractPriceProductVolumeTransfersFromArray($priceProductTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
+     *
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
+     *
+     * @return \Generated\Shared\Transfer\ValidationResponseTransfer
+     */
+    public function validateVolumePrices(ArrayObject $priceProductTransfers): ValidationResponseTransfer
+    {
+        return $this->getFactory()
+            ->createPriceProductVolumeValidator()
+            ->validate($priceProductTransfers);
     }
 }

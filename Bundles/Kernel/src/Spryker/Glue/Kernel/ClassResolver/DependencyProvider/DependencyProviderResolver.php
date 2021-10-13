@@ -11,6 +11,9 @@ use Spryker\Glue\Kernel\ClassResolver\AbstractClassResolver;
 
 class DependencyProviderResolver extends AbstractClassResolver
 {
+    /**
+     * @var string
+     */
     protected const RESOLVABLE_TYPE = 'GlueDependencyProvider';
 
     /**

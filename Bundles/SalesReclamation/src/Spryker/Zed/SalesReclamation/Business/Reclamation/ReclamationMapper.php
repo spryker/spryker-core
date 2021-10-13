@@ -31,7 +31,7 @@ class ReclamationMapper implements ReclamationMapperInterface
         $reclamationTransfer->setCustomerReference($orderTransfer->getCustomerReference());
         $reclamationTransfer->setCustomerEmail($orderTransfer->getEmail());
 
-        /** @var \Generated\Shared\Transfer\ReclamationItemTransfer[]|\ArrayObject $reclamationItems */
+        /** @var \ArrayObject<int, \Generated\Shared\Transfer\ReclamationItemTransfer> $reclamationItems */
         $reclamationItems = new ArrayObject();
         $orderItems = $this->mapOrderItemsToReclamationItems($orderTransfer->getItems(), $reclamationItems);
         $reclamationTransfer->setReclamationItems($orderItems);
@@ -40,10 +40,10 @@ class ReclamationMapper implements ReclamationMapperInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $orderItems
-     * @param \ArrayObject|\Generated\Shared\Transfer\ReclamationItemTransfer[] $reclamationItems
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $orderItems
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ReclamationItemTransfer> $reclamationItems
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ReclamationItemTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\ReclamationItemTransfer>
      */
     protected function mapOrderItemsToReclamationItems(
         ArrayObject $orderItems,

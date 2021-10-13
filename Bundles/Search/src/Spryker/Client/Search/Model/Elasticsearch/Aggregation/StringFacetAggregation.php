@@ -15,6 +15,9 @@ use Spryker\Client\Search\SearchConfig;
  */
 class StringFacetAggregation extends AbstractTermsFacetAggregation
 {
+    /**
+     * @var string
+     */
     public const VALUE_SUFFIX = '-value';
 
     /**

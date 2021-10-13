@@ -17,17 +17,17 @@ abstract class AbstractGatewayController extends AbstractController
     protected $success = true;
 
     /**
-     * @var \Generated\Shared\Transfer\MessageTransfer[]
+     * @var array<\Generated\Shared\Transfer\MessageTransfer>
      */
     protected $errorMessages = [];
 
     /**
-     * @var \Generated\Shared\Transfer\MessageTransfer[]
+     * @var array<\Generated\Shared\Transfer\MessageTransfer>
      */
     protected $infoMessages = [];
 
     /**
-     * @var \Generated\Shared\Transfer\MessageTransfer[]
+     * @var array<\Generated\Shared\Transfer\MessageTransfer>
      */
     protected $successMessages = [];
 
@@ -103,7 +103,7 @@ abstract class AbstractGatewayController extends AbstractController
     }
 
     /**
-     * @return \Generated\Shared\Transfer\MessageTransfer[]
+     * @return array<\Generated\Shared\Transfer\MessageTransfer>
      */
     public function getErrorMessages()
     {
@@ -111,7 +111,7 @@ abstract class AbstractGatewayController extends AbstractController
     }
 
     /**
-     * @return \Generated\Shared\Transfer\MessageTransfer[]
+     * @return array<\Generated\Shared\Transfer\MessageTransfer>
      */
     public function getInfoMessages()
     {
@@ -119,7 +119,7 @@ abstract class AbstractGatewayController extends AbstractController
     }
 
     /**
-     * @return \Generated\Shared\Transfer\MessageTransfer[]
+     * @return array<\Generated\Shared\Transfer\MessageTransfer>
      */
     public function getSuccessMessages()
     {

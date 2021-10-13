@@ -17,7 +17,13 @@ use Spryker\Glue\SalesReturnsRestApi\Dependency\Client\SalesReturnsRestApiToSale
  */
 class SalesReturnsRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_SALES_RETURN = 'CLIENT_SALES_RETURN';
+    /**
+     * @var string
+     */
     public const CLIENT_SALES_RETURN_SEARCH = 'CLIENT_SALES_RETURN_SEARCH';
 
     /**

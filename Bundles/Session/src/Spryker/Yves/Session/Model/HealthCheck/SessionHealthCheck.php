@@ -13,6 +13,9 @@ use Spryker\Client\Session\SessionClientInterface;
 
 class SessionHealthCheck implements HealthCheckInterface
 {
+    /**
+     * @var string
+     */
     protected const KEY_SESSION_YVES_HEALTH_CHECK = 'SESSION_YVES_HEALTH_CHECK';
 
     /**

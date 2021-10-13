@@ -10,7 +10,9 @@ namespace Spryker\Zed\PriceProductOfferStorage\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\PriceProductOfferStorage\Business\PriceProductOfferStorage\PriceProductOfferStorageWriter;
 use Spryker\Zed\PriceProductOfferStorage\Business\PriceProductOfferStorage\PriceProductOfferStorageWriterInterface;
+use Spryker\Zed\PriceProductOfferStorage\Dependency\Facade\PriceProductOfferStorageToEventBehaviorFacadeInterface;
 use Spryker\Zed\PriceProductOfferStorage\Dependency\Facade\PriceProductOfferStorageToEventFacadeInterface;
+use Spryker\Zed\PriceProductOfferStorage\Dependency\Facade\PriceProductOfferStorageToPriceProductOfferFacadeInterface;
 use Spryker\Zed\PriceProductOfferStorage\PriceProductOfferStorageDependencyProvider;
 
 /**
@@ -23,7 +25,11 @@ class PriceProductOfferStorageBusinessFactory extends AbstractBusinessFactory
      */
     public function createPriceProductOfferStorageWriter(): PriceProductOfferStorageWriterInterface
     {
-        return new PriceProductOfferStorageWriter($this->getEventFacade());
+        return new PriceProductOfferStorageWriter(
+            $this->getEventFacade(),
+            $this->getPriceProductOfferFacade(),
+            $this->getEventBehaviorFacade()
+        );
     }
 
     /**
@@ -32,5 +38,21 @@ class PriceProductOfferStorageBusinessFactory extends AbstractBusinessFactory
     public function getEventFacade(): PriceProductOfferStorageToEventFacadeInterface
     {
         return $this->getProvidedDependency(PriceProductOfferStorageDependencyProvider::FACADE_EVENT);
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProductOfferStorage\Dependency\Facade\PriceProductOfferStorageToPriceProductOfferFacadeInterface
+     */
+    public function getPriceProductOfferFacade(): PriceProductOfferStorageToPriceProductOfferFacadeInterface
+    {
+        return $this->getProvidedDependency(PriceProductOfferStorageDependencyProvider::FACADE_PRICE_PRODUCT_OFFER);
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProductOfferStorage\Dependency\Facade\PriceProductOfferStorageToEventBehaviorFacadeInterface
+     */
+    public function getEventBehaviorFacade(): PriceProductOfferStorageToEventBehaviorFacadeInterface
+    {
+        return $this->getProvidedDependency(PriceProductOfferStorageDependencyProvider::FACADE_EVENT_BEHAVIOR);
     }
 }

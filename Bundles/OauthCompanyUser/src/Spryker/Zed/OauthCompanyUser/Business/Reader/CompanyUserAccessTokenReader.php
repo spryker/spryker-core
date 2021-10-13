@@ -19,6 +19,9 @@ use Spryker\Zed\OauthCompanyUser\Dependency\Service\OauthCompanyUserToUtilEncodi
 
 class CompanyUserAccessTokenReader implements CompanyUserAccessTokenReaderInterface
 {
+    /**
+     * @var string
+     */
     protected const TOKEN_TYPE = 'Bearer';
 
     /**
@@ -37,7 +40,7 @@ class CompanyUserAccessTokenReader implements CompanyUserAccessTokenReaderInterf
     protected $customerFacade;
 
     /**
-     * @var \Spryker\Zed\OauthCompanyUserExtension\Dependency\Plugin\CustomerExpanderPluginInterface[]
+     * @var array<\Spryker\Zed\OauthCompanyUserExtension\Dependency\Plugin\CustomerExpanderPluginInterface>
      */
     protected $customerExpanderPlugins;
 
@@ -45,7 +48,7 @@ class CompanyUserAccessTokenReader implements CompanyUserAccessTokenReaderInterf
      * @param \Spryker\Zed\OauthCompanyUser\Dependency\Facade\OauthCompanyUserToOauthFacadeInterface $oauthFacade
      * @param \Spryker\Zed\OauthCompanyUser\Dependency\Service\OauthCompanyUserToUtilEncodingServiceInterface $utilEncodingService
      * @param \Spryker\Zed\OauthCompanyUser\Dependency\Facade\OauthCompanyUserToCustomerFacadeInterface $customerFacade
-     * @param \Spryker\Zed\OauthCompanyUserExtension\Dependency\Plugin\CustomerExpanderPluginInterface[] $customerExpanderPlugins
+     * @param array<\Spryker\Zed\OauthCompanyUserExtension\Dependency\Plugin\CustomerExpanderPluginInterface> $customerExpanderPlugins
      */
     public function __construct(
         OauthCompanyUserToOauthFacadeInterface $oauthFacade,
@@ -83,6 +86,12 @@ class CompanyUserAccessTokenReader implements CompanyUserAccessTokenReaderInterf
         $decodedPayload = $this->utilEncodingService->decodeJson($oauthAccessTokenValidationResponseTransfer->getOauthUserId(), true);
         $companyUserIdentifierTransfer = (new CompanyUserIdentifierTransfer())->fromArray($decodedPayload, true);
 
+        if (!$this->isCompanyUser($companyUserIdentifierTransfer)) {
+            return (new CustomerResponseTransfer())
+                ->setIsSuccess(false)
+                ->setHasCustomer(false);
+        }
+
         $customerTransfer = $this->getCustomerByCompanyUserIdentifier($companyUserIdentifierTransfer);
         $customerTransfer = $this->executeCustomerExpanderPlugins($customerTransfer, $companyUserIdentifierTransfer);
 
@@ -97,15 +106,16 @@ class CompanyUserAccessTokenReader implements CompanyUserAccessTokenReaderInterf
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
-    protected function getCustomerByCompanyUserIdentifier(CompanyUserIdentifierTransfer $companyUserIdentifierTransfer): CustomerTransfer
-    {
+    protected function getCustomerByCompanyUserIdentifier(
+        CompanyUserIdentifierTransfer $companyUserIdentifierTransfer
+    ): CustomerTransfer {
         $companyUserIdentifierTransfer
             ->requireIdCustomer()
             ->requireIdCompanyUser();
 
         $customerTransfer = (new CustomerTransfer())
             ->setIdCustomer($companyUserIdentifierTransfer->getIdCustomer())
-            ->setCompanyUserTransfer((new CompanyUserTransfer())->setIdCompanyUser((int)$companyUserIdentifierTransfer->getIdCompanyUser()));
+            ->setCompanyUserTransfer((new CompanyUserTransfer())->setUuid($companyUserIdentifierTransfer->getIdCompanyUser()));
 
         return $this->customerFacade->getCustomer($customerTransfer);
     }
@@ -125,5 +135,15 @@ class CompanyUserAccessTokenReader implements CompanyUserAccessTokenReaderInterf
         }
 
         return $customerTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserIdentifierTransfer $companyUserIdentifierTransfer
+     *
+     * @return bool
+     */
+    protected function isCompanyUser(CompanyUserIdentifierTransfer $companyUserIdentifierTransfer): bool
+    {
+        return (bool)$companyUserIdentifierTransfer->getIdCompanyUser();
     }
 }

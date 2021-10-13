@@ -27,9 +27,9 @@ class StateHistoryExpander implements StateHistoryExpanderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     public function expandOrderItemsWithStateHistory(array $itemTransfers): array
     {
@@ -66,9 +66,9 @@ class StateHistoryExpander implements StateHistoryExpanderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemStateTransfer[] $itemStateTransfers
+     * @param array<\Generated\Shared\Transfer\ItemStateTransfer> $itemStateTransfers
      *
-     * @return \Generated\Shared\Transfer\ItemStateTransfer[][]
+     * @return array<\Generated\Shared\Transfer\ItemStateTransfer[]>
      */
     protected function mapItemStatesByIdSalesOrderItem(array $itemStateTransfers): array
     {
@@ -82,9 +82,9 @@ class StateHistoryExpander implements StateHistoryExpanderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function extractSalesOrderItemIds(array $itemTransfers): array
     {

@@ -10,7 +10,9 @@ namespace Spryker\Zed\ZedNavigation\Business\Model\SchemaFinder;
 interface ZedNavigationSchemaFinderInterface
 {
     /**
-     * @return \Symfony\Component\Finder\Finder|\Symfony\Component\Finder\SplFileInfo[]
+     * @param string $fileNamePattern
+     *
+     * @return \Symfony\Component\Finder\Finder<\Symfony\Component\Finder\SplFileInfo>
      */
-    public function getSchemaFiles();
+    public function getSchemaFiles(string $fileNamePattern);
 }

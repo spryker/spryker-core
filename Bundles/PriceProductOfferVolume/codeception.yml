@@ -2,6 +2,7 @@ namespace: PriceProductOfferVolume
 include:
     - tests/SprykerTest/Client/PriceProductOfferVolume
     - tests/SprykerTest/Service/PriceProductOfferVolume
+    - tests/SprykerTest/Zed/PriceProductOfferVolume
 paths:
     tests: tests
     log: tests/_output

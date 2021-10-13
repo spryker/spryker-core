@@ -9,30 +9,27 @@ namespace Spryker\Client\CategoryStorage\Formatter;
 
 use ArrayObject;
 use Generated\Shared\Transfer\CategoryNodeSearchResultTransfer;
-use Spryker\Client\CategoryStorage\Dependency\Client\CategoryStorageToLocaleClientInterface;
 use Spryker\Client\CategoryStorage\Storage\CategoryTreeStorageReaderInterface;
 
 class CategoryTreeFilterFormatter implements CategoryTreeFilterFormatterInterface
 {
     /**
      * @uses \Spryker\Client\SearchElasticsearch\AggregationExtractor\CategoryExtractor::DOC_COUNT
+     * @var string
      */
     protected const DOC_COUNT = 'doc_count';
 
     /**
      * @uses \Spryker\Client\SearchElasticsearch\AggregationExtractor\CategoryExtractor::KEY_BUCKETS
+     * @var string
      */
     protected const KEY_BUCKETS = 'buckets';
 
     /**
      * @uses \Spryker\Client\SearchElasticsearch\AggregationExtractor\CategoryExtractor::KEY_KEY
+     * @var string
      */
     protected const KEY_KEY = 'key';
-
-    /**
-     * @var \Spryker\Client\CategoryStorage\Dependency\Client\CategoryStorageToLocaleClientInterface
-     */
-    protected $localeClient;
 
     /**
      * @var \Spryker\Client\CategoryStorage\Storage\CategoryTreeStorageReaderInterface
@@ -40,30 +37,25 @@ class CategoryTreeFilterFormatter implements CategoryTreeFilterFormatterInterfac
     protected $categoryTreeStorageReader;
 
     /**
-     * @param \Spryker\Client\CategoryStorage\Dependency\Client\CategoryStorageToLocaleClientInterface $localeClient
      * @param \Spryker\Client\CategoryStorage\Storage\CategoryTreeStorageReaderInterface $categoryTreeStorageReader
      */
-    public function __construct(
-        CategoryStorageToLocaleClientInterface $localeClient,
-        CategoryTreeStorageReaderInterface $categoryTreeStorageReader
-    ) {
-        $this->localeClient = $localeClient;
+    public function __construct(CategoryTreeStorageReaderInterface $categoryTreeStorageReader)
+    {
         $this->categoryTreeStorageReader = $categoryTreeStorageReader;
     }
 
     /**
      * @param array $docCountAggregation
+     * @param string $localeName
+     * @param string $storeName
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\CategoryNodeSearchResultTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\CategoryNodeSearchResultTransfer>
      */
-    public function formatCategoryTreeFilter(array $docCountAggregation): ArrayObject
+    public function formatCategoryTreeFilter(array $docCountAggregation, string $localeName, string $storeName): ArrayObject
     {
         $categoryDocCounts = $this->getMappedCategoryDocCountsByNodeId($docCountAggregation);
 
-        $categoryNodeStorageTransfers = $this->categoryTreeStorageReader->getCategories(
-            $this->localeClient->getCurrentLocale()
-        );
-
+        $categoryNodeStorageTransfers = $this->categoryTreeStorageReader->getCategories($localeName, $storeName);
         $categoryNodeSearchResultTransfers = $this->mapCategoryNodeStoragesToCategoryNodeSearchResults(
             $categoryNodeStorageTransfers,
             new ArrayObject()
@@ -76,10 +68,10 @@ class CategoryTreeFilterFormatter implements CategoryTreeFilterFormatterInterfac
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\CategoryNodeStorageTransfer[] $categoryNodeStorageTransfers
-     * @param \ArrayObject|\Generated\Shared\Transfer\CategoryNodeSearchResultTransfer[] $categoryNodeSearchResultTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\CategoryNodeStorageTransfer> $categoryNodeStorageTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\CategoryNodeSearchResultTransfer> $categoryNodeSearchResultTransfers
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\CategoryNodeSearchResultTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\CategoryNodeSearchResultTransfer>
      */
     protected function mapCategoryNodeStoragesToCategoryNodeSearchResults(
         ArrayObject $categoryNodeStorageTransfers,
@@ -95,10 +87,10 @@ class CategoryTreeFilterFormatter implements CategoryTreeFilterFormatterInterfac
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\CategoryNodeSearchResultTransfer[] $categoryNodeSearchResultTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\CategoryNodeSearchResultTransfer> $categoryNodeSearchResultTransfers
      * @param array $categoryDocCounts
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\CategoryNodeSearchResultTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\CategoryNodeSearchResultTransfer>
      */
     protected function mergeCategoryNodeSearchResultWithCategoryDocCount(
         ArrayObject $categoryNodeSearchResultTransfers,
@@ -133,7 +125,7 @@ class CategoryTreeFilterFormatter implements CategoryTreeFilterFormatterInterfac
     /**
      * @param array $docCountAggregation
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getMappedCategoryDocCountsByNodeId(array $docCountAggregation): array
     {

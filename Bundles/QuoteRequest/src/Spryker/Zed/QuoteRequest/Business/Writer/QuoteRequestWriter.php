@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\QuoteRequest\Business\Writer;
 
+use ArrayObject;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
 use Generated\Shared\Transfer\QuoteRequestResponseTransfer;
@@ -25,8 +26,21 @@ class QuoteRequestWriter implements QuoteRequestWriterInterface
 {
     use TransactionTrait;
 
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_QUOTE_REQUEST_COMPANY_USER_NOT_FOUND = 'quote_request.validation.error.company_user_not_found';
+    /**
+     * @var string
+     */
+    protected const GLOSSARY_KEY_QUOTE_REQUEST_CART_IS_EMPTY = 'quote_request.validation.error.cart_is_empty';
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_QUOTE_REQUEST_WRONG_STATUS = 'quote_request.validation.error.wrong_status';
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_CONCURRENT_CUSTOMERS = 'quote_request.update.validation.concurrent';
 
     /**
@@ -60,12 +74,18 @@ class QuoteRequestWriter implements QuoteRequestWriterInterface
     protected $quoteRequestStatus;
 
     /**
+     * @var array<\Spryker\Zed\QuoteRequestExtension\Dependency\Plugin\QuoteRequestValidatorPluginInterface>
+     */
+    protected $quoteRequestValidatorPlugins;
+
+    /**
      * @param \Spryker\Zed\QuoteRequest\QuoteRequestConfig $quoteRequestConfig
      * @param \Spryker\Zed\QuoteRequest\Persistence\QuoteRequestEntityManagerInterface $quoteRequestEntityManager
      * @param \Spryker\Zed\QuoteRequest\Business\Reader\QuoteRequestReaderInterface $quoteRequestReader
      * @param \Spryker\Zed\QuoteRequest\Business\ReferenceGenerator\QuoteRequestReferenceGeneratorInterface $quoteRequestReferenceGenerator
      * @param \Spryker\Zed\QuoteRequest\Business\Sanitizer\QuoteRequestVersionSanitizerInterface $quoteRequestVersionSanitizer
      * @param \Spryker\Zed\QuoteRequest\Business\Status\QuoteRequestStatusInterface $quoteRequestStatus
+     * @param array<\Spryker\Zed\QuoteRequestExtension\Dependency\Plugin\QuoteRequestValidatorPluginInterface> $quoteRequestValidatorPlugins
      */
     public function __construct(
         QuoteRequestConfig $quoteRequestConfig,
@@ -73,7 +93,8 @@ class QuoteRequestWriter implements QuoteRequestWriterInterface
         QuoteRequestReaderInterface $quoteRequestReader,
         QuoteRequestReferenceGeneratorInterface $quoteRequestReferenceGenerator,
         QuoteRequestVersionSanitizerInterface $quoteRequestVersionSanitizer,
-        QuoteRequestStatusInterface $quoteRequestStatus
+        QuoteRequestStatusInterface $quoteRequestStatus,
+        array $quoteRequestValidatorPlugins
     ) {
         $this->quoteRequestConfig = $quoteRequestConfig;
         $this->quoteRequestEntityManager = $quoteRequestEntityManager;
@@ -81,6 +102,7 @@ class QuoteRequestWriter implements QuoteRequestWriterInterface
         $this->quoteRequestReferenceGenerator = $quoteRequestReferenceGenerator;
         $this->quoteRequestVersionSanitizer = $quoteRequestVersionSanitizer;
         $this->quoteRequestStatus = $quoteRequestStatus;
+        $this->quoteRequestValidatorPlugins = $quoteRequestValidatorPlugins;
     }
 
     /**
@@ -129,7 +151,7 @@ class QuoteRequestWriter implements QuoteRequestWriterInterface
         $quoteRequestTransfer
             ->requireCompanyUser()
             ->getCompanyUser()
-                ->requireIdCompanyUser();
+            ->requireIdCompanyUser();
 
         $customerReference = $this->quoteRequestReader->findCustomerReference($quoteRequestTransfer->getCompanyUser());
 
@@ -137,19 +159,27 @@ class QuoteRequestWriter implements QuoteRequestWriterInterface
             return $this->getErrorResponse(static::GLOSSARY_KEY_QUOTE_REQUEST_COMPANY_USER_NOT_FOUND);
         }
 
+        $quoteRequestResponseTransfer = $this->executeQuoteRequestValidatorPlugins($quoteRequestTransfer);
+        if (!$quoteRequestResponseTransfer->getIsSuccessful()) {
+            return $quoteRequestResponseTransfer;
+        }
+
         $quoteRequestTransfer = $this->createQuoteRequestTransfer($quoteRequestTransfer, $customerReference);
 
         $quoteRequestVersionTransfer = $quoteRequestTransfer->requireLatestVersion()->getLatestVersion();
+
+        if ($quoteRequestVersionTransfer->getQuote() === null || !$quoteRequestVersionTransfer->getQuote()->getItems()->count()) {
+            return $this->getErrorResponse(static::GLOSSARY_KEY_QUOTE_REQUEST_CART_IS_EMPTY);
+        }
 
         $quoteRequestVersionTransfer = $this->quoteRequestVersionSanitizer->recalculateQuoteRequestVersionQuote($quoteRequestVersionTransfer);
         $quoteRequestTransfer->setLatestVersion($quoteRequestVersionTransfer);
 
         $quoteRequestVersionTransfer = $this->createQuoteRequestVersionTransfer($quoteRequestTransfer);
         $quoteRequestTransfer->setLatestVersion($quoteRequestVersionTransfer);
+        $quoteRequestTransfer->setQuoteRequestVersions(new ArrayObject([$quoteRequestTransfer->getLatestVersionOrFail()]));
 
-        return (new QuoteRequestResponseTransfer())
-            ->setQuoteRequest($quoteRequestTransfer)
-            ->setIsSuccessful(true);
+        return $this->createSuccessfulResponse($quoteRequestTransfer);
     }
 
     /**
@@ -179,13 +209,16 @@ class QuoteRequestWriter implements QuoteRequestWriterInterface
             return $this->getErrorResponse(static::GLOSSARY_KEY_QUOTE_REQUEST_WRONG_STATUS);
         }
 
+        $quoteRequestResponseTransfer = $this->executeQuoteRequestValidatorPlugins($quoteRequestTransfer);
+        if (!$quoteRequestResponseTransfer->getIsSuccessful()) {
+            return $quoteRequestResponseTransfer;
+        }
+
         $this->quoteRequestEntityManager->updateQuoteRequestVersion(
             $this->quoteRequestVersionSanitizer->cleanUpQuoteRequestVersionQuote($quoteRequestTransfer->getLatestVersion())
         );
 
-        return (new QuoteRequestResponseTransfer())
-            ->setQuoteRequest($quoteRequestTransfer)
-            ->setIsSuccessful(true);
+        return $this->createSuccessfulResponse($quoteRequestTransfer);
     }
 
     /**
@@ -221,9 +254,7 @@ class QuoteRequestWriter implements QuoteRequestWriterInterface
 
         $quoteRequestTransfer = $this->quoteRequestEntityManager->updateQuoteRequest($quoteRequestTransfer);
 
-        return (new QuoteRequestResponseTransfer())
-            ->setQuoteRequest($quoteRequestTransfer)
-            ->setIsSuccessful(true);
+        return $this->createSuccessfulResponse($quoteRequestTransfer);
     }
 
     /**
@@ -307,6 +338,32 @@ class QuoteRequestWriter implements QuoteRequestWriterInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
+     */
+    protected function executeQuoteRequestValidatorPlugins(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestResponseTransfer
+    {
+        $errorMessageTransfers = [];
+        foreach ($this->quoteRequestValidatorPlugins as $quoteRequestValidatorPlugin) {
+            $quoteRequestResponseTransfer = $quoteRequestValidatorPlugin->validate($quoteRequestTransfer);
+            if (!$quoteRequestResponseTransfer->getIsSuccessful()) {
+                $errorMessageTransfers[] = $quoteRequestResponseTransfer->getMessages()->getArrayCopy();
+            }
+        }
+
+        if ($errorMessageTransfers) {
+            $errorMessagesTransferCollection = new ArrayObject(array_merge([], ...$errorMessageTransfers));
+
+            return (new QuoteRequestResponseTransfer())
+                ->setIsSuccessful(false)
+                ->setMessages($errorMessagesTransferCollection);
+        }
+
+        return $this->createSuccessfulResponse($quoteRequestTransfer);
+    }
+
+    /**
      * @param string $message
      *
      * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
@@ -319,5 +376,17 @@ class QuoteRequestWriter implements QuoteRequestWriterInterface
         return (new QuoteRequestResponseTransfer())
             ->setIsSuccessful(false)
             ->addMessage($messageTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
+     */
+    protected function createSuccessfulResponse(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestResponseTransfer
+    {
+        return (new QuoteRequestResponseTransfer())
+            ->setQuoteRequest($quoteRequestTransfer)
+            ->setIsSuccessful(true);
     }
 }

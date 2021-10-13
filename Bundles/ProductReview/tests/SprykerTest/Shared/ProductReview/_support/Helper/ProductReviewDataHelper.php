@@ -26,6 +26,9 @@ class ProductReviewDataHelper extends Module
     use DependencyHelperTrait;
     use LocatorHelperTrait;
 
+    /**
+     * @var string
+     */
     public const NAMESPACE_ROOT = '\\';
 
     /**

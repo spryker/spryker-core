@@ -9,6 +9,7 @@ namespace Spryker\Glue\SalesReturnsRestApi\Processor\Builder;
 
 use Generated\Shared\Transfer\ReturnCollectionTransfer;
 use Generated\Shared\Transfer\ReturnFilterTransfer;
+use Generated\Shared\Transfer\ReturnResponseTransfer;
 use Generated\Shared\Transfer\ReturnTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 
@@ -40,9 +41,18 @@ interface RestReturnResponseBuilderInterface
     public function createErrorRestResponse(string $message): RestResponseInterface;
 
     /**
+     * @param \Generated\Shared\Transfer\ReturnResponseTransfer $returnResponseTransfer
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function createErrorRestResponseFromReturnResponse(
+        ReturnResponseTransfer $returnResponseTransfer
+    ): RestResponseInterface;
+
+    /**
      * @param \Generated\Shared\Transfer\ReturnTransfer $returnTransfer
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>
      */
     public function createReturnItemRestResourcesFromReturnTransfer(ReturnTransfer $returnTransfer): array;
 }

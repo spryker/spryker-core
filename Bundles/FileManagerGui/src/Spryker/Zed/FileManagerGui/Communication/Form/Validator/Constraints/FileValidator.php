@@ -37,8 +37,8 @@ class FileValidator extends SymfonyFileValidator
         }
 
         return new UploadedFile(
-            $fileUploadTransfer->getRealPath(),
-            $fileUploadTransfer->getClientOriginalName(),
+            (string)$fileUploadTransfer->getRealPath(),
+            (string)$fileUploadTransfer->getClientOriginalName(),
             $fileUploadTransfer->getMimeTypeName(),
             $fileUploadTransfer->getSize()
         );

@@ -23,9 +23,21 @@ use Spryker\Zed\ProductBundle\ProductBundleConfig;
 
 class ProductBundleCartAvailabilityCheck extends BasePreCheck implements ProductBundleCartAvailabilityCheckInterface
 {
+    /**
+     * @var string
+     */
     public const CART_PRE_CHECK_ITEM_AVAILABILITY_FAILED = 'cart.pre.check.availability.failed';
+    /**
+     * @var string
+     */
     public const CART_PRE_CHECK_ITEM_AVAILABILITY_EMPTY = 'cart.pre.check.availability.failed.empty';
+    /**
+     * @var string
+     */
     public const STOCK_TRANSLATION_PARAMETER = '%stock%';
+    /**
+     * @var string
+     */
     public const SKU_TRANSLATION_PARAMETER = '%sku%';
 
     /**
@@ -87,7 +99,7 @@ class ProductBundleCartAvailabilityCheck extends BasePreCheck implements Product
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      * @param string $sku
      *
      * @return \Spryker\DecimalObject\Decimal
@@ -170,7 +182,7 @@ class ProductBundleCartAvailabilityCheck extends BasePreCheck implements Product
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\MessageTransfer[] $messages
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\MessageTransfer> $messages
      *
      * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
      */
@@ -183,7 +195,7 @@ class ProductBundleCartAvailabilityCheck extends BasePreCheck implements Product
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemsInCart
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $itemsInCart
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return \Spryker\DecimalObject\Decimal
@@ -215,11 +227,11 @@ class ProductBundleCartAvailabilityCheck extends BasePreCheck implements Product
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemsInCart
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $itemsInCart
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return \Generated\Shared\Transfer\MessageTransfer[]
+     * @return array<\Generated\Shared\Transfer\MessageTransfer>
      */
     protected function checkItemAvailability(
         ArrayObject $itemsInCart,
@@ -242,12 +254,12 @@ class ProductBundleCartAvailabilityCheck extends BasePreCheck implements Product
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemsInCart
-     * @param \Orm\Zed\ProductBundle\Persistence\SpyProductBundle[] $bundledProducts
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $itemsInCart
+     * @param array<\Orm\Zed\ProductBundle\Persistence\SpyProductBundle> $bundledProducts
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return \Generated\Shared\Transfer\MessageTransfer[]
+     * @return array<\Generated\Shared\Transfer\MessageTransfer>
      */
     protected function getUnavailableBundleItemsInCart(
         ArrayObject $itemsInCart,
@@ -289,7 +301,7 @@ class ProductBundleCartAvailabilityCheck extends BasePreCheck implements Product
 
     /**
      * @param array $unavailableBundleItems
-     * @param \Orm\Zed\ProductBundle\Persistence\SpyProductBundle[] $bundledProducts
+     * @param array<\Orm\Zed\ProductBundle\Persistence\SpyProductBundle> $bundledProducts
      *
      * @return bool
      */
@@ -301,7 +313,7 @@ class ProductBundleCartAvailabilityCheck extends BasePreCheck implements Product
     /**
      * @param array $unavailableBundleItems
      *
-     * @return \Generated\Shared\Transfer\MessageTransfer[]
+     * @return array<\Generated\Shared\Transfer\MessageTransfer>
      */
     protected function createMessageTransfersForUnavailableBundleItems(array $unavailableBundleItems): array
     {
@@ -317,7 +329,7 @@ class ProductBundleCartAvailabilityCheck extends BasePreCheck implements Product
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemsInCart
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $itemsInCart
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
@@ -337,7 +349,7 @@ class ProductBundleCartAvailabilityCheck extends BasePreCheck implements Product
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getProductCocnreteSkusFromCartChangeTransfer(CartChangeTransfer $cartChangeTransfer): array
     {

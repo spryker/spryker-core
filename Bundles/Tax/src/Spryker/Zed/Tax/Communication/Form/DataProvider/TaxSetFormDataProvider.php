@@ -58,7 +58,7 @@ class TaxSetFormDataProvider
     }
 
     /**
-     * @return \ArrayObject|\Generated\Shared\Transfer\TaxRateTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\TaxRateTransfer>
      */
     protected function createTaxRatesList()
     {

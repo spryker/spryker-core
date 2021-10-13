@@ -19,13 +19,15 @@ class PercentageType implements CalculatorTypeInterface
     protected static $roundingError = 0.0;
 
     /**
-     * @param \Generated\Shared\Transfer\DiscountableItemTransfer[] $discountableItems
+     * @param array<\Generated\Shared\Transfer\DiscountableItemTransfer> $discountableItems
      * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
      *
      * @return int
      */
     public function calculateDiscount(array $discountableItems, DiscountTransfer $discountTransfer)
     {
+        $this->resetRoundingError();
+
         $value = $discountTransfer->requireAmount()->getAmount();
 
         $this->ensureIsValidNumber($value);
@@ -97,5 +99,13 @@ class PercentageType implements CalculatorTypeInterface
         }
 
         return $quantity;
+    }
+
+    /**
+     * @return void
+     */
+    protected function resetRoundingError(): void
+    {
+        static::$roundingError = 0.0;
     }
 }

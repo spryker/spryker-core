@@ -34,7 +34,7 @@ use Spryker\Zed\User\UserConfig;
 class UserTest extends Unit
 {
     /**
-     * @const string
+     * @var string
      */
     public const USERNAME = 'test@test.com';
 
@@ -365,7 +365,7 @@ class UserTest extends Unit
     /**
      * @dataProvider getUserPositiveScenarioDataProvider
      *
-     * @param string[] $userCriteriaKeys
+     * @param array<string> $userCriteriaKeys
      *
      * @return void
      */

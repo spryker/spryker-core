@@ -23,19 +23,19 @@ interface ProductMeasurementUnitRepositoryInterface
     /**
      * @param int $idProduct
      *
-     * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer>
      */
     public function getProductMeasurementSalesUnitTransfersByIdProduct(int $idProduct): array;
 
     /**
-     * @param int[] $salesUnitsIds
+     * @param array<int> $salesUnitsIds
      *
-     * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer>
      */
     public function getProductMeasurementSalesUnitTransfersByIds(array $salesUnitsIds): array;
 
     /**
-     * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer>
      */
     public function getProductMeasurementSalesUnitTransfers(): array;
 
@@ -47,74 +47,74 @@ interface ProductMeasurementUnitRepositoryInterface
     public function getProductMeasurementBaseUnitTransfer(int $idProductMeasurementBaseUnit): ProductMeasurementBaseUnitTransfer;
 
     /**
-     * @param int[] $productMeasurementUnitIds
+     * @param array<int> $productMeasurementUnitIds
      *
-     * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductMeasurementUnitTransfer>
      */
     public function findProductMeasurementUnitTransfers(array $productMeasurementUnitIds): array;
 
     /**
      * @param int $idSalesOrder
      *
-     * @return \Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer[]
+     * @return array<\Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer>
      */
     public function querySalesOrderItemsByIdSalesOrder($idSalesOrder): array;
 
     /**
-     * @param int[] $salesOrderItemIds
+     * @param array<int> $salesOrderItemIds
      *
-     * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer>
      */
     public function getMappedProductMeasurementSalesUnits(array $salesOrderItemIds): array;
 
     /**
-     * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductMeasurementUnitTransfer>
      */
     public function findAllProductMeasurementUnitTransfers(): array;
 
     /**
-     * @param string[] $productConcreteSkus
+     * @param array<string> $productConcreteSkus
      * @param int $idStore
      *
-     * @return int[]
+     * @return array<int>
      */
     public function findIndexedStoreAwareDefaultProductMeasurementSalesUnitIds(array $productConcreteSkus, int $idStore): array;
 
     /**
      * @module Product
      *
-     * @param string[] $productConcreteSkus
+     * @param array<string> $productConcreteSkus
      * @param int $idStore
      *
-     * @return int[][]
+     * @return array<int[]>
      */
     public function findIndexedStoreAwareProductMeasurementSalesUnitIds(array $productConcreteSkus, int $idStore): array;
 
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductMeasurementUnitTransfer>
      */
     public function findFilteredProductMeasurementUnitTransfers(FilterTransfer $filterTransfer): array;
 
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer>
      */
     public function findFilteredProductMeasurementSalesUnitTransfers(FilterTransfer $filterTransfer): array;
 
     /**
-     * @param int[] $productConcreteIds
+     * @param array<int> $productConcreteIds
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getProductMeasurementSalesUnitCountByProductConcreteIds(array $productConcreteIds): array;
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getProductMeasurementBaseUnitCountByProductAbstractIds(array $productAbstractIds): array;
 }

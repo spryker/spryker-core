@@ -190,10 +190,10 @@ class ShipmentMapper implements ShipmentMapperInterface
     }
 
     /**
-     * @param iterable|\Orm\Zed\Sales\Persistence\SpySalesShipment[]|\Propel\Runtime\Collection\ObjectCollection $salesOrderShipments
-     * @param \Generated\Shared\Transfer\ShipmentTransfer[] $shipmentTransfers
+     * @param \Propel\Runtime\Collection\ObjectCollection|iterable<\Orm\Zed\Sales\Persistence\SpySalesShipment> $salesOrderShipments
+     * @param array<\Generated\Shared\Transfer\ShipmentTransfer> $shipmentTransfers
      *
-     * @return \Generated\Shared\Transfer\ShipmentTransfer[]
+     * @return array<\Generated\Shared\Transfer\ShipmentTransfer>
      */
     public function mapShipmentEntitiesToShipmentTransfers(iterable $salesOrderShipments, array $shipmentTransfers): array
     {

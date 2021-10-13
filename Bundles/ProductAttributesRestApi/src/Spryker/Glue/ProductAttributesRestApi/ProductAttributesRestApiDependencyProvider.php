@@ -16,6 +16,9 @@ use Spryker\Glue\ProductAttributesRestApi\Dependency\Client\ProductAttributesRes
  */
 class ProductAttributesRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_PRODUCT_ATTRIBUTE = 'CLIENT_PRODUCT_ATTRIBUTE';
 
     /**

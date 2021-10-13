@@ -15,6 +15,9 @@ use Spryker\Shared\SearchElasticsearch\SearchElasticsearchConstants;
  */
 class SearchElasticsearchConfig extends AbstractBundleConfig
 {
+    /**
+     * @var int
+     */
     public const FACET_NAME_AGGREGATION_SIZE = 10;
 
     /**
@@ -50,7 +53,7 @@ class SearchElasticsearchConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getSupportedSourceIdentifiers(): array
     {
@@ -65,5 +68,15 @@ class SearchElasticsearchConfig extends AbstractBundleConfig
     public function isDevelopmentMode(): bool
     {
         return APPLICATION_ENV === 'development' || APPLICATION_ENV === 'docker.dev';
+    }
+
+    /**
+     * @api
+     *
+     * @return string
+     */
+    public function getIndexPrefix(): string
+    {
+        return $this->getSharedConfig()->getIndexPrefix();
     }
 }

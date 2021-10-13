@@ -28,7 +28,7 @@ class ConsoleBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Symfony\Component\Console\Command\Command[]
+     * @return array<\Symfony\Component\Console\Command\Command>
      */
     public function getConsoleCommands()
     {
@@ -36,7 +36,7 @@ class ConsoleBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Symfony\Component\EventDispatcher\EventSubscriberInterface[]
+     * @return array<\Symfony\Component\EventDispatcher\EventSubscriberInterface>
      */
     public function getEventSubscriber()
     {
@@ -44,7 +44,7 @@ class ConsoleBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface[]
+     * @return array<\Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface>
      */
     public function getApplicationPlugins(): array
     {
@@ -54,7 +54,7 @@ class ConsoleBusinessFactory extends AbstractBusinessFactory
     /**
      * @deprecated Use {@link \Spryker\Zed\Console\Business\ConsoleBusinessFactory::getApplicationPlugins()} instead.
      *
-     * @return \Silex\ServiceProviderInterface[]
+     * @return array<\Silex\ServiceProviderInterface>
      */
     public function getServiceProviders()
     {
@@ -62,7 +62,7 @@ class ConsoleBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Console\Dependency\Plugin\ConsolePreRunHookPluginInterface[]
+     * @return array<\Spryker\Zed\Console\Dependency\Plugin\ConsolePreRunHookPluginInterface>
      */
     public function getPreRunHookPlugins()
     {
@@ -70,7 +70,7 @@ class ConsoleBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Console\Dependency\Plugin\ConsolePostRunHookPluginInterface[]
+     * @return array<\Spryker\Zed\Console\Dependency\Plugin\ConsolePostRunHookPluginInterface>
      */
     public function getPostRunHookPlugins()
     {

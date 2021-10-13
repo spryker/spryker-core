@@ -25,11 +25,14 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class MoneyCollectionType extends AbstractCollectionType
 {
+    /**
+     * @var string
+     */
     public const OPTION_AMOUNT_PER_STORE = 'amount_per_store';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param string[] $options
+     * @param array<string> $options
      *
      * @return void
      */
@@ -65,7 +68,7 @@ class MoneyCollectionType extends AbstractCollectionType
         $resolver->setRequired(static::OPTION_AMOUNT_PER_STORE);
 
         $resolver->setDefaults([
-           static::OPTION_AMOUNT_PER_STORE => true,
+            static::OPTION_AMOUNT_PER_STORE => true,
         ]);
 
         parent::configureOptions($resolver);
@@ -73,7 +76,7 @@ class MoneyCollectionType extends AbstractCollectionType
 
     /**
      * @param \Symfony\Component\Form\FormEvent $event
-     * @param string[] $options
+     * @param array<string> $options
      *
      * @return void
      */
@@ -89,7 +92,7 @@ class MoneyCollectionType extends AbstractCollectionType
             return;
         }
 
-        /** @var \ArrayObject|\Generated\Shared\Transfer\MoneyValueTransfer[] $data */
+        /** @var \ArrayObject<int, \Generated\Shared\Transfer\MoneyValueTransfer> $data */
         $data = $event->getData();
         $event->setData(
             $moneyCollectionInitialDataProvider->mergeMissingMoneyValues($data)
@@ -97,7 +100,11 @@ class MoneyCollectionType extends AbstractCollectionType
     }
 
     /**
-     * @inheritDoc
+     * @param \Symfony\Component\Form\FormView $view
+     * @param \Symfony\Component\Form\FormInterface $form
+     * @param array<string, mixed> $options
+     *
+     * @return void
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {

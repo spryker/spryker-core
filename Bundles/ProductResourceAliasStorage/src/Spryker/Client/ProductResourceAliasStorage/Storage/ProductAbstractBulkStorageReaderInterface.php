@@ -10,7 +10,7 @@ namespace Spryker\Client\ProductResourceAliasStorage\Storage;
 interface ProductAbstractBulkStorageReaderInterface
 {
     /**
-     * @param string[] $identifiers
+     * @param array<string> $identifiers
      * @param string $localeName
      *
      * @return array

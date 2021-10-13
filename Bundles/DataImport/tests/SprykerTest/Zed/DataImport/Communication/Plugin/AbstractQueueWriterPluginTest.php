@@ -26,6 +26,9 @@ use Spryker\Zed\DataImport\Communication\Plugin\AbstractQueueWriterPlugin;
  */
 class AbstractQueueWriterPluginTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const DUMMY_QUEUE_NAME = 'dummy_queue';
 
     /**
@@ -120,7 +123,7 @@ class AbstractQueueWriterPluginTest extends Unit
     /**
      * @param int $collectionSize
      *
-     * @return \Generated\Shared\Transfer\DataSetItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\DataSetItemTransfer>
      */
     protected function getDataSetItemTransferCollection(int $collectionSize): array
     {

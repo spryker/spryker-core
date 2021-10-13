@@ -13,6 +13,9 @@ use Spryker\Client\PriceProductVolume\Dependency\Client\PriceProductVolumeToProd
 
 class PriceProductReader implements PriceProductReaderInterface
 {
+    /**
+     * @var string
+     */
     protected const STORAGE_KEY_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
 
     /**
@@ -48,7 +51,7 @@ class PriceProductReader implements PriceProductReaderInterface
     /**
      * @param int $idProductConcrete
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function getPriceProductAbstractFromPriceProduct(int $idProductConcrete): array
     {

@@ -14,6 +14,9 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
  */
 class ListPageController extends AbstractController
 {
+    /**
+     * @var string
+     */
     public const URL_PARAM_ID_CMS_PAGE = 'id-cms-page';
 
     /**

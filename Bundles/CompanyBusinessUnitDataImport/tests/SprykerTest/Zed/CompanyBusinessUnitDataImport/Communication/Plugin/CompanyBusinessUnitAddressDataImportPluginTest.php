@@ -27,10 +27,22 @@ use Spryker\Zed\DataImport\Business\Exception\DataImportException;
  */
 class CompanyBusinessUnitAddressDataImportPluginTest extends AbstractCompanyBusinessUnitDataImportUnitTest
 {
+    /**
+     * @var string
+     */
     protected const COMPANY_ADDRESS_KEY = 'Address--1';
+    /**
+     * @var string
+     */
     protected const COMPANY_BUSINESS_UNIT_KEY = 'Test_HQ';
 
+    /**
+     * @var string
+     */
     protected const IMPORT_COMPANY_BUSINESS_UNIT_ADDRESS_CSV = 'import/company_business_unit_address.csv';
+    /**
+     * @var string
+     */
     protected const IMPORT_COMPANY_BUSINESS_UNIT_ADDRESS_WITH_INVALID_COMPANY_ADDRESS_CSV = 'import/company_business_unit_address_with_invalid_company_address.csv';
 
     /**

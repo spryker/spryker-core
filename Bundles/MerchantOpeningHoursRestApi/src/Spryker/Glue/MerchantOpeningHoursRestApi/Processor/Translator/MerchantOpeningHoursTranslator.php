@@ -25,49 +25,49 @@ class MerchantOpeningHoursTranslator implements MerchantOpeningHoursTranslatorIn
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantOpeningHoursStorageTransfer[] $merchantOpeningHoursStorageTransfers
+     * @param array<\Generated\Shared\Transfer\MerchantOpeningHoursStorageTransfer> $merchantOpeningHoursStorageTransfers
      * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\MerchantOpeningHoursStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\MerchantOpeningHoursStorageTransfer>
      */
     public function translateMerchantOpeningHoursTransfers(array $merchantOpeningHoursStorageTransfers, string $localeName): array
     {
-        $scheduleNotes = $this->getScheduleNotes($merchantOpeningHoursStorageTransfers);
+        $scheduleNoteGlossaryKeys = $this->getScheduleNoteGlossaryKeys($merchantOpeningHoursStorageTransfers);
 
-        $translatedNotes = $this->glossaryStorageClient->translateBulk($scheduleNotes, $localeName);
+        $translatedNotes = $this->glossaryStorageClient->translateBulk($scheduleNoteGlossaryKeys, $localeName);
 
         return $this->updateDateScheduleTransfers($merchantOpeningHoursStorageTransfers, $translatedNotes);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantOpeningHoursStorageTransfer[] $merchantOpeningHoursStorageTransfers
+     * @param array<\Generated\Shared\Transfer\MerchantOpeningHoursStorageTransfer> $merchantOpeningHoursStorageTransfers
      *
-     * @return string[]
+     * @return array<string>
      */
-    protected function getScheduleNotes(array $merchantOpeningHoursStorageTransfers): array
+    protected function getScheduleNoteGlossaryKeys(array $merchantOpeningHoursStorageTransfers): array
     {
-        $scheduleNotes = [];
+        $scheduleNoteGlossaryKeys = [];
         foreach ($merchantOpeningHoursStorageTransfers as $merchantOpeningHoursStorageTransfer) {
             foreach ($merchantOpeningHoursStorageTransfer->getDateSchedule() as $dateScheduleTransfer) {
-                $scheduleNotes[] = $dateScheduleTransfer->getNote();
+                $scheduleNoteGlossaryKeys[] = $dateScheduleTransfer->getNoteGlossaryKey();
             }
         }
 
-        return array_unique(array_filter($scheduleNotes));
+        return array_unique(array_filter($scheduleNoteGlossaryKeys));
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantOpeningHoursStorageTransfer[] $merchantOpeningHoursStorageTransfers
-     * @param string[] $translatedNotes
+     * @param array<\Generated\Shared\Transfer\MerchantOpeningHoursStorageTransfer> $merchantOpeningHoursStorageTransfers
+     * @param array<string> $translatedNotes
      *
-     * @return \Generated\Shared\Transfer\MerchantOpeningHoursStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\MerchantOpeningHoursStorageTransfer>
      */
     protected function updateDateScheduleTransfers(array $merchantOpeningHoursStorageTransfers, array $translatedNotes): array
     {
         foreach ($merchantOpeningHoursStorageTransfers as $merchantOpeningHoursStorageTransfer) {
             foreach ($merchantOpeningHoursStorageTransfer->getDateSchedule() as $dateScheduleTransfer) {
-                if (isset($translatedNotes[$dateScheduleTransfer->getNote()])) {
-                    $dateScheduleTransfer->setNote($translatedNotes[$dateScheduleTransfer->getNote()]);
+                if (isset($translatedNotes[$dateScheduleTransfer->getNoteGlossaryKey()])) {
+                    $dateScheduleTransfer->setNoteGlossaryKey($translatedNotes[$dateScheduleTransfer->getNoteGlossaryKey()]);
                 }
             }
         }

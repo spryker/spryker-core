@@ -20,18 +20,39 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class EditPageController extends AbstractController
 {
+    /**
+     * @var string
+     */
     public const URL_PARAM_ID_CMS_PAGE = 'id-cms-page';
+    /**
+     * @var string
+     */
     public const URL_PARAM_REDIRECT_URL = 'redirect-url';
+    /**
+     * @var string
+     */
     public const ERROR_MESSAGE_INVALID_DATA_PROVIDED = 'Invalid data provided.';
+    /**
+     * @var string
+     */
     public const MESSAGE_TEMPLATE_SELECT_ERROR = 'Selected template doesn\'t exist anymore.';
+    /**
+     * @var string
+     */
     public const MESSAGE_PAGE_UPDATE_SUCCESS = 'Page was updated successfully.';
+    /**
+     * @var string
+     */
     public const MESSAGE_PAGE_ACTIVATION_SUCCESS = 'Page was activated successfully.';
+    /**
+     * @var string
+     */
     public const MESSAGE_PAGE_DEACTIVATION_SUCCESS = 'Page was deactivated successfully.';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function indexAction(Request $request)
     {
@@ -163,7 +184,7 @@ class EditPageController extends AbstractController
 
             $this->addSuccessMessage(static::MESSAGE_PAGE_ACTIVATION_SUCCESS);
         } catch (CannotActivatePageException $exception) {
-             $this->addErrorMessage($exception->getMessage());
+            $this->addErrorMessage($exception->getMessage());
         }
 
         return $this->redirectResponse($redirectUrl);

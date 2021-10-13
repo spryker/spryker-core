@@ -14,6 +14,9 @@ use Spryker\Zed\Tax\Business\Model\AccruedTaxCalculatorInterface;
 
 class TaxAmountCalculator implements CalculatorInterface
 {
+    /**
+     * @var string
+     */
     public const ROUNDING_ERROR_BUCKET_IDENTIFIER = 'calculable_object';
 
     /**
@@ -54,7 +57,7 @@ class TaxAmountCalculator implements CalculatorInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $items
      * @param string $priceMode
      * @param bool $haveExpenses
      *
@@ -94,7 +97,7 @@ class TaxAmountCalculator implements CalculatorInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $items
      * @param string $priceMode
      *
      * @return void
@@ -127,7 +130,7 @@ class TaxAmountCalculator implements CalculatorInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ExpenseTransfer[] $expenses
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ExpenseTransfer> $expenses
      * @param string $priceMode
      *
      * @return void
@@ -166,7 +169,7 @@ class TaxAmountCalculator implements CalculatorInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $items
      * @param string $priceMode
      * @param bool $haveExpenses
      *
@@ -206,7 +209,7 @@ class TaxAmountCalculator implements CalculatorInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $items
      * @param string $priceMode
      *
      * @return void
@@ -239,7 +242,7 @@ class TaxAmountCalculator implements CalculatorInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ExpenseTransfer[] $expenses
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ExpenseTransfer> $expenses
      * @param string $priceMode
      *
      * @return void

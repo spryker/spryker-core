@@ -28,7 +28,7 @@ class ProductMeasurementUnitTranslationExpander implements ProductMeasurementUni
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[] $productMeasurementSalesUnitTransfers
+     * @param array<\Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer> $productMeasurementSalesUnitTransfers
      *
      * @return array
      */

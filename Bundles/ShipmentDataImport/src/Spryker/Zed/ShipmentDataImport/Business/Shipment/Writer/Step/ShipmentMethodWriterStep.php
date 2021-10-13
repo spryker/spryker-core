@@ -14,6 +14,9 @@ use Spryker\Zed\ShipmentDataImport\Business\Shipment\Writer\DataSet\ShipmentData
 
 class ShipmentMethodWriterStep implements DataImportStepInterface
 {
+    /**
+     * @var int
+     */
     public const BULK_SIZE = 100;
 
     /**
@@ -27,6 +30,7 @@ class ShipmentMethodWriterStep implements DataImportStepInterface
             ->filterByShipmentMethodKey($dataSet[ShipmentDataSetInterface::COL_SHIPMENT_METHOD_KEY])
             ->findOneOrCreate();
 
+        $shipmentMethod->fromArray($dataSet->getArrayCopy());
         $shipmentMethod
             ->setFkShipmentCarrier($dataSet[ShipmentDataSetInterface::COL_ID_CARRIER])
             ->setName($dataSet[ShipmentDataSetInterface::COL_NAME])

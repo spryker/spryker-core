@@ -8,12 +8,28 @@
 namespace Spryker\Zed\Availability\Persistence\Mapper;
 
 use Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer;
+use Generated\Shared\Transfer\ProductConcreteAvailabilityCollectionTransfer;
 use Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer;
 use Orm\Zed\Availability\Persistence\SpyAvailability;
+use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\DecimalObject\Decimal;
+use Spryker\Service\Availability\AvailabilityServiceInterface;
 
 class AvailabilityMapper implements AvailabilityMapperInterface
 {
+    /**
+     * @var \Spryker\Service\Availability\AvailabilityServiceInterface
+     */
+    protected $availabilityService;
+
+    /**
+     * @param \Spryker\Service\Availability\AvailabilityServiceInterface $availabilityService
+     */
+    public function __construct(AvailabilityServiceInterface $availabilityService)
+    {
+        $this->availabilityService = $availabilityService;
+    }
+
     /**
      * @param \Orm\Zed\Availability\Persistence\SpyAvailability $availabilityEntity
      * @param \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer $productConcreteAvailabilityTransfer
@@ -47,6 +63,28 @@ class AvailabilityMapper implements AvailabilityMapperInterface
     }
 
     /**
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Availability\Persistence\SpyAvailability> $availabilityEntities
+     * @param \Generated\Shared\Transfer\ProductConcreteAvailabilityCollectionTransfer $productConcreteAvailabilityCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityCollectionTransfer
+     */
+    public function mapAvailabilityEntitiesToProductConcreteAvailabilityCollectionTransfer(
+        ObjectCollection $availabilityEntities,
+        ProductConcreteAvailabilityCollectionTransfer $productConcreteAvailabilityCollectionTransfer
+    ): ProductConcreteAvailabilityCollectionTransfer {
+        foreach ($availabilityEntities as $availabilityEntity) {
+            $productConcreteAvailabilityCollectionTransfer->addProductConcreteAvailability(
+                $this->mapAvailabilityEntityToProductConcreteAvailabilityTransfer(
+                    $availabilityEntity,
+                    new ProductConcreteAvailabilityTransfer()
+                )
+            );
+        }
+
+        return $productConcreteAvailabilityCollectionTransfer;
+    }
+
+    /**
      * @param array $availabilityAbstractData
      *
      * @return array
@@ -60,7 +98,7 @@ class AvailabilityMapper implements AvailabilityMapperInterface
         }
 
         if (isset($availabilityAbstractData[ProductAbstractAvailabilityTransfer::IS_NEVER_OUT_OF_STOCK])) {
-            $availabilityAbstractData[ProductAbstractAvailabilityTransfer::IS_NEVER_OUT_OF_STOCK] = $this->isNeverOutOfStock($availabilityAbstractData[ProductAbstractAvailabilityTransfer::IS_NEVER_OUT_OF_STOCK]);
+            $availabilityAbstractData[ProductAbstractAvailabilityTransfer::IS_NEVER_OUT_OF_STOCK] = $this->availabilityService->isAbstractProductNeverOutOfStock($availabilityAbstractData[ProductAbstractAvailabilityTransfer::IS_NEVER_OUT_OF_STOCK]);
         }
 
         if (
@@ -97,15 +135,5 @@ class AvailabilityMapper implements AvailabilityMapperInterface
         }
 
         return $reservation;
-    }
-
-    /**
-     * @param string $neverOutOfStockSet
-     *
-     * @return bool
-     */
-    protected function isNeverOutOfStock(string $neverOutOfStockSet): bool
-    {
-        return stripos($neverOutOfStockSet, 'true') !== false;
     }
 }

@@ -39,7 +39,7 @@ interface ProductDiscountConnectorFacadeInterface
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      *
-     * @return \Generated\Shared\Transfer\DiscountableItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\DiscountableItemTransfer>
      */
     public function collectByProductAttribute(QuoteTransfer $quoteTransfer, ClauseTransfer $clauseTransfer);
 
@@ -49,7 +49,7 @@ interface ProductDiscountConnectorFacadeInterface
      *
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getAttributeTypes();
 }

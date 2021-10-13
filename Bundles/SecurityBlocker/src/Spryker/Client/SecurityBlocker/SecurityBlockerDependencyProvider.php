@@ -16,6 +16,9 @@ use Spryker\Client\SecurityBlocker\Dependency\Client\SecurityBlockerToRedisClien
  */
 class SecurityBlockerDependencyProvider extends AbstractDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_REDIS = 'CLIENT_REDIS';
 
     /**

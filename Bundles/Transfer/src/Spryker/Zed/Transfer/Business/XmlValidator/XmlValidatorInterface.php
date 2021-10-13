@@ -23,7 +23,7 @@ interface XmlValidatorInterface
     public function isValid(): bool;
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getErrors(): array;
 }

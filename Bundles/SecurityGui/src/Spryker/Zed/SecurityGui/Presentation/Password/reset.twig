@@ -2,6 +2,8 @@
 
 {% form_theme form '@SecurityGui/Layout/form.twig' %}
 
+{% block login_heading %}{% endblock %}
+
 {% block content %}
 
     {{ form_start(form) }}
@@ -12,8 +14,8 @@
         {{ form_row(form.password.first) }}
         {{ form_row(form.password.second) }}
 
-        <div class="form-group">
-            <button class="btn btn-success btn-block btn" type="submit">{{ 'Reset' | trans }}</button>
+        <div class="text-center">
+            <button class="btn btn-block" type="submit">{{ 'Reset' | trans }}</button>
         </div>
 
         {{ form_rest(form) }}

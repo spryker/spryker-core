@@ -17,19 +17,30 @@ use Spryker\Glue\Kernel\Container;
  */
 class CustomersRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
     /**
      * @deprecated Will be removed in the next major.
+     * @var string
      */
     public const CLIENT_SESSION = 'CLIENT_SESSION';
 
     /**
      * @deprecated Will be removed in the next major.
+     * @var string
      */
     public const PLUGINS_CUSTOMER_POST_REGISTER = 'PLUGINS_CUSTOMER_POST_REGISTER';
 
+    /**
+     * @var string
+     */
     public const PLUGINS_CUSTOMER_EXPANDER = 'PLUGINS_CUSTOMER_EXPANDER';
 
+    /**
+     * @var string
+     */
     public const PLUGINS_CUSTOMER_POST_CREATE = 'PLUGINS_CUSTOMER_POST_CREATE';
 
     /**
@@ -106,7 +117,7 @@ class CustomersRestApiDependencyProvider extends AbstractBundleDependencyProvide
     }
 
     /**
-     * @return \Spryker\Glue\CustomersRestApiExtension\Dependency\Plugin\CustomerExpanderPluginInterface[]
+     * @return array<\Spryker\Glue\CustomersRestApiExtension\Dependency\Plugin\CustomerExpanderPluginInterface>
      */
     protected function getCustomerExpanderPlugins(): array
     {
@@ -114,7 +125,7 @@ class CustomersRestApiDependencyProvider extends AbstractBundleDependencyProvide
     }
 
     /**
-     * @return \Spryker\Glue\CustomersRestApiExtension\Dependency\Plugin\CustomerPostCreatePluginInterface[]
+     * @return array<\Spryker\Glue\CustomersRestApiExtension\Dependency\Plugin\CustomerPostCreatePluginInterface>
      */
     protected function getCustomerPostCreatePlugins(): array
     {

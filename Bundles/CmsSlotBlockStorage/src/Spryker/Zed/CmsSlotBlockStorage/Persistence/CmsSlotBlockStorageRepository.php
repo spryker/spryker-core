@@ -25,9 +25,9 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 class CmsSlotBlockStorageRepository extends AbstractRepository implements CmsSlotBlockStorageRepositoryInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\CmsSlotBlockTransfer[] $cmsSlotBlockTransfers
+     * @param array<\Generated\Shared\Transfer\CmsSlotBlockTransfer> $cmsSlotBlockTransfers
      *
-     * @return \Generated\Shared\Transfer\CmsSlotBlockStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\CmsSlotBlockStorageTransfer>
      */
     public function getCmsSlotBlockStorageTransfersByCmsSlotBlocks(array $cmsSlotBlockTransfers): array
     {
@@ -71,7 +71,7 @@ class CmsSlotBlockStorageRepository extends AbstractRepository implements CmsSlo
 
     /**
      * @param \Orm\Zed\CmsSlotBlock\Persistence\Base\SpyCmsSlotBlockQuery $cmsSlotBlockQuery
-     * @param \Generated\Shared\Transfer\CmsSlotBlockTransfer[] $cmsSlotBlockTransfers
+     * @param array<\Generated\Shared\Transfer\CmsSlotBlockTransfer> $cmsSlotBlockTransfers
      *
      * @return \Orm\Zed\CmsSlotBlock\Persistence\Base\SpyCmsSlotBlockQuery
      */
@@ -116,9 +116,9 @@ class CmsSlotBlockStorageRepository extends AbstractRepository implements CmsSlo
 
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     * @param int[] $cmsSlotBlockStorageIds
+     * @param array<int> $cmsSlotBlockStorageIds
      *
-     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     * @return array<\Generated\Shared\Transfer\SynchronizationDataTransfer>
      */
     public function getSynchronizationDataTransfersByCmsSlotBlockStorageIds(
         FilterTransfer $filterTransfer,

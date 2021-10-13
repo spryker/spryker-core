@@ -38,7 +38,7 @@ class EventFacade extends AbstractFacade implements EventFacadeInterface
      * @api
      *
      * @param string $eventName
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $transfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $transfers
      *
      * @return void
      */
@@ -56,7 +56,7 @@ class EventFacade extends AbstractFacade implements EventFacadeInterface
      *
      * @param string $listenerName
      * @param string $eventName
-     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface[] $transfers
+     * @param array<\Spryker\Shared\Kernel\Transfer\TransferInterface> $transfers
      *
      * @return void
      */
@@ -72,9 +72,9 @@ class EventFacade extends AbstractFacade implements EventFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QueueReceiveMessageTransfer[] $queueMessageTransfers
+     * @param array<\Generated\Shared\Transfer\QueueReceiveMessageTransfer> $queueMessageTransfers
      *
-     * @return \Generated\Shared\Transfer\QueueReceiveMessageTransfer[]
+     * @return array<\Generated\Shared\Transfer\QueueReceiveMessageTransfer>
      */
     public function processEnqueuedMessages(array $queueMessageTransfers)
     {
@@ -88,9 +88,9 @@ class EventFacade extends AbstractFacade implements EventFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QueueReceiveMessageTransfer[] $queueMessageTransfers
+     * @param array<\Generated\Shared\Transfer\QueueReceiveMessageTransfer> $queueMessageTransfers
      *
-     * @return \Generated\Shared\Transfer\QueueReceiveMessageTransfer[]
+     * @return array<\Generated\Shared\Transfer\QueueReceiveMessageTransfer>
      */
     public function forwardMessages(array $queueMessageTransfers): array
     {

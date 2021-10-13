@@ -16,6 +16,9 @@ use Spryker\Glue\MerchantProductOffersRestApi\Dependency\Client\MerchantProductO
  */
 class MerchantProductOffersRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_MERCHANT_PRODUCT_OFFER_STORAGE = 'CLIENT_MERCHANT_PRODUCT_OFFER_STORAGE';
 
     /**

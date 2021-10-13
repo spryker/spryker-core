@@ -1,0 +1,8 @@
+{% extends '@ErrorHandler/Layout/layout.twig' %}
+
+{% block content %}
+    <div class="box">
+        <h1>{{ 'Error' | trans | upper }} 404</h1>
+        <p>{{ error }}</p>
+    </div>
+{% endblock %}

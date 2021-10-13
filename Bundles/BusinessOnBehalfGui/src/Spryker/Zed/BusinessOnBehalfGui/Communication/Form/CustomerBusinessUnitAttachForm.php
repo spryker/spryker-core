@@ -19,8 +19,14 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class CustomerBusinessUnitAttachForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const OPTION_COMPANY_BUSINESS_UNIT_CHOICES = 'company_business_unit_choices';
 
+    /**
+     * @var string
+     */
     public const FIELD_FK_COMPANY_BUSINESS_UNIT = 'fk_company_business_unit';
 
     /**

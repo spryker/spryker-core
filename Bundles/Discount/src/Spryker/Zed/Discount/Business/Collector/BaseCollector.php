@@ -16,7 +16,7 @@ class BaseCollector
     /**
      * @param int $unitPrice
      * @param int $quantity
-     * @param \ArrayObject|\Generated\Shared\Transfer\CalculatedDiscountTransfer[] $originalItemCalculatedDiscounts
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\CalculatedDiscountTransfer> $originalItemCalculatedDiscounts
      *
      * @return \Generated\Shared\Transfer\DiscountableItemTransfer
      */

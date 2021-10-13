@@ -9,6 +9,7 @@ namespace Spryker\Zed\SalesProductConnector\Business;
 
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\ProductPageLoadTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
@@ -92,9 +93,9 @@ class SalesProductConnectorFacade extends AbstractFacade implements SalesProduct
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     public function expandOrderItemsWithMetadata(array $itemTransfers): array
     {
@@ -108,9 +109,9 @@ class SalesProductConnectorFacade extends AbstractFacade implements SalesProduct
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\OrderTransfer[] $orderTransfers
+     * @param array<\Generated\Shared\Transfer\OrderTransfer> $orderTransfers
      *
-     * @return \Generated\Shared\Transfer\OrderTransfer[]
+     * @return array<\Generated\Shared\Transfer\OrderTransfer>
      */
     public function expandOrdersWithMetadata(array $orderTransfers): array
     {
@@ -124,14 +125,42 @@ class SalesProductConnectorFacade extends AbstractFacade implements SalesProduct
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     public function expandOrderItemsWithProductIds(array $itemTransfers): array
     {
         return $this->getFactory()
             ->createProductIdExpander()
             ->expandOrderItemsWithProduct($itemTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductPageLoadTransfer $productPageLoadTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductPageLoadTransfer
+     */
+    public function expandProductAbstractPageWithPopularity(ProductPageLoadTransfer $productPageLoadTransfer): ProductPageLoadTransfer
+    {
+        return $this->getFactory()
+            ->createPopularityProductPageExpander()
+            ->expandProductPageLoadTransferWithPopularityData($productPageLoadTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\ProductPageLoadTransfer
+     */
+    public function getProductPageLoadTransferForRefresh(): ProductPageLoadTransfer
+    {
+        return $this->getFactory()->createProductAbstractIdsRefreshReader()->getProductProductPageLoadTransferForRefresh();
     }
 }

@@ -25,10 +25,10 @@ class ConfigurableBundleTranslator implements ConfigurableBundleTranslatorInterf
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer[] $configurableBundleTemplateStorageTransfers
+     * @param array<\Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer> $configurableBundleTemplateStorageTransfers
      * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer>
      */
     public function translateConfigurableBundleTemplateStorageTransfers(
         array $configurableBundleTemplateStorageTransfers,
@@ -47,9 +47,9 @@ class ConfigurableBundleTranslator implements ConfigurableBundleTranslatorInterf
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer[] $configurableBundleTemplateStorageTransfers
+     * @param array<\Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer> $configurableBundleTemplateStorageTransfers
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getGlossaryStorageKeysFromConfigurableBundleTemplateStorageTransfers(
         array $configurableBundleTemplateStorageTransfers
@@ -71,10 +71,10 @@ class ConfigurableBundleTranslator implements ConfigurableBundleTranslatorInterf
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer[] $configurableBundleTemplateStorageTransfers
-     * @param string[] $translations
+     * @param array<\Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer> $configurableBundleTemplateStorageTransfers
+     * @param array<string> $translations
      *
-     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer>
      */
     protected function setTranslationsToConfigurableBundleTemplateStorageTransfers(
         array $configurableBundleTemplateStorageTransfers,

@@ -12,11 +12,26 @@ namespace Spryker\Shared\Config;
  */
 class Environment
 {
+    /**
+     * @var string
+     */
     public const DEFAULT_ENVIRONMENT = 'production';
 
+    /**
+     * @var string
+     */
     public const PRODUCTION = 'production';
+    /**
+     * @var string
+     */
     public const STAGING = 'staging';
+    /**
+     * @var string
+     */
     public const DEVELOPMENT = 'development';
+    /**
+     * @var string
+     */
     public const TESTING = 'devtest';
 
     /**

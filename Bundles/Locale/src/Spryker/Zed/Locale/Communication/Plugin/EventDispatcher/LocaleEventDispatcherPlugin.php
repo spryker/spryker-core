@@ -23,7 +23,13 @@ use Symfony\Component\HttpKernel\KernelEvents;
  */
 class LocaleEventDispatcherPlugin extends AbstractPlugin implements EventDispatcherPluginInterface
 {
+    /**
+     * @var string
+     */
     protected const SERVICE_LOCALE = 'locale';
+    /**
+     * @var int
+     */
     protected const EVENT_PRIORITY = 16;
 
     /**

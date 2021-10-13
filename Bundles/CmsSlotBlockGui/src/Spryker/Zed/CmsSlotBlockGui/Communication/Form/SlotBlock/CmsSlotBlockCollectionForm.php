@@ -20,8 +20,14 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class CmsSlotBlockCollectionForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const OPTION_TEMPLATE_CONDITIONS = 'template_conditions';
 
+    /**
+     * @var string
+     */
     protected const FIELD_CMS_SLOT_BLOCKS = 'cmsSlotBlocks';
 
     /**

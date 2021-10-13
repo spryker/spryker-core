@@ -69,7 +69,7 @@ class TouchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Touch\Business\Model\BulkTouch\BulkTouchInterface[]
+     * @return array<\Spryker\Zed\Touch\Business\Model\BulkTouch\BulkTouchInterface>
      */
     protected function createBulkTouchHandler()
     {

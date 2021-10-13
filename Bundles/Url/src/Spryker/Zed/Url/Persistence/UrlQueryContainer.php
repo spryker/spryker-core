@@ -16,7 +16,13 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class UrlQueryContainer extends AbstractQueryContainer implements UrlQueryContainerInterface
 {
+    /**
+     * @var string
+     */
     public const TO_URL = 'toUrl';
+    /**
+     * @var string
+     */
     public const STATUS = 'status';
 
     /**
@@ -173,7 +179,7 @@ class UrlQueryContainer extends AbstractQueryContainer implements UrlQueryContai
      *
      * @api
      *
-     * @deprecated Use {@link \Spryker\Zed\Category\Persistence\CategoryQueryContainer::queryResourceUrlByCategoryNodeAndLocaleId()} instead.
+     * @deprecated Will be removed with next major release.
      *
      * @param int $idCategoryNode
      * @param int $idLocale

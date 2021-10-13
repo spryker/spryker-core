@@ -37,7 +37,7 @@ class ProductSetOrganizer implements ProductSetOrganizerInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductSetTransfer[] $productSetTransfers
+     * @param array<\Generated\Shared\Transfer\ProductSetTransfer> $productSetTransfers
      *
      * @return void
      */
@@ -49,7 +49,7 @@ class ProductSetOrganizer implements ProductSetOrganizerInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductSetTransfer[] $productSetTransfers
+     * @param array<\Generated\Shared\Transfer\ProductSetTransfer> $productSetTransfers
      *
      * @return void
      */

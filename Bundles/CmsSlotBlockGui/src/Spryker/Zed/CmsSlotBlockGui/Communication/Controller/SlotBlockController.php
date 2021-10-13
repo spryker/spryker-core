@@ -19,7 +19,13 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class SlotBlockController extends AbstractController
 {
+    /**
+     * @var string
+     */
     protected const PARAM_ID_CMS_SLOT_TEMPLATE = 'id-cms-slot-template';
+    /**
+     * @var string
+     */
     protected const PARAM_ID_CMS_SLOT = 'id-cms-slot';
 
     /**

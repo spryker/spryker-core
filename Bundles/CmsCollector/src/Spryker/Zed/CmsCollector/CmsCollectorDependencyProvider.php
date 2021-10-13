@@ -18,12 +18,27 @@ use Spryker\Zed\Kernel\Container;
  */
 class CmsCollectorDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_COLLECTOR = 'FACADE_COLLECTOR';
+    /**
+     * @var string
+     */
     public const FACADE_SEARCH = 'FACADE_SEARCH';
+    /**
+     * @var string
+     */
     public const FACADE_CMS = 'FACADE_CMS';
 
+    /**
+     * @var string
+     */
     public const QUERY_CONTAINER_TOUCH = 'QUERY_CONTAINER_TOUCH';
 
+    /**
+     * @var string
+     */
     public const SERVICE_DATA_READER = 'SERVICE_DATA_READER';
 
     /**

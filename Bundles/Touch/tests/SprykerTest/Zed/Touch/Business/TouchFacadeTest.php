@@ -29,17 +29,47 @@ use Spryker\Zed\Touch\Business\TouchFacadeInterface;
  */
 class TouchFacadeTest extends Unit
 {
+    /**
+     * @var string
+     */
     public const ITEM_TYPE = 'test.item';
+    /**
+     * @var int
+     */
     public const ITEM_ID_1 = 1;
+    /**
+     * @var int
+     */
     public const ITEM_ID_2 = 2;
+    /**
+     * @var int
+     */
     public const ITEM_ID_3 = 3;
+    /**
+     * @var int
+     */
     public const ITEM_ID_FOR_INSERT = 4;
 
+    /**
+     * @var string
+     */
     public const ITEM_EVENT_ACTIVE = 'active';
+    /**
+     * @var string
+     */
     public const ITEM_EVENT_INACTIVE = 'inactive';
+    /**
+     * @var string
+     */
     public const ITEM_EVENT_DELETED = 'deleted';
 
+    /**
+     * @var int
+     */
     protected const UNIQUE_INDEX_ITEM_ID = 1;
+    /**
+     * @var string
+     */
     protected const UNIQUE_INDEX_ITEM_TYPE = 'index.test.item';
 
     /**

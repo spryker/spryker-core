@@ -33,6 +33,6 @@ class CartBundleAvailabilityPreCheckPlugin extends AbstractPlugin implements Car
      */
     public function check(CartChangeTransfer $cartChangeTransfer)
     {
-         return $this->getFacade()->preCheckCartAvailability($cartChangeTransfer);
+        return $this->getFacade()->preCheckCartAvailability($cartChangeTransfer);
     }
 }

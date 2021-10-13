@@ -12,7 +12,7 @@ use Spryker\Shared\Kernel\Transfer\TransferInterface;
 class ConfigurableBundleToEventFacadeBridge implements ConfigurableBundleToEventFacadeInterface
 {
     /**
-     * @var \Spryker\Zed\Event\Business\EventFacadeInterface $eventFacade
+     * @var \Spryker\Zed\Event\Business\EventFacadeInterface
      */
     protected $eventFacade;
 

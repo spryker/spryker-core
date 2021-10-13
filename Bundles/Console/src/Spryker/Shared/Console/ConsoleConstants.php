@@ -18,6 +18,7 @@ interface ConsoleConstants
      * - If false, the console commands will return the exception code.
      *
      * @api
+     * @var string
      */
     public const CATCH_EXCEPTIONS = 'CONSOLE:CATCH_EXCEPTIONS';
 
@@ -27,6 +28,7 @@ interface ConsoleConstants
      * - If false, the console application will run in normal mode.
      *
      * @api
+     * @var string
      */
     public const IS_DEBUG_ENABLED = 'CONSOLE:IS_DEBUG_ENABLED';
 }

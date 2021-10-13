@@ -22,6 +22,9 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class SslServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
+    /**
+     * @var string
+     */
     public const BC_FEATURE_FLAG_SSL_SERVICE_PROVIDER = 'BC_FEATURE_FLAG_SSL_SERVICE_PROVIDER';
 
     /**

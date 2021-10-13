@@ -36,10 +36,25 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
  */
 class ProductPageSearchQueryContainer extends AbstractQueryContainer implements ProductPageSearchQueryContainerInterface
 {
+    /**
+     * @var string
+     */
     public const FK_PRODUCT_ABSTRACT = 'fkProductAbstract';
+    /**
+     * @var string
+     */
     public const FK_CATEGORY = 'fkCategory';
+    /**
+     * @var string
+     */
     public const VIRT_COLUMN_ID_CATEGORY_NODE = 'id_category_node';
+    /**
+     * @var string
+     */
     protected const COLUMN_ID_IMAGE_SET = 'id_image_set';
+    /**
+     * @var int
+     */
     protected const PRODUCT_IMAGE_SET_LIMIT = 1;
 
     /**
@@ -47,7 +62,7 @@ class ProductPageSearchQueryContainer extends AbstractQueryContainer implements 
      *
      * @api
      *
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributesQuery
      */
@@ -98,7 +113,7 @@ class ProductPageSearchQueryContainer extends AbstractQueryContainer implements 
      *
      * @module Product
      *
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributesQuery
@@ -147,8 +162,8 @@ class ProductPageSearchQueryContainer extends AbstractQueryContainer implements 
      * @module Product
      * @module Locale
      *
-     * @param int[] $abstractProductIds
-     * @param string[] $localeIsoCodes
+     * @param array<int> $abstractProductIds
+     * @param array<string> $localeIsoCodes
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductQuery
      */
@@ -173,8 +188,8 @@ class ProductPageSearchQueryContainer extends AbstractQueryContainer implements 
      *
      * @module ProductSearch
      *
-     * @param int[] $productConcreteIds
-     * @param string[] $localeIsoCodes
+     * @param array<int> $productConcreteIds
+     * @param array<string> $localeIsoCodes
      *
      * @return \Orm\Zed\ProductSearch\Persistence\SpyProductSearchQuery
      */
@@ -194,7 +209,7 @@ class ProductPageSearchQueryContainer extends AbstractQueryContainer implements 
      *
      * @api
      *
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributesQuery
      */
@@ -211,7 +226,7 @@ class ProductPageSearchQueryContainer extends AbstractQueryContainer implements 
      *
      * @api
      *
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return \Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearchQuery
      */
@@ -379,7 +394,7 @@ class ProductPageSearchQueryContainer extends AbstractQueryContainer implements 
      *
      * @api
      *
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery
      */
@@ -403,7 +418,7 @@ class ProductPageSearchQueryContainer extends AbstractQueryContainer implements 
      *
      * @api
      *
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return \Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery
      */
@@ -521,7 +536,7 @@ class ProductPageSearchQueryContainer extends AbstractQueryContainer implements 
      *
      * @api
      *
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return \Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery
      */

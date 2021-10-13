@@ -43,7 +43,7 @@ class OmsProductOfferReservationFacade extends AbstractFacade implements OmsProd
      *
      * @param \Generated\Shared\Transfer\ReservationRequestTransfer $reservationRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer[]
+     * @return array<\Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer>
      */
     public function getAggregatedReservations(ReservationRequestTransfer $reservationRequestTransfer): array
     {

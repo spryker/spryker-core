@@ -33,7 +33,7 @@ class ProductApiToApiBridge implements ProductApiToApiInterface
     }
 
     /**
-     * @param array|\Spryker\Shared\Kernel\Transfer\AbstractTransfer $data
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|array $data
      * @param int|null $id
      *
      * @return \Generated\Shared\Transfer\ApiItemTransfer

@@ -10,7 +10,7 @@ namespace Spryker\Zed\ProductLabelDiscountConnector\Dependency\Facade;
 interface ProductLabelDiscountConnectorToProductLabelInterface
 {
     /**
-     * @return \Generated\Shared\Transfer\ProductLabelTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductLabelTransfer>
      */
     public function findAllLabels();
 }

@@ -35,7 +35,7 @@ class StoreRelationToggleDataProvider implements StoreRelationToggleDataProvider
     }
 
     /**
-     * @return int[]
+     * @return array<int>
      */
     protected function getAllIdStores()
     {

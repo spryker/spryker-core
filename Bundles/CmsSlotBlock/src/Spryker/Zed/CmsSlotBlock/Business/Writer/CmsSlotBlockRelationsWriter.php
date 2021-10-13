@@ -73,7 +73,7 @@ class CmsSlotBlockRelationsWriter implements CmsSlotBlockRelationsWriterInterfac
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CmsSlotBlockTransfer[] $cmsSlotBlockTransfers
+     * @param array<\Generated\Shared\Transfer\CmsSlotBlockTransfer> $cmsSlotBlockTransfers
      *
      * @throws \Spryker\Zed\CmsSlotBlock\Business\Exception\InvalidCmsSlotBlockException
      *
@@ -118,7 +118,7 @@ class CmsSlotBlockRelationsWriter implements CmsSlotBlockRelationsWriterInterfac
     /**
      * @param \Generated\Shared\Transfer\CmsSlotBlockCollectionTransfer $cmsSlotBlockCollectionTransfer
      *
-     * @return \Generated\Shared\Transfer\EventEntityTransfer[]
+     * @return array<\Generated\Shared\Transfer\EventEntityTransfer>
      */
     protected function mapCmsSlotBlockCollectionTransferToEventTransfers(
         CmsSlotBlockCollectionTransfer $cmsSlotBlockCollectionTransfer

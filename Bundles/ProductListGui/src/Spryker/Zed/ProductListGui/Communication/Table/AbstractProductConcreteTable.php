@@ -18,12 +18,21 @@ use Spryker\Zed\ProductListGui\Dependency\Facade\ProductListGuiToLocaleFacadeInt
 
 abstract class AbstractProductConcreteTable extends AbstractTable
 {
+    /**
+     * @var string
+     */
     protected const DEFAULT_URL = 'table';
+    /**
+     * @var string
+     */
     protected const TABLE_IDENTIFIER = 'table';
 
     protected const COLUMN_ID = SpyProductTableMap::COL_ID_PRODUCT;
     protected const COLUMN_SKU = SpyProductTableMap::COL_SKU;
     protected const COLUMN_NAME = SpyProductLocalizedAttributesTableMap::COL_NAME;
+    /**
+     * @var string
+     */
     protected const COLUMN_ACTION = 'action';
 
     /**
@@ -121,9 +130,9 @@ abstract class AbstractProductConcreteTable extends AbstractTable
     }
 
     /**
-     * @param string[] $product
+     * @param array<string> $product
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function buildDataRow(array $product): array
     {

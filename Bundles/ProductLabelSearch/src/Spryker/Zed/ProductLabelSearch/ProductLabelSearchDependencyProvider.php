@@ -24,10 +24,25 @@ use Spryker\Zed\ProductLabelSearch\Dependency\Service\ProductLabelSearchToUtilSa
  */
 class ProductLabelSearchDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
+    /**
+     * @var string
+     */
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
+    /**
+     * @var string
+     */
     public const FACADE_PRODUCT_LABEL = 'FACADE_PRODUCT_LABEL';
+    /**
+     * @var string
+     */
     public const FACADE_PRODUCT_PAGE_SEARCH = 'FACADE_PRODUCT_PAGE_SEARCH';
+    /**
+     * @var string
+     */
     public const PROPEL_QUERY_PRODUCT_LABEL = 'PROPEL_QUERY_PRODUCT_LABEL';
 
     /**

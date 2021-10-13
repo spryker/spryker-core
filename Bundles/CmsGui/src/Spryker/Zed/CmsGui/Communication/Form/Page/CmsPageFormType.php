@@ -29,17 +29,50 @@ class CmsPageFormType extends AbstractType
 {
     use ArrayObjectTransformerTrait;
 
+    /**
+     * @var string
+     */
     public const FIELD_SEARCHABLE = 'isSearchable';
+    /**
+     * @var string
+     */
     public const FIELD_PAGE_ATTRIBUTES = 'pageAttributes';
+    /**
+     * @var string
+     */
     public const FIELD_PAGE_META_ATTRIBUTES = 'metaAttributes';
+    /**
+     * @var string
+     */
     public const FIELD_FK_TEMPLATE = 'fkTemplate';
+    /**
+     * @var string
+     */
     public const FIELD_FK_PAGE = 'fkPage';
+    /**
+     * @var string
+     */
     public const FIELD_VALID_FROM = 'validFrom';
+    /**
+     * @var string
+     */
     public const FIELD_VALID_TO = 'validTo';
 
+    /**
+     * @var string
+     */
     public const OPTION_TEMPLATE_CHOICES = 'template_choices';
+    /**
+     * @var string
+     */
     public const OPTION_DATA_CLASS_ATTRIBUTES = 'data_class_attributes';
+    /**
+     * @var string
+     */
     public const OPTION_DATA_CLASS_META_ATTRIBUTES = 'data_class_meta_attributes';
+    /**
+     * @var string
+     */
     public const FIELD_STORE_RELATION = 'storeRelation';
 
     /**
@@ -264,21 +297,21 @@ class CmsPageFormType extends AbstractType
     protected function createValidToFieldRangeConstraint()
     {
         return new Callback([
-           'callback' => function ($dateTimeTo, ExecutionContextInterface $context) {
+            'callback' => function ($dateTimeTo, ExecutionContextInterface $context) {
                 $cmsPageTransfer = $context->getRoot()->getData();
 
-            if (!$dateTimeTo) {
-                if ($cmsPageTransfer->getValidFrom()) {
-                    $context->addViolation('This field should be selected if "Valid from" is filled.');
+                if (!$dateTimeTo) {
+                    if ($cmsPageTransfer->getValidFrom()) {
+                        $context->addViolation('This field should be selected if "Valid from" is filled.');
+                    }
+
+                    return;
                 }
 
-                return;
-            }
-
-            if ($dateTimeTo < $cmsPageTransfer->getValidFrom()) {
-                $context->addViolation('Date "Valid to" cannot be earlier than "Valid from".');
-            }
-           },
+                if ($dateTimeTo < $cmsPageTransfer->getValidFrom()) {
+                    $context->addViolation('Date "Valid to" cannot be earlier than "Valid from".');
+                }
+            },
         ]);
     }
 

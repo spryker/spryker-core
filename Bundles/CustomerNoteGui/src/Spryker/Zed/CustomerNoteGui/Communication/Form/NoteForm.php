@@ -21,7 +21,13 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class NoteForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     protected const FORM_NAME = 'note';
+    /**
+     * @var string
+     */
     protected const VALIDATION_MESSAGE = 'Please add your message to post a comment';
 
     /**

@@ -52,9 +52,9 @@ interface ProductConcreteManagerInterface
     public function findProductConcreteIdBySku($sku);
 
     /**
-     * @param string[] $skus
+     * @param array<string> $skus
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
      */
     public function findProductConcretesBySkus(array $skus): array;
 
@@ -81,7 +81,7 @@ interface ProductConcreteManagerInterface
     /**
      * @param int $idProductAbstract
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
      */
     public function getConcreteProductsByAbstractProductId($idProductAbstract);
 
@@ -104,14 +104,14 @@ interface ProductConcreteManagerInterface
     /**
      * @param int $idProductAbstract
      *
-     * @return int[]
+     * @return array<int>
      */
     public function findProductConcreteIdsByAbstractProductId(int $idProductAbstract): array;
 
     /**
-     * @param int[] $productConcreteIds
+     * @param array<int> $productConcreteIds
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getProductAbstractIdsByProductConcreteIds(array $productConcreteIds): array;
 
@@ -133,23 +133,37 @@ interface ProductConcreteManagerInterface
     public function findProductEntityByAbstractAndConcrete(ProductAbstractTransfer $productAbstractTransfer, ProductConcreteTransfer $productConcreteTransfer);
 
     /**
-     * @param string[] $skus
+     * @param array<string> $skus
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getProductConcreteIdsByConcreteSkus(array $skus): array;
 
     /**
-     * @param int[] $productIds
+     * @param array<int> $productIds
      *
      * @return array
      */
     public function getProductConcreteSkusByConcreteIds(array $productIds): array;
 
     /**
-     * @param string[] $productConcreteSkus
+     * @param array<string> $productConcreteSkus
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
      */
     public function getProductConcretesByConcreteSkus(array $productConcreteSkus): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    public function notifyBeforeCreateObservers(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    public function notifyAfterCreateObservers(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer;
 }

@@ -16,6 +16,9 @@ use Spryker\Shared\ProductOfferAvailabilityStorage\ProductOfferAvailabilityStora
 
 class ProductOfferAvailabilityStorageReader implements ProductOfferAvailabilityStorageReaderInterface
 {
+    /**
+     * @var string
+     */
     protected const KEY_PRODUCT_OFFER_REFERENCE = 'product_offer_reference';
 
     /**
@@ -71,10 +74,10 @@ class ProductOfferAvailabilityStorageReader implements ProductOfferAvailabilityS
     }
 
     /**
-     * @param string[] $productOfferReferences
+     * @param array<string> $productOfferReferences
      * @param string $storeName
      *
-     * @return \Generated\Shared\Transfer\ProductOfferAvailabilityStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductOfferAvailabilityStorageTransfer>
      */
     public function getByProductOfferReferences(array $productOfferReferences, string $storeName): array
     {
@@ -123,10 +126,10 @@ class ProductOfferAvailabilityStorageReader implements ProductOfferAvailabilityS
     }
 
     /**
-     * @param string[] $productOfferReferences
+     * @param array<string> $productOfferReferences
      * @param string $storeName
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function generateKeys(array $productOfferReferences, string $storeName): array
     {

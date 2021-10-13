@@ -15,6 +15,9 @@ use Spryker\Client\SearchElasticsearch\Plugin\ResultFormatter\AbstractElasticsea
 
 class ReturnReasonSearchResultFormatterPlugin extends AbstractElasticsearchResultFormatterPlugin
 {
+    /**
+     * @var string
+     */
     public const NAME = 'ReturnReasonCollection';
 
     /**
@@ -43,11 +46,7 @@ class ReturnReasonSearchResultFormatterPlugin extends AbstractElasticsearchResul
             );
         }
 
-        $returnReasonSearchCollection->setNbResults(
-            $searchResult->getResponse()->getData()['hits']['total'] ?? 0
-        );
-
-        return $returnReasonSearchCollection;
+        return $returnReasonSearchCollection->setNbResults($searchResult->getTotalHits());
     }
 
     /**

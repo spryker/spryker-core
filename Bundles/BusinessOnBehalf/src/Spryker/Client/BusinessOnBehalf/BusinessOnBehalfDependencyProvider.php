@@ -13,7 +13,13 @@ use Spryker\Client\Kernel\Container;
 
 class BusinessOnBehalfDependencyProvider extends AbstractDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
+    /**
+     * @var string
+     */
     public const PLUGINS_COMPANY_USER_CHANGE_ALLOWED_CHECK = 'PLUGINS_COMPANY_USER_CHANGE_ALLOWED_CHECK';
 
     /**
@@ -58,7 +64,7 @@ class BusinessOnBehalfDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @return \Spryker\Client\BusinessOnBehalfExtension\Dependency\Plugin\CompanyUserChangeAllowedCheckPluginInterface[]
+     * @return array<\Spryker\Client\BusinessOnBehalfExtension\Dependency\Plugin\CompanyUserChangeAllowedCheckPluginInterface>
      */
     protected function getCompanyUserChangeAllowedCheckPlugins(): array
     {

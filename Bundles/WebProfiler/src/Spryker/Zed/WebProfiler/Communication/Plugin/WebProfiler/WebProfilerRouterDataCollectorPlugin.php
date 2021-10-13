@@ -14,7 +14,13 @@ use Symfony\Component\HttpKernel\DataCollector\RouterDataCollector;
 
 class WebProfilerRouterDataCollectorPlugin implements WebProfilerDataCollectorPluginInterface
 {
+    /**
+     * @var string
+     */
     protected const NAME = 'router';
+    /**
+     * @var string
+     */
     protected const TEMPLATE = '@WebProfiler/Collector/router.html.twig';
 
     /**

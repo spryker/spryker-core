@@ -29,7 +29,7 @@ class CacheStub implements CacheInterface
     /**
      * @param string $key
      *
-     * @return bool|string
+     * @return string|bool
      */
     public function get($key)
     {

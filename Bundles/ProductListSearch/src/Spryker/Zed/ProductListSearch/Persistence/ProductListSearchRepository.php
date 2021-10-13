@@ -17,9 +17,21 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
  */
 class ProductListSearchRepository extends AbstractRepository implements ProductListSearchRepositoryInterface
 {
+    /**
+     * @var string
+     */
     public const COL_CONCRETE_PRODUCT_COUNT = 'concrete_product_count';
+    /**
+     * @var string
+     */
     public const COL_ID_PRODUCT_ABSTRACT = 'col_id_product_abstract';
+    /**
+     * @var string
+     */
     public const COL_TYPE = 'col_type';
+    /**
+     * @var string
+     */
     public const COL_ID_PRODUCT_LIST = 'col_id_product_list';
 
     /**
@@ -54,9 +66,9 @@ class ProductListSearchRepository extends AbstractRepository implements ProductL
     /**
      * @uses SpyProductQuery
      *
-     * @param int[] $concreteIds
+     * @param array<int> $concreteIds
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getProductAbstractIdsByConcreteIds(array $concreteIds): array
     {
@@ -76,7 +88,7 @@ class ProductListSearchRepository extends AbstractRepository implements ProductL
      *
      * @param array $categoryIds
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getProductAbstractIdsByCategoryIds(array $categoryIds): array
     {

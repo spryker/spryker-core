@@ -22,6 +22,9 @@ class QuoteItemOperation implements QuoteItemOperationInterface
 {
     use PermissionAwareTrait;
 
+    /**
+     * @var string
+     */
     public const GLOSSARY_KEY_PERMISSION_FAILED = 'global.permission.failed';
 
     /**
@@ -71,7 +74,7 @@ class QuoteItemOperation implements QuoteItemOperationInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransferList
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransferList
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
@@ -96,7 +99,7 @@ class QuoteItemOperation implements QuoteItemOperationInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransferList
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransferList
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
@@ -117,7 +120,7 @@ class QuoteItemOperation implements QuoteItemOperationInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransferList
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransferList
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
@@ -203,7 +206,7 @@ class QuoteItemOperation implements QuoteItemOperationInterface
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransferList
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransferList
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */

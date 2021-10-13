@@ -47,7 +47,7 @@ class CmsBlockStorageStorageParameterMapExpanderPlugin extends AbstractPlugin im
     /**
      * @param array $collectedData
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function gePlaceholders(array $collectedData)
     {

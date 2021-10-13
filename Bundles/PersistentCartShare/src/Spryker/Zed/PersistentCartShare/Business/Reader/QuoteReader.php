@@ -19,7 +19,13 @@ use Spryker\Zed\PersistentCartShare\Dependency\Facade\PersistentCartShareToResou
 
 class QuoteReader implements QuoteReaderInterface
 {
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_QUOTE_IS_NOT_AVAILABLE = 'persistent_cart_share.error.quote_is_not_available';
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_RESOURCE_IS_NOT_AVAILABLE = 'persistent_cart_share.error.resource_is_not_available';
 
     /**
@@ -84,9 +90,9 @@ class QuoteReader implements QuoteReaderInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\MessageTransfer[] $resourceShareResponseMessages
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\MessageTransfer> $resourceShareResponseMessages
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\QuoteErrorTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\QuoteErrorTransfer>
      */
     protected function mapResourceShareResponseMessagesToQuoteResponseTransferErrors(ArrayObject $resourceShareResponseMessages): ArrayObject
     {

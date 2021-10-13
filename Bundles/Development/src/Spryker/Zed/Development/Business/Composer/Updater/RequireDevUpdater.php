@@ -11,7 +11,13 @@ use Symfony\Component\Finder\SplFileInfo;
 
 class RequireDevUpdater implements UpdaterInterface
 {
+    /**
+     * @var string
+     */
     public const KEY_REQUIRE_DEV = 'require-dev';
+    /**
+     * @var string
+     */
     public const PACKAGE_CODE_SNIFFER = 'spryker/code-sniffer';
 
     /**

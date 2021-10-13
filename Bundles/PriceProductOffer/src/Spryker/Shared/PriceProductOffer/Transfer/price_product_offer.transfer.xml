@@ -1,29 +1,30 @@
 <?xml version="1.0"?>
-<transfers xmlns="spryker:transfer-01"
-           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-           xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+<transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="PriceProductOffer">
-        <property name="idPriceProductOffer"  type="int"/>
-        <property name="fkProductOffer"  type="int"/>
+        <property name="idPriceProductOffer" type="int"/>
+        <property name="fkProductOffer" type="int"/>
         <property name="fkPriceProductStore" type="int"/>
         <property name="productOffer" type="ProductOffer"/>
     </transfer>
 
     <transfer name="PriceProductOfferCriteria">
         <property name="idProductOffer" type="int"/>
+        <property name="withExtractedPrices" type="bool"/>
         <property name="priceProductOfferIds" type="int[]" singular="idPriceProductOffer"/>
-        <property name="productOfferCriteriaFilter" type="ProductOfferCriteriaFilter"/>
+        <property name="productOfferCriteria" type="ProductOfferCriteria"/>
         <property name="currencyIds" type="int[]" singular="idCurrency"/>
         <property name="storeIds" type="int[]" singular="idStore"/>
         <property name="priceTypeIds" type="int[]" singular="idPriceType"/>
+        <property name="priceProductStoreIds" type="int[]" singular="idPriceProductStore"/>
     </transfer>
 
-    <transfer name="ProductOfferCriteriaFilter">
-        <property name="merchantIds" type="int[]" singular="idMerchant"/>
+    <transfer name="ProductOfferCriteria">
+        <property name="productOfferReference" type="string"/>
+        <property name="productOfferReferences" type="string[]" singular="productOfferReference"/>
     </transfer>
 
-   <transfer name="PriceProductStoreCriteria">
+    <transfer name="PriceProductStoreCriteria">
         <property name="currencyIds" type="int[]" singular="idCurrency"/>
         <property name="storeIds" type="int[]" singular="idStore"/>
     </transfer>
@@ -102,6 +103,7 @@
     </transfer>
 
     <transfer name="Store">
+        <property name="idStore" type="int"/>
         <property name="name" type="string"/>
         <property name="availableCurrencyIsoCodes" type="array" singular="availableCurrencyIsoCode"/>
     </transfer>
@@ -123,6 +125,15 @@
     </transfer>
 
     <transfer name="PriceProductFilterIdentifier">
+        <property name="productOfferReference" type="string"/>
+    </transfer>
+
+    <transfer name="WishlistItem">
+        <property name="productOfferReference" type="string"/>
+        <property name="prices" type="PriceProduct[]" singular="price"/>
+    </transfer>
+
+    <transfer name="PriceProductFilter">
         <property name="productOfferReference" type="string"/>
     </transfer>
 </transfers>

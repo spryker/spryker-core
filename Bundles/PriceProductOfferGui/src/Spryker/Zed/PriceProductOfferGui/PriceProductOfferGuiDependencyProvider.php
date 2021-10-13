@@ -18,8 +18,17 @@ use Spryker\Zed\PriceProductOfferGui\Dependency\Service\PriceProductOfferGuiToUt
  */
 class PriceProductOfferGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
+    /**
+     * @var string
+     */
     public const FACADE_PRICE_PRODUCT = 'FACADE_PRICE_PRODUCT';
+    /**
+     * @var string
+     */
     public const FACADE_PRICE = 'FACADE_PRICE';
 
     /**

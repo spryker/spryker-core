@@ -20,8 +20,17 @@ class QuoteDeleter implements QuoteDeleterInterface
 {
     use PermissionAwareTrait;
 
+    /**
+     * @var string
+     */
     public const GLOSSARY_KEY_PERMISSION_FAILED = 'global.permission.failed';
+    /**
+     * @var string
+     */
     public const GLOSSARY_KEY_CAN_NOT_REMOVE_LAST_CART = 'persistent_cart.quote.remove.can_not_remove_last_cart';
+    /**
+     * @var string
+     */
     public const GLOSSARY_KEY_REMOVE_SUCCESS = 'persistent_cart.quote.remove.success';
 
     /**

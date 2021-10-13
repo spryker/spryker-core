@@ -26,6 +26,11 @@ use SprykerTest\Zed\ZedNavigation\Business\ZedNavigationBusinessTester;
 class ZedNavigationCollectorCacheDecoratorTest extends ZedNavigationBusinessTester
 {
     /**
+     * @var string
+     */
+    protected const NAVIGATION_TYPE_MAIN = 'main';
+
+    /**
      * @return void
      */
     public function testIfCacheIsNotEnabledGetNavigationMustReturnNavigationFromCollector(): void
@@ -55,7 +60,7 @@ class ZedNavigationCollectorCacheDecoratorTest extends ZedNavigationBusinessTest
             ->will($this->returnValue(false));
 
         //act
-        $navigation = $navigationCollectorCacheDecorator->getNavigation();
+        $navigation = $navigationCollectorCacheDecorator->getNavigation(static::NAVIGATION_TYPE_MAIN);
 
         //assert
         $this->assertSame(
@@ -90,7 +95,7 @@ class ZedNavigationCollectorCacheDecoratorTest extends ZedNavigationBusinessTest
             ->will($this->returnValue(true));
 
         //act
-        $navigation = $navigationCollectorCacheDecorator->getNavigation();
+        $navigation = $navigationCollectorCacheDecorator->getNavigation(static::NAVIGATION_TYPE_MAIN);
 
         //assert
         $this->assertSame(
@@ -130,7 +135,7 @@ class ZedNavigationCollectorCacheDecoratorTest extends ZedNavigationBusinessTest
             ->willReturn($expectedNavigation);
 
         //act
-        $navigation = $navigationCollectorCacheDecorator->getNavigation();
+        $navigation = $navigationCollectorCacheDecorator->getNavigation(static::NAVIGATION_TYPE_MAIN);
 
         //assert
         $this->assertSame(

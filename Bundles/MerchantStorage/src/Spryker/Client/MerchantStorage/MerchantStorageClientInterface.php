@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\MerchantStorage;
 
+use Generated\Shared\Transfer\MerchantStorageCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantStorageTransfer;
 
 interface MerchantStorageClientInterface
@@ -25,49 +26,25 @@ interface MerchantStorageClientInterface
 
     /**
      * Specification:
-     * - Finds merchant storage data by idMerchant.
+     * - Finds one merchant storage by a merchant storage criteria.
      *
      * @api
      *
-     * @param int $idMerchant
+     * @param \Generated\Shared\Transfer\MerchantStorageCriteriaTransfer $merchantStorageCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantStorageTransfer|null
      */
-    public function findOne(int $idMerchant): ?MerchantStorageTransfer;
+    public function findOne(MerchantStorageCriteriaTransfer $merchantStorageCriteriaTransfer): ?MerchantStorageTransfer;
 
     /**
      * Specification:
-     * - Finds merchant storage data by merchantIds.
+     * - Finds merchant storage data by a merchant storage criteria.
      *
      * @api
      *
-     * @param int[] $merchantIds
+     * @param \Generated\Shared\Transfer\MerchantStorageCriteriaTransfer $merchantStorageCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\MerchantStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\MerchantStorageTransfer>
      */
-    public function get(array $merchantIds): array;
-
-    /**
-     * Specification:
-     * - Finds merchant data by merchantReference.
-     *
-     * @api
-     *
-     * @param string $merchantReference
-     *
-     * @return \Generated\Shared\Transfer\MerchantStorageTransfer|null
-     */
-    public function findOneByMerchantReference(string $merchantReference): ?MerchantStorageTransfer;
-
-    /**
-     * Specification:
-     * - Finds merchant data by merchantReferences.
-     *
-     * @api
-     *
-     * @param string[] $merchantReferences
-     *
-     * @return \Generated\Shared\Transfer\MerchantStorageTransfer[]
-     */
-    public function getByMerchantReferences(array $merchantReferences): array;
+    public function get(MerchantStorageCriteriaTransfer $merchantStorageCriteriaTransfer): array;
 }

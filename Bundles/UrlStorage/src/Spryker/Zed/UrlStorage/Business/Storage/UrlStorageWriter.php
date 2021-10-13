@@ -21,7 +21,13 @@ class UrlStorageWriter implements UrlStorageWriterInterface
 {
     use LoggerTrait;
 
+    /**
+     * @var string
+     */
     public const RESOURCE_TYPE = 'type';
+    /**
+     * @var string
+     */
     public const RESOURCE_VALUE = 'value';
 
     /**
@@ -73,7 +79,7 @@ class UrlStorageWriter implements UrlStorageWriterInterface
     }
 
     /**
-     * @param int[] $urlIds
+     * @param array<int> $urlIds
      *
      * @return void
      */
@@ -88,7 +94,7 @@ class UrlStorageWriter implements UrlStorageWriterInterface
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function getSharedPersistenceLocaleNames(): array
     {
@@ -104,7 +110,7 @@ class UrlStorageWriter implements UrlStorageWriterInterface
     }
 
     /**
-     * @param int[] $urlIds
+     * @param array<int> $urlIds
      *
      * @return void
      */
@@ -123,8 +129,8 @@ class UrlStorageWriter implements UrlStorageWriterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\UrlStorageTransfer[] $urlStorageTransfers
-     * @param \Orm\Zed\UrlStorage\Persistence\SpyUrlStorage[] $urlStorageEntities
+     * @param array<\Generated\Shared\Transfer\UrlStorageTransfer> $urlStorageTransfers
+     * @param array<\Orm\Zed\UrlStorage\Persistence\SpyUrlStorage> $urlStorageEntities
      *
      * @return void
      */
@@ -203,9 +209,9 @@ class UrlStorageWriter implements UrlStorageWriterInterface
     }
 
     /**
-     * @param \Orm\Zed\Url\Persistence\SpyUrl[][] $groupedUrlEntities
+     * @param array<\Orm\Zed\Url\Persistence\SpyUrl[]> $groupedUrlEntities
      *
-     * @return \Generated\Shared\Transfer\UrlStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\UrlStorageTransfer>
      */
     protected function mapUrlsEntitiesToUrlStorageTransfers(array $groupedUrlEntities)
     {
@@ -221,7 +227,7 @@ class UrlStorageWriter implements UrlStorageWriterInterface
 
     /**
      * @param \Orm\Zed\Url\Persistence\SpyUrl $urlEntity
-     * @param \Orm\Zed\Url\Persistence\SpyUrl[] $urlEntities
+     * @param array<\Orm\Zed\Url\Persistence\SpyUrl> $urlEntities
      *
      * @return \Generated\Shared\Transfer\UrlStorageTransfer
      */
@@ -243,9 +249,9 @@ class UrlStorageWriter implements UrlStorageWriterInterface
     }
 
     /**
-     * @param \Orm\Zed\UrlStorage\Persistence\SpyUrlStorage[] $urlStorageEntities
+     * @param array<\Orm\Zed\UrlStorage\Persistence\SpyUrlStorage> $urlStorageEntities
      *
-     * @return \Orm\Zed\UrlStorage\Persistence\SpyUrlStorage[]
+     * @return array<\Orm\Zed\UrlStorage\Persistence\SpyUrlStorage>
      */
     protected function indexUrlStorageEntitiesByUrl(array $urlStorageEntities): array
     {
@@ -258,10 +264,10 @@ class UrlStorageWriter implements UrlStorageWriterInterface
     }
 
     /**
-     * @param \Orm\Zed\UrlStorage\Persistence\SpyUrlStorage[] $indexedUrlStorageEntities
-     * @param \Orm\Zed\Url\Persistence\SpyUrl[] $urlEntities
+     * @param array<\Orm\Zed\UrlStorage\Persistence\SpyUrlStorage> $indexedUrlStorageEntities
+     * @param array<\Orm\Zed\Url\Persistence\SpyUrl> $urlEntities
      *
-     * @return \Orm\Zed\UrlStorage\Persistence\SpyUrlStorage[]
+     * @return array<\Orm\Zed\UrlStorage\Persistence\SpyUrlStorage>
      */
     protected function getStorageEntitiesWithExistingUrls(array $indexedUrlStorageEntities, array $urlEntities): array
     {
@@ -277,10 +283,10 @@ class UrlStorageWriter implements UrlStorageWriterInterface
     }
 
     /**
-     * @param \Orm\Zed\UrlStorage\Persistence\SpyUrlStorage[] $indexedUrlStorageEntities
-     * @param \Orm\Zed\UrlStorage\Persistence\SpyUrlStorage[] $urlStorageEntitiesWithExistingUrls
+     * @param array<\Orm\Zed\UrlStorage\Persistence\SpyUrlStorage> $indexedUrlStorageEntities
+     * @param array<\Orm\Zed\UrlStorage\Persistence\SpyUrlStorage> $urlStorageEntitiesWithExistingUrls
      *
-     * @return \Orm\Zed\UrlStorage\Persistence\SpyUrlStorage[]
+     * @return array<\Orm\Zed\UrlStorage\Persistence\SpyUrlStorage>
      */
     protected function filterOutStorageEntitiesWithExistingUrls(array $indexedUrlStorageEntities, array $urlStorageEntitiesWithExistingUrls): array
     {
@@ -296,7 +302,7 @@ class UrlStorageWriter implements UrlStorageWriterInterface
     }
 
     /**
-     * @param \Orm\Zed\UrlStorage\Persistence\SpyUrlStorage[] $urlStorageEntitiesWithExistingUrls
+     * @param array<\Orm\Zed\UrlStorage\Persistence\SpyUrlStorage> $urlStorageEntitiesWithExistingUrls
      *
      * @return void
      */

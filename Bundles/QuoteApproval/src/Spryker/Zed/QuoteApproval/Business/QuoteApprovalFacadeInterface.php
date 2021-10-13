@@ -69,9 +69,21 @@ interface QuoteApprovalFacadeInterface
      *
      * @param int $idQuote
      *
-     * @return \Generated\Shared\Transfer\QuoteApprovalTransfer[]
+     * @return array<\Generated\Shared\Transfer\QuoteApprovalTransfer>
      */
     public function getQuoteApprovalsByIdQuote(int $idQuote): array;
+
+    /**
+     * Specification:
+     * - Returns a list of quote approval transfers filtered by the QuoteApprovalRequestTransfer
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteApprovalRequestTransfer $quoteApprovalsRequestTransfer
+     *
+     * @return array<\Generated\Shared\Transfer\QuoteApprovalTransfer>
+     */
+    public function getQuoteApprovals(QuoteApprovalRequestTransfer $quoteApprovalsRequestTransfer): array;
 
     /**
      * Specification:
@@ -154,7 +166,7 @@ interface QuoteApprovalFacadeInterface
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getQuoteFieldsAllowedForSavingByQuoteApprovalStatus(QuoteTransfer $quoteTransfer): array;
 
@@ -170,4 +182,16 @@ interface QuoteApprovalFacadeInterface
      * @return bool
      */
     public function isQuoteInApprovalProcess(QuoteTransfer $quoteTransfer): bool;
+
+    /**
+     * Specification:
+     * - Returns true if quote status is `waiting`.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    public function isQuoteWaitingForApproval(QuoteTransfer $quoteTransfer): bool;
 }

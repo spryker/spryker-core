@@ -12,12 +12,12 @@ use Generated\Shared\Transfer\UrlTransfer;
 abstract class AbstractUrlUpdaterSubject
 {
     /**
-     * @var \Spryker\Zed\Url\Business\Url\UrlUpdaterBeforeSaveObserverInterface[]
+     * @var array<\Spryker\Zed\Url\Business\Url\UrlUpdaterBeforeSaveObserverInterface>
      */
     protected $beforeSaveObservers = [];
 
     /**
-     * @var \Spryker\Zed\Url\Business\Url\UrlUpdaterAfterSaveObserverInterface[]
+     * @var array<\Spryker\Zed\Url\Business\Url\UrlUpdaterAfterSaveObserverInterface>
      */
     protected $afterSaveObservers = [];
 

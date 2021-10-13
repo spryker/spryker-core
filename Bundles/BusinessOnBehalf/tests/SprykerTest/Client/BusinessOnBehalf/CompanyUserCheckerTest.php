@@ -62,7 +62,7 @@ class CompanyUserCheckerTest extends Unit
     }
 
     /**
-     * @param \Spryker\Client\BusinessOnBehalfExtension\Dependency\Plugin\CompanyUserChangeAllowedCheckPluginInterface[] $companyUserChangeAllowedCheckPlugins
+     * @param array<\Spryker\Client\BusinessOnBehalfExtension\Dependency\Plugin\CompanyUserChangeAllowedCheckPluginInterface> $companyUserChangeAllowedCheckPlugins
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\BusinessOnBehalf\Checker\CompanyUserChecker
      */

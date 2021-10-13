@@ -27,6 +27,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 abstract class AbstractDatabaseCollector extends AbstractCollector implements DatabaseCollectorInterface
 {
+    /**
+     * @var string
+     */
     public const ID_TOUCH = 'idTouch';
 
     /**
@@ -265,7 +268,7 @@ abstract class AbstractDatabaseCollector extends AbstractCollector implements Da
     }
 
     /**
-     * @param string[] $keysToDelete
+     * @param array<string> $keysToDelete
      * @param \Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface $touchUpdater
      *
      * @return void

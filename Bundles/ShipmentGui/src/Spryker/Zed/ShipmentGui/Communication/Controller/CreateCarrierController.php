@@ -16,13 +16,19 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class CreateCarrierController extends AbstractController
 {
+    /**
+     * @var string
+     */
     protected const MESSAGE_CARRIER_CREATE_SUCCESS = 'Carrier was created successfully.';
+    /**
+     * @var string
+     */
     protected const ROUTE_SHIPMENT = '/shipment-gui/shipment-method';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function indexAction(Request $request)
     {

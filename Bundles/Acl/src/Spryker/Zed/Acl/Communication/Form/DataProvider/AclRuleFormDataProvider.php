@@ -58,6 +58,6 @@ class AclRuleFormDataProvider
         return array_combine(
             SpyAclRuleTableMap::getValueSet(SpyAclRuleTableMap::COL_TYPE),
             SpyAclRuleTableMap::getValueSet(SpyAclRuleTableMap::COL_TYPE)
-        );
+        ) ?: [];
     }
 }

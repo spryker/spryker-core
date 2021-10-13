@@ -24,10 +24,19 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  */
 class CompanyUserRoleByCompanyForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const OPTION_COMPANY_ROLE_CHOICES = 'company_role_choices';
 
+    /**
+     * @var string
+     */
     protected const FIELD_COMPANY_ROLE_COLLECTION = 'company_role_collection';
 
+    /**
+     * @var string
+     */
     protected const TEMPLATE_PATH = '@CompanyRoleGui/BusinessOnBehalfGui/company_role.twig';
 
     /**

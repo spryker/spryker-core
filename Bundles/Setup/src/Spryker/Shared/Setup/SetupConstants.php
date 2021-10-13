@@ -16,6 +16,7 @@ interface SetupConstants
      * @deprecated Will be removed without replacement.
      *
      * @api
+     * @var string
      */
     public const JENKINS_BASE_URL = 'JENKINS_BASE_URL';
 
@@ -23,6 +24,7 @@ interface SetupConstants
      * @deprecated Will be removed without replacement.
      *
      * @api
+     * @var string
      */
     public const JENKINS_DIRECTORY = 'JENKINS_DIRECTORY';
 
@@ -30,6 +32,7 @@ interface SetupConstants
      * @deprecated Will be removed without replacement.
      *
      * @api
+     * @var string
      */
     public const JENKINS_CSRF_PROTECTION_ENABLED = 'SETUP:JENKINS_CSRF_PROTECTION_ENABLED';
 }

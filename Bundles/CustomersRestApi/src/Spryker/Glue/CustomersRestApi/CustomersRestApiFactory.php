@@ -36,6 +36,7 @@ use Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomerRestorePasswordResour
 use Spryker\Glue\CustomersRestApi\Processor\Relationship\AddressByCheckoutDataResourceRelationshipExpander;
 use Spryker\Glue\CustomersRestApi\Processor\Relationship\AddressResourceRelationshipExpanderInterface;
 use Spryker\Glue\CustomersRestApi\Processor\Relationship\CustomerByCompanyUserResourceRelationshipExpander;
+use Spryker\Glue\CustomersRestApi\Processor\Relationship\CustomerByQuoteRequestResourceRelationshipExpander;
 use Spryker\Glue\CustomersRestApi\Processor\Relationship\CustomerResourceRelationshipExpanderInterface;
 use Spryker\Glue\CustomersRestApi\Processor\RestResponseBuilder\AddressRestResponseBuilder;
 use Spryker\Glue\CustomersRestApi\Processor\RestResponseBuilder\AddressRestResponseBuilderInterface;
@@ -162,6 +163,17 @@ class CustomersRestApiFactory extends AbstractFactory
     }
 
     /**
+     * @return \Spryker\Glue\CustomersRestApi\Processor\Relationship\CustomerResourceRelationshipExpanderInterface
+     */
+    public function createCustomerByQuoteRequestResourceRelationshipExpander(): CustomerResourceRelationshipExpanderInterface
+    {
+        return new CustomerByQuoteRequestResourceRelationshipExpander(
+            $this->createCustomerRestResponseBuilder(),
+            $this->createCustomerResourceMapper()
+        );
+    }
+
+    /**
      * @return \Spryker\Glue\CustomersRestApi\Processor\Relationship\AddressResourceRelationshipExpanderInterface
      */
     public function createAddressByCheckoutDataResourceRelationshipExpander(): AddressResourceRelationshipExpanderInterface
@@ -266,7 +278,7 @@ class CustomersRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\CustomersRestApiExtension\Dependency\Plugin\CustomerExpanderPluginInterface[]
+     * @return array<\Spryker\Glue\CustomersRestApiExtension\Dependency\Plugin\CustomerExpanderPluginInterface>
      */
     public function getCustomerExpanderPlugins(): array
     {
@@ -274,7 +286,7 @@ class CustomersRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\CustomersRestApiExtension\Dependency\Plugin\CustomerPostCreatePluginInterface[]
+     * @return array<\Spryker\Glue\CustomersRestApiExtension\Dependency\Plugin\CustomerPostCreatePluginInterface>
      */
     public function getCustomerPostCreatePlugins(): array
     {

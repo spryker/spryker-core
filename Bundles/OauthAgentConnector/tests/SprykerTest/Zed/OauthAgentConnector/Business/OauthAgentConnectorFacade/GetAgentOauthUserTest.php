@@ -24,6 +24,9 @@ use Generated\Shared\Transfer\OauthUserTransfer;
  */
 class GetAgentOauthUserTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const USER_PASSWORD_VALUE = 'change123';
 
     /**

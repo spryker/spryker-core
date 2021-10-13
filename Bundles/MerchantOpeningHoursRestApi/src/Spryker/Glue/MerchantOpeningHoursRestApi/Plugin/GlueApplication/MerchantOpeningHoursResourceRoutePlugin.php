@@ -54,7 +54,7 @@ class MerchantOpeningHoursResourceRoutePlugin extends AbstractPlugin implements 
      */
     public function getController(): string
     {
-         return 'merchant-opening-hours-resource';
+        return 'merchant-opening-hours-resource';
     }
 
     /**

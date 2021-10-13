@@ -18,6 +18,9 @@ use Spryker\Shared\PriceProductStorage\PriceProductStorageConstants;
 
 class PriceProductMapper implements PriceProductMapperInterface
 {
+    /**
+     * @var string
+     */
     protected const INDEX_SEPARATOR = '-';
 
     /**
@@ -36,7 +39,7 @@ class PriceProductMapper implements PriceProductMapperInterface
     /**
      * @param \Generated\Shared\Transfer\PriceProductStorageTransfer $priceProductStorageTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function mapPriceProductStorageTransferToPriceProductTransfers(PriceProductStorageTransfer $priceProductStorageTransfer): array
     {
@@ -49,7 +52,7 @@ class PriceProductMapper implements PriceProductMapperInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      * @param array $prices
      * @param string $currencyCode
      *
@@ -91,17 +94,40 @@ class PriceProductMapper implements PriceProductMapperInterface
      */
     protected function setPriceData(PriceProductTransfer $priceProductTransfer, array $prices): PriceProductTransfer
     {
-        if (isset($prices[PriceProductStorageConfig::PRICE_DATA])) {
-            $priceProductTransfer->getMoneyValue()->setPriceData($prices[PriceProductStorageConfig::PRICE_DATA]);
+        $moneyValueTransfer = $priceProductTransfer->getMoneyValue();
+
+        $priceData = $this->resolvePriceData($priceProductTransfer, $prices);
+        if ($priceData !== null) {
+            $moneyValueTransfer->setPriceData($priceData);
+        }
+
+        if (isset($prices[PriceProductStorageConfig::PRICE_DATA_BY_PRICE_TYPE])) {
+            $moneyValueTransfer->setPriceDataByPriceType($prices[PriceProductStorageConfig::PRICE_DATA_BY_PRICE_TYPE]);
         }
 
         return $priceProductTransfer;
     }
 
     /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     * @param array $prices
+     *
+     * @return string|null
+     */
+    protected function resolvePriceData(PriceProductTransfer $priceProductTransfer, array $prices): ?string
+    {
+        $priceTypeName = $priceProductTransfer->getPriceTypeName();
+        if (isset($prices[PriceProductStorageConfig::PRICE_DATA_BY_PRICE_TYPE][$priceTypeName])) {
+            return $prices[PriceProductStorageConfig::PRICE_DATA_BY_PRICE_TYPE][$priceTypeName];
+        }
+
+        return $prices[PriceProductStorageConfig::PRICE_DATA] ?? null;
+    }
+
+    /**
      * @param string $currencyCode
      * @param string $priceType
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer
      */

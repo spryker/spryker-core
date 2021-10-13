@@ -1,0 +1,6 @@
+"This field is missing.","This field is missing."
+"This value is not valid.","This value is not valid."
+"The set of Store, Currency, and Quantity needs to be unique.","The set of Store, Currency, and Quantity needs to be unique."
+"Gross Default and/or Net Default price is required for volume price.","Gross Default and/or Net Default price is required for volume price."
+"Invalid volume quantity.","Invalid volume quantity."
+"For a volume price the Gross and Net base price needs to be set.","For a volume price the Gross and Net base price needs to be set."

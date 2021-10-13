@@ -13,9 +13,21 @@ use Spryker\Client\Permission\Dependency\Client\PermissionToZedRequestClientBrid
 
 class PermissionDependencyProvider extends AbstractDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const PLUGINS_PERMISSION = 'PLUGINS_PERMISSION';
+    /**
+     * @var string
+     */
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
+    /**
+     * @var string
+     */
     public const PLUGINS_PERMISSION_STORAGE = 'PLUGINS_PERMISSION_STORAGE';
+    /**
+     * @var string
+     */
     public const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
 
     /**
@@ -76,7 +88,7 @@ class PermissionDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @return \Spryker\Shared\PermissionExtension\Dependency\Plugin\PermissionPluginInterface[]
+     * @return array<\Spryker\Shared\PermissionExtension\Dependency\Plugin\PermissionPluginInterface>
      */
     protected function getPermissionPlugins(): array
     {
@@ -84,7 +96,7 @@ class PermissionDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @return \Spryker\Client\PermissionExtension\Dependency\Plugin\PermissionStoragePluginInterface[]
+     * @return array<\Spryker\Client\PermissionExtension\Dependency\Plugin\PermissionStoragePluginInterface>
      */
     protected function getPermissionStoragePlugins(): array
     {

@@ -1,7 +1,5 @@
 <mp-layout-main [navigationConfig]="navigationConfig">
-    <ng-template header>
-        <ng-content select="[name='header']"></ng-content>
-    </ng-template>
-
+    <ng-content header select="[header]"></ng-content>
+    <ng-content logo select="[logo]"></ng-content>
     <ng-content></ng-content>
 </mp-layout-main>

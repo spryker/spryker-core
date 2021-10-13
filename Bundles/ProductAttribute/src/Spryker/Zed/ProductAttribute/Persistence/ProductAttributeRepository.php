@@ -24,7 +24,7 @@ class ProductAttributeRepository extends AbstractRepository implements ProductAt
     /**
      * @param array $attributes
      *
-     * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductManagementAttributeTransfer>
      */
     public function findSuperAttributesFromAttributesList(array $attributes): array
     {
@@ -81,9 +81,9 @@ class ProductAttributeRepository extends AbstractRepository implements ProductAt
     }
 
     /**
-     * @param int[] $productManagementAttributeIds
+     * @param array<int> $productManagementAttributeIds
      *
-     * @return \Generated\Shared\Transfer\ProductManagementAttributeValueTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductManagementAttributeValueTransfer>
      */
     public function getProductManagementAttributeValues(array $productManagementAttributeIds): array
     {
@@ -118,6 +118,13 @@ class ProductAttributeRepository extends AbstractRepository implements ProductAt
             $productManagementAttributeQuery
                 ->useSpyProductAttributeKeyQuery()
                 ->filterByKey_In($productManagementAttributeFilterTransfer->getKeys())
+                ->endUse();
+        }
+
+        if ($productManagementAttributeFilterTransfer->getOnlySuperAttributes()) {
+            $productManagementAttributeQuery
+                ->useSpyProductAttributeKeyQuery()
+                    ->filterByIsSuper(true)
                 ->endUse();
         }
 

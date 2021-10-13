@@ -9,6 +9,10 @@ namespace Spryker\Zed\PriceProduct\Business;
 
 use Spryker\Service\PriceProduct\PriceProductServiceInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\PriceProduct\Business\Currency\CurrencyReaderInterface;
+use Spryker\Zed\PriceProduct\Business\Currency\CurrencyReaderWithCache;
+use Spryker\Zed\PriceProduct\Business\Expander\Wishlist\PriceProductWishlistItemExpander;
+use Spryker\Zed\PriceProduct\Business\Expander\Wishlist\PriceProductWishlistItemExpanderInterface;
 use Spryker\Zed\PriceProduct\Business\Internal\Install;
 use Spryker\Zed\PriceProduct\Business\Internal\InstallInterface;
 use Spryker\Zed\PriceProduct\Business\Model\BulkWriter;
@@ -52,6 +56,13 @@ use Spryker\Zed\PriceProduct\Business\PriceProduct\PriceProductDefaultRemover;
 use Spryker\Zed\PriceProduct\Business\PriceProduct\PriceProductDefaultRemoverInterface;
 use Spryker\Zed\PriceProduct\Business\PriceProduct\PriceProductRemover;
 use Spryker\Zed\PriceProduct\Business\PriceProduct\PriceProductRemoverInterface;
+use Spryker\Zed\PriceProduct\Business\Validator\Constraint\ValidCurrencyAssignedToStoreConstraint;
+use Spryker\Zed\PriceProduct\Business\Validator\Constraint\ValidUniqueStoreCurrencyGrossNetConstraint;
+use Spryker\Zed\PriceProduct\Business\Validator\ConstraintProvider\PriceProductConstraintProvider;
+use Spryker\Zed\PriceProduct\Business\Validator\ConstraintProvider\PriceProductConstraintProviderInterface;
+use Spryker\Zed\PriceProduct\Business\Validator\PriceProductValidator;
+use Spryker\Zed\PriceProduct\Business\Validator\PriceProductValidatorInterface;
+use Spryker\Zed\PriceProduct\Dependency\External\PriceProductToValidationAdapterInterface;
 use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToCurrencyFacadeInterface;
 use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToPriceFacadeInterface;
 use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToProductFacadeInterface;
@@ -60,6 +71,7 @@ use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToTouchFacadeInterfac
 use Spryker\Zed\PriceProduct\Dependency\Service\PriceProductToUtilEncodingServiceInterface;
 use Spryker\Zed\PriceProduct\PriceProductConfig;
 use Spryker\Zed\PriceProduct\PriceProductDependencyProvider;
+use Symfony\Component\Validator\Constraint;
 
 /**
  * @method \Spryker\Zed\PriceProduct\PriceProductConfig getConfig()
@@ -125,6 +137,16 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
             $this->getQueryContainer(),
             $this->createPriceTypeMapper(),
             $this->getConfig()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProduct\Business\Currency\CurrencyReaderInterface
+     */
+    public function createCurrencyReader(): CurrencyReaderInterface
+    {
+        return new CurrencyReaderWithCache(
+            $this->getCurrencyFacade()
         );
     }
 
@@ -195,7 +217,7 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
     public function createProductCriteriaBuilder(): PriceProductCriteriaBuilderInterface
     {
         return new PriceProductCriteriaBuilder(
-            $this->getCurrencyFacade(),
+            $this->createCurrencyReader(),
             $this->getPriceFacade(),
             $this->getStoreFacade(),
             $this->createPriceTypeReader(),
@@ -352,6 +374,65 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\PriceProduct\Business\Validator\PriceProductValidatorInterface
+     */
+    public function createPriceProductValidator(): PriceProductValidatorInterface
+    {
+        return new PriceProductValidator(
+            $this->createPriceProductConstraintProvider(),
+            $this->getValidationAdapter(),
+            $this->getPriceProductValidatorPlugins()
+        );
+    }
+
+    /**
+     * @return array<\Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceProductValidatorPluginInterface>
+     */
+    public function getPriceProductValidatorPlugins(): array
+    {
+        return $this->getProvidedDependency(PriceProductDependencyProvider::PLUGIN_PRICE_PRODUCT_VALIDATOR);
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProduct\Business\Validator\ConstraintProvider\PriceProductConstraintProviderInterface
+     */
+    public function createPriceProductConstraintProvider(): PriceProductConstraintProviderInterface
+    {
+        return new PriceProductConstraintProvider([
+            $this->createValidUniqueStoreCurrencyGrossNetConstraint(),
+            $this->createValidCurrencyAssignedToStoreConstraint(),
+        ]);
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraint
+     */
+    public function createValidUniqueStoreCurrencyGrossNetConstraint(): Constraint
+    {
+        return new ValidUniqueStoreCurrencyGrossNetConstraint($this->getRepository());
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraint
+     */
+    public function createValidCurrencyAssignedToStoreConstraint(): Constraint
+    {
+        return new ValidCurrencyAssignedToStoreConstraint($this->getStoreFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProduct\Business\Expander\Wishlist\PriceProductWishlistItemExpanderInterface
+     */
+    public function createPriceProductWishlsitItemExpander(): PriceProductWishlistItemExpanderInterface
+    {
+        return new PriceProductWishlistItemExpander(
+            $this->createPriceProductConcreteReader(),
+            $this->getConfig(),
+            $this->getStoreFacade()
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToProductFacadeInterface
      */
     public function getProductFacade(): PriceProductToProductFacadeInterface
@@ -419,7 +500,7 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceDimensionAbstractSaverPluginInterface[]
+     * @return array<\Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceDimensionAbstractSaverPluginInterface>
      */
     public function getPriceDimensionAbstractSaverPlugins(): array
     {
@@ -427,7 +508,7 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceDimensionConcreteSaverPluginInterface[]
+     * @return array<\Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceDimensionConcreteSaverPluginInterface>
      */
     public function getPriceDimensionConcreteSaverPlugins(): array
     {
@@ -435,7 +516,7 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Service\PriceProductExtension\Dependency\Plugin\PriceProductDimensionExpanderStrategyPluginInterface[]
+     * @return array<\Spryker\Service\PriceProductExtension\Dependency\Plugin\PriceProductDimensionExpanderStrategyPluginInterface>
      */
     public function getPriceProductDimensionExpanderStrategyPlugins(): array
     {
@@ -443,7 +524,7 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceProductReaderPricesExtractorPluginInterface[]
+     * @return array<\Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceProductReaderPricesExtractorPluginInterface>
      */
     public function getPriceProductPricesExtractorPlugins(): array
     {
@@ -451,7 +532,7 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceProductExternalProviderPluginInterface[]
+     * @return array<\Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceProductExternalProviderPluginInterface>
      */
     public function getPriceProductExternalProviderPlugins(): array
     {
@@ -459,10 +540,18 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceProductStorePreDeletePluginInterface[]
+     * @return array<\Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceProductStorePreDeletePluginInterface>
      */
     public function getPriceProductStorePreDeletePlugins(): array
     {
         return $this->getProvidedDependency(PriceProductDependencyProvider::PLUGIN_PRICE_PRODUCT_STORE_PRE_DELETE);
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProduct\Dependency\External\PriceProductToValidationAdapterInterface
+     */
+    public function getValidationAdapter(): PriceProductToValidationAdapterInterface
+    {
+        return $this->getProvidedDependency(PriceProductDependencyProvider::EXTERNAL_ADAPTER_VALIDATION);
     }
 }

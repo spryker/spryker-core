@@ -17,4 +17,11 @@ interface TaxProductConnectorRepositoryInterface
      * @return \Generated\Shared\Transfer\TaxSetTransfer|null
      */
     public function findTaxSetByProductAbstractSku(string $productAbstractSku): ?TaxSetTransfer;
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return \Generated\Shared\Transfer\TaxSetTransfer|null
+     */
+    public function findByIdProductAbstract(int $idProductAbstract): ?TaxSetTransfer;
 }

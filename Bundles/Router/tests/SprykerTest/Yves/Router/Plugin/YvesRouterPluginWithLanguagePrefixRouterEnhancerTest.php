@@ -122,7 +122,7 @@ class YvesRouterPluginWithLanguagePrefixRouterEnhancerTest extends Unit
     }
 
     /**
-     * @return string[][]
+     * @return array<string[]>
      */
     public function matcherDataProvider(): array
     {
@@ -135,7 +135,7 @@ class YvesRouterPluginWithLanguagePrefixRouterEnhancerTest extends Unit
     }
 
     /**
-     * @return string[][]
+     * @return array<string[]>
      */
     public function generatorDataProvider(): array
     {
@@ -148,7 +148,7 @@ class YvesRouterPluginWithLanguagePrefixRouterEnhancerTest extends Unit
     }
 
     /**
-     * @return string[][]
+     * @return array<string[]>
      */
     public function generatorWithoutLanguageAndStoreDataProvider(): array
     {

@@ -18,8 +18,17 @@ use Spryker\Glue\Kernel\Container;
  */
 class CmsPagesContentProductAbstractListsResourceRelationshipDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_CMS_STORAGE = 'CLIENT_CMS_STORAGE';
+    /**
+     * @var string
+     */
     public const CLIENT_STORE = 'CLIENT_STORE';
+    /**
+     * @var string
+     */
     public const RESOURCE_CONTENT_PRODUCT_ABSTRACT_LISTS_REST_API = 'RESOURCE_CONTENT_PRODUCT_ABSTRACT_LISTS_REST_API';
 
     /**

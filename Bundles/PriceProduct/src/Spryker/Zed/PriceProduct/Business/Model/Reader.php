@@ -74,7 +74,7 @@ class Reader implements ReaderInterface
     protected static $priceModeIdentifierForNetType;
 
     /**
-     * @var \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @var array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     protected static $resolvedPriceProductTransferCollection = [];
 
@@ -124,7 +124,12 @@ class Reader implements ReaderInterface
             return null;
         }
 
-        return $this->getPriceByPriceMode($priceProductTransfer->getMoneyValue(), $priceProductCriteriaTransfer->getPriceMode());
+        /** @var \Generated\Shared\Transfer\MoneyValueTransfer $moneyValueTransfer */
+        $moneyValueTransfer = $priceProductTransfer->requireMoneyValue()->getMoneyValue();
+        /** @var string $priceMode */
+        $priceMode = $priceProductCriteriaTransfer->requirePriceMode()->getPriceMode();
+
+        return $this->getPriceByPriceMode($moneyValueTransfer, $priceMode);
     }
 
     /**
@@ -142,7 +147,12 @@ class Reader implements ReaderInterface
 
         $priceProductCriteriaTransfer = $this->priceProductCriteriaBuilder->buildCriteriaFromFilter($priceProductFilterTransfer);
 
-        return $this->getPriceByPriceMode($priceProductTransfer->getMoneyValue(), $priceProductCriteriaTransfer->getPriceMode());
+        /** @var \Generated\Shared\Transfer\MoneyValueTransfer $moneyValueTransfer */
+        $moneyValueTransfer = $priceProductTransfer->requireMoneyValue()->getMoneyValue();
+        /** @var string $priceMode */
+        $priceMode = $priceProductCriteriaTransfer->requirePriceMode()->getPriceMode();
+
+        return $this->getPriceByPriceMode($moneyValueTransfer, $priceMode);
     }
 
     /**
@@ -156,7 +166,10 @@ class Reader implements ReaderInterface
 
         $priceProductCriteriaTransfer = $this->priceProductCriteriaBuilder->buildCriteriaFromFilter($priceProductFilterTransfer);
 
-        return $this->findProductPrice($priceProductFilterTransfer->getSku(), $priceProductCriteriaTransfer);
+        /** @var string $sku */
+        $sku = $priceProductFilterTransfer->requireSku()->getSku();
+
+        return $this->findProductPrice($sku, $priceProductCriteriaTransfer);
     }
 
     /**
@@ -164,18 +177,22 @@ class Reader implements ReaderInterface
      * @param int $idProductAbstract
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer|null $priceProductCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function findProductConcretePrices(
         int $idProductConcrete,
         int $idProductAbstract,
         ?PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null
     ): array {
-        $abstractPriceProductTransfers = $this->priceProductAbstractReader
-            ->findProductAbstractPricesById($idProductAbstract, $priceProductCriteriaTransfer);
-
         $concretePriceProductTransfers = $this->priceProductConcreteReader
             ->findProductConcretePricesById($idProductConcrete, $priceProductCriteriaTransfer);
+
+        if ($priceProductCriteriaTransfer !== null && $priceProductCriteriaTransfer->getOnlyConcretePrices()) {
+            return $concretePriceProductTransfers;
+        }
+
+        $abstractPriceProductTransfers = $this->priceProductAbstractReader
+            ->findProductAbstractPricesById($idProductAbstract, $priceProductCriteriaTransfer);
 
         return $this->mergeConcreteAndAbstractPrices($abstractPriceProductTransfers, $concretePriceProductTransfers);
     }
@@ -218,7 +235,10 @@ class Reader implements ReaderInterface
 
         $priceProductCriteriaTransfer = $this->priceProductCriteriaBuilder->buildCriteriaFromFilter($priceProductFilterTransfer);
 
-        return $this->isValidPrice($priceProductFilterTransfer->getSku(), $priceProductCriteriaTransfer);
+        /** @var string $sku */
+        $sku = $priceProductFilterTransfer->requireSku()->getSku();
+
+        return $this->isValidPrice($sku, $priceProductCriteriaTransfer);
     }
 
     /**
@@ -233,21 +253,27 @@ class Reader implements ReaderInterface
         $priceProductCriteriaTransfer = $this->priceProductCriteriaBuilder->buildCriteriaWithDefaultValues();
 
         if ($this->priceProductConcreteReader->hasPriceForProductConcrete($sku, $priceProductCriteriaTransfer)) {
-            return $this->priceProductConcreteReader->findPriceProductId($sku, $priceProductCriteriaTransfer);
+            /** @var int $idPriceProduct */
+            $idPriceProduct = $this->priceProductConcreteReader->findPriceProductId($sku, $priceProductCriteriaTransfer);
+
+            return $idPriceProduct;
         }
 
         if (!$this->priceProductAbstractReader->hasPriceForProductAbstract($sku, $priceProductCriteriaTransfer)) {
             $sku = $this->productFacade->getAbstractSkuFromProductConcrete($sku);
         }
 
-        return $this->priceProductAbstractReader->findPriceProductId($sku, $priceProductCriteriaTransfer);
+        /** @var int $idPriceProduct */
+        $idPriceProduct = $this->priceProductAbstractReader->findPriceProductId($sku, $priceProductCriteriaTransfer);
+
+        return $idPriceProduct;
     }
 
     /**
      * @param string $sku
      * @param \Generated\Shared\Transfer\PriceProductDimensionTransfer|null $priceProductDimensionTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function findPricesBySkuForCurrentStore(
         string $sku,
@@ -273,10 +299,10 @@ class Reader implements ReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $abstractPriceProductTransfers
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $concretePriceProductTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $abstractPriceProductTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $concretePriceProductTransfers
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     protected function mergeConcreteAndAbstractPrices(
         array $abstractPriceProductTransfers,
@@ -302,10 +328,10 @@ class Reader implements ReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $concretePriceProductTransfers
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $concretePriceProductTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     protected function addConcreteNotMergedPrices(array $concretePriceProductTransfers, array $priceProductTransfers)
     {
@@ -323,12 +349,12 @@ class Reader implements ReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $concretePriceProductTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $concretePriceProductTransfers
      * @param string $abstractKey
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductAbstractTransfer
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     protected function mergeConcreteProduct(
         array $concretePriceProductTransfers,
@@ -350,9 +376,14 @@ class Reader implements ReaderInterface
         }
 
         if (!isset($priceProductTransfers[$abstractKey])) {
-            $priceProductAbstractTransfer->getPriceDimension()->setIdPriceProductDefault(null);
-            $priceProductAbstractTransfer->getMoneyValue()->setIdEntity(null);
-            $priceProductTransfers[$abstractKey] = $priceProductAbstractTransfer;
+            /** @var \Generated\Shared\Transfer\PriceProductDimensionTransfer $priceDimensionTransfer */
+            $priceDimensionTransfer = $priceProductAbstractTransfer->requirePriceDimension()->getPriceDimension();
+            /** @var \Generated\Shared\Transfer\MoneyValueTransfer $moneyValueTransfer */
+            $moneyValueTransfer = $priceProductAbstractTransfer->requireMoneyValue()->getMoneyValue();
+            $priceDimensionTransfer->setIdPriceProductDefault(null);
+            $moneyValueTransfer->setIdEntity(null);
+            $priceProductTransfers[$abstractKey] = $priceProductAbstractTransfer->setPriceDimension($priceDimensionTransfer)
+                ->setMoneyValue($moneyValueTransfer);
         }
 
         return $priceProductTransfers;
@@ -368,8 +399,10 @@ class Reader implements ReaderInterface
         PriceProductTransfer $priceProductAbstractTransfer,
         PriceProductTransfer $priceProductConcreteTransfer
     ) {
-        $abstractMoneyValueTransfer = $priceProductAbstractTransfer->getMoneyValue();
-        $concreteMoneyValueTransfer = $priceProductConcreteTransfer->getMoneyValue();
+        /** @var \Generated\Shared\Transfer\MoneyValueTransfer $abstractMoneyValueTransfer */
+        $abstractMoneyValueTransfer = $priceProductAbstractTransfer->requireMoneyValue()->getMoneyValue();
+        /** @var \Generated\Shared\Transfer\MoneyValueTransfer $concreteMoneyValueTransfer */
+        $concreteMoneyValueTransfer = $priceProductConcreteTransfer->requireMoneyValue()->getMoneyValue();
 
         if ($concreteMoneyValueTransfer->getGrossAmount() === null) {
             $concreteMoneyValueTransfer->setGrossAmount($abstractMoneyValueTransfer->getGrossAmount());
@@ -467,18 +500,22 @@ class Reader implements ReaderInterface
      * @param int $idProductAbstract
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer|null $priceProductCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function findProductConcretePricesWithoutPriceExtraction(
         int $idProductConcrete,
         int $idProductAbstract,
         ?PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null
     ): array {
-        $abstractPriceProductTransfers = $this->priceProductAbstractReader
-            ->findProductAbstractPricesWithoutPriceExtraction($idProductAbstract, $priceProductCriteriaTransfer);
-
         $concretePriceProductTransfers = $this->priceProductConcreteReader
             ->findProductConcretePricesWithoutPriceExtraction($idProductConcrete, $priceProductCriteriaTransfer);
+
+        if ($priceProductCriteriaTransfer !== null && $priceProductCriteriaTransfer->getOnlyConcretePrices()) {
+            return $concretePriceProductTransfers;
+        }
+
+        $abstractPriceProductTransfers = $this->priceProductAbstractReader
+            ->findProductAbstractPricesWithoutPriceExtraction($idProductAbstract, $priceProductCriteriaTransfer);
 
         return $this->mergeConcreteAndAbstractPrices($abstractPriceProductTransfers, $concretePriceProductTransfers);
     }
@@ -490,7 +527,9 @@ class Reader implements ReaderInterface
      */
     protected function buildPriceProductIdentifier(PriceProductTransfer $priceProductTransfer): string
     {
+        /** @var \Generated\Shared\Transfer\MoneyValueTransfer $moneyValueTransfer */
         $moneyValueTransfer = $priceProductTransfer->requireMoneyValue()->getMoneyValue();
+        /** @var \Generated\Shared\Transfer\PriceTypeTransfer $priceTypeTransfer */
         $priceTypeTransfer = $priceProductTransfer->requirePriceType()->getPriceType();
 
         return implode(
@@ -505,9 +544,9 @@ class Reader implements ReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer[] $priceProductFilterTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductFilterTransfer> $priceProductFilterTransfers
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function getValidPrices(array $priceProductFilterTransfers): array
     {
@@ -532,10 +571,10 @@ class Reader implements ReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[][] $indexedAbstractPriceProductTransfers
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[][] $indexedConcretePriceProductTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer[]> $indexedAbstractPriceProductTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer[]> $indexedConcretePriceProductTransfers
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[][]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer[]>
      */
     protected function mergeIndexedPriceProductTransfers(array $indexedAbstractPriceProductTransfers, array $indexedConcretePriceProductTransfers): array
     {
@@ -559,10 +598,10 @@ class Reader implements ReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[][] $priceProductTransfers
-     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer[] $priceProductFilterTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer[]> $priceProductTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductFilterTransfer> $priceProductFilterTransfers
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     protected function resolveProductPrices(array $priceProductTransfers, array $priceProductFilterTransfers): array
     {
@@ -572,9 +611,9 @@ class Reader implements ReaderInterface
 
         $resolvedPriceProductTransfers = [];
         foreach ($priceProductCriteriaTransfers as $index => $priceProductCriteriaTransfer) {
-            $priceProductCriteriaIdentifier = $this->buildPriceProductFilterIdentifier($priceProductFilterTransfers[$index]);
+            $priceProductFilterTransfer = $this->fillPriceProductFilterIdentifier($priceProductFilterTransfers[$index]);
             $resolvedItemPrice = $this->resolveProductPriceByPriceProductCriteria(
-                $priceProductCriteriaIdentifier,
+                $priceProductFilterTransfer->getIdentifierOrFail(),
                 $priceProductTransfers,
                 $priceProductCriteriaTransfer
             );
@@ -588,6 +627,8 @@ class Reader implements ReaderInterface
     }
 
     /**
+     * @phpstan-param array<array<\Generated\Shared\Transfer\PriceProductTransfer>> $priceProductTransfers
+     *
      * @param string $priceProductCriteriaIdentifier
      * @param array $priceProductTransfers
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
@@ -600,10 +641,12 @@ class Reader implements ReaderInterface
         PriceProductCriteriaTransfer $priceProductCriteriaTransfer
     ): ?PriceProductTransfer {
         if (!isset(static::$resolvedPriceProductTransferCollection[$priceProductCriteriaIdentifier])) {
-            static::$resolvedPriceProductTransferCollection[$priceProductCriteriaIdentifier] = $this->priceProductService->resolveProductPriceByPriceProductCriteria(
+            /** @var \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer */
+            $priceProductTransfer = $this->priceProductService->resolveProductPriceByPriceProductCriteria(
                 $priceProductTransfers[$priceProductCriteriaIdentifier],
                 $priceProductCriteriaTransfer
             );
+            static::$resolvedPriceProductTransferCollection[$priceProductCriteriaIdentifier] = $priceProductTransfer;
         }
 
         return static::$resolvedPriceProductTransferCollection[$priceProductCriteriaIdentifier];
@@ -622,16 +665,19 @@ class Reader implements ReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer[] $priceProductFilterTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductFilterTransfer> $priceProductFilterTransfers
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[][]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer[]>
      */
     protected function findPricesForConcreteProducts(array $priceProductFilterTransfers): array
     {
         $priceProductFilterTransfer = $this->getCommonPriceProductFilterTransfer($priceProductFilterTransfers);
         $priceProductCriteriaTransfer = $this->priceProductCriteriaBuilder->buildCriteriaFromFilter($priceProductFilterTransfer);
         $productConcreteSkus = array_map(function (PriceProductFilterTransfer $priceProductFilterTransfer) {
-            return $priceProductFilterTransfer->getSku();
+            /** @var string $sku */
+            $sku = $priceProductFilterTransfer->getSku();
+
+            return $sku;
         }, $priceProductFilterTransfers);
 
         $concretePriceProductTransfers = $this->priceProductConcreteReader->getProductConcretePricesByConcreteSkusAndCriteria(
@@ -643,10 +689,10 @@ class Reader implements ReaderInterface
     }
 
     /**
-     * @param string[] $productConcreteSkus
-     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer[] $priceProductFilterTransfers
+     * @param array<string> $productConcreteSkus
+     * @param array<\Generated\Shared\Transfer\PriceProductFilterTransfer> $priceProductFilterTransfers
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[][]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer[]>
      */
     protected function findPricesForAbstractProducts(array $productConcreteSkus, array $priceProductFilterTransfers): array
     {
@@ -662,17 +708,18 @@ class Reader implements ReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer[] $priceProductFilterTransfers
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductFilterTransfer> $priceProductFilterTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[][]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer[]>
      */
     protected function groupPriceProductTransfersByFilter(array $priceProductFilterTransfers, array $priceProductTransfers): array
     {
         $priceProductTransfersGroupedByFilterIdentifier = [];
 
         foreach ($priceProductFilterTransfers as $priceProductFilterTransfer) {
-            $priceProductFilterIdentifier = $this->buildPriceProductFilterIdentifier($priceProductFilterTransfer);
+            $priceProductFilterTransfer = $this->fillPriceProductFilterIdentifier($priceProductFilterTransfer);
+            $priceProductFilterIdentifier = $priceProductFilterTransfer->getIdentifierOrFail();
             $priceProductTransfersGroupedByFilterIdentifier[$priceProductFilterIdentifier] = $this->priceProductService->resolveProductPricesByPriceProductFilter(
                 $priceProductTransfers,
                 $priceProductFilterTransfer
@@ -683,25 +730,28 @@ class Reader implements ReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer[] $priceProductFilterTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductFilterTransfer> $priceProductFilterTransfers
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getProductConcreteSkus(array $priceProductFilterTransfers): array
     {
         $productConcreteSkus = [];
 
         foreach ($priceProductFilterTransfers as $priceProductFilterTransfer) {
-            $productConcreteSkus[] = $priceProductFilterTransfer->getSku();
+            /** @var string $sku */
+            $sku = $priceProductFilterTransfer->getSku();
+
+            $productConcreteSkus[] = $sku;
         }
 
         return $productConcreteSkus;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer[] $priceProductFilterTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductFilterTransfer> $priceProductFilterTransfers
      *
-     * @return \Generated\Shared\Transfer\PriceProductFilterTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductFilterTransfer>
      */
     protected function getPriceProductFilterTransfersBySku(array $priceProductFilterTransfers): array
     {
@@ -714,19 +764,22 @@ class Reader implements ReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer[] $priceProductFilterTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductFilterTransfer> $priceProductFilterTransfers
      *
      * @return \Generated\Shared\Transfer\PriceProductFilterTransfer
      */
     protected function getCommonPriceProductFilterTransfer(array $priceProductFilterTransfers): PriceProductFilterTransfer
     {
-        return array_shift($priceProductFilterTransfers);
+        /** @var \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer */
+        $priceProductFilterTransfer = array_shift($priceProductFilterTransfers);
+
+        return $priceProductFilterTransfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer[] $priceProductFilterTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductFilterTransfer> $priceProductFilterTransfers
      *
-     * @return \Generated\Shared\Transfer\PriceProductFilterTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductFilterTransfer>
      */
     protected function filterPriceProductFilterTransfersWithoutExistingPriceType(array $priceProductFilterTransfers): array
     {
@@ -756,6 +809,22 @@ class Reader implements ReaderInterface
         );
         $priceProductFilterIdentifierTransfer->setQuantity((int)$priceProductFilterTransfer->getQuantity());
 
-        return md5(serialize($priceProductFilterIdentifierTransfer->toArray()));
+        return md5(json_encode($priceProductFilterIdentifierTransfer->toArray(), JSON_THROW_ON_ERROR));
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductFilterTransfer
+     */
+    protected function fillPriceProductFilterIdentifier(PriceProductFilterTransfer $priceProductFilterTransfer): PriceProductFilterTransfer
+    {
+        if ($priceProductFilterTransfer->getIdentifier() !== null) {
+            return $priceProductFilterTransfer;
+        }
+
+        return $priceProductFilterTransfer->setIdentifier(
+            $this->buildPriceProductFilterIdentifier($priceProductFilterTransfer)
+        );
     }
 }

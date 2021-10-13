@@ -16,12 +16,15 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
  */
 class ProductResourceAliasStorageRepository extends AbstractRepository implements ProductResourceAliasStorageRepositoryInterface
 {
+    /**
+     * @var string
+     */
     protected const KEY_SKU = 'sku';
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
-     * @return \Orm\Zed\ProductStorage\Persistence\SpyProductAbstractStorage[]
+     * @return array<\Orm\Zed\ProductStorage\Persistence\SpyProductAbstractStorage>
      */
     public function getProductAbstractStorageEntities(array $productAbstractIds): array
     {
@@ -33,9 +36,9 @@ class ProductResourceAliasStorageRepository extends AbstractRepository implement
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
-     * @return string[]
+     * @return array<string[]>
      */
     public function getProductAbstractSkuList(array $productAbstractIds): array
     {
@@ -48,9 +51,9 @@ class ProductResourceAliasStorageRepository extends AbstractRepository implement
     }
 
     /**
-     * @param int[] $productConcreteIds
+     * @param array<int> $productConcreteIds
      *
-     * @return \Orm\Zed\ProductStorage\Persistence\SpyProductConcreteStorage[]
+     * @return array<\Orm\Zed\ProductStorage\Persistence\SpyProductConcreteStorage>
      */
     public function getProductConcreteStorageEntities(array $productConcreteIds): array
     {
@@ -62,9 +65,9 @@ class ProductResourceAliasStorageRepository extends AbstractRepository implement
     }
 
     /**
-     * @param int[] $productConcreteIds
+     * @param array<int> $productConcreteIds
      *
-     * @return string[]
+     * @return array<string[]>
      */
     public function getProductConcreteSkuList(array $productConcreteIds): array
     {

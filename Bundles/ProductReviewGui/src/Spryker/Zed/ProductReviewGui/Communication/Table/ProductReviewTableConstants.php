@@ -19,20 +19,44 @@ use Spryker\Zed\ProductReviewGui\Persistence\ProductReviewGuiQueryContainer;
  */
 interface ProductReviewTableConstants
 {
+    /**
+     * @var string
+     */
     public const TABLE_IDENTIFIER = 'product-review-table';
 
     public const SORT_DESC = TableConfiguration::SORT_DESC;
 
     public const PARAM_ID = UpdateController::PARAM_ID;
 
+    /**
+     * @var string
+     */
     public const COL_ID_PRODUCT_REVIEW = 'id_product_review';
     public const COL_CREATED = ProductReviewGuiQueryContainer::FIELD_CREATED;
+    /**
+     * @var string
+     */
     public const COL_CUSTOMER_NAME = 'customer_name';
+    /**
+     * @var string
+     */
     public const COL_NICK_NAME = 'nickname';
     public const COL_PRODUCT_NAME = ProductReviewGuiQueryContainer::FIELD_PRODUCT_NAME;
+    /**
+     * @var string
+     */
     public const COL_RATING = 'rating';
+    /**
+     * @var string
+     */
     public const COL_STATUS = 'status';
+    /**
+     * @var string
+     */
     public const COL_ACTIONS = 'actions';
+    /**
+     * @var string
+     */
     public const COL_SHOW_DETAILS = 'show_details';
     public const COL_PRODUCT_ABSTRACT_LOCALIZED_ATTRIBUTES_NAME = SpyProductAbstractLocalizedAttributesTableMap::COL_NAME;
     public const COL_CUSTOMER_FIRST_NAME = SpyCustomerTableMap::COL_FIRST_NAME;
@@ -43,5 +67,8 @@ interface ProductReviewTableConstants
     public const COL_PRODUCT_REVIEW_GUI_ID_CUSTOMER = ProductReviewGuiQueryContainer::FIELD_ID_CUSTOMER;
     public const COL_PRODUCT_REVIEW_GUI_FIRST_NAME = ProductReviewGuiQueryContainer::FIELD_CUSTOMER_FIRST_NAME;
     public const COL_PRODUCT_REVIEW_GUI_LAST_NAME = ProductReviewGuiQueryContainer::FIELD_CUSTOMER_LAST_NAME;
+    /**
+     * @var string
+     */
     public const EXTRA_DETAILS = 'details';
 }

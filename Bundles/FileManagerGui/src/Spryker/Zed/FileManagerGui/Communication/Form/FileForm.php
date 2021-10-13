@@ -29,19 +29,55 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  */
 class FileForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const FIELD_FILE_NAME = 'fileName';
+    /**
+     * @var string
+     */
     public const FILED_FILE_UPLOAD = 'fileUpload';
+    /**
+     * @var string
+     */
     public const FIELD_ID_FILE = 'idFile';
+    /**
+     * @var string
+     */
     public const FIELD_USE_REAL_NAME = 'useRealName';
+    /**
+     * @var string
+     */
     public const FILE_LOCALIZED_ATTRIBUTES = 'localizedAttributes';
 
+    /**
+     * @var string
+     */
     public const OPTION_DATA_CLASS = 'data_class';
+    /**
+     * @var string
+     */
     public const OPTION_AVAILABLE_LOCALES = 'option_available_locales';
+    /**
+     * @var string
+     */
     public const OPTION_ALLOWED_MIME_TYPES = 'option_allowed_mime_types';
 
+    /**
+     * @var string
+     */
     protected const ERROR_MIME_TYPE_MESSAGE = 'File type is not allowed for uploading';
+    /**
+     * @var string
+     */
     protected const ERROR_FILE_MISSED_EDIT_MESSAGE = 'Upload a file or specify a new file name';
+    /**
+     * @var string
+     */
     protected const ERROR_FILE_MISSED_ADD_MESSAGE = 'Upload a file';
+    /**
+     * @var string
+     */
     protected const ERROR_FILE_NAME_MISSED_ADD_MESSAGE = 'Specify a file name or use real one';
 
     /**
@@ -178,11 +214,11 @@ class FileForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array|null $options
+     * @param mixed|null $options
      *
      * @return $this
      */
-    protected function addFileLocalizedAttributesForm(FormBuilderInterface $builder, ?array $options = null)
+    protected function addFileLocalizedAttributesForm(FormBuilderInterface $builder, $options = null)
     {
         $builder->add(static::FILE_LOCALIZED_ATTRIBUTES, CollectionType::class, [
             'entry_type' => FileLocalizedAttributesForm::class,
@@ -210,7 +246,7 @@ class FileForm extends AbstractType
 
         $fileUploadTransfer = new FileUploadTransfer();
         $fileUploadTransfer->setClientOriginalName($uploadedFile->getClientOriginalName());
-        $fileUploadTransfer->setRealPath($uploadedFile->getRealPath());
+        $fileUploadTransfer->setRealPath((string)$uploadedFile->getRealPath());
         $fileUploadTransfer->setMimeTypeName($uploadedFile->getMimeType());
         $fileUploadTransfer->setClientOriginalExtension($uploadedFile->getClientOriginalExtension());
         $fileUploadTransfer->setSize($uploadedFile->getSize());

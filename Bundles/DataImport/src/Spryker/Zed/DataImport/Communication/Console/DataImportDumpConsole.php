@@ -35,12 +35,15 @@ class DataImportDumpConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $dataImporter = $this->getFacade()->listImporters();
-        if (!$dataImporter) {
+        $dataImportersDump = $this->getFactory()
+            ->createDataImporterDumpExecutor()
+            ->executeDataImportersDump();
+
+        if (!$dataImportersDump) {
             return static::CODE_ERROR;
         }
 
-        $formattedDataImporterList = $this->formatForTable($dataImporter);
+        $formattedDataImporterList = $this->formatForTable($dataImportersDump);
         $table = new Table($output);
         $table
             ->setHeaders(['Import Type', 'Class Name'])
@@ -52,7 +55,7 @@ class DataImportDumpConsole extends Console
     }
 
     /**
-     * @param string[] $dataImporter
+     * @param array<string> $dataImporter
      *
      * @return array
      */

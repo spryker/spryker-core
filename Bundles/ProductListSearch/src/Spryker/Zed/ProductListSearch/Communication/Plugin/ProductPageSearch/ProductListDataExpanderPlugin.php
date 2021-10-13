@@ -21,6 +21,9 @@ use Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageDataExpanderInter
  */
 class ProductListDataExpanderPlugin extends AbstractPlugin implements ProductPageDataExpanderInterface
 {
+    /**
+     * @var string
+     */
     protected const KEY_FK_PRODUCT_ABSTRACT = 'fk_product_abstract';
 
     /**
@@ -57,8 +60,8 @@ class ProductListDataExpanderPlugin extends AbstractPlugin implements ProductPag
 
     /**
      * @param \Generated\Shared\Transfer\ProductPageSearchTransfer $productAbstractPageSearchTransfer
-     * @param int[] $blacklistIds
-     * @param int[] $whitelistIds
+     * @param array<int> $blacklistIds
+     * @param array<int> $whitelistIds
      *
      * @return void
      */

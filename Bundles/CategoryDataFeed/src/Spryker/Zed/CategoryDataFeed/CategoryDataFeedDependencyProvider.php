@@ -16,6 +16,9 @@ use Spryker\Zed\Kernel\Container;
  */
 class CategoryDataFeedDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CATEGORY_QUERY_CONTAINER = 'CATEGORY_QUERY_CONTAINER';
 
     /**

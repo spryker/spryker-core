@@ -17,7 +17,7 @@ use Spryker\Zed\QuoteRequestDataImport\Business\DataSet\QuoteRequestDataSetInter
 class CompanyUserKeyToIdCompanyUser implements DataImportStepInterface
 {
     /**
-     * @var int[]
+     * @var array<int>
      */
     protected $idCompanyUserCache;
 

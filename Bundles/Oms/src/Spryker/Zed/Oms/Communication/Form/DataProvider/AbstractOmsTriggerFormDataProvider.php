@@ -9,14 +9,35 @@ namespace Spryker\Zed\Oms\Communication\Form\DataProvider;
 
 abstract class AbstractOmsTriggerFormDataProvider
 {
+    /**
+     * @var string
+     */
     public const OMS_ACTION_ITEM_TRIGGER = 'submit-trigger-event-for-order-items';
+    /**
+     * @var string
+     */
     public const OMS_ACTION_ORDER_TRIGGER = 'submit-trigger-event-for-order';
 
+    /**
+     * @var string
+     */
     public const QUERY_PARAM_EVENT = 'event';
+    /**
+     * @var string
+     */
     public const QUERY_PARAM_ID_SALES_ORDER = 'id-sales-order';
+    /**
+     * @var string
+     */
     public const QUERY_PARAM_ID_SALES_ORDER_ITEM = 'id-sales-order-item';
+    /**
+     * @var string
+     */
     public const QUERY_PARAM_REDIRECT = 'redirect';
 
+    /**
+     * @var string
+     */
     public const SUBMIT_BUTTON_CLASS = 'btn btn-primary btn-sm trigger-event';
 
     /**

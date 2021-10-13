@@ -37,7 +37,7 @@ class SkuIncrementGenerator implements SkuIncrementGeneratorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteTransfers
+     * @param array<\Generated\Shared\Transfer\ProductConcreteTransfer> $productConcreteTransfers
      *
      * @return string
      */

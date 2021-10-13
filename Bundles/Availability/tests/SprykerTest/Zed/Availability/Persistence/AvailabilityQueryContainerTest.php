@@ -28,9 +28,21 @@ use Spryker\Zed\Availability\Persistence\AvailabilityQueryContainer;
  */
 class AvailabilityQueryContainerTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const STORE_NAME = 'Test store';
+    /**
+     * @var string
+     */
     protected const LOCALE_NAME = 'xxx';
+    /**
+     * @var string
+     */
     protected const STOCK_NAME_1 = 'Test Stock 1';
+    /**
+     * @var string
+     */
     protected const STOCK_NAME_2 = 'Test Stock 2';
 
     /**
@@ -54,7 +66,7 @@ class AvailabilityQueryContainerTest extends Unit
     protected $storeTransfer;
 
     /**
-     * @var \Generated\Shared\Transfer\StockTransfer[]
+     * @var array<\Generated\Shared\Transfer\StockTransfer>
      */
     protected $stockTransfers = [];
 
@@ -141,5 +153,31 @@ class AvailabilityQueryContainerTest extends Unit
 
         $this->assertCount(1, $queryResult);
         $this->assertEquals($productQuantity * 2, $queryResult[0][AvailabilityQueryContainer::STOCK_QUANTITY]);
+    }
+
+    /**
+     * @return void
+     */
+    public function testQuerySpyProductAbstractAvailabilityWithStockWillReturnCorrectDataWhenStoreDoesNotHaveAssignedStocks(): void
+    {
+        // Arrange
+        $storeName = 'Store without stocks';
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => $storeName]);
+
+        $productQuantity = random_int(1, 25);
+        $this->tester->haveProductWithStockAndAvailability(
+            $storeTransfer,
+            $this->localeTransfer,
+            $this->stockTransfers,
+            $productQuantity
+        );
+
+        // Act
+        $queryResult = $this->availabilityQueryContainer->querySpyProductAbstractAvailabilityWithStock([])
+            ->find()
+            ->getData();
+
+        // Assert
+        $this->assertNotEmpty($queryResult);
     }
 }

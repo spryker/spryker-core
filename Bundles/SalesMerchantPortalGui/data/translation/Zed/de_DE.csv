@@ -2,49 +2,57 @@ Created,Erstellt
 Customer,Kunde
 Email,E-Mail
 "Grand Total",Gesamtsumme
-"Items States","Items States"
-"Merchant Reference",Händler-Referenznummer
-"No. of Items","No. of Items"
+"Items States",Artikelstatus
+"Merchant Reference",Verkäufer-Referenznummer
+"No. of Items",Artikelanzahl
 Orders,Bestellungen
-Reference,Reference
+Reference,Referenz
 Search,Suche
-States,States
+States,Status
 Store,Store
 Stores,Stores
-Details,Einzelheiten
+Details,"Bestellung ansehen"
 Order,Bestellung
 "Order date",Bestelldatum
 "Number of products","Anzahl der Produkte"
 Items,Artikel
-Shipments,Liefermethoden
+Shipments,Versandarten
 Subtotal,Zwischensumme
 Shipment,Versand
-"Included Taxes","Enthaltener Steuern"
+"Included Taxes","Inkl. Steuern"
 "Client name",Kundenname
 "Client email",Kunden-e-mail
-"Total orders","Gesamtzahl der Bestellungen"
+"Total orders","Bestellungen gesamt"
 Overview,Überblick
 Totals,Summen
-"From the last %daysNumber% days","From the last %daysNumber% days"
-"Manage Orders","Manage Orders"
-New,New
-"Per Store","Per Store"
-"The state is updated successfully.","The state is updated successfully."
+"From the last %daysNumber% days","Letzte %daysNumber% Tage"
+"Manage Orders","Bestellungen verwalten"
+New,Neu
+"Per Store","Nach Store"
+"The state is updated successfully.","Der Status wurde aktualisiert."
 "Only matching states items will be updated.","Es werden nur Elemente mit übereinstimmenden Status aktualisiert."
-"Order's Items state","Artikelstatus der Bestellung"
-"Merchant order not found for id %d.","Händlerbestellung für ID %d nicht gefunden"
+"Order's Items state",Artikelstatus
+"Merchant order not found for id %d.","Verkäuferbestellung für ID %d nicht gefunden"
 "Event name is empty.","Ereignisname ist leer."
-"Merchant order ids are empty.","Händlerbestell-IDs sind leer."
-Method,Methode
-Carrier,Träger
+"Merchant order ids are empty.","Verkäuferbestell-IDs sind leer."
+Method,Versandart
+Carrier,Versandanbieter
 "Delivery address",Lieferadresse
 "Requested Date",Wunschtermin
 SKU,SKU
 Image,Bild
 Name,Name
 Quantity,Menge
-State,State
-"There are no applicable actions for the selected items.","There are no applicable actions for the selected items."
-"Shipment %index% of %total%","Versand %index% von %total%"
+State,Status
+"There are no applicable actions for the selected items.","Für die ausgewählten Artikel sind keine Aktionen verfügbar."
+"Shipment %index% of %total%","Lieferung %index% von %total%"
 "Canceled Amount","Stornierter Betrag"
 "Discount Amount",Rabattbetrag
+"Canceled By Merchant","Vom Händler storniert"
+Shipped,Versendet
+Delivered,Zugestellt
+initiate,Starten
+ship,Versenden
+deliver,Zustellen
+close,Schließen
+"cancel by merchant",Stornieren

@@ -69,7 +69,7 @@ class ShipmentOrderHydrate implements ShipmentOrderHydrateInterface
     }
 
     /**
-     * @param iterable|\Generated\Shared\Transfer\ShipmentTransfer[] $shipmentTransfers
+     * @param iterable<\Generated\Shared\Transfer\ShipmentTransfer> $shipmentTransfers
      *
      * @return bool
      */
@@ -79,7 +79,7 @@ class ShipmentOrderHydrate implements ShipmentOrderHydrateInterface
     }
 
     /**
-     * @param iterable|\Generated\Shared\Transfer\ShipmentTransfer[] $shipmentTransfers
+     * @param iterable<\Generated\Shared\Transfer\ShipmentTransfer> $shipmentTransfers
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
@@ -113,7 +113,7 @@ class ShipmentOrderHydrate implements ShipmentOrderHydrateInterface
     }
 
     /**
-     * @param iterable|\Generated\Shared\Transfer\ShipmentTransfer[] $shipmentTransfers
+     * @param iterable<\Generated\Shared\Transfer\ShipmentTransfer> $shipmentTransfers
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
@@ -147,7 +147,7 @@ class ShipmentOrderHydrate implements ShipmentOrderHydrateInterface
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
-     * @param int[] $idSalesOrderItemList
+     * @param array<int> $idSalesOrderItemList
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
@@ -169,7 +169,7 @@ class ShipmentOrderHydrate implements ShipmentOrderHydrateInterface
 
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     * @param \Generated\Shared\Transfer\ShipmentTransfer[] $shipmentTransfers
+     * @param array<\Generated\Shared\Transfer\ShipmentTransfer> $shipmentTransfers
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
@@ -189,7 +189,7 @@ class ShipmentOrderHydrate implements ShipmentOrderHydrateInterface
 
     /**
      * @param \Generated\Shared\Transfer\ExpenseTransfer $expenseTransfer
-     * @param \Generated\Shared\Transfer\ShipmentTransfer[] $shipmentTransfers
+     * @param array<\Generated\Shared\Transfer\ShipmentTransfer> $shipmentTransfers
      *
      * @return \Generated\Shared\Transfer\ShipmentTransfer|null
      */
@@ -223,10 +223,10 @@ class ShipmentOrderHydrate implements ShipmentOrderHydrateInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ShipmentTransfer[] $shipmentTransfers
+     * @param array<\Generated\Shared\Transfer\ShipmentTransfer> $shipmentTransfers
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return \Generated\Shared\Transfer\ShipmentTransfer[]
+     * @return array<\Generated\Shared\Transfer\ShipmentTransfer>
      */
     protected function addOrderAddressToShipments(array $shipmentTransfers, OrderTransfer $orderTransfer): array
     {
@@ -243,7 +243,7 @@ class ShipmentOrderHydrate implements ShipmentOrderHydrateInterface
      * @deprecated Exists for Backward Compatibility reasons only.
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     * @param iterable|\Generated\Shared\Transfer\ShipmentTransfer[] $shipmentTransfers
+     * @param iterable<\Generated\Shared\Transfer\ShipmentTransfer> $shipmentTransfers
      *
      * @return \Generated\Shared\Transfer\ShipmentTransfer|null
      */

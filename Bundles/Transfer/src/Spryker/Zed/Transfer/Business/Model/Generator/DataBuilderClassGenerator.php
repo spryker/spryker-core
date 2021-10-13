@@ -12,6 +12,9 @@ use Twig\Loader\FilesystemLoader;
 
 class DataBuilderClassGenerator implements GeneratorInterface
 {
+    /**
+     * @var string
+     */
     public const TWIG_TEMPLATES_LOCATION = '/Templates/';
 
     /**

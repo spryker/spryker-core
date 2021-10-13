@@ -18,13 +18,14 @@ class ProductPageAvailabilityStockSearchListener extends AbstractProductPageSear
 {
     /**
      * @uses \Orm\Zed\Availability\Persistence\Map\SpyAvailabilityTableMap::COL_SKU
+     * @var string
      */
     protected const COL_SKU = 'spy_availability.sku';
 
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
      * @param string $eventName
      *
      * @return void

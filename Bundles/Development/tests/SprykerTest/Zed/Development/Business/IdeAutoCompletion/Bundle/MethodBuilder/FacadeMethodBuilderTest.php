@@ -30,7 +30,13 @@ use Symfony\Component\Finder\SplFileInfo;
  */
 class FacadeMethodBuilderTest extends Unit
 {
+    /**
+     * @var string
+     */
     public const BASE_DIRECTORY = '/foo/bar/baz/*/src/';
+    /**
+     * @var string
+     */
     public const BUNDLE_DIRECTORY = '/foo/bar/baz/FooBundle/src/Spryker/FooApplication/';
 
     /**

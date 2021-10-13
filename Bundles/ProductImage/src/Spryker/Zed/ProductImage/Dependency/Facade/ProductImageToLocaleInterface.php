@@ -22,12 +22,12 @@ interface ProductImageToLocaleInterface
     public function getLocale($localeName);
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getAvailableLocales();
 
     /**
-     * @return \Generated\Shared\Transfer\LocaleTransfer[]
+     * @return array<\Generated\Shared\Transfer\LocaleTransfer>
      */
     public function getLocaleCollection();
 

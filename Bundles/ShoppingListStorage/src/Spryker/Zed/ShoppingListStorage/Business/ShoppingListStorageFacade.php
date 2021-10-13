@@ -23,7 +23,7 @@ class ShoppingListStorageFacade extends AbstractFacade implements ShoppingListSt
      *
      * @api
      *
-     * @param string[] $customerReferences
+     * @param array<string> $customerReferences
      *
      * @return void
      */

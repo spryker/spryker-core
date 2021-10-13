@@ -1,6 +1,6 @@
 # Session Module
-[![Build Status](https://travis-ci.org/spryker/session.svg)](https://travis-ci.org/spryker/session)
-[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
+[![Latest Stable Version](https://poser.pugx.org/spryker/session/v/stable.svg)](https://packagist.org/packages/spryker/session)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.4-8892BF.svg)](https://php.net/)
 
 Session is a wrapper for Yves and Zed that includes a session locking mechanism.
 

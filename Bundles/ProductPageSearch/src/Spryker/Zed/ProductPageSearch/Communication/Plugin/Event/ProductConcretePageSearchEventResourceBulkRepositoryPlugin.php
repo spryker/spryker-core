@@ -22,6 +22,9 @@ use Spryker\Zed\Product\Dependency\ProductEvents;
  */
 class ProductConcretePageSearchEventResourceBulkRepositoryPlugin extends AbstractPlugin implements EventResourceBulkRepositoryPluginInterface
 {
+    /**
+     * @var string
+     */
     protected const COL_ID_PRODUCT_CONCRETE = '.id_product_concrete';
 
     /**
@@ -33,7 +36,7 @@ class ProductConcretePageSearchEventResourceBulkRepositoryPlugin extends Abstrac
      * @param int $offset
      * @param int $limit
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
      */
     public function getData(int $offset, int $limit): array
     {

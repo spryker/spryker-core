@@ -29,6 +29,9 @@ use Spryker\Client\ProductConfigurationStorage\ProductConfigurationStorageFactor
  */
 class ExpandProductViewWithProductConfigurationInstanceTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const TEST_LOCALE_NAME = 'test_locale_name';
 
     /**

@@ -22,9 +22,21 @@ use Twig\Environment;
  */
 class CmsBlockContentWidgetPlugin extends AbstractPlugin implements CmsContentWidgetPluginInterface
 {
+    /**
+     * @var string
+     */
     protected const STORAGE_DATA_KEY_CMS_BLOCK_GLOSSARY_KEY_MAPPINGS = 'SpyCmsBlockGlossaryKeyMappings';
+    /**
+     * @var string
+     */
     protected const CMS_BLOCK_GLOSSARY_KEY_MAPPING_PLACEHOLDER = 'placeholder';
+    /**
+     * @var string
+     */
     protected const CMS_BLOCK_GLOSSARY_KEY_MAPPING_GLOSSARY_KEY = 'GlossaryKey';
+    /**
+     * @var string
+     */
     protected const CMS_BLOCK_GLOSSARY_KEY_MAPPING_KEY = 'key';
 
     /**
@@ -55,7 +67,7 @@ class CmsBlockContentWidgetPlugin extends AbstractPlugin implements CmsContentWi
     /**
      * @param \Twig\Environment $twig
      * @param array $context
-     * @param string[] $blockNames
+     * @param array<string> $blockNames
      * @param string|null $templateIdentifier
      *
      * @return string
@@ -101,7 +113,7 @@ class CmsBlockContentWidgetPlugin extends AbstractPlugin implements CmsContentWi
     }
 
     /**
-     * @param string[] $blockNames
+     * @param array<string> $blockNames
      *
      * @return array
      */

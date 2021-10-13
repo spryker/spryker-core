@@ -17,6 +17,9 @@ use Symfony\Component\HttpFoundation\Request;
 
 class DataRequestBuilder implements DataRequestBuilderInterface
 {
+    /**
+     * @var string
+     */
     protected const DEFAULT_SORT_DIRECTION = 'ASC';
 
     /**
@@ -89,7 +92,7 @@ class DataRequestBuilder implements DataRequestBuilderInterface
         }
 
         foreach ($guiTableFiltersConfigurationTransfer->getItems() as $guiTableFilterTransfer) {
-            $idFilter = $guiTableFilterTransfer->getId();
+            $idFilter = $guiTableFilterTransfer->getIdOrFail();
             if (!array_key_exists($idFilter, $requestFilters)) {
                 continue;
             }

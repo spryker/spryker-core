@@ -21,6 +21,9 @@ use Spryker\Client\Price\PriceConfig;
  */
 class PriceClientTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const CACHED_PRICE_MODE = 'CACHED_PRICE_MODE';
 
     /**

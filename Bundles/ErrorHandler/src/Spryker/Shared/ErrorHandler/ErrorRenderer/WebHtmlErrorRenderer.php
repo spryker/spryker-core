@@ -12,6 +12,9 @@ use Spryker\Shared\ErrorHandler\ErrorHandlerConstants;
 
 class WebHtmlErrorRenderer implements ErrorRendererInterface
 {
+    /**
+     * @var string
+     */
     public const APPLICATION_ZED = 'ZED';
 
     /**
@@ -58,6 +61,6 @@ class WebHtmlErrorRenderer implements ErrorRendererInterface
      */
     protected function getHtmlErrorPageContent($errorPage)
     {
-        return file_get_contents($errorPage);
+        return (string)file_get_contents($errorPage);
     }
 }

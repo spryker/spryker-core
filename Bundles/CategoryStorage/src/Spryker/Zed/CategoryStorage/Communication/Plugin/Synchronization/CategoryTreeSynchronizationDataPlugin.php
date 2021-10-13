@@ -13,6 +13,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQueryContainerPluginInterface;
 
 /**
+ * @deprecated Use {@link \Spryker\Zed\CategoryStorage\Communication\Plugin\Synchronization\CategoryTreeSynchronizationDataBulkRepositoryPlugin} instead.
+ *
  * @method \Spryker\Zed\CategoryStorage\Persistence\CategoryStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\CategoryStorage\Business\CategoryStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\CategoryStorage\Communication\CategoryStorageCommunicationFactory getFactory()
@@ -41,7 +43,7 @@ class CategoryTreeSynchronizationDataPlugin extends AbstractPlugin implements Sy
      */
     public function hasStore(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -49,7 +51,7 @@ class CategoryTreeSynchronizationDataPlugin extends AbstractPlugin implements Sy
      *
      * @api
      *
-     * @param int[] $ids
+     * @param array<int> $ids
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria|null
      */

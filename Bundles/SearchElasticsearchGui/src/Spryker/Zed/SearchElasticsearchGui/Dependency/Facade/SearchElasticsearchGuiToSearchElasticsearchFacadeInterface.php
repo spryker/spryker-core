@@ -12,14 +12,14 @@ use Generated\Shared\Transfer\ElasticsearchSearchContextTransfer;
 interface SearchElasticsearchGuiToSearchElasticsearchFacadeInterface
 {
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getIndexNames(): array;
 
     /**
      * @param \Generated\Shared\Transfer\ElasticsearchSearchContextTransfer $elasticsearchSearchContextTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getIndexMetaData(ElasticsearchSearchContextTransfer $elasticsearchSearchContextTransfer): array;
 

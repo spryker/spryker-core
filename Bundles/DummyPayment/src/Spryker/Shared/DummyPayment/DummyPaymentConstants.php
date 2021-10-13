@@ -12,6 +12,12 @@ namespace Spryker\Shared\DummyPayment;
  */
 interface DummyPaymentConstants
 {
+    /**
+     * @var string
+     */
     public const PROVIDER_NAME = 'DummyPayment';
+    /**
+     * @var string
+     */
     public const LAST_NAME_FOR_INVALID_TEST = 'Invalid';
 }

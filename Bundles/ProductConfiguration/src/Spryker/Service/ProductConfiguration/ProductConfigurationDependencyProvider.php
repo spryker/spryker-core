@@ -14,7 +14,13 @@ use Spryker\Service\ProductConfiguration\Dependency\Service\ProductConfiguration
 
 class ProductConfigurationDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
+    /**
+     * @var string
+     */
     public const SERVICE_UTIL_TEXT = 'SERVICE_UTIL_TEXT';
 
     /**

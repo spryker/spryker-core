@@ -39,11 +39,11 @@ class VoucherRestResponseBuilder implements VoucherRestResponseBuilderInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\DiscountTransfer[] $discountTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\DiscountTransfer> $discountTransfers
      * @param string $parentResourceType
      * @param string $parentResourceId
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>
      */
     public function createVoucherRestResource(ArrayObject $discountTransfers, string $parentResourceType, string $parentResourceId): array
     {

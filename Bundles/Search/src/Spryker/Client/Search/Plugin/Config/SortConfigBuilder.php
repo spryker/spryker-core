@@ -16,13 +16,22 @@ use Spryker\Client\Search\Dependency\Plugin\SortConfigBuilderInterface;
  */
 class SortConfigBuilder extends AbstractPlugin implements SortConfigBuilderInterface
 {
+    /**
+     * @var string
+     */
     public const DIRECTION_ASC = 'asc';
+    /**
+     * @var string
+     */
     public const DIRECTION_DESC = 'desc';
 
+    /**
+     * @var string
+     */
     public const DEFAULT_SORT_PARAM_KEY = 'sort';
 
     /**
-     * @var \Generated\Shared\Transfer\SortConfigTransfer[]
+     * @var array<\Generated\Shared\Transfer\SortConfigTransfer>
      */
     protected $sortConfigTransfers = [];
 
@@ -68,7 +77,7 @@ class SortConfigBuilder extends AbstractPlugin implements SortConfigBuilderInter
     }
 
     /**
-     * @return \Generated\Shared\Transfer\SortConfigTransfer[]
+     * @return array<\Generated\Shared\Transfer\SortConfigTransfer>
      */
     public function getAll()
     {

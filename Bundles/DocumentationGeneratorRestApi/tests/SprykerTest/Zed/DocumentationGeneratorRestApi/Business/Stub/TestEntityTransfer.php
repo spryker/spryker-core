@@ -11,8 +11,14 @@ use Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer;
 
 class TestEntityTransfer extends AbstractEntityTransfer
 {
+    /**
+     * @var string
+     */
     public const ATTRIBUTE1 = 'attribute1';
 
+    /**
+     * @var string
+     */
     public const ATTRIBUTE2 = 'attribute2';
 
     /**

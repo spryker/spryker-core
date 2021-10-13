@@ -40,11 +40,29 @@ use Spryker\Zed\StateMachine\Business\StateMachineFacade;
  */
 class MerchantOmsFacadeTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const TEST_STATE_MACHINE = 'Test01';
+    /**
+     * @var string
+     */
     protected const TEST_STATE_MACHINE_EVENT = 'test';
+    /**
+     * @var string
+     */
     protected const TEST_PROCESS_NAME = 'processName';
+    /**
+     * @var array
+     */
     protected const TEST_STATE_NAMES = ['new', 'canceled'];
+    /**
+     * @var array
+     */
     protected const TEST_MANUAL_EVENTS = ['ship', 'cancel'];
+    /**
+     * @var array
+     */
     protected const TEST_MANUAL_EVENT_NAMES = [
         [
             'ship',
@@ -263,9 +281,9 @@ class MerchantOmsFacadeTest extends Unit
     }
 
     /**
-     * @param string[] $stateNames
+     * @param array<string> $stateNames
      * @param \Generated\Shared\Transfer\StateMachineProcessTransfer|null $stateMachineProcessTransfer
-     * @param string[] $manualEvents
+     * @param array<string> $manualEvents
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\MerchantOms\Dependency\Facade\MerchantOmsToStateMachineFacadeInterface
      */

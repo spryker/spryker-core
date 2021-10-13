@@ -21,4 +21,11 @@ interface ProductConfigurationStorageMapperInterface
         array $productConfigurationStorageData,
         ProductConfigurationStorageTransfer $configurationStorageTransfer
     ): ProductConfigurationStorageTransfer;
+
+    /**
+     * @param array $productConfigurationStoragesData
+     *
+     * @return array<\Generated\Shared\Transfer\ProductConfigurationStorageTransfer>
+     */
+    public function mapProductConfigurationStoragesDataToProductConfigurationStorageTransfers(array $productConfigurationStoragesData): array;
 }

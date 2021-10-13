@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CmsBlockCategoryConnector\Business\Model;
 
+use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\CmsBlockTransfer;
 use Orm\Zed\CmsBlock\Persistence\SpyCmsBlock;
 use Spryker\Zed\CmsBlockCategoryConnector\Persistence\CmsBlockCategoryConnectorQueryContainerInterface;
@@ -50,7 +51,7 @@ class CmsBlockCategoryReader implements CmsBlockCategoryReaderInterface
      * @param int $idCmsBlock
      * @param int $idLocale
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getRenderedCategoryList($idCmsBlock, $idLocale)
     {
@@ -73,7 +74,7 @@ class CmsBlockCategoryReader implements CmsBlockCategoryReaderInterface
      * @param int $idCategory
      * @param int $idCategoryTemplate
      *
-     * @return \Generated\Shared\Transfer\CmsBlockTransfer[]
+     * @return array<\Generated\Shared\Transfer\CmsBlockTransfer>
      */
     public function getCmsBlockCollection($idCategory, $idCategoryTemplate)
     {
@@ -91,6 +92,27 @@ class CmsBlockCategoryReader implements CmsBlockCategoryReaderInterface
         }
 
         return $cmsBlockTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     *
+     * @return array<string>
+     */
+    public function getCmsBlockNamesIndexedByCmsBlockIdsForCategory(CategoryTransfer $categoryTransfer): array
+    {
+        $cmsBlocks = [];
+
+        $cmsBlockTransfers = $this->getCmsBlockCollection(
+            $categoryTransfer->getIdCategoryOrFail(),
+            $categoryTransfer->getFkCategoryTemplateOrFail()
+        );
+
+        foreach ($cmsBlockTransfers as $cmsBlockTransfer) {
+            $cmsBlocks[$cmsBlockTransfer->getIdCmsBlock()] = $cmsBlockTransfer->getName();
+        }
+
+        return $cmsBlocks;
     }
 
     /**

@@ -13,7 +13,13 @@ use Spryker\Shared\Kernel\Store;
 
 class ProductSearchDependencyProvider extends AbstractDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const STORE = 'store';
+    /**
+     * @var string
+     */
     public const CLIENT_STORAGE = 'storage client';
 
     /**

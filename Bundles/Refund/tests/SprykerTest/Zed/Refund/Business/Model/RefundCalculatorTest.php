@@ -52,7 +52,7 @@ class RefundCalculatorTest extends Unit
     }
 
     /**
-     * @param \Spryker\Zed\Refund\Dependency\Plugin\RefundCalculatorPluginInterface[] $refundCalculatorPlugins
+     * @param array<\Spryker\Zed\Refund\Dependency\Plugin\RefundCalculatorPluginInterface> $refundCalculatorPlugins
      *
      * @return \Spryker\Zed\Refund\Business\Model\RefundCalculator
      */

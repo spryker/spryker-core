@@ -40,7 +40,7 @@ class AvailabilityGuiToAvailabilityQueryContainerBridge implements AvailabilityG
     /**
      * @param int $idLocale
      * @param int $idStore
-     * @param int[] $stockIds
+     * @param array<int> $stockIds
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
@@ -80,10 +80,10 @@ class AvailabilityGuiToAvailabilityQueryContainerBridge implements AvailabilityG
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      * @param int $idLocale
      * @param int $idStore
-     * @param string[] $stockNames
+     * @param array<string> $stockNames
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */

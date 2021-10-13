@@ -22,6 +22,9 @@ class OrderItemSplit implements OrderItemSplitInterface
 {
     use TransactionTrait;
 
+    /**
+     * @var string
+     */
     public const SPLIT_MARKER = 'split#';
 
     /**

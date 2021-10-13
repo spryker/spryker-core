@@ -12,12 +12,30 @@ use Generated\Shared\Transfer\TabsViewTransfer;
 
 class ProductListCreateAggregationTabsExpander implements ProductListCreateAggregationTabsExpanderInterface
 {
+    /**
+     * @var string
+     */
     public const CATEGORIES_TAB_NAME = 'product_list_category_relation';
+    /**
+     * @var string
+     */
     public const CATEGORIES_TAB_TITLE = 'Assign Categories';
+    /**
+     * @var string
+     */
     public const CATEGORIES_TAB_TEMPLATE = '@ProductListGui/_partials/_tabs/product-list-category-relation.twig';
 
+    /**
+     * @var string
+     */
     public const PRODUCTS_TAB_NAME = 'product_list_product_concrete_relation';
+    /**
+     * @var string
+     */
     public const PRODUCTS_TAB_TITLE = 'Assign Products';
+    /**
+     * @var string
+     */
     public const PRODUCTS_TAB_TEMPLATE = '@ProductListGui/_partials/_tabs/product-list-product-concrete-relation.twig';
 
     /**

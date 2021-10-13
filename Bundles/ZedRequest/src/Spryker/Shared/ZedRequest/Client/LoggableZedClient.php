@@ -77,7 +77,7 @@ class LoggableZedClient implements AbstractZedClientInterface
     }
 
     /**
-     * @return \Generated\Shared\Transfer\MessageTransfer[]
+     * @return array<\Generated\Shared\Transfer\MessageTransfer>
      */
     public function getInfoStatusMessages(): array
     {
@@ -85,7 +85,7 @@ class LoggableZedClient implements AbstractZedClientInterface
     }
 
     /**
-     * @return \Generated\Shared\Transfer\MessageTransfer[]
+     * @return array<\Generated\Shared\Transfer\MessageTransfer>
      */
     public function getErrorStatusMessages(): array
     {
@@ -93,7 +93,7 @@ class LoggableZedClient implements AbstractZedClientInterface
     }
 
     /**
-     * @return \Generated\Shared\Transfer\MessageTransfer[]
+     * @return array<\Generated\Shared\Transfer\MessageTransfer>
      */
     public function getSuccessStatusMessages(): array
     {

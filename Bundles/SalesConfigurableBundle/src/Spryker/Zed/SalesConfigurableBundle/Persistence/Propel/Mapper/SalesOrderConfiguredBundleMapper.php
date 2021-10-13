@@ -113,7 +113,7 @@ class SalesOrderConfiguredBundleMapper
     /**
      * @param \Orm\Zed\SalesConfigurableBundle\Persistence\SpySalesOrderConfiguredBundle $bundleEntity
      *
-     * @return \Generated\Shared\Transfer\SalesOrderConfiguredBundleItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\SalesOrderConfiguredBundleItemTransfer>
      */
     protected function mapBundleEntityToBundleItemTransfers(SpySalesOrderConfiguredBundle $bundleEntity): array
     {

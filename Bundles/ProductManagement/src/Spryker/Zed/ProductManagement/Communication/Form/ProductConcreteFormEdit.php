@@ -29,16 +29,43 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  */
 class ProductConcreteFormEdit extends ProductFormAdd
 {
+    /**
+     * @var string
+     */
     public const FIELD_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
+    /**
+     * @var string
+     */
     public const FIELD_ID_PRODUCT_CONCRETE = 'id_product';
+    /**
+     * @var string
+     */
     public const FIELD_VALID_FROM = 'valid_from';
+    /**
+     * @var string
+     */
     public const FIELD_VALID_TO = 'valid_to';
 
+    /**
+     * @var string
+     */
     public const FORM_ASSIGNED_BUNDLED_PRODUCTS = 'assigned_bundled_products';
+    /**
+     * @var string
+     */
     public const BUNDLED_PRODUCTS_TO_BE_REMOVED = 'product_bundles_to_be_removed';
+    /**
+     * @var string
+     */
     public const FORM_PRODUCT_CONCRETE_SUPER_ATTRIBUTES = 'form_product_concrete_super_attributes';
 
+    /**
+     * @var string
+     */
     public const OPTION_IS_BUNDLE_ITEM = 'is_bundle_item';
+    /**
+     * @var string
+     */
     public const VALIDITY_DATETIME_FORMAT = 'yyyy-MM-dd H:mm:ss';
 
     /**

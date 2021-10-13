@@ -12,5 +12,8 @@ namespace Spryker\Shared\ProductReview;
  */
 interface ProductReviewConstants
 {
+    /**
+     * @var string
+     */
     public const SEARCH_SORT_FIELD_CREATED_AT = 'created-at';
 }

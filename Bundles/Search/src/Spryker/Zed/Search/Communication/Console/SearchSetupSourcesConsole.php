@@ -17,7 +17,13 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class SearchSetupSourcesConsole extends Console
 {
+    /**
+     * @var string
+     */
     public const COMMAND_NAME = 'search:setup:sources';
+    /**
+     * @var string
+     */
     public const DESCRIPTION = 'This command will create the search sources.';
 
     /**

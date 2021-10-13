@@ -17,7 +17,7 @@ interface ReaderInterface
      *
      * @throws \Spryker\Zed\Dataset\Business\Exception\DatasetParseException
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\DatasetRowColumnValueTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\DatasetRowColumnValueTransfer>
      */
     public function parseFileToDataTransfers(DatasetFilePathTransfer $filePathTransfer): ArrayObject;
 }

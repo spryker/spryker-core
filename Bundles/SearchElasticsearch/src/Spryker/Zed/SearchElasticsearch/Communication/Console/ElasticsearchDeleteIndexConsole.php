@@ -17,8 +17,17 @@ use Symfony\Component\Console\Input\InputArgument;
  */
 class ElasticsearchDeleteIndexConsole extends AbstractIndexNameAwareSearchIndexConsole
 {
+    /**
+     * @var string
+     */
     public const COMMAND_NAME = 'elasticsearch:index:delete';
+    /**
+     * @var string
+     */
     public const DESCRIPTION = 'This command will delete Elasticsearch index by its name. If no index name is specified, all available indexes for the current store will be deleted.';
+    /**
+     * @var string
+     */
     public const COMMAND_ALIAS = 'search:index:delete';
 
     /**

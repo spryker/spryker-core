@@ -1,0 +1,62 @@
+{% block body %}
+    {% set productConcreteBulkFormFields = productConcreteBulkForm.children %}
+    {% set validityErrors = productConcreteBulkFormFields.validFrom.vars.errors | merge(
+        productConcreteBulkFormFields.validTo.vars.errors
+    ) %}
+    {% set bulkSections = {
+        status: {
+            title: 'Status' | trans,
+            activationName: activationNameStatus,
+            name: productConcreteBulkFormFields.isActive.vars.full_name,
+            placeholder: productConcreteBulkFormFields.isActive.vars.label | trans,
+            value: false,
+            error: productConcreteBulkFormFields.isActive.vars.errors[0].message | default | trans,
+        },
+        validity: {
+            title: 'Validity Dates & Time' | trans,
+            activationName: activationNameValidity,
+            name: {
+                from: productConcreteBulkFormFields.validFrom.vars.full_name,
+                to: productConcreteBulkFormFields.validTo.vars.full_name,
+            },
+            placeholder: {
+                from: productConcreteBulkFormFields.validFrom.vars.label | trans,
+                to: productConcreteBulkFormFields.validTo.vars.label | trans,
+            },
+            value: {
+                from: productConcreteBulkFormFields.validFrom.vars.value,
+                to: productConcreteBulkFormFields.validTo.vars.value,
+            },
+            error: validityErrors[0].message | default | trans,
+        }
+    } %}
+
+    {% block bulkEditProduct %}
+        {{ form_start(productConcreteBulkForm, {attr: {excludeFormTag: true}}) }}
+            <web-mp-bulk-edit-product-variants
+                    sections="{{ bulkSections | json_encode }}"
+                    cloak
+            >
+                {% block title %}
+                    <span title>{{ 'Bulk edit %number% variants' | trans({ '%number%': variantsNumber }) }}</span>
+                {% endblock %}
+
+                {% block action %}
+                    <web-spy-button size="lg" type="submit" action>{{ 'Save' | trans }}</web-spy-button>
+                {% endblock %}
+
+                {% block natification %}
+                    <web-spy-notification type="info" floating="false">
+                        <span title>
+                            {{ 'Enabling an option below will overwrite the existing input.' | trans }}
+                        </span>
+                    </web-spy-notification>
+                {% endblock %}
+            </web-mp-bulk-edit-product-variants>
+            {% do productConcreteBulkForm.isActive.setRendered %}
+            {% do productConcreteBulkForm.validFrom.setRendered %}
+            {% do productConcreteBulkForm.validTo.setRendered %}
+        {{ form_end(productConcreteBulkForm) }}
+
+    {% endblock %}
+{% endblock %}

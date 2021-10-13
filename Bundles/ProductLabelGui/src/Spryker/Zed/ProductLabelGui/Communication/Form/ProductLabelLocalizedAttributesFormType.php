@@ -21,8 +21,17 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class ProductLabelLocalizedAttributesFormType extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const FIELD_LOCALE_ID = 'localeId';
+    /**
+     * @var string
+     */
     public const FIELD_LOCALE_NAME = 'localeName';
+    /**
+     * @var string
+     */
     public const FIELD_NAME = 'name';
 
     /**

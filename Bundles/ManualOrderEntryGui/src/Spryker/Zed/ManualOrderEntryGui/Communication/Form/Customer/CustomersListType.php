@@ -20,8 +20,17 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class CustomersListType extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const TYPE_NAME = 'customers';
+    /**
+     * @var string
+     */
     public const FIELD_CUSTOMER = 'idCustomer';
+    /**
+     * @var string
+     */
     public const OPTION_CUSTOMER_ARRAY = 'option-category-array';
 
     /**

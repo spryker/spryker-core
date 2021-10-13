@@ -13,6 +13,9 @@ use Spryker\Glue\CompanyUserStorage\Processor\CompanyUser\Mapper\CompanyUserStor
 
 class CompanyUserStorageProvider implements CompanyUserStorageProviderInterface
 {
+    /**
+     * @var string
+     */
     protected const MAPPING_TYPE_UUID = 'uuid';
 
     /**

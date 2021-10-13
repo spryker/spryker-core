@@ -13,9 +13,9 @@ interface ProductBundleStorageRepositoryInterface
 {
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     * @param int[] $productConcreteIds
+     * @param array<int> $productConcreteIds
      *
-     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     * @return array<\Generated\Shared\Transfer\SynchronizationDataTransfer>
      */
     public function getPaginatedProductBundleStorageDataTransfers(
         FilterTransfer $filterTransfer,

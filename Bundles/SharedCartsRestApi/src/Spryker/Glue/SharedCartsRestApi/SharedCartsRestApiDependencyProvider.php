@@ -17,7 +17,13 @@ use Spryker\Glue\SharedCartsRestApiExtension\Dependency\Plugin\CompanyUserProvid
  */
 class SharedCartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const PLUGIN_COMPANY_USER_PROVIDER = 'PLUGIN_COMPANY_USER_PROVIDER';
+    /**
+     * @var string
+     */
     protected const EXCEPTION_MESSAGE_MISSING_COMPANY_USER_PROVIDER_PLUGIN = 'Missing instance of %s! You need to configure CompanyUserProviderPlugin in your own SharedCartsRestApiDependencyProvider::getCompanyUserProviderPlugin() to be able share carts.';
 
     /**

@@ -8,6 +8,8 @@
 namespace Spryker\Zed\Stock\Business;
 
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\StockCollectionTransfer;
+use Generated\Shared\Transfer\StockCriteriaFilterTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
 use Generated\Shared\Transfer\StockResponseTransfer;
 use Generated\Shared\Transfer\StockTransfer;
@@ -220,7 +222,7 @@ interface StockFacadeInterface
      *
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getAvailableStockTypes();
 
@@ -233,7 +235,7 @@ interface StockFacadeInterface
      *
      * @param int $idProductConcrete
      *
-     * @return \Generated\Shared\Transfer\StockProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\StockProductTransfer>
      */
     public function getStockProductsByIdProduct($idProductConcrete);
 
@@ -246,7 +248,7 @@ interface StockFacadeInterface
      * @param int $idProductConcrete
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return \Generated\Shared\Transfer\StockProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\StockProductTransfer>
      */
     public function findStockProductsByIdProductForStore($idProductConcrete, StoreTransfer $storeTransfer);
 
@@ -258,7 +260,7 @@ interface StockFacadeInterface
      *
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getStockTypesForStore(StoreTransfer $storeTransfer);
 
@@ -273,7 +275,7 @@ interface StockFacadeInterface
      *
      * @api
      *
-     * @return string[][]
+     * @return array<string[]>
      */
     public function getWarehouseToStoreMapping();
 
@@ -288,7 +290,7 @@ interface StockFacadeInterface
      *
      * @api
      *
-     * @return string[][]
+     * @return array<string[]>
      */
     public function getStoreToWarehouseMapping();
 
@@ -322,6 +324,7 @@ interface StockFacadeInterface
      * Specification:
      *  - Persists a new stock entity to database.
      *  - Touches the newly created stock.
+     *  - Executes {@link \Spryker\Zed\StockExtension\Dependency\Plugin\StockPostCreatePluginInterface} plugin stack.
      *
      * @api
      *
@@ -337,6 +340,7 @@ interface StockFacadeInterface
      *  - Updates stock store relationships.
      *  - Persists stock entity to database.
      *  - Touches the newly created stock.
+     *  - Executes {@link \Spryker\Zed\StockExtension\Dependency\Plugin\StockPostUpdatePluginInterface} plugin stack.
      *
      * @api
      *
@@ -354,7 +358,7 @@ interface StockFacadeInterface
      *
      * @param string $sku
      *
-     * @return \Generated\Shared\Transfer\StoreTransfer[]
+     * @return array<\Generated\Shared\Transfer\StoreTransfer>
      */
     public function getStoresWhereProductStockIsDefined(string $sku): array;
 
@@ -363,12 +367,26 @@ interface StockFacadeInterface
      *  - Returns all available stock types for given store.
      *  - Filters out stocks that are inactive.
      *  - StoreTransfer.name is required.
+     *  - Executes {@link \Spryker\Zed\StockExtension\Dependency\Plugin\StockCollectionExpanderPluginInterface} plugin stack.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return \Generated\Shared\Transfer\StockTransfer[]
+     * @return array<\Generated\Shared\Transfer\StockTransfer>
      */
     public function getAvailableWarehousesForStore(StoreTransfer $storeTransfer): array;
+
+    /**
+     * Specification:
+     * - Gets Stock collection by criteria filter.
+     * - Executes {@link \Spryker\Zed\StockExtension\Dependency\Plugin\StockCollectionExpanderPluginInterface} plugin stack.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\StockCriteriaFilterTransfer $stockCriteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\StockCollectionTransfer
+     */
+    public function getStocksByStockCriteriaFilter(StockCriteriaFilterTransfer $stockCriteriaFilterTransfer): StockCollectionTransfer;
 }

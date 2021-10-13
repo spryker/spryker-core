@@ -18,6 +18,9 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class CurrenciesForStoreController extends AbstractController
 {
+    /**
+     * @var string
+     */
     protected const KEY_ID_STORE = 'idStore';
 
     /**

@@ -18,6 +18,9 @@ use Symfony\Component\Form\FormEvents;
  */
 class AddProductAlternativeForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const FIELD_PRODUCT_ALTERNATIVE = 'alternative_products';
 
     /**

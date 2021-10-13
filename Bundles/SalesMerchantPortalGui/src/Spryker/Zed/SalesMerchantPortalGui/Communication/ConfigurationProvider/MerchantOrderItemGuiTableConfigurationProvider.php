@@ -15,18 +15,43 @@ use Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderIn
 use Spryker\Shared\GuiTable\GuiTableFactoryInterface;
 use Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToMerchantOmsFacadeInterface;
 use Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToMerchantUserFacadeInterface;
+use Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToTranslatorFacadeInterface;
 
 class MerchantOrderItemGuiTableConfigurationProvider implements MerchantOrderItemGuiTableConfigurationProviderInterface
 {
+    /**
+     * @var string
+     */
     public const COL_KEY_SKU = 'sku';
+    /**
+     * @var string
+     */
     public const COL_KEY_IMAGE = 'image';
+    /**
+     * @var string
+     */
     public const COL_KEY_NAME = 'name';
+    /**
+     * @var string
+     */
     public const COL_KEY_QUANTITY = 'quantity';
+    /**
+     * @var string
+     */
     public const COL_KEY_STATE = 'state';
+    /**
+     * @var string
+     */
     public const COL_KEY_ACTION_IDS = 'actionIds';
 
     /**
+     * @var string
+     */
+    protected const MESSAGE_NO_BATCH_ACTION_AVAILABLE_FOR_ITEMS = 'There are no applicable actions for the selected items.';
+
+    /**
      * @uses \Spryker\Zed\SalesMerchantPortalGui\Communication\Controller\ItemListController::tableDataAction()
+     * @var string
      */
     protected const DATA_URL = '/sales-merchant-portal-gui/item-list/table-data';
 
@@ -46,26 +71,34 @@ class MerchantOrderItemGuiTableConfigurationProvider implements MerchantOrderIte
     protected $guiTableFactory;
 
     /**
-     * @var array|\Spryker\Zed\SalesMerchantPortalGuiExtension\Dependency\Plugin\MerchantOrderItemTableExpanderPluginInterface[]
+     * @var array<\Spryker\Zed\SalesMerchantPortalGuiExtension\Dependency\Plugin\MerchantOrderItemTableExpanderPluginInterface>
      */
     protected $merchantOrderItemTableExpanderPlugins;
+
+    /**
+     * @var \Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToTranslatorFacadeInterface
+     */
+    protected $translatorFacade;
 
     /**
      * @param \Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToMerchantOmsFacadeInterface $merchantOmsFacade
      * @param \Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToMerchantUserFacadeInterface $merchantUserFacade
      * @param \Spryker\Shared\GuiTable\GuiTableFactoryInterface $guiTableFactory
-     * @param \Spryker\Zed\SalesMerchantPortalGuiExtension\Dependency\Plugin\MerchantOrderItemTableExpanderPluginInterface[] $merchantOrderItemTableExpanderPlugins
+     * @param \Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToTranslatorFacadeInterface $translatorFacade
+     * @param array<\Spryker\Zed\SalesMerchantPortalGuiExtension\Dependency\Plugin\MerchantOrderItemTableExpanderPluginInterface> $merchantOrderItemTableExpanderPlugins
      */
     public function __construct(
         SalesMerchantPortalGuiToMerchantOmsFacadeInterface $merchantOmsFacade,
         SalesMerchantPortalGuiToMerchantUserFacadeInterface $merchantUserFacade,
         GuiTableFactoryInterface $guiTableFactory,
+        SalesMerchantPortalGuiToTranslatorFacadeInterface $translatorFacade,
         array $merchantOrderItemTableExpanderPlugins = []
     ) {
         $this->merchantOmsFacade = $merchantOmsFacade;
         $this->merchantUserFacade = $merchantUserFacade;
         $this->guiTableFactory = $guiTableFactory;
         $this->merchantOrderItemTableExpanderPlugins = $merchantOrderItemTableExpanderPlugins;
+        $this->translatorFacade = $translatorFacade;
     }
 
     /**
@@ -130,7 +163,7 @@ class MerchantOrderItemGuiTableConfigurationProvider implements MerchantOrderIte
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function getStatesOptions(): array
     {
@@ -154,7 +187,7 @@ class MerchantOrderItemGuiTableConfigurationProvider implements MerchantOrderIte
         MerchantOrderTransfer $merchantOrderTransfer
     ): GuiTableConfigurationBuilderInterface {
         foreach ($merchantOrderTransfer->getManualEvents() as $manualEvent) {
-            $guiTableConfigurationBuilder->addRowActionUrl(
+            $guiTableConfigurationBuilder->addRowActionHttp(
                 $manualEvent,
                 $manualEvent,
                 sprintf(
@@ -182,7 +215,7 @@ class MerchantOrderItemGuiTableConfigurationProvider implements MerchantOrderIte
         MerchantOrderTransfer $merchantOrderTransfer
     ): GuiTableConfigurationBuilderInterface {
         foreach ($merchantOrderTransfer->getManualEvents() as $manualEvent) {
-            $guiTableConfigurationBuilder->addBatchActionUrl(
+            $guiTableConfigurationBuilder->addBatchActionHttp(
                 $manualEvent,
                 $manualEvent,
                 sprintf(
@@ -195,7 +228,9 @@ class MerchantOrderItemGuiTableConfigurationProvider implements MerchantOrderIte
 
         $guiTableConfigurationBuilder->setBatchActionRowIdPath(MerchantOrderItemTransfer::ID_MERCHANT_ORDER_ITEM)
             ->setAvailableBatchActionsPath(static::COL_KEY_ACTION_IDS)
-            ->setNoBatchActionsMessage('There are no applicable actions for the selected items.');
+            ->setNoBatchActionsMessage(
+                $this->translatorFacade->trans(static::MESSAGE_NO_BATCH_ACTION_AVAILABLE_FOR_ITEMS)
+            );
 
         return $guiTableConfigurationBuilder;
     }

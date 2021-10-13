@@ -17,7 +17,7 @@ class AbstractServiceFactory
     use ContainerMocker;
 
     /**
-     * @var \Spryker\Service\Kernel\Container[]
+     * @var array<\Spryker\Service\Kernel\Container>
      */
     protected static $containers = [];
 

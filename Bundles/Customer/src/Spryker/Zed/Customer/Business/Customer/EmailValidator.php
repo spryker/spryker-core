@@ -12,6 +12,9 @@ use Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface;
 
 class EmailValidator implements EmailValidatorInterface
 {
+    /**
+     * @var int
+     */
     protected const COL_EMAIL_MAX_ALLOWED_LENGHT = 100;
 
     /**

@@ -29,7 +29,7 @@ class LocaleProvider
     /**
      * @param bool $includeDefault
      *
-     * @return \Generated\Shared\Transfer\LocaleTransfer[]
+     * @return array<\Generated\Shared\Transfer\LocaleTransfer>
      *
      * TODO: Check usages and fix to transfers
      */

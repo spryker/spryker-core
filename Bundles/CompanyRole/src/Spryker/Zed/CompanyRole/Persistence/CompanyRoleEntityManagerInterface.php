@@ -37,7 +37,7 @@ interface CompanyRoleEntityManagerInterface
     public function saveCompanyUser(CompanyUserTransfer $companyUserTransfer): void;
 
     /**
-     * @param \Generated\Shared\Transfer\PermissionTransfer[] $permissions
+     * @param array<\Generated\Shared\Transfer\PermissionTransfer> $permissions
      * @param int $idCompanyRole
      *
      * @return void

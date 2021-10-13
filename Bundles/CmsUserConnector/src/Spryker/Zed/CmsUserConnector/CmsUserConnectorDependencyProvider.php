@@ -17,7 +17,13 @@ use Spryker\Zed\Kernel\Container;
  */
 class CmsUserConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_USER = 'FACADE_USER';
+    /**
+     * @var string
+     */
     public const QUERY_CONTAINER_CMS = 'QUERY_CONTAINER_CMS';
 
     /**

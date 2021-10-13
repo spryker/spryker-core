@@ -17,8 +17,17 @@ use Symfony\Component\Console\Input\InputArgument;
  */
 class ElasticsearchCloseIndexConsole extends AbstractIndexNameAwareSearchIndexConsole
 {
+    /**
+     * @var string
+     */
     public const COMMAND_NAME = 'elasticsearch:index:close';
+    /**
+     * @var string
+     */
     public const DESCRIPTION = 'This command will close an Elasticsearch index with the specified name. If no index name is passed, all available indexes for the current store will be closed.';
+    /**
+     * @var string
+     */
     public const COMMAND_ALIAS = 'search:index:close';
 
     /**

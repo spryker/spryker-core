@@ -15,6 +15,9 @@ use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToMessengerFacadeIn
 
 class ProductBundleCartChangeObserver implements ProductBundleCartChangeObserverInterface
 {
+    /**
+     * @var string
+     */
     public const CART_SYNCHRONIZE_ITEMS_PRICE_CHANGED = 'cart.validate.items.price.changed';
 
     /**
@@ -45,7 +48,7 @@ class ProductBundleCartChangeObserver implements ProductBundleCartChangeObserver
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $cartItems
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $cartItems
      *
      * @return array
      */

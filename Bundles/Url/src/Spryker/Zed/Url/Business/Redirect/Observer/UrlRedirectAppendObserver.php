@@ -96,7 +96,7 @@ class UrlRedirectAppendObserver implements UrlCreatorAfterSaveObserverInterface,
     /**
      * @param string $targetUrl
      *
-     * @return \Orm\Zed\Url\Persistence\SpyUrlRedirect[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Url\Persistence\SpyUrlRedirect>
      */
     protected function findUrlRedirectEntitiesByTargetUrl($targetUrl)
     {

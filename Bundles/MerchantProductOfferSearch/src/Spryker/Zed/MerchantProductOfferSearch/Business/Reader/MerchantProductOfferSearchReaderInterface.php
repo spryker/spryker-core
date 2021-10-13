@@ -10,9 +10,9 @@ namespace Spryker\Zed\MerchantProductOfferSearch\Business\Reader;
 interface MerchantProductOfferSearchReaderInterface
 {
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
-     * @return \Generated\Shared\Transfer\ProductAbstractMerchantTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductAbstractMerchantTransfer>
      */
     public function getProductAbstractMerchantDataByProductAbstractIds(array $productAbstractIds): array;
 }

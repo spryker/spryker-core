@@ -133,7 +133,7 @@ interface DiscountFacadeInterface
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      *
-     * @return \Generated\Shared\Transfer\DiscountableItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\DiscountableItemTransfer>
      */
     public function collectByItemQuantity(QuoteTransfer $quoteTransfer, ClauseTransfer $clauseTransfer);
 
@@ -160,7 +160,7 @@ interface DiscountFacadeInterface
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      *
-     * @return \Generated\Shared\Transfer\DiscountableItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\DiscountableItemTransfer>
      */
     public function collectByItemPrice(QuoteTransfer $quoteTransfer, ClauseTransfer $clauseTransfer);
 
@@ -229,7 +229,7 @@ interface DiscountFacadeInterface
      *
      * @param string $type
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getQueryStringFieldsByType($type);
 
@@ -243,7 +243,7 @@ interface DiscountFacadeInterface
      * @param string $type
      * @param string $fieldName
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getQueryStringFieldExpressionsForField($type, $fieldName);
 
@@ -256,7 +256,7 @@ interface DiscountFacadeInterface
      *
      * @param string $type
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getQueryStringComparatorExpressions($type);
 
@@ -269,7 +269,7 @@ interface DiscountFacadeInterface
      *
      * @param string $type
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getQueryStringLogicalComparators($type);
 
@@ -300,7 +300,7 @@ interface DiscountFacadeInterface
      * @param string $type
      * @param string $queryString
      *
-     * @return string[]
+     * @return array<string>
      */
     public function validateQueryStringByType($type, $queryString);
 
@@ -389,7 +389,7 @@ interface DiscountFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\DiscountableItemTransfer[] $discountableObjects
+     * @param array<\Generated\Shared\Transfer\DiscountableItemTransfer> $discountableObjects
      * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
      *
      * @return int
@@ -403,7 +403,7 @@ interface DiscountFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\DiscountableItemTransfer[] $discountableObjects
+     * @param array<\Generated\Shared\Transfer\DiscountableItemTransfer> $discountableObjects
      * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
      *
      * @return int
@@ -431,7 +431,7 @@ interface DiscountFacadeInterface
      *
      * @api
      *
-     * @param string[] $voucherCodes
+     * @param array<string> $voucherCodes
      *
      * @return int
      */
@@ -444,7 +444,7 @@ interface DiscountFacadeInterface
      *
      * @api
      *
-     * @param string[] $voucherCodes
+     * @param array<string> $voucherCodes
      *
      * @return int
      */
@@ -467,7 +467,8 @@ interface DiscountFacadeInterface
 
     /**
      * Specification:
-     *  - Hydrates sales discount data for current order to OrderTransfer
+     *  - Hydrates sales discount data for current order to `OrderTransfer`.
+     *  - If discount has voucher code, it is added to `OrderTransfer.voucherDiscounts`.
      *
      * @api
      *

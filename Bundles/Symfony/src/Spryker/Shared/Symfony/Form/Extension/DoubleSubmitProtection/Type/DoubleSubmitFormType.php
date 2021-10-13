@@ -24,24 +24,36 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class DoubleSubmitFormType extends AbstractTypeExtension
 {
+    /**
+     * @var string
+     */
     public const OPTION_KEY_ERROR_MESSAGE = 'double_submit_error';
+    /**
+     * @var string
+     */
     public const OPTION_KEY_TOKEN_FIELD_NAME = 'token_field_name';
 
+    /**
+     * @var string
+     */
     public const DEFAULT_TOKEN_FIELD_NAME = '_requestToken';
+    /**
+     * @var string
+     */
     public const DEFAULT_ERROR_MESSAGE = 'This form has been already submitted.';
 
     /**
-     * @var \Spryker\Shared\Symfony\Form\Extension\DoubleSubmitProtection\RequestTokenProvider\TokenGeneratorInterface $tokenProvider
+     * @var \Spryker\Shared\Symfony\Form\Extension\DoubleSubmitProtection\RequestTokenProvider\TokenGeneratorInterface
      */
     protected $tokenGenerator;
 
     /**
-     * @var \Spryker\Shared\Symfony\Form\Extension\DoubleSubmitProtection\RequestTokenProvider\StorageInterface $storage
+     * @var \Spryker\Shared\Symfony\Form\Extension\DoubleSubmitProtection\RequestTokenProvider\StorageInterface
      */
     protected $storage;
 
     /**
-     * @var string $fieldName
+     * @var string
      */
     protected $fieldName;
 
@@ -155,7 +167,7 @@ class DoubleSubmitFormType extends AbstractTypeExtension
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public static function getExtendedTypes(): iterable
     {

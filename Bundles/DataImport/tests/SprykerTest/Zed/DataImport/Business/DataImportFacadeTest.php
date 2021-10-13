@@ -26,9 +26,21 @@ use Spryker\Zed\DataImport\Business\DataImportFacade;
  */
 class DataImportFacadeTest extends Unit
 {
+    /**
+     * @var string
+     */
     public const IMPORT_TYPE_FULL_IMPORT = 'full';
+    /**
+     * @var string
+     */
     public const IMPORT_GROUP_FULL = 'FULL';
+    /**
+     * @var string
+     */
     public const IMPORT_TYPE_SPECIFIC_A = 'specific-importer-a';
+    /**
+     * @var string
+     */
     public const IMPORT_TYPE_SPECIFIC_B = 'specific-importer-b';
 
     /**
@@ -131,7 +143,11 @@ class DataImportFacadeTest extends Unit
      */
     public function testDumpImporterDumpsAListOfAppliedImporter(): void
     {
+        // Act
         $dumpedImporter = $this->getFacade()->listImporters();
+
+        // Assert
         $this->assertIsArray($dumpedImporter);
+        $this->assertEmpty($dumpedImporter);
     }
 }

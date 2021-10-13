@@ -17,7 +17,13 @@ use Spryker\Zed\PriceProductMerchantRelationship\Dependency\Facade\PriceProductM
  */
 class PriceProductMerchantRelationshipDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_PRICE_PRODUCT = 'FACADE_PRICE_PRODUCT';
+    /**
+     * @var string
+     */
     public const FACADE_MERCHANT_RELATIONSHIP = 'FACADE_MERCHANT_RELATIONSHIP';
 
     /**

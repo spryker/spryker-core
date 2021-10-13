@@ -14,7 +14,13 @@ use PHPMD\Rule\ClassAware;
 
 class TooManyMethods extends AbstractRule implements ClassAware
 {
+    /**
+     * @var string
+     */
     public const MAX_METHODS = 'maxmethods';
+    /**
+     * @var string
+     */
     public const METHODS_IGNORE_PATTERN = 'ignorepattern';
 
     /**

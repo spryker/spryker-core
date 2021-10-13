@@ -14,8 +14,14 @@ use Spryker\Zed\ProductPackagingUnit\Persistence\ProductPackagingUnitRepositoryI
 
 class ProductPackagingUnitTypeWriter implements ProductPackagingUnitTypeWriterInterface
 {
+    /**
+     * @var string
+     */
     protected const ERROR_PRODUCT_PACKAGING_UNIT_TYPE_EXISTS = 'Product packaging unit type was found already for name "%s".';
 
+    /**
+     * @var string
+     */
     protected const PRODUCT_PACKAGING_UNIT_TYPE_KEY = 'packaging_unit_type.%s.name';
 
     /**

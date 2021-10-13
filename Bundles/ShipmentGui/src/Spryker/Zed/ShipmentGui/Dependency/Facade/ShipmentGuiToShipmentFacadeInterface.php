@@ -20,7 +20,7 @@ use Generated\Shared\Transfer\ShipmentTransfer;
 interface ShipmentGuiToShipmentFacadeInterface
 {
     /**
-     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer[]
+     * @return array<\Generated\Shared\Transfer\ShipmentMethodTransfer>
      */
     public function getMethods();
 
@@ -51,7 +51,7 @@ interface ShipmentGuiToShipmentFacadeInterface
 
     /**
      * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
-     * @param bool[] $itemListUpdatedStatus
+     * @param array<bool> $itemListUpdatedStatus
      *
      * @return \Generated\Shared\Transfer\ShipmentGroupTransfer
      */
@@ -64,7 +64,7 @@ interface ShipmentGuiToShipmentFacadeInterface
      * @param int $idSalesOrder
      * @param int $idSalesShipment
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]|\ArrayObject
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer>
      */
     public function findSalesOrderItemsIdsBySalesShipmentId(int $idSalesOrder, int $idSalesShipment): ArrayObject;
 
@@ -123,7 +123,7 @@ interface ShipmentGuiToShipmentFacadeInterface
     public function getShipmentMethodPlugins(): ShipmentMethodPluginCollectionTransfer;
 
     /**
-     * @return \Generated\Shared\Transfer\ShipmentCarrierTransfer[]
+     * @return array<\Generated\Shared\Transfer\ShipmentCarrierTransfer>
      */
     public function getActiveShipmentCarriers(): array;
 }

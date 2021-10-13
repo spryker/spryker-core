@@ -22,6 +22,7 @@ class ProductConfigurationPublisherTriggerPlugin extends AbstractPlugin implemen
 {
     /**
      * @uses \Orm\Zed\ProductConfiguration\Persistence\Map\SpyProductConfigurationTableMap::COL_ID_PRODUCT_CONFIGURATION
+     * @var string
      */
     protected const COL_ID_PRODUCT_CONFIGURATION = 'spy_product_configuration.id_product_configuration';
 
@@ -46,7 +47,7 @@ class ProductConfigurationPublisherTriggerPlugin extends AbstractPlugin implemen
      * @param int $offset
      * @param int $limit
      *
-     * @return \Generated\Shared\Transfer\ProductConfigurationTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConfigurationTransfer>
      */
     public function getData(int $offset, int $limit): array
     {

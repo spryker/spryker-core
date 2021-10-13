@@ -62,7 +62,7 @@ interface ProductAttributeToProductInterface
      * @deprecated Method will be removed without replacement.
      *
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteCollection
+     * @param array<\Generated\Shared\Transfer\ProductConcreteTransfer> $productConcreteCollection
      *
      * @return int
      */
@@ -70,7 +70,7 @@ interface ProductAttributeToProductInterface
 
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteCollection
+     * @param array<\Generated\Shared\Transfer\ProductConcreteTransfer> $productConcreteCollection
      *
      * @throws \Exception
      *
@@ -113,7 +113,7 @@ interface ProductAttributeToProductInterface
     /**
      * @param int $idProductAbstract
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
      */
     public function getConcreteProductsByAbstractProductId($idProductAbstract);
 
@@ -137,7 +137,7 @@ interface ProductAttributeToProductInterface
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      * @param array $attributeCollection
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
      */
     public function generateVariants(ProductAbstractTransfer $productAbstractTransfer, array $attributeCollection);
 

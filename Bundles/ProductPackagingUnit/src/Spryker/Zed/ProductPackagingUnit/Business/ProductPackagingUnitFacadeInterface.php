@@ -39,7 +39,7 @@ interface ProductPackagingUnitFacadeInterface
      *
      * @deprecated Will be removed without replacement.
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getInfrastructuralProductPackagingUnitTypeNames(): array;
 
@@ -113,9 +113,9 @@ interface ProductPackagingUnitFacadeInterface
      *
      * @api
      *
-     * @param int[] $productPackagingUnitTypeIds
+     * @param array<int> $productPackagingUnitTypeIds
      *
-     * @return int[]
+     * @return array<int>
      */
     public function findProductIdsByProductPackagingUnitTypeIds(array $productPackagingUnitTypeIds): array;
 
@@ -339,7 +339,7 @@ interface ProductPackagingUnitFacadeInterface
      * @param \Generated\Shared\Transfer\OmsStateCollectionTransfer $reservedStates
      * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
      *
-     * @return \Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer[]
+     * @return array<\Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer>
      */
     public function aggregateProductPackagingUnitReservation(
         string $sku,
@@ -382,9 +382,9 @@ interface ProductPackagingUnitFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     public function expandOrderItemsWithAmountSalesUnit(array $itemTransfers): array;
 
@@ -408,9 +408,9 @@ interface ProductPackagingUnitFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     public function expandOrderItemsWithAmountLeadProduct(array $itemTransfers): array;
 
@@ -489,9 +489,9 @@ interface ProductPackagingUnitFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteTransfers
+     * @param array<\Generated\Shared\Transfer\ProductConcreteTransfer> $productConcreteTransfers
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
      */
     public function filterProductsWithoutPackagingUnit(array $productConcreteTransfers): array;
 }

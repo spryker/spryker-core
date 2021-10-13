@@ -9,6 +9,7 @@ namespace Spryker\Shared\GuiTable\Configuration\Builder;
 
 use ArrayObject;
 use Generated\Shared\Transfer\DateRangeGuiTableFilterTypeOptionsTransfer;
+use Generated\Shared\Transfer\GuiTableBatchActionOptionsTransfer;
 use Generated\Shared\Transfer\GuiTableBatchActionsConfigurationTransfer;
 use Generated\Shared\Transfer\GuiTableBatchActionTransfer;
 use Generated\Shared\Transfer\GuiTableColumnConfigurationTransfer;
@@ -26,6 +27,7 @@ use Generated\Shared\Transfer\GuiTableFiltersConfigurationTransfer;
 use Generated\Shared\Transfer\GuiTableFilterTransfer;
 use Generated\Shared\Transfer\GuiTableItemSelectionConfigurationTransfer;
 use Generated\Shared\Transfer\GuiTablePaginationConfigurationTransfer;
+use Generated\Shared\Transfer\GuiTableRowActionOptionsTransfer;
 use Generated\Shared\Transfer\GuiTableRowActionsConfigurationTransfer;
 use Generated\Shared\Transfer\GuiTableRowActionTransfer;
 use Generated\Shared\Transfer\GuiTableSearchConfigurationTransfer;
@@ -38,16 +40,17 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
 {
     /**
      * @see https://angular.io/api/common/DatePipe for details.
+     * @var string
      */
     protected const DEFAULT_UI_DATE_FORMAT = 'dd.MM.y';
 
     /**
-     * @var \Generated\Shared\Transfer\GuiTableColumnConfigurationTransfer[]
+     * @var array<\Generated\Shared\Transfer\GuiTableColumnConfigurationTransfer>
      */
     protected $columns;
 
     /**
-     * @var \Generated\Shared\Transfer\GuiTableColumnConfigurationTransfer[]
+     * @var array<\Generated\Shared\Transfer\GuiTableColumnConfigurationTransfer>
      */
     protected $editableColumns;
 
@@ -57,12 +60,12 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
     protected $title;
 
     /**
-     * @var \Generated\Shared\Transfer\GuiTableFilterTransfer[]
+     * @var array<\Generated\Shared\Transfer\GuiTableFilterTransfer>
      */
     protected $filters = [];
 
     /**
-     * @var \Generated\Shared\Transfer\GuiTableRowActionTransfer[]
+     * @var array<\Generated\Shared\Transfer\GuiTableRowActionTransfer>
      */
     protected $rowActions = [];
 
@@ -82,7 +85,7 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
     protected $availableRowActionsPath;
 
     /**
-     * @var \Generated\Shared\Transfer\GuiTableBatchActionTransfer[]
+     * @var array<\Generated\Shared\Transfer\GuiTableBatchActionTransfer>
      */
     protected $batchActions = [];
 
@@ -105,6 +108,11 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
      * @var string
      */
     protected $dataSourceUrl;
+
+    /**
+     * @var array<string[]>
+     */
+    protected $dataSourceInlineData;
 
     /**
      * @var int
@@ -135,6 +143,11 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
      * @var \Generated\Shared\Transfer\GuiTableEditableConfigurationTransfer|null
      */
     protected $editableConfiguration;
+
+    /**
+     * @var bool
+     */
+    protected $isPaginationEnabled;
 
     /**
      * @api
@@ -231,7 +244,7 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
      * @param bool $isSortable
      * @param bool $isHideable
      * @param string|null $color
-     * @param mixed[]|null $colorMapping
+     * @param array<mixed>|null $colorMapping
      *
      * @return $this
      */
@@ -323,7 +336,7 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
      * @param string $id
      * @param string $title
      * @param bool $isMultiselect
-     * @param string[] $values select values in format of ['value1' => 'title1', 'value2' => 'title2']
+     * @param array<string> $values select values in format of ['value1' => 'title1', 'value2' => 'title2']
      *
      * @return $this
      */
@@ -357,7 +370,7 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
      * @param string $id
      * @param string $title
      * @param bool $isMultiselect
-     * @param \Generated\Shared\Transfer\OptionSelectGuiTableFilterTypeOptionsTransfer[] $options
+     * @param array<\Generated\Shared\Transfer\OptionSelectGuiTableFilterTypeOptionsTransfer> $options
      *
      * @return $this
      */
@@ -418,12 +431,26 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
      * @param string $id
      * @param string $title
      * @param string $url
+     * @param string|null $method
      *
      * @return $this
      */
-    public function addRowActionOpenFormOverlay(string $id, string $title, string $url)
-    {
-        $this->addRowAction($id, $title, static::ACTION_TYPE_FORM_OVERLAY, ['url' => $url]);
+    public function addRowActionDrawerAjaxForm(
+        string $id,
+        string $title,
+        string $url,
+        ?string $method = null
+    ) {
+        $this->addRowAction(
+            $id,
+            $title,
+            static::ACTION_TYPE_DRAWER,
+            static::ACTION_DRAWER_COMPONENT_TYPE_AJAX_FORM,
+            [
+                'action' => $url,
+                'method' => $method,
+            ]
+        );
 
         return $this;
     }
@@ -434,12 +461,26 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
      * @param string $id
      * @param string $title
      * @param string $url
+     * @param string|null $method
      *
      * @return $this
      */
-    public function addRowActionOpenPageOverlay(string $id, string $title, string $url)
-    {
-        $this->addRowAction($id, $title, static::ACTION_TYPE_HTML_OVERLAY, ['url' => $url]);
+    public function addRowActionDrawerUrlHtmlRenderer(
+        string $id,
+        string $title,
+        string $url,
+        ?string $method = null
+    ) {
+        $this->addRowAction(
+            $id,
+            $title,
+            static::ACTION_TYPE_DRAWER,
+            static::ACTION_DRAWER_COMPONENT_TYPE_URL_HTML_RENDERER,
+            [
+                'url' => $url,
+                'method' => $method,
+            ]
+        );
 
         return $this;
     }
@@ -450,12 +491,26 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
      * @param string $id
      * @param string $title
      * @param string $url
+     * @param string|null $method
      *
      * @return $this
      */
-    public function addRowActionUrl(string $id, string $title, string $url)
-    {
-        $this->addRowAction($id, $title, static::ACTION_TYPE_URL, ['url' => $url]);
+    public function addRowActionHttp(
+        string $id,
+        string $title,
+        string $url,
+        ?string $method = null
+    ) {
+        $this->addRowAction(
+            $id,
+            $title,
+            static::ACTION_TYPE_HTTP,
+            null,
+            [
+                'url' => $url,
+                'method' => $method,
+            ]
+        );
 
         return $this;
     }
@@ -464,14 +519,20 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
      * @param string $id
      * @param string $title
      * @param string $type
-     * @param string[] $options
+     * @param string|null $component
+     * @param array $options
      *
      * @throws \Spryker\Shared\GuiTable\Exception\InvalidConfigurationException
      *
      * @return void
      */
-    protected function addRowAction(string $id, string $title, string $type, array $options): void
-    {
+    protected function addRowAction(
+        string $id,
+        string $title,
+        string $type,
+        ?string $component = null,
+        array $options = []
+    ): void {
         if (isset($this->rowActions[$id])) {
             throw new InvalidConfigurationException(sprintf('Row action with id "%s" already exists', $id));
         }
@@ -479,10 +540,24 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
         $guiTableRowActionTransfer = (new GuiTableRowActionTransfer())
             ->setId($id)
             ->setTitle($title)
-            ->setType($type)
-            ->setTypeOptions($options);
+            ->setType($type);
 
         $this->rowActions[$id] = $guiTableRowActionTransfer;
+
+        if ($type === static::ACTION_TYPE_HTTP) {
+            $guiTableRowActionTransfer
+                ->setUrl($options['url'])
+                ->setMethod($options['method']);
+
+            return;
+        }
+
+        $guiTableRowActionTransfer
+            ->setComponent($component)
+            ->setOptions(
+                (new GuiTableRowActionOptionsTransfer())
+                    ->setInputs($options)
+            );
     }
 
     /**
@@ -491,12 +566,88 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
      * @param string $id
      * @param string $title
      * @param string $url
+     * @param string|null $method
      *
      * @return $this
      */
-    public function addBatchActionUrl(string $id, string $title, string $url)
-    {
-        $this->addBatchAction($id, $title, static::ACTION_TYPE_URL, ['url' => $url]);
+    public function addBatchActionDrawerAjaxForm(
+        string $id,
+        string $title,
+        string $url,
+        ?string $method = null
+    ) {
+        $this->addBatchAction(
+            $id,
+            $title,
+            static::ACTION_TYPE_DRAWER,
+            static::ACTION_DRAWER_COMPONENT_TYPE_AJAX_FORM,
+            [
+                'action' => $url,
+                'method' => $method,
+            ]
+        );
+
+        return $this;
+    }
+
+    /**
+     * @api
+     *
+     * @param string $id
+     * @param string $title
+     * @param string $url
+     * @param string|null $method
+     *
+     * @return $this
+     */
+    public function addBatchActionHttp(
+        string $id,
+        string $title,
+        string $url,
+        ?string $method = null
+    ) {
+        $this->addBatchAction(
+            $id,
+            $title,
+            static::ACTION_TYPE_HTTP,
+            null,
+            [
+                'url' => $url,
+                'method' => $method,
+            ]
+        );
+
+        return $this;
+    }
+
+    /**
+     * @api
+     *
+     * @param string $id
+     * @param string $title
+     * @param string $url
+     * @param string|null $method
+     *
+     * @throws \Spryker\Shared\GuiTable\Exception\InvalidConfigurationException
+     *
+     * @return $this
+     */
+    public function addBatchActionDrawerUrlHtmlRenderer(
+        string $id,
+        string $title,
+        string $url,
+        ?string $method = null
+    ) {
+        $this->addBatchAction(
+            $id,
+            $title,
+            static::ACTION_TYPE_DRAWER,
+            static::ACTION_DRAWER_COMPONENT_TYPE_URL_HTML_RENDERER,
+            [
+                'url' => $url,
+                'method' => $method,
+            ]
+        );
 
         return $this;
     }
@@ -505,14 +656,20 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
      * @param string $id
      * @param string $title
      * @param string $type
-     * @param string[] $options
+     * @param string|null $component
+     * @param array $options
      *
      * @throws \Spryker\Shared\GuiTable\Exception\InvalidConfigurationException
      *
      * @return void
      */
-    protected function addBatchAction(string $id, string $title, string $type, array $options): void
-    {
+    protected function addBatchAction(
+        string $id,
+        string $title,
+        string $type,
+        ?string $component = null,
+        array $options = []
+    ): void {
         if (isset($this->batchActions[$id])) {
             throw new InvalidConfigurationException(sprintf('Batch action with id "%s" already exists', $id));
         }
@@ -520,10 +677,24 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
         $guiTableBatchActionTransfer = (new GuiTableBatchActionTransfer())
             ->setId($id)
             ->setTitle($title)
-            ->setType($type)
-            ->setTypeOptions($options);
+            ->setType($type);
 
         $this->batchActions[$id] = $guiTableBatchActionTransfer;
+
+        if ($type === static::ACTION_TYPE_HTTP) {
+            $guiTableBatchActionTransfer
+                ->setUrl($options['url'])
+                ->setMethod($options['method']);
+
+            return;
+        }
+
+        $guiTableBatchActionTransfer
+            ->setComponent($component)
+            ->setOptions(
+                (new GuiTableBatchActionOptionsTransfer())
+                    ->setInputs($options)
+            );
     }
 
     /**
@@ -627,6 +798,20 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
     /**
      * @api
      *
+     * @param array<string[]> $data
+     *
+     * @return $this
+     */
+    public function setDataSourceInlineData(array $data)
+    {
+        $this->dataSourceInlineData = $data;
+
+        return $this;
+    }
+
+    /**
+     * @api
+     *
      * @param int $defaultPageSize
      *
      * @return $this
@@ -711,6 +896,20 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
     /**
      * @api
      *
+     * @param bool $isPaginationEnabled
+     *
+     * @return $this
+     */
+    public function setIsPaginationEnabled(bool $isPaginationEnabled)
+    {
+        $this->isPaginationEnabled = $isPaginationEnabled;
+
+        return $this;
+    }
+
+    /**
+     * @api
+     *
      * @throws \Spryker\Shared\GuiTable\Exception\InvalidConfigurationException
      *
      * @return \Generated\Shared\Transfer\GuiTableConfigurationTransfer
@@ -727,18 +926,13 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
         $guiTableConfigurationTransfer = $this->setFilters($guiTableConfigurationTransfer);
         $guiTableConfigurationTransfer = $this->setRowActions($guiTableConfigurationTransfer);
         $guiTableConfigurationTransfer = $this->setBatchActions($guiTableConfigurationTransfer);
+        $guiTableConfigurationTransfer = $this->setDataSource($guiTableConfigurationTransfer);
 
         if ($this->title) {
             $guiTableConfigurationTransfer->setTitle(
                 (new GuiTableTitleConfigurationTransfer())
                     ->setIsEnabled(true)
                     ->setTitle($this->title)
-            );
-        }
-
-        if ($this->dataSourceUrl) {
-            $guiTableConfigurationTransfer->setDataSource(
-                (new GuiTableDataSourceConfigurationTransfer())->setUrl($this->dataSourceUrl)
             );
         }
 
@@ -757,7 +951,7 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
         );
 
         if ($this->searchPlaceholder) {
-            $guiTableConfigurationTransfer->getSearch()
+            $guiTableConfigurationTransfer->getSearchOrFail()
                 ->addSearchOption('placeholder', $this->searchPlaceholder);
         }
 
@@ -769,6 +963,12 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
 
         if ($this->editableConfiguration) {
             $guiTableConfigurationTransfer->setEditable($this->editableConfiguration);
+        }
+
+        if ($this->isPaginationEnabled !== null) {
+            $guiTableConfigurationTransfer->setPagination(
+                (new GuiTablePaginationConfigurationTransfer())->setIsEnabled($this->isPaginationEnabled)
+            );
         }
 
         return $guiTableConfigurationTransfer;
@@ -817,7 +1017,7 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
      * @phpstan-param array<mixed> $cancelButton
      *
      * @param string $url
-     * @param string|null $method
+     * @param string $method
      * @param array|null $saveButton
      * @param array|null $cancelButton
      *
@@ -825,7 +1025,7 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
      */
     public function enableInlineDataEditing(
         string $url,
-        ?string $method = 'POST',
+        string $method = 'POST',
         ?array $saveButton = null,
         ?array $cancelButton = null
     ) {
@@ -851,11 +1051,11 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
      * @param string $id
      * @param string $title
      * @param string $inputType
-     * @param array|null $options
+     * @param array $options
      *
      * @return $this
      */
-    public function addEditableColumnInput(string $id, string $title, string $inputType = 'text', ?array $options = [])
+    public function addEditableColumnInput(string $id, string $title, string $inputType = 'text', array $options = [])
     {
         $guiTableColumnConfigurationTransfer = (new GuiTableColumnConfigurationTransfer())
             ->setId($id)
@@ -882,6 +1082,7 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
      * @param string $title
      * @param bool $isMultiselect
      * @param array $options
+     * @param string|null $placeholder
      *
      * @return $this
      */
@@ -889,7 +1090,8 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
         string $id,
         string $title,
         bool $isMultiselect,
-        array $options
+        array $options,
+        ?string $placeholder = null
     ) {
         $guiTableColumnConfigurationTransfer = (new GuiTableColumnConfigurationTransfer())
             ->setId($id)
@@ -903,6 +1105,10 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
                 'title' => $optionTitle,
                 'value' => $value,
             ];
+        }
+
+        if ($placeholder) {
+            $typeOptionValues['placeholder'] = $placeholder;
         }
 
         $guiTableColumnConfigurationTransfer->setTypeOptions($typeOptionValues);
@@ -993,7 +1199,7 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
      *
      * @return \Generated\Shared\Transfer\GuiTableEditableButtonTransfer
      */
-    protected function createEditableCancelButton(?array $cancelButton)
+    protected function createEditableCancelButton(?array $cancelButton): GuiTableEditableButtonTransfer
     {
         $title = $cancelButton[GuiTableEditableButtonTransfer::TITLE] ?? 'Cancel';
         $icon = $cancelButton[GuiTableEditableButtonTransfer::ICON] ?? null;
@@ -1048,7 +1254,7 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
         );
 
         if ($this->filters) {
-            $guiTableConfigurationTransfer->getFilters()
+            $guiTableConfigurationTransfer->getFiltersOrFail()
                 ->setIsEnabled(true)
                 ->setItems(new ArrayObject($this->filters));
         }
@@ -1068,7 +1274,7 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
         );
 
         if ($this->rowActions) {
-            $guiTableConfigurationTransfer->getRowActions()
+            $guiTableConfigurationTransfer->getRowActionsOrFail()
                 ->setIsEnabled(true)
                 ->setActions(new ArrayObject($this->rowActions))
                 ->setClick($this->rowOnClickIdAction)
@@ -1086,12 +1292,11 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
      */
     protected function setBatchActions(GuiTableConfigurationTransfer $guiTableConfigurationTransfer): GuiTableConfigurationTransfer
     {
-        $guiTableConfigurationTransfer->setBatchActions(
-            (new GuiTableBatchActionsConfigurationTransfer())->setIsEnabled(false)
-        );
+        $guiTableBatchActionsConfigurationTransfer = (new GuiTableBatchActionsConfigurationTransfer())
+            ->setIsEnabled(false);
 
         if ($this->batchActions) {
-            $guiTableConfigurationTransfer->getBatchActions()
+            $guiTableBatchActionsConfigurationTransfer
                 ->setIsEnabled(true)
                 ->setActions(new ArrayObject($this->batchActions))
                 ->setRowIdPath($this->batchActionRowIdPath)
@@ -1099,6 +1304,65 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
                 ->setNoActionsMessage($this->noBatchActionsMessage);
         }
 
+        $guiTableConfigurationTransfer->setBatchActions($guiTableBatchActionsConfigurationTransfer);
+
         return $guiTableConfigurationTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\GuiTableConfigurationTransfer $guiTableConfigurationTransfer
+     *
+     * @return \Generated\Shared\Transfer\GuiTableConfigurationTransfer
+     */
+    protected function setDataSource(GuiTableConfigurationTransfer $guiTableConfigurationTransfer): GuiTableConfigurationTransfer
+    {
+        $guiTableDataSourceConfigurationTransfer = new GuiTableDataSourceConfigurationTransfer();
+
+        if ($this->dataSourceUrl) {
+            $guiTableDataSourceConfigurationTransfer->setUrl($this->dataSourceUrl);
+        }
+
+        if ($this->dataSourceInlineData) {
+            $guiTableDataSourceConfigurationTransfer->setData($this->dataSourceInlineData)
+                ->setType(GuiTableConfigurationBuilderInterface::DATA_SOURCE_TYPE_INLINE);
+        }
+
+        $guiTableConfigurationTransfer->setDataSource($guiTableDataSourceConfigurationTransfer);
+
+        return $guiTableConfigurationTransfer;
+    }
+
+    /**
+     * @api
+     *
+     * @param string $id
+     * @param string $title
+     * @param string $dependableColumn
+     * @param string $dependableUrl
+     *
+     * @throws \Spryker\Shared\GuiTable\Exception\InvalidConfigurationException
+     *
+     * @return $this
+     */
+    public function addEditableColumnDynamic(string $id, string $title, string $dependableColumn, string $dependableUrl)
+    {
+        $guiTableColumnConfigurationTransfer = (new GuiTableColumnConfigurationTransfer())
+            ->setId($id)
+            ->setTitle($title)
+            ->setType(static::COLUMN_TYPE_DYNAMIC)
+            ->setTypeOptions([
+                'datasource' => [
+                    'type' => static::DATA_SOURCE_TYPE_DEPENDABLE,
+                    'dependsOn' => $dependableColumn,
+                    'datasource' => [
+                        'type' => static::DATA_SOURCE_TYPE_HTTP,
+                        'url' => $dependableUrl,
+                    ],
+                ],
+            ]);
+
+        $this->addEditableColumn($guiTableColumnConfigurationTransfer);
+
+        return $this;
     }
 }

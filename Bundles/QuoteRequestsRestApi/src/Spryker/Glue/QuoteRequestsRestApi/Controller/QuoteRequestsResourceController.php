@@ -41,7 +41,6 @@ class QuoteRequestsResourceController extends AbstractController
      *          }],
      *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\RestQuoteRequestsAttributesTransfer",
      *          "responses": {
-     *              "404": "Quote request not found.",
      *              "403": "Unauthorized request.",
      *              "400": "Bad request."
      *          }
@@ -56,12 +55,12 @@ class QuoteRequestsResourceController extends AbstractController
     {
         if ($restRequest->getResource()->getId()) {
             return $this->getFactory()
-                ->createQuoteRequestsReader()
+                ->createQuoteRequestReader()
                 ->getQuoteRequest($restRequest);
         }
 
         return $this->getFactory()
-            ->createQuoteRequestsReader()
+            ->createQuoteRequestReader()
             ->getQuoteRequestCollection($restRequest);
     }
 

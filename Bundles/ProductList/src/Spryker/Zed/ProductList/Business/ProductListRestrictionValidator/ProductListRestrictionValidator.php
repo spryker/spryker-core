@@ -15,7 +15,13 @@ use Spryker\Zed\ProductList\Business\ProductListRestrictionFilter\ProductListRes
 
 class ProductListRestrictionValidator implements ProductListRestrictionValidatorInterface
 {
+    /**
+     * @var string
+     */
     protected const MESSAGE_PARAM_SKU = '%sku%';
+    /**
+     * @var string
+     */
     protected const MESSAGE_INFO_RESTRICTED_PRODUCT_REMOVED = 'product-cart.info.restricted-product.removed';
 
     /**
@@ -81,7 +87,7 @@ class ProductListRestrictionValidator implements ProductListRestrictionValidator
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param \Generated\Shared\Transfer\CartPreCheckResponseTransfer $cartPreCheckResponseTransfer
-     * @param string[] $restrictedProductConcreteSkus
+     * @param array<string> $restrictedProductConcreteSkus
      *
      * @return void
      */

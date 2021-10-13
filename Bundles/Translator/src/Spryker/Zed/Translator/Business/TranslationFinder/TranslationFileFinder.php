@@ -10,15 +10,15 @@ namespace Spryker\Zed\Translator\Business\TranslationFinder;
 class TranslationFileFinder implements TranslationFileFinderInterface
 {
     /**
-     * @param string[] $translationFilePathPatterns
+     * @param array<string> $translationFilePathPatterns
      *
-     * @return string[]
+     * @return array<string>
      */
     public function findFilesByGlobPatterns(array $translationFilePathPatterns): array
     {
         $translationFilePaths = [];
         foreach ($translationFilePathPatterns as $translationFilePathPattern) {
-            $translationFilePaths[] = glob($translationFilePathPattern, GLOB_NOSORT);
+            $translationFilePaths[] = glob($translationFilePathPattern, GLOB_NOSORT) ?: [];
         }
 
         return array_filter(array_merge(...$translationFilePaths));

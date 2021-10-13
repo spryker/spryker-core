@@ -87,7 +87,7 @@ class CompanyUsersRestApiMapper
     }
 
     /**
-     * @param \Orm\Zed\CompanyRole\Persistence\SpyCompanyRole[] $companyRoleEntities
+     * @param array<\Orm\Zed\CompanyRole\Persistence\SpyCompanyRole> $companyRoleEntities
      * @param \Generated\Shared\Transfer\CompanyRoleCollectionTransfer $companyRoleCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyRoleCollectionTransfer
@@ -108,7 +108,7 @@ class CompanyUsersRestApiMapper
     /**
      * @param \Propel\Runtime\Collection\ObjectCollection $companyRoles
      *
-     * @return \Orm\Zed\CompanyRole\Persistence\SpyCompanyRole[][]
+     * @return array<\Orm\Zed\CompanyRole\Persistence\SpyCompanyRole[]>
      */
     protected function indexCompanyRoleEntities(ObjectCollection $companyRoles): array
     {

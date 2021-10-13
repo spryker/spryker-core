@@ -25,6 +25,9 @@ use Spryker\Zed\ShipmentDataImport\Communication\Plugin\ShipmentDataImportPlugin
  */
 class ShipmentDataImportPluginTest extends Unit
 {
+    /**
+     * @var int
+     */
     protected const EXPECTED_IMPORT_COUNT = 2;
 
     /**

@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\UserPasswordReset\Business;
 
 use Codeception\Test\Unit;
 use DateTime;
+use Generated\Shared\Transfer\UserPasswordResetRequestTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 use Orm\Zed\UserPasswordReset\Persistence\Map\SpyResetPasswordTableMap;
 
@@ -25,7 +26,13 @@ use Orm\Zed\UserPasswordReset\Persistence\Map\SpyResetPasswordTableMap;
  */
 class UserPasswordResetFacadeTest extends Unit
 {
+    /**
+     * @var string
+     */
     public const TEST_MAIL = 'username@example.com';
+    /**
+     * @var string
+     */
     protected const TEST_SYSTEM_USER_TOKEN = 'token';
 
     /**
@@ -49,7 +56,10 @@ class UserPasswordResetFacadeTest extends Unit
         ]);
 
         // Act
-        $result = $this->tester->getUserPasswordReset()->requestPasswordReset($userTransfer->getUsername());
+        $result = $this->tester->getUserPasswordReset()->requestPasswordReset(
+            (new UserPasswordResetRequestTransfer())
+                ->setEmail($userTransfer->getUsername())
+        );
 
         // Assert
         $this->assertTrue($result);
@@ -67,7 +77,10 @@ class UserPasswordResetFacadeTest extends Unit
         $fakeUsername = 'user_not_exists@example.com';
 
         // Act
-        $result = $this->tester->getUserPasswordReset()->requestPasswordReset($fakeUsername);
+        $result = $this->tester->getUserPasswordReset()->requestPasswordReset(
+            (new UserPasswordResetRequestTransfer())
+                ->setEmail($fakeUsername)
+        );
 
         // Assert
         $this->assertFalse($result);
@@ -82,7 +95,10 @@ class UserPasswordResetFacadeTest extends Unit
         $userTransfer = $this->tester->haveUser([
             UserTransfer::USERNAME => static::TEST_MAIL,
         ]);
-        $this->tester->getUserPasswordReset()->requestPasswordReset($userTransfer->getUsername());
+        $this->tester->getUserPasswordReset()->requestPasswordReset(
+            (new UserPasswordResetRequestTransfer())
+                ->setEmail($userTransfer->getUsername())
+        );
         $resetPasswordTransfer = $this->tester->findResetPasswordTransferByIdUser($userTransfer->getIdUser());
 
         // Act
@@ -103,7 +119,10 @@ class UserPasswordResetFacadeTest extends Unit
         $userTransfer = $this->tester->haveUser([
             UserTransfer::USERNAME => static::TEST_MAIL,
         ]);
-        $this->tester->getUserPasswordReset()->requestPasswordReset($userTransfer->getUsername());
+        $this->tester->getUserPasswordReset()->requestPasswordReset(
+            (new UserPasswordResetRequestTransfer())
+                ->setEmail($userTransfer->getUsername())
+        );
         $resetPasswordTransfer = $this->tester->findResetPasswordTransferByIdUser($userTransfer->getIdUser());
 
         // Act
@@ -122,7 +141,10 @@ class UserPasswordResetFacadeTest extends Unit
         $userTransfer = $this->tester->haveUser([
             UserTransfer::USERNAME => static::TEST_MAIL,
         ]);
-        $this->tester->getUserPasswordReset()->requestPasswordReset($userTransfer->getUsername());
+        $this->tester->getUserPasswordReset()->requestPasswordReset(
+            (new UserPasswordResetRequestTransfer())
+                ->setEmail($userTransfer->getUsername())
+        );
         $resetPasswordTransfer = $this->tester->findResetPasswordTransferByIdUser($userTransfer->getIdUser());
         $resetPasswordTransfer->setCreatedAt(
             (new DateTime('last year'))->format('Y-m-d H:i:s')

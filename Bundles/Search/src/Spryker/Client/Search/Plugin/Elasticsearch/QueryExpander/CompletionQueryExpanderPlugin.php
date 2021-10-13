@@ -22,10 +22,19 @@ use Spryker\Client\Search\Exception\InvalidSearchQueryException;
  */
 class CompletionQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPluginInterface
 {
+    /**
+     * @var string
+     */
     public const AGGREGATION_NAME = 'completion';
 
+    /**
+     * @var int
+     */
     public const SIZE = 10;
 
+    /**
+     * @var string
+     */
     public const SEARCH_WILDCARD = '.*';
 
     /**

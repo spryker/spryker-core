@@ -23,6 +23,9 @@ use Generated\Shared\Transfer\DatasetFilenameTransfer;
  */
 class ResolverPathTest extends Unit
 {
+    /**
+     * @var string
+     */
     public const DEFAULT_FILENAME = 'dataset';
 
     /**

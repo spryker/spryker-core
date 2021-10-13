@@ -20,10 +20,25 @@ use Spryker\Glue\RestRequestValidator\Dependency\External\RestRequestValidatorTo
  */
 class RestRequestValidatorDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const ADAPTER_FILESYSTEM = 'ADAPTER_FILESYSTEM';
+    /**
+     * @var string
+     */
     public const ADAPTER_YAML = 'ADAPTER_YAML';
+    /**
+     * @var string
+     */
     public const ADAPTER_VALIDATION = 'ADAPTER_VALIDATION';
+    /**
+     * @var string
+     */
     public const ADAPTER_CONSTRAINT_COLLECTION = 'ADAPTER_CONSTRAINT_COLLECTION';
+    /**
+     * @var string
+     */
     public const CLIENT_STORE = 'CLIENT_STORE';
 
     /**

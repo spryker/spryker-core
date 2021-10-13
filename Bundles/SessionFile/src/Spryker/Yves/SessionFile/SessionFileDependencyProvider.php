@@ -16,6 +16,9 @@ use Spryker\Yves\Kernel\Container;
  */
 class SessionFileDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const SERVICE_MONITORING = 'SERVICE_MONITORING';
 
     /**

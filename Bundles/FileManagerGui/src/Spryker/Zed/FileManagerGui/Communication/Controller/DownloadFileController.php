@@ -8,7 +8,7 @@
 namespace Spryker\Zed\FileManagerGui\Communication\Controller;
 
 use Generated\Shared\Transfer\FileManagerDataTransfer;
-use Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException;
+use Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemReadException;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,10 +21,25 @@ use Transliterator;
  */
 class DownloadFileController extends AbstractController
 {
+    /**
+     * @var string
+     */
     protected const URL_PARAM_ID_FILE_INFO = 'id-file-info';
+    /**
+     * @var string
+     */
     protected const CONTENT_DISPOSITION = 'Content-Disposition';
+    /**
+     * @var string
+     */
     protected const CONTENT_TYPE = 'Content-Type';
+    /**
+     * @var string
+     */
     protected const MESSAGE_FILE_UNAVAILABLE = 'File was not found';
+    /**
+     * @var string
+     */
     protected const TRANSLITERATOR_RULE = 'Any-Latin;Latin-ASCII;';
 
     /**
@@ -58,13 +73,18 @@ class DownloadFileController extends AbstractController
     protected function createResponse(FileManagerDataTransfer $fileManagerDataTransfer)
     {
         $response = new Response($fileManagerDataTransfer->getContent());
-        $fileName = $fileManagerDataTransfer->getFile()->getFileName();
-        $contentType = $fileManagerDataTransfer->getFileInfo()->getType();
+        $fileName = $fileManagerDataTransfer->getFileOrFail()->getFileNameOrFail();
+        $contentType = $fileManagerDataTransfer->getFileInfoOrFail()->getType() ?? '';
+        $transliterator = Transliterator::create(static::TRANSLITERATOR_RULE);
+
+        if ($transliterator === null) {
+            return $response;
+        }
 
         $disposition = $response->headers->makeDisposition(
             ResponseHeaderBag::DISPOSITION_ATTACHMENT,
             $fileName,
-            Transliterator::create(static::TRANSLITERATOR_RULE)->transliterate($fileName)
+            (string)$transliterator->transliterate($fileName)
         );
 
         $response->headers->set(static::CONTENT_DISPOSITION, $disposition);

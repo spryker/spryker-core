@@ -18,20 +18,30 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ReturnSlipController extends AbstractController
 {
+    /**
+     * @var string
+     */
     protected const PARAM_ID_RETURN = 'id-return';
 
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_RETURN_NOT_FOUND = 'Return with id "%id%" was not found.';
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_PARAM_ID = '%id%';
 
     /**
      * @uses \Spryker\Zed\SalesReturnGui\Communication\Controller\IndexController::indexAction()
+     * @var string
      */
     protected const ROUTE_RETURN_LIST = '/sales-return-gui';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function indexAction(Request $request)
     {
@@ -47,7 +57,7 @@ class ReturnSlipController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     protected function executeIndexAction(Request $request)
     {

@@ -16,6 +16,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginReadInterface;
 
 /**
+ * @deprecated Use {@link \Spryker\Zed\PriceProduct\Communication\Plugin\Product\PriceProductProductAbstractExpanderPlugin} instead.
+ *
  * @method \Spryker\Zed\PriceProduct\Business\PriceProductFacadeInterface getFacade()
  * @method \Spryker\Zed\PriceProduct\Communication\PriceProductCommunicationFactory getFactory()
  * @method \Spryker\Zed\PriceProduct\PriceProductConfig getConfig()
@@ -39,8 +41,11 @@ class PriceProductAbstractReadPlugin extends AbstractPlugin implements ProductAb
             (new PriceProductDimensionTransfer())
                 ->setType(PriceProductConfig::PRICE_DIMENSION_DEFAULT)
         );
+
+        /** @var int $idProductAbstract */
+        $idProductAbstract = $productAbstractTransfer->requireIdProductAbstract()->getIdProductAbstract();
         $priceProductTransfers = $this->getFacade()->findProductAbstractPrices(
-            $productAbstractTransfer->getIdProductAbstract(),
+            $idProductAbstract,
             $priceProductCriteria
         );
 

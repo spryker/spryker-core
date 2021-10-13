@@ -21,11 +21,13 @@ class TouchWriter implements TouchWriterInterface
 
     /**
      * @uses \Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap::COL_ITEM_EVENT_DELETED
+     * @var string
      */
     protected const COL_ITEM_EVENT_DELETED = 'deleted';
 
     /**
      * @uses \Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap::COL_ID_TOUCH
+     * @var string
      */
     protected const COL_ID_TOUCH = 'spy_touch.id_touch';
 
@@ -99,7 +101,7 @@ class TouchWriter implements TouchWriterInterface
     /**
      * @param \Orm\Zed\Touch\Persistence\SpyTouchQuery $touchQuery
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getTouchEntityIdsForDeletedItemEvent(SpyTouchQuery $touchQuery): array
     {
@@ -130,7 +132,7 @@ class TouchWriter implements TouchWriterInterface
     }
 
     /**
-     * @param int[] $touchIds
+     * @param array<int> $touchIds
      *
      * @return void
      */

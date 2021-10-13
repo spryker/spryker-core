@@ -19,20 +19,47 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class CreateController extends AbstractController
 {
+    /**
+     * @var string
+     */
     protected const PARAM_ID_PRODUCT = 'idProduct';
+    /**
+     * @var string
+     */
     protected const PARAM_ID_PRODUCT_ABSTRACT = 'idProductAbstract';
+    /**
+     * @var string
+     */
     protected const REDIRECT_URL_PRODUCT_CONCRETE_PATTERN = '/product-management/edit/variant?id-product=%s&id-product-abstract=%s#tab-content-scheduled_prices';
+    /**
+     * @var string
+     */
     protected const REDIRECT_URL_PRODUCT_ABSTRACT_PATTERN = '/product-management/edit?id-product-abstract=%s#tab-content-scheduled_prices';
+    /**
+     * @var string
+     */
     protected const MESSAGE_SUCCESS = 'Scheduled price has been successfully saved';
+    /**
+     * @var string
+     */
     protected const KEY_TITLE = 'title';
+    /**
+     * @var string
+     */
     protected const KEY_FORM = 'form';
+    /**
+     * @var string
+     */
     protected const KEY_REDIRECT_URL = 'redirectUrl';
+    /**
+     * @var string
+     */
     protected const KEY_ID_PRODUCT = 'idProduct';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function indexAction(Request $request)
     {

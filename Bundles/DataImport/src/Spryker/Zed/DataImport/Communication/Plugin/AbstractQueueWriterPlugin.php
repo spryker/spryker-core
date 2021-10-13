@@ -18,7 +18,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 abstract class AbstractQueueWriterPlugin extends AbstractPlugin implements DataSetItemWriterPluginInterface
 {
     /**
-     * @var \Generated\Shared\Transfer\DataSetItemTransfer[]
+     * @var array<\Generated\Shared\Transfer\DataSetItemTransfer>
      */
     protected static $dataSetItemBuffer = [];
 

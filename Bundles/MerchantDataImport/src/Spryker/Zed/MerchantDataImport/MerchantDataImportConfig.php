@@ -5,14 +5,20 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
-namespace  Spryker\Zed\MerchantDataImport;
+namespace Spryker\Zed\MerchantDataImport;
 
 use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Spryker\Zed\DataImport\DataImportConfig;
 
 class MerchantDataImportConfig extends DataImportConfig
 {
+    /**
+     * @var string
+     */
     public const IMPORT_TYPE_MERCHANT = 'merchant';
+    /**
+     * @var string
+     */
     public const IMPORT_TYPE_MERCHANT_STORE = 'merchant-store';
 
     /**

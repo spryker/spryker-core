@@ -17,7 +17,13 @@ use Spryker\Zed\Kernel\Container;
  */
 class DiscountPromotionDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_PRODUCT = 'FACADE_PRODUCT';
+    /**
+     * @var string
+     */
     public const FACADE_AVAILABILITY = 'FACADE_AVAILABILITY';
 
     /**

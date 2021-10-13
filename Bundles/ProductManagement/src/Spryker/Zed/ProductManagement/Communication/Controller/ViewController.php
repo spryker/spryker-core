@@ -11,6 +11,7 @@ use ArrayObject;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductImageSetTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Generated\Shared\Transfer\TaxSetTransfer;
 use Spryker\Shared\ProductManagement\ProductManagementConstants;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\ImageCollectionForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\ImageSetForm;
@@ -25,13 +26,19 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ViewController extends AddController
 {
+    /**
+     * @var string
+     */
     public const PARAM_ID_PRODUCT_ABSTRACT = 'id-product-abstract';
+    /**
+     * @var string
+     */
     public const PARAM_ID_PRODUCT = 'id-product';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function indexAction(Request $request)
     {
@@ -102,7 +109,7 @@ class ViewController extends AddController
             'productAttributes' => $attributes,
             'imageSetCollection' => $imageSets,
             'imageUrlPrefix' => $this->getFactory()->getConfig()->getImageUrlPrefix(),
-            'taxSet' => $this->getFactory()->getTaxFacade()->getTaxSet($productAbstractTransfer->getIdTaxSet()),
+            'taxSet' => $this->findTaxSet($productAbstractTransfer),
             'renderedPlugins' => $this->getRenderedProductAbstractViewPlugins($idProductAbstract),
             'relatedStoreNames' => $relatedStoreNames,
             'isProductBundle' => $isProductBundle,
@@ -116,7 +123,7 @@ class ViewController extends AddController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function variantAction(Request $request)
     {
@@ -221,7 +228,7 @@ class ViewController extends AddController
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductImageSetTransfer[] $imageSetTransferCollection
+     * @param array<\Generated\Shared\Transfer\ProductImageSetTransfer> $imageSetTransferCollection
      *
      * @return array
      */
@@ -318,9 +325,9 @@ class ViewController extends AddController
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\StoreTransfer[] $stores
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\StoreTransfer> $stores
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getStoreNames(ArrayObject $stores)
     {
@@ -341,5 +348,21 @@ class ViewController extends AddController
         }
 
         return $viewData;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     *
+     * @return \Generated\Shared\Transfer\TaxSetTransfer|null
+     */
+    protected function findTaxSet(ProductAbstractTransfer $productAbstractTransfer): ?TaxSetTransfer
+    {
+        if (!$productAbstractTransfer->getIdTaxSet()) {
+            return null;
+        }
+
+        return $this->getFactory()
+            ->getTaxFacade()
+            ->getTaxSet($productAbstractTransfer->getIdTaxSet());
     }
 }

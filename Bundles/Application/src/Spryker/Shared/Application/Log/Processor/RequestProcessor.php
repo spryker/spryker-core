@@ -16,17 +16,47 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class RequestProcessor
 {
+    /**
+     * @var string
+     */
     public const EXTRA = 'request';
+    /**
+     * @var string
+     */
     public const CONTEXT_KEY = 'request';
 
+    /**
+     * @var string
+     */
     public const REQUEST_PARAMS = 'request_params';
+    /**
+     * @var string
+     */
     public const REQUEST_ID = 'requestId';
+    /**
+     * @var string
+     */
     public const SESSION_ID = 'sessionId';
+    /**
+     * @var string
+     */
     public const USERNAME = 'username';
+    /**
+     * @var string
+     */
     public const REQUEST_TYPE = 'type';
 
+    /**
+     * @var string
+     */
     public const RECORD_CONTEXT = 'context';
+    /**
+     * @var string
+     */
     public const SESSION_KEY_USER = 'user:currentUser';
+    /**
+     * @var string
+     */
     public const RECORD_EXTRA = 'extra';
 
     /**
@@ -105,7 +135,7 @@ class RequestProcessor
     /**
      * @param array $context
      *
-     * @return bool|\Symfony\Component\HttpFoundation\Request|null
+     * @return \Symfony\Component\HttpFoundation\Request|bool|null
      */
     protected function findRequest(array $context)
     {

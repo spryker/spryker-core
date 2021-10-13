@@ -54,7 +54,7 @@ class ItemByPriceCollectorPlugin extends AbstractPlugin implements CollectorPlug
      *
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function acceptedDataTypes()
     {

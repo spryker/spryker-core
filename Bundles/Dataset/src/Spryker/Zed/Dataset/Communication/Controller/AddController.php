@@ -21,13 +21,19 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class AddController extends AbstractController
 {
+    /**
+     * @var string
+     */
     protected const MESSAGE_DATASET_PARSE_ERROR = 'Something wrong';
+    /**
+     * @var string
+     */
     protected const DATSET_LIST_URL = '/dataset';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function indexAction(Request $request)
     {

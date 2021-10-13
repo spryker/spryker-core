@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReportTransfer;
 use Spryker\Zed\CmsSlotDataImport\Communication\Plugin\CmsSlotTemplateDataImportPlugin;
+use Spryker\Zed\DataImport\Business\Exception\DataImportException;
 
 /**
  * Auto-generated group annotations
@@ -56,19 +57,18 @@ class CmsSlotTemplateDataImportPluginTest extends Unit
      */
     public function testCmsSlotTemplateImportWithInvalidDataThrowsException(): void
     {
-        $this->expectException('Spryker\Zed\DataImport\Business\Exception\DataImportException');
+        // Arrange
         $this->tester->ensureSpyCmsSlotTemplateTableIsEmpty();
-
         $dataImporterReaderConfigurationTransfer = new DataImporterReaderConfigurationTransfer();
         $dataImporterReaderConfigurationTransfer->setFileName(codecept_data_dir() . 'import/cms_slot_template_invalid.csv');
-
         $dataImportConfigurationTransfer = (new DataImporterConfigurationTransfer())
             ->setReaderConfiguration($dataImporterReaderConfigurationTransfer)
             ->setThrowException(true);
 
-        $dataImporterReportTransfer = (new CmsSlotTemplateDataImportPlugin())->import($dataImportConfigurationTransfer);
+        // Assert
+        $this->expectException(DataImportException::class);
 
-        $this->assertInstanceOf(DataImporterReportTransfer::class, $dataImporterReportTransfer);
-        $this->assertFalse($dataImporterReportTransfer->getIsSuccess());
+        // Act
+        (new CmsSlotTemplateDataImportPlugin())->import($dataImportConfigurationTransfer);
     }
 }

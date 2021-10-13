@@ -17,7 +17,7 @@ use Spryker\Zed\PaymentDataImport\Business\PaymentMethodStore\Writer\DataSet\Pay
 class StoreNameToIdStoreStep implements DataImportStepInterface
 {
     /**
-     * @var int[]
+     * @var array<int>
      */
     protected static $idStoreCache = [];
 

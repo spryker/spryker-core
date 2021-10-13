@@ -8,9 +8,10 @@
 namespace Spryker\Service\Flysystem;
 
 use Generated\Shared\Transfer\FlysystemConfigTransfer;
-use League\Flysystem\FilesystemInterface;
+use League\Flysystem\FilesystemOperator;
 use Spryker\Service\Flysystem\Exception\BuilderNotFoundException;
 use Spryker\Service\Flysystem\Model\Provider\FilesystemProvider;
+use Spryker\Service\Flysystem\Model\Provider\FilesystemProviderInterface;
 use Spryker\Service\Flysystem\Model\Reader;
 use Spryker\Service\Flysystem\Model\Stream;
 use Spryker\Service\Flysystem\Model\Writer;
@@ -21,12 +22,15 @@ use Spryker\Service\Kernel\AbstractServiceFactory;
  */
 class FlysystemServiceFactory extends AbstractServiceFactory
 {
+    /**
+     * @var string
+     */
     public const SPRYKER_ADAPTER_CLASS = 'sprykerAdapterClass';
 
     /**
      * @return \Spryker\Service\Flysystem\Model\Provider\FilesystemProviderInterface
      */
-    public function createFilesystemProvider()
+    public function createFilesystemProvider(): FilesystemProviderInterface
     {
         return new FilesystemProvider(
             $this->buildFilesystemCollection()
@@ -64,7 +68,7 @@ class FlysystemServiceFactory extends AbstractServiceFactory
     }
 
     /**
-     * @return \Generated\Shared\Transfer\FlysystemConfigTransfer[]
+     * @return array<\Generated\Shared\Transfer\FlysystemConfigTransfer>
      */
     protected function createConfigCollection()
     {
@@ -97,7 +101,7 @@ class FlysystemServiceFactory extends AbstractServiceFactory
      *
      * @return \Generated\Shared\Transfer\FlysystemConfigTransfer
      */
-    protected function createConfig($name, array $configData)
+    protected function createConfig($name, array $configData): FlysystemConfigTransfer
     {
         $type = $configData[static::SPRYKER_ADAPTER_CLASS];
         unset($configData[static::SPRYKER_ADAPTER_CLASS]);
@@ -115,19 +119,15 @@ class FlysystemServiceFactory extends AbstractServiceFactory
     }
 
     /**
-     * @return \League\Flysystem\FilesystemInterface[]
+     * @return array<\League\Flysystem\FilesystemOperator>
      */
-    protected function buildFilesystemCollection()
+    protected function buildFilesystemCollection(): array
     {
         $configCollection = $this->createConfigCollection();
-        $flysystemPluginCollection = $this->getFlysystemPluginCollection();
 
         $filesystemCollection = [];
         foreach ($configCollection as $name => $configTransfer) {
-            $filesystem = $this->buildFilesystemByType($configTransfer);
-            $this->provideFlysystemPlugins($filesystem, $flysystemPluginCollection);
-
-            $filesystemCollection[$name] = $filesystem;
+            $filesystemCollection[$name] = $this->buildFilesystemByType($configTransfer);
         }
 
         return $filesystemCollection;
@@ -138,14 +138,14 @@ class FlysystemServiceFactory extends AbstractServiceFactory
      *
      * @throws \Spryker\Service\Flysystem\Exception\BuilderNotFoundException
      *
-     * @return \League\Flysystem\FilesystemInterface
+     * @return \League\Flysystem\FilesystemOperator
      */
-    protected function buildFilesystemByType(FlysystemConfigTransfer $configTransfer)
+    protected function buildFilesystemByType(FlysystemConfigTransfer $configTransfer): FilesystemOperator
     {
         $pluginCollection = $this->getFilesystemBuilderPluginCollection();
         foreach ($pluginCollection as $plugin) {
-            if ($plugin->acceptType($configTransfer->getType())) {
-                return $plugin->build($configTransfer, $this->getFlysystemPluginCollection());
+            if ($plugin->acceptType($configTransfer->getTypeOrFail())) {
+                return $plugin->build($configTransfer);
             }
         }
 
@@ -156,33 +156,10 @@ class FlysystemServiceFactory extends AbstractServiceFactory
     }
 
     /**
-     * @return \League\Flysystem\PluginInterface[]
-     */
-    protected function getFlysystemPluginCollection()
-    {
-        return $this->getProvidedDependency(FlysystemDependencyProvider::PLUGIN_COLLECTION_FLYSYSTEM);
-    }
-
-    /**
-     * @return \Spryker\Service\Flysystem\Dependency\Plugin\FlysystemFilesystemBuilderPluginInterface[]
+     * @return array<\Spryker\Service\Flysystem\Dependency\Plugin\FlysystemFilesystemBuilderPluginInterface>
      */
     protected function getFilesystemBuilderPluginCollection()
     {
         return $this->getProvidedDependency(FlysystemDependencyProvider::PLUGIN_COLLECTION_FILESYSTEM_BUILDER);
-    }
-
-    /**
-     * @param \League\Flysystem\FilesystemInterface $filesystem
-     * @param \League\Flysystem\PluginInterface[] $flysystemPluginCollection
-     *
-     * @return \League\Flysystem\FilesystemInterface
-     */
-    protected function provideFlysystemPlugins(FilesystemInterface $filesystem, array $flysystemPluginCollection)
-    {
-        foreach ($flysystemPluginCollection as $plugin) {
-            $filesystem->addPlugin($plugin);
-        }
-
-        return $filesystem;
     }
 }

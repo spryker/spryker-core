@@ -18,6 +18,9 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 class ProductLabelDeleteForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     protected const FIELD_SUBMIT = 'submit';
 
     /**

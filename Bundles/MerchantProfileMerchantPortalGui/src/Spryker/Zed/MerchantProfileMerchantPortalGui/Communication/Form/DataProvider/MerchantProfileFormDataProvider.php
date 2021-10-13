@@ -121,7 +121,7 @@ class MerchantProfileFormDataProvider implements MerchantProfileFormDataProvider
     /**
      * @phpstan-param \ArrayObject<int,\Generated\Shared\Transfer\UrlTransfer> $merchantProfileUrlCollection
      *
-     * @param \ArrayObject|\Generated\Shared\Transfer\UrlTransfer[] $merchantProfileUrlCollection
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\UrlTransfer> $merchantProfileUrlCollection
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return \Generated\Shared\Transfer\UrlTransfer

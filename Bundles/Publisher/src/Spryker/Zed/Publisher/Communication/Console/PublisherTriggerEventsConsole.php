@@ -18,13 +18,31 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class PublisherTriggerEventsConsole extends Console
 {
+    /**
+     * @var string
+     */
     public const COMMAND_NAME = 'publish:trigger-events';
+    /**
+     * @var string
+     */
     public const DESCRIPTION = 'This command will publish Zed resource(Product, Price, ...) to storage and search.';
 
+    /**
+     * @var string
+     */
     public const RESOURCE_OPTION = 'resource';
+    /**
+     * @var string
+     */
     public const RESOURCE_OPTION_SHORTCUT = 'r';
 
+    /**
+     * @var string
+     */
     public const RESOURCE_IDS_OPTION = 'ids';
+    /**
+     * @var string
+     */
     public const RESOURCE_IDS_OPTION_SHORTCUT = 'i';
 
     /**

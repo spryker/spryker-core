@@ -31,13 +31,9 @@ class ItemPriceCollectorTest extends BaseRuleTester
     public function testCollectWhenMatchesPriceShouldReturnListOfDiscountableItems(): void
     {
         $comparatorMock = $this->createComparatorMock();
-        $comparatorMock->expects($this->at(0))
+        $comparatorMock->expects($this->exactly(2))
             ->method('compare')
-            ->willReturn(true);
-
-        $comparatorMock->expects($this->at(1))
-            ->method('compare')
-            ->willReturn(false);
+            ->willReturnOnConsecutiveCalls(true, false);
 
         $itemPriceCollector = $this->createItemPriceCollector($comparatorMock);
 

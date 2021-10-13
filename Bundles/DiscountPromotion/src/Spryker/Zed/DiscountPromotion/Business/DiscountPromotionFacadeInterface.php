@@ -27,7 +27,7 @@ interface DiscountPromotionFacadeInterface
      * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\DiscountableItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\DiscountableItemTransfer>
      */
     public function collect(DiscountTransfer $discountTransfer, QuoteTransfer $quoteTransfer);
 

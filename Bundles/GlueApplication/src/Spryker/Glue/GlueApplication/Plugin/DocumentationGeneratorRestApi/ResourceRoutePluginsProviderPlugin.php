@@ -21,7 +21,7 @@ class ResourceRoutePluginsProviderPlugin extends AbstractPlugin implements Resou
      *
      * @api
      *
-     * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface[]
+     * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface>
      */
     public function getResourceRoutePlugins(): array
     {

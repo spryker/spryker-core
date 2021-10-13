@@ -23,7 +23,7 @@ class TransferObjectFormatter extends ArrayFormatter
      *
      * @throws \Propel\Runtime\Exception\LogicException
      *
-     * @return \Spryker\Shared\Kernel\Transfer\TransferInterface[]
+     * @return array<\Spryker\Shared\Kernel\Transfer\TransferInterface>
      */
     public function format(?DataFetcherInterface $dataFetcher = null)
     {

@@ -12,7 +12,13 @@ use Spryker\Zed\DataImport\DataImportConfig;
 
 class MultiCartDataImportConfig extends DataImportConfig
 {
+    /**
+     * @var string
+     */
     public const IMPORT_TYPE_MULTI_CART = 'multi-cart';
+    /**
+     * @var string
+     */
     protected const FILE_NAME = 'multi_cart.csv';
 
     /**

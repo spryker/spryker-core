@@ -12,6 +12,9 @@ use Spryker\Zed\Kernel\Container;
 
 class DashboardMerchantPortalGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const PLUGINS_DASHBOARD_CARD = 'PLUGINS_DASHBOARD_CARD';
 
     /**
@@ -41,7 +44,7 @@ class DashboardMerchantPortalGuiDependencyProvider extends AbstractBundleDepende
     }
 
     /**
-     * @return \Spryker\Zed\DashboardMerchantPortalGuiExtension\Dependency\Plugin\MerchantDashboardCardPluginInterface[]
+     * @return array<\Spryker\Zed\DashboardMerchantPortalGuiExtension\Dependency\Plugin\MerchantDashboardCardPluginInterface>
      */
     protected function getDashboardCardPlugins(): array
     {

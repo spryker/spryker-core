@@ -15,6 +15,9 @@ use Throwable;
 
 class ElasticsearchDataCollector extends DataCollector
 {
+    /**
+     * @var string
+     */
     protected const DATA_COLLECTOR_NAME = 'elasticsearch';
 
     /**

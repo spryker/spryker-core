@@ -17,7 +17,7 @@ interface PublisherPluginInterface extends EventBulkHandlerInterface
      *
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getSubscribedEvents(): array;
 }

@@ -17,9 +17,21 @@ use Spryker\Zed\QuoteRequest\Persistence\QuoteRequestEntityManagerInterface;
 
 class QuoteRequestUserSender implements QuoteRequestUserSenderInterface
 {
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_CONCURRENT_CUSTOMERS = 'quote_request.update.validation.concurrent';
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_QUOTE_REQUEST_WRONG_STATUS = 'quote_request.validation.error.wrong_status';
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_QUOTE_REQUEST_EMPTY_QUOTE_ITEMS = 'quote_request.validation.error.empty_quote_items';
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_WRONG_QUOTE_REQUEST_VALID_UNTIL = 'quote_request.update.validation.error.wrong_valid_until';
 
     /**

@@ -16,7 +16,13 @@ use Spryker\Zed\ShoppingList\Business\ShoppingListItem\ShoppingListItemPluginExe
 
 class ShoppingListItemAddOperationValidator implements ShoppingListItemAddOperationValidatorInterface
 {
+    /**
+     * @var string
+     */
     protected const ERROR_SHOPPING_LIST_WRITE_PERMISSION_REQUIRED = 'customer.account.shopping_list.error.write_permission_required';
+    /**
+     * @var string
+     */
     protected const ERROR_SHOPPING_LIST_ITEM_QUANTITY_NOT_VALID = 'customer.account.shopping_list_item.error.quantity_not_valid';
 
     /**

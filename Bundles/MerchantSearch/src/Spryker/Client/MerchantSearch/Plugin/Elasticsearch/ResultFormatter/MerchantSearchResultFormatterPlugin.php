@@ -15,7 +15,13 @@ use Spryker\Client\SearchElasticsearch\Plugin\ResultFormatter\AbstractElasticsea
 
 class MerchantSearchResultFormatterPlugin extends AbstractElasticsearchResultFormatterPlugin
 {
+    /**
+     * @var string
+     */
     protected const NAME = 'MerchantSearchCollection';
+    /**
+     * @var string
+     */
     protected const ITEMS_PER_PAGE = 'from';
 
     /**
@@ -30,7 +36,7 @@ class MerchantSearchResultFormatterPlugin extends AbstractElasticsearchResultFor
 
     /**
      * @param \Elastica\ResultSet $searchResult
-     * @param mixed[] $requestParameters
+     * @param array<mixed> $requestParameters
      *
      * @return \Generated\Shared\Transfer\MerchantSearchCollectionTransfer
      */
@@ -53,7 +59,7 @@ class MerchantSearchResultFormatterPlugin extends AbstractElasticsearchResultFor
     }
 
     /**
-     * @param string[] $data
+     * @param array<string> $data
      *
      * @return \Generated\Shared\Transfer\MerchantSearchTransfer
      */

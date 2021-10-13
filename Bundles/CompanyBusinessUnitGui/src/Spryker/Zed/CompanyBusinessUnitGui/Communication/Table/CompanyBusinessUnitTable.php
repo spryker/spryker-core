@@ -24,23 +24,38 @@ class CompanyBusinessUnitTable extends AbstractTable
     protected const COL_ID_COMPANY_BUSINESS_UNIT = SpyCompanyBusinessUnitTableMap::COL_ID_COMPANY_BUSINESS_UNIT;
     protected const COL_COMPANY_NAME = SpyCompanyTableMap::COL_NAME;
     protected const COL_NAME = SpyCompanyBusinessUnitTableMap::COL_NAME;
+    /**
+     * @var string
+     */
     protected const COL_PARENT_NAME = 'parent.name';
+    /**
+     * @var string
+     */
     protected const COL_ADDRESS = 'address';
     protected const COL_IBAN = SpyCompanyBusinessUnitTableMap::COL_IBAN;
     protected const COL_BIC = SpyCompanyBusinessUnitTableMap::COL_BIC;
+    /**
+     * @var string
+     */
     protected const COL_ACTIONS = 'actions';
 
+    /**
+     * @var string
+     */
     protected const TABLE_PARENT_UNIT = 'parent';
     /**
      * @see CompanyBusinessUnitForm::FIELD_ID_COMPANY_BUSINESS_UNIT
+     * @var string
      */
     protected const PARAM_ID_COMPANY_BUSINESS_UNIT = 'id-company-business-unit';
     /**
      * @see EditCompanyBusinessUnitController::indexAction()
+     * @var string
      */
     protected const URL_COMPANY_BUSINESS_UNIT_EDIT = '/company-business-unit-gui/edit-company-business-unit';
     /**
      * @see DeleteCompanyBusinessUnitController::indexAction()
+     * @var string
      */
     protected const URL_COMPANY_BUSINESS_UNIT_DELETE = '/company-business-unit-gui/delete-company-business-unit';
 

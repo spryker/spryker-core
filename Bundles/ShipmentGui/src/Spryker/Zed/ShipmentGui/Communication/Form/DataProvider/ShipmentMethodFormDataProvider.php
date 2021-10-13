@@ -13,14 +13,38 @@ use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToTaxFacadeInterface;
 
 class ShipmentMethodFormDataProvider extends ViewShipmentMethodFormDataProvider
 {
+    /**
+     * @var string
+     */
     public const OPTION_CARRIER_CHOICES = 'carrier_choices';
+    /**
+     * @var string
+     */
     public const OPTION_AVAILABILITY_PLUGIN_CHOICE_LIST = 'availability_plugin_choice_list';
+    /**
+     * @var string
+     */
     public const OPTION_PRICE_PLUGIN_CHOICE_LIST = 'price_plugin_choice_list';
+    /**
+     * @var string
+     */
     public const OPTION_DELIVERY_TIME_PLUGIN_CHOICE_LIST = 'delivery_time_plugin_choice_list';
+    /**
+     * @var string
+     */
     public const OPTION_DELIVERY_KEY_DISABLED = 'option_delivery_key_disabled';
 
+    /**
+     * @var string
+     */
     protected const KEY_AVAILABILITY = 'AVAILABILITY_PLUGINS';
+    /**
+     * @var string
+     */
     protected const KEY_PRICE = 'PRICE_PLUGINS';
+    /**
+     * @var string
+     */
     protected const KEY_DELIVERY_TIME = 'DELIVERY_TIME_PLUGINS';
 
     /**
@@ -66,7 +90,7 @@ class ShipmentMethodFormDataProvider extends ViewShipmentMethodFormDataProvider
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function getCarrierOptions(): array
     {
@@ -83,7 +107,7 @@ class ShipmentMethodFormDataProvider extends ViewShipmentMethodFormDataProvider
     /**
      * @param \Generated\Shared\Transfer\ShipmentMethodPluginCollectionTransfer $shipmentMethodPluginCollectionTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getAvailabilityPluginOptions(ShipmentMethodPluginCollectionTransfer $shipmentMethodPluginCollectionTransfer): array
     {
@@ -95,7 +119,7 @@ class ShipmentMethodFormDataProvider extends ViewShipmentMethodFormDataProvider
     /**
      * @param \Generated\Shared\Transfer\ShipmentMethodPluginCollectionTransfer $shipmentMethodPluginCollectionTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getPricePluginOptions(ShipmentMethodPluginCollectionTransfer $shipmentMethodPluginCollectionTransfer): array
     {

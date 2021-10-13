@@ -34,8 +34,14 @@ class ProductSetPageSearchCommunicationTester extends Actor
 {
     use _generated\ProductSetPageSearchCommunicationTesterActions;
 
+    /**
+     * @var string
+     */
     public const PARAM_PROJECT = 'PROJECT';
 
+    /**
+     * @var string
+     */
     public const PROJECT_SUITE = 'suite';
 
     /**
@@ -70,7 +76,7 @@ class ProductSetPageSearchCommunicationTester extends Actor
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductSetTransfer[] $productSetTransfers
+     * @param array<\Generated\Shared\Transfer\ProductSetTransfer> $productSetTransfers
      * @param \Spryker\Zed\ProductSetPageSearch\Business\ProductSetPageSearchFacade $productSetPageSearchFacade
      *
      * @return void

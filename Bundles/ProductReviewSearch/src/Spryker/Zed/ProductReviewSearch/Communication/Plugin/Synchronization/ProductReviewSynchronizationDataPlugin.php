@@ -49,7 +49,7 @@ class ProductReviewSynchronizationDataPlugin extends AbstractPlugin implements S
      *
      * @api
      *
-     * @param int[] $ids
+     * @param array<int> $ids
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria|null
      */

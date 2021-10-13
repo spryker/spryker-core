@@ -78,7 +78,7 @@ class PropelBatchIterator implements CountableIteratorInterface
     }
 
     /**
-     * @inheritDoc
+     * @return mixed
      */
     public function current()
     {
@@ -86,7 +86,7 @@ class PropelBatchIterator implements CountableIteratorInterface
     }
 
     /**
-     * @inheritDoc
+     * @return void
      */
     public function next()
     {
@@ -94,7 +94,7 @@ class PropelBatchIterator implements CountableIteratorInterface
     }
 
     /**
-     * @inheritDoc
+     * @return int
      */
     public function key()
     {

@@ -133,7 +133,7 @@ class QuoteStatusCalculatorTest extends Unit
     }
 
     /**
-     * @param string[] $statuses
+     * @param array<string> $statuses
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
@@ -146,9 +146,9 @@ class QuoteStatusCalculatorTest extends Unit
     }
 
     /**
-     * @param string[] $statuses
+     * @param array<string> $statuses
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\QuoteApprovalTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\QuoteApprovalTransfer>
      */
     protected function createQuoteApprovalTransfers(array $statuses): ArrayObject
     {

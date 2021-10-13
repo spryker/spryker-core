@@ -37,12 +37,12 @@ class Timeout implements TimeoutInterface
     protected $omsConfig;
 
     /**
-     * @var \DateTime[]
+     * @var array<\DateTime>
      */
     protected $eventToTimeoutBuffer = [];
 
     /**
-     * @var \Spryker\Zed\Oms\Business\Process\StateInterface[]
+     * @var array<\Spryker\Zed\Oms\Business\Process\StateInterface>
      */
     protected $stateIdToModelBuffer = [];
 

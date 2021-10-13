@@ -1,2 +1,6 @@
 parameters:
     checkMissingIterableValueType: false
+    checkGenericClassInNonGenericObjectType: false
+    excludes_analyse:
+            - '%rootDir%/../../../vendor/spryker/spryker/Bundles/CategoryGui/src/Spryker/Zed/CategoryGui/Communication/Table/CategoryTable.php'
+    ignoreErrors:

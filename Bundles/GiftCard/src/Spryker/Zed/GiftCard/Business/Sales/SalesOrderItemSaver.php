@@ -24,12 +24,12 @@ class SalesOrderItemSaver implements SalesOrderItemSaverInterface
     protected $utilEncodingService;
 
     /**
-     * @var \Spryker\Zed\GiftCard\Dependency\Plugin\GiftCardAttributePluginInterface[]
+     * @var array<\Spryker\Zed\GiftCard\Dependency\Plugin\GiftCardAttributePluginInterface>
      */
     protected $attributePlugins;
 
     /**
-     * @param \Spryker\Zed\GiftCard\Dependency\Plugin\GiftCardAttributePluginInterface[] $attributePlugins
+     * @param array<\Spryker\Zed\GiftCard\Dependency\Plugin\GiftCardAttributePluginInterface> $attributePlugins
      * @param \Spryker\Service\UtilEncoding\UtilEncodingServiceInterface $utilEncodingService
      */
     public function __construct(
@@ -41,12 +41,34 @@ class SalesOrderItemSaver implements SalesOrderItemSaverInterface
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\GiftCard\Business\Sales\SalesOrderItemSaver::saveSalesOrderItemGiftCards()} instead.
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
      *
      * @return void
      */
     public function saveSalesOrderGiftCardItems(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse)
+    {
+        $this->doSaveSalesOrderGiftCardItems($quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return void
+     */
+    public function saveSalesOrderItemGiftCards(QuoteTransfer $quoteTransfer): void
+    {
+        $this->doSaveSalesOrderGiftCardItems($quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return void
+     */
+    protected function doSaveSalesOrderGiftCardItems(QuoteTransfer $quoteTransfer): void
     {
         $this->handleDatabaseTransaction(function () use ($quoteTransfer) {
             foreach ($quoteTransfer->getItems() as $itemTransfer) {
@@ -97,7 +119,7 @@ class SalesOrderItemSaver implements SalesOrderItemSaverInterface
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
-     * @return array
+     * @return array<mixed>
      */
     protected function getAttributes(ItemTransfer $itemTransfer)
     {

@@ -26,6 +26,7 @@ class AbstractControllerTest extends Unit
 {
     /**
      * @deprecated Use PHPUnit's additional internal methods methods instead of the deprecated `assertInternalType()`.
+     * @var string
      */
     public const EXPECTED_INTERNAL_TYPE = 'int';
 
@@ -34,17 +35,12 @@ class AbstractControllerTest extends Unit
      *
      * @param mixed $input
      * @param int $expected
-     * @param bool $isValid
      *
      * @return void
      */
-    public function testCastInt($input, int $expected, bool $isValid): void
+    public function testCastInt($input, int $expected): void
     {
         $controller = new MockController();
-
-        if (!$isValid) {
-            $this->expectException(Exception::class);
-        }
 
         $result = $controller->indexAction($input);
 
@@ -53,18 +49,45 @@ class AbstractControllerTest extends Unit
     }
 
     /**
+     * @dataProvider getInvalidTestData()
+     *
+     * @param mixed $input
+     *
+     * @return void
+     */
+    public function testCastIntThrowsExceptionForInvalidData($input): void
+    {
+        //Arrange
+        $controller = new MockController();
+
+        //Assert
+        $this->expectException(Exception::class);
+
+        //Act
+        $controller->indexAction($input);
+    }
+
+    /**
      * @return array
      */
     public function getTestData(): array
     {
         return [
-            ['1', 1, true],
-            [1, 1, true],
-            [1.5, 1, true],
-            [true, 1, false],
-            [false, 0, false],
-            ['string', 0, false],
-            [[], 0, false],
+            ['1', 1],
+            [1, 1],
+            [1.5, 1],
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public function getInvalidTestData(): array
+    {
+        return [
+            [true],
+            ['string'],
+            [[]],
         ];
     }
 }

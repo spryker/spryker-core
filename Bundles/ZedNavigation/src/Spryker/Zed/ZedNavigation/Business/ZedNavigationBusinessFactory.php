@@ -8,6 +8,8 @@
 namespace Spryker\Zed\ZedNavigation\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\ZedNavigation\Business\Filter\BackofficeNavigationItemCollectionRouterFilter;
+use Spryker\Zed\ZedNavigation\Business\Filter\BackofficeNavigationItemCollectionRouterFilterInterface;
 use Spryker\Zed\ZedNavigation\Business\Filter\NavigationItemFilter;
 use Spryker\Zed\ZedNavigation\Business\Filter\NavigationItemFilterInterface;
 use Spryker\Zed\ZedNavigation\Business\Model\Cache\ZedNavigationCache;
@@ -26,6 +28,7 @@ use Spryker\Zed\ZedNavigation\Business\Resolver\MergeNavigationStrategyResolverI
 use Spryker\Zed\ZedNavigation\Business\Strategy\BreadcrumbNavigationMergeStrategy;
 use Spryker\Zed\ZedNavigation\Business\Strategy\NavigationFullMergeStrategy;
 use Spryker\Zed\ZedNavigation\Business\Strategy\NavigationMergeStrategyInterface;
+use Spryker\Zed\ZedNavigation\Dependency\Facade\ZedNavigationToRouterFacadeInterface;
 use Spryker\Zed\ZedNavigation\ZedNavigationDependencyProvider;
 
 /**
@@ -42,7 +45,8 @@ class ZedNavigationBusinessFactory extends AbstractBusinessFactory
             $this->createCachedNavigationCollector(),
             $this->createMenuFormatter(),
             $this->createPathExtractor(),
-            $this->createNavigationItemFilter()
+            $this->createNavigationItemFilter(),
+            $this->getConfig()
         );
     }
 
@@ -64,7 +68,8 @@ class ZedNavigationBusinessFactory extends AbstractBusinessFactory
     {
         return new ZedNavigationCacheBuilder(
             $this->createNavigationCollector(),
-            $this->createNavigationCache()
+            $this->createNavigationCache(),
+            $this->getConfig()
         );
     }
 
@@ -74,7 +79,8 @@ class ZedNavigationBusinessFactory extends AbstractBusinessFactory
     public function createNavigationCacheRemover(): ZedNavigationCacheRemover
     {
         return new ZedNavigationCacheRemover(
-            $this->createNavigationCache()
+            $this->createNavigationCache(),
+            $this->getConfig()
         );
     }
 
@@ -99,10 +105,7 @@ class ZedNavigationBusinessFactory extends AbstractBusinessFactory
      */
     public function createNavigationSchemaFinder()
     {
-        return new ZedNavigationSchemaFinder(
-            $this->getConfig()->getNavigationSchemaPathPattern(),
-            $this->getConfig()->getNavigationSchemaFileNamePattern()
-        );
+        return new ZedNavigationSchemaFinder($this->getConfig()->getNavigationSchemaPathPattern());
     }
 
     /**
@@ -141,7 +144,6 @@ class ZedNavigationBusinessFactory extends AbstractBusinessFactory
     public function createNavigationCache()
     {
         return new ZedNavigationCache(
-            $this->getConfig()->getCacheFile(),
             $this->getConfig()->isNavigationCacheEnabled(),
             $this->getUtilEncodingService()
         );
@@ -188,7 +190,7 @@ class ZedNavigationBusinessFactory extends AbstractBusinessFactory
     /**
      * @deprecated Use {@link \Spryker\Zed\ZedNavigation\Business\ZedNavigationBusinessFactory::getNavigationItemCollectionFilterPlugins()} instead.
      *
-     * @return \Spryker\Zed\ZedNavigationExtension\Dependency\Plugin\NavigationItemFilterPluginInterface[]
+     * @return array<\Spryker\Zed\ZedNavigationExtension\Dependency\Plugin\NavigationItemFilterPluginInterface>
      */
     public function getNavigationItemFilterPlugins(): array
     {
@@ -196,7 +198,7 @@ class ZedNavigationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ZedNavigationExtension\Dependency\Plugin\NavigationItemCollectionFilterPluginInterface[]
+     * @return array<\Spryker\Zed\ZedNavigationExtension\Dependency\Plugin\NavigationItemCollectionFilterPluginInterface>
      */
     public function getNavigationItemCollectionFilterPlugins(): array
     {
@@ -229,5 +231,23 @@ class ZedNavigationBusinessFactory extends AbstractBusinessFactory
     public function createUrlUniqueValidator()
     {
         return new UrlUniqueValidator();
+    }
+
+    /**
+     * @return \Spryker\Zed\ZedNavigation\Business\Filter\BackofficeNavigationItemCollectionRouterFilterInterface
+     */
+    public function createBackofficeNavigationItemCollectionRouterFilter(): BackofficeNavigationItemCollectionRouterFilterInterface
+    {
+        return new BackofficeNavigationItemCollectionRouterFilter(
+            $this->getRouterFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ZedNavigation\Dependency\Facade\ZedNavigationToRouterFacadeInterface
+     */
+    public function getRouterFacade(): ZedNavigationToRouterFacadeInterface
+    {
+        return $this->getProvidedDependency(ZedNavigationDependencyProvider::FACADE_ROUTER);
     }
 }

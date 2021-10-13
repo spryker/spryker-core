@@ -44,7 +44,7 @@ class CompanyBusinessUnitSalesConnectorFacade extends AbstractFacade implements 
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\FilterFieldTransfer[] $filterFieldTransfers
+     * @param array<\Generated\Shared\Transfer\FilterFieldTransfer> $filterFieldTransfers
      * @param \Generated\Shared\Transfer\QueryJoinCollectionTransfer $queryJoinCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\QueryJoinCollectionTransfer
@@ -63,7 +63,7 @@ class CompanyBusinessUnitSalesConnectorFacade extends AbstractFacade implements 
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\FilterFieldTransfer[] $filterFieldTransfers
+     * @param array<\Generated\Shared\Transfer\FilterFieldTransfer> $filterFieldTransfers
      * @param \Generated\Shared\Transfer\QueryJoinCollectionTransfer $queryJoinCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\QueryJoinCollectionTransfer
@@ -82,7 +82,7 @@ class CompanyBusinessUnitSalesConnectorFacade extends AbstractFacade implements 
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\FilterFieldTransfer[] $filterFieldTransfers
+     * @param array<\Generated\Shared\Transfer\FilterFieldTransfer> $filterFieldTransfers
      * @param \Generated\Shared\Transfer\QueryJoinCollectionTransfer $queryJoinCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\QueryJoinCollectionTransfer
@@ -101,7 +101,7 @@ class CompanyBusinessUnitSalesConnectorFacade extends AbstractFacade implements 
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\FilterFieldTransfer[] $filterFieldTransfers
+     * @param array<\Generated\Shared\Transfer\FilterFieldTransfer> $filterFieldTransfers
      * @param string $type
      *
      * @return bool

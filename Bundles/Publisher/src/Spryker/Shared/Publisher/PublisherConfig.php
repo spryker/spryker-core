@@ -13,26 +13,36 @@ class PublisherConfig extends AbstractSharedConfig
 {
     /**
      * Defines queue name as used when with asynchronous event handling.
+     *
+     * @var string
      */
     public const PUBLISH_QUEUE = 'publish';
 
     /**
      * Defines error queue name as used when with asynchronous event handling
+     *
+     * @var string
      */
     public const PUBLISH_ERROR_QUEUE = 'publish.error';
 
     /**
      * Defines retry queue name as used when with asynchronous event handling.
+     *
+     * @var string
      */
     public const PUBLISH_RETRY_QUEUE = 'publish.retry';
 
     /**
      * Defines routing key for forwarding message to retry queue.
+     *
+     * @var string
      */
     public const PUBLISH_ROUTING_KEY_RETRY = 'retry';
 
     /**
      * Defines routing key for forwarding message to error queue.
+     *
+     * @var string
      */
     public const PUBLISH_ROUTING_KEY_ERROR = 'error';
 }

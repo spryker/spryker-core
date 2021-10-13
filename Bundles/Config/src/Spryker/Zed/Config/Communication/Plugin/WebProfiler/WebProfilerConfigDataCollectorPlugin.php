@@ -21,6 +21,9 @@ use Throwable;
  */
 class WebProfilerConfigDataCollectorPlugin extends AbstractPlugin implements WebProfilerDataCollectorPluginInterface, DataCollectorInterface
 {
+    /**
+     * @var string
+     */
     protected const SPRYKER_CONFIG_PROFILER = 'spryker_config_profiler';
 
     /**

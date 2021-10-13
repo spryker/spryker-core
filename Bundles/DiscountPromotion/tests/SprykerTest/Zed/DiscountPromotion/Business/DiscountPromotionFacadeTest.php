@@ -35,10 +35,25 @@ use Generated\Shared\Transfer\StoreTransfer;
  */
 class DiscountPromotionFacadeTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const STORE_NAME_DE = 'DE';
+    /**
+     * @var string
+     */
     protected const TEST_ITEM_SKU = 'test_sku';
+    /**
+     * @var int
+     */
     protected const TEST_NOT_EXISTING_DISCOUNT_PROMOTION_ID = 0;
+    /**
+     * @var string
+     */
     protected const CART_OPERATION_ADD = 'add';
+    /**
+     * @var string
+     */
     protected const INVALID_CART_OPERATION_ADD = 'invalid operation';
 
     /**
@@ -210,6 +225,25 @@ class DiscountPromotionFacadeTest extends Unit
         // Assert
         $this->assertNotNull($discountPromotionTransfer);
         $this->assertSame($discountPromotionTransferSaved->getIdDiscountPromotion(), $discountPromotionTransfer->getIdDiscountPromotion());
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpdateDiscountPromotionShouldReturnTransferEvenIfDiscountDoesNotExists(): void
+    {
+        // Arrange
+        $discountPromotionTransferSaved = $this->tester->haveDiscountPromotion([
+            DiscountPromotionTransfer::FK_DISCOUNT => $this->tester->haveDiscount()->getIdDiscount(),
+        ]);
+
+        $discountPromotionTransferSaved->setIdDiscountPromotion(99999);
+
+        // Act
+        $discountPromotionTransfer = $this->tester->getFacade()->updatePromotionDiscount($discountPromotionTransferSaved);
+
+        // Assert
+        $this->assertNull($discountPromotionTransfer->getIdDiscountPromotion());
     }
 
     /**

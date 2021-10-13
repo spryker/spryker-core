@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\PriceProductOfferCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
 use Generated\Shared\Transfer\ValidationResponseTransfer;
+use Generated\Shared\Transfer\WishlistItemTransfer;
 
 interface PriceProductOfferFacadeInterface
 {
@@ -57,6 +58,7 @@ interface PriceProductOfferFacadeInterface
      * - Validates product offer prices collection.
      * - Checks if there are duplicated prices for store-currency-gross-net combinations.
      * - Checks that currency assigned to a store per prices.
+     * - Executes `PriceProductOfferValidatorPluginInterface` plugin stack.
      * - Returns ValidationResponseTransfer transfer object.
      *
      * @api
@@ -93,15 +95,29 @@ interface PriceProductOfferFacadeInterface
 
     /**
      * Specification:
-     * - Retrives collection of PriceProductTransfer over PriceProductOfferCriteriaTransfer.
+     * - Retrieves collection of PriceProductTransfer by PriceProductOfferCriteriaTransfer.
+     * - Executes `PriceProductOfferExpanderPluginInterface` plugin stack.
+     * - Executes `PriceProductOfferExtractorPluginInterface` plugin stack.
      *
      * @api
      *
-     * @phpstan-return \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>
-     *
      * @param \Generated\Shared\Transfer\PriceProductOfferCriteriaTransfer $priceProductOfferCriteriaTransfer
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>
      */
-    public function getProductOfferPrices(PriceProductOfferCriteriaTransfer $priceProductOfferCriteriaTransfer): ArrayObject;
+    public function getProductOfferPrices(
+        PriceProductOfferCriteriaTransfer $priceProductOfferCriteriaTransfer
+    ): ArrayObject;
+
+    /**
+     * Specification:
+     * - Expands provided `WishlistItem` transfer object with `PriceProduct` transfer objects.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistItemTransfer
+     */
+    public function expandWishlistItemWithPrices(WishlistItemTransfer $wishlistItemTransfer): WishlistItemTransfer;
 }

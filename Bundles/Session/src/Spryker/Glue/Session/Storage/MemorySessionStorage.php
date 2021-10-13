@@ -20,6 +20,9 @@ use Symfony\Component\HttpFoundation\Session\Storage\SessionStorageInterface;
  */
 class MemorySessionStorage implements SessionStorageInterface
 {
+    /**
+     * @var string
+     */
     protected const SESSION_ID = 'MOCKSESSID';
 
     /**

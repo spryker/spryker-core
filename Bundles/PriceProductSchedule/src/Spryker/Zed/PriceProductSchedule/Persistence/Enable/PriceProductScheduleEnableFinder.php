@@ -19,19 +19,40 @@ use Spryker\Zed\Propel\PropelConfig;
 
 class PriceProductScheduleEnableFinder implements PriceProductScheduleEnableFinderInterface
 {
+    /**
+     * @var string
+     */
     protected const COL_PRODUCT_ID = 'product_id';
+    /**
+     * @var string
+     */
     protected const COL_RESULT = 'result';
 
+    /**
+     * @var string
+     */
     protected const ALIAS_CONCATENATED = 'concatenated';
+    /**
+     * @var string
+     */
     protected const ALIAS_FILTERED = 'filtered';
 
+    /**
+     * @var string
+     */
     protected const MESSAGE_NOT_SUPPORTED_DB_ENGINE = 'DB engine "%s" is not supported. Please extend EXPRESSION_CONCATENATED_RESULT_MAP';
 
+    /**
+     * @var array
+     */
     protected const EXPRESSION_CONCATENATED_RESULT_MAP = [
         PropelConfig::DB_ENGINE_PGSQL => 'CAST(CONCAT(CONCAT(CAST(EXTRACT(epoch from now() - %s) + EXTRACT(epoch from %s - now()) AS INT), \'.\'), %s + %s) as DECIMAL)',
         PropelConfig::DB_ENGINE_MYSQL => 'CONCAT(CONCAT(CAST(TIMESTAMPDIFF(minute, %s, now()) + TIMESTAMPDIFF(minute, now(), %s) AS BINARY), \'.\'), %s + %s) + 0',
     ];
 
+    /**
+     * @var string
+     */
     protected const EXPRESSION_CONCATENATED_PRODUCT_ID = 'CONCAT(%s, \' \', %s, \' \', COALESCE(%s, 0), \'_\', COALESCE(%s, 0))';
 
     /**
@@ -75,7 +96,7 @@ class PriceProductScheduleEnableFinder implements PriceProductScheduleEnableFind
     /**
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductScheduleTransfer>
      */
     public function findPriceProductSchedulesToEnableByStore(StoreTransfer $storeTransfer): array
     {
@@ -96,7 +117,7 @@ class PriceProductScheduleEnableFinder implements PriceProductScheduleEnableFind
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      * @param int $idProductAbstract
      *
-     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductScheduleTransfer>
      */
     public function findPriceProductSchedulesToEnableByStoreAndIdProductAbstract(
         StoreTransfer $storeTransfer,
@@ -120,7 +141,7 @@ class PriceProductScheduleEnableFinder implements PriceProductScheduleEnableFind
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      * @param int $idProductConcrete
      *
-     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductScheduleTransfer>
      */
     public function findPriceProductSchedulesToEnableByStoreAndIdProductConcrete(
         StoreTransfer $storeTransfer,
@@ -251,7 +272,7 @@ class PriceProductScheduleEnableFinder implements PriceProductScheduleEnableFind
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      * @param string $dbEngineName
      *
-     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductScheduleTransfer>
      */
     protected function findPriceProductSchedulesToEnableByStoreResult(
         SpyPriceProductScheduleQuery $subQuery,
@@ -329,7 +350,7 @@ class PriceProductScheduleEnableFinder implements PriceProductScheduleEnableFind
      * @param string $dbEngineName
      * @param int $idProductAbstract
      *
-     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductScheduleTransfer>
      */
     protected function findPriceProductSchedulesToEnableByStoreAndIdProductAbstractResult(
         SpyPriceProductScheduleQuery $subQuery,
@@ -367,7 +388,7 @@ class PriceProductScheduleEnableFinder implements PriceProductScheduleEnableFind
      * @param string $dbEngineName
      * @param int $idProductConcrete
      *
-     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductScheduleTransfer>
      */
     protected function findPriceProductSchedulesToEnableByStoreAndIdProductConcreteResult(
         SpyPriceProductScheduleQuery $subQuery,

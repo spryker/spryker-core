@@ -37,7 +37,7 @@ class QueueFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Queue\Model\Adapter\AdapterInterface[]
+     * @return array<\Spryker\Client\Queue\Model\Adapter\AdapterInterface>
      */
     protected function getQueueAdapters()
     {

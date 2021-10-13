@@ -29,7 +29,7 @@ class ContentFileFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\ContentFile\Executor\ContentFileListTermExecutorInterface[]
+     * @return array<\Spryker\Client\ContentFile\Executor\ContentFileListTermExecutorInterface>
      */
     public function getContentFileTermExecutorMap(): array
     {

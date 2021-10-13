@@ -21,7 +21,13 @@ class PriceProductScheduleDisabler implements PriceProductScheduleDisablerInterf
 {
     use TransactionTrait;
 
+    /**
+     * @var string
+     */
     protected const PATTERN_MINUS_ONE_DAY = '-1 day';
+    /**
+     * @var string
+     */
     protected const PATTERN_FORMAT_DATE = 'Y-m-d H:i:s';
 
     /**
@@ -143,6 +149,9 @@ class PriceProductScheduleDisabler implements PriceProductScheduleDisablerInterf
      */
     protected function executeExitLogicTransaction(PriceProductScheduleTransfer $priceProductScheduleTransfer): void
     {
+        $isPriceProductScheduleForSwitchExists = $this->priceProductScheduleRepository
+            ->isScheduledPriceForSwitchExists($priceProductScheduleTransfer);
+
         $priceProductTransfer = $priceProductScheduleTransfer->getPriceProduct();
 
         $fallbackPriceProduct = $this->priceProductFallbackFinder->findFallbackPriceProduct($priceProductTransfer);
@@ -151,13 +160,13 @@ class PriceProductScheduleDisabler implements PriceProductScheduleDisablerInterf
 
         $this->priceProductScheduleEntityManager->savePriceProductSchedule($priceProductScheduleTransfer);
 
-        if ($fallbackPriceProduct !== null) {
-            if ($priceProductTransfer->getSkuProduct() !== null) {
-                $fallbackPriceProduct->setSkuProduct($priceProductTransfer->getSkuProduct());
-            }
-
+        if ($fallbackPriceProduct !== null && !$isPriceProductScheduleForSwitchExists) {
             if ($priceProductTransfer->getSkuProductAbstract() !== null) {
                 $fallbackPriceProduct->setSkuProductAbstract($priceProductTransfer->getSkuProductAbstract());
+            }
+
+            if ($priceProductTransfer->getSkuProduct() !== null) {
+                $fallbackPriceProduct->setSkuProduct($priceProductTransfer->getSkuProduct());
             }
 
             $this->productPriceUpdater->updateCurrentPriceProduct(
@@ -172,12 +181,12 @@ class PriceProductScheduleDisabler implements PriceProductScheduleDisablerInterf
             ->setPriceTypeName($priceProductTransfer->getPriceTypeName())
             ->setCurrencyIsoCode($priceProductTransfer->getMoneyValue()->getCurrency()->getCode());
 
-        if ($priceProductTransfer->getSkuProduct() !== null) {
-            $priceProductFilterTransfer->setSku($priceProductTransfer->getSkuProduct());
-        }
-
         if ($priceProductTransfer->getSkuProductAbstract() !== null) {
             $priceProductFilterTransfer->setSku($priceProductTransfer->getSkuProductAbstract());
+        }
+
+        if ($priceProductTransfer->getSkuProduct() !== null) {
+            $priceProductFilterTransfer->setSku($priceProductTransfer->getSkuProduct());
         }
 
         $currentPriceProductTransfer = $this->priceProductFacade->findPriceProductFor($priceProductFilterTransfer);

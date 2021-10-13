@@ -17,6 +17,9 @@ use Symfony\Component\Finder\SplFileInfo;
 
 class TransferValidator implements TransferValidatorInterface
 {
+    /**
+     * @var string
+     */
     public const TRANSFER_SCHEMA_SUFFIX = '.transfer.xml';
 
     /**
@@ -391,7 +394,7 @@ class TransferValidator implements TransferValidatorInterface
     }
 
     /**
-     * @param string[] $property
+     * @param array<string> $property
      *
      * @return bool
      */
@@ -401,7 +404,7 @@ class TransferValidator implements TransferValidatorInterface
     }
 
     /**
-     * @param string[] $property
+     * @param array<string> $property
      *
      * @return bool
      */
@@ -415,7 +418,7 @@ class TransferValidator implements TransferValidatorInterface
     }
 
     /**
-     * @param string[] $singulars
+     * @param array<string> $singulars
      *
      * @return bool
      */

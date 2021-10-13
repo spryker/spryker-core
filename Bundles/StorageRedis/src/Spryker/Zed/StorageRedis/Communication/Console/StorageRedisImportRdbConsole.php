@@ -17,9 +17,18 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class StorageRedisImportRdbConsole extends Console
 {
+    /**
+     * @var string
+     */
     public const COMMAND_NAME = 'storage:redis:import-rdb';
+    /**
+     * @var string
+     */
     public const DESCRIPTION = 'This command will import Redis rdb file.';
 
+    /**
+     * @var string
+     */
     public const ARGUMENT_SOURCE = 'source';
 
     /**
@@ -43,6 +52,7 @@ class StorageRedisImportRdbConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        /** @var string $source */
         $source = $input->getArgument(static::ARGUMENT_SOURCE);
         $storageRedisImporter = $this->getFactory()->createStorageRedisImporter();
 

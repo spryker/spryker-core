@@ -18,11 +18,26 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class MerchantUserCreateForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const FIELD_USERNAME = 'username';
+    /**
+     * @var string
+     */
     public const FIELD_FIRST_NAME = 'firstName';
+    /**
+     * @var string
+     */
     public const FIELD_LAST_NAME = 'lastName';
+    /**
+     * @var string
+     */
     public const FIELD_STATUS = 'status';
 
+    /**
+     * @var string
+     */
     protected const GROUP_UNIQUE_USERNAME_CHECK = 'unique_email_check';
 
     /**

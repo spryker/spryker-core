@@ -25,9 +25,9 @@ class ShipmentGuiToShipmentServiceBridge implements ShipmentGuiToShipmentService
     }
 
     /**
-     * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransferCollection
+     * @param iterable<\Generated\Shared\Transfer\ItemTransfer> $itemTransferCollection
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\ShipmentGroupTransfer>
      */
     public function groupItemsByShipment(iterable $itemTransferCollection): ArrayObject
     {

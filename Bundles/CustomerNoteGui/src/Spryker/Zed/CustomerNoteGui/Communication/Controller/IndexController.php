@@ -16,14 +16,23 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class IndexController extends AbstractController
 {
+    /**
+     * @var string
+     */
     protected const CUSTOMER_PARAM = 'customerTransfer';
+    /**
+     * @var string
+     */
     protected const MESSAGE_SUCCESS = 'Comment successfully added';
+    /**
+     * @var string
+     */
     protected const REFERER_HEADER = 'referer';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function indexAction(Request $request)
     {

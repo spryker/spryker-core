@@ -45,10 +45,7 @@ class ProductSetCollectorFacade extends AbstractFacade implements ProductSetColl
         TouchUpdaterInterface $touchUpdater,
         OutputInterface $output
     ) {
-        $collector = $this->getFactory()->createStorageProductSetCollector();
-
-        $this->getFactory()->getCollectorFacade()->runCollector(
-            $collector,
+        $this->getFactory()->createStorageProductSetCollectorRunner()->run(
             $baseQuery,
             $localeTransfer,
             $result,
@@ -83,10 +80,7 @@ class ProductSetCollectorFacade extends AbstractFacade implements ProductSetColl
         TouchUpdaterInterface $touchUpdater,
         OutputInterface $output
     ) {
-        $collector = $this->getFactory()->createSearchProductSetCollector();
-
-        $this->getFactory()->getCollectorFacade()->runCollector(
-            $collector,
+        $this->getFactory()->createSearchProductSetCollectorRunner()->run(
             $baseQuery,
             $localeTransfer,
             $result,

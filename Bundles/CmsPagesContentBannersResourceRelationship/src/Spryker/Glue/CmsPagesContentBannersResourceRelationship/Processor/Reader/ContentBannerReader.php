@@ -48,10 +48,10 @@ class ContentBannerReader implements ContentBannerReaderInterface
     /**
      * @phpstan-return array<string, array<string, \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>>
      *
-     * @param string[] $cmsPageUuids
+     * @param array<string> $cmsPageUuids
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[][]
+     * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]>
      */
     public function getContentBannersResources(array $cmsPageUuids, RestRequestInterface $restRequest): array
     {
@@ -85,9 +85,9 @@ class ContentBannerReader implements ContentBannerReaderInterface
     /**
      * @phpstan-return array<string, array<string, string>>
      *
-     * @param \Generated\Shared\Transfer\CmsPageStorageTransfer[] $cmsPageStorageTransfers
+     * @param array<\Generated\Shared\Transfer\CmsPageStorageTransfer> $cmsPageStorageTransfers
      *
-     * @return string[][]
+     * @return array<string[]>
      */
     protected function getGroupedContentBannerKeys(array $cmsPageStorageTransfers): array
     {
@@ -110,10 +110,10 @@ class ContentBannerReader implements ContentBannerReaderInterface
      *
      * @phpstan-return array<string, array<string, \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>>
      *
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $contentBannerResources
-     * @param string[][] $groupedContentBannerKeys
+     * @param array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface> $contentBannerResources
+     * @param array<string[]> $groupedContentBannerKeys
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[][]
+     * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]>
      */
     protected function groupRestResourcesByCmsPageUuid(array $contentBannerResources, array $groupedContentBannerKeys): array
     {

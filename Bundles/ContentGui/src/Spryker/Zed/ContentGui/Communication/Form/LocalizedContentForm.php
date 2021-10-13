@@ -24,9 +24,18 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class LocalizedContentForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const FIELD_FK_LOCALE = 'fk_locale';
+    /**
+     * @var string
+     */
     public const FIELD_NAME = 'locale_name';
 
+    /**
+     * @var string
+     */
     public const FIELD_PARAMETERS = 'parameters';
 
     /**

@@ -48,7 +48,7 @@ class PermissionFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Shared\PermissionExtension\Dependency\Plugin\ExecutablePermissionPluginInterface[]
+     * @return array<\Spryker\Shared\PermissionExtension\Dependency\Plugin\ExecutablePermissionPluginInterface>
      */
     protected function getPermissionPlugins(): array
     {
@@ -56,7 +56,7 @@ class PermissionFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\PermissionExtension\Dependency\Plugin\PermissionStoragePluginInterface[]
+     * @return array<\Spryker\Client\PermissionExtension\Dependency\Plugin\PermissionStoragePluginInterface>
      */
     protected function getPermissionStoragePlugins(): array
     {

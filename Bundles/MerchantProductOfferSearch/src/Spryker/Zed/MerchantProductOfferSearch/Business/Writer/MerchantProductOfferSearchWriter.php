@@ -44,7 +44,7 @@ class MerchantProductOfferSearchWriter implements MerchantProductOfferSearchWrit
     }
 
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
      *
      * @return void
      */
@@ -58,7 +58,7 @@ class MerchantProductOfferSearchWriter implements MerchantProductOfferSearchWrit
     }
 
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
      *
      * @return void
      */

@@ -19,7 +19,7 @@ class ProductReviewStorageFacade extends AbstractFacade implements ProductReview
      *
      * @api
      *
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return void
      */
@@ -33,7 +33,7 @@ class ProductReviewStorageFacade extends AbstractFacade implements ProductReview
      *
      * @api
      *
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return void
      */

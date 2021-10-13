@@ -24,6 +24,9 @@ use Generated\Shared\Transfer\CompanyTransfer;
  */
 class CompanySupplierFacadeTest extends Test
 {
+    /**
+     * @var string
+     */
     protected const COMPANY_TYPE_SUPPLIER = 'supplier';
 
     /**

@@ -20,10 +20,14 @@ use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
  */
 class MerchantCategoryMerchantSearchQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPluginInterface
 {
+    /**
+     * @var string
+     */
     protected const PARAMETER_CATEGORY_KEYS = 'category-keys';
 
     /**
      * @uses \Spryker\Zed\MerchantCategorySearch\Communication\Expander\MerchantCategorySearchExpander::CATEGORY_KEYS
+     * @var string
      */
     protected const CATEGORY_KEYS = 'category-keys';
 
@@ -34,7 +38,7 @@ class MerchantCategoryMerchantSearchQueryExpanderPlugin extends AbstractPlugin i
      * @api
      *
      * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface $searchQuery
-     * @param mixed[] $requestParameters
+     * @param array<mixed> $requestParameters
      *
      * @return \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface
      */
@@ -47,7 +51,7 @@ class MerchantCategoryMerchantSearchQueryExpanderPlugin extends AbstractPlugin i
 
     /**
      * @param \Elastica\Query $query
-     * @param mixed[] $requestParameters
+     * @param array<mixed> $requestParameters
      *
      * @return void
      */
@@ -63,7 +67,7 @@ class MerchantCategoryMerchantSearchQueryExpanderPlugin extends AbstractPlugin i
     }
 
     /**
-     * @param string[] $categoryKeys
+     * @param array<string> $categoryKeys
      *
      * @return \Elastica\Query\Terms
      */

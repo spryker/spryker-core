@@ -70,7 +70,7 @@ class DiscontinueProductFormDataProvider
     /**
      * @param \Generated\Shared\Transfer\ProductDiscontinuedTransfer $productDiscontinuedTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductDiscontinuedNoteTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductDiscontinuedNoteTransfer>
      */
     protected function getLocalizedNotes(ProductDiscontinuedTransfer $productDiscontinuedTransfer): array
     {
@@ -89,9 +89,9 @@ class DiscontinueProductFormDataProvider
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductDiscontinuedNoteTransfer[] $productDiscontinuedNoteTransfers
+     * @param array<\Generated\Shared\Transfer\ProductDiscontinuedNoteTransfer> $productDiscontinuedNoteTransfers
      *
-     * @return \Generated\Shared\Transfer\ProductDiscontinuedNoteTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductDiscontinuedNoteTransfer>
      */
     protected function indexProductDiscontinuedNotes(array $productDiscontinuedNoteTransfers): array
     {

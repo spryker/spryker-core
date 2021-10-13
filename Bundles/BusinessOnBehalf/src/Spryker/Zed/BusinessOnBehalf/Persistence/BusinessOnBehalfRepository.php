@@ -45,7 +45,7 @@ class BusinessOnBehalfRepository extends AbstractRepository implements BusinessO
      *
      * @param int $idCustomer
      *
-     * @return int[]
+     * @return array<int>
      */
     public function findActiveCompanyUserIdsByCustomerId(int $idCustomer): array
     {

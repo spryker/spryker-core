@@ -26,14 +26,14 @@ class CompanyUserProvider implements CompanyUserProviderInterface
     protected $utilEncodingService;
 
     /**
-     * @var \Spryker\Zed\OauthCompanyUserExtension\Dependency\Plugin\OauthCompanyUserIdentifierExpanderPluginInterface[]
+     * @var array<\Spryker\Zed\OauthCompanyUserExtension\Dependency\Plugin\OauthCompanyUserIdentifierExpanderPluginInterface>
      */
     protected $oauthCompanyUserIdentifierExpanderPlugins;
 
     /**
      * @param \Spryker\Zed\OauthCompanyUser\Dependency\Facade\OauthCompanyUserToCompanyUserFacadeInterface $companyUserFacade
      * @param \Spryker\Zed\OauthCompanyUser\Dependency\Service\OauthCompanyUserToUtilEncodingServiceInterface $utilEncodingService
-     * @param \Spryker\Zed\OauthCompanyUserExtension\Dependency\Plugin\OauthCompanyUserIdentifierExpanderPluginInterface[] $oauthCompanyUserIdentifierExpanderPlugins
+     * @param array<\Spryker\Zed\OauthCompanyUserExtension\Dependency\Plugin\OauthCompanyUserIdentifierExpanderPluginInterface> $oauthCompanyUserIdentifierExpanderPlugins
      */
     public function __construct(
         OauthCompanyUserToCompanyUserFacadeInterface $companyUserFacade,

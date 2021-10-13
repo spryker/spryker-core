@@ -10,7 +10,7 @@ namespace Spryker\Zed\Development\Business\DependencyTree\DependencyHydrator;
 class DependencyHydrator implements DependencyHydratorCompositeInterface
 {
     /**
-     * @var \Spryker\Zed\Development\Business\DependencyTree\DependencyHydrator\DependencyHydratorInterface[]
+     * @var array<\Spryker\Zed\Development\Business\DependencyTree\DependencyHydrator\DependencyHydratorInterface>
      */
     protected $hydrator;
 

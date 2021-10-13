@@ -17,7 +17,13 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class TransferGeneratorConsole extends Console
 {
+    /**
+     * @var string
+     */
     public const COMMAND_NAME = 'transfer:generate';
+    /**
+     * @var string
+     */
     public const COMMAND_DESCRIPTION = 'Generates data transfer objects from transfer XML definition files';
 
     /**

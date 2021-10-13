@@ -30,6 +30,9 @@ class ProductStorageClientTester extends Actor
 {
     use _generated\ProductStorageClientTesterActions;
 
+    /**
+     * @var int
+     */
     protected const TEST_PRODUCT_CONCRETE_ID = 777;
 
     /**

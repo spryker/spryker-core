@@ -20,7 +20,7 @@ use Symfony\Component\HttpFoundation\Request;
 class ResourceRouteLoader implements ResourceRouteLoaderInterface
 {
     /**
-     * @var \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface[]
+     * @var array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface>
      */
     protected $resourcePlugins = [];
 
@@ -30,13 +30,23 @@ class ResourceRouteLoader implements ResourceRouteLoaderInterface
     protected $versionResolver;
 
     /**
-     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface[] $resourcePlugins
-     * @param \Spryker\Glue\GlueApplication\Rest\Version\VersionResolverInterface $versionResolver
+     * @var array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RouterParameterExpanderPluginInterface>
      */
-    public function __construct(array $resourcePlugins, VersionResolverInterface $versionResolver)
-    {
+    protected $routerParameterExpanderPlugins;
+
+    /**
+     * @param array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface> $resourcePlugins
+     * @param \Spryker\Glue\GlueApplication\Rest\Version\VersionResolverInterface $versionResolver
+     * @param array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RouterParameterExpanderPluginInterface> $routerParameterExpanderPlugins
+     */
+    public function __construct(
+        array $resourcePlugins,
+        VersionResolverInterface $versionResolver,
+        array $routerParameterExpanderPlugins
+    ) {
         $this->resourcePlugins = $resourcePlugins;
         $this->versionResolver = $versionResolver;
+        $this->routerParameterExpanderPlugins = $routerParameterExpanderPlugins;
     }
 
     /**
@@ -75,6 +85,10 @@ class ResourceRouteLoader implements ResourceRouteLoaderInterface
 
         if ($resourcePlugin instanceof ResourceVersionableInterface) {
             $resourceConfiguration[RequestConstantsInterface::ATTRIBUTE_RESOURCE_VERSION] = $resourcePlugin->getVersion();
+        }
+
+        foreach ($this->routerParameterExpanderPlugins as $routerParameterExpanderPlugin) {
+            $resourceConfiguration = $routerParameterExpanderPlugin->expandResourceConfiguration($resourcePlugin, $resourceConfiguration);
         }
 
         return $resourceConfiguration;
@@ -200,11 +214,11 @@ class ResourceRouteLoader implements ResourceRouteLoaderInterface
         $resourceVersion = $resourceRoutePlugin->getVersion();
 
         return ($resourceVersion->getMajor() === $requestedVersionTransfer->getMajor() &&
-           $resourceVersion->getMinor() === $requestedVersionTransfer->getMinor());
+            $resourceVersion->getMinor() === $requestedVersionTransfer->getMinor());
     }
 
     /**
-     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface[] $resourcePlugins
+     * @param array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface> $resourcePlugins
      * @param \Generated\Shared\Transfer\RestVersionTransfer $requestedVersionTransfer
      *
      * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface|null
@@ -223,7 +237,7 @@ class ResourceRouteLoader implements ResourceRouteLoaderInterface
     }
 
     /**
-     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface[]|\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceVersionableInterface[] $resourcePlugins
+     * @param array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface|\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceVersionableInterface> $resourcePlugins
      *
      * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceVersionableInterface|null
      */
@@ -265,7 +279,7 @@ class ResourceRouteLoader implements ResourceRouteLoaderInterface
      * @param string $resourceType
      * @param array $resources
      *
-     * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface[]
+     * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface>
      */
     protected function filterResourcePlugins(string $resourceType, array $resources): array
     {
@@ -282,10 +296,10 @@ class ResourceRouteLoader implements ResourceRouteLoaderInterface
     }
 
     /**
-     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface[] $resourceRoutePlugins
+     * @param array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface> $resourceRoutePlugins
      * @param array $resources
      *
-     * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface[]
+     * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface>
      */
     protected function filterOutDuplicatedResourceRoutePlugins(array $resourceRoutePlugins, array $resources): array
     {
@@ -305,9 +319,9 @@ class ResourceRouteLoader implements ResourceRouteLoaderInterface
     }
 
     /**
-     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface[] $resourceRoutePlugins
+     * @param array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface> $resourceRoutePlugins
      *
-     * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface[]
+     * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface>
      */
     protected function filterOutResourceWithParentPlugins(array $resourceRoutePlugins): array
     {
@@ -317,9 +331,9 @@ class ResourceRouteLoader implements ResourceRouteLoaderInterface
     }
 
     /**
-     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface[] $resourceRoutePlugins
+     * @param array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface> $resourceRoutePlugins
      *
-     * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface[]
+     * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface>
      */
     protected function filterOutResourceWithoutParentPlugins(array $resourceRoutePlugins): array
     {

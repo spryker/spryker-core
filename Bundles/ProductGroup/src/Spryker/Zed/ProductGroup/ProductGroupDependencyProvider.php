@@ -16,6 +16,9 @@ use Spryker\Zed\ProductGroup\Dependency\Facade\ProductGroupToTouchBridge;
  */
 class ProductGroupDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_TOUCH = 'FACADE_TOUCH';
 
     /**

@@ -13,7 +13,13 @@ use Spryker\Shared\Kernel\KernelConstants;
 
 class ConstraintNotFoundException extends Exception
 {
+    /**
+     * @var string
+     */
     protected const EXCEPTION_MESSAGE_CLASS_NOT_FOUND = 'Class "%s" not found. Have you forgotten to add your custom validator namespace in %s?';
+    /**
+     * @var string
+     */
     protected const NAMESPACE_CONFIG_SOURCE = '%s\%s\%s\%s::%s()';
 
     /**

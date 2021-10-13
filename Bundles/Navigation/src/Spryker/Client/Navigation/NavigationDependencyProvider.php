@@ -12,6 +12,9 @@ use Spryker\Client\Kernel\Container;
 
 class NavigationDependencyProvider extends AbstractDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_STORAGE = 'CLIENT_STORAGE';
 
     /**

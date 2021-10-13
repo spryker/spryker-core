@@ -15,6 +15,9 @@ use Spryker\Zed\Kernel\Container;
  */
 class FormDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const PLUGINS_FORM = 'PLUGINS_FORM';
 
     /**
@@ -44,7 +47,7 @@ class FormDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Shared\FormExtension\Dependency\Plugin\FormPluginInterface[]
+     * @return array<\Spryker\Shared\FormExtension\Dependency\Plugin\FormPluginInterface>
      */
     protected function getFormPlugins(): array
     {

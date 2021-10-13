@@ -15,6 +15,9 @@ use Spryker\Zed\ProductCustomerPermission\Persistence\ProductCustomerPermissionQ
 
 class ProductCustomerPermissionCheckoutPreCondition implements ProductCustomerPermissionCheckoutPreConditionInterface
 {
+    /**
+     * @var string
+     */
     protected const MESSAGE_NO_PERMISSION = 'checkout.step.error.no-product-permission';
 
     /**
@@ -96,7 +99,7 @@ class ProductCustomerPermissionCheckoutPreCondition implements ProductCustomerPe
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getAllowedIdProductAbstracts(QuoteTransfer $quoteTransfer): array
     {
@@ -124,7 +127,7 @@ class ProductCustomerPermissionCheckoutPreCondition implements ProductCustomerPe
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getDeniedProductAbstractNames(QuoteTransfer $quoteTransfer): array
     {
@@ -143,7 +146,7 @@ class ProductCustomerPermissionCheckoutPreCondition implements ProductCustomerPe
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getIdProductAbstracts(QuoteTransfer $quoteTransfer): array
     {

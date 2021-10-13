@@ -19,9 +19,9 @@ interface HeaderExpanderPluginInterface
      *
      * @api
      *
-     * @param string[] $headers
+     * @param array<string> $headers
      *
-     * @return string[]
+     * @return array<string>
      */
     public function expandHeader(array $headers): array;
 }

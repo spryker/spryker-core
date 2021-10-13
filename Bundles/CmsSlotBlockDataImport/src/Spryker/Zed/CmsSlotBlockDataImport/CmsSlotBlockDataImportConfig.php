@@ -12,6 +12,9 @@ use Spryker\Zed\DataImport\DataImportConfig;
 
 class CmsSlotBlockDataImportConfig extends DataImportConfig
 {
+    /**
+     * @var string
+     */
     public const IMPORT_TYPE_CMS_SLOT_BLOCK = 'cms-slot-block';
 
     /**

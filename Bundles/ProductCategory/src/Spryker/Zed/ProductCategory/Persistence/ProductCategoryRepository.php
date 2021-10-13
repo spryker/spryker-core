@@ -20,6 +20,9 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
  */
 class ProductCategoryRepository extends AbstractRepository implements ProductCategoryRepositoryInterface
 {
+    /**
+     * @var string
+     */
     protected const TABLE_JOIN_CATEGORY = 'Category';
 
     /**
@@ -69,9 +72,9 @@ class ProductCategoryRepository extends AbstractRepository implements ProductCat
     /**
      * @module Product
      *
-     * @param int[] $categoryIds
+     * @param array<int> $categoryIds
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getProductConcreteIdsByCategoryIds(array $categoryIds): array
     {

@@ -1,0 +1,13 @@
+<div class="mp-edit-abstract-product__header">
+    <spy-headline>
+        <div class="mp-edit-abstract-product__title">
+            <ng-content select="[title]"></ng-content>
+        </div>
+        <h3 class="mp-edit-abstract-product__sub-title">{{ product.sku }}, {{ product.name }}</h3>
+        <ng-content actions select="[action]"></ng-content>
+    </spy-headline>
+</div>
+
+<div class="mp-edit-abstract-product__content">
+    <ng-content></ng-content>
+</div>

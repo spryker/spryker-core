@@ -17,6 +17,7 @@ interface SecurityConstants
      *  - HTTP port for Yves.
      *
      * @api
+     * @var string
      */
     public const YVES_HTTP_PORT = 'SECURITY:YVES_HTTP_PORT';
 
@@ -25,6 +26,7 @@ interface SecurityConstants
      * - HTTPS port for Yves.
      *
      * @api
+     * @var string
      */
     public const YVES_HTTPS_PORT = 'SECURITY:YVES_HTTPS_PORT';
 
@@ -33,6 +35,7 @@ interface SecurityConstants
      *  - HTTP port for Zed.
      *
      * @api
+     * @var string
      */
     public const ZED_HTTP_PORT = 'SECURITY:ZED_HTTP_PORT';
 
@@ -41,6 +44,7 @@ interface SecurityConstants
      * - HTTPS port for Zed.
      *
      * @api
+     * @var string
      */
     public const ZED_HTTPS_PORT = 'SECURITY:ZED_HTTPS_PORT';
 }

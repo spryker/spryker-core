@@ -16,7 +16,13 @@ use Spryker\Zed\OauthRevoke\Dependency\Service\OauthRevokeToUtilEncodingServiceB
  */
 class OauthRevokeDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
+    /**
+     * @var string
+     */
     public const PLUGINS_OAUTH_USER_IDENTIFIER_FILTER = 'PLUGINS_OAUTH_USER_IDENTIFIER_FILTER';
 
     /**
@@ -65,7 +71,7 @@ class OauthRevokeDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\OauthRevokeExtension\Dependency\Plugin\OauthUserIdentifierFilterPluginInterface[]
+     * @return array<\Spryker\Zed\OauthRevokeExtension\Dependency\Plugin\OauthUserIdentifierFilterPluginInterface>
      */
     protected function getOauthUserIdentifierFilterPlugins(): array
     {

@@ -1,9 +1,9 @@
 namespace: SprykerTest
 
 include:
-  - tests/SprykerTest/Zed/EventDispatcher
-  - tests/SprykerTest/Yves/EventDispatcher
-  - tests/SprykerTest/Glue/EventDispatcher
+    - tests/SprykerTest/Zed/EventDispatcher
+    - tests/SprykerTest/Yves/EventDispatcher
+    - tests/SprykerTest/Glue/EventDispatcher
 
 paths:
     tests: tests

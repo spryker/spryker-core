@@ -28,8 +28,17 @@ class FormApplicationPluginTest extends Unit
 {
     use ContainerHelperTrait;
 
+    /**
+     * @var string
+     */
     protected const SERVICE_FORM_FACTORY = 'form.factory';
+    /**
+     * @var string
+     */
     protected const SERVICE_FORM_CSRF_PROVIDER = 'form.csrf_provider';
+    /**
+     * @var string
+     */
     protected const SERVICE_FORM_FACTORY_ALIAS = 'FORM_FACTORY';
 
     /**

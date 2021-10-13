@@ -14,10 +14,10 @@ use Generated\Shared\Transfer\ShipmentGroupTransfer;
 class ProductBundleGrouper implements ProductBundleGrouperInterface
 {
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[] $shipmentGroupTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ShipmentGroupTransfer> $shipmentGroupTransfers
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductBundleGroupTransfer[][]
+     * @return array<\Generated\Shared\Transfer\ProductBundleGroupTransfer[]>
      */
     public function groupBundleItemsByShipmentGroupHash(ArrayObject $shipmentGroupTransfers, OrderTransfer $orderTransfer): array
     {
@@ -35,9 +35,9 @@ class ProductBundleGrouper implements ProductBundleGrouperInterface
 
     /**
      * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
-     * @param \Generated\Shared\Transfer\ProductBundleGroupTransfer[] $indexedProductBundleGroupTransfers
+     * @param array<\Generated\Shared\Transfer\ProductBundleGroupTransfer> $indexedProductBundleGroupTransfers
      *
-     * @return \Generated\Shared\Transfer\ProductBundleGroupTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductBundleGroupTransfer>
      */
     protected function getGroupItemsForShipmentGroup(ShipmentGroupTransfer $shipmentGroupTransfer, array $indexedProductBundleGroupTransfers): array
     {
@@ -57,9 +57,9 @@ class ProductBundleGrouper implements ProductBundleGrouperInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ProductBundleGroupTransfer[] $productBundleGroupTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ProductBundleGroupTransfer> $productBundleGroupTransfers
      *
-     * @return \Generated\Shared\Transfer\ProductBundleGroupTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductBundleGroupTransfer>
      */
     protected function indexProductBundleGroupItemsByItemGroupKey(ArrayObject $productBundleGroupTransfers): array
     {

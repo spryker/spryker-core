@@ -33,7 +33,7 @@ class ShoppingListProductOptionConnectorEntityManager extends AbstractEntityMana
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ShoppingListItemTransfer[] $shoppingListItemTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ShoppingListItemTransfer> $shoppingListItemTransfers
      *
      * @return void
      */
@@ -72,7 +72,7 @@ class ShoppingListProductOptionConnectorEntityManager extends AbstractEntityMana
     }
 
     /**
-     * @param int[] $shoppingListItemIds
+     * @param array<int> $shoppingListItemIds
      *
      * @return void
      */
@@ -87,7 +87,7 @@ class ShoppingListProductOptionConnectorEntityManager extends AbstractEntityMana
     }
 
     /**
-     * @param int[] $productOptionValueIds
+     * @param array<int> $productOptionValueIds
      *
      * @return void
      */
@@ -102,7 +102,7 @@ class ShoppingListProductOptionConnectorEntityManager extends AbstractEntityMana
     }
 
     /**
-     * @param \Orm\Zed\ShoppingListProductOptionConnector\Persistence\SpyShoppingListProductOption[]|\Propel\Runtime\Collection\ObjectCollection $shoppingListProductOptionEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ShoppingListProductOptionConnector\Persistence\SpyShoppingListProductOption> $shoppingListProductOptionEntities
      *
      * @return void
      */

@@ -19,11 +19,29 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
  */
 class SalesStatisticsRepository extends AbstractRepository implements SalesStatisticsRepositoryInterface
 {
+    /**
+     * @var string
+     */
     public const COUNT = 'count';
+    /**
+     * @var string
+     */
     public const DATE = 'date';
+    /**
+     * @var string
+     */
     public const STATUS_NAME = 'status_name';
+    /**
+     * @var string
+     */
     public const TOTAL = 'total';
+    /**
+     * @var string
+     */
     public const ITEM_NAME = 'item_name';
+    /**
+     * @var string
+     */
     public const ITEM_SKU = 'sku';
 
     /**
@@ -33,7 +51,7 @@ class SalesStatisticsRepository extends AbstractRepository implements SalesStati
      */
     public function getOrderCountStatisticByDays(int $day): ChartDataTraceTransfer
     {
-        $date = date('Y-m-d H:i:s.u', strtotime(sprintf('-%d days', $day)));
+        $date = date('Y-m-d H:i:s.u', (int)strtotime(sprintf('-%d days', $day)));
 
         $result = $this->getDataOrderCountStatisticByDays($date);
 

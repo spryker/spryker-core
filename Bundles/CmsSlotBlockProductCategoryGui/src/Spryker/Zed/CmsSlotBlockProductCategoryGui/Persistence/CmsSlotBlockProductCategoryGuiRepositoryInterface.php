@@ -10,9 +10,9 @@ namespace Spryker\Zed\CmsSlotBlockProductCategoryGui\Persistence;
 interface CmsSlotBlockProductCategoryGuiRepositoryInterface
 {
     /**
-     * @param int[]|null $productAbstractIds
+     * @param array<int>|null $productAbstractIds
      *
-     * @return \Generated\Shared\Transfer\ProductAbstractTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductAbstractTransfer>
      */
     public function getProductAbstracts(?array $productAbstractIds = []): array;
 }

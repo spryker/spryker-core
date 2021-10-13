@@ -16,12 +16,18 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 class PriceProductConstraintProvider implements PriceProductConstraintProviderInterface
 {
+    /**
+     * @var string
+     */
     protected const VALUE_IS_INVALID = 'This value is not valid.';
 
+    /**
+     * @var string
+     */
     protected const VALUE_CANNOT_BE_EMPTY = 'This field is missing.';
 
     /**
-     * @return \Spryker\Zed\PriceProductOffer\Business\Validator\Constraint\TransferConstraint[]
+     * @return array<\Spryker\Zed\PriceProductOffer\Business\Validator\Constraint\TransferConstraint>
      */
     public function getConstraints(): array
     {

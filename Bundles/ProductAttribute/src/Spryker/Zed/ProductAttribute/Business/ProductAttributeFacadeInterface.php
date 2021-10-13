@@ -307,7 +307,7 @@ interface ProductAttributeFacadeInterface
      *
      * @api
      *
-     * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductManagementAttributeTransfer>
      */
     public function getProductAttributeCollection();
 
@@ -317,9 +317,9 @@ interface ProductAttributeFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteTransfers
+     * @param array<\Generated\Shared\Transfer\ProductConcreteTransfer> $productConcreteTransfers
      *
-     * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductManagementAttributeTransfer>
      */
     public function getUniqueSuperAttributesFromConcreteProducts(array $productConcreteTransfers): array;
 

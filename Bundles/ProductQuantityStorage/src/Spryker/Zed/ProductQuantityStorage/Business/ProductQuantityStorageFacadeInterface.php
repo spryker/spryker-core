@@ -17,7 +17,7 @@ interface ProductQuantityStorageFacadeInterface
      *
      * @api
      *
-     * @param int[] $productIds
+     * @param array<int> $productIds
      *
      * @return void
      */
@@ -29,7 +29,7 @@ interface ProductQuantityStorageFacadeInterface
      *
      * @api
      *
-     * @return \Generated\Shared\Transfer\ProductQuantityTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductQuantityTransfer|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer>
      */
     public function findProductQuantityTransfers(): array;
 
@@ -39,9 +39,9 @@ interface ProductQuantityStorageFacadeInterface
      *
      * @api
      *
-     * @param int[] $productIds
+     * @param array<int> $productIds
      *
-     * @return \Generated\Shared\Transfer\ProductQuantityTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductQuantityTransfer|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer>
      */
     public function findProductQuantityByProductIdsTransfers(array $productIds): array;
 
@@ -53,7 +53,7 @@ interface ProductQuantityStorageFacadeInterface
      *
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductQuantityTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductQuantityTransfer|\Spryker\Shared\Kernel\Transfer\AbstractTransfer>
      */
     public function findFilteredProductQuantityTransfers(FilterTransfer $filterTransfer): array;
 }

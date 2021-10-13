@@ -11,15 +11,20 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class CompanySalesConnectorConfig extends AbstractBundleConfig
 {
+    /**
+     * @var string
+     */
     public const FILTER_FIELD_TYPE_COMPANY = 'company';
 
     /**
      * @uses \Spryker\Zed\Sales\Persistence\Propel\QueryBuilder\OrderSearchFilterFieldQueryBuilder::SEARCH_TYPE_ALL
+     * @var string
      */
     public const FILTER_FIELD_TYPE_ALL = 'all';
 
     /**
      * @uses \Spryker\Zed\Sales\Persistence\Propel\QueryBuilder\OrderSearchFilterFieldQueryBuilder::FILTER_FIELD_TYPE_ORDER_BY
+     * @var string
      */
     public const FILTER_FIELD_TYPE_ORDER_BY = 'orderBy';
 }

@@ -70,9 +70,9 @@ class CacheBuilder implements CacheBuilderInterface
 
     /**
      * @param string $moduleName
-     * @param string[] $cacheEntries
+     * @param array<string> $cacheEntries
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function addCacheEntriesForModule(string $moduleName, array $cacheEntries): array
     {
@@ -87,7 +87,7 @@ class CacheBuilder implements CacheBuilderInterface
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function getModuleNames(): array
     {

@@ -15,9 +15,18 @@ use Spryker\Zed\CompanyRoleGui\Dependency\Facade\CompanyRoleGuiToCompanyRoleFaca
 
 class CompanyUserRoleFormDataProvider
 {
+    /**
+     * @var string
+     */
     protected const OPTION_ATTRIBUTE_DATA = 'data-id_company';
+    /**
+     * @var string
+     */
     protected const OPTION_IS_DEFAULT = 'data-is_default';
 
+    /**
+     * @var string
+     */
     protected const FORMAT_NAME = '%s (id: %s)';
 
     /**
@@ -68,16 +77,24 @@ class CompanyUserRoleFormDataProvider
      */
     protected function prepareCompanyRoleAttributeMap(CompanyUserTransfer $companyUserTransfer): array
     {
+        if (!$companyUserTransfer->getFkCompany()) {
+            return [[], []];
+        }
+
         $values = [];
         $attributes = [];
+        $companyRoleCriteriaFilterTransfer = (new CompanyRoleCriteriaFilterTransfer())
+            ->setIdCompany($companyUserTransfer->getFkCompany())
+            ->setWithoutExpanders(true);
+
         $companyRoleCollection = $this->companyRoleFacade->getCompanyRoleCollection(
-            (new CompanyRoleCriteriaFilterTransfer())
+            $companyRoleCriteriaFilterTransfer
         );
 
         foreach ($companyRoleCollection->getRoles() as $companyRoleTransfer) {
             $roleKey = $this->generateCompanyRoleName($companyRoleTransfer);
-
             $companyRoleAttributes = [static::OPTION_ATTRIBUTE_DATA => $companyRoleTransfer->getFkCompany()];
+
             if (
                 $companyRoleTransfer->getIsDefault()
                 && $companyUserTransfer->getCompanyRoleCollection() === null

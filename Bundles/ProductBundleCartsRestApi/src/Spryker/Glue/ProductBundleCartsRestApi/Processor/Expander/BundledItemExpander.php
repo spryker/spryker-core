@@ -20,11 +20,13 @@ class BundledItemExpander implements BundledItemExpanderInterface
 {
     /**
      * @uses \Spryker\Client\ProductBundle\Grouper\ProductBundleGrouper::BUNDLE_ITEMS
+     * @var string
      */
     protected const BUNDLE_ITEMS = 'bundleItems';
 
     /**
      * @uses \Spryker\Client\ProductBundle\Grouper\ProductBundleGrouper::BUNDLE_PRODUCT
+     * @var string
      */
     protected const BUNDLE_PRODUCT = 'bundleProduct';
 
@@ -59,7 +61,7 @@ class BundledItemExpander implements BundledItemExpanderInterface
     }
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
+     * @param array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface> $resources
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return void
@@ -87,14 +89,14 @@ class BundledItemExpander implements BundledItemExpanderInterface
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[][]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer[]>
      */
     protected function getGroupedBundledItems(QuoteTransfer $quoteTransfer): array
     {
         $groupedBundleItems = $this->productBundleClient
             ->getGroupedBundleItems($quoteTransfer->getItems(), $quoteTransfer->getBundleItems());
 
-        /** @var \Generated\Shared\Transfer\ItemTransfer[] $bundledItemTransfers */
+        /** @var array<\Generated\Shared\Transfer\ItemTransfer> $bundledItemTransfers */
         $bundledItemTransfers = [];
         foreach ($groupedBundleItems as $groupedBundleItem) {
             if ($groupedBundleItem instanceof ItemTransfer) {
@@ -111,7 +113,7 @@ class BundledItemExpander implements BundledItemExpanderInterface
     /**
      * @phpstan-param array<string, array<\Generated\Shared\Transfer\ItemTransfer>> $groupedBundledItems
      *
-     * @param \Generated\Shared\Transfer\ItemTransfer[][] $groupedBundledItems
+     * @param array<\Generated\Shared\Transfer\ItemTransfer[]> $groupedBundledItems
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $restResource
      * @param string $localeName
      *

@@ -16,6 +16,9 @@ use Spryker\Zed\SalesReclamation\Dependency\Facade\SalesReclamationToSalesFacade
  */
 class SalesReclamationDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_SALES = 'FACADE_SALES';
 
     /**

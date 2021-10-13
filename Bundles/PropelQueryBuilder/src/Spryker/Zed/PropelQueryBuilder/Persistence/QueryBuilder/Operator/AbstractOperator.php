@@ -8,9 +8,13 @@
 namespace Spryker\Zed\PropelQueryBuilder\Persistence\QueryBuilder\Operator;
 
 use Generated\Shared\Transfer\PropelQueryBuilderRuleSetTransfer;
+use RuntimeException;
 
 abstract class AbstractOperator implements OperatorInterface
 {
+    /**
+     * @var string|null
+     */
     public const TYPE = null;
 
     /**
@@ -19,11 +23,18 @@ abstract class AbstractOperator implements OperatorInterface
     abstract public function getOperator();
 
     /**
+     * @throws \RuntimeException
+     *
      * @return string
      */
     public function getType()
     {
-        return static::TYPE;
+        $type = static::TYPE;
+        if ($type === null) {
+            throw new RuntimeException('Type not defined');
+        }
+
+        return $type;
     }
 
     /**

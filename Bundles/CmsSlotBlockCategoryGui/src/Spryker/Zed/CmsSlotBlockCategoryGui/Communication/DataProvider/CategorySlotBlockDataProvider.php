@@ -8,6 +8,8 @@
 namespace Spryker\Zed\CmsSlotBlockCategoryGui\Communication\DataProvider;
 
 use Generated\Shared\Transfer\CategoryCollectionTransfer;
+use Generated\Shared\Transfer\CategoryCriteriaTransfer;
+use Generated\Shared\Transfer\CategoryTransfer;
 use Spryker\Zed\CmsSlotBlockCategoryGui\Communication\Form\CategorySlotBlockConditionForm;
 use Spryker\Zed\CmsSlotBlockCategoryGui\Dependency\Facade\CmsSlotBlockCategoryGuiToCategoryFacadeInterface;
 use Spryker\Zed\CmsSlotBlockCategoryGui\Dependency\Facade\CmsSlotBlockCategoryGuiToLocaleFacadeInterface;
@@ -15,8 +17,18 @@ use Spryker\Zed\CmsSlotBlockCategoryGui\Dependency\Facade\CmsSlotBlockCategoryGu
 
 class CategorySlotBlockDataProvider implements CategorySlotBlockDataProviderInterface
 {
+    /**
+     * @var string
+     */
     protected const KEY_OPTION_ALL_CATEGORIES = 'All Category Pages';
+    /**
+     * @var string
+     */
     protected const KEY_OPTION_SPECIFIC_CATEGORY = 'Specific Category Pages';
+    /**
+     * @var string
+     */
+    protected const FORMATTED_CATEGORY_NAME = '%s [%s]';
 
     /**
      * @var \Spryker\Zed\CmsSlotBlockCategoryGui\Dependency\Facade\CmsSlotBlockCategoryGuiToCategoryFacadeInterface
@@ -32,6 +44,11 @@ class CategorySlotBlockDataProvider implements CategorySlotBlockDataProviderInte
      * @var \Spryker\Zed\CmsSlotBlockCategoryGui\Dependency\Facade\CmsSlotBlockCategoryGuiToTranslatorFacadeInterface
      */
     protected $translatorFacade;
+
+    /**
+     * @var array<int>|null
+     */
+    protected static $categoryCache = null;
 
     /**
      * @param \Spryker\Zed\CmsSlotBlockCategoryGui\Dependency\Facade\CmsSlotBlockCategoryGuiToCategoryFacadeInterface $categoryFacade
@@ -71,29 +88,46 @@ class CategorySlotBlockDataProvider implements CategorySlotBlockDataProviderInte
     }
 
     /**
-     * @return int[]
+     * @return array<int>
      */
     protected function getCategories(): array
     {
-        $categoryCollectionTransfer = $this->categoryFacade
-            ->getAllCategoryCollection($this->localeFacade->getCurrentLocale());
+        if (static::$categoryCache !== null) {
+            return static::$categoryCache;
+        }
 
-        return $this->getCategoryIdsFromCollection($categoryCollectionTransfer);
+        $categoryCriteriaTransfer = (new CategoryCriteriaTransfer())
+            ->setIdLocale($this->localeFacade->getCurrentLocale()->getIdLocale());
+
+        static::$categoryCache = $this->getCategoryIdsFromCollection(
+            $this->categoryFacade->getCategoriesByCriteria($categoryCriteriaTransfer)
+        );
+
+        return static::$categoryCache;
     }
 
     /**
      * @param \Generated\Shared\Transfer\CategoryCollectionTransfer $categoryCollectionTransfer
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getCategoryIdsFromCollection(CategoryCollectionTransfer $categoryCollectionTransfer): array
     {
         $categoryIds = [];
-
         foreach ($categoryCollectionTransfer->getCategories() as $categoryTransfer) {
-            $categoryIds[$categoryTransfer->getName()] = $categoryTransfer->getIdCategory();
+            $categoryIds[$this->getFormattedCategoryName($categoryTransfer)] = $categoryTransfer->getIdCategory();
         }
 
         return $categoryIds;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     *
+     * @return string
+     */
+    protected function getFormattedCategoryName(CategoryTransfer $categoryTransfer): string
+    {
+        return sprintf(static::FORMATTED_CATEGORY_NAME, $categoryTransfer->getName(), $categoryTransfer->getCategoryKey());
     }
 }

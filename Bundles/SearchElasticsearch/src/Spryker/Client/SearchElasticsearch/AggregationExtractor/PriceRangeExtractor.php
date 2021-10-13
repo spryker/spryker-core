@@ -33,7 +33,7 @@ class PriceRangeExtractor extends RangeExtractor
      * @param float|null $min
      * @param float|null $max
      *
-     * @return (int|float|null)[]
+     * @return array<int|float|null>
      */
     protected function getActiveRangeData(array $requestParameters, ?float $min, ?float $max): array
     {
@@ -48,7 +48,7 @@ class PriceRangeExtractor extends RangeExtractor
     /**
      * @param array $requestParameters
      *
-     * @return (float|null)[]
+     * @return array<float|null>
      */
     protected function getActiveRangeParameters(array $requestParameters): array
     {

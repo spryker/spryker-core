@@ -11,19 +11,78 @@ use Exception;
 use Laminas\Config\Reader\ReaderInterface;
 use PHPMD\RuleSetFactory;
 use PHPMD\TextUI\CommandLineOptions;
+use RuntimeException;
 use Spryker\Zed\Development\Business\SnifferConfiguration\Builder\SnifferConfigurationBuilderInterface;
 use Spryker\Zed\Development\DevelopmentConfig;
 use Symfony\Component\Process\Process;
 
 class ArchitectureSniffer implements ArchitectureSnifferInterface
 {
+    /**
+     * @var string
+     */
     public const OPTION_PRIORITY = 'priority';
+    /**
+     * @var string
+     */
     public const OPTION_STRICT = 'strict';
+    /**
+     * @var string
+     */
     public const OPTION_DRY_RUN = 'dry-run';
+    /**
+     * @var string
+     */
+    public const NAME_VISIBLE_VIOLATIONS = 'visible';
+    /**
+     * @var string
+     */
+    public const NAME_IGNORED_VIOLATIONS = 'ignored';
+    /**
+     * @var string
+     */
+    public const VIOLATION_FIELD_NAME_DESCRIPTION = 'description';
+    /**
+     * @var string
+     */
+    public const VIOLATION_FIELD_NAME_RULESET = 'ruleset';
+    /**
+     * @var string
+     */
+    public const VIOLATION_FIELD_NAME_RULE = 'rule';
+    /**
+     * @var string
+     */
+    public const OPTION_UPDATE = 'update-baseline';
 
+    /**
+     * @var string
+     */
     protected const SOURCE_FOLDER_NAME = 'src';
+    /**
+     * @var string
+     */
     protected const OPTION_MODULE = 'module';
+    /**
+     * @var string
+     */
     protected const OPTION_IGNORE_ERRORS = 'ignoreErrors';
+    /**
+     * @var string
+     */
+    protected const OPTION_VERBOSE = 'verbose';
+    /**
+     * @var string
+     */
+    protected const ARCHITECTURE_BASELINE_JSON = 'architecture-baseline.json';
+    /**
+     * @var string
+     */
+    protected const VIOLATION_FIELD_NAME_PRIORITY = 'priority';
+    /**
+     * @var string
+     */
+    protected const VIOLATION_FIELD_NAME_FILENAME = 'fileName';
 
     /**
      * @var string
@@ -94,11 +153,11 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
 
     /**
      * @param string $directory
-     * @param array $options
+     * @param array<string> $options
      *
      * @return array
      */
-    public function run($directory, array $options = [])
+    public function run($directory, array $options = []): array
     {
         $options = $this->configurationBuilder->getConfiguration($directory, $options);
 
@@ -124,7 +183,79 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
         $results = $this->getResultsWithoutIgnoredErrors($results, $options);
         $fileViolations = $this->formatResult($results);
 
-        return $fileViolations;
+        return $this->runAnalyzer($fileViolations, $directory, $options);
+    }
+
+    /**
+     * @param array $fileViolations
+     * @param string $directory
+     * @param array<string> $options
+     *
+     * @return array
+     */
+    protected function runAnalyzer(array $fileViolations, $directory, array $options): array
+    {
+        $reportPath = APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . static::ARCHITECTURE_BASELINE_JSON;
+        if ($this->isCoreModule($options)) {
+            $reportPath = dirname($directory) . DIRECTORY_SEPARATOR . static::ARCHITECTURE_BASELINE_JSON;
+        }
+
+        $reportFileExists = file_exists($reportPath);
+        $result = $this->formatViolations($fileViolations);
+        $reportResult = $reportFileExists ? $this->getReportResult($reportPath) : [];
+
+        if ($options[static::OPTION_UPDATE] || !$reportFileExists) {
+            $this->saveBaseline($result, $reportPath);
+        }
+
+        if (!$result) {
+            $result = $reportResult;
+        }
+
+        return $this->sortViolations($result, $reportResult);
+    }
+
+    /**
+     * @param array $result
+     * @param string $reportPath
+     *
+     * @throws \RuntimeException
+     *
+     * @return void
+     */
+    protected function saveBaseline(array $result, $reportPath): void
+    {
+        $content = json_encode($result, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) . PHP_EOL;
+
+        if ($content === false) {
+            throw new RuntimeException('Error encoding:' . json_last_error());
+        }
+
+        file_put_contents($reportPath, $content);
+    }
+
+    /**
+     * @param array $result
+     * @param array $reportResult
+     *
+     * @return array
+     */
+    protected function sortViolations(array $result, array $reportResult): array
+    {
+        $sortedViolations = [
+            static::NAME_VISIBLE_VIOLATIONS => [],
+            static::NAME_IGNORED_VIOLATIONS => [],
+        ];
+
+        foreach ($result as $key => $violations) {
+            if (array_search($violations[static::VIOLATION_FIELD_NAME_DESCRIPTION], array_column($reportResult, static::VIOLATION_FIELD_NAME_DESCRIPTION)) !== false) {
+                $sortedViolations[static::NAME_IGNORED_VIOLATIONS][] = $result[$key];
+            } else {
+                $sortedViolations[static::NAME_VISIBLE_VIOLATIONS][] = $result[$key];
+            }
+        }
+
+        return $sortedViolations;
     }
 
     /**
@@ -161,6 +292,7 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
 
         $process = $this->getProcess($command);
         $process->run();
+
         if (substr($process->getOutput(), 0, 5) !== '<?xml') {
             throw new Exception('Sniffer run was not successful: ' . $process->getExitCodeText());
         }
@@ -168,6 +300,62 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
         $output = $process->getOutput();
 
         return $output;
+    }
+
+    /**
+     * @param array $array
+     *
+     * @return array
+     */
+    protected function formatViolations(array $array): array
+    {
+        $result = [];
+
+        foreach ($array as $file => $violations) {
+            foreach ($violations as $violation) {
+                $result[] = [
+                    static::VIOLATION_FIELD_NAME_FILENAME => $this->normalizeProjectPath($file),
+                    static::VIOLATION_FIELD_NAME_DESCRIPTION => $violation['_'],
+                    static::VIOLATION_FIELD_NAME_RULE => $violation['rule'],
+                    static::VIOLATION_FIELD_NAME_RULESET => $violation['ruleset'],
+                    static::VIOLATION_FIELD_NAME_PRIORITY => $violation['priority'],
+                ];
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * @param string $path
+     *
+     * @return string
+     */
+    protected function normalizeProjectPath(string $path): string
+    {
+        return str_replace(APPLICATION_ROOT_DIR, '', $path);
+    }
+
+    /**
+     * @param string $path
+     *
+     * @throws \RuntimeException
+     *
+     * @return array
+     */
+    protected function getReportResult(string $path): array
+    {
+        $content = file_get_contents($path);
+        if ($content === false) {
+            throw new RuntimeException('Invalid content: ' . $path);
+        }
+
+        $result = json_decode($content, true);
+        if ($result === null) {
+            throw new RuntimeException('Invalid JSON file: ' . $path);
+        }
+
+        return $result;
     }
 
     /**
@@ -321,7 +509,7 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
 
     /**
      * @param array $fileResult
-     * @param string[] $ignoreErrorPatterns
+     * @param array<string> $ignoreErrorPatterns
      *
      * @return array
      */
@@ -356,7 +544,7 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
 
     /**
      * @param array $violation
-     * @param string[] $ignoreErrorPatterns
+     * @param array<string> $ignoreErrorPatterns
      *
      * @return bool
      */

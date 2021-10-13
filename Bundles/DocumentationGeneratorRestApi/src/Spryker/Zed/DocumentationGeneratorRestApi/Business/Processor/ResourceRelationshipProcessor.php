@@ -59,7 +59,7 @@ class ResourceRelationshipProcessor implements ResourceRelationshipProcessorInte
      * @param string $transferClassName
      * @param string $responseDataSchemaName
      *
-     * @return \Generated\Shared\Transfer\SchemaDataTransfer[]
+     * @return array<\Generated\Shared\Transfer\SchemaDataTransfer>
      */
     public function getRelationshipSchemaDataTransfersForPlugin(
         ResourceRoutePluginInterface $plugin,
@@ -78,7 +78,7 @@ class ResourceRelationshipProcessor implements ResourceRelationshipProcessorInte
     /**
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
      * @param string $transferClassName
-     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipPluginInterface[] $resourceRelationships
+     * @param array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipPluginInterface> $resourceRelationships
      *
      * @return \Generated\Shared\Transfer\SchemaDataTransfer
      */
@@ -112,7 +112,7 @@ class ResourceRelationshipProcessor implements ResourceRelationshipProcessorInte
     /**
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getResourceAttributesClassNamesFromPlugin(ResourceRoutePluginInterface $plugin): array
     {
@@ -140,7 +140,7 @@ class ResourceRelationshipProcessor implements ResourceRelationshipProcessorInte
     /**
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
      *
-     * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipPluginInterface[]
+     * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipPluginInterface>
      */
     public function getResourceRelationshipsForResourceRoutePlugin(ResourceRoutePluginInterface $plugin): array
     {
@@ -152,7 +152,7 @@ class ResourceRelationshipProcessor implements ResourceRelationshipProcessorInte
      * @param array $resourceRelationships
      * @param string $transferClassName
      *
-     * @return \Generated\Shared\Transfer\SchemaDataTransfer[]
+     * @return array<\Generated\Shared\Transfer\SchemaDataTransfer>
      */
     protected function createIncludedSchemaDataTransfers(
         string $responseDataSchemaName,
@@ -172,7 +172,7 @@ class ResourceRelationshipProcessor implements ResourceRelationshipProcessorInte
      * @param array $resourceRelationships
      * @param string $transferClassName
      *
-     * @return \Generated\Shared\Transfer\SchemaDataTransfer[]
+     * @return array<\Generated\Shared\Transfer\SchemaDataTransfer>
      */
     protected function createResourceRelationshipSchemaDataTransfers(
         string $responseDataSchemaName,

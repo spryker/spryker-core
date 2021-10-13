@@ -13,6 +13,9 @@ use Spryker\Service\UtilSanitizeXss\Dependency\External\UtilSanitizeToAntiXssAda
 
 class UtilSanitizeXssDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const XSS_SANITIZER = 'XSS_SANITIZER';
 
     /**

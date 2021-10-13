@@ -11,6 +11,9 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class UuidConfig extends AbstractBundleConfig
 {
+    /**
+     * @var int
+     */
     protected const UUID_GENERATOR_BATCH_SIZE = 200;
 
     /**

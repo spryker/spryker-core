@@ -98,7 +98,7 @@ class ProductAttribute implements ProductAttributeInterface
 
     /**
      * @param array $defaultAttributes
-     * @param \Generated\Shared\Transfer\LocalizedAttributesTransfer[] $localizedAttributes
+     * @param array<\Generated\Shared\Transfer\LocalizedAttributesTransfer> $localizedAttributes
      *
      * @return array
      */

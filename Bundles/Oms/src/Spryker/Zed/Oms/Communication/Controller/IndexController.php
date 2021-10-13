@@ -20,7 +20,13 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class IndexController extends AbstractController
 {
+    /**
+     * @var string
+     */
     public const DEFAULT_FORMAT = 'svg';
+    /**
+     * @var int
+     */
     public const DEFAULT_FONT_SIZE = 14;
 
     /**
@@ -103,7 +109,7 @@ class IndexController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function drawPreviewVersionAction(Request $request)
     {

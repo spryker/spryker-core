@@ -23,7 +23,7 @@ class CmsSlotBlockStoragePublishListener extends AbstractPlugin implements Event
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
      * @param string $eventName
      *
      * @return void
@@ -35,9 +35,9 @@ class CmsSlotBlockStoragePublishListener extends AbstractPlugin implements Event
     }
 
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
      *
-     * @return \Generated\Shared\Transfer\CmsSlotBlockTransfer[]
+     * @return array<\Generated\Shared\Transfer\CmsSlotBlockTransfer>
      */
     protected function mapEventEntityTransfersToCmsSlotBlockTransfers(array $eventEntityTransfers): array
     {

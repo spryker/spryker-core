@@ -10,7 +10,7 @@ namespace Spryker\Zed\ProductDiscontinuedProductLabelConnector\Persistence;
 interface ProductDiscontinuedProductLabelConnectorRepositoryInterface
 {
     /**
-     * @return int[]
+     * @return array<int>
      */
     public function getProductAbstractIdsToBeLabeled(): array;
 }

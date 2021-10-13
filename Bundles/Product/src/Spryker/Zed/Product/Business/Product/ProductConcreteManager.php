@@ -30,7 +30,7 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
     use TransactionTrait;
 
     /**
-     * @var \Generated\Shared\Transfer\LocaleTransfer[]
+     * @var array<\Generated\Shared\Transfer\LocaleTransfer>
      */
     protected static $localeTransfersCache;
 
@@ -198,15 +198,16 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
     }
 
     /**
-     * @param string[] $skus
+     * @param array<string> $skus
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
      */
     public function findProductConcretesBySkus(array $skus): array
     {
         $productConcreteEntities = $this->productQueryContainer
             ->queryProduct()
             ->filterBySku_In($skus)
+            ->joinWithSpyProductAbstract()
             ->find();
 
         if (!$productConcreteEntities->getData()) {
@@ -271,7 +272,7 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
     /**
      * @param int $idProductAbstract
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
      */
     public function getConcreteProductsByAbstractProductId($idProductAbstract)
     {
@@ -329,7 +330,7 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
     /**
      * @param int $idProductAbstract
      *
-     * @return int[]
+     * @return array<int>
      */
     public function findProductConcreteIdsByAbstractProductId(int $idProductAbstract): array
     {
@@ -337,9 +338,9 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
     }
 
     /**
-     * @param int[] $productConcreteIds
+     * @param array<int> $productConcreteIds
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getProductAbstractIdsByProductConcreteIds(array $productConcreteIds): array
     {
@@ -632,9 +633,9 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
     }
 
     /**
-     * @param string[] $skus
+     * @param array<string> $skus
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getProductConcreteIdsByConcreteSkus(array $skus): array
     {
@@ -642,7 +643,7 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
     }
 
     /**
-     * @param int[] $productIds
+     * @param array<int> $productIds
      *
      * @return array
      */
@@ -652,9 +653,9 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
     }
 
     /**
-     * @param string[] $productConcreteSkus
+     * @param array<string> $productConcreteSkus
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
      */
     public function getProductConcretesByConcreteSkus(array $productConcreteSkus): array
     {

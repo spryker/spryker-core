@@ -107,9 +107,9 @@ class SalesReturnFacade extends AbstractFacade implements SalesReturnFacadeInter
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     public function setOrderItemIsReturnableByGlobalReturnableNumberOfDays(array $itemTransfers): array
     {
@@ -123,9 +123,9 @@ class SalesReturnFacade extends AbstractFacade implements SalesReturnFacadeInter
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     public function setOrderItemIsReturnableByItemState(array $itemTransfers): array
     {

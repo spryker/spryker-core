@@ -19,16 +19,29 @@ use Spryker\Zed\Kernel\Container;
  */
 class GlossaryDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_TOUCH = 'touch facade';
 
+    /**
+     * @var string
+     */
     public const FACADE_LOCALE = 'locale facade';
 
+    /**
+     * @var string
+     */
     public const PLUGIN_VALIDATOR = 'validator plugin';
 
+    /**
+     * @var string
+     */
     public const FACADE_MESSENGER = 'messages';
 
     /**
      * @uses \Spryker\Zed\Validator\Communication\Plugin\Application\ValidatorApplicationPlugin::SERVICE_VALIDATOR
+     * @var string
      */
     protected const SERVICE_VALIDATOR = 'validator';
 

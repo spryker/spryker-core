@@ -10,7 +10,7 @@ namespace Spryker\Zed\CmsSlotBlockProductCategoryGui\Communication\DataProvider;
 interface ProductCategorySlotBlockDataProviderInterface
 {
     /**
-     * @param int[]|null $productAbstractIds
+     * @param array<int>|null $productAbstractIds
      *
      * @return array
      */

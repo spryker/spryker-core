@@ -19,6 +19,9 @@ use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataBu
  */
 class MerchantSynchronizationDataBulkRepositoryPlugin extends AbstractPlugin implements SynchronizationDataBulkRepositoryPluginInterface
 {
+    /**
+     * @var string
+     */
     protected const PARAM_TYPE = 'merchant';
 
     /**
@@ -50,7 +53,7 @@ class MerchantSynchronizationDataBulkRepositoryPlugin extends AbstractPlugin imp
      *
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getParams(): array
     {
@@ -76,9 +79,9 @@ class MerchantSynchronizationDataBulkRepositoryPlugin extends AbstractPlugin imp
      *
      * @param int $offset
      * @param int $limit
-     * @param int[] $ids
+     * @param array<int> $ids
      *
-     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     * @return array<\Generated\Shared\Transfer\SynchronizationDataTransfer>
      */
     public function getData(int $offset, int $limit, array $ids = []): array
     {

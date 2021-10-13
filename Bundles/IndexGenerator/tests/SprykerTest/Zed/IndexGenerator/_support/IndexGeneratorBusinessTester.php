@@ -85,7 +85,7 @@ class IndexGeneratorBusinessTester extends Actor
     /**
      * @return string
      */
-    protected function getPathToGeneratedSchema(): string
+    public function getPathToGeneratedSchema(): string
     {
         return $this->getTargetDirectory() . DIRECTORY_SEPARATOR . 'test.schema.xml';
     }

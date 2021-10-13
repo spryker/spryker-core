@@ -14,7 +14,7 @@ class TestifyConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getOutputDirectoriesForCleanup(): array
     {

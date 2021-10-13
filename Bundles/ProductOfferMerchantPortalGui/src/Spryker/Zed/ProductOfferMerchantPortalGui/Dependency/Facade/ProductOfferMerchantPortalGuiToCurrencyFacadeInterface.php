@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\CurrencyTransfer;
 interface ProductOfferMerchantPortalGuiToCurrencyFacadeInterface
 {
     /**
-     * @return \Generated\Shared\Transfer\StoreWithCurrencyTransfer[]
+     * @return array<\Generated\Shared\Transfer\StoreWithCurrencyTransfer>
      */
     public function getAllStoresWithCurrencies();
 

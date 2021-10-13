@@ -24,7 +24,13 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class DeleteController extends AbstractController
 {
+    /**
+     * @var string
+     */
     protected const URL_CUSTOMER_LIST_PAGE = '/customer';
+    /**
+     * @var string
+     */
     protected const URL_CUSTOMER_DELETE_PAGE = '/customer/delete';
 
     /**

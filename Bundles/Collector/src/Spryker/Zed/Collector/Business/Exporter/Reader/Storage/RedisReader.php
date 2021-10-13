@@ -12,6 +12,9 @@ use Spryker\Zed\Collector\Business\Storage\Adapter\KeyValue\ReadInterface;
 
 class RedisReader implements ReaderInterface
 {
+    /**
+     * @var string
+     */
     public const READER_NAME = 'redis-reader';
 
     /**

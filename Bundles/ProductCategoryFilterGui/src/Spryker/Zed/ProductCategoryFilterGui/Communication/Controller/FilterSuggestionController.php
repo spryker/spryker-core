@@ -16,6 +16,9 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class FilterSuggestionController extends AbstractController
 {
+    /**
+     * @var string
+     */
     public const PARAM_TERM = 'term';
 
     /**
@@ -25,7 +28,7 @@ class FilterSuggestionController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $searchTerm = $request->query->get(self::PARAM_TERM);
+        $searchTerm = (string)$request->query->get(static::PARAM_TERM);
         $suggestions = $this
             ->getFactory()
             ->getProductSearchFacade()

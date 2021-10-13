@@ -11,6 +11,9 @@ use Spryker\Shared\Kernel\Locator\LocatorMatcherInterface;
 
 class LocatorWithMatcherMatcher implements LocatorMatcherInterface
 {
+    /**
+     * @var string
+     */
     public const NAME = 'locator';
 
     /**

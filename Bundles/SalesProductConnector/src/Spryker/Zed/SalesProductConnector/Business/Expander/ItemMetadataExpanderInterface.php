@@ -10,9 +10,9 @@ namespace Spryker\Zed\SalesProductConnector\Business\Expander;
 interface ItemMetadataExpanderInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     public function expandOrderItemsWithMetadata(array $itemTransfers): array;
 }

@@ -21,8 +21,17 @@ use Spryker\Zed\SharedCart\Persistence\SharedCartRepositoryInterface;
 
 class ResourceShareQuoteCompanyUserWriter implements ResourceShareQuoteCompanyUserWriterInterface
 {
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_CART_WAS_SUCCESSFULLY_SHARED = 'shared_cart_page.share.success';
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_UNABLE_TO_SHARE_CART = 'shared_cart.resource_share.strategy.error.unable_to_share_cart';
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_CART_SHARE_ACCESS_UPDATED = 'shared_cart.resource_share.strategy.success.cart_share_access_updated';
 
     /**

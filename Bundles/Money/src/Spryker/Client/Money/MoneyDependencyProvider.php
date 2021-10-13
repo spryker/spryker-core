@@ -18,8 +18,17 @@ use Spryker\Shared\Money\Dependency\Parser\MoneyToParserBridge;
 
 class MoneyDependencyProvider extends AbstractDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const STORE = 'store';
+    /**
+     * @var string
+     */
     public const PLUGIN_CURRENCY = 'currency plugin';
+    /**
+     * @var string
+     */
     public const MONEY_PARSER = 'money parser';
 
     /**

@@ -15,8 +15,17 @@ use Spryker\Zed\CustomersRestApi\Dependency\Facade\CustomersRestApiToCustomerFac
 
 class CustomerAddressValidator implements CustomerAddressValidatorInterface
 {
+    /**
+     * @var string
+     */
     protected const GLOSSARY_PARAMETER_ID = '%id%';
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_CUSTOMER_ADDRESS_IN_CHECKOUT_DATA_NOT_FOUND = 'checkout.validation.customer_address.not_found';
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_CUSTOMER_ADDRESSES_APPLICABLE_FOR_CUSTOMERS_ONLY = 'checkout.validation.customer_address.not_applicable';
 
     /**
@@ -83,7 +92,7 @@ class CustomerAddressValidator implements CustomerAddressValidatorInterface
     /**
      * @param \Generated\Shared\Transfer\CheckoutDataTransfer $checkoutDataTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getCustomerShippingAddressUuids(CheckoutDataTransfer $checkoutDataTransfer): array
     {
@@ -103,7 +112,7 @@ class CustomerAddressValidator implements CustomerAddressValidatorInterface
     /**
      * @param \Generated\Shared\Transfer\CheckoutDataTransfer $checkoutDataTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function extractShippingAddressUuids(CheckoutDataTransfer $checkoutDataTransfer): array
     {
@@ -123,7 +132,7 @@ class CustomerAddressValidator implements CustomerAddressValidatorInterface
     /**
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      * @param string $message
-     * @param string[] $parameters
+     * @param array<string> $parameters
      *
      * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */

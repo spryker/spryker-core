@@ -9,5 +9,8 @@ namespace Spryker\Shared\Company\Code;
 
 interface Messages
 {
+    /**
+     * @var string
+     */
     public const COMPANY_AUTHORIZATION_SUCCESS = 'company.account.authorization.success';
 }

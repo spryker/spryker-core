@@ -17,6 +17,9 @@ use Generated\Shared\Transfer\FacetSearchResultValueTransfer;
  */
 class CategoryExtractor implements AggregationExtractorInterface
 {
+    /**
+     * @var string
+     */
     public const DOC_COUNT = 'doc_count';
 
     /**
@@ -60,7 +63,7 @@ class CategoryExtractor implements AggregationExtractorInterface
     /**
      * @param array $aggregation
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\FacetSearchResultValueTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\FacetSearchResultValueTransfer>
      */
     protected function extractFacetData(array $aggregation)
     {

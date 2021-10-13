@@ -16,9 +16,21 @@ use Spryker\Zed\Kernel\Container;
 
 class CmsSlotBlockCategoryGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_CATEGORY = 'FACADE_CATEGORY';
+    /**
+     * @var string
+     */
     public const FACADE_LOCALE = 'FACADE_LOCALE';
+    /**
+     * @var string
+     */
     public const FACADE_TRANSLATOR = 'FACADE_TRANSLATOR';
+    /**
+     * @var string
+     */
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
     /**

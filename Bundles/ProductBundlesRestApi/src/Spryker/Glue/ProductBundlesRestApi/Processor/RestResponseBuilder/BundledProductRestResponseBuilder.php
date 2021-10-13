@@ -53,7 +53,7 @@ class BundledProductRestResponseBuilder implements BundledProductRestResponseBui
     }
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $bundledProductRestResources
+     * @param array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface> $bundledProductRestResources
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
@@ -71,7 +71,7 @@ class BundledProductRestResponseBuilder implements BundledProductRestResponseBui
      * @param string $productConcreteSku
      * @param \Generated\Shared\Transfer\ProductBundleStorageTransfer $productBundleStorageTransfer
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>
      */
     public function createBundledProductRestResources(
         string $productConcreteSku,

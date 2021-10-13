@@ -24,14 +24,26 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class ProductOptionTranslationForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const FIELD_NAME = 'name';
+    /**
+     * @var string
+     */
     public const FIELD_LOCALE_CODE = 'localeCode';
+    /**
+     * @var string
+     */
     public const FIELD_KEY = 'key';
+    /**
+     * @var string
+     */
     public const FIELD_RELATED_OPTION_HASH = 'relatedOptionHash';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param string[] $options
+     * @param array<string> $options
      *
      * @return void
      */
@@ -67,7 +79,7 @@ class ProductOptionTranslationForm extends AbstractType
             'required' => true,
             'constraints' => [
                 new NotBlank(),
-             ],
+            ],
         ]);
 
         return $this;

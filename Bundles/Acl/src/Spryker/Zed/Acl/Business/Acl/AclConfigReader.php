@@ -15,7 +15,13 @@ use Spryker\Zed\Acl\AclConfig;
 
 class AclConfigReader implements AclConfigReaderInterface
 {
+    /**
+     * @var string
+     */
     protected const GROUP_KEY = 'group';
+    /**
+     * @var string
+     */
     protected const ROLE_KEY = 'role';
 
     /**
@@ -32,7 +38,7 @@ class AclConfigReader implements AclConfigReaderInterface
     }
 
     /**
-     * @return \Generated\Shared\Transfer\RoleTransfer[]
+     * @return array<\Generated\Shared\Transfer\RoleTransfer>
      */
     public function getRoles(): array
     {
@@ -40,8 +46,16 @@ class AclConfigReader implements AclConfigReaderInterface
         foreach ($this->aclConfig->getInstallerRoles() as $roleData) {
             $groupTransfer = (new GroupTransfer())->setName($roleData[static::GROUP_KEY]);
             $roleTransfers[$roleData[RoleTransfer::NAME]] = (new RoleTransfer())
-                ->setName($roleData[RoleTransfer::NAME])
+                ->fromArray($roleData, true)
                 ->setAclGroup($groupTransfer);
+
+            if (isset($roleData[RoleTransfer::ACL_ENTITY_RULES])) {
+                $roleTransfers[$roleData[RoleTransfer::NAME]]->setAclEntityRules($roleData[RoleTransfer::ACL_ENTITY_RULES]);
+            }
+
+            if (isset($roleData[RoleTransfer::ACL_RULES])) {
+                $roleTransfers[$roleData[RoleTransfer::NAME]]->setAclRules($roleData[RoleTransfer::ACL_RULES]);
+            }
         }
         foreach ($this->aclConfig->getInstallerRules() as $ruleData) {
             if (!isset($roleTransfers[$ruleData[static::ROLE_KEY]])) {
@@ -57,7 +71,7 @@ class AclConfigReader implements AclConfigReaderInterface
     }
 
     /**
-     * @return \Generated\Shared\Transfer\GroupTransfer[]
+     * @return array<\Generated\Shared\Transfer\GroupTransfer>
      */
     public function getGroups(): array
     {
@@ -70,16 +84,19 @@ class AclConfigReader implements AclConfigReaderInterface
     }
 
     /**
-     * @return \Generated\Shared\Transfer\UserTransfer[]
+     * @return array<\Generated\Shared\Transfer\UserTransfer>
      */
     public function getUserGroupRelations(): array
     {
         $userTransfers = [];
         foreach ($this->aclConfig->getInstallerUsers() as $username => $userData) {
-            $groupTransfer = (new GroupTransfer())->setName($userData[static::GROUP_KEY]);
-            $userTransfers[] = (new UserTransfer())
-                ->setUsername($username)
-                ->addAclGroup($groupTransfer);
+            $userTransfer = (new UserTransfer())
+                ->setUsername($username);
+            if (isset($userData[static::GROUP_KEY])) {
+                $groupTransfer = (new GroupTransfer())->setName($userData[static::GROUP_KEY]);
+                $userTransfer->addAclGroup($groupTransfer);
+            }
+            $userTransfers[] = $userTransfer;
         }
 
         return $userTransfers;

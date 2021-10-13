@@ -84,9 +84,9 @@ class ProductOptionValuePriceReader implements ProductOptionValuePriceReaderInte
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\StorageProductOptionValueTransfer[] $productOptionValueCollection
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\StorageProductOptionValueTransfer> $productOptionValueCollection
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\StorageProductOptionValueTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\StorageProductOptionValueTransfer>
      */
     protected function filterOptionValuesWithEmptyPrice(ArrayObject $productOptionValueCollection)
     {

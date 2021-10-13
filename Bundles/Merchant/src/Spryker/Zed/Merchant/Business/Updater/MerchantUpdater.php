@@ -25,7 +25,13 @@ class MerchantUpdater implements MerchantUpdaterInterface
 {
     use TransactionTrait;
 
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_MERCHANT_NOT_FOUND = 'Merchant is not found.';
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_MERCHANT_STATUS_TRANSITION_NOT_VALID = 'Merchant status transition is not valid.';
 
     /**
@@ -44,7 +50,7 @@ class MerchantUpdater implements MerchantUpdaterInterface
     protected $merchantStatusValidator;
 
     /**
-     * @var \Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantPostUpdatePluginInterface[]
+     * @var array<\Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantPostUpdatePluginInterface>
      */
     protected $merchantPostUpdatePlugins;
 
@@ -62,7 +68,7 @@ class MerchantUpdater implements MerchantUpdaterInterface
      * @param \Spryker\Zed\Merchant\Persistence\MerchantEntityManagerInterface $merchantEntityManager
      * @param \Spryker\Zed\Merchant\Persistence\MerchantRepositoryInterface $merchantRepository
      * @param \Spryker\Zed\Merchant\Business\Status\MerchantStatusValidatorInterface $merchantStatusValidator
-     * @param \Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantPostUpdatePluginInterface[] $merchantPostUpdatePlugins
+     * @param array<\Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantPostUpdatePluginInterface> $merchantPostUpdatePlugins
      * @param \Spryker\Zed\Merchant\Business\MerchantUrlSaver\MerchantUrlSaverInterface $merchantUrlSaver
      * @param \Spryker\Zed\Merchant\Dependency\Facade\MerchantToEventFacadeInterface $eventFacade
      */
@@ -103,8 +109,13 @@ class MerchantUpdater implements MerchantUpdaterInterface
 
             return $merchantResponseTransfer;
         }
+        /** @var string $existingMerchantStatus */
+        $existingMerchantStatus = $existingMerchantTransfer->getStatus();
 
-        if (!$this->merchantStatusValidator->isMerchantStatusTransitionValid($existingMerchantTransfer->getStatus(), $merchantTransfer->getStatus())) {
+        /** @var string $merchantStatus */
+        $merchantStatus = $merchantTransfer->getStatus();
+
+        if (!$this->merchantStatusValidator->isMerchantStatusTransitionValid($existingMerchantStatus, $merchantStatus)) {
             $merchantResponseTransfer = $this->addMerchantError($merchantResponseTransfer, static::ERROR_MESSAGE_MERCHANT_STATUS_TRANSITION_NOT_VALID);
 
             return $merchantResponseTransfer;
@@ -152,18 +163,24 @@ class MerchantUpdater implements MerchantUpdaterInterface
      */
     protected function updateMerchantStores(MerchantTransfer $merchantTransfer): MerchantTransfer
     {
-        $merchantStoreRelationTransferMap = $this->merchantRepository->getMerchantStoreRelationMapByMerchantIds([$merchantTransfer->getIdMerchant()]);
+        /** @var int $idMerchant */
+        $idMerchant = $merchantTransfer->getIdMerchant();
+
+        $merchantStoreRelationTransferMap = $this->merchantRepository->getMerchantStoreRelationMapByMerchantIds([$idMerchant]);
         $currentStoreRelationTransfer = $merchantStoreRelationTransferMap[$merchantTransfer->getIdMerchant()];
+
+        /** @var \Generated\Shared\Transfer\StoreRelationTransfer $storeRelationTransfer */
+        $storeRelationTransfer = $merchantTransfer->getStoreRelation();
 
         if (!$currentStoreRelationTransfer->getIdStores()) {
             return $this->createMerchantStores(
                 $merchantTransfer,
-                $merchantTransfer->getStoreRelation()->getIdStores()
+                $storeRelationTransfer->getIdStores()
             );
         }
 
         $currentStoreIds = $currentStoreRelationTransfer->getIdStores();
-        $requestedStoreIds = $merchantTransfer->getStoreRelation()->getIdStores();
+        $requestedStoreIds = $storeRelationTransfer->getIdStores();
 
         $merchantTransfer = $this->createMerchantStores($merchantTransfer, array_diff($requestedStoreIds, $currentStoreIds));
         $this->deleteMerchantStores($merchantTransfer, array_diff($currentStoreIds, $requestedStoreIds));
@@ -173,18 +190,21 @@ class MerchantUpdater implements MerchantUpdaterInterface
 
     /**
      * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
-     * @param int[] $storeIds
+     * @param array<int> $storeIds
      *
      * @return \Generated\Shared\Transfer\MerchantTransfer
      */
     protected function createMerchantStores(MerchantTransfer $merchantTransfer, array $storeIds): MerchantTransfer
     {
+        /** @var \Generated\Shared\Transfer\StoreRelationTransfer $storeRelationTransfer */
+        $storeRelationTransfer = $merchantTransfer->getStoreRelation();
+
         foreach ($storeIds as $idStore) {
             $storeTransfer = $this->merchantEntityManager->createMerchantStore($merchantTransfer, $idStore);
-            $merchantTransfer->getStoreRelation()->addStores($storeTransfer);
+            $storeRelationTransfer->addStores($storeTransfer);
         }
 
-        $merchantTransfer->getStoreRelation()
+        $storeRelationTransfer
             ->setIdEntity($merchantTransfer->getIdMerchant())
             ->setIdStores($storeIds);
 
@@ -193,7 +213,7 @@ class MerchantUpdater implements MerchantUpdaterInterface
 
     /**
      * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
-     * @param int[] $storeIds
+     * @param array<int> $storeIds
      *
      * @return void
      */

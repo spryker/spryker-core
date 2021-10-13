@@ -18,23 +18,62 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class PaymentMethodTable extends AbstractTable
 {
+    /**
+     * @var string
+     */
     protected const COL_ACTIONS = 'Actions';
 
+    /**
+     * @var string
+     */
     protected const PARAM_ID_PAYMENT_METHOD = 'id-payment-method';
 
+    /**
+     * @var string
+     */
     protected const URL_PAYMENT_METHOD_VIEW = '/payment-gui/view-payment-method/index';
+    /**
+     * @var string
+     */
     protected const URL_PAYMENT_METHOD_EDIT = '/payment-gui/update-payment-method/index';
 
+    /**
+     * @var string
+     */
     protected const BUTTON_VIEW = 'View';
+    /**
+     * @var string
+     */
     protected const BUTTON_EDIT = 'Edit';
 
+    /**
+     * @var string
+     */
     protected const HEADER_PAYMENT_METHOD_KEY = 'Payment Method Key';
+    /**
+     * @var string
+     */
     protected const HEADER_NAME = 'Name';
+    /**
+     * @var string
+     */
     protected const HEADER_PROVIDER = 'Provider';
+    /**
+     * @var string
+     */
     protected const HEADER_STATUS = 'Status';
+    /**
+     * @var string
+     */
     protected const HEADER_AVAILABLE_IN_STORE = 'Available in Store';
+    /**
+     * @var string
+     */
     protected const HEADER_ACTIONS = 'Actions';
 
+    /**
+     * @var string
+     */
     protected const LABEL_PRIMARY = 'label-primary';
 
     /**
@@ -139,7 +178,7 @@ class PaymentMethodTable extends AbstractTable
      */
     protected function prepareData(TableConfiguration $config): array
     {
-        /** @var \Orm\Zed\Payment\Persistence\SpyPaymentMethod[] $paymentMethodEntities */
+        /** @var array<\Orm\Zed\Payment\Persistence\SpyPaymentMethod> $paymentMethodEntities */
         $paymentMethodEntities = $this->runQuery($this->prepareQuery(), $config, true);
 
         $paymentMethodRows = [];

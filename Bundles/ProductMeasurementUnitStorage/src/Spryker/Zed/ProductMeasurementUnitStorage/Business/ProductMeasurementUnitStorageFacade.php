@@ -22,7 +22,7 @@ class ProductMeasurementUnitStorageFacade extends AbstractFacade implements Prod
      *
      * @api
      *
-     * @param int[] $productMeasurementUnitIds
+     * @param array<int> $productMeasurementUnitIds
      *
      * @return void
      */
@@ -36,7 +36,7 @@ class ProductMeasurementUnitStorageFacade extends AbstractFacade implements Prod
      *
      * @api
      *
-     * @param int[] $productIds
+     * @param array<int> $productIds
      *
      * @return void
      */
@@ -50,7 +50,7 @@ class ProductMeasurementUnitStorageFacade extends AbstractFacade implements Prod
      *
      * @api
      *
-     * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductMeasurementUnitTransfer|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer>
      */
     public function findAllProductMeasurementUnitTransfers(): array
     {
@@ -62,9 +62,9 @@ class ProductMeasurementUnitStorageFacade extends AbstractFacade implements Prod
      *
      * @api
      *
-     * @param int[] $productMeasurementUnitIds
+     * @param array<int> $productMeasurementUnitIds
      *
-     * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductMeasurementUnitTransfer|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer>
      */
     public function findProductMeasurementUnitTransfers(array $productMeasurementUnitIds): array
     {
@@ -76,7 +76,7 @@ class ProductMeasurementUnitStorageFacade extends AbstractFacade implements Prod
      *
      * @api
      *
-     * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer>
      */
     public function getSalesUnits(): array
     {
@@ -88,9 +88,9 @@ class ProductMeasurementUnitStorageFacade extends AbstractFacade implements Prod
      *
      * @api
      *
-     * @param int[] $salesUnitsIds
+     * @param array<int> $salesUnitsIds
      *
-     * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer>
      */
     public function getSalesUnitsByIds(array $salesUnitsIds): array
     {
@@ -104,7 +104,7 @@ class ProductMeasurementUnitStorageFacade extends AbstractFacade implements Prod
      *
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductMeasurementUnitTransfer|\Spryker\Shared\Kernel\Transfer\AbstractTransfer>
      */
     public function findFilteredProductMeasurementUnitTransfers(FilterTransfer $filterTransfer): array
     {
@@ -118,7 +118,7 @@ class ProductMeasurementUnitStorageFacade extends AbstractFacade implements Prod
      *
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer|\Spryker\Shared\Kernel\Transfer\AbstractTransfer>
      */
     public function findFilteredProductMeasurementSalesUnitTransfers(FilterTransfer $filterTransfer): array
     {

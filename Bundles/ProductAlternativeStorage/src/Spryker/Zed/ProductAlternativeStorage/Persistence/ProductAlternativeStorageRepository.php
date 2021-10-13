@@ -24,9 +24,9 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 class ProductAlternativeStorageRepository extends AbstractRepository implements ProductAlternativeStorageRepositoryInterface
 {
     /**
-     * @param int[] $productIds
+     * @param array<int> $productIds
      *
-     * @return \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductAlternativeStorage[]
+     * @return array<\Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductAlternativeStorage>
      */
     public function findProductAlternativeStorageEntities(array $productIds): array
     {
@@ -62,7 +62,7 @@ class ProductAlternativeStorageRepository extends AbstractRepository implements 
      *
      * @param int $idProduct
      *
-     * @return int[]
+     * @return array<int>
      */
     public function findAbstractAlternativesIdsByConcreteProductId($idProduct): array
     {
@@ -80,7 +80,7 @@ class ProductAlternativeStorageRepository extends AbstractRepository implements 
      *
      * @param int $idProduct
      *
-     * @return int[]
+     * @return array<int>
      */
     public function findConcreteAlternativesIdsByConcreteProductId($idProduct): array
     {
@@ -96,9 +96,9 @@ class ProductAlternativeStorageRepository extends AbstractRepository implements 
     /**
      * @module Product
      *
-     * @param int[] $productIds
+     * @param array<int> $productIds
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getIndexedProductConcreteIdToSkusByProductIds(array $productIds): array
     {
@@ -123,9 +123,9 @@ class ProductAlternativeStorageRepository extends AbstractRepository implements 
     /**
      * @module Product
      *
-     * @param int[] $productIds
+     * @param array<int> $productIds
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getIndexedProductAbstractIdToSkusByProductIds(array $productIds): array
     {
@@ -142,9 +142,9 @@ class ProductAlternativeStorageRepository extends AbstractRepository implements 
     /**
      * @module Product
      *
-     * @param int[] $productIds
+     * @param array<int> $productIds
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getIndexedProductConcreteIdToSkusByProductAbstractIds(array $productIds): array
     {
@@ -184,7 +184,7 @@ class ProductAlternativeStorageRepository extends AbstractRepository implements 
      *
      * @param int $idProductAbstract
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getReplacementsByAbstractProductId(int $idProductAbstract): array
     {
@@ -201,7 +201,7 @@ class ProductAlternativeStorageRepository extends AbstractRepository implements 
      *
      * @param int $idProductConcrete
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getReplacementsByConcreteProductId(int $idProductConcrete): array
     {
@@ -216,7 +216,7 @@ class ProductAlternativeStorageRepository extends AbstractRepository implements 
     /**
      * @see \Spryker\Zed\ProductAlternativeStorage\Persistence\ProductAlternativeStorageRepositoryInterface::getSynchronizationDataTransfersByFilterAndProductAlternativeStorageIds()
      *
-     * @return \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductAlternativeStorage[]
+     * @return array<\Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductAlternativeStorage>
      */
     public function findAllProductAlternativeStorageEntities(): array
     {
@@ -229,9 +229,9 @@ class ProductAlternativeStorageRepository extends AbstractRepository implements 
     /**
      * @see \Spryker\Zed\ProductAlternativeStorage\Persistence\ProductAlternativeStorageRepositoryInterface::getSynchronizationDataTransfersByFilterAndProductAlternativeStorageIds()
      *
-     * @param int[] $productAlternativeStorageIds
+     * @param array<int> $productAlternativeStorageIds
      *
-     * @return \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductAlternativeStorage[]
+     * @return array<\Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductAlternativeStorage>
      */
     public function findProductAlternativeStorageEntitiesByIds(array $productAlternativeStorageIds): array
     {
@@ -245,7 +245,7 @@ class ProductAlternativeStorageRepository extends AbstractRepository implements 
     /**
      * @see \Spryker\Zed\ProductAlternativeStorage\Persistence\ProductAlternativeStorageRepositoryInterface::getSynchronizationDataTransfersByFilterAndProductReplacementForStorageIds()
      *
-     * @return \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductReplacementForStorage[]
+     * @return array<\Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductReplacementForStorage>
      */
     public function findAllProductReplacementForStorageEntities(): array
     {
@@ -258,9 +258,9 @@ class ProductAlternativeStorageRepository extends AbstractRepository implements 
     /**
      * @see \Spryker\Zed\ProductAlternativeStorage\Persistence\ProductAlternativeStorageRepositoryInterface::getSynchronizationDataTransfersByFilterAndProductReplacementForStorageIds()
      *
-     * @param int[] $productReplacementForStorageIds
+     * @param array<int> $productReplacementForStorageIds
      *
-     * @return \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductReplacementForStorage[]
+     * @return array<\Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductReplacementForStorage>
      */
     public function findProductReplacementForStorageEntitiesByIds(array $productReplacementForStorageIds): array
     {
@@ -273,9 +273,9 @@ class ProductAlternativeStorageRepository extends AbstractRepository implements 
 
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     * @param int[] $productAlternativeStorageIds
+     * @param array<int> $productAlternativeStorageIds
      *
-     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     * @return array<\Generated\Shared\Transfer\SynchronizationDataTransfer>
      */
     public function getSynchronizationDataTransfersByFilterAndProductAlternativeStorageIds(
         FilterTransfer $filterTransfer,
@@ -299,9 +299,9 @@ class ProductAlternativeStorageRepository extends AbstractRepository implements 
 
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     * @param int[] $productReplacementForStorageIds
+     * @param array<int> $productReplacementForStorageIds
      *
-     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     * @return array<\Generated\Shared\Transfer\SynchronizationDataTransfer>
      */
     public function getSynchronizationDataTransfersByFilterAndProductReplacementForStorageIds(
         FilterTransfer $filterTransfer,

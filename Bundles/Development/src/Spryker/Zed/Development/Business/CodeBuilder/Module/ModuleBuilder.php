@@ -14,10 +14,22 @@ use Symfony\Component\Filesystem\Filesystem;
 
 class ModuleBuilder
 {
+    /**
+     * @var string
+     */
     protected const OPTION_FILE = 'file';
+    /**
+     * @var string
+     */
     protected const OPTION_FORCE = 'force';
 
+    /**
+     * @var string
+     */
     protected const NAMESPACE_SPRYKER = 'Spryker';
+    /**
+     * @var string
+     */
     protected const NAMESPACE_SPRYKER_SHOP = 'SprykerShop';
 
     /**
@@ -36,7 +48,6 @@ class ModuleBuilder
         '.coveralls.yml',
         '.gitattributes',
         '.gitignore',
-        '.travis.yml',
         'CHANGELOG.md',
         'codecept.yml' => 'codeception.yml',
         'composer.json',
@@ -94,13 +105,13 @@ class ModuleBuilder
     /**
      * @param string $namespace
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getModuleNames($namespace)
     {
         $moduleDirectory = $this->getDirectoryName($namespace);
 
-        $moduleDirectories = glob($moduleDirectory . '*');
+        $moduleDirectories = glob($moduleDirectory . '*', GLOB_NOSORT);
 
         $modules = [];
         foreach ($moduleDirectories as $moduleDirectory) {

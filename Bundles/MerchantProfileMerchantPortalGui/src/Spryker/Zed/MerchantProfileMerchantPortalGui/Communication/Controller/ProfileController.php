@@ -16,23 +16,21 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ProfileController extends AbstractController
 {
+    /**
+     * @var string
+     */
     protected const MESSAGE_MERCHANT_UPDATE_SUCCESS = 'The Profile has been changed successfully.';
 
     /**
-     * @phpstan-return array<mixed>
-     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array
+     * @return array<mixed>
      */
     public function indexAction(Request $request): array
     {
-        /** @var int $idMerchant */
-        $idMerchant = $this->getFactory()
-            ->getMerchantUserFacade()
-            ->getCurrentMerchantUser()
-            ->requireIdMerchant()
-            ->getIdMerchant();
+        $merchantUserTransfer = $this->getFactory()->getMerchantUserFacade()->getCurrentMerchantUser();
+        $storeTransfers = $merchantUserTransfer->getMerchantOrFail()->getStoreRelationOrFail()->getStores();
+        $idMerchant = $merchantUserTransfer->getIdMerchantOrFail();
 
         $merchantProfileFormDataProvider = $this->getFactory()->createMerchantProfileFormDataProvider();
         $merchantTransfer = $merchantProfileFormDataProvider->findMerchantById($idMerchant);
@@ -46,6 +44,7 @@ class ProfileController extends AbstractController
 
         return $this->viewResponse([
             'form' => $merchantProfileForm->createView(),
+            'stores' => $storeTransfers,
         ]);
     }
 

@@ -17,7 +17,7 @@ use Spryker\Zed\ShoppingListDataImport\Business\DataSet\ShoppingListCompanyUserD
 class ShoppingListPermissionGroupNameToIdShoppingListPermissionGroupStep implements DataImportStepInterface
 {
     /**
-     * @var int[]
+     * @var array<int>
      */
     protected $idPermissionGroupCache = [];
 

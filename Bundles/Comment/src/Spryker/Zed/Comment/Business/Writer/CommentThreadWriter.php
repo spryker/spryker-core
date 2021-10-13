@@ -21,6 +21,9 @@ class CommentThreadWriter implements CommentThreadWriterInterface
 {
     use TransactionTrait;
 
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_COMMENT_THREAD_ALREADY_EXISTS = 'comment.validation.error.comment_thread_already_exists';
 
     /**

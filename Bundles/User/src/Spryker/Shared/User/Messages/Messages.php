@@ -9,6 +9,12 @@ namespace Spryker\Shared\User\Messages;
 
 class Messages
 {
+    /**
+     * @var string
+     */
     public const USER_EXISTS_ERROR = 'user.error.user_exists';
+    /**
+     * @var string
+     */
     public const USER_NOT_FOUND_ERROR = 'user.error.user_not_found';
 }

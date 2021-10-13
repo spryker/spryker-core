@@ -35,10 +35,25 @@ use SprykerTest\Zed\StateMachine\Mocks\StateMachineMocks;
  */
 class TriggerTest extends StateMachineMocks
 {
+    /**
+     * @var int
+     */
     public const ITEM_IDENTIFIER = 1985;
+    /**
+     * @var string
+     */
     public const TESTING_STATE_MACHINE = 'Testing state machine';
+    /**
+     * @var string
+     */
     public const PROCESS_NAME = 'Process';
+    /**
+     * @var string
+     */
     public const INITIAL_STATE = 'new';
+    /**
+     * @var string
+     */
     public const TEST_COMMAND = 'TestCommand';
 
     /**
@@ -210,7 +225,7 @@ class TriggerTest extends StateMachineMocks
     }
 
     /**
-     * @return \Spryker\Zed\StateMachine\Business\Process\Process[]
+     * @return array<\Spryker\Zed\StateMachine\Business\Process\Process>
      */
     protected function createProcesses(): array
     {
@@ -243,7 +258,7 @@ class TriggerTest extends StateMachineMocks
     }
 
     /**
-     * @return \Generated\Shared\Transfer\StateMachineItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\StateMachineItemTransfer>
      */
     protected function createStateMachineItems(): array
     {

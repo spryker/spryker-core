@@ -94,7 +94,7 @@ class ProductCategoryFacade extends AbstractFacade implements ProductCategoryFac
      * @param int $idCategory
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductAbstractTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductAbstractTransfer>
      */
     public function getAbstractProductsByIdCategory($idCategory, LocaleTransfer $localeTransfer)
     {
@@ -143,13 +143,30 @@ class ProductCategoryFacade extends AbstractFacade implements ProductCategoryFac
      *
      * @api
      *
-     * @param int[] $categoryIds
+     * @param array<int> $categoryIds
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getProductConcreteIdsByCategoryIds(array $categoryIds): array
     {
         return $this->getRepository()
             ->getProductConcreteIdsByCategoryIds($categoryIds);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return array<string>
+     */
+    public function getLocalizedProductAbstractNamesByCategory(CategoryTransfer $categoryTransfer, LocaleTransfer $localeTransfer): array
+    {
+        return $this->getFactory()
+            ->createProductCategoryReader()
+            ->getLocalizedProductAbstractNamesByCategory($categoryTransfer, $localeTransfer);
     }
 }

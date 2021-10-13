@@ -12,6 +12,9 @@ use Spryker\Zed\Development\Business\Dependency\DependencyFinder\Context\Depende
 
 class ComposerDependencyFinder extends AbstractFileDependencyFinder
 {
+    /**
+     * @var string
+     */
     public const TYPE_COMPOSER = 'composer';
 
     /**

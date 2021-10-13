@@ -51,7 +51,7 @@ Published,Veröffentlicht
 "Scheduled Prices: Import dry run","Geplante Preise: Trockenlauf importieren"
 "Select your CSV file","Wählen Sie Ihre CSV-Datei"
 Status,Status
-"Store was not found by provided name %s.","Geschäft wurde mit dem angegebenen Namen %s nicht gefunden."
+"Store was not found by provided name %s.","Store wurde mit dem angegebenen Namen %s nicht gefunden."
 "The timezone used for the scheduled price will be %s as defined on the store selected","Die Zeitzone für den geplanten Preis wird %s sein wie definiert im gewähltn Store"
 "They will be available to your customers based on the dates","Sie werden Ihren Kunden basierend auf den Daten zur Verfügung stehen"
 "Via data import","Via Datenimport"

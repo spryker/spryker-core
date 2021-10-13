@@ -15,6 +15,7 @@ use Orm\Zed\ProductOffer\Persistence\Map\SpyProductOfferTableMap;
 use Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery;
 use Orm\Zed\Store\Persistence\Map\SpyStoreTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Shared\ProductOfferGui\ProductOfferGuiConfig as SharedProductOfferGuiConfig;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
@@ -27,17 +28,41 @@ use Spryker\Zed\ProductOfferGui\ProductOfferGuiConfig;
 
 class ProductOfferTable extends AbstractTable
 {
+    /**
+     * @var string
+     */
     protected const COL_STORES = 'stores';
+    /**
+     * @var string
+     */
     protected const COL_ACTIONS = 'actions';
+    /**
+     * @var string
+     */
     protected const COL_PRODUCT_NAME = 'product_name';
+    /**
+     * @var string
+     */
+    protected const COL_ID_PRODUCT_CONCRETE = 'id_product_concrete';
+    /**
+     * @var string
+     */
     protected const STORE_CLASS_LABEL = 'label-info';
 
+    /**
+     * @phpstan-var array<string, string>
+     * @var array
+     */
     protected const APPROVAL_STATUS_CLASS_LABEL_MAPPING = [
         SharedProductOfferGuiConfig::STATUS_WAITING_FOR_APPROVAL => 'label-warning',
         SharedProductOfferGuiConfig::STATUS_APPROVED => 'label-info',
         SharedProductOfferGuiConfig::STATUS_DENIED => 'label-danger',
     ];
 
+    /**
+     * @phpstan-var array<string, string>
+     * @var array
+     */
     protected const APPROVAL_STATUS_CLASS_BUTTON_MAPPING = [
         SharedProductOfferGuiConfig::STATUS_APPROVED => 'btn-create',
         SharedProductOfferGuiConfig::STATUS_DENIED => 'btn-remove',
@@ -66,7 +91,7 @@ class ProductOfferTable extends AbstractTable
     protected $repository;
 
     /**
-     * @var \Spryker\Zed\ProductOfferGuiExtension\Dependency\Plugin\ProductOfferTableExpanderPluginInterface[]
+     * @var array<\Spryker\Zed\ProductOfferGuiExtension\Dependency\Plugin\ProductOfferTableExpanderPluginInterface>
      */
     protected $productOfferTableExpanderPlugins;
 
@@ -77,7 +102,7 @@ class ProductOfferTable extends AbstractTable
      * @param \Spryker\Zed\ProductOfferGui\Dependency\Facade\ProductOfferGuiToLocaleFacadeInterface $localeFacade
      * @param \Spryker\Zed\ProductOfferGui\Dependency\Facade\ProductOfferGuiToProductOfferFacadeInterface $productOfferFacade
      * @param \Spryker\Zed\ProductOfferGui\Persistence\ProductOfferGuiRepositoryInterface $repository
-     * @param \Spryker\Zed\ProductOfferGuiExtension\Dependency\Plugin\ProductOfferTableExpanderPluginInterface[] $productOfferTableExpanderPlugins
+     * @param array<\Spryker\Zed\ProductOfferGuiExtension\Dependency\Plugin\ProductOfferTableExpanderPluginInterface> $productOfferTableExpanderPlugins
      */
     public function __construct(
         SpyProductOfferQuery $productOfferQuery,
@@ -176,6 +201,8 @@ class ProductOfferTable extends AbstractTable
             $this->buildQueryCriteriaTransfer()
         );
 
+        $this->total = $this->productOfferQuery->count();
+
         $this->productOfferQuery
             ->groupByIdProductOffer()
             ->useSpyProductOfferStoreQuery(null, Criteria::LEFT_JOIN)
@@ -188,7 +215,11 @@ class ProductOfferTable extends AbstractTable
             ->addJoin(SpyProductOfferTableMap::COL_CONCRETE_SKU, SpyProductTableMap::COL_SKU, Criteria::INNER_JOIN)
             ->addJoin(SpyProductTableMap::COL_ID_PRODUCT, SpyProductLocalizedAttributesTableMap::COL_FK_PRODUCT, Criteria::INNER_JOIN)
             ->where(sprintf('%s = (%s)', SpyProductLocalizedAttributesTableMap::COL_FK_LOCALE, $this->localeFacade->getCurrentLocale()->getIdLocale()))
-            ->withColumn(SpyProductLocalizedAttributesTableMap::COL_NAME, static::COL_PRODUCT_NAME);
+            ->withColumn(SpyProductLocalizedAttributesTableMap::COL_NAME, static::COL_PRODUCT_NAME)
+            ->withColumn(
+                SpyProductLocalizedAttributesTableMap::COL_FK_PRODUCT,
+                static::COL_ID_PRODUCT_CONCRETE
+            );
 
         return $this->productOfferQuery;
     }
@@ -261,7 +292,9 @@ class ProductOfferTable extends AbstractTable
                     ProductOfferGuiConfig::URL_UPDATE_APPROVAL_STATUS,
                     [
                         ProductOfferGuiConfig::REQUEST_PARAM_ID_PRODUCT_OFFER => $item[SpyProductOfferTableMap::COL_ID_PRODUCT_OFFER],
-                        ProductOfferGuiConfig::REQUEST_PARAM_APPROVAL_STATUS => $availableApprovalStatus]
+                        ProductOfferGuiConfig::REQUEST_PARAM_APPROVAL_STATUS => $availableApprovalStatus,
+                        ProductOfferGuiConfig::REQUEST_PARAM_ID_PRODUCT_CONCRETE => $item[static::COL_ID_PRODUCT_CONCRETE],
+                    ]
                 ),
                 $availableApprovalStatus . '_offer_button',
                 ApprovalStatusForm::class,
@@ -335,5 +368,17 @@ class ProductOfferTable extends AbstractTable
         }
 
         return $queryCriteriaTransfer;
+    }
+
+    /**
+     * @phpstan-param \Propel\Runtime\ActiveQuery\ModelCriteria<mixed> $query
+     *
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
+     *
+     * @return int
+     */
+    protected function countTotal(ModelCriteria $query): int
+    {
+        return $this->total;
     }
 }

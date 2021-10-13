@@ -18,9 +18,21 @@ use Spryker\Zed\CmsStorage\Persistence\CmsStorageQueryContainerInterface;
 
 class CmsPageStorageWriter implements CmsPageStorageWriterInterface
 {
+    /**
+     * @var string
+     */
     protected const CMS_PAGE_ENTITY = 'CMS_PAGE_ENTITY';
+    /**
+     * @var string
+     */
     protected const CMS_PAGE_STORAGE_ENTITY = 'CMS_PAGE_STORAGE_ENTITY';
+    /**
+     * @var string
+     */
     protected const LOCALE_NAME = 'LOCALE_NAME';
+    /**
+     * @var string
+     */
     protected const STORE_NAME = 'STORE_NAME';
 
     /**
@@ -34,7 +46,7 @@ class CmsPageStorageWriter implements CmsPageStorageWriterInterface
     protected $cmsFacade;
 
     /**
-     * @var \Spryker\Zed\CmsExtension\Dependency\Plugin\CmsPageDataExpanderPluginInterface[]
+     * @var array<\Spryker\Zed\CmsExtension\Dependency\Plugin\CmsPageDataExpanderPluginInterface>
      */
     protected $contentWidgetDataExpanderPlugins = [];
 
@@ -53,7 +65,7 @@ class CmsPageStorageWriter implements CmsPageStorageWriterInterface
     /**
      * @param \Spryker\Zed\CmsStorage\Persistence\CmsStorageQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\CmsStorage\Dependency\Facade\CmsStorageToCmsInterface $cmsFacade
-     * @param \Spryker\Zed\CmsExtension\Dependency\Plugin\CmsPageDataExpanderPluginInterface[] $contentWidgetDataExpanderPlugins
+     * @param array<\Spryker\Zed\CmsExtension\Dependency\Plugin\CmsPageDataExpanderPluginInterface> $contentWidgetDataExpanderPlugins
      * @param \Spryker\Zed\CmsStorage\Dependency\Facade\CmsStorageToStoreFacadeInterface $storeFacade
      * @param bool $isSendingToQueue
      */
@@ -72,7 +84,7 @@ class CmsPageStorageWriter implements CmsPageStorageWriterInterface
     }
 
     /**
-     * @param int[] $cmsPageIds
+     * @param array<int> $cmsPageIds
      *
      * @return void
      */
@@ -85,7 +97,7 @@ class CmsPageStorageWriter implements CmsPageStorageWriterInterface
     }
 
     /**
-     * @param int[] $cmsPageIds
+     * @param array<int> $cmsPageIds
      *
      * @return void
      */
@@ -96,7 +108,7 @@ class CmsPageStorageWriter implements CmsPageStorageWriterInterface
     }
 
     /**
-     * @param \Orm\Zed\Cms\Persistence\SpyCmsPage[] $cmsPageEntities
+     * @param array<\Orm\Zed\Cms\Persistence\SpyCmsPage> $cmsPageEntities
      * @param array $cmsPageStorageEntities
      *
      * @return void
@@ -167,9 +179,9 @@ class CmsPageStorageWriter implements CmsPageStorageWriterInterface
     }
 
     /**
-     * @param int[] $cmsPageIds
+     * @param array<int> $cmsPageIds
      *
-     * @return \Orm\Zed\Cms\Persistence\SpyCmsPage[]
+     * @return array<\Orm\Zed\Cms\Persistence\SpyCmsPage>
      */
     protected function findCmsPageEntities(array $cmsPageIds): array
     {
@@ -177,7 +189,7 @@ class CmsPageStorageWriter implements CmsPageStorageWriterInterface
     }
 
     /**
-     * @param int[] $cmsPageIds
+     * @param array<int> $cmsPageIds
      *
      * @return array
      */
@@ -193,7 +205,7 @@ class CmsPageStorageWriter implements CmsPageStorageWriterInterface
     }
 
     /**
-     * @param \Orm\Zed\Url\Persistence\SpyUrl[] $spyUrls
+     * @param array<\Orm\Zed\Url\Persistence\SpyUrl> $spyUrls
      * @param string $localeName
      *
      * @return string
@@ -288,7 +300,7 @@ class CmsPageStorageWriter implements CmsPageStorageWriterInterface
     }
 
     /**
-     * @param \Orm\Zed\Cms\Persistence\SpyCmsPage[] $cmsPageEntities
+     * @param array<\Orm\Zed\Cms\Persistence\SpyCmsPage> $cmsPageEntities
      * @param array $cmsPageStorageEntities
      *
      * @return array
@@ -319,7 +331,7 @@ class CmsPageStorageWriter implements CmsPageStorageWriterInterface
      * @param \Orm\Zed\Cms\Persistence\SpyCmsPage $cmsPageEntity
      * @param array $cmsPageStorageEntities
      * @param array $pairs
-     * @param string[][] $localeNameMap
+     * @param array<string[]> $localeNameMap
      *
      * @return array
      */
@@ -376,7 +388,7 @@ class CmsPageStorageWriter implements CmsPageStorageWriterInterface
     }
 
     /**
-     * @return string[][]
+     * @return array<string[]>
      */
     protected function getLocaleNameMapByStoreName(): array
     {

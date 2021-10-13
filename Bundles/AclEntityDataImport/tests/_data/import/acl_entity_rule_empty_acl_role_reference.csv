@@ -1,0 +1,4 @@
+acl_role_reference,entity,scope,permission_mask,segment_reference
+,Orm\Zed\Company\Persistence\SpyCompany,global,C,
+SIfdvYi3rZwxNKJRehEm,Orm\Zed\Product\Persistence\SpyProductAbstract,global,R,
+

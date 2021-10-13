@@ -13,7 +13,13 @@ use Spryker\Client\ProductReview\ProductReviewConfig;
 
 class ProductReviewSummaryCalculator implements ProductReviewSummaryCalculatorInterface
 {
+    /**
+     * @var int
+     */
     public const MINIMUM_RATING = 1;
+    /**
+     * @var int
+     */
     public const RATING_PRECISION = 1;
 
     /**
@@ -49,7 +55,7 @@ class ProductReviewSummaryCalculator implements ProductReviewSummaryCalculatorIn
     }
 
     /**
-     * @param int[] $ratingAggregation
+     * @param array<int> $ratingAggregation
      * @param int $totalReview
      *
      * @return float
@@ -66,9 +72,9 @@ class ProductReviewSummaryCalculator implements ProductReviewSummaryCalculatorIn
     }
 
     /**
-     * @param int[] $ratingAggregation
+     * @param array<int> $ratingAggregation
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function formatRatingAggregation(array $ratingAggregation): array
     {
@@ -79,9 +85,9 @@ class ProductReviewSummaryCalculator implements ProductReviewSummaryCalculatorIn
     }
 
     /**
-     * @param int[] $ratingAggregation
+     * @param array<int> $ratingAggregation
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function fillRatings(array $ratingAggregation): array
     {
@@ -95,9 +101,9 @@ class ProductReviewSummaryCalculator implements ProductReviewSummaryCalculatorIn
     }
 
     /**
-     * @param int[] $ratingAggregation
+     * @param array<int> $ratingAggregation
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function sortRatings(array $ratingAggregation): array
     {
@@ -107,7 +113,7 @@ class ProductReviewSummaryCalculator implements ProductReviewSummaryCalculatorIn
     }
 
     /**
-     * @param int[] $ratingAggregation
+     * @param array<int> $ratingAggregation
      *
      * @return int
      */
@@ -117,7 +123,7 @@ class ProductReviewSummaryCalculator implements ProductReviewSummaryCalculatorIn
     }
 
     /**
-     * @param int[] $ratingAggregation
+     * @param array<int> $ratingAggregation
      *
      * @return int
      */

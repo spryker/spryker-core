@@ -14,6 +14,9 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class CompanyRoleConfig extends AbstractBundleConfig
 {
+    /**
+     * @var string
+     */
     protected const DEFAULT_ADMIN_ROLE_NAME = 'Administrator';
 
     /**
@@ -29,7 +32,7 @@ class CompanyRoleConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getAdminRolePermissionKeys(): array
     {
@@ -39,7 +42,7 @@ class CompanyRoleConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return \Generated\Shared\Transfer\CompanyRoleTransfer[]
+     * @return array<\Generated\Shared\Transfer\CompanyRoleTransfer>
      */
     public function getPredefinedCompanyRoles(): array
     {
@@ -62,7 +65,7 @@ class CompanyRoleConfig extends AbstractBundleConfig
     }
 
     /**
-     * @param string[] $permissionKeys
+     * @param array<string> $permissionKeys
      *
      * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
      */

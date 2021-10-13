@@ -40,8 +40,14 @@ class ProductSetStorageCommunicationTester extends Actor
 {
     use _generated\ProductSetStorageCommunicationTesterActions;
 
+    /**
+     * @var string
+     */
     public const PARAM_PROJECT = 'PROJECT';
 
+    /**
+     * @var string
+     */
     public const PROJECT_SUITE = 'suite';
 
     /**
@@ -66,17 +72,17 @@ class ProductSetStorageCommunicationTester extends Actor
             ->build()
             ->setLocale($this->haveLocale());
 
-         return $this->haveProductSet([
-             ProductSetTransfer::LOCALIZED_DATA => new ArrayObject([$localizedProductSetTransfer]),
-             ProductSetTransfer::ID_PRODUCT_ABSTRACTS => [
-                $this->haveProductAbstract()->getIdProductAbstract(),
-                $this->haveProductAbstract()->getIdProductAbstract(),
-             ],
-         ]);
+        return $this->haveProductSet([
+            ProductSetTransfer::LOCALIZED_DATA => new ArrayObject([$localizedProductSetTransfer]),
+            ProductSetTransfer::ID_PRODUCT_ABSTRACTS => [
+               $this->haveProductAbstract()->getIdProductAbstract(),
+               $this->haveProductAbstract()->getIdProductAbstract(),
+            ],
+        ]);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductImageTransfer[] $productImageTransfers
+     * @param array<\Generated\Shared\Transfer\ProductImageTransfer> $productImageTransfers
      *
      * @return \Generated\Shared\Transfer\ProductSetTransfer
      */
@@ -164,7 +170,7 @@ class ProductSetStorageCommunicationTester extends Actor
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductSetTransfer[] $productSetTransfers
+     * @param array<\Generated\Shared\Transfer\ProductSetTransfer> $productSetTransfers
      * @param \Spryker\Zed\ProductSetStorage\Business\ProductSetStorageFacade $productSetStorageFacade
      *
      * @return void

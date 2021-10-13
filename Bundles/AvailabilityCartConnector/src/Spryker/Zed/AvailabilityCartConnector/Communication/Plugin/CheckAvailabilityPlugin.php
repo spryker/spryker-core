@@ -24,6 +24,8 @@ class CheckAvailabilityPlugin extends AbstractPlugin implements CartPreCheckPlug
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\AvailabilityCartConnector\Communication\Plugin\Cart\CheckAvailabilityPlugin} instead.
+     *
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
      * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer

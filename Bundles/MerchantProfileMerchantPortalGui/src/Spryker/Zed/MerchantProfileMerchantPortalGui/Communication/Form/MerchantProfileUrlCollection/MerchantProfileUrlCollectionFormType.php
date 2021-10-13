@@ -20,11 +20,29 @@ use Symfony\Component\Validator\Constraints\Regex;
  */
 class MerchantProfileUrlCollectionFormType extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const FIELD_URL = 'url';
+    /**
+     * @var string
+     */
     protected const LABEL_URL = 'URL';
+    /**
+     * @var string
+     */
     protected const PLACEHOLDER_URL = 'Provide the URL of your Store';
+    /**
+     * @var string
+     */
     protected const TEMPLATE_PATH = 'url';
+    /**
+     * @var string
+     */
     protected const FIELD_FK_LOCALE = 'fkLocale';
+    /**
+     * @var string
+     */
     protected const URL_PATH_PATTERN = '#^([^\s\\\\]+)$#i';
 
     /**

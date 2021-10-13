@@ -12,7 +12,13 @@ use Spryker\Service\Kernel\Container;
 
 class SynchronizationDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const SYNCHRONIZATION_STORAGE_KEY_GENERATOR_PLUGINS = 'SYNCHRONIZATION_STORAGE_KEY_GENERATOR_PLUGINS';
+    /**
+     * @var string
+     */
     public const SYNCHRONIZATION_SEARCH_KEY_GENERATOR_PLUGINS = 'SYNCHRONIZATION_SEARCH_KEY_GENERATOR_PLUGINS';
 
     /**
@@ -59,7 +65,7 @@ class SynchronizationDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @param \Spryker\Service\Kernel\Container $container
      *
-     * @return \Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface[]
+     * @return array<\Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface>
      */
     protected function getSearchKeyGeneratorPlugins(Container $container)
     {
@@ -69,7 +75,7 @@ class SynchronizationDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @param \Spryker\Service\Kernel\Container $container
      *
-     * @return \Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface[]
+     * @return array<\Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface>
      */
     protected function getStorageKeyGeneratorPlugins(Container $container)
     {

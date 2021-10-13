@@ -25,6 +25,9 @@ use SprykerTest\Zed\StateMachine\Mocks\StateMachineMocks;
  */
 class HandlerResolverTest extends StateMachineMocks
 {
+    /**
+     * @var string
+     */
     public const TEST_HANDLER_NAME = 'testing state machine name';
 
     /**

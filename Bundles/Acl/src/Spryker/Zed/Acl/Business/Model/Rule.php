@@ -49,12 +49,12 @@ class Rule implements RuleInterface
     protected $config;
 
     /**
-     * @var \Generated\Shared\Transfer\GroupsTransfer[]
+     * @var array<\Generated\Shared\Transfer\GroupsTransfer>
      */
     protected $groupsTransferCache = [];
 
     /**
-     * @var \Generated\Shared\Transfer\RulesTransfer[]
+     * @var array<\Generated\Shared\Transfer\RulesTransfer>
      */
     protected $rulesTransferCache = [];
 

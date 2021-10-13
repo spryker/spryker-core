@@ -11,10 +11,13 @@ use Generated\Shared\Transfer\DiscountTransfer;
 
 class FixedType implements CalculatorTypeInterface
 {
+    /**
+     * @var string
+     */
     public const PRICE_NET_MODE = 'NET_MODE';
 
     /**
-     * @param \Generated\Shared\Transfer\DiscountableItemTransfer[] $discountableItems
+     * @param array<\Generated\Shared\Transfer\DiscountableItemTransfer> $discountableItems
      * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
      *
      * @return int

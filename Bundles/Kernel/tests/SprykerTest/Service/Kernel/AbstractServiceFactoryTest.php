@@ -23,7 +23,13 @@ use SprykerTest\Service\Kernel\Fixtures\ServiceFactory;
  */
 class AbstractServiceFactoryTest extends Unit
 {
+    /**
+     * @var string
+     */
     public const CONTAINER_KEY = 'key';
+    /**
+     * @var string
+     */
     public const CONTAINER_VALUE = 'value';
 
     /**

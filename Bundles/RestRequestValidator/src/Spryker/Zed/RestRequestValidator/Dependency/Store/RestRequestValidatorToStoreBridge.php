@@ -23,7 +23,7 @@ class RestRequestValidatorToStoreBridge implements RestRequestValidatorToStoreIn
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getAllowedStores()
     {

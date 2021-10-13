@@ -13,6 +13,7 @@ class PriceProductOfferVolumeGuiConfig extends AbstractBundleConfig
 {
     /**
      * @uses \Spryker\Zed\ProductOfferGui\ProductOfferGuiConfig::URL_VIEW
+     * @var string
      */
     public const PRODUCT_OFFER_URL_VIEW = '/product-offer-gui/view';
 }

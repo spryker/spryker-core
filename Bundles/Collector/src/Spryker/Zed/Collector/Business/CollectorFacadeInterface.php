@@ -26,7 +26,7 @@ interface CollectorFacadeInterface
      *
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
-     * @return \Spryker\Zed\Collector\Business\Model\BatchResultInterface[]
+     * @return array<\Spryker\Zed\Collector\Business\Model\BatchResultInterface>
      */
     public function exportStorage(OutputInterface $output);
 
@@ -39,7 +39,7 @@ interface CollectorFacadeInterface
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
-     * @return \Spryker\Zed\Collector\Business\Model\BatchResultInterface[]
+     * @return array<\Spryker\Zed\Collector\Business\Model\BatchResultInterface>
      */
     public function exportStorageByLocale(LocaleTransfer $locale, OutputInterface $output);
 
@@ -64,7 +64,7 @@ interface CollectorFacadeInterface
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
-     * @return \Spryker\Zed\Collector\Business\Model\BatchResultInterface[]
+     * @return array<\Spryker\Zed\Collector\Business\Model\BatchResultInterface>
      */
     public function exportSearchByLocale(LocaleTransfer $locale, OutputInterface $output);
 

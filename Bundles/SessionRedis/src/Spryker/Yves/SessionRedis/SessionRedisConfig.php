@@ -17,6 +17,9 @@ use Spryker\Yves\Kernel\AbstractBundleConfig;
  */
 class SessionRedisConfig extends AbstractBundleConfig
 {
+    /**
+     * @var string
+     */
     public const SESSION_REDIS_CONNECTION_KEY = 'SESSION_YVES';
 
     /**
@@ -109,7 +112,7 @@ class SessionRedisConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function getDataSourceNames(): array
     {

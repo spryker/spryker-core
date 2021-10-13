@@ -26,7 +26,13 @@ use Spryker\Zed\ProductRelationGui\Dependency\QueryContainer\ProductRelationGuiT
 
 class RuleQueryCreator implements RuleQueryCreatorInterface
 {
+    /**
+     * @var string
+     */
     protected const COL_CATEGORY_NAME = 'category_name';
+    /**
+     * @var string
+     */
     protected const ALIAS_PRODUCT_ABSTRACT_LOCALIZED_ATTRIBUTES = 'spy_product_abstract_localized_attributes';
 
     /**

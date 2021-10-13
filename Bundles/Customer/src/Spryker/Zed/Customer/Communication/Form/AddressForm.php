@@ -26,23 +26,74 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class AddressForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const OPTION_SALUTATION_CHOICES = 'salutation_choices';
+    /**
+     * @var string
+     */
     public const OPTION_COUNTRY_CHOICES = 'country_choices';
+    /**
+     * @var string
+     */
     public const OPTION_PREFERRED_COUNTRY_CHOICES = 'preferred_country_choices';
 
+    /**
+     * @var string
+     */
     public const FIELD_ID_CUSTOMER_ADDRESS = 'id_customer_address';
+    /**
+     * @var string
+     */
     public const FIELD_FK_CUSTOMER = 'fk_customer';
+    /**
+     * @var string
+     */
     public const FIELD_SALUTATION = 'salutation';
+    /**
+     * @var string
+     */
     public const FIELD_FIRST_NAME = 'first_name';
+    /**
+     * @var string
+     */
     public const FIELD_LAST_NAME = 'last_name';
+    /**
+     * @var string
+     */
     public const FIELD_ADDRESS_1 = 'address1';
+    /**
+     * @var string
+     */
     public const FIELD_ADDRESS_2 = 'address2';
+    /**
+     * @var string
+     */
     public const FIELD_ADDRESS_3 = 'address3';
+    /**
+     * @var string
+     */
     public const FIELD_CITY = 'city';
+    /**
+     * @var string
+     */
     public const FIELD_ZIP_CODE = 'zip_code';
+    /**
+     * @var string
+     */
     public const FIELD_FK_COUNTRY = 'fk_country';
+    /**
+     * @var string
+     */
     public const FIELD_PHONE = 'phone';
+    /**
+     * @var string
+     */
     public const FIELD_COMPANY = 'company';
+    /**
+     * @var string
+     */
     public const FIELD_COMMENT = 'comment';
 
     /**

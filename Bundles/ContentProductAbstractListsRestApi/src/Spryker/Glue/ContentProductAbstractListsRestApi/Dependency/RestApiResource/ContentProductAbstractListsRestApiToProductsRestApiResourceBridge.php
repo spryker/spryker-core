@@ -23,11 +23,11 @@ class ContentProductAbstractListsRestApiToProductsRestApiResourceBridge implemen
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      * @param string $localeName
      * @param string $storeName
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>
      */
     public function getProductAbstractsByIds(array $productAbstractIds, string $localeName, string $storeName): array
     {

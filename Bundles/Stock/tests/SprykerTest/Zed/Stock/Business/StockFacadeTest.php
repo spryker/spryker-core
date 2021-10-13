@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\Stock\Business;
 use ArrayObject;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\StockCriteriaFilterTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
 use Generated\Shared\Transfer\StockTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
@@ -23,8 +24,6 @@ use Orm\Zed\Stock\Persistence\SpyStockProductQuery;
 use Orm\Zed\Stock\Persistence\SpyStockQuery;
 use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\Stock\Business\Exception\StockProductAlreadyExistsException;
-use Spryker\Zed\Stock\Business\StockFacade;
-use Spryker\Zed\Stock\Persistence\StockQueryContainer;
 
 /**
  * Auto-generated group annotations
@@ -39,8 +38,17 @@ use Spryker\Zed\Stock\Persistence\StockQueryContainer;
  */
 class StockFacadeTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const STORE_NAME_DE = 'DE';
+    /**
+     * @var string
+     */
     protected const STORE_NAME_AT = 'AT';
+    /**
+     * @var string
+     */
     protected const STOCK_NAME = 'Test Warehouse';
 
     /**
@@ -52,11 +60,6 @@ class StockFacadeTest extends Unit
      * @var \Spryker\Zed\Stock\Business\StockFacade
      */
     protected $stockFacade;
-
-    /**
-     * @var \Spryker\Zed\Stock\Persistence\StockQueryContainer
-     */
-    protected $stockQueryContainer;
 
     /**
      * @var \Generated\Shared\Transfer\StoreTransfer
@@ -103,8 +106,17 @@ class StockFacadeTest extends Unit
      */
     protected $productConcreteEntity;
 
+    /**
+     * @var string
+     */
     public const ABSTRACT_SKU = 'abstract-sku';
+    /**
+     * @var string
+     */
     public const CONCRETE_SKU = 'concrete-sku';
+    /**
+     * @var int
+     */
     public const STOCK_QUANTITY_1 = 92;
     public const STOCK_QUANTITY_2 = 8.2;
 
@@ -115,9 +127,7 @@ class StockFacadeTest extends Unit
     {
         parent::setUp();
 
-        $this->stockFacade = new StockFacade();
-        $this->stockQueryContainer = new StockQueryContainer();
-
+        $this->stockFacade = $this->tester->getFacade();
         $this->setupData();
     }
 
@@ -262,21 +272,18 @@ class StockFacadeTest extends Unit
      */
     public function testCreateStockProductShouldThrowException(): void
     {
-        $this->expectException(StockProductAlreadyExistsException::class);
-        $this->expectExceptionMessage('Cannot duplicate entry: this stock type is already set for this product');
-
+        // Arrange
         $stockProductTransfer = (new StockProductTransfer())
             ->setStockType($this->stockEntity1->getName())
             ->setQuantity(static::STOCK_QUANTITY_1)
             ->setSku(static::CONCRETE_SKU);
 
-        $idStockProduct = $this->stockFacade->createStockProduct($stockProductTransfer);
+        // Assert
+        $this->expectException(StockProductAlreadyExistsException::class);
+        $this->expectExceptionMessage('Cannot duplicate entry: this stock type is already set for this product');
 
-        $stockProductEntity = SpyStockProductQuery::create()
-            ->filterByIdStockProduct($idStockProduct)
-            ->findOne();
-
-        $this->assertSame(static::STOCK_QUANTITY_1, $stockProductEntity->getQuantity());
+        // Act
+        $this->stockFacade->createStockProduct($stockProductTransfer);
     }
 
     /**
@@ -821,6 +828,86 @@ class StockFacadeTest extends Unit
         $this->assertTrue($stockResponseTransfer->getIsSuccessful(), 'Stock response should be successful.');
         $stockTransfer = $stockResponseTransfer->getStock();
         $this->assertNotContains($stockTransfer->getName(), $storeStockRelation, 'Store relation should not contain store name.');
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetStocksByStockCriteriaFilterWillFilterStocksByName(): void
+    {
+        // Arrange
+        $stockCriteriaFilterTransfer = (new StockCriteriaFilterTransfer())->addStockName($this->stockEntity1->getName());
+
+        // Act
+        $stockCollectionTransfer = $this->stockFacade->getStocksByStockCriteriaFilter($stockCriteriaFilterTransfer);
+
+        // Assert
+        $this->assertCount(1, $stockCollectionTransfer->getStocks(), 'Stocks count does not match expected value.');
+        $this->assertSame(
+            $this->stockEntity1->getName(),
+            $stockCollectionTransfer->getStocks()->offsetGet(0)->getNameOrFail(),
+            'Stock name does not match expected value.'
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetStocksByStockCriteriaFilterWillReturnEmptyCollectionForNonExistingStockName(): void
+    {
+        // Arrange
+        $stockCriteriaFilterTransfer = (new StockCriteriaFilterTransfer())->addStockName('SOME_RANDOM_STOCK_NAME');
+
+        // Act
+        $stockCollectionTransfer = $this->stockFacade->getStocksByStockCriteriaFilter($stockCriteriaFilterTransfer);
+
+        // Assert
+        $this->assertCount(0, $stockCollectionTransfer->getStocks(), 'Stocks count does not match expected value.');
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetStocksByStockCriteriaFilterWillFilterStocksByActiveStatus(): void
+    {
+        // Arrange
+        $stockCriteriaFilterTransfer = (new StockCriteriaFilterTransfer())->setIsActive(true);
+
+        // Act
+        $stockCollectionTransfer = $this->stockFacade->getStocksByStockCriteriaFilter($stockCriteriaFilterTransfer);
+
+        // Assert
+        $this->assertGreaterThanOrEqual(2, $stockCollectionTransfer->getStocks()->count(), 'Stocks count does not match expected value.');
+
+        $resultStockNames = array_map(function (StockTransfer $stockTransfer) {
+            return $stockTransfer->getNameOrFail();
+        }, $stockCollectionTransfer->getStocks()->getArrayCopy());
+        $this->assertTrue(in_array($this->stockEntity1->getName(), $resultStockNames, true), 'Expected stock name is missing in returned stock collection.');
+        $this->assertTrue(in_array($this->stockEntity2->getName(), $resultStockNames, true), 'Expected stock name is missing in returned stock collection.');
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetStocksByStockCriteriaFilterWillFilterStocksByStoreName(): void
+    {
+        // Arrange
+        $storeName = 'Test Store';
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => $storeName]);
+        $this->tester->haveStockStoreRelation($this->stockTransfer1, $storeTransfer);
+
+        $stockCriteriaFilterTransfer = (new StockCriteriaFilterTransfer())->addStoreName($storeName);
+
+        // Act
+        $stockCollectionTransfer = $this->stockFacade->getStocksByStockCriteriaFilter($stockCriteriaFilterTransfer);
+
+        // Assert
+        $this->assertCount(1, $stockCollectionTransfer->getStocks(), 'Stocks count does not match expected value.');
+        $this->assertSame(
+            $this->stockEntity1->getName(),
+            $stockCollectionTransfer->getStocks()->offsetGet(0)->getNameOrFail(),
+            'Stock name does not match expected value.'
+        );
     }
 
     /**

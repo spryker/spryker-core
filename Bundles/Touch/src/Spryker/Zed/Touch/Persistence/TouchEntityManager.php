@@ -15,7 +15,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 class TouchEntityManager extends AbstractEntityManager implements TouchEntityManagerInterface
 {
     /**
-     * @param int[] $touchEntityIds
+     * @param array<int> $touchEntityIds
      *
      * @return int
      */
@@ -28,7 +28,7 @@ class TouchEntityManager extends AbstractEntityManager implements TouchEntityMan
     }
 
     /**
-     * @param int[] $touchEntityIds
+     * @param array<int> $touchEntityIds
      *
      * @return int
      */
@@ -41,7 +41,7 @@ class TouchEntityManager extends AbstractEntityManager implements TouchEntityMan
     }
 
     /**
-     * @param int[] $touchEntityIds
+     * @param array<int> $touchEntityIds
      *
      * @return int
      */

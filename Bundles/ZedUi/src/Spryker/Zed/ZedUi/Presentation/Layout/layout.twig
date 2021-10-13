@@ -1,48 +1,73 @@
-<!DOCTYPE html>
-<html lang="{{ app.locale }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <style>
-            [cloak]:not([ng-version]) {
-                display: none;
-            }
-        </style>
-        <title>
-            {% block headTitle %}{% endblock %}
-        </title>
+{% set importConfig = {
+    assetsPath: 'js/',
+    bundleSubFolder: 'spy/',
+    isWatchMode: false,
+} %}
 
-        {% block headCss %}
-            <link rel="stylesheet" href="{{ assetsPath('js/mp/styles.css') }}">
-        {% endblock %}
-    </head>
-    <body>
-        {% block globalBody %}
-            <web-spy-locale-switcher locale="{{ app.locale | split('_') | first }}"></web-spy-locale-switcher>
-        {% endblock %}
+{% macro importJs(name, config) %}
+    {% if config.isWatchMode %}
+        <script src="{{ assetsPath(config.assetsPath ~ name ~ '.js') }}"></script>
+    {% else %}
+        <script src="{{ assetsPath(config.assetsPath ~ name ~ '-es2015.js') }}" type="module"></script>
+        <script src="{{ assetsPath(config.assetsPath ~ name ~ '-es5.js') }}" nomodule defer></script>
+    {% endif %}
+{%- endmacro -%}
 
-        {% block body %}{% endblock %}
+{% macro importJsBundle(name, config) %}
+    {% if config.isWatchMode %}
+        <script src="{{ assetsPath(config.assetsPath ~ config.bundleSubFolder ~ name ~ '.js') }}"></script>
+    {% else %}
+        <script src="{{ assetsPath(config.assetsPath ~ config.bundleSubFolder ~ name ~ '-es2015.js') }}" type="module"></script>
+        <script src="{{ assetsPath(config.assetsPath ~ config.bundleSubFolder ~ name ~ '-es5.js') }}" nomodule defer></script>
+    {% endif %}
+{%- endmacro -%}
 
-        {% block polyfillsJs %}
-            <script src="{{ assetsPath('js/mp/runtime-es2015.js') }}" type="module"></script>
-            <script src="{{ assetsPath('js/mp/runtime-es5.js') }}" nomodule defer></script>
-            <script src="{{ assetsPath('js/mp/polyfills-es2015.js') }}" type="module"></script>
-            <script src="{{ assetsPath('js/mp/polyfills-es5.js') }}" nomodule defer></script>
-        {% endblock %}
+{% import _self as view %}
 
-        {% block globalJs %}
-            <script src="{{ assetsPath('js/mp/vendor-es2015.js') }}" type="module"></script>
-            <script src="{{ assetsPath('js/mp/vendor-es5.js') }}" nomodule defer></script>
-            <script src="{{ assetsPath('js/mp/main-es2015.js') }}" type="module"></script>
-            <script src="{{ assetsPath('js/mp/main-es5.js') }}" nomodule defer></script>
-        {% endblock %}
+{% block template %}
+    <!DOCTYPE html>
+    <html lang="{{ app.locale }}">
+        <head>
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <style>
+                [cloak]:not([ng-version]) {
+                    display: none;
+                }
+            </style>
+            <title>
+                {% block headTitle %}{% endblock %}
+            </title>
 
-        {% block layoutJs %}
-            <script src="{{ assetsPath('js/mp/spy/zed-ui-es2015.js') }}" type="module"></script>
-            <script src="{{ assetsPath('js/mp/spy/zed-ui-es5.js') }}" nomodule defer></script>
-        {% endblock %}
+            {% block headCss %}
+                <link rel="stylesheet" href="{{ assetsPath(importConfig.assetsPath ~ 'styles.css') }}">
+            {% endblock %}
+        </head>
+        <body>
+            <web-mp-root cloak>
+                {% block globalBody %}
+                    <web-spy-locale-switcher locale="{{ app.locale | split('_') | first }}"></web-spy-locale-switcher>
+                {% endblock %}
 
-        {% block footerJs %}
-        {% endblock %}
-    </body>
-</html>
+                {% block body %}{% endblock %}
+            </web-mp-root>
+
+            {% block polyfillsJs %}
+                {{ view.importJs('runtime', importConfig) }}
+                {{ view.importJs('polyfills', importConfig) }}
+            {% endblock %}
+
+            {% block globalJs %}
+                {{ view.importJs('vendor', importConfig) }}
+                {{ view.importJs('main', importConfig) }}
+            {% endblock %}
+
+            {% block layoutJs %}
+                {{ view.importJsBundle('zed-ui', importConfig) }}
+            {% endblock %}
+
+            {% block footerJs %}
+            {% endblock %}
+        </body>
+    </html>
+{% endblock %}

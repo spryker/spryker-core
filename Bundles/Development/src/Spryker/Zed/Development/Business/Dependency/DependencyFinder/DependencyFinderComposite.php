@@ -13,12 +13,12 @@ use Spryker\Zed\Development\Business\Dependency\DependencyFinder\Context\Depende
 class DependencyFinderComposite implements DependencyFinderInterface
 {
     /**
-     * @var \Spryker\Zed\Development\Business\Dependency\DependencyFinder\DependencyFinderInterface[]
+     * @var array<\Spryker\Zed\Development\Business\Dependency\DependencyFinder\DependencyFinderInterface>
      */
     protected $dependencyFinder;
 
     /**
-     * @param \Spryker\Zed\Development\Business\Dependency\DependencyFinder\DependencyFinderInterface[] $dependencyFinder
+     * @param array<\Spryker\Zed\Development\Business\Dependency\DependencyFinder\DependencyFinderInterface> $dependencyFinder
      */
     public function __construct(array $dependencyFinder)
     {

@@ -17,12 +17,14 @@ interface PriceProductOfferVolumeReaderInterface
      * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
      * @param string $storeName
      * @param string $currencyCode
+     * @param string|null $priceType
      *
      * @return array
      */
     public function getVolumePricesData(
         ProductOfferTransfer $productOfferTransfer,
         string $storeName,
-        string $currencyCode
+        string $currencyCode,
+        ?string $priceType = null
     ): array;
 }

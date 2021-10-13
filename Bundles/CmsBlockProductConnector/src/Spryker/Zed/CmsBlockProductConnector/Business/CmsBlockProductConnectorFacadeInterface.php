@@ -52,7 +52,7 @@ interface CmsBlockProductConnectorFacadeInterface
      * @param int $idCmsBlock
      * @param int $idLocale
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getProductAbstractRenderedList($idCmsBlock, $idLocale);
 
@@ -64,7 +64,7 @@ interface CmsBlockProductConnectorFacadeInterface
      *
      * @param int $idProductAbstract
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getCmsBlockRenderedList($idProductAbstract);
 

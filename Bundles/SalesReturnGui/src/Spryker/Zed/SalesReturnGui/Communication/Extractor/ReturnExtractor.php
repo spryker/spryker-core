@@ -12,6 +12,9 @@ use Spryker\Zed\SalesReturnGui\SalesReturnGuiConfig;
 
 class ReturnExtractor implements ReturnExtractorInterface
 {
+    /**
+     * @var string
+     */
     protected const DEFAULT_LABEL_CLASS = 'label-default';
 
     /**
@@ -30,7 +33,7 @@ class ReturnExtractor implements ReturnExtractorInterface
     /**
      * @param \Generated\Shared\Transfer\ReturnTransfer $returnTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     public function extractUniqueOrderReferencesFromReturn(ReturnTransfer $returnTransfer): array
     {
@@ -49,7 +52,7 @@ class ReturnExtractor implements ReturnExtractorInterface
     /**
      * @param \Generated\Shared\Transfer\ReturnTransfer $returnTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     public function extractUniqueItemStateLabelsFromReturn(ReturnTransfer $returnTransfer): array
     {
@@ -67,7 +70,7 @@ class ReturnExtractor implements ReturnExtractorInterface
     /**
      * @param \Generated\Shared\Transfer\ReturnTransfer $returnTransfer
      *
-     * @return int[]
+     * @return array<int>
      */
     public function extractSalesOrderItemIdsFromReturn(ReturnTransfer $returnTransfer): array
     {

@@ -41,7 +41,7 @@ class ProductOfferRestResponseBuilder implements ProductOfferRestResponseBuilder
     }
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $productOfferRestResources
+     * @param array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface> $productOfferRestResources
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
@@ -74,16 +74,16 @@ class ProductOfferRestResponseBuilder implements ProductOfferRestResponseBuilder
     /**
      * @param \Generated\Shared\Transfer\ProductOfferStorageCollectionTransfer $productOfferStorageCollectionTransfer
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[][]
+     * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]>
      */
     public function createProductOfferRestResources(
         ProductOfferStorageCollectionTransfer $productOfferStorageCollectionTransfer
     ): array {
         $productOffersRestResources = [];
 
-        foreach ($productOfferStorageCollectionTransfer->getProductOffersStorage() as $productOfferStorageTransfer) {
-            $productOffersRestResources[$productOfferStorageTransfer->getProductConcreteSku()][] =
-                $this->createProductOfferRestResource($productOfferStorageTransfer);
+        foreach ($productOfferStorageCollectionTransfer->getProductOffers() as $productOffer) {
+            $productOffersRestResources[$productOffer->getProductConcreteSku()][] =
+                $this->createProductOfferRestResource($productOffer);
         }
 
         return $productOffersRestResources;

@@ -12,6 +12,9 @@ use Throwable;
 
 class SalesOrderThresholdTypeNotFoundException extends Exception
 {
+    /**
+     * @var string
+     */
     protected const MESSAGE = 'No strategy was found for the key `%s`';
 
     /**

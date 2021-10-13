@@ -15,6 +15,9 @@ use Spryker\Client\QuoteRequest\Zed\QuoteRequestStubInterface;
 
 class QuoteRequestCreator implements QuoteRequestCreatorInterface
 {
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_QUOTE_REQUEST_WRONG_STATUS = 'quote_request.validation.error.wrong_status';
 
     /**

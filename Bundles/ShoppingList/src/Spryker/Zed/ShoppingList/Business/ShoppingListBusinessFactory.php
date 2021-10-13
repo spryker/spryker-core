@@ -67,7 +67,8 @@ class ShoppingListBusinessFactory extends AbstractBusinessFactory
             $this->getProductFacade(),
             $this->getCompanyUserFacade(),
             $this->createShoppingListItemPluginExecutor(),
-            $this->getMessengerFacade()
+            $this->getMessengerFacade(),
+            $this->getConfig(),
         );
     }
 
@@ -233,7 +234,7 @@ class ShoppingListBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ItemExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ItemExpanderPluginInterface>
      */
     public function getItemExpanderPlugins(): array
     {
@@ -241,7 +242,7 @@ class ShoppingListBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ShoppingListItemCollectionExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ShoppingListItemCollectionExpanderPluginInterface>
      */
     public function getItemCollectionExpanderPlugins(): array
     {
@@ -318,7 +319,7 @@ class ShoppingListBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ShoppingListExtension\Dependency\Plugin\QuoteItemsPreConvertPluginInterface[]
+     * @return array<\Spryker\Zed\ShoppingListExtension\Dependency\Plugin\QuoteItemsPreConvertPluginInterface>
      */
     public function getQuoteItemExpanderPlugins(): array
     {
@@ -326,7 +327,7 @@ class ShoppingListBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ShoppingListExtension\Dependency\Plugin\AddItemPreCheckPluginInterface[]
+     * @return array<\Spryker\Zed\ShoppingListExtension\Dependency\Plugin\AddItemPreCheckPluginInterface>
      */
     public function getAddItemPreCheckPlugins(): array
     {
@@ -334,7 +335,7 @@ class ShoppingListBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ShoppingListItemPostSavePluginInterface[]
+     * @return array<\Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ShoppingListItemPostSavePluginInterface>
      */
     public function getShoppingListItemPostSavePlugins(): array
     {
@@ -342,7 +343,7 @@ class ShoppingListBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ShoppingListItemBulkPostSavePluginInterface[]
+     * @return array<\Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ShoppingListItemBulkPostSavePluginInterface>
      */
     public function getShoppingListItemBulkPostSavePlugins(): array
     {
@@ -350,7 +351,7 @@ class ShoppingListBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ShoppingListItemBeforeDeletePluginInterface[]
+     * @return array<\Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ShoppingListItemBeforeDeletePluginInterface>
      */
     public function getShoppingListItemBeforeDeletePlugins(): array
     {
@@ -358,7 +359,7 @@ class ShoppingListBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ItemToShoppingListItemMapperPluginInterface[]
+     * @return array<\Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ItemToShoppingListItemMapperPluginInterface>
      */
     public function getItemToShoppingListItemMapperPlugins(): array
     {

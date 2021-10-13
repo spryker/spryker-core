@@ -20,13 +20,13 @@ class SchedulerFilter implements SchedulerFilterInterface
     protected $schedulerConfig;
 
     /**
-     * @var \Spryker\Zed\SchedulerExtension\Dependency\Plugin\SchedulerAdapterPluginInterface[]
+     * @var array<\Spryker\Zed\SchedulerExtension\Dependency\Plugin\SchedulerAdapterPluginInterface>
      */
     protected $schedulerAdapterPlugins;
 
     /**
      * @param \Spryker\Zed\Scheduler\SchedulerConfig $schedulerConfig
-     * @param \Spryker\Zed\SchedulerExtension\Dependency\Plugin\SchedulerAdapterPluginInterface[] $schedulerAdapterPlugins
+     * @param array<\Spryker\Zed\SchedulerExtension\Dependency\Plugin\SchedulerAdapterPluginInterface> $schedulerAdapterPlugins
      */
     public function __construct(SchedulerConfig $schedulerConfig, array $schedulerAdapterPlugins)
     {
@@ -37,7 +37,7 @@ class SchedulerFilter implements SchedulerFilterInterface
     /**
      * @param \Generated\Shared\Transfer\SchedulerFilterTransfer $filterTransfer
      *
-     * @return \Spryker\Zed\SchedulerExtension\Dependency\Plugin\SchedulerAdapterPluginInterface[]
+     * @return array<\Spryker\Zed\SchedulerExtension\Dependency\Plugin\SchedulerAdapterPluginInterface>
      */
     public function getFilteredSchedulerAdapters(SchedulerFilterTransfer $filterTransfer): array
     {

@@ -20,11 +20,29 @@ use Spryker\Client\PersistentCartExtension\Dependency\Plugin\QuotePersistPluginI
  */
 class PersistentCartDependencyProvider extends AbstractDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
+    /**
+     * @var string
+     */
     public const CLIENT_QUOTE = 'CLIENT_QUOTE';
+    /**
+     * @var string
+     */
     public const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
+    /**
+     * @var string
+     */
     public const PLUGIN_QUOTE_PERSIST = 'PLUGIN_QUOTE_PERSIST';
+    /**
+     * @var string
+     */
     public const PLUGINS_QUOTE_UPDATE = 'PLUGINS_QUOTE_UPDATE';
+    /**
+     * @var string
+     */
     public const PLUGINS_CHANGE_REQUEST_EXTEND = 'PLUGINS_CHANGE_REQUEST_EXTEND';
 
     /**
@@ -129,7 +147,7 @@ class PersistentCartDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @return \Spryker\Client\PersistentCartExtension\Dependency\Plugin\QuoteUpdatePluginInterface[]
+     * @return array<\Spryker\Client\PersistentCartExtension\Dependency\Plugin\QuoteUpdatePluginInterface>
      */
     protected function getQuoteUpdatePlugins(): array
     {
@@ -137,7 +155,7 @@ class PersistentCartDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @return \Spryker\Client\PersistentCartExtension\Dependency\Plugin\PersistentCartChangeExpanderPluginInterface[]
+     * @return array<\Spryker\Client\PersistentCartExtension\Dependency\Plugin\PersistentCartChangeExpanderPluginInterface>
      */
     protected function getChangeRequestExtendPlugins(): array
     {

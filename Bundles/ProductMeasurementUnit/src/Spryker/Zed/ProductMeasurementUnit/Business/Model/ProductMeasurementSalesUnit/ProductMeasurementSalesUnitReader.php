@@ -15,6 +15,9 @@ use Spryker\Zed\ProductMeasurementUnit\Persistence\ProductMeasurementUnitReposit
 
 class ProductMeasurementSalesUnitReader implements ProductMeasurementSalesUnitReaderInterface
 {
+    /**
+     * @var int
+     */
     protected const DEFAULT_EXCHANGE_RATIO = 1;
 
     /**
@@ -42,7 +45,7 @@ class ProductMeasurementSalesUnitReader implements ProductMeasurementSalesUnitRe
     /**
      * @param int $idProduct
      *
-     * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer>
      */
     public function getProductMeasurementSalesUnitTransfersByIdProduct(int $idProduct): array
     {
@@ -57,9 +60,9 @@ class ProductMeasurementSalesUnitReader implements ProductMeasurementSalesUnitRe
     }
 
     /**
-     * @param int[] $salesUnitIds
+     * @param array<int> $salesUnitIds
      *
-     * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer>
      */
     public function getProductMeasurementSalesUnitTransfersByIds(array $salesUnitIds): array
     {
@@ -74,7 +77,7 @@ class ProductMeasurementSalesUnitReader implements ProductMeasurementSalesUnitRe
     }
 
     /**
-     * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer>
      */
     public function getProductMeasurementSalesUnitTransfers(): array
     {
@@ -106,7 +109,7 @@ class ProductMeasurementSalesUnitReader implements ProductMeasurementSalesUnitRe
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer>
      */
     public function findFilteredProductMeasurementSalesUnitTransfers(FilterTransfer $filterTransfer): array
     {

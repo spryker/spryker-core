@@ -10,6 +10,8 @@ namespace SprykerTest\Zed\ProductImageStorage;
 use Codeception\Actor;
 use Generated\Shared\DataBuilder\ProductImageBuilder;
 use Generated\Shared\Transfer\ProductImageTransfer;
+use Orm\Zed\ProductImage\Persistence\SpyProductImageSetToProductImage;
+use Orm\Zed\ProductImage\Persistence\SpyProductImageSetToProductImageQuery;
 
 /**
  * @method void wantToTest($text)
@@ -29,8 +31,14 @@ class ProductImageStorageCommunicationTester extends Actor
 {
     use _generated\ProductImageStorageCommunicationTesterActions;
 
+    /**
+     * @var string
+     */
     public const PARAM_PROJECT = 'PROJECT';
 
+    /**
+     * @var string
+     */
     public const PROJECT_SUITE = 'suite';
 
     /**
@@ -58,5 +66,31 @@ class ProductImageStorageCommunicationTester extends Actor
             ->build();
 
         return $productImageTransfer;
+    }
+
+    /**
+     * @param int $idProductImageSet
+     *
+     * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetToProductImage|null
+     */
+    public function findProductImageSetToProductImage(int $idProductImageSet): ?SpyProductImageSetToProductImage
+    {
+        return SpyProductImageSetToProductImageQuery::create()
+            ->findOneByFkProductImageSet($idProductImageSet);
+    }
+
+    /**
+     * @param int $idProductImageSet
+     *
+     * @return void
+     */
+    public function deleteProductImageSetToProductImage(int $idProductImageSet): void
+    {
+        $productImageSetToProductImageEntity = $this->findProductImageSetToProductImage($idProductImageSet);
+        if ($productImageSetToProductImageEntity === null) {
+            return;
+        }
+
+        $productImageSetToProductImageEntity->delete();
     }
 }

@@ -39,7 +39,7 @@ class PaymentMethodRestResponseBuilder implements PaymentMethodRestResponseBuild
     /**
      * @param \Generated\Shared\Transfer\RestCheckoutDataTransfer $restCheckoutDataTransfer
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>
      */
     public function createRestPaymentMethodsResources(RestCheckoutDataTransfer $restCheckoutDataTransfer): array
     {

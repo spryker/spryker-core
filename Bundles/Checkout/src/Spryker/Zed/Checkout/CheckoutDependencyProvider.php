@@ -16,10 +16,25 @@ use Spryker\Zed\Kernel\Container;
  */
 class CheckoutDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CHECKOUT_PRE_CONDITIONS = 'checkout_pre_conditions';
+    /**
+     * @var string
+     */
     public const CHECKOUT_POST_HOOKS = 'checkout_post_hooks';
+    /**
+     * @var string
+     */
     public const CHECKOUT_ORDER_SAVERS = 'checkout_order_savers';
+    /**
+     * @var string
+     */
     public const CHECKOUT_PRE_SAVE_HOOKS = 'checkout_pre_save_hooks';
+    /**
+     * @var string
+     */
     public const FACADE_OMS = 'FACADE_OMS';
 
     /**
@@ -67,7 +82,7 @@ class CheckoutDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return \Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutPreConditionPluginInterface[]
+     * @return array<\Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutPreConditionPluginInterface>
      */
     protected function getCheckoutPreConditions(Container $container)
     {
@@ -77,7 +92,7 @@ class CheckoutDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return \Spryker\Zed\Checkout\Dependency\Plugin\CheckoutSaveOrderInterface[]
+     * @return array<\Spryker\Zed\Checkout\Dependency\Plugin\CheckoutSaveOrderInterface>
      */
     protected function getCheckoutOrderSavers(Container $container)
     {
@@ -87,7 +102,7 @@ class CheckoutDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return \Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPostSaveHookInterface[]
+     * @return array<\Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPostSaveHookInterface>
      */
     protected function getCheckoutPostHooks(Container $container)
     {
@@ -97,7 +112,7 @@ class CheckoutDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return \Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreSaveHookInterface[]|\Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreSaveInterface[]
+     * @return array<\Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreSaveHookInterface|\Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreSaveInterface>
      */
     protected function getCheckoutPreSaveHooks(Container $container)
     {

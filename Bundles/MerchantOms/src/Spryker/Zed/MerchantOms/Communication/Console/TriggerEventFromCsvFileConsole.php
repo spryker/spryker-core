@@ -23,16 +23,46 @@ use Throwable;
  */
 class TriggerEventFromCsvFileConsole extends Console
 {
+    /**
+     * @var string
+     */
     protected const COMMAND_NAME = 'merchant-oms:trigger-event:from-csv-file';
+    /**
+     * @var string
+     */
     protected const COMMAND_DESCRIPTION = 'Triggers event for merchant order items from given file.';
+    /**
+     * @var string
+     */
     protected const ARGUMENT_FILE_PATH = 'file-path';
+    /**
+     * @var string
+     */
     protected const OPTION_IGNORE_ERRORS = 'ignore-errors';
+    /**
+     * @var string
+     */
     protected const OPTION_START_FROM = 'start-from';
 
+    /**
+     * @var string
+     */
     protected const TABLE_HEADER_COLUMN_ROW_NUMBER = 'row_number';
+    /**
+     * @var string
+     */
     protected const TABLE_HEADER_COLUMN_MERCHANT_ORDER_ITEM_REFERENCE = 'merchant_order_item_reference';
+    /**
+     * @var string
+     */
     protected const TABLE_HEADER_COLUMN_MERCHANT_ORDER_ITEM_OMS_EVENT_STATE = 'merchant_order_item_oms_event_state';
+    /**
+     * @var string
+     */
     protected const TABLE_HEADER_COLUMN_RESULT = 'result';
+    /**
+     * @var string
+     */
     protected const TABLE_HEADER_COLUMN_MESSAGE = 'message';
 
     /**
@@ -46,7 +76,7 @@ class TriggerEventFromCsvFileConsole extends Console
     protected $outputTable;
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function getMandatoryColumns(): array
     {
@@ -134,10 +164,13 @@ class TriggerEventFromCsvFileConsole extends Console
                 if ($merchantOmsTriggerResponseTransfer->getIsSuccessful()) {
                     $successfullyProcessedRowsCount++;
                 }
+                /** @var bool $isSuccessfulMerchantOmsTriggerResponse */
+                $isSuccessfulMerchantOmsTriggerResponse = $merchantOmsTriggerResponseTransfer->getIsSuccessful();
+
                 $this->logOutput(
                     $rowNumber,
                     $merchantOmsTriggerRequestTransfer,
-                    $merchantOmsTriggerResponseTransfer->getIsSuccessful()
+                    $isSuccessfulMerchantOmsTriggerResponse
                 );
             } catch (Throwable $exception) {
                 $this->logOutput(
@@ -159,12 +192,21 @@ class TriggerEventFromCsvFileConsole extends Console
      */
     protected function resolveFilePath(): ?string
     {
+        /** @var string $filePath */
+        $filePath = $this->input->getArgument(static::ARGUMENT_FILE_PATH);
+
         $filePathResolverResponseTransfer = $this->getFactory()
             ->createFilePathResolver()
-            ->resolveFilePath($this->input->getArgument(static::ARGUMENT_FILE_PATH));
+            ->resolveFilePath($filePath);
 
         if (!$filePathResolverResponseTransfer->getIsSuccessful()) {
-            $this->error($filePathResolverResponseTransfer->getMessage()->getMessage());
+            /** @var \Generated\Shared\Transfer\MessageTransfer $messageTransfer */
+            $messageTransfer = $filePathResolverResponseTransfer->getMessage();
+
+            /** @var string $message */
+            $message = $messageTransfer->getMessage();
+
+            $this->error($message);
 
             return null;
         }
@@ -177,7 +219,10 @@ class TriggerEventFromCsvFileConsole extends Console
      */
     protected function getStartFromOption(): int
     {
-        return max((int)$this->input->getOption(static::OPTION_START_FROM) - 1, 0);
+        /** @var string|bool|null $option */
+        $option = $this->input->getOption(static::OPTION_START_FROM);
+
+        return max((int)$option - 1, 0);
     }
 
     /**

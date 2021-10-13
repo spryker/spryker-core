@@ -17,7 +17,7 @@ use Spryker\Zed\SharedCartDataImport\Business\DataSet\SharedCartDataSetInterface
 class CompanyUserKeyToIdCompanyUserStep implements DataImportStepInterface
 {
     /**
-     * @var int[]
+     * @var array<int>
      */
     protected $idCompanyUserCache = [];
 

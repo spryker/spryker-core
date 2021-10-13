@@ -13,36 +13,50 @@ class ContentNavigationConfig extends AbstractSharedConfig
 {
     /**
      * Content item navigation
+     *
+     * @var string
      */
     public const CONTENT_TYPE_NAVIGATION = 'Navigation';
 
     /**
      * Content item navigation
+     *
+     * @var string
      */
     public const CONTENT_TERM_NAVIGATION = 'Navigation';
 
     /**
      * Content item navigation tree-inline template identifier
+     *
+     * @var string
      */
     public const WIDGET_TEMPLATE_IDENTIFIER_TREE_INLINE = 'tree-inline';
 
     /**
      * Content item navigation tree template identifier
+     *
+     * @var string
      */
     public const WIDGET_TEMPLATE_IDENTIFIER_TREE = 'tree';
 
     /**
      * Content item navigation list-inline template identifier
+     *
+     * @var string
      */
     public const WIDGET_TEMPLATE_IDENTIFIER_LIST_INLINE = 'list-inline';
 
     /**
      * Content item navigation list template identifier
+     *
+     * @var string
      */
     public const WIDGET_TEMPLATE_IDENTIFIER_LIST = 'list';
 
     /**
      * Content item navigation function name
+     *
+     * @var string
      */
     public const TWIG_FUNCTION_NAME = 'content_navigation';
 }

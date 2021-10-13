@@ -15,7 +15,7 @@ class Event implements EventInterface
     protected $id;
 
     /**
-     * @var \Spryker\Zed\StateMachine\Business\Process\TransitionInterface[]
+     * @var array<\Spryker\Zed\StateMachine\Business\Process\TransitionInterface>
      */
     protected $transitions = [];
 
@@ -132,7 +132,7 @@ class Event implements EventInterface
     /**
      * @param \Spryker\Zed\StateMachine\Business\Process\StateInterface $sourceState
      *
-     * @return \Spryker\Zed\StateMachine\Business\Process\TransitionInterface[]
+     * @return array<\Spryker\Zed\StateMachine\Business\Process\TransitionInterface>
      */
     public function getTransitionsBySource(StateInterface $sourceState)
     {
@@ -169,7 +169,7 @@ class Event implements EventInterface
     }
 
     /**
-     * @return \Spryker\Zed\StateMachine\Business\Process\TransitionInterface[]
+     * @return array<\Spryker\Zed\StateMachine\Business\Process\TransitionInterface>
      */
     public function getTransitions()
     {

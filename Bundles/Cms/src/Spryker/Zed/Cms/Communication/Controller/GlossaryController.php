@@ -33,9 +33,21 @@ use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
  */
 class GlossaryController extends AbstractController
 {
+    /**
+     * @var string
+     */
     protected const REDIRECT_ADDRESS = '/cms/glossary';
+    /**
+     * @var int
+     */
     protected const SEARCH_LIMIT = 10;
+    /**
+     * @var string
+     */
     protected const ID_FORM = 'id-form';
+    /**
+     * @var string
+     */
     protected const TYPE = 'type';
 
     /**
@@ -46,7 +58,7 @@ class GlossaryController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\JsonResponse
+     * @return \Symfony\Component\HttpFoundation\JsonResponse|array
      */
     public function indexAction(Request $request)
     {
@@ -184,13 +196,13 @@ class GlossaryController extends AbstractController
      * @param string|null $key
      * @param int|null $localeId
      *
-     * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryKey[]|\Orm\Zed\Glossary\Persistence\SpyGlossaryTranslation[]
+     * @return array<\Orm\Zed\Glossary\Persistence\SpyGlossaryKey|\Orm\Zed\Glossary\Persistence\SpyGlossaryTranslation>
      */
     protected function searchGlossaryKeysAndTranslations(?string $value, ?string $key, ?int $localeId)
     {
         $searchedItems = [];
         if ($value !== null) {
-            /** @var \Orm\Zed\Glossary\Persistence\SpyGlossaryKey[]|\Orm\Zed\Glossary\Persistence\SpyGlossaryTranslation[] $searchedItems */
+            /** @var array<\Orm\Zed\Glossary\Persistence\SpyGlossaryKey|\Orm\Zed\Glossary\Persistence\SpyGlossaryTranslation> $searchedItems */
             $searchedItems = $this->getQueryContainer()
                 ->queryTranslationWithKeyByValue($value)
                 ->limit(self::SEARCH_LIMIT)
@@ -286,7 +298,7 @@ class GlossaryController extends AbstractController
             ->queryGlossaryKeyMappingsWithKeyByPageId($idPage, $localeTransfer->getIdLocale());
         $glossaryMappingArray = [];
 
-        /** @var \Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMapping[] $keyMappings */
+        /** @var array<\Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMapping> $keyMappings */
         $keyMappings = $glossaryQuery->find()
             ->getData();
         foreach ($keyMappings as $keyMapping) {
@@ -297,7 +309,7 @@ class GlossaryController extends AbstractController
     }
 
     /**
-     * @param \Symfony\Component\Form\FormInterface[] $forms
+     * @param array<\Symfony\Component\Form\FormInterface> $forms
      * @param int $idForm
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *

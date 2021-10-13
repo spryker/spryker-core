@@ -39,7 +39,7 @@ class CmsBlockProductEventResourceQueryContainerPlugin extends AbstractPlugin im
      *
      * @api
      *
-     * @param int[] $ids
+     * @param array<int> $ids
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria|null
      */

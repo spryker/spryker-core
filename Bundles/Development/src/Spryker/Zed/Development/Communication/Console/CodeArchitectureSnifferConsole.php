@@ -14,6 +14,7 @@ use Laminas\Filter\FilterChain;
 use Laminas\Filter\StringToLower;
 use Laminas\Filter\Word\CamelCaseToDash;
 use Laminas\Filter\Word\UnderscoreToCamelCase;
+use Spryker\Zed\Development\Business\ArchitectureSniffer\ArchitectureSniffer;
 use Spryker\Zed\Kernel\Communication\Console\Console;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -26,17 +27,50 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class CodeArchitectureSnifferConsole extends Console
 {
+    /**
+     * @var string
+     */
     protected const COMMAND_NAME = 'code:sniff:architecture';
+    /**
+     * @var string
+     */
     protected const OPTION_MODULE = 'module';
+    /**
+     * @var string
+     */
     protected const OPTION_STRICT = 'strict';
+    /**
+     * @var string
+     */
     protected const OPTION_PRIORITY = 'priority';
+    /**
+     * @var string
+     */
     protected const OPTION_DRY_RUN = 'dry-run';
+    /**
+     * @var string
+     */
     protected const ARGUMENT_SUB_PATH = 'path';
+    /**
+     * @var string
+     */
     protected const OPTION_VERBOSE = 'verbose';
+    /**
+     * @var array
+     */
     protected const APPLICATION_LAYERS = ['Zed', 'Client', 'Yves', 'Service', 'Shared'];
 
+    /**
+     * @var string
+     */
     protected const NAMESPACE_SPRYKER_SHOP = 'SprykerShop';
+    /**
+     * @var string
+     */
     protected const NAMESPACE_SPRYKER = 'Spryker';
+    /**
+     * @var string
+     */
     protected const SOURCE_FOLDER_NAME = 'src';
 
     /**
@@ -55,6 +89,7 @@ class CodeArchitectureSnifferConsole extends Console
         $this->addOption(static::OPTION_PRIORITY, 'p', InputOption::VALUE_OPTIONAL, 'Priority [1 (highest), 2 (medium), 3 (experimental)], defaults to 2.');
         $this->addOption(static::OPTION_STRICT, 's', InputOption::VALUE_NONE, 'Also report those nodes with a @SuppressWarnings annotation');
         $this->addOption(static::OPTION_DRY_RUN, 'd', InputOption::VALUE_NONE, 'Dry-Run the command, display it only');
+        $this->addOption(ArchitectureSniffer::OPTION_UPDATE, 'u', InputOption::VALUE_NONE, 'Update baseline');
 
         $this->addArgument(static::ARGUMENT_SUB_PATH, InputArgument::OPTIONAL, 'Optional path or sub path element');
     }
@@ -128,8 +163,7 @@ class CodeArchitectureSnifferConsole extends Console
 
             $violations = $this->getFacade()->runArchitectureSniffer($path, $this->input->getOptions());
             $output->writeln($path, $violations ? OutputInterface::VERBOSITY_QUIET : OutputInterface::VERBOSITY_VERBOSE);
-            $countCurrent = $this->displayViolations($output, $violations);
-            $this->displayViolationsCountMessage($output, $countCurrent);
+            $countCurrent = $this->displayViolationsWithBaseline($output, $violations);
             $count += $countCurrent;
         }
 
@@ -139,7 +173,7 @@ class CodeArchitectureSnifferConsole extends Console
     /**
      * @param string $moduleArgument
      *
-     * @return \Generated\Shared\Transfer\ModuleTransfer[]
+     * @return array<\Generated\Shared\Transfer\ModuleTransfer>
      */
     protected function getModulesToExecute(string $moduleArgument): array
     {
@@ -257,7 +291,7 @@ class CodeArchitectureSnifferConsole extends Console
                 $output->writeln('Checking path: ' . $path, OutputInterface::VERBOSITY_VERBOSE);
 
                 $violations = $this->getFacade()->runArchitectureSniffer($path, $this->input->getOptions());
-                $count = $this->displayViolations($output, $violations);
+                $count = $this->displayViolationsWithBaseline($output, $violations);
                 $result += $count;
             }
         }
@@ -284,14 +318,14 @@ class CodeArchitectureSnifferConsole extends Console
         $output->writeln($customPath, OutputInterface::VERBOSITY_VERBOSE);
 
         $violations = $this->getFacade()->runArchitectureSniffer($customPath, $this->input->getOptions());
-        $count = $this->displayViolations($output, $violations);
-
-        $this->displayViolationsCountMessage($output, $count);
+        $count = $this->displayViolationsWithBaseline($output, $violations);
 
         return $count === 0;
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\Development\Communication\Console\CodeArchitectureSnifferConsole::displayViolationsWithBaseline()} instead.}
+     *
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      * @param array $violations
      *
@@ -309,6 +343,38 @@ class CodeArchitectureSnifferConsole extends Console
         }
 
         return $count;
+    }
+
+    /**
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     * @param array $violations
+     *
+     * @return int
+     */
+    protected function displayViolationsWithBaseline(OutputInterface $output, array $violations): int
+    {
+        if (!$violations) {
+            return 0;
+        }
+
+        foreach ($violations as $type => $violationsArray) {
+            $count = 0;
+
+            foreach ($violationsArray as $violation) {
+                if ($type === ArchitectureSniffer::NAME_VISIBLE_VIOLATIONS) {
+                    $output->writeln('<error> ' . trim($violation[ArchitectureSniffer::VIOLATION_FIELD_NAME_DESCRIPTION]) . '<error> ', OutputInterface::VERBOSITY_VERBOSE);
+                } else {
+                    $output->writeln(' - ' . trim($violation[ArchitectureSniffer::VIOLATION_FIELD_NAME_DESCRIPTION]), OutputInterface::VERBOSITY_VERBOSE);
+                }
+
+                $output->writeln(' ' . $violation[ArchitectureSniffer::VIOLATION_FIELD_NAME_RULESET] . ' > ' . $violation[ArchitectureSniffer::VIOLATION_FIELD_NAME_RULE], OutputInterface::VERBOSITY_VERBOSE);
+                $count++;
+            }
+
+            $this->displayViolationsCountMessage($output, $count, ($type === ArchitectureSniffer::NAME_IGNORED_VIOLATIONS));
+        }
+
+            return count($violations[ArchitectureSniffer::NAME_VISIBLE_VIOLATIONS]);
     }
 
     /**
@@ -343,16 +409,17 @@ class CodeArchitectureSnifferConsole extends Console
     /**
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      * @param int $count
+     * @param bool $isIgnored
      *
      * @return void
      */
-    protected function displayViolationsCountMessage(OutputInterface $output, int $count): void
+    protected function displayViolationsCountMessage(OutputInterface $output, int $count, $isIgnored = false): void
     {
         if (!$this->isVerboseModeEnabled() && $count === 0) {
             return;
         }
 
-        $output->writeln($count . ' violations found');
+        $output->writeln($count . ($isIgnored ? ' ' . ArchitectureSniffer::NAME_IGNORED_VIOLATIONS : '') . ' violations found');
     }
 
     /**

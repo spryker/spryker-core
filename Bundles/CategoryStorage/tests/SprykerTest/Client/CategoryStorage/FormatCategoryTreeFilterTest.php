@@ -25,14 +25,41 @@ use Spryker\Client\CategoryStorage\Dependency\Client\CategoryStorageToStorageInt
  */
 class FormatCategoryTreeFilterTest extends Unit
 {
+    /**
+     * @var int
+     */
     protected const FIRST_CATEGORY_NODE_ID = 1;
+    /**
+     * @var int
+     */
     protected const FIRST_CATEGORY_DOC_COUNT = 224;
 
+    /**
+     * @var int
+     */
     protected const SECOND_CATEGORY_DOC_COUNT = 33;
+    /**
+     * @var int
+     */
     protected const SECOND_CATEGORY_NODE_ID = 2;
 
+    /**
+     * @var int
+     */
     protected const THIRD_CATEGORY_DOC_COUNT = 41;
+    /**
+     * @var int
+     */
     protected const THIRD_CATEGORY_NODE_ID = 3;
+
+    /**
+     * @var string
+     */
+    protected const TEST_LOCALE_NAME = 'en_US';
+    /**
+     * @var string
+     */
+    protected const TEST_STORE_NAME = 'DE';
 
     /**
      * @var \SprykerTest\Client\CategoryStorage\CategoryStorageClientTester
@@ -49,17 +76,17 @@ class FormatCategoryTreeFilterTest extends Unit
 
         /** @var \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\CategoryStorage\CategoryStorageFactory $categoryStorageFactoryMock */
         $categoryStorageFactoryMock = $this->getMockBuilder(CategoryStorageFactory::class)
-            ->onlyMethods(['getStorage', 'getConfig'])
+            ->onlyMethods(['getStorageClient', 'getConfig'])
             ->getMock();
 
         $categoryStorageFactoryMock
-            ->method('getStorage')
+            ->method('getStorageClient')
             ->willReturn($this->getStorageClientMock());
 
         // Act
         $categoryNodeSearchResultTransfers = $this->tester
             ->getClientMock($categoryStorageFactoryMock)
-            ->formatCategoryTreeFilter($docCountAggregation);
+            ->formatCategoryTreeFilter($docCountAggregation, static::TEST_LOCALE_NAME, static::TEST_STORE_NAME);
 
         // Assert
         /** @var \Generated\Shared\Transfer\CategoryNodeSearchResultTransfer $categoryNodeSearchResultTransfer */
@@ -92,17 +119,17 @@ class FormatCategoryTreeFilterTest extends Unit
         // Arrange
         /** @var \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\CategoryStorage\CategoryStorageFactory $categoryStorageFactoryMock */
         $categoryStorageFactoryMock = $this->getMockBuilder(CategoryStorageFactory::class)
-            ->onlyMethods(['getStorage', 'getConfig'])
+            ->onlyMethods(['getStorageClient', 'getConfig'])
             ->getMock();
 
         $categoryStorageFactoryMock
-            ->method('getStorage')
+            ->method('getStorageClient')
             ->willReturn($this->getStorageClientMock());
 
         // Act
         $categoryNodeSearchResultTransfers = $this->tester
             ->getClientMock($categoryStorageFactoryMock)
-            ->formatCategoryTreeFilter([]);
+            ->formatCategoryTreeFilter([], static::TEST_LOCALE_NAME, static::TEST_STORE_NAME);
 
         // Assert
         $this->assertSame(
@@ -122,17 +149,17 @@ class FormatCategoryTreeFilterTest extends Unit
 
         /** @var \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\CategoryStorage\CategoryStorageFactory $categoryStorageFactoryMock */
         $categoryStorageFactoryMock = $this->getMockBuilder(CategoryStorageFactory::class)
-            ->onlyMethods(['getStorage', 'getConfig'])
+            ->onlyMethods(['getStorageClient', 'getConfig'])
             ->getMock();
 
         $categoryStorageFactoryMock
-            ->method('getStorage')
+            ->method('getStorageClient')
             ->willReturn($this->getStorageClientMock(true));
 
         // Act
         $categoryNodeSearchResultTransfers = $this->tester
             ->getClientMock($categoryStorageFactoryMock)
-            ->formatCategoryTreeFilter($docCountAggregation);
+            ->formatCategoryTreeFilter($docCountAggregation, static::TEST_LOCALE_NAME, static::TEST_STORE_NAME);
 
         // Assert
         $this->assertEmpty($categoryNodeSearchResultTransfers, 'Expects empty collection in case empty category storage data.');
@@ -148,17 +175,17 @@ class FormatCategoryTreeFilterTest extends Unit
 
         /** @var \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\CategoryStorage\CategoryStorageFactory $categoryStorageFactoryMock */
         $categoryStorageFactoryMock = $this->getMockBuilder(CategoryStorageFactory::class)
-            ->onlyMethods(['getStorage', 'getConfig'])
+            ->onlyMethods(['getStorageClient', 'getConfig'])
             ->getMock();
 
         $categoryStorageFactoryMock
-            ->method('getStorage')
+            ->method('getStorageClient')
             ->willReturn($this->getStorageClientMock());
 
         // Act
         $categoryNodeSearchResultTransfers = $this->tester
             ->getClientMock($categoryStorageFactoryMock)
-            ->formatCategoryTreeFilter($docCountAggregation);
+            ->formatCategoryTreeFilter($docCountAggregation, static::TEST_LOCALE_NAME, static::TEST_STORE_NAME);
 
         // Assert
         $this->assertSame(
@@ -182,17 +209,17 @@ class FormatCategoryTreeFilterTest extends Unit
 
         /** @var \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\CategoryStorage\CategoryStorageFactory $categoryStorageFactoryMock */
         $categoryStorageFactoryMock = $this->getMockBuilder(CategoryStorageFactory::class)
-            ->onlyMethods(['getStorage', 'getConfig'])
+            ->onlyMethods(['getStorageClient', 'getConfig'])
             ->getMock();
 
         $categoryStorageFactoryMock
-            ->method('getStorage')
+            ->method('getStorageClient')
             ->willReturn($this->getStorageClientMock());
 
         // Act
         $categoryNodeSearchResultTransfers = $this->tester
             ->getClientMock($categoryStorageFactoryMock)
-            ->formatCategoryTreeFilter($docCountAggregation);
+            ->formatCategoryTreeFilter($docCountAggregation, static::TEST_LOCALE_NAME, static::TEST_STORE_NAME);
 
         // Assert
         $this->assertSame(

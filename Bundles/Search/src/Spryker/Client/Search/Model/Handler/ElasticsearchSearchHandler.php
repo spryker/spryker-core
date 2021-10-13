@@ -14,7 +14,7 @@ use Spryker\Client\Search\Exception\SearchResponseException;
 use Spryker\Client\Search\Provider\IndexClientProvider;
 
 /**
- * @deprecated Will be removed without replacement.
+ * @deprecated Supports only ElasticSearch < 7.0 with one index and multi-mapping. Will be removed without replacement.
  */
 class ElasticsearchSearchHandler implements SearchHandlerInterface
 {
@@ -33,10 +33,10 @@ class ElasticsearchSearchHandler implements SearchHandlerInterface
 
     /**
      * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface $searchQuery
-     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface[] $resultFormatters
-     * @param array $requestParameters
+     * @param array<\Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface> $resultFormatters
+     * @param array<mixed> $requestParameters
      *
-     * @return array|\Elastica\ResultSet
+     * @return \Elastica\ResultSet|array<mixed>
      */
     public function search(QueryInterface $searchQuery, array $resultFormatters = [], array $requestParameters = [])
     {
@@ -50,11 +50,11 @@ class ElasticsearchSearchHandler implements SearchHandlerInterface
     }
 
     /**
-     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface[] $resultFormatters
+     * @param array<\Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface> $resultFormatters
      * @param \Elastica\ResultSet $rawSearchResult
-     * @param array $requestParameters
+     * @param array<mixed> $requestParameters
      *
-     * @return array
+     * @return array<mixed>
      */
     protected function formatSearchResults(array $resultFormatters, ResultSet $rawSearchResult, array $requestParameters)
     {

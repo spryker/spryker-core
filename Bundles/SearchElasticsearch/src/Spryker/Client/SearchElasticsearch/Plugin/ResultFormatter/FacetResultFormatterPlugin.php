@@ -16,7 +16,13 @@ use Spryker\Client\SearchElasticsearch\Plugin\QueryExpander\FacetQueryExpanderPl
  */
 class FacetResultFormatterPlugin extends AbstractElasticsearchResultFormatterPlugin
 {
+    /**
+     * @var string
+     */
     public const NAME = 'facets';
+    /**
+     * @var string
+     */
     public const PATH_SEPARATOR = '.';
 
     /**

@@ -647,7 +647,7 @@ class ClassDefinitionTest extends Unit
      * @dataProvider transferDefinitionTypeIsCorrectlyShimmedDataProvider
      *
      * @param array $shimConfig
-     * @param string[] $expectedTypesTypes
+     * @param array<string> $expectedTypesTypes
      *
      * @return void
      */
@@ -741,7 +741,7 @@ class ClassDefinitionTest extends Unit
 
     /**
      * @param \Spryker\Zed\Transfer\Business\Model\Generator\ClassDefinitionInterface $classDefinition
-     * @param string[] $expectedTypes
+     * @param array<string> $expectedTypes
      *
      * @return void
      */

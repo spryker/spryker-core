@@ -13,10 +13,10 @@ use Spryker\Shared\HealthCheck\ChainFilter\FilterInterface;
 class ServiceNameFilter implements FilterInterface
 {
     /**
-     * @param \Spryker\Shared\HealthCheckExtension\Dependency\Plugin\HealthCheckPluginInterface[] $healthCheckPlugins
+     * @param array<\Spryker\Shared\HealthCheckExtension\Dependency\Plugin\HealthCheckPluginInterface> $healthCheckPlugins
      * @param \Generated\Shared\Transfer\HealthCheckRequestTransfer $healthCheckRequestTransfer
      *
-     * @return \Spryker\Shared\HealthCheckExtension\Dependency\Plugin\HealthCheckPluginInterface[]
+     * @return array<\Spryker\Shared\HealthCheckExtension\Dependency\Plugin\HealthCheckPluginInterface>
      */
     public function filter(array $healthCheckPlugins, HealthCheckRequestTransfer $healthCheckRequestTransfer): array
     {
@@ -30,10 +30,10 @@ class ServiceNameFilter implements FilterInterface
     }
 
     /**
-     * @param \Spryker\Shared\HealthCheckExtension\Dependency\Plugin\HealthCheckPluginInterface[] $healthCheckPlugins
-     * @param string[] $requestedServices
+     * @param array<\Spryker\Shared\HealthCheckExtension\Dependency\Plugin\HealthCheckPluginInterface> $healthCheckPlugins
+     * @param array<string> $requestedServices
      *
-     * @return \Spryker\Shared\HealthCheckExtension\Dependency\Plugin\HealthCheckPluginInterface[]
+     * @return array<\Spryker\Shared\HealthCheckExtension\Dependency\Plugin\HealthCheckPluginInterface>
      */
     protected function filterByServiceName(array $healthCheckPlugins, array $requestedServices): array
     {

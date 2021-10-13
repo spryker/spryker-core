@@ -20,9 +20,21 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ProductLabelReader implements ProductLabelReaderInterface
 {
+    /**
+     * @var string
+     */
     protected const PRODUCT_ABSTRACT_MAPPING_TYPE = 'sku';
+    /**
+     * @var string
+     */
     protected const PRODUCT_CONCRETE_MAPPING_TYPE = 'sku';
+    /**
+     * @var string
+     */
     protected const KEY_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
+    /**
+     * @var string
+     */
     protected const KEY_ID_PRODUCT_CONCRETE = 'id_product_concrete';
 
     /**
@@ -106,7 +118,7 @@ class ProductLabelReader implements ProductLabelReaderInterface
      * @param string $sku
      * @param string $localeName
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>
      */
     public function getProductLabelsByAbstractSku(string $sku, string $localeName): array
     {
@@ -129,10 +141,10 @@ class ProductLabelReader implements ProductLabelReaderInterface
     }
 
     /**
-     * @param string[] $productConcreteSkus
+     * @param array<string> $productConcreteSkus
      * @param string $localeName
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[][]
+     * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]>
      */
     public function getProductLabelsByProductConcreteSkus(array $productConcreteSkus, string $localeName): array
     {
@@ -156,10 +168,10 @@ class ProductLabelReader implements ProductLabelReaderInterface
     }
 
     /**
-     * @param string[] $productConcreteSkus
+     * @param array<string> $productConcreteSkus
      * @param string $localeName
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getProductAbstractIdsByProductConcreteSkus(array $productConcreteSkus, string $localeName): array
     {
@@ -179,9 +191,9 @@ class ProductLabelReader implements ProductLabelReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[] $productLabels
+     * @param array<\Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer> $productLabels
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>
      */
     protected function prepareRestResourceCollection(array $productLabels): array
     {

@@ -24,7 +24,7 @@ class DiscountOrderSaver implements DiscountOrderSaverInterface
     protected $discountQueryContainer;
 
     /**
-     * @var string[]
+     * @var array<string>
      */
     protected $voucherCodesUsed = [];
 

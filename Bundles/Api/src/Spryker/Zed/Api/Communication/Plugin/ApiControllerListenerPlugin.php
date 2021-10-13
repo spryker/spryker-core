@@ -33,6 +33,9 @@ class ApiControllerListenerPlugin extends AbstractPlugin implements ApiControlle
 {
     use LoggerTrait;
 
+    /**
+     * @var string
+     */
     protected const REQUEST_URI = 'REQUEST_URI';
 
     /**

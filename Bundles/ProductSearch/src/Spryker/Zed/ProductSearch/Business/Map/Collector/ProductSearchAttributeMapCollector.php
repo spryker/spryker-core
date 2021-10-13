@@ -18,7 +18,7 @@ class ProductSearchAttributeMapCollector implements ProductSearchAttributeMapCol
     protected $productSearchQueryContainer;
 
     /**
-     * @var \Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttributeMap[]|\Propel\Runtime\Collection\ObjectCollection
+     * @var \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttributeMap>
      */
     protected static $rawAttributeMap;
 
@@ -31,7 +31,7 @@ class ProductSearchAttributeMapCollector implements ProductSearchAttributeMapCol
     }
 
     /**
-     * @return \Generated\Shared\Transfer\ProductSearchAttributeMapTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductSearchAttributeMapTransfer>
      */
     public function getProductSearchAttributeMap()
     {
@@ -51,7 +51,7 @@ class ProductSearchAttributeMapCollector implements ProductSearchAttributeMapCol
     }
 
     /**
-     * @return \Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttributeMap[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttributeMap>
      */
     protected function getRawAttributeMap()
     {
@@ -68,7 +68,7 @@ class ProductSearchAttributeMapCollector implements ProductSearchAttributeMapCol
     /**
      * @param array $attributeMaps
      *
-     * @return \Generated\Shared\Transfer\ProductSearchAttributeMapTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductSearchAttributeMapTransfer>
      */
     protected function processRawMap(array $attributeMaps)
     {

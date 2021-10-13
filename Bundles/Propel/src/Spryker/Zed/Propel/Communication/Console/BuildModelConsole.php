@@ -17,7 +17,13 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class BuildModelConsole extends Console
 {
+    /**
+     * @var string
+     */
     public const COMMAND_NAME = 'propel:model:build';
+    /**
+     * @var string
+     */
     public const COMMAND_DESCRIPTION = 'Build Propel2 classes';
 
     /**
@@ -43,10 +49,16 @@ class BuildModelConsole extends Console
 
         $command = $this->getFactory()->createModelBuildCommand();
 
-        return $this->getFactory()->createPropelCommandRunner()->runCommand(
+        $exitCode = $this->getFactory()->createPropelCommandRunner()->runCommand(
             $command,
             $this->getDefinition(),
             $output
         );
+
+        if ($exitCode === static::CODE_SUCCESS) {
+            $this->getFacade()->loadPropelTableMap();
+        }
+
+        return $exitCode;
     }
 }

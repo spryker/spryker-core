@@ -17,6 +17,9 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class RemoveGlueIdeAutoCompletionConsole extends Console
 {
+    /**
+     * @var string
+     */
     public const COMMAND_NAME = 'dev:ide-auto-completion:glue:remove';
 
     /**

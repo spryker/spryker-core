@@ -150,7 +150,7 @@ class CmsBlockGlossaryManager implements CmsBlockGlossaryManagerInterface
      * @param int $idCmsBlock
      * @param array $placeholders
      *
-     * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockGlossaryKeyMapping[]
+     * @return array<\Orm\Zed\CmsBlock\Persistence\SpyCmsBlockGlossaryKeyMapping>
      */
     protected function createKeyMappingByPlaceholder(int $idCmsBlock, array $placeholders): array
     {
@@ -168,7 +168,7 @@ class CmsBlockGlossaryManager implements CmsBlockGlossaryManagerInterface
      * @param int $idCmsBlock
      * @param array $placeholders
      *
-     * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockGlossaryKeyMapping[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\CmsBlock\Persistence\SpyCmsBlockGlossaryKeyMapping>
      */
     protected function getGlossaryMappingCollection(int $idCmsBlock, array $placeholders): ObjectCollection
     {

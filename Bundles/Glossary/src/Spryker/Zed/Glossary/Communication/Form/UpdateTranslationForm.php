@@ -18,6 +18,9 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 class UpdateTranslationForm extends TranslationForm
 {
+    /**
+     * @var string
+     */
     public const TYPE_DATA_EMPTY = 'empty_data';
 
     /**

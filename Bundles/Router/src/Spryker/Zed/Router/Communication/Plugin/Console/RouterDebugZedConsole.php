@@ -18,15 +18,34 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Routing\RouteCollection;
 
 /**
+ * @deprecated Use {@link \Spryker\Zed\Router\Communication\Plugin\Console\RouterDebugBackofficeConsole} instead.
+ * @deprecated Use {@link \Spryker\Zed\Router\Communication\Plugin\Console\RouterDebugBackendGatewayConsole} instead.
+ * @deprecated Use {@link \Spryker\Zed\Router\Communication\Plugin\Console\RouterDebugBackendApiConsole} instead.
+ *
  * @method \Spryker\Zed\Router\Business\RouterFacade getFacade()
  * @method \Spryker\Zed\Router\Communication\RouterCommunicationFactory getFactory()
  */
 class RouterDebugZedConsole extends Console
 {
+    /**
+     * @var string
+     */
     protected const NAME = 'router:debug';
+    /**
+     * @var string
+     */
     protected const NAME_ALIAS = 'router:debug:zed';
+    /**
+     * @var string
+     */
     protected const ARGUMENT_ROUTE_NAME = 'name';
+    /**
+     * @var string
+     */
     protected const OPTION_SHOW_CONTROLLERS = 'show-controllers';
+    /**
+     * @var string
+     */
     protected const OPTION_SHOW_CONTROLLERS_SHORT = 'c';
 
     /**

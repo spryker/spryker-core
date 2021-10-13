@@ -2,7 +2,7 @@
 
 return [
     [
-         [
+        [
             'fkProduct' => 85,
             'fkProductAbstract' => 70,
             'abstractSku' => '070',
@@ -72,8 +72,8 @@ return [
                          [
                          ],
                  ],
-         ],
-         [
+        ],
+        [
             'store' => 'AT',
             'locale' => 'de_DE',
             'type' => 'product_concrete',
@@ -106,7 +106,7 @@ return [
                  [
                     'name' => 'Samsung Galaxy Ace',
                  ],
-         ],
-         'de_DE',
+        ],
+        'de_DE',
     ],
 ];

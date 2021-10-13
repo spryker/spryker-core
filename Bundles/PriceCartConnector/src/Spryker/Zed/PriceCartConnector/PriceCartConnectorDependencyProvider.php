@@ -20,12 +20,33 @@ use Spryker\Zed\PriceCartConnector\Dependency\Service\PriceCartConnectorToPriceP
  */
 class PriceCartConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_PRICE_PRODUCT = 'price product facade';
+    /**
+     * @var string
+     */
     public const SERVICE_PRICE_PRODUCT = 'SERVICE_PRICE_PRODUCT';
+    /**
+     * @var string
+     */
     public const FACADE_PRICE = 'price facade';
+    /**
+     * @var string
+     */
     public const FACADE_MESSENGER = 'FACADE_MESSENGER';
+    /**
+     * @var string
+     */
     public const FACADE_CURRENCY = 'FACADE_CURRENCY';
+    /**
+     * @var string
+     */
     public const PLUGINS_PRICE_PRODUCT_EXPANDER = 'PLUGINS_PRICE_PRODUCT_EXPANDER';
+    /**
+     * @var string
+     */
     public const PLUGINS_CART_ITEM_QUANTITY_COUNTER_STRATEGY = 'PLUGINS_CART_ITEM_QUANTITY_COUNTER_STRATEGY';
 
     /**
@@ -145,7 +166,7 @@ class PriceCartConnectorDependencyProvider extends AbstractBundleDependencyProvi
     }
 
     /**
-     * @return \Spryker\Zed\PriceCartConnectorExtension\Dependency\Plugin\CartItemQuantityCounterStrategyPluginInterface[]
+     * @return array<\Spryker\Zed\PriceCartConnectorExtension\Dependency\Plugin\CartItemQuantityCounterStrategyPluginInterface>
      */
     protected function getCartItemQuantityCounterStrategyPlugins(): array
     {
@@ -153,7 +174,7 @@ class PriceCartConnectorDependencyProvider extends AbstractBundleDependencyProvi
     }
 
     /**
-     * @return \Spryker\Zed\PriceCartConnectorExtension\Dependency\Plugin\PriceProductExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\PriceCartConnectorExtension\Dependency\Plugin\PriceProductExpanderPluginInterface>
      */
     protected function getPriceProductExpanderPlugins(): array
     {

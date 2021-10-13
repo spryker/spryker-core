@@ -16,12 +16,15 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class CreateController extends ProductListAbstractController
 {
+    /**
+     * @var string
+     */
     public const MESSAGE_PRODUCT_LIST_CREATE_SUCCESS = 'Product List "%s" has been successfully created.';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function indexAction(Request $request)
     {

@@ -10,6 +10,9 @@ namespace Spryker\Zed\Payment\Dependency\Plugin\Sales;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PaymentTransfer;
 
+/**
+ * @deprecated Use {@link \Spryker\Zed\SalesPaymentExtension\Dependency\Plugin\OrderPaymentExpanderPluginInterface} instead.
+ */
 interface PaymentHydratorPluginInterface
 {
     /**

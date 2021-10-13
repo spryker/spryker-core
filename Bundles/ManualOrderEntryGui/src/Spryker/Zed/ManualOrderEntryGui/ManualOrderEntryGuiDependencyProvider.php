@@ -29,25 +29,76 @@ use Spryker\Zed\ManualOrderEntryGui\Dependency\QueryContainer\ManualOrderEntryGu
  */
 class ManualOrderEntryGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_CUSTOMER = 'FACADE_CUSTOMER';
+    /**
+     * @var string
+     */
     public const FACADE_PRODUCT = 'FACADE_PRODUCT';
+    /**
+     * @var string
+     */
     public const FACADE_CART = 'FACADE_CART';
+    /**
+     * @var string
+     */
     public const FACADE_DISCOUNT = 'FACADE_DISCOUNT';
+    /**
+     * @var string
+     */
     public const FACADE_CURRENCY = 'FACADE_CURRENCY';
+    /**
+     * @var string
+     */
     public const FACADE_MESSENGER = 'FACADE_MESSENGER';
+    /**
+     * @var string
+     */
     public const FACADE_SHIPMENT = 'FACADE_SHIPMENT';
+    /**
+     * @var string
+     */
     public const FACADE_STORE = 'FACADE_STORE';
+    /**
+     * @var string
+     */
     public const FACADE_MONEY = 'FACADE_MONEY';
+    /**
+     * @var string
+     */
     public const FACADE_PAYMENT = 'FACADE_PAYMENT';
+    /**
+     * @var string
+     */
     public const FACADE_CHECKOUT = 'FACADE_CHECKOUT';
+    /**
+     * @var string
+     */
     public const FACADE_CALCULATION = 'FACADE_CALCULATION';
+    /**
+     * @var string
+     */
     public const FACADE_MANUAL_ORDER_ENTRY = 'FACADE_MANUAL_ORDER_ENTRY';
 
+    /**
+     * @var string
+     */
     public const PAYMENT_SUB_FORMS = 'PAYMENT_SUB_FORMS';
 
+    /**
+     * @var string
+     */
     public const QUERY_CONTAINER_CUSTOMER = 'QUERY_CONTAINER_CUSTOMER';
 
+    /**
+     * @var string
+     */
     public const PLUGINS_MANUAL_ORDER_ENTRY_FORM = 'PLUGINS_MANUAL_ORDER_ENTRY_FORM';
+    /**
+     * @var string
+     */
     public const PLUGINS_QUOTE_EXPANDER = 'PLUGINS_QUOTE_EXPANDER';
 
     /**
@@ -276,7 +327,7 @@ class ManualOrderEntryGuiDependencyProvider extends AbstractBundleDependencyProv
     }
 
     /**
-     * @return \Spryker\Zed\ManualOrderEntryGuiExtension\Dependency\Plugin\PaymentSubFormPluginInterface[]
+     * @return array<\Spryker\Zed\ManualOrderEntryGuiExtension\Dependency\Plugin\PaymentSubFormPluginInterface>
      */
     protected function getPaymentSubFormPlugins(): array
     {
@@ -312,7 +363,7 @@ class ManualOrderEntryGuiDependencyProvider extends AbstractBundleDependencyProv
     }
 
     /**
-     * @return \Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\ManualOrderEntryFormPluginInterface[]
+     * @return array<\Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\ManualOrderEntryFormPluginInterface>
      */
     protected function getManualOrderEntryFormPlugins(): array
     {
@@ -334,7 +385,7 @@ class ManualOrderEntryGuiDependencyProvider extends AbstractBundleDependencyProv
     }
 
     /**
-     * @return \Spryker\Zed\ManualOrderEntryGui\Dependency\Plugin\QuoteExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\ManualOrderEntryGui\Dependency\Plugin\QuoteExpanderPluginInterface>
      */
     protected function getQuoteExpanderPlugins(): array
     {

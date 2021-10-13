@@ -58,7 +58,8 @@ class CheckoutRestApiBusinessFactory extends AbstractBusinessFactory
             $this->getQuoteFacade(),
             $this->getCalculationFacade(),
             $this->createCheckoutValidator(),
-            $this->getQuoteMapperPlugins()
+            $this->getQuoteMapperPlugins(),
+            $this->getConfig()
         );
     }
 
@@ -169,7 +170,7 @@ class CheckoutRestApiBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\QuoteMapperPluginInterface[]
+     * @return array<\Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\QuoteMapperPluginInterface>
      */
     public function getQuoteMapperPlugins(): array
     {
@@ -177,7 +178,7 @@ class CheckoutRestApiBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\CheckoutDataValidatorPluginInterface[]
+     * @return array<\Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\CheckoutDataValidatorPluginInterface>
      */
     public function getCheckoutDataValidatorPlugins(): array
     {
@@ -185,7 +186,7 @@ class CheckoutRestApiBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\ReadCheckoutDataValidatorPluginInterface[]
+     * @return array<\Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\ReadCheckoutDataValidatorPluginInterface>
      */
     public function getReadCheckoutDataValidatorPlugins(): array
     {
@@ -193,7 +194,7 @@ class CheckoutRestApiBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\CheckoutDataExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\CheckoutDataExpanderPluginInterface>
      */
     public function getCheckoutDataExpanderPlugins(): array
     {

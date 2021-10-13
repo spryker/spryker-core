@@ -12,14 +12,14 @@ use ArrayObject;
 interface MoneyCollectionDataProviderInterface
 {
     /**
-     * @return \ArrayObject|\Generated\Shared\Transfer\MoneyValueTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\MoneyValueTransfer>
      */
     public function getInitialData();
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\MoneyValueTransfer[] $currentFormMoneyValueCollection
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\MoneyValueTransfer> $currentFormMoneyValueCollection
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\MoneyValueTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\MoneyValueTransfer>
      */
     public function mergeMissingMoneyValues(ArrayObject $currentFormMoneyValueCollection);
 }

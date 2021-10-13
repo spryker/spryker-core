@@ -16,7 +16,13 @@ use Spryker\Zed\ProductOfferStockGui\Dependency\Facade\ProductOfferStockGuiToPro
  */
 class ProductOfferStockGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_PRODUCT_OFFER_STOCK = 'FACADE_PRODUCT_OFFER_STOCK';
+    /**
+     * @var string
+     */
     public const PLUGINS_PRODUCT_OFFER_STOCK_TABLE_EXPANDER = 'PLUGINS_PRODUCT_OFFER_STOCK_TABLE_EXPANDER';
 
     /**
@@ -65,7 +71,7 @@ class ProductOfferStockGuiDependencyProvider extends AbstractBundleDependencyPro
     }
 
     /**
-     * @return \Spryker\Zed\ProductOfferStockGuiExtension\Dependeency\Plugin\ProductOfferStockTableExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\ProductOfferStockGuiExtension\Dependeency\Plugin\ProductOfferStockTableExpanderPluginInterface>
      */
     protected function getProductOfferStockTableExpanderPlugins(): array
     {

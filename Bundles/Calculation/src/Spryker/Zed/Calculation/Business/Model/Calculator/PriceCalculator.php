@@ -13,18 +13,18 @@ use Spryker\Shared\Calculation\CalculationPriceMode;
 class PriceCalculator implements CalculatorInterface
 {
     /**
-     * @var array|\Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface[]
+     * @var array<\Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface>
      */
     protected $netPriceCalculators;
 
     /**
-     * @var array|\Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface[]
+     * @var array<\Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface>
      */
     protected $grossPriceCalculators;
 
     /**
-     * @param \Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface[] $netPriceCalculators
-     * @param \Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface[] $grossPriceCalculators
+     * @param array<\Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface> $netPriceCalculators
+     * @param array<\Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface> $grossPriceCalculators
      */
     public function __construct(
         array $netPriceCalculators,
@@ -51,7 +51,7 @@ class PriceCalculator implements CalculatorInterface
     }
 
     /**
-     * @param \Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface[] $calculators
+     * @param array<\Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface> $calculators
      * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
      *
      * @return void

@@ -63,7 +63,7 @@ class CmsBlockProductConnectorFacade extends AbstractFacade implements CmsBlockP
      * @param int $idCmsBlock
      * @param int $idLocale
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getProductAbstractRenderedList($idCmsBlock, $idLocale)
     {
@@ -79,7 +79,7 @@ class CmsBlockProductConnectorFacade extends AbstractFacade implements CmsBlockP
      *
      * @param int $idProductAbstract
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getCmsBlockRenderedList($idProductAbstract)
     {
@@ -112,11 +112,7 @@ class CmsBlockProductConnectorFacade extends AbstractFacade implements CmsBlockP
         TouchUpdaterInterface $touchUpdater,
         OutputInterface $output
     ) {
-        $collector = $this->getFactory()
-            ->createStorageCmsBlockProductConnectorCollector();
-
-        $this->getFactory()->getCollectorFacade()->runCollector(
-            $collector,
+        $this->getFactory()->createCmsBlockProductCollectorRunner()->run(
             $baseQuery,
             $localeTransfer,
             $result,

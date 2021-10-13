@@ -20,16 +20,32 @@ use Spryker\Zed\SalesReclamationGui\Dependency\Service\SalesReclamationGuiToUtil
  */
 class SalesReclamationGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_SALES_RECLAMATION = 'FACADE_SALES_RECLAMATION';
+    /**
+     * @var string
+     */
     public const FACADE_SALES = 'FACADE_SALES';
+    /**
+     * @var string
+     */
     public const FACADE_OMS = 'FACADE_OMS';
 
+    /**
+     * @var string
+     */
     public const PROPEL_QUERY_SALES_RECLAMATION = 'PROPEL_QUERY_SALES_RECLAMATION';
 
+    /**
+     * @var string
+     */
     public const SERVICE_DATETIME = 'SERVICE_DATETIME';
 
     /**
      * @uses \Spryker\Zed\Form\Communication\Plugin\Application\FormApplicationPlugin::SERVICE_FORM_CSRF_PROVIDER
+     * @var string
      */
     public const SERVICE_FORM_CSRF_PROVIDER = 'form.csrf_provider';
 

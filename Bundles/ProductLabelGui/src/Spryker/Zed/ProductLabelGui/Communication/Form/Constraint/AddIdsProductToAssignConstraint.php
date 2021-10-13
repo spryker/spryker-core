@@ -12,6 +12,9 @@ use Symfony\Component\Validator\Constraint;
 
 class AddIdsProductToAssignConstraint extends Constraint
 {
+    /**
+     * @var string
+     */
     public const OPTION_PRODUCT_LABEL_FACADE = 'productLabelFacade';
 
     /**

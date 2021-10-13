@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\MerchantsRestApi\Dependency\Client;
 
+use Generated\Shared\Transfer\MerchantStorageCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantStorageTransfer;
 
 class MerchantsRestApiToMerchantStorageClientBridge implements MerchantsRestApiToMerchantStorageClientInterface
@@ -25,42 +26,22 @@ class MerchantsRestApiToMerchantStorageClientBridge implements MerchantsRestApiT
     }
 
     /**
-     * @param int[] $merchantIds
+     * @param \Generated\Shared\Transfer\MerchantStorageCriteriaTransfer $merchantStorageCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\MerchantStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\MerchantStorageTransfer>
      */
-    public function get(array $merchantIds): array
+    public function get(MerchantStorageCriteriaTransfer $merchantStorageCriteriaTransfer): array
     {
-        return $this->merchantStorageClient->get($merchantIds);
+        return $this->merchantStorageClient->get($merchantStorageCriteriaTransfer);
     }
 
     /**
-     * @param string[] $merchantReferences
-     *
-     * @return \Generated\Shared\Transfer\MerchantStorageTransfer[]
-     */
-    public function getByMerchantReferences(array $merchantReferences): array
-    {
-        return $this->merchantStorageClient->getByMerchantReferences($merchantReferences);
-    }
-
-    /**
-     * @param string $merchantReference
+     * @param \Generated\Shared\Transfer\MerchantStorageCriteriaTransfer $merchantStorageCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantStorageTransfer|null
      */
-    public function findOneByMerchantReference(string $merchantReference): ?MerchantStorageTransfer
+    public function findOne(MerchantStorageCriteriaTransfer $merchantStorageCriteriaTransfer): ?MerchantStorageTransfer
     {
-        return $this->merchantStorageClient->findOneByMerchantReference($merchantReference);
-    }
-
-    /**
-     * @param int $idMerchant
-     *
-     * @return \Generated\Shared\Transfer\MerchantStorageTransfer|null
-     */
-    public function findOne(int $idMerchant): ?MerchantStorageTransfer
-    {
-        return $this->merchantStorageClient->findOne($idMerchant);
+        return $this->merchantStorageClient->findOne($merchantStorageCriteriaTransfer);
     }
 }

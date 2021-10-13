@@ -50,7 +50,7 @@ class PersistentCartShareFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\PersistentCartShareExtension\Dependency\Plugin\CartShareOptionPluginInterface[]
+     * @return array<\Spryker\Client\PersistentCartShareExtension\Dependency\Plugin\CartShareOptionPluginInterface>
      */
     public function getCartShareOptionPlugins(): array
     {

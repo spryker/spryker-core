@@ -18,14 +18,23 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class NodeController extends AbstractController
 {
+    /**
+     * @var string
+     */
     public const PARAM_ID_NAVIGATION = 'id-navigation';
+    /**
+     * @var string
+     */
     public const PARAM_ID_NAVIGATION_NODE = 'id-navigation-node';
+    /**
+     * @var string
+     */
     public const PARAM_ID_SELECTED_TREE_NODE = 'id-selected-tree-node';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function createAction(Request $request)
     {
@@ -85,7 +94,7 @@ class NodeController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function updateAction(Request $request)
     {

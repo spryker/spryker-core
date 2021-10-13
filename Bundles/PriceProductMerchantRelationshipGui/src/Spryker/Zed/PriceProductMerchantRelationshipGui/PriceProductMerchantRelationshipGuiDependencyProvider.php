@@ -16,6 +16,9 @@ use Spryker\Zed\PriceProductMerchantRelationshipGui\Dependency\Facade\PriceProdu
  */
 class PriceProductMerchantRelationshipGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_MERCHANT_RELATIONSHIP = 'FACADE_MERCHANT_RELATIONSHIP';
 
     /**

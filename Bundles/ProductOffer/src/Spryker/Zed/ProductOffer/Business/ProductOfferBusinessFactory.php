@@ -10,6 +10,8 @@ namespace Spryker\Zed\ProductOffer\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductOffer\Business\Checker\ItemProductOfferChecker;
 use Spryker\Zed\ProductOffer\Business\Checker\ItemProductOfferCheckerInterface;
+use Spryker\Zed\ProductOffer\Business\Counter\ProductOfferCartItemQuantityCounter;
+use Spryker\Zed\ProductOffer\Business\Counter\ProductOfferCartItemQuantityCounterInterface;
 use Spryker\Zed\ProductOffer\Business\Generator\ProductOfferReferenceGenerator;
 use Spryker\Zed\ProductOffer\Business\Generator\ProductOfferReferenceGeneratorInterface;
 use Spryker\Zed\ProductOffer\Business\InactiveProductOfferItemsFilter\InactiveProductOfferItemsFilter;
@@ -18,6 +20,8 @@ use Spryker\Zed\ProductOffer\Business\Reader\ProductOfferReader;
 use Spryker\Zed\ProductOffer\Business\Reader\ProductOfferReaderInterface;
 use Spryker\Zed\ProductOffer\Business\Reader\ProductOfferStatusReader;
 use Spryker\Zed\ProductOffer\Business\Reader\ProductOfferStatusReaderInterface;
+use Spryker\Zed\ProductOffer\Business\Validator\ProductOfferCheckoutValidator;
+use Spryker\Zed\ProductOffer\Business\Validator\ProductOfferCheckoutValidatorInterface;
 use Spryker\Zed\ProductOffer\Business\Writer\ProductOfferWriter;
 use Spryker\Zed\ProductOffer\Business\Writer\ProductOfferWriterInterface;
 use Spryker\Zed\ProductOffer\Dependency\Facade\ProductOfferToMessengerFacadeInterface;
@@ -106,11 +110,11 @@ class ProductOfferBusinessFactory extends AbstractBusinessFactory
      */
     public function createProductOfferReferenceGenerator(): ProductOfferReferenceGeneratorInterface
     {
-        return new ProductOfferReferenceGenerator($this->getRepository());
+        return new ProductOfferReferenceGenerator();
     }
 
     /**
-     * @return \Spryker\Zed\ProductOfferExtension\Dependency\Plugin\ProductOfferPostCreatePluginInterface[]
+     * @return array<\Spryker\Zed\ProductOfferExtension\Dependency\Plugin\ProductOfferPostCreatePluginInterface>
      */
     public function getProductOfferPostCreatePlugins(): array
     {
@@ -118,7 +122,7 @@ class ProductOfferBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductOfferExtension\Dependency\Plugin\ProductOfferPostUpdatePluginInterface[]
+     * @return array<\Spryker\Zed\ProductOfferExtension\Dependency\Plugin\ProductOfferPostUpdatePluginInterface>
      */
     public function getProductOfferPostUpdatePlugins(): array
     {
@@ -126,10 +130,26 @@ class ProductOfferBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductOfferExtension\Dependency\Plugin\ProductOfferExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\ProductOfferExtension\Dependency\Plugin\ProductOfferExpanderPluginInterface>
      */
     public function getProductOfferExpanderPlugins(): array
     {
         return $this->getProvidedDependency(ProductOfferDependencyProvider::PLUGINS_PRODUCT_OFFER_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOffer\Business\Validator\ProductOfferCheckoutValidatorInterface
+     */
+    public function createProductOfferCheckoutValidator(): ProductOfferCheckoutValidatorInterface
+    {
+        return new ProductOfferCheckoutValidator($this->getRepository());
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOffer\Business\Counter\ProductOfferCartItemQuantityCounterInterface
+     */
+    public function createProductOfferCartItemQuantityCounter(): ProductOfferCartItemQuantityCounterInterface
+    {
+        return new ProductOfferCartItemQuantityCounter();
     }
 }

@@ -20,10 +20,25 @@ use Spryker\Zed\Kernel\Container;
  */
 class FileManagerGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_FILE_MANAGER = 'FACADE_FILE_MANAGER';
+    /**
+     * @var string
+     */
     public const FACADE_LOCALE = 'FACADE_LOCALE';
+    /**
+     * @var string
+     */
     public const PROPEL_QUERY_FILE = 'PROPEL_QUERY_FILE';
+    /**
+     * @var string
+     */
     public const PROPEL_QUERY_FILE_INFO = 'PROPEL_QUERY_FILE_INFO';
+    /**
+     * @var string
+     */
     public const PROPEL_QUERY_MIME_TYPE = 'PROPEL_QUERY_MIME_TYPE';
 
     /**

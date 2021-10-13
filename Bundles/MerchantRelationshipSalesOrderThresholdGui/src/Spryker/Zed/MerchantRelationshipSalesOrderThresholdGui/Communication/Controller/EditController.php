@@ -27,8 +27,17 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class EditController extends AbstractController
 {
+    /**
+     * @var string
+     */
     protected const PARAM_STORE_CURRENCY_REQUEST = 'store_currency';
+    /**
+     * @var string
+     */
     protected const REQUEST_ID_MERCHANT_RELATIONSHIP = 'id-merchant-relationship';
+    /**
+     * @var string
+     */
     protected const MESSAGE_UPDATE_SUCCESSFUL = 'The Merchant Relationship Thresholds is saved successfully.';
 
     /**

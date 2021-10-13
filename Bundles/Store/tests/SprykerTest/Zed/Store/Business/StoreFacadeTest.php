@@ -25,6 +25,9 @@ use Spryker\Zed\Store\Business\StoreFacade;
  */
 class StoreFacadeTest extends Unit
 {
+    /**
+     * @var string
+     */
     public const DEFAULT_STORE_NAME = 'DE';
 
     /**
@@ -152,6 +155,28 @@ class StoreFacadeTest extends Unit
         //Assert
         $this->assertTrue($quoteValidationTransfer->getIsSuccessful());
         $this->assertSame(0, $quoteValidationTransfer->getErrors()->count());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetStoresAvailableForCurrentPersistenceWillReturnCurrentStoreWithSharedStores(): void
+    {
+        // Arrange
+        $storeFacade = $this->createStoreFacade();
+
+        $currentStoreTransfer = $storeFacade->getCurrentStore();
+        $expectedStoreNames = array_merge([$currentStoreTransfer->getName()], $currentStoreTransfer->getStoresWithSharedPersistence());
+
+        // Act
+        $availableStoreTransfers = $storeFacade->getStoresAvailableForCurrentPersistence();
+
+        // Assert
+        $availableStoreNames = array_map(function (StoreTransfer $storeTransfer) {
+            return $storeTransfer->getName();
+        }, $availableStoreTransfers);
+
+        $this->assertSame($expectedStoreNames, $availableStoreNames, 'Available stores should contain stores with shared persistence.');
     }
 
     /**

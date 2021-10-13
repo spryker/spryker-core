@@ -17,7 +17,7 @@ class QuoteRequestAgentConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getCancelableStatuses(): array
     {
@@ -27,7 +27,7 @@ class QuoteRequestAgentConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getRevisableStatuses(): array
     {

@@ -2,7 +2,7 @@
 
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
 namespace SprykerTest\Client\PriceProductOfferVolume;
@@ -29,10 +29,13 @@ class PriceProductOfferVolumeTester extends Actor
 {
     use _generated\PriceProductOfferVolumeTesterActions;
 
+    /**
+     * @var string
+     */
     protected const PRICE_DATA_VOLUME = '{"volume_prices":[{"quantity":3,"net_price":350,"gross_price":385},{"quantity":8,"net_price":340,"gross_price":375}]}';
 
     /**
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function preparePriceProductsWithVolumePrices(): array
     {

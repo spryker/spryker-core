@@ -41,7 +41,7 @@ class ConfigInit extends Module
     }
 
     /**
-     * @return \Symfony\Component\Finder\Finder|\Symfony\Component\Finder\SplFileInfo[]
+     * @return \Symfony\Component\Finder\Finder<\Symfony\Component\Finder\SplFileInfo>
      */
     private function getConfigFiles()
     {
@@ -55,7 +55,7 @@ class ConfigInit extends Module
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     private function getSourceDirectories(): array
     {
@@ -69,9 +69,9 @@ class ConfigInit extends Module
     }
 
     /**
-     * @param string[] $configPaths
+     * @param array<string> $configPaths
      *
-     * @return string[]
+     * @return array<string>
      */
     private function addBundleToTestConfigDirectory(array $configPaths): array
     {
@@ -139,7 +139,7 @@ class ConfigInit extends Module
     }
 
     /**
-     * @return \Symfony\Component\Finder\Finder|\Symfony\Component\Finder\SplFileInfo[]
+     * @return \Symfony\Component\Finder\Finder<\Symfony\Component\Finder\SplFileInfo>
      */
     private function getConfigDefaultFiles()
     {

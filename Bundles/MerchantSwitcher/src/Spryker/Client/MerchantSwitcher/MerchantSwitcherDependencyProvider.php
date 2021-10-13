@@ -13,6 +13,9 @@ use Spryker\Client\MerchantSwitcher\Dependency\Client\MerchantSwitcherToZedReque
 
 class MerchantSwitcherDependencyProvider extends AbstractDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
 
     /**

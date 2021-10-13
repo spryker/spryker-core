@@ -19,10 +19,22 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class AbstractSchedulerConsole extends Console
 {
+    /**
+     * @var string
+     */
     protected const OUTPUT_SUCCESS_COLOR = 'green';
+    /**
+     * @var string
+     */
     protected const OUTPUT_ERROR_COLOR = 'red';
 
+    /**
+     * @var string
+     */
     protected const OUTPUT_SUCCESS_MESSAGE = 'OK';
+    /**
+     * @var string
+     */
     protected const OUTPUT_ERROR_MESSAGE = 'ERROR';
 
     /**
@@ -73,9 +85,9 @@ class AbstractSchedulerConsole extends Console
     }
 
     /**
-     * @param string[] $roles
-     * @param string[] $schedulers
-     * @param string[] $jobNames
+     * @param array<string> $roles
+     * @param array<string> $schedulers
+     * @param array<string> $jobNames
      *
      * @return \Generated\Shared\Transfer\SchedulerFilterTransfer
      */

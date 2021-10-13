@@ -15,6 +15,9 @@ use Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\Translator\ProductMeas
 
 class ProductMeasurementUnitByProductConcreteResourceRelationshipExpander implements ProductMeasurementUnitByProductConcreteResourceRelationshipExpanderInterface
 {
+    /**
+     * @var string
+     */
     protected const PRODUCT_CONCRETE_MAPPING_TYPE = 'sku';
 
     /**
@@ -56,7 +59,7 @@ class ProductMeasurementUnitByProductConcreteResourceRelationshipExpander implem
     }
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
+     * @param array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface> $resources
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return void
@@ -90,9 +93,9 @@ class ProductMeasurementUnitByProductConcreteResourceRelationshipExpander implem
     }
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
+     * @param array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface> $resources
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getProductConcreteSkus(array $resources): array
     {

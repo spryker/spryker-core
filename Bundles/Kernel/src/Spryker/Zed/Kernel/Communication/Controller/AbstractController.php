@@ -29,11 +29,13 @@ abstract class AbstractController
 
     /**
      * @uses \Spryker\Zed\Messenger\Communication\Plugin\Application\MessengerApplicationPlugin::SERVICE_MESSENGER
+     * @var string
      */
     protected const SERVICE_MESSENGER = 'messenger';
 
     /**
      * @uses \Spryker\Zed\Twig\Communication\Plugin\Application\TwigApplicationPlugin::SERVICE_TWIG
+     * @var string
      */
     protected const SERVICE_TWIG = 'twig';
 

@@ -15,8 +15,14 @@ use SprykerTest\Shared\Testify\Exception\StoreNotFoundException;
 
 class Environment extends Module
 {
+    /**
+     * @var string
+     */
     protected const TESTING_APPLICATION_ENV_NAME = 'devtest';
 
+    /**
+     * @var string
+     */
     protected const CONFIG_IS_ISOLATED_MODULE_TEST = 'isolated';
 
     /**
@@ -141,6 +147,11 @@ class Environment extends Module
         }
 
         if (!$this->rootDirectory) {
+            if (defined('APPLICATION_ROOT_DIR')) {
+                return rtrim(APPLICATION_ROOT_DIR, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+            }
+
+            // Deprecated: Will be removed in the next major. Please use APPLICATION_ROOT_DIR instead.
             $directory = getcwd();
 
             $pathParts = explode(DIRECTORY_SEPARATOR, Configuration::projectDir());

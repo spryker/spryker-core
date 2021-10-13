@@ -74,7 +74,7 @@ class ProductSearchWriter implements ProductSearchWriterInterface
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      * @param bool $isSearchable
      *
-     * @return \Generated\Shared\Transfer\LocaleTransfer[]
+     * @return array<\Generated\Shared\Transfer\LocaleTransfer>
      */
     protected function getIsSearchableLocales(ProductConcreteTransfer $productConcreteTransfer, $isSearchable)
     {

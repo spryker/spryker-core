@@ -14,10 +14,25 @@ use Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGu
 
 class PriceProductScheduleFormDataProvider
 {
+    /**
+     * @var string
+     */
     public const OPTION_DATA_CLASS = 'data_class';
+    /**
+     * @var string
+     */
     public const OPTION_STORE_CHOICES = 'option_store_choices';
+    /**
+     * @var string
+     */
     public const OPTION_CURRENCY_CHOICES = 'option_currency_choices';
+    /**
+     * @var string
+     */
     public const OPTION_PRICE_TYPE_CHOICES = 'option_price_type_choices';
+    /**
+     * @var string
+     */
     public const OPTION_IS_PRICE_TYPE_DISABLED = 'option_is_price_type_disabled';
 
     /**

@@ -15,6 +15,9 @@ use Symfony\Component\HttpFoundation\Request;
 
 class PromotionProductMapper implements PromotionProductMapperInterface
 {
+    /**
+     * @var string
+     */
     public const URL_PARAM_VARIANT_ATTRIBUTES = 'attributes';
 
     /**
@@ -43,7 +46,7 @@ class PromotionProductMapper implements PromotionProductMapperInterface
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Generated\Shared\Transfer\StorageProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\StorageProductTransfer>
      */
     public function mapPromotionItemsFromProductStorage(QuoteTransfer $quoteTransfer, Request $request)
     {

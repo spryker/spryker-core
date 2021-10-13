@@ -1,7 +1,5 @@
 <?xml version="1.0"?>
-<transfers xmlns="spryker:transfer-01"
-           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-           xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+<transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="EventEntity">
     </transfer>
@@ -27,5 +25,13 @@
         <property name="body" type="string"/>
     </transfer>
 
-</transfers>
+    <transfer name="QueueConnection">
+        <property name="queueOptionCollection" singular="queueOptionItem" type="RabbitMqOption[]"/>
+    </transfer>
 
+    <transfer name="RabbitMqOption">
+        <property name="queueName" type="string"/>
+        <property name="bindingQueueCollection" singular="bindingQueueItem" type="RabbitMqOption[]"/>
+    </transfer>
+
+</transfers>

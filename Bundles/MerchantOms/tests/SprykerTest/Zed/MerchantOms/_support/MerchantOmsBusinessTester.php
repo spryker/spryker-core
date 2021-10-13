@@ -34,6 +34,9 @@ class MerchantOmsBusinessTester extends Actor
 {
     use _generated\MerchantOmsBusinessTesterActions;
 
+    /**
+     * @var string
+     */
     protected const TEST_STATE_MACHINE = 'Test01';
 
     /**

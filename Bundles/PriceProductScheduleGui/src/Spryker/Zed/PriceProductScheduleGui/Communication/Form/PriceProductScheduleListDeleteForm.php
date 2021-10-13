@@ -17,6 +17,9 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 class PriceProductScheduleListDeleteForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const FIELD_SUBMIT = 'submit';
 
     /**

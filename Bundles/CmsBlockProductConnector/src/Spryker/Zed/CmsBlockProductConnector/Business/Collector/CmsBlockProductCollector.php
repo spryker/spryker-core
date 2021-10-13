@@ -37,7 +37,7 @@ class CmsBlockProductCollector extends AbstractStoragePropelCollector
     /**
      * @param string $cmsBlockNames
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function extractCmsBlockNames($cmsBlockNames)
     {

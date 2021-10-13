@@ -16,6 +16,9 @@ use Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInter
  */
 class ShopContextApplicationPlugin extends AbstractPlugin implements ApplicationPluginInterface
 {
+    /**
+     * @var string
+     */
     protected const SERVICE_SHOP_CONTEXT = 'SERVICE_SHOP_CONTEXT';
 
     /**

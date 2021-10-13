@@ -12,8 +12,17 @@ use Symfony\Component\HttpFoundation\Request;
 
 class ResourceRouteCollection implements ResourceRouteCollectionInterface
 {
+    /**
+     * @var string
+     */
     public const CONTROLLER_ACTION = 'action';
+    /**
+     * @var string
+     */
     public const METHOD_CONTEXT = 'context';
+    /**
+     * @var string
+     */
     public const IS_PROTECTED = 'is_protected';
 
     /**

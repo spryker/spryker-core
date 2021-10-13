@@ -34,7 +34,7 @@ class ProductDiscontinuedMapper implements ProductDiscontinuedMapperInterface
             );
         }
 
-        /** @var \Generated\Shared\Transfer\ProductDiscontinuedNoteTransfer[] $productDiscontinuedNotes */
+        /** @var array<\Generated\Shared\Transfer\ProductDiscontinuedNoteTransfer> $productDiscontinuedNotes */
         $productDiscontinuedNotes = $productDiscontinuedEntity->getSpyProductDiscontinuedNotes();
         if ($productDiscontinuedNotes) {
             $productDiscontinuedTransfer->setProductDiscontinuedNotes(
@@ -82,7 +82,7 @@ class ProductDiscontinuedMapper implements ProductDiscontinuedMapperInterface
     /**
      * @param \Orm\Zed\ProductDiscontinued\Persistence\SpyProductDiscontinued $productDiscontinuedEntity
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ProductDiscontinuedNoteTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\ProductDiscontinuedNoteTransfer>
      */
     protected function mapProductDiscontinuedNotes(SpyProductDiscontinued $productDiscontinuedEntity): ArrayObject
     {

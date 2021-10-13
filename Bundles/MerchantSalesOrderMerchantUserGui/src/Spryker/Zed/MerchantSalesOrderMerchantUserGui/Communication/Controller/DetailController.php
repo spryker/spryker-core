@@ -14,7 +14,6 @@ use Generated\Shared\Transfer\MerchantOrderItemTransfer;
 use Generated\Shared\Transfer\MerchantOrderTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
-use Spryker\Zed\MerchantSalesOrderMerchantUserGui\MerchantSalesOrderMerchantUserGuiConfig;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -23,30 +22,44 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class DetailController extends AbstractController
 {
-    protected const PARAM_ID_MERCHANT_SALES_ORDER = 'id-merchant-sales-order';
+    /**
+     * @var string
+     */
+    protected const REQUEST_PARAM_ID_MERCHANT_SALES_ORDER = 'id-merchant-sales-order';
 
+    /**
+     * @var string
+     */
     protected const ROUTE_REDIRECT = '/merchant-sales-order-merchant-user-gui/detail';
 
     /**
      * @uses \Spryker\Zed\Http\Communication\Plugin\Application\HttpApplicationPlugin::SERVICE_SUB_REQUEST
+     * @var string
      */
     protected const SERVICE_SUB_REQUEST = 'sub_request';
 
+    /**
+     * @var string
+     */
     protected const MESSAGE_MERCHANT_NOT_FOUND_ERROR = 'Merchant for current user not found.';
+    /**
+     * @var string
+     */
     protected const MESSAGE_MERCHANT_ORDER_NOT_FOUND_ERROR = 'Merchant sales order #%d not found.';
 
     /**
-     * @phpstan-return array<mixed>|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @phpstan-return \Symfony\Component\HttpFoundation\RedirectResponse|array<mixed>
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function indexAction(Request $request)
     {
         $idMerchantSalesOrder = $this->castId(
-            $request->query->getInt(MerchantSalesOrderMerchantUserGuiConfig::REQUEST_PARAM_ID_MERCHANT_SALES_ORDER)
+            $request->query->getInt(static::REQUEST_PARAM_ID_MERCHANT_SALES_ORDER)
         );
+
         $idMerchant = $this->getFactory()->getMerchantUserFacade()->getCurrentMerchantUser()->getIdMerchant();
 
         if (!$idMerchant) {
@@ -122,7 +135,7 @@ class DetailController extends AbstractController
         if (!$merchantOrderTransfer) {
             return null;
         }
-
+        /** @var array<int> $merchantOrderItemIds */
         $merchantOrderItemIds = $this->extractMerchantOrderItemIds($merchantOrderTransfer->getMerchantOrderItems());
         $merchantOrderItemsStateHistory = $this->getFactory()
             ->getMerchantOmsFacade()
@@ -162,9 +175,11 @@ class DetailController extends AbstractController
     /**
      * @phpstan-param \ArrayObject<int,\Generated\Shared\Transfer\MerchantOrderItemTransfer> $merchantOrderItems
      *
-     * @param \ArrayObject|\Generated\Shared\Transfer\MerchantOrderItemTransfer[] $merchantOrderItems
+     * @phpstan-return array<array-key, int|null>
      *
-     * @return int[]
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\MerchantOrderItemTransfer> $merchantOrderItems
+     *
+     * @return array<int>
      */
     protected function extractMerchantOrderItemIds(ArrayObject $merchantOrderItems): array
     {
@@ -182,7 +197,7 @@ class DetailController extends AbstractController
      *
      * @phpstan-return array<int|string, array<int|string, string>>
      *
-     * @param \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[] $groupedMerchantOrderItemsByShipment
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ShipmentGroupTransfer> $groupedMerchantOrderItemsByShipment
      * @param array $merchantOrderItemsWithOrderItemIdKey
      *
      * @return array
@@ -194,7 +209,10 @@ class DetailController extends AbstractController
         foreach ($groupedMerchantOrderItemsByShipment as $shipmentGroupTransfer) {
             $eventsForGroup = [];
             foreach ($shipmentGroupTransfer->getItems() as $itemTransfer) {
-                $merchantOrderItemTransfer = $merchantOrderItemsWithOrderItemIdKey[$itemTransfer->getIdSalesOrderItem()];
+                /** @var int $idSalesOrderItem */
+                $idSalesOrderItem = $itemTransfer->getIdSalesOrderItem();
+
+                $merchantOrderItemTransfer = $merchantOrderItemsWithOrderItemIdKey[$idSalesOrderItem];
                 $eventsForGroup = array_merge($eventsForGroup, $merchantOrderItemTransfer->getManualEvents());
             }
 
@@ -218,7 +236,7 @@ class DetailController extends AbstractController
     protected function createRedirectLink(int $idMerchantSalesOrder): string
     {
         $redirectUrlParams = [
-            static::PARAM_ID_MERCHANT_SALES_ORDER => $idMerchantSalesOrder,
+            static::REQUEST_PARAM_ID_MERCHANT_SALES_ORDER => $idMerchantSalesOrder,
         ];
 
         return Url::generate(static::ROUTE_REDIRECT, $redirectUrlParams);
@@ -255,7 +273,7 @@ class DetailController extends AbstractController
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param string $blockUrl
      *
-     * @return string|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|string
      */
     protected function handleSubRequest(Request $request, string $blockUrl)
     {

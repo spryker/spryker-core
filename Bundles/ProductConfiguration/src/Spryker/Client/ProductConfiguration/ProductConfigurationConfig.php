@@ -16,6 +16,8 @@ class ProductConfigurationConfig extends AbstractBundleConfig
 {
     /**
      * Number of seconds while response considered as valid.
+     *
+     * @var int
      */
     protected const PRODUCT_CONFIGURATOR_RESPONSE_MAX_VALID_SECONDS = 60;
 

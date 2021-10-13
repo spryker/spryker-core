@@ -37,6 +37,9 @@ use SprykerTest\Zed\CmsBlockProductStorage\CmsBlockProductStorageConfigMock;
  */
 class CmsBlockProductStorageListenerTest extends Unit
 {
+    /**
+     * @var int
+     */
     protected const EXPECTED_BLOCK_NAME_COUNT = 1;
 
     /**

@@ -19,6 +19,9 @@ use Twig\TwigFunction;
  */
 class PanelTwigPlugin extends AbstractPlugin implements TwigPluginInterface
 {
+    /**
+     * @var string
+     */
     public const FUNCTION_NAME_PANEL = 'panel';
 
     /**

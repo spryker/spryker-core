@@ -8,9 +8,11 @@
 namespace Spryker\Zed\Sales\Persistence;
 
 use Generated\Shared\Transfer\AddressTransfer;
+use Generated\Shared\Transfer\OrderFilterTransfer;
 use Generated\Shared\Transfer\OrderItemFilterTransfer;
 use Generated\Shared\Transfer\OrderListRequestTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 
 interface SalesRepositoryInterface
 {
@@ -39,7 +41,7 @@ interface SalesRepositoryInterface
     /**
      * @param \Generated\Shared\Transfer\OrderItemFilterTransfer $orderItemFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     public function getOrderItems(OrderItemFilterTransfer $orderItemFilterTransfer): array;
 
@@ -51,23 +53,44 @@ interface SalesRepositoryInterface
     public function searchOrders(OrderListTransfer $orderListTransfer): OrderListTransfer;
 
     /**
-     * @param int[] $salesOrderIds
+     * @param array<int> $salesOrderIds
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     public function getSalesOrderItemsByOrderIds(array $salesOrderIds): array;
 
     /**
-     * @param int[] $salesOrderIds
+     * @param array<int> $salesOrderIds
      *
-     * @return \Generated\Shared\Transfer\TotalsTransfer[]
+     * @return array<\Generated\Shared\Transfer\TotalsTransfer>
      */
     public function getMappedSalesOrderTotalsBySalesOrderIds(array $salesOrderIds): array;
 
     /**
-     * @param int[] $salesOrderIds
+     * @param array<int> $salesOrderIds
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getCurrencyIsoCodesBySalesOrderIds(array $salesOrderIds): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderFilterTransfer $orderFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function getSalesOrderDetails(OrderFilterTransfer $orderFilterTransfer): OrderTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return int
+     */
+    public function getTotalCustomerOrderCount(OrderTransfer $orderTransfer): int;
+
+    /**
+     * @param int $idSalesOrder
+     *
+     * @return int
+     */
+    public function countUniqueProductsForOrder(int $idSalesOrder): int;
 }

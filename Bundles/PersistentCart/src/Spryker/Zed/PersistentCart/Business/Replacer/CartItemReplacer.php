@@ -94,8 +94,8 @@ class CartItemReplacer implements CartItemReplacerInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemsToRemoval
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemsToAdding
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemsToRemoval
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemsToAdding
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
@@ -142,7 +142,7 @@ class CartItemReplacer implements CartItemReplacerInterface
      * @param \Generated\Shared\Transfer\PersistentItemReplaceTransfer $persistentItemReplaceTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     protected function prepareItemsForRemoval(PersistentItemReplaceTransfer $persistentItemReplaceTransfer, QuoteTransfer $quoteTransfer): array
     {

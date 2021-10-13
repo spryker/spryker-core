@@ -12,12 +12,12 @@ use Generated\Shared\Transfer\ApiRequestTransfer;
 class ApiRequestTransferFilter implements ApiRequestTransferFilterInterface
 {
     /**
-     * @var \Spryker\Zed\Api\Communication\Plugin\ApiRequestTransferFilterPluginInterface[]
+     * @var array<\Spryker\Zed\Api\Communication\Plugin\ApiRequestTransferFilterPluginInterface>
      */
     protected $apiRequestTransferFilterPlugins;
 
     /**
-     * @param \Spryker\Zed\Api\Communication\Plugin\ApiRequestTransferFilterPluginInterface[] $apiRequestTransferFilterPlugins
+     * @param array<\Spryker\Zed\Api\Communication\Plugin\ApiRequestTransferFilterPluginInterface> $apiRequestTransferFilterPlugins
      */
     public function __construct(array $apiRequestTransferFilterPlugins)
     {

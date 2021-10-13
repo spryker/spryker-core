@@ -13,6 +13,8 @@ class UrlStorageConfig extends AbstractSharedConfig
 {
     /**
      * Defines queue name that as used for asynchronous event handling.
+     *
+     * @var string
      */
     public const PUBLISH_URL = 'publish.url';
 }

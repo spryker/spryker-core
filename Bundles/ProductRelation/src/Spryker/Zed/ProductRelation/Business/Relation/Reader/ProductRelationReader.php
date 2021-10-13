@@ -13,6 +13,9 @@ use Spryker\Zed\ProductRelation\Persistence\ProductRelationRepositoryInterface;
 
 class ProductRelationReader implements ProductRelationReaderInterface
 {
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_NOT_FOUND = 'Product relation #%d not found';
 
     /**

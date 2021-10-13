@@ -17,8 +17,17 @@ class BundleProxy
 {
     use SharedConfigResolverAwareTrait;
 
+    /**
+     * @var string
+     */
     protected const LOCATOR_MATCHER_SUFFIX = 'Matcher';
+    /**
+     * @var string
+     */
     protected const INSTANCE = 'instance';
+    /**
+     * @var string
+     */
     protected const CLASS_NAME = 'className';
 
     /**
@@ -27,24 +36,24 @@ class BundleProxy
     protected $moduleName;
 
     /**
-     * @var \Spryker\Shared\Kernel\Locator\LocatorInterface[]
+     * @var array<\Spryker\Shared\Kernel\Locator\LocatorInterface>
      */
     protected $locators = [];
 
     /**
-     * @var \Spryker\Shared\Kernel\Locator\LocatorMatcherInterface[]
+     * @var array<\Spryker\Shared\Kernel\Locator\LocatorMatcherInterface>
      */
     protected $locatorMatcherMap = [];
 
     /**
-     * @var \Spryker\Shared\Kernel\Locator\LocatorInterface[]
+     * @var array<\Spryker\Shared\Kernel\Locator\LocatorInterface>
      */
     protected $locatorMatcherByMethodNameMap = [];
 
     /**
      * @var bool|null
      */
-    protected $isInstanceCacheEnabled;
+    protected static $isInstanceCacheEnabled;
 
     /**
      * @var array
@@ -160,11 +169,11 @@ class BundleProxy
      */
     protected function isClassCacheEnabled(): bool
     {
-        if ($this->isInstanceCacheEnabled === null) {
-            $this->isInstanceCacheEnabled = $this->getSharedConfig()->isLocatorInstanceCacheEnabled();
+        if (static::$isInstanceCacheEnabled === null) {
+            static::$isInstanceCacheEnabled = $this->getSharedConfig()->isLocatorInstanceCacheEnabled();
         }
 
-        return $this->isInstanceCacheEnabled;
+        return static::$isInstanceCacheEnabled;
     }
 
     /**

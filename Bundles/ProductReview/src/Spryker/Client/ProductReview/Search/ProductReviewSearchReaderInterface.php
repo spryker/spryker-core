@@ -17,4 +17,9 @@ interface ProductReviewSearchReaderInterface
      * @return array
      */
     public function findProductReviews(ProductReviewSearchRequestTransfer $productReviewSearchRequestTransfer): array;
+
+    /**
+     * @return \Elastica\ResultSet|mixed|array
+     */
+    public function searchProductReviews();
 }

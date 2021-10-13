@@ -18,14 +18,35 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class CustomerTable extends AbstractTable
 {
+    /**
+     * @var string
+     */
     public const ACTIONS = 'Actions';
 
+    /**
+     * @var string
+     */
     public const COL_FK_CUSTOMER = 'fk_customer';
+    /**
+     * @var string
+     */
     public const COL_FIRST_NAME = 'first_name';
+    /**
+     * @var string
+     */
     public const COL_LAST_NAME = 'last_name';
+    /**
+     * @var string
+     */
     public const COL_GENDER = 'gender';
+    /**
+     * @var string
+     */
     public const COL_EMAIL = 'email';
 
+    /**
+     * @var array
+     */
     public const GENDER_MAP = [
         0 => 'Male',
         1 => 'Female',
@@ -97,7 +118,7 @@ class CustomerTable extends AbstractTable
     {
         $query = $this->prepareQuery();
 
-        /** @var \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\CustomerGroup\Persistence\SpyCustomerGroupToCustomer[] $customerCollection */
+        /** @var \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\CustomerGroup\Persistence\SpyCustomerGroupToCustomer> $customerCollection */
         $customerCollection = $this->runQuery($query, $config, true);
 
         if ($customerCollection->count() < 1) {
@@ -124,7 +145,7 @@ class CustomerTable extends AbstractTable
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\CustomerGroup\Persistence\SpyCustomerGroupToCustomer[] $customersCollection
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\CustomerGroup\Persistence\SpyCustomerGroupToCustomer> $customersCollection
      *
      * @return array
      */

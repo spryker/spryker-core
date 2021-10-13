@@ -24,9 +24,21 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ConcreteProductPricesReader implements ConcreteProductPricesReaderInterface
 {
+    /**
+     * @var string
+     */
     protected const PRODUCT_CONCRETE_MAPPING_TYPE = 'sku';
+    /**
+     * @var string
+     */
     protected const KEY_ID_PRODUCT_CONCRETE = 'id_product_concrete';
+    /**
+     * @var string
+     */
     protected const KEY_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
+    /**
+     * @var string
+     */
     protected const SELF_LINK_TEMPLATE = '%s/%s/%s';
 
     /**
@@ -89,6 +101,7 @@ class ConcreteProductPricesReader implements ConcreteProductPricesReaderInterfac
             return $restResponse->addError($this->createConcreteProductSkuIsNotSpecifiedError());
         }
 
+        /** @var string $productConcreteSku */
         $productConcreteSku = $concreteProductResource->getId();
         $restResource = $this->findConcreteProductPricesBySku($productConcreteSku, $restRequest);
 

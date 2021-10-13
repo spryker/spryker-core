@@ -23,11 +23,13 @@ class StorageFactory extends AbstractFactory
 {
     /**
      * @deprecated Will be removed with next major release. StorageRedis module handles default database value.
+     * @var int
      */
     public const DEFAULT_REDIS_DATABASE = 0;
 
     /**
      * @uses \Spryker\Shared\StorageRedis\StorageRedisConstants::STORAGE_REDIS_SCHEME.
+     * @var string
      */
     protected const STORAGE_REDIS_SCHEME = 'STORAGE_REDIS:STORAGE_REDIS_SCHEME';
 

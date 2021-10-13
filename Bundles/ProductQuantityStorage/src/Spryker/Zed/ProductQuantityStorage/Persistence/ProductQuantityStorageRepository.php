@@ -16,9 +16,9 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 class ProductQuantityStorageRepository extends AbstractRepository implements ProductQuantityStorageRepositoryInterface
 {
     /**
-     * @param int[] $productIds
+     * @param array<int> $productIds
      *
-     * @return \Generated\Shared\Transfer\SpyProductQuantityStorageEntityTransfer[]
+     * @return array<\Generated\Shared\Transfer\SpyProductQuantityStorageEntityTransfer>
      */
     public function findProductQuantityStorageEntitiesByProductIds(array $productIds): array
     {
@@ -34,7 +34,7 @@ class ProductQuantityStorageRepository extends AbstractRepository implements Pro
     }
 
     /**
-     * @return \Generated\Shared\Transfer\SpyProductQuantityStorageEntityTransfer[]
+     * @return array<\Generated\Shared\Transfer\SpyProductQuantityStorageEntityTransfer>
      */
     public function findAllProductQuantityStorageEntities(): array
     {
@@ -45,9 +45,9 @@ class ProductQuantityStorageRepository extends AbstractRepository implements Pro
 
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     * @param int[] $productIds
+     * @param array<int> $productIds
      *
-     * @return \Generated\Shared\Transfer\SpyProductQuantityStorageEntityTransfer[]
+     * @return array<\Generated\Shared\Transfer\SpyProductQuantityStorageEntityTransfer>
      */
     public function findFilteredProductQuantityStorageEntities(FilterTransfer $filterTransfer, array $productIds = []): array
     {
@@ -63,9 +63,9 @@ class ProductQuantityStorageRepository extends AbstractRepository implements Pro
     /**
      * @module ProductQuantity
      *
-     * @param int[] $productIds
+     * @param array<int> $productIds
      *
-     * @return \Generated\Shared\Transfer\SpyProductQuantityEntityTransfer[]
+     * @return array<\Generated\Shared\Transfer\SpyProductQuantityEntityTransfer>
      */
     public function getProductQuantityEntityTransfersByProductIds(array $productIds): array
     {

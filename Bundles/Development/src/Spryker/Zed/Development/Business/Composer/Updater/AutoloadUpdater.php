@@ -14,34 +14,106 @@ use Symfony\Component\Finder\SplFileInfo;
 
 class AutoloadUpdater implements UpdaterInterface
 {
+    /**
+     * @var string
+     */
     public const AUTOLOAD_KEY = 'autoload';
+    /**
+     * @var string
+     */
     public const AUTOLOAD_DEV_KEY = 'autoload-dev';
 
+    /**
+     * @var string
+     */
     public const BASE_TESTS_DIRECTORY = 'tests';
+    /**
+     * @var string
+     */
     public const BASE_SRC_DIRECTORY = 'src';
+    /**
+     * @var string
+     */
     public const BASE_SUPPORT_DIRECTORY = '_support';
+    /**
+     * @var string
+     */
     public const BASE_HELPER_DIRECTORY = 'Helper';
+    /**
+     * @var string
+     */
     protected const BASE_PAGE_OBJECT_DIRECTORY = 'PageObject';
+    /**
+     * @var string
+     */
     public const BASE_TESTER_DIRECTORY = 'Tester';
+    /**
+     * @var string
+     */
     public const BASE_FIXTURES_DIRECTORY = 'Fixtures';
+    /**
+     * @var string
+     */
     public const BASE_STEP_OVERRIDE_DIRECTORY = 'StepOverride';
+    /**
+     * @var string
+     */
     public const BASE_FILTER_DIRECTORY = 'Filter';
 
+    /**
+     * @var string
+     */
     public const SPRYKER_TEST_NAMESPACE = 'SprykerTest';
+    /**
+     * @var string
+     */
     public const SPRYKER_SDK_TEST_NAMESPACE = 'SprykerSdkTest';
+    /**
+     * @var string
+     */
     public const SPRYKER_ECO_TEST_NAMESPACE = 'SprykerEcoTest';
+    /**
+     * @var string
+     */
     public const SPRYKER_SHOP_TEST_NAMESPACE = 'SprykerShopTest';
+    /**
+     * @var string
+     */
     public const SPRYKER_MERCHANT_PORTAL_SHOP_TEST_NAMESPACE = 'SprykerMerchantPortalTest';
 
+    /**
+     * @var string
+     */
     public const SPRYKER_NAMESPACE = 'Spryker';
+    /**
+     * @var string
+     */
     public const SPRYKER_SHOP_NAMESPACE = 'SprykerShop';
+    /**
+     * @var string
+     */
     public const SPRYKER_ECO_NAMESPACE = 'SprykerEco';
+    /**
+     * @var string
+     */
     public const SPRYKER_SDK_NAMESPACE = 'SprykerSdk';
+    /**
+     * @var string
+     */
     public const SPRYKER_MERCHANT_PORTAL_NAMESPACE = 'SprykerMerchantPortal';
 
+    /**
+     * @var string
+     */
     public const PSR_0 = 'psr-0';
+    /**
+     * @var string
+     */
     public const PSR_4 = 'psr-4';
 
+    /**
+     * @var array
+     */
     protected const RESERVED_NAMESPACES = [
         'vendor/',
         'tests/_',
@@ -215,11 +287,15 @@ class AutoloadUpdater implements UpdaterInterface
      */
     protected function getNonEmptyDirectoriesWithHelpers($directory)
     {
-        $files = (new Finder())->files()->in($directory)->name('/Helper.php$/');
+        $files = (new Finder())->files()->in($directory)
+            ->exclude('_generated')
+            ->name('*.php$')
+            ->notName('/Tester.php$/');
+
         $directories = [];
         foreach ($files as $file) {
             $directoryName = dirname(str_replace('//', '/', $file));
-            if (!in_array($directoryName, $directories)) {
+            if (!in_array($directoryName, $directories, true)) {
                 $directories[] = $directoryName;
             }
         }
@@ -452,7 +528,7 @@ class AutoloadUpdater implements UpdaterInterface
                 $relativeDirectory,
             ]);
 
-            if (!$this->pathExists($path) || !in_array($this->getLastPartOfPath($relativeDirectory), $this->autoloadPSR4Whitelist)) {
+            if (!$this->pathExists($path) || !in_array($this->getLastPartOfPath($relativeDirectory), $this->autoloadPSR4Whitelist, true)) {
                 if ($this->isFile($path)) {
                     continue;
                 }

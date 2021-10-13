@@ -24,15 +24,39 @@ use Symfony\Component\Validator\Constraints\Regex;
  */
 class ItemType extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const FIELD_SKU = 'sku';
+    /**
+     * @var string
+     */
     public const FIELD_QUANTITY = 'quantity';
+    /**
+     * @var string
+     */
     public const FIELD_UNIT_GROSS_PRICE = 'unitGrossPrice';
+    /**
+     * @var string
+     */
     public const FIELD_FORCED_UNIT_GROSS_PRICE = 'forcedUnitGrossPrice';
 
+    /**
+     * @var string
+     */
     public const OPTION_ISO_CODE = 'isoCode';
 
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_QUANTITY = 'Invalid Quantity.';
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_PRICE = 'Invalid Price.';
+    /**
+     * @var string
+     */
     protected const PATTERN_MONEY = '/^\d*\.?\d{0,2}$/';
 
     /**

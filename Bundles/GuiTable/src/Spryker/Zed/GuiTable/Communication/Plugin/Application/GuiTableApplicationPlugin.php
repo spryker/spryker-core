@@ -19,7 +19,13 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class GuiTableApplicationPlugin extends AbstractPlugin implements ApplicationPluginInterface
 {
+    /**
+     * @var string
+     */
     public const SERVICE_GUI_TABLE_FACTORY = 'gui_table_factory';
+    /**
+     * @var string
+     */
     public const SERVICE_GUI_TABLE_HTTP_DATA_REQUEST_EXECUTOR = 'gui_table_http_data_request_executor';
 
     /**

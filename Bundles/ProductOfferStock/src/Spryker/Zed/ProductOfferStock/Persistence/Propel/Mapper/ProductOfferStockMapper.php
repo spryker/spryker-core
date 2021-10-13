@@ -18,9 +18,9 @@ class ProductOfferStockMapper
 {
     /**
      * @param \Propel\Runtime\Collection\ObjectCollection $productOfferStockEntities
-     * @param \ArrayObject|\Generated\Shared\Transfer\ProductOfferStockTransfer[] $productOfferStockTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ProductOfferStockTransfer> $productOfferStockTransfers
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ProductOfferStockTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\ProductOfferStockTransfer>
      */
     public function mapProductOfferStockEntityCollectionToProductOfferStockTransfers(
         ObjectCollection $productOfferStockEntities,
@@ -65,9 +65,18 @@ class ProductOfferStockMapper
         ProductOfferStockTransfer $productOfferStockTransfer,
         SpyProductOfferStock $productOfferStockEntity
     ): SpyProductOfferStock {
+        /** @var int $idProductOffer */
+        $idProductOffer = $productOfferStockTransfer->getIdProductOffer();
+
+        /** @var \Generated\Shared\Transfer\StockTransfer $stockTransfer */
+        $stockTransfer = $productOfferStockTransfer->getStock();
+
+        /** @var int $idStock */
+        $idStock = $stockTransfer->getIdStock();
+
         $productOfferStockEntity->fromArray($productOfferStockTransfer->toArray(false));
-        $productOfferStockEntity->setFkProductOffer($productOfferStockTransfer->getIdProductOffer());
-        $productOfferStockEntity->setFkStock($productOfferStockTransfer->getStock()->getIdStock());
+        $productOfferStockEntity->setFkProductOffer($idProductOffer);
+        $productOfferStockEntity->setFkStock($idStock);
 
         return $productOfferStockEntity;
     }

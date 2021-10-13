@@ -17,7 +17,13 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class PropelSchemaXmlNameValidatorConsole extends Console
 {
+    /**
+     * @var string
+     */
     public const COMMAND_NAME = 'propel:schema:validate-xml-names';
+    /**
+     * @var string
+     */
     public const DESCRIPTION = 'Validates XML element name rules for schema files.';
 
     /**

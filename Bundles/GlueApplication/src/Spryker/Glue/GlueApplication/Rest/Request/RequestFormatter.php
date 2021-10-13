@@ -32,7 +32,7 @@ class RequestFormatter implements RequestFormatterInterface
     protected $glueApplicationConfig;
 
     /**
-     * @var \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\FormatRequestPluginInterface[]
+     * @var array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\FormatRequestPluginInterface>
      */
     protected $requestFormatterPlugins = [];
 
@@ -40,7 +40,7 @@ class RequestFormatter implements RequestFormatterInterface
      * @param \Spryker\Glue\GlueApplication\Rest\Request\RequestMetaDataExtractorInterface $requestMetaDataExtractor
      * @param \Spryker\Glue\GlueApplication\Rest\Request\RequestResourceExtractorInterface $requestResourceExtractor
      * @param \Spryker\Glue\GlueApplication\GlueApplicationConfig $glueApplicationConfig
-     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\FormatRequestPluginInterface[] $requestFormatterPlugins
+     * @param array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\FormatRequestPluginInterface> $requestFormatterPlugins
      */
     public function __construct(
         RequestMetaDataExtractorInterface $requestMetaDataExtractor,

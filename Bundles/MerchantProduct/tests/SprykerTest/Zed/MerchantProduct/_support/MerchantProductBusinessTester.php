@@ -8,7 +8,11 @@
 namespace SprykerTest\Zed\MerchantProduct;
 
 use Codeception\Actor;
+use Generated\Shared\Transfer\MerchantProductCriteriaTransfer;
+use Generated\Shared\Transfer\MerchantProductTransfer;
+use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstractQuery;
+use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 
 /**
  * @method void wantToTest($text)
@@ -44,5 +48,51 @@ class MerchantProductBusinessTester extends Actor
     protected function getMerchantProductAbstractPropelQuery(): SpyMerchantProductAbstractQuery
     {
         return SpyMerchantProductAbstractQuery::create();
+    }
+
+    /**
+     * @param int $productAbstractId
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer|null
+     */
+    public function findProductAbstractById(int $productAbstractId): ?ProductAbstractTransfer
+    {
+        $productAbstractEntity = SpyProductAbstractQuery::create()->findOneByIdProductAbstract($productAbstractId);
+
+        if (!$productAbstractEntity) {
+            return null;
+        }
+
+        $productAbstractTransfer = (new ProductAbstractTransfer())->fromArray($productAbstractEntity->toArray(), true);
+
+        return $productAbstractTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantProductCriteriaTransfer $merchantProductCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantProductTransfer|null
+     */
+    public function findMerchantProduct(
+        MerchantProductCriteriaTransfer $merchantProductCriteriaTransfer
+    ): ?MerchantProductTransfer {
+        $merchantProductAbstractQuery = SpyMerchantProductAbstractQuery::create();
+        if (count($merchantProductCriteriaTransfer->getMerchantProductAbstractIds())) {
+            $merchantProductAbstractQuery->filterByIdMerchantProductAbstract_In(
+                $merchantProductCriteriaTransfer->getMerchantProductAbstractIds()
+            );
+        }
+
+        $merchantProductAbstractEntity = $merchantProductAbstractQuery->findOne();
+
+        if (!$merchantProductAbstractEntity) {
+            return null;
+        }
+
+        $merchantProductTransfer = (new MerchantProductTransfer())->fromArray($merchantProductAbstractEntity->toArray(), true);
+        $merchantProductTransfer->setIdProductAbstract($merchantProductAbstractEntity->getFkProductAbstract());
+        $merchantProductTransfer->setIdMerchant($merchantProductAbstractEntity->getFkMerchant());
+
+        return $merchantProductTransfer;
     }
 }

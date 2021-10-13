@@ -17,16 +17,28 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class CreateMerchantRelationshipController extends AbstractController
 {
+    /**
+     * @var string
+     */
     protected const PARAM_REDIRECT_URL = 'redirect-url';
+    /**
+     * @var string
+     */
     public const PARAM_SUBMIT_PERSIST = 'submit-persist';
 
+    /**
+     * @var string
+     */
     protected const MESSAGE_MERCHANT_RELATION_CREATE_SUCCESS = 'Merchant relation created successfully.';
+    /**
+     * @var string
+     */
     protected const MESSAGE_MERCHANT_RELATION_CREATE_ERROR = 'Merchant relation has not been created.';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function indexAction(Request $request)
     {
@@ -54,7 +66,7 @@ class CreateMerchantRelationshipController extends AbstractController
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Symfony\Component\Form\FormInterface $merchantRelationshipForm
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     protected function createMerchantRelationship(Request $request, FormInterface $merchantRelationshipForm)
     {

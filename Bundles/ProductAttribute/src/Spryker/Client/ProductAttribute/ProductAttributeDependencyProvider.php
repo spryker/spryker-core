@@ -16,6 +16,9 @@ use Spryker\Client\ProductAttribute\Dependency\Client\ProductAttributeToZedReque
  */
 class ProductAttributeDependencyProvider extends AbstractDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
 
     /**

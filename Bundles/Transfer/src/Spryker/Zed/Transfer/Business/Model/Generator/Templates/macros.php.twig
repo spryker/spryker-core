@@ -4,6 +4,10 @@
     /**
      * @deprecated {{ constant.deprecationDescription }}
      */
+    {% else -%}
+    /**
+     * @var string
+     */
     {% endif -%}
     public const {{ constant.name }} = '{{ constant.value }}';
 
@@ -26,6 +30,7 @@
             'rest_request_parameter' => '{{ property.restRequestParameter is defined ? property.restRequestParameter : 'no' }}',
             'is_associative' => {{ property.is_associative ? 'true' : 'false' }},
             'is_nullable' => {{ property.nullable ? 'true' : 'false' }},
+            'is_strict' => {{ property.is_strict ? 'true' : 'false' }},
         ],
     {% endfor -%}
 ];
@@ -133,7 +138,7 @@
      {% endif -%}
      * @return {{ method.return }}{% if method.typeShimNotice %} {{ method.typeShimNotice }}{% endif ~%}
      */
-    public function {{ method.name }}(){% if method.returnTypeHint is defined %}: {{ method.returnTypeHint }} {% endif ~%}
+    public function {{ method.name }}(){% if method.returnTypeHint is defined %}: {{ method.returnTypeHint }}{% endif ~%}
     {
         return $this->{{ method.property }};
     }
@@ -146,13 +151,15 @@
      * @module {{ method.bundles|join('|') }}
      *
      {% endif -%}
+     * @throws \Spryker\Shared\Kernel\Transfer\Exception\NullValueException
+     *
      {% if method.deprecationDescription is not null -%}
      * @deprecated {{ method.deprecationDescription }}
      *
      {% endif -%}
      * @return {{ method.return }}
      */
-    public function {{ method.name }}(){% if method.returnTypeHint is defined %}: {{ method.returnTypeHint }} {% endif ~%}
+    public function {{ method.name }}(){% if method.returnTypeHint is defined %}: {{ method.returnTypeHint }}{% endif ~%}
     {
         if ($this->{{ method.property }} === null) {
             $this->throwNullValueException(static::{{ method.propertyConst }});
@@ -249,6 +256,8 @@
      * @module {{ method.bundles|join('|') }}
      *
      {% endif -%}
+     * @throws \Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException
+     *
      {% if method.deprecationDescription is not null -%}
      * @deprecated {{ method.deprecationDescription }}
      *
@@ -269,8 +278,8 @@
 
 {%- macro addEntityNamespace(entityNamespace) %}
     /**
-    * @var string
-    */
+     * @var string
+     */
     public static $entityNamespace = '{{ entityNamespace }}';
 {% endmacro -%}
 
@@ -278,8 +287,8 @@
 {%- macro addModifiedToArray(methodName, camelCase, isRecursive, primitives, transfers, collections, valueObjects)-%}
 
     /**
-    * @return array
-    */
+     * @return array
+     */
     public function {{ methodName }}()
     {
         $values = [];
@@ -295,6 +304,7 @@
 {% if isRecursive %}
             if ($value instanceof AbstractTransfer) {
                 $values[$arrayKey] = $value->modifiedToArray({{ isRecursive ?  'true' : 'false' }}, {{ camelCase ?  'true' : 'false' }});
+
                 continue;
             }
             switch ($property) {
@@ -306,6 +316,7 @@
                 case '{{ value.name }}':
 {% endfor %}
                     $values[$arrayKey] = $value;
+
                     break;
 {% endif %}
 {% if transfers is not empty %}
@@ -313,6 +324,7 @@
                 case '{{ value.name }}':
 {% endfor %}
                     $values[$arrayKey] = $value instanceof AbstractTransfer ? $value->modifiedToArray({{ isRecursive ?  'true' : 'false' }}, {{ camelCase ?  'true' : 'false' }}) : $value;
+
                     break;
 {% endif %}
 {% if collections is not empty %}
@@ -320,6 +332,7 @@
                 case '{{ value.name }}':
 {% endfor %}
                     $values[$arrayKey] = $value ? $this->addValuesToCollectionModified($value, {{ isRecursive ?  'true' : 'false' }}, {{ camelCase ?  'true' : 'false' }}) : $value;
+
                     break;
 {% endif %}
             }
@@ -336,8 +349,8 @@
 {%- macro addToArray(methodName, isRecursive, isCamelCamed, primitives, transfers, transferCollections, valueObjects)-%}
 {%- set nameKey = isCamelCamed ? 'name' : 'name_underscore' -%}
     /**
-    * @return array
-    */
+     * @return array
+     */
     public function {{ methodName }}()
     {
         return [
@@ -371,8 +384,8 @@
 
 {%- macro addInitCollections(collections) -%}
     /**
-    * @return void
-    */
+     * @return void
+     */
     protected function initCollectionProperties()
     {
 {% for collection in collections %}

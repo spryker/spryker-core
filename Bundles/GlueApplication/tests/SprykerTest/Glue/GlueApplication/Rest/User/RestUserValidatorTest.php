@@ -74,12 +74,12 @@ class RestUserValidatorTest extends Unit
     protected function createRestUserValidatorPluginMock(): RestUserValidatorPluginInterface
     {
         return $this->getMockBuilder(RestUserValidatorPluginInterface::class)
-           ->onlyMethods(['validate'])
-           ->getMock();
+            ->onlyMethods(['validate'])
+            ->getMock();
     }
 
     /**
-     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RestUserValidatorPluginInterface[] $restUserValidatorPlugins
+     * @param array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RestUserValidatorPluginInterface> $restUserValidatorPlugins
      *
      * @return \Spryker\Glue\GlueApplication\Rest\User\RestUserValidatorInterface
      */

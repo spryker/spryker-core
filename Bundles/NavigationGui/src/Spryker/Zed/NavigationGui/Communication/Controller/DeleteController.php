@@ -19,17 +19,29 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class DeleteController extends AbstractController
 {
+    /**
+     * @var string
+     */
     public const PARAM_ID_NAVIGATION = 'id-navigation';
 
+    /**
+     * @var string
+     */
     protected const MESSAGE_NAVIGATION_REMOVAL_SUCCESS = 'Navigation element %d was deleted successfully.';
+    /**
+     * @var string
+     */
     protected const MESSAGE_NAVIGATION_REMOVAL_FAIL = 'Navigation element %d was not found.';
 
+    /**
+     * @var string
+     */
     protected const MESSAGE_PARAM = '%d';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function indexAction(Request $request)
     {

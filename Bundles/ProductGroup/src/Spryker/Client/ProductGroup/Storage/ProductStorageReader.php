@@ -64,7 +64,7 @@ class ProductStorageReader implements ProductStorageReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductGroupTransfer[] $productGroupTransfers
+     * @param array<\Generated\Shared\Transfer\ProductGroupTransfer> $productGroupTransfers
      *
      * @return array
      */

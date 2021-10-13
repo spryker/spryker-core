@@ -21,11 +21,13 @@ class BundleItemExpander implements BundleItemExpanderInterface
 {
     /**
      * @uses \Spryker\Client\ProductBundle\Grouper\ProductBundleGrouper::BUNDLE_ITEMS
+     * @var string
      */
     protected const BUNDLE_ITEMS = 'bundleItems';
 
     /**
      * @uses \Spryker\Client\ProductBundle\Grouper\ProductBundleGrouper::BUNDLE_PRODUCT
+     * @var string
      */
     protected const BUNDLE_PRODUCT = 'bundleProduct';
 
@@ -60,7 +62,7 @@ class BundleItemExpander implements BundleItemExpanderInterface
     }
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
+     * @param array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface> $resources
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return void
@@ -93,7 +95,7 @@ class BundleItemExpander implements BundleItemExpanderInterface
     }
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
+     * @param array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface> $resources
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return void
@@ -128,14 +130,14 @@ class BundleItemExpander implements BundleItemExpanderInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     protected function getGroupedBundleItems(QuoteTransfer $quoteTransfer): array
     {
         $groupedBundleItems = $this->productBundleClient
             ->getGroupedBundleItems($quoteTransfer->getItems(), $quoteTransfer->getBundleItems());
 
-        /** @var \Generated\Shared\Transfer\ItemTransfer[] $bundleItemTransfers */
+        /** @var array<\Generated\Shared\Transfer\ItemTransfer> $bundleItemTransfers */
         $bundleItemTransfers = [];
         foreach ($groupedBundleItems as $groupedBundleItem) {
             if ($groupedBundleItem instanceof ItemTransfer) {

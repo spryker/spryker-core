@@ -16,6 +16,9 @@ use Spryker\Yves\Kernel\AbstractPlugin;
  */
 class StoreApplicationPlugin extends AbstractPlugin implements ApplicationPluginInterface
 {
+    /**
+     * @var string
+     */
     public const STORE = 'store';
 
     /**

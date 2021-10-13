@@ -12,8 +12,17 @@ use Spryker\Shared\Log\Sanitizer\SanitizerInterface;
 
 class GuzzleBodyProcessor
 {
+    /**
+     * @var string
+     */
     public const EXTRA = 'guzzle-body';
+    /**
+     * @var string
+     */
     public const RECORD_CONTEXT = 'context';
+    /**
+     * @var string
+     */
     public const RECORD_EXTRA = 'extra';
 
     /**
@@ -47,7 +56,7 @@ class GuzzleBodyProcessor
     }
 
     /**
-     * @param string|array $body
+     * @param array|string $body
      *
      * @return array
      */

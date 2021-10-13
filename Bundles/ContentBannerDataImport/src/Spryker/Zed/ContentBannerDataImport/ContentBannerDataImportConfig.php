@@ -12,7 +12,13 @@ use Spryker\Zed\DataImport\DataImportConfig;
 
 class ContentBannerDataImportConfig extends DataImportConfig
 {
+    /**
+     * @var string
+     */
     public const IMPORT_FILE_NAME = 'content_banner.csv';
+    /**
+     * @var string
+     */
     public const IMPORT_TYPE_CONTENT_BANNER = 'content-banner';
 
     /**

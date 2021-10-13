@@ -1,0 +1,30 @@
+[
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/ProductSearch/src/Spryker/Zed/ProductSearch/Dependency/Facade/ProductSearchToGlossaryInterface.php",
+        "description": "\n      Bridges: The bridge interface has incorrect method 'updateAndTouchTranslation' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/ProductSearch/src/Spryker/Zed/ProductSearch/Dependency/Facade/ProductSearchToGlossaryInterface.php",
+        "description": "\n      Bridges: The bridge interface has incorrect method 'hasTranslation' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/ProductSearch/src/Spryker/Zed/ProductSearch/Dependency/Facade/ProductSearchToTouchInterface.php",
+        "description": "\n      Bridges: The bridge interface has incorrect method 'touchActive' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/ProductSearch/src/Spryker/Zed/ProductSearch/Dependency/Facade/ProductSearchToTouchInterface.php",
+        "description": "\n      Bridges: The bridge interface has incorrect method 'bulkTouchSetActive' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    }
+]

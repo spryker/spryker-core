@@ -29,7 +29,13 @@ use Spryker\Zed\DataImport\Business\Exception\DataImportException;
  */
 class CompanyUnitAddressLabelRelationDataImportPluginTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const COMPANY_ADDRESS_KEY_1 = 'spryker-address-1';
+    /**
+     * @var string
+     */
     protected const COMPANY_ADDRESS_KEY_2 = 'spryker-address-2';
 
     /**

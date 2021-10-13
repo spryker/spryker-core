@@ -43,9 +43,9 @@ interface ContentBannerRestResponseBuilderInterface
      *
      * @phpstan-return array<string, \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>
      *
-     * @param \Generated\Shared\Transfer\ContentBannerTypeTransfer[] $contentBannerTypeTransfers
+     * @param array<\Generated\Shared\Transfer\ContentBannerTypeTransfer> $contentBannerTypeTransfers
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>
      */
     public function createContentBannersRestResources(array $contentBannerTypeTransfers): array;
 }

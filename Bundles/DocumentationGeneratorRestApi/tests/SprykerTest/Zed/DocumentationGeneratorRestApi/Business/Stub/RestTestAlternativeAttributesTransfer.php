@@ -11,8 +11,14 @@ use SprykerTest\Shared\Kernel\Transfer\Fixtures\AbstractTransfer;
 
 class RestTestAlternativeAttributesTransfer extends AbstractTransfer
 {
+    /**
+     * @var string
+     */
     public const ATTRIBUTE3 = 'attribute3';
 
+    /**
+     * @var string
+     */
     public const ATTRIBUTE4 = 'attribute4';
 
     /**

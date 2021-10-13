@@ -14,7 +14,13 @@ use Spryker\Zed\MerchantRelationshipProductList\Business\Reader\MerchantRelation
 
 class ProductListDeleteChecker implements ProductListDeleteCheckerInterface
 {
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_UNABLE_TO_DELETE_PRODUCT_LIST = 'Unable to delete Product List since it\'s used by Merchant Relation "%merchant_relation%".';
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_PARAM_MERCHANT_RELATION = '%merchant_relation%';
 
     /**
@@ -57,7 +63,7 @@ class ProductListDeleteChecker implements ProductListDeleteCheckerInterface
 
     /**
      * @param \Generated\Shared\Transfer\ProductListResponseTransfer $productListResponseTransfer
-     * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer[] $merchantRelationshipTransfers
+     * @param array<\Generated\Shared\Transfer\MerchantRelationshipTransfer> $merchantRelationshipTransfers
      *
      * @return \Generated\Shared\Transfer\ProductListResponseTransfer
      */

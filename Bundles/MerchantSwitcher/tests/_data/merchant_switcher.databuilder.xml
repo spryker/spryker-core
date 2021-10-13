@@ -7,4 +7,16 @@
     <transfer name="Merchant">
         <property name="merchantReference" dataBuilderRule="unique()->sentence"/>
     </transfer>
+
+    <transfer name="ProductOffer">
+        <property name="concreteSku" dataBuilderRule="unique()->sentence(5)"/>
+        <property name="productOfferReference" dataBuilderRule="unique()->sentence(5)"/>
+    </transfer>
+
+    <transfer name="WishlistItem">
+        <property name="wishlistName" dataBuilderRule="unique()->sentence"/>
+        <property name="sku" dataBuilderRule="unique()->sentence"/>
+        <property name="merchantReference" dataBuilderRule="unique()->sentence"/>
+        <property name="productOfferReference" dataBuilderRule="unique()->sentence"/>
+    </transfer>
 </transfers>

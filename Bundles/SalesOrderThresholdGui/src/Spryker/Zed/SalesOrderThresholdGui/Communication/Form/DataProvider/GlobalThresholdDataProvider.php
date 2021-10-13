@@ -19,7 +19,13 @@ use Spryker\Zed\SalesOrderThresholdGui\SalesOrderThresholdGuiConfig;
 
 class GlobalThresholdDataProvider
 {
+    /**
+     * @var string
+     */
     protected const FORMAT_STORE_CURRENCY_ROW_LABEL = '%s - %s [%s]';
+    /**
+     * @var string
+     */
     protected const FORMAT_STORE_CURRENCY_ROW_VALUE = '%s%s%s';
 
     /**
@@ -38,7 +44,7 @@ class GlobalThresholdDataProvider
     protected $globalThresholdDataProviderResolver;
 
     /**
-     * @var \Spryker\Zed\SalesOrderThresholdGuiExtension\Dependency\Plugin\SalesOrderThresholdFormExpanderPluginInterface[]
+     * @var array<\Spryker\Zed\SalesOrderThresholdGuiExtension\Dependency\Plugin\SalesOrderThresholdFormExpanderPluginInterface>
      */
     protected $formExpanderPlugins;
 
@@ -46,7 +52,7 @@ class GlobalThresholdDataProvider
      * @param \Spryker\Zed\SalesOrderThresholdGui\Dependency\Facade\SalesOrderThresholdGuiToSalesOrderThresholdFacadeInterface $salesOrderThresholdFacade
      * @param \Spryker\Zed\SalesOrderThresholdGui\Dependency\Facade\SalesOrderThresholdGuiToCurrencyFacadeInterface $currencyFacade
      * @param \Spryker\Zed\SalesOrderThresholdGui\Communication\Form\DataProvider\ThresholdGroup\Resolver\GlobalThresholdDataProviderResolverInterface $globalThresholdDataProviderResolver
-     * @param \Spryker\Zed\SalesOrderThresholdGuiExtension\Dependency\Plugin\SalesOrderThresholdFormExpanderPluginInterface[] $formExpanderPlugins
+     * @param array<\Spryker\Zed\SalesOrderThresholdGuiExtension\Dependency\Plugin\SalesOrderThresholdFormExpanderPluginInterface> $formExpanderPlugins
      */
     public function __construct(
         SalesOrderThresholdGuiToSalesOrderThresholdFacadeInterface $salesOrderThresholdFacade,
@@ -120,7 +126,7 @@ class GlobalThresholdDataProvider
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function getStoreCurrencyList(): array
     {
@@ -158,7 +164,7 @@ class GlobalThresholdDataProvider
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function getHardTypesList(): array
     {
@@ -173,7 +179,7 @@ class GlobalThresholdDataProvider
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function getHardMaxTypesList(): array
     {
@@ -188,7 +194,7 @@ class GlobalThresholdDataProvider
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function getSoftTypesList(): array
     {
@@ -224,7 +230,7 @@ class GlobalThresholdDataProvider
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
      *
-     * @return \Generated\Shared\Transfer\SalesOrderThresholdTransfer[]
+     * @return array<\Generated\Shared\Transfer\SalesOrderThresholdTransfer>
      */
     protected function getSalesOrderThresholdTransfers(StoreTransfer $storeTransfer, CurrencyTransfer $currencyTransfer): array
     {

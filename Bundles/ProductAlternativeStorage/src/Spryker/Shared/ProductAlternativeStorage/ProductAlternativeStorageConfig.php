@@ -16,6 +16,7 @@ class ProductAlternativeStorageConfig extends AbstractBundleConfig
      * - Key generation resource name of product alternative.
      *
      * @api
+     * @var string
      */
     public const PRODUCT_ALTERNATIVE_RESOURCE_NAME = 'product_alternative';
 
@@ -24,6 +25,7 @@ class ProductAlternativeStorageConfig extends AbstractBundleConfig
      * - Key generation resource name of product replacement.
      *
      * @api
+     * @var string
      */
     public const PRODUCT_REPLACEMENT_RESOURCE_NAME = 'product_replacement_for';
 
@@ -32,6 +34,7 @@ class ProductAlternativeStorageConfig extends AbstractBundleConfig
      * - Queue name as used for processing product alternative messages.
      *
      * @api
+     * @var string
      */
     public const PRODUCT_ALTERNATIVE_SYNC_STORAGE_QUEUE = 'sync.storage.product';
 
@@ -40,6 +43,7 @@ class ProductAlternativeStorageConfig extends AbstractBundleConfig
      * - Queue name as used for processing product alternative messages.
      *
      * @api
+     * @var string
      */
     public const PRODUCT_ALTERNATIVE_SYNC_STORAGE_ERROR_QUEUE = 'sync.storage.product.error';
 }

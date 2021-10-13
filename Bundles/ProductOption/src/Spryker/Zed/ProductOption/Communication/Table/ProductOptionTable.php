@@ -18,14 +18,32 @@ use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface;
 
 class ProductOptionTable extends AbstractTable
 {
+    /**
+     * @var string
+     */
     public const TABLE_IDENTIFIER = 'product-option-table';
 
+    /**
+     * @var string
+     */
     public const COL_CHECKBOX = 'checkbox';
+    /**
+     * @var string
+     */
     public const COL_ACTIONS = 'actions';
 
+    /**
+     * @var string
+     */
     public const TABLE_CONTEXT_EDIT = 'edit';
+    /**
+     * @var string
+     */
     public const TABLE_CONTEXT_VIEW = 'view';
 
+    /**
+     * @var string
+     */
     public const URL_PARAM_ID_PRODUCT_ABSTRACT = 'id-product-abstract';
 
     /**
@@ -164,9 +182,9 @@ class ProductOptionTable extends AbstractTable
             ];
         }
 
-         return [
-             self::COL_ACTIONS => 'Actions',
-         ];
+        return [
+            self::COL_ACTIONS => 'Actions',
+        ];
     }
 
     /**

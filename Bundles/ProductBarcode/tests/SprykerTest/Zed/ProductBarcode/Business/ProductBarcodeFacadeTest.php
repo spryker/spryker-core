@@ -29,7 +29,13 @@ use Spryker\Service\Barcode\BarcodeDependencyProvider;
  */
 class ProductBarcodeFacadeTest extends Test
 {
+    /**
+     * @var string
+     */
     protected const BARCODE_GENERATION_SOURCE_TEXT = 'generated text';
+    /**
+     * @var string
+     */
     protected const BARCODE_GENERATION_ENCODING = 'data:image/png;base64';
 
     /**

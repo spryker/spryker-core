@@ -18,7 +18,13 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class WishlistsUuidWriterConsole extends Console
 {
+    /**
+     * @var string
+     */
     protected const COMMAND_NAME = 'wishlists:uuid:update';
+    /**
+     * @var string
+     */
     protected const COMMAND_DESCRIPTION = 'Generates UUIDs for existed whishlists records without UUID';
 
     /**

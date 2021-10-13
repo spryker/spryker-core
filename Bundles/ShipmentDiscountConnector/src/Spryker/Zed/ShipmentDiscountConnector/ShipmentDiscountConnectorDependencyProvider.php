@@ -19,10 +19,22 @@ use Spryker\Zed\ShipmentDiscountConnector\Dependency\Service\ShipmentDiscountCon
  */
 class ShipmentDiscountConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_SHIPMENT = 'FACADE_SHIPMENT';
+    /**
+     * @var string
+     */
     public const FACADE_DISCOUNT = 'FACADE_DISCOUNT';
+    /**
+     * @var string
+     */
     public const FACADE_MONEY = 'FACADE_MONEY';
 
+    /**
+     * @var string
+     */
     public const SERVICE_SHIPMENT = 'SERVICE_SHIPMENT';
 
     /**

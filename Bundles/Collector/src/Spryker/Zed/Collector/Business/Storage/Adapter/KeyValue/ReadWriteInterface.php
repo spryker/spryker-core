@@ -21,7 +21,7 @@ interface ReadWriteInterface extends ReadInterface
      * @param array $items
      * @param string $prefix
      *
-     * @return bool|mixed
+     * @return mixed|bool
      */
     public function setMulti(array $items, $prefix = RedisRead::KV_PREFIX);
 
@@ -29,7 +29,7 @@ interface ReadWriteInterface extends ReadInterface
      * @param string $key
      * @param string $prefix
      *
-     * @return bool|mixed
+     * @return mixed|bool
      */
     public function delete($key, $prefix = RedisRead::KV_PREFIX);
 
@@ -37,7 +37,7 @@ interface ReadWriteInterface extends ReadInterface
      * @param array $keys
      * @param string $prefix
      *
-     * @return bool|mixed
+     * @return mixed|bool
      */
     public function deleteMulti(array $keys, $prefix = RedisRead::KV_PREFIX);
 

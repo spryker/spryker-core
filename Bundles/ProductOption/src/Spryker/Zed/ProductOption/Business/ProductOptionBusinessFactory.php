@@ -47,7 +47,8 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
             $this->createProductOptionValuePriceHydrator(),
             $this->getQueryContainer(),
             $this->getGlossaryFacade(),
-            $this->getLocaleFacade()
+            $this->getLocaleFacade(),
+            $this->getProductOptionGroupExpanderPlugins()
         );
     }
 
@@ -281,7 +282,7 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductOptionExtension\Dependency\Plugin\ProductOptionValuesPreRemovePluginInterface[]
+     * @return array<\Spryker\Zed\ProductOptionExtension\Dependency\Plugin\ProductOptionValuesPreRemovePluginInterface>
      */
     protected function getProductOptionValuesPreRemovePlugins(): array
     {
@@ -306,5 +307,13 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
         };
 
         return new TaxRateCalculatorStrategyResolver($strategyContainer);
+    }
+
+    /**
+     * @return array<\Spryker\Zed\ProductOptionExtension\Dependency\Plugin\ProductOptionGroupExpanderPluginInterface>
+     */
+    public function getProductOptionGroupExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(ProductOptionDependencyProvider::PLUGINS_PRODUCT_OPTION_GROUP_EXPANDER);
     }
 }

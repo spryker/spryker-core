@@ -17,7 +17,13 @@ use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
  */
 class PaginatedReturnReasonSearchQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPluginInterface
 {
+    /**
+     * @var string
+     */
     protected const PARAMETER_OFFSET = 'offset';
+    /**
+     * @var string
+     */
     protected const PARAMETER_LIMIT = 'limit';
 
     /**

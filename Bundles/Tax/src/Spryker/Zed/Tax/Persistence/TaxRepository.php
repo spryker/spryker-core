@@ -54,16 +54,16 @@ class TaxRepository extends AbstractRepository implements TaxRepositoryInterface
      */
     public function findTaxRate(int $idTaxRate): ?TaxRateTransfer
     {
-         $taxRateEntity = $this->getFactory()->createTaxRateQuery()->findOneByIdTaxRate($idTaxRate);
+        $taxRateEntity = $this->getFactory()->createTaxRateQuery()->findOneByIdTaxRate($idTaxRate);
 
         if ($taxRateEntity === null) {
             return $taxRateEntity;
         }
 
-         return $this->getFactory()->createTaxRateMapper()->mapTaxRateEntityToTaxRateTransfer(
-             $taxRateEntity,
-             new TaxRateTransfer()
-         );
+        return $this->getFactory()->createTaxRateMapper()->mapTaxRateEntityToTaxRateTransfer(
+            $taxRateEntity,
+            new TaxRateTransfer()
+        );
     }
 
     /**

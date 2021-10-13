@@ -26,7 +26,7 @@ class PriceToPayAggregator implements CalculatorInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $items
      * @param string $priceMode
      *
      * @return void
@@ -58,7 +58,7 @@ class PriceToPayAggregator implements CalculatorInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ExpenseTransfer[] $expenses
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ExpenseTransfer> $expenses
      * @param string $priceMode
      *
      * @return void

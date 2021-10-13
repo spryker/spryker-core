@@ -15,12 +15,27 @@ use Spryker\Yves\Kernel\Container;
  */
 class ConsoleDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const COMMANDS = 'COMMANDS';
+    /**
+     * @var string
+     */
     public const EVENT_SUBSCRIBER = 'EVENT_SUBSCRIBER';
 
+    /**
+     * @var string
+     */
     public const PLUGINS_APPLICATION = 'PLUGINS_APPLICATION';
 
+    /**
+     * @var string
+     */
     public const PLUGINS_CONSOLE_PRE_RUN_HOOK = 'PLUGINS_CONSOLE_PRE_RUN_HOOK';
+    /**
+     * @var string
+     */
     public const PLUGINS_CONSOLE_POST_RUN_HOOK = 'PLUGINS_CONSOLE_POST_RUN_HOOK';
 
     /**
@@ -55,7 +70,7 @@ class ConsoleDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @param \Spryker\Yves\Kernel\Container $container
      *
-     * @return \Symfony\Component\Console\Command\Command[]
+     * @return array<\Symfony\Component\Console\Command\Command>
      */
     protected function getConsoleCommands(Container $container): array
     {
@@ -79,7 +94,7 @@ class ConsoleDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @param \Spryker\Yves\Kernel\Container $container
      *
-     * @return \Symfony\Component\EventDispatcher\EventSubscriberInterface[]
+     * @return array<\Symfony\Component\EventDispatcher\EventSubscriberInterface>
      */
     protected function getEventSubscriber(Container $container): array
     {
@@ -107,7 +122,7 @@ class ConsoleDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @param \Spryker\Yves\Kernel\Container $container
      *
-     * @return \Spryker\Shared\Console\Dependency\Plugin\ConsolePreRunHookPluginInterface[]
+     * @return array<\Spryker\Shared\Console\Dependency\Plugin\ConsolePreRunHookPluginInterface>
      */
     protected function getConsolePreRunHookPlugins(Container $container): array
     {
@@ -117,7 +132,7 @@ class ConsoleDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @param \Spryker\Yves\Kernel\Container $container
      *
-     * @return \Spryker\Shared\Console\Dependency\Plugin\ConsolePostRunHookPluginInterface[]
+     * @return array<\Spryker\Shared\Console\Dependency\Plugin\ConsolePostRunHookPluginInterface>
      */
     protected function getConsolePostRunHookPlugins(Container $container): array
     {
@@ -141,7 +156,7 @@ class ConsoleDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @param \Spryker\Yves\Kernel\Container $container
      *
-     * @return \Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface[]
+     * @return array<\Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface>
      */
     protected function getApplicationPlugins(Container $container): array
     {

@@ -324,7 +324,7 @@ class JsonIndexDefinitionLoaderTest extends Unit
     /**
      * @param array $sourceDirectories
      * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\JsonIndexDefinitionMerger $definitionMerger
-     * @param string[] $storeNames
+     * @param array<string> $storeNames
      * @param string $currentStoreName
      * @param string $suffix
      *
@@ -361,7 +361,7 @@ class JsonIndexDefinitionLoaderTest extends Unit
 
     /**
      * @param string $currentStoreName
-     * @param string[] $storeNames
+     * @param array<string> $storeNames
      *
      * @return \Spryker\Zed\Search\Dependency\Facade\SearchToStoreFacadeBridge|\PHPUnit\Framework\MockObject\MockObject
      */
@@ -385,7 +385,7 @@ class JsonIndexDefinitionLoaderTest extends Unit
     }
 
     /**
-     * @param string[] $sourceDirectories
+     * @param array<string> $sourceDirectories
      * @param \Spryker\Zed\Search\Dependency\Facade\SearchToStoreFacadeBridge $searchToStoreFacadeBridge
      *
      * @return \Spryker\Zed\Search\Business\Definition\JsonIndexDefinitionFinder

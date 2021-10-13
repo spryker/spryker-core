@@ -22,12 +22,30 @@ use Symfony\Component\Validator\Constraints\Regex;
  */
 class LocalizedProductImageSetFormType extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const FIELD_ID_PRODUCT_IMAGE_SET = 'id_product_image_set';
+    /**
+     * @var string
+     */
     public const FIELD_NAME = 'name';
+    /**
+     * @var string
+     */
     public const FIELD_FK_LOCALE = 'fk_locale';
+    /**
+     * @var string
+     */
     public const FIELD_FK_RESOURCE_PRODUCT_SET = 'fk_resource_product_set';
+    /**
+     * @var string
+     */
     public const FIELD_PRODUCT_IMAGE_COLLECTION = 'product_image_collection';
 
+    /**
+     * @var string
+     */
     public const VALIDATION_GROUP_IMAGE_COLLECTION = 'validation_group_image_collection';
 
     /**

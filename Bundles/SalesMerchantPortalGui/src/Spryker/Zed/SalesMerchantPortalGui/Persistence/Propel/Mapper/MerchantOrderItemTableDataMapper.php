@@ -21,29 +21,37 @@ class MerchantOrderItemTableDataMapper
 {
     /**
      * @uses \Spryker\Zed\SalesMerchantPortalGui\Communication\ConfigurationProvider\MerchantOrderItemGuiTableConfigurationProvider::COL_KEY_SKU
+     * @var string
      */
     protected const COL_KEY_SKU = 'sku';
 
     /**
      * @uses \Spryker\Zed\SalesMerchantPortalGui\Communication\ConfigurationProvider\MerchantOrderItemGuiTableConfigurationProvider::COL_KEY_IMAGE
+     * @var string
      */
     protected const COL_KEY_IMAGE = 'image';
 
     /**
      * @uses \Spryker\Zed\SalesMerchantPortalGui\Communication\ConfigurationProvider\MerchantOrderItemGuiTableConfigurationProvider::COL_KEY_NAME
+     * @var string
      */
     protected const COL_KEY_NAME = 'name';
 
     /**
      * @uses \Spryker\Zed\SalesMerchantPortalGui\Communication\ConfigurationProvider\MerchantOrderItemGuiTableConfigurationProvider::COL_KEY_QUANTITY
+     * @var string
      */
     protected const COL_KEY_QUANTITY = 'quantity';
 
     /**
      * @uses \Spryker\Zed\SalesMerchantPortalGui\Communication\ConfigurationProvider\MerchantOrderItemGuiTableConfigurationProvider::COL_KEY_STATE
+     * @var string
      */
     protected const COL_KEY_STATE = 'state';
 
+    /**
+     * @var array
+     */
     public const MERCHANT_ORDER_ITEM_DATA_COLUMN_MAP = [
         self::COL_KEY_SKU => SpySalesOrderItemTableMap::COL_SKU,
         self::COL_KEY_IMAGE => SpySalesOrderItemMetadataTableMap::COL_IMAGE,
@@ -91,6 +99,8 @@ class MerchantOrderItemTableDataMapper
             $merchantOrderItemTransfer = (new MerchantOrderItemTransfer())
                 ->fromArray($merchantOrderItemTableRowDataArray, true)
                 ->setOrderItem($itemTransfer);
+
+            $merchantOrderItemTransfer->setIdMerchantOrderItem((int)$merchantOrderItemTransfer->getIdMerchantOrderItem());
 
             $merchantOrderItemTransfers[] = $merchantOrderItemTransfer;
         }

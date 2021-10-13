@@ -12,6 +12,9 @@ use Symfony\Component\Validator\Constraint;
 
 class ShipmentMethodNameUniqueConstraint extends Constraint
 {
+    /**
+     * @var string
+     */
     public const OPTION_SHIPMENT_FACADE = 'shipmentFacade';
 
     /**

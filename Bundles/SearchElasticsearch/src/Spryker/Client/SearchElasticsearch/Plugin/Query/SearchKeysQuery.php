@@ -22,6 +22,9 @@ use Spryker\Client\SearchExtension\Dependency\Plugin\SearchContextAwareQueryInte
  */
 class SearchKeysQuery implements QueryInterface, SearchContextAwareQueryInterface
 {
+    /**
+     * @var string
+     */
     protected const SOURCE_IDENTIFIER = 'page';
 
     /**

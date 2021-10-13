@@ -26,9 +26,21 @@ use Symfony\Component\HttpKernel\Event\RequestEvent;
  */
 class ContainerTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const SERVICE = 'service';
+    /**
+     * @var string
+     */
     protected const SERVICE_GLOBAL = 'global service';
+    /**
+     * @var string
+     */
     protected const SERVICE_PROPERTY_1 = 'SERVICE_PROPERTY_1';
+    /**
+     * @var string
+     */
     protected const SERVICE_PROPERTY_2 = 'SERVICE_PROPERTY_2';
 
     /**

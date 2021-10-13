@@ -30,12 +30,12 @@ class SearchConfigBuilder implements SearchConfigBuilderInterface
     protected $paginationConfig;
 
     /**
-     * @var \Spryker\Client\SearchExtension\Dependency\Plugin\SearchConfigBuilderPluginInterface[]
+     * @var array<\Spryker\Client\SearchExtension\Dependency\Plugin\SearchConfigBuilderPluginInterface>
      */
     protected $searchConfigBuilderPlugins;
 
     /**
-     * @var \Spryker\Client\SearchExtension\Dependency\Plugin\SearchConfigExpanderPluginInterface[]
+     * @var array<\Spryker\Client\SearchExtension\Dependency\Plugin\SearchConfigExpanderPluginInterface>
      */
     protected $searchConfigExpanderPlugins = [];
 
@@ -73,7 +73,7 @@ class SearchConfigBuilder implements SearchConfigBuilderInterface
     }
 
     /**
-     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\SearchConfigBuilderPluginInterface[] $searchConfigBuilderPlugins
+     * @param array<\Spryker\Client\SearchExtension\Dependency\Plugin\SearchConfigBuilderPluginInterface> $searchConfigBuilderPlugins
      *
      * @return void
      */
@@ -83,7 +83,7 @@ class SearchConfigBuilder implements SearchConfigBuilderInterface
     }
 
     /**
-     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\SearchConfigExpanderPluginInterface[] $searchConfigExpanderPlugins
+     * @param array<\Spryker\Client\SearchExtension\Dependency\Plugin\SearchConfigExpanderPluginInterface> $searchConfigExpanderPlugins
      *
      * @return void
      */

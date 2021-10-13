@@ -23,7 +23,13 @@ use Spryker\Zed\Kernel\Container;
  */
 class ContainerTest extends Unit
 {
+    /**
+     * @var string
+     */
     public const TEST_VALUE = 'foo';
+    /**
+     * @var string
+     */
     public const TEST_KEY = 'test.value';
 
     /**

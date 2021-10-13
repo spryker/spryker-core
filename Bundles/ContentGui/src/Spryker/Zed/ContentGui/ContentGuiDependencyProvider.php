@@ -20,12 +20,33 @@ use Spryker\Zed\Kernel\Container;
  */
 class ContentGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const PLUGINS_CONTENT_ITEM = 'PLUGINS_CONTENT_ITEM';
+    /**
+     * @var string
+     */
     public const PLUGINS_CONTENT_EDITOR = 'PLUGINS_CONTENT_EDITOR';
+    /**
+     * @var string
+     */
     public const PROPEL_QUERY_CONTENT = 'PROPEL_QUERY_CONTENT';
+    /**
+     * @var string
+     */
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
+    /**
+     * @var string
+     */
     public const FACADE_LOCALE = 'FACADE_LOCALE';
+    /**
+     * @var string
+     */
     public const FACADE_CONTENT = 'FACADE_CONTENT';
+    /**
+     * @var string
+     */
     public const FACADE_TRANSLATOR = 'FACADE_TRANSLATOR';
 
     /**
@@ -78,7 +99,7 @@ class ContentGuiDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\ContentGuiExtension\Dependency\Plugin\ContentPluginInterface[]
+     * @return array<\Spryker\Zed\ContentGuiExtension\Dependency\Plugin\ContentPluginInterface>
      */
     protected function getContentPlugins(): array
     {
@@ -158,7 +179,7 @@ class ContentGuiDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\ContentGuiExtension\Dependency\Plugin\ContentGuiEditorPluginInterface[]
+     * @return array<\Spryker\Zed\ContentGuiExtension\Dependency\Plugin\ContentGuiEditorPluginInterface>
      */
     protected function getContentEditorPlugins(): array
     {

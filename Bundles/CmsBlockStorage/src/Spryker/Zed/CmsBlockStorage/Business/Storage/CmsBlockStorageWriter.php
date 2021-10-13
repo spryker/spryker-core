@@ -14,17 +14,50 @@ use Spryker\Zed\CmsBlockStorage\Persistence\CmsBlockStorageQueryContainerInterfa
 
 class CmsBlockStorageWriter implements CmsBlockStorageWriterInterface
 {
+    /**
+     * @var string
+     */
     protected const RELATION_CMS_BLOCK_STORES = 'SpyCmsBlockStores';
+    /**
+     * @var string
+     */
     protected const RELATION_STORE = 'SpyStore';
+    /**
+     * @var string
+     */
     protected const COLUMN_ID_CMS_BLOCK = 'id_cms_block';
+    /**
+     * @var string
+     */
     protected const COLUMN_STORE_NAME = 'name';
+    /**
+     * @var string
+     */
     protected const COLUMN_CMS_BLOCK_NAME = 'name';
+    /**
+     * @var string
+     */
     protected const COLUMN_CMS_BLOCK_KEY = 'key';
+    /**
+     * @var string
+     */
     protected const COLUMN_CMS_BLOCK_IS_ACTIVE = 'is_active';
 
+    /**
+     * @var string
+     */
     protected const CMS_BLOCK_ENTITY = 'CMS_BLOCK_ENTITY';
+    /**
+     * @var string
+     */
     protected const CMS_BLOCK_STORAGE_ENTITY = 'CMS_BLOCK_STORAGE_ENTITY';
+    /**
+     * @var string
+     */
     protected const LOCALE_NAME = 'LOCALE_NAME';
+    /**
+     * @var string
+     */
     protected const STORE_NAME = 'STORE_NAME';
 
     /**
@@ -38,7 +71,7 @@ class CmsBlockStorageWriter implements CmsBlockStorageWriterInterface
     protected $utilEncodingService;
 
     /**
-     * @var \Spryker\Zed\CmsBlockStorage\Dependency\Plugin\CmsBlockStorageDataExpanderPluginInterface[]
+     * @var array<\Spryker\Zed\CmsBlockStorage\Dependency\Plugin\CmsBlockStorageDataExpanderPluginInterface>
      */
     protected $contentWidgetDataExpanderPlugins = [];
 
@@ -57,7 +90,7 @@ class CmsBlockStorageWriter implements CmsBlockStorageWriterInterface
     /**
      * @param \Spryker\Zed\CmsBlockStorage\Persistence\CmsBlockStorageQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\CmsBlockStorage\Dependency\Service\CmsBlockStorageToUtilSanitizeServiceInterface $utilEncodingService
-     * @param \Spryker\Zed\CmsBlockStorage\Dependency\Plugin\CmsBlockStorageDataExpanderPluginInterface[] $contentWidgetDataExpanderPlugins
+     * @param array<\Spryker\Zed\CmsBlockStorage\Dependency\Plugin\CmsBlockStorageDataExpanderPluginInterface> $contentWidgetDataExpanderPlugins
      * @param \Spryker\Zed\CmsBlockStorage\Dependency\Facade\CmsBlockStorageToStoreFacadeInterface $storeFacade
      * @param bool $isSendingToQueue
      */
@@ -112,7 +145,7 @@ class CmsBlockStorageWriter implements CmsBlockStorageWriterInterface
 
     /**
      * @param array $cmsBlockEntities
-     * @param \Orm\Zed\CmsBlockStorage\Persistence\SpyCmsBlockStorage[] $cmsBlockStorageEntities
+     * @param array<\Orm\Zed\CmsBlockStorage\Persistence\SpyCmsBlockStorage> $cmsBlockStorageEntities
      *
      * @return void
      */
@@ -155,7 +188,7 @@ class CmsBlockStorageWriter implements CmsBlockStorageWriterInterface
     }
 
     /**
-     * @param \Orm\Zed\CmsBlockStorage\Persistence\SpyCmsBlockStorage[] $cmsBlockStorageEntities
+     * @param array<\Orm\Zed\CmsBlockStorage\Persistence\SpyCmsBlockStorage> $cmsBlockStorageEntities
      *
      * @return void
      */
@@ -243,7 +276,7 @@ class CmsBlockStorageWriter implements CmsBlockStorageWriterInterface
     }
 
     /**
-     * @param \Orm\Zed\CmsBlockStorage\Persistence\SpyCmsBlockStorage[] $cmsBlockStorageEntities
+     * @param array<\Orm\Zed\CmsBlockStorage\Persistence\SpyCmsBlockStorage> $cmsBlockStorageEntities
      *
      * @return array
      */
@@ -270,7 +303,7 @@ class CmsBlockStorageWriter implements CmsBlockStorageWriterInterface
     /**
      * @param array $cmsBlockIds
      *
-     * @return \Orm\Zed\CmsBlockStorage\Persistence\SpyCmsBlockStorage[]
+     * @return array<\Orm\Zed\CmsBlockStorage\Persistence\SpyCmsBlockStorage>
      */
     protected function findCmsBlockStorageEntities(array $cmsBlockIds): array
     {
@@ -299,7 +332,7 @@ class CmsBlockStorageWriter implements CmsBlockStorageWriterInterface
 
     /**
      * @param int $idCmsBlock
-     * @param string[][] $localeNameMap
+     * @param array<string[]> $localeNameMap
      * @param array $cmsBlockStores
      * @param array $cmsBlockEntity
      * @param array $mappedCmsBlockStorageEntities
@@ -337,7 +370,7 @@ class CmsBlockStorageWriter implements CmsBlockStorageWriterInterface
     }
 
     /**
-     * @return string[][]
+     * @return array<string[]>
      */
     protected function getLocaleNameMapByStoreName(): array
     {

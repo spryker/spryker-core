@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\ValidationResponseTransfer;
 interface CmsSlotBlockValidatorInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\CmsSlotBlockTransfer[] $cmsSlotBlockTransfers
+     * @param array<\Generated\Shared\Transfer\CmsSlotBlockTransfer> $cmsSlotBlockTransfers
      *
      * @return \Generated\Shared\Transfer\ValidationResponseTransfer
      */

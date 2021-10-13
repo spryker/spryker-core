@@ -42,13 +42,34 @@ use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityFacad
  */
 class ProductBundleFacadeTest extends Unit
 {
+    /**
+     * @var string
+     */
     public const SKU_BUNDLED_1 = 'sku-1-test-tester';
+    /**
+     * @var string
+     */
     public const SKU_BUNDLED_2 = 'sku-2-test-tester';
+    /**
+     * @var string
+     */
     public const BUNDLE_SKU_3 = 'sku-3-test-tester';
 
+    /**
+     * @var int
+     */
     public const BUNDLED_PRODUCT_PRICE_1 = 50;
+    /**
+     * @var int
+     */
     public const BUNDLED_PRODUCT_PRICE_2 = 100;
+    /**
+     * @var int
+     */
     public const ID_STORE = 1;
+    /**
+     * @var string
+     */
     protected const STORE_NAME_DE = 'DE';
 
     /**
@@ -587,7 +608,7 @@ class ProductBundleFacadeTest extends Unit
     /**
      * @param int $bundlePrice
      * @param bool $isAlwaysAvailable
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productsToAssign
+     * @param array<\Generated\Shared\Transfer\ProductConcreteTransfer> $productsToAssign
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */

@@ -7,15 +7,20 @@
 
 namespace Spryker\Zed\CategoryPageSearch\Business\Search\DataMapper;
 
-use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\NodeTransfer;
 
 interface CategoryNodePageSearchDataMapperInterface
 {
     /**
-     * @param array $data
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     * @param \Generated\Shared\Transfer\NodeTransfer $nodeTransfer
+     * @param string $storeName
+     * @param string $localeName
      *
      * @return array
      */
-    public function mapCategoryNodeDataToSearchData(array $data, LocaleTransfer $localeTransfer): array;
+    public function mapNodeTransferToCategoryNodePageSearchDataForStoreAndLocale(
+        NodeTransfer $nodeTransfer,
+        string $storeName,
+        string $localeName
+    ): array;
 }

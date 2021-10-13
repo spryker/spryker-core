@@ -24,7 +24,7 @@ class SinglePaymentValidator implements SinglePaymentValidatorInterface
     {
         $restErrorCollectionTransfer = new RestErrorCollectionTransfer();
         if ($restCheckoutRequestAttributesTransfer->getPayments()->count() > 1) {
-             $restErrorMessageTransfer = (new RestErrorMessageTransfer())
+            $restErrorMessageTransfer = (new RestErrorMessageTransfer())
                 ->setStatus(Response::HTTP_BAD_REQUEST)
                 ->setCode(CheckoutRestApiConfig::RESPONSE_CODE_MULTIPLE_PAYMENTS_NOT_ALLOWED)
                 ->setDetail(CheckoutRestApiConfig::RESPONSE_DETAILS_MULTIPLE_PAYMENTS_NOT_ALLOWED);

@@ -17,14 +17,15 @@ class CmsBlockProductConnectorRepository extends AbstractRepository implements C
 {
     /**
      * @uses \Orm\Zed\CmsBlockProductConnector\Persistence\Map\SpyCmsBlockProductConnectorTableMap
+     * @var string
      */
     protected const FK_PRODUCT_ABSTRACT = 'fkProductAbstract';
 
-    /***
+    /**
      * @param int $idLocale
      * @param int $idCmsBlock
      *
-     * @return \Generated\Shared\Transfer\ProductAbstractTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductAbstractTransfer>
      */
     public function getAssignedProductAbstracts(int $idLocale, int $idCmsBlock): array
     {
@@ -52,7 +53,7 @@ class CmsBlockProductConnectorRepository extends AbstractRepository implements C
     /**
      * @param int $idCmsBlock
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getAssignedProductAbstractIds(int $idCmsBlock): array
     {

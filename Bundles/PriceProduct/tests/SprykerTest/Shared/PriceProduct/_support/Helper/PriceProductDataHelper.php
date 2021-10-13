@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\PriceTypeTransfer;
+use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Shared\PriceProduct\PriceProductConfig;
 use Spryker\Zed\Currency\Business\CurrencyFacadeInterface;
@@ -30,9 +31,21 @@ class PriceProductDataHelper extends Module
     use DataCleanupHelperTrait;
     use LocatorHelperTrait;
 
+    /**
+     * @var string
+     */
     protected const EUR_ISO_CODE = 'EUR';
+    /**
+     * @var string
+     */
     protected const USD_ISO_CODE = 'USD';
+    /**
+     * @var int
+     */
     protected const NET_PRICE = 10;
+    /**
+     * @var int
+     */
     protected const GROSS_PRICE = 9;
 
     /**
@@ -61,6 +74,34 @@ class PriceProductDataHelper extends Module
         $this->getDataCleanupHelper()->_addCleanup(function () use ($priceProductTransfer): void {
             $this->cleanupPriceProduct($priceProductTransfer->getIdPriceProduct());
         });
+
+        return $priceProductTransfer;
+    }
+
+    /**
+     * @param int $idProductAbstract
+     * @param array $priceProductOverride
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer
+     */
+    public function havePriceProductAbstract(int $idProductAbstract, array $priceProductOverride = []): PriceProductTransfer
+    {
+        $priceProductTransfer = $this->createPriceProductTransfer(
+            $priceProductOverride,
+            static::NET_PRICE,
+            static::GROSS_PRICE,
+            static::EUR_ISO_CODE
+        );
+
+        $this->getPriceProductFacade()->persistProductAbstractPriceCollection(
+            (new ProductAbstractTransfer())->setIdProductAbstract($idProductAbstract)->addPrice($priceProductTransfer)
+        );
+
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($priceProductTransfer): void {
+            $this->cleanupPriceProduct($priceProductTransfer->getIdPriceProduct());
+        });
+
+        $priceProductTransfer->setIdProductAbstract($idProductAbstract);
 
         return $priceProductTransfer;
     }
@@ -199,7 +240,8 @@ class PriceProductDataHelper extends Module
             ->setGrossAmount($grossAmount)
             ->setFkStore($storeTransfer->getIdStore())
             ->setFkCurrency($currencyTransfer->getIdCurrency())
-            ->setCurrency($currencyTransfer);
+            ->setCurrency($currencyTransfer)
+            ->setStore($storeTransfer);
     }
 
     /**

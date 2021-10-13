@@ -14,6 +14,9 @@ use Spryker\Zed\Development\DevelopmentConfig;
 
 class InternalDependencyFinder extends AbstractFileDependencyFinder
 {
+    /**
+     * @var string
+     */
     public const TYPE_INTERNAL = 'internal';
 
     /**
@@ -155,6 +158,6 @@ class InternalDependencyFinder extends AbstractFileDependencyFinder
      */
     protected function isIgnorableUseStatement(array $useStatementFragments): bool
     {
-        return (!in_array($useStatementFragments[0], $this->config->getInternalNamespaces()) || !in_array($useStatementFragments[1], $this->config->getApplications()));
+        return (!in_array($useStatementFragments[0], $this->config->getInternalNamespaces(), true) || !in_array($useStatementFragments[1], $this->config->getApplications(), true));
     }
 }

@@ -19,6 +19,9 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 class DiscontinueProductForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const FIELD_DISCONTINUED_NOTES = 'discontinued_notes';
 
     /**

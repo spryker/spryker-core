@@ -36,10 +36,10 @@ class ProductQuantityCommunicationTester extends Actor
     public function createEmptyCartChangeTransfer(): CartChangeTransfer
     {
         return (new CartChangeTransfer())
-           ->setQuote(
-               (new QuoteTransfer())
-                   ->setItems(new ArrayObject([]))
-           )
-           ->setItems(new ArrayObject([]));
+            ->setQuote(
+                (new QuoteTransfer())
+                    ->setItems(new ArrayObject([]))
+            )
+            ->setItems(new ArrayObject([]));
     }
 }

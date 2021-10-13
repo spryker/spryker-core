@@ -25,7 +25,13 @@ class ConsoleBootstrap extends Application
     use BundleConfigResolverAwareTrait;
     use FactoryResolverAwareTrait;
 
+    /**
+     * @var string
+     */
     protected const VERSION = '1';
+    /**
+     * @var string
+     */
     protected const NAME = 'Spryker Yves Console';
 
     /**
@@ -58,7 +64,7 @@ class ConsoleBootstrap extends Application
     }
 
     /**
-     * @return \Symfony\Component\Console\Command\Command[]
+     * @return array<\Symfony\Component\Console\Command\Command>
      */
     protected function getDefaultCommands(): array
     {

@@ -16,6 +16,9 @@ use Spryker\Zed\PriceDataFeed\Dependency\QueryContainer\PriceDataFeedToPriceBrid
  */
 class PriceDataFeedDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const PRICE_PRODUCT_QUERY_CONTAINER = 'PRICE_QUERY_CONTAINER';
 
     /**

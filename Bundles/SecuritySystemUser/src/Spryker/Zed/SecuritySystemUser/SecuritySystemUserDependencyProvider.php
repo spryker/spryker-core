@@ -16,6 +16,9 @@ use Spryker\Zed\SecuritySystemUser\Dependency\Facade\SecuritySystemUserToUserFac
  */
 class SecuritySystemUserDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_USER = 'FACADE_USER';
 
     /**

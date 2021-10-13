@@ -49,7 +49,7 @@ class FileContentTest extends Unit
     {
         $fileSystemServiceMock = $this->getFileSystemServiceMock();
         $fileSystemServiceMock->expects($this->once())
-            ->method('put')
+            ->method('write')
             ->willReturn(null);
 
         $fileContent = new FileContent(

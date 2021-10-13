@@ -120,7 +120,7 @@ class CriteriaMapper implements CriteriaMapperInterface
 
     /**
      * @param \Generated\Shared\Transfer\PropelQueryBuilderRuleSetTransfer $ruleSetTransfer
-     * @param \Propel\Runtime\ActiveQuery\Criterion\AbstractCriterion[] $criterionCollection
+     * @param array<\Propel\Runtime\ActiveQuery\Criterion\AbstractCriterion> $criterionCollection
      *
      * @return \Propel\Runtime\ActiveQuery\Criterion\AbstractCriterion|null
      */

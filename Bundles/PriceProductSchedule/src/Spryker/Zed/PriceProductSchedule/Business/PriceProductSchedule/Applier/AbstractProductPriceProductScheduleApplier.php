@@ -90,7 +90,7 @@ class AbstractProductPriceProductScheduleApplier implements AbstractProductPrice
     /**
      * @param \Generated\Shared\Transfer\PriceProductScheduleTransfer $priceProductScheduleTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductScheduleTransfer>
      */
     protected function findPriceProductSchedulesToEnableForCurrentStoreAndIdProductAbstract(PriceProductScheduleTransfer $priceProductScheduleTransfer): array
     {

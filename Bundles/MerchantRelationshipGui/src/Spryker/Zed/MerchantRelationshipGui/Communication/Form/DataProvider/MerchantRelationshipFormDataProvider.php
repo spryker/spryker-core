@@ -17,10 +17,25 @@ use Spryker\Zed\MerchantRelationshipGui\Dependency\Facade\MerchantRelationshipGu
 
 class MerchantRelationshipFormDataProvider
 {
+    /**
+     * @var string
+     */
     public const OPTION_SELECTED_COMPANY = 'id_company';
+    /**
+     * @var string
+     */
     public const OPTION_IS_PERSISTENCE_FORM = 'is_persistence_form';
+    /**
+     * @var string
+     */
     public const OPTION_COMPANY_CHOICES = 'company_choices';
+    /**
+     * @var string
+     */
     public const OPTION_MERCHANT_CHOICES = 'merchant_choices';
+    /**
+     * @var string
+     */
     public const OPTION_ASSIGNED_COMPANY_BUSINESS_UNIT_CHOICES = 'assignee_company_business_unit_choices';
 
     /**
@@ -82,7 +97,7 @@ class MerchantRelationshipFormDataProvider
      * @param bool $isPersistenceForm
      * @param int|null $idCompany
      *
-     * @return array
+     * @return array<mixed>
      */
     public function getOptions(bool $isPersistenceForm, ?int $idCompany = null): array
     {
@@ -99,7 +114,7 @@ class MerchantRelationshipFormDataProvider
     /**
      * @param int|null $idCompany
      *
-     * @return array
+     * @return array<string>
      */
     protected function getAssigneeCompanyBusinessUnitChoices(?int $idCompany = null): array
     {
@@ -108,12 +123,16 @@ class MerchantRelationshipFormDataProvider
             $companyBusinessUnitCriteriaFilterTransfer = new CompanyBusinessUnitCriteriaFilterTransfer();
             $companyBusinessUnitCriteriaFilterTransfer->setIdCompany($idCompany);
 
-            $companyBusinessUnits = $this->companyBusinessUnitFacade
+            $companyBusinessUnitTransfers = $this->companyBusinessUnitFacade
                 ->getCompanyBusinessUnitCollection($companyBusinessUnitCriteriaFilterTransfer)
                 ->getCompanyBusinessUnits();
 
-            foreach ($companyBusinessUnits as $companyBusinessUnit) {
-                $choices[$companyBusinessUnit->getIdCompanyBusinessUnit()] = $companyBusinessUnit->getName();
+            foreach ($companyBusinessUnitTransfers as $companyBusinessUnitTransfer) {
+                $choices[$companyBusinessUnitTransfer->getIdCompanyBusinessUnit()] = sprintf(
+                    '%s (ID: %d)',
+                    $companyBusinessUnitTransfer->getName(),
+                    $companyBusinessUnitTransfer->getIdCompanyBusinessUnit()
+                );
             }
         }
 
@@ -121,21 +140,25 @@ class MerchantRelationshipFormDataProvider
     }
 
     /**
-     * @return array
+     * @return array<string>
      */
     protected function getCompanyChoices(): array
     {
         $choices = [];
 
-        foreach ($this->companyFacade->getCompanies()->getCompanies() as $company) {
-            $choices[$company->getIdCompany()] = $company->getName();
+        foreach ($this->companyFacade->getCompanies()->getCompanies() as $companyTransfer) {
+            $choices[$companyTransfer->getIdCompany()] = sprintf(
+                '%s (ID: %d)',
+                $companyTransfer->getName(),
+                $companyTransfer->getIdCompany()
+            );
         }
 
         return $choices;
     }
 
     /**
-     * @return array
+     * @return array<string>
      */
     protected function getMerchantChoices(): array
     {

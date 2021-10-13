@@ -25,6 +25,9 @@ class CompanyRole implements CompanyRoleInterface
 {
     use TransactionTrait;
 
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_HAS_RELATED_USERS = 'company.company_role.delete.error.has_users';
 
     /**
@@ -103,7 +106,7 @@ class CompanyRole implements CompanyRoleInterface
 
     /**
      * @param \Generated\Shared\Transfer\CompanyResponseTransfer $companyResponseTransfer
-     * @param \Generated\Shared\Transfer\CompanyRoleTransfer[] $companyRoles
+     * @param array<\Generated\Shared\Transfer\CompanyRoleTransfer> $companyRoles
      *
      * @return \Generated\Shared\Transfer\CompanyResponseTransfer
      */

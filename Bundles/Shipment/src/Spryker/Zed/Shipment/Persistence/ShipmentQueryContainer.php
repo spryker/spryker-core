@@ -18,6 +18,9 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class ShipmentQueryContainer extends AbstractQueryContainer implements ShipmentQueryContainerInterface
 {
+    /**
+     * @var string
+     */
     public const COL_MAX_TAX_RATE = 'MaxTaxRate';
 
     /**

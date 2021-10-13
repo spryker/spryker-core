@@ -20,11 +20,26 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class ElasticsearchCopyIndexConsole extends Console
 {
+    /**
+     * @var string
+     */
     public const COMMAND_NAME = 'elasticsearch:index:copy';
+    /**
+     * @var string
+     */
     public const DESCRIPTION = 'This command will copy one index to another.';
+    /**
+     * @var string
+     */
     public const COMMAND_ALIAS = 'search:index:copy';
 
+    /**
+     * @var string
+     */
     protected const ARGUMENT_SOURCE_INDEX_NAME = 'source-index-name';
+    /**
+     * @var string
+     */
     protected const ARGUMENT_TARGET_INDEX_NAME = 'target-index-name';
 
     /**

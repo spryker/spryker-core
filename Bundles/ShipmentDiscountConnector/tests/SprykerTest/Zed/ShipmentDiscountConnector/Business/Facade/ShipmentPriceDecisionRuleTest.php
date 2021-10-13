@@ -44,7 +44,7 @@ class ShipmentPriceDecisionRuleTest extends Test
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
-     * @param string[] $expectedValues
+     * @param array<string> $expectedValues
      *
      * @return void
      */

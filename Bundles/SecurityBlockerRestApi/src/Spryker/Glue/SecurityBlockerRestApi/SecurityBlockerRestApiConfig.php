@@ -13,24 +13,34 @@ class SecurityBlockerRestApiConfig extends AbstractBundleConfig
 {
     /**
      * @uses \Spryker\Glue\AuthRestApi\AuthRestApiConfig::RESOURCE_ACCESS_TOKENS
+     * @var string
      */
     public const RESOURCE_ACCESS_TOKENS = 'access-tokens';
 
     /**
      * @uses \Spryker\Glue\AgentAuthRestApi\AgentAuthRestApiConfig::RESOURCE_AGENT_ACCESS_TOKENS
+     * @var string
      */
     public const RESOURCE_AGENT_ACCESS_TOKENS = 'agent-access-tokens';
 
     /**
      * @uses \SprykerShop\Yves\SecurityBlockerPage\SecurityBlockerPageConfig::SECURITY_BLOCKER_CUSTOMER_ENTITY_TYPE
+     * @var string
      */
     public const SECURITY_BLOCKER_CUSTOMER_ENTITY_TYPE = 'customer';
 
     /**
      * @uses \SprykerShop\Yves\SecurityBlockerPage\SecurityBlockerPageConfig::SECURITY_BLOCKER_AGENT_ENTITY_TYPE
+     * @var string
      */
     public const SECURITY_BLOCKER_AGENT_ENTITY_TYPE = 'agent';
 
+    /**
+     * @var string
+     */
     public const ERROR_RESPONSE_CODE_ACCOUNT_BLOCKED = '4401';
+    /**
+     * @var string
+     */
     public const ERROR_RESPONSE_DETAIL_ACCOUNT_BLOCKED = 'security_blocker_page.error.account_blocked';
 }

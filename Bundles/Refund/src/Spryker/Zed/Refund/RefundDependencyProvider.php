@@ -20,13 +20,34 @@ use Spryker\Zed\Refund\Dependency\Facade\RefundToSalesBridge;
  */
 class RefundDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_MONEY = 'money facade';
+    /**
+     * @var string
+     */
     public const FACADE_SALES = 'sales facade';
+    /**
+     * @var string
+     */
     public const FACADE_CALCULATION = 'calculation facade';
 
+    /**
+     * @var string
+     */
     public const QUERY_CONTAINER_SALES = 'sales query container';
+    /**
+     * @var string
+     */
     public const PLUGIN_ITEM_REFUND_CALCULATOR = 'item refund calculator plugin';
+    /**
+     * @var string
+     */
     public const PLUGIN_EXPENSE_REFUND_CALCULATOR = 'expense refund calculator plugin';
+    /**
+     * @var string
+     */
     public const SERVICE_DATE_TIME = 'date formatter';
 
     /**

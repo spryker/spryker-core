@@ -12,7 +12,7 @@ use Spryker\Zed\Touch\TouchConfig;
 class BulkTouch implements BulkTouchInterface
 {
     /**
-     * @var \Spryker\Zed\Touch\Business\Model\BulkTouch\BulkTouchInterface[]
+     * @var array<\Spryker\Zed\Touch\Business\Model\BulkTouch\BulkTouchInterface>
      */
     protected $bulkTouchHandler;
 

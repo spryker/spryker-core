@@ -28,21 +28,38 @@ use Spryker\Zed\SalesExtension\Dependency\Plugin\OrderExpanderPluginInterface;
  */
 class CancelOrderTest extends Test
 {
+    /**
+     * @var string
+     */
     protected const DEFAULT_OMS_PROCESS_NAME_WITH_CANCELLABLE_FLAGS = 'Test05';
+    /**
+     * @var string
+     */
     protected const DEFAULT_OMS_PROCESS_NAME_WITHOUT_CANCELLABLE_FLAGS = 'Test01';
 
+    /**
+     * @var int
+     */
     protected const FAKE_ID_SALES_ORDER = 6666;
+    /**
+     * @var string
+     */
     protected const FAKE_CUSTOMER_REFERENCE = 'FAKE_CUSTOMER_REFERENCE';
 
+    /**
+     * @var string
+     */
     protected const CANCELLED_STATE_NAME = 'cancelled';
 
     /**
      * @see \Spryker\Zed\Sales\Business\Writer\OrderWriter::GLOSSARY_KEY_CUSTOMER_ORDER_NOT_FOUND
+     * @var string
      */
     protected const GLOSSARY_KEY_CUSTOMER_ORDER_NOT_FOUND = 'sales.error.customer_order_not_found';
 
     /**
      * @see \Spryker\Zed\Sales\Business\Writer\OrderWriter::GLOSSARY_KEY_ORDER_CANNOT_BE_CANCELLED
+     * @var string
      */
     protected const GLOSSARY_KEY_ORDER_CANNOT_BE_CANCELLED = 'sales.error.order_cannot_be_canceled_due_to_wrong_item_state';
 

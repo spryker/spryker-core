@@ -84,7 +84,7 @@ class YvesRouterPluginTest extends Unit
     }
 
     /**
-     * @return string[][]
+     * @return array<string[]>
      */
     public function dataProvider(): array
     {

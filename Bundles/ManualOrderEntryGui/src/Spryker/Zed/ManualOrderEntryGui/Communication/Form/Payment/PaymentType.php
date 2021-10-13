@@ -24,15 +24,27 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class PaymentType extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const TYPE_NAME = 'payments';
 
     public const PAYMENT_PROPERTY_PATH = QuoteTransfer::PAYMENT;
     public const PAYMENT_SELECTION = PaymentTransfer::PAYMENT_SELECTION;
     public const PAYMENT_SELECTION_PROPERTY_PATH = self::PAYMENT_PROPERTY_PATH . '.' . self::PAYMENT_SELECTION;
 
+    /**
+     * @var string
+     */
     public const KEY_SUBFORM = 'SUBFORM';
+    /**
+     * @var string
+     */
     public const KEY_PLUGIN = 'PLUGIN';
 
+    /**
+     * @var string
+     */
     public const OPTIONS_FIELD_NAME = 'select_options';
 
     /**
@@ -118,7 +130,7 @@ class PaymentType extends AbstractType
     }
 
     /**
-     * @param \Spryker\Zed\ManualOrderEntryGuiExtension\Dependency\Plugin\PaymentSubFormPluginInterface[] $paymentSubFormPlugins
+     * @param array<\Spryker\Zed\ManualOrderEntryGuiExtension\Dependency\Plugin\PaymentSubFormPluginInterface> $paymentSubFormPlugins
      *
      * @return array
      */

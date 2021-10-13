@@ -17,6 +17,7 @@ class NavigationStorageConstants
      * - Queue name as used for processing translation messages
      *
      * @api
+     * @var string
      */
     public const NAVIGATION_SYNC_STORAGE_QUEUE = 'sync.storage.category';
 
@@ -25,6 +26,7 @@ class NavigationStorageConstants
      * - Queue name as used for processing translation messages
      *
      * @api
+     * @var string
      */
     public const NAVIGATION_SYNC_STORAGE_ERROR_QUEUE = 'sync.storage.category.error';
 
@@ -33,6 +35,7 @@ class NavigationStorageConstants
      * - Resource name, this will use for key generating
      *
      * @api
+     * @var string
      */
     public const RESOURCE_NAME = 'navigation';
 }

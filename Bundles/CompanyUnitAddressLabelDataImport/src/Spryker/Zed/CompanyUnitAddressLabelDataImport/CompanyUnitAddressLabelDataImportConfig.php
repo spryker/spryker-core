@@ -12,7 +12,13 @@ use Spryker\Zed\DataImport\DataImportConfig;
 
 class CompanyUnitAddressLabelDataImportConfig extends DataImportConfig
 {
+    /**
+     * @var string
+     */
     public const IMPORT_TYPE_COMPANY_UNIT_ADDRESS_LABEL = 'company-unit-address-label';
+    /**
+     * @var string
+     */
     public const IMPORT_TYPE_COMPANY_UNIT_ADDRESS_LABEL_RELATION = 'company-unit-address-label-relation';
 
     /**

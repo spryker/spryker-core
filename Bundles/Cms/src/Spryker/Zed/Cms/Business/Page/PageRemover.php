@@ -26,7 +26,7 @@ class PageRemover implements PageRemoverInterface
     protected $touchFacade;
 
     /**
-     * @var \Spryker\Zed\CmsExtension\Dependency\Plugin\CmsPageBeforeDeletePluginInterface[]
+     * @var array<\Spryker\Zed\CmsExtension\Dependency\Plugin\CmsPageBeforeDeletePluginInterface>
      */
     protected $cmsPageBeforeDeletePlugins;
 
@@ -38,7 +38,7 @@ class PageRemover implements PageRemoverInterface
     /**
      * @param \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface $cmsQueryContainer
      * @param \Spryker\Zed\Cms\Dependency\Facade\CmsToTouchFacadeInterface $touchFacade
-     * @param \Spryker\Zed\CmsExtension\Dependency\Plugin\CmsPageBeforeDeletePluginInterface[] $cmsPageBeforeDeletePlugins
+     * @param array<\Spryker\Zed\CmsExtension\Dependency\Plugin\CmsPageBeforeDeletePluginInterface> $cmsPageBeforeDeletePlugins
      * @param \Spryker\Zed\Cms\Business\Page\CmsPageMapperInterface $cmsPageMapper
      */
     public function __construct(

@@ -10,6 +10,7 @@ namespace Spryker\Zed\SalesMerchantPortalGui\Communication;
 use Spryker\Shared\GuiTable\DataProvider\GuiTableDataProviderInterface;
 use Spryker\Shared\GuiTable\GuiTableFactoryInterface;
 use Spryker\Shared\GuiTable\Http\GuiTableDataRequestExecutorInterface;
+use Spryker\Shared\ZedUi\ZedUiFactoryInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\SalesMerchantPortalGui\Communication\ConfigurationProvider\MerchantOrderGuiTableConfigurationProvider;
 use Spryker\Zed\SalesMerchantPortalGui\Communication\ConfigurationProvider\MerchantOrderGuiTableConfigurationProviderInterface;
@@ -59,6 +60,7 @@ class SalesMerchantPortalGuiCommunicationFactory extends AbstractCommunicationFa
             $this->getMerchantOmsFacade(),
             $this->getMerchantUserFacade(),
             $this->getGuiTableFactory(),
+            $this->getTranslatorFacade(),
             $this->getMerchantOrderItemTableExpanderPlugins()
         );
     }
@@ -77,7 +79,7 @@ class SalesMerchantPortalGuiCommunicationFactory extends AbstractCommunicationFa
     }
 
     /**
-     * @param int[] $merchantOrderItemIds
+     * @param array<int> $merchantOrderItemIds
      *
      * @return \Spryker\Shared\GuiTable\DataProvider\GuiTableDataProviderInterface
      */
@@ -188,7 +190,7 @@ class SalesMerchantPortalGuiCommunicationFactory extends AbstractCommunicationFa
     }
 
     /**
-     * @return \Spryker\Zed\SalesMerchantPortalGuiExtension\Dependency\Plugin\MerchantOrderItemTableExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\SalesMerchantPortalGuiExtension\Dependency\Plugin\MerchantOrderItemTableExpanderPluginInterface>
      */
     public function getMerchantOrderItemTableExpanderPlugins(): array
     {
@@ -209,5 +211,13 @@ class SalesMerchantPortalGuiCommunicationFactory extends AbstractCommunicationFa
     public function getGuiTableFactory(): GuiTableFactoryInterface
     {
         return $this->getProvidedDependency(SalesMerchantPortalGuiDependencyProvider::SERVICE_GUI_TABLE_FACTORY);
+    }
+
+    /**
+     * @return \Spryker\Shared\ZedUi\ZedUiFactoryInterface
+     */
+    public function getZedUiFactory(): ZedUiFactoryInterface
+    {
+        return $this->getProvidedDependency(SalesMerchantPortalGuiDependencyProvider::SERVICE_ZED_UI_FACTORY);
     }
 }

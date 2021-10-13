@@ -25,21 +25,37 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class IndexController extends AbstractController
 {
+    /**
+     * @var string
+     */
     public const URL_PARAM_ID_DISCOUNT = 'id-discount';
+    /**
+     * @var string
+     */
     public const URL_PARAM_BATCH_PARAMETER = 'batch';
+    /**
+     * @var string
+     */
     public const URL_PARAM_ID_POOL = 'id-pool';
+    /**
+     * @var string
+     */
     public const URL_PARAM_VISIBILITY = 'visibility';
+    /**
+     * @var string
+     */
     public const URL_PARAM_REDIRECT_URL = 'redirect-url';
 
     /**
      * @uses \Spryker\Zed\Http\Communication\Plugin\Application\HttpApplicationPlugin::SERVICE_SUB_REQUEST
+     * @var string
      */
     protected const SERVICE_SUB_REQUEST = 'sub_request';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function createAction(Request $request)
     {
@@ -71,7 +87,7 @@ class IndexController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function editAction(Request $request)
     {

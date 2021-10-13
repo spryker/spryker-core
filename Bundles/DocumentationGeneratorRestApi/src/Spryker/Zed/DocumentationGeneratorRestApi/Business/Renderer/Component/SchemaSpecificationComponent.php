@@ -17,7 +17,7 @@ use Generated\Shared\Transfer\SchemaComponentTransfer;
 class SchemaSpecificationComponent implements SchemaSpecificationComponentInterface
 {
     /**
-     * @var \Generated\Shared\Transfer\SchemaComponentTransfer|null $schemaComponentTransfer
+     * @var \Generated\Shared\Transfer\SchemaComponentTransfer|null
      */
     protected $schemaComponentTransfer;
 

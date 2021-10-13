@@ -28,6 +28,9 @@ use Spryker\Zed\ProductRelationGui\Dependency\QueryContainer\ProductRelationGuiT
  */
 class RuleQueryCreatorQueryTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const COL_ID_PRODUCT_ABSTRACT = 'IdProductAbstract';
 
     /**

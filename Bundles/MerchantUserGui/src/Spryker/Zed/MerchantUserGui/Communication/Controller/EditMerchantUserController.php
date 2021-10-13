@@ -17,12 +17,15 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class EditMerchantUserController extends AbstractCrudMerchantUserController
 {
+    /**
+     * @var string
+     */
     public const PARAM_MERCHANT_USER_ID = 'merchant-user-id';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function indexAction(Request $request)
     {

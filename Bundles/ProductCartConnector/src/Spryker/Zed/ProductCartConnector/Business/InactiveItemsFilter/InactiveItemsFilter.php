@@ -16,7 +16,13 @@ use Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToSto
 
 class InactiveItemsFilter implements InactiveItemsFilterInterface
 {
+    /**
+     * @var string
+     */
     protected const MESSAGE_PARAM_SKU = '%sku%';
+    /**
+     * @var string
+     */
     protected const MESSAGE_INFO_CONCRETE_INACTIVE_PRODUCT_REMOVED = 'product-cart.info.concrete-product-inactive.removed';
 
     /**
@@ -96,7 +102,7 @@ class InactiveItemsFilter implements InactiveItemsFilterInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getProductSkusFromQuoteTransfer(QuoteTransfer $quoteTransfer): array
     {
@@ -110,9 +116,9 @@ class InactiveItemsFilter implements InactiveItemsFilterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteTransfers
+     * @param array<\Generated\Shared\Transfer\ProductConcreteTransfer> $productConcreteTransfers
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
      */
     protected function indexProductConcreteTransfersBySku(array $productConcreteTransfers): array
     {

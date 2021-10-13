@@ -17,9 +17,21 @@ use Spryker\Zed\CategoryDataImport\Business\Exception\CategoryByKeyNotFoundExcep
 
 class CategoryReader implements CategoryReaderInterface
 {
+    /**
+     * @var string
+     */
     public const ID_CATEGORY_NODE = 'id_category_node';
+    /**
+     * @var string
+     */
     public const ID_LOCALE = 'idLocale';
+    /**
+     * @var string
+     */
     public const URL = 'url';
+    /**
+     * @var string
+     */
     public const ID_CATEGORY = 'id_category';
 
     /**
@@ -147,7 +159,12 @@ class CategoryReader implements CategoryReaderInterface
         $urlEntityCollection = SpyUrlQuery::create()->filterByFkResourceCategorynode(null, Criteria::ISNOTNULL)->find();
 
         foreach ($urlEntityCollection as $urlEntity) {
-            $categoryEntity = $urlEntity->getSpyCategoryNode()->getCategory();
+            $categoryNodeEntity = $urlEntity->getSpyCategoryNode();
+            if (!$categoryNodeEntity) {
+                return;
+            }
+            $categoryEntity = $categoryNodeEntity->getCategory();
+
             if (!$this->categoryUrls->offsetExists($categoryEntity->getCategoryKey())) {
                 $this->categoryUrls[$categoryEntity->getCategoryKey()] = [];
             }

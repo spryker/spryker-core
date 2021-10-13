@@ -9,19 +9,34 @@ namespace Spryker\Service\FlysystemAws3v3FileSystem\Model\Builder\Adapter;
 
 use Aws\S3\S3Client;
 use Generated\Shared\Transfer\FlysystemConfigAws3v3Transfer;
-use League\Flysystem\AwsS3v3\AwsS3Adapter;
+use League\Flysystem\AwsS3V3\AwsS3V3Adapter;
 use Spryker\Service\FlysystemAws3v3FileSystem\Exception\NoBucketException;
 
 class Aws3v3AdapterBuilder implements AdapterBuilderInterface
 {
+    /**
+     * @var string
+     */
     public const KEY = 'key';
+    /**
+     * @var string
+     */
     public const SECRET = 'secret';
+    /**
+     * @var string
+     */
     public const REGION = 'region';
+    /**
+     * @var string
+     */
     public const VERSION = 'version';
+    /**
+     * @var string
+     */
     public const CREDENTIALS = 'credentials';
 
     /**
-     * @var \League\Flysystem\AwsS3v3\AwsS3Adapter
+     * @var \League\Flysystem\FilesystemAdapter
      */
     protected $adapter;
 
@@ -44,7 +59,7 @@ class Aws3v3AdapterBuilder implements AdapterBuilderInterface
     }
 
     /**
-     * @return \League\Flysystem\AdapterInterface
+     * @return \League\Flysystem\FilesystemAdapter
      */
     public function build()
     {
@@ -83,7 +98,7 @@ class Aws3v3AdapterBuilder implements AdapterBuilderInterface
         if ($bucket === null) {
             throw new NoBucketException('Bucket not set in adapter configuration.');
         }
-        $this->adapter = new AwsS3Adapter($this->client, $bucket);
+        $this->adapter = new AwsS3V3Adapter($this->client, $bucket);
 
         return $this;
     }

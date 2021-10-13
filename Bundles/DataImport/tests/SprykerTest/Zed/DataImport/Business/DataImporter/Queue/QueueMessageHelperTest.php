@@ -29,8 +29,17 @@ use Spryker\Zed\DataImport\Dependency\Service\DataImportToUtilEncodingServiceInt
  */
 class QueueMessageHelperTest extends Unit
 {
+    /**
+     * @var array
+     */
     protected const DUMMY_MESSAGE_BODY = ['dummy message body'];
+    /**
+     * @var string
+     */
     protected const DUMMY_ERROR_MESSAGE = 'dummy error message';
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_TYPE = 'errorMessage';
 
     /**

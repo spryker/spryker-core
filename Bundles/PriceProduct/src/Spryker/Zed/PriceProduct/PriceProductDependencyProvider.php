@@ -10,6 +10,7 @@ namespace Spryker\Zed\PriceProduct;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\PriceProduct\Communication\Plugin\DefaultPriceQueryCriteriaPlugin;
+use Spryker\Zed\PriceProduct\Dependency\External\PriceProductToValidationAdapter;
 use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToCurrencyFacadeBridge;
 use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToPriceFacadeBridge;
 use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToProductFacadeBridge;
@@ -22,22 +23,73 @@ use Spryker\Zed\PriceProduct\Dependency\Service\PriceProductToUtilEncodingServic
  */
 class PriceProductDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_TOUCH = 'FACADE_TOUCH';
+    /**
+     * @var string
+     */
     public const FACADE_PRODUCT = 'FACADE_PRODUCT';
+    /**
+     * @var string
+     */
     public const FACADE_CURRENCY = 'FACADE_CURRENCY';
+    /**
+     * @var string
+     */
     public const FACADE_PRICE = 'FACADE_PRICE';
+    /**
+     * @var string
+     */
     public const FACADE_STORE = 'FACADE_STORE';
 
+    /**
+     * @var string
+     */
     public const SERVICE_PRICE_PRODUCT = 'SERVICE_PRICE_PRODUCT';
+    /**
+     * @var string
+     */
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
+    /**
+     * @var string
+     */
     public const PLUGIN_PRICE_DIMENSION_QUERY_CRITERIA = 'PLUGIN_PRICE_DIMENSION_QUERY_CRITERIA';
+    /**
+     * @var string
+     */
     public const PLUGIN_PRICE_DIMENSION_ABSTRACT_SAVER = 'PLUGIN_PRICE_DIMENSION_ABSTRACT_SAVER';
+    /**
+     * @var string
+     */
     public const PLUGIN_PRICE_DIMENSION_CONCRETE_SAVER = 'PLUGIN_PRICE_DIMENSION_CONCRETE_SAVER';
+    /**
+     * @var string
+     */
     public const PLUGIN_PRICE_PRODUCT_DIMENSION_TRANSFER_EXPANDER = 'PLUGIN_PRICE_PRODUCT_DIMENSION_TRANSFER_EXPANDER';
+    /**
+     * @var string
+     */
     public const PLUGIN_PRICE_PRODUCT_PRICES_EXTRACTOR = 'PLUGIN_PRICE_PRODUCT_PRICES_EXTRACTOR';
+    /**
+     * @var string
+     */
     public const PLUGIN_PRICE_PRODUCT_STORE_PRE_DELETE = 'PLUGIN_PRICE_PRODUCT_STORE_PRE_DELETE';
+    /**
+     * @var string
+     */
     public const PLUGIN_PRICE_PRODUCT_EXTERNAL_PROVIDER = 'PLUGIN_PRICE_PRODUCT_PROVIDER';
+    /**
+     * @var string
+     */
+    public const PLUGIN_PRICE_PRODUCT_VALIDATOR = 'PLUGIN_PRICE_PRODUCT_VALIDATOR';
+
+    /**
+     * @var string
+     */
+    public const EXTERNAL_ADAPTER_VALIDATION = 'EXTERNAL_ADAPTER_VALIDATION';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -59,6 +111,8 @@ class PriceProductDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addPriceProductPricesExtractorPlugins($container);
         $container = $this->addPriceProductStorePreDeletePlugins($container);
         $container = $this->addUtilEncodingService($container);
+        $container = $this->addValidationAdapter($container);
+        $container = $this->addPriceProductValidatorPlugins($container);
 
         return $container;
     }
@@ -230,6 +284,8 @@ class PriceProductDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -260,7 +316,7 @@ class PriceProductDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * The plugins in this stack will provide additional criteria to main price product query.
      *
-     * @return \Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceDimensionQueryCriteriaPluginInterface[]
+     * @return array<\Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceDimensionQueryCriteriaPluginInterface>
      */
     protected function getPriceDimensionQueryCriteriaPlugins(): array
     {
@@ -272,7 +328,7 @@ class PriceProductDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * The plugins are executed when saving abstract product price
      *
-     * @return \Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceDimensionAbstractSaverPluginInterface[]
+     * @return array<\Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceDimensionAbstractSaverPluginInterface>
      */
     protected function getPriceDimensionAbstractSaverPlugins(): array
     {
@@ -282,7 +338,7 @@ class PriceProductDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * The plugins are executed before deleting price product store entity
      *
-     * @return \Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceProductStorePreDeletePluginInterface[]
+     * @return array<\Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceProductStorePreDeletePluginInterface>
      */
     protected function getPriceProductStorePreDeletePlugins(): array
     {
@@ -292,7 +348,7 @@ class PriceProductDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * The plugins are executed when saving concrete product price
      *
-     * @return \Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceDimensionConcreteSaverPluginInterface[]
+     * @return array<\Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceDimensionConcreteSaverPluginInterface>
      */
     protected function getPriceDimensionConcreteSaverPlugins(): array
     {
@@ -300,7 +356,7 @@ class PriceProductDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Service\PriceProductExtension\Dependency\Plugin\PriceProductDimensionExpanderStrategyPluginInterface[]
+     * @return array<\Spryker\Service\PriceProductExtension\Dependency\Plugin\PriceProductDimensionExpanderStrategyPluginInterface>
      */
     protected function getPriceProductDimensionExpanderStrategyPlugins(): array
     {
@@ -308,7 +364,7 @@ class PriceProductDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceProductReaderPricesExtractorPluginInterface[]
+     * @return array<\Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceProductReaderPricesExtractorPluginInterface>
      */
     protected function getPriceProductPricesExtractorPlugins(): array
     {
@@ -316,9 +372,11 @@ class PriceProductDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceProductExternalProviderPluginInterface[]
+     * @deprecated Will be removed without replacement.
+     *
+     * @return array<\Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceProductExternalProviderPluginInterface>
      */
-    public function getPriceProductExternalProviderPlugins(): array
+    protected function getPriceProductExternalProviderPlugins(): array
     {
         return [];
     }
@@ -335,5 +393,41 @@ class PriceProductDependencyProvider extends AbstractBundleDependencyProvider
         });
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addValidationAdapter(Container $container): Container
+    {
+        $container->set(static::EXTERNAL_ADAPTER_VALIDATION, function () {
+            return new PriceProductToValidationAdapter();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addPriceProductValidatorPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGIN_PRICE_PRODUCT_VALIDATOR, function () {
+            return $this->getPriceProductValidatorPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return array<\Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceProductValidatorPluginInterface>
+     */
+    protected function getPriceProductValidatorPlugins(): array
+    {
+        return [];
     }
 }

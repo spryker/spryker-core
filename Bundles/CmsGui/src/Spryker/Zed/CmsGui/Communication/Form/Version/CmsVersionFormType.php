@@ -19,7 +19,13 @@ use Symfony\Component\Validator\Constraints\NotNull;
  */
 class CmsVersionFormType extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const OPTION_VERSION_NAME_CHOICES = 'version_choices';
+    /**
+     * @var string
+     */
     public const CMS_VERSION = 'cms_version';
 
     /**

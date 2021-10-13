@@ -25,6 +25,7 @@ use Spryker\Zed\Stock\Business\StockProduct\StockProductReaderInterface;
 use Spryker\Zed\Stock\Business\StockProduct\StockProductUpdater;
 use Spryker\Zed\Stock\Business\StockProduct\StockProductUpdaterInterface;
 use Spryker\Zed\Stock\Business\Transfer\StockProductTransferMapper;
+use Spryker\Zed\Stock\Dependency\External\StockToConnectionInterface;
 use Spryker\Zed\Stock\StockDependencyProvider;
 
 /**
@@ -53,7 +54,8 @@ class StockBusinessFactory extends AbstractBusinessFactory
         return new StockReader(
             $this->getRepository(),
             $this->createStockMapper(),
-            $this->getStoreFacade()
+            $this->getStoreFacade(),
+            $this->getStockCollectionExpanderPlugins()
         );
     }
 
@@ -92,7 +94,9 @@ class StockBusinessFactory extends AbstractBusinessFactory
     {
         return new StockCreator(
             $this->getEntityManager(),
-            $this->getTouchFacade()
+            $this->getTouchFacade(),
+            $this->getConnection(),
+            $this->getStockPostCreatePlugins()
         );
     }
 
@@ -105,7 +109,9 @@ class StockBusinessFactory extends AbstractBusinessFactory
             $this->getEntityManager(),
             $this->getTouchFacade(),
             $this->createStockStoreRelationshipUpdater(),
-            $this->createStockProductUpdater()
+            $this->createStockProductUpdater(),
+            $this->getConnection(),
+            $this->getStockPostUpdatePlugins()
         );
     }
 
@@ -164,7 +170,7 @@ class StockBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\StockExtension\Dependency\Plugin\StockUpdateHandlerPluginInterface[]
+     * @return array<\Spryker\Zed\StockExtension\Dependency\Plugin\StockUpdateHandlerPluginInterface>
      */
     public function getStockUpdateHandlerPlugins()
     {
@@ -177,5 +183,37 @@ class StockBusinessFactory extends AbstractBusinessFactory
     public function getStoreFacade()
     {
         return $this->getProvidedDependency(StockDependencyProvider::FACADE_STORE);
+    }
+
+    /**
+     * @return \Spryker\Zed\Stock\Dependency\External\StockToConnectionInterface
+     */
+    public function getConnection(): StockToConnectionInterface
+    {
+        return $this->getProvidedDependency(StockDependencyProvider::CONNECTION);
+    }
+
+    /**
+     * @return array<\Spryker\Zed\StockExtension\Dependency\Plugin\StockCollectionExpanderPluginInterface>
+     */
+    public function getStockCollectionExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(StockDependencyProvider::PLUGINS_STOCK_COLLECTION_EXPANDER);
+    }
+
+    /**
+     * @return array<\Spryker\Zed\StockExtension\Dependency\Plugin\StockPostCreatePluginInterface>
+     */
+    public function getStockPostCreatePlugins(): array
+    {
+        return $this->getProvidedDependency(StockDependencyProvider::PLUGINS_STOCK_POST_CREATE);
+    }
+
+    /**
+     * @return array<\Spryker\Zed\StockExtension\Dependency\Plugin\StockPostUpdatePluginInterface>
+     */
+    public function getStockPostUpdatePlugins(): array
+    {
+        return $this->getProvidedDependency(StockDependencyProvider::PLUGINS_STOCK_POST_UPDATE);
     }
 }

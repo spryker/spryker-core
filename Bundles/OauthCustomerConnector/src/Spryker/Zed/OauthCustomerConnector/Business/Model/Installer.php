@@ -75,9 +75,9 @@ class Installer implements InstallerInterface
     }
 
     /**
-     * @param string[] $customerScopes
+     * @param array<string> $customerScopes
      *
-     * @return \Generated\Shared\Transfer\OauthScopeTransfer[]
+     * @return array<\Generated\Shared\Transfer\OauthScopeTransfer>
      */
     protected function getScopesByIdentifiers(array $customerScopes): array
     {
@@ -94,7 +94,7 @@ class Installer implements InstallerInterface
 
     /**
      * @param string $oauthScopeIdentifier
-     * @param \Generated\Shared\Transfer\OauthScopeTransfer[] $oauthScopeTransfers
+     * @param array<\Generated\Shared\Transfer\OauthScopeTransfer> $oauthScopeTransfers
      *
      * @return bool
      */

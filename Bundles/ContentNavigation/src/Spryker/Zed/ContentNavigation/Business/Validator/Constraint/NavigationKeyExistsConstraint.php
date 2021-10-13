@@ -12,8 +12,14 @@ use Symfony\Component\Validator\Constraint;
 
 class NavigationKeyExistsConstraint extends Constraint
 {
+    /**
+     * @var string
+     */
     public const OPTION_NAVIGATION_FACADE = 'navigationFacade';
 
+    /**
+     * @var string
+     */
     protected const MESSAGE = 'Provided navigation key `%s` does not exist.';
 
     /**

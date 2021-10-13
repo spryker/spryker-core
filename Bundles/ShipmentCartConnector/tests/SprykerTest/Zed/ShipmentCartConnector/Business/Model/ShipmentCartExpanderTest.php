@@ -38,9 +38,18 @@ use Spryker\Shared\ShipmentCartConnector\ShipmentCartConnectorConfig;
  */
 class ShipmentCartExpanderTest extends Test
 {
+    /**
+     * @var string
+     */
     public const DEFAULT_STORE_NAME = 'DE';
 
+    /**
+     * @var string
+     */
     public const CURRENCY_CODE_EUR = 'EUR';
+    /**
+     * @var string
+     */
     public const CURRENCY_CODE_USD = 'USD';
 
     /**

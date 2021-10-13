@@ -30,31 +30,31 @@ interface AvailabilityGuiToStockInterface
      * @param int $idProductConcrete
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return \Generated\Shared\Transfer\StockProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\StockProductTransfer>
      */
     public function findStockProductsByIdProductForStore($idProductConcrete, StoreTransfer $storeTransfer);
 
     /**
-     * @return string[][]
+     * @return array<string[]>
      */
     public function getWarehouseToStoreMapping();
 
     /**
-     * @return string[][]
+     * @return array<string[]>
      */
     public function getStoreToWarehouseMapping();
 
     /**
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getStockTypesForStore(StoreTransfer $storeTransfer);
 
     /**
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return \Generated\Shared\Transfer\StockTransfer[]
+     * @return array<\Generated\Shared\Transfer\StockTransfer>
      */
     public function getAvailableWarehousesForStore(StoreTransfer $storeTransfer): array;
 }

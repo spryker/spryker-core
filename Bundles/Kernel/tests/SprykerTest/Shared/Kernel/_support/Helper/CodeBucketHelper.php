@@ -14,6 +14,9 @@ class CodeBucketHelper extends Module
 {
     use DataCleanupHelperTrait;
 
+    /**
+     * @var string
+     */
     protected const SPRYKER_CODE_BUCKET = 'SPRYKER_CODE_BUCKET';
 
     /**

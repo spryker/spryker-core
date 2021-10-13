@@ -23,6 +23,9 @@ use Spryker\Zed\SalesOrderThreshold\Business\Strategy\Exception\SalesOrderThresh
  */
 class SalesOrderThresholdRepository extends AbstractRepository implements SalesOrderThresholdRepositoryInterface
 {
+    /**
+     * @var string
+     */
     protected const COL_MAX_TAX_RATE = 'MaxTaxRate';
 
     /**
@@ -57,7 +60,7 @@ class SalesOrderThresholdRepository extends AbstractRepository implements SalesO
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
      *
-     * @return \Generated\Shared\Transfer\SalesOrderThresholdTransfer[]
+     * @return array<\Generated\Shared\Transfer\SalesOrderThresholdTransfer>
      */
     public function getSalesOrderThresholds(
         StoreTransfer $storeTransfer,

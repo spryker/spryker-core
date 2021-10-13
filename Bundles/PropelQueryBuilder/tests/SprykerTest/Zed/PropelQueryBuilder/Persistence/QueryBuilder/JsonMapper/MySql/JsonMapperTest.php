@@ -27,9 +27,21 @@ use Spryker\Zed\PropelQueryBuilder\Persistence\QueryBuilder\Operator\OperatorInt
  */
 class JsonMapperTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const RULE_FIELD = 'RULE_FIELD';
+    /**
+     * @var string
+     */
     protected const RULE_VALUE = 'RULE_VALUE';
+    /**
+     * @var string
+     */
     protected const OPERATOR = 'OPERATOR';
+    /**
+     * @var string
+     */
     protected const ATTRIBUTE_NAME = 'ATTRIBUTE_NAME';
 
     /**

@@ -38,7 +38,7 @@ class ProductRelationStorageEntityManager extends AbstractEntityManager implemen
 
     /**
      * @param int $productAbstractId
-     * @param string[] $stores
+     * @param array<string> $stores
      *
      * @return void
      */
@@ -55,7 +55,7 @@ class ProductRelationStorageEntityManager extends AbstractEntityManager implemen
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return void
      */

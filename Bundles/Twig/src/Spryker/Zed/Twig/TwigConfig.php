@@ -18,10 +18,14 @@ use Symfony\Bridge\Twig\Extension\FormExtension;
  */
 class TwigConfig extends AbstractBundleConfig
 {
+    /**
+     * @var string
+     */
     protected const APPLICATION_ZED = 'ZED';
 
     /**
      * @uses \Spryker\Yves\Twig\TwigConfig::APPLICATION_YVES
+     * @var string
      */
     protected const APPLICATION_YVES = 'YVES';
 
@@ -38,7 +42,7 @@ class TwigConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getTemplatePaths()
     {
@@ -50,9 +54,9 @@ class TwigConfig extends AbstractBundleConfig
     }
 
     /**
-     * @param string[] $paths
+     * @param array<string> $paths
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function addProjectTemplatePaths(array $paths)
     {
@@ -67,9 +71,9 @@ class TwigConfig extends AbstractBundleConfig
     }
 
     /**
-     * @param string[] $paths
+     * @param array<string> $paths
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function addCoreTemplatePaths(array $paths)
     {
@@ -87,7 +91,7 @@ class TwigConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getProjectNamespaces(): array
     {
@@ -97,7 +101,7 @@ class TwigConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getCoreNamespaces(): array
     {
@@ -137,7 +141,7 @@ class TwigConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getZedDirectoryPathPatterns()
     {
@@ -149,7 +153,7 @@ class TwigConfig extends AbstractBundleConfig
      *
      * @deprecated Use {@link getZedDirectoryPathPatterns()} instead.
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getZedDirectoryPathPattern()
     {
@@ -164,7 +168,7 @@ class TwigConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getYvesDirectoryPathPatterns()
     {
@@ -176,7 +180,7 @@ class TwigConfig extends AbstractBundleConfig
      *
      * @deprecated Use {@link getYvesDirectoryPathPatterns()} instead.
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getYvesDirectoryPathPattern()
     {
@@ -222,7 +226,7 @@ class TwigConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getFormTemplateDirectories(): array
     {

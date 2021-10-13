@@ -40,6 +40,9 @@ use Spryker\Zed\Permission\PermissionDependencyProvider;
  */
 class CompanyUserInvitationFacadeWithUserPermissionTest extends Test
 {
+    /**
+     * @var array
+     */
     public const PERMISSION_PLUGINS = [
         ManageCompanyUserInvitationPermissionPlugin::class,
     ];

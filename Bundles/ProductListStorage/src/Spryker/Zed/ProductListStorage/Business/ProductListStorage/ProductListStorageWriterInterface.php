@@ -10,7 +10,7 @@ namespace Spryker\Zed\ProductListStorage\Business\ProductListStorage;
 interface ProductListStorageWriterInterface
 {
     /**
-     * @param int[] $productListIds
+     * @param array<int> $productListIds
      *
      * @return void
      */

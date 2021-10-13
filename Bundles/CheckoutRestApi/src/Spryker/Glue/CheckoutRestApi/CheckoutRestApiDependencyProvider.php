@@ -16,11 +16,29 @@ use Spryker\Glue\Kernel\Container;
  */
 class CheckoutRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_GLOSSARY_STORAGE = 'CLIENT_GLOSSARY_STORAGE';
+    /**
+     * @var string
+     */
     public const PLUGINS_CHECKOUT_REQUEST_ATTRIBUTES_VALIDATOR = 'PLUGINS_CHECKOUT_REQUEST_ATTRIBUTES_VALIDATOR';
+    /**
+     * @var string
+     */
     public const PLUGINS_CHECKOUT_REQUEST_VALIDATOR = 'PLUGINS_CHECKOUT_REQUEST_VALIDATOR';
+    /**
+     * @var string
+     */
     public const PLUGINS_CHECKOUT_RESPONSE_MAPPER = 'PLUGINS_CHECKOUT_RESPONSE_MAPPER';
+    /**
+     * @var string
+     */
     public const PLUGINS_CHECKOUT_DATA_RESPONSE_MAPPER = 'PLUGINS_CHECKOUT_DATA_RESPONSE_MAPPER';
+    /**
+     * @var string
+     */
     public const PLUGINS_CHECKOUT_REQUEST_EXPANDER = 'PLUGINS_CHECKOUT_REQUEST_EXPANDER';
 
     /**
@@ -84,7 +102,7 @@ class CheckoutRestApiDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Glue\CheckoutRestApiExtension\Dependency\Plugin\CheckoutRequestAttributesValidatorPluginInterface[]
+     * @return array<\Spryker\Glue\CheckoutRestApiExtension\Dependency\Plugin\CheckoutRequestAttributesValidatorPluginInterface>
      */
     protected function getCheckoutRequestAttributesValidatorPlugins(): array
     {
@@ -92,7 +110,7 @@ class CheckoutRestApiDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Glue\CheckoutRestApiExtension\Dependency\Plugin\CheckoutRequestValidatorPluginInterface[]
+     * @return array<\Spryker\Glue\CheckoutRestApiExtension\Dependency\Plugin\CheckoutRequestValidatorPluginInterface>
      */
     protected function getCheckoutRequestValidatorPlugins(): array
     {
@@ -114,7 +132,7 @@ class CheckoutRestApiDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Glue\CheckoutRestApiExtension\Dependency\Plugin\CheckoutResponseMapperPluginInterface[]
+     * @return array<\Spryker\Glue\CheckoutRestApiExtension\Dependency\Plugin\CheckoutResponseMapperPluginInterface>
      */
     protected function getCheckoutResponseMapperPlugins(): array
     {
@@ -136,7 +154,7 @@ class CheckoutRestApiDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Glue\CheckoutRestApiExtension\Dependency\Plugin\CheckoutDataResponseMapperPluginInterface[]
+     * @return array<\Spryker\Glue\CheckoutRestApiExtension\Dependency\Plugin\CheckoutDataResponseMapperPluginInterface>
      */
     protected function getCheckoutDataResponseMapperPlugins(): array
     {
@@ -158,7 +176,7 @@ class CheckoutRestApiDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Glue\CheckoutRestApiExtension\Dependency\Plugin\CheckoutRequestExpanderPluginInterface[]
+     * @return array<\Spryker\Glue\CheckoutRestApiExtension\Dependency\Plugin\CheckoutRequestExpanderPluginInterface>
      */
     protected function getCheckoutRequestExpanderPlugins(): array
     {

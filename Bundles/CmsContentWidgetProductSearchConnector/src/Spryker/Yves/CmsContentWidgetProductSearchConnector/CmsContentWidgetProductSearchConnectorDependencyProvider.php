@@ -17,7 +17,13 @@ use Spryker\Yves\Kernel\Container;
  */
 class CmsContentWidgetProductSearchConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_PRODUCT = 'PRODUCT CLIENT';
+    /**
+     * @var string
+     */
     public const CLIENT_SEARCH = 'SEARCH CLIENT';
 
     /**

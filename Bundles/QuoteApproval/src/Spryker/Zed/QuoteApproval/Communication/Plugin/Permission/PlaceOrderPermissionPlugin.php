@@ -12,7 +12,13 @@ use Spryker\Shared\QuoteApproval\QuoteApprovalConfig;
 
 class PlaceOrderPermissionPlugin implements ExecutablePermissionPluginInterface
 {
+    /**
+     * @var string
+     */
     public const KEY = 'PlaceOrderPermissionPlugin';
+    /**
+     * @var string
+     */
     public const FIELD_STORE_MULTI_CURRENCY = 'store_multi_currency';
 
     /**
@@ -24,7 +30,7 @@ class PlaceOrderPermissionPlugin implements ExecutablePermissionPluginInterface
      * @api
      *
      * @param array $configuration
-     * @param int|string|array|null $context
+     * @param array|string|int|null $context
      *
      * @return bool
      */
@@ -54,7 +60,7 @@ class PlaceOrderPermissionPlugin implements ExecutablePermissionPluginInterface
      *
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getConfigurationSignature(): array
     {

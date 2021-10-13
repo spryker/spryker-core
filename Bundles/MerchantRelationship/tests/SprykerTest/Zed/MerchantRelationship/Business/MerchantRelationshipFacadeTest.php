@@ -27,13 +27,26 @@ use Generated\Shared\Transfer\MerchantRelationshipTransfer;
  */
 class MerchantRelationshipFacadeTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const MR_KEY_TEST = 'mr-test';
+    /**
+     * @var string
+     */
     protected const BU_OWNER_KEY_OWNER = 'unit-owner';
+    /**
+     * @var string
+     */
     protected const BU_KEY_UNIT_1 = 'unit-1';
+    /**
+     * @var string
+     */
     protected const BU_KEY_UNIT_2 = 'unit-2';
 
     /**
      * @uses \Spryker\Zed\MerchantRelationship\Business\Mapper\ProductListUsedByTableMapper::ENTITY_TITLE
+     * @var string
      */
     protected const MR_ENTITY_TITLE = 'Merchant Relationship';
 

@@ -14,6 +14,9 @@ use Spryker\Zed\CompanyBusinessUnit\Persistence\CompanyBusinessUnitRepositoryInt
 
 class CompanyUserValidator implements CompanyUserValidatorInterface
 {
+    /**
+     * @var string
+     */
     protected const MESSAGE_ERROR_COMPANY_USER_ALREADY_ATTACHED = 'Customer already attached to this business unit.';
 
     /**

@@ -17,7 +17,7 @@ interface FinderInterface
     /**
      * @param int $idOrderItem
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getManualEvents($idOrderItem);
 
@@ -48,7 +48,7 @@ interface FinderInterface
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $order
      * @param string $flag
      *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem[]
+     * @return array<\Orm\Zed\Sales\Persistence\SpySalesOrderItem>
      */
     public function getItemsWithFlag(SpySalesOrder $order, $flag);
 
@@ -56,12 +56,12 @@ interface FinderInterface
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $order
      * @param string $flag
      *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem[]
+     * @return array<\Orm\Zed\Sales\Persistence\SpySalesOrderItem>
      */
     public function getItemsWithoutFlag(SpySalesOrder $order, $flag);
 
     /**
-     * @return \Spryker\Zed\Oms\Business\Process\ProcessInterface[]
+     * @return array<\Spryker\Zed\Oms\Business\Process\ProcessInterface>
      */
     public function getProcesses();
 
@@ -77,14 +77,14 @@ interface FinderInterface
     /**
      * @param int $idSalesOrder
      *
-     * @return string[][]
+     * @return array<string[]>
      */
     public function getManualEventsByIdSalesOrder($idSalesOrder);
 
     /**
      * @param int $idSalesOrder
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getDistinctManualEventsByIdSalesOrder($idSalesOrder);
 

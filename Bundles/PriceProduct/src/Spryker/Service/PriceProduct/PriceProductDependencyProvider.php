@@ -15,6 +15,9 @@ use Spryker\Service\Kernel\Container;
  */
 class PriceProductDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const PLUGIN_PRICE_PRODUCT_DECISION = 'PLUGIN_PRICE_PRODUCT_DECISION';
 
     /**
@@ -46,7 +49,7 @@ class PriceProductDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * The plugins in this stack will filter data returned by price query.
      *
-     * @return \Spryker\Service\PriceProductExtension\Dependency\Plugin\PriceProductFilterPluginInterface[]
+     * @return array<\Spryker\Service\PriceProductExtension\Dependency\Plugin\PriceProductFilterPluginInterface>
      */
     protected function getPriceProductDecisionPlugins(): array
     {

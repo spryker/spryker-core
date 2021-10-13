@@ -44,11 +44,11 @@ interface ProductOfferMerchantPortalGuiToPriceProductOfferFacadeInterface
     public function count(PriceProductOfferCriteriaTransfer $priceProductOfferCriteriaTransfer): int;
 
     /**
-     * @phpstan-return \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>
-     *
      * @param \Generated\Shared\Transfer\PriceProductOfferCriteriaTransfer $priceProductOfferCriteriaTransfer
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>
      */
-    public function getProductOfferPrices(PriceProductOfferCriteriaTransfer $priceProductOfferCriteriaTransfer): ArrayObject;
+    public function getProductOfferPrices(
+        PriceProductOfferCriteriaTransfer $priceProductOfferCriteriaTransfer
+    ): ArrayObject;
 }

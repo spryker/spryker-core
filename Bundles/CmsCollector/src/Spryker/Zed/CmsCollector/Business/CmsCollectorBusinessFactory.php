@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\CmsCollector\Business;
 
+use Spryker\Zed\CmsCollector\Business\Collector\CmsCollectorRunner;
+use Spryker\Zed\CmsCollector\Business\Collector\CmsCollectorRunnerInterface;
 use Spryker\Zed\CmsCollector\Business\Collector\Search\CmsVersionPageCollector as CmsVersionSearchPageCollector;
 use Spryker\Zed\CmsCollector\Business\Collector\Storage\CmsVersionPageCollector as CmsVersionStoragePageCollector;
 use Spryker\Zed\CmsCollector\Business\Map\CmsDataPageMapBuilder;
@@ -115,5 +117,27 @@ class CmsCollectorBusinessFactory extends AbstractBusinessFactory
     protected function getCmsFacade()
     {
         return $this->getProvidedDependency(CmsCollectorDependencyProvider::FACADE_CMS);
+    }
+
+    /**
+     * @return \Spryker\Zed\CmsCollector\Business\Collector\CmsCollectorRunnerInterface
+     */
+    public function createSearchCmsVersionPageCollectorRunner(): CmsCollectorRunnerInterface
+    {
+        return new CmsCollectorRunner(
+            $this->createSearchCmsVersionPageCollector(),
+            $this->getCollectorFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\CmsCollector\Business\Collector\CmsCollectorRunnerInterface
+     */
+    public function createStorageCmsVersionPageCollectorRunner(): CmsCollectorRunnerInterface
+    {
+        return new CmsCollectorRunner(
+            $this->createStorageCmsVersionPageCollector(),
+            $this->getCollectorFacade()
+        );
     }
 }

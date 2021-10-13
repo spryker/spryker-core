@@ -17,8 +17,12 @@ class CustomerAccessRequestFormatter implements CustomerAccessRequestFormatterIn
 {
     /**
      * @uses \Spryker\Glue\GlueApplication\Rest\RequestConstantsInterface::ATTRIBUTE_IS_PROTECTED
+     * @var string
      */
     protected const REQUEST_ATTRIBUTE_IS_PROTECTED = 'is-protected';
+    /**
+     * @var string
+     */
     protected const REQUEST_ATTRIBUTE_TYPE = 'type';
 
     /**

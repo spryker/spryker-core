@@ -23,11 +23,13 @@ class FileSynchronizationDataBulkPlugin extends AbstractPlugin implements Synchr
 {
     /**
      * @uses \Orm\Zed\FileManager\Persistence\Map\SpyFileTableMap::COL_ID_FILE
+     * @var string
      */
     protected const ORDER_BY_COLUMN = 'spy_file.id_file';
 
     /**
      * @uses \Propel\Runtime\ActiveQuery\Criteria::ASC
+     * @var string
      */
     protected const ORDER_DIRECTION = 'ASC';
 
@@ -62,9 +64,9 @@ class FileSynchronizationDataBulkPlugin extends AbstractPlugin implements Synchr
      *
      * @param int $offset
      * @param int $limit
-     * @param int[] $ids
+     * @param array<int> $ids
      *
-     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     * @return array<\Generated\Shared\Transfer\SynchronizationDataTransfer>
      */
     public function getData(int $offset, int $limit, array $ids = []): array
     {
@@ -75,8 +77,9 @@ class FileSynchronizationDataBulkPlugin extends AbstractPlugin implements Synchr
         $synchronizationDataTransfers = [];
         foreach ($fileStorageTransfers as $fileStorageTransfer) {
             $synchronizationDataTransfer = new SynchronizationDataTransfer();
-            /** @var string $data */
-            $data = $fileStorageTransfer->getData() ? $fileStorageTransfer->getData()->toArray() : [];
+            $transferedData = $fileStorageTransfer->getData();
+            /** @var array $data */
+            $data = $transferedData !== null ? $transferedData->toArray() : [];
             $synchronizationDataTransfer->setData($data);
             $synchronizationDataTransfer->setKey($fileStorageTransfer->getKey());
             $synchronizationDataTransfers[] = $synchronizationDataTransfer;

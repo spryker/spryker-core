@@ -11,8 +11,14 @@ use SprykerTest\Zed\Sales\SalesPresentationTester;
 
 class SalesListPage
 {
+    /**
+     * @var string
+     */
     public const URL = '/sales';
 
+    /**
+     * @var string
+     */
     public const SELECTOR_ID_SALES_ORDER_ROWS = '//tbody/tr/td[1]';
 
     /**
@@ -29,7 +35,7 @@ class SalesListPage
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function grabOrderIdsFromGrid(): array
     {

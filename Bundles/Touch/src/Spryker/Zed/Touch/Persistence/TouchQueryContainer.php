@@ -20,7 +20,13 @@ use Spryker\Zed\PropelOrm\Business\Model\Formatter\PropelArraySetFormatter;
  */
 class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryContainerInterface
 {
+    /**
+     * @var string
+     */
     public const TOUCH_ENTRY_QUERY_KEY = 'search touch entry';
+    /**
+     * @var string
+     */
     public const TOUCH_ENTRIES_QUERY_KEY = 'search touch entries';
 
     /**
@@ -199,7 +205,7 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
      *
      * @api
      *
-     * @param int[]|int $touchIds
+     * @param array<int>|int $touchIds
      *
      * @return \Orm\Zed\Touch\Persistence\SpyTouchSearchQuery
      */
@@ -222,7 +228,7 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
      *
      * @api
      *
-     * @param int[]|int $touchIds
+     * @param array<int>|int $touchIds
      *
      * @return \Orm\Zed\Touch\Persistence\SpyTouchStorageQuery
      */

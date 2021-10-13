@@ -18,7 +18,13 @@ use Spryker\Zed\ProductQuantityDataImport\Business\Exception\EntityNotFoundExcep
 
 class ProductQuantityDataImportWriterStep extends PublishAwareStep implements DataImportStepInterface
 {
+    /**
+     * @var int|null
+     */
     protected const DEFAULT_MAX = null;
+    /**
+     * @var int
+     */
     protected const DEFAULT_INTERVAL = 1;
 
     /**

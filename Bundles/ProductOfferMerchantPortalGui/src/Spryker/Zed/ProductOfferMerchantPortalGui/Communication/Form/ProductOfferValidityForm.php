@@ -25,16 +25,40 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class ProductOfferValidityForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     protected const FIELD_ID_PRODUCT_OFFER = 'idProductOffer';
+    /**
+     * @var string
+     */
     protected const FIELD_VALID_FROM = 'validFrom';
+    /**
+     * @var string
+     */
     protected const FIELD_VALID_TO = 'validTo';
 
+    /**
+     * @var string
+     */
     protected const LABEL_VALID_FROM = 'Valid from';
+    /**
+     * @var string
+     */
     protected const LABEL_VALID_TO = 'Valid to';
 
+    /**
+     * @var string
+     */
     protected const PLACEHOLDER_VALID_FROM = 'From';
+    /**
+     * @var string
+     */
     protected const PLACEHOLDER_VALID_TO = 'To';
 
+    /**
+     * @var string
+     */
     protected const DATE_TIME_FORMAT = 'Y-m-d H:i:s';
 
     /**

@@ -18,6 +18,9 @@ use Twig\Environment;
  */
 class TranslationTwigPlugin implements TwigPluginInterface
 {
+    /**
+     * @var string
+     */
     protected const SERVICE_TRANSLATOR = 'translator';
 
     /**

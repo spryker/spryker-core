@@ -21,6 +21,9 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
  */
 class SessionClientServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
+    /**
+     * @var string
+     */
     protected const SERVICE_SESSION = 'session';
 
     /**

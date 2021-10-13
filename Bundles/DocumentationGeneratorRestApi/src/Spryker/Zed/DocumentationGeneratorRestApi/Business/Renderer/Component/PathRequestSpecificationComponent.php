@@ -16,13 +16,25 @@ use Generated\Shared\Transfer\PathRequestComponentTransfer;
  */
 class PathRequestSpecificationComponent implements PathRequestSpecificationComponentInterface
 {
+    /**
+     * @var string
+     */
     protected const KEY_APPLICATION_JSON = 'application/json';
+    /**
+     * @var string
+     */
     protected const KEY_CONTENT = 'content';
+    /**
+     * @var string
+     */
     protected const KEY_REF = '$ref';
+    /**
+     * @var string
+     */
     protected const KEY_SCHEMA = 'schema';
 
     /**
-     * @var \Generated\Shared\Transfer\PathRequestComponentTransfer|null $pathRequestComponentTransfer
+     * @var \Generated\Shared\Transfer\PathRequestComponentTransfer|null
      */
     protected $pathRequestComponentTransfer;
 

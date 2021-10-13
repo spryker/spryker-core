@@ -11,8 +11,10 @@ use Codeception\Test\Unit;
 use Predis\ClientInterface;
 use Spryker\Client\Storage\Redis\Service;
 use Spryker\Client\Storage\StorageClient;
+use Spryker\Client\Storage\StorageClientInterface;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Storage\StorageConstants;
+use SprykerTest\Client\Testify\Helper\ClientHelperTrait;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -27,35 +29,43 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ServiceTest extends Unit
 {
+    use ClientHelperTrait;
+
     /**
      * @uses \Spryker\Shared\StorageRedis\StorageRedisConstants::STORAGE_REDIS_PROTOCOL
      *
      * @deprecated Use {@link \SprykerTest\Client\Storage\Redis\ServiceTest::REDIS_SCHEME} instead.
+     * @var string
      */
     protected const REDIS_PROTOCOL = 'STORAGE_REDIS:STORAGE_REDIS_PROTOCOL';
 
     /**
      * @uses \Spryker\Shared\StorageRedis\StorageRedisConstants::STORAGE_REDIS_SCHEME
+     * @var string
      */
     protected const REDIS_SCHEME = 'STORAGE_REDIS:STORAGE_REDIS_SCHEME';
 
     /**
      * @uses \Spryker\Shared\StorageRedis\StorageRedisConstants::STORAGE_REDIS_HOST
+     * @var string
      */
     protected const REDIS_HOST = 'STORAGE_REDIS:STORAGE_REDIS_HOST';
 
     /**
      * @uses \Spryker\Shared\StorageRedis\StorageRedisConstants::STORAGE_REDIS_PORT
+     * @var string
      */
     protected const REDIS_PORT = 'STORAGE_REDIS:STORAGE_REDIS_PORT';
 
     /**
      * @uses \Spryker\Shared\StorageRedis\StorageRedisConstants::STORAGE_REDIS_DATABASE
+     * @var string
      */
     protected const REDIS_DATABASE = 'STORAGE_REDIS:STORAGE_REDIS_DATABASE';
 
     /**
      * @uses \Spryker\Shared\StorageRedis\StorageRedisConstants::STORAGE_REDIS_PASSWORD
+     * @var string
      */
     protected const REDIS_PASSWORD = 'STORAGE_REDIS:STORAGE_REDIS_PASSWORD';
 
@@ -133,6 +143,17 @@ class ServiceTest extends Unit
     }
 
     /**
+     * @return \Spryker\Client\Storage\StorageClientInterface
+     */
+    protected function getStorageClient(): StorageClientInterface
+    {
+        /** @var \Spryker\Client\Storage\StorageClientInterface $storageClient */
+        $storageClient = $this->getClientHelper()->getClient();
+
+        return $storageClient;
+    }
+
+    /**
      * @return void
      */
     public function testGetAllKeysTriggersRightCommand(): void
@@ -189,7 +210,7 @@ class ServiceTest extends Unit
             $this->markTestSkipped('Cache is disabled.');
         }
 
-        $storageClient = new StorageClient();
+        $storageClient = $this->getStorageClient();
         $storageClient->setMulti($this->fixtures['multi']);
 
         //Check 0: Returns expected keys and values w/o cache
@@ -291,7 +312,7 @@ class ServiceTest extends Unit
     {
         $request = $this->createRequest();
 
-        $storageClient = new StorageClient();
+        $storageClient = $this->getStorageClient();
         $storageClient->setMulti($fixtures);
         $this->assertEquals($expected, $storageClient->getMulti(array_keys($fixtures)));
 
@@ -311,7 +332,7 @@ class ServiceTest extends Unit
     {
         $request = $this->createRequest();
 
-        $storageClient = new StorageClient();
+        $storageClient = $this->getStorageClient();
         $storageClient->set($key, $value);
         $this->assertEquals($value, $storageClient->get($key));
 

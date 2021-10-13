@@ -20,10 +20,25 @@ use Spryker\Zed\ProductRelationStorage\Dependency\QueryContainer\ProductRelation
  */
 class ProductRelationStorageDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const QUERY_CONTAINER_PRODUCT = 'QUERY_CONTAINER_PRODUCT';
+    /**
+     * @var string
+     */
     public const QUERY_CONTAINER_PRODUCT_RELATION = 'QUERY_CONTAINER_PRODUCT_RELATION';
+    /**
+     * @var string
+     */
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
+    /**
+     * @var string
+     */
     public const FACADE_PRODUCT_RELATION = 'FACADE_PRODUCT_RELATION';
+    /**
+     * @var string
+     */
     public const PROPEL_QUERY_PRODUCT_RELATION_PRODUCT_ABSTRACT = 'PROPEL_QUERY_PRODUCT_RELATION_PRODUCT_ABSTRACT';
 
     /**

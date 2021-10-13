@@ -59,7 +59,7 @@ class ProductCustomerPermissionSaver implements ProductCustomerPermissionSaverIn
 
     /**
      * @param int $idCustomer
-     * @param int[] $idProductAbstracts
+     * @param array<int> $idProductAbstracts
      *
      * @return void
      */
@@ -116,7 +116,7 @@ class ProductCustomerPermissionSaver implements ProductCustomerPermissionSaverIn
 
     /**
      * @param int $idCustomer
-     * @param int[] $idProductAbstracts
+     * @param array<int> $idProductAbstracts
      *
      * @return void
      */
@@ -144,9 +144,9 @@ class ProductCustomerPermissionSaver implements ProductCustomerPermissionSaverIn
     }
 
     /**
-     * @param \Traversable|\Orm\Zed\ProductCustomerPermission\Persistence\SpyProductCustomerPermission[] $existingEntities
+     * @param \Traversable<\Orm\Zed\ProductCustomerPermission\Persistence\SpyProductCustomerPermission> $existingEntities
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getExistingIdProductCustomerPermissions(Traversable $existingEntities): array
     {
@@ -160,8 +160,8 @@ class ProductCustomerPermissionSaver implements ProductCustomerPermissionSaverIn
 
     /**
      * @param int $idCustomer
-     * @param int[] $existingIdProductCustomerPermissions : as a key idProductAbstract
-     * @param int[] $idProductAbstracts
+     * @param array<int> $existingIdProductCustomerPermissions : as a key idProductAbstract
+     * @param array<int> $idProductAbstracts
      *
      * @return void
      */

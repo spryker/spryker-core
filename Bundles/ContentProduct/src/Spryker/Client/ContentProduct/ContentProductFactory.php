@@ -32,7 +32,7 @@ class ContentProductFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\ContentProduct\Executor\ContentProductTermExecutorInterface[]
+     * @return array<\Spryker\Client\ContentProduct\Executor\ContentProductTermExecutorInterface>
      */
     public function getContentProductTermExecutorMap(): array
     {

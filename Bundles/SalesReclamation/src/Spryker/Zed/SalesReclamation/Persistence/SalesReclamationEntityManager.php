@@ -40,7 +40,7 @@ class SalesReclamationEntityManager extends AbstractEntityManager implements Sal
     /**
      * @param \Generated\Shared\Transfer\ReclamationTransfer $reclamationTransfer
      *
-     * @return \Generated\Shared\Transfer\ReclamationItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ReclamationItemTransfer>
      */
     public function saveReclamationItems(ReclamationTransfer $reclamationTransfer): array
     {

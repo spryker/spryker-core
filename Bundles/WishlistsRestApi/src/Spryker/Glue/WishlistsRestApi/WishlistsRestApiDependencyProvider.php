@@ -16,7 +16,14 @@ use Spryker\Glue\WishlistsRestApi\Dependency\Client\WishlistsRestApiToWishlistCl
  */
 class WishlistsRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_WISHLIST = 'CLIENT_WISHLIST';
+    /**
+     * @var string
+     */
+    public const PLUGINS_REST_WISHLIST_ITEMS_ATTRIBUTES_MAPPER = 'PLUGINS_REST_WISHLIST_ITEMS_ATTRIBUTES_MAPPER';
 
     /**
      * @param \Spryker\Glue\Kernel\Container $container
@@ -26,6 +33,7 @@ class WishlistsRestApiDependencyProvider extends AbstractBundleDependencyProvide
     public function provideDependencies(Container $container): Container
     {
         $container = $this->addWishlistClient($container);
+        $container = $this->addRestWishlistItemsAttributesMapperPlugins($container);
 
         return $container;
     }
@@ -42,5 +50,27 @@ class WishlistsRestApiDependencyProvider extends AbstractBundleDependencyProvide
         });
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Glue\Kernel\Container $container
+     *
+     * @return \Spryker\Glue\Kernel\Container
+     */
+    protected function addRestWishlistItemsAttributesMapperPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_REST_WISHLIST_ITEMS_ATTRIBUTES_MAPPER, function (Container $container) {
+            return $this->getRestWishlistItemsAttributesMapperPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return array<\Spryker\Glue\WishlistsRestApiExtension\Dependency\Plugin\RestWishlistItemsAttributesMapperPluginInterface>
+     */
+    protected function getRestWishlistItemsAttributesMapperPlugins(): array
+    {
+        return [];
     }
 }

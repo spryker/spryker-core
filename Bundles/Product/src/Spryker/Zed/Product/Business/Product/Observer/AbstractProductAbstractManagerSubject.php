@@ -14,27 +14,27 @@ use Spryker\Zed\Product\Dependency\ProductEvents;
 abstract class AbstractProductAbstractManagerSubject
 {
     /**
-     * @var \Spryker\Zed\Product\Business\Product\Observer\ProductAbstractCreateObserverInterface[]
+     * @var array<\Spryker\Zed\Product\Business\Product\Observer\ProductAbstractCreateObserverInterface>
      */
     protected $beforeCreateObservers = [];
 
     /**
-     * @var \Spryker\Zed\Product\Business\Product\Observer\ProductAbstractCreateObserverInterface[]
+     * @var array<\Spryker\Zed\Product\Business\Product\Observer\ProductAbstractCreateObserverInterface>
      */
     protected $afterCreateObservers = [];
 
     /**
-     * @var \Spryker\Zed\Product\Business\Product\Observer\ProductAbstractUpdateObserverInterface[]
+     * @var array<\Spryker\Zed\Product\Business\Product\Observer\ProductAbstractUpdateObserverInterface>
      */
     protected $beforeUpdateObservers = [];
 
     /**
-     * @var \Spryker\Zed\Product\Business\Product\Observer\ProductAbstractUpdateObserverInterface[]
+     * @var array<\Spryker\Zed\Product\Business\Product\Observer\ProductAbstractUpdateObserverInterface>
      */
     protected $afterUpdateObservers = [];
 
     /**
-     * @var \Spryker\Zed\Product\Business\Product\Observer\ProductAbstractReadObserverInterface[]
+     * @var array<\Spryker\Zed\Product\Business\Product\Observer\ProductAbstractReadObserverInterface>
      */
     protected $readObservers = [];
 

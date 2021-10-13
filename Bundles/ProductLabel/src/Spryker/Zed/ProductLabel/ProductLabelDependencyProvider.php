@@ -17,9 +17,18 @@ use Spryker\Zed\ProductLabel\Dependency\Facade\ProductLabelToTouchBridge;
  */
 class ProductLabelDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_TOUCH = 'FACADE_TOUCH';
+    /**
+     * @var string
+     */
     public const FACADE_PRODUCT = 'FACADE_PRODUCT';
 
+    /**
+     * @var string
+     */
     public const PLUGIN_PRODUCT_LABEL_RELATION_UPDATERS = 'PLUGIN_PRODUCT_LABEL_RELATION_UPDATERS';
 
     /**
@@ -80,7 +89,7 @@ class ProductLabelDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\ProductLabel\Dependency\Plugin\ProductLabelRelationUpdaterPluginInterface[]
+     * @return array<\Spryker\Zed\ProductLabel\Dependency\Plugin\ProductLabelRelationUpdaterPluginInterface>
      */
     protected function getProductLabelRelationUpdaterPlugins()
     {

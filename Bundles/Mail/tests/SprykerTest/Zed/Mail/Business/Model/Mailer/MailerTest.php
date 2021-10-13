@@ -31,6 +31,9 @@ use Spryker\Zed\Mail\Dependency\Plugin\MailTypePluginInterface;
  */
 class MailerTest extends Unit
 {
+    /**
+     * @var string
+     */
     public const MAIL_TYPE_A = 'mail type a';
 
     /**

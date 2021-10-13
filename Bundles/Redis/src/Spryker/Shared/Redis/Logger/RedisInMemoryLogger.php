@@ -12,10 +12,13 @@ use Spryker\Shared\Redis\Dependency\Service\RedisToUtilEncodingServiceInterface;
 
 class RedisInMemoryLogger implements RedisLoggerInterface
 {
+    /**
+     * @var string
+     */
     protected const DSN_STRING_TEMPLATE_UNKNOWN = 'unknown';
 
     /**
-     * @var string[][]
+     * @var array<string[]>
      */
     protected static $logs = [];
 
@@ -63,7 +66,7 @@ class RedisInMemoryLogger implements RedisLoggerInterface
     }
 
     /**
-     * @return string[][]
+     * @return array<string[]>
      */
     public function getLogs(): array
     {

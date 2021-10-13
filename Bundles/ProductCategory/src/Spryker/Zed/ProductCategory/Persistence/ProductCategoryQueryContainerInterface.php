@@ -118,7 +118,7 @@ interface ProductCategoryQueryContainerInterface extends QueryContainerInterface
      * @api
      *
      * @param int $idProductAbstract
-     * @param int[] $idsCategoryNode
+     * @param array<int> $idsCategoryNode
      *
      * @return \Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery
      */

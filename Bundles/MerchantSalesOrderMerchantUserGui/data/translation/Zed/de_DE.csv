@@ -1,7 +1,8 @@
 "Overview of Orders",Auftragsübersicht
 "List of Orders","Liste der Bestellungen"
+"My Orders","Meine Bestellungen"
 "Order Reference",Bestellnummer
-"Marketplace Order Reference","Bestellreferenz für den Marktplatz"
+"Marketplace Order Reference","Marktplatz Bestellreferenz"
 Created,Erstellt
 Customer,Kunde
 Email,Email
@@ -39,8 +40,8 @@ Product,Produkt
 Quantity,Menge
 "Unit Price",Stückpreis
 "Item total","Artikel Gesamt"
-State,Zustand
-"Trigger event","Auslösendes Ereignis"
+State,Status
+"Trigger event","Event auslösen"
 "Variant Details",Variantendetails
 "Show less","Weniger anzeigen"
 "Show more","Mehr anzeigen"
@@ -50,8 +51,9 @@ State,Zustand
 Sku,SKU
 "Shipment has been successfully created.","Sendung wurde erfolgreich erstellt."
 "Shipment has not been created.","Es wurde keine Lieferung erstellt."
-"Merchant sales order #%d not found.","Händler-Bestellnummer %d wurde nicht gefunden."
+"Merchant sales order #%d not found.","Verkäufer-Bestellnummer %d wurde nicht gefunden."
 "Shipment has been successfully updated.","Sendung wurde erfolgreich bearbeitet."
 "Shipment has not been updated.","Die Lieferung wurde nicht aktualisiert."
 "Shipment #%d not found.","Die Lieferung #%d wurde nicht gefunden."
 "New Shipment for Order: %idMerchantSalesOrder%","Neue Lieferung für Bestellung: %idMerchantSalesOrder%"
+"Back to Orders","Zurück zu Bestellungen"

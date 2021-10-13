@@ -29,16 +29,46 @@ use Symfony\Component\Validator\Context\ExecutionContext;
  */
 class NavigationNodeFormType extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const FIELD_NODE_TYPE = 'node_type';
+    /**
+     * @var string
+     */
     public const FIELD_NAVIGATION_NODE_LOCALIZED_ATTRIBUTES = 'navigation_node_localized_attributes';
+    /**
+     * @var string
+     */
     public const FIELD_IS_ACTIVE = 'is_active';
+    /**
+     * @var string
+     */
     public const FIELD_VALID_FROM = 'valid_from';
+    /**
+     * @var string
+     */
     public const FIELD_VALID_TO = 'valid_to';
 
+    /**
+     * @var string
+     */
     public const NODE_TYPE_LABEL = 'label';
+    /**
+     * @var string
+     */
     public const NODE_TYPE_CATEGORY = 'category';
+    /**
+     * @var string
+     */
     public const NODE_TYPE_CMS_PAGE = 'cms_page';
+    /**
+     * @var string
+     */
     public const NODE_TYPE_LINK = 'link';
+    /**
+     * @var string
+     */
     public const NODE_TYPE_EXTERNAL_URL = 'external_url';
 
     /**

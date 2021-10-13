@@ -16,6 +16,9 @@ use Spryker\Shared\Redis\Dependency\Service\RedisToUtilEncodingServiceBridge;
  */
 class RedisDependencyProvider extends AbstractDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
     /**

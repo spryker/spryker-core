@@ -13,6 +13,9 @@ use Spryker\Service\Oauth\Dependency\Service\OauthToUtilEncodingServiceBridge;
 
 class OauthDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
     /**

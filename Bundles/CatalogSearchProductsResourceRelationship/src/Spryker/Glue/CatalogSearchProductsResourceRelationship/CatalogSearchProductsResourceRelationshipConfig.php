@@ -13,6 +13,7 @@ class CatalogSearchProductsResourceRelationshipConfig extends AbstractBundleConf
 {
     /**
      * @uses \Spryker\Glue\ProductsRestApi\ProductsRestApiConfig::RESOURCE_ABSTRACT_PRODUCTS
+     * @var string
      */
     public const RESOURCE_ABSTRACT_PRODUCTS = 'abstract-products';
 }

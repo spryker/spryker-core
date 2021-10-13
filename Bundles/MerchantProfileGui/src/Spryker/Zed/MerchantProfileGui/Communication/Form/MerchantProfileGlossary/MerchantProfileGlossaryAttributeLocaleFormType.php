@@ -18,7 +18,13 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 class MerchantProfileGlossaryAttributeLocaleFormType extends AbstractType
 {
+    /**
+     * @var string
+     */
     protected const FIELD_ID_LOCALE = 'idLocale';
+    /**
+     * @var string
+     */
     protected const FIELD_LOCALE_NAME = 'localeName';
 
     /**

@@ -23,7 +23,7 @@ class CartCurrencyConnectorToZedRequestClientBridge implements CartCurrencyConne
     }
 
     /**
-     * @return \Generated\Shared\Transfer\MessageTransfer[]
+     * @return array<\Generated\Shared\Transfer\MessageTransfer>
      */
     public function getLastResponseErrorMessages()
     {
@@ -31,7 +31,7 @@ class CartCurrencyConnectorToZedRequestClientBridge implements CartCurrencyConne
     }
 
     /**
-     * @return \Generated\Shared\Transfer\MessageTransfer[]
+     * @return array<\Generated\Shared\Transfer\MessageTransfer>
      */
     public function getResponsesErrorMessages(): array
     {

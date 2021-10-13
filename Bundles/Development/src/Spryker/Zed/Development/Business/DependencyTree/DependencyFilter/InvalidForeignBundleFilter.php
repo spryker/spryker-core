@@ -31,6 +31,6 @@ class InvalidForeignBundleFilter implements DependencyFilterInterface
      */
     public function filter(array $dependency)
     {
-        return (!in_array($dependency[DependencyTree::META_FOREIGN_BUNDLE], $this->allowedBundles) && !isset($dependency[DependencyTree::META_FOREIGN_IS_EXTERNAL]));
+        return (!in_array($dependency[DependencyTree::META_FOREIGN_BUNDLE], $this->allowedBundles, true) && !isset($dependency[DependencyTree::META_FOREIGN_IS_EXTERNAL]));
     }
 }

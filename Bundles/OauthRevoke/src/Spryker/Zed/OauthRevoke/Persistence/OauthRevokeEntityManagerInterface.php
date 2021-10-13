@@ -28,7 +28,7 @@ interface OauthRevokeEntityManagerInterface
     public function revokeRefreshToken(OauthRefreshTokenTransfer $oauthRefreshTokenTransfer): void;
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\OauthRefreshTokenTransfer[] $oauthRefreshTokenTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\OauthRefreshTokenTransfer> $oauthRefreshTokenTransfers
      *
      * @return void
      */

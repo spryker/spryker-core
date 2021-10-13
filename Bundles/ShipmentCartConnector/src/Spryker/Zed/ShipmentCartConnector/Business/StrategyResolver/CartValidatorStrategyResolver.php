@@ -16,16 +16,22 @@ use Spryker\Zed\ShipmentCartConnector\Business\Cart\ShipmentCartValidatorInterfa
  */
 class CartValidatorStrategyResolver implements CartValidatorStrategyResolverInterface
 {
+    /**
+     * @var string
+     */
     public const STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT = 'STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT';
+    /**
+     * @var string
+     */
     public const STRATEGY_KEY_WITH_MULTI_SHIPMENT = 'STRATEGY_KEY_WITH_MULTI_SHIPMENT';
 
     /**
-     * @var array|\Closure[]
+     * @var array<\Closure>
      */
     protected $strategyContainer;
 
     /**
-     * @param \Closure[] $strategyContainer
+     * @param array<\Closure> $strategyContainer
      */
     public function __construct(array $strategyContainer)
     {
@@ -33,7 +39,7 @@ class CartValidatorStrategyResolver implements CartValidatorStrategyResolverInte
     }
 
     /**
-     * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param iterable<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
      * @return \Spryker\Zed\ShipmentCartConnector\Business\Cart\ShipmentCartValidatorInterface
      */

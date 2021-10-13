@@ -10,7 +10,7 @@ namespace Spryker\Yves\CmsContentWidgetCmsBlockConnector\Dependency\Client;
 interface CmsContentWidgetCmsBlockConnectorToCmsBlockStorageClientInterface
 {
     /**
-     * @param string[] $blockNames
+     * @param array<string> $blockNames
      * @param string $localeName
      * @param string $storeName
      *

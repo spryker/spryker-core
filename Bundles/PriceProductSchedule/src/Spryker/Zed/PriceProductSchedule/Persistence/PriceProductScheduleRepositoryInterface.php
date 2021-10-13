@@ -15,28 +15,35 @@ use Generated\Shared\Transfer\StoreTransfer;
 interface PriceProductScheduleRepositoryInterface
 {
     /**
-     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductScheduleTransfer>
      */
     public function findPriceProductSchedulesToDisable(): array;
 
     /**
+     * @param \Generated\Shared\Transfer\PriceProductScheduleTransfer $priceProductScheduleTransfer
+     *
+     * @return bool
+     */
+    public function isScheduledPriceForSwitchExists(PriceProductScheduleTransfer $priceProductScheduleTransfer): bool;
+
+    /**
      * @param int $idProductAbstract
      *
-     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductScheduleTransfer>
      */
     public function findPriceProductSchedulesToDisableByIdProductAbstract(int $idProductAbstract): array;
 
     /**
      * @param int $idProductConcrete
      *
-     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductScheduleTransfer>
      */
     public function findPriceProductSchedulesToDisableByIdProductConcrete(int $idProductConcrete): array;
 
     /**
      * @param \Generated\Shared\Transfer\PriceProductScheduleTransfer $priceProductScheduleTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductScheduleTransfer>
      */
     public function findSimilarPriceProductSchedulesToDisable(
         PriceProductScheduleTransfer $priceProductScheduleTransfer
@@ -45,7 +52,7 @@ interface PriceProductScheduleRepositoryInterface
     /**
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductScheduleTransfer>
      */
     public function findPriceProductSchedulesToEnableByStore(StoreTransfer $storeTransfer): array;
 
@@ -70,7 +77,7 @@ interface PriceProductScheduleRepositoryInterface
     /**
      * @param int $idPriceProductScheduleList
      *
-     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductScheduleTransfer>
      */
     public function findPriceProductSchedulesByIdPriceProductScheduleList(
         int $idPriceProductScheduleList
@@ -96,7 +103,7 @@ interface PriceProductScheduleRepositoryInterface
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      * @param int $idProductAbstract
      *
-     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductScheduleTransfer>
      */
     public function findPriceProductSchedulesToEnableByStoreAndIdProductAbstract(
         StoreTransfer $storeTransfer,
@@ -107,7 +114,7 @@ interface PriceProductScheduleRepositoryInterface
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      * @param int $idProductConcrete
      *
-     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductScheduleTransfer>
      */
     public function findPriceProductSchedulesToEnableByStoreAndIdProductConcrete(
         StoreTransfer $storeTransfer,

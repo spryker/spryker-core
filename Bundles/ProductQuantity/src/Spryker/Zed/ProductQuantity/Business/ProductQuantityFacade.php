@@ -56,9 +56,9 @@ class ProductQuantityFacade extends AbstractFacade implements ProductQuantityFac
      *
      * @api
      *
-     * @param int[] $productIds
+     * @param array<int> $productIds
      *
-     * @return \Generated\Shared\Transfer\ProductQuantityTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductQuantityTransfer>
      */
     public function findProductQuantityTransfersByProductIds(array $productIds): array
     {
@@ -72,7 +72,7 @@ class ProductQuantityFacade extends AbstractFacade implements ProductQuantityFac
      *
      * @api
      *
-     * @return \Generated\Shared\Transfer\ProductQuantityTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductQuantityTransfer>
      */
     public function findProductQuantityTransfers(): array
     {
@@ -121,7 +121,7 @@ class ProductQuantityFacade extends AbstractFacade implements ProductQuantityFac
      *
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductQuantityTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductQuantityTransfer>
      */
     public function findFilteredProductQuantityTransfers(FilterTransfer $filterTransfer): array
     {

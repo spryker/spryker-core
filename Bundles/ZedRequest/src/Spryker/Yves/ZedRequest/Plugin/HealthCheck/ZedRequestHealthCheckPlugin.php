@@ -16,6 +16,9 @@ use Spryker\Yves\Kernel\AbstractPlugin;
  */
 class ZedRequestHealthCheckPlugin extends AbstractPlugin implements HealthCheckPluginInterface
 {
+    /**
+     * @var string
+     */
     public const ZED_REQUEST_HEALTH_CHECK_SERVICE_NAME = 'zed-request';
 
     /**

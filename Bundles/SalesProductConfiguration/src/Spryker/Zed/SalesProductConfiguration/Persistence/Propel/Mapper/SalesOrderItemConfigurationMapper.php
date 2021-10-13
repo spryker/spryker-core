@@ -30,9 +30,9 @@ class SalesOrderItemConfigurationMapper
     }
 
     /**
-     * @param \Propel\Runtime\Collection\Collection|\Orm\Zed\SalesProductConfiguration\Persistence\SpySalesOrderItemConfiguration[] $salesOrderItemConfigurationEntityCollection
+     * @param \Propel\Runtime\Collection\Collection<\Orm\Zed\SalesProductConfiguration\Persistence\SpySalesOrderItemConfiguration> $salesOrderItemConfigurationEntityCollection
      *
-     * @return \Generated\Shared\Transfer\SalesOrderItemConfigurationTransfer[]
+     * @return array<\Generated\Shared\Transfer\SalesOrderItemConfigurationTransfer>
      */
     public function mapSalesOrderItemConfigurationEntityCollectionToSalesOrderItemConfigurationTransfers(
         Collection $salesOrderItemConfigurationEntityCollection

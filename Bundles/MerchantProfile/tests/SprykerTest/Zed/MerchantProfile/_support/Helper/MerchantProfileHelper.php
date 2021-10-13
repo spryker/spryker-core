@@ -90,7 +90,7 @@ class MerchantProfileHelper extends Module
     }
 
     /**
-     * @return \Generated\Shared\Transfer\LocaleTransfer[]
+     * @return array<\Generated\Shared\Transfer\LocaleTransfer>
      */
     protected function getLocaleTransferCollection(): array
     {
@@ -98,7 +98,7 @@ class MerchantProfileHelper extends Module
     }
 
     /**
-     * @return \ArrayObject|\Generated\Shared\Transfer\MerchantProfileAddressTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\MerchantProfileAddressTransfer>
      */
     protected function createMerchantProfileAddressTransfers(): ArrayObject
     {

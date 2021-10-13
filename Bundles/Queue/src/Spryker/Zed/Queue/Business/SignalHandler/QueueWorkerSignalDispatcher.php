@@ -24,7 +24,7 @@ class QueueWorkerSignalDispatcher implements SignalDispatcherInterface
     protected $queueConfig;
 
     /**
-     * @var array
+     * @var array<string>
      */
     protected $queueNames;
 
@@ -49,7 +49,7 @@ class QueueWorkerSignalDispatcher implements SignalDispatcherInterface
     }
 
     /**
-     * @param int[] $signals
+     * @param array<int> $signals
      *
      * @return void
      */

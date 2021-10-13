@@ -15,8 +15,17 @@ use Spryker\Zed\CompanyBusinessUnitAddressesRestApi\Dependency\Facade\CompanyBus
 
 class CompanyBusinessUnitAddressValidator implements CompanyBusinessUnitAddressValidatorInterface
 {
+    /**
+     * @var string
+     */
     protected const GLOSSARY_PARAMETER_ID = '%id%';
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_COMPANY_ADDRESS_IN_CHECKOUT_DATA_NOT_FOUND = 'checkout.validation.company_address.not_found';
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_COMPANY_ADDRESSES_APPLICABLE_FOR_COMPANY_USERS_ONLY = 'checkout.validation.company_address.not_applicable';
 
     /**
@@ -85,7 +94,7 @@ class CompanyBusinessUnitAddressValidator implements CompanyBusinessUnitAddressV
     /**
      * @param \Generated\Shared\Transfer\CheckoutDataTransfer $checkoutDataTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getCompanyUnitAddressUuids(CheckoutDataTransfer $checkoutDataTransfer): array
     {
@@ -107,7 +116,7 @@ class CompanyBusinessUnitAddressValidator implements CompanyBusinessUnitAddressV
     /**
      * @param \Generated\Shared\Transfer\CheckoutDataTransfer $checkoutDataTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function extractShippingAddressUuids(CheckoutDataTransfer $checkoutDataTransfer): array
     {
@@ -127,7 +136,7 @@ class CompanyBusinessUnitAddressValidator implements CompanyBusinessUnitAddressV
     /**
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      * @param string $message
-     * @param string[] $parameters
+     * @param array<string> $parameters
      *
      * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */

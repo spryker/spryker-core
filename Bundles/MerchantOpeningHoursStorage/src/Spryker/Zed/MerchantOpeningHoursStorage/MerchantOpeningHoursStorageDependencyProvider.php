@@ -19,10 +19,37 @@ use Spryker\Zed\MerchantOpeningHoursStorage\Dependency\Facade\MerchantOpeningHou
  */
 class MerchantOpeningHoursStorageDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
+    /**
+     * @var string
+     */
     public const FACADE_MERCHANT = 'FACADE_MERCHANT';
+    /**
+     * @var string
+     */
     public const PROPEL_QUERY_MERCHANT_OPENING_HOURS_WEEKDAY_SCHEDULE = 'PROPEL_QUERY_MERCHANT_OPENING_HOURS_WEEKDAY_SCHEDULE';
+    /**
+     * @var string
+     */
     public const PROPEL_QUERY_MERCHANT_OPENING_HOURS_DATE_SCHEDULE = 'PROPEL_QUERY_MERCHANT_OPENING_HOURS_DATE_SCHEDULE';
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function provideBusinessLayerDependencies(Container $container): Container
+    {
+        $container = parent::provideBusinessLayerDependencies($container);
+
+        $container = $this->addMerchantFacade($container);
+        $container = $this->addEventBehaviorFacade($container);
+
+        return $container;
+    }
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -32,7 +59,6 @@ class MerchantOpeningHoursStorageDependencyProvider extends AbstractBundleDepend
     public function provideCommunicationLayerDependencies(Container $container): Container
     {
         $container = parent::provideCommunicationLayerDependencies($container);
-        $container = $this->addEventBehaviorFacade($container);
         $container = $this->addMerchantFacade($container);
 
         return $container;

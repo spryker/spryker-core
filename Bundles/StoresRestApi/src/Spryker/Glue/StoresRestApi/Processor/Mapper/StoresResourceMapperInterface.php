@@ -12,8 +12,8 @@ use Generated\Shared\Transfer\StoresRestAttributesTransfer;
 interface StoresResourceMapperInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\StoreCountryRestAttributesTransfer[] $countries
-     * @param \Generated\Shared\Transfer\StoreCurrencyRestAttributesTransfer[] $currencies
+     * @param array<\Generated\Shared\Transfer\StoreCountryRestAttributesTransfer> $countries
+     * @param array<\Generated\Shared\Transfer\StoreCurrencyRestAttributesTransfer> $currencies
      *
      * @return \Generated\Shared\Transfer\StoresRestAttributesTransfer
      */

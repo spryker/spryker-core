@@ -17,7 +17,7 @@ use Propel\Runtime\Collection\ObjectCollection;
 class WishlistMapper implements WishlistMapperInterface
 {
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Wishlist\Persistence\SpyWishlist[] $wishlistEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Wishlist\Persistence\SpyWishlist> $wishlistEntities
      * @param \Generated\Shared\Transfer\WishlistCollectionTransfer $wishlistCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\WishlistCollectionTransfer
@@ -45,15 +45,39 @@ class WishlistMapper implements WishlistMapperInterface
         SpyWishlist $wishlistEntity,
         WishlistTransfer $wishlistTransfer
     ): WishlistTransfer {
-        $wishlistTransfer = $wishlistTransfer->fromArray($wishlistEntity->toArray(), false);
-        $wishlistItemEntities = $wishlistEntity->getSpyWishlistItems();
-        foreach ($wishlistItemEntities as $wishlistItemEntity) {
-            $wishlistTransfer->addWishlistItem(
-                $this->mapWishlistItemEntityToWishlistItemTransfer($wishlistItemEntity, new WishlistItemTransfer())
-            );
+        $wishlistData = $wishlistEntity->toArray();
+
+        if (array_key_exists(WishlistTransfer::NUMBER_OF_ITEMS, $wishlistData)) {
+            $wishlistData[WishlistTransfer::NUMBER_OF_ITEMS] = (int)$wishlistData[WishlistTransfer::NUMBER_OF_ITEMS];
         }
 
-        $wishlistTransfer->setNumberOfItems($wishlistItemEntities->count());
+        return $wishlistTransfer->fromArray($wishlistData, false);
+    }
+
+    /**
+     * @param \Orm\Zed\Wishlist\Persistence\SpyWishlist $wishlistEntity
+     * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistTransfer
+     */
+    public function mapWishlistEntityToWishlistTransferIncludingWishlistItems(
+        SpyWishlist $wishlistEntity,
+        WishlistTransfer $wishlistTransfer
+    ): WishlistTransfer {
+        $wishlistTransfer = $this->mapWishlistEntityToWishlistTransfer($wishlistEntity, $wishlistTransfer);
+
+        foreach ($wishlistEntity->getSpyWishlistItems() as $wishlistItemEntity) {
+            $wishlistItemTransfer = $this->mapWishlistItemEntityToWishlistItemTransfer(
+                $wishlistItemEntity,
+                new WishlistItemTransfer()
+            );
+
+            $wishlistItemTransfer
+                ->setFkCustomer($wishlistTransfer->getFkCustomer())
+                ->setWishlistName($wishlistTransfer->getName());
+
+            $wishlistTransfer->addWishlistItem($wishlistItemTransfer);
+        }
 
         return $wishlistTransfer;
     }
@@ -69,5 +93,20 @@ class WishlistMapper implements WishlistMapperInterface
         WishlistItemTransfer $wishlistItemTransfer
     ): WishlistItemTransfer {
         return $wishlistItemTransfer->fromArray($wishlistItemEntity->toArray(), true);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
+     * @param \Orm\Zed\Wishlist\Persistence\SpyWishlistItem $wishlistItemEntity
+     *
+     * @return \Orm\Zed\Wishlist\Persistence\SpyWishlistItem
+     */
+    public function mapWishlistItemTransferToWishlistItemEntity(
+        WishlistItemTransfer $wishlistItemTransfer,
+        SpyWishlistItem $wishlistItemEntity
+    ): SpyWishlistItem {
+        $wishlistItemEntity->fromArray($wishlistItemTransfer->toArray());
+
+        return $wishlistItemEntity;
     }
 }

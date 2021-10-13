@@ -12,6 +12,9 @@ use Spryker\Client\Kernel\Container;
 
 class CollectorDependencyProvider extends AbstractDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_STORAGE = 'storage client';
 
     /**

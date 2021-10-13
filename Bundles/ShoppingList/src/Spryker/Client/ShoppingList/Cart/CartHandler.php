@@ -35,12 +35,12 @@ class CartHandler implements CartHandlerInterface
     protected $messengerClient;
 
     /**
-     * @var \Spryker\Client\ShoppingListExtension\Dependency\Plugin\ShoppingListItemToItemMapperPluginInterface[]
+     * @var array<\Spryker\Client\ShoppingListExtension\Dependency\Plugin\ShoppingListItemToItemMapperPluginInterface>
      */
     protected $shoppingListItemToItemMapperPlugins;
 
     /**
-     * @var \Spryker\Client\ShoppingListExtension\Dependency\Plugin\QuoteItemToItemMapperPluginInterface[]
+     * @var array<\Spryker\Client\ShoppingListExtension\Dependency\Plugin\QuoteItemToItemMapperPluginInterface>
      */
     protected $quoteItemToItemMapperPlugins;
 
@@ -48,8 +48,8 @@ class CartHandler implements CartHandlerInterface
      * @param \Spryker\Client\ShoppingList\Dependency\Client\ShoppingListToCartClientInterface $cartClient
      * @param \Spryker\Client\ShoppingList\Zed\ShoppingListStubInterface $shoppingListStub
      * @param \Spryker\Client\ShoppingList\Dependency\Client\ShoppingListToMessengerClientInterface $messengerClient
-     * @param \Spryker\Client\ShoppingListExtension\Dependency\Plugin\ShoppingListItemToItemMapperPluginInterface[] $shoppingListItemToItemMapperPlugins
-     * @param \Spryker\Client\ShoppingListExtension\Dependency\Plugin\QuoteItemToItemMapperPluginInterface[] $quoteItemToItemMapperPlugins
+     * @param array<\Spryker\Client\ShoppingListExtension\Dependency\Plugin\ShoppingListItemToItemMapperPluginInterface> $shoppingListItemToItemMapperPlugins
+     * @param array<\Spryker\Client\ShoppingListExtension\Dependency\Plugin\QuoteItemToItemMapperPluginInterface> $quoteItemToItemMapperPlugins
      */
     public function __construct(
         ShoppingListToCartClientInterface $cartClient,

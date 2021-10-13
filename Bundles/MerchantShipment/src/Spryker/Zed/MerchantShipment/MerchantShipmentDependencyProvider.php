@@ -16,6 +16,9 @@ use Spryker\Zed\MerchantShipment\Dependency\Facade\MerchantShipmentToShipmentFac
  */
 class MerchantShipmentDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_SHIPMENT = 'FACADE_SHIPMENT';
 
     /**

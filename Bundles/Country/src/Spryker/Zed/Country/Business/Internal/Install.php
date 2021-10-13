@@ -233,7 +233,7 @@ class Install implements InstallInterface
     }
 
     /**
-     * @return \Spryker\Zed\Country\Business\Internal\Regions\RegionInstallInterface[]
+     * @return array<\Spryker\Zed\Country\Business\Internal\Regions\RegionInstallInterface>
      */
     protected function getCountriesToInstallRegionsFor()
     {

@@ -24,11 +24,15 @@ abstract class AbstractApplicationHelper extends Framework
     use ContainerHelperTrait;
     use CommunicationHelperTrait;
 
+    /**
+     * @var string
+     */
     protected const MODULE_NAME = 'Application';
 
     /**
      * @uses \Spryker\Yves\Http\Plugin\Application\HttpApplicationPlugin::SERVICE_KERNEL
      * @uses \Spryker\Zed\Http\Communication\Plugin\Application\HttpApplicationPlugin::SERVICE_KERNEL
+     * @var string
      */
     protected const SERVICE_KERNEL = 'kernel';
 
@@ -101,6 +105,35 @@ abstract class AbstractApplicationHelper extends Framework
         }
 
         return $this->client;
+    }
+
+    /**
+     * @param string $page
+     *
+     * @return void
+     */
+    public function amOnPage($page): void
+    {
+        if ($this->client === null) {
+            $this->getClient();
+        }
+
+        $this->_loadPage('GET', $page);
+    }
+
+    /**
+     * @param string $uri
+     * @param array $params
+     *
+     * @return void
+     */
+    public function sendAjaxPostRequest($uri, $params = []): void
+    {
+        if ($this->client === null) {
+            $this->getClient();
+        }
+
+        parent::sendAjaxPostRequest($uri, $params);
     }
 
     /**

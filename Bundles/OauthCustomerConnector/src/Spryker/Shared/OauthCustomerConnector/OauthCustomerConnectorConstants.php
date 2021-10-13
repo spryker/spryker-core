@@ -19,6 +19,7 @@ interface OauthCustomerConnectorConstants
      *  - The identifier of OAUTH client to use when requesting for access tokens.
      *
      * @api
+     * @var string
      */
     public const OAUTH_CLIENT_IDENTIFIER = 'OAUTH_CLIENT_IDENTIFIER';
 
@@ -29,6 +30,7 @@ interface OauthCustomerConnectorConstants
      *  - The secret of OAUTH client to use when requesting for access tokens.
      *
      * @api
+     * @var string
      */
     public const OAUTH_CLIENT_SECRET = 'OAUTH_CLIENT_SECRET';
 }

@@ -30,6 +30,9 @@ use SprykerTest\Zed\StateMachine\Mocks\StateMachineMocks;
  */
 class TimeoutTest extends StateMachineMocks
 {
+    /**
+     * @var string
+     */
     public const STATE_WITH_TIMEOUT = 'State with timeout';
 
     /**

@@ -16,6 +16,9 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class CleanOutputConsole extends Console
 {
+    /**
+     * @var string
+     */
     protected const COMMAND_NAME = 'testify:clean:output';
 
     /**

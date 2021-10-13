@@ -69,7 +69,7 @@ class SessionQuoteStorageStrategyPlugin extends AbstractPlugin implements QuoteS
      *  - Stores quote in session internally after zed request.
      *  - Returns update quote.
      *
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      * @param array $params
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
@@ -154,7 +154,7 @@ class SessionQuoteStorageStrategyPlugin extends AbstractPlugin implements QuoteS
      *  - Stores quote in session internally after zed request.
      *  - Returns update quote.
      *
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $items
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */

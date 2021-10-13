@@ -21,16 +21,40 @@ use Spryker\Zed\MerchantOms\Dependency\Service\MerchantOmsToUtilDataReaderServic
  */
 class MerchantOmsDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_MERCHANT = 'FACADE_MERCHANT';
+    /**
+     * @var string
+     */
     public const FACADE_STATE_MACHINE = 'FACADE_STATE_MACHINE';
+    /**
+     * @var string
+     */
     public const FACADE_MERCHANT_SALES_ORDER = 'FACADE_MERCHANT_SALES_ORDER';
 
+    /**
+     * @var string
+     */
     public const PLUGINS_STATE_MACHINE_CONDITION = 'PLUGINS_STATE_MACHINE_CONDITION';
+    /**
+     * @var string
+     */
     public const PLUGINS_PLUGINS_STATE_MACHINE_COMMAND = 'PLUGINS_PLUGINS_STATE_MACHINE_COMMAND';
 
+    /**
+     * @var string
+     */
     public const PROPEL_QUERY_MERCHANT_SALES_ORDER_ITEM = 'PROPEL_QUERY_MERCHANT_SALES_ORDER_ITEM';
+    /**
+     * @var string
+     */
     public const PROPEL_QUERY_STATE_MACHINE_ITEM_STATE_HISTORY = 'PROPEL_QUERY_STATE_MACHINE_ITEM_STATE_HISTORY';
 
+    /**
+     * @var string
+     */
     public const SERVICE_UTIL_DATA_READER = 'SERVICE_UTIL_DATA_READER';
 
     /**
@@ -194,7 +218,7 @@ class MerchantOmsDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\StateMachine\Dependency\Plugin\ConditionPluginInterface[]
+     * @return array<\Spryker\Zed\StateMachine\Dependency\Plugin\ConditionPluginInterface>
      */
     protected function getStateMachineConditionPlugins(): array
     {
@@ -202,7 +226,7 @@ class MerchantOmsDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\StateMachine\Dependency\Plugin\CommandPluginInterface[]
+     * @return array<\Spryker\Zed\StateMachine\Dependency\Plugin\CommandPluginInterface>
      */
     protected function getStateMachineCommandPlugins(): array
     {

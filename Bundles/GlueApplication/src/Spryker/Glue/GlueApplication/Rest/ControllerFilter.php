@@ -14,6 +14,7 @@ use Spryker\Glue\GlueApplication\GlueApplicationConfig;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
+use Spryker\Glue\GlueApplication\Rest\Request\FormattedControllerBeforeActionInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\HttpRequestValidatorInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\RequestFormatterInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\RestRequestValidatorInterface;
@@ -22,6 +23,7 @@ use Spryker\Glue\GlueApplication\Rest\Response\ResponseHeadersInterface;
 use Spryker\Glue\GlueApplication\Rest\User\RestUserValidatorInterface;
 use Spryker\Glue\GlueApplication\Rest\User\UserProviderInterface;
 use Spryker\Glue\Kernel\Controller\AbstractController;
+use Spryker\Glue\Kernel\Controller\FormattedAbstractController;
 use Spryker\Shared\Log\LoggerTrait;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -81,6 +83,11 @@ class ControllerFilter implements ControllerFilterInterface
     protected $userProvider;
 
     /**
+     * @var \Spryker\Glue\GlueApplication\Rest\Request\FormattedControllerBeforeActionInterface
+     */
+    protected $formattedControllerBeforeAction;
+
+    /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\RequestFormatterInterface $requestFormatter
      * @param \Spryker\Glue\GlueApplication\Rest\Response\ResponseFormatterInterface $responseFormatter
      * @param \Spryker\Glue\GlueApplication\Rest\Response\ResponseHeadersInterface $responseHeaders
@@ -91,6 +98,7 @@ class ControllerFilter implements ControllerFilterInterface
      * @param \Spryker\Glue\GlueApplication\Rest\ControllerCallbacksInterface $controllerCallbacks
      * @param \Spryker\Glue\GlueApplication\GlueApplicationConfig $applicationConfig
      * @param \Spryker\Glue\GlueApplication\Rest\User\UserProviderInterface $userProvider
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\FormattedControllerBeforeActionInterface $formattedControllerBeforeAction
      */
     public function __construct(
         RequestFormatterInterface $requestFormatter,
@@ -102,7 +110,8 @@ class ControllerFilter implements ControllerFilterInterface
         RestResourceBuilderInterface $restResourceBuilder,
         ControllerCallbacksInterface $controllerCallbacks,
         GlueApplicationConfig $applicationConfig,
-        UserProviderInterface $userProvider
+        UserProviderInterface $userProvider,
+        FormattedControllerBeforeActionInterface $formattedControllerBeforeAction
     ) {
         $this->requestFormatter = $requestFormatter;
         $this->responseFormatter = $responseFormatter;
@@ -114,6 +123,7 @@ class ControllerFilter implements ControllerFilterInterface
         $this->controllerCallbacks = $controllerCallbacks;
         $this->applicationConfig = $applicationConfig;
         $this->userProvider = $userProvider;
+        $this->formattedControllerBeforeAction = $formattedControllerBeforeAction;
     }
 
     /**
@@ -129,6 +139,15 @@ class ControllerFilter implements ControllerFilterInterface
             $restErrorMessageTransfer = $this->httpRequestValidator->validate($httpRequest);
             if ($restErrorMessageTransfer) {
                 return new Response($restErrorMessageTransfer->getDetail(), $restErrorMessageTransfer->getStatus());
+            }
+
+            if ($controller instanceof FormattedAbstractController) {
+                $restErrorMessageTransfer = $this->formattedControllerBeforeAction->beforeAction($httpRequest);
+                if ($restErrorMessageTransfer) {
+                    return new Response($restErrorMessageTransfer->getDetail(), $restErrorMessageTransfer->getStatus());
+                }
+
+                return $controller->$action($httpRequest);
             }
 
             $restRequest = $this->requestFormatter->formatRequest($httpRequest);
@@ -158,7 +177,7 @@ class ControllerFilter implements ControllerFilterInterface
     ): RestResponseInterface {
         if (!$restErrorCollectionTransfer || !$restErrorCollectionTransfer->getRestErrors()->count()) {
             $restRequest = $this->userProvider->setUserToRestRequest($restRequest);
-            $restUserValidationRestErrorCollectionTransfer = $this->validateRestUser($restRequest);
+            $restUserValidationRestErrorCollectionTransfer = $this->restUserValidator->validate($restRequest);
             if ($restUserValidationRestErrorCollectionTransfer) {
                 return $this->createErrorResponse($restUserValidationRestErrorCollectionTransfer);
             }
@@ -237,10 +256,6 @@ class ControllerFilter implements ControllerFilterInterface
      */
     protected function logException(Exception $exception): void
     {
-        if (!$this->getLogger()) {
-            return;
-        }
-
         $this->getLogger()->error($exception->getMessage(), ['trace' => $exception->getTraceAsString()]);
     }
 
@@ -254,21 +269,22 @@ class ControllerFilter implements ControllerFilterInterface
     protected function validateRequest(AbstractController $controller, Request $httpRequest, RestRequestInterface $restRequest): ?RestErrorCollectionTransfer
     {
         $restErrorCollectionTransfer = null;
+
+        /**
+         * @description Skip validation for the OPTION method to not invalidate CORS requests.
+         * @link https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS
+         * @link https://developer.mozilla.org/en-US/docs/Glossary/Preflight_request
+         * @link https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/OPTIONS#preflighted_requests_in_cors
+         */
+        if ($httpRequest->getMethod() === Request::METHOD_OPTIONS) {
+            return null;
+        }
+
         if (!$controller instanceof ErrorControllerInterface) {
             $restErrorCollectionTransfer = $this->restRequestValidator->validate($httpRequest, $restRequest);
         }
 
         return $restErrorCollectionTransfer;
-    }
-
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     *
-     * @return \Generated\Shared\Transfer\RestErrorCollectionTransfer|null
-     */
-    protected function validateRestUser(RestRequestInterface $restRequest): ?RestErrorCollectionTransfer
-    {
-        return $this->restUserValidator->validate($restRequest);
     }
 
     /**

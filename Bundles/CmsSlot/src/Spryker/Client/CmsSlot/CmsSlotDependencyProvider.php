@@ -12,6 +12,9 @@ use Spryker\Client\Kernel\Container;
 
 class CmsSlotDependencyProvider extends AbstractDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const EXTERNAL_DATA_PROVIDER_STRATEGY_PLUGINS = 'EXTERNAL_DATA_PROVIDER_STRATEGY_PLUGINS';
 
     /**
@@ -41,7 +44,7 @@ class CmsSlotDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @return \Spryker\Client\CmsSlotExtension\Dependency\Plugin\ExternalDataProviderStrategyPluginInterface[]
+     * @return array<\Spryker\Client\CmsSlotExtension\Dependency\Plugin\ExternalDataProviderStrategyPluginInterface>
      */
     public function getExternalDataProviderStrategyPlugins(): array
     {

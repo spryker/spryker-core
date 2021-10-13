@@ -15,8 +15,17 @@ use Spryker\Zed\Kernel\Container;
  */
 class CompanyBusinessUnitDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const PLUGINS_COMPANY_BUSINESS_UNIT_POST_SAVE = 'PLUGINS_COMPANY_BUSINESS_UNIT_POST_SAVE';
+    /**
+     * @var string
+     */
     public const PLUGINS_COMPANY_BUSINESS_UNIT_PRE_DELETE = 'PLUGINS_COMPANY_BUSINESS_UNIT_PRE_DELETE';
+    /**
+     * @var string
+     */
     public const PLUGINS_COMPANY_BUSINESS_UNIT_EXPANDER = 'PLUGINS_COMPANY_BUSINESS_UNIT_EXPANDER';
 
     /**
@@ -77,7 +86,7 @@ class CompanyBusinessUnitDependencyProvider extends AbstractBundleDependencyProv
     }
 
     /**
-     * @return \Spryker\Zed\CompanyBusinessUnitExtension\Dependency\Plugin\CompanyBusinessUnitPostSavePluginInterface[]
+     * @return array<\Spryker\Zed\CompanyBusinessUnitExtension\Dependency\Plugin\CompanyBusinessUnitPostSavePluginInterface>
      */
     protected function getCompanyBusinessUnitPostSavePlugins(): array
     {
@@ -85,7 +94,7 @@ class CompanyBusinessUnitDependencyProvider extends AbstractBundleDependencyProv
     }
 
     /**
-     * @return \Spryker\Zed\CompanyBusinessUnitExtension\Dependency\Plugin\CompanyBusinessUnitExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\CompanyBusinessUnitExtension\Dependency\Plugin\CompanyBusinessUnitExpanderPluginInterface>
      */
     protected function getCompanyBusinessUnitExpanderPlugins(): array
     {
@@ -93,7 +102,7 @@ class CompanyBusinessUnitDependencyProvider extends AbstractBundleDependencyProv
     }
 
     /**
-     * @return \Spryker\Zed\CompanyBusinessUnitExtension\Dependency\Plugin\CompanyBusinessUnitPreDeletePluginInterface[]
+     * @return array<\Spryker\Zed\CompanyBusinessUnitExtension\Dependency\Plugin\CompanyBusinessUnitPreDeletePluginInterface>
      */
     protected function getCompanyBusinessUnitPreDeletePlugins(): array
     {

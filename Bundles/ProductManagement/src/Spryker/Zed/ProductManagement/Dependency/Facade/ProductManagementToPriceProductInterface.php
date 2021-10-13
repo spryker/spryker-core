@@ -20,7 +20,7 @@ interface ProductManagementToPriceProductInterface
     public function findPriceBySku($sku, $priceTypeName = null);
 
     /**
-     * @return \Generated\Shared\Transfer\PriceTypeTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceTypeTransfer>
      */
     public function getPriceTypeValues();
 
@@ -33,7 +33,7 @@ interface ProductManagementToPriceProductInterface
      * @param int $idProductConcrete
      * @param int $idProductAbstract
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function findProductConcretePrices($idProductConcrete, $idProductAbstract);
 
@@ -46,7 +46,7 @@ interface ProductManagementToPriceProductInterface
      * @param int $idProductAbstract
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer|null $priceProductCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function findProductAbstractPricesWithoutPriceExtraction(
         int $idProductAbstract,
@@ -58,7 +58,7 @@ interface ProductManagementToPriceProductInterface
      * @param int $idProductAbstract
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer|null $priceProductCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function findProductConcretePricesWithoutPriceExtraction(
         int $idProductConcrete,

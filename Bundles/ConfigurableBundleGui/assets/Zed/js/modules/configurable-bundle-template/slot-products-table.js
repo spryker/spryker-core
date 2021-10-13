@@ -26,7 +26,7 @@ function init() {
 function addSlotTableRowClickHandler() {
     var $slotTable = $slotTableWrapper.find('.dataTables_scrollBody table').first().DataTable();
 
-    $slotTable.on('click', 'tbody tr[role="row"]', function () {
+    $slotTable.on('click', 'tbody > tr', function () {
         updateSlotProductsTable(this, $slotTable);
     });
 }
@@ -35,7 +35,7 @@ function addSlotTableDrawHandler() {
     var $slotTable = $slotTableWrapper.find('.dataTables_scrollBody table').first().DataTable();
 
     $slotTable.on('draw', function () {
-        var $rows = $(this).find('tbody > tr[role="row"]');
+        var $rows = $(this).find('tbody > tr');
 
         if (isInitialDraw) {
             performInitialDraw($slotTable, $rows);

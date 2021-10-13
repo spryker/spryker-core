@@ -13,6 +13,9 @@ use Spryker\Shared\ZedRequest\ZedRequestConstants;
 
 class ZedRequestConfig extends AbstractBundleConfig
 {
+    /**
+     * @var string
+     */
     public const HASH_COST = 'cost';
 
     /**

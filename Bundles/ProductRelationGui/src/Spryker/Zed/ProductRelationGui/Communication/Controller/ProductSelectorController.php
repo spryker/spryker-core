@@ -16,6 +16,9 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ProductSelectorController extends AbstractController
 {
+    /**
+     * @var string
+     */
     public const URL_PARAM_ID_PRODUCT_ABSTRACT = 'id-product-abstract';
 
     /**

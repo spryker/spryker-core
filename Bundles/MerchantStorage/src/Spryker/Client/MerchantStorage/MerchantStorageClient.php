@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\MerchantStorage;
 
+use Generated\Shared\Transfer\MerchantStorageCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantStorageTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
@@ -36,15 +37,15 @@ class MerchantStorageClient extends AbstractClient implements MerchantStorageCli
      *
      * @api
      *
-     * @param int $idMerchant
+     * @param \Generated\Shared\Transfer\MerchantStorageCriteriaTransfer $merchantStorageCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantStorageTransfer|null
      */
-    public function findOne(int $idMerchant): ?MerchantStorageTransfer
+    public function findOne(MerchantStorageCriteriaTransfer $merchantStorageCriteriaTransfer): ?MerchantStorageTransfer
     {
         return $this->getFactory()
             ->createMerchantStorageReader()
-            ->findOne($idMerchant);
+            ->findOne($merchantStorageCriteriaTransfer);
     }
 
     /**
@@ -52,46 +53,14 @@ class MerchantStorageClient extends AbstractClient implements MerchantStorageCli
      *
      * @api
      *
-     * @param int[] $merchantIds
+     * @param \Generated\Shared\Transfer\MerchantStorageCriteriaTransfer $merchantStorageCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\MerchantStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\MerchantStorageTransfer>
      */
-    public function get(array $merchantIds): array
+    public function get(MerchantStorageCriteriaTransfer $merchantStorageCriteriaTransfer): array
     {
         return $this->getFactory()
             ->createMerchantStorageReader()
-            ->get($merchantIds);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param string $merchantReference
-     *
-     * @return \Generated\Shared\Transfer\MerchantStorageTransfer|null
-     */
-    public function findOneByMerchantReference(string $merchantReference): ?MerchantStorageTransfer
-    {
-        return $this->getFactory()
-            ->createMerchantStorageReader()
-            ->findOneByMerchantReference($merchantReference);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param string[] $merchantReferences
-     *
-     * @return \Generated\Shared\Transfer\MerchantStorageTransfer[]
-     */
-    public function getByMerchantReferences(array $merchantReferences): array
-    {
-        return $this->getFactory()
-            ->createMerchantStorageReader()
-            ->getByMerchantReferences($merchantReferences);
+            ->get($merchantStorageCriteriaTransfer);
     }
 }

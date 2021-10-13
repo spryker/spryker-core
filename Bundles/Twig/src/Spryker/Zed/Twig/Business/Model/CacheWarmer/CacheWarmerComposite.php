@@ -12,12 +12,12 @@ use Spryker\Zed\Twig\Business\Model\CacheWarmerInterface;
 class CacheWarmerComposite implements CacheWarmerInterface
 {
     /**
-     * @var \Spryker\Zed\Twig\Business\Model\CacheWarmerInterface[]
+     * @var array<\Spryker\Zed\Twig\Business\Model\CacheWarmerInterface>
      */
     protected $cacheWarmer;
 
     /**
-     * @param \Spryker\Zed\Twig\Business\Model\CacheWarmerInterface[] $cacheWarmer
+     * @param array<\Spryker\Zed\Twig\Business\Model\CacheWarmerInterface> $cacheWarmer
      */
     public function __construct(array $cacheWarmer)
     {

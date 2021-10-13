@@ -16,6 +16,7 @@ class ConfigurableBundleStorageConfig extends AbstractBundleConfig
      * - Queue name as used for processing configurable bundles messages
      *
      * @api
+     * @var string
      */
     public const CONFIGURABLE_BUNDLE_SYNC_STORAGE_QUEUE = 'sync.storage.configurable_bundle';
 
@@ -24,6 +25,7 @@ class ConfigurableBundleStorageConfig extends AbstractBundleConfig
      * - Queue name as used for processing configurable bundles messages
      *
      * @api
+     * @var string
      */
     public const CONFIGURABLE_BUNDLE_SYNC_STORAGE_ERROR_QUEUE = 'sync.storage.configurable_bundle.error';
 
@@ -32,6 +34,7 @@ class ConfigurableBundleStorageConfig extends AbstractBundleConfig
      * - Key generation resource name of configurable bundles template.
      *
      * @api
+     * @var string
      */
     public const CONFIGURABLE_BUNDLE_TEMPLATE_RESOURCE_NAME = 'configurable_bundle_template';
 
@@ -40,6 +43,7 @@ class ConfigurableBundleStorageConfig extends AbstractBundleConfig
      * - Resource name, will be used for key generating.
      *
      * @api
+     * @var string
      */
     public const CONFIGURABLE_BUNDLE_TEMPLATE_IMAGE_RESOURCE_NAME = 'configurable_bundle_template_image';
 }

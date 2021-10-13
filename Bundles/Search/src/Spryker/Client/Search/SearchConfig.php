@@ -15,8 +15,14 @@ use Spryker\Shared\Search\SearchConstants;
  */
 class SearchConfig extends AbstractBundleConfig
 {
+    /**
+     * @var int
+     */
     public const FACET_NAME_AGGREGATION_SIZE = 10;
 
+    /**
+     * @var string
+     */
     protected const DEFAULT_SOURCE_IDENTIFIER = 'page';
 
     /**
@@ -64,8 +70,9 @@ class SearchConfig extends AbstractBundleConfig
         $config['port'] = $this->get(SearchConstants::ELASTICA_PARAMETER__PORT);
         $config['host'] = $this->get(SearchConstants::ELASTICA_PARAMETER__HOST);
 
-        $authHeader = $this->get(SearchConstants::ELASTICA_PARAMETER__AUTH_HEADER, null);
-        if ($authHeader !== null) {
+        $authHeader = (string)$this->get(SearchConstants::ELASTICA_PARAMETER__AUTH_HEADER, '');
+
+        if ($authHeader !== '') {
             $config['headers'] = [
                 'Authorization' => 'Basic ' . $authHeader,
             ];

@@ -36,12 +36,27 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class RestRequestValidatorCustomConstraintPluginTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const VALIDATION_CACHE_FILENAME_PATTERN = '%s/custom.validation.yaml';
+    /**
+     * @var string
+     */
     protected const STORE_NAME_DE = 'DE';
+    /**
+     * @var string
+     */
     protected const STORE_NAME_AT = 'AT';
+    /**
+     * @var array
+     */
     protected const CORRECT_ENDPOINT_DATA = [
         'currencyCode' => 'FJD',
     ];
+    /**
+     * @var array
+     */
     protected const INCORRECT_ENDPOINT_DATA = [
         'currencyCode' => 'xxx',
     ];

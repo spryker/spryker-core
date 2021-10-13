@@ -20,6 +20,9 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class PriceTypeSubForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const FIELD_ID_PRICE_TYPE = 'idPriceType';
 
     /**

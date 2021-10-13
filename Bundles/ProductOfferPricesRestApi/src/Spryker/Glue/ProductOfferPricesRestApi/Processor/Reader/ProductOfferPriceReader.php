@@ -19,9 +19,21 @@ use Spryker\Glue\ProductOfferPricesRestApi\ProductOfferPricesRestApiConfig;
 
 class ProductOfferPriceReader implements ProductOfferPriceReaderInterface
 {
+    /**
+     * @var string
+     */
     protected const MAPPING_TYPE_SKU = 'sku';
+    /**
+     * @var string
+     */
     protected const PRODUCT_CONCRETE_ID_PRODUCT_CONCRETE = 'id_product_concrete';
+    /**
+     * @var string
+     */
     protected const PRODUCT_CONCRETE_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
+    /**
+     * @var string
+     */
     protected const PRODUCT_CONCRETE_SKU = 'sku';
 
     /**
@@ -79,11 +91,14 @@ class ProductOfferPriceReader implements ProductOfferPriceReaderInterface
     {
         $productOfferRestResource = $restRequest->findParentResourceByType(ProductOfferPricesRestApiConfig::RESOURCE_PRODUCT_OFFERS);
 
-        if (!$productOfferRestResource || !$productOfferRestResource->getId()) {
+        if (!$productOfferRestResource || $productOfferRestResource->getId() === null) {
             return $this->productOfferPriceRestResponseBuilder->createProductOfferIdNotSpecifierErrorResponse();
         }
 
-        $productOfferPriceRestResources = $this->getProductOfferPriceRestResources([$productOfferRestResource->getId()], $restRequest->getMetadata()->getLocale());
+        $productOfferPriceRestResources = $this->getProductOfferPriceRestResources(
+            [$productOfferRestResource->getId()],
+            $restRequest->getMetadata()->getLocale()
+        );
 
         $productOfferPriceRestResource = $productOfferPriceRestResources[$productOfferRestResource->getId()] ?? null;
         if (!isset($productOfferPriceRestResource)) {
@@ -94,10 +109,10 @@ class ProductOfferPriceReader implements ProductOfferPriceReaderInterface
     }
 
     /**
-     * @param string[] $productOfferReferences
+     * @param array<string> $productOfferReferences
      * @param string $localeName
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>
      */
     public function getProductOfferPriceRestResources(array $productOfferReferences, string $localeName): array
     {
@@ -144,15 +159,15 @@ class ProductOfferPriceReader implements ProductOfferPriceReaderInterface
     /**
      * @phpstan-return array<string, string>
      *
-     * @param \Generated\Shared\Transfer\ProductOfferStorageTransfer[] $productOfferStorageTransfers
+     * @param array<\Generated\Shared\Transfer\ProductOfferStorageTransfer> $productOfferStorageTransfers
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getProductConcreteSkus(array $productOfferStorageTransfers): array
     {
         $productConcreteSkus = [];
         foreach ($productOfferStorageTransfers as $productOfferStorageTransfer) {
-            $productConcreteSkus[$productOfferStorageTransfer->getProductOfferReference()] = $productOfferStorageTransfer->getProductConcreteSku();
+            $productConcreteSkus[$productOfferStorageTransfer->getProductOfferReferenceOrFail()] = $productOfferStorageTransfer->getProductConcreteSkuOrFail();
         }
 
         return $productConcreteSkus;

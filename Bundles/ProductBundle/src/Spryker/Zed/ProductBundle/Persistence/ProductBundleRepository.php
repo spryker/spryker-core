@@ -20,12 +20,15 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
  */
 class ProductBundleRepository extends AbstractRepository implements ProductBundleRepositoryInterface
 {
+    /**
+     * @var string
+     */
     protected const ALIAS_BUNDLED_PRODUCT = 'aliasBundledProduct';
 
     /**
      * @param string $sku
      *
-     * @return \Generated\Shared\Transfer\ProductForBundleTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductForBundleTransfer>
      */
     public function findBundledProductsBySku(string $sku): array
     {
@@ -119,9 +122,9 @@ class ProductBundleRepository extends AbstractRepository implements ProductBundl
     }
 
     /**
-     * @param string[] $skus
+     * @param array<string> $skus
      *
-     * @return \Generated\Shared\Transfer\ProductForBundleTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductForBundleTransfer>
      */
     public function getProductForBundleTransfersByProductConcreteSkus(array $skus): array
     {
@@ -141,9 +144,9 @@ class ProductBundleRepository extends AbstractRepository implements ProductBundl
     /**
      * @module Sales
      *
-     * @param int[] $salesOrderItemIds
+     * @param array<int> $salesOrderItemIds
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     public function getBundleItemsBySalesOrderItemIds(array $salesOrderItemIds): array
     {
@@ -162,7 +165,7 @@ class ProductBundleRepository extends AbstractRepository implements ProductBundl
     /**
      * @module Product
      *
-     * @param string[] $productConcreteSkus
+     * @param array<string> $productConcreteSkus
      *
      * @return array
      */

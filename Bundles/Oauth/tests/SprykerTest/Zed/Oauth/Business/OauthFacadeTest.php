@@ -57,6 +57,15 @@ class OauthFacadeTest extends Unit
     protected $customerTransfer;
 
     /**
+     * @var string
+     */
+    protected const CLIENT_IDENTIFIER = 'test client';
+    /**
+     * @var string
+     */
+    protected const CLIENT_SECRET = 'abc123';
+
+    /**
      * @return void
      */
     public function setUp(): void
@@ -237,11 +246,12 @@ class OauthFacadeTest extends Unit
     public function testRevokeRefreshTokenShouldSuccessWithValidToken(): void
     {
         // Arrange
+        $this->createTestClient();
         $this->tester->deleteAllOauthRefreshTokens();
         $this->setOauthDependencies();
         $this->setUserProviderPluginMock();
         $customerTransfer = $this->tester->createCustomerTransfer();
-        $oauthResponseTransfer = $this->tester->haveAuthorizationToGlue($customerTransfer);
+        $oauthResponseTransfer = $this->tester->haveAuthorizationToGlue($customerTransfer, null, static::CLIENT_IDENTIFIER, static::CLIENT_SECRET);
 
         $revokeRefreshTokenRequestTransfer = $this->tester->createRevokeRefreshTokenRequestTransfer(
             $oauthResponseTransfer->getCustomerReference(),
@@ -261,6 +271,7 @@ class OauthFacadeTest extends Unit
     public function testRevokeRefreshTokenShouldFailedWithInvalidToken(): void
     {
         // Arrange
+        $this->createTestClient();
         $revokeRefreshTokenRequestTransfer = $this->tester->createRevokeRefreshTokenRequestTransfer(
             $this->tester->haveCustomer()->getCustomerReference(),
             'test'
@@ -414,12 +425,12 @@ class OauthFacadeTest extends Unit
     protected function createTestClient(): void
     {
         $oauthClientEntity = SpyOauthClientQuery::create()
-            ->filterByIdentifier('frontend')
+            ->filterByIdentifier(static::CLIENT_IDENTIFIER)
             ->findOneOrCreate();
 
         $oauthClientEntity
-            ->setName('frontend api client')
-            ->setSecret('$2y$10$gkKxj9iHzIAtza98kT4Ipe0/bxHV1XIEvLROcqaC6YdHJThUFrexS')
+            ->setName('test api client')
+            ->setSecret(password_hash(static::CLIENT_SECRET, PASSWORD_BCRYPT))
             ->setIsConfidential(true)
             ->save();
     }
@@ -432,8 +443,8 @@ class OauthFacadeTest extends Unit
         $oauthRequestTransfer = new OauthRequestTransfer();
         $oauthRequestTransfer
             ->setGrantType('password')
-            ->setClientId('frontend')
-            ->setClientSecret('abc123')
+            ->setClientId(static::CLIENT_IDENTIFIER)
+            ->setClientSecret(static::CLIENT_SECRET)
             ->setUsername('spencor.hopkin@spryker.com')
             ->setPassword('change123');
 

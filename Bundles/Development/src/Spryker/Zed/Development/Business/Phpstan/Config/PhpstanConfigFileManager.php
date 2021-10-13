@@ -41,7 +41,7 @@ class PhpstanConfigFileManager implements PhpstanConfigFileManagerInterface
     }
 
     /**
-     * @param \SplFileInfo[] $configFiles
+     * @param array<\SplFileInfo> $configFiles
      * @param string $newConfigFileName
      *
      * @return string
@@ -72,7 +72,7 @@ class PhpstanConfigFileManager implements PhpstanConfigFileManagerInterface
     }
 
     /**
-     * @param \SplFileInfo[] $configFiles
+     * @param array<\SplFileInfo> $configFiles
      *
      * @return array
      */

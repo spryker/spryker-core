@@ -34,7 +34,7 @@ class ContentFileListContentGuiEditorPlugin extends AbstractPlugin implements Co
      *
      * @api
      *
-     * @return \Generated\Shared\Transfer\ContentWidgetTemplateTransfer[]
+     * @return array<\Generated\Shared\Transfer\ContentWidgetTemplateTransfer>
      */
     public function getTemplates(): array
     {

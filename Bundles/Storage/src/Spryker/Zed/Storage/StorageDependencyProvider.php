@@ -16,8 +16,14 @@ use Spryker\Zed\Storage\Dependency\Service\StorageToUtilSanitizeServiceBridge;
  */
 class StorageDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_STORAGE = 'CLIENT_STORAGE';
 
+    /**
+     * @var string
+     */
     public const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
 
     /**

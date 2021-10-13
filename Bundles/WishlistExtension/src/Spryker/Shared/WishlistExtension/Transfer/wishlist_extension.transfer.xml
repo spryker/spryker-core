@@ -1,12 +1,25 @@
 <?xml version="1.0"?>
-<transfers xmlns="spryker:transfer-01"
-   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-   xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+<transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="WishlistItem">
     </transfer>
 
     <transfer name="WishlistPreAddItemCheckResponse">
+    </transfer>
+
+    <transfer name="ValidationResponse">
+    </transfer>
+
+    <transfer name="Wishlist">
+    </transfer>
+
+    <transfer name="WishlistItemCollection">
+    </transfer>
+
+    <transfer name="WishlistMoveToCartRequestCollection">
+    </transfer>
+
+    <transfer name="Quote">
     </transfer>
 
 </transfers>

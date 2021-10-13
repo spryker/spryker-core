@@ -40,6 +40,8 @@
                 <strong>{{ 'Updated at' | trans }}</strong>: {{ productOptionGroup.updatedAt | formatDateTime}}
             </p>
 
+            {% include '@MerchantProductOptionGui/_partials/info-merchant.twig' ignore missing %}
+
             <br />
 
             <table class="table">

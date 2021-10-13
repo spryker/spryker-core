@@ -16,6 +16,9 @@ use Spryker\Zed\Kernel\Container;
  */
 class OmsProductOfferReservationDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const PROPEL_QUERY_SALES_ORDER_ITEM = 'PROPEL_QUERY_SALES_ORDER_ITEM';
 
     /**

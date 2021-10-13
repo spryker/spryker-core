@@ -24,8 +24,17 @@ use Generated\Shared\Transfer\OrderTransfer;
  */
 class ExpandOrdersWithAggregatedItemStatesTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const DEFAULT_OMS_PROCESS_NAME = 'Test01';
+    /**
+     * @var string
+     */
     protected const SHIPPED_STATE_NAME = 'shipped';
+    /**
+     * @var string
+     */
     protected const SHIPPED_STATE_DISPLAY_NAME = 'in progress';
 
     /**

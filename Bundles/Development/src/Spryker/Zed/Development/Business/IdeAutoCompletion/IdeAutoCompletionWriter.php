@@ -12,7 +12,7 @@ use Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\BundleFinderInterf
 class IdeAutoCompletionWriter implements IdeAutoCompletionWriterInterface
 {
     /**
-     * @var \Spryker\Zed\Development\Business\IdeAutoCompletion\Generator\GeneratorInterface[]
+     * @var array<\Spryker\Zed\Development\Business\IdeAutoCompletion\Generator\GeneratorInterface>
      */
     protected $generators;
 
@@ -22,7 +22,7 @@ class IdeAutoCompletionWriter implements IdeAutoCompletionWriterInterface
     protected $moduleFinder;
 
     /**
-     * @param \Spryker\Zed\Development\Business\IdeAutoCompletion\Generator\GeneratorInterface[] $generators
+     * @param array<\Spryker\Zed\Development\Business\IdeAutoCompletion\Generator\GeneratorInterface> $generators
      * @param \Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\BundleFinderInterface $moduleFinder
      */
     public function __construct(array $generators, BundleFinderInterface $moduleFinder)

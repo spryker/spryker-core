@@ -19,15 +19,24 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class DeleteController extends AbstractController
 {
+    /**
+     * @var string
+     */
     public const URL_PARAM_ID_PRODUCT_LABEL = 'id-product-label';
+    /**
+     * @var string
+     */
     public const URL_PARAM_REDIRECT_URL = 'redirect-url';
 
+    /**
+     * @var string
+     */
     protected const MESSAGE_SUCCESS = 'Product label #%d was successfully deleted.';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function indexAction(Request $request)
     {

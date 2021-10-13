@@ -20,13 +20,31 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class MimeTypeController extends AbstractController
 {
+    /**
+     * @var string
+     */
     protected const ROUTE_MIME_TYPE_INDEX = '/file-manager-gui/mime-type';
 
+    /**
+     * @var string
+     */
     protected const URL_PARAM_ID_MIME_TYPE = 'id-mime-type';
 
+    /**
+     * @var string
+     */
     protected const MESSAGE_MIME_TYPE_SAVING_SUCCESS = 'MIME type was successfully saved';
+    /**
+     * @var string
+     */
     protected const MESSAGE_MIME_TYPE_SAVING_ERROR = 'MIME type already exists';
+    /**
+     * @var string
+     */
     protected const MESSAGE_MIME_TYPE_DELETING_SUCCESS = 'MIME type was successfully deleted';
+    /**
+     * @var string
+     */
     protected const MESSAGE_MIME_TYPE_DELETING_ERROR = 'Failed to delete MIME type';
 
     /**
@@ -73,7 +91,7 @@ class MimeTypeController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function addAction(Request $request)
     {
@@ -99,7 +117,7 @@ class MimeTypeController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function editAction(Request $request)
     {
@@ -125,7 +143,7 @@ class MimeTypeController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function deleteAction(Request $request)
     {

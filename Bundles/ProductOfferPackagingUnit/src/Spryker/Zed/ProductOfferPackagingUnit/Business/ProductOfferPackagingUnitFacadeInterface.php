@@ -13,7 +13,7 @@ interface ProductOfferPackagingUnitFacadeInterface
 {
     /**
      * Specification:
-     * - Aggregates reservations for product offers.
+     * - Aggregates reservations for product offers packaging unit.
      * - Requires ReservationRequestTransfer.productOfferReference transfer field to be set.
      * - Requires ReservationRequestTransfer.reservedStates transfer field to be set.
      *
@@ -21,7 +21,7 @@ interface ProductOfferPackagingUnitFacadeInterface
      *
      * @param \Generated\Shared\Transfer\ReservationRequestTransfer $reservationRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer[]
+     * @return array<\Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer>
      */
     public function getAggregatedReservations(ReservationRequestTransfer $reservationRequestTransfer): array;
 }

@@ -13,6 +13,9 @@ use Spryker\Yves\Kernel\Container;
 
 class UrlDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const STORE = 'STORE';
 
     /**

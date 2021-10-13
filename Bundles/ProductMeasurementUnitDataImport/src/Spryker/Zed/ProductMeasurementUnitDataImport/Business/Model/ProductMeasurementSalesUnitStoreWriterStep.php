@@ -18,7 +18,7 @@ use Spryker\Zed\ProductMeasurementUnitDataImport\Business\Exception\EntityNotFou
 class ProductMeasurementSalesUnitStoreWriterStep extends PublishAwareStep implements DataImportStepInterface
 {
     /**
-     * @var int[] Keys are store names, values are store ids.
+     * @var array<int> Keys are store names, values are store ids.
      */
     protected static $idStoreBuffer;
 

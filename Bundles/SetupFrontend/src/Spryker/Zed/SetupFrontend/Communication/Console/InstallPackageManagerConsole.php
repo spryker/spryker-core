@@ -16,7 +16,13 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class InstallPackageManagerConsole extends Console
 {
+    /**
+     * @var string
+     */
     public const COMMAND_NAME = 'frontend:install:package-manager';
+    /**
+     * @var string
+     */
     public const DESCRIPTION = 'This command will install the package manager.';
 
     /**

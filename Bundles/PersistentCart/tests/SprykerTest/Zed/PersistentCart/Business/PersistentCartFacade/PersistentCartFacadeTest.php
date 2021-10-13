@@ -32,10 +32,25 @@ use Spryker\Zed\CartExtension\Dependency\Plugin\CartRemovalPreCheckPluginInterfa
  */
 class PersistentCartFacadeTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const FAKE_SKU_1 = 'fake_sku_1';
+    /**
+     * @var string
+     */
     protected const FAKE_SKU_2 = 'fake_sku_2';
+    /**
+     * @var string
+     */
     protected const FAKE_SKU_3 = 'fake_sku_3';
+    /**
+     * @var string
+     */
     protected const FAKE_SKU_4 = 'fake_sku_4';
+    /**
+     * @var string
+     */
     protected const FAKE_SKU_5 = 'fake_sku_5';
 
     /**

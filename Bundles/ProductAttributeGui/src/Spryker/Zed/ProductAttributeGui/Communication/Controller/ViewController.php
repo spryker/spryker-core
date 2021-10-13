@@ -18,13 +18,19 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ViewController extends AbstractController
 {
+    /**
+     * @var string
+     */
     public const PARAM_ID_PRODUCT_ABSTRACT = 'id-product-abstract';
+    /**
+     * @var string
+     */
     public const PARAM_ID_PRODUCT = 'id-product';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function productAbstractAction(Request $request)
     {
@@ -82,7 +88,7 @@ class ViewController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function productAction(Request $request)
     {

@@ -11,9 +11,9 @@ use Spryker\Zed\DataImport\Business\DataImportBusinessFactory;
 use Spryker\Zed\DataImport\Business\Model\DataImporterInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\MerchantOpeningHoursDataImport\Business\MerchantOpeningHours\Step\DateScheduleWriterStep;
-use Spryker\Zed\MerchantOpeningHoursDataImport\Business\MerchantOpeningHours\Step\MerchantKeyToIdMerchantStep;
 use Spryker\Zed\MerchantOpeningHoursDataImport\Business\MerchantOpeningHours\Step\MerchantOpeningHoursDateScheduleWriterStep;
 use Spryker\Zed\MerchantOpeningHoursDataImport\Business\MerchantOpeningHours\Step\MerchantOpeningHoursWeekdayScheduleWriterStep;
+use Spryker\Zed\MerchantOpeningHoursDataImport\Business\MerchantOpeningHours\Step\MerchantReferenceToIdMerchantStep;
 use Spryker\Zed\MerchantOpeningHoursDataImport\Business\MerchantOpeningHours\Step\WeekdayScheduleWriterStep;
 
 /**
@@ -32,7 +32,7 @@ class MerchantOpeningHoursDataImportBusinessFactory extends DataImportBusinessFa
 
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();
         $dataSetStepBroker
-            ->addStep($this->createMerchantKeyToIdMerchantStep())
+            ->addStep($this->createMerchantReferenceToIdMerchantStep())
             ->addStep($this->createWeekdayScheduleWriterStep())
             ->addStep($this->createMerchantOpeningHoursWeekdayScheduleWriterStep());
 
@@ -52,7 +52,7 @@ class MerchantOpeningHoursDataImportBusinessFactory extends DataImportBusinessFa
 
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();
         $dataSetStepBroker
-            ->addStep($this->createMerchantKeyToIdMerchantStep())
+            ->addStep($this->createMerchantReferenceToIdMerchantStep())
             ->addStep($this->createDateScheduleWriterStep())
             ->addStep($this->createMerchantOpeningHoursDateScheduleWriterStep());
 
@@ -64,9 +64,9 @@ class MerchantOpeningHoursDataImportBusinessFactory extends DataImportBusinessFa
     /**
      * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
      */
-    public function createMerchantKeyToIdMerchantStep(): DataImportStepInterface
+    public function createMerchantReferenceToIdMerchantStep(): DataImportStepInterface
     {
-        return new MerchantKeyToIdMerchantStep();
+        return new MerchantReferenceToIdMerchantStep();
     }
 
     /**

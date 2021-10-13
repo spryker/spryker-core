@@ -17,6 +17,9 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class MessengerApplicationPlugin extends AbstractPlugin implements ApplicationPluginInterface
 {
+    /**
+     * @var string
+     */
     public const SERVICE_MESSENGER = 'messenger';
 
     /**

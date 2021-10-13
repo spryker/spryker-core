@@ -14,6 +14,7 @@ interface CmsSlotEvents
      * - This events will be used for CmsSlot publishing.
      *
      * @api
+     * @var string
      */
     public const CMS_SLOT_PUBLISH = 'CmsSlot.slot.publish';
 
@@ -22,6 +23,7 @@ interface CmsSlotEvents
      * - This events will be used for spy_cms_slot entity update.
      *
      * @api
+     * @var string
      */
     public const ENTITY_SPY_CMS_SLOT_UPDATE = 'Entity.spy_cms_slot.update';
 
@@ -30,6 +32,7 @@ interface CmsSlotEvents
      * - Represents spy_cms_slot entity creation.
      *
      * @api
+     * @var string
      */
     public const ENTITY_SPY_CMS_SLOT_CREATE = 'Entity.spy_cms_slot.create';
 }

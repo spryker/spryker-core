@@ -17,6 +17,9 @@ use Spryker\Zed\StateMachine\Dependency\Plugin\StateMachineHandlerInterface;
 
 class Trigger implements TriggerInterface
 {
+    /**
+     * @var int
+     */
     public const MAX_EVENT_REPEATS = 10;
 
     /**
@@ -109,7 +112,7 @@ class Trigger implements TriggerInterface
 
     /**
      * @param string $eventName
-     * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItemTransfers
+     * @param array<\Generated\Shared\Transfer\StateMachineItemTransfer> $stateMachineItemTransfers
      *
      * @return int
      */
@@ -190,9 +193,9 @@ class Trigger implements TriggerInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems
+     * @param array<\Generated\Shared\Transfer\StateMachineItemTransfer> $stateMachineItems
      *
-     * @return \Generated\Shared\Transfer\StateMachineItemTransfer[][]
+     * @return array<\Generated\Shared\Transfer\StateMachineItemTransfer[]>
      */
     protected function groupItemsByEvent(array $stateMachineItems)
     {
@@ -210,10 +213,10 @@ class Trigger implements TriggerInterface
 
     /**
      * @param string $eventName
-     * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems
-     * @param \Spryker\Zed\StateMachine\Business\Process\ProcessInterface[] $processes
+     * @param array<\Generated\Shared\Transfer\StateMachineItemTransfer> $stateMachineItems
+     * @param array<\Spryker\Zed\StateMachine\Business\Process\ProcessInterface> $processes
      *
-     * @return \Generated\Shared\Transfer\StateMachineItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\StateMachineItemTransfer>
      */
     protected function filterEventAffectedItems($eventName, array $stateMachineItems, $processes)
     {
@@ -237,8 +240,8 @@ class Trigger implements TriggerInterface
 
     /**
      * @param string $eventName
-     * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems
-     * @param \Spryker\Zed\StateMachine\Business\Process\ProcessInterface[] $processes
+     * @param array<\Generated\Shared\Transfer\StateMachineItemTransfer> $stateMachineItems
+     * @param array<\Spryker\Zed\StateMachine\Business\Process\ProcessInterface> $processes
      *
      * @throws \Exception
      *
@@ -279,9 +282,9 @@ class Trigger implements TriggerInterface
 
     /**
      * @param string $eventName
-     * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems
+     * @param array<\Generated\Shared\Transfer\StateMachineItemTransfer> $stateMachineItems
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function updateStateByEvent($eventName, array $stateMachineItems)
     {
@@ -376,7 +379,7 @@ class Trigger implements TriggerInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems
+     * @param array<\Generated\Shared\Transfer\StateMachineItemTransfer> $stateMachineItems
      *
      * @return void
      */

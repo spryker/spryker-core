@@ -1,3 +1,5 @@
 parameters:
     checkGenericClassInNonGenericObjectType: false
     checkMissingIterableValueType: false
+    excludePaths:
+        - %rootDir%/../../../vendor/spryker/spryker/Bundles/ProductSet/src/Spryker/Client/ProductSet/Plugin/Elasticsearch/Query/ProductSetListQueryPlugin.php

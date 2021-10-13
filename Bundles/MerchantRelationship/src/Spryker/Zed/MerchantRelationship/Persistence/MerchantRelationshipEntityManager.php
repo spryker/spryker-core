@@ -77,7 +77,7 @@ class MerchantRelationshipEntityManager extends AbstractEntityManager implements
     /**
      * {@inheritDoc}
      *
-     * @param int[] $assignedCompanyBusinessUnitIds
+     * @param array<int> $assignedCompanyBusinessUnitIds
      * @param int $idMerchantRelationship
      *
      * @return void
@@ -101,7 +101,7 @@ class MerchantRelationshipEntityManager extends AbstractEntityManager implements
     /**
      * {@inheritDoc}
      *
-     * @param int[] $assignedCompanyBusinessUnitIds
+     * @param array<int> $assignedCompanyBusinessUnitIds
      * @param int $idMerchantRelationship
      *
      * @return void

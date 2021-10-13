@@ -30,15 +30,39 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  */
 class LocalizedGeneralFormType extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const FIELD_NAME = 'name';
+    /**
+     * @var string
+     */
     public const FIELD_URL = 'url';
+    /**
+     * @var string
+     */
     public const FIELD_URL_PREFIX = 'url_prefix';
+    /**
+     * @var string
+     */
     public const FIELD_ORIGINAL_URL = 'original_url';
+    /**
+     * @var string
+     */
     public const FIELD_DESCRIPTION = 'description';
+    /**
+     * @var string
+     */
     public const FIELD_FK_LOCALE = 'fk_locale';
 
+    /**
+     * @var string
+     */
     public const URL_PATH_PATTERN = '#^([^\s\\\\]+)$#i';
 
+    /**
+     * @var string
+     */
     public const GROUP_UNIQUE_URL_CHECK = 'unique_url_check';
 
     /**

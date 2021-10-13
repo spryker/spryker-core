@@ -20,7 +20,7 @@ class ProductDiscontinuedProductLabelConnectorRepository extends AbstractReposit
      * @module Product
      * @module ProductDiscontinued
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getProductAbstractIdsToBeLabeled(): array
     {

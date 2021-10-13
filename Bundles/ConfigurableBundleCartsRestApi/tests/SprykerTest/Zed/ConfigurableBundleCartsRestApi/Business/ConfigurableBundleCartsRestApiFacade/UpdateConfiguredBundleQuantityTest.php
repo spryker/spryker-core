@@ -32,15 +32,20 @@ use Spryker\Zed\ConfigurableBundleCartsRestApi\Dependency\Facade\ConfigurableBun
  */
 class UpdateConfiguredBundleQuantityTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const FAKE_QUOTE_UUID = 'FAKE_QUOTE_UUID';
 
     /**
      * @uses \Spryker\Shared\CartsRestApi\CartsRestApiConfig::ERROR_IDENTIFIER_UNAUTHORIZED_CART_ACTION
+     * @var string
      */
     protected const ERROR_IDENTIFIER_UNAUTHORIZED_CART_ACTION = 'ERROR_IDENTIFIER_UNAUTHORIZED_CART_ACTION';
 
     /**
      * @uses \Spryker\Shared\ConfigurableBundleCartsRestApi\ConfigurableBundleCartsRestApiConfig::ERROR_IDENTIFIER_FAILED_UPDATING_CONFIGURED_BUNDLE
+     * @var string
      */
     protected const ERROR_IDENTIFIER_FAILED_UPDATING_CONFIGURED_BUNDLE = 'ERROR_IDENTIFIER_FAILED_UPDATING_CONFIGURED_BUNDLE';
 

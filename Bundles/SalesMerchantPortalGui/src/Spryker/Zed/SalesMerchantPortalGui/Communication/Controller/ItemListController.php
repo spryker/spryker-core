@@ -19,7 +19,13 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class ItemListController extends AbstractController
 {
+    /**
+     * @var string
+     */
     protected const PARAM_MERCHANT_ORDER_ITEM_IDS = 'merchant-order-item-ids';
+    /**
+     * @var string
+     */
     protected const PARAM_MERCHANT_ORDER_ID = 'merchant-order-id';
 
     /**
@@ -56,7 +62,7 @@ class ItemListController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getMerchantOrderItemIds(Request $request): array
     {

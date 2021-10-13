@@ -14,6 +14,9 @@ use Spryker\Zed\Collector\Business\Mapping\MappingFactoryInterface;
 
 class ElasticsearchMarkerWriter implements WriterInterface, ConfigurableSearchWriterInterface
 {
+    /**
+     * @var string
+     */
     public const WRITER_NAME = 'elasticsearch-marker-writer';
 
     /**

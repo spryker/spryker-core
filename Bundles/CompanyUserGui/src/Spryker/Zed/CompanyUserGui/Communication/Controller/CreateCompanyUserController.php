@@ -18,18 +18,33 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class CreateCompanyUserController extends AbstractController
 {
+    /**
+     * @var string
+     */
     protected const PARAM_REDIRECT_URL = 'redirect-url';
 
+    /**
+     * @var string
+     */
     protected const MESSAGE_SUCCESS_COMPANY_USER_CREATE = 'Company user has been created.';
+    /**
+     * @var string
+     */
     protected const MESSAGE_ERROR_COMPANY_USER_CREATE = 'Company user has not been created.';
+    /**
+     * @var string
+     */
     protected const MESSAGE_ERROR_COMPANY_WITHOUT_CUSTOMER = 'Customer with id `%s` does not exist';
 
+    /**
+     * @var string
+     */
     protected const URL_REDIRECT_COMPANY_USER_PAGE = '/company-user-gui/list-company-user';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function indexAction(Request $request)
     {
@@ -57,7 +72,7 @@ class CreateCompanyUserController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function attachCustomerAction(Request $request)
     {
@@ -106,7 +121,7 @@ class CreateCompanyUserController extends AbstractController
      * @param \Symfony\Component\Form\FormInterface $companyUserForm
      * @param string $redirectUrl
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     protected function createCompanyUser(FormInterface $companyUserForm, string $redirectUrl)
     {

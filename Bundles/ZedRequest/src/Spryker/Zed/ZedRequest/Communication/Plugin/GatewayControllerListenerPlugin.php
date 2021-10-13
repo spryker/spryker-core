@@ -224,9 +224,9 @@ class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayC
 
     /**
      * @param array $messages
-     * @param \Generated\Shared\Transfer\MessageTransfer[] $storedMessages
+     * @param array<\Generated\Shared\Transfer\MessageTransfer> $storedMessages
      *
-     * @return \Generated\Shared\Transfer\MessageTransfer[]
+     * @return array<\Generated\Shared\Transfer\MessageTransfer>
      */
     protected function createResponseMessages(array $messages, array $storedMessages = [])
     {

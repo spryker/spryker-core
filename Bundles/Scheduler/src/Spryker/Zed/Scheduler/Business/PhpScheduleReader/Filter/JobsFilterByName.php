@@ -13,6 +13,7 @@ class JobsFilterByName extends AbstractJobsFilter implements ChainableJobsFilter
 {
     /**
      * @see \Spryker\Zed\Scheduler\Business\PhpScheduleReader\Mapper\PhpScheduleMapper::KEY_NAME
+     * @var string
      */
     protected const KEY_NAME = 'name';
 

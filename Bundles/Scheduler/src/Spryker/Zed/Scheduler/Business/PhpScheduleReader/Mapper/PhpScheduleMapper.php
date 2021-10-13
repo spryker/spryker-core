@@ -14,11 +14,29 @@ use Spryker\Zed\Scheduler\Business\PhpScheduleReader\Filter\JobsFilterInterface;
 
 class PhpScheduleMapper implements PhpScheduleMapperInterface
 {
+    /**
+     * @var string
+     */
     protected const KEY_NAME = 'name';
+    /**
+     * @var string
+     */
     protected const KEY_ENABLE = 'enable';
+    /**
+     * @var string
+     */
     protected const KEY_COMMAND = 'command';
+    /**
+     * @var string
+     */
     protected const KEY_SCHEDULE = 'schedule';
+    /**
+     * @var string
+     */
     protected const KEY_STORES = 'stores';
+    /**
+     * @var string
+     */
     protected const KEY_ROLE = 'role';
 
     /**

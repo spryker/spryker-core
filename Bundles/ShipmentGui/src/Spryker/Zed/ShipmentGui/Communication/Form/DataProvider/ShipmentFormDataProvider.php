@@ -22,8 +22,17 @@ use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToShipmentFacadeInterfa
 
 class ShipmentFormDataProvider
 {
+    /**
+     * @var string
+     */
     protected const ADDRESS_LABEL_PATTERN = '%s %s %s, %s %s, %s %s';
+    /**
+     * @var string
+     */
     protected const SHIPMENT_METHODS_OPTIONS_NAMES_PATTERN = '%s - %s';
+    /**
+     * @var string
+     */
     protected const SANITIZED_CUSTOMER_ADDRESS_LABEL_PATTERN = '%s - %s';
 
     /**
@@ -181,7 +190,7 @@ class ShipmentFormDataProvider
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getShippingAddressesOptions(OrderTransfer $orderTransfer): array
     {
@@ -224,9 +233,9 @@ class ShipmentFormDataProvider
     }
 
     /**
-     * @param iterable|\ArrayObject|\Generated\Shared\Transfer\AddressTransfer[] $customerAddressesCollection
+     * @param \ArrayObject|iterable<\Generated\Shared\Transfer\AddressTransfer> $customerAddressesCollection
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getCustomerAddressChoices(iterable $customerAddressesCollection): array
     {
@@ -245,9 +254,9 @@ class ShipmentFormDataProvider
     }
 
     /**
-     * @param iterable|string[] $choices
+     * @param iterable<string> $choices
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function sanitizeDuplicatedCustomerAddressChoices(iterable $choices): array
     {
@@ -285,7 +294,7 @@ class ShipmentFormDataProvider
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function getShippingMethodsOptions(): array
     {
@@ -308,7 +317,7 @@ class ShipmentFormDataProvider
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function getSalutationOptions(): array
     {
@@ -317,12 +326,7 @@ class ShipmentFormDataProvider
             return [];
         }
 
-        $combinedSalutation = array_combine($salutation, $salutation);
-        if ($combinedSalutation === false) {
-            return [];
-        }
-
-        return $combinedSalutation;
+        return array_combine($salutation, $salutation);
     }
 
     /**

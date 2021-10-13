@@ -16,7 +16,7 @@ use Propel\Generator\Model\Table;
 class PropelFileHelper extends Module
 {
     /**
-     * @var string[]
+     * @var array<string>
      */
     protected $filesNames = [];
 

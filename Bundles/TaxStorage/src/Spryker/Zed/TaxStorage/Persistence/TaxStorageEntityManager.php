@@ -15,10 +15,13 @@ use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
  */
 class TaxStorageEntityManager extends AbstractEntityManager implements TaxStorageEntityManagerInterface
 {
+    /**
+     * @var string
+     */
     protected const COL_FK_TAX_SET = 'FkTaxSet';
 
     /**
-     * @param \Generated\Shared\Transfer\TaxSetStorageTransfer[] $taxSetStorageTransfers
+     * @param array<\Generated\Shared\Transfer\TaxSetStorageTransfer> $taxSetStorageTransfers
      *
      * @return void
      */
@@ -41,7 +44,7 @@ class TaxStorageEntityManager extends AbstractEntityManager implements TaxStorag
     }
 
     /**
-     * @param int[] $taxSetIds
+     * @param array<int> $taxSetIds
      *
      * @return void
      */
@@ -55,9 +58,9 @@ class TaxStorageEntityManager extends AbstractEntityManager implements TaxStorag
     }
 
     /**
-     * @param int[] $taxSetIds
+     * @param array<int> $taxSetIds
      *
-     * @return \Orm\Zed\TaxStorage\Persistence\SpyTaxSetStorage[]
+     * @return array<\Orm\Zed\TaxStorage\Persistence\SpyTaxSetStorage>
      */
     public function findTaxSetStoragesByIdTaxSetsIndexedByFkTaxSet(array $taxSetIds): array
     {
@@ -71,9 +74,9 @@ class TaxStorageEntityManager extends AbstractEntityManager implements TaxStorag
     }
 
     /**
-     * @param \Generated\Shared\Transfer\TaxSetStorageTransfer[] $taxSetStorageTransfers
+     * @param array<\Generated\Shared\Transfer\TaxSetStorageTransfer> $taxSetStorageTransfers
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getIdFromTransfers(array $taxSetStorageTransfers): array
     {

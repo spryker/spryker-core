@@ -13,6 +13,9 @@ use Symfony\Component\Finder\SplFileInfo;
 
 abstract class AbstractTransferFileFinder implements GeneratedFileFinderInterface
 {
+    /**
+     * @var string
+     */
     protected const TRANSFER_NAMESPACE_PATTERN = 'Generated\Shared\Transfer\%s';
 
     /**
@@ -84,10 +87,9 @@ abstract class AbstractTransferFileFinder implements GeneratedFileFinderInterfac
         }
 
         $reflectionClass = new ReflectionClass($transferClassName);
+        $parentClass = $reflectionClass->getParentClass();
 
-        return $reflectionClass->getParentClass()
-            ? $reflectionClass->getParentClass()->getName()
-            : null;
+        return $parentClass ? $parentClass->getName() : null;
     }
 
     /**

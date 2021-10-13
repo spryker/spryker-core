@@ -21,11 +21,29 @@ use Spryker\Zed\ProductManagement\Communication\Controller\ViewController;
 
 class ProductGroupTable extends AbstractProductTable
 {
+    /**
+     * @var string
+     */
     public const COL_ID_PRODUCT_GROUP = 'id_product_group';
+    /**
+     * @var string
+     */
     public const COL_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
+    /**
+     * @var string
+     */
     public const COL_NAME = 'name';
+    /**
+     * @var string
+     */
     public const COL_SKU = 'sku';
+    /**
+     * @var string
+     */
     public const COL_STATUS = 'status';
+    /**
+     * @var string
+     */
     public const COL_ACTIONS = 'actions';
 
     /**

@@ -26,7 +26,13 @@ use Spryker\Zed\Development\Business\PhpMd\Rules\Design\CouplingBetweenObjects;
  */
 class CouplingBetweenObjectsTest extends Unit
 {
+    /**
+     * @var int
+     */
     public const NUMBER_OF_COUPLING_BETWEEN_OBJECTS = 2;
+    /**
+     * @var int
+     */
     public const THRESHOLD = 1;
 
     /**

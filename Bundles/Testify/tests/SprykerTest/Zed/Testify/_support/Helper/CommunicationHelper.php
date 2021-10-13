@@ -23,6 +23,9 @@ use SprykerTest\Shared\Testify\Helper\ConfigHelper;
  */
 class CommunicationHelper extends Module
 {
+    /**
+     * @var string
+     */
     protected const COMMUNICATION_FACTORY_CLASS_NAME_PATTERN = '\%1$s\%2$s\%3$s\Communication\%3$sCommunicationFactory';
 
     /**
@@ -59,7 +62,7 @@ class CommunicationHelper extends Module
     }
 
     /**
-     * @return \Spryker\Shared\Kernel\LocatorLocatorInterface|\Generated\Zed\Ide\AutoCompletion|\Generated\Service\Ide\AutoCompletion
+     * @return \Spryker\Shared\Kernel\LocatorLocatorInterface&\Generated\Zed\Ide\AutoCompletion&\Generated\Service\Ide\AutoCompletion
      */
     public function getLocator()
     {
@@ -72,7 +75,7 @@ class CommunicationHelper extends Module
      *
      * @throws \Exception
      *
-     * @return object|\Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory
+     * @return \Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory|object
      */
     public function mockFactoryMethod(string $methodName, $return)
     {

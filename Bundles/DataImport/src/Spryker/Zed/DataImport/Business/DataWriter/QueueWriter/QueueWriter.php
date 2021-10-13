@@ -38,7 +38,7 @@ class QueueWriter implements QueueWriterInterface
 
     /**
      * @param string $queueName
-     * @param \Generated\Shared\Transfer\DataSetItemTransfer[] $dataSetItemTransfers
+     * @param array<\Generated\Shared\Transfer\DataSetItemTransfer> $dataSetItemTransfers
      *
      * @return void
      */
@@ -54,9 +54,9 @@ class QueueWriter implements QueueWriterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\DataSetItemTransfer[] $dataSetItemTransfers
+     * @param array<\Generated\Shared\Transfer\DataSetItemTransfer> $dataSetItemTransfers
      *
-     * @return \Generated\Shared\Transfer\QueueSendMessageTransfer[]
+     * @return array<\Generated\Shared\Transfer\QueueSendMessageTransfer>
      */
     protected function getQueueSendMessageTransfersFromDataSetItemTransfers(array $dataSetItemTransfers): array
     {

@@ -17,7 +17,7 @@ use Spryker\Zed\ShipmentDataImport\Business\ShipmentMethodStore\Writer\DataSet\S
 class ShipmentMethodKeyToIdShipmentMethodStep implements DataImportStepInterface
 {
     /**
-     * @var int[]
+     * @var array<int>
      */
     protected static $idShipmentMethodCache = [];
 

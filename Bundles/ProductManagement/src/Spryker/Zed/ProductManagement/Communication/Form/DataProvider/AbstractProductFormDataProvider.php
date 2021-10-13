@@ -27,6 +27,7 @@ use Spryker\Zed\ProductManagement\Communication\Form\Product\ImageCollectionForm
 use Spryker\Zed\ProductManagement\Communication\Form\Product\ImageSetForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\SeoForm;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
+use Spryker\Zed\ProductManagement\Communication\Reader\ProductAttributeReaderInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceProductInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductImageInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductInterface;
@@ -36,26 +37,69 @@ use Spryker\Zed\Stock\Persistence\StockQueryContainerInterface;
 
 class AbstractProductFormDataProvider
 {
+    /**
+     * @var string
+     */
     public const LOCALE_NAME = 'locale_name';
 
+    /**
+     * @var string
+     */
     public const FORM_FIELD_ID = 'id';
+    /**
+     * @var string
+     */
     public const FORM_FIELD_VALUE = 'value';
+    /**
+     * @var string
+     */
     public const FORM_FIELD_NAME = 'name';
+    /**
+     * @var string
+     */
     public const FORM_FIELD_PRODUCT_SPECIFIC = 'product_specific';
+    /**
+     * @var string
+     */
     public const FORM_FIELD_LABEL = 'label';
+    /**
+     * @var string
+     */
     public const FORM_FIELD_SUPER = 'super';
+    /**
+     * @var string
+     */
     public const FORM_FIELD_INPUT_TYPE = 'input_type';
+    /**
+     * @var string
+     */
     public const FORM_FIELD_VALUE_DISABLED = 'value_disabled';
+    /**
+     * @var string
+     */
     public const FORM_FIELD_NAME_DISABLED = 'name_disabled';
+    /**
+     * @var string
+     */
     public const FORM_FIELD_ALLOW_INPUT = 'allow_input';
 
+    /**
+     * @var string
+     */
     public const IMAGES = 'images';
 
+    /**
+     * @var string
+     */
     public const DEFAULT_INPUT_TYPE = 'text';
+    /**
+     * @var string
+     */
     public const TEXT_AREA_INPUT_TYPE = 'textarea';
 
     /**
      * @uses \Spryker\Shared\PriceProduct\PriceProductConfig::PRICE_DIMENSION_DEFAULT
+     * @var string
      */
     protected const PRICE_DIMENSION_DEFAULT = 'PRICE_DIMENSION_DEFAULT';
 
@@ -105,7 +149,7 @@ class AbstractProductFormDataProvider
     protected $priceProductFacade;
 
     /**
-     * @var \Generated\Shared\Transfer\ProductManagementAttributeTransfer[]|\Everon\Component\Collection\CollectionInterface
+     * @var \Everon\Component\Collection\CollectionInterface<\Generated\Shared\Transfer\ProductManagementAttributeTransfer>
      */
     protected $attributeTransferCollection;
 
@@ -125,6 +169,11 @@ class AbstractProductFormDataProvider
     protected $store;
 
     /**
+     * @var \Spryker\Zed\ProductManagement\Communication\Reader\ProductAttributeReaderInterface|null
+     */
+    protected $productAttributeReader;
+
+    /**
      * @param \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface $categoryQueryContainer
      * @param \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface $productManagementQueryContainer
      * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
@@ -134,10 +183,10 @@ class AbstractProductFormDataProvider
      * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceProductInterface $priceProductFacade
      * @param \Spryker\Zed\ProductManagement\Communication\Form\DataProvider\LocaleProvider $localeProvider
      * @param \Generated\Shared\Transfer\LocaleTransfer $currentLocale
-     * @param array $attributeCollection
      * @param array $taxCollection
      * @param string $imageUrlPrefix
      * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToStoreInterface|null $store
+     * @param \Spryker\Zed\ProductManagement\Communication\Reader\ProductAttributeReaderInterface|null $productAttributeReader
      */
     public function __construct(
         CategoryQueryContainerInterface $categoryQueryContainer,
@@ -149,10 +198,10 @@ class AbstractProductFormDataProvider
         ProductManagementToPriceProductInterface $priceProductFacade,
         LocaleProvider $localeProvider,
         LocaleTransfer $currentLocale,
-        array $attributeCollection,
         array $taxCollection,
         $imageUrlPrefix,
-        ?ProductManagementToStoreInterface $store = null
+        ?ProductManagementToStoreInterface $store = null,
+        ?ProductAttributeReaderInterface $productAttributeReader = null
     ) {
         $this->categoryQueryContainer = $categoryQueryContainer;
         $this->productManagementQueryContainer = $productManagementQueryContainer;
@@ -163,10 +212,11 @@ class AbstractProductFormDataProvider
         $this->localeProvider = $localeProvider;
         $this->productFacade = $productFacade;
         $this->currentLocale = $currentLocale;
-        $this->attributeTransferCollection = new Collection($attributeCollection);
         $this->taxCollection = $taxCollection;
         $this->imageUrlPrefix = $imageUrlPrefix;
         $this->store = $store;
+        $this->productAttributeReader = $productAttributeReader;
+        $this->attributeTransferCollection = $this->getAttributeTransferCollection();
     }
 
     /**
@@ -263,7 +313,7 @@ class AbstractProductFormDataProvider
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductImageSetTransfer[] $imageSetTransferCollection
+     * @param array<\Generated\Shared\Transfer\ProductImageSetTransfer> $imageSetTransferCollection
      *
      * @return array
      */
@@ -794,7 +844,7 @@ class AbstractProductFormDataProvider
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      * @param array $formData
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>
      */
     protected function getProductAbstractPricesByPriceDimension(ProductAbstractTransfer $productAbstractTransfer, array $formData): ArrayObject
     {
@@ -820,7 +870,7 @@ class AbstractProductFormDataProvider
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      * @param array $formData
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>
      */
     protected function getProductConcretePricesByPriceDimension(
         ProductConcreteTransfer $productTransfer,
@@ -843,5 +893,17 @@ class AbstractProductFormDataProvider
         );
 
         return new ArrayObject($priceProducts);
+    }
+
+    /**
+     * @return \Everon\Component\Collection\Collection
+     */
+    protected function getAttributeTransferCollection(): Collection
+    {
+        if ($this->productAttributeReader === null) {
+            return new Collection([]);
+        }
+
+        return new Collection($this->productAttributeReader->getProductSuperAttributesIndexedByAttributeKey());
     }
 }

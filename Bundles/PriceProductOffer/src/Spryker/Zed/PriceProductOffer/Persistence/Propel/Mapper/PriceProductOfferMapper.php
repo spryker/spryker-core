@@ -33,17 +33,23 @@ class PriceProductOfferMapper
         PriceProductTransfer $priceProductTransfer,
         SpyPriceProductOffer $priceProductOfferEntity
     ): SpyPriceProductOffer {
-        $priceProductOfferEntity->setFkProductOffer($priceProductTransfer->getPriceDimension()->getIdProductOffer());
-        $priceProductOfferEntity->setFkPriceProductStore((string)$priceProductTransfer->getMoneyValue()->getIdEntity());
+        /** @var \Generated\Shared\Transfer\PriceProductDimensionTransfer $priceDimensionTransfer */
+        $priceDimensionTransfer = $priceProductTransfer->requirePriceDimension()->getPriceDimension();
+        /** @var \Generated\Shared\Transfer\MoneyValueTransfer $moneyValueTransfer */
+        $moneyValueTransfer = $priceProductTransfer->requireMoneyValue()->getMoneyValue();
+        /** @var int $idProductOffer */
+        $idProductOffer = $priceDimensionTransfer->getIdProductOffer();
+        $priceProductOfferEntity->setFkProductOffer($idProductOffer);
+        $priceProductOfferEntity->setFkPriceProductStore((string)$moneyValueTransfer->getIdEntity());
 
         return $priceProductOfferEntity;
     }
 
     /**
      * @param \Propel\Runtime\Collection\ObjectCollection $priceProductOfferEntities
-     * @param \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function mapPriceProductOfferEntitiesToPriceProductTransfers(
         ObjectCollection $priceProductOfferEntities,
@@ -121,6 +127,8 @@ class PriceProductOfferMapper
         SpyPriceProductStore $priceProductStoreEntity,
         MoneyValueTransfer $moneyValueTransfer
     ): MoneyValueTransfer {
+        /** @var \Orm\Zed\Store\Persistence\SpyStore $storeEntity */
+        $storeEntity = $priceProductStoreEntity->getStore();
         $moneyValueTransfer->fromArray($priceProductStoreEntity->toArray(), true);
         $moneyValueTransfer->setIdEntity((int)$priceProductStoreEntity->getIdPriceProductStore());
         $moneyValueTransfer->setGrossAmount($priceProductStoreEntity->getGrossPrice());
@@ -129,7 +137,7 @@ class PriceProductOfferMapper
             $this->mapCurrencyEntityToTransfer($priceProductStoreEntity->getCurrency(), new CurrencyTransfer())
         );
         $moneyValueTransfer->setStore(
-            $this->mapStoreEntityToStoreTransfer($priceProductStoreEntity->getStore(), new StoreTransfer())
+            $this->mapStoreEntityToStoreTransfer($storeEntity, new StoreTransfer())
         );
 
         return $moneyValueTransfer;

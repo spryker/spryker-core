@@ -17,17 +17,21 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class DuplicateController extends AbstractController
 {
+    /**
+     * @var string
+     */
     public const PARAM_ID_NAVIGATION = 'id-navigation';
 
     /**
      * @uses \Spryker\Zed\NavigationGui\NavigationGuiConfig::REDIRECT_URL_DEFAULT
+     * @var string
      */
     protected const REDIRECT_URL_DEFAULT = '/navigation-gui';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function indexAction(Request $request)
     {
@@ -42,7 +46,7 @@ class DuplicateController extends AbstractController
      * @param \Symfony\Component\Form\FormInterface $duplicateNavigationForm
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     protected function handleDuplicateNavigationForm(FormInterface $duplicateNavigationForm, Request $request)
     {

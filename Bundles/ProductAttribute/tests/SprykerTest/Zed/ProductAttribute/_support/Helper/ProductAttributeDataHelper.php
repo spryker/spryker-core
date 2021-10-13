@@ -29,7 +29,13 @@ class ProductAttributeDataHelper extends Module
     use DataCleanupHelperTrait;
     use LocatorHelperTrait;
 
+    /**
+     * @var string
+     */
     protected const COLUMN_PRODUCT_ATTRIBUTE_KEY = 'key';
+    /**
+     * @var string
+     */
     protected const COLUMN_PRODUCT_MANAGEMENT_ATTRIBUTE_FK_PRODUCT_ATTRIBUTE_KEY = 'fk_product_attribute_key';
 
     /**
@@ -115,7 +121,7 @@ class ProductAttributeDataHelper extends Module
     }
 
     /**
-     * @return \Generated\Shared\Transfer\LocalizedAttributesTransfer[]
+     * @return array<\Generated\Shared\Transfer\LocalizedAttributesTransfer>
      */
     public function generateLocalizedAttributes(): array
     {

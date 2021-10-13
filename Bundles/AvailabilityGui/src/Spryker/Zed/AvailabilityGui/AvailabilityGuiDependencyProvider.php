@@ -13,6 +13,7 @@ use Spryker\Zed\AvailabilityGui\Dependency\Facade\AvailabilityGuiToStockBridge;
 use Spryker\Zed\AvailabilityGui\Dependency\Facade\AvailabilityToStoreFacadeBridge;
 use Spryker\Zed\AvailabilityGui\Dependency\QueryContainer\AvailabilityGuiToAvailabilityQueryContainerBridge;
 use Spryker\Zed\AvailabilityGui\Dependency\QueryContainer\AvailabilityGuiToProductBundleQueryContainerBridge;
+use Spryker\Zed\AvailabilityGui\Dependency\Service\AvailabilityGuiToAvailabilityServiceBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -21,17 +22,49 @@ use Spryker\Zed\Kernel\Container;
  */
 class AvailabilityGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_LOCALE = 'locale facade';
+    /**
+     * @var string
+     */
     public const FACADE_STOCK = 'stock facade';
+    /**
+     * @var string
+     */
     public const FACADE_STORE = 'store facade';
+    /**
+     * @var string
+     */
     public const FACADE_OMS = 'oms facade';
 
+    /**
+     * @var string
+     */
     public const QUERY_CONTAINER_AVAILABILITY = 'availability query container';
+    /**
+     * @var string
+     */
     public const QUERY_CONTAINER_PRODUCT_BUNDLE = 'product bundle query container';
 
+    /**
+     * @var string
+     */
     public const PLUGINS_AVAILABILITY_LIST_ACTION_VIEW_DATA_EXPANDER = 'PLUGINS_AVAILABILITY_LIST_ACTION_VIEW_DATA_EXPANDER';
+    /**
+     * @var string
+     */
     public const PLUGINS_AVAILABILITY_VIEW_ACTION_VIEW_DATA_EXPANDER = 'PLUGINS_AVAILABILITY_VIEW_ACTION_VIEW_DATA_EXPANDER';
+    /**
+     * @var string
+     */
     public const PLUGINS_AVAILABILITY_ABSTRACT_TABLE_QUERY_CRITERIA_EXPANDER = 'PLUGINS_AVAILABILITY_ABSTRACT_TABLE_QUERY_CRITERIA_EXPANDER';
+
+    /**
+     * @var string
+     */
+    public const SERVICE_AVAILABILITY = 'SERVICE_AVAILABILITY';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -58,6 +91,7 @@ class AvailabilityGuiDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addOmsFacade($container);
         $container = $this->addAvailabilityListActionViewDataExpanderPlugins($container);
         $container = $this->addAvailabilityViewActionViewDataExpanderPlugins($container);
+        $container = $this->addAvailabilityService($container);
 
         return $container;
     }
@@ -174,7 +208,7 @@ class AvailabilityGuiDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\AvailabilityGuiExtension\Dependency\Plugin\AvailabilityListActionViewDataExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\AvailabilityGuiExtension\Dependency\Plugin\AvailabilityListActionViewDataExpanderPluginInterface>
      */
     protected function getAvailabilityListActionViewDataExpanderPlugins(): array
     {
@@ -196,7 +230,7 @@ class AvailabilityGuiDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\AvailabilityGuiExtension\Dependency\Plugin\AvailabilityViewActionViewDataExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\AvailabilityGuiExtension\Dependency\Plugin\AvailabilityViewActionViewDataExpanderPluginInterface>
      */
     protected function getAvailabilityViewActionViewDataExpanderPlugins(): array
     {
@@ -218,10 +252,26 @@ class AvailabilityGuiDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\AvailabilityGuiExtension\Dependency\Plugin\AvailabilityAbstractTableQueryCriteriaExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\AvailabilityGuiExtension\Dependency\Plugin\AvailabilityAbstractTableQueryCriteriaExpanderPluginInterface>
      */
     protected function getAvailabilityAbstractTableQueryCriteriaExpanderPlugins(): array
     {
         return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addAvailabilityService(Container $container): Container
+    {
+        $container->set(static::SERVICE_AVAILABILITY, function (Container $container) {
+            return new AvailabilityGuiToAvailabilityServiceBridge(
+                $container->getLocator()->availability()->service()
+            );
+        });
+
+        return $container;
     }
 }

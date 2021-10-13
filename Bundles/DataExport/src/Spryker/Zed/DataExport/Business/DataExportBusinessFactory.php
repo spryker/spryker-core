@@ -10,6 +10,7 @@ namespace Spryker\Zed\DataExport\Business;
 use Spryker\Service\DataExport\DataExportServiceInterface;
 use Spryker\Zed\DataExport\Business\Exporter\DataExportExecutor;
 use Spryker\Zed\DataExport\DataExportDependencyProvider;
+use Spryker\Zed\DataExport\Dependency\Facade\DataExportToGracefulRunnerFacadeInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
@@ -25,7 +26,8 @@ class DataExportBusinessFactory extends AbstractBusinessFactory
         return new DataExportExecutor(
             $this->getDataEntityExporterPlugins(),
             $this->getDataExportService(),
-            $this->getConfig()
+            $this->getConfig(),
+            $this->getGracefulRunnerFacade()
         );
     }
 
@@ -38,10 +40,18 @@ class DataExportBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\DataExportExtension\Dependency\Plugin\DataEntityExporterPluginInterface[]
+     * @return array<\Spryker\Zed\DataExportExtension\Dependency\Plugin\DataEntityExporterPluginInterface>
      */
     public function getDataEntityExporterPlugins(): array
     {
         return $this->getProvidedDependency(DataExportDependencyProvider::DATA_ENTITY_EXPORTER_PLUGINS);
+    }
+
+    /**
+     * @return \Spryker\Zed\DataExport\Dependency\Facade\DataExportToGracefulRunnerFacadeInterface
+     */
+    public function getGracefulRunnerFacade(): DataExportToGracefulRunnerFacadeInterface
+    {
+        return $this->getProvidedDependency(DataExportDependencyProvider::FACADE_GRACEFUL_RUNNER);
     }
 }

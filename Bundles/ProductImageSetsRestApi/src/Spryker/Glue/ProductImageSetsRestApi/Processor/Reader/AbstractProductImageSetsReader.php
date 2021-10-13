@@ -24,7 +24,13 @@ use Symfony\Component\HttpFoundation\Response;
 
 class AbstractProductImageSetsReader implements AbstractProductImageSetsReaderInterface
 {
+    /**
+     * @var string
+     */
     protected const PRODUCT_ABSTRACT_MAPPING_TYPE = 'sku';
+    /**
+     * @var string
+     */
     protected const SELF_LINK_FORMAT = '%s/%s/%s';
 
     /**

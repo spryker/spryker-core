@@ -11,15 +11,27 @@ use Spryker\Glue\Kernel\AbstractBundleConfig;
 
 class PaymentsRestApiConfig extends AbstractBundleConfig
 {
+    /**
+     * @var string
+     */
     public const RESOURCE_PAYMENT_METHODS = 'payment-methods';
 
+    /**
+     * @var array
+     */
     protected const PAYMENT_METHOD_PRIORITY = [];
 
+    /**
+     * @var array
+     */
     protected const PAYMENT_REQUIRED_FIELDS = [
         'paymentMethod',
         'paymentProvider',
     ];
 
+    /**
+     * @var array
+     */
     protected const PAYMENT_METHOD_REQUIRED_FIELDS = [];
 
     /**
@@ -40,7 +52,7 @@ class PaymentsRestApiConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getPaymentMethodPriority(): array
     {

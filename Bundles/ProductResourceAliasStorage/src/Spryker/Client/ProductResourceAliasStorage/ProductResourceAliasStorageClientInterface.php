@@ -28,7 +28,7 @@ interface ProductResourceAliasStorageClientInterface
      *
      * @api
      *
-     * @param string[] $skus
+     * @param array<string> $skus
      * @param string $localeName
      *
      * @return array

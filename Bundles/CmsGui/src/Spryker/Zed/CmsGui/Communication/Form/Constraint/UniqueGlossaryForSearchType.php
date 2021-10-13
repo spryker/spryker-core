@@ -11,7 +11,13 @@ use Symfony\Component\Validator\Constraint as SymfonyConstraint;
 
 class UniqueGlossaryForSearchType extends SymfonyConstraint
 {
+    /**
+     * @var string
+     */
     public const OPTION_GLOSSARY_FACADE = 'glossaryFacade';
+    /**
+     * @var int
+     */
     public const OPTION_SEARCH_TYPE = 1;
 
     /**

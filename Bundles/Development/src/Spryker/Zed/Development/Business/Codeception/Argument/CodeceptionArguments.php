@@ -10,13 +10,13 @@ namespace Spryker\Zed\Development\Business\Codeception\Argument;
 class CodeceptionArguments
 {
     /**
-     * @var string[]
+     * @var array<string>
      */
     protected $arguments = [];
 
     /**
      * @param string $argumentName
-     * @param string[] $argumentValues
+     * @param array<string> $argumentValues
      *
      * @return $this
      */
@@ -37,7 +37,7 @@ class CodeceptionArguments
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getArguments(): array
     {

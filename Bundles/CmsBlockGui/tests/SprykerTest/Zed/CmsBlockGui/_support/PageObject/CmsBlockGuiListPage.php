@@ -9,5 +9,8 @@ namespace SprykerTest\Zed\CmsBlockGui\PageObject;
 
 class CmsBlockGuiListPage
 {
+    /**
+     * @var string
+     */
     public const URL = '/cms-block-gui/list-block';
 }

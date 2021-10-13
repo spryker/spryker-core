@@ -12,7 +12,22 @@ namespace Spryker\Shared\Category;
  */
 interface CategoryConstants
 {
-    public const PARAM_ID_NODE = 'id-node';
-    public const PARAM_ID_PARENT_NODE = 'id-parent-node';
-    public const PARAM_ID_CATEGORY = 'id-category';
+    /**
+     * Specification:
+     * - Defines the number of categories in the chunk to read.
+     *
+     * @api
+     * @var string
+     */
+    public const CATEGORY_READ_CHUNK = 'CATEGORY:CATEGORY_READ_CHUNK';
+
+    /**
+     * Specification:
+     * - Defines if Propel events for `spy_category_closure_table` table should be enabled.
+     * - Impacts category create/update operations.
+     *
+     * @api
+     * @var string
+     */
+    public const CATEGORY_IS_CLOSURE_TABLE_EVENTS_ENABLED = 'CATEGORY:CATEGORY_IS_CLOSURE_TABLE_EVENTS_ENABLED';
 }

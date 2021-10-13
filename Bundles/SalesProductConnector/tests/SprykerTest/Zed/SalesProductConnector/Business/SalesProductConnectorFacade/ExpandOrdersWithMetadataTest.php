@@ -24,6 +24,9 @@ use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
  */
 class ExpandOrdersWithMetadataTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const DEFAULT_OMS_PROCESS_NAME = 'Test01';
 
     /**
@@ -101,7 +104,7 @@ class ExpandOrdersWithMetadataTest extends Unit
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
      * @return void
      */

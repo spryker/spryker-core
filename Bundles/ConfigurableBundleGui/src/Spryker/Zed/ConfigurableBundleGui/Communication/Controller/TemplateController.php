@@ -22,32 +22,79 @@ class TemplateController extends AbstractController
 {
     /**
      * @uses \Spryker\Zed\ConfigurableBundleGui\Communication\Controller\TemplateController::indexAction()
+     * @var string
      */
     protected const ROUTE_EDIT_TEMPLATE = '/configurable-bundle-gui/template/edit';
 
     /**
      * @uses \Spryker\Zed\ConfigurableBundleGui\Communication\Controller\TemplateController::indexAction()
+     * @var string
      */
     protected const ROUTE_TEMPLATES_LIST = '/configurable-bundle-gui/template';
 
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_TEMPLATE_NOT_FOUND = 'Configurable bundle template with id "%id%" was not found.';
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_TEMPLATE_CREATE_FAIL = 'Configurable bundle template has not been created.';
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_TEMPLATE_UPDATE_FAIL = 'Configurable bundle template has not been updated.';
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_TEMPLATE_DELETE_FAIL = 'Configurable bundle template has not been deleted.';
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_TEMPLATE_ACTIVATE_FAIL = 'Template "%template_name%" has not been activated.';
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_TEMPLATE_DEACTIVATE_FAIL = 'Template "%template_name%" has not been deactivated.';
 
+    /**
+     * @var string
+     */
     protected const SUCCESS_MESSAGE_TEMPLATE_CREATED = 'Configurable bundle template has been successfully created.';
+    /**
+     * @var string
+     */
     protected const SUCCESS_MESSAGE_TEMPLATE_UPDATED = 'Configurable bundle template has been successfully updated.';
+    /**
+     * @var string
+     */
     protected const SUCCESS_MESSAGE_TEMPLATE_DELETED = 'Configurable bundle template has been successfully deleted.';
+    /**
+     * @var string
+     */
     protected const SUCCESS_MESSAGE_TEMPLATE_ACTIVATED = 'Template "%template_name%" has been activated.';
+    /**
+     * @var string
+     */
     protected const SUCCESS_MESSAGE_TEMPLATE_DEACTIVATED = 'Template "%template_name%" has deactivated.';
 
+    /**
+     * @var string
+     */
     protected const MESSAGE_PARAM_TEMPLATE_NAME = '%template_name%';
 
+    /**
+     * @var string
+     */
     protected const PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE = 'id-configurable-bundle-template';
+    /**
+     * @var string
+     */
     protected const PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT = 'id-configurable-bundle-template-slot';
 
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_PARAM_ID = '%id%';
 
     /**

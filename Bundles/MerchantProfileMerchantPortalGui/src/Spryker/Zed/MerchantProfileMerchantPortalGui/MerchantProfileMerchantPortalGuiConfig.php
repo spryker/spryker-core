@@ -11,8 +11,14 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class MerchantProfileMerchantPortalGuiConfig extends AbstractBundleConfig
 {
+    /**
+     * @var string
+     */
     protected const PREFIX_MERCHANT_PROFILE_URL = 'merchant';
 
+    /**
+     * @var array
+     */
     protected const SALUTATION_CHOICES = [
         'Ms' => 'Ms',
         'Mr' => 'Mr',
@@ -23,7 +29,7 @@ class MerchantProfileMerchantPortalGuiConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getSalutationChoices(): array
     {
@@ -38,5 +44,24 @@ class MerchantProfileMerchantPortalGuiConfig extends AbstractBundleConfig
     public function getMerchantUrlPrefix(): string
     {
         return static::PREFIX_MERCHANT_PROFILE_URL;
+    }
+
+    /**
+     * @api
+     *
+     * @return array<string>
+     */
+    public function getHtmlTagWhitelist(): array
+    {
+        return [
+            '<h1>',
+            '<h2>',
+            '<h3>',
+            '<h4>',
+            '<h5>',
+            '<h6>',
+            '<br>',
+            '<p>',
+        ];
     }
 }

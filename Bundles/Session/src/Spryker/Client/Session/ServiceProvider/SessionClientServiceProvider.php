@@ -17,6 +17,9 @@ use Spryker\Shared\Kernel\ContainerGlobals;
  */
 class SessionClientServiceProvider implements ServiceProviderInterface
 {
+    /**
+     * @var string
+     */
     public const CLIENT_SESSION = 'session client';
 
     /**

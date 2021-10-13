@@ -25,17 +25,47 @@ use Spryker\Zed\ProductPackagingUnit\Dependency\Service\ProductPackagingUnitToUt
  */
 class ProductPackagingUnitDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_LOCALE = 'FACADE_LOCALE';
+    /**
+     * @var string
+     */
     public const FACADE_GLOSSARY = 'FACADE_GLOSSARY';
+    /**
+     * @var string
+     */
     public const FACADE_PRODUCT_MEASUREMENT_UNIT = 'FACADE_PRODUCT_MEASUREMENT_UNIT';
+    /**
+     * @var string
+     */
     public const FACADE_AVAILABILITY = 'FACADE_AVAILABILITY';
+    /**
+     * @var string
+     */
     public const FACADE_OMS = 'FACADE_OMS';
+    /**
+     * @var string
+     */
     public const FACADE_STORE = 'FACADE_STORE';
+    /**
+     * @var string
+     */
     public const FACADE_PRODUCT = 'FACADE_PRODUCT';
+    /**
+     * @var string
+     */
     public const FACADE_SALES_QUANTITY = 'FACADE_SALES_QUANTITY';
 
+    /**
+     * @var string
+     */
     public const PROPEL_QUERY_SALES_ORDER_ITEM = 'PROPEL_QUERY_SALES_ORDER_ITEM';
 
+    /**
+     * @var string
+     */
     public const SERVICE_UTIL_TEXT = 'SERVICE_UTIL_TEXT';
 
     /**

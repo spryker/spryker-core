@@ -89,7 +89,7 @@ class CompanyBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\CompanyExtension\Dependency\Plugin\CompanyPreSavePluginInterface[]
+     * @return array<\Spryker\Zed\CompanyExtension\Dependency\Plugin\CompanyPreSavePluginInterface>
      */
     protected function getCompanyPreSavePlugins(): array
     {
@@ -97,7 +97,7 @@ class CompanyBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\CompanyExtension\Dependency\Plugin\CompanyPostSavePluginInterface[]
+     * @return array<\Spryker\Zed\CompanyExtension\Dependency\Plugin\CompanyPostSavePluginInterface>
      */
     protected function getCompanyPostSavePlugins(): array
     {
@@ -105,7 +105,7 @@ class CompanyBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\CompanyExtension\Dependency\Plugin\CompanyPostCreatePluginInterface[]
+     * @return array<\Spryker\Zed\CompanyExtension\Dependency\Plugin\CompanyPostCreatePluginInterface>
      */
     protected function getCompanyPostCreatePlugins(): array
     {

@@ -28,6 +28,9 @@ use Spryker\Zed\Oms\Exception\CommandNotFoundException;
  */
 class CommandCollectionTest extends Unit
 {
+    /**
+     * @var string
+     */
     public const COMMAND_NAME = 'commandName';
 
     /**

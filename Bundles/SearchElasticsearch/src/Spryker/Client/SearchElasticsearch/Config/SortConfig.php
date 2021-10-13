@@ -11,13 +11,22 @@ use Generated\Shared\Transfer\SortConfigTransfer;
 
 class SortConfig implements SortConfigInterface
 {
+    /**
+     * @var string
+     */
     public const DIRECTION_ASC = 'asc';
+    /**
+     * @var string
+     */
     public const DIRECTION_DESC = 'desc';
 
+    /**
+     * @var string
+     */
     public const DEFAULT_SORT_PARAM_KEY = 'sort';
 
     /**
-     * @var \Generated\Shared\Transfer\SortConfigTransfer[]
+     * @var array<\Generated\Shared\Transfer\SortConfigTransfer>
      */
     protected $sortConfigTransfers = [];
 
@@ -63,7 +72,7 @@ class SortConfig implements SortConfigInterface
     }
 
     /**
-     * @return \Generated\Shared\Transfer\SortConfigTransfer[]
+     * @return array<\Generated\Shared\Transfer\SortConfigTransfer>
      */
     public function getAll(): array
     {

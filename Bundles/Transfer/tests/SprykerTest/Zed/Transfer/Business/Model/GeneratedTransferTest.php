@@ -12,6 +12,7 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\GeneratedNestedTransfer;
 use Generated\Shared\Transfer\GeneratedTransfer;
 use Spryker\DecimalObject\Decimal;
+use Spryker\Shared\Kernel\Transfer\Exception\InvalidStrictTypeException;
 use Spryker\Shared\Kernel\Transfer\Exception\NullValueException;
 use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
@@ -178,7 +179,7 @@ class GeneratedTransferTest extends Unit
     {
         $generatedTransfer = new GeneratedTransfer();
         $generatedTransfer->setTestBool(true);
-        $this->assertSame(true, $generatedTransfer->getTestBool());
+        $this->assertTrue($generatedTransfer->getTestBool());
         $this->assertIsBool($generatedTransfer->getTestBool());
 
         $modified = $generatedTransfer->modifiedToArray();
@@ -339,6 +340,12 @@ class GeneratedTransferTest extends Unit
                 'test_bool' => true,
                 'test_array' => [],
             ],
+            'test_transfer_strict' => [ // the property is strict-typed and it must be an instance of the TransferInterface.
+                'test_string' => 'string',
+                'test_int' => 100,
+                'test_bool' => true,
+                'test_array' => [],
+            ],
         ];
 
         $generatedTransfer = new GeneratedTransfer();
@@ -351,10 +358,27 @@ class GeneratedTransferTest extends Unit
         $this->assertSame(['string a', 'string b'], $generatedTransfer->getTestStringArray());
         $this->assertSame(100, $generatedTransfer->getTestInt());
         $this->assertSame([100, 200], $generatedTransfer->getTestIntArray());
-        $this->assertSame(true, $generatedTransfer->getTestBool());
+        $this->assertTrue($generatedTransfer->getTestBool());
         $this->assertSame([true, false], $generatedTransfer->getTestBoolArray());
         $this->assertSame([true, false], $generatedTransfer->getTestBoolArray());
         $this->assertInstanceOf(GeneratedTransfer::class, $generatedTransfer->getTestTransfer());
+        $this->assertInstanceOf(GeneratedTransfer::class, $generatedTransfer->getTestTransferStrict());
+    }
+
+    /**
+     * @return void
+     */
+    public function testFromArrayMethodThrowsExceptionWhenOnStrictType(): void
+    {
+        $this->expectException(InvalidStrictTypeException::class);
+
+        $generatedTransferData = [
+            'test_transfer_strict' => 'string', // the property is strict-typed and it must be an instance of the TransferInterface.
+        ];
+
+        $generatedTransfer = new GeneratedTransfer();
+
+        $generatedTransfer->fromArray($generatedTransferData);
     }
 
     /**

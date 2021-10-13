@@ -26,9 +26,9 @@ class PriceProductMerchantRelationshipMapper implements PriceProductMerchantRela
     }
 
     /**
-     * @param \Orm\Zed\PriceProductMerchantRelationship\Persistence\SpyPriceProductMerchantRelationship[] $priceProductMerchantRelationshipEntities
+     * @param array<\Orm\Zed\PriceProductMerchantRelationship\Persistence\SpyPriceProductMerchantRelationship> $priceProductMerchantRelationshipEntities
      *
-     * @return \Generated\Shared\Transfer\PriceProductMerchantRelationshipTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductMerchantRelationshipTransfer>
      */
     public function mapEntitiesToPriceProductMerchantRelationshipTransferCollection(array $priceProductMerchantRelationshipEntities): array
     {

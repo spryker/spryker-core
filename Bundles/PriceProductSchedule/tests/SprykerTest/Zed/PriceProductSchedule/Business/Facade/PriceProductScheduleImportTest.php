@@ -35,6 +35,9 @@ use Generated\Shared\Transfer\StoreTransfer;
  */
 class PriceProductScheduleImportTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const FORMAT_DATE = 'Y-m-d\TH:i:sO';
 
     /**
@@ -204,7 +207,7 @@ class PriceProductScheduleImportTest extends Unit
     /**
      * @param int $itemsCount
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\PriceProductScheduleImportTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\PriceProductScheduleImportTransfer>
      */
     protected function prepareValidPriceProductScheduleImportData(int $itemsCount): ArrayObject
     {

@@ -14,6 +14,9 @@ use Spryker\Zed\Oms\Persistence\OmsRepositoryInterface;
 
 class OrderItemMatrix
 {
+    /**
+     * @var string
+     */
     public const COL_STATE = 'COL_STATE';
 
     /**
@@ -140,7 +143,7 @@ class OrderItemMatrix
     }
 
     /**
-     * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderProcess[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Oms\Persistence\SpyOmsOrderProcess>
      */
     protected function getActiveProcesses()
     {

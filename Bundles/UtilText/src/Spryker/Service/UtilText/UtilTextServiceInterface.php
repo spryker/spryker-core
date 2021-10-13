@@ -135,4 +135,17 @@ interface UtilTextServiceInterface
      * @return bool
      */
     public function checkToken($rawToken, $hash);
+
+    /**
+     * Specification:
+     * - Generates a unique ID.
+     *
+     * @api
+     *
+     * @param string $prefix
+     * @param bool $moreEntropy
+     *
+     * @return string
+     */
+    public function generateUniqueId(string $prefix = '', bool $moreEntropy = false): string;
 }

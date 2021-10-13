@@ -8,7 +8,14 @@
     <tr>
         <td class="{{ noBottomBorderClass }}">{{ barcode(returnItem.orderItem.sku) }}</td>
         <td class="{{ noBottomBorderClass }}">{{ returnItem.orderItem.sku }}</td>
-        <td class="{{ noBottomBorderClass }}">{{ returnItem.orderItem.name }}</td>
+        <td class="{{ noBottomBorderClass }}">
+            {{ returnItem.orderItem.name }}
+            <div>
+                {% include '@SalesProductConfigurationGui/Sales/Partials/order-item-product-configuration.twig' ignore missing with {
+                    orderItem: orderItem,
+                } %}
+            </div>
+        </td>
         <td class="{{ noBottomBorderClass }}">{{ (returnItem.orderItem.sumPrice - returnItem.orderItem.sumDiscountAmountFullAggregation) | money(true, currencyIsoCode) }}</td>
         <td class="{{ noBottomBorderClass }}">{{ returnItem.orderItem.quantity }}</td>
         <td class="{{ noBottomBorderClass }}">{{ returnItem.orderItem.sumPriceToPayAggregation | money(true, currencyIsoCode) }}</td>

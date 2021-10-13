@@ -15,6 +15,9 @@ use Spryker\Client\ProductConfiguration\ProductConfigurationConfig;
 
 class ProductConfiguratorCheckSumResponseValidator implements ProductConfiguratorResponseValidatorInterface
 {
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_PRODUCT_CONFIGURATION_NOT_VALID_RESPONSE_CHECKSUM = 'product_configuration.validation.error.not_valid_response_checksum';
 
     /**
@@ -52,7 +55,7 @@ class ProductConfiguratorCheckSumResponseValidator implements ProductConfigurato
         $productConfiguratorResponseProcessorResponseTransfer->requireProductConfiguratorResponse();
 
         $productConfiguratorResponseTransfer = $productConfiguratorResponseProcessorResponseTransfer
-            ->getProductConfiguratorResponse();
+            ->getProductConfiguratorResponseOrFail();
 
         $plainCopyOfConfiguredResponseData = $configuratorResponseData;
 

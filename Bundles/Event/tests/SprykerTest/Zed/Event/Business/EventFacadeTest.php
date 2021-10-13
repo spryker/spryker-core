@@ -41,6 +41,9 @@ use SprykerTest\Zed\Event\Stub\TestEventBulkListenerPluginStub;
  */
 class EventFacadeTest extends Unit
 {
+    /**
+     * @var string
+     */
     public const TEST_EVENT_NAME = 'test.event';
 
     /**
@@ -268,7 +271,7 @@ class EventFacadeTest extends Unit
     protected function createTransferObjectMock(): TransferInterface
     {
         return $this->getMockBuilder(TransferInterface::class)
-           ->getMock();
+            ->getMock();
     }
 
     /**

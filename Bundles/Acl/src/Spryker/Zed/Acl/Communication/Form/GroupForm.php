@@ -27,11 +27,23 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  */
 class GroupForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const FIELD_TITLE = 'title';
+    /**
+     * @var string
+     */
     public const FIELD_ROLES = 'roles';
 
+    /**
+     * @var string
+     */
     public const OPTION_ROLE_CHOICES = 'role_choices';
 
+    /**
+     * @var string
+     */
     public const GROUP_UNIQUE_GROUP_CHECK = 'unique_group_check';
 
     /**

@@ -29,6 +29,7 @@ class ValidateItemsShipmentTest extends Unit
 {
     /**
      * @uses \Spryker\Zed\ShipmentsRestApi\Business\Validator\CartItemCheckoutDataValidator::GLOSSARY_KEY_ITEM_NO_SHIPMENT_SELECTED
+     * @var string
      */
     protected const GLOSSARY_KEY_ITEM_NO_SHIPMENT_SELECTED = 'checkout.validation.item.no_shipment_selected';
 

@@ -21,13 +21,13 @@ class CompanyUserAccessTokenCreator implements CompanyUserAccessTokenCreatorInte
     protected $oauthFacade;
 
     /**
-     * @var \Spryker\Zed\OauthCompanyUserExtension\Dependency\Plugin\CustomerOauthRequestMapperPluginInterface[]
+     * @var array<\Spryker\Zed\OauthCompanyUserExtension\Dependency\Plugin\CustomerOauthRequestMapperPluginInterface>
      */
     protected $customerOauthRequestMapperPlugins;
 
     /**
      * @param \Spryker\Zed\OauthCompanyUser\Dependency\Facade\OauthCompanyUserToOauthFacadeInterface $oauthFacade
-     * @param \Spryker\Zed\OauthCompanyUserExtension\Dependency\Plugin\CustomerOauthRequestMapperPluginInterface[] $customerOauthRequestMapperPlugins
+     * @param array<\Spryker\Zed\OauthCompanyUserExtension\Dependency\Plugin\CustomerOauthRequestMapperPluginInterface> $customerOauthRequestMapperPlugins
      */
     public function __construct(
         OauthCompanyUserToOauthFacadeInterface $oauthFacade,

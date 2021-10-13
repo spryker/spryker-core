@@ -17,7 +17,7 @@ use Spryker\Zed\MerchantDataImport\Business\MerchantStore\DataSet\MerchantStoreD
 class StoreNameToIdStoreStep implements DataImportStepInterface
 {
     /**
-     * @var int[]
+     * @var array<int>
      */
     protected $idStoreCache = [];
 

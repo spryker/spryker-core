@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 interface HttpResponseBuilderInterface
 {
     /**
-     * @param mixed[] $data
+     * @param array<mixed> $data
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */

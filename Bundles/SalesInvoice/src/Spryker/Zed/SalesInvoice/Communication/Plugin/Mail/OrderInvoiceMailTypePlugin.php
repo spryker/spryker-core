@@ -20,8 +20,17 @@ use Spryker\Zed\SalesInvoice\SalesInvoiceConfig;
  */
 class OrderInvoiceMailTypePlugin extends AbstractPlugin implements MailTypePluginInterface
 {
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_MAIL_ORDER_INVOICE_SUBJECT = 'mail.order_invoice.subject';
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_MAIL_SENDER_EMAIL = 'mail.sender.email';
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_MAIL_SENDER_NAME = 'mail.sender.name';
 
     /**

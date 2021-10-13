@@ -1,6 +1,6 @@
 # ProductsCategoriesResourceRelationship Module
-[![Build Status](https://travis-ci.org/spryker/products-categories-resource-relationship.svg)](https://travis-ci.org/spryker/products-categories-resource-relationship)
-[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
+[![Latest Stable Version](https://poser.pugx.org/spryker/products-categories-resource-relationship/v/stable.svg)](https://packagist.org/packages/spryker/products-categories-resource-relationship)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.4-8892BF.svg)](https://php.net/)
 
 ProductsCategoriesResourceRelationship module provides relation between products and products categories
 

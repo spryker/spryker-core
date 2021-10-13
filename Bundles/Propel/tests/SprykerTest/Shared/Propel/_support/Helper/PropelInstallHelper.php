@@ -108,7 +108,7 @@ class PropelInstallHelper extends Module
      */
     protected function runCommand(string $command): void
     {
-        $process = new Process($command, Configuration::projectDir());
+        $process = $this->createProcess($command);
         $process->setTimeout(600);
         $process->mustRun(function ($type, $buffer) use ($command): void {
             if ($type === Process::ERR) {
@@ -134,10 +134,6 @@ class PropelInstallHelper extends Module
     private function copyFromTestBundle(): void
     {
         $testBundleSchemaDirectory = Configuration::projectDir() . 'src/Spryker/Zed/*/Persistence/Propel/Schema';
-        if (count(glob($testBundleSchemaDirectory)) === 0) {
-            return;
-        }
-
         $finder = $this->getBundleSchemaFinder($testBundleSchemaDirectory);
 
         if ($finder->count() === 0) {
@@ -190,5 +186,21 @@ class PropelInstallHelper extends Module
         if (!is_dir($pathForSchemas)) {
             mkdir($pathForSchemas, 0775, true);
         }
+    }
+
+    /**
+     * @param string $command
+     *
+     * @return \Symfony\Component\Process\Process
+     */
+    protected function createProcess(string $command): Process
+    {
+        // Shim for Symfony 3.x, to be removed when Symfony dependency becomes 4.2+
+        if (!method_exists(Process::class, 'fromShellCommandline')) {
+            //@phpstan-ignore-next-line
+            return new Process($command, Configuration::projectDir());
+        }
+
+        return Process::fromShellCommandline($command, Configuration::projectDir());
     }
 }

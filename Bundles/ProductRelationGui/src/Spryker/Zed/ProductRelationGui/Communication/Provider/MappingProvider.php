@@ -16,6 +16,9 @@ use Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery;
 
 class MappingProvider implements MappingProviderInterface
 {
+    /**
+     * @var string
+     */
     protected const PATTERN_PRODUCT_ATTRIBUTE_KEY = 'product.json.%s';
 
     /**
@@ -32,7 +35,7 @@ class MappingProvider implements MappingProviderInterface
     }
 
     /**
-     * @return \Generated\Shared\Transfer\PropelQueryBuilderCriteriaMappingTransfer[]
+     * @return array<\Generated\Shared\Transfer\PropelQueryBuilderCriteriaMappingTransfer>
      */
     public function getMappings(): array
     {
@@ -43,7 +46,7 @@ class MappingProvider implements MappingProviderInterface
     }
 
     /**
-     * @return \Generated\Shared\Transfer\PropelQueryBuilderCriteriaMappingTransfer[]
+     * @return array<\Generated\Shared\Transfer\PropelQueryBuilderCriteriaMappingTransfer>
      */
     protected function buildProductMapping(): array
     {
@@ -78,7 +81,7 @@ class MappingProvider implements MappingProviderInterface
     }
 
     /**
-     * @return \Generated\Shared\Transfer\PropelQueryBuilderCriteriaMappingTransfer[]
+     * @return array<\Generated\Shared\Transfer\PropelQueryBuilderCriteriaMappingTransfer>
      */
     protected function buildProductAttributeMap(): array
     {

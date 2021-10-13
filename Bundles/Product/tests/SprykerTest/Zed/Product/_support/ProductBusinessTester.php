@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
+use Orm\Zed\Product\Persistence\SpyProductLocalizedAttributesQuery;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Orm\Zed\Url\Persistence\SpyUrlQuery;
 use Spryker\Zed\Locale\Business\LocaleFacadeInterface;
@@ -40,12 +41,12 @@ class ProductBusinessTester extends Actor
     use _generated\ProductBusinessTesterActions;
 
     /**
-     * @var int[]
+     * @var array<int>
      */
     protected $productConcreteIds = [];
 
     /**
-     * @var int[]
+     * @var array<int>
      */
     protected $productAbstractIds = [];
 
@@ -85,7 +86,7 @@ class ProductBusinessTester extends Actor
     }
 
     /**
-     * @return int[]
+     * @return array<int>
      */
     public function getProductConcreteIds(): array
     {
@@ -93,7 +94,7 @@ class ProductBusinessTester extends Actor
     }
 
     /**
-     * @return int[]
+     * @return array<int>
      */
     public function getProductAbstractIds(): array
     {
@@ -176,6 +177,14 @@ class ProductBusinessTester extends Actor
     }
 
     /**
+     * @return bool
+     */
+    public function isPhp8(): bool
+    {
+        return version_compare(PHP_VERSION, '8.0.0', '>=');
+    }
+
+    /**
      * @param string $sku
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer
@@ -217,7 +226,7 @@ class ProductBusinessTester extends Actor
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
      */
     protected function createProductConcreteTransferCollection(ProductAbstractTransfer $productAbstractTransfer): array
     {
@@ -246,5 +255,29 @@ class ProductBusinessTester extends Actor
         $localizedAttributeTransfer->setLocale($this->getLocaleFacade()->getCurrentLocale());
 
         return $localizedAttributeTransfer;
+    }
+
+    /**
+     * @param array $skus
+     *
+     * @return void
+     */
+    public function deleteConcreteProductBySkus(array $skus): void
+    {
+        (new SpyProductQuery())->filterBySku_In($skus)->delete();
+    }
+
+    /**
+     * @param array $skus
+     *
+     * @return int
+     */
+    public function countProductLocalizedAttributesByProductBySkus(array $skus): int
+    {
+        return (new SpyProductLocalizedAttributesQuery())
+            ->useSpyProductQuery()
+                ->filterBySku_In($skus)
+            ->endUse()
+            ->count();
     }
 }

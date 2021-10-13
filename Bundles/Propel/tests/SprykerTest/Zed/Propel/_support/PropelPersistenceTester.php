@@ -63,7 +63,7 @@ class PropelPersistenceTester extends Actor
      * @param string $entityClassName
      * @param int $numberOfEntities
      *
-     * @return \Propel\Runtime\ActiveRecord\ActiveRecordInterface[]
+     * @return array<\Propel\Runtime\ActiveRecord\ActiveRecordInterface>
      */
     public function getEntityCollectionForInsert(string $entityClassName, int $numberOfEntities = 2): array
     {
@@ -122,7 +122,7 @@ class PropelPersistenceTester extends Actor
      *
      * @throws \PHPUnit\Framework\ExpectationFailedException
      *
-     * @return float|mixed|bool|int|\DateTime|string
+     * @return \DateTime|mixed|string|float|int|bool
      */
     public function getValue(ColumnMap $columnMap)
     {

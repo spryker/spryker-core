@@ -18,6 +18,7 @@ class ProductMeasurementUnitStorageReader implements ProductMeasurementUnitStora
 {
     /**
      * @uses \Spryker\Client\ProductStorage\Storage\ProductConcreteStorageReader::KEY_ID
+     * @var string
      */
     protected const KEY_ID = 'id';
 
@@ -70,9 +71,9 @@ class ProductMeasurementUnitStorageReader implements ProductMeasurementUnitStora
 
     /**
      * @param string $mappingType
-     * @param string[] $identifiers
+     * @param array<string> $identifiers
      *
-     * @return \Generated\Shared\Transfer\ProductMeasurementUnitStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductMeasurementUnitStorageTransfer>
      */
     public function getProductMeasurementUnitsByMapping(string $mappingType, array $identifiers): array
     {
@@ -96,9 +97,9 @@ class ProductMeasurementUnitStorageReader implements ProductMeasurementUnitStora
     }
 
     /**
-     * @param int[] $productMeasurementUnitIds
+     * @param array<int> $productMeasurementUnitIds
      *
-     * @return \Generated\Shared\Transfer\ProductMeasurementUnitStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductMeasurementUnitStorageTransfer>
      */
     public function getProductMeasurementUnitStorageCollection(array $productMeasurementUnitIds): array
     {
@@ -108,9 +109,9 @@ class ProductMeasurementUnitStorageReader implements ProductMeasurementUnitStora
     }
 
     /**
-     * @param string[] $productMeasurementUnitsStorageData
+     * @param array<string> $productMeasurementUnitsStorageData
      *
-     * @return \Generated\Shared\Transfer\ProductMeasurementUnitStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductMeasurementUnitStorageTransfer>
      */
     protected function mapProductMeasurementUnitStorageDataToProductMeasurementUnitStorageTransfers(
         array $productMeasurementUnitsStorageData
@@ -150,9 +151,9 @@ class ProductMeasurementUnitStorageReader implements ProductMeasurementUnitStora
 
     /**
      * @param string $mappingType
-     * @param string[] $identifiers
+     * @param array<string> $identifiers
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function generateMappingStorageKeys(string $mappingType, array $identifiers): array
     {

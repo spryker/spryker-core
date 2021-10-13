@@ -36,9 +36,9 @@ class MerchantOpeningHoursStorageClient extends AbstractClient implements Mercha
      *
      * @api
      *
-     * @param int[] $merchantIds
+     * @param array<int> $merchantIds
      *
-     * @return \Generated\Shared\Transfer\MerchantOpeningHoursStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\MerchantOpeningHoursStorageTransfer>
      */
     public function getMerchantOpeningHoursByMerchantIds(array $merchantIds): array
     {

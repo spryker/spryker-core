@@ -23,6 +23,9 @@ use Spryker\Shared\Log\Sanitizer\SanitizerInterface;
  */
 class SanitizerTest extends Unit
 {
+    /**
+     * @var string
+     */
     public const SANITIZED_VALUE = '***';
 
     /**

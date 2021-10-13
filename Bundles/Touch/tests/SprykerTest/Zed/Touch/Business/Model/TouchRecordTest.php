@@ -27,6 +27,9 @@ use Spryker\Zed\Touch\TouchDependencyProvider;
  */
 class TouchRecordTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const TYPE_CATEGORY = 'category';
 
     /**

@@ -24,10 +24,12 @@ class CommentController extends AbstractController
 {
     /**
      * @uses \Spryker\Zed\Sales\Communication\Controller\DetailController::indexAction()
+     * @var string
      */
     protected const ROUTE_REDIRECT = '/sales/detail';
     /**
      * @uses \Spryker\Zed\Sales\Communication\Controller\DetailController::PARAM_ID_SALES_ORDER
+     * @var string
      */
     protected const PARAM_ID_SALES_ORDER = 'id-sales-order';
 

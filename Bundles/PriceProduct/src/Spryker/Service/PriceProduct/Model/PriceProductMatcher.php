@@ -11,11 +11,12 @@ use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Spryker\Service\PriceProduct\FilterStrategy\SinglePriceProductFilterStrategyInterface;
+use Spryker\Shared\PriceProduct\PriceProductConfig;
 
 class PriceProductMatcher implements PriceProductMatcherInterface
 {
     /**
-     * @var \Spryker\Service\PriceProductExtension\Dependency\Plugin\PriceProductFilterPluginInterface[]
+     * @var array<\Spryker\Service\PriceProductExtension\Dependency\Plugin\PriceProductFilterPluginInterface>
      */
     protected $priceProductFilterPlugins = [];
 
@@ -25,7 +26,7 @@ class PriceProductMatcher implements PriceProductMatcherInterface
     protected $singlePriceProductFilterStrategy;
 
     /**
-     * @param \Spryker\Service\PriceProductExtension\Dependency\Plugin\PriceProductFilterPluginInterface[] $priceProductDecisionPlugins
+     * @param array<\Spryker\Service\PriceProductExtension\Dependency\Plugin\PriceProductFilterPluginInterface> $priceProductDecisionPlugins
      * @param \Spryker\Service\PriceProduct\FilterStrategy\SinglePriceProductFilterStrategyInterface $singlePriceProductFilterStrategy
      */
     public function __construct(
@@ -37,7 +38,7 @@ class PriceProductMatcher implements PriceProductMatcherInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer|null
@@ -61,16 +62,62 @@ class PriceProductMatcher implements PriceProductMatcherInterface
             ->fromArray($priceProductCriteriaTransfer->toArray(false), true);
         $priceProductFilterTransfer->setPriceTypeName($priceProductCriteriaTransfer->getPriceType());
 
-        $priceProductTransfers = $this->applyPriceProductFilterPlugins($priceProductTransfers, $priceProductFilterTransfer);
+        $priceProductTransfers = $this->filterProductPrices($priceProductTransfers, $priceProductFilterTransfer);
 
         return $this->singlePriceProductFilterStrategy->findOne($priceProductTransfers, $priceProductFilterTransfer);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
+     */
+    protected function filterProductPrices(array $priceProductTransfers, PriceProductFilterTransfer $priceProductFilterTransfer): array
+    {
+        $priceProductTransfers = $this->filterProductPricesByPriceMode(
+            $priceProductTransfers,
+            $priceProductFilterTransfer->getPriceModeOrFail()
+        );
+
+        return $this->applyPriceProductFilterPlugins(
+            $priceProductTransfers,
+            $priceProductFilterTransfer
+        );
+    }
+
+    /**
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
+     * @param string $priceMode
+     *
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
+     */
+    protected function filterProductPricesByPriceMode(array $priceProductTransfers, string $priceMode): array
+    {
+        $filteredPriceProductTransfers = [];
+
+        foreach ($priceProductTransfers as $priceProductTransfer) {
+            $moneyValueTransfer = $priceProductTransfer->getMoneyValueOrFail();
+
+            if ($priceMode === PriceProductConfig::PRICE_GROSS_MODE && $moneyValueTransfer->getGrossAmount() === null) {
+                continue;
+            }
+
+            if ($priceMode !== PriceProductConfig::PRICE_GROSS_MODE && $moneyValueTransfer->getNetAmount() === null) {
+                continue;
+            }
+
+            $filteredPriceProductTransfers[] = $priceProductTransfer;
+        }
+
+        return $filteredPriceProductTransfers;
+    }
+
+    /**
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
+     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
+     *
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     protected function applyPriceProductFilterPlugins(array $priceProductTransfers, PriceProductFilterTransfer $priceProductFilterTransfer)
     {
@@ -82,10 +129,10 @@ class PriceProductMatcher implements PriceProductMatcherInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     protected function findPricesByPriceProductCriteria(array $priceProductTransfers, PriceProductCriteriaTransfer $priceProductCriteriaTransfer): array
     {
@@ -113,24 +160,35 @@ class PriceProductMatcher implements PriceProductMatcherInterface
             ->requirePriceTypeName()
             ->requireMoneyValue();
 
-        if (!$priceProductTransfer->getPriceDimension()->getType()) {
+        /** @var \Generated\Shared\Transfer\PriceProductDimensionTransfer $priceDimensionTransfer */
+        $priceDimensionTransfer = $priceProductTransfer->getPriceDimension();
+
+        if (!$priceDimensionTransfer->getType()) {
             return false;
         }
 
-        if ($priceProductCriteriaTransfer->getIdStore() !== $priceProductTransfer->getMoneyValue()->getFkStore()) {
+        /** @var \Generated\Shared\Transfer\MoneyValueTransfer $moneyValueTransfer */
+        $moneyValueTransfer = $priceProductTransfer->getMoneyValue();
+
+        if ($priceProductCriteriaTransfer->getIdStore() !== $moneyValueTransfer->getFkStore()) {
             return false;
         }
 
         if ($priceProductCriteriaTransfer->getPriceDimension() !== null) {
-            if ($priceProductCriteriaTransfer->getPriceDimension()->getType() !== $priceProductTransfer->getPriceDimension()->getType()) {
+            /** @var \Generated\Shared\Transfer\PriceProductDimensionTransfer $priceCriteriaDimensionTransfer */
+            $priceCriteriaDimensionTransfer = $priceProductCriteriaTransfer->getPriceDimension();
+
+            if ($priceCriteriaDimensionTransfer->getType() !== $priceDimensionTransfer->getType()) {
                 return false;
             }
         }
 
         if ($priceProductCriteriaTransfer->getIdCurrency() !== null) {
-            $priceProductTransfer->getMoneyValue()->requireCurrency();
+            $moneyValueTransfer->requireCurrency();
+            /** @var \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer */
+            $currencyTransfer = $moneyValueTransfer->requireCurrency()->getCurrency();
 
-            if ($priceProductCriteriaTransfer->getIdCurrency() !== $priceProductTransfer->getMoneyValue()->getCurrency()->getIdCurrency()) {
+            if ($priceProductCriteriaTransfer->getIdCurrency() !== $currencyTransfer->getIdCurrency()) {
                 return false;
             }
         }
@@ -144,7 +202,7 @@ class PriceProductMatcher implements PriceProductMatcherInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer|null
@@ -161,16 +219,16 @@ class PriceProductMatcher implements PriceProductMatcherInterface
             ->requirePriceMode();
 
         $priceProductTransfers = $this->findPricesByPriceProductFilter($priceProductTransfers, $priceProductFilterTransfer);
-        $priceProductTransfers = $this->applyPriceProductFilterPlugins($priceProductTransfers, $priceProductFilterTransfer);
+        $priceProductTransfers = $this->filterProductPrices($priceProductTransfers, $priceProductFilterTransfer);
 
         return $this->singlePriceProductFilterStrategy->findOne($priceProductTransfers, $priceProductFilterTransfer);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function matchPricesByFilter(array $priceProductTransfers, PriceProductFilterTransfer $priceProductFilterTransfer): array
     {
@@ -188,10 +246,10 @@ class PriceProductMatcher implements PriceProductMatcherInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     protected function findPricesByPriceProductFilter(array $priceProductTransfers, PriceProductFilterTransfer $priceProductFilterTransfer): array
     {
@@ -203,7 +261,7 @@ class PriceProductMatcher implements PriceProductMatcherInterface
             }
         }
 
-        return $this->applyPriceProductFilterPlugins($matchedPriceProductTransfers, $priceProductFilterTransfer);
+        return $this->filterProductPrices($matchedPriceProductTransfers, $priceProductFilterTransfer);
     }
 
     /**
@@ -221,21 +279,24 @@ class PriceProductMatcher implements PriceProductMatcherInterface
         if ($priceProductFilterTransfer->getPriceDimension() !== null) {
             $priceProductTransfer->requirePriceDimension();
 
-            if ($priceProductFilterTransfer->getPriceDimension()->getType() !== $priceProductTransfer->getPriceDimension()->getType()) {
+            /** @var \Generated\Shared\Transfer\PriceProductDimensionTransfer $priceDimensionTransfer */
+            $priceDimensionTransfer = $priceProductTransfer->requirePriceDimension()->getPriceDimension();
+
+            /** @var \Generated\Shared\Transfer\PriceProductDimensionTransfer $priceProductFilterDimensionTransfer */
+            $priceProductFilterDimensionTransfer = $priceProductFilterTransfer->getPriceDimension();
+
+            if ($priceProductFilterDimensionTransfer->getType() !== $priceDimensionTransfer->getType()) {
                 return false;
             }
         }
 
         if ($priceProductFilterTransfer->getCurrencyIsoCode() !== null) {
-            $priceProductTransfer
-                ->getMoneyValue()
-                ->requireCurrency();
-            $priceProductTransfer
-                ->getMoneyValue()
-                ->getCurrency()
-                ->requireCode();
+            /** @var \Generated\Shared\Transfer\MoneyValueTransfer $moneyValueTransfer */
+            $moneyValueTransfer = $priceProductTransfer->requireMoneyValue()->getMoneyValue();
+            /** @var \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer */
+            $currencyTransfer = $moneyValueTransfer->requireCurrency()->getCurrency();
 
-            if ($priceProductTransfer->getMoneyValue()->getCurrency()->getCode() !== $priceProductFilterTransfer->getCurrencyIsoCode()) {
+            if ($currencyTransfer->requireCode()->getCode() !== $priceProductFilterTransfer->getCurrencyIsoCode()) {
                 return false;
             }
         }

@@ -18,7 +18,7 @@ use Spryker\Zed\Oms\Dependency\Plugin\Command\CommandByOrderInterface;
 class ReleaseUsedVoucherCodes extends AbstractCommand implements CommandByOrderInterface
 {
     /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
+     * @param array<\Orm\Zed\Sales\Persistence\SpySalesOrderItem> $orderItems
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity
      * @param \Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject $data
      *
@@ -40,7 +40,7 @@ class ReleaseUsedVoucherCodes extends AbstractCommand implements CommandByOrderI
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getVoucherCodes(SpySalesOrder $orderEntity)
     {

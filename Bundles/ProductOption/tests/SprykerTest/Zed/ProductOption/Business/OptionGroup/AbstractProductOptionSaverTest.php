@@ -31,7 +31,13 @@ use SprykerTest\Zed\ProductOption\Business\MockProvider;
  */
 class AbstractProductOptionSaverTest extends MockProvider
 {
+    /**
+     * @var int
+     */
     protected const VALUE_ID_PRODUCT_OPTION_GROUP = 1;
+    /**
+     * @var string
+     */
     protected const VALUE_SKU_PRODUCT_ABSTRACT = '123';
 
     /**

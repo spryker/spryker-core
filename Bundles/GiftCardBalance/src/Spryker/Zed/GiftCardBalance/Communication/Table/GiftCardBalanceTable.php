@@ -18,10 +18,25 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class GiftCardBalanceTable extends AbstractTable
 {
+    /**
+     * @var string
+     */
     public const COL_CREATE_AT = 'created_at';
+    /**
+     * @var string
+     */
     public const COL_CUSTOMER_REFERENCE = 'customer_name';
+    /**
+     * @var string
+     */
     public const COL_GIFT_CARD_NAME = 'gift_card_name';
+    /**
+     * @var string
+     */
     public const COL_ID_SALES_ORDER = 'id_sales_order';
+    /**
+     * @var string
+     */
     public const COL_BALANCE = 'balance';
 
     /**

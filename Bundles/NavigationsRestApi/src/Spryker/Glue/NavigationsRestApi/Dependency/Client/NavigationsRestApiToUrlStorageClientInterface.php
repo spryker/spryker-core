@@ -10,9 +10,9 @@ namespace Spryker\Glue\NavigationsRestApi\Dependency\Client;
 interface NavigationsRestApiToUrlStorageClientInterface
 {
     /**
-     * @param string[] $urlCollection
+     * @param array<string> $urlCollection
      *
-     * @return \Generated\Shared\Transfer\UrlStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\UrlStorageTransfer>
      */
     public function getUrlStorageTransferByUrls(array $urlCollection): array;
 }

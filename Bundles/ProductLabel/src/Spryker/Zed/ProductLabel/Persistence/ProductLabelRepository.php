@@ -69,7 +69,7 @@ class ProductLabelRepository extends AbstractRepository implements ProductLabelR
     }
 
     /**
-     * @return \Generated\Shared\Transfer\ProductLabelTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductLabelTransfer>
      */
     public function getAllProductLabelsSortedByPosition(): array
     {
@@ -88,7 +88,7 @@ class ProductLabelRepository extends AbstractRepository implements ProductLabelR
     /**
      * @param int $idProductAbstract
      *
-     * @return \Generated\Shared\Transfer\ProductLabelTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductLabelTransfer>
      */
     public function getProductLabelsByIdProductAbstract(int $idProductAbstract): array
     {
@@ -109,7 +109,7 @@ class ProductLabelRepository extends AbstractRepository implements ProductLabelR
     /**
      * @param \Generated\Shared\Transfer\ProductLabelCriteriaTransfer $productLabelCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductLabelTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductLabelTransfer>
      */
     public function getActiveLabelsByCriteria(ProductLabelCriteriaTransfer $productLabelCriteriaTransfer): array
     {
@@ -156,7 +156,7 @@ class ProductLabelRepository extends AbstractRepository implements ProductLabelR
     /**
      * @param int $idProductAbstract
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getProductLabelIdsByIdProductAbstract(int $idProductAbstract): array
     {
@@ -174,7 +174,7 @@ class ProductLabelRepository extends AbstractRepository implements ProductLabelR
     /**
      * @param int $idProductAbstract
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getActiveProductLabelIdsByIdProductAbstract(int $idProductAbstract): array
     {
@@ -211,9 +211,9 @@ class ProductLabelRepository extends AbstractRepository implements ProductLabelR
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
-     * @return \Generated\Shared\Transfer\ProductLabelProductAbstractTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductLabelProductAbstractTransfer>
      */
     public function getProductLabelProductAbstractsByProductAbstractIds(array $productAbstractIds): array
     {
@@ -236,7 +236,7 @@ class ProductLabelRepository extends AbstractRepository implements ProductLabelR
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductLabelProductAbstractTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductLabelProductAbstractTransfer>
      */
     public function getProductLabelProductAbstractsByFilter(FilterTransfer $filterTransfer): array
     {
@@ -253,5 +253,43 @@ class ProductLabelRepository extends AbstractRepository implements ProductLabelR
         return $this->getFactory()
             ->createProductLabelProductAbstractMapper()
             ->mapProductLabelProductAbstractEntitiesToProductLabelProductTransfers($productLabelProductAbstractEntities, []);
+    }
+
+    /**
+     * @param int $idProductLabel
+     * @param array<int> $productAbstractIds
+     *
+     * @return array<\Generated\Shared\Transfer\ProductLabelProductAbstractTransfer>
+     */
+    public function getProductAbstractRelationsByIdProductLabelAndProductAbstractIds(int $idProductLabel, array $productAbstractIds): array
+    {
+        $productLabelProductAbstractEntities = $this->getFactory()
+            ->createProductRelationQuery()
+            ->filterByFkProductLabel($idProductLabel)
+            ->filterByFkProductAbstract_In($productAbstractIds)
+            ->find();
+
+        if (!$productLabelProductAbstractEntities->count()) {
+            return [];
+        }
+
+        return $this->getFactory()
+            ->createProductLabelProductAbstractMapper()
+            ->mapProductLabelProductAbstractEntitiesToProductLabelProductTransfers($productLabelProductAbstractEntities, []);
+    }
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return bool
+     */
+    public function checkProductLabelProductAbstractByIdProductAbstractExists(int $idProductAbstract): bool
+    {
+        return $this->getFactory()
+            ->createProductLabelQuery()
+            ->useSpyProductLabelProductAbstractQuery()
+                ->filterByFkProductAbstract($idProductAbstract)
+            ->endUse()
+            ->exists();
     }
 }

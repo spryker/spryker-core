@@ -13,39 +13,39 @@ use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\QuoteRequestsRestApi\Dependency\Client\QuoteRequestsRestApiToQuoteRequestClientInterface;
-use Spryker\Glue\QuoteRequestsRestApi\Processor\Mapper\QuoteRequestsRequestMapperInterface;
-use Spryker\Glue\QuoteRequestsRestApi\Processor\RestResponseBuilder\QuoteRequestsRestResponseBuilderInterface;
+use Spryker\Glue\QuoteRequestsRestApi\Processor\Mapper\QuoteRequestMapperInterface;
+use Spryker\Glue\QuoteRequestsRestApi\Processor\RestResponseBuilder\QuoteRequestRestResponseBuilderInterface;
 
 class QuoteRequestReader implements QuoteRequestReaderInterface
 {
     /**
      * @var \Spryker\Glue\QuoteRequestsRestApi\Dependency\Client\QuoteRequestsRestApiToQuoteRequestClientInterface
      */
-    private $quoteRequestClient;
+    protected $quoteRequestClient;
 
     /**
-     * @var \Spryker\Glue\QuoteRequestsRestApi\Processor\RestResponseBuilder\QuoteRequestsRestResponseBuilderInterface
+     * @var \Spryker\Glue\QuoteRequestsRestApi\Processor\RestResponseBuilder\QuoteRequestRestResponseBuilderInterface
      */
-    private $quoteRequestsRestResponseBuilder;
+    protected $quoteRequestRestResponseBuilder;
 
     /**
-     * @var \Spryker\Glue\QuoteRequestsRestApi\Processor\Mapper\QuoteRequestsRequestMapperInterface
+     * @var \Spryker\Glue\QuoteRequestsRestApi\Processor\Mapper\QuoteRequestMapperInterface
      */
-    private $quoteRequestsRequestMapper;
+    protected $quoteRequestMapper;
 
     /**
      * @param \Spryker\Glue\QuoteRequestsRestApi\Dependency\Client\QuoteRequestsRestApiToQuoteRequestClientInterface $quoteRequestsRestApiToQuoteRequestClient
-     * @param \Spryker\Glue\QuoteRequestsRestApi\Processor\RestResponseBuilder\QuoteRequestsRestResponseBuilderInterface $quoteRequestsRestResponseBuilder
-     * @param \Spryker\Glue\QuoteRequestsRestApi\Processor\Mapper\QuoteRequestsRequestMapperInterface $quoteRequestsRequestMapper
+     * @param \Spryker\Glue\QuoteRequestsRestApi\Processor\RestResponseBuilder\QuoteRequestRestResponseBuilderInterface $quoteRequestRestResponseBuilder
+     * @param \Spryker\Glue\QuoteRequestsRestApi\Processor\Mapper\QuoteRequestMapperInterface $quoteRequestMapper
      */
     public function __construct(
         QuoteRequestsRestApiToQuoteRequestClientInterface $quoteRequestsRestApiToQuoteRequestClient,
-        QuoteRequestsRestResponseBuilderInterface $quoteRequestsRestResponseBuilder,
-        QuoteRequestsRequestMapperInterface $quoteRequestsRequestMapper
+        QuoteRequestRestResponseBuilderInterface $quoteRequestRestResponseBuilder,
+        QuoteRequestMapperInterface $quoteRequestMapper
     ) {
         $this->quoteRequestClient = $quoteRequestsRestApiToQuoteRequestClient;
-        $this->quoteRequestsRestResponseBuilder = $quoteRequestsRestResponseBuilder;
-        $this->quoteRequestsRequestMapper = $quoteRequestsRequestMapper;
+        $this->quoteRequestRestResponseBuilder = $quoteRequestRestResponseBuilder;
+        $this->quoteRequestMapper = $quoteRequestMapper;
     }
 
     /**
@@ -55,11 +55,17 @@ class QuoteRequestReader implements QuoteRequestReaderInterface
      */
     public function getQuoteRequest(RestRequestInterface $restRequest): RestResponseInterface
     {
-        $companyUserTransfer = (new CompanyUserTransfer())
-            ->setIdCompanyUser($restRequest->getRestUser()->getIdCompanyUser());
         $quoteRequestFilterTransfer = (new QuoteRequestFilterTransfer())
             ->setQuoteRequestReference($restRequest->getResource()->getId())
-            ->setCompanyUser($companyUserTransfer);
+            ->setWithVersions(true);
+
+        $restUserTransfer = $restRequest->getRestUser();
+        if ($restUserTransfer) {
+            $companyUserTransfer = (new CompanyUserTransfer())
+                ->setIdCompanyUser($restUserTransfer->getIdCompanyUser());
+
+            $quoteRequestFilterTransfer->setCompanyUser($companyUserTransfer);
+        }
 
         $quoteRequestResponseTransfer = $this->quoteRequestClient
             ->getQuoteRequest($quoteRequestFilterTransfer);
@@ -68,11 +74,14 @@ class QuoteRequestReader implements QuoteRequestReaderInterface
             !$quoteRequestResponseTransfer->getIsSuccessful()
             || $quoteRequestResponseTransfer->getQuoteRequest() === null
         ) {
-            return $this->quoteRequestsRestResponseBuilder->createQuoteRequestNotFoundErrorResponse();
+            return $this->quoteRequestRestResponseBuilder->createQuoteRequestNotFoundErrorResponse();
         }
 
-        return $this->quoteRequestsRestResponseBuilder
-            ->createQuoteRequestRestResponse($quoteRequestResponseTransfer->getQuoteRequest());
+        return $this->quoteRequestRestResponseBuilder
+            ->createQuoteRequestRestResponse(
+                $quoteRequestResponseTransfer,
+                $restRequest->getMetadata()->getLocale()
+            );
     }
 
     /**
@@ -82,22 +91,31 @@ class QuoteRequestReader implements QuoteRequestReaderInterface
      */
     public function getQuoteRequestCollection(RestRequestInterface $restRequest): RestResponseInterface
     {
-        $companyUserTransfer = (new CompanyUserTransfer())
-            ->setIdCompanyUser($restRequest->getRestUser()->getIdCompanyUser());
-        $quoteRequestFilterTransfer = (new QuoteRequestFilterTransfer())
-            ->setCompanyUser($companyUserTransfer);
+        $quoteRequestFilterTransfer = new QuoteRequestFilterTransfer();
 
+        $restUserTransfer = $restRequest->getRestUser();
+        if ($restUserTransfer) {
+            $companyUserTransfer = (new CompanyUserTransfer())
+                ->setIdCompanyUser($restUserTransfer->getIdCompanyUser());
+
+            $quoteRequestFilterTransfer->setCompanyUser($companyUserTransfer);
+        }
+
+        $paginationTransfer = new PaginationTransfer();
         if ($restRequest->getPage() !== null) {
-            $quoteRequestFilterTransfer->setPagination(
-                (new PaginationTransfer())
-                    ->setMaxPerPage($restRequest->getPage()->getLimit())
-                    ->setPage(($restRequest->getPage()->getOffset() / $restRequest->getPage()->getLimit()) + 1)
-            );
+            $paginationTransfer
+                ->setMaxPerPage($restRequest->getPage()->getLimit())
+                ->setPage(($restRequest->getPage()->getOffset() / $restRequest->getPage()->getLimit()) + 1);
+
+            $quoteRequestFilterTransfer->setPagination($paginationTransfer);
         }
 
         $quoteRequestCollectionTransfer = $this->quoteRequestClient
             ->getQuoteRequestCollectionByFilter($quoteRequestFilterTransfer);
 
-        return $this->quoteRequestsRestResponseBuilder->createQuoteRequestCollectionRestResponse($quoteRequestCollectionTransfer);
+        return $this->quoteRequestRestResponseBuilder->createQuoteRequestCollectionRestResponse(
+            $quoteRequestCollectionTransfer,
+            $restRequest->getMetadata()->getLocale()
+        );
     }
 }

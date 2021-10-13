@@ -16,7 +16,7 @@ class ReorderFormDataToTransferMapper
     /**
      * @param \Symfony\Component\Form\FormInterface $reorderProductSetForm
      *
-     * @return \Generated\Shared\Transfer\ProductSetTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductSetTransfer>
      */
     public function mapData(FormInterface $reorderProductSetForm)
     {

@@ -24,7 +24,13 @@ class CommentTagWriter implements CommentTagWriterInterface
 {
     use TransactionTrait;
 
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_COMMENT_NOT_FOUND = 'comment.validation.error.comment_not_found';
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_COMMENT_TAG_NOT_AVAILABLE = 'comment.validation.error.comment_tag_not_available';
 
     /**
@@ -161,9 +167,9 @@ class CommentTagWriter implements CommentTagWriterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CommentTagTransfer[] $commentTagTransfers
+     * @param array<\Generated\Shared\Transfer\CommentTagTransfer> $commentTagTransfers
      *
-     * @return \Generated\Shared\Transfer\CommentTagTransfer[]
+     * @return array<\Generated\Shared\Transfer\CommentTagTransfer>
      */
     protected function mapCommentTagsByName(array $commentTagTransfers): array
     {

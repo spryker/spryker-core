@@ -75,7 +75,7 @@ class ContentTabs extends AbstractTabs
     }
 
     /**
-     * @return \Generated\Shared\Transfer\LocaleTransfer[]
+     * @return array<\Generated\Shared\Transfer\LocaleTransfer>
      */
     protected function getAvailableLocales(): array
     {

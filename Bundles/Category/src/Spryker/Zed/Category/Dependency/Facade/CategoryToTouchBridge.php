@@ -45,50 +45,10 @@ class CategoryToTouchBridge implements CategoryToTouchInterface
     }
 
     /**
-     * @deprecated Will be removed with next major release
-     *
-     * @param string $itemType
-     * @param array $itemIds
-     *
-     * @return int
+     * @return bool
      */
-    public function bulkTouchActive($itemType, array $itemIds = [])
+    public function isTouchEnabled(): bool
     {
-        // BC reason
-        if (method_exists($this->touchFacade, 'bulkTouchActive')) {
-            return $this->touchFacade->bulkTouchActive($itemType, $itemIds);
-        }
-
-        return $this->touchFacade->bulkTouchSetActive($itemType, $itemIds);
-    }
-
-    /**
-     * @deprecated Will be removed with next major release
-     *
-     * @param string $itemType
-     * @param array $itemIds
-     *
-     * @return int
-     */
-    public function bulkTouchInactive($itemType, array $itemIds = [])
-    {
-        // BC reason
-        if (method_exists($this->touchFacade, 'bulkTouchInactive')) {
-            return $this->touchFacade->bulkTouchInactive($itemType, $itemIds);
-        }
-
-        return $this->touchFacade->bulkTouchSetInActive($itemType, $itemIds);
-    }
-
-    /**
-     * @deprecated Will be removed with next major release
-     *
-     * @param string $itemType
-     *
-     * @return \Generated\Shared\Transfer\TouchTransfer[]
-     */
-    public function getItemsByType($itemType)
-    {
-        return $this->touchFacade->getItemsByType($itemType);
+        return $this->touchFacade->isTouchEnabled();
     }
 }

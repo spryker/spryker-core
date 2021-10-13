@@ -19,7 +19,13 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class SearchOpenIndexConsole extends Console
 {
+    /**
+     * @var string
+     */
     protected const COMMAND_NAME = 'search:index:open';
+    /**
+     * @var string
+     */
     protected const DESCRIPTION = 'This command will open an index.';
 
     /**

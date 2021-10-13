@@ -9,11 +9,15 @@ namespace SprykerTest\Zed\Discount\Communication\Plugin\Sales;
 
 use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\QuoteBuilder;
+use Generated\Shared\Transfer\DiscountGeneralTransfer;
+use Generated\Shared\Transfer\DiscountVoucherTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Orm\Zed\Sales\Persistence\Map\SpySalesDiscountTableMap;
+use Orm\Zed\Sales\Persistence\SpySalesDiscountCodeQuery;
+use Spryker\Shared\Discount\DiscountConstants;
 use Spryker\Zed\Discount\Communication\Plugin\Sales\DiscountOrderHydratePlugin;
 use Spryker\Zed\Sales\Business\SalesFacadeInterface;
 use Spryker\Zed\Sales\Dependency\Plugin\HydrateOrderPluginInterface;
@@ -33,11 +37,26 @@ use SprykerTest\Zed\Sales\Helper\BusinessHelper;
  */
 class DiscountOrderHydratePluginTest extends Unit
 {
+    /**
+     * @var int
+     */
     protected const DISCOUNT_AMOUNT = 50;
+    /**
+     * @var string
+     */
     protected const FIELD_NAME_AMOUNT = 'amount';
 
+    /**
+     * @var string
+     */
     protected const DISCOUNT_NAME = 'Discount order saver tester';
+    /**
+     * @var string
+     */
     protected const FIELD_NAME_NAME = 'name';
+    /**
+     * @var string
+     */
     protected const FIELD_DISPLAY_NAME = 'display_name';
 
     /**
@@ -62,6 +81,33 @@ class DiscountOrderHydratePluginTest extends Unit
 
         //Assert
         $this->assertNotEmpty($orderTransfer->getCalculatedDiscounts());
+    }
+
+    /**
+     * @return void
+     */
+    public function testOrderHydratedWithDiscountVouchers(): void
+    {
+        // Arrange
+        $this->tester->configureTestStateMachine([BusinessHelper::DEFAULT_OMS_PROCESS_NAME]);
+
+        $saveOrderTransfer = $this->tester->haveOrder(['unitPrice' => 1000], BusinessHelper::DEFAULT_OMS_PROCESS_NAME);
+        $orderTransfer = $this->findOrder($saveOrderTransfer);
+
+        $discountGeneralTransfer = $this->tester->haveDiscount([
+            DiscountGeneralTransfer::DISCOUNT_TYPE => DiscountConstants::TYPE_VOUCHER,
+        ]);
+        $discountVoucherTransfer = $this->tester->haveGeneratedVoucherCodes([
+            DiscountVoucherTransfer::ID_DISCOUNT => $discountGeneralTransfer->getIdDiscount(),
+        ]);
+        $this->addVoucherDiscountToOrder($orderTransfer, $discountGeneralTransfer, $discountVoucherTransfer);
+
+        // Act
+        $orderTransfer = $this->createDiscountOrderHydratePlugin()->hydrate($orderTransfer);
+
+        // Assert
+        $this->assertCount(1, $orderTransfer->getVoucherDiscounts());
+        $this->assertEquals($discountVoucherTransfer->getCode(), $orderTransfer->getVoucherDiscounts()->getIterator()->current()->getVoucherCode());
     }
 
     /**
@@ -443,6 +489,37 @@ class DiscountOrderHydratePluginTest extends Unit
         foreach ($orderTransfer->getItems() as $orderItem) {
             $seedData = $this->getSeedDataForSalesDiscount($orderTransfer->getIdSalesOrder(), $orderItem->getIdSalesOrderItem());
             $this->tester->haveSalesDiscount($seedData);
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\DiscountGeneralTransfer $discountGeneralTransfer
+     * @param \Generated\Shared\Transfer\DiscountVoucherTransfer $discountVoucherTransfer
+     *
+     * @return void
+     */
+    protected function addVoucherDiscountToOrder(
+        OrderTransfer $orderTransfer,
+        DiscountGeneralTransfer $discountGeneralTransfer,
+        DiscountVoucherTransfer $discountVoucherTransfer
+    ): void {
+        foreach ($orderTransfer->getItems() as $orderItem) {
+            $salesDiscountEntity = $this->tester->haveSalesDiscount(array_merge(
+                $discountGeneralTransfer->toArray(),
+                [
+                    $this->getDiscountPhpFieldName(SpySalesDiscountTableMap::COL_FK_SALES_ORDER) => $orderTransfer->getIdSalesOrder(),
+                    $this->getDiscountPhpFieldName(SpySalesDiscountTableMap::COL_FK_SALES_ORDER_ITEM) => $orderItem->getIdSalesOrderItem(),
+                    static::FIELD_NAME_NAME => $discountGeneralTransfer->getDisplayName(),
+                ]
+            ));
+
+            $salesDiscountCodeEntity = SpySalesDiscountCodeQuery::create()
+                ->filterByFkSalesDiscount($salesDiscountEntity->getIdSalesDiscount())
+                ->findOneOrCreate();
+            $salesDiscountCodeEntity->setCode($discountVoucherTransfer->getCode())
+                ->setCodepoolName($discountGeneralTransfer->getDisplayName())
+                ->save();
         }
     }
 }

@@ -17,16 +17,19 @@ class ReturnReasonReader implements ReturnReasonReaderInterface
 {
     /**
      * @uses \Spryker\Client\SalesReturnSearch\Plugin\Elasticsearch\Query\PaginatedReturnReasonSearchQueryExpanderPlugin::PARAMETER_OFFSET
+     * @var string
      */
     protected const PARAMETER_OFFSET = 'offset';
 
     /**
      * @uses \Spryker\Client\SalesReturnSearch\Plugin\Elasticsearch\Query\PaginatedReturnReasonSearchQueryExpanderPlugin::PARAMETER_LIMIT
+     * @var string
      */
     protected const PARAMETER_LIMIT = 'limit';
 
     /**
      * @uses \Spryker\Client\SalesReturnSearch\Plugin\Elasticsearch\ResultFormatter\ReturnReasonSearchResultFormatterPlugin::NAME
+     * @var string
      */
     protected const KEY_RETURN_REASON_COLLECTION = 'ReturnReasonCollection';
 

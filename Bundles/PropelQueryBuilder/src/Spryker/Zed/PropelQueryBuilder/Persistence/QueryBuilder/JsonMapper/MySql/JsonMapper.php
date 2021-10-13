@@ -14,6 +14,9 @@ use Spryker\Zed\PropelQueryBuilder\Persistence\QueryBuilder\Operator\OperatorInt
 
 class JsonMapper implements JsonMapperInterface
 {
+    /**
+     * @var string
+     */
     protected const JSON_EXTRACT_PATTERN = "JSON_EXTRACT(%s, '$.%s') %s '%s'";
 
     /**

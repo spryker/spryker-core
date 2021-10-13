@@ -15,11 +15,26 @@ use Spryker\Zed\ShoppingList\Persistence\ShoppingListRepositoryInterface;
 
 class ShoppingListItemValidator implements ShoppingListItemValidatorInterface
 {
+    /**
+     * @var int
+     */
     protected const MAX_QUANTITY = 2147483647; // 32 bit integer
 
+    /**
+     * @var string
+     */
     protected const ERROR_SHOPPING_LIST_NOT_FOUND = 'customer.account.shopping_list.error.not_found';
+    /**
+     * @var string
+     */
     protected const ERROR_SHOPPING_LIST_ITEM_NOT_FOUND = 'customer.account.shopping_list_item.error.not_found';
+    /**
+     * @var string
+     */
     protected const ERROR_SHOPPING_LIST_ITEM_QUANTITY_NOT_VALID = 'customer.account.shopping_list_item.error.quantity_not_valid';
+    /**
+     * @var string
+     */
     protected const ERROR_SHOPPING_LIST_ITEM_PRODUCT_NOT_FOUND = 'customer.account.shopping_list_item.error.product_not_found';
 
     /**

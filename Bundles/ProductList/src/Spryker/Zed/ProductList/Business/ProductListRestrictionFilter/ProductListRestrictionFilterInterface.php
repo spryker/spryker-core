@@ -10,11 +10,11 @@ namespace Spryker\Zed\ProductList\Business\ProductListRestrictionFilter;
 interface ProductListRestrictionFilterInterface
 {
     /**
-     * @param string[] $productConcreteSkus
-     * @param int[] $customerBlacklistIds
-     * @param int[] $customerWhitelistIds
+     * @param array<string> $productConcreteSkus
+     * @param array<int> $customerBlacklistIds
+     * @param array<int> $customerWhitelistIds
      *
-     * @return string[]
+     * @return array<string>
      */
     public function filterRestrictedProductConcreteSkus(array $productConcreteSkus, array $customerBlacklistIds, array $customerWhitelistIds): array;
 }

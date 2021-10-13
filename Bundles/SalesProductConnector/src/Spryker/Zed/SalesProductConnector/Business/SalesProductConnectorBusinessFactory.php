@@ -12,11 +12,15 @@ use Spryker\Zed\SalesProductConnector\Business\Expander\ItemMetadataExpander;
 use Spryker\Zed\SalesProductConnector\Business\Expander\ItemMetadataExpanderInterface;
 use Spryker\Zed\SalesProductConnector\Business\Expander\OrderExpander;
 use Spryker\Zed\SalesProductConnector\Business\Expander\OrderExpanderInterface;
+use Spryker\Zed\SalesProductConnector\Business\Expander\PopularityProductPageExpander;
+use Spryker\Zed\SalesProductConnector\Business\Expander\PopularityProductPageExpanderInterface;
 use Spryker\Zed\SalesProductConnector\Business\Expander\ProductIdExpander;
 use Spryker\Zed\SalesProductConnector\Business\Expander\ProductIdExpanderInterface;
 use Spryker\Zed\SalesProductConnector\Business\Model\ItemMetadataHydrator;
 use Spryker\Zed\SalesProductConnector\Business\Model\ItemMetadataSaver;
 use Spryker\Zed\SalesProductConnector\Business\Model\ProductIdHydrator;
+use Spryker\Zed\SalesProductConnector\Business\Reader\ProductAbstractIdsRefreshReader;
+use Spryker\Zed\SalesProductConnector\Business\Reader\ProductAbstractIdsRefreshReaderInterface;
 use Spryker\Zed\SalesProductConnector\SalesProductConnectorDependencyProvider;
 
 /**
@@ -88,6 +92,28 @@ class SalesProductConnectorBusinessFactory extends AbstractBusinessFactory
     public function createOrderExpander(): OrderExpanderInterface
     {
         return new OrderExpander($this->createItemMetadataExpander());
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesProductConnector\Business\Expander\PopularityProductPageExpanderInterface
+     */
+    public function createPopularityProductPageExpander(): PopularityProductPageExpanderInterface
+    {
+        return new PopularityProductPageExpander(
+            $this->getRepository(),
+            $this->getConfig()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesProductConnector\Business\Reader\ProductAbstractIdsRefreshReaderInterface
+     */
+    public function createProductAbstractIdsRefreshReader(): ProductAbstractIdsRefreshReaderInterface
+    {
+        return new ProductAbstractIdsRefreshReader(
+            $this->getRepository(),
+            $this->getConfig()
+        );
     }
 
     /**

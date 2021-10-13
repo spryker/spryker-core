@@ -21,7 +21,7 @@ interface DiscountEntityMapperInterface
     /**
      * @param \Orm\Zed\Discount\Persistence\SpyDiscount $discountEntity
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\MoneyValueTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\MoneyValueTransfer>
      */
     public function getMoneyValueCollectionForEntity(SpyDiscount $discountEntity);
 

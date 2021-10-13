@@ -29,7 +29,7 @@ class CountryMapper implements CountryMapperInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SpyCountryEntityTransfer[] $countryEntityTransfers
+     * @param array<\Generated\Shared\Transfer\SpyCountryEntityTransfer> $countryEntityTransfers
      *
      * @return \Generated\Shared\Transfer\CountryCollectionTransfer
      */

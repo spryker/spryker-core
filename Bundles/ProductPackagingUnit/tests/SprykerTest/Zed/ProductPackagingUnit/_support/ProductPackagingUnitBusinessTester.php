@@ -426,7 +426,7 @@ class ProductPackagingUnitBusinessTester extends Actor
     /**
      * @param bool $selfLead
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
      */
     protected function havePackagingUnitAndLead(bool $selfLead): array
     {

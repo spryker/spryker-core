@@ -107,4 +107,20 @@ class AgentClient extends AbstractClient implements AgentClientInterface
             ->createImpersonationSessionFinisher()
             ->finishImpersonationSession();
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param string $securedPattern
+     *
+     * @return string
+     */
+    public function applyAgentAccessOnSecuredPattern(string $securedPattern): string
+    {
+        return $this->getFactory()
+            ->createAgentAccessConfigurator()
+            ->applyAgentAccessOnSecuredPattern($securedPattern);
+    }
 }

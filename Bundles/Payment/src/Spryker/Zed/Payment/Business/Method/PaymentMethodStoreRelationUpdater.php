@@ -72,7 +72,7 @@ class PaymentMethodStoreRelationUpdater implements PaymentMethodStoreRelationUpd
     /**
      * @param int $idShipmentMethod
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getIdStoresByIdShipmentMethod(int $idShipmentMethod): array
     {

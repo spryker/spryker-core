@@ -17,6 +17,9 @@ use Propel\Runtime\ActiveQuery\Criterion\CustomCriterion;
 
 class OrderSearchQueryJoinQueryBuilder implements OrderSearchQueryJoinQueryBuilderInterface
 {
+    /**
+     * @var string
+     */
     protected const CONCAT = 'CONCAT';
 
     /**
@@ -49,7 +52,7 @@ class OrderSearchQueryJoinQueryBuilder implements OrderSearchQueryJoinQueryBuild
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderQuery $salesOrderQuery
      * @param \Generated\Shared\Transfer\QueryJoinTransfer $queryJoinTransfer
-     * @param string[] $whereConditionGroups
+     * @param array<string> $whereConditionGroups
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
      */
@@ -87,7 +90,7 @@ class OrderSearchQueryJoinQueryBuilder implements OrderSearchQueryJoinQueryBuild
 
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderQuery $salesOrderQuery
-     * @param string[] $withColumns
+     * @param array<string> $withColumns
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
      */
@@ -157,8 +160,8 @@ class OrderSearchQueryJoinQueryBuilder implements OrderSearchQueryJoinQueryBuild
 
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderQuery $salesOrderQuery
-     * @param \ArrayObject|\Generated\Shared\Transfer\QueryWhereConditionTransfer[] $queryWhereConditionTransfers
-     * @param string[] $conditionGroups
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\QueryWhereConditionTransfer> $queryWhereConditionTransfers
+     * @param array<string> $conditionGroups
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
      */
@@ -186,9 +189,9 @@ class OrderSearchQueryJoinQueryBuilder implements OrderSearchQueryJoinQueryBuild
 
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderQuery $salesOrderQuery
-     * @param \ArrayObject|\Generated\Shared\Transfer\QueryWhereConditionTransfer[] $queryWhereConditionTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\QueryWhereConditionTransfer> $queryWhereConditionTransfers
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function createSalesOrderQueryWhereConditions(
         SpySalesOrderQuery $salesOrderQuery,

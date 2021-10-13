@@ -13,7 +13,13 @@ use Elastica\Snapshot as ElasticaSnapshot;
 
 class Repository implements RepositoryInterface
 {
+    /**
+     * @var string
+     */
     protected const TYPE_FILESYSTEM = 'fs';
+    /**
+     * @var string
+     */
     protected const SETTINGS_LOCATION = 'location';
 
     /**

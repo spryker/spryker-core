@@ -16,6 +16,9 @@ use Spryker\Client\StorageRedis\Dependency\Client\StorageRedisToRedisClientBridg
  */
 class StorageRedisDependencyProvider extends AbstractDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_REDIS = 'CLIENT_REDIS';
 
     /**

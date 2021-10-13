@@ -17,15 +17,20 @@ use Spryker\Yves\Kernel\Plugin\Pimple;
  */
 class CmsContentWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CMS_CONTENT_WIDGET_PLUGINS = 'CMS CONTENT WIDGET PLUGINS';
 
     /**
      * @deprecated Will be removed without replacement.
+     * @var string
      */
     public const TWIG_ENVIRONMENT = 'TWIG ENVIRONMENT';
 
     /**
      * @uses \Spryker\Yves\Twig\Plugin\Application\TwigApplicationPlugin::SERVICE_TWIG
+     * @var string
      */
     public const SERVICE_TWIG = 'twig';
 
@@ -64,7 +69,7 @@ class CmsContentWidgetDependencyProvider extends AbstractBundleDependencyProvide
      * Returns list of cms content widget plugins which are twig functions used in cms content pages/blocks.
      * Should return key value pair where key is function name and value is concrete content widget plugin.
      *
-     * @return \Spryker\Yves\CmsContentWidget\Dependency\CmsContentWidgetPluginInterface[]
+     * @return array<\Spryker\Yves\CmsContentWidget\Dependency\CmsContentWidgetPluginInterface>
      */
     public function getCmsContentWidgetPlugins()
     {

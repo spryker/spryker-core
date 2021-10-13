@@ -29,12 +29,12 @@ use Spryker\Zed\Kernel\Communication\Plugin\Pimple;
 class ZedBootstrap
 {
     /**
-     * @var \Silex\ServiceProviderInterface[]
+     * @var array<\Silex\ServiceProviderInterface>
      */
     protected $additionalServiceProvider;
 
     /**
-     * @var \Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface[]
+     * @var array<\Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface>
      */
     protected $additionalApplicationPlugins;
 
@@ -44,8 +44,8 @@ class ZedBootstrap
     protected $legacyApplication;
 
     /**
-     * @param \Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface[] $additionalApplicationPlugins
-     * @param \Silex\ServiceProviderInterface[] $additionalServiceProvider
+     * @param array<\Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface> $additionalApplicationPlugins
+     * @param array<\Silex\ServiceProviderInterface> $additionalServiceProvider
      */
     public function __construct(array $additionalApplicationPlugins, array $additionalServiceProvider)
     {

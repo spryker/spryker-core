@@ -22,7 +22,7 @@ class ProductDiscontinuedLabelUpdaterPlugin extends AbstractPlugin implements Pr
      *
      * @api
      *
-     * @return \Generated\Shared\Transfer\ProductLabelProductAbstractRelationsTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductLabelProductAbstractRelationsTransfer>
      */
     public function findProductLabelProductAbstractRelationChanges(): array
     {

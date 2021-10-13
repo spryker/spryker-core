@@ -127,7 +127,7 @@ class CompanyRoleRepository extends AbstractRepository implements CompanyRoleRep
     {
         $decodedValue = json_decode($value, true);
 
-        if (json_last_error() === \JSON_ERROR_NONE) {
+        if (json_last_error() === JSON_ERROR_NONE) {
             return $decodedValue;
         }
 
@@ -193,7 +193,7 @@ class CompanyRoleRepository extends AbstractRepository implements CompanyRoleRep
      * @param string $permissionKey
      * @param int|null $idCompany
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getCompanyUserIdsByPermissionKey(string $permissionKey, ?int $idCompany = null): array
     {
@@ -236,7 +236,7 @@ class CompanyRoleRepository extends AbstractRepository implements CompanyRoleRep
         }
 
         $collection = $this->buildQueryFromCriteria($query, $companyRoleCriteriaFilterTransfer->getFilter());
-        /** @var \Orm\Zed\CompanyRole\Persistence\SpyCompanyRole[] $spyCompanyRoleCollection */
+        /** @var array<\Orm\Zed\CompanyRole\Persistence\SpyCompanyRole> $spyCompanyRoleCollection */
         $spyCompanyRoleCollection = $this->getPaginatedCollection($collection, $companyRoleCriteriaFilterTransfer->getPagination());
 
         $collectionTransfer = new CompanyRoleCollectionTransfer();
@@ -269,7 +269,7 @@ class CompanyRoleRepository extends AbstractRepository implements CompanyRoleRep
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
      * @param \Generated\Shared\Transfer\PaginationTransfer|null $paginationTransfer
      *
-     * @return \Propel\Runtime\ActiveRecord\ActiveRecordInterface[]|\Propel\Runtime\Collection\Collection|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Propel\Runtime\Collection\Collection|\Propel\Runtime\Collection\ObjectCollection<\Propel\Runtime\ActiveRecord\ActiveRecordInterface>
      */
     protected function getPaginatedCollection(ModelCriteria $query, ?PaginationTransfer $paginationTransfer = null)
     {

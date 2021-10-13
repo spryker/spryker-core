@@ -12,19 +12,35 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class ZedNavigationConfig extends AbstractBundleConfig
 {
+    /**
+     * @var int
+     */
     public const MAX_LEVEL_COUNT = 5;
 
     /**
      * Specification:
      *  - Strategy by which root navigation elements are being merged with core navigation elements.
+     *
+     * @var string
      */
     public const FULL_MERGE_STRATEGY = 'fullMergeStrategy';
 
     /**
      * Specification:
      *  - Strategy by which root navigation elements are being merged with core navigation elements excluding first and second level.
+     *
+     * @var string
      */
     public const BREADCRUMB_MERGE_STRATEGY = 'breadcrumbMergeStrategy';
+
+    /**
+     * @var string
+     */
+    protected const NAVIGATION_TYPE_MAIN = 'main';
+    /**
+     * @var string
+     */
+    protected const NAVIGATION_TYPE_SECONDARY = 'secondary';
 
     /**
      * @api
@@ -54,6 +70,8 @@ class ZedNavigationConfig extends AbstractBundleConfig
     /**
      * @api
      *
+     * @deprecated Use {@link getNavigationSchemaFileNamePatterns()} instead.
+     *
      * @return string
      */
     public function getNavigationSchemaFileNamePattern()
@@ -62,23 +80,75 @@ class ZedNavigationConfig extends AbstractBundleConfig
     }
 
     /**
+     * Specification:
+     *  - Returns navigation schema file name patters indexed by navigation types.
+     *
      * @api
      *
-     * @return string
+     * @return array<string>
      */
-    public function getRootNavigationSchema()
+    public function getNavigationSchemaFileNamePatterns(): array
     {
-        return APPLICATION_ROOT_DIR . '/config/Zed/' . $this->getNavigationSchemaFileNamePattern();
+        return [
+            static::NAVIGATION_TYPE_MAIN => $this->getNavigationSchemaFileNamePattern(),
+            static::NAVIGATION_TYPE_SECONDARY => 'navigation-secondary.xml',
+        ];
     }
 
     /**
      * @api
      *
+     * @deprecated Use {@link getRootNavigationSchemaPaths()} instead.
+     *
+     * @return string
+     */
+    public function getRootNavigationSchema()
+    {
+        return $this->getRootNavigationSchemasDirName() . $this->getNavigationSchemaFileNamePattern();
+    }
+
+    /**
+     * Specification:
+     *  - Returns absolute paths to navigation schemas indexed by navigation types.
+     *
+     * @api
+     *
+     * @return array<string>
+     */
+    public function getRootNavigationSchemaPaths(): array
+    {
+        return [
+            static::NAVIGATION_TYPE_MAIN => $this->getRootNavigationSchema(),
+            static::NAVIGATION_TYPE_SECONDARY => $this->getRootNavigationSchemasDirName() . $this->getNavigationSchemaFileNamePatterns()[static::NAVIGATION_TYPE_SECONDARY],
+        ];
+    }
+
+    /**
+     * @api
+     *
+     * @deprecated Use {@link getCacheFilePaths()} instead.
+     *
      * @return string
      */
     public function getCacheFile()
     {
-        return APPLICATION_ROOT_DIR . '/src/Generated/' . ucfirst(strtolower(APPLICATION)) . '/Navigation/codeBucket/navigation.cache';
+        return $this->getCacheDirName() . 'navigation.cache';
+    }
+
+    /**
+     * Specification:
+     *  - Returns absolute paths to cache files indexed by navigation types.
+     *
+     * @api
+     *
+     * @return array<string>
+     */
+    public function getCacheFilePaths(): array
+    {
+        return [
+            static::NAVIGATION_TYPE_MAIN => $this->getCacheFile(),
+            static::NAVIGATION_TYPE_SECONDARY => $this->getCacheDirName() . 'navigation-secondary.cache',
+        ];
     }
 
     /**
@@ -122,5 +192,44 @@ class ZedNavigationConfig extends AbstractBundleConfig
     public function getMergeStrategy(): string
     {
         return static::FULL_MERGE_STRATEGY;
+    }
+
+    /**
+     * Specification:
+     *  - Defines the default navigation type.
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getDefaultNavigationType(): string
+    {
+        return static::NAVIGATION_TYPE_MAIN;
+    }
+
+    /**
+     * Specification:
+     *  - Defines the cache directory name.
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getCacheDirName(): string
+    {
+        return APPLICATION_ROOT_DIR . '/src/Generated/' . ucfirst(strtolower(APPLICATION)) . '/Navigation/codeBucket/';
+    }
+
+    /**
+     * Specification:
+     *  - Defines the navigation schemas directory name.
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getRootNavigationSchemasDirName(): string
+    {
+        return APPLICATION_ROOT_DIR . '/config/Zed/';
     }
 }

@@ -16,6 +16,9 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class ProductLabelQueryContainer extends AbstractQueryContainer implements ProductLabelQueryContainerInterface
 {
+    /**
+     * @var string
+     */
     public const COL_MAX_POSITION = 'max_position';
 
     /**
@@ -221,8 +224,10 @@ class ProductLabelQueryContainer extends AbstractQueryContainer implements Produ
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\ProductLabel\Persistence\ProductLabelRepositoryInterface::getProductAbstractRelationsByIdProductLabelAndProductAbstractIds()} instead.
+     *
      * @param int $idProductLabel
-     * @param int[] $idsProductAbstract
+     * @param array<int> $idsProductAbstract
      *
      * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelProductAbstractQuery
      */

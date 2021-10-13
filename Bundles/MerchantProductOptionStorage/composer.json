@@ -1,0 +1,45 @@
+{
+    "name": "spryker/merchant-product-option-storage",
+    "type": "library",
+    "description": "MerchantProductOptionStorage module",
+    "license": "proprietary",
+    "require": {
+        "php": ">=7.4",
+        "spryker/event-behavior": "^1.0.0",
+        "spryker/kernel": "^3.30.0",
+        "spryker/merchant-product-option": "^1.0.0",
+        "spryker/product-option": "^8.10.0",
+        "spryker/product-option-storage": "^1.11.0",
+        "spryker/product-option-storage-extension": "^1.0.0",
+        "spryker/publisher-extension": "^1.0.0"
+    },
+    "require-dev": {
+        "spryker/code-sniffer": "*",
+        "spryker/propel": "*",
+        "spryker/testify": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Spryker\\": "src/Spryker/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "SprykerTest\\": "tests/SprykerTest/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "scripts": {
+        "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/ tests/",
+        "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/ tests/"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    }
+}

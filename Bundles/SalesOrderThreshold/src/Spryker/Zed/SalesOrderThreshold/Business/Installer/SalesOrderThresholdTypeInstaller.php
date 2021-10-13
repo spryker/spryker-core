@@ -15,7 +15,7 @@ class SalesOrderThresholdTypeInstaller implements SalesOrderThresholdTypeInstall
     use TransactionTrait;
 
     /**
-     * @var \Spryker\Zed\SalesOrderThresholdExtension\Dependency\Plugin\SalesOrderThresholdStrategyPluginInterface[]
+     * @var array<\Spryker\Zed\SalesOrderThresholdExtension\Dependency\Plugin\SalesOrderThresholdStrategyPluginInterface>
      */
     protected $salesOrderThresholdStrategyPlugins;
 
@@ -25,7 +25,7 @@ class SalesOrderThresholdTypeInstaller implements SalesOrderThresholdTypeInstall
     protected $salesOrderThresholdEntityManager;
 
     /**
-     * @param \Spryker\Zed\SalesOrderThresholdExtension\Dependency\Plugin\SalesOrderThresholdStrategyPluginInterface[] $salesOrderThresholdStrategyPlugins
+     * @param array<\Spryker\Zed\SalesOrderThresholdExtension\Dependency\Plugin\SalesOrderThresholdStrategyPluginInterface> $salesOrderThresholdStrategyPlugins
      * @param \Spryker\Zed\SalesOrderThreshold\Persistence\SalesOrderThresholdEntityManagerInterface $salesOrderThresholdEntityManager
      */
     public function __construct(

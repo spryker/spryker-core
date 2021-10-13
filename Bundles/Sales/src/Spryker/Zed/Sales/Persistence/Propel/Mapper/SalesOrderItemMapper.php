@@ -44,9 +44,9 @@ class SalesOrderItemMapper implements SalesOrderItemMapperInterface
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $salesOrderItemEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Sales\Persistence\SpySalesOrderItem> $salesOrderItemEntities
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     public function mapSalesOrderItemEntityCollectionToOrderItemTransfers(ObjectCollection $salesOrderItemEntities): array
     {
@@ -89,5 +89,34 @@ class SalesOrderItemMapper implements SalesOrderItemMapperInterface
             ->setIdSalesOrder($salesOrderItemEntity->getFkSalesOrder());
 
         return $itemStateTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer $salesOrderItemEntityTransfer
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $salesOrderItemEntity
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem
+     */
+    public function mapSalesOrderItemEntityTransferToSalesOrderItemEntity(
+        SpySalesOrderItemEntityTransfer $salesOrderItemEntityTransfer,
+        SpySalesOrderItem $salesOrderItemEntity
+    ): SpySalesOrderItem {
+        $salesOrderItemEntity->fromArray($salesOrderItemEntityTransfer->toArray());
+        $salesOrderItemEntity->setFkOmsOrderProcess($salesOrderItemEntityTransfer->getProcess()->getIdOmsOrderProcess());
+
+        return $salesOrderItemEntity;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer $salesOrderItemEntityTransfer
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $salesOrderItemEntity
+     *
+     * @return \Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer
+     */
+    public function mapSalesOrderItemEntityToSalesOrderItemEntityTransfer(
+        SpySalesOrderItemEntityTransfer $salesOrderItemEntityTransfer,
+        SpySalesOrderItem $salesOrderItemEntity
+    ): SpySalesOrderItemEntityTransfer {
+        return $salesOrderItemEntityTransfer->fromArray($salesOrderItemEntity->toArray(), true);
     }
 }

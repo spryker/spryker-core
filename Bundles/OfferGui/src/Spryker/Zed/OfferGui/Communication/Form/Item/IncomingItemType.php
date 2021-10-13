@@ -19,9 +19,18 @@ use Symfony\Component\Validator\Constraints\Regex;
  */
 class IncomingItemType extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const FIELD_SKU = 'sku';
+    /**
+     * @var string
+     */
     public const FIELD_QUANTITY = 'quantity';
 
+    /**
+     * @var int
+     */
     protected const DEFAULT_QUANTITY = 1;
 
     /**

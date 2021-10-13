@@ -12,5 +12,8 @@ namespace Spryker\Shared\User;
  */
 interface UserConstants
 {
+    /**
+     * @var string
+     */
     public const USER_SYSTEM_USERS = 'USER_SYSTEM_USERS';
 }

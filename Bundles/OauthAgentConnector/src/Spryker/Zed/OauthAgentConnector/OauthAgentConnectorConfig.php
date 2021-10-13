@@ -11,8 +11,14 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class OauthAgentConnectorConfig extends AbstractBundleConfig
 {
+    /**
+     * @var string
+     */
     protected const OAUTH_SCOPE_AGENT = 'agent';
 
+    /**
+     * @var string
+     */
     public const GRANT_TYPE_AGENT_CREDENTIALS = 'agent_credentials';
 
     /**
@@ -21,7 +27,7 @@ class OauthAgentConnectorConfig extends AbstractBundleConfig
      *
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getAgentScopes(): array
     {

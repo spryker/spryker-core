@@ -30,12 +30,33 @@ class CompanyRoleDataImportCommunicationTester extends Actor
 {
     use _generated\CompanyRoleDataImportCommunicationTesterActions;
 
+    /**
+     * @var string
+     */
     protected const COMPANY_KEY_1 = 'Test_ltd';
+    /**
+     * @var string
+     */
     protected const COMPANY_KEY_2 = 'Test2_ltd';
+    /**
+     * @var string
+     */
     protected const COMPANY_ROLE_ADMIN = 'Role_Admin';
+    /**
+     * @var string
+     */
     protected const COMPANY_ROLE_BUYER = 'Role_Buyer';
+    /**
+     * @var string
+     */
     protected const COMPANY_USER_KEY_1 = 'ComUser--1';
+    /**
+     * @var string
+     */
     protected const COMPANY_USER_KEY_2 = 'ComUser--2';
+    /**
+     * @var array
+     */
     protected const PERMISSION_PLUGINS = [
         MockPermissionPlugin::class,
     ];

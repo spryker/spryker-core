@@ -27,8 +27,17 @@ use Spryker\Client\StorageRedis\Plugin\StorageRedisPlugin;
  */
 class ContentFileClientTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const LOCALE_NAME = 'de_DE';
+    /**
+     * @var string
+     */
     protected const WRONG_KEY_CONTENT = 'fl-0';
+    /**
+     * @var string
+     */
     protected const EXCEPTION_ERROR_MESSAGE = 'There is no matching ContentFileListTermExecutor for FileListType when provided with term `%s`.';
 
     /**

@@ -19,7 +19,13 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class DeleteAllCachesConsole extends Console
 {
+    /**
+     * @var string
+     */
     public const COMMAND_NAME = 'cache:delete-all';
+    /**
+     * @var string
+     */
     public const DESCRIPTION = 'Deletes all cache files from /data/{Store}/cache for all stores';
 
     /**

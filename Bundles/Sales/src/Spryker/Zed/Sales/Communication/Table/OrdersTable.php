@@ -8,10 +8,13 @@
 namespace Spryker\Zed\Sales\Communication\Table;
 
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderTableMap;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
+use Propel\Runtime\ActiveRecord\ActiveRecordInterface;
 use Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
+use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToCustomerInterface;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToMoneyInterface;
 use Spryker\Zed\Sales\Dependency\Service\SalesToUtilSanitizeInterface;
@@ -20,15 +23,45 @@ use Spryker\Zed\SalesExtension\Dependency\Plugin\SalesTablePluginInterface;
 class OrdersTable extends AbstractTable
 {
     public const URL = SalesTablePluginInterface::ROW_ACTIONS;
+    /**
+     * @var string
+     */
     public const ID_ORDER_ITEM_PROCESS = 'id-order-item-process';
+    /**
+     * @var string
+     */
     public const ID_ORDER_ITEM_STATE = 'id-order-item-state';
+    /**
+     * @var string
+     */
     public const FILTER = 'filter';
+    /**
+     * @var string
+     */
     public const URL_SALES_DETAIL = '/sales/detail';
+    /**
+     * @var string
+     */
     public const PARAM_ID_SALES_ORDER = 'id-sales-order';
+    /**
+     * @var string
+     */
     public const GRAND_TOTAL = 'GrandTotal';
+    /**
+     * @var string
+     */
     public const ITEM_STATE_NAMES_CSV = 'item_state_names_csv';
+    /**
+     * @var string
+     */
     public const NUMBER_OF_ORDER_ITEMS = 'number_of_order_items';
+    /**
+     * @var string
+     */
     protected const COLUMN_SEPARATOR = ' ';
+    /**
+     * @var string
+     */
     protected const FULL_NAME_SEARCHABLE_FIELD_PATTERN = 'CONCAT(%s,\'%s\',%s)';
 
     /**
@@ -57,7 +90,7 @@ class OrdersTable extends AbstractTable
     protected $customerFacade;
 
     /**
-     * @var \Spryker\Zed\SalesExtension\Dependency\Plugin\SalesTablePluginInterface[]
+     * @var array<\Spryker\Zed\SalesExtension\Dependency\Plugin\SalesTablePluginInterface>
      */
     protected $salesTablePlugins;
 
@@ -67,7 +100,7 @@ class OrdersTable extends AbstractTable
      * @param \Spryker\Zed\Sales\Dependency\Service\SalesToUtilSanitizeInterface $sanitizeService
      * @param \Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface $utilDateTimeService
      * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToCustomerInterface $customerFacade
-     * @param \Spryker\Zed\SalesExtension\Dependency\Plugin\SalesTablePluginInterface[] $salesTablePlugins
+     * @param array<\Spryker\Zed\SalesExtension\Dependency\Plugin\SalesTablePluginInterface> $salesTablePlugins
      */
     public function __construct(
         OrdersTableQueryBuilderInterface $queryBuilder,
@@ -110,6 +143,85 @@ class OrdersTable extends AbstractTable
     }
 
     /**
+     * @return array<string>
+     */
+    protected function getCsvHeaders(): array
+    {
+        return [
+            SpySalesOrderTableMap::COL_ID_SALES_ORDER => '#',
+            SpySalesOrderTableMap::COL_ORDER_REFERENCE => 'Order Reference',
+            SpySalesOrderTableMap::COL_CREATED_AT => 'Created',
+            SpySalesOrderTableMap::COL_CUSTOMER_REFERENCE => 'Customer Full Name',
+            SpySalesOrderTableMap::COL_EMAIL => 'Email',
+            static::ITEM_STATE_NAMES_CSV => 'Order State',
+            static::GRAND_TOTAL => 'Grand Total',
+            static::NUMBER_OF_ORDER_ITEMS => 'Number of Items',
+        ];
+    }
+
+    /**
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
+     */
+    protected function getDownloadQuery(): ModelCriteria
+    {
+        $salesOrderQuery = $this->queryBuilder->buildQuery();
+        $salesOrderQuery->orderBy(SpySalesOrderTableMap::COL_ID_SALES_ORDER, Criteria::DESC);
+
+        return $salesOrderQuery;
+    }
+
+    /**
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $entity
+     *
+     * @return array
+     */
+    protected function formatCsvRow(ActiveRecordInterface $entity): array
+    {
+        $salesOrderRow = (array)$entity->toArray(SpySalesOrderTableMap::TYPE_COLNAME);
+        $grandTotal = $salesOrderRow[OrdersTableQueryBuilder::FIELD_ORDER_GRAND_TOTAL] ?? 0;
+        $customer = sprintf(
+            '%s%s %s',
+            $entity->getSalutation() ? $entity->getSalutation() . ' ' : '',
+            $entity->getFirstName(),
+            $entity->getLastName(),
+        );
+
+        $stateNames = $salesOrderRow[OrdersTableQueryBuilder::FIELD_ITEM_STATE_NAMES_CSV] ?? '';
+
+        $salesOrderRow[SpySalesOrderTableMap::COL_CUSTOMER_REFERENCE] = $customer;
+        $salesOrderRow[SpySalesOrderTableMap::COL_CREATED_AT] = $this->utilDateTimeService->formatDateTime($entity->getCreatedAt());
+        $salesOrderRow[static::ITEM_STATE_NAMES_CSV] = $this->groupItemStateNamesForCsv($stateNames);
+        $salesOrderRow[static::GRAND_TOTAL] = $this->formatGrandTotal((int)$grandTotal, $entity->getCurrencyIsoCode());
+
+        return $salesOrderRow;
+    }
+
+    /**
+     * @param int $grandTotal
+     * @param string $currencyIsoCode
+     *
+     * @return string
+     */
+    protected function formatGrandTotal(int $grandTotal, string $currencyIsoCode): string
+    {
+        return $this->formatPrice($grandTotal, true, $currencyIsoCode);
+    }
+
+    /**
+     * @param string $itemStateNamesCsv
+     *
+     * @return string
+     */
+    protected function groupItemStateNamesForCsv(string $itemStateNamesCsv): string
+    {
+        $itemStateNames = explode(',', $itemStateNamesCsv);
+        $itemStateNames = array_map('trim', $itemStateNames);
+        $distinctItemStateNames = array_unique($itemStateNames);
+
+        return implode(' ', $distinctItemStateNames);
+    }
+
+    /**
      * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
      * @return array
@@ -117,6 +229,7 @@ class OrdersTable extends AbstractTable
     protected function prepareData(TableConfiguration $config)
     {
         $query = $this->buildQuery();
+        /** @var array $queryResults */
         $queryResults = $this->runQuery($query, $config);
 
         return $this->formatQueryData($queryResults);
@@ -249,7 +362,7 @@ class OrdersTable extends AbstractTable
     {
         $idOrderItemProcess = $this->request->query->getInt(static::ID_ORDER_ITEM_PROCESS);
         $idOrderItemItemState = $this->request->query->getInt(static::ID_ORDER_ITEM_STATE);
-        $filter = $this->request->query->get(static::FILTER);
+        $filter = (string)$this->request->query->get(static::FILTER) ?: null;
 
         return $this->queryBuilder->buildQuery($idOrderItemProcess, $idOrderItemItemState, $filter);
     }
@@ -365,7 +478,7 @@ class OrdersTable extends AbstractTable
     }
 
     /**
-     * @param string|\Spryker\Service\UtilText\Model\Url\Url $url
+     * @param \Spryker\Service\UtilText\Model\Url\Url|string $url
      * @param string $title
      * @param array $options
      *

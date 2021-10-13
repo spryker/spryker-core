@@ -14,6 +14,19 @@ use Spryker\Glue\Kernel\AbstractPlugin;
 class TestResourceRoutePlugin extends AbstractPlugin implements ResourceRoutePluginInterface
 {
     /**
+     * @var string
+     */
+    protected $resourceType;
+
+    /**
+     * @param string $resourceType
+     */
+    public function __construct(string $resourceType = 'tests')
+    {
+        $this->resourceType = $resourceType;
+    }
+
+    /**
      * @api
      *
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRouteCollectionInterface $resourceRouteCollection
@@ -37,7 +50,7 @@ class TestResourceRoutePlugin extends AbstractPlugin implements ResourceRoutePlu
      */
     public function getResourceType(): string
     {
-        return 'tests';
+        return $this->resourceType;
     }
 
     /**

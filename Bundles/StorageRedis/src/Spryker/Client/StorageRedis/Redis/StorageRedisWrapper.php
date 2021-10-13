@@ -15,6 +15,9 @@ use Spryker\Client\StorageRedis\StorageRedisConfig;
 
 class StorageRedisWrapper implements StorageRedisWrapperInterface
 {
+    /**
+     * @var string
+     */
     public const KV_PREFIX = 'kv:';
 
     /**
@@ -134,7 +137,7 @@ class StorageRedisWrapper implements StorageRedisWrapperInterface
             $transformedKeys[] = $this->getKeyName($key);
         }
 
-        $values = array_combine($transformedKeys, $this->redisClient->mget($this->connectionKey, $transformedKeys));
+        $values = array_combine($transformedKeys, $this->redisClient->mget($this->connectionKey, $transformedKeys)) ?: [];
         $this->addMultiReadAccessStats($keys);
 
         return $values;

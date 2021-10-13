@@ -19,7 +19,13 @@ class QuoteStatusChecker implements QuoteStatusCheckerInterface
 {
     use PermissionAwareTrait;
 
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_CART_REQUIRE_APPROVAL = 'quote_approval.cart.require_approval';
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_CART_WAITING_APPROVAL = 'quote_approval.cart.waiting_approval';
 
     /**
@@ -57,6 +63,21 @@ class QuoteStatusChecker implements QuoteStatusCheckerInterface
             QuoteApprovalConfig::STATUS_WAITING,
             QuoteApprovalConfig::STATUS_APPROVED,
         ], true);
+    }
+
+    /**
+     * @see \Spryker\Client\QuoteApproval\Quote\QuoteStatusChecker::isQuoteWaitingForApproval()
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    public function isQuoteWaitingForApproval(QuoteTransfer $quoteTransfer): bool
+    {
+        $quoteStatus = $this->quoteStatusCalculator
+            ->calculateQuoteStatus($quoteTransfer);
+
+        return $quoteStatus === QuoteApprovalConfig::STATUS_WAITING;
     }
 
     /**

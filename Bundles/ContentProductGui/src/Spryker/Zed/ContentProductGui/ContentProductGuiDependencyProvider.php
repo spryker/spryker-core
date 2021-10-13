@@ -19,9 +19,21 @@ use Spryker\Zed\Kernel\Container;
  */
 class ContentProductGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_LOCALE = 'FACADE_LOCALE';
+    /**
+     * @var string
+     */
     public const FACADE_CONTENT_PRODUCT = 'FACADE_CONTENT_PRODUCT';
+    /**
+     * @var string
+     */
     public const FACADE_PRODUCT_IMAGE = 'FACADE_PRODUCT_IMAGE';
+    /**
+     * @var string
+     */
     public const PROPEL_QUERY_PRODUCT_ABSTRACT = 'PROPEL_QUERY_PRODUCT_ABSTRACT';
 
     /**

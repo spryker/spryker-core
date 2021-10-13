@@ -13,6 +13,9 @@ use Spryker\Yves\Kernel\Container;
 
 class CmsContentWidgetCmsBlockConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_CMS_BLOCK_STORAGE = 'CLIENT_CMS_BLOCK_STORAGE';
 
     /**

@@ -42,7 +42,7 @@ class CmsPageMapper implements CmsPageMapperInterface
     /**
      * @param \Orm\Zed\Cms\Persistence\SpyCmsPage $cmsPageEntity
      *
-     * @return string[]
+     * @return array<string>
      */
     public function mapCmsPageUrlLocale(SpyCmsPage $cmsPageEntity): array
     {

@@ -46,6 +46,8 @@ use Spryker\Zed\GiftCard\Business\ShipmentMethod\ShipmentMethodGiftCardFilter;
 use Spryker\Zed\GiftCard\Business\ShipmentMethod\ShipmentMethodGiftCardFilterInterface;
 use Spryker\Zed\GiftCard\Business\ShipmentMethod\ShipmentMethodGiftCardReader;
 use Spryker\Zed\GiftCard\Business\ShipmentMethod\ShipmentMethodGiftCardReaderInterface;
+use Spryker\Zed\GiftCard\Business\Writer\OrderGiftCardsRelationshipWriter;
+use Spryker\Zed\GiftCard\Business\Writer\OrderGiftCardsRelationshipWriterInterface;
 use Spryker\Zed\GiftCard\GiftCardDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
@@ -105,6 +107,17 @@ class GiftCardBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\GiftCard\Business\Writer\OrderGiftCardsRelationshipWriterInterface
+     */
+    public function createOrderGiftCardsRelationshipWriter(): OrderGiftCardsRelationshipWriterInterface
+    {
+        return new OrderGiftCardsRelationshipWriter(
+            $this->createSalesOrderItemSaver(),
+            $this->createSalesOrderPaymentSaver()
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\GiftCard\Business\CartCode\GiftCardCartCodeAdderInterface
      */
     public function createGiftCardCartCodeAdder(): GiftCardCartCodeAdderInterface
@@ -137,7 +150,7 @@ class GiftCardBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\GiftCard\Dependency\Plugin\GiftCardCodeCandidateValidationPluginInterface[]
+     * @return array<\Spryker\Zed\GiftCard\Dependency\Plugin\GiftCardCodeCandidateValidationPluginInterface>
      */
     protected function getGiftCardCodeCandidateValidationPlugins()
     {
@@ -145,7 +158,7 @@ class GiftCardBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\GiftCard\Dependency\Plugin\GiftCardAttributePluginInterface[]
+     * @return array<\Spryker\Zed\GiftCard\Dependency\Plugin\GiftCardAttributePluginInterface>
      */
     protected function getGiftCardAttributePlugins()
     {
@@ -226,7 +239,7 @@ class GiftCardBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\GiftCard\Dependency\Plugin\GiftCardDecisionRulePluginInterface[]
+     * @return array<\Spryker\Zed\GiftCard\Dependency\Plugin\GiftCardDecisionRulePluginInterface>
      */
     protected function getGiftCardDecisionRulePlugins()
     {
@@ -249,7 +262,7 @@ class GiftCardBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\GiftCard\Business\Payment\SalesOrderPaymentSaverInterface
      */
-    public function createSalesOrderSaver()
+    public function createSalesOrderPaymentSaver()
     {
         return new SalesOrderPaymentSaver(
             $this->getPaymentSaverPlugins(),
@@ -258,7 +271,7 @@ class GiftCardBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\GiftCard\Dependency\Plugin\GiftCardPaymentSaverPluginInterface[]
+     * @return array<\Spryker\Zed\GiftCard\Dependency\Plugin\GiftCardPaymentSaverPluginInterface>
      */
     protected function getPaymentSaverPlugins()
     {

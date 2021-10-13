@@ -1,9 +1,17 @@
 {% if priceData['volume_prices'] is defined and priceData['volume_prices'] is not null %}
     <a
-        href="{{ url('/price-product-offer-volume-gui/view', {'id-product-offer': idProductOffer, 'store-name': storeName, 'currency-code': currencyCode}) }}"
+        href="{{ url('/price-product-offer-volume-gui/view', {
+            'id-product-offer': idProductOffer,
+            'store-name': storeName,
+            'currency-code': currencyCode,
+            'price-type-name': priceTypeName | default(null),
+        }) }}"
         class="btn btn-sm btn-outline safe-submit btn-view"
     >
         <i class="fa fa-eye"></i>
-        {{ 'View Offer Volume Price' | trans }}
+        {{ 'View Offer Volume Price:' | trans }}
+        {% if priceTypeName is defined %}
+            {{ priceTypeName | trans }}
+        {% endif %}
     </a>
 {% endif %}

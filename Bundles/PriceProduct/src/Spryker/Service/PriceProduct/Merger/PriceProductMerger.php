@@ -12,10 +12,10 @@ use Generated\Shared\Transfer\PriceProductTransfer;
 class PriceProductMerger implements PriceProductMergerInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $abstractPriceProductTransfers
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $concretePriceProductTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $abstractPriceProductTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $concretePriceProductTransfers
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function mergeConcreteAndAbstractPrices(
         array $abstractPriceProductTransfers,
@@ -55,7 +55,9 @@ class PriceProductMerger implements PriceProductMergerInterface
         PriceProductTransfer $abstractPriceProductTransfer,
         PriceProductTransfer $concretePriceProductTransfer
     ): PriceProductTransfer {
+        /** @var \Generated\Shared\Transfer\MoneyValueTransfer $abstractMoneyValueTransfer */
         $abstractMoneyValueTransfer = $abstractPriceProductTransfer->getMoneyValue();
+        /** @var \Generated\Shared\Transfer\MoneyValueTransfer $concreteMoneyValueTransfer */
         $concreteMoneyValueTransfer = $concretePriceProductTransfer->getMoneyValue();
 
         if ($concreteMoneyValueTransfer->getGrossAmount() === null) {
@@ -70,10 +72,10 @@ class PriceProductMerger implements PriceProductMergerInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $concretePriceProductTransfers
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $concretePriceProductTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     protected function addConcreteNotMergedPrices(
         array $concretePriceProductTransfers,
@@ -83,9 +85,9 @@ class PriceProductMerger implements PriceProductMergerInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     protected function groupPriceProductTransfers(array $priceProductTransfers): array
     {
@@ -99,7 +101,7 @@ class PriceProductMerger implements PriceProductMergerInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      *
      * @return bool
      */
@@ -115,14 +117,14 @@ class PriceProductMerger implements PriceProductMergerInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     protected function filterNotMergeableProductPrices(array $priceProductTransfers): array
     {
         return array_filter($priceProductTransfers, function (PriceProductTransfer $priceProductTransfer) {
-            return $priceProductTransfer->getIsMergeable();
+            return (bool)$priceProductTransfer->getIsMergeable();
         });
     }
 }

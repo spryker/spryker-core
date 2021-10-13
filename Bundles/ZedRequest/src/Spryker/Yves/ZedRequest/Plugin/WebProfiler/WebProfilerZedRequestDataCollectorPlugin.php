@@ -17,7 +17,13 @@ use Symfony\Component\HttpKernel\DataCollector\DataCollectorInterface;
  */
 class WebProfilerZedRequestDataCollectorPlugin extends AbstractPlugin implements WebProfilerDataCollectorPluginInterface
 {
+    /**
+     * @var string
+     */
     protected const DATA_COLLECTOR_NAME = 'zed_request';
+    /**
+     * @var string
+     */
     protected const DATA_TEMPLATE_NAME = '@ZedRequest/zed-request';
 
     /**

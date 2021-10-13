@@ -16,6 +16,9 @@ use Spryker\Zed\Kernel\Container;
  */
 class CmsContentWidgetContentConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_CONTENT = 'FACADE_CONTENT';
 
     /**

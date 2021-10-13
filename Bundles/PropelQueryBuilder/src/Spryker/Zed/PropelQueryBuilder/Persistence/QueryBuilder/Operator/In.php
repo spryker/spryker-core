@@ -12,6 +12,9 @@ use Propel\Runtime\ActiveQuery\Criteria;
 
 class In extends AbstractOperator
 {
+    /**
+     * @var string
+     */
     public const TYPE = 'in';
 
     /**

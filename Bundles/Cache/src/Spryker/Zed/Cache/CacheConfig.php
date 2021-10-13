@@ -12,6 +12,9 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class CacheConfig extends AbstractBundleConfig
 {
+    /**
+     * @var string
+     */
     public const STORE_PATTERN_MARKER = '{STORE}';
 
     /**
@@ -84,7 +87,7 @@ class CacheConfig extends AbstractBundleConfig
      *
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getProjectSpecificCache(): array
     {

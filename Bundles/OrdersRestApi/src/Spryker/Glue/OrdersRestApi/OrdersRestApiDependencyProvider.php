@@ -16,9 +16,18 @@ use Spryker\Glue\OrdersRestApi\Dependency\Client\OrdersRestApiToSalesClientBridg
  */
 class OrdersRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_SALES = 'CLIENT_SALES';
 
+    /**
+     * @var string
+     */
     public const PLUGINS_REST_ORDER_ITEMS_ATTRIBUTES_MAPPER = 'PLUGINS_REST_ORDER_ITEMS_ATTRIBUTES_MAPPER';
+    /**
+     * @var string
+     */
     public const PLUGINS_REST_ORDER_DETAILS_ATTRIBUTES_MAPPER = 'PLUGINS_REST_ORDER_DETAILS_ATTRIBUTES_MAPPER';
 
     /**
@@ -65,7 +74,7 @@ class OrdersRestApiDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Glue\OrdersRestApiExtension\Dependency\Plugin\RestOrderItemsAttributesMapperPluginInterface[]
+     * @return array<\Spryker\Glue\OrdersRestApiExtension\Dependency\Plugin\RestOrderItemsAttributesMapperPluginInterface>
      */
     protected function getRestOrderItemsAttributesMapperPlugins(): array
     {
@@ -87,7 +96,7 @@ class OrdersRestApiDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Glue\OrdersRestApiExtension\Dependency\Plugin\RestOrderDetailsAttributesMapperPluginInterface[]
+     * @return array<\Spryker\Glue\OrdersRestApiExtension\Dependency\Plugin\RestOrderDetailsAttributesMapperPluginInterface>
      */
     protected function getRestOrderDetailsAttributesMapperPlugins(): array
     {

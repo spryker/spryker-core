@@ -12,16 +12,16 @@ use Generated\Shared\Transfer\FilterTransfer;
 interface ProductRelationStorageToProductRelationFacadeInterface
 {
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
-     * @return \Generated\Shared\Transfer\ProductRelationTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductRelationTransfer>
      */
     public function getProductRelationsByProductAbstractIds(array $productAbstractIds): array;
 
     /**
-     * @param int[] $productRelationIds
+     * @param array<int> $productRelationIds
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getProductAbstractIdsByProductRelationIds(
         array $productRelationIds
@@ -30,7 +30,7 @@ interface ProductRelationStorageToProductRelationFacadeInterface
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductRelationTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductRelationTransfer>
      */
     public function findProductRelationsForFilter(FilterTransfer $filterTransfer): array;
 }

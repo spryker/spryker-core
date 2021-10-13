@@ -11,6 +11,9 @@ use Spryker\Shared\Kernel\AbstractBundleConfig;
 
 class SessionFileConfig extends AbstractBundleConfig
 {
+    /**
+     * @var string
+     */
     public const SESSION_HANDLER_FILE = 'file';
 
     /**

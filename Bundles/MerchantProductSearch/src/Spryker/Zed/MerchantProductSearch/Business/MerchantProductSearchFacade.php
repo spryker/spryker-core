@@ -20,7 +20,7 @@ class MerchantProductSearchFacade extends AbstractFacade implements MerchantProd
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
      *
      * @return void
      */
@@ -36,7 +36,7 @@ class MerchantProductSearchFacade extends AbstractFacade implements MerchantProd
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
      *
      * @return void
      */
@@ -52,9 +52,9 @@ class MerchantProductSearchFacade extends AbstractFacade implements MerchantProd
      *
      * @api
      *
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
-     * @return \Generated\Shared\Transfer\ProductAbstractMerchantTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductAbstractMerchantTransfer>
      */
     public function getMerchantDataByProductAbstractIds(array $productAbstractIds): array
     {

@@ -14,18 +14,42 @@ use Spryker\Client\MerchantProductOfferStorage\Dependency\Client\MerchantProduct
 use Spryker\Client\MerchantProductOfferStorage\Dependency\Client\MerchantProductOfferStorageToStoreClientBridge;
 use Spryker\Client\MerchantProductOfferStorage\Dependency\Service\MerchantProductOfferStorageToSynchronizationServiceBridge;
 use Spryker\Client\MerchantProductOfferStorage\Dependency\Service\MerchantProductOfferStorageToUtilEncodingServiceBridge;
-use Spryker\Client\MerchantProductOfferStorage\Exception\ProductOfferStorageCollectionSorterPluginException;
+use Spryker\Client\MerchantProductOfferStorage\Plugin\MerchantProductOfferStorage\DefaultProductOfferStorageCollectionSorterPlugin;
 use Spryker\Client\MerchantProductOfferStorageExtension\Dependency\Plugin\ProductOfferStorageCollectionSorterPluginInterface;
 
 class MerchantProductOfferStorageDependencyProvider extends AbstractDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_STORAGE = 'CLIENT_STORAGE';
+    /**
+     * @var string
+     */
     public const CLIENT_STORE = 'CLIENT_STORE';
+    /**
+     * @var string
+     */
     public const CLIENT_MERCHANT_STORAGE = 'CLIENT_MERCHANT_STORAGE';
+    /**
+     * @var string
+     */
     public const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
+    /**
+     * @var string
+     */
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
+    /**
+     * @var string
+     */
     public const PLUGINS_PRODUCT_OFFER_REFERENCE_STRATEGY = 'PLUGINS_PRODUCT_OFFER_REFERENCE_STRATEGY';
+    /**
+     * @var string
+     */
     public const PLUGINS_PRODUCT_OFFER_STORAGE_EXPANDER = 'PLUGINS_PRODUCT_OFFER_STORAGE_EXPANDER';
+    /**
+     * @var string
+     */
     public const PLUGIN_PRODUCT_OFFER_STORAGE_COLLECTION_SORTER = 'PLUGIN_PRODUCT_OFFER_STORAGE_COLLECTION_SORTER';
 
     /**
@@ -64,7 +88,7 @@ class MerchantProductOfferStorageDependencyProvider extends AbstractDependencyPr
     }
 
     /**
-     * @return \Spryker\Client\MerchantProductOfferStorageExtension\Dependency\Plugin\ProductOfferReferenceStrategyPluginInterface[]
+     * @return array<\Spryker\Client\MerchantProductOfferStorageExtension\Dependency\Plugin\ProductOfferReferenceStrategyPluginInterface>
      */
     protected function getProductOfferReferenceStrategyPlugins(): array
     {
@@ -86,7 +110,7 @@ class MerchantProductOfferStorageDependencyProvider extends AbstractDependencyPr
     }
 
     /**
-     * @return \Spryker\Client\MerchantProductOfferStorageExtension\Dependency\Plugin\ProductOfferStorageExpanderPluginInterface[]
+     * @return array<\Spryker\Client\MerchantProductOfferStorageExtension\Dependency\Plugin\ProductOfferStorageExpanderPluginInterface>
      */
     protected function getProductOfferStorageExpanderPlugins(): array
     {
@@ -108,20 +132,11 @@ class MerchantProductOfferStorageDependencyProvider extends AbstractDependencyPr
     }
 
     /**
-     * @throws \Spryker\Client\MerchantProductOfferStorage\Exception\ProductOfferStorageCollectionSorterPluginException
-     *
      * @return \Spryker\Client\MerchantProductOfferStorageExtension\Dependency\Plugin\ProductOfferStorageCollectionSorterPluginInterface
      */
     protected function createProductOfferStorageCollectionSorterPlugin(): ProductOfferStorageCollectionSorterPluginInterface
     {
-        throw new ProductOfferStorageCollectionSorterPluginException(
-            sprintf(
-                'Missing instance of %s! You need to configure ProductOfferStorageCollectionSorterPlugin ' .
-                'in your own MerchantProductOfferStorageDependencyProvider::createProductOfferStorageCollectionSorterPlugin() ' .
-                'to be able to get default offer reference.',
-                ProductOfferStorageCollectionSorterPluginInterface::class
-            )
-        );
+        return new DefaultProductOfferStorageCollectionSorterPlugin();
     }
 
     /**

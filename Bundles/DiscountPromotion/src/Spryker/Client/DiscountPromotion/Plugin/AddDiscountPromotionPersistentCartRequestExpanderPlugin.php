@@ -12,6 +12,9 @@ use Spryker\Client\PersistentCartExtension\Dependency\Plugin\PersistentCartChang
 
 class AddDiscountPromotionPersistentCartRequestExpanderPlugin implements PersistentCartChangeExpanderPluginInterface
 {
+    /**
+     * @var string
+     */
     public const URL_PARAM_ID_DISCOUNT_PROMOTION = 'idDiscountPromotion';
 
     /**

@@ -14,7 +14,13 @@ use Spryker\Zed\Discount\Business\QueryString\Specification\SpecificationProvide
 
 class SpecificationBuilder implements SpecificationBuilderInterface
 {
+    /**
+     * @var string
+     */
     public const OPEN_PARENTHESIS = '(';
+    /**
+     * @var string
+     */
     public const CLOSE_PARENTHESIS = ')';
 
     /**
@@ -33,7 +39,7 @@ class SpecificationBuilder implements SpecificationBuilderInterface
     protected $comparatorOperators;
 
     /**
-     * @var string[]
+     * @var array<string>
      */
     protected $compoundComparatorExpressions = [];
 
@@ -48,7 +54,7 @@ class SpecificationBuilder implements SpecificationBuilderInterface
     protected $metaDataProvider;
 
     /**
-     * @var string[]
+     * @var array<string>
      */
     protected $availableFields;
 
@@ -86,7 +92,7 @@ class SpecificationBuilder implements SpecificationBuilderInterface
     }
 
     /**
-     * @param string[] $tokens
+     * @param array<string> $tokens
      * @param int $currentTokenIndex
      * @param int $parenthesisDepth
      *
@@ -182,7 +188,7 @@ class SpecificationBuilder implements SpecificationBuilderInterface
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function getCompoundComparatorExpressions()
     {
@@ -300,8 +306,8 @@ class SpecificationBuilder implements SpecificationBuilderInterface
      */
     protected function isValue($token)
     {
-         $first = substr($token, 0, 1);
-         $last = substr($token, -1);
+        $first = substr($token, 0, 1);
+        $last = substr($token, -1);
 
         if ($first === '"' && $last === '"') {
             return true;
@@ -311,6 +317,6 @@ class SpecificationBuilder implements SpecificationBuilderInterface
             return true;
         }
 
-         return false;
+        return false;
     }
 }

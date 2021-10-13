@@ -116,7 +116,7 @@ class ProductDiscontinuedProductLabelWriter implements ProductDiscontinuedProduc
     }
 
     /**
-     * @param int[] $productConcreteIds
+     * @param array<int> $productConcreteIds
      *
      * @return void
      */

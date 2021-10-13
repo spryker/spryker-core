@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\SearchElasticsearch;
 
+use Generated\Shared\Transfer\SearchConnectionResponseTransfer;
 use Generated\Shared\Transfer\SearchDocumentTransfer;
 use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
 
@@ -21,10 +22,10 @@ interface SearchElasticsearchClientInterface
      * @api
      *
      * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface $searchQuery
-     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface[] $resultFormatters
+     * @param array<\Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface> $resultFormatters
      * @param array $requestParameters
      *
-     * @return array|\Elastica\ResultSet
+     * @return \Elastica\ResultSet|array
      */
     public function search(QueryInterface $searchQuery, array $resultFormatters = [], array $requestParameters = []);
 
@@ -58,7 +59,7 @@ interface SearchElasticsearchClientInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\SearchDocumentTransfer[] $searchDocumentTransfers
+     * @param array<\Generated\Shared\Transfer\SearchDocumentTransfer> $searchDocumentTransfers
      *
      * @return bool
      */
@@ -83,9 +84,19 @@ interface SearchElasticsearchClientInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\SearchDocumentTransfer[] $searchDocumentTransfers
+     * @param array<\Generated\Shared\Transfer\SearchDocumentTransfer> $searchDocumentTransfers
      *
      * @return bool
      */
     public function deleteDocuments(array $searchDocumentTransfers): bool;
+
+    /**
+     * Specification:
+     * - Sends request to Elasticsearch for checking connection.
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\SearchConnectionResponseTransfer
+     */
+    public function checkConnection(): SearchConnectionResponseTransfer;
 }

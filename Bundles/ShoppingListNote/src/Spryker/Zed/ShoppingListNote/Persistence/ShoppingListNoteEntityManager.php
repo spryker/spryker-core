@@ -54,7 +54,7 @@ class ShoppingListNoteEntityManager extends AbstractEntityManager implements Sho
     }
 
     /**
-     * @param int[] $shoppingListItemNoteIds
+     * @param array<int> $shoppingListItemNoteIds
      *
      * @return void
      */

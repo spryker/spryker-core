@@ -17,8 +17,17 @@ use Symfony\Component\Console\Input\InputArgument;
  */
 class ElasticsearchOpenIndexConsole extends AbstractIndexNameAwareSearchIndexConsole
 {
+    /**
+     * @var string
+     */
     protected const COMMAND_NAME = 'elasticsearch:index:open';
+    /**
+     * @var string
+     */
     protected const DESCRIPTION = 'This command will open an index. If no index name is specified, all available indexes for the current store will be opened.';
+    /**
+     * @var string
+     */
     protected const COMMAND_ALIAS = 'search:index:open';
 
     /**

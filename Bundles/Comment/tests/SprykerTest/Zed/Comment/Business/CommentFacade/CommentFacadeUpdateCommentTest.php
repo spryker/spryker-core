@@ -26,26 +26,36 @@ use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
  */
 class CommentFacadeUpdateCommentTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const FAKE_COMMENT_MESSAGE = 'FAKE_COMMENT_MESSAGE';
+    /**
+     * @var string
+     */
     protected const FAKE_COMMENT_UUID = 'FAKE_COMMENT_UUID';
 
     /**
      * @uses \Spryker\Zed\Comment\Business\Writer\CommentWriter::COMMENT_MESSAGE_MAX_LENGTH
+     * @var int
      */
     protected const COMMENT_MESSAGE_MAX_LENGTH = 5000;
 
     /**
      * @uses \Spryker\Zed\Comment\Business\Writer\CommentWriter::GLOSSARY_KEY_COMMENT_NOT_FOUND
+     * @var string
      */
     protected const GLOSSARY_KEY_COMMENT_NOT_FOUND = 'comment.validation.error.comment_not_found';
 
     /**
      * @uses \Spryker\Zed\Comment\Business\Writer\CommentWriter::GLOSSARY_KEY_COMMENT_ACCESS_DENIED
+     * @var string
      */
     protected const GLOSSARY_KEY_COMMENT_ACCESS_DENIED = 'comment.validation.error.access_denied';
 
     /**
      * @uses \Spryker\Zed\Comment\Business\Writer\CommentWriter::GLOSSARY_KEY_COMMENT_INVALID_MESSAGE_LENGTH
+     * @var string
      */
     protected const GLOSSARY_KEY_COMMENT_INVALID_MESSAGE_LENGTH = 'comment.validation.error.invalid_message_length';
 

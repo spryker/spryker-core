@@ -15,12 +15,12 @@ use Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentMethodDeliveryTimePl
 class MethodDeliveryTimeReader implements MethodDeliveryTimeReaderInterface
 {
     /**
-     * @var \Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentMethodDeliveryTimePluginInterface[]
+     * @var array<\Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentMethodDeliveryTimePluginInterface>
      */
     protected $shipmentMethodDeliveryTimePlugins;
 
     /**
-     * @param \Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentMethodDeliveryTimePluginInterface[] $shipmentMethodDeliveryTimePlugins
+     * @param array<\Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentMethodDeliveryTimePluginInterface> $shipmentMethodDeliveryTimePlugins
      */
     public function __construct(array $shipmentMethodDeliveryTimePlugins)
     {

@@ -26,7 +26,7 @@ class MerchantRelationshipSalesOrderThresholdDataSourceStrategyPlugin extends Ab
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\SalesOrderThresholdValueTransfer[]
+     * @return array<\Generated\Shared\Transfer\SalesOrderThresholdValueTransfer>
      */
     public function findApplicableThresholds(QuoteTransfer $quoteTransfer): array
     {

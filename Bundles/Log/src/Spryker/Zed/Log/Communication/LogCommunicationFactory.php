@@ -30,7 +30,7 @@ use Spryker\Zed\Log\LogDependencyProvider;
 class LogCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
-     * @return \Monolog\Handler\HandlerInterface[]
+     * @return array<\Monolog\Handler\HandlerInterface>
      */
     public function getHandlers()
     {
@@ -38,7 +38,7 @@ class LogCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return callable[]
+     * @return array<callable>
      */
     public function getProcessors()
     {
@@ -184,7 +184,7 @@ class LogCommunicationFactory extends AbstractCommunicationFactory
     protected function createStreamHandler()
     {
         $streamHandler = new StreamHandler(
-            $this->getConfig()->getLogFilePath(),
+            $this->getConfig()->getLogDestinationPath(),
             (int)$this->getConfig()->getLogLevel()
         );
 
@@ -207,7 +207,7 @@ class LogCommunicationFactory extends AbstractCommunicationFactory
     public function createExceptionStreamHandler()
     {
         $streamHandler = new StreamHandler(
-            $this->getConfig()->getExceptionLogFilePath(),
+            $this->getConfig()->getExceptionLogDestinationPath(),
             Logger::ERROR
         );
         $streamHandler->setFormatter($this->createExceptionFormatter());

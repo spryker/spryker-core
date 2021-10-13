@@ -101,7 +101,7 @@ class CartCodeFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\CartCodeExtension\Dependency\Plugin\CartCodePluginInterface[]
+     * @return array<\Spryker\Client\CartCodeExtension\Dependency\Plugin\CartCodePluginInterface>
      */
     public function getCartCodePlugins(): array
     {

@@ -12,8 +12,17 @@ use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\SecuritySchemeRe
 
 class OpenApiSpecificationSecuritySchemeGenerator implements SecuritySchemeGeneratorInterface
 {
+    /**
+     * @var string
+     */
     protected const DEFAULT_BEARER_AUTH_SCHEME_NAME = 'BearerAuth';
+    /**
+     * @var string
+     */
     protected const DEFAULT_BEARER_AUTH_SCHEME_TYPE = 'http';
+    /**
+     * @var string
+     */
     protected const DEFAULT_BEARER_AUTH_SCHEME = 'bearer';
 
     /**

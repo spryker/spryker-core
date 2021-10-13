@@ -16,7 +16,13 @@ use Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGu
 
 class ConcreteProductViewExpander implements ConcreteProductViewExpanderInterface
 {
+    /**
+     * @var string
+     */
     protected const PRICE_TYPE_TEMPLATE = '@PriceProductScheduleGui/_partials/price-type-tabs/price-type-tab.twig';
+    /**
+     * @var string
+     */
     protected const DEFAULT_TITLE = 'Price type: ';
 
     /**

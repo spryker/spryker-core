@@ -17,18 +17,24 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 class MerchantOmsRepository extends AbstractRepository implements MerchantOmsRepositoryInterface
 {
     /**
+     * @phpstan-param array<mixed> $stateIds
+     *
      * @param array $stateIds
      *
-     * @return \Generated\Shared\Transfer\StateMachineItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\StateMachineItemTransfer>
      */
     public function getStateMachineItemsByStateIds(array $stateIds): array
     {
-        $merchantSalesOrderItemEntities = $this->getFactory()
+        /** @var \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItemQuery<\Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItem> $merchantSalesOrderItemQuery */
+        $merchantSalesOrderItemQuery = $this->getFactory()
             ->getMerchantSalesOrderItemPropelQuery()
             ->joinWithStateMachineItemState()
             ->useStateMachineItemStateQuery()
                 ->joinWithProcess()
-            ->endUse()
+            ->endUse();
+
+        /** @var \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItem> $merchantSalesOrderItemEntities */
+        $merchantSalesOrderItemEntities = $merchantSalesOrderItemQuery
             ->filterByFkStateMachineItemState_In($stateIds)
             ->find();
 
@@ -53,11 +59,13 @@ class MerchantOmsRepository extends AbstractRepository implements MerchantOmsRep
         if ($merchantSalesOrderItemEntity === null) {
             return null;
         }
+        /** @var \Orm\Zed\StateMachine\Persistence\SpyStateMachineItemState $stateMachineItemState */
+        $stateMachineItemState = $merchantSalesOrderItemEntity->getStateMachineItemState();
 
         return $this->getFactory()
             ->createStateMachineItemMapper()
             ->mapStateMachineItemEntityToStateMachineItemTransfer(
-                $merchantSalesOrderItemEntity->getStateMachineItemState(),
+                $stateMachineItemState,
                 (new StateMachineItemTransfer())
             );
     }
@@ -65,9 +73,9 @@ class MerchantOmsRepository extends AbstractRepository implements MerchantOmsRep
     /**
      * @module StateMachine
      *
-     * @param int[] $merchantOrderItemIds
+     * @param array<int> $merchantOrderItemIds
      *
-     * @return \Generated\Shared\Transfer\StateMachineItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\StateMachineItemTransfer>
      */
     public function findStateHistoryByMerchantOrderIds(array $merchantOrderItemIds): array
     {

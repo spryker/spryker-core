@@ -19,9 +19,21 @@ use Spryker\Zed\Kernel\Container;
  */
 class GiftCardMailConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_MAIL = 'FACADE_MAIL';
+    /**
+     * @var string
+     */
     public const FACADE_CUSTOMER = 'FACADE_CUSTOMER';
+    /**
+     * @var string
+     */
     public const FACADE_GIFT_CARD = 'FACADE_GIFT_CARD';
+    /**
+     * @var string
+     */
     public const FACADE_SALES = 'FACADE_SALES';
 
     /**

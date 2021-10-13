@@ -45,11 +45,7 @@ class CmsCollectorFacade extends AbstractFacade implements CmsCollectorFacadeInt
         TouchUpdaterInterface $touchUpdater,
         OutputInterface $output
     ) {
-        $collector = $this->getFactory()
-            ->createStorageCmsVersionPageCollector();
-
-        $this->getFactory()->getCollectorFacade()->runCollector(
-            $collector,
+        $this->getFactory()->createStorageCmsVersionPageCollectorRunner()->run(
             $baseQuery,
             $localeTransfer,
             $result,
@@ -84,11 +80,7 @@ class CmsCollectorFacade extends AbstractFacade implements CmsCollectorFacadeInt
         TouchUpdaterInterface $touchUpdater,
         OutputInterface $output
     ) {
-        $collector = $this->getFactory()
-            ->createSearchCmsVersionPageCollector();
-
-        $this->getFactory()->getCollectorFacade()->runCollector(
-            $collector,
+        $this->getFactory()->createSearchCmsVersionPageCollectorRunner()->run(
             $baseQuery,
             $localeTransfer,
             $result,

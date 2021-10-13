@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Generated\Shared\Transfer\QuoteCompanyUserTransfer;
 use Generated\Shared\Transfer\QuotePermissionGroupCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuotePermissionGroupTransfer;
+use Generated\Shared\Transfer\ShareCartRequestTransfer;
 use Generated\Shared\Transfer\ShareDetailCollectionTransfer;
 use Generated\Shared\Transfer\ShareDetailCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ShareDetailTransfer;
@@ -36,28 +37,28 @@ interface SharedCartRepositoryInterface
     /**
      * @param \Generated\Shared\Transfer\SharedQuoteCriteriaFilterTransfer $sharedQuoteCriteriaFilterTransfer
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getIsDefaultFlagForSharedCartsBySharedQuoteCriteriaFilter(SharedQuoteCriteriaFilterTransfer $sharedQuoteCriteriaFilterTransfer): array;
 
     /**
      * @param string $customerReference
      *
-     * @return \Generated\Shared\Transfer\SpyCompanyUserEntityTransfer[]
+     * @return array<\Generated\Shared\Transfer\SpyCompanyUserEntityTransfer>
      */
     public function findShareInformationCustomer($customerReference): array;
 
     /**
      * @param \Generated\Shared\Transfer\QuotePermissionGroupCriteriaFilterTransfer $criteriaFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\QuotePermissionGroupTransfer[]
+     * @return array<\Generated\Shared\Transfer\QuotePermissionGroupTransfer>
      */
     public function findQuotePermissionGroupList(QuotePermissionGroupCriteriaFilterTransfer $criteriaFilterTransfer): array;
 
     /**
      * @param int $idQuote
      *
-     * @return int[]
+     * @return array<int>
      */
     public function findQuoteCompanyUserIdCollection(int $idQuote): array;
 
@@ -79,7 +80,7 @@ interface SharedCartRepositoryInterface
     /**
      * @param int $idQuote
      *
-     * @return int[]
+     * @return array<int>
      */
     public function findAllCompanyUserQuotePermissionGroupIdIndexes(int $idQuote): array;
 
@@ -120,6 +121,13 @@ interface SharedCartRepositoryInterface
      * @return \Generated\Shared\Transfer\ShareDetailTransfer|null
      */
     public function findShareDetailByIdQuoteAndIdCompanyUser(int $idQuote, int $idCompanyUser): ?ShareDetailTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\ShareCartRequestTransfer $shareCartRequestTransfer
+     *
+     * @return array<\Generated\Shared\Transfer\ShareDetailCollectionTransfer>
+     */
+    public function getSharedCartDetails(ShareCartRequestTransfer $shareCartRequestTransfer): array;
 
     /**
      * @param int $idQuote

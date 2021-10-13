@@ -16,6 +16,9 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
  */
 class QuoteConfig extends AbstractBundleConfig
 {
+    /**
+     * @var string
+     */
     protected const DEFAULT_GUEST_QUOTE_LIFETIME = 'P01M';
 
     /**
@@ -31,7 +34,7 @@ class QuoteConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getQuoteFieldsAllowedForSaving()
     {
@@ -50,7 +53,7 @@ class QuoteConfig extends AbstractBundleConfig
      *
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getQuoteItemFieldsAllowedForSaving(): array
     {

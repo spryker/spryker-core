@@ -16,6 +16,7 @@ class CmsSlotBlockConfig extends AbstractSharedConfig
      * - Content provider type used for CMS slot rendering.
      *
      * @api
+     * @var string
      */
     public const CMS_SLOT_CONTENT_PROVIDER_TYPE = 'SprykerCmsSlotBlock';
 }

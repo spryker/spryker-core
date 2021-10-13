@@ -1,8 +1,5 @@
 <?xml version="1.0"?>
-<transfers
-    xmlns="spryker:transfer-01"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+<transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="Group">
         <property name="idAclGroup" type="int"/>
@@ -20,6 +17,7 @@
         <property name="rules" type="string"/>
         <property name="aclGroup" type="Group"/>
         <property name="aclRules" type="Rule[]" singular="aclRule"/>
+        <property name="aclEntityRules" type="AclEntityRule[]" singular="aclEntityRule"/>
     </transfer>
 
     <transfer name="Roles">
@@ -45,8 +43,15 @@
         <property name="aclGroups" type="Group[]" singular="aclGroup"/>
     </transfer>
 
+    <transfer name="AclRoleCriteria">
+        <property name="names" type="string[]" singular="name"/>
+        <property name="name" type="string"/>
+        <property name="reference" type="string"/>
+    </transfer>
+
     <transfer name="GroupCriteria">
         <property name="idAclGroup" type="int"/>
+        <property name="names" type="string[]" singular="name"/>
     </transfer>
 
     <transfer name="NavigationItem">
@@ -57,6 +62,9 @@
 
     <transfer name="NavigationItemCollection">
         <property name="navigationItems" type="NavigationItem[]" associative="true" singular="navigationItem"/>
+    </transfer>
+
+    <transfer name="AclEntityRule">
     </transfer>
 
 </transfers>

@@ -125,9 +125,9 @@ class ConfigurableBundleRepository extends AbstractRepository implements Configu
     }
 
     /**
-     * @param string[] $templateUuids
+     * @param array<string> $templateUuids
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getActiveConfigurableBundleTemplateUuids(array $templateUuids): array
     {
@@ -217,9 +217,9 @@ class ConfigurableBundleRepository extends AbstractRepository implements Configu
      * @module Locale
      *
      * @param int $idConfigurableBundleTemplate
-     * @param int[] $localeIds
+     * @param array<int> $localeIds
      *
-     * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductImageSetTransfer>
      */
     public function getConfigurableBundleTemplateImageSets(int $idConfigurableBundleTemplate, array $localeIds): array
     {

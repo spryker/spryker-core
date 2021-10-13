@@ -22,14 +22,24 @@ use Twig\Loader\FilesystemLoader;
  */
 class SchedulerJenkinsDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_GUZZLE = 'CLIENT_GUZZLE';
 
+    /**
+     * @var string
+     */
     public const TWIG_ENVIRONMENT = 'TWIG_ENVIRONMENT';
 
+    /**
+     * @var string
+     */
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
     /**
      * @uses \Spryker\Zed\Twig\Communication\Plugin\Application\TwigApplicationPlugin::SERVICE_TWIG
+     * @var string
      */
     public const SERVICE_TWIG = 'twig';
 

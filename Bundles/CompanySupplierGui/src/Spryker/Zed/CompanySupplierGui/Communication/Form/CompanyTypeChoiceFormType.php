@@ -19,6 +19,9 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class CompanyTypeChoiceFormType extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const OPTION_VALUES_COMPANY_TYPE_CHOICES = 'company_type_value_options';
 
     /**

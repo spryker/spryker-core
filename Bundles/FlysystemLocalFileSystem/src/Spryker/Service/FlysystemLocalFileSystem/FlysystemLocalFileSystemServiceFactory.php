@@ -18,11 +18,10 @@ class FlysystemLocalFileSystemServiceFactory extends AbstractServiceFactory
 {
     /**
      * @param \Generated\Shared\Transfer\FlysystemConfigTransfer $configTransfer
-     * @param \League\Flysystem\PluginInterface[] $flysystemPluginCollection
      *
      * @return \Spryker\Service\FlysystemLocalFileSystem\Model\Builder\Filesystem\LocalFilesystemBuilder
      */
-    public function createFlysystemLocalFileSystemBuilder(FlysystemConfigTransfer $configTransfer, array $flysystemPluginCollection = [])
+    public function createFlysystemLocalFileSystemBuilder(FlysystemConfigTransfer $configTransfer)
     {
         return new LocalFilesystemBuilder($configTransfer);
     }

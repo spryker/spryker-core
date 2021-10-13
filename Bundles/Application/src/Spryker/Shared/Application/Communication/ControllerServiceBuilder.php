@@ -33,6 +33,7 @@ class ControllerServiceBuilder
     ) {
         $serviceName = 'controller.service.' . str_replace('/', '.', trim($routeNameResolver->resolve(), '/'));
         $application[$serviceName] = function () use ($application, $controllerResolver, $bundleControllerAction) {
+            /** @var \Spryker\Zed\Kernel\Communication\Controller\AbstractController $controller */
             $controller = $controllerResolver->resolve($bundleControllerAction);
             $controller->setApplication($application);
             $controller->initialize();

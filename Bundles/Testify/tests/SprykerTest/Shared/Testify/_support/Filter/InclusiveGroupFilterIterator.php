@@ -17,13 +17,13 @@ use RecursiveIterator;
 class InclusiveGroupFilterIterator extends RecursiveFilterIterator
 {
     /**
-     * @var string[]
+     * @var array<string>
      */
     protected $testGroups = [];
 
     /**
      * @param \RecursiveIterator $iterator
-     * @param string[] $groups
+     * @param array<string> $groups
      * @param \PHPUnit\Framework\TestSuite $suite
      */
     public function __construct(RecursiveIterator $iterator, array $groups, TestSuite $suite)
@@ -55,7 +55,7 @@ class InclusiveGroupFilterIterator extends RecursiveFilterIterator
 
     /**
      * @param \PHPUnit\Framework\TestSuite $suite
-     * @param string[] $inclusiveGroups
+     * @param array<string> $inclusiveGroups
      *
      * @return array
      */
@@ -74,7 +74,7 @@ class InclusiveGroupFilterIterator extends RecursiveFilterIterator
     }
 
     /**
-     * @param string[] $suiteGroups
+     * @param array<string> $suiteGroups
      *
      * @return void
      */

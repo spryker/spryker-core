@@ -12,6 +12,9 @@ use Spryker\Glue\Kernel\Container;
 
 class ShopContextDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const PLUGINS_SHOP_CONTEXT_EXPANDER = 'PLUGINS_SHOP_CONTEXT_EXPANDER';
 
     /**
@@ -43,7 +46,7 @@ class ShopContextDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Shared\ShopContextExtension\Dependency\Plugin\ShopContextExpanderPluginInterface[]
+     * @return array<\Spryker\Shared\ShopContextExtension\Dependency\Plugin\ShopContextExpanderPluginInterface>
      */
     protected function getShopContextExpanderPlugins(): array
     {

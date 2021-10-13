@@ -12,6 +12,9 @@ use Spryker\Zed\ProductList\Persistence\ProductListRepositoryInterface;
 
 class ProductListKeyGenerator implements ProductListKeyGeneratorInterface
 {
+    /**
+     * @var string
+     */
     protected const PRODUCT_LIST_KEY_PATTERN = '%s-%d';
 
     /**

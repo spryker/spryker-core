@@ -9,22 +9,46 @@ namespace Spryker\Zed\Customer\Communication\Table;
 
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Orm\Zed\Customer\Persistence\SpyCustomer;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
+use Propel\Runtime\ActiveRecord\ActiveRecordInterface;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Customer\Communication\Table\PluginExecutor\CustomerTableExpanderPluginExecutorInterface;
 use Spryker\Zed\Customer\Dependency\Service\CustomerToUtilDateTimeServiceInterface;
 use Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
+use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
 class CustomerTable extends AbstractTable
 {
+    /**
+     * @var string
+     */
     public const ACTIONS = 'Actions';
 
+    /**
+     * @var string
+     */
     public const COL_CREATED_AT = 'created_at';
+    /**
+     * @var string
+     */
     public const COL_ID_CUSTOMER = 'id_customer';
+    /**
+     * @var string
+     */
     public const COL_EMAIL = 'email';
+    /**
+     * @var string
+     */
     public const COL_FIRST_NAME = 'first_name';
+    /**
+     * @var string
+     */
     public const COL_LAST_NAME = 'last_name';
+    /**
+     * @var string
+     */
     public const COL_STATUS = 'registered';
 
     /**
@@ -97,6 +121,47 @@ class CustomerTable extends AbstractTable
         ]);
 
         return $config;
+    }
+
+    /**
+     * @return array<string>
+     */
+    protected function getCsvHeaders(): array
+    {
+        return [
+            static::COL_ID_CUSTOMER => '#',
+            static::COL_CREATED_AT => 'Registration Date',
+            static::COL_EMAIL => 'Email',
+            static::COL_LAST_NAME => 'Last Name',
+            static::COL_FIRST_NAME => 'First Name',
+            static::COL_STATUS => 'Status',
+        ];
+    }
+
+    /**
+     * @return \Orm\Zed\Customer\Persistence\SpyCustomerQuery
+     */
+    protected function getDownloadQuery(): ModelCriteria
+    {
+        $customerQuery = $this->prepareQuery();
+        $customerQuery->orderBy(SpyCustomerTableMap::COL_ID_CUSTOMER, Criteria::DESC);
+
+        return $customerQuery;
+    }
+
+    /**
+     * @param \Orm\Zed\Customer\Persistence\SpyCustomer $entity
+     *
+     * @return array
+     */
+    protected function formatCsvRow(ActiveRecordInterface $entity): array
+    {
+        $customerRow = $entity->toArray();
+
+        $customerRow[static::COL_CREATED_AT] = $this->utilDateTimeService->formatDateTime($entity->getCreatedAt());
+        $customerRow[static::COL_STATUS] = $entity->getRegistered() ? 'Verified' : 'Unverified';
+
+        return $customerRow;
     }
 
     /**
@@ -183,10 +248,10 @@ class CustomerTable extends AbstractTable
     }
 
     /**
-     * @param string[] $buttons
+     * @param array<string> $buttons
      * @param \Orm\Zed\Customer\Persistence\SpyCustomer $customer
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function expandLinks(array $buttons, SpyCustomer $customer): array
     {

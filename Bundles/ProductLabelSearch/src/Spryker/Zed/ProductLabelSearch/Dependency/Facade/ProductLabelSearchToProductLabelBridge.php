@@ -27,7 +27,7 @@ class ProductLabelSearchToProductLabelBridge implements ProductLabelSearchToProd
     /**
      * @param int $idProductAbstract
      *
-     * @return int[]
+     * @return array<int>
      */
     public function findLabelIdsByIdProductAbstract($idProductAbstract)
     {
@@ -37,7 +37,7 @@ class ProductLabelSearchToProductLabelBridge implements ProductLabelSearchToProd
     /**
      * @param \Generated\Shared\Transfer\ProductLabelCriteriaTransfer $productLabelCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductLabelTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductLabelTransfer>
      */
     public function getActiveLabelsByCriteria(ProductLabelCriteriaTransfer $productLabelCriteriaTransfer): array
     {

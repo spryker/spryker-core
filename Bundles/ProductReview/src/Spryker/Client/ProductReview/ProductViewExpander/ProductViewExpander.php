@@ -17,8 +17,15 @@ class ProductViewExpander implements ProductViewExpanderInterface
 {
     /**
      * @see \Spryker\Client\ProductReview\Plugin\Elasticsearch\ResultFormatter\RatingAggregationResultFormatterPlugin::NAME
+     * @var string
      */
     protected const KEY_RATING_AGGREGATION = 'ratingAggregation';
+
+    /**
+     * @see \Spryker\Client\ProductReview\Plugin\Elasticsearch\ResultFormatter\ProductRatingAggregationBulkResultFormatterPlugin::NAME
+     * @var string
+     */
+    protected const KEY_PRODUCT_BULK_AGGREGATION = 'productAggregation';
 
     /**
      * @var \Spryker\Client\ProductReview\Calculator\ProductReviewSummaryCalculatorInterface
@@ -75,5 +82,36 @@ class ProductViewExpander implements ProductViewExpanderInterface
     {
         return (new RatingAggregationTransfer())
             ->setRatingAggregation($productReviews[static::KEY_RATING_AGGREGATION]);
+    }
+
+    /**
+     * @param array<\Generated\Shared\Transfer\ProductViewTransfer> $productViewTransfers
+     *
+     * @return array<\Generated\Shared\Transfer\ProductViewTransfer>
+     */
+    public function expandProductViewsWithProductReviewData(
+        array $productViewTransfers
+    ): array {
+        $productsReviews = $this->productReviewSearchReader->searchProductReviews();
+
+        if (!isset($productsReviews[static::KEY_PRODUCT_BULK_AGGREGATION])) {
+            return $productViewTransfers;
+        }
+
+        foreach ($productsReviews[static::KEY_PRODUCT_BULK_AGGREGATION] as $productId => $productReviews) {
+            if (empty($productReviews[static::KEY_RATING_AGGREGATION])) {
+                continue;
+            }
+
+            if (isset($productViewTransfers[$productId])) {
+                $productReviewSummaryTransfer = $this->productReviewSummaryCalculator->calculate(
+                    $this->createRatingAggregationTransfer($productReviews)
+                );
+
+                $productViewTransfers[$productId]->setRating($productReviewSummaryTransfer);
+            }
+        }
+
+        return $productViewTransfers;
     }
 }

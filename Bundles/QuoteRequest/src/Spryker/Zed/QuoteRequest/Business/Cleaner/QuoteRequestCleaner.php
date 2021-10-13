@@ -54,7 +54,7 @@ class QuoteRequestCleaner implements QuoteRequestCleanerInterface
     }
 
     /**
-     * @param int[] $quoteRequestIds
+     * @param array<int> $quoteRequestIds
      *
      * @return void
      */
@@ -66,7 +66,7 @@ class QuoteRequestCleaner implements QuoteRequestCleanerInterface
     }
 
     /**
-     * @param int[] $quoteRequestIds
+     * @param array<int> $quoteRequestIds
      *
      * @return void
      */

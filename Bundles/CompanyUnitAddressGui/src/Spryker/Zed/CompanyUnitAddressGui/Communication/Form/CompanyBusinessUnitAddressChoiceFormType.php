@@ -22,6 +22,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class CompanyBusinessUnitAddressChoiceFormType extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const OPTION_VALUES_ADDRESSES_CHOICES = 'company_business_unit_address_value_options';
 
     /**

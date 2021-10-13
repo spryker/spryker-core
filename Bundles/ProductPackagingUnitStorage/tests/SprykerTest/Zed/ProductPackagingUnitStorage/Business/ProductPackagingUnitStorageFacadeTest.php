@@ -29,7 +29,13 @@ use SprykerTest\Zed\ProductPackagingUnitStorage\ProductPackagingUnitStorageConfi
  */
 class ProductPackagingUnitStorageFacadeTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const PACKAGING_TYPE_DEFAULT = 'item';
+    /**
+     * @var string
+     */
     protected const PACKAGING_TYPE = 'box';
 
     /**

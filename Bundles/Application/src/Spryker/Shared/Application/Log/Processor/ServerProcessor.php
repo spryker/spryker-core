@@ -14,15 +14,42 @@ use Spryker\Service\UtilNetwork\Model\Host;
  */
 class ServerProcessor
 {
+    /**
+     * @var string
+     */
     public const EXTRA = 'server';
 
+    /**
+     * @var string
+     */
     public const URL = 'url';
+    /**
+     * @var string
+     */
     public const IS_HTTPS = 'is_https';
+    /**
+     * @var string
+     */
     public const HOST_NAME = 'hostname';
+    /**
+     * @var string
+     */
     public const USER_AGENT = 'user_agent';
+    /**
+     * @var string
+     */
     public const USER_IP = 'user_ip';
+    /**
+     * @var string
+     */
     public const REQUEST_METHOD = 'request_method';
+    /**
+     * @var string
+     */
     public const REFERER = 'referer';
+    /**
+     * @var string
+     */
     public const RECORD_EXTRA = 'extra';
 
     /**

@@ -35,7 +35,7 @@ class Messenger implements MessengerInterface
     }
 
     /**
-     * @return \Generated\Shared\Transfer\MessageTransfer[]
+     * @return array<\Generated\Shared\Transfer\MessageTransfer>
      */
     public function getLastResponseInfoMessages()
     {
@@ -47,7 +47,7 @@ class Messenger implements MessengerInterface
     }
 
     /**
-     * @return \Generated\Shared\Transfer\MessageTransfer[]
+     * @return array<\Generated\Shared\Transfer\MessageTransfer>
      */
     public function getLastResponseErrorMessages()
     {
@@ -59,7 +59,7 @@ class Messenger implements MessengerInterface
     }
 
     /**
-     * @return \Generated\Shared\Transfer\MessageTransfer[]
+     * @return array<\Generated\Shared\Transfer\MessageTransfer>
      */
     public function getLastResponseSuccessMessages()
     {
@@ -111,7 +111,7 @@ class Messenger implements MessengerInterface
     }
 
     /**
-     * @return \Generated\Shared\Transfer\MessageTransfer[]
+     * @return array<\Generated\Shared\Transfer\MessageTransfer>
      */
     public function getResponsesInfoMessages(): array
     {
@@ -119,7 +119,7 @@ class Messenger implements MessengerInterface
     }
 
     /**
-     * @return \Generated\Shared\Transfer\MessageTransfer[]
+     * @return array<\Generated\Shared\Transfer\MessageTransfer>
      */
     public function getResponsesErrorMessages(): array
     {
@@ -127,7 +127,7 @@ class Messenger implements MessengerInterface
     }
 
     /**
-     * @return \Generated\Shared\Transfer\MessageTransfer[]
+     * @return array<\Generated\Shared\Transfer\MessageTransfer>
      */
     public function getResponsesSuccessMessages(): array
     {

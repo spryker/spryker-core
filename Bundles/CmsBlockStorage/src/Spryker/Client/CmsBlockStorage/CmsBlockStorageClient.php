@@ -19,7 +19,7 @@ class CmsBlockStorageClient extends AbstractClient implements CmsBlockStorageCli
      *
      * @api
      *
-     * @param string[] $blockNames
+     * @param array<string> $blockNames
      * @param string $localeName
      * @param string $storeName
      *

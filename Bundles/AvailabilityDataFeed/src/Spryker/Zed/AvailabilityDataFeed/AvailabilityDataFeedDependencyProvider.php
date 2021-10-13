@@ -16,6 +16,9 @@ use Spryker\Zed\Kernel\Container;
  */
 class AvailabilityDataFeedDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const AVAILABILITY_QUERY_CONTAINER = 'AVAILABILITY_QUERY_CONTAINER';
 
     /**

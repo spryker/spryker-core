@@ -10,9 +10,9 @@ namespace Spryker\Zed\Discount\Persistence;
 interface DiscountRepositoryInterface
 {
     /**
-     * @param string[] $codes
+     * @param array<string> $codes
      *
-     * @return string[]
+     * @return array<string>
      */
     public function findVoucherCodesExceedingUsageLimit(array $codes): array;
 }

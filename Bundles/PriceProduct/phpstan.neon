@@ -2,7 +2,4 @@ parameters:
     checkMissingIterableValueType: false
     ignoreErrors:
         - '#Call to an undefined method .+SpyPriceProductQuery::joinWithPriceProductDefault\(\)#'
-        - '#Parameter \#1 \$idPriceProductDefault of method .+SpyPriceProductDefaultEntityTransfer::setIdPriceProductDefault\(\) expects string\|null, int\|null given#'
-        - '#Parameter \#1 \$fkPriceProductStore of method .+SpyPriceProductDefaultEntityTransfer::setFkPriceProductStore\(\) expects string\|null, int\|null given#'
         - '#Parameter \#1 \$idEntity of method .+MoneyValueTransfer::setIdEntity\(\) expects int\|null, string given#'
-        - '#Parameter \#1 \$idPriceProductDefault of method .+PriceProductDimensionTransfer::setIdPriceProductDefault\(\) expects int\|null, string\|null given.#'

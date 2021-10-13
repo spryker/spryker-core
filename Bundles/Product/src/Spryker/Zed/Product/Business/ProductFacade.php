@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\ProductAbstractSuggestionCollectionTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductAttributeKeyTransfer;
+use Generated\Shared\Transfer\ProductConcreteCollectionTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductCriteriaTransfer;
 use Generated\Shared\Transfer\ProductUrlCriteriaFilterTransfer;
@@ -22,6 +23,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 /**
  * @method \Spryker\Zed\Product\Business\ProductBusinessFactory getFactory()
  * @method \Spryker\Zed\Product\Persistence\ProductRepositoryInterface getRepository()
+ * @method \Spryker\Zed\Product\Persistence\ProductEntityManagerInterface getEntityManager()
  */
 class ProductFacade extends AbstractFacade implements ProductFacadeInterface
 {
@@ -31,7 +33,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteCollection
+     * @param array<\Generated\Shared\Transfer\ProductConcreteTransfer> $productConcreteCollection
      *
      * @throws \Spryker\Zed\Product\Business\Exception\ProductAbstractExistsException
      * @throws \Spryker\Zed\Product\Business\Exception\ProductConcreteExistsException
@@ -51,7 +53,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteCollection
+     * @param array<\Generated\Shared\Transfer\ProductConcreteTransfer> $productConcreteCollection
      *
      * @throws \Spryker\Zed\Product\Business\Exception\ProductAbstractExistsException
      * @throws \Spryker\Zed\Product\Business\Exception\ProductConcreteExistsException
@@ -258,9 +260,9 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      *
      * @api
      *
-     * @param string[] $skus
+     * @param array<string> $skus
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
      */
     public function findProductConcretesBySkus(array $skus): array
     {
@@ -344,7 +346,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      *
      * @param int $idProductAbstract
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
      */
     public function getConcreteProductsByAbstractProductId($idProductAbstract)
     {
@@ -712,7 +714,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      *
      * @api
      *
-     * @param string[] $productConcreteSkus
+     * @param array<string> $productConcreteSkus
      *
      * @return void
      */
@@ -748,7 +750,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      * @param array $attributeCollection
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
      */
     public function generateVariants(ProductAbstractTransfer $productAbstractTransfer, array $attributeCollection)
     {
@@ -813,7 +815,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      *
      * @api
      *
-     * @param int[] $productIds
+     * @param array<int> $productIds
      * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
      *
      * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
@@ -917,7 +919,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      *
      * @param string $suggestion
      *
-     * @return string[]
+     * @return array<string>
      */
     public function suggestProductAbstract(string $suggestion): array
     {
@@ -952,7 +954,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      *
      * @param string $suggestion
      *
-     * @return string[]
+     * @return array<string>
      */
     public function suggestProductConcrete(string $suggestion): array
     {
@@ -968,7 +970,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      *
      * @param int $idProductAbstract
      *
-     * @return int[]
+     * @return array<int>
      */
     public function findProductConcreteIdsByAbstractProductId(int $idProductAbstract): array
     {
@@ -982,9 +984,9 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      *
      * @api
      *
-     * @param int[] $productConcreteIds
+     * @param array<int> $productConcreteIds
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getProductAbstractIdsByProductConcreteIds(array $productConcreteIds): array
     {
@@ -998,9 +1000,9 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      *
      * @api
      *
-     * @param string[] $skus
+     * @param array<string> $skus
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getProductConcreteIdsByConcreteSkus(array $skus): array
     {
@@ -1014,7 +1016,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      *
      * @api
      *
-     * @param int[] $productIds
+     * @param array<int> $productIds
      *
      * @return array
      */
@@ -1047,9 +1049,9 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      *
      * @api
      *
-     * @param int[] $productIds
+     * @param array<int> $productIds
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
      */
     public function getProductConcreteTransfersByProductIds(array $productIds): array
     {
@@ -1062,9 +1064,9 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      *
      * @api
      *
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
      */
     public function getProductConcreteTransfersByProductAbstractIds(array $productAbstractIds): array
     {
@@ -1079,7 +1081,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      *
      * @param array $productConcreteSkus
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
      */
     public function getRawProductConcreteTransfersByConcreteSkus(array $productConcreteSkus): array
     {
@@ -1095,7 +1097,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      *
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
      */
     public function getProductConcretesByFilter(FilterTransfer $filterTransfer): array
     {
@@ -1109,7 +1111,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      *
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
      */
     public function getRawProductConcreteTransfersByFilter(FilterTransfer $filterTransfer): array
     {
@@ -1123,7 +1125,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      *
      * @param \Generated\Shared\Transfer\ProductUrlCriteriaFilterTransfer $productUrlCriteriaFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\UrlTransfer[]
+     * @return array<\Generated\Shared\Transfer\UrlTransfer>
      */
     public function getProductUrls(ProductUrlCriteriaFilterTransfer $productUrlCriteriaFilterTransfer): array
     {
@@ -1135,9 +1137,9 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      *
      * @api
      *
-     * @param string[] $productAbstractSkus
+     * @param array<string> $productAbstractSkus
      *
-     * @return \Generated\Shared\Transfer\ProductAbstractTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductAbstractTransfer>
      */
     public function getRawProductAbstractTransfersByAbstractSkus(array $productAbstractSkus): array
     {
@@ -1151,10 +1153,27 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      *
      * @param \Generated\Shared\Transfer\ProductCriteriaTransfer $productCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
      */
     public function getProductConcretesByCriteria(ProductCriteriaTransfer $productCriteriaTransfer): array
     {
         return $this->getRepository()->getProductConcretesByCriteria($productCriteriaTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductConcreteCollectionTransfer $productConcreteCollectionTransfer
+     *
+     * @return void
+     */
+    public function createProductConcreteCollection(
+        ProductConcreteCollectionTransfer $productConcreteCollectionTransfer
+    ): void {
+        $this->getFactory()
+            ->createProductConcreteWriter()
+            ->createProductConcreteCollection($productConcreteCollectionTransfer);
     }
 }

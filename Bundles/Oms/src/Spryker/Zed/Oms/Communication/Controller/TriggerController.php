@@ -22,16 +22,38 @@ class TriggerController extends AbstractController
 {
     /**
      * @deprecated Exists for Backward Compatibility reasons only. Use static::REQUEST_PARAMETER_ITEMS instead.
+     * @var string
      */
     protected const REQUEST_PARAMETER_ID_SALES_ORDER_ITEM = 'id-sales-order-item';
+    /**
+     * @var string
+     */
     protected const REQUEST_PARAMETER_ID_SALES_ORDER = 'id-sales-order';
+    /**
+     * @var string
+     */
     protected const REQUEST_PARAMETER_ITEMS = 'items';
+    /**
+     * @var string
+     */
     protected const REQUEST_PARAMETER_EVENT = 'event';
+    /**
+     * @var string
+     */
     protected const REQUEST_PARAMETER_REDIRECT = 'redirect';
 
+    /**
+     * @var string
+     */
     protected const MESSAGE_STATUS_CHANGED_SUCCESSFULLY = 'Status change triggered successfully.';
 
+    /**
+     * @var string
+     */
     protected const ROUTE_REDIRECT_DEFAULT = '/';
+    /**
+     * @var string
+     */
     protected const ERROR_INVALID_FORM = 'Form is invalid';
 
     /**
@@ -93,7 +115,7 @@ class TriggerController extends AbstractController
      * @param int $idOrder
      * @param array|null $itemsList
      *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Sales\Persistence\SpySalesOrderItem>
      */
     protected function getOrderItemsToTriggerAction($idOrder, $itemsList = null)
     {
@@ -152,9 +174,7 @@ class TriggerController extends AbstractController
             $idOrderItems = [];
         }
 
-        /**
-         * Exists for Backward Compatibility reasons only.
-         */
+        // Exists for Backward Compatibility reasons only.
         $idOrderItem = $request->query->get(static::REQUEST_PARAMETER_ID_SALES_ORDER_ITEM);
         if ($idOrderItems === [] && $idOrderItem !== null) {
             $idOrderItems = [$idOrderItem];

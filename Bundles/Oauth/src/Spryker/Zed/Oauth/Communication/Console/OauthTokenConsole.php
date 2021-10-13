@@ -18,7 +18,13 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class OauthTokenConsole extends Console
 {
+    /**
+     * @var string
+     */
     public const COMMAND_NAME = 'oauth:refresh-token:remove-expired';
+    /**
+     * @var string
+     */
     public const DESCRIPTION = 'Remove expired refresh tokens from the database.';
 
     /**

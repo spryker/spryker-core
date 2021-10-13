@@ -20,14 +20,20 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class RateController extends AbstractController
 {
+    /**
+     * @var string
+     */
     public const PARAM_URL_ID_TAX_RATE = 'id-tax-rate';
 
+    /**
+     * @var string
+     */
     public const REDIRECT_URL_DEFAULT = '/tax/rate/list';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function createAction(Request $request)
     {

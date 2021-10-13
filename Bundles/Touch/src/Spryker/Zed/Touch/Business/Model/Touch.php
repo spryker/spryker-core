@@ -13,6 +13,9 @@ use Spryker\Zed\Touch\TouchConfig;
 
 class Touch implements TouchInterface
 {
+    /**
+     * @var int
+     */
     public const BULK_UPDATE_CHUNK_SIZE = 250;
 
     /**
@@ -40,7 +43,7 @@ class Touch implements TouchInterface
     /**
      * @param string $itemType
      *
-     * @return \Generated\Shared\Transfer\TouchTransfer[]
+     * @return array<\Generated\Shared\Transfer\TouchTransfer>
      */
     public function getItemsByType($itemType)
     {

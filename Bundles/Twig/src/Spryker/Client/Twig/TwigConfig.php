@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\Twig;
 
-use Spryker\Yves\Kernel\AbstractBundleConfig;
+use Spryker\Client\Kernel\AbstractBundleConfig;
 
 /**
  * @method \Spryker\Shared\Twig\TwigConfig getSharedConfig()

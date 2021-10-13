@@ -13,7 +13,13 @@ use Propel\Runtime\ActiveQuery\ModelCriteria;
 
 class QueryBuilder implements QueryBuilderInterface
 {
+    /**
+     * @var string
+     */
     protected const TABLE_SEPARATOR = '_';
+    /**
+     * @var string
+     */
     protected const QUERY_NAMESPACE = 'Orm\Zed\%s\Persistence\%sQuery';
 
     /**

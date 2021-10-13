@@ -22,7 +22,6 @@ use Symfony\Component\Security\Guard\Token\PostAuthenticationGuardToken;
 /**
  * @method \Spryker\Zed\SecuritySystemUser\Communication\SecuritySystemUserCommunicationFactory getFactory()
  * @method \Spryker\Zed\SecuritySystemUser\SecuritySystemUserConfig getConfig()
- * @method \Spryker\Zed\SecuritySystemUser\Business\SecuritySystemUserFacadeInterface getFacade()
  */
 class TokenAuthenticator extends AbstractPlugin implements AuthenticatorInterface
 {
@@ -54,13 +53,13 @@ class TokenAuthenticator extends AbstractPlugin implements AuthenticatorInterfac
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|mixed|void
+     * @return array<string>|null
      */
     public function getCredentials(Request $request)
     {
         $token = $request->headers->get(strtolower(SecuritySystemUserConfig::AUTH_TOKEN));
         if (!$token) {
-            return;
+            return null;
         }
 
         return [
@@ -107,6 +106,7 @@ class TokenAuthenticator extends AbstractPlugin implements AuthenticatorInterfac
         $user = $token->getUser();
         $this->getFactory()->getUserFacade()->setCurrentUser(
             (new UserTransfer())->setUsername($user->getUsername())
+                ->setIsSystemUser(true)
         );
 
         return null;

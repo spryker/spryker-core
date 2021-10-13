@@ -9,7 +9,6 @@ namespace Spryker\Zed\MerchantUser;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToAclFacadeBridge;
 use Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToMerchantFacadeBridge;
 use Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToUserFacadeBridge;
 use Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToUserPasswordResetFacadeBridge;
@@ -20,11 +19,26 @@ use Spryker\Zed\MerchantUser\Dependency\Service\MerchantUserToUtilTextServiceBri
  */
 class MerchantUserDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const FACADE_ACL = 'FACADE_ACL';
+    /**
+     * @var string
+     */
     public const FACADE_USER = 'FACADE_USER';
+    /**
+     * @var string
+     */
     public const FACADE_MERCHANT = 'FACADE_MERCHANT';
-    public const SERVICE_UTIL_TEXT = 'UTIL_TEXT_SERVICE';
+    /**
+     * @var string
+     */
     public const FACADE_USER_PASSWORD_RESET = 'FACADE_USER_PASSWORD_RESET';
+    /**
+     * @var string
+     */
+    public const SERVICE_UTIL_TEXT = 'UTIL_TEXT_SERVICE';
+    /**
+     * @var string
+     */
+    public const PLUGINS_MERCHANT_USER_POST_CREATE = 'PLUGINS_MERCHANT_USER_POST_CREATE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -37,9 +51,9 @@ class MerchantUserDependencyProvider extends AbstractBundleDependencyProvider
 
         $container = $this->addUserFacade($container);
         $container = $this->addUtilTextService($container);
-        $container = $this->addAclFacade($container);
         $container = $this->addMerchantFacade($container);
         $container = $this->addUserPasswordResetFacade($container);
+        $container = $this->addMerchantUserPostCreatePlugins($container);
 
         return $container;
     }
@@ -81,22 +95,6 @@ class MerchantUserDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addAclFacade(Container $container): Container
-    {
-        $container->set(static::FACADE_ACL, function (Container $container) {
-            return new MerchantUserToAclFacadeBridge(
-                $container->getLocator()->acl()->facade()
-            );
-        });
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addMerchantFacade(Container $container): Container
     {
         $container->set(static::FACADE_MERCHANT, function (Container $container) {
@@ -122,5 +120,27 @@ class MerchantUserDependencyProvider extends AbstractBundleDependencyProvider
         });
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addMerchantUserPostCreatePlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_MERCHANT_USER_POST_CREATE, function (Container $container) {
+            return $this->getMerchantUserPostCreatePlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return array<\Spryker\Zed\MerchantUserExtension\Dependency\Plugin\MerchantUserPostCreatePluginInterface>
+     */
+    protected function getMerchantUserPostCreatePlugins(): array
+    {
+        return [];
     }
 }

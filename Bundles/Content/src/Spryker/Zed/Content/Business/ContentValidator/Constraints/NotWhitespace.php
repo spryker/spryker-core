@@ -11,6 +11,9 @@ use Symfony\Component\Validator\Constraint;
 
 class NotWhitespace extends Constraint
 {
+    /**
+     * @var string
+     */
     public const IS_EMPTY_ERROR = 'is_empty_error';
 
     /**

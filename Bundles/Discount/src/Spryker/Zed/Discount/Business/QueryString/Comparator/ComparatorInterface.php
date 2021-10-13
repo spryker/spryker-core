@@ -41,7 +41,7 @@ interface ComparatorInterface
     public function getExpression();
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getAcceptedTypes();
 }

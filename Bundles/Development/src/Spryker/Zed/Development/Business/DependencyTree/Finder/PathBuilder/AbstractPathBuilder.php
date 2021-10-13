@@ -14,8 +14,14 @@ use Spryker\Zed\Development\DevelopmentConfig;
 
 class AbstractPathBuilder
 {
+    /**
+     * @var string
+     */
     protected const ORGANIZATION = '';
 
+    /**
+     * @var array
+     */
     protected const LOOKUP_NAMESPACES = [];
 
     /**
@@ -53,7 +59,7 @@ class AbstractPathBuilder
     }
 
     /**
-     * @param string[] $pathComponents
+     * @param array<string> $pathComponents
      *
      * @return string
      */

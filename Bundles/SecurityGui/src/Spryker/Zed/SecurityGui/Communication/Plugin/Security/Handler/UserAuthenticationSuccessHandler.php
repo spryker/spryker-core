@@ -25,6 +25,7 @@ class UserAuthenticationSuccessHandler extends AbstractPlugin implements Authent
 
     /**
      * @uses \Spryker\Zed\SecurityGui\Communication\Plugin\Security\UserSecurityPlugin::SECURITY_FIREWALL_NAME
+     * @var string
      */
     protected const SECURITY_FIREWALL_NAME = 'User';
 

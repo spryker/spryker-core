@@ -10,7 +10,7 @@ namespace Spryker\Zed\Oms\Business\Checker;
 interface FlagCheckerInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      * @param string $flag
      *
      * @return bool

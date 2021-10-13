@@ -14,6 +14,9 @@ use Spryker\Glue\NavigationsCategoryNodesResourceRelationship\Dependency\RestRes
 
 class CategoryNodeResourceExpander implements CategoryNodeResourceExpanderInterface
 {
+    /**
+     * @var string
+     */
     protected const NODE_TYPE_VALUE_CATEGORY = 'category';
 
     /**
@@ -30,10 +33,10 @@ class CategoryNodeResourceExpander implements CategoryNodeResourceExpanderInterf
     }
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
+     * @param array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface> $resources
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>
      */
     public function addResourceRelationshipsByResourceId(array $resources, RestRequestInterface $restRequest): array
     {
@@ -52,7 +55,7 @@ class CategoryNodeResourceExpander implements CategoryNodeResourceExpanderInterf
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RestNavigationNodeTransfer[] $navigationNodes
+     * @param array<\Generated\Shared\Transfer\RestNavigationNodeTransfer> $navigationNodes
      *
      * @return array
      */
@@ -73,7 +76,7 @@ class CategoryNodeResourceExpander implements CategoryNodeResourceExpanderInterf
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $resource
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     * @param int[] $categoryNodeIds
+     * @param array<int> $categoryNodeIds
      *
      * @return void
      */

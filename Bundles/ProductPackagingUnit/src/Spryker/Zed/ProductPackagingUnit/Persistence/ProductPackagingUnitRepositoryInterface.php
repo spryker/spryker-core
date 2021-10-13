@@ -51,9 +51,9 @@ interface ProductPackagingUnitRepositoryInterface
     ): ?ProductConcreteTransfer;
 
     /**
-     * @param int[] $productPackagingUnitTypeIds
+     * @param array<int> $productPackagingUnitTypeIds
      *
-     * @return int[]
+     * @return array<int>
      */
     public function findProductIdsByProductPackagingUnitTypeIds(array $productPackagingUnitTypeIds): array;
 
@@ -85,9 +85,9 @@ interface ProductPackagingUnitRepositoryInterface
     ): ?ProductPackagingUnitTransfer;
 
     /**
-     * @param string[] $productSkus
+     * @param array<string> $productSkus
      *
-     * @return \Generated\Shared\Transfer\ProductPackagingUnitTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductPackagingUnitTransfer>
      */
     public function findProductPackagingUnitsByProductSku(
         array $productSkus
@@ -96,21 +96,21 @@ interface ProductPackagingUnitRepositoryInterface
     /**
      * @param int $idSalesOrder
      *
-     * @return \Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer[]
+     * @return array<\Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer>
      */
     public function findSalesOrderItemsByIdSalesOrder(int $idSalesOrder): array;
 
     /**
-     * @param int[] $salesOrderItemIds
+     * @param array<int> $salesOrderItemIds
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getMappedLeadProductSkusBySalesOrderItemIds(array $salesOrderItemIds): array;
 
     /**
-     * @param int[] $salesOrderItemIds
+     * @param array<int> $salesOrderItemIds
      *
-     * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer>
      */
     public function getMappedProductMeasurementSalesUnits(array $salesOrderItemIds): array;
 
@@ -118,17 +118,17 @@ interface ProductPackagingUnitRepositoryInterface
      * @uses State
      *
      * @param string $sku
-     * @param string[] $reservedStateNames
+     * @param array<string> $reservedStateNames
      * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
      *
-     * @return \Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer[]
+     * @return array<\Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer>
      */
     public function aggregateProductPackagingUnitReservation(string $sku, array $reservedStateNames, ?StoreTransfer $storeTransfer = null): array;
 
     /**
-     * @param int[] $productConcreteIds
+     * @param array<int> $productConcreteIds
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getProductPackagingUnitCountByProductConcreteIds(array $productConcreteIds): array;
 }

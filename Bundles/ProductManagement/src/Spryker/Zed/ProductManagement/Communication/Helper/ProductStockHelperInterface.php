@@ -13,7 +13,7 @@ interface ProductStockHelperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     * @param \Orm\Zed\Stock\Persistence\SpyStock[] $stockTypeEntities
+     * @param array<\Orm\Zed\Stock\Persistence\SpyStock> $stockTypeEntities
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */

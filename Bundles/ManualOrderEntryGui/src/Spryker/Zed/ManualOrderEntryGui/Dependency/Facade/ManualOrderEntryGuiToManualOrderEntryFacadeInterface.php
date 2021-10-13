@@ -17,7 +17,7 @@ interface ManualOrderEntryGuiToManualOrderEntryFacadeInterface
     public function getOrderSourceById($idOrderSource);
 
     /**
-     * @return \Generated\Shared\Transfer\OrderSourceTransfer[]
+     * @return array<\Generated\Shared\Transfer\OrderSourceTransfer>
      */
     public function getAllOrderSources();
 }

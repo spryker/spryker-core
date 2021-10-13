@@ -16,16 +16,22 @@ use Spryker\Zed\ShipmentCheckoutConnector\Business\Shipment\ShipmentCheckoutPreC
  */
 class PreCheckStrategyResolver implements PreCheckStrategyResolverInterface
 {
+    /**
+     * @var string
+     */
     public const STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT = 'STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT';
+    /**
+     * @var string
+     */
     public const STRATEGY_KEY_WITH_MULTI_SHIPMENT = 'STRATEGY_KEY_WITH_MULTI_SHIPMENT';
 
     /**
-     * @var array|\Closure[]
+     * @var array<\Closure>
      */
     protected $strategyContainer;
 
     /**
-     * @param \Closure[] $strategyContainer
+     * @param array<\Closure> $strategyContainer
      */
     public function __construct(array $strategyContainer)
     {
@@ -33,7 +39,7 @@ class PreCheckStrategyResolver implements PreCheckStrategyResolverInterface
     }
 
     /**
-     * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param iterable<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
      * @return \Spryker\Zed\ShipmentCheckoutConnector\Business\Shipment\ShipmentCheckoutPreCheckInterface
      */

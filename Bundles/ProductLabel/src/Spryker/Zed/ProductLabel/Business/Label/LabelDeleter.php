@@ -18,6 +18,9 @@ class LabelDeleter implements LabelDeleterInterface
 {
     use TransactionTrait;
 
+    /**
+     * @var string
+     */
     protected const MESSAGE_PRODUCT_LABEL_NOT_FOUND = 'Product label #%d not found.';
 
     /**

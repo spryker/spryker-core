@@ -24,12 +24,27 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  */
 abstract class AbstractAttributeKeyForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const FIELD_KEY = 'key';
 
+    /**
+     * @var string
+     */
     public const OPTION_FILTER_TYPE_CHOICES = 'filter_type_choices';
+    /**
+     * @var string
+     */
     public const OPTION_IS_UPDATE = 'is_update';
+    /**
+     * @var string
+     */
     public const OPTION_ATTRIBUTE_TRANSLATION_COLLECTION_OPTIONS = 'attribute_translation_collection_options';
 
+    /**
+     * @var string
+     */
     public const GROUP_UNIQUE_KEY = 'unique_key_group';
 
     /**
@@ -73,7 +88,7 @@ abstract class AbstractAttributeKeyForm extends AbstractType
     abstract protected function isUniqueKey($key);
 
     /**
-     * @return \Symfony\Component\Validator\Constraint[]
+     * @return array<\Symfony\Component\Validator\Constraint>
      */
     protected function createAttributeKeyFieldConstraints()
     {

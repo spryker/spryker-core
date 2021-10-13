@@ -22,6 +22,9 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class MessengerBusinessFactory extends AbstractBusinessFactory
 {
+    /**
+     * @var string
+     */
     protected const DUMMY_LOCALE = '';
 
     /**
@@ -88,7 +91,7 @@ class MessengerBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\MessengerExtension\Dependency\Plugin\TranslationPluginInterface[]
+     * @return array<\Spryker\Zed\MessengerExtension\Dependency\Plugin\TranslationPluginInterface>
      */
     public function getTranslationPlugins(): array
     {

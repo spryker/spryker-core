@@ -12,6 +12,9 @@ use Spryker\Client\Kernel\Container;
 
 class CalculationDependencyProvider extends AbstractDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_ZED_REQUEST = 'zed request client';
 
     /**

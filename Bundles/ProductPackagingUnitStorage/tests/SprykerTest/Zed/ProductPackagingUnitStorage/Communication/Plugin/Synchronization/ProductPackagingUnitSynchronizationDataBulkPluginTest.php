@@ -31,7 +31,13 @@ use SprykerTest\Zed\ProductPackagingUnitStorage\ProductPackagingUnitStorageConfi
  */
 class ProductPackagingUnitSynchronizationDataBulkPluginTest extends Unit
 {
+    /**
+     * @var int
+     */
     protected const TEST_INVALID_ID = 111;
+    /**
+     * @var string
+     */
     protected const PACKAGING_TYPE = 'box';
 
     /**

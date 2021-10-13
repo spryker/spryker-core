@@ -30,19 +30,50 @@ use Spryker\Zed\Kernel\Container;
  */
 class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const SERVICE_PROVIDER = 'SERVICE_PROVIDER';
+    /**
+     * @var string
+     */
     public const SERVICE_PROVIDER_API = 'SERVICE_PROVIDER_API';
+    /**
+     * @var string
+     */
     public const INTERNAL_CALL_SERVICE_PROVIDER = 'INTERNAL_CALL_SERVICE_PROVIDER';
+    /**
+     * @var string
+     */
     public const INTERNAL_CALL_SERVICE_PROVIDER_WITH_AUTHENTICATION = 'INTERNAL_CALL_SERVICE_PROVIDER_WITH_AUTHENTICATION';
+
+    /**
+     * @deprecated Use {@link \Spryker\Zed\Application\ApplicationDependencyProvider::PLUGINS_BACKOFFICE_APPLICATION} instead.
+     * @var string
+     */
     public const PLUGINS_APPLICATION = 'PLUGINS_APPLICATION';
+    /**
+     * @var string
+     */
+    public const PLUGINS_BACKOFFICE_APPLICATION = 'PLUGINS_BACKOFFICE_APPLICATION';
+    /**
+     * @var string
+     */
+    public const PLUGINS_BACKEND_GATEWAY_APPLICATION = 'PLUGINS_BACKEND_GATEWAY_APPLICATION';
+    /**
+     * @var string
+     */
+    public const PLUGINS_BACKEND_API_APPLICATION = 'PLUGINS_BACKEND_API_APPLICATION';
 
     /**
      * @deprecated Will be removed without replacement.
+     * @var string
      */
     public const SERVICE_ENCODING = 'util encoding service';
 
     /**
      * @deprecated Will be removed without replacement.
+     * @var string
      */
     public const ENVIRONMENT = 'ENVIRONMENT';
 
@@ -65,6 +96,10 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
+        $container = $this->addBackofficeApplicationPlugins($container);
+        $container = $this->addBackendGatewayApplicationPlugins($container);
+        $container = $this->addBackendApiApplicationPlugins($container);
+
         $container = $this->addApplicationPlugins($container);
         $container = $this->addServiceProviders($container);
         $container = $this->addApiServiceProviders($container);
@@ -79,6 +114,74 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
+    protected function addBackofficeApplicationPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_BACKOFFICE_APPLICATION, function (Container $container): array {
+            return $this->getBackofficeApplicationPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return array<\Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface>
+     */
+    protected function getBackofficeApplicationPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addBackendGatewayApplicationPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_BACKEND_GATEWAY_APPLICATION, function (Container $container): array {
+            return $this->getBackendGatewayApplicationPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return array<\Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface>
+     */
+    protected function getBackendGatewayApplicationPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addBackendApiApplicationPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_BACKEND_API_APPLICATION, function (Container $container): array {
+            return $this->getBackendApiApplicationPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return array<\Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface>
+     */
+    protected function getBackendApiApplicationPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @deprecated Use {@link \Spryker\Zed\Application\ApplicationDependencyProvider::addBackofficeApplicationPlugins()} instead.
+     *
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
     protected function addApplicationPlugins(Container $container): Container
     {
         $container->set(static::PLUGINS_APPLICATION, function (Container $container): array {
@@ -89,7 +192,9 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface[]
+     * @deprecated Use {@link \Spryker\Zed\Application\ApplicationDependencyProvider::getBackofficeApplicationPlugins()} instead.
+     *
+     * @return array<\Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface>
      */
     protected function getApplicationPlugins(): array
     {
@@ -133,7 +238,7 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return \Silex\ServiceProviderInterface[]
+     * @return array<\Silex\ServiceProviderInterface>
      */
     protected function getServiceProviders(Container $container)
     {
@@ -177,7 +282,7 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return \Silex\ServiceProviderInterface[]
+     * @return array<\Silex\ServiceProviderInterface>
      */
     protected function getServiceProvider(Container $container)
     {
@@ -205,7 +310,7 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return \Silex\ServiceProviderInterface[]
+     * @return array<\Silex\ServiceProviderInterface>
      */
     protected function getApiServiceProviders(Container $container)
     {
@@ -233,7 +338,7 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return \Silex\ServiceProviderInterface[]
+     * @return array<\Silex\ServiceProviderInterface>
      */
     protected function getInternalCallServiceProviders(Container $container)
     {
@@ -261,7 +366,7 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return \Silex\ServiceProviderInterface[]
+     * @return array<\Silex\ServiceProviderInterface>
      */
     protected function getInternalCallServiceProvidersWithAuthentication(Container $container)
     {

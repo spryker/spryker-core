@@ -19,16 +19,40 @@ class FileTable extends AbstractTable
 {
     protected const COL_ID_FILE = SpyFileTableMap::COL_ID_FILE;
     protected const COL_FILE_NAME = SpyFileTableMap::COL_FILE_NAME;
+    /**
+     * @var string
+     */
     protected const COL_ACTIONS = 'Actions';
 
+    /**
+     * @var string
+     */
     protected const URL_FILE_MANAGER_GUI_VIEW = '/file-manager-gui/view-file';
+    /**
+     * @var string
+     */
     protected const URL_FILE_MANAGER_GUI_EDIT = '/file-manager-gui/edit-file';
+    /**
+     * @var string
+     */
     protected const URL_FILE_MANAGER_GUI_DELETE = '/file-manager-gui/delete-file/file';
 
+    /**
+     * @var string
+     */
     protected const VIEW_TITLE = 'View';
+    /**
+     * @var string
+     */
     protected const EDIT_TITLE = 'Edit';
+    /**
+     * @var string
+     */
     protected const DELETE_TITLE = 'Delete';
 
+    /**
+     * @var string
+     */
     protected const REQUEST_ID_FILE = 'id-file';
 
     /**
@@ -37,7 +61,7 @@ class FileTable extends AbstractTable
     protected $fileQuery;
 
     /**
-     * @var int
+     * @var int|null
      */
     protected $fileDirectoryId;
 
@@ -47,7 +71,7 @@ class FileTable extends AbstractTable
      */
     public function __construct(
         SpyFileQuery $fileQuery,
-        $fileDirectoryId = null
+        ?int $fileDirectoryId = null
     ) {
         $this->fileQuery = $fileQuery;
         $this->fileDirectoryId = $fileDirectoryId;

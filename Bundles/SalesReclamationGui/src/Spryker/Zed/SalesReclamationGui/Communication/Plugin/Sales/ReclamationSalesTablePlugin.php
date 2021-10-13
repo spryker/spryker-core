@@ -12,15 +12,20 @@ use Spryker\Zed\SalesExtension\Dependency\Plugin\SalesTablePluginInterface;
 
 class ReclamationSalesTablePlugin implements SalesTablePluginInterface
 {
+    /**
+     * @var string
+     */
     protected const URL_CREATE_RECLAMATION = '/sales-reclamation-gui/create';
 
     /**
      * @see \Orm\Zed\Sales\Persistence\Map\SpySalesOrderTableMap::COL_ID_SALES_ORDER
+     * @var string
      */
     protected const COL_ID_SALES_ORDER = 'spy_sales_order.id_sales_order';
 
     /**
      * @see \Spryker\Zed\SalesReclamationGui\Communication\Controller\CreateController::COL_ID_SALES_ORDER
+     * @var string
      */
     protected const PARAM_ID_SALES_ORDER = 'id-sales-order';
 

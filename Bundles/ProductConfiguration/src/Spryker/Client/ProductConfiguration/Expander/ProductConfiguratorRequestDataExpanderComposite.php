@@ -12,12 +12,12 @@ use Generated\Shared\Transfer\ProductConfiguratorRequestDataTransfer;
 class ProductConfiguratorRequestDataExpanderComposite implements ProductConfiguratorRequestDataExpanderInterface
 {
     /**
-     * @var \Spryker\Client\ProductConfiguration\Expander\ProductConfiguratorRequestDataExpanderInterface[]
+     * @var array<\Spryker\Client\ProductConfiguration\Expander\ProductConfiguratorRequestDataExpanderInterface>
      */
     protected $productConfiguratorRequestDataExpanders;
 
     /**
-     * @param \Spryker\Client\ProductConfiguration\Expander\ProductConfiguratorRequestDataExpanderInterface[] $productConfiguratorRequestDataExpanders
+     * @param array<\Spryker\Client\ProductConfiguration\Expander\ProductConfiguratorRequestDataExpanderInterface> $productConfiguratorRequestDataExpanders
      */
     public function __construct(array $productConfiguratorRequestDataExpanders)
     {

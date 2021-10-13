@@ -59,7 +59,7 @@ class Finder
     {
         $directories = $this->getDirectories();
         foreach ($directories as $key => $directory) {
-            if (!glob($directory)) {
+            if (!glob($directory, GLOB_NOSORT)) {
                 unset($directories[$key]);
             }
         }

@@ -44,58 +44,124 @@ use Spryker\Zed\Customer\Dependency\Service\CustomerToUtilValidateServiceInterfa
  */
 class CustomerFacadeTest extends Unit
 {
+    /**
+     * @var string
+     */
     public const TESTER_EMAIL = 'tester@spryker.com';
+    /**
+     * @var string
+     */
     public const TESTER_INVALID_EMAIL = 'tester<>@spryker.com';
+    /**
+     * @var string
+     */
     public const TESTER_NON_EXISTING_EMAIL = 'nonexisting@spryker.com';
+    /**
+     * @var string
+     */
     public const TESTER_UPDATE_EMAIL = 'update.tester@spryker.com';
+    /**
+     * @var string
+     */
     public const TESTER_PASSWORD = '$2tester';
+    /**
+     * @var string
+     */
     public const TESTER_NEW_PASSWORD = '$3tester';
+    /**
+     * @var string
+     */
     public const TESTER_NAME = 'Tester';
 
     /**
      * @uses \Spryker\Zed\Customer\Business\Customer\Customer::GLOSSARY_PARAM_VALIDATION_LENGTH
+     * @var string
      */
     protected const GLOSSARY_PARAM_VALIDATION_LENGTH = '{{ limit }}';
 
     /**
      * @uses \Spryker\Zed\Customer\Business\Customer\Customer::GLOSSARY_KEY_MIN_LENGTH_ERROR
+     * @var string
      */
     protected const GLOSSARY_KEY_MIN_LENGTH_ERROR = 'customer.password.error.min_length';
 
     /**
      * @uses \Spryker\Zed\Customer\Business\Customer\Customer::GLOSSARY_KEY_MAX_LENGTH_ERROR
+     * @var string
      */
     protected const GLOSSARY_KEY_MAX_LENGTH_ERROR = 'customer.password.error.max_length';
 
     /**
      * @uses \Spryker\Zed\Customer\Business\CustomerPasswordPolicy::GLOSSARY_KEY_PASSWORD_POLICY_ERROR_SEQUENCE
+     * @var string
      */
     protected const GLOSSARY_KEY_PASSWORD_POLICY_ERROR_SEQUENCE = 'customer.password.error.sequence';
 
     /**
      * @uses \Spryker\Zed\Customer\Business\DenyListCustomerPasswordPolicy::GLOSSARY_KEY_PASSWORD_POLICY_ERROR_SEQUENCE
+     * @var string
      */
     protected const GLOSSARY_KEY_PASSWORD_POLICY_ERROR_DENY_LIST = 'customer.password.error.deny_list';
 
     /**
      * @uses \Spryker\Zed\Customer\Business\CharacterSetCustomerPasswordPolicy::GLOSSARY_KEY_PASSWORD_POLICY_ERROR_CHARACTER_SET
+     * @var string
      */
     protected const GLOSSARY_KEY_PASSWORD_POLICY_ERROR_CHARACTER_SET = 'customer.password.error.character_set';
 
+    /**
+     * @var int
+     */
     protected const MIN_LENGTH_CUSTOMER_PASSWORD = 6;
+    /**
+     * @var int
+     */
     protected const MAX_LENGTH_CUSTOMER_PASSWORD = 12;
+    /**
+     * @var int
+     */
     protected const SEQUENCE_LIMIT_CUSTOMER_PASSWORD = 3;
+    /**
+     * @var string
+     */
     protected const CHARACTER_SET_REGEXP = '/^[a-zA-Z0-9]*$/';
+    /**
+     * @var bool
+     */
     protected const PASSWORD_VALIDATION_ON_RESTORE_PASSWORD_ENABLED = true;
 
+    /**
+     * @var string
+     */
     protected const VALUE_SHORT_PASSWORD = 'p2c';
+    /**
+     * @var string
+     */
     protected const VALUE_LONG_PASSWORD = 'p2cfGyY4p2cfGyY4p';
 
+    /**
+     * @var string
+     */
     protected const VALUE_VALID_PASSWORD = 'p2cfGyY4';
+    /**
+     * @var string
+     */
     protected const VALUE_NEW_PASSWORD = 'pdcEphDN';
+    /**
+     * @var string
+     */
     protected const VALUE_SEQUENCE_TOO_LONG_PASSWORD = '[3$0hhhh';
+    /**
+     * @var string
+     */
     protected const VALUE_HAS_SEQUENCE_VALID_PASSWORD = '4sxjjvrt';
+    /**
+     * @var string
+     */
     protected const VALUE_DENY_LIST_PASSWORD = 'qwerty';
+    /**
+     * @var string
+     */
     protected const VALUE_CHARACTER_SET_WRONG_PASSWORD = 'cnhszer123~';
 
     /**

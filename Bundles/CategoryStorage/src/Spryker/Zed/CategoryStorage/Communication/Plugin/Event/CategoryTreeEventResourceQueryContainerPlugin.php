@@ -14,6 +14,8 @@ use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourceQueryContainerPlugi
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
+ * @deprecated Use {@link \Spryker\Zed\CategoryStorage\Communication\Plugin\Publisher\CategoryTreePublisherTriggerPlugin} instead.
+ *
  * @method \Spryker\Zed\CategoryStorage\Business\CategoryStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\CategoryStorage\Communication\CategoryStorageCommunicationFactory getFactory()
  * @method \Spryker\Zed\CategoryStorage\CategoryStorageConfig getConfig()
@@ -38,7 +40,7 @@ class CategoryTreeEventResourceQueryContainerPlugin extends AbstractPlugin imple
      *
      * @api
      *
-     * @param int[] $ids
+     * @param array<int> $ids
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria|null
      */

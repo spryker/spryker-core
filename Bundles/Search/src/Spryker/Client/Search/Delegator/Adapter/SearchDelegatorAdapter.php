@@ -68,7 +68,7 @@ class SearchDelegatorAdapter implements SearchDelegatorAdapterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SearchDocumentTransfer[] $searchDocumentTransfers
+     * @param array<\Generated\Shared\Transfer\SearchDocumentTransfer> $searchDocumentTransfers
      *
      * @return bool
      */
@@ -95,7 +95,7 @@ class SearchDelegatorAdapter implements SearchDelegatorAdapterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SearchDocumentTransfer[] $searchDocumentTransfers
+     * @param array<\Generated\Shared\Transfer\SearchDocumentTransfer> $searchDocumentTransfers
      *
      * @return bool
      */
@@ -159,9 +159,9 @@ class SearchDelegatorAdapter implements SearchDelegatorAdapterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SearchDocumentTransfer[] $searchDocumentTransfers
+     * @param array<\Generated\Shared\Transfer\SearchDocumentTransfer> $searchDocumentTransfers
      *
-     * @return \Generated\Shared\Transfer\SearchDocumentTransfer[]
+     * @return array<\Generated\Shared\Transfer\SearchDocumentTransfer>
      */
     protected function addSearchContextToSearchDocumentTransfers(array $searchDocumentTransfers): array
     {

@@ -32,7 +32,7 @@ interface StoreFacadeInterface
      *
      * @api
      *
-     * @return \Generated\Shared\Transfer\StoreTransfer[]
+     * @return array<\Generated\Shared\Transfer\StoreTransfer>
      */
     public function getAllStores();
 
@@ -83,7 +83,7 @@ interface StoreFacadeInterface
      *
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return \Generated\Shared\Transfer\StoreTransfer[]
+     * @return array<\Generated\Shared\Transfer\StoreTransfer>
      */
     public function getStoresWithSharedPersistence(StoreTransfer $storeTransfer);
 
@@ -93,7 +93,7 @@ interface StoreFacadeInterface
      *
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getCountries();
 
@@ -118,9 +118,32 @@ interface StoreFacadeInterface
      *
      * @api
      *
-     * @param string[] $storeNames
+     * @param array<string> $storeNames
      *
-     * @return \Generated\Shared\Transfer\StoreTransfer[]
+     * @return array<\Generated\Shared\Transfer\StoreTransfer>
      */
     public function getStoreTransfersByStoreNames(array $storeNames): array;
+
+    /**
+     * Specification:
+     * - Checks if multi store per Zed is enabled.
+     * - Gets the value from module configuration.
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function isMultiStorePerZedEnabled(): bool;
+
+    /**
+     * Specification:
+     * - Gets currently selected store transfer.
+     * - Fetches all shared stores related to current store transfer.
+     * - Returns a list of stores available for current persistence.
+     *
+     * @api
+     *
+     * @return array<\Generated\Shared\Transfer\StoreTransfer>
+     */
+    public function getStoresAvailableForCurrentPersistence(): array;
 }

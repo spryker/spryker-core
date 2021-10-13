@@ -17,12 +17,15 @@ use Spryker\Zed\MerchantProfileDataImport\Business\Address\DataSet\MerchantProfi
 
 class MerchantProfileAddressWriterStep extends PublishAwareStep implements DataImportStepInterface
 {
+    /**
+     * @var array
+     */
     protected const REQUIRED_DATA_SET_KEYS = [
         MerchantProfileAddressDataSetInterface::ADDRESS1,
         MerchantProfileAddressDataSetInterface::ADDRESS2,
         MerchantProfileAddressDataSetInterface::CITY,
         MerchantProfileAddressDataSetInterface::ZIP_CODE,
-        MerchantProfileAddressDataSetInterface::MERCHANT_KEY,
+        MerchantProfileAddressDataSetInterface::MERCHANT_REFERENCE,
     ];
 
     /**
@@ -35,13 +38,7 @@ class MerchantProfileAddressWriterStep extends PublishAwareStep implements DataI
         $this->validateDataSet($dataSet);
 
         $merchantProfileAddressEntity = SpyMerchantProfileAddressQuery::create()
-            ->filterByAddress1($dataSet[MerchantProfileAddressDataSetInterface::ADDRESS1])
-            ->filterByAddress2($dataSet[MerchantProfileAddressDataSetInterface::ADDRESS2])
-            ->filterByAddress3($dataSet[MerchantProfileAddressDataSetInterface::ADDRESS3])
-            ->filterByCity($dataSet[MerchantProfileAddressDataSetInterface::CITY])
-            ->filterByZipCode($dataSet[MerchantProfileAddressDataSetInterface::ZIP_CODE])
             ->filterByFkMerchantProfile($dataSet[MerchantProfileAddressDataSetInterface::ID_MERCHANT_PROFILE])
-            ->filterByFkCountry($dataSet[MerchantProfileAddressDataSetInterface::ID_COUNTRY])
             ->findOneOrCreate();
 
         $merchantProfileAddressEntity
@@ -52,6 +49,8 @@ class MerchantProfileAddressWriterStep extends PublishAwareStep implements DataI
             ->setZipCode($dataSet[MerchantProfileAddressDataSetInterface::ZIP_CODE])
             ->setFkMerchantProfile($dataSet[MerchantProfileAddressDataSetInterface::ID_MERCHANT_PROFILE])
             ->setFkCountry($dataSet[MerchantProfileAddressDataSetInterface::ID_COUNTRY])
+            ->setLatitude($dataSet[MerchantProfileAddressDataSetInterface::LATITUDE])
+            ->setLongitude($dataSet[MerchantProfileAddressDataSetInterface::LONGITUDE])
             ->save();
 
         $this->addPublishEvents(MerchantEvents::MERCHANT_PUBLISH, $merchantProfileAddressEntity->getSpyMerchantProfile()->getFkMerchant());

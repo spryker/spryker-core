@@ -13,6 +13,9 @@ use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
 
 class IsIn implements ComparatorInterface
 {
+    /**
+     * @var string
+     */
     public const EXPRESSION = 'is in';
 
     /**
@@ -51,7 +54,7 @@ class IsIn implements ComparatorInterface
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getAcceptedTypes()
     {

@@ -20,6 +20,9 @@ use Twig\TwigFunction;
  */
 abstract class AbstractTwigChartPlugin extends AbstractPlugin implements TwigChartFunctionPluginInterface
 {
+    /**
+     * @var string
+     */
     public const TWIG_FUNCTION_NAME = 'chart';
 
     /**
@@ -39,7 +42,7 @@ abstract class AbstractTwigChartPlugin extends AbstractPlugin implements TwigCha
      *
      * @api
      *
-     * @return \Twig\TwigFunction[]
+     * @return array<\Twig\TwigFunction>
      */
     public function getChartFunctions(): array
     {

@@ -20,13 +20,47 @@ use Spryker\Zed\SalesReturn\Dependency\Service\SalesReturnToUtilDateTimeServiceB
  */
 class SalesReturnDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_STORE = 'FACADE_STORE';
+    /**
+     * @var string
+     */
     public const FACADE_SALES = 'FACADE_SALES';
+    /**
+     * @var string
+     */
     public const FACADE_OMS = 'FACADE_OMS';
 
+    /**
+     * @var string
+     */
     public const SERVICE_UTIL_DATE_TIME = 'SERVICE_UTIL_DATE_TIME';
 
+    /**
+     * @var string
+     */
     public const PROPEL_QUERY_SALES_ORDER_ITEM = 'PROPEL_QUERY_SALES_ORDER_ITEM';
+
+    /**
+     * @var string
+     */
+    public const PLUGINS_RETURN_PRE_CREATE = 'PLUGINS_RETURN_PRE_CREATE';
+    /**
+     * @var string
+     */
+    public const PLUGINS_RETURN_CREATE_REQUEST_VALIDATOR = 'PLUGINS_RETURN_CREATE_REQUEST_VALIDATOR';
+    /**
+     * @var string
+     */
+    public const PLUGINS_RETURN_EXPANDER = 'PLUGINS_RETURN_EXPANDER';
+
+    /**
+     * @deprecated Will be removed without replacement.
+     * @var string
+     */
+    public const PLUGINS_RETURN_COLLECTION_EXPANDER = 'PLUGINS_RETURN_COLLECTION_EXPANDER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -41,6 +75,10 @@ class SalesReturnDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addSalesFacade($container);
         $container = $this->addOmsFacade($container);
         $container = $this->addUtilDateTimeService($container);
+        $container = $this->addReturnPreCreatePlugins($container);
+        $container = $this->addReturnRequestValidatorPlugins($container);
+        $container = $this->addReturnCollectionExpanderPlugins($container);
+        $container = $this->addReturnExpanderPlugins($container);
 
         return $container;
     }
@@ -131,5 +169,97 @@ class SalesReturnDependencyProvider extends AbstractBundleDependencyProvider
         });
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addReturnPreCreatePlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_RETURN_PRE_CREATE, function () {
+            return $this->getReturnPreCreatePlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addReturnRequestValidatorPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_RETURN_CREATE_REQUEST_VALIDATOR, function () {
+            return $this->getReturnCreateRequestValidatorPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @deprecated Will be removed without replacement.
+     *
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addReturnCollectionExpanderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_RETURN_COLLECTION_EXPANDER, function () {
+            return $this->getReturnCollectionExpanderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addReturnExpanderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_RETURN_EXPANDER, function () {
+            return $this->getReturnExpanderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return array<\Spryker\Zed\SalesReturnExtension\Dependency\Plugin\ReturnPreCreatePluginInterface>
+     */
+    protected function getReturnPreCreatePlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return array<\Spryker\Zed\SalesReturnExtension\Dependency\Plugin\ReturnCreateRequestValidatorPluginInterface>
+     */
+    protected function getReturnCreateRequestValidatorPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @deprecated Will be removed without replacement.
+     *
+     * @return array<\Spryker\Zed\SalesReturnExtension\Dependency\Plugin\ReturnCollectionExpanderPluginInterface>
+     */
+    protected function getReturnCollectionExpanderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return array<\Spryker\Zed\SalesReturnExtension\Dependency\Plugin\ReturnExpanderPluginInterface>
+     */
+    protected function getReturnExpanderPlugins(): array
+    {
+        return [];
     }
 }

@@ -42,6 +42,7 @@ class PriceProductDimensionExpander implements PriceProductDimensionExpanderInte
 
         $priceProductDimensionTransfer->setType(PriceProductMerchantRelationshipConfig::PRICE_DIMENSION_MERCHANT_RELATIONSHIP);
         $priceProductDimensionTransfer->setName($merchantRelationshipTransfer->getName());
+        $priceProductDimensionTransfer->setIsMerchantActive($merchantRelationshipTransfer->getMerchantOrFail()->getIsActive());
 
         return $priceProductDimensionTransfer;
     }

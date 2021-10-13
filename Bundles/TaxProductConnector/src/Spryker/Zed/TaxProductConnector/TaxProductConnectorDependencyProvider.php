@@ -17,7 +17,13 @@ use Spryker\Zed\TaxProductConnector\Dependency\Facade\TaxProductConnectorToTaxBr
  */
 class TaxProductConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_PRODUCT = 'facade product';
+    /**
+     * @var string
+     */
     public const FACADE_TAX = 'facade tax';
 
     /**

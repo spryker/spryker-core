@@ -16,6 +16,9 @@ use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
 class CustomerReader implements CustomerReaderInterface
 {
+    /**
+     * @var string
+     */
     protected const REQUEST_PARAMETER_QUERY = 'q';
 
     /**

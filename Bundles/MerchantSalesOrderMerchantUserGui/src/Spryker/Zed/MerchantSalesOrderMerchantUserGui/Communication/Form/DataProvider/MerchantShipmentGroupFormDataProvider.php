@@ -16,40 +16,50 @@ use Spryker\Zed\MerchantSalesOrderMerchantUserGui\Dependency\Facade\MerchantSale
 
 class MerchantShipmentGroupFormDataProvider
 {
+    /**
+     * @var string
+     */
     protected const ADDRESS_CHOICE_NEW_ADDRESS_LABEL = 'New address';
 
     /**
      * @uses \Spryker\Zed\MerchantSalesOrderMerchantUserGui\Communication\Form\Shipment\MerchantShipmentGroupFormType::OPTION_SHIPMENT_METHOD_CHOICES
+     * @var string
      */
     protected const OPTION_SHIPMENT_METHOD_CHOICES = 'method_choices';
 
     /**
      * @uses \Spryker\Zed\MerchantSalesOrderMerchantUserGui\Communication\Form\Shipment\MerchantShipmentGroupFormType::OPTION_SALUTATION_CHOICES
+     * @var string
      */
     protected const OPTION_SALUTATION_CHOICES = 'salutation_choices';
 
     /**
      * @uses \Spryker\Zed\MerchantSalesOrderMerchantUserGui\Communication\Form\Shipment\MerchantShipmentGroupFormType::OPTION_SHIPMENT_ADDRESS_CHOICES
+     * @var string
      */
     protected const OPTION_SHIPMENT_ADDRESS_CHOICES = 'address_choices';
 
     /**
      * @uses \Spryker\Zed\MerchantSalesOrderMerchantUserGui\Communication\Form\Shipment\MerchantShipmentGroupFormType::OPTION_ORDER_ITEMS_CHOICES
+     * @var string
      */
     protected const OPTION_ORDER_ITEMS_CHOICES = 'items_choices';
 
     /**
      * @uses \Spryker\Zed\MerchantSalesOrderMerchantUserGui\Communication\Form\Shipment\MerchantShipmentGroupFormType::FIELD_ID_SHIPMENT_METHOD
+     * @var string
      */
     protected const FIELD_ID_SHIPMENT_METHOD = 'idShipmentMethod';
 
     /**
      * @uses \Spryker\Zed\MerchantSalesOrderMerchantUserGui\Communication\Form\Shipment\MerchantShipmentGroupFormType::FIELD_ID_SALES_SHIPMENT
+     * @var string
      */
     protected const FIELD_ID_SALES_SHIPMENT = 'idSalesShipment';
 
     /**
      * @uses \Spryker\Zed\MerchantSalesOrderMerchantUserGui\Communication\Form\Shipment\MerchantShipmentGroupFormType::FIELD_SHIPMENT_SELECTED_ITEMS
+     * @var string
      */
     protected const FIELD_SHIPMENT_SELECTED_ITEMS = 'selected_items';
 
@@ -224,7 +234,7 @@ class MerchantShipmentGroupFormDataProvider
     /**
      * @param \Generated\Shared\Transfer\MerchantOrderTransfer $merchantOrderTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getShippingAddressesOptions(MerchantOrderTransfer $merchantOrderTransfer): array
     {
@@ -272,9 +282,9 @@ class MerchantShipmentGroupFormDataProvider
     }
 
     /**
-     * @param iterable|\ArrayObject|\Generated\Shared\Transfer\AddressTransfer[] $customerAddressesCollection
+     * @param iterable<\Generated\Shared\Transfer\AddressTransfer> $customerAddressesCollection
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getCustomerAddressChoices(iterable $customerAddressesCollection): array
     {
@@ -293,9 +303,9 @@ class MerchantShipmentGroupFormDataProvider
     }
 
     /**
-     * @param iterable|string[] $choices
+     * @param iterable<string> $choices
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function sanitizeDuplicatedCustomerAddressChoices(iterable $choices): array
     {
@@ -336,7 +346,7 @@ class MerchantShipmentGroupFormDataProvider
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function getShippingMethodsOptions(): array
     {
@@ -359,7 +369,7 @@ class MerchantShipmentGroupFormDataProvider
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function getSalutationOptions(): array
     {
@@ -369,9 +379,6 @@ class MerchantShipmentGroupFormDataProvider
         }
 
         $combinedSalutation = array_combine($salutation, $salutation);
-        if ($combinedSalutation === false) {
-            return [];
-        }
 
         return $combinedSalutation;
     }

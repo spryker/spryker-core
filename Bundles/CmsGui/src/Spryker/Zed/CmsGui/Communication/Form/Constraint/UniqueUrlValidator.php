@@ -15,6 +15,9 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 class UniqueUrlValidator extends ConstraintValidator
 {
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_PROVIDED_URL_IS_ALREADY_TAKEN = 'Provided URL "%s" is already taken.';
 
     /**

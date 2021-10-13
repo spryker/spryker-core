@@ -62,7 +62,7 @@ class GuestCartReader implements GuestCartReaderInterface
             ->setCustomer((new CustomerTransfer())->setCustomerReference($customerReference))
             ->setUuid($uuidCart);
 
-        $quoteResponseTransfer = $this->cartsRestApiClient->findQuoteByUuid($quoteTransfer);
+        $quoteResponseTransfer = $this->cartsRestApiClient->findQuoteByUuidWithQuoteItemReload($quoteTransfer);
 
         if (!$quoteResponseTransfer->getIsSuccessful()) {
             return $this->guestCartRestResponseBuilder->createFailedErrorResponse($quoteResponseTransfer->getErrors());

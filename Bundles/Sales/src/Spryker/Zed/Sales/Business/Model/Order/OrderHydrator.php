@@ -55,17 +55,17 @@ class OrderHydrator implements OrderHydratorInterface
     protected $customerFacade;
 
     /**
-     * @var \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderExpanderPluginInterface[]
+     * @var array<\Spryker\Zed\SalesExtension\Dependency\Plugin\OrderExpanderPluginInterface>
      */
     protected $hydrateOrderPlugins;
 
     /**
-     * @var \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderItemExpanderPluginInterface[]
+     * @var array<\Spryker\Zed\SalesExtension\Dependency\Plugin\OrderItemExpanderPluginInterface>
      */
     protected $orderItemExpanderPlugins;
 
     /**
-     * @var \Spryker\Zed\SalesExtension\Dependency\Plugin\CustomerOrderAccessCheckPluginInterface[]
+     * @var array<\Spryker\Zed\SalesExtension\Dependency\Plugin\CustomerOrderAccessCheckPluginInterface>
      */
     protected $customerOrderAccessCheckPlugins;
 
@@ -74,9 +74,9 @@ class OrderHydrator implements OrderHydratorInterface
      * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface $omsFacade
      * @param \Spryker\Zed\Sales\SalesConfig $salesConfig
      * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToCustomerInterface $customerFacade
-     * @param \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderExpanderPluginInterface[] $hydrateOrderPlugins
-     * @param \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderItemExpanderPluginInterface[] $orderItemExpanderPlugins
-     * @param \Spryker\Zed\SalesExtension\Dependency\Plugin\CustomerOrderAccessCheckPluginInterface[] $customerOrderAccessCheckPlugins
+     * @param array<\Spryker\Zed\SalesExtension\Dependency\Plugin\OrderExpanderPluginInterface> $hydrateOrderPlugins
+     * @param array<\Spryker\Zed\SalesExtension\Dependency\Plugin\OrderItemExpanderPluginInterface> $orderItemExpanderPlugins
+     * @param array<\Spryker\Zed\SalesExtension\Dependency\Plugin\CustomerOrderAccessCheckPluginInterface> $customerOrderAccessCheckPlugins
      */
     public function __construct(
         SalesQueryContainerInterface $queryContainer,
@@ -284,7 +284,7 @@ class OrderHydrator implements OrderHydratorInterface
     public function hydrateBaseOrderTransfer(SpySalesOrder $orderEntity)
     {
         $orderTransfer = new OrderTransfer();
-        $orderTransfer->fromArray($orderEntity->toArray(), true);
+        $orderTransfer->fromArray((array)$orderEntity->toArray(), true);
         $orderTransfer->setCustomerReference($orderEntity->getCustomerReference());
         // Deprecated: Using FK to customer is obsolete, but needed to prevent BC break.
         $orderTransfer->setFkCustomer($orderEntity->getFkCustomer());
@@ -328,9 +328,9 @@ class OrderHydrator implements OrderHydratorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     protected function executeOrderItemExpanderPlugins(array $itemTransfers): array
     {
@@ -611,7 +611,7 @@ class OrderHydrator implements OrderHydratorInterface
      */
     protected function isCustomerOrderAccessGranted(SpySalesOrder $orderEntity, CustomerTransfer $customerTransfer): bool
     {
-        $orderTransfer = (new OrderTransfer())->fromArray($orderEntity->toArray(), true);
+        $orderTransfer = (new OrderTransfer())->fromArray((array)$orderEntity->toArray(), true);
 
         foreach ($this->customerOrderAccessCheckPlugins as $customerOrderAccessCheckPlugin) {
             if ($customerOrderAccessCheckPlugin->check($orderTransfer, $customerTransfer)) {

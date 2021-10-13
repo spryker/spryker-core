@@ -19,8 +19,17 @@ use Spryker\Zed\Oauth\OauthConfig;
 
 class PasswordGrantType extends AbstractGrant implements GrantTypeInterface
 {
+    /**
+     * @var string
+     */
     protected const REQUEST_PARAMETER_PASSWORD = 'password';
+    /**
+     * @var string
+     */
     protected const REQUEST_PARAMETER_SCOPE = 'scope';
+    /**
+     * @var string
+     */
     protected const REQUEST_PARAMETER_USERNAME = 'username';
 
     /**

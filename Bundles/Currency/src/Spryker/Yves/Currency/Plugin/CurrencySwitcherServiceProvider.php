@@ -84,7 +84,7 @@ class CurrencySwitcherServiceProvider extends AbstractPlugin implements ServiceP
     }
 
     /**
-     * @return \Generated\Shared\Transfer\CurrencyTransfer[]
+     * @return array<\Generated\Shared\Transfer\CurrencyTransfer>
      */
     protected function getCurrencies()
     {

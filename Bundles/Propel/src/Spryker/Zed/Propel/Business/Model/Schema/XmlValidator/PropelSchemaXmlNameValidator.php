@@ -54,7 +54,7 @@ class PropelSchemaXmlNameValidator implements PropelSchemaXmlValidatorInterface
     }
 
     /**
-     * @return \Symfony\Component\Finder\SplFileInfo[]
+     * @return array<\Symfony\Component\Finder\SplFileInfo>
      */
     protected function getSchemaFiles(): array
     {
@@ -68,7 +68,7 @@ class PropelSchemaXmlNameValidator implements PropelSchemaXmlValidatorInterface
     }
 
     /**
-     * @param \Symfony\Component\Finder\SplFileInfo[] $schemaFiles
+     * @param array<\Symfony\Component\Finder\SplFileInfo> $schemaFiles
      *
      * @return array
      */

@@ -25,10 +25,14 @@ use Spryker\Zed\Url\Dependency\UrlEvents;
 
 class CmsPageWriterStep extends PublishAwareStep implements DataImportStepInterface
 {
+    /**
+     * @var int
+     */
     public const BULK_SIZE = 20;
 
     /**
      * @uses \Spryker\Shared\GlossaryStorage\GlossaryStorageConfig::GLOSSARY_KEY_PUBLISH_WRITE
+     * @var string
      */
     protected const GLOSSARY_KEY_PUBLISH_WRITE = 'Glossary.key.publish';
 

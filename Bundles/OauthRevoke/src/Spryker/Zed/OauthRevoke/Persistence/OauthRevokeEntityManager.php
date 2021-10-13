@@ -20,6 +20,9 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
  */
 class OauthRevokeEntityManager extends AbstractEntityManager implements OauthRevokeEntityManagerInterface
 {
+    /**
+     * @var string
+     */
     protected const COLUMN_REVOKED_AT = 'RevokedAt';
 
     /**
@@ -52,7 +55,7 @@ class OauthRevokeEntityManager extends AbstractEntityManager implements OauthRev
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\OauthRefreshTokenTransfer[] $oauthRefreshTokenTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\OauthRefreshTokenTransfer> $oauthRefreshTokenTransfers
      *
      * @return void
      */
@@ -83,9 +86,9 @@ class OauthRevokeEntityManager extends AbstractEntityManager implements OauthRev
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\OauthRefreshTokenTransfer[] $oauthRefreshTokenTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\OauthRefreshTokenTransfer> $oauthRefreshTokenTransfers
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getIdentifiersFromTransfers(ArrayObject $oauthRefreshTokenTransfers): array
     {

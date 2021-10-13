@@ -26,13 +26,37 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class ProductRelationQueryContainer extends AbstractQueryContainer implements ProductRelationQueryContainerInterface
 {
+    /**
+     * @var string
+     */
     public const COL_ASSIGNED_CATEGORIES = 'assignedCategories';
+    /**
+     * @var string
+     */
     public const COL_NUMBER_OF_RELATED_PRODUCTS = 'numberOfRelatedProducts';
+    /**
+     * @var string
+     */
     public const COL_CATEGORY_NAME = 'category_name';
+    /**
+     * @var string
+     */
     public const COL_NAME = 'name';
+    /**
+     * @var string
+     */
     public const COL_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
+    /**
+     * @var string
+     */
     public const COL_SKU = 'sku';
+    /**
+     * @var string
+     */
     public const COL_IS_ACTIVE_AGGREGATION = 'is_active_aggregation';
+    /**
+     * @var string
+     */
     public const COL_PRICE_PRODUCT = 'spy_price_product.price';
 
     /**
@@ -347,8 +371,8 @@ class ProductRelationQueryContainer extends AbstractQueryContainer implements Pr
     public function queryProductAttributeKey()
     {
         return $this->getFactory()
-           ->getProductQueryContainer()
-           ->queryProductAttributeKey();
+            ->getProductQueryContainer()
+            ->queryProductAttributeKey();
     }
 
     /**
@@ -376,18 +400,18 @@ class ProductRelationQueryContainer extends AbstractQueryContainer implements Pr
     public function queryRulePropelQueryWithLocalizedProductData(ProductRelationTransfer $productRelationTransfer)
     {
         return $this->getRulePropelQuery($productRelationTransfer)
-         ->clearSelectColumns()
-        ->withColumn(
-            'GROUP_CONCAT(' . SpyProductTableMap::COL_IS_ACTIVE . ')',
-            static::COL_IS_ACTIVE_AGGREGATION
-        )
-         ->withColumn(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT, static::COL_ID_PRODUCT_ABSTRACT)
-         ->withColumn(SpyProductAbstractTableMap::COL_SKU, static::COL_SKU)
-         ->withColumn(SpyProductAbstractLocalizedAttributesTableMap::COL_NAME, static::COL_NAME)
-        ->withColumn(
-            'GROUP_CONCAT(DISTINCT ' . SpyCategoryAttributeTableMap::COL_NAME . ')',
-            static::COL_CATEGORY_NAME
-        );
+            ->clearSelectColumns()
+            ->withColumn(
+                'GROUP_CONCAT(' . SpyProductTableMap::COL_IS_ACTIVE . ')',
+                static::COL_IS_ACTIVE_AGGREGATION
+            )
+            ->withColumn(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT, static::COL_ID_PRODUCT_ABSTRACT)
+            ->withColumn(SpyProductAbstractTableMap::COL_SKU, static::COL_SKU)
+            ->withColumn(SpyProductAbstractLocalizedAttributesTableMap::COL_NAME, static::COL_NAME)
+            ->withColumn(
+                'GROUP_CONCAT(DISTINCT ' . SpyCategoryAttributeTableMap::COL_NAME . ')',
+                static::COL_CATEGORY_NAME
+            );
     }
 
     /**

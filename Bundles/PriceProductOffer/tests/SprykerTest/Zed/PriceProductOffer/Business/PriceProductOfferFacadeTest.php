@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\PriceProductOfferTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
+use Generated\Shared\Transfer\WishlistItemTransfer;
 use Spryker\Shared\PriceProductOffer\PriceProductOfferConfig;
 use Spryker\Zed\PriceProductOffer\Dependency\Facade\PriceProductOfferToPriceProductFacadeBridge;
 use Spryker\Zed\PriceProductOffer\Dependency\Facade\PriceProductOfferToPriceProductFacadeInterface;
@@ -35,6 +36,9 @@ class PriceProductOfferFacadeTest extends Unit
 {
     use DataCleanupHelperTrait;
 
+    /**
+     * @var string
+     */
     protected const FAKE_CURRENCY = 'FAKE_CURRENCY';
 
     /**
@@ -220,7 +224,7 @@ class PriceProductOfferFacadeTest extends Unit
         $this->assertFalse($collectionValidationResponseTransfer->getIsSuccess());
         $this->assertCount(1, $collectionValidationResponseTransfer->getValidationErrors());
         $this->assertSame(
-            'The set of inputs Store and Currency needs to be unique.',
+            'The set of Store and Currency needs to be unique.',
             $collectionValidationResponseTransfer->getValidationErrors()
                 ->offsetGet(0)
                 ->getMessage()
@@ -255,7 +259,7 @@ class PriceProductOfferFacadeTest extends Unit
         $this->assertFalse($collectionValidationResponseTransfer->getIsSuccess());
         $this->assertCount(1, $collectionValidationResponseTransfer->getValidationErrors());
         $this->assertSame(
-            'Currency "FAKE_CURRENCY" is not assigned to the store "DE"',
+            'Currency FAKE_CURRENCY is not assigned to the store DE',
             $collectionValidationResponseTransfer->getValidationErrors()
                 ->offsetGet(0)
                 ->getMessage()
@@ -334,7 +338,7 @@ class PriceProductOfferFacadeTest extends Unit
             $validationError->getMessage()
         );
         $this->assertSame(
-            '[0][default][moneyValue][fkCurrency]',
+            '[priceProductOffers][0][productOffer][prices][0][moneyValue:default][fkCurrency]',
             $validationError->getPropertyPath()
         );
     }
@@ -367,7 +371,7 @@ class PriceProductOfferFacadeTest extends Unit
             $validationError->getMessage()
         );
         $this->assertSame(
-            '[0][default][moneyValue][fkStore]',
+            '[priceProductOffers][0][productOffer][prices][0][moneyValue:default][fkStore]',
             $validationError->getPropertyPath()
         );
     }
@@ -452,6 +456,34 @@ class PriceProductOfferFacadeTest extends Unit
 
         // Assert
         $this->assertCount(2, $productOfferPrices);
+    }
+
+    /**
+     * @return void
+     */
+    public function testExpandWishlistItemWithPrices(): void
+    {
+        // Arrange
+        $this->tester->ensurePriceProductOfferTableIsEmpty();
+        $priceProduct = $this->tester->havePriceProductSaved([PriceProductTransfer::SKU_PRODUCT_ABSTRACT => 'sku']);
+        $priceProductOfferCriteriaTransfer = new PriceProductOfferCriteriaTransfer();
+        $priceProductOfferCriteriaTransfer->setPriceProductOfferIds(
+            [$priceProduct->getPriceDimension()->getIdPriceProductOffer()]
+        );
+
+        $wishlistItemTransfer = (new WishlistItemTransfer())
+            ->setProductOfferReference($priceProduct->getPriceDimension()->getProductOfferReference());
+
+        // Act
+        $wishlistItemTransfer = $this->tester->getFacade()
+            ->expandWishlistItemWithPrices($wishlistItemTransfer);
+
+        // Assert
+        $this->assertSame(1, $wishlistItemTransfer->getPrices()->count());
+        $this->assertSame(
+            $priceProduct->getPriceDimension()->getIdPriceProductOffer(),
+            $wishlistItemTransfer->getPrices()->getIterator()->current()->getPriceDimension()->getIdPriceProductOffer()
+        );
     }
 
     /**

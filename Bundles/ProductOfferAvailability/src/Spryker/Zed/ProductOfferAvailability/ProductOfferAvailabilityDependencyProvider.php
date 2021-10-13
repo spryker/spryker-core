@@ -17,7 +17,13 @@ use Spryker\Zed\ProductOfferAvailability\Dependency\Facade\ProductOfferAvailabil
  */
 class ProductOfferAvailabilityDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_OMS = 'FACADE_OMS';
+    /**
+     * @var string
+     */
     public const FACADE_PRODUCT_OFFER_STOCK = 'FACADE_PRODUCT_OFFER_STOCK';
 
     /**

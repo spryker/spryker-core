@@ -13,6 +13,9 @@ use Spryker\Client\ProductStorage\Storage\ProductConcreteStorageReaderInterface;
 
 class ProductConcreteViewTransferFinder extends AbstractProductViewTransferFinder
 {
+    /**
+     * @var string
+     */
     protected const KEY_ID_PRODUCT = 'id_product_concrete';
 
     /**
@@ -47,7 +50,7 @@ class ProductConcreteViewTransferFinder extends AbstractProductViewTransferFinde
     }
 
     /**
-     * @param int[] $productIds
+     * @param array<int> $productIds
      * @param string $localeName
      *
      * @return array

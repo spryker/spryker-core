@@ -15,11 +15,29 @@ use Spryker\Shared\Kernel\Transfer\TransferInterface;
  */
 interface ResponseInterface
 {
+    /**
+     * @var string
+     */
     public const INFO_MESSAGES = 'infoMessages';
+    /**
+     * @var string
+     */
     public const ERROR_MESSAGES = 'errorMessages';
+    /**
+     * @var string
+     */
     public const SUCCESS_MESSAGES = 'successMessages';
+    /**
+     * @var string
+     */
     public const SUCCESS = 'success';
+    /**
+     * @var string
+     */
     public const TRANSFER_CLASSNAME = 'transferClassName';
+    /**
+     * @var string
+     */
     public const TRANSFER = 'transfer';
 
     /**
@@ -30,7 +48,7 @@ interface ResponseInterface
     public function fromArray(array $values);
 
     /**
-     * @return \Generated\Shared\Transfer\MessageTransfer[]
+     * @return array<\Generated\Shared\Transfer\MessageTransfer>
      */
     public function getErrorMessages();
 
@@ -56,7 +74,7 @@ interface ResponseInterface
     public function addErrorMessage(MessageTransfer $errorMessage);
 
     /**
-     * @return \Generated\Shared\Transfer\MessageTransfer[]
+     * @return array<\Generated\Shared\Transfer\MessageTransfer>
      */
     public function getInfoMessages();
 
@@ -82,7 +100,7 @@ interface ResponseInterface
     public function addInfoMessages(array $messages);
 
     /**
-     * @return \Generated\Shared\Transfer\MessageTransfer[]
+     * @return array<\Generated\Shared\Transfer\MessageTransfer>
      */
     public function getSuccessMessages();
 

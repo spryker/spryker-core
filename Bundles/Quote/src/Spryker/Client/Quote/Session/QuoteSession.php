@@ -14,6 +14,9 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class QuoteSession implements QuoteSessionInterface
 {
+    /**
+     * @var string
+     */
     public const QUOTE_SESSION_IDENTIFIER = 'quote session identifier';
 
     /**
@@ -22,7 +25,7 @@ class QuoteSession implements QuoteSessionInterface
     protected $session;
 
     /**
-     * @var \Spryker\Client\Quote\Dependency\Plugin\QuoteTransferExpanderPluginInterface[]
+     * @var array<\Spryker\Client\Quote\Dependency\Plugin\QuoteTransferExpanderPluginInterface>
      */
     protected $quoteTransferExpanderPlugins;
 
@@ -39,7 +42,7 @@ class QuoteSession implements QuoteSessionInterface
     /**
      * @param \Symfony\Component\HttpFoundation\Session\SessionInterface $session
      * @param \Spryker\Client\Quote\Dependency\Client\QuoteToCurrencyClientInterface $currencyClient
-     * @param \Spryker\Client\Quote\Dependency\Plugin\QuoteTransferExpanderPluginInterface[] $quoteTransferExpanderPlugins
+     * @param array<\Spryker\Client\Quote\Dependency\Plugin\QuoteTransferExpanderPluginInterface> $quoteTransferExpanderPlugins
      */
     public function __construct(
         SessionInterface $session,

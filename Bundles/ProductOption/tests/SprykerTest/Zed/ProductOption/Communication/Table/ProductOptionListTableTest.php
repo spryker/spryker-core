@@ -14,6 +14,7 @@ use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToCurrencyFacadeInt
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToMoneyFacadeBridge;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToMoneyFacadeInterface;
 use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainer;
+use Spryker\Zed\ProductOption\Persistence\ProductOptionRepository;
 
 /**
  * Auto-generated group annotations
@@ -28,7 +29,13 @@ use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainer;
  */
 class ProductOptionListTableTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const PRODUCT_OPTION_VALUE_SKU_1 = 'PRODUCT_OPTION_VALUE_SKU_1';
+    /**
+     * @var string
+     */
     protected const PRODUCT_OPTION_VALUE_SKU_2 = 'PRODUCT_OPTION_VALUE_SKU_2';
 
     /**
@@ -70,11 +77,13 @@ class ProductOptionListTableTest extends Unit
     protected function getProductOptionListTableMock(): ProductOptionListTableMock
     {
         $productOptionQueryContainer = new ProductOptionQueryContainer();
+        $productOptionRepository = new ProductOptionRepository();
 
         return new ProductOptionListTableMock(
             $productOptionQueryContainer,
             $this->getProductOptionToCurrencyFacadeMock(),
-            $this->getProductOptionToMoneyFacadeMock()
+            $this->getProductOptionToMoneyFacadeMock(),
+            $productOptionRepository
         );
     }
 

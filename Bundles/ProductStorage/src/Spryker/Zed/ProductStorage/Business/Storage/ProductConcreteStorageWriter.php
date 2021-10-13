@@ -15,15 +15,42 @@ use Spryker\Zed\ProductStorage\Persistence\ProductStorageQueryContainerInterface
 
 class ProductConcreteStorageWriter implements ProductConcreteStorageWriterInterface
 {
+    /**
+     * @var string
+     */
     public const COL_FK_PRODUCT_ABSTRACT = 'fk_product_abstract';
+    /**
+     * @var string
+     */
     public const COL_FK_PRODUCT = 'fk_product';
+    /**
+     * @var string
+     */
     public const CONCRETE_DESCRIPTION = 'description';
+    /**
+     * @var string
+     */
     public const ABSTRACT_DESCRIPTION = 'abstract_description';
+    /**
+     * @var string
+     */
     public const ABSTRACT_ATTRIBUTES = 'abstract_attributes';
+    /**
+     * @var string
+     */
     public const CONCRETE_ATTRIBUTES = 'attributes';
 
+    /**
+     * @var string
+     */
     public const PRODUCT_CONCRETE_LOCALIZED_ENTITY = 'PRODUCT_CONCRETE_LOCALIZED_ENTITY';
+    /**
+     * @var string
+     */
     public const PRODUCT_CONCRETE_STORAGE_ENTITY = 'PRODUCT_CONCRETE_STORAGE_ENTITY';
+    /**
+     * @var string
+     */
     public const LOCALE_NAME = 'LOCALE_NAME';
 
     /**
@@ -64,7 +91,7 @@ class ProductConcreteStorageWriter implements ProductConcreteStorageWriterInterf
     }
 
     /**
-     * @param int[] $productConcreteIds
+     * @param array<int> $productConcreteIds
      *
      * @return void
      */
@@ -83,7 +110,7 @@ class ProductConcreteStorageWriter implements ProductConcreteStorageWriterInterf
     }
 
     /**
-     * @param int[] $productConcreteIds
+     * @param array<int> $productConcreteIds
      *
      * @return void
      */
@@ -95,7 +122,7 @@ class ProductConcreteStorageWriter implements ProductConcreteStorageWriterInterf
     }
 
     /**
-     * @param \Orm\Zed\ProductStorage\Persistence\SpyProductConcreteStorage[] $productConcreteStorageEntities
+     * @param array<\Orm\Zed\ProductStorage\Persistence\SpyProductConcreteStorage> $productConcreteStorageEntities
      *
      * @return void
      */
@@ -120,7 +147,7 @@ class ProductConcreteStorageWriter implements ProductConcreteStorageWriterInterf
 
     /**
      * @param array $productConcreteLocalizedEntities
-     * @param \Orm\Zed\ProductStorage\Persistence\SpyProductConcreteStorage[] $productConcreteStorageEntities
+     * @param array<\Orm\Zed\ProductStorage\Persistence\SpyProductConcreteStorage> $productConcreteStorageEntities
      *
      * @return void
      */
@@ -155,7 +182,7 @@ class ProductConcreteStorageWriter implements ProductConcreteStorageWriterInterf
      * - ProductConcreteStorageEntities without ProductConcreteLocalizedEntity (left outs) are paired with NULL.
      *
      * @param array $productConcreteLocalizedEntities
-     * @param \Orm\Zed\ProductStorage\Persistence\SpyProductConcreteStorage[] $productConcreteStorageEntities
+     * @param array<\Orm\Zed\ProductStorage\Persistence\SpyProductConcreteStorage> $productConcreteStorageEntities
      *
      * @return array
      */
@@ -362,7 +389,7 @@ class ProductConcreteStorageWriter implements ProductConcreteStorageWriterInterf
     /**
      * @param array $attributes Array keys are attribute keys.
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function filterSuperAttributeKeys(array $attributes)
     {
@@ -372,7 +399,7 @@ class ProductConcreteStorageWriter implements ProductConcreteStorageWriterInterf
     }
 
     /**
-     * @param int[] $productConcreteIds
+     * @param array<int> $productConcreteIds
      *
      * @return array
      */
@@ -382,7 +409,7 @@ class ProductConcreteStorageWriter implements ProductConcreteStorageWriterInterf
     }
 
     /**
-     * @param int[] $productConcreteIds
+     * @param array<int> $productConcreteIds
      *
      * @return array
      */
@@ -392,7 +419,7 @@ class ProductConcreteStorageWriter implements ProductConcreteStorageWriterInterf
     }
 
     /**
-     * @param \Orm\Zed\ProductStorage\Persistence\SpyProductConcreteStorage[] $productConcreteStorageEntities
+     * @param array<\Orm\Zed\ProductStorage\Persistence\SpyProductConcreteStorage> $productConcreteStorageEntities
      *
      * @return array
      */

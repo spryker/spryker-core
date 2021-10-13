@@ -30,23 +30,57 @@ class SalesDataExportFacadeTest extends Unit
 {
     /**
      * @uses \Spryker\Service\DataExport\Writer\DataExportLocalWriter::LOCAL_CONNECTION_PARAM_EXPORT_ROOT_DIR
+     * @var string
      */
     protected const LOCAL_CONNECTION_PARAM_EXPORT_ROOT_DIR = 'export_root_dir';
 
+    /**
+     * @var string
+     */
     protected const DESTINATION_TEMPLATE = '{data_entity}s_DE_{timestamp}.{extension}';
+    /**
+     * @var string
+     */
     protected const FORMATTER_TYPE = 'csv';
+    /**
+     * @var string
+     */
     protected const CONNECTION_TYPE = 'local';
+    /**
+     * @var string
+     */
     protected const EXTENSION = 'csv';
 
+    /**
+     * @var string
+     */
     protected const STORE_DE = 'DE';
 
+    /**
+     * @var string
+     */
     protected const DATA_ENTITY_ORDER = 'order';
+    /**
+     * @var string
+     */
     protected const DATA_EXPORT_RESULT_FILE_NAME_TEMPLATE_ORDER = 'orders_DE_%s.csv';
 
+    /**
+     * @var string
+     */
     protected const DATA_ENTITY_ORDER_ITEM = 'order-item';
+    /**
+     * @var string
+     */
     protected const DATA_EXPORT_RESULT_FILE_NAME_TEMPLATE_ORDER_ITEM = 'order-items_DE_%s.csv';
 
+    /**
+     * @var string
+     */
     protected const DATA_ENTITY_ORDER_EXPENSE = 'order-expense';
+    /**
+     * @var string
+     */
     protected const DATA_EXPORT_RESULT_FILE_NAME_TEMPLATE_ORDER_EXPENSE = 'order-expenses_DE_%s.csv';
 
     /**

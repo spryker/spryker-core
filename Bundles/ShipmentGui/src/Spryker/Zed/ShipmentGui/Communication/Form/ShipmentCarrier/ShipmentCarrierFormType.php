@@ -25,12 +25,30 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  */
 class ShipmentCarrierFormType extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const FIELD_NAME = 'name';
+    /**
+     * @var string
+     */
     public const FIELD_IS_ACTIVE = 'isActive';
+    /**
+     * @var string
+     */
     public const FIELD_CARRIER_ID = 'idShipmentCarrier';
 
+    /**
+     * @var string
+     */
     protected const LABEL_NAME = 'Name';
+    /**
+     * @var string
+     */
     protected const LABEL_IS_ACTIVE_FIELD = 'Enabled?';
+    /**
+     * @var string
+     */
     protected const MESSAGE_VIOLATION = 'Carrier with the same name already exists.';
 
     /**

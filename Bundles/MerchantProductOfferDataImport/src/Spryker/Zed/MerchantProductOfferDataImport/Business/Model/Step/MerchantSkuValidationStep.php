@@ -16,6 +16,10 @@ use Spryker\Zed\MerchantProductOfferDataImport\Business\Model\DataSet\MerchantPr
 
 class MerchantSkuValidationStep implements DataImportStepInterface
 {
+    protected const MERCHANT_SKU = MerchantProductOfferDataSetInterface::MERCHANT_SKU;
+    protected const ID_MERCHANT = MerchantProductOfferDataSetInterface::ID_MERCHANT;
+    protected const MERCHANT_REFERENCE = MerchantProductOfferDataSetInterface::MERCHANT_REFERENCE;
+
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
      *
@@ -25,22 +29,22 @@ class MerchantSkuValidationStep implements DataImportStepInterface
      */
     public function execute(DataSetInterface $dataSet): void
     {
-        $merchantSku = $dataSet[MerchantProductOfferDataSetInterface::MERCHANT_SKU];
+        $merchantSku = $dataSet[static::MERCHANT_SKU];
 
         if (!$merchantSku) {
             return;
         }
 
-        $fkMerchant = $dataSet[MerchantProductOfferDataSetInterface::ID_MERCHANT];
+        $merchantReference = $dataSet[static::MERCHANT_REFERENCE];
 
         /** @var \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery $productOfferQuery */
         $productOfferQuery = SpyProductOfferQuery::create();
         $productOfferQuery->filterByMerchantSku($merchantSku)
-            ->filterByFkMerchant($fkMerchant)
+            ->filterByMerchantReference($merchantReference)
             ->filterByProductOfferReference($dataSet[MerchantProductOfferDataSetInterface::PRODUCT_OFFER_REFERENCE], Criteria::ALT_NOT_EQUAL);
 
         if ($productOfferQuery->count() > 0) {
-            throw new EntityNotFoundException(sprintf('Product with merchant sku "%s" and merchant id "%d" should be unique.', $merchantSku, $fkMerchant));
+            throw new EntityNotFoundException(sprintf('Product with merchant sku "%s" and merchant reference "%s" should be unique.', $merchantSku, $merchantReference));
         }
     }
 }

@@ -42,7 +42,7 @@ class ProductMoneyCollectionDataProvider
     }
 
     /**
-     * @return \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function getInitialData()
     {
@@ -67,9 +67,9 @@ class ProductMoneyCollectionDataProvider
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[] $currentFormMoneyValueCollection
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $currentFormMoneyValueCollection
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function mergeMissingMoneyValues(ArrayObject $currentFormMoneyValueCollection)
     {
@@ -86,9 +86,9 @@ class ProductMoneyCollectionDataProvider
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[] $productMoneyValueCollection
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $productMoneyValueCollection
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>
      */
     protected function mapProductMoneyValueCollection(ArrayObject $productMoneyValueCollection)
     {
@@ -109,11 +109,11 @@ class ProductMoneyCollectionDataProvider
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[] $currentFormMoneyValueCollection
-     * @param \Generated\Shared\Transfer\StoreWithCurrencyTransfer[] $storeCurrencyCollection
-     * @param bool[] $existingCurrencyMap
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $currentFormMoneyValueCollection
+     * @param array<\Generated\Shared\Transfer\StoreWithCurrencyTransfer> $storeCurrencyCollection
+     * @param array<bool> $existingCurrencyMap
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>
      */
     protected function mergeMultiStoreMoneyCollection(
         ArrayObject $currentFormMoneyValueCollection,
@@ -172,9 +172,9 @@ class ProductMoneyCollectionDataProvider
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[] $submittedMoneyValueCollection
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $submittedMoneyValueCollection
      *
-     * @return bool[]
+     * @return array<bool>
      */
     protected function createCurrencyIndexMap(ArrayObject $submittedMoneyValueCollection)
     {

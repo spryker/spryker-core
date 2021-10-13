@@ -33,7 +33,7 @@ class MerchantCreator implements MerchantCreatorInterface
     protected $merchantConfig;
 
     /**
-     * @var \Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantPostCreatePluginInterface[]
+     * @var array<\Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantPostCreatePluginInterface>
      */
     protected $merchantPostCreatePlugins;
 
@@ -50,7 +50,7 @@ class MerchantCreator implements MerchantCreatorInterface
     /**
      * @param \Spryker\Zed\Merchant\Persistence\MerchantEntityManagerInterface $merchantEntityManager
      * @param \Spryker\Zed\Merchant\MerchantConfig $merchantConfig
-     * @param \Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantPostCreatePluginInterface[] $merchantPostCreatePlugins
+     * @param array<\Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantPostCreatePluginInterface> $merchantPostCreatePlugins
      * @param \Spryker\Zed\Merchant\Business\MerchantUrlSaver\MerchantUrlSaverInterface $merchantUrlSaver
      * @param \Spryker\Zed\Merchant\Dependency\Facade\MerchantToEventFacadeInterface $eventFacade
      */
@@ -77,7 +77,10 @@ class MerchantCreator implements MerchantCreatorInterface
     {
         $this->assertDefaultMerchantRequirements($merchantTransfer);
 
-        $merchantTransfer->setStatus($this->merchantConfig->getDefaultMerchantStatus());
+        if (!$merchantTransfer->getStatus()) {
+            $merchantTransfer->setStatus($this->merchantConfig->getDefaultMerchantStatus());
+        }
+
         $merchantResponseTransfer = $this->createMerchantResponseTransfer();
 
         try {
@@ -125,12 +128,14 @@ class MerchantCreator implements MerchantCreatorInterface
      */
     protected function createMerchantStores(MerchantTransfer $merchantTransfer): MerchantTransfer
     {
-        foreach ($merchantTransfer->getStoreRelation()->getIdStores() as $idStore) {
-            $storeTransfer = $this->merchantEntityManager->createMerchantStore($merchantTransfer, $idStore);
-            $merchantTransfer->getStoreRelation()->addStores($storeTransfer);
-        }
+        /** @var \Generated\Shared\Transfer\StoreRelationTransfer $storeRelationTransfer */
+        $storeRelationTransfer = $merchantTransfer->getStoreRelation();
 
-        $merchantTransfer->getStoreRelation()->setIdEntity($merchantTransfer->getIdMerchant());
+        foreach ($storeRelationTransfer->getIdStores() as $idStore) {
+            $storeTransfer = $this->merchantEntityManager->createMerchantStore($merchantTransfer, $idStore);
+            $storeRelationTransfer->addStores($storeTransfer);
+        }
+        $storeRelationTransfer->setIdEntity($merchantTransfer->getIdMerchant());
 
         return $merchantTransfer;
     }

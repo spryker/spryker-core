@@ -22,8 +22,17 @@ use Symfony\Component\Validator\ConstraintValidatorInterface;
  */
 class UserPasswordValidatorConstraintPlugin extends AbstractPlugin implements ConstraintPluginInterface
 {
+    /**
+     * @var string
+     */
     protected const CONSTRAINT_NAME = 'security.validator.user_password';
+    /**
+     * @var string
+     */
     protected const SERVICE_SECURITY_TOKEN_STORAGE = 'security.token_storage';
+    /**
+     * @var string
+     */
     protected const SERVICE_SECURITY_ENCODER_FACTORY = 'security.encoder_factory';
 
     /**

@@ -14,45 +14,56 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
  */
 class PriceProductMerchantRelationshipStorageConfig extends AbstractBundleConfig
 {
+    /**
+     * @var string
+     */
     public const PRICE_PRODUCT_MERCHANT_RELATIONSHIP_SYNC_STORAGE_QUEUE = 'sync.storage.price';
 
     /**
      * @uses \Orm\Zed\MerchantRelationship\Persistence\Map\SpyMerchantRelationshipToCompanyBusinessUnitTableMap::COL_FK_COMPANY_BUSINESS_UNIT
+     * @var string
      */
     public const COL_FK_COMPANY_BUSINESS_UNIT = 'spy_merchant_relationship_to_company_business_unit.fk_company_business_unit';
 
     /**
      * @uses \Orm\Zed\PriceProductMerchantRelationship\Persistence\Map\SpyPriceProductMerchantRelationshipTableMap::COL_FK_MERCHANT_RELATIONSHIP
+     * @var string
      */
     public const COL_FK_MERCHANT_RELATIONSHIP = 'spy_price_product_merchant_relationship.fk_merchant_relationship';
 
     /**
      * @uses \Orm\Zed\PriceProductMerchantRelationship\Persistence\Map\SpyPriceProductMerchantRelationshipTableMap::COL_FK_PRICE_PRODUCT_STORE
+     * @var string
      */
     public const COL_FK_PRICE_PRODUCT_STORE = 'spy_price_product_merchant_relationship.fk_price_product_store';
 
     /**
      * @uses \Orm\Zed\PriceProductMerchantRelationship\Persistence\Map\SpyPriceProductMerchantRelationshipTableMap::COL_FK_PRODUCT
+     * @var string
      */
     public const COL_FK_PRODUCT = 'spy_price_product_merchant_relationship.fk_product';
 
     /**
      * @uses \Orm\Zed\PriceProductMerchantRelationship\Persistence\Map\SpyPriceProductMerchantRelationshipTableMap::COL_FK_PRODUCT_ABSTRACT
+     * @var string
      */
     public const COL_FK_PRODUCT_ABSTRACT = 'spy_price_product_merchant_relationship.fk_product_abstract';
 
     /**
      * @uses \Spryker\Shared\PriceProduct\PriceProductConfig::PRICE_DATA
+     * @var string
      */
     public const PRICE_DATA = 'priceData';
 
     /**
      * @uses \Spryker\Shared\Price\PriceConfig::PRICE_MODE_GROSS
+     * @var string
      */
     public const PRICE_MODE_GROSS = 'GROSS_MODE';
 
     /**
      * @uses \Spryker\Shared\Price\PriceConfig::PRICE_MODE_NET
+     * @var string
      */
     public const PRICE_MODE_NET = 'NET_MODE';
 

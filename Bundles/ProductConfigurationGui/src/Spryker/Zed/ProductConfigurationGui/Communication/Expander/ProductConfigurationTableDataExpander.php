@@ -13,14 +13,19 @@ class ProductConfigurationTableDataExpander implements ProductConfigurationTable
 {
     /**
      * @uses \Spryker\Zed\ProductManagement\Communication\Table\ProductTable::COL_PRODUCT_TYPES
+     * @var string
      */
     protected const COL_PRODUCT_TYPES = 'product_types';
 
     /**
      * @uses \Spryker\Zed\ProductManagement\Communication\Table\ProductTable::COL_SKU
+     * @var string
      */
     protected const COL_SKU = 'sku';
 
+    /**
+     * @var string
+     */
     protected const CONFIGURABLE_PRODUCT_TYPE = 'Configurable Product';
 
     /**
@@ -60,7 +65,7 @@ class ProductConfigurationTableDataExpander implements ProductConfigurationTable
 
         if (
             $productConfigurationAggregationTransfer->getProductConcreteCount()
-             === $productConfigurationAggregationTransfer->getProductConfigurationCount()
+            === $productConfigurationAggregationTransfer->getProductConfigurationCount()
         ) {
             $item[static::COL_PRODUCT_TYPES] = static::CONFIGURABLE_PRODUCT_TYPE;
 
@@ -73,6 +78,6 @@ class ProductConfigurationTableDataExpander implements ProductConfigurationTable
             static::CONFIGURABLE_PRODUCT_TYPE
         );
 
-         return $item;
+        return $item;
     }
 }

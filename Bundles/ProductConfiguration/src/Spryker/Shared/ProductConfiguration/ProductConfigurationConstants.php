@@ -18,6 +18,7 @@ interface ProductConfigurationConstants
      * - Used for the product configurator data checksum generation based on the given key.
      *
      * @api
+     * @var string
      */
     public const SPRYKER_PRODUCT_CONFIGURATOR_ENCRYPTION_KEY = 'SPRYKER_PRODUCT_CONFIGURATOR_ENCRYPTION_KEY';
 
@@ -27,6 +28,7 @@ interface ProductConfigurationConstants
      * - Used for the product configurator data checksum generation as hex initialization vector.
      *
      * @api
+     * @var string
      */
     public const SPRYKER_PRODUCT_CONFIGURATOR_HEX_INITIALIZATION_VECTOR = 'SPRYKER_PRODUCT_CONFIGURATOR_HEX_INITIALIZATION_VECTOR';
 }

@@ -15,7 +15,7 @@ class QuoteValidator implements QuoteValidatorInterface
     use PermissionAwareTrait;
 
     /**
-     * @var \Spryker\Client\QuoteRequestExtension\Dependency\Plugin\QuoteRequestQuoteCheckPluginInterface[]
+     * @var array<\Spryker\Client\QuoteRequestExtension\Dependency\Plugin\QuoteRequestQuoteCheckPluginInterface>
      */
     protected $quoteRequestQuoteCheckPlugins;
 

@@ -47,7 +47,13 @@ use SprykerTest\Zed\ProductSetStorage\ProductSetStorageConfigMock;
  */
 class ProductSetStorageListenerTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const MESSAGE_PRODUCT_SET_NOT_DELETED = 'Product set has not been removed.';
+    /**
+     * @var string
+     */
     protected const MESSAGE_UNNECESSARY_PRODUCT_SET_DELETED = 'Unnecessary product set was has been removed.';
 
     /**

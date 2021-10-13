@@ -13,7 +13,58 @@ use Spryker\Shared\GlueApplication\GlueApplicationConstants;
 
 class GlueApplicationConfig extends AbstractBundleConfig
 {
+    /**
+     * @var string
+     */
     public const COLLECTION_IDENTIFIER_CURRENT_USER = 'mine';
+
+    /**
+     * @var string
+     */
+    protected const HEADER_X_FRAME_OPTIONS_VALUE = 'SAMEORIGIN';
+
+    /**
+     * @var string
+     */
+    protected const HEADER_CONTENT_SECURITY_POLICY_VALUE = 'frame-ancestors \'self\'';
+
+    /**
+     * @var string
+     */
+    protected const HEADER_X_CONTENT_TYPE_OPTIONS_VALUE = 'nosniff';
+
+    /**
+     * @var string
+     */
+    protected const HEADER_X_XSS_PROTECTION_VALUE = '1; mode=block';
+
+    /**
+     * @var string
+     */
+    protected const HEADER_REFERRER_POLICY_VALUE = 'same-origin';
+
+    /**
+     * @var string
+     */
+    protected const HEADER_PERMISSIONS_POLICY_VALUE = '';
+
+    /**
+     * @var bool
+     */
+    public const VALIDATE_REQUEST_HEADERS = true;
+
+    /**
+     * Specification:
+     *  - Enables or disables request header validation.
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function getValidateRequestHeaders(): bool
+    {
+        return static::VALIDATE_REQUEST_HEADERS;
+    }
 
     /**
      * Specification:
@@ -60,7 +111,7 @@ class GlueApplicationConfig extends AbstractBundleConfig
      *
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getCorsAllowedHeaders(): array
     {
@@ -70,6 +121,25 @@ class GlueApplicationConfig extends AbstractBundleConfig
             RequestConstantsInterface::HEADER_CONTENT_LANGUAGE,
             RequestConstantsInterface::HEADER_ACCEPT_LANGUAGE,
             RequestConstantsInterface::HEADER_AUTHORIZATION,
+        ];
+    }
+
+    /**
+     * @phpstan-return array<string, string>
+     *
+     * @api
+     *
+     * @return array<string>
+     */
+    public function getSecurityHeaders(): array
+    {
+        return [
+            'X-Frame-Options' => static::HEADER_X_FRAME_OPTIONS_VALUE,
+            'Content-Security-Policy' => static::HEADER_CONTENT_SECURITY_POLICY_VALUE,
+            'X-Content-Type-Options' => static::HEADER_X_CONTENT_TYPE_OPTIONS_VALUE,
+            'X-XSS-Protection' => static::HEADER_X_XSS_PROTECTION_VALUE,
+            'Referrer-Policy' => static::HEADER_REFERRER_POLICY_VALUE,
+            'Permissions-policy' => static::HEADER_PERMISSIONS_POLICY_VALUE,
         ];
     }
 

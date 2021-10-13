@@ -12,6 +12,12 @@ namespace Spryker\Shared\Tax;
  */
 interface TaxConstants
 {
+    /**
+     * @var string
+     */
     public const DEFAULT_TAX_RATE = 'DEFAULT_TAX_RATE';
+    /**
+     * @var string
+     */
     public const TAX_EXEMPT_PLACEHOLDER = 'Tax Exempt';
 }

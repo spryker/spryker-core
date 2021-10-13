@@ -17,7 +17,13 @@ use Spryker\Zed\PersistentCartShare\Dependency\Facade\PersistentCartShareToResou
  */
 class PersistentCartShareDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_RESOURCE_SHARE = 'FACADE_RESOURCE_SHARE';
+    /**
+     * @var string
+     */
     public const FACADE_QUOTE = 'FACADE_QUOTE';
 
     /**

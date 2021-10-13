@@ -12,16 +12,34 @@ use Symfony\Component\Finder\SplFileInfo;
 
 class LicenseUpdater implements UpdaterInterface
 {
+    /**
+     * @var string
+     */
     protected const KEY_LICENSE = 'license';
 
+    /**
+     * @var string
+     */
     protected const LICENSE_TYPE_MIT = 'MIT';
 
+    /**
+     * @var string
+     */
     protected const LICENSE_TYPE_PROPRIETARY = 'proprietary';
 
+    /**
+     * @var string
+     */
     protected const MIT_LICENSE = 'The MIT License (MIT)';
 
+    /**
+     * @var int
+     */
     protected const LICENSE_FILE_DEPTH = 0;
 
+    /**
+     * @var string
+     */
     protected const LICENSE_FILE_NAME = 'LICENSE';
 
     /**

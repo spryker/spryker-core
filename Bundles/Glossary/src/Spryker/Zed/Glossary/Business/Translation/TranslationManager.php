@@ -31,8 +31,17 @@ class TranslationManager implements TranslationManagerInterface
     use TransactionTrait;
     use TranslatorTrait;
 
+    /**
+     * @var string
+     */
     public const TOUCH_TRANSLATION = 'translation';
+    /**
+     * @var string
+     */
     public const GLOSSARY_KEY = 'glossary_key';
+    /**
+     * @var string
+     */
     public const LOCALE_PREFIX = 'locale_';
 
     /**

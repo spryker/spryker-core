@@ -19,7 +19,13 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class PriceProductStoreOptimizeConsole extends Console
 {
+    /**
+     * @var string
+     */
     public const COMMAND_NAME = 'price-product-store:optimize';
+    /**
+     * @var string
+     */
     public const COMMAND_DESCRIPTION = 'Will delete all price_product_store records without any price dimension.';
 
     /**

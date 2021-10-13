@@ -16,6 +16,9 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ProductSupplierController extends AbstractController
 {
+    /**
+     * @var string
+     */
     protected const PARAM_ID_COMPANY = 'id-company';
 
     /**

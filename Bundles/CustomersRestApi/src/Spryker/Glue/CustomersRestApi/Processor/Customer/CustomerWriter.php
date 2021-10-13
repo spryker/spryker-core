@@ -23,8 +23,17 @@ use Symfony\Component\HttpFoundation\Response;
 
 class CustomerWriter implements CustomerWriterInterface
 {
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_CUSTOMER_EMAIL_ALREADY_USED = 'customer.email.already.used';
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_CUSTOMER_EMAIL_INVALID = 'customer.email.format.invalid';
+    /**
+     * @var string
+     */
     protected const ERROR_CUSTOMER_PASSWORD_INVALID = 'customer.password.invalid';
 
     /**
@@ -58,7 +67,7 @@ class CustomerWriter implements CustomerWriterInterface
     protected $customerReader;
 
     /**
-     * @var \Spryker\Glue\CustomersRestApiExtension\Dependency\Plugin\CustomerPostCreatePluginInterface[]
+     * @var array<\Spryker\Glue\CustomersRestApiExtension\Dependency\Plugin\CustomerPostCreatePluginInterface>
      */
     protected $customerPostCreatePlugins;
 
@@ -69,7 +78,7 @@ class CustomerWriter implements CustomerWriterInterface
      * @param \Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomerResourceMapperInterface $customerResourceMapper
      * @param \Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiErrorInterface $restApiError
      * @param \Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiValidatorInterface $restApiValidator
-     * @param \Spryker\Glue\CustomersRestApiExtension\Dependency\Plugin\CustomerPostCreatePluginInterface[] $customerPostCreatePlugins
+     * @param array<\Spryker\Glue\CustomersRestApiExtension\Dependency\Plugin\CustomerPostCreatePluginInterface> $customerPostCreatePlugins
      */
     public function __construct(
         CustomersRestApiToCustomerClientInterface $customerClient,
@@ -226,7 +235,7 @@ class CustomerWriter implements CustomerWriterInterface
         }
 
         $resourceId = $restRequest->getResource()->getId();
-        if ($resourceId && $resourceId !== $restRequest->getUser()->getNaturalIdentifier()) {
+        if ($resourceId && $resourceId !== $restRequest->getRestUser()->getNaturalIdentifier()) {
             return $this->restApiError->addCustomerUnauthorizedError($restResponse);
         }
 

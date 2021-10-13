@@ -26,18 +26,29 @@ class TranslatorDependencyProvider extends AbstractBundleDependencyProvider
 {
     /**
      * @uses \Spryker\Zed\Translator\Communication\Plugin\Application\TranslatorApplicationPlugin::SERVICE_TRANSLATOR
+     * @var string
      */
     public const SERVICE_TRANSLATOR = 'translator';
 
     /**
      * @deprecated Will be removed in favor of accessing the service you need directly.
+     * @var string
      */
     public const APPLICATION = 'APPLICATION';
 
+    /**
+     * @var string
+     */
     public const STORE = 'STORE';
 
+    /**
+     * @var string
+     */
     public const FACADE_LOCALE = 'FACADE_LOCALE';
 
+    /**
+     * @var string
+     */
     public const PLUGIN_TRANSLATOR = 'PLUGIN_TRANSLATOR';
 
     /**

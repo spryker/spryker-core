@@ -14,6 +14,7 @@ class OmsEventTriggerer implements OmsEventTriggererInterface
 {
     /**
      * @uses \Spryker\Zed\Oms\OmsConfig::EVENT_CANCEL
+     * @var string
      */
     protected const EVENT_CANCEL = 'cancel';
 
@@ -45,7 +46,7 @@ class OmsEventTriggerer implements OmsEventTriggererInterface
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function extractSalesOrderItemIds(OrderTransfer $orderTransfer): array
     {

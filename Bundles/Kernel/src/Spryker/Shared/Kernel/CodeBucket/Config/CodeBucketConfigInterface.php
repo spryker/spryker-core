@@ -10,7 +10,7 @@ namespace Spryker\Shared\Kernel\CodeBucket\Config;
 interface CodeBucketConfigInterface
 {
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getCodeBuckets(): array;
 

@@ -27,18 +27,57 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class AvailabilityQueryContainer extends AbstractQueryContainer implements AvailabilityQueryContainerInterface
 {
+    /**
+     * @var string
+     */
     public const SUM_QUANTITY = 'sumQuantity';
+    /**
+     * @var string
+     */
     public const ABSTRACT_SKU = 'abstractSku';
+    /**
+     * @var string
+     */
     public const AVAILABILITY_QUANTITY = 'availabilityQuantity';
+    /**
+     * @var string
+     */
     public const STOCK_QUANTITY = 'stockQuantity';
+    /**
+     * @var string
+     */
     public const RESERVATION_QUANTITY = 'reservationQuantity';
+    /**
+     * @var string
+     */
     public const PRODUCT_NAME = 'productName';
+    /**
+     * @var string
+     */
     public const CONCRETE_SKU = 'concreteSku';
+    /**
+     * @var string
+     */
     public const CONCRETE_AVAILABILITY = 'concreteAvailability';
+    /**
+     * @var string
+     */
     public const CONCRETE_NAME = 'concreteName';
+    /**
+     * @var string
+     */
     public const ID_PRODUCT = 'idProduct';
+    /**
+     * @var string
+     */
     public const GROUP_CONCAT = 'GROUP_CONCAT';
+    /**
+     * @var string
+     */
     public const CONCAT = 'CONCAT';
+    /**
+     * @var string
+     */
     public const CONCRETE_NEVER_OUT_OF_STOCK_SET = 'concreteNeverOutOfStockSet';
 
     /**
@@ -142,15 +181,21 @@ class AvailabilityQueryContainer extends AbstractQueryContainer implements Avail
      */
     public function queryAvailabilityAbstractWithStockByIdLocale($idLocale, $idStore, array $stockNames)
     {
-        return $this->querySpyProductAbstractAvailabilityWithStockByIdLocale($idLocale, $stockNames)
-            ->withColumn(static::GROUP_CONCAT . '(' . SpyStockProductTableMap::COL_IS_NEVER_OUT_OF_STOCK . ')', static::CONCRETE_NEVER_OUT_OF_STOCK_SET)
-            ->withColumn('SUM(' . SpyStockProductTableMap::COL_QUANTITY . ')', self::STOCK_QUANTITY)
-            ->withColumn(
-                static::GROUP_CONCAT . '(' . static::CONCAT . '(' . SpyProductTableMap::COL_SKU . ",':'," . SpyOmsProductReservationTableMap::COL_RESERVATION_QUANTITY . '))',
-                static::RESERVATION_QUANTITY
-            )
+        $productAbstractQuery = $this->querySpyProductAbstractAvailabilityWithStockByIdLocale($idLocale, $stockNames)
             ->addAnd(SpyAvailabilityAbstractTableMap::COL_FK_STORE, $idStore)
             ->groupBy(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT);
+
+        if ($stockNames !== []) {
+            $productAbstractQuery
+                ->withColumn(static::GROUP_CONCAT . '(' . SpyStockProductTableMap::COL_IS_NEVER_OUT_OF_STOCK . ')', static::CONCRETE_NEVER_OUT_OF_STOCK_SET)
+                ->withColumn('SUM(' . SpyStockProductTableMap::COL_QUANTITY . ')', static::STOCK_QUANTITY)
+                ->withColumn(
+                    static::GROUP_CONCAT . '(' . static::CONCAT . '(' . SpyProductTableMap::COL_SKU . ",':'," . SpyOmsProductReservationTableMap::COL_RESERVATION_QUANTITY . '))',
+                    static::RESERVATION_QUANTITY
+                );
+        }
+
+        return $productAbstractQuery;
     }
 
     /**
@@ -160,7 +205,7 @@ class AvailabilityQueryContainer extends AbstractQueryContainer implements Avail
      *
      * @param int $idLocale
      * @param int $idStore
-     * @param int[] $stockIds
+     * @param array<int> $stockIds
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
@@ -252,48 +297,33 @@ class AvailabilityQueryContainer extends AbstractQueryContainer implements Avail
      */
     public function querySpyProductAbstractAvailabilityWithStock(array $stockNames = [])
     {
-        $query = $this->querySpyProductAbstractAvailability();
+        $productAbstractQuery = $this->querySpyProductAbstractAvailability();
 
-        if (count($stockNames) > 0) {
-            $joinStockProduct = (new Join())->setRightTableName(SpyStockTableMap::TABLE_NAME);
-            $joinStockProduct->setJoinType(Criteria::LEFT_JOIN);
-
-            $stockTypeCriterion = (new Criteria())->getNewCriterion(
-                SpyStockTableMap::COL_NAME,
-                $stockNames,
-                Criteria::IN
-            );
-
-            $joinStockProduct->setJoinCondition($stockTypeCriterion);
-
-            $query->addJoinObject($joinStockProduct);
+        if ($stockNames === []) {
+            return $productAbstractQuery;
         }
 
-        $query->addJoin(
-            [
-                SpyProductTableMap::COL_ID_PRODUCT,
-                SpyStockTableMap::COL_ID_STOCK,
-            ],
-            [
-                SpyStockProductTableMap::COL_FK_PRODUCT,
-                SpyStockProductTableMap::COL_FK_STOCK,
-            ],
-            Criteria::LEFT_JOIN
-        )
+        $joinStockProduct = (new Join())->setRightTableName(SpyStockTableMap::TABLE_NAME);
+        $joinStockProduct->setJoinType(Criteria::LEFT_JOIN);
 
-        ->addJoin(
-            [
-                SpyProductTableMap::COL_SKU,
-                SpyAvailabilityAbstractTableMap::COL_FK_STORE,
-            ],
-            [
-                SpyOmsProductReservationTableMap::COL_SKU,
-                SpyOmsProductReservationTableMap::COL_FK_STORE,
-            ],
-            Criteria::LEFT_JOIN
+        $joinStockProduct->setJoinCondition(
+            (new Criteria())->getNewCriterion(SpyStockTableMap::COL_NAME, $stockNames, Criteria::IN)
         );
 
-        return $query;
+        $productAbstractQuery
+            ->addJoinObject($joinStockProduct)
+            ->addJoin(
+                [SpyProductTableMap::COL_ID_PRODUCT, SpyStockTableMap::COL_ID_STOCK],
+                [SpyStockProductTableMap::COL_FK_PRODUCT, SpyStockProductTableMap::COL_FK_STOCK],
+                Criteria::LEFT_JOIN
+            )
+            ->addJoin(
+                [SpyProductTableMap::COL_SKU, SpyAvailabilityAbstractTableMap::COL_FK_STORE],
+                [SpyOmsProductReservationTableMap::COL_SKU, SpyOmsProductReservationTableMap::COL_FK_STORE],
+                Criteria::LEFT_JOIN
+            );
+
+        return $productAbstractQuery;
     }
 
     /**
@@ -330,8 +360,9 @@ class AvailabilityQueryContainer extends AbstractQueryContainer implements Avail
         $idStore,
         array $stockNames = []
     ) {
-        $query = $this->queryAvailabilityAbstractWithStockByIdLocale($idLocale, $idStore, $stockNames)
-            ->filterByIdProductAbstract($idProductAbstract);
+        /** @var \Orm\Zed\Product\Persistence\SpyProductAbstractQuery $query */
+        $query = $this->queryAvailabilityAbstractWithStockByIdLocale($idLocale, $idStore, $stockNames);
+        $query->filterByIdProductAbstract($idProductAbstract);
 
         return $query;
     }
@@ -341,10 +372,10 @@ class AvailabilityQueryContainer extends AbstractQueryContainer implements Avail
      *
      * @api
      *
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      * @param int $idLocale
      * @param int $idStore
-     * @param string[] $stockNames
+     * @param array<string> $stockNames
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
@@ -354,8 +385,11 @@ class AvailabilityQueryContainer extends AbstractQueryContainer implements Avail
         int $idStore,
         array $stockNames = []
     ): SpyProductAbstractQuery {
-        return $this->queryAvailabilityAbstractWithStockByIdLocale($idLocale, $idStore, $stockNames)
-            ->filterByIdProductAbstract_In($productAbstractIds);
+        /** @var \Orm\Zed\Product\Persistence\SpyProductAbstractQuery $query */
+        $query = $this->queryAvailabilityAbstractWithStockByIdLocale($idLocale, $idStore, $stockNames);
+        $query->filterByIdProductAbstract_In($productAbstractIds);
+
+        return $query;
     }
 
     /**
@@ -372,19 +406,25 @@ class AvailabilityQueryContainer extends AbstractQueryContainer implements Avail
      */
     public function queryAvailabilityWithStockByIdProductAbstractAndIdLocale($idProductAbstract, $idLocale, $idStore, array $stockNames = [])
     {
-        return $this->queryAvailabilityWithStockByIdLocale($idLocale, $stockNames)
-            ->withColumn('GROUP_CONCAT(' . SpyStockProductTableMap::COL_IS_NEVER_OUT_OF_STOCK . ')', static::CONCRETE_NEVER_OUT_OF_STOCK_SET)
+        $productAbstractQuery = $this->queryAvailabilityWithStockByIdLocale($idLocale, $stockNames)
             ->withColumn(SpyProductTableMap::COL_ID_PRODUCT, static::ID_PRODUCT)
             ->withColumn(SpyProductTableMap::COL_SKU, static::CONCRETE_SKU)
             ->withColumn(SpyAvailabilityTableMap::COL_QUANTITY, static::CONCRETE_AVAILABILITY)
             ->withColumn(SpyProductLocalizedAttributesTableMap::COL_NAME, static::CONCRETE_NAME)
             ->withColumn(SpyProductLocalizedAttributesTableMap::COL_FK_LOCALE)
-            ->withColumn('SUM(' . SpyStockProductTableMap::COL_QUANTITY . ')', static::STOCK_QUANTITY)
-            ->withColumn(SpyOmsProductReservationTableMap::COL_RESERVATION_QUANTITY, static::RESERVATION_QUANTITY)
             ->addAnd(SpyAvailabilityAbstractTableMap::COL_FK_STORE, $idStore)
             ->filterByIdProductAbstract($idProductAbstract)
             ->select([static::CONCRETE_SKU])
-            ->groupBy(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT);
+            ->groupBy(static::ID_PRODUCT);
+
+        if ($stockNames !== []) {
+            $productAbstractQuery
+                ->withColumn('GROUP_CONCAT(' . SpyStockProductTableMap::COL_IS_NEVER_OUT_OF_STOCK . ')', static::CONCRETE_NEVER_OUT_OF_STOCK_SET)
+                ->withColumn('SUM(' . SpyStockProductTableMap::COL_QUANTITY . ')', static::STOCK_QUANTITY)
+                ->withColumn(SpyOmsProductReservationTableMap::COL_RESERVATION_QUANTITY, static::RESERVATION_QUANTITY);
+        }
+
+        return $productAbstractQuery;
     }
 
     /**
@@ -444,7 +484,7 @@ class AvailabilityQueryContainer extends AbstractQueryContainer implements Avail
 
     /**
      * @param \Orm\Zed\Product\Persistence\SpyProductAbstractQuery $query
-     * @param int[] $stockIds
+     * @param array<int> $stockIds
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */

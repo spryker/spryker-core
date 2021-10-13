@@ -10,7 +10,7 @@ namespace Spryker\Zed\SalesOrderThreshold\Dependency\Facade;
 interface SalesOrderThresholdToLocaleFacadeInterface
 {
     /**
-     * @return \Generated\Shared\Transfer\LocaleTransfer[]
+     * @return array<\Generated\Shared\Transfer\LocaleTransfer>
      */
     public function getLocaleCollection();
 }

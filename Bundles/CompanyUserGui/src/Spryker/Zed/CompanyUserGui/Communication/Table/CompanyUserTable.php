@@ -23,9 +23,21 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class CompanyUserTable extends AbstractTable
 {
+    /**
+     * @var string
+     */
     protected const COL_COMPANY_NAME = 'company_name';
+    /**
+     * @var string
+     */
     protected const COL_COMPANY_USER_NAME = 'company_user_name';
+    /**
+     * @var string
+     */
     protected const COL_IS_ACTIVE = 'is_active';
+    /**
+     * @var string
+     */
     protected const COL_COMPANY_USER_ACTIONS = 'actions';
 
     /**
@@ -39,7 +51,7 @@ class CompanyUserTable extends AbstractTable
     protected $companyUserTableExpanderPluginExecutor;
 
     /**
-     * @var \Spryker\Zed\CompanyUserGuiExtension\Dependency\Plugin\CompanyUserTableActionExpanderPluginInterface[]
+     * @var array<\Spryker\Zed\CompanyUserGuiExtension\Dependency\Plugin\CompanyUserTableActionExpanderPluginInterface>
      */
     protected $companyUserTableActionLinksExpanderPlugins;
 
@@ -51,7 +63,7 @@ class CompanyUserTable extends AbstractTable
     /**
      * @param \Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery $companyUserQuery
      * @param \Spryker\Zed\CompanyUserGui\Communication\Table\PluginExecutor\CompanyUserTableExpanderPluginExecutorInterface $companyUserTableExpanderPluginExecutor
-     * @param \Spryker\Zed\CompanyUserGuiExtension\Dependency\Plugin\CompanyUserTableActionExpanderPluginInterface[] $companyUserTableActionLinksExpanderPlugins
+     * @param array<\Spryker\Zed\CompanyUserGuiExtension\Dependency\Plugin\CompanyUserTableActionExpanderPluginInterface> $companyUserTableActionLinksExpanderPlugins
      * @param \Spryker\Zed\CompanyUserGuiExtension\Dependency\Plugin\CompanyUserTableDeleteActionPluginInterface|null $companyUserTableDeleteActionPlugin
      */
     public function __construct(
@@ -304,9 +316,9 @@ class CompanyUserTable extends AbstractTable
 
     /**
      * @param array $companyUserDataItem
-     * @param string[] $buttons
+     * @param array<string> $buttons
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function expandLinks(array $companyUserDataItem, array $buttons): array
     {

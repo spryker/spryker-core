@@ -12,19 +12,30 @@ use Spryker\Zed\DataImport\DataImportConfig;
 
 class ProductRelationDataImportConfig extends DataImportConfig
 {
+    /**
+     * @var string
+     */
     public const IMPORT_TYPE_PRODUCT_RELATION = 'product-relation';
+    /**
+     * @var string
+     */
     public const IMPORT_TYPE_PRODUCT_RELATION_STORE = 'product-relation-store';
 
     /**
      * @uses \Spryker\Shared\ProductRelationStorage\ProductRelationStorageConfig::PRODUCT_ABSTRACT_RELATION_PUBLISH
+     * @var string
      */
     public const PRODUCT_ABSTRACT_RELATION_PUBLISH = 'ProductRelation.product_abstract_relation.publish';
 
     /**
      * @uses \Spryker\Shared\ProductRelationStorage\ProductRelationStorageConfig::PRODUCT_ABSTRACT_RELATION_STORE_PUBLISH
+     * @var string
      */
     public const PRODUCT_ABSTRACT_RELATION_STORE_PUBLISH = 'ProductRelation.product_abstract_relation_store.publish';
 
+    /**
+     * @var int
+     */
     protected const MODULE_ROOT_DIRECTORY_LEVEL = 4;
 
     /**

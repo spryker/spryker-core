@@ -61,7 +61,7 @@ class TimeDecisionRulePlugin extends AbstractPlugin implements DecisionRulePlugi
      *
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function acceptedDataTypes()
     {

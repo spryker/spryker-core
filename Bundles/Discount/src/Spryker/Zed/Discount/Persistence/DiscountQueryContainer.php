@@ -22,11 +22,29 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQueryContainerInterface
 {
+    /**
+     * @var string
+     */
     public const ALIAS_COL_ID_DISCOUNT = 'id_discount';
+    /**
+     * @var string
+     */
     public const ALIAS_COL_AMOUNT = 'amount';
+    /**
+     * @var string
+     */
     public const ALIAS_COL_TYPE = 'type';
+    /**
+     * @var string
+     */
     public const ALIAS_COL_DESCRIPTION = 'description';
+    /**
+     * @var string
+     */
     public const ALIAS_COL_VOUCHER_CODE = 'VoucherCode';
+    /**
+     * @var string
+     */
     public const ALIAS_VOUCHER_POOL_NAME = 'voucher_pool';
 
     /**
@@ -81,7 +99,7 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
      * @api
      *
      * @param int $idStore
-     * @param string[] $voucherCodes
+     * @param array<string> $voucherCodes
      *
      * @return \Orm\Zed\Discount\Persistence\SpyDiscountQuery
      */
@@ -255,8 +273,8 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
     public function queryDiscountName($discountName)
     {
         return $this->getFactory()
-           ->createDiscountQuery()
-           ->filterByDisplayName($discountName);
+            ->createDiscountQuery()
+            ->filterByDisplayName($discountName);
     }
 
     /**
@@ -293,7 +311,7 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
      * @api
      *
      * @param int $idDiscount
-     * @param int[] $idStores
+     * @param array<int> $idStores
      *
      * @return \Orm\Zed\Discount\Persistence\SpyDiscountStoreQuery
      */

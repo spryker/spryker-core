@@ -16,6 +16,8 @@ class PriceProductConfig extends AbstractBundleConfig
 {
     /**
      * Decides if orphan store prices need to be cleared after every product price update.
+     *
+     * @var bool
      */
     protected const IS_DELETE_ORPHAN_STORE_PRICES_ON_SAVE_ENABLED = false;
 

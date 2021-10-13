@@ -16,7 +16,7 @@ use Spryker\Zed\Oms\Exception\CommandNotFoundException;
 class CommandCollection implements CommandCollectionInterface, HasAwareCollectionInterface, ArrayAccess
 {
     /**
-     * @var \Spryker\Zed\Oms\Dependency\Plugin\Command\CommandInterface[]|\Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandInterface[]
+     * @var array<\Spryker\Zed\Oms\Dependency\Plugin\Command\CommandInterface|\Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandInterface>
      */
     protected $commands = [];
 

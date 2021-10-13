@@ -17,9 +17,21 @@ use Spryker\Zed\ProductLabelCollector\Dependency\Facade\ProductLabelCollectorToP
  */
 class ProductLabelCollectorDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_PRODUCT_LABEL = 'FACADE_PRODUCT_LABEL';
+    /**
+     * @var string
+     */
     public const FACADE_COLLECTOR = 'FACADE_COLLECTOR';
+    /**
+     * @var string
+     */
     public const SERVICE_DATA_READER = 'SERVICE_DATA_READER';
+    /**
+     * @var string
+     */
     public const QUERY_CONTAINER_TOUCH = 'QUERY_CONTAINER_TOUCH';
 
     /**

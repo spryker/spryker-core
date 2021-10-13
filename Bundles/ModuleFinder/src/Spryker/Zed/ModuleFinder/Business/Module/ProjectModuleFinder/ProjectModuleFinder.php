@@ -41,7 +41,7 @@ class ProjectModuleFinder implements ProjectModuleFinderInterface
     /**
      * @param \Generated\Shared\Transfer\ModuleFilterTransfer|null $moduleFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\ModuleTransfer[]
+     * @return array<\Generated\Shared\Transfer\ModuleTransfer>
      */
     public function getProjectModules(?ModuleFilterTransfer $moduleFilterTransfer = null): array
     {
@@ -90,7 +90,7 @@ class ProjectModuleFinder implements ProjectModuleFinderInterface
     /**
      * @param array $projectOrganizationModuleDirectories
      *
-     * @return \Symfony\Component\Finder\SplFileInfo[]|\Symfony\Component\Finder\Finder
+     * @return \Symfony\Component\Finder\Finder<\Symfony\Component\Finder\SplFileInfo>
      */
     protected function getProjectModuleFinder(array $projectOrganizationModuleDirectories): Finder
     {

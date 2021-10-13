@@ -13,21 +13,26 @@ class GlossaryConfig extends AbstractBundleConfig
 {
     /**
      * Used as `item_type` for touch mechanism.
+     *
+     * @var string
      */
     public const RESOURCE_TYPE_TRANSLATION = 'translation';
 
+    /**
+     * @var string
+     */
     protected const REDIRECT_URL_DEFAULT = '/glossary';
 
     /**
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getGlossaryFilePaths()
     {
         $paths = array_merge(
-            glob(APPLICATION_SOURCE_DIR . '/*/*/*/Resources/glossary.yml'),
-            glob(APPLICATION_VENDOR_DIR . '/*/*/src/*/*/*/Resources/glossary.yml')
+            glob(APPLICATION_SOURCE_DIR . '/*/*/*/Resources/glossary.yml', GLOB_NOSORT),
+            glob(APPLICATION_VENDOR_DIR . '/*/*/src/*/*/*/Resources/glossary.yml', GLOB_NOSORT)
         );
 
         return $paths;

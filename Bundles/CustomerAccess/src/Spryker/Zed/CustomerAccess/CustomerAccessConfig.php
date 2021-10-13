@@ -16,7 +16,7 @@ class CustomerAccessConfig extends AbstractBundleConfig
      *
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getContentTypes(): array
     {
@@ -40,7 +40,7 @@ class CustomerAccessConfig extends AbstractBundleConfig
      *
      * @api
      *
-     * @return bool[]
+     * @return array<bool>
      */
     public function getContentAccessByType(): array
     {

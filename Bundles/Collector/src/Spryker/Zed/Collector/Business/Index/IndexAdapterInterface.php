@@ -12,7 +12,7 @@ use Elastica\Document;
 interface IndexAdapterInterface
 {
     /**
-     * @param int|string $id
+     * @param string|int $id
      * @param array $options
      *
      * @return \Elastica\Document
@@ -20,7 +20,7 @@ interface IndexAdapterInterface
     public function getDocument($id, array $options = []): Document;
 
     /**
-     * @param \Elastica\Document[] $documents
+     * @param array<\Elastica\Document> $documents
      * @param array $options
      *
      * @return \Elastica\Bulk\ResponseSet

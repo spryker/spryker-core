@@ -12,18 +12,30 @@ use Generated\Shared\Transfer\PriceProductScheduleRedirectTransfer;
 
 class PriceProductScheduleRedirectStrategyResolver implements PriceProductScheduleRedirectStrategyResolverInterface
 {
+    /**
+     * @var string
+     */
     public const KEY_SCHEDULE_LIST = 'schedule_list';
+    /**
+     * @var string
+     */
     public const KEY_ABSTRACT_PRODUCT = 'abstract_product';
+    /**
+     * @var string
+     */
     public const KEY_CONCRETE_PRODUCT = 'concrete_product';
+    /**
+     * @var string
+     */
     protected const EXCEPTION_MESSAGE = 'Container is not valid';
 
     /**
-     * @var \Spryker\Zed\PriceProductScheduleGui\Communication\Redirect\PriceProductScheduleRedirectInterface[]
+     * @var array<\Spryker\Zed\PriceProductScheduleGui\Communication\Redirect\PriceProductScheduleRedirectInterface>
      */
     protected $priceProductScheduleStrategyContainer;
 
     /**
-     * @param \Spryker\Zed\PriceProductScheduleGui\Communication\Redirect\PriceProductScheduleRedirectInterface[] $priceProductScheduleStrategyContainer
+     * @param array<\Spryker\Zed\PriceProductScheduleGui\Communication\Redirect\PriceProductScheduleRedirectInterface> $priceProductScheduleStrategyContainer
      */
     public function __construct(array $priceProductScheduleStrategyContainer)
     {

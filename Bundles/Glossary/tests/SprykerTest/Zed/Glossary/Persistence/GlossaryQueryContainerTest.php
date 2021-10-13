@@ -25,8 +25,17 @@ use Spryker\Zed\Glossary\Persistence\GlossaryQueryContainer;
  */
 class GlossaryQueryContainerTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const TEST_LOCALE_1 = 'xxx';
+    /**
+     * @var string
+     */
     protected const TEST_LOCALE_2 = 'yyy';
+    /**
+     * @var string
+     */
     protected const TEST_GLOSSARY_KEY = 'test_glossary_key';
 
     /**

@@ -31,4 +31,26 @@ class ProductConfigurationInstanceMapper implements ProductConfigurationInstance
 
         return $productConfigurationInstanceTransfer;
     }
+
+    /**
+     * @param array<\Generated\Shared\Transfer\ProductConfigurationStorageTransfer> $productConfigurationStorageTransfers
+     *
+     * @return array<\Generated\Shared\Transfer\ProductConfigurationInstanceTransfer>
+     */
+    public function mapProductConfigurationStorageTransfersToProductConfigurationInstanceTransfersIndexedBySku(array $productConfigurationStorageTransfers)
+    {
+        $productConfigurationInstanceTransfers = [];
+
+        foreach ($productConfigurationStorageTransfers as $productConfigurationStorageTransfer) {
+            /** @var \Generated\Shared\Transfer\ProductConfigurationStorageTransfer $productConfigurationStorageTransfer */
+            $sku = $productConfigurationStorageTransfer->getSku();
+
+            $productConfigurationInstanceTransfers[$sku] = $this->mapProductConfigurationStorageTransferToProductConfigurationInstanceTransfer(
+                $productConfigurationStorageTransfer,
+                new ProductConfigurationInstanceTransfer()
+            );
+        }
+
+        return $productConfigurationInstanceTransfers;
+    }
 }

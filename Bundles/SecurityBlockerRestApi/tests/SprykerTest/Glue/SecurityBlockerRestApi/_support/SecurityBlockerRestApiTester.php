@@ -36,11 +36,13 @@ class SecurityBlockerRestApiTester extends Actor
 
     /**
      * @uses \Spryker\Glue\AgentAuthRestApi\AgentAuthRestApiConfig::RESPONSE_CODE_INVALID_LOGIN
+     * @var string
      */
     protected const RESPONSE_CODE_INVALID_LOGIN = '4101';
 
     /**
      * @uses \Spryker\Glue\AuthRestApi\AuthRestApiConfig::RESPONSE_INVALID_LOGIN
+     * @var string
      */
     protected const RESPONSE_INVALID_LOGIN = '003';
 

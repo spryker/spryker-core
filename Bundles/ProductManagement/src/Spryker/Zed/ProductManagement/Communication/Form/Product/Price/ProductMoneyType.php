@@ -24,11 +24,14 @@ use Symfony\Component\Form\FormView;
  */
 class ProductMoneyType extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const FIELD_FK_PRICE_TYPE = 'fk_price_type';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param string[] $options
+     * @param array<string> $options
      *
      * @return void
      */

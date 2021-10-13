@@ -15,9 +15,21 @@ use Spryker\Yves\Kernel\Container;
  */
 class RouterDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const ROUTER_PLUGINS = 'ROUTER_PLUGINS';
+    /**
+     * @var string
+     */
     public const ROUTER_ROUTE_PROVIDER = 'ROUTER_ROUTE_PROVIDER';
+    /**
+     * @var string
+     */
     public const POST_ADD_ROUTE_MANIPULATOR = 'POST_ADD_ROUTE_MANIPULATOR';
+    /**
+     * @var string
+     */
     public const ROUTER_ENHANCER_PLUGINS = 'ROUTER_ENHANCER_PLUGINS';
 
     /**
@@ -50,7 +62,7 @@ class RouterDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Yves\RouterExtension\Dependency\Plugin\RouterPluginInterface[]
+     * @return array<\Spryker\Yves\RouterExtension\Dependency\Plugin\RouterPluginInterface>
      */
     protected function getRouterPlugins(): array
     {
@@ -72,7 +84,7 @@ class RouterDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Yves\RouterExtension\Dependency\Plugin\RouterEnhancerPluginInterface[]
+     * @return array<\Spryker\Yves\RouterExtension\Dependency\Plugin\RouterEnhancerPluginInterface>
      */
     protected function getRouterEnhancerPlugins(): array
     {
@@ -94,7 +106,7 @@ class RouterDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Yves\RouterExtension\Dependency\Plugin\RouterPluginInterface[]
+     * @return array<\Spryker\Yves\RouterExtension\Dependency\Plugin\RouterPluginInterface>
      */
     protected function getRouteProvider(): array
     {
@@ -116,7 +128,7 @@ class RouterDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Yves\RouterExtension\Dependency\Plugin\PostAddRouteManipulatorPluginInterface[]
+     * @return array<\Spryker\Yves\RouterExtension\Dependency\Plugin\PostAddRouteManipulatorPluginInterface>
      */
     protected function getPostAddRouteManipulator(): array
     {

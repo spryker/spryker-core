@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\PriceProduct\Business;
 
+use ArrayObject;
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
@@ -14,6 +15,8 @@ use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\PriceTypeTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\ValidationResponseTransfer;
+use Generated\Shared\Transfer\WishlistItemTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -28,7 +31,7 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
      *
      * @api
      *
-     * @return \Generated\Shared\Transfer\PriceTypeTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceTypeTransfer>
      */
     public function getPriceTypeValues()
     {
@@ -268,7 +271,7 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
      *
      * @param string $sku
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function findPricesBySkuForCurrentStore($sku)
     {
@@ -281,6 +284,8 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
      * {@inheritDoc}
      *
      * @api
+     *
+     * @phpstan-return array<mixed>
      *
      * @param string $sku
      * @param \Generated\Shared\Transfer\PriceProductDimensionTransfer|null $priceProductDimensionTransfer
@@ -301,7 +306,9 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @phpstan-return array<mixed>
+     *
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      *
      * @return array
      */
@@ -320,7 +327,7 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
      * @param int $idProductAbstract
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer|null $priceProductCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function findProductAbstractPrices(
         int $idProductAbstract,
@@ -340,7 +347,7 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
      * @param int $idProductAbstract
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer|null $priceProductCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function findProductConcretePrices(
         int $idProductConcrete,
@@ -388,6 +395,8 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
      *
      * @api
      *
+     * @phpstan-param array<mixed> $priceData
+     *
      * @param array $priceData
      *
      * @return string
@@ -426,7 +435,7 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
     {
         $this->getFactory()
             ->createPriceProductStoreWriter()
-            ->deleteOrphanPriceProductStoreEntities();
+            ->deleteAllOrphanPriceProductStoreEntities();
     }
 
     /**
@@ -437,7 +446,7 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
      * @param int $idProductAbstract
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer|null $priceProductCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function findProductAbstractPricesWithoutPriceExtraction(
         int $idProductAbstract,
@@ -453,9 +462,9 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
      *
      * @api
      *
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function findProductAbstractPricesWithoutPriceExtractionByIdProductAbstractIn(array $productAbstractIds): array
     {
@@ -489,7 +498,7 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
      * @param int $idProductAbstract
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer|null $priceProductCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function findProductConcretePricesWithoutPriceExtraction(
         int $idProductConcrete,
@@ -522,10 +531,10 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
      *
      * @api
      *
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer|null $priceProductCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function findProductAbstractPricesWithoutPriceExtractionByProductAbstractIdsAndCriteria(
         array $productAbstractIds,
@@ -573,9 +582,9 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer[] $priceProductFilterTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductFilterTransfer> $priceProductFilterTransfers
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function getValidPrices(array $priceProductFilterTransfers): array
     {
@@ -613,5 +622,39 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
         return $this->getFactory()
             ->createPriceProductConcreteReader()
             ->expandProductConcreteWithPrices($productConcreteTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
+     *
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
+     *
+     * @return \Generated\Shared\Transfer\ValidationResponseTransfer
+     */
+    public function validatePrices(ArrayObject $priceProductTransfers): ValidationResponseTransfer
+    {
+        return $this->getFactory()
+            ->createPriceProductValidator()
+            ->validatePrices($priceProductTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistItemTransfer
+     */
+    public function expandWishlistItem(WishlistItemTransfer $wishlistItemTransfer): WishlistItemTransfer
+    {
+        return $this->getFactory()
+            ->createPriceProductWishlsitItemExpander()
+            ->expandWishlistItem($wishlistItemTransfer);
     }
 }

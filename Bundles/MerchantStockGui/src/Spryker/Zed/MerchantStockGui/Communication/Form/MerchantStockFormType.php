@@ -18,7 +18,13 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 class MerchantStockFormType extends AbstractType
 {
+    /**
+     * @var string
+     */
     protected const FIELD_STOCKS = 'stocks';
+    /**
+     * @var string
+     */
     protected const LABEL_STOCKS = 'Warehouses';
 
     /**

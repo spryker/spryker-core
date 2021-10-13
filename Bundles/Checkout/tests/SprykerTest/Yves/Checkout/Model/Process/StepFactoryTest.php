@@ -28,6 +28,9 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
  */
 class StepFactoryTest extends Unit
 {
+    /**
+     * @var string
+     */
     public const METHOD_HANDLER = 'method handler';
 
     /**

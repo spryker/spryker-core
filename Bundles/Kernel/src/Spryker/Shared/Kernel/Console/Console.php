@@ -23,7 +23,13 @@ use Symfony\Component\Console\Terminal;
  */
 class Console extends SymfonyCommand
 {
+    /**
+     * @var int
+     */
     public const CODE_SUCCESS = 0;
+    /**
+     * @var int
+     */
     public const CODE_ERROR = 1;
 
     /**
@@ -87,7 +93,7 @@ class Console extends SymfonyCommand
     }
 
     /**
-     * @param string|array $message
+     * @param array|string $message
      * @param bool $wrapInInfoTags
      *
      * @return void

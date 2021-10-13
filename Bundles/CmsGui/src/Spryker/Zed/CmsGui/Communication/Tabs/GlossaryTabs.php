@@ -15,7 +15,7 @@ use Spryker\Zed\Gui\Communication\Tabs\AbstractTabs;
 class GlossaryTabs extends AbstractTabs
 {
     /**
-     * @var \Generated\Shared\Transfer\CmsGlossaryTransfer $cmsGlossaryTransfer
+     * @var \Generated\Shared\Transfer\CmsGlossaryTransfer
      */
     protected $cmsGlossaryTransfer;
 
@@ -34,10 +34,10 @@ class GlossaryTabs extends AbstractTabs
      */
     protected function build(TabsViewTransfer $tabsViewTransfer)
     {
-         $this->createPlaceHolderTabs($tabsViewTransfer)
+        $this->createPlaceHolderTabs($tabsViewTransfer)
             ->setFooter($tabsViewTransfer);
 
-         return $tabsViewTransfer;
+        return $tabsViewTransfer;
     }
 
     /**

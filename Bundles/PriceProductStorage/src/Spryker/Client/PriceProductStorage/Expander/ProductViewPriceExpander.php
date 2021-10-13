@@ -37,7 +37,7 @@ class ProductViewPriceExpander implements ProductViewPriceExpanderInterface
     protected $priceProductService;
 
     /**
-     * @var \Spryker\Client\PriceProductStorageExtension\Dependency\Plugin\PriceProductFilterExpanderPluginInterface[]
+     * @var array<\Spryker\Client\PriceProductStorageExtension\Dependency\Plugin\PriceProductFilterExpanderPluginInterface>
      */
     protected $priceProductFilterExpanderPlugins;
 
@@ -46,7 +46,7 @@ class ProductViewPriceExpander implements ProductViewPriceExpanderInterface
      * @param \Spryker\Client\PriceProductStorage\Storage\PriceConcreteStorageReaderInterface $priceConcreteStorageReader
      * @param \Spryker\Client\PriceProductStorage\Dependency\Client\PriceProductStorageToPriceProductClientInterface $priceProductClient
      * @param \Spryker\Client\PriceProductStorage\Dependency\Service\PriceProductStorageToPriceProductServiceInterface $priceProductService
-     * @param \Spryker\Client\PriceProductStorageExtension\Dependency\Plugin\PriceProductFilterExpanderPluginInterface[] $priceProductFilterExpanderPlugins
+     * @param array<\Spryker\Client\PriceProductStorageExtension\Dependency\Plugin\PriceProductFilterExpanderPluginInterface> $priceProductFilterExpanderPlugins
      */
     public function __construct(
         PriceAbstractStorageReaderInterface $priceAbstractStorageReader,
@@ -90,7 +90,7 @@ class ProductViewPriceExpander implements ProductViewPriceExpanderInterface
 
     /**
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer
      */
@@ -110,7 +110,7 @@ class ProductViewPriceExpander implements ProductViewPriceExpanderInterface
     /**
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     protected function findPriceAbstractData(ProductViewTransfer $productViewTransfer): array
     {
@@ -124,7 +124,7 @@ class ProductViewPriceExpander implements ProductViewPriceExpanderInterface
     /**
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     protected function findPriceConcreteData(ProductViewTransfer $productViewTransfer): array
     {

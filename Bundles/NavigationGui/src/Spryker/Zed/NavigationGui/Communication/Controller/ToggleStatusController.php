@@ -18,8 +18,14 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ToggleStatusController extends AbstractController
 {
+    /**
+     * @var string
+     */
     public const PARAM_ID_NAVIGATION = 'id-navigation';
 
+    /**
+     * @var array
+     */
     public const MESSAGE_MAP_UPDATE_SUCCESS = [
         true => 'Navigation element %d was activated successfully.',
         false => 'Navigation element %d was deactivated successfully.',
@@ -28,7 +34,7 @@ class ToggleStatusController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function indexAction(Request $request)
     {

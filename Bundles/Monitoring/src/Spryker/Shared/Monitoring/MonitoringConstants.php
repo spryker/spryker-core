@@ -24,6 +24,7 @@ interface MonitoringConstants
      * ];
      *
      * @api
+     * @var string
      */
     public const IGNORABLE_TRANSACTIONS = 'MONITORING:IGNORABLE_TRANSACTIONS';
 }

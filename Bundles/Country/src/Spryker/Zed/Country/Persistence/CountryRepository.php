@@ -17,7 +17,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 class CountryRepository extends AbstractRepository implements CountryRepositoryInterface
 {
     /**
-     * @param string[] $iso2Codes
+     * @param array<string> $iso2Codes
      *
      * @return \Generated\Shared\Transfer\CountryCollectionTransfer
      */

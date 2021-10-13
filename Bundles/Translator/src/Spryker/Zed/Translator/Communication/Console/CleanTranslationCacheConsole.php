@@ -17,7 +17,13 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class CleanTranslationCacheConsole extends Console
 {
+    /**
+     * @var string
+     */
     public const COMMAND_NAME = 'translator:clean-cache';
+    /**
+     * @var string
+     */
     public const DESCRIPTION = 'Clean translation cache for Zed';
 
     /**

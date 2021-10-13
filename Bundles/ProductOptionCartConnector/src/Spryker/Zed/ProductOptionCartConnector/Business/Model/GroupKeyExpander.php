@@ -56,7 +56,7 @@ class GroupKeyExpander implements GroupKeyExpanderInterface
         usort(
             $options,
             function (ProductOptionTransfer $productOptionLeft, ProductOptionTransfer $productOptionRight) {
-                return ($productOptionLeft->getIdProductOptionValue() < $productOptionRight->getIdProductOptionValue()) ? -1 : 1;
+                return ((int)$productOptionLeft->getIdProductOptionValue() < (int)$productOptionRight->getIdProductOptionValue()) ? -1 : 1;
             }
         );
 
@@ -64,7 +64,7 @@ class GroupKeyExpander implements GroupKeyExpanderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductOptionTransfer[] $sortedProductOptions
+     * @param array<\Generated\Shared\Transfer\ProductOptionTransfer> $sortedProductOptions
      *
      * @return string
      */

@@ -13,6 +13,9 @@ use Spryker\Client\PriceProductMerchantRelationshipStorage\Dependency\Service\Pr
 
 class PriceProductMerchantRelationshipKeyGenerator implements PriceProductMerchantRelationshipKeyGeneratorInterface
 {
+    /**
+     * @var string
+     */
     protected const KEY_SEPARATOR = ':';
 
     /**

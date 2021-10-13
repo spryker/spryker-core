@@ -19,7 +19,7 @@ class ChartFacade extends AbstractFacade implements ChartFacadeInterface
      *
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getChartTypes(): array
     {

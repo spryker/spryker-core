@@ -12,14 +12,24 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class OauthCustomerConnectorConfig extends AbstractBundleConfig
 {
+    /**
+     * @var string
+     */
     public const SCOPE_CUSTOMER = 'customer';
+    /**
+     * @var string
+     */
     protected const SCOPE_CUSTOMER_IMPERSONATION = 'customer_impersonation';
 
     /**
      * @uses \Spryker\Zed\Oauth\OauthConfig::GRANT_TYPE_PASSWORD
+     * @var string
      */
     public const GRANT_TYPE_PASSWORD = 'password';
 
+    /**
+     * @var string
+     */
     public const GRANT_TYPE_CUSTOMER_IMPERSONATION = 'customer_impersonation';
 
     /**
@@ -66,7 +76,7 @@ class OauthCustomerConnectorConfig extends AbstractBundleConfig
      *
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getCustomerImpersonationScopes(): array
     {

@@ -11,6 +11,9 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class ContentFileConfig extends AbstractBundleConfig
 {
+    /**
+     * @var int
+     */
     protected const MAX_NUMBER_FILES_IN_FILE_LIST = 20;
 
     /**

@@ -30,4 +30,44 @@ class SalesExpenseMapper implements SalesExpenseMapperInterface
 
         return $salesExpenseEntity;
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\ExpenseTransfer $expenseTransfer
+     * @param \Orm\Zed\Sales\Persistence\SpySalesExpense $expenseEntity
+     *
+     * @return \Generated\Shared\Transfer\ExpenseTransfer
+     */
+    public function mapExpenseEntityToSalesExpenseTransfer(ExpenseTransfer $expenseTransfer, SpySalesExpense $expenseEntity): ExpenseTransfer
+    {
+        $expenseTransfer->fromArray($expenseEntity->toArray(), true);
+        $expenseTransfer->setQuantity(1);
+        $expenseTransfer->setSumGrossPrice($expenseEntity->getGrossPrice());
+        $expenseTransfer->setSumNetPrice($expenseEntity->getNetPrice());
+        $expenseTransfer->setSumPrice($expenseEntity->getPrice());
+        $expenseTransfer->setSumPriceToPayAggregation($expenseEntity->getPriceToPayAggregation());
+        $expenseTransfer->setSumTaxAmount($expenseEntity->getTaxAmount());
+        $expenseTransfer->setIsOrdered(true);
+
+        $expenseTransfer = $this->mapExpenseUnitPrices($expenseTransfer);
+
+        return $expenseTransfer;
+    }
+
+    /**
+     * Unit prices are populated for presentation purposes only. For further calculations use sum prices or properly populated unit prices.
+     *
+     * @param \Generated\Shared\Transfer\ExpenseTransfer $expenseTransfer
+     *
+     * @return \Generated\Shared\Transfer\ExpenseTransfer
+     */
+    protected function mapExpenseUnitPrices(ExpenseTransfer $expenseTransfer): ExpenseTransfer
+    {
+        $expenseTransfer->setUnitGrossPrice((int)round($expenseTransfer->getSumGrossPrice() / $expenseTransfer->getQuantity()));
+        $expenseTransfer->setUnitNetPrice((int)round($expenseTransfer->getSumNetPrice() / $expenseTransfer->getQuantity()));
+        $expenseTransfer->setUnitPrice((int)round($expenseTransfer->getSumPrice() / $expenseTransfer->getQuantity()));
+        $expenseTransfer->setUnitPriceToPayAggregation((int)round($expenseTransfer->getSumPriceToPayAggregation() / $expenseTransfer->getQuantity()));
+        $expenseTransfer->setUnitTaxAmount((int)round($expenseTransfer->getSumTaxAmount() / $expenseTransfer->getQuantity()));
+
+        return $expenseTransfer;
+    }
 }

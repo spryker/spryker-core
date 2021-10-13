@@ -12,6 +12,9 @@ use Spryker\Zed\ContentGuiExtension\Dependency\Plugin\ContentGuiEditorPluginInte
 
 class ContentBannerContentGuiEditorPluginMock implements ContentGuiEditorPluginInterface
 {
+    /**
+     * @var array
+     */
     protected const TEMPLATES = [
         'default' => 'Default',
         'top-title' => 'Top Title',
@@ -26,7 +29,7 @@ class ContentBannerContentGuiEditorPluginMock implements ContentGuiEditorPluginI
     }
 
     /**
-     * @return \Generated\Shared\Transfer\ContentWidgetTemplateTransfer[]
+     * @return array<\Generated\Shared\Transfer\ContentWidgetTemplateTransfer>
      */
     public function getTemplates(): array
     {

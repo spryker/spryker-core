@@ -16,8 +16,14 @@ use Generated\Shared\Search\PageIndexMap;
  */
 class SpellingSuggestionQueryExpanderPlugin extends AbstractSuggestionExpanderPlugin
 {
+    /**
+     * @var string
+     */
     public const SUGGESTION_NAME = 'spelling-suggestion';
 
+    /**
+     * @var int
+     */
     public const SIZE = 1;
 
     /**

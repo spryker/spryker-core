@@ -17,13 +17,13 @@ class AddToCartSkuReader implements AddToCartSkuReaderInterface
     protected $productPageSearchRepository;
 
     /**
-     * @var \Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductAbstractAddToCartPluginInterface[]
+     * @var array<\Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductAbstractAddToCartPluginInterface>
      */
     protected $productAbstractAddToCartPlugins;
 
     /**
      * @param \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchRepositoryInterface $productPageSearchRepository
-     * @param \Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductAbstractAddToCartPluginInterface[] $productAbstractAddToCartPlugins
+     * @param array<\Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductAbstractAddToCartPluginInterface> $productAbstractAddToCartPlugins
      */
     public function __construct(
         ProductPageSearchRepositoryInterface $productPageSearchRepository,
@@ -34,9 +34,9 @@ class AddToCartSkuReader implements AddToCartSkuReaderInterface
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getProductAbstractAddToCartSkus(array $productAbstractIds): array
     {
@@ -57,9 +57,9 @@ class AddToCartSkuReader implements AddToCartSkuReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteTransfers
+     * @param array<\Generated\Shared\Transfer\ProductConcreteTransfer> $productConcreteTransfers
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
      */
     protected function executeProductAbstractAddToCartPlugins(array $productConcreteTransfers): array
     {
@@ -71,9 +71,9 @@ class AddToCartSkuReader implements AddToCartSkuReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteTransfers
+     * @param array<\Generated\Shared\Transfer\ProductConcreteTransfer> $productConcreteTransfers
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function mapProductConcreteTransfersToProductConcreteSkus(array $productConcreteTransfers): array
     {

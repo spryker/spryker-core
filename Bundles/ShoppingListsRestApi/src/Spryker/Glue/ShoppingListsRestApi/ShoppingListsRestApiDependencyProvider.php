@@ -17,7 +17,13 @@ use Spryker\Glue\ShoppingListsRestApi\Dependency\Client\ShoppingListsRestApiToSh
  */
 class ShoppingListsRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_SHOPPING_LIST = 'CLIENT_SHOPPING_LIST';
+    /**
+     * @var string
+     */
     public const CLIENT_GLOSSARY_STORAGE = 'CLIENT_GLOSSARY_STORAGE';
 
     /**

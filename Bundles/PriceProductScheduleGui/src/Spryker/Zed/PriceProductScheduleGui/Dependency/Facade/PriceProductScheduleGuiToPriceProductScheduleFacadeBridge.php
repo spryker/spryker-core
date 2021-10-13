@@ -106,7 +106,7 @@ class PriceProductScheduleGuiToPriceProductScheduleFacadeBridge implements Price
     /**
      * @param int $idPriceProductScheduleList
      *
-     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductScheduleTransfer>
      */
     public function findPriceProductSchedulesByIdPriceProductScheduleList(
         int $idPriceProductScheduleList

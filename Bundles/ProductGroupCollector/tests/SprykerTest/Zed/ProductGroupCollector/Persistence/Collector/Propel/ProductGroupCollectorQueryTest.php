@@ -27,6 +27,19 @@ use Spryker\Zed\ProductGroupCollector\Persistence\Collector\Propel\ProductGroupC
 class ProductGroupCollectorQueryTest extends Unit
 {
     /**
+     * @var string
+     */
+    protected const ITEM_TYPE_PRODUCT_GROUP = 'product_group';
+    /**
+     * @var string
+     */
+    protected const KEY_ITEM_TYPE = 'ItemType';
+    /**
+     * @var string
+     */
+    protected const KEY_ITEM_ID = 'ItemId';
+
+    /**
      * @var \SprykerTest\Zed\ProductGroupCollector\ProductGroupCollectorPersistenceTester
      */
     protected $tester;
@@ -56,7 +69,10 @@ class ProductGroupCollectorQueryTest extends Unit
 
         // Act
         $productGroupCollectorQuery->prepare();
-        $result = $productGroupCollectorQuery->getTouchQuery()->find()->toArray();
+        $result = $productGroupCollectorQuery->getTouchQuery()
+            ->filterByItemType(static::ITEM_TYPE_PRODUCT_GROUP)
+            ->find()
+            ->toArray();
 
         // Assert
         $this->assertNotEmpty($result);
@@ -84,7 +100,7 @@ class ProductGroupCollectorQueryTest extends Unit
     protected function findResultProductGroupData(array $result, int $idProductGroup): ?array
     {
         foreach ($result as $row) {
-            if ($row['ItemType'] === 'product_group' && $row['ItemId'] === $idProductGroup) {
+            if ($row[static::KEY_ITEM_TYPE] === static::ITEM_TYPE_PRODUCT_GROUP && $row[static::KEY_ITEM_ID] === $idProductGroup) {
                 return $row;
             }
         }

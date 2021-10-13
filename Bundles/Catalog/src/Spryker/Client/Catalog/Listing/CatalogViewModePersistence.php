@@ -13,9 +13,18 @@ use Symfony\Component\HttpFoundation\Response;
 
 class CatalogViewModePersistence implements CatalogViewModePersistenceInterface
 {
+    /**
+     * @var string
+     */
     public const COOKIE_IDENTIFIER = 'catalog-view-mode';
 
+    /**
+     * @var string
+     */
     public const VIEW_MODE_GRID = 'grid';
+    /**
+     * @var string
+     */
     public const VIEW_MODE_LIST = 'list';
 
     /**
@@ -51,7 +60,7 @@ class CatalogViewModePersistence implements CatalogViewModePersistenceInterface
      */
     public function getViewMode(Request $request)
     {
-        $listingMode = $request->cookies->get(static::COOKIE_IDENTIFIER);
+        $listingMode = (string)$request->cookies->get(static::COOKIE_IDENTIFIER);
 
         if (!$listingMode) {
             return $this->defaultViewMode;

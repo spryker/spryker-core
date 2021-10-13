@@ -37,7 +37,7 @@ class CmsSlotStoragePublisher implements CmsSlotStoragePublisherInterface
     }
 
     /**
-     * @param int[] $cmsSlotIds
+     * @param array<int> $cmsSlotIds
      *
      * @return void
      */
@@ -51,7 +51,7 @@ class CmsSlotStoragePublisher implements CmsSlotStoragePublisherInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CmsSlotTransfer[] $cmsSlotTransfers
+     * @param array<\Generated\Shared\Transfer\CmsSlotTransfer> $cmsSlotTransfers
      *
      * @return void
      */

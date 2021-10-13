@@ -1,7 +1,5 @@
 <?xml version="1.0"?>
-<transfers xmlns="spryker:transfer-01"
-           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-           xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+<transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="RestAccessTokensAttributes">
         <property name="username" type="string" restRequestParameter="required"/>
@@ -40,6 +38,16 @@
         <property name="anonymousCustomerReference" type="string"/>
         <property name="customerReference" type="string"/>
         <property name="isValid" type="bool"/>
+        <property name="error" type="OauthError"/>
+        <property name="accessToken" type="string"/>
+        <property name="tokenType" type="string"/>
+        <property name="expiresIn" type="int"/>
+        <property name="refreshToken" type="string"/>
+    </transfer>
+
+    <transfer name="OauthError">
+        <property name="errorType" type="string"/>
+        <property name="message" type="string"/>
     </transfer>
 
     <transfer name="RestUser">
@@ -79,4 +87,9 @@
         <property name="customerReference" type="string"/>
     </transfer>
 
+    <transfer name="RestTokenAttributes">
+        <property name="grantType" type="string"/>
+        <property name="username" type="string"/>
+        <property name="password" type="string"/>
+    </transfer>
 </transfers>

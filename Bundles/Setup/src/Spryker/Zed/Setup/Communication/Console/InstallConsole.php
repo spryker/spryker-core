@@ -19,7 +19,13 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class InstallConsole extends Console
 {
+    /**
+     * @var string
+     */
     public const COMMAND_NAME = 'setup:install';
+    /**
+     * @var string
+     */
     public const DESCRIPTION = 'Setup the application';
 
     /**

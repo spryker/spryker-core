@@ -47,38 +47,128 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  */
 class ProductFormAdd extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const FIELD_SKU = 'sku';
+    /**
+     * @var string
+     */
     public const FIELD_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
+    /**
+     * @var string
+     */
     public const FIELD_PRICES = 'prices';
+    /**
+     * @var string
+     */
     public const FIELD_TAX_RATE = 'tax_rate';
+    /**
+     * @var string
+     */
     public const FIELD_NEW_FROM = 'new_from';
+    /**
+     * @var string
+     */
     public const FIELD_NEW_TO = 'new_to';
 
+    /**
+     * @var string
+     */
     public const FORM_ATTRIBUTE_ABSTRACT = 'attribute_abstract';
+    /**
+     * @var string
+     */
     public const FORM_ATTRIBUTE_SUPER = 'attribute_super';
+    /**
+     * @var string
+     */
     public const FORM_GENERAL = 'general';
+    /**
+     * @var string
+     */
     public const FORM_PRICE_AND_TAX = 'price_and_tax';
+    /**
+     * @var string
+     */
     public const FORM_PRICE_AND_STOCK = 'price_and_stock';
+    /**
+     * @var string
+     */
     public const FORM_TAX_SET = 'tax_set';
+    /**
+     * @var string
+     */
     public const FORM_SEO = 'seo';
+    /**
+     * @var string
+     */
     public const FORM_STORE_RELATION = 'store_relation';
+    /**
+     * @var string
+     */
     public const FORM_IMAGE_SET = 'image_set';
+    /**
+     * @var string
+     */
     public const FORM_PRICE_DIMENSION = 'price_dimension';
 
+    /**
+     * @var string
+     */
     public const OPTION_ATTRIBUTE_ABSTRACT = 'option_attribute_abstract';
+    /**
+     * @var string
+     */
     public const OPTION_ATTRIBUTE_SUPER = 'option_attribute_super';
+    /**
+     * @var string
+     */
     public const OPTION_ID_LOCALE = 'option_id_locale';
+    /**
+     * @var string
+     */
     public const OPTION_TAX_RATES = 'option_tax_rates';
+    /**
+     * @var string
+     */
     public const OPTION_CURRENCY_ISO_CODE = 'currency_iso_code';
 
+    /**
+     * @var string
+     */
     public const VALIDATION_GROUP_UNIQUE_SKU = 'validation_group_unique_sku';
+    /**
+     * @var string
+     */
     public const VALIDATION_GROUP_ATTRIBUTE_ABSTRACT = 'validation_group_attribute_abstract';
+    /**
+     * @var string
+     */
     public const VALIDATION_GROUP_ATTRIBUTE_SUPER = 'validation_group_attribute_super';
+    /**
+     * @var string
+     */
     public const VALIDATION_GROUP_GENERAL = 'validation_group_general';
+    /**
+     * @var string
+     */
     public const VALIDATION_GROUP_PRICE_AND_TAX = 'validation_group_price_and_tax';
+    /**
+     * @var string
+     */
     public const VALIDATION_GROUP_PRICE_AND_STOCK = 'validation_group_price_and_stock';
+    /**
+     * @var string
+     */
     public const VALIDATION_GROUP_SEO = 'validation_group_seo';
+    /**
+     * @var string
+     */
     public const VALIDATION_GROUP_IMAGE_SET = 'validation_group_image';
+    /**
+     * @var string
+     */
     public const VALIDATION_GROUP_PRICE_SOURCE = 'validation_group_price_source';
 
     /**

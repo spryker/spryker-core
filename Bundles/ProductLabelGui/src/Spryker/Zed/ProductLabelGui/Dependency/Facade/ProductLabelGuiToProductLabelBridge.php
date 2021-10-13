@@ -36,7 +36,7 @@ class ProductLabelGuiToProductLabelBridge implements ProductLabelGuiToProductLab
     }
 
     /**
-     * @return \Generated\Shared\Transfer\ProductLabelTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductLabelTransfer>
      */
     public function findAllLabels()
     {
@@ -65,7 +65,7 @@ class ProductLabelGuiToProductLabelBridge implements ProductLabelGuiToProductLab
 
     /**
      * @param int $idProductLabel
-     * @param int[] $idsProductAbstract
+     * @param array<int> $idsProductAbstract
      *
      * @return void
      */
@@ -76,7 +76,7 @@ class ProductLabelGuiToProductLabelBridge implements ProductLabelGuiToProductLab
 
     /**
      * @param int $idProductLabel
-     * @param int[] $idsProductAbstract
+     * @param array<int> $idsProductAbstract
      *
      * @return void
      */
@@ -98,7 +98,7 @@ class ProductLabelGuiToProductLabelBridge implements ProductLabelGuiToProductLab
     /**
      * @param int $idProductLabel
      *
-     * @return int[]
+     * @return array<int>
      */
     public function findProductAbstractRelationsByIdProductLabel($idProductLabel)
     {

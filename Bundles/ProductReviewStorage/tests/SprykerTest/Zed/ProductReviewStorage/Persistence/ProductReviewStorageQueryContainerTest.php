@@ -27,6 +27,9 @@ use Spryker\Zed\ProductReviewStorage\Persistence\ProductReviewStorageQueryContai
  */
 class ProductReviewStorageQueryContainerTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const TEST_LOCALE_NAME = 'xxx';
 
     /**
@@ -151,7 +154,10 @@ class ProductReviewStorageQueryContainerTest extends Unit
 
         // Assert
         $this->assertCount(2, $result);
-        $resultProductAbstractIds = array_column($result, ProductPageSearchTransfer::ID_PRODUCT_ABSTRACT);
+        $resultProductAbstractIds = array_map(
+            'intval',
+            array_column($result, ProductPageSearchTransfer::ID_PRODUCT_ABSTRACT)
+        );
         $this->assertContains($this->productAbstractTransfer1->getIdProductAbstract(), $resultProductAbstractIds);
         $this->assertContains($this->productAbstractTransfer2->getIdProductAbstract(), $resultProductAbstractIds);
     }

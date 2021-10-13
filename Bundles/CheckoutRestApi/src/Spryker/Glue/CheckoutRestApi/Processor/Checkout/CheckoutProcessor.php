@@ -108,7 +108,7 @@ class CheckoutProcessor implements CheckoutProcessorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RestCheckoutErrorTransfer[]|\ArrayObject $errors
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\RestCheckoutErrorTransfer> $errors
      * @param string $localeName
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface

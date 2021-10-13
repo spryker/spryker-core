@@ -49,7 +49,7 @@ class CmsBlockProductAbstractReader implements CmsBlockProductAbstractReaderInte
      * @param int $idCmsBlock
      * @param int $idLocale
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getProductAbstractRenderedList($idCmsBlock, $idLocale)
     {
@@ -71,7 +71,7 @@ class CmsBlockProductAbstractReader implements CmsBlockProductAbstractReaderInte
     /**
      * @param int $idProductAbstract
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getCmsBlockRenderedList($idProductAbstract)
     {

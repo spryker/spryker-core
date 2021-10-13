@@ -14,6 +14,7 @@ interface CategoryImageEvents
      * - This event will be used for category_image publishing
      *
      * @api
+     * @var string
      */
     public const CATEGORY_IMAGE_CATEGORY_PUBLISH = 'CategoryImage.category_image.publish';
 
@@ -22,6 +23,7 @@ interface CategoryImageEvents
      * - This event will be used for category_image un-publishing
      *
      * @api
+     * @var string
      */
     public const CATEGORY_IMAGE_CATEGORY_UNPUBLISH = 'CategoryImage.category_image.unpublish';
 
@@ -30,6 +32,7 @@ interface CategoryImageEvents
      * - This event will be used for spy_category_image entity changes
      *
      * @api
+     * @var string
      */
     public const ENTITY_SPY_CATEGORY_IMAGE_UPDATE = 'Entity.spy_category_image.update';
 
@@ -38,6 +41,7 @@ interface CategoryImageEvents
      * - This event will be used for spy_category_image_set entity creation
      *
      * @api
+     * @var string
      */
     public const ENTITY_SPY_CATEGORY_IMAGE_SET_CREATE = 'Entity.spy_category_image_set.create';
 
@@ -46,6 +50,7 @@ interface CategoryImageEvents
      * - This event will be used for spy_category_image_set entity changes
      *
      * @api
+     * @var string
      */
     public const ENTITY_SPY_CATEGORY_IMAGE_SET_UPDATE = 'Entity.spy_category_image_set.update';
 
@@ -54,6 +59,7 @@ interface CategoryImageEvents
      * - This event will be used for spy_category_image_set entity deletion
      *
      * @api
+     * @var string
      */
     public const ENTITY_SPY_CATEGORY_IMAGE_SET_DELETE = 'Entity.spy_category_image_set.delete';
 
@@ -62,6 +68,7 @@ interface CategoryImageEvents
      * - This event will be used for spy_category_image_set_to_category_image entity creation
      *
      * @api
+     * @var string
      */
     public const ENTITY_SPY_CATEGORY_IMAGE_SET_TO_CATEGORY_IMAGE_CREATE = 'Entity.spy_category_image_set_to_category_image.create';
 
@@ -70,6 +77,7 @@ interface CategoryImageEvents
      * - This event will be used for spy_category_image_set_to_category_image entity changes
      *
      * @api
+     * @var string
      */
     public const ENTITY_SPY_CATEGORY_IMAGE_SET_TO_CATEGORY_IMAGE_UPDATE = 'Entity.spy_category_image_set_to_category_image.update';
 
@@ -78,6 +86,7 @@ interface CategoryImageEvents
      * - This event will be used for spy_category_image_set_to_category_image entity deletion
      *
      * @api
+     * @var string
      */
     public const ENTITY_SPY_CATEGORY_IMAGE_SET_TO_CATEGORY_IMAGE_DELETE = 'Entity.spy_category_image_set_to_category_image.delete';
 }

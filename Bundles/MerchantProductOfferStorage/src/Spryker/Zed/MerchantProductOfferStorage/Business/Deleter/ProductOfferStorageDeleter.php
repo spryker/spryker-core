@@ -36,7 +36,7 @@ class ProductOfferStorageDeleter implements ProductOfferStorageDeleterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
      *
      * @return void
      */
@@ -52,7 +52,7 @@ class ProductOfferStorageDeleter implements ProductOfferStorageDeleterInterface
     }
 
     /**
-     * @param string[] $productOfferReferences
+     * @param array<string> $productOfferReferences
      * @param string|null $storeName
      *
      * @return void

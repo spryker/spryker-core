@@ -54,7 +54,7 @@ class CmsPageStoreRelationWriter implements CmsPageStoreRelationWriterInterface
     /**
      * @param int $idCmsPage
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getIdStoresByIdCmsPage(int $idCmsPage): array
     {

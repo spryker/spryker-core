@@ -14,8 +14,6 @@ use Generated\Shared\Transfer\SchedulerResponseTransfer;
 use Generated\Shared\Transfer\SchedulerScheduleTransfer;
 use Spryker\Zed\Scheduler\Business\Command\Filter\SchedulerFilter;
 use Spryker\Zed\Scheduler\Business\Command\Filter\SchedulerFilterInterface;
-use Spryker\Zed\Scheduler\Business\SchedulerBusinessFactory;
-use Spryker\Zed\Scheduler\Business\SchedulerFacade;
 use Spryker\Zed\Scheduler\Business\SchedulerFacadeInterface;
 use Spryker\Zed\Scheduler\Communication\Plugin\Scheduler\PhpScheduleReaderPlugin;
 use Spryker\Zed\Scheduler\SchedulerConfig;
@@ -35,7 +33,15 @@ use Spryker\Zed\SchedulerExtension\Dependency\Plugin\ScheduleReaderPluginInterfa
  */
 class SchedulerFacadeTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const TEST_SCHEDULER = 'test';
+
+    /**
+     * @var \SprykerTest\Zed\Scheduler\SchedulerBusinessTester
+     */
+    protected $tester;
 
     /**
      * @return void
@@ -120,8 +126,15 @@ class SchedulerFacadeTest extends Unit
      */
     protected function getSchedulerFacade(): SchedulerFacadeInterface
     {
-        return (new SchedulerFacade())
-            ->setFactory($this->getSchedulerBusinessFactoryMock());
+        $this->tester->mockFactoryMethod('getSchedulerAdapterPlugins', $this->getSchedulerAdapterPlugins());
+        $this->tester->mockFactoryMethod('getScheduleReaderPlugins', $this->getSchedulerReaderPlugins());
+        $this->tester->mockFactoryMethod('getConfig', $this->getSchedulerConfigMock());
+        $this->tester->mockFactoryMethod('createSchedulerFilter', $this->getSchedulerFilter());
+
+        /** @var \Spryker\Zed\Scheduler\Business\SchedulerFacadeInterface $facade */
+        $facade = $this->tester->getFacade();
+
+        return $facade;
     }
 
     /**
@@ -142,39 +155,6 @@ class SchedulerFacadeTest extends Unit
     {
         return (new SchedulerScheduleTransfer())
             ->setIdScheduler(static::TEST_SCHEDULER);
-    }
-
-    /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Scheduler\Business\SchedulerBusinessFactory
-     */
-    protected function getSchedulerBusinessFactoryMock(): SchedulerBusinessFactory
-    {
-        $schedulerBusinessFactoryMock = $this->getMockBuilder(SchedulerBusinessFactory::class)
-            ->setMethods([
-                'getSchedulerAdapterPlugins',
-                'getScheduleReaderPlugins',
-                'getConfig',
-                'createSchedulerFilter',
-            ])
-            ->getMock();
-
-        $schedulerBusinessFactoryMock
-            ->method('getSchedulerAdapterPlugins')
-            ->willReturn($this->getSchedulerAdapterPlugins());
-
-        $schedulerBusinessFactoryMock
-            ->method('getScheduleReaderPlugins')
-            ->willReturn($this->getSchedulerReaderPlugins());
-
-        $schedulerBusinessFactoryMock
-            ->method('getConfig')
-            ->willReturn($this->getSchedulerConfigMock());
-
-        $schedulerBusinessFactoryMock
-            ->method('createSchedulerFilter')
-            ->willReturn($this->getSchedulerFilter());
-
-        return $schedulerBusinessFactoryMock;
     }
 
     /**
@@ -201,7 +181,7 @@ class SchedulerFacadeTest extends Unit
     }
 
     /**
-     * @return \Spryker\Zed\SchedulerExtension\Dependency\Plugin\ScheduleReaderPluginInterface[]
+     * @return array<\Spryker\Zed\SchedulerExtension\Dependency\Plugin\ScheduleReaderPluginInterface>
      */
     protected function getSchedulerReaderPlugins(): array
     {
@@ -310,7 +290,7 @@ class SchedulerFacadeTest extends Unit
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function getEnabledSchedulers(): array
     {

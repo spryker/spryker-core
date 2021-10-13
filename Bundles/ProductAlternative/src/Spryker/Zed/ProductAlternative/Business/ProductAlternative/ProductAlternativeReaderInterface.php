@@ -19,7 +19,7 @@ interface ProductAlternativeReaderInterface
     public function getProductAlternativeListByIdProductConcrete(int $idProductConcrete): ProductAlternativeListTransfer;
 
     /**
-     * @param int[] $productIds
+     * @param array<int> $productIds
      *
      * @return bool
      */
@@ -33,7 +33,7 @@ interface ProductAlternativeReaderInterface
     public function isAlternativeProductApplicable(int $idProduct): bool;
 
     /**
-     * @return int[]
+     * @return array<int>
      */
     public function findProductAbstractIdsWhichConcreteHasAlternative(): array;
 }

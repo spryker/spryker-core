@@ -16,6 +16,7 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Session\Communication\EventListener\SaveSessionListener;
 use Spryker\Zed\Session\SessionDependencyProvider;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
 use Symfony\Component\HttpFoundation\Session\Storage\MockFileSessionStorage;
 use Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage;
 use Symfony\Component\HttpFoundation\Session\Storage\SessionStorageInterface;
@@ -55,9 +56,7 @@ class SessionCommunicationFactory extends AbstractCommunicationFactory
             $this->getSessionHandlerPlugins()
         );
 
-        /**
-         * This check was added because of BC and will be removed in the next major release.
-         */
+        // This check was added because of BC and will be removed in the next major release.
         if (!$this->getSessionHandlerPlugins()) {
             $sessionHandlerPool
                 ->addHandler($this->createSessionHandlerRedis(), SessionConfig::SESSION_HANDLER_REDIS)
@@ -128,7 +127,7 @@ class SessionCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Shared\SessionExtension\Dependency\Plugin\SessionHandlerProviderPluginInterface[]
+     * @return array<\Spryker\Shared\SessionExtension\Dependency\Plugin\SessionHandlerProviderPluginInterface>
      */
     protected function getSessionHandlerPlugins(): array
     {
@@ -167,5 +166,13 @@ class SessionCommunicationFactory extends AbstractCommunicationFactory
     public function createSaveSessionEventSubscriber(): EventSubscriberInterface
     {
         return new SaveSessionListener();
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Session\Storage\SessionStorageInterface
+     */
+    public function createMockArraySessionStorage(): SessionStorageInterface
+    {
+        return new MockArraySessionStorage();
     }
 }

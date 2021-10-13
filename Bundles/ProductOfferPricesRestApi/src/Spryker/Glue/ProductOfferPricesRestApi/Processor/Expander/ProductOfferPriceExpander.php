@@ -27,7 +27,7 @@ class ProductOfferPriceExpander implements ProductOfferPriceExpanderInterface
     }
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
+     * @param array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface> $resources
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return void
@@ -54,9 +54,9 @@ class ProductOfferPriceExpander implements ProductOfferPriceExpanderInterface
     }
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
+     * @param array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface> $resources
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getProductOfferReferences(array $resources): array
     {
@@ -66,7 +66,9 @@ class ProductOfferPriceExpander implements ProductOfferPriceExpanderInterface
                 continue;
             }
 
-            $productOfferReferences[] = $resource->getId();
+            if ($resource->getId() !== null) {
+                $productOfferReferences[] = $resource->getId();
+            }
         }
 
         return $productOfferReferences;

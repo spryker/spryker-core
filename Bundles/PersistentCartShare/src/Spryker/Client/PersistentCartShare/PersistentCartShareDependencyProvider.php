@@ -14,9 +14,18 @@ use Spryker\Client\PersistentCartShare\Dependency\Client\PersistentCartShareToZe
 
 class PersistentCartShareDependencyProvider extends AbstractDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_RESOURCE_SHARE = 'CLIENT_RESOURCE_SHARE';
+    /**
+     * @var string
+     */
     public const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
 
+    /**
+     * @var string
+     */
     public const PLUGINS_CART_SHARE_OPTION = 'PLUGINS_CART_SHARE_OPTION';
 
     /**
@@ -80,7 +89,7 @@ class PersistentCartShareDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @return \Spryker\Client\PersistentCartShareExtension\Dependency\Plugin\CartShareOptionPluginInterface[]
+     * @return array<\Spryker\Client\PersistentCartShareExtension\Dependency\Plugin\CartShareOptionPluginInterface>
      */
     protected function getCartShareOptionPlugins(): array
     {

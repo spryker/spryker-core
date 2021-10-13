@@ -12,10 +12,10 @@ use ArrayObject;
 interface ShipmentExpenseCollectionRemoverInterface
 {
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ExpenseTransfer[] $expenseTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ExpenseTransfer> $expenseTransfers
      * @param string $shipmentHash
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ExpenseTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\ExpenseTransfer>
      */
     public function removeExpenseByShipmentHash(ArrayObject $expenseTransfers, string $shipmentHash): ArrayObject;
 }

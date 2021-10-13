@@ -18,10 +18,22 @@ use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
  */
 class SalesReturnSearchDependencyProvider extends AbstractDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_SEARCH = 'CLIENT_SEARCH';
 
+    /**
+     * @var string
+     */
     public const PLUGIN_RETURN_REASON_SEARCH_QUERY = 'PLUGIN_RETURN_REASON_SEARCH_QUERY';
+    /**
+     * @var string
+     */
     public const PLUGINS_RETURN_REASON_SEARCH_RESULT_FORMATTER = 'PLUGINS_RETURN_REASON_SEARCH_RESULT_FORMATTER';
+    /**
+     * @var string
+     */
     public const PLUGINS_RETURN_REASON_SEARCH_QUERY_EXPANDER = 'PLUGINS_RETURN_REASON_SEARCH_QUERY_EXPANDER';
 
     /**
@@ -107,7 +119,7 @@ class SalesReturnSearchDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @return \Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface[]
+     * @return array<\Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface>
      */
     protected function getReturnReasonSearchResultFormatterPlugins(): array
     {
@@ -115,7 +127,7 @@ class SalesReturnSearchDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @return \Spryker\Client\SearchExtension\Dependency\Plugin\QueryExpanderPluginInterface[]
+     * @return array<\Spryker\Client\SearchExtension\Dependency\Plugin\QueryExpanderPluginInterface>
      */
     protected function getReturnReasonSearchQueryExpanderPlugins(): array
     {

@@ -17,6 +17,9 @@ use Spryker\Service\FileManager\FileManagerConfig;
 
 class FileReader implements FileReaderInterface
 {
+    /**
+     * @var string
+     */
     protected const FILE_SYSTEM_DOCUMENT = 'fileSystem';
 
     /**

@@ -13,6 +13,9 @@ use Spryker\Client\Kernel\Container;
 
 class ContentFileDependencyProvider extends AbstractDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_CONTENT_STORAGE = 'CLIENT_CONTENT_STORAGE';
 
     /**

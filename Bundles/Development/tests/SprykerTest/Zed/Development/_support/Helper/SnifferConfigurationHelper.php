@@ -11,11 +11,29 @@ use Codeception\Module;
 
 class SnifferConfigurationHelper extends Module
 {
+    /**
+     * @var string
+     */
     protected const PATH_SPRYKER_ZED_ACL_MODULE = 'ConfigurationReader/Spryker/Zed/Acl/';
+    /**
+     * @var string
+     */
     protected const PATH_SPRYKER_ZED_CUSTOMER_MODULE = 'ConfigurationReader/Spryker/Zed/Customer/';
+    /**
+     * @var string
+     */
     protected const PATH_SPRYKER_ZED_COUNTRY_MODULE = 'ConfigurationReader/Spryker/Zed/Country/';
+    /**
+     * @var string
+     */
     protected const PATH_SPRYKER_ZED_DISCOUNT_MODULE = 'ConfigurationReader/Spryker/Zed/Discount/';
+    /**
+     * @var string
+     */
     protected const PATH_SPRYKER_ZED_PRODUCT_MODULE = 'ConfigurationReader/Spryker/Zed/Product/';
+    /**
+     * @var string
+     */
     protected const PATH_CUSTOM_FOLDER = 'ConfigurationReader/custom/';
 
     /**

@@ -19,6 +19,9 @@ class ProductDiscontinuedDeactivator implements ProductDiscontinuedDeactivatorIn
 {
     use TransactionTrait;
 
+    /**
+     * @var int
+     */
     protected const DEACTIVATE_BATCH_SIZE = 1000;
 
     /**
@@ -104,7 +107,7 @@ class ProductDiscontinuedDeactivator implements ProductDiscontinuedDeactivatorIn
     /**
      * @param \Generated\Shared\Transfer\ProductDiscontinuedCollectionTransfer $productDiscontinuedCollectionTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getProductConcreteSkusFromProductDiscontinuedCollection(
         ProductDiscontinuedCollectionTransfer $productDiscontinuedCollectionTransfer
@@ -121,7 +124,7 @@ class ProductDiscontinuedDeactivator implements ProductDiscontinuedDeactivatorIn
     /**
      * @param \Generated\Shared\Transfer\ProductDiscontinuedCollectionTransfer $productDiscontinuedCollectionTransfer
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getProductDiscontinuedIdsFromProductDiscontinuedCollection(
         ProductDiscontinuedCollectionTransfer $productDiscontinuedCollectionTransfer

@@ -16,6 +16,9 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class DirectoriesTreeController extends AbstractController
 {
+    /**
+     * @var string
+     */
     protected const FILE_DIRECTORY_TREE = 'file-directory-tree';
 
     /**

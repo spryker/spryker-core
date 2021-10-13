@@ -20,7 +20,7 @@ interface StockEntityManagerInterface
 
     /**
      * @param int $idStock
-     * @param int[] $storeIds
+     * @param array<int> $storeIds
      *
      * @return void
      */
@@ -28,7 +28,7 @@ interface StockEntityManagerInterface
 
     /**
      * @param int $idStock
-     * @param int[] $storeIds
+     * @param array<int> $storeIds
      *
      * @return void
      */

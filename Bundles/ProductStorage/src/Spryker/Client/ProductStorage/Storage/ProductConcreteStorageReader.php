@@ -24,13 +24,26 @@ use Spryker\Shared\ProductStorage\ProductStorageConstants;
 
 class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterface
 {
+    /**
+     * @var string
+     */
     protected const KEY_ID_PRODUCT_CONCRETE = 'id_product_concrete';
+    /**
+     * @var string
+     */
     protected const KEY_PRICES = 'prices';
+    /**
+     * @var string
+     */
     protected const KEY_IMAGE_SETS = 'imageSets';
+    /**
+     * @var string
+     */
     protected const KEY_ID = 'id';
 
     /**
      * @uses \Spryker\Zed\Storage\Communication\Table\StorageTable::KV_PREFIX
+     * @var string
      */
     protected const KV_PREFIX = 'kv:';
 
@@ -55,12 +68,12 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
     protected $utilEncodingService;
 
     /**
-     * @var \Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductConcreteRestrictionPluginInterface[]
+     * @var array<\Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductConcreteRestrictionPluginInterface>
      */
     protected $productConcreteRestrictionPlugins;
 
     /**
-     * @var \Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductConcreteRestrictionFilterPluginInterface[]
+     * @var array<\Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductConcreteRestrictionFilterPluginInterface>
      */
     protected $productConcreteRestrictionFilterPlugins;
 
@@ -79,8 +92,8 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
      * @param \Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToSynchronizationServiceInterface $synchronizationService
      * @param \Spryker\Client\ProductStorage\Dependency\Client\ProductStorageToLocaleInterface $localeClient
      * @param \Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToUtilEncodingServiceInterface $utilEncodingService
-     * @param \Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductConcreteRestrictionPluginInterface[] $productConcreteRestrictionPlugins
-     * @param \Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductConcreteRestrictionFilterPluginInterface[] $productConcreteRestrictionFilterPlugins
+     * @param array<\Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductConcreteRestrictionPluginInterface> $productConcreteRestrictionPlugins
+     * @param array<\Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductConcreteRestrictionFilterPluginInterface> $productConcreteRestrictionFilterPlugins
      */
     public function __construct(
         ProductStorageToStorageClientInterface $storageClient,
@@ -135,10 +148,10 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
 
     /**
      * @param string $mappingType
-     * @param string[] $identifiers
+     * @param array<string> $identifiers
      * @param string $localeName
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getProductConcreteIdsByMapping(string $mappingType, array $identifiers, string $localeName): array
     {
@@ -152,10 +165,10 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
     }
 
     /**
-     * @param string[] $storageKeys
+     * @param array<string> $storageKeys
      * @param array $mappingData
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getFilteredProductConcreteIds(array $storageKeys, array $mappingData): array
     {
@@ -179,10 +192,10 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
 
     /**
      * @param string $mappingType
-     * @param string[] $identifiers
+     * @param array<string> $identifiers
      * @param string $localeName
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getStorageKeysByMapping(string $mappingType, array $identifiers, string $localeName): array
     {
@@ -248,9 +261,9 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
     }
 
     /**
-     * @param int[] $productIds
+     * @param array<int> $productIds
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConcreteStorageTransfer>
      */
     public function getProductConcreteStorageTransfersForCurrentLocale(array $productIds): array
     {
@@ -258,10 +271,10 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
     }
 
     /**
-     * @param int[] $productIds
+     * @param array<int> $productIds
      * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConcreteStorageTransfer>
      */
     protected function getProductConcreteStorageTransfers(array $productIds, string $localeName): array
     {
@@ -327,7 +340,7 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
 
     /**
      * @param string $mappingType
-     * @param string[] $identifiers
+     * @param array<string> $identifiers
      * @param string $localeName
      *
      * @return array
@@ -435,7 +448,7 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
     }
 
     /**
-     * @param int[] $productConcreteIds
+     * @param array<int> $productConcreteIds
      * @param string $localeName
      *
      * @return array
@@ -453,7 +466,7 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
     }
 
     /**
-     * @param int[] $productConcreteIds
+     * @param array<int> $productConcreteIds
      * @param string $localeName
      *
      * @return array
@@ -474,7 +487,7 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
     }
 
     /**
-     * @param int[] $productConcreteIds
+     * @param array<int> $productConcreteIds
      * @param string $localeName
      *
      * @return array
@@ -492,10 +505,10 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
     }
 
     /**
-     * @param int[] $productConcreteIds
+     * @param array<int> $productConcreteIds
      * @param string $localeName
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function generateStorageKeys(array $productConcreteIds, string $localeName): array
     {
@@ -509,10 +522,10 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
 
     /**
      * @param string $mappingType
-     * @param string[] $identifiers
+     * @param array<string> $identifiers
      * @param string $localeName
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function generateMappingStorageKeys(string $mappingType, array $identifiers, string $localeName): array
     {
@@ -545,7 +558,7 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
     }
 
     /**
-     * @param int[] $productConcreteIds
+     * @param array<int> $productConcreteIds
      * @param string $localeName
      *
      * @return array
@@ -570,9 +583,9 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
     }
 
     /**
-     * @param int[] $productConcreteIds
+     * @param array<int> $productConcreteIds
      *
-     * @return int[]
+     * @return array<int>
      */
     public function filterRestrictedProductConcreteIds(array $productConcreteIds): array
     {

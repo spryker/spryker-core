@@ -22,8 +22,14 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class InvoiceSubForm extends AbstractSubFormType implements SubFormInterface, SubFormProviderNameInterface
 {
+    /**
+     * @var string
+     */
     public const FIELD_DATE_OF_BIRTH = 'dateOfBirth';
 
+    /**
+     * @var string
+     */
     protected const PAYMENT_METHOD = 'invoice';
 
     /**

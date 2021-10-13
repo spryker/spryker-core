@@ -23,7 +23,7 @@ class ExecutionStrategy implements ExecutionStrategyInterface
     protected $executorForAbsentJob;
 
     /**
-     * @var bool[]
+     * @var array<bool>
      */
     protected $jobNames = [];
 

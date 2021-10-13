@@ -17,14 +17,20 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class CreateMerchantController extends AbstractController
 {
+    /**
+     * @var string
+     */
     protected const PARAM_REDIRECT_URL = 'redirect-url';
 
+    /**
+     * @var string
+     */
     protected const MESSAGE_MERCHANT_CREATE_SUCCESS = 'Merchant created successfully.';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function indexAction(Request $request)
     {
@@ -50,7 +56,7 @@ class CreateMerchantController extends AbstractController
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Symfony\Component\Form\FormInterface $merchantForm
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     protected function createMerchant(Request $request, FormInterface $merchantForm)
     {

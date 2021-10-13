@@ -58,7 +58,7 @@ class ShipmentDataCheckoutRequestValidatorPluginTest extends Unit
     }
 
     /**
-     * @return mixed[]
+     * @return array<mixed>
      */
     public function shipmentDataCheckoutRequestValidatorPluginDataProvider(): array
     {

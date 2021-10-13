@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\RoleTransfer;
 use Generated\Shared\Transfer\RuleTransfer;
 use Spryker\Zed\Acl\Business\Acl\AclConfigReaderInterface;
 use Spryker\Zed\Acl\Business\Exception\GroupNotFoundException;
+use Spryker\Zed\Acl\Business\Writer\RoleWriterInterface;
 use Spryker\Zed\Acl\Dependency\Facade\AclToUserInterface;
 use Spryker\Zed\User\Business\Exception\UserNotFoundException;
 
@@ -37,7 +38,7 @@ class Installer implements InstallerInterface
     protected $userFacade;
 
     /**
-     * @var \Spryker\Zed\AclExtension\Dependency\Plugin\AclInstallerPluginInterface[]
+     * @var array<\Spryker\Zed\AclExtension\Dependency\Plugin\AclInstallerPluginInterface>
      */
     protected $aclInstallerPlugins;
 
@@ -47,12 +48,18 @@ class Installer implements InstallerInterface
     protected $aclConfigReader;
 
     /**
+     * @var \Spryker\Zed\Acl\Business\Writer\RoleWriterInterface
+     */
+    protected $roleWriter;
+
+    /**
      * @param \Spryker\Zed\Acl\Business\Model\GroupInterface $group
      * @param \Spryker\Zed\Acl\Business\Model\RoleInterface $role
      * @param \Spryker\Zed\Acl\Business\Model\RuleInterface $rule
      * @param \Spryker\Zed\Acl\Dependency\Facade\AclToUserInterface $userFacade
      * @param \Spryker\Zed\Acl\Business\Acl\AclConfigReaderInterface $aclConfigReader
-     * @param \Spryker\Zed\AclExtension\Dependency\Plugin\AclInstallerPluginInterface[] $aclInstallerPlugins
+     * @param \Spryker\Zed\Acl\Business\Writer\RoleWriterInterface $roleWriter
+     * @param array<\Spryker\Zed\AclExtension\Dependency\Plugin\AclInstallerPluginInterface> $aclInstallerPlugins
      */
     public function __construct(
         GroupInterface $group,
@@ -60,6 +67,7 @@ class Installer implements InstallerInterface
         RuleInterface $rule,
         AclToUserInterface $userFacade,
         AclConfigReaderInterface $aclConfigReader,
+        RoleWriterInterface $roleWriter,
         array $aclInstallerPlugins
     ) {
         $this->group = $group;
@@ -67,6 +75,7 @@ class Installer implements InstallerInterface
         $this->rule = $rule;
         $this->userFacade = $userFacade;
         $this->aclConfigReader = $aclConfigReader;
+        $this->roleWriter = $roleWriter;
         $this->aclInstallerPlugins = $aclInstallerPlugins;
     }
 
@@ -131,7 +140,7 @@ class Installer implements InstallerInterface
         if (!$groupTransfer->getIdAclGroup()) {
             throw new GroupNotFoundException(sprintf('The group with name %s was not found', $roleTransfer->getAclGroup()->getName()));
         }
-        $roleTransfer = $this->role->addRole($roleTransfer->getName());
+        $roleTransfer = $this->roleWriter->createRole($roleTransfer);
         $this->group->addRoleToGroup($roleTransfer->getIdAclRole(), $groupTransfer->getIdAclGroup());
 
         return $roleTransfer;
@@ -193,7 +202,7 @@ class Installer implements InstallerInterface
     }
 
     /**
-     * @return \Generated\Shared\Transfer\RoleTransfer[]
+     * @return array<\Generated\Shared\Transfer\RoleTransfer>
      */
     protected function getRoles(): array
     {
@@ -209,7 +218,7 @@ class Installer implements InstallerInterface
     }
 
     /**
-     * @return \Generated\Shared\Transfer\GroupTransfer[]
+     * @return array<\Generated\Shared\Transfer\GroupTransfer>
      */
     protected function getGroups(): array
     {

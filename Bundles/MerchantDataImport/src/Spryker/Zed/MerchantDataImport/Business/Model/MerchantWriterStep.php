@@ -7,8 +7,10 @@
 
 namespace Spryker\Zed\MerchantDataImport\Business\Model;
 
-use Orm\Zed\Merchant\Persistence\SpyMerchant;
-use Orm\Zed\Merchant\Persistence\SpyMerchantQuery;
+use Generated\Shared\Transfer\MerchantCriteriaTransfer;
+use Generated\Shared\Transfer\MerchantProfileTransfer;
+use Generated\Shared\Transfer\MerchantTransfer;
+use Generated\Shared\Transfer\StoreRelationTransfer;
 use Orm\Zed\Url\Persistence\SpyUrlQuery;
 use Spryker\Zed\DataImport\Business\Exception\InvalidDataException;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
@@ -18,12 +20,15 @@ use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 use Spryker\Zed\DataImport\Dependency\Facade\DataImportToEventFacadeInterface;
 use Spryker\Zed\Merchant\Dependency\MerchantEvents;
 use Spryker\Zed\MerchantDataImport\Business\Model\DataSet\MerchantDataSetInterface;
+use Spryker\Zed\MerchantDataImport\Dependency\Facade\MerchantDataImportToMerchantFacadeInterface;
 use Spryker\Zed\Url\Dependency\UrlEvents;
 
 class MerchantWriterStep extends PublishAwareStep implements DataImportStepInterface
 {
+    /**
+     * @var array
+     */
     protected const REQUIRED_DATA_SET_KEYS = [
-        MerchantDataSetInterface::MERCHANT_KEY,
         MerchantDataSetInterface::MERCHANT_REFERENCE,
         MerchantDataSetInterface::NAME,
         MerchantDataSetInterface::REGISTRATION_NUMBER,
@@ -32,20 +37,40 @@ class MerchantWriterStep extends PublishAwareStep implements DataImportStepInter
     ];
 
     /**
+     * @var string
+     */
+    protected const ACTION_CREATE = 'create';
+    /**
+     * @var string
+     */
+    protected const ACTION_UPDATE = 'update';
+
+    /**
      * @var \Spryker\Zed\DataImport\Dependency\Facade\DataImportToEventFacadeInterface
      */
     protected $eventFacade;
 
     /**
-     * @param \Spryker\Zed\DataImport\Dependency\Facade\DataImportToEventFacadeInterface $eventFacade
+     * @var \Spryker\Zed\MerchantDataImport\Dependency\Facade\MerchantDataImportToMerchantFacadeInterface
      */
-    public function __construct(DataImportToEventFacadeInterface $eventFacade)
-    {
+    protected $merchantFacade;
+
+    /**
+     * @param \Spryker\Zed\DataImport\Dependency\Facade\DataImportToEventFacadeInterface $eventFacade
+     * @param \Spryker\Zed\MerchantDataImport\Dependency\Facade\MerchantDataImportToMerchantFacadeInterface $merchantFacade
+     */
+    public function __construct(
+        DataImportToEventFacadeInterface $eventFacade,
+        MerchantDataImportToMerchantFacadeInterface $merchantFacade
+    ) {
         $this->eventFacade = $eventFacade;
+        $this->merchantFacade = $merchantFacade;
     }
 
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
+     *
+     * @throws \Spryker\Zed\DataImport\Business\Exception\InvalidDataException
      *
      * @return void
      */
@@ -53,23 +78,48 @@ class MerchantWriterStep extends PublishAwareStep implements DataImportStepInter
     {
         $this->validateDataSet($dataSet);
 
-        $merchantEntity = SpyMerchantQuery::create()
-            ->filterByMerchantKey($dataSet[MerchantDataSetInterface::MERCHANT_KEY])
-            ->findOneOrCreate();
+        $merchantCriteriaTransfer = (new MerchantCriteriaTransfer())
+            ->setMerchantReference($dataSet[MerchantDataSetInterface::MERCHANT_REFERENCE]);
+        $merchantTransfer = $this->merchantFacade->findOne($merchantCriteriaTransfer);
+        $action = $merchantTransfer ? static::ACTION_UPDATE : static::ACTION_CREATE;
 
-        $merchantEntity
+        if (!$merchantTransfer) {
+            $merchantTransfer = new MerchantTransfer();
+        }
+
+        $merchantTransfer
+            ->setMerchantReference($dataSet[MerchantDataSetInterface::MERCHANT_REFERENCE])
             ->setName($dataSet[MerchantDataSetInterface::NAME])
             ->setRegistrationNumber($dataSet[MerchantDataSetInterface::REGISTRATION_NUMBER])
             ->setStatus($dataSet[MerchantDataSetInterface::STATUS])
             ->setEmail($dataSet[MerchantDataSetInterface::EMAIL])
-            ->setMerchantReference($dataSet[MerchantDataSetInterface::MERCHANT_REFERENCE])
-            ->setIsActive($dataSet[MerchantDataSetInterface::IS_ACTIVE])
-            ->save();
+            ->setIsActive($dataSet[MerchantDataSetInterface::IS_ACTIVE]);
 
-        $merchantEntity = $this->saveGlossaryKeyAttributes($merchantEntity, $dataSet[LocalizedAttributesExtractorStep::KEY_LOCALIZED_ATTRIBUTES]);
-        $merchantEntity->save();
+        if ($action === static::ACTION_CREATE) {
+            $merchantTransfer->setStoreRelation(new StoreRelationTransfer())
+                ->setMerchantProfile(new MerchantProfileTransfer());
 
-        $this->addPublishEvents(MerchantEvents::MERCHANT_PUBLISH, $merchantEntity->getIdMerchant());
+            $merchantResponseTransfer = $this->merchantFacade->createMerchant($merchantTransfer);
+        }
+
+        if ($action === static::ACTION_UPDATE) {
+            $merchantResponseTransfer = $this->merchantFacade->updateMerchant($merchantTransfer);
+        }
+
+        if (!isset($merchantResponseTransfer) || !$merchantResponseTransfer->getMerchant()) {
+            return;
+        }
+
+        if ($merchantResponseTransfer->getErrors()->count() > 0) {
+            $merchantErrorTransfers = $merchantResponseTransfer->getErrors();
+            $errorMessage = $merchantErrorTransfers->getIterator()->current()->getMessage();
+
+            throw new InvalidDataException($errorMessage);
+        }
+
+        $merchantTransfer = $merchantResponseTransfer->getMerchantOrFail();
+        $this->saveGlossaryKeyAttributes($merchantTransfer, $dataSet[LocalizedAttributesExtractorStep::KEY_LOCALIZED_ATTRIBUTES]);
+        $this->addPublishEvents(MerchantEvents::MERCHANT_PUBLISH, $merchantTransfer->getIdMerchantOrFail());
     }
 
     /**
@@ -100,22 +150,20 @@ class MerchantWriterStep extends PublishAwareStep implements DataImportStepInter
     }
 
     /**
-     * @param \Orm\Zed\Merchant\Persistence\SpyMerchant $merchantEntity
+     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
      * @param array $glossaryKeyAttributes
      *
-     * @return \Orm\Zed\Merchant\Persistence\SpyMerchant
+     * @return void
      */
-    protected function saveGlossaryKeyAttributes(SpyMerchant $merchantEntity, array $glossaryKeyAttributes): SpyMerchant
+    protected function saveGlossaryKeyAttributes(MerchantTransfer $merchantTransfer, array $glossaryKeyAttributes): void
     {
         foreach ($glossaryKeyAttributes as $idLocale => $attributes) {
             foreach ($attributes as $attributeName => $attributeValue) {
                 if ($attributeValue && $attributeName === MerchantDataSetInterface::URL) {
-                    $this->addMerchantUrl($merchantEntity->getIdMerchant(), $idLocale, $attributeValue);
+                    $this->addMerchantUrl($merchantTransfer->getIdMerchantOrFail(), $idLocale, $attributeValue);
                 }
             }
         }
-
-        return $merchantEntity;
     }
 
     /**

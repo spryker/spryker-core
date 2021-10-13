@@ -24,9 +24,9 @@ interface ProductPackagingUnitToProductFacadeInterface
     public function findProductConcreteIdBySku($sku);
 
     /**
-     * @param string[] $skus
+     * @param array<string> $skus
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
      */
     public function findProductConcretesBySkus(array $skus): array;
 }

@@ -7,12 +7,14 @@
 
 namespace Spryker\Shared\GuiTable\Normalizer;
 
+use Generated\Shared\Transfer\CriteriaRangeFilterTransfer;
+
 interface DateRangeRequestFilterValueNormalizerInterface
 {
     /**
-     * @param int|string|bool|int[]|string[] $value
+     * @param array<int|string>|string|int|bool $value
      *
-     * @return mixed
+     * @return \Generated\Shared\Transfer\CriteriaRangeFilterTransfer|null
      */
-    public function normalizeFilterValue($value);
+    public function normalizeFilterValue($value): ?CriteriaRangeFilterTransfer;
 }

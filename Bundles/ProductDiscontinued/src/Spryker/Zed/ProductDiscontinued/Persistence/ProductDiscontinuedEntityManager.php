@@ -87,7 +87,7 @@ class ProductDiscontinuedEntityManager extends AbstractEntityManager implements 
     }
 
     /**
-     * @param int[] $productDiscontinuedIds
+     * @param array<int> $productDiscontinuedIds
      *
      * @return void
      */
@@ -102,7 +102,7 @@ class ProductDiscontinuedEntityManager extends AbstractEntityManager implements 
     }
 
     /**
-     * @param int[] $productDiscontinuedIds
+     * @param array<int> $productDiscontinuedIds
      *
      * @return void
      */

@@ -24,6 +24,9 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
 {
     use TransactionTrait;
 
+    /**
+     * @var string
+     */
     public const GENERATED_GLOSSARY_KEY_PREFIX = 'generated.cms';
 
     /**

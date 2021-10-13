@@ -19,13 +19,13 @@ class CustomerAddress implements CustomerAddressInterface
     protected $customerStub;
 
     /**
-     * @var \Spryker\Client\Customer\Dependency\Plugin\DefaultAddressChangePluginInterface[]
+     * @var array<\Spryker\Client\Customer\Dependency\Plugin\DefaultAddressChangePluginInterface>
      */
     protected $defaultAddressChangePlugins;
 
     /**
      * @param \Spryker\Client\Customer\Zed\CustomerStubInterface $customerStub
-     * @param \Spryker\Client\Customer\Dependency\Plugin\DefaultAddressChangePluginInterface[] $defaultAddressChangePlugins
+     * @param array<\Spryker\Client\Customer\Dependency\Plugin\DefaultAddressChangePluginInterface> $defaultAddressChangePlugins
      */
     public function __construct(CustomerStubInterface $customerStub, array $defaultAddressChangePlugins)
     {

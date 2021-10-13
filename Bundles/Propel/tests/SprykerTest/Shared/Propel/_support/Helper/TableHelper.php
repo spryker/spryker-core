@@ -20,10 +20,13 @@ use Spryker\Shared\Propel\PropelConstants;
 
 class TableHelper extends Module
 {
+    /**
+     * @var string
+     */
     protected const DEFAULT_DATA_SOURCE_NAME = 'zed';
 
     /**
-     * @var \Propel\Generator\Model\Table[]
+     * @var array<\Propel\Generator\Model\Table>
      */
     protected $tables = [];
 
@@ -48,7 +51,10 @@ class TableHelper extends Module
 
         foreach ($columnsData as $columnData) {
             $column = new Column($columnData['name'], $columnData['type']);
-            $column->setDomain(new Domain($columnData['type'], $columnData['type']));
+            $domain = new Domain();
+            $domain->setDatabase($database);
+            $domain->loadMapping($columnData);
+            $column->setDomain($domain);
 
             $table->addColumn($column);
         }

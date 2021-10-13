@@ -20,10 +20,19 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class OrderSourceListType extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const TYPE_NAME = 'order-source-list';
 
+    /**
+     * @var string
+     */
     public const FIELD_ORDER_SOURCE = 'id_order_source';
 
+    /**
+     * @var string
+     */
     public const OPTION_ORDER_SOURCE_ARRAY = 'option-order-source-array';
 
     /**

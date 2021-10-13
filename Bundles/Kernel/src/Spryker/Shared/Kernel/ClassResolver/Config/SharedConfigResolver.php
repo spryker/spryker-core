@@ -11,6 +11,9 @@ use Spryker\Shared\Kernel\ClassResolver\AbstractClassResolver;
 
 class SharedConfigResolver extends AbstractClassResolver
 {
+    /**
+     * @var string
+     */
     protected const RESOLVABLE_TYPE = 'SharedConfig';
 
     /**

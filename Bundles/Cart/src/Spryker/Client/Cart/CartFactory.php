@@ -9,6 +9,9 @@ namespace Spryker\Client\Cart;
 
 use Spryker\Client\Cart\CartChangeRequestExpander\CartChangeRequestExpander;
 use Spryker\Client\Cart\Dependency\Client\CartToMessengerClientInterface;
+use Spryker\Client\Cart\Dependency\Client\CartToUtilTextServiceInterface;
+use Spryker\Client\Cart\Expander\GroupKeyPrefixItemExpander;
+use Spryker\Client\Cart\Expander\GroupKeyPrefixItemExpanderInterface;
 use Spryker\Client\Cart\Operation\CartOperation;
 use Spryker\Client\Cart\Operation\CartOperationInterface;
 use Spryker\Client\Cart\QuoteStorageStrategy\QuoteStorageStrategyProvider;
@@ -130,7 +133,18 @@ class CartFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\CartExtension\Dependency\Plugin\QuoteStorageStrategyPluginInterface[]
+     * @return \Spryker\Client\Cart\Expander\GroupKeyPrefixItemExpanderInterface
+     */
+    public function createGroupKeyPrefixItemExpander(): GroupKeyPrefixItemExpanderInterface
+    {
+        return new GroupKeyPrefixItemExpander(
+            $this->getQuoteItemFinderPlugin(),
+            $this->getUtilTextService()
+        );
+    }
+
+    /**
+     * @return array<\Spryker\Client\CartExtension\Dependency\Plugin\QuoteStorageStrategyPluginInterface>
      */
     protected function getQuoteStorageStrategyPlugins()
     {
@@ -146,7 +160,7 @@ class CartFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\CartExtension\Dependency\Plugin\CartChangeRequestExpanderPluginInterface[]
+     * @return array<\Spryker\Client\CartExtension\Dependency\Plugin\CartChangeRequestExpanderPluginInterface>
      */
     protected function getAddItemsRequestExpanderPlugins()
     {
@@ -154,10 +168,18 @@ class CartFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\CartExtension\Dependency\Plugin\CartChangeRequestExpanderPluginInterface[]
+     * @return array<\Spryker\Client\CartExtension\Dependency\Plugin\CartChangeRequestExpanderPluginInterface>
      */
     protected function getRemoveItemsRequestExpanderPlugins()
     {
         return $this->getProvidedDependency(CartDependencyProvider::PLUGINS_REMOVE_ITEMS_REQUEST_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Client\Cart\Dependency\Client\CartToUtilTextServiceInterface
+     */
+    protected function getUtilTextService(): CartToUtilTextServiceInterface
+    {
+        return $this->getProvidedDependency(CartDependencyProvider::SERVICE_UTIL_TEXT);
     }
 }

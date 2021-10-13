@@ -60,7 +60,7 @@ class MerchantGuiToMerchantFacadeBridge implements MerchantGuiToMerchantFacadeIn
     /**
      * @param string $currentStatus
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getApplicableMerchantStatuses(string $currentStatus): array
     {

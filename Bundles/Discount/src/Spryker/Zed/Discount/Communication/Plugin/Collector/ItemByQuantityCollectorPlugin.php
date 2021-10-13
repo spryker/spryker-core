@@ -54,7 +54,7 @@ class ItemByQuantityCollectorPlugin extends AbstractPlugin implements CollectorP
      *
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function acceptedDataTypes()
     {

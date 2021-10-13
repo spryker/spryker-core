@@ -12,6 +12,9 @@ use Spryker\Zed\DataImport\DataImportConfig;
 
 class CompanyUnitAddressDataImportConfig extends DataImportConfig
 {
+    /**
+     * @var string
+     */
     public const IMPORT_TYPE_COMPANY_UNIT_ADDRESS = 'company-unit-address';
 
     /**

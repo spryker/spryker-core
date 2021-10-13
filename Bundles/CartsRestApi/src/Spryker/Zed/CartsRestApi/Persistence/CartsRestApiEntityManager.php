@@ -15,6 +15,9 @@ use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
  */
 class CartsRestApiEntityManager extends AbstractEntityManager implements CartsRestApiEntityManagerInterface
 {
+    /**
+     * @var int
+     */
     protected const BATCH_SIZE = 200;
 
     /**

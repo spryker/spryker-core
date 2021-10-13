@@ -13,12 +13,12 @@ namespace Spryker\Zed\Search\Business\LegacyModeChecker;
 class SearchLegacyModeChecker implements SearchLegacyModeCheckerInterface
 {
     /**
-     * @var \Spryker\Zed\SearchExtension\Dependency\Plugin\InstallPluginInterface[]
+     * @var array<\Spryker\Zed\SearchExtension\Dependency\Plugin\InstallPluginInterface>
      */
     protected $sourceInstallerPlugins;
 
     /**
-     * @param \Spryker\Zed\SearchExtension\Dependency\Plugin\InstallPluginInterface[] $sourceInstallerPlugins
+     * @param array<\Spryker\Zed\SearchExtension\Dependency\Plugin\InstallPluginInterface> $sourceInstallerPlugins
      */
     public function __construct(array $sourceInstallerPlugins)
     {

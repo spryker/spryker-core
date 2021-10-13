@@ -14,7 +14,7 @@ interface UserTablePluginExecutorInterface
     /**
      * @param array $user
      *
-     * @return \Generated\Shared\Transfer\ButtonTransfer[]
+     * @return array<\Generated\Shared\Transfer\ButtonTransfer>
      */
     public function executeActionButtonExpanderPlugins(array $user): array;
 

@@ -13,7 +13,13 @@ use Spryker\Zed\Api\Business\Model\Processor\Post\PostProcessorInterface;
 
 class PaginationByHeaderFilterPostProcessor implements PostProcessorInterface
 {
+    /**
+     * @var string
+     */
     public const HEADER_ACCEPT_RANGES = 'Accept-Ranges';
+    /**
+     * @var string
+     */
     public const HEADER_CONTENT_RANGE = 'Content-Range';
 
     /**

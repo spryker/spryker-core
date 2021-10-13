@@ -16,7 +16,13 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 class MerchantProfileLocalizedGlossaryAttributesFormType extends AbstractType
 {
+    /**
+     * @var string
+     */
     protected const FIELD_MERCHANT_PROFILE_GLOSSARY_ATTRIBUTES_LOCALE = 'locale';
+    /**
+     * @var string
+     */
     protected const FIELD_MERCHANT_PROFILE_GLOSSARY_ATTRIBUTES = 'merchantProfileGlossaryAttributeValues';
 
     /**

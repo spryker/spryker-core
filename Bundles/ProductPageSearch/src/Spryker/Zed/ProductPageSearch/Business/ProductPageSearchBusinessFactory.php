@@ -30,6 +30,8 @@ use Spryker\Zed\ProductPageSearch\Business\Publisher\ProductConcretePageSearchPu
 use Spryker\Zed\ProductPageSearch\Business\Publisher\ProductConcretePageSearchPublisherInterface;
 use Spryker\Zed\ProductPageSearch\Business\Reader\AddToCartSkuReader;
 use Spryker\Zed\ProductPageSearch\Business\Reader\AddToCartSkuReaderInterface;
+use Spryker\Zed\ProductPageSearch\Business\Refresher\ProductAbstractPageRefresher;
+use Spryker\Zed\ProductPageSearch\Business\Refresher\ProductPageRefresherInterface;
 use Spryker\Zed\ProductPageSearch\Business\Unpublisher\ProductConcretePageSearchUnpublisher;
 use Spryker\Zed\ProductPageSearch\Business\Unpublisher\ProductConcretePageSearchUnpublisherInterface;
 use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToPriceProductInterface;
@@ -118,11 +120,30 @@ class ProductPageSearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductConcretePageDataExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductConcretePageDataExpanderPluginInterface>
      */
     public function getProductConcretePageDataExpanderPlugins(): array
     {
         return $this->getProvidedDependency(ProductPageSearchDependencyProvider::PLUGINS_PRODUCT_CONCRETE_PAGE_DATA_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductPageSearch\Business\Refresher\ProductPageRefresherInterface
+     */
+    public function createProductAbstractPageRefresher(): ProductPageRefresherInterface
+    {
+        return new ProductAbstractPageRefresher(
+            $this->createProductAbstractPagePublisher(),
+            $this->getProductPageRefreshPlugins()
+        );
+    }
+
+    /**
+     * @return array<\Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductAbstractCollectionRefreshPluginInterface>
+     */
+    public function getProductPageRefreshPlugins(): array
+    {
+        return $this->getProvidedDependency(ProductPageSearchDependencyProvider::PLUGINS_PRODUCT_PAGE_REFRESH);
     }
 
     /**
@@ -210,7 +231,7 @@ class ProductPageSearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageDataExpanderInterface[]
+     * @return array<\Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageDataExpanderInterface>
      */
     protected function getProductPageDataExpanderPlugins()
     {
@@ -218,7 +239,7 @@ class ProductPageSearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductPageDataLoaderPluginInterface[]
+     * @return array<\Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductPageDataLoaderPluginInterface>
      */
     protected function getProductPageDataLoaderPlugins()
     {
@@ -266,7 +287,7 @@ class ProductPageSearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductConcretePageMapExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductConcretePageMapExpanderPluginInterface>
      */
     public function getProductConcreteMapExpanderPlugins(): array
     {
@@ -274,7 +295,7 @@ class ProductPageSearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductAbstractMapExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductAbstractMapExpanderPluginInterface>
      */
     public function getProductAbstractMapExpanderPlugins(): array
     {
@@ -309,7 +330,7 @@ class ProductPageSearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductAbstractAddToCartPluginInterface[]
+     * @return array<\Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductAbstractAddToCartPluginInterface>
      */
     public function getProductAbstractAddToCartPlugins(): array
     {

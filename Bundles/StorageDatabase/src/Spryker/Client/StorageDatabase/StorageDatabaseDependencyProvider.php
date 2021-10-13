@@ -18,7 +18,13 @@ use Spryker\Client\StorageDatabaseExtension\Dependency\Plugin\StorageReaderPlugi
  */
 class StorageDatabaseDependencyProvider extends AbstractDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
+    /**
+     * @var string
+     */
     public const PLUGIN_STORAGE_READER_PROVIDER = 'PLUGIN_STORAGE_READER_PROVIDER';
 
     /**

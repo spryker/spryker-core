@@ -10,13 +10,22 @@ namespace Spryker\Zed\ProductOffer\Business\Checker;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
-use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
+use Generated\Shared\Transfer\ProductOfferCriteriaTransfer;
 use Spryker\Zed\ProductOffer\Persistence\ProductOfferRepositoryInterface;
 
 class ItemProductOfferChecker implements ItemProductOfferCheckerInterface
 {
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_ERROR_INVALID_PRODUCT_OFFER_REFERENCE = 'product-offer.info.reference.invalid';
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_PARAM_SKU = '%sku%';
+    /**
+     * @var string
+     */
     protected const MESSAGE_TYPE_ERROR = 'error';
 
     /**
@@ -56,17 +65,17 @@ class ItemProductOfferChecker implements ItemProductOfferCheckerInterface
             return $cartPreCheckResponseTransfer;
         }
 
-        $productOfferCriteriaFilterTransfer = (new ProductOfferCriteriaFilterTransfer())
+        $productOfferCriteriaTransfer = (new ProductOfferCriteriaTransfer())
             ->setProductOfferReferences($productOfferReferences)
             ->setIsActive(true);
 
         $productOfferTransfers = $this->productOfferRepository
-            ->find($productOfferCriteriaFilterTransfer)
+            ->get($productOfferCriteriaTransfer)
             ->getProductOffers();
 
         if (!$productOfferTransfers->count()) {
             $cartPreCheckResponseTransfer->setIsSuccess(false);
-            foreach ($productConcreteSkusByOfferReference as $sku => $productOfferReference) {
+            foreach ($productConcreteSkusByOfferReference as $productOfferReference => $sku) {
                 $cartPreCheckResponseTransfer->addMessage($this->createErrorMessage($sku));
             }
 

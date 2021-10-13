@@ -36,49 +36,163 @@ use Spryker\Zed\ProductManagement\Exception\MissingStoreRelationFormTypePluginEx
  */
 class ProductManagementDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const STORE = 'STORE';
 
+    /**
+     * @var string
+     */
     public const FACADE_LOCALE = 'FACADE_LOCALE';
+    /**
+     * @var string
+     */
     public const FACADE_PRODUCT = 'FACADE_PRODUCT';
+    /**
+     * @var string
+     */
     public const FACADE_PRODUCT_ATTRIBUTE = 'FACADE_PRODUCT_ATTRIBUTE';
+    /**
+     * @var string
+     */
     public const FACADE_PRODUCT_CATEGORY = 'FACADE_PRODUCT_CATEGORY';
+    /**
+     * @var string
+     */
     public const FACADE_PRODUCT_IMAGE = 'FACADE_PRODUCT_IMAGE';
+    /**
+     * @var string
+     */
     public const FACADE_PRODUCT_BUNDLE = 'FACADE_PRODUCT_BUNDLE';
+    /**
+     * @var string
+     */
     public const FACADE_TOUCH = 'FACADE_TOUCH';
+    /**
+     * @var string
+     */
     public const FACADE_TAX = 'FACADE_TAX';
+    /**
+     * @var string
+     */
     public const FACADE_PRICE = 'FACADE_PRICE';
+    /**
+     * @var string
+     */
     public const FACADE_PRICE_PRODUCT = 'FACADE_PRICE_PRODUCT';
+    /**
+     * @var string
+     */
     public const FACADE_STOCK = 'FACADE_STOCK';
+    /**
+     * @var string
+     */
     public const FACADE_MONEY = 'FACADE_MONEY';
+    /**
+     * @var string
+     */
     public const FACADE_CURRENCY = 'FACADE_CURRENCY';
+    /**
+     * @var string
+     */
     public const FACADE_AVAILABILITY = 'FACADE_AVAILABILITY';
+    /**
+     * @var string
+     */
     public const FACADE_STORE = 'FACADE_STORE';
 
+    /**
+     * @var string
+     */
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
+    /**
+     * @var string
+     */
     public const QUERY_CONTAINER_CATEGORY = 'QUERY_CONTAINER_CATEGORY';
+    /**
+     * @var string
+     */
     public const QUERY_CONTAINER_PRODUCT = 'QUERY_CONTAINER_PRODUCT';
+    /**
+     * @var string
+     */
     public const QUERY_CONTAINER_STOCK = 'QUERY_CONTAINER_STOCK';
+    /**
+     * @var string
+     */
     public const QUERY_CONTAINER_PRODUCT_IMAGE = 'QUERY_CONTAINER_PRODUCT_IMAGE';
+    /**
+     * @var string
+     */
     public const QUERY_CONTAINER_PRODUCT_GROUP = 'QUERY_CONTAINER_PRODUCT_GROUP';
 
+    /**
+     * @var string
+     */
     public const PLUGINS_PRODUCT_ABSTRACT_VIEW = 'PRODUCT_MANAGEMENT:PLUGINS_PRODUCT_ABSTRACT_VIEW';
+    /**
+     * @var string
+     */
     public const PLUGIN_STORE_RELATION_FORM_TYPE = 'PLUGIN_STORE_RELATION_FORM_TYPE';
 
+    /**
+     * @var string
+     */
     public const PLUGIN_MONEY_FORM_TYPE = 'MONEY_FORM_TYPE_PLUGIN';
 
+    /**
+     * @var string
+     */
     public const PRODUCT_CONCRETE_EDIT_FORM_EXPANDER_PLUGINS = 'PRODUCT_CONCRETE_EDIT_FORM_EXPANDER_PLUGINS';
+    /**
+     * @var string
+     */
     public const PRODUCT_CONCRETE_FORM_EDIT_DATA_PROVIDER_EXPANDER_PLUGINS = 'PRODUCT_CONCRETE_FORM_EDIT_DATA_PROVIDER_EXPANDER_PLUGINS';
+    /**
+     * @var string
+     */
     public const PRODUCT_FORM_TRANSFER_MAPPER_EXPANDER_PLUGINS = 'PRODUCT_FORM_TRANSFER_MAPPER_EXPANDER_PLUGINS';
+    /**
+     * @var string
+     */
     public const PLUGINS_PRODUCT_CONCRETE_FORM_EDIT_TABS_EXPANDER = 'PLUGINS_PRODUCT_CONCRETE_FORM_EDIT_TABS_EXPANDER';
+    /**
+     * @var string
+     */
     public const PLUGINS_PRODUCT_ABSTRACT_FORM_EXPANDER = 'PLUGINS_PRODUCT_ABSTRACT_FORM_EXPANDER';
+    /**
+     * @var string
+     */
     public const PLUGINS_PRODUCT_CONCRETE_FORM_EXPANDER = 'PLUGINS_PRODUCT_CONCRETE_FORM_EXPANDER';
+    /**
+     * @var string
+     */
     public const PLUGINS_PRODUCT_ABSTRACT_FORM_EDIT_TABS_EXPANDER = 'PLUGINS_PRODUCT_ABSTRACT_FORM_EDIT_TABS_EXPANDER';
+    /**
+     * @var string
+     */
     public const PLUGINS_PRODUCT_ABSTRACT_EDIT_VIEW_EXPANDER = 'PLUGINS_PRODUCT_ABSTRACT_EDIT_VIEW_EXPANDER';
+    /**
+     * @var string
+     */
     public const PLUGINS_PRODUCT_CONCRETE_EDIT_VIEW_EXPANDER = 'PLUGINS_PRODUCT_CONCRETE_EDIT_VIEW_EXPANDER';
+    /**
+     * @var string
+     */
     public const PLUGINS_PRODUCT_ABSTRACT_LIST_ACTION_VIEW_DATA_EXPANDER = 'PLUGINS_PRODUCT_ABSTRACT_LIST_ACTION_VIEW_DATA_EXPANDER';
+    /**
+     * @var string
+     */
     public const PLUGINS_PRODUCT_ABSTRACT_VIEW_ACTION_VIEW_DATA_EXPANDER = 'PLUGINS_PRODUCT_ABSTRACT_VIEW_ACTION_VIEW_DATA_EXPANDER';
+    /**
+     * @var string
+     */
     public const PLUGINS_PRODUCT_TABLE_QUERY_CRITERIA_EXPANDER = 'PLUGINS_PRODUCT_TABLE_QUERY_CRITERIA_EXPANDER';
+    /**
+     * @var string
+     */
     public const PLUGINS_PRODUCT_TABLE_DATA_EXPANDER = 'PLUGINS_PRODUCT_TABLE_DATA_EXPANDER';
 
     /**
@@ -325,7 +439,7 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
     }
 
     /**
-     * @return \Spryker\Zed\ProductManagement\Communication\Plugin\ProductAbstractViewPluginInterface[]
+     * @return array<\Spryker\Zed\ProductManagement\Communication\Plugin\ProductAbstractViewPluginInterface>
      */
     protected function getProductAbstractViewPlugins()
     {
@@ -406,7 +520,7 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
     }
 
     /**
-     * @return \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductAbstractFormExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductAbstractFormExpanderPluginInterface>
      */
     protected function getProductAbstractFormExpanderPlugins(): array
     {
@@ -428,7 +542,7 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
     }
 
     /**
-     * @return \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductConcreteFormExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductConcreteFormExpanderPluginInterface>
      */
     protected function getProductConcreteFormExpanderPlugins(): array
     {
@@ -450,7 +564,7 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
     }
 
     /**
-     * @return \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductConcreteEditFormExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductConcreteEditFormExpanderPluginInterface>
      */
     protected function getProductConcreteEditFormExpanderPlugins(): array
     {
@@ -472,7 +586,7 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
     }
 
     /**
-     * @return \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductConcreteFormEditDataProviderExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductConcreteFormEditDataProviderExpanderPluginInterface>
      */
     protected function getProductConcreteFormEditDataProviderExpanderPlugins(): array
     {
@@ -494,7 +608,7 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
     }
 
     /**
-     * @return \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductConcreteFormEditDataProviderExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductConcreteFormEditDataProviderExpanderPluginInterface>
      */
     protected function getProductFormTransferMapperExpanderPlugins(): array
     {
@@ -516,7 +630,7 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
     }
 
     /**
-     * @return \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductConcreteFormEditTabsExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductConcreteFormEditTabsExpanderPluginInterface>
      */
     protected function getProductConcreteFormEditTabsExpanderPlugins(): array
     {
@@ -538,7 +652,7 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
     }
 
     /**
-     * @return \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductAbstractFormEditTabsExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductAbstractFormEditTabsExpanderPluginInterface>
      */
     protected function getProductAbstractFormEditTabsExpanderPlugins(): array
     {
@@ -560,7 +674,7 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
     }
 
     /**
-     * @return \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductAbstractEditViewExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductAbstractEditViewExpanderPluginInterface>
      */
     protected function getProductAbstractEditViewExpanderPlugins(): array
     {
@@ -582,7 +696,7 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
     }
 
     /**
-     * @return \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductConcreteEditViewExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductConcreteEditViewExpanderPluginInterface>
      */
     protected function getProductConcreteEditViewExpanderPlugins(): array
     {
@@ -604,7 +718,7 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
     }
 
     /**
-     * @return \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductAbstractListActionViewDataExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductAbstractListActionViewDataExpanderPluginInterface>
      */
     protected function getProductAbstractListActionViewDataExpanderPlugins(): array
     {
@@ -626,7 +740,7 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
     }
 
     /**
-     * @return \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductAbstractViewActionViewDataExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductAbstractViewActionViewDataExpanderPluginInterface>
      */
     protected function getProductAbstractViewActionViewDataExpanderPlugins(): array
     {
@@ -648,7 +762,7 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
     }
 
     /**
-     * @return \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductTableQueryCriteriaExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductTableQueryCriteriaExpanderPluginInterface>
      */
     protected function getProductTableQueryCriteriaExpanderPluginInterfaces(): array
     {
@@ -670,7 +784,7 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
     }
 
     /**
-     * @return \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductTableDataExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductTableDataExpanderPluginInterface>
      */
     protected function getProductTableDataExpanderPlugins(): array
     {

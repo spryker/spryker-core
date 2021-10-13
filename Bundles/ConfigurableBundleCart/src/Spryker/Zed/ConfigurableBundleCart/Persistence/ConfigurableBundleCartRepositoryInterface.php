@@ -11,7 +11,7 @@ interface ConfigurableBundleCartRepositoryInterface
 {
     /**
      * @param string $configurableBundleTemplateUuid
-     * @param string[] $configurableBundleTemplateSlotUuids
+     * @param array<string> $configurableBundleTemplateSlotUuids
      *
      * @return bool
      */

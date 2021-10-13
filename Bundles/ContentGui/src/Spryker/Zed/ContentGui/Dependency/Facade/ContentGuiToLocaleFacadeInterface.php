@@ -17,12 +17,12 @@ interface ContentGuiToLocaleFacadeInterface
     public function getCurrentLocale(): LocaleTransfer;
 
     /**
-     * @return \Generated\Shared\Transfer\LocaleTransfer[]
+     * @return array<\Generated\Shared\Transfer\LocaleTransfer>
      */
     public function getLocaleCollection(): array;
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getAvailableLocales(): array;
 }

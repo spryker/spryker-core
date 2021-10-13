@@ -1,7 +1,8 @@
 # QuoteRequestsRestApi Module
-[![Build Status](https://travis-ci.org/spryker/quote-requests-rest-api.svg)](https://travis-ci.org/spryker/quote-requests-rest-api)
+[![Latest Stable Version](https://poser.pugx.org/spryker/quote-requests-rest-api/v/stable.svg)](https://packagist.org/packages/spryker/quote-requests-rest-api)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.4-8892BF.svg)](https://php.net/)
 
-QuoteRequestsRestApi module provides rest API endpoints to manage quote requests as a company user.
+QuoteRequestsRestApi module provides REST API endpoints to manage quote requests as a company user.
 
 ## Installation
 

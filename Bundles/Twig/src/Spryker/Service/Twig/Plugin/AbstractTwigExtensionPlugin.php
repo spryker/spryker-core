@@ -44,7 +44,7 @@ abstract class AbstractTwigExtensionPlugin extends AbstractPlugin implements Twi
     }
 
     /**
-     * @return \Twig\TokenParser\TokenParserInterface[]
+     * @return array<\Twig\TokenParser\TokenParserInterface>
      */
     public function getTokenParsers(): array
     {
@@ -52,7 +52,7 @@ abstract class AbstractTwigExtensionPlugin extends AbstractPlugin implements Twi
     }
 
     /**
-     * @return \Twig\NodeVisitor\NodeVisitorInterface[]
+     * @return array<\Twig\NodeVisitor\NodeVisitorInterface>
      */
     public function getNodeVisitors(): array
     {
@@ -60,7 +60,7 @@ abstract class AbstractTwigExtensionPlugin extends AbstractPlugin implements Twi
     }
 
     /**
-     * @return \Twig\TwigFilter[]
+     * @return array<\Twig\TwigFilter>
      */
     public function getFilters(): array
     {
@@ -68,7 +68,7 @@ abstract class AbstractTwigExtensionPlugin extends AbstractPlugin implements Twi
     }
 
     /**
-     * @return \Twig\TwigTest[]
+     * @return array<\Twig\TwigTest>
      */
     public function getTests(): array
     {
@@ -76,7 +76,7 @@ abstract class AbstractTwigExtensionPlugin extends AbstractPlugin implements Twi
     }
 
     /**
-     * @return \Twig\TwigFunction[]
+     * @return array<\Twig\TwigFunction>
      */
     public function getFunctions(): array
     {

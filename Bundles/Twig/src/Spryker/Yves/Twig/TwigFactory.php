@@ -35,7 +35,7 @@ class TwigFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Shared\TwigExtension\Dependency\Plugin\TwigPluginInterface[]
+     * @return array<\Spryker\Shared\TwigExtension\Dependency\Plugin\TwigPluginInterface>
      */
     public function getTwigPlugins(): array
     {
@@ -108,7 +108,7 @@ class TwigFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Shared\TwigExtension\Dependency\Plugin\TwigLoaderPluginInterface[]
+     * @return array<\Spryker\Shared\TwigExtension\Dependency\Plugin\TwigLoaderPluginInterface>
      */
     public function getTwigLoaderPlugins(): array
     {

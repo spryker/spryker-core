@@ -17,7 +17,13 @@ use Spryker\Zed\PriceProductOfferVolumeGui\Dependency\Service\PriceProductOfferV
  */
 class PriceProductOfferVolumeGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_PRODUCT_OFFER = 'FACADE_PRODUCT_OFFER';
+    /**
+     * @var string
+     */
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
     /**

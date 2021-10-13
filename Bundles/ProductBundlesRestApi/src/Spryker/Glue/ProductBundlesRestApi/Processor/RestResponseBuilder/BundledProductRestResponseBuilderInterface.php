@@ -23,7 +23,7 @@ interface BundledProductRestResponseBuilderInterface
     public function createBundledProductEmptyRestResponse(): RestResponseInterface;
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $bundledProductRestResources
+     * @param array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface> $bundledProductRestResources
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
@@ -33,7 +33,7 @@ interface BundledProductRestResponseBuilderInterface
      * @param string $productConcreteSku
      * @param \Generated\Shared\Transfer\ProductBundleStorageTransfer $productBundleStorageTransfer
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>
      */
     public function createBundledProductRestResources(
         string $productConcreteSku,

@@ -26,6 +26,9 @@ use Spryker\Zed\Propel\Business\Model\PropelConfigConverterJson;
  */
 class PropelConfigConverterJsonTest extends Unit
 {
+    /**
+     * @var string
+     */
     public const FILE_NAME = 'propel.json';
 
     /**

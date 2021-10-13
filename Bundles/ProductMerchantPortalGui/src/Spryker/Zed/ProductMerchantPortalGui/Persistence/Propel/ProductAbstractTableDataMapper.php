@@ -8,63 +8,78 @@
 namespace Spryker\Zed\ProductMerchantPortalGui\Persistence\Propel;
 
 use ArrayObject;
-use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\ProductAbstractCollectionTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductImageSetTransfer;
 use Generated\Shared\Transfer\ProductImageTransfer;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
-use Propel\Runtime\Util\PropelModelPager;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Service\ProductMerchantPortalGuiToUtilEncodingServiceInterface;
 
 class ProductAbstractTableDataMapper
 {
     /**
-     * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\ConfigurationProvider\ProductAbstractGuiTableConfigurationProvider::COL_KEY_SKU
+     * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductAbstractGuiTableConfigurationProvider::COL_KEY_SKU
+     * @var string
      */
     protected const COL_KEY_SKU = 'sku';
 
     /**
-     * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\ConfigurationProvider\ProductAbstractGuiTableConfigurationProvider::COL_KEY_IMAGE
+     * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductAbstractGuiTableConfigurationProvider::COL_KEY_IMAGE
+     * @var string
      */
     protected const COL_KEY_IMAGE = 'image';
 
     /**
-     * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\ConfigurationProvider\ProductAbstractGuiTableConfigurationProvider::COL_KEY_NAME
+     * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductAbstractGuiTableConfigurationProvider::COL_KEY_NAME
+     * @var string
      */
     protected const COL_KEY_NAME = 'name';
 
     /**
-     * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\ConfigurationProvider\ProductAbstractGuiTableConfigurationProvider::COL_KEY_SUPER_ATTRIBUTES
+     * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductAbstractGuiTableConfigurationProvider::COL_KEY_SUPER_ATTRIBUTES
+     * @var string
      */
     protected const COL_KEY_SUPER_ATTRIBUTES = 'superAttributes';
 
     /**
-     * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\ConfigurationProvider\ProductAbstractGuiTableConfigurationProvider::COL_KEY_VARIANTS
+     * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductAbstractGuiTableConfigurationProvider::COL_KEY_VARIANTS
+     * @var string
      */
     protected const COL_KEY_VARIANTS = 'variants';
 
     /**
-     * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\ConfigurationProvider\ProductAbstractGuiTableConfigurationProvider::COL_KEY_CATEGORIES
+     * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductAbstractGuiTableConfigurationProvider::COL_KEY_CATEGORIES
+     * @var string
      */
     protected const COL_KEY_CATEGORIES = 'categories';
 
     /**
-     * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\ConfigurationProvider\ProductAbstractGuiTableConfigurationProvider::COL_KEY_STORES
+     * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductAbstractGuiTableConfigurationProvider::COL_KEY_STORES
+     * @var string
      */
     protected const COL_KEY_STORES = 'stores';
 
     /**
-     * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\ConfigurationProvider\ProductAbstractGuiTableConfigurationProvider::COL_KEY_VISIBILITY
+     * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductAbstractGuiTableConfigurationProvider::COL_KEY_VISIBILITY
+     * @var string
      */
     protected const COL_KEY_VISIBILITY = 'visibility';
+
+    /**
+     * @uses \Spryker\Zed\ProductMerchantPortalGui\Persistence\ProductMerchantPortalGuiRepository::COL_NAME_FALLBACK
+     * @var string
+     */
+    protected const COL_NAME_FALLBACK = 'name_fallback';
 
     /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\Dependency\Service\ProductMerchantPortalGuiToUtilEncodingServiceInterface
      */
     protected $utilEncodingService;
 
+    /**
+     * @var array
+     */
     public const PRODUCT_ABSTRACT_DATA_COLUMN_MAP = [
         self::COL_KEY_SKU => SpyProductAbstractTableMap::COL_SKU,
         self::COL_KEY_IMAGE => ProductImageTransfer::EXTERNAL_URL_SMALL,
@@ -85,7 +100,7 @@ class ProductAbstractTableDataMapper
     }
 
     /**
-     * @param mixed[] $productAbstractTableDataArray
+     * @param array<mixed> $productAbstractTableDataArray
      * @param \Generated\Shared\Transfer\ProductAbstractCollectionTransfer $productAbstractCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\ProductAbstractCollectionTransfer
@@ -113,6 +128,10 @@ class ProductAbstractTableDataMapper
             $productAbstractTransfer = (new ProductAbstractTransfer())->fromArray($productAbstractTableRowDataArray, true);
             $productAbstractTransfer = $this->mapImageToProductAbstract($productAbstractTableRowDataArray, $productAbstractTransfer);
 
+            if ($productAbstractTableRowDataArray[static::COL_NAME_FALLBACK]) {
+                $productAbstractTransfer->setName($productAbstractTableRowDataArray[static::COL_NAME_FALLBACK]);
+            }
+
             $productAbstractTransfers[] = $productAbstractTransfer;
         }
 
@@ -122,7 +141,7 @@ class ProductAbstractTableDataMapper
     }
 
     /**
-     * @param mixed[] $productAbstractTableRowDataArray
+     * @param array<mixed> $productAbstractTableRowDataArray
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer
@@ -137,28 +156,5 @@ class ProductAbstractTableDataMapper
         $productAbstractTransfer->setImageSets(new ArrayObject([$productImageSetTransfer]));
 
         return $productAbstractTransfer;
-    }
-
-    /**
-     * @phpstan-param \Propel\Runtime\Util\PropelModelPager<mixed> $propelPager
-     *
-     * @param \Propel\Runtime\Util\PropelModelPager $propelPager
-     *
-     * @return \Generated\Shared\Transfer\PaginationTransfer
-     */
-    public function mapPropelModelPagerToPaginationTransfer(
-        PropelModelPager $propelPager
-    ): PaginationTransfer {
-        return (new PaginationTransfer())
-            ->setNbResults($propelPager->getNbResults())
-            ->setPage($propelPager->getPage())
-            ->setMaxPerPage($propelPager->getMaxPerPage())
-            ->setFirstIndex($propelPager->getFirstIndex())
-            ->setFirstIndex($propelPager->getFirstIndex())
-            ->setLastIndex($propelPager->getLastIndex())
-            ->setFirstPage($propelPager->getFirstPage())
-            ->setLastPage($propelPager->getLastPage())
-            ->setNextPage($propelPager->getNextPage())
-            ->setPreviousPage($propelPager->getPreviousPage());
     }
 }

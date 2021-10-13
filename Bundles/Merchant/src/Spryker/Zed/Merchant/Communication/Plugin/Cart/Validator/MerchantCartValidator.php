@@ -16,9 +16,21 @@ use Spryker\Zed\Merchant\Business\MerchantFacadeInterface;
 
 class MerchantCartValidator implements MerchantCartValidatorInterface
 {
+    /**
+     * @var string
+     */
     protected const MESSAGE_TYPE_ERROR = 'error';
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_REMOVED_MERCHANT = 'merchant.message.removed';
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_INACTIVE_MERCHANT = 'merchant.message.inactive';
+    /**
+     * @var string
+     */
     protected const GLOSSARY_PARAM_MERCHANT_REFERENCE = '%merchant_reference%';
 
     /**
@@ -93,12 +105,16 @@ class MerchantCartValidator implements MerchantCartValidatorInterface
         if (!$merchantReferences) {
             return $merchantTransfers;
         }
-
+        /** @var array<string> $merchantReferences */
         $merchantReferences = array_unique($merchantReferences);
+
+        /** @var \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer */
+        $quoteTransfer = $cartChangeTransfer->getQuote();
+
         $merchantCollectionTransfer = $this->merchantFacade->get(
             (new MerchantCriteriaTransfer())
                 ->setMerchantReferences($merchantReferences)
-                ->setStore($cartChangeTransfer->getQuote()->getStore())
+                ->setStore($quoteTransfer->getStore())
         );
         foreach ($merchantCollectionTransfer->getMerchants() as $merchantTransfer) {
             $merchantTransfers[$merchantTransfer->getMerchantReference()] = $merchantTransfer;

@@ -10,7 +10,7 @@ namespace Spryker\Zed\ProductDiscountConnector\Business\Attribute;
 interface AttributeProviderInterface
 {
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getAllAttributeTypes();
 }

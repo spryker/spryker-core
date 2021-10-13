@@ -15,6 +15,9 @@ use Spryker\Zed\Collector\Persistence\Pdo\BulkUpdateTouchKeyByIdQueryInterface;
 
 abstract class AbstractTouchUpdater implements TouchUpdaterInterface
 {
+    /**
+     * @var string
+     */
     public const FK_TOUCH = 'fk_touch';
 
     /**
@@ -52,7 +55,7 @@ abstract class AbstractTouchUpdater implements TouchUpdaterInterface
     abstract protected function findOrCreateTouchKeyEntity($key, $idLocale, $idStore);
 
     /**
-     * @param string[] $keys
+     * @param array<string> $keys
      * @param int $idLocale
      *
      * @return void

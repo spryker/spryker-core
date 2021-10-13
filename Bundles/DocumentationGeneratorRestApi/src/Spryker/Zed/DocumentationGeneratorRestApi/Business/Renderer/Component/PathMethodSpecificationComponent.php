@@ -16,10 +16,13 @@ use Generated\Shared\Transfer\PathMethodComponentTransfer;
  */
 class PathMethodSpecificationComponent implements PathMethodSpecificationComponentInterface
 {
+    /**
+     * @var string
+     */
     protected const KEY_REQUEST_BODY = 'requestBody';
 
     /**
-     * @var \Generated\Shared\Transfer\PathMethodComponentTransfer|null $pathMethodComponentTransfer
+     * @var \Generated\Shared\Transfer\PathMethodComponentTransfer|null
      */
     protected $pathMethodComponentTransfer;
 
@@ -56,6 +59,9 @@ class PathMethodSpecificationComponent implements PathMethodSpecificationCompone
         }
         if ($this->pathMethodComponentTransfer->getOperationId()) {
             $pathData[PathMethodComponentTransfer::OPERATION_ID] = $this->pathMethodComponentTransfer->getOperationId();
+        }
+        if ($this->pathMethodComponentTransfer->getDeprecated()) {
+            $pathData[PathMethodComponentTransfer::DEPRECATED] = $this->pathMethodComponentTransfer->getDeprecated();
         }
         $pathData[PathMethodComponentTransfer::RESPONSES] = [];
         foreach ($this->pathMethodComponentTransfer->getResponses() as $response) {

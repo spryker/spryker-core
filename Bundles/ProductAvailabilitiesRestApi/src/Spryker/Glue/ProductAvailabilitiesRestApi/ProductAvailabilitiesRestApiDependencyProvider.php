@@ -17,7 +17,13 @@ use Spryker\Glue\ProductAvailabilitiesRestApi\Dependency\Client\ProductAvailabil
  */
 class ProductAvailabilitiesRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_AVAILABILITY_STORAGE = 'CLIENT_AVAILABILITY_STORAGE';
+    /**
+     * @var string
+     */
     public const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE';
 
     /**

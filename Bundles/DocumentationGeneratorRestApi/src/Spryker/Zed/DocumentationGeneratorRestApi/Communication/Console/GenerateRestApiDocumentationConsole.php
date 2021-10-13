@@ -17,7 +17,13 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class GenerateRestApiDocumentationConsole extends Console
 {
+    /**
+     * @var string
+     */
     protected const COMMAND_NAME = 'rest-api:generate:documentation';
+    /**
+     * @var string
+     */
     protected const DESCRIPTION = 'Generates documentation for enabled Rest API endpoints.';
 
     /**

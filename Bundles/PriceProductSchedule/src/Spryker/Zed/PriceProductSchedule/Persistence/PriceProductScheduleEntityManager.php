@@ -21,6 +21,9 @@ use Spryker\Zed\PriceProductSchedule\Persistence\Exception\PriceProductScheduleL
  */
 class PriceProductScheduleEntityManager extends AbstractEntityManager implements PriceProductScheduleEntityManagerInterface
 {
+    /**
+     * @var string
+     */
     protected const PATTERN_MINUS_DAYS = '-%s days';
 
     /**

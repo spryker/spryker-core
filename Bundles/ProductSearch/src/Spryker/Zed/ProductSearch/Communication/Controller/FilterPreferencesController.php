@@ -18,12 +18,27 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class FilterPreferencesController extends AbstractController
 {
+    /**
+     * @var string
+     */
     public const PARAM_ID = 'id';
+    /**
+     * @var string
+     */
     public const PARAM_TERM = 'term';
 
+    /**
+     * @var string
+     */
     public const MESSAGE_FILTER_PREFERENCE_CREATE_SUCCESS = 'Filter preference was created successfully.';
+    /**
+     * @var string
+     */
     public const MESSAGE_FILTER_PREFERENCE_UPDATE_SUCCESS = 'Filter preference was updated successfully.';
 
+    /**
+     * @var string
+     */
     public const REDIRECT_URL_DEFAULT = '/product-search/filter-preferences';
 
     /**
@@ -53,7 +68,7 @@ class FilterPreferencesController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function createAction(Request $request)
     {
@@ -94,7 +109,7 @@ class FilterPreferencesController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function editAction(Request $request)
     {
@@ -145,7 +160,7 @@ class FilterPreferencesController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function viewAction(Request $request)
     {
@@ -169,7 +184,7 @@ class FilterPreferencesController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function deleteAction(Request $request)
     {

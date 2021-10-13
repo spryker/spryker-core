@@ -14,9 +14,9 @@ use Spryker\Zed\Discount\Dependency\Plugin\DecisionRulePluginInterface;
 
 class DecisionRuleContext implements DecisionRuleSpecificationInterface
 {
-     /**
-      * @var \Spryker\Zed\Discount\Dependency\Plugin\DecisionRulePluginInterface
-      */
+    /**
+     * @var \Spryker\Zed\Discount\Dependency\Plugin\DecisionRulePluginInterface
+     */
     protected $rulePlugin;
 
     /**
@@ -24,22 +24,22 @@ class DecisionRuleContext implements DecisionRuleSpecificationInterface
      */
     protected $clauseTransfer;
 
-     /**
-      * @param \Spryker\Zed\Discount\Dependency\Plugin\DecisionRulePluginInterface $rulePlugin
-      * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
-      */
+    /**
+     * @param \Spryker\Zed\Discount\Dependency\Plugin\DecisionRulePluginInterface $rulePlugin
+     * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
+     */
     public function __construct(DecisionRulePluginInterface $rulePlugin, ClauseTransfer $clauseTransfer)
     {
         $this->rulePlugin = $rulePlugin;
         $this->clauseTransfer = $clauseTransfer;
     }
 
-     /**
-      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-      *
-      * @return bool
-      */
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return bool
+     */
     public function isSatisfiedBy(QuoteTransfer $quoteTransfer, ItemTransfer $itemTransfer)
     {
         $this->setAcceptedDataTypes();
@@ -47,9 +47,9 @@ class DecisionRuleContext implements DecisionRuleSpecificationInterface
         return $this->rulePlugin->isSatisfiedBy($quoteTransfer, $itemTransfer, $this->clauseTransfer);
     }
 
-     /**
-      * @return void
-      */
+    /**
+     * @return void
+     */
     protected function setAcceptedDataTypes()
     {
         $this->clauseTransfer->setAcceptedTypes($this->rulePlugin->acceptedDataTypes());

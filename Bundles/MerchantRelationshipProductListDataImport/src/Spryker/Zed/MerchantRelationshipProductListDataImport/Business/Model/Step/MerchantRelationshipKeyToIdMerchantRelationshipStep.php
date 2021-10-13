@@ -18,7 +18,7 @@ use Spryker\Zed\MerchantRelationshipProductListDataImport\Business\Model\DataSet
 class MerchantRelationshipKeyToIdMerchantRelationshipStep implements DataImportStepInterface
 {
     /**
-     * @var int[]
+     * @var array<int>
      */
     protected $idMerchantRelationshipCache = [];
 

@@ -14,6 +14,9 @@ use Spryker\Shared\Kernel\Transfer\EntityTransferInterface;
 
 class TransferToEntityMapper implements TransferToEntityMapperInterface
 {
+    /**
+     * @var string
+     */
     public const PROPEL_SETTER_PREFIX = 'add';
 
     /**

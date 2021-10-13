@@ -18,6 +18,7 @@ class MerchantRelationshipPriceQueryExpander implements MerchantRelationshipPric
 {
     /**
      * @uses \Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductStoreTableMap::COL_ID_PRICE_PRODUCT_STORE
+     * @var string
      */
     public const COL_ID_PRICE_PRODUCT_STORE = 'spy_price_product_store.id_price_product_store';
 
@@ -97,7 +98,7 @@ class MerchantRelationshipPriceQueryExpander implements MerchantRelationshipPric
     }
 
     /**
-     * @param int[] $merchantRelationshipIds
+     * @param array<int> $merchantRelationshipIds
      *
      * @return \Generated\Shared\Transfer\QueryCriteriaTransfer
      */

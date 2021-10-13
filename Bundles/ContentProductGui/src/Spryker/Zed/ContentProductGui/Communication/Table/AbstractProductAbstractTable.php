@@ -16,17 +16,50 @@ use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 
 abstract class AbstractProductAbstractTable extends AbstractTable
 {
+    /**
+     * @var string
+     */
     public const HEADER_ID_PRODUCT_ABSTRACT = 'ID';
+    /**
+     * @var string
+     */
     public const HEADER_NAME = 'Name';
+    /**
+     * @var string
+     */
     public const HEADER_SKU = 'SKU';
 
+    /**
+     * @var string
+     */
     public const COL_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
+    /**
+     * @var string
+     */
     public const COL_SKU = 'sku';
+    /**
+     * @var string
+     */
     public const COL_IMAGE = 'Image';
+    /**
+     * @var string
+     */
     public const COL_NAME = 'name';
+    /**
+     * @var string
+     */
     public const COL_STORES = 'Stores';
+    /**
+     * @var string
+     */
     public const COL_STATUS = 'Status';
+    /**
+     * @var string
+     */
     public const COL_SELECTED = 'Selected';
+    /**
+     * @var string
+     */
     public const COL_ACTIONS = 'Actions';
 
     /**
@@ -35,7 +68,7 @@ abstract class AbstractProductAbstractTable extends AbstractTable
     protected $productQueryContainer;
 
     /**
-     * @var \Spryker\Zed\ContentProductGui\Dependency\Facade\ContentProductGuiToProductImageInterface $productImageFacade
+     * @var \Spryker\Zed\ContentProductGui\Dependency\Facade\ContentProductGuiToProductImageInterface
      */
     protected $productImageFacade;
 
@@ -76,7 +109,7 @@ abstract class AbstractProductAbstractTable extends AbstractTable
     }
 
     /**
-     * @param \Orm\Zed\Product\Persistence\SpyProductAbstractStore[] $productAbstractStoreEntities
+     * @param array<\Orm\Zed\Product\Persistence\SpyProductAbstractStore> $productAbstractStoreEntities
      *
      * @return string
      */

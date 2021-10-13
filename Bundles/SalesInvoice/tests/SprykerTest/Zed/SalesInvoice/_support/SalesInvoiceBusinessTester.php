@@ -30,6 +30,9 @@ class SalesInvoiceBusinessTester extends Actor
 {
     use _generated\SalesInvoiceBusinessTesterActions;
 
+    /**
+     * @var string
+     */
     protected const DEFAULT_OMS_PROCESS_NAME = 'Test01';
 
     /**
@@ -65,7 +68,7 @@ class SalesInvoiceBusinessTester extends Actor
     /**
      * @param int $number
      *
-     * @return \Generated\Shared\Transfer\OrderInvoiceTransfer[]
+     * @return array<\Generated\Shared\Transfer\OrderInvoiceTransfer>
      */
     public function createInvoiceCollection(int $number): array
     {

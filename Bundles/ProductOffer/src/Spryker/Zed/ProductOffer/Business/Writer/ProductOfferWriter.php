@@ -8,7 +8,7 @@
 namespace Spryker\Zed\ProductOffer\Business\Writer;
 
 use ArrayObject;
-use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
+use Generated\Shared\Transfer\ProductOfferCriteriaTransfer;
 use Generated\Shared\Transfer\ProductOfferErrorTransfer;
 use Generated\Shared\Transfer\ProductOfferResponseTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
@@ -22,6 +22,9 @@ class ProductOfferWriter implements ProductOfferWriterInterface
 {
     use TransactionTrait;
 
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_PRODUCT_OFFER_NOT_FOUND = 'Product offer is not found.';
 
     /**
@@ -45,12 +48,12 @@ class ProductOfferWriter implements ProductOfferWriterInterface
     protected $productOfferConfig;
 
     /**
-     * @var array|\Spryker\Zed\ProductOfferExtension\Dependency\Plugin\ProductOfferPostCreatePluginInterface[]
+     * @var array<\Spryker\Zed\ProductOfferExtension\Dependency\Plugin\ProductOfferPostCreatePluginInterface>
      */
     protected $productOfferPostCreatePlugins;
 
     /**
-     * @var array|\Spryker\Zed\ProductOfferExtension\Dependency\Plugin\ProductOfferPostUpdatePluginInterface[]
+     * @var array<\Spryker\Zed\ProductOfferExtension\Dependency\Plugin\ProductOfferPostUpdatePluginInterface>
      */
     protected $productOfferPostUpdatePlugins;
 
@@ -59,8 +62,8 @@ class ProductOfferWriter implements ProductOfferWriterInterface
      * @param \Spryker\Zed\ProductOffer\Persistence\ProductOfferEntityManagerInterface $productOfferEntityManager
      * @param \Spryker\Zed\ProductOffer\Business\Generator\ProductOfferReferenceGeneratorInterface $productOfferReferenceGenerator
      * @param \Spryker\Zed\ProductOffer\ProductOfferConfig $productOfferConfig
-     * @param \Spryker\Zed\ProductOfferExtension\Dependency\Plugin\ProductOfferPostCreatePluginInterface[] $productOfferPostCreatePlugins
-     * @param \Spryker\Zed\ProductOfferExtension\Dependency\Plugin\ProductOfferPostUpdatePluginInterface[] $productOfferPostUpdatePlugins
+     * @param array<\Spryker\Zed\ProductOfferExtension\Dependency\Plugin\ProductOfferPostCreatePluginInterface> $productOfferPostCreatePlugins
+     * @param array<\Spryker\Zed\ProductOfferExtension\Dependency\Plugin\ProductOfferPostUpdatePluginInterface> $productOfferPostUpdatePlugins
      */
     public function __construct(
         ProductOfferRepositoryInterface $productOfferRepository,
@@ -101,7 +104,7 @@ class ProductOfferWriter implements ProductOfferWriterInterface
     {
         if (
             !$productOfferTransfer->getIdProductOffer()
-            || !$this->productOfferRepository->findOne((new ProductOfferCriteriaFilterTransfer())->setIdProductOffer($productOfferTransfer->getIdProductOffer()))
+            || !$this->productOfferRepository->findOne((new ProductOfferCriteriaTransfer())->setIdProductOffer($productOfferTransfer->getIdProductOffer()))
         ) {
             return (new ProductOfferResponseTransfer())
                 ->setIsSuccessful(false)
@@ -129,6 +132,13 @@ class ProductOfferWriter implements ProductOfferWriterInterface
         $productOfferTransfer = $this->productOfferEntityManager->createProductOffer($productOfferTransfer);
         $productOfferTransfer = $this->productOfferEntityManager->createProductOfferStores($productOfferTransfer);
         $productOfferTransfer = $this->executeProductOfferPostCreatePlugins($productOfferTransfer);
+        if (!$productOfferTransfer->getProductOfferReference()) {
+            $productOfferTransfer->setProductOfferReference(
+                $this->productOfferReferenceGenerator
+                    ->generateProductOfferReferenceById($productOfferTransfer->getIdProductOffer())
+            );
+        }
+        $productOfferTransfer = $this->productOfferEntityManager->updateProductOffer($productOfferTransfer);
 
         return $productOfferTransfer;
     }
@@ -217,7 +227,7 @@ class ProductOfferWriter implements ProductOfferWriterInterface
     protected function setDefaultValues(ProductOfferTransfer $productOfferTransfer): ProductOfferTransfer
     {
         if ($productOfferTransfer->getProductOfferReference() === null) {
-            $productOfferTransfer->setProductOfferReference($this->productOfferReferenceGenerator->generateProductOfferReference());
+            $productOfferTransfer->setProductOfferReference('');
         }
 
         if ($productOfferTransfer->getApprovalStatus() === null) {
@@ -228,9 +238,9 @@ class ProductOfferWriter implements ProductOfferWriterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\StoreTransfer[] $storeTransfers
+     * @param array<\Generated\Shared\Transfer\StoreTransfer> $storeTransfers
      *
-     * @return \Generated\Shared\Transfer\StoreTransfer[]
+     * @return array<\Generated\Shared\Transfer\StoreTransfer>
      */
     protected function indexStoreTransfersByIdStore(array $storeTransfers): array
     {

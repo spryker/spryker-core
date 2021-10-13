@@ -15,9 +15,21 @@ use Spryker\Zed\Kernel\Container;
  */
 class ApiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const SERVICE_ENCODING = 'SERVICE_ENCODING';
+    /**
+     * @var string
+     */
     public const PLUGINS_API = 'PLUGINS_API';
+    /**
+     * @var string
+     */
     public const PLUGINS_API_VALIDATOR = 'PLUGINS_API_VALIDATOR';
+    /**
+     * @var string
+     */
     public const PLUGINS_API_REQUEST_TRANSFER_FILTER = 'PLUGINS_API_REQUEST_TRANSFER_FILTER';
 
     /**
@@ -93,7 +105,7 @@ class ApiDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\Api\Dependency\Plugin\ApiResourcePluginInterface[]
+     * @return array<\Spryker\Zed\Api\Dependency\Plugin\ApiResourcePluginInterface>
      */
     protected function getApiResourcePluginCollection()
     {
@@ -101,7 +113,7 @@ class ApiDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\Api\Dependency\Plugin\ApiValidatorPluginInterface[]
+     * @return array<\Spryker\Zed\Api\Dependency\Plugin\ApiValidatorPluginInterface>
      */
     protected function getApiValidatorPluginCollection()
     {
@@ -116,7 +128,7 @@ class ApiDependencyProvider extends AbstractBundleDependencyProvider
     protected function provideApiRequestTransferFilterPlugins(Container $container): Container
     {
         /**
-         * @return \Spryker\Zed\Api\Communication\Plugin\ApiRequestTransferFilterPluginInterface[]
+         * @return array<\Spryker\Zed\Api\Communication\Plugin\ApiRequestTransferFilterPluginInterface>
          */
         $container->set(static::PLUGINS_API_REQUEST_TRANSFER_FILTER, function (Container $container): array {
             return $this->getApiRequestTransferFilterPluginCollection();
@@ -126,7 +138,7 @@ class ApiDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\Api\Communication\Plugin\ApiRequestTransferFilterPluginInterface[]
+     * @return array<\Spryker\Zed\Api\Communication\Plugin\ApiRequestTransferFilterPluginInterface>
      */
     protected function getApiRequestTransferFilterPluginCollection(): array
     {

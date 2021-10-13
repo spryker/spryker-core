@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PriceProductOfferTableViewTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\ProductOfferResponseTransfer;
 use Generated\Shared\Transfer\RawProductAttributesTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,11 +24,28 @@ use Symfony\Component\HttpFoundation\Request;
 class AbstractProductOfferController extends AbstractController
 {
     /**
+     * @var array
+     */
+    protected const DEFAULT_INITIAL_DATA = [
+        GuiTableEditableInitialDataTransfer::DATA => [],
+        GuiTableEditableInitialDataTransfer::ERRORS => [],
+    ];
+
+    /**
+     * @var string
+     */
+    protected const RESPONSE_NOTIFICATION_MESSAGE_SUCCESS = 'The Offer is saved.';
+    /**
+     * @var string
+     */
+    protected const RESPONSE_NOTIFICATION_MESSAGE_ERROR = 'To save an Offer please resolve all errors.';
+
+    /**
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getProductAttributes(
         LocaleTransfer $localeTransfer,
@@ -54,10 +72,10 @@ class AbstractProductOfferController extends AbstractController
     /**
      * @phpstan-param array<\Generated\Shared\Transfer\LocalizedAttributesTransfer> $localizedAttributes
      *
-     * @param \Generated\Shared\Transfer\LocalizedAttributesTransfer[] $localizedAttributes
+     * @param array<\Generated\Shared\Transfer\LocalizedAttributesTransfer> $localizedAttributes
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getLocalizedAttributesByLocale(array $localizedAttributes, LocaleTransfer $localeTransfer): array
     {
@@ -87,22 +105,40 @@ class AbstractProductOfferController extends AbstractController
     protected function getDefaultInitialData(Request $request, string $formName): array
     {
         $requestTableData = $request->get($formName);
+
+        if (!$requestTableData) {
+            return static::DEFAULT_INITIAL_DATA;
+        }
+
         $requestTableData = $this->getFactory()->getUtilEncodingService()->decodeJson(
             $requestTableData[PriceProductOfferTableViewTransfer::PRICES],
             true
         );
 
         if (!$requestTableData) {
-            return [
-                GuiTableEditableInitialDataTransfer::DATA => [],
-                GuiTableEditableInitialDataTransfer::ERRORS => [],
-            ];
+            return static::DEFAULT_INITIAL_DATA;
         }
 
-        return [
-            GuiTableEditableInitialDataTransfer::DATA => $requestTableData,
-            GuiTableEditableInitialDataTransfer::ERRORS => [],
-        ];
+        $defaultInitialData = static::DEFAULT_INITIAL_DATA;
+        $defaultInitialData[GuiTableEditableInitialDataTransfer::DATA] = $requestTableData;
+
+        return $defaultInitialData;
+    }
+
+    /**
+     * @param array<mixed> $responseData
+     *
+     * @return array<mixed>
+     */
+    protected function addSuccessResponseDataToResponse(array $responseData): array
+    {
+        $zedUiFormResponseTransfer = $this->getFactory()
+            ->getZedUiFactory()
+            ->createZedUiFormResponseBuilder()
+            ->addSuccessNotification(static::RESPONSE_NOTIFICATION_MESSAGE_SUCCESS)
+            ->createResponse();
+
+        return array_merge($responseData, $zedUiFormResponseTransfer->toArray());
     }
 
     /**
@@ -110,19 +146,28 @@ class AbstractProductOfferController extends AbstractController
      *
      * @phpstan-return array<string, mixed>
      *
-     * @param array $responseData
+     * @param array<mixed> $responseData
+     * @param \Generated\Shared\Transfer\ProductOfferResponseTransfer|null $productOfferResponseTransfer
      *
-     * @return array
+     * @return array<mixed>
      */
-    protected function addValidationNotifications(array $responseData): array
+    protected function addErrorResponseDataToResponse(array $responseData, ?ProductOfferResponseTransfer $productOfferResponseTransfer = null): array
     {
-        $responseData['notifications'] = [
-            [
-                'type' => 'error',
-                'message' => 'To save an Offer please resolve all errors.',
-            ],
-        ];
+        $message = $this->getFactory()
+            ->getTranslatorFacade()
+            ->trans(static::RESPONSE_NOTIFICATION_MESSAGE_ERROR);
 
-        return $responseData;
+        $zedUiFormResponseBuilder = $this->getFactory()
+            ->getZedUiFactory()
+            ->createZedUiFormResponseBuilder()
+            ->addErrorNotification($message);
+
+        if ($productOfferResponseTransfer) {
+            foreach ($productOfferResponseTransfer->getErrors() as $productOfferErrorTransfer) {
+                $zedUiFormResponseBuilder->addErrorNotification($productOfferErrorTransfer->getMessageOrFail());
+            }
+        }
+
+        return array_merge($responseData, $zedUiFormResponseBuilder->createResponse()->toArray());
     }
 }

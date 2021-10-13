@@ -11,6 +11,9 @@ use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
 
 class GreaterThanOrEqualDate extends GreaterThanOrEqual
 {
+    /**
+     * @var string
+     */
     public const VALIDATION_VALID_DATE_FORMAT = 'Y-m-d'; // Format accepted by date().
 
     /**

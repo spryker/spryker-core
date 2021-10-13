@@ -18,11 +18,23 @@ use Spryker\Zed\ProductApi\Dependency\QueryContainer\ProductApiToApiQueryBuilder
  */
 class ProductApiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const SERVICE_DATE_FORMATTER = 'SERVICE_DATE_FORMATTER';
 
+    /**
+     * @var string
+     */
     public const QUERY_CONTAINER_API = 'QUERY_CONTAINER_API';
+    /**
+     * @var string
+     */
     public const QUERY_CONTAINER_API_QUERY_BUILDER = 'QUERY_CONTAINER_API_QUERY_BUILDER';
 
+    /**
+     * @var string
+     */
     public const FACADE_PRODUCT = 'FACADE_PRODUCT';
 
     /**

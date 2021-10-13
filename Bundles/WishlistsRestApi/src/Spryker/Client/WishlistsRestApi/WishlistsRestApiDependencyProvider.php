@@ -13,6 +13,9 @@ use Spryker\Client\WishlistsRestApi\Dependency\Client\WishlistsRestApiToZedReque
 
 class WishlistsRestApiDependencyProvider extends AbstractDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
 
     /**

@@ -10,8 +10,8 @@ namespace Spryker\Zed\Development\Communication\Console;
 use Generated\Shared\Transfer\ModuleDependencyTransfer;
 use Generated\Shared\Transfer\ModuleTransfer;
 use Generated\Shared\Transfer\ValidationMessageTransfer;
+use Spryker\Zed\Development\Business\Composer\Util\ComposerJson;
 use Spryker\Zed\Development\Business\Dependency\Validator\ValidationRules\ValidationRuleInterface;
-use stdClass;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -24,11 +24,18 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class DependencyViolationFixConsole extends AbstractCoreModuleAwareConsole
 {
+    /**
+     * @var string
+     */
     protected const COMMAND_NAME = 'dev:dependency:fix';
+    /**
+     * @var string
+     */
     protected const OPTION_DRY_RUN = 'dry-run';
+    /**
+     * @var string
+     */
     protected const OPTION_DRY_RUN_SHORT = 'd';
-
-    protected const REPLACE_4_WITH_2_SPACES = '/^(  +?)\\1(?=[^ ])/m';
 
     /**
      * @return void
@@ -39,7 +46,7 @@ class DependencyViolationFixConsole extends AbstractCoreModuleAwareConsole
 
         $this
             ->setName(static::COMMAND_NAME)
-            ->addOption(static::OPTION_DRY_RUN, 'd', InputOption::VALUE_NONE, 'Dry-run the command, changed composer.json will not be saved.')
+            ->addOption(static::OPTION_DRY_RUN, static::OPTION_DRY_RUN_SHORT, InputOption::VALUE_NONE, 'Dry-run the command, changed composer.json will not be saved.')
             ->setDescription('Fix dependency violations in composer.json.');
     }
 
@@ -96,21 +103,39 @@ class DependencyViolationFixConsole extends AbstractCoreModuleAwareConsole
         $composerJsonArray = $this->getComposerJsonAsArray($moduleTransfer);
 
         foreach ($this->getModuleDependencies($moduleTransfer) as $moduleDependencyTransfer) {
-            $composerNameToFix = $this->getFacade()->findComposerNameByModuleName($moduleDependencyTransfer->getModuleName());
+            $missingComposerName = $this->getMissingComposerName($moduleDependencyTransfer);
 
-            if ($composerNameToFix === null) {
+            if ($missingComposerName === null) {
                 $this->output->writeln(sprintf('Could not get a composer name for "%s"', $moduleDependencyTransfer->getModuleName()));
                 $this->output->writeln(sprintf('Please check the module <fg=yellow>%s.%s</> manually.', $moduleTransfer->getOrganization()->getName(), $moduleTransfer->getName()));
 
                 continue;
             }
 
-            $composerJsonArray = $this->fixDependencyViolations($moduleDependencyTransfer, $composerJsonArray, $composerNameToFix);
+            $composerJsonArray = $this->fixDependencyViolations($moduleDependencyTransfer, $composerJsonArray, $missingComposerName);
         }
 
         $this->output->writeln(sprintf('Fixed dependencies in <fg=yellow>%s.%s</>', $moduleTransfer->getOrganization()->getName(), $moduleTransfer->getName()));
 
         $this->saveComposerJsonArray($moduleTransfer, $composerJsonArray);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ModuleDependencyTransfer $moduleDependencyTransfer
+     *
+     * @return string|null
+     */
+    protected function getMissingComposerName(ModuleDependencyTransfer $moduleDependencyTransfer): ?string
+    {
+        if ($moduleDependencyTransfer->getComposerName() !== null) {
+            return $moduleDependencyTransfer->getComposerName();
+        }
+
+        if ($moduleDependencyTransfer->getModuleName() !== null) {
+            return $this->getFacade()->findComposerNameByModuleName($moduleDependencyTransfer->getModuleName());
+        }
+
+        return null;
     }
 
     /**
@@ -121,8 +146,7 @@ class DependencyViolationFixConsole extends AbstractCoreModuleAwareConsole
     protected function getComposerJsonAsArray(ModuleTransfer $moduleTransfer): array
     {
         $composerJsonFile = $moduleTransfer->getPath() . '/composer.json';
-        $composerJsonContent = file_get_contents($composerJsonFile);
-        $composerJsonArray = json_decode($composerJsonContent, true);
+        $composerJsonArray = ComposerJson::fromFile($composerJsonFile);
 
         return $composerJsonArray;
     }
@@ -143,13 +167,7 @@ class DependencyViolationFixConsole extends AbstractCoreModuleAwareConsole
         $composerJsonArray = $this->orderEntriesInComposerJsonArray($composerJsonArray);
         $composerJsonArray = $this->removeEmptyEntriesInComposerJsonArray($composerJsonArray);
 
-        if (isset($composerJsonArray['scripts']) && empty($composerJsonArray['scripts'])) {
-            $composerJsonArray['scripts'] = new stdClass();
-        }
-        $modifiedComposerJson = json_encode($composerJsonArray, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
-        $modifiedComposerJson = preg_replace(static::REPLACE_4_WITH_2_SPACES, '$1', $modifiedComposerJson) . PHP_EOL;
-
-        file_put_contents($composerJsonFile, $modifiedComposerJson);
+        ComposerJson::toFile($composerJsonFile, $composerJsonArray);
     }
 
     /**

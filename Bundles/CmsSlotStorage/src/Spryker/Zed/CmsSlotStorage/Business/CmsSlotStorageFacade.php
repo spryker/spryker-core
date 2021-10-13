@@ -22,7 +22,7 @@ class CmsSlotStorageFacade extends AbstractFacade implements CmsSlotStorageFacad
      *
      * @api
      *
-     * @param int[] $cmsSlotIds
+     * @param array<int> $cmsSlotIds
      *
      * @return void
      */
@@ -37,9 +37,9 @@ class CmsSlotStorageFacade extends AbstractFacade implements CmsSlotStorageFacad
      * @api
      *
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     * @param int[] $cmsSlotStorageIds
+     * @param array<int> $cmsSlotStorageIds
      *
-     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     * @return array<\Generated\Shared\Transfer\SynchronizationDataTransfer>
      */
     public function getSynchronizationTransferCollection(
         FilterTransfer $filterTransfer,

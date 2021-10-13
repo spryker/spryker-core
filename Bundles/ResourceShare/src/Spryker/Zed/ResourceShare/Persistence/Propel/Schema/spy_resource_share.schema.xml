@@ -1,9 +1,5 @@
 <?xml version="1.0"?>
-<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-          xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd" name="zed"
-          namespace="Orm\Zed\ResourceShare\Persistence"
-          package="src.Orm.Zed.ResourceShare.Persistence"
->
+<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd" name="zed" namespace="Orm\Zed\ResourceShare\Persistence" package="src.Orm.Zed.ResourceShare.Persistence">
 
     <table name="spy_resource_share" idMethod="native">
         <column name="id_resource_share" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>

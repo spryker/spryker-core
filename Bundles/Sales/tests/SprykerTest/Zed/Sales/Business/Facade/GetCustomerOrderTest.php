@@ -27,7 +27,13 @@ use Spryker\Zed\SalesExtension\Dependency\Plugin\CustomerOrderAccessCheckPluginI
  */
 class GetCustomerOrderTest extends Test
 {
+    /**
+     * @var int
+     */
     protected const FAKE_CUSTOMER_ID = 6666;
+    /**
+     * @var string
+     */
     protected const DEFAULT_OMS_PROCESS_NAME = 'Test01';
 
     /**

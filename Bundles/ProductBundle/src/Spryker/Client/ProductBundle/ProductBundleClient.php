@@ -21,8 +21,8 @@ class ProductBundleClient extends AbstractClient implements ProductBundleClientI
      *
      * @api
      *
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $bundleItems
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $items
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $bundleItems
      *
      * @return array
      */
@@ -40,7 +40,7 @@ class ProductBundleClient extends AbstractClient implements ProductBundleClientI
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     public function getItemsWithBundlesItems(QuoteTransfer $quoteTransfer): array
     {
@@ -58,7 +58,7 @@ class ProductBundleClient extends AbstractClient implements ProductBundleClientI
      * @param string $sku
      * @param string|null $groupKey
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     public function findBundleItemsInQuote(QuoteTransfer $quoteTransfer, $sku, $groupKey): array
     {

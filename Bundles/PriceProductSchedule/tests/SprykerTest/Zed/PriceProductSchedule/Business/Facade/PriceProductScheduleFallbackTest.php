@@ -32,7 +32,13 @@ use Spryker\Zed\PriceProductSchedule\PriceProductScheduleConfig;
  */
 class PriceProductScheduleFallbackTest extends Unit
 {
+    /**
+     * @var int
+     */
     public const DEFAULT_PRICE_TYPE_ID = 1;
+    /**
+     * @var int
+     */
     public const PRICE_TYPE_ID = 2;
     public const PRICE_TYPE_NAME_ORIGINAL = PriceProductScheduleConfig::PRICE_TYPE_ORIGINAL;
 
@@ -149,6 +155,96 @@ class PriceProductScheduleFallbackTest extends Unit
         );
         $this->assertEquals(
             $fallbackPriceProductTransfer->getMoneyValue()->getGrossAmount(),
+            $actualPriceProductTransfer->getMoneyValue()->getGrossAmount(),
+            'Gross product price should have been reverted after scheduled price is over.'
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testProductPriceShouldBeSwitchedToTheSecondScheduledPrice(): void
+    {
+        // Arrange
+        $productConcreteTransfer = $this->tester->haveProduct();
+        $defaultPriceTypeTransfer = $this->tester->havePriceType();
+        $storeTransfer = $this->storeFacade->getCurrentStore();
+
+        $currencyId = $this->tester->haveCurrency([CurrencyTransfer::CODE => 'tes']);
+        $currencyTransfer = $this->currencyFacade->getByIdCurrency($currencyId);
+
+        $this->tester->havePriceProduct([
+            PriceProductTransfer::SKU_PRODUCT_ABSTRACT => $productConcreteTransfer->getAbstractSku(),
+            PriceProductTransfer::PRICE_TYPE => $defaultPriceTypeTransfer,
+            PriceProductTransfer::MONEY_VALUE => [
+                MoneyValueTransfer::NET_AMOUNT => 100,
+                MoneyValueTransfer::GROSS_AMOUNT => 100,
+                MoneyValueTransfer::CURRENCY => $currencyTransfer,
+            ],
+        ]);
+
+        $priceProductScheduleTransferOne = $this->tester->havePriceProductSchedule([
+            PriceProductScheduleTransfer::ACTIVE_FROM => (new DateTime('-4 days')),
+            PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime('+1 hour')),
+            PriceProductScheduleTransfer::IS_CURRENT => false,
+            PriceProductScheduleTransfer::PRICE_PRODUCT => [
+                PriceProductTransfer::ID_PRODUCT => $productConcreteTransfer->getIdProductConcrete(),
+                PriceProductTransfer::PRICE_TYPE => [
+                    PriceTypeTransfer::NAME => $defaultPriceTypeTransfer->getName(),
+                    PriceTypeTransfer::ID_PRICE_TYPE => $defaultPriceTypeTransfer->getIdPriceType(),
+                ],
+                PriceProductTransfer::MONEY_VALUE => [
+                    MoneyValueTransfer::FK_STORE => $storeTransfer->getIdStore(),
+                    MoneyValueTransfer::FK_CURRENCY => $currencyId,
+                    MoneyValueTransfer::CURRENCY => $currencyTransfer,
+                    MoneyValueTransfer::NET_AMOUNT => 1000,
+                    MoneyValueTransfer::GROSS_AMOUNT => 1000,
+                ],
+            ],
+        ]);
+
+        $this->tester->havePriceProductSchedule([
+            PriceProductScheduleTransfer::ACTIVE_FROM => (new DateTime('-4 days')),
+            PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime('+5 hour')),
+            PriceProductScheduleTransfer::IS_CURRENT => false,
+            PriceProductScheduleTransfer::PRICE_PRODUCT => [
+                PriceProductTransfer::ID_PRODUCT => $productConcreteTransfer->getIdProductConcrete(),
+                PriceProductTransfer::PRICE_TYPE => [
+                    PriceTypeTransfer::NAME => $defaultPriceTypeTransfer->getName(),
+                    PriceTypeTransfer::ID_PRICE_TYPE => $defaultPriceTypeTransfer->getIdPriceType(),
+                ],
+                PriceProductTransfer::MONEY_VALUE => [
+                    MoneyValueTransfer::FK_STORE => $storeTransfer->getIdStore(),
+                    MoneyValueTransfer::FK_CURRENCY => $currencyId,
+                    MoneyValueTransfer::CURRENCY => $currencyTransfer,
+                    MoneyValueTransfer::NET_AMOUNT => 200,
+                    MoneyValueTransfer::GROSS_AMOUNT => 200,
+                ],
+            ],
+        ]);
+
+        $priceProductScheduleFacade = $this->tester->getFacade();
+
+        // Act
+        $priceProductScheduleFacade->applyScheduledPrices();
+        $priceProductScheduleTransferOne->setActiveTo(new DateTime('-1 hour'));
+        $priceProductScheduleFacade->updateAndApplyPriceProductSchedule($priceProductScheduleTransferOne);
+
+        // Assert
+        $priceProductFilterTransfer = (new PriceProductFilterTransfer())
+            ->setSku($productConcreteTransfer->getSku())
+            ->setPriceTypeName($defaultPriceTypeTransfer->getName())
+            ->setCurrencyIsoCode($currencyTransfer->getCode());
+
+        $actualPriceProductTransfer = $this->priceProductFacade->findPriceProductFor($priceProductFilterTransfer);
+
+        $this->assertEquals(
+            200,
+            $actualPriceProductTransfer->getMoneyValue()->getNetAmount(),
+            'Net product price should have been reverted after scheduled price is over.'
+        );
+        $this->assertEquals(
+            200,
             $actualPriceProductTransfer->getMoneyValue()->getGrossAmount(),
             'Gross product price should have been reverted after scheduled price is over.'
         );

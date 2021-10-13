@@ -45,10 +45,7 @@ class ProductGroupCollectorFacade extends AbstractFacade implements ProductGroup
         TouchUpdaterInterface $touchUpdater,
         OutputInterface $output
     ) {
-        $collector = $this->getFactory()->createStorageProductGroupCollector();
-
-        $this->getFactory()->getCollectorFacade()->runCollector(
-            $collector,
+        $this->getFactory()->createStorageProductGroupCollectorRunner()->run(
             $baseQuery,
             $localeTransfer,
             $result,
@@ -83,10 +80,7 @@ class ProductGroupCollectorFacade extends AbstractFacade implements ProductGroup
         TouchUpdaterInterface $touchUpdater,
         OutputInterface $output
     ) {
-        $collector = $this->getFactory()->createStorageProductAbstractGroupsCollector();
-
-        $this->getFactory()->getCollectorFacade()->runCollector(
-            $collector,
+        $this->getFactory()->createStorageProductAbstractGroupsCollectorRunner()->run(
             $baseQuery,
             $localeTransfer,
             $result,

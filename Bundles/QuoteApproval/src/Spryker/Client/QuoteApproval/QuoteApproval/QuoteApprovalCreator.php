@@ -15,6 +15,9 @@ use Spryker\Client\QuoteApproval\Zed\QuoteApprovalStubInterface;
 
 class QuoteApprovalCreator implements QuoteApprovalCreatorInterface
 {
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_CART_CANT_BE_SENT_FOR_APPROVAL = 'quote_approval.create.cart_cant_be_sent_for_approval';
 
     /**

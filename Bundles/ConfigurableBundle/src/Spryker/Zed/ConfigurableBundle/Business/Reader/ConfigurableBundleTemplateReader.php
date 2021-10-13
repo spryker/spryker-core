@@ -21,6 +21,9 @@ use Spryker\Zed\ConfigurableBundle\Persistence\ConfigurableBundleRepositoryInter
 
 class ConfigurableBundleTemplateReader implements ConfigurableBundleTemplateReaderInterface
 {
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_CONFIGURABLE_BUNDLE_TEMPLATE_NOT_EXISTS = 'configurable_bundle.template.validation.error.not_exists';
 
     /**

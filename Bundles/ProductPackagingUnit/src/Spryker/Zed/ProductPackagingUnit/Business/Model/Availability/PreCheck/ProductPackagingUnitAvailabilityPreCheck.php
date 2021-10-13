@@ -76,7 +76,7 @@ abstract class ProductPackagingUnitAvailabilityPreCheck
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $items
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $items
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return bool
@@ -94,7 +94,7 @@ abstract class ProductPackagingUnitAvailabilityPreCheck
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      * @param string $leadProductSku
      *
      * @return \Spryker\DecimalObject\Decimal

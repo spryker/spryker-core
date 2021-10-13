@@ -16,6 +16,9 @@ use Spryker\Zed\Kernel\Container;
  */
 class DiscountPromotionsRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_DISCOUNT_PROMOTION = 'FACADE_DISCOUNT_PROMOTION';
 
     /**

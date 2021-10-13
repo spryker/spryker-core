@@ -16,9 +16,18 @@ use Spryker\Zed\ProductRelationGui\Dependency\Facade\ProductRelationGuiToProduct
 
 class ProductRelationTypeDataProvider
 {
+    /**
+     * @var string
+     */
     public const TYPE_RELATED_PRODUCTS = 'related-products';
+    /**
+     * @var string
+     */
     public const TYPE_UP_SELLING = 'up-selling';
 
+    /**
+     * @var string
+     */
     public const OPTION_PRODUCT_RELATION_KEY_DISABLED = 'option_product_relation_key_disabled';
 
     /**

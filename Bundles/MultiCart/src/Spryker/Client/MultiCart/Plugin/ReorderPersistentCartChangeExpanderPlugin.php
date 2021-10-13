@@ -17,6 +17,9 @@ use Spryker\Client\PersistentCartExtension\Dependency\Plugin\PersistentCartChang
  */
 class ReorderPersistentCartChangeExpanderPlugin extends AbstractPlugin implements PersistentCartChangeExpanderPluginInterface
 {
+    /**
+     * @var string
+     */
     public const PARAM_ORDER_REFERENCE = 'orderReference';
 
     /**

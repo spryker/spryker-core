@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\QuoteApproval\Persistence;
 
+use Generated\Shared\Transfer\QuoteApprovalRequestTransfer;
 use Generated\Shared\Transfer\QuoteApprovalTransfer;
+use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -19,28 +21,75 @@ class QuoteApprovalRepository extends AbstractRepository implements QuoteApprova
      * @module CompanyUser
      * @module Customer
      *
-     * @param int $idQuote
+     * @param array<int> $quoteIds
      *
-     * @return \Generated\Shared\Transfer\QuoteApprovalTransfer[]
+     * @return \Propel\Runtime\Collection\ObjectCollection
      */
-    public function getQuoteApprovalsByIdQuote(int $idQuote): array
+    protected function getQuoteApprovalsEntitiesByQuoteIds(array $quoteIds): ObjectCollection
     {
-        $quoteApprovalEntities = $this->getFactory()
+        return $this->getFactory()
             ->createQuoteApprovalPropelQuery()
             ->joinWithSpyCompanyUser()
             ->useSpyCompanyUserQuery()
                 ->joinWithCustomer()
             ->endUse()
-            ->filterByFkQuote($idQuote)
+            ->filterByFkQuote_In($quoteIds)
             ->orderByIdQuoteApproval()
             ->find();
+    }
+
+    /**
+     * @module CompanyUser
+     * @module Customer
+     *
+     * @param int $idQuote
+     *
+     * @return array<\Generated\Shared\Transfer\QuoteApprovalTransfer>
+     */
+    public function getQuoteApprovalsByIdQuote(int $idQuote): array
+    {
+        $quoteApprovalEntities = $this->getQuoteApprovalsEntitiesByQuoteIds([$idQuote]);
+
+        $quoteApprovalTransfers = [];
+
+        $mapper = $this->getFactory()
+            ->createQuoteApprovalMapper();
+
+        foreach ($quoteApprovalEntities as $quoteApprovalEntity) {
+            $quoteApprovalTransfers[] = $mapper
+                ->mapQuoteApprovalEntityToTransfer(
+                    $quoteApprovalEntity,
+                    new QuoteApprovalTransfer()
+                );
+        }
+
+        return $quoteApprovalTransfers;
+    }
+
+    /**
+     * @module CompanyUser
+     * @module Customer
+     *
+     * @param \Generated\Shared\Transfer\QuoteApprovalRequestTransfer $quoteApprovalsRequestTransfer
+     *
+     * @return array<\Generated\Shared\Transfer\QuoteApprovalTransfer>
+     */
+    public function getQuoteApprovalsIdexedByQuoteId(QuoteApprovalRequestTransfer $quoteApprovalsRequestTransfer): array
+    {
+        $quoteIds = $quoteApprovalsRequestTransfer->getQuoteIds();
+        $quoteApprovalEntities = $this->getQuoteApprovalsEntitiesByQuoteIds($quoteIds);
 
         $quoteApprovalTransfers = [];
 
         $mapper = $this->getFactory()
             ->createQuoteApprovalMapper();
         foreach ($quoteApprovalEntities as $quoteApprovalEntity) {
-            $quoteApprovalTransfers[] = $mapper
+            $quoteId = $quoteApprovalEntity->getFkQuote();
+            if ($quoteApprovalTransfers[$quoteId] === null) {
+                $quoteApprovalTransfers[$quoteId] = [];
+            }
+
+            $quoteApprovalTransfers[$quoteId][] = $mapper
                 ->mapQuoteApprovalEntityToTransfer(
                     $quoteApprovalEntity,
                     new QuoteApprovalTransfer()

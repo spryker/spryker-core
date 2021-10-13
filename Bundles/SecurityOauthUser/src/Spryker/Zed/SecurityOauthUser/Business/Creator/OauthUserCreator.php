@@ -16,6 +16,9 @@ use Spryker\Zed\SecurityOauthUser\SecurityOauthUserConfig;
 
 class OauthUserCreator implements OauthUserCreatorInterface
 {
+    /**
+     * @var int
+     */
     protected const OAUTH_USER_CREATION_DEFAULT_PASSWORD_LENGTH = 64;
 
     /**

@@ -23,6 +23,8 @@ class PriceProductGroupKeyBuilder implements PriceProductGroupKeyBuilderInterfac
     }
 
     /**
+     * @phpstan-return array<mixed>
+     *
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      *
      * @return array
@@ -31,26 +33,35 @@ class PriceProductGroupKeyBuilder implements PriceProductGroupKeyBuilderInterfac
     {
         $priceProductTransfer->requireMoneyValue()
             ->requirePriceDimension()
-            ->requirePriceTypeName()
-            ->getMoneyValue()
-            ->requireCurrency()
-            ->getCurrency()
-            ->requireCode();
+            ->requirePriceTypeName();
+
+        /** @var \Generated\Shared\Transfer\MoneyValueTransfer $moneyValueTransfer */
+        $moneyValueTransfer = $priceProductTransfer->requireMoneyValue()->getMoneyValue();
+        /** @var \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer */
+        $currencyTransfer = $moneyValueTransfer->requireCurrency()->getCurrency();
+        $currencyTransfer->requireCode();
 
         $identifierPaths = [
-            $priceProductTransfer->getMoneyValue()->getCurrency()->getCode(),
+            $currencyTransfer->getCode(),
             $priceProductTransfer->getPriceTypeName(),
-            $priceProductTransfer->getMoneyValue()->getFkStore(),
+            $moneyValueTransfer->getFkStore(),
         ];
 
         if ($priceProductTransfer->getPriceType()) {
-            $identifierPaths[] = $priceProductTransfer->getPriceType()->getPriceModeConfiguration();
+            /** @var \Generated\Shared\Transfer\PriceTypeTransfer $priceTypeTransfer */
+            $priceTypeTransfer = $priceProductTransfer->requirePriceType()->getPriceType();
+            $identifierPaths[] = $priceTypeTransfer->getPriceModeConfiguration();
         }
 
-        return array_merge($identifierPaths, $this->getPriceDimensionGroupKeys($priceProductTransfer->getPriceDimension()));
+        /** @var \Generated\Shared\Transfer\PriceProductDimensionTransfer $priceProductDimensionTransfer */
+        $priceProductDimensionTransfer = $priceProductTransfer->requirePriceDimension()->getPriceDimension();
+
+        return array_merge($identifierPaths, $this->getPriceDimensionGroupKeys($priceProductDimensionTransfer));
     }
 
     /**
+     * @phpstan-return array<mixed>
+     *
      * @param \Generated\Shared\Transfer\PriceProductDimensionTransfer $priceProductDimensionTransfer
      *
      * @return array
@@ -59,9 +70,7 @@ class PriceProductGroupKeyBuilder implements PriceProductGroupKeyBuilderInterfac
     {
         $priceDimensionKeys = $priceProductDimensionTransfer->toArray(false, true);
 
-        /**
-         * Since abstract and concrete product prices has different `idPriceProductDefault` it shouldn't be included in group key.
-         */
+        // Since abstract and concrete product prices has different `idPriceProductDefault` it shouldn't be included in group key.
         unset($priceDimensionKeys[PriceProductDimensionTransfer::ID_PRICE_PRODUCT_DEFAULT]);
 
         return array_values($priceDimensionKeys);

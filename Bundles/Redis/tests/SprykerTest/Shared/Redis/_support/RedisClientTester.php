@@ -34,9 +34,21 @@ class RedisClientTester extends Actor
 {
     use _generated\RedisClientTesterActions;
 
+    /**
+     * @var string
+     */
     public const DEFAULT_REDIS_SCHEME = 'redis';
+    /**
+     * @var string
+     */
     public const DEFAULT_REDIS_HOST = 'localhost';
+    /**
+     * @var int
+     */
     public const DEFAULT_REDIS_PORT = 6379;
+    /**
+     * @var int
+     */
     public const DEFAULT_REDIS_DATABASE = 1;
 
     /**

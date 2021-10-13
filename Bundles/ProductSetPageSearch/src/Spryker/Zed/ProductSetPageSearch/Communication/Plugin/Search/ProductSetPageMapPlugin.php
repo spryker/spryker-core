@@ -24,6 +24,9 @@ use Spryker\Zed\Search\Dependency\Plugin\NamedPageMapInterface;
  */
 class ProductSetPageMapPlugin extends AbstractPlugin implements NamedPageMapInterface
 {
+    /**
+     * @var array
+     */
     public const FILTERED_KEYS = [
         'locale',
         'store',

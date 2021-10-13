@@ -14,12 +14,12 @@ use Generated\Shared\Transfer\RestItemsAttributesTransfer;
 class CartItemMapper implements CartItemMapperInterface
 {
     /**
-     * @var \Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\RestCartItemsAttributesMapperPluginInterface[]
+     * @var array<\Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\RestCartItemsAttributesMapperPluginInterface>
      */
     protected $restCartItemsAttributesMapperPlugins;
 
     /**
-     * @param \Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\RestCartItemsAttributesMapperPluginInterface[] $restCartItemsAttributesMapperPlugins
+     * @param array<\Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\RestCartItemsAttributesMapperPluginInterface> $restCartItemsAttributesMapperPlugins
      */
     public function __construct(array $restCartItemsAttributesMapperPlugins)
     {

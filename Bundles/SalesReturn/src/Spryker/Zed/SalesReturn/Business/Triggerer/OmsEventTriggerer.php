@@ -51,7 +51,7 @@ class OmsEventTriggerer implements OmsEventTriggererInterface
     /**
      * @param \Generated\Shared\Transfer\ReturnTransfer $returnTransfer
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function extractSalesOrderItemIds(ReturnTransfer $returnTransfer): array
     {

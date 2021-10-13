@@ -25,14 +25,23 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class AddController extends AbstractController
 {
+    /**
+     * @var string
+     */
     public const PARAM_ID_PRODUCT_ABSTRACT = 'id-product-abstract';
+    /**
+     * @var string
+     */
     protected const PARAM_ID_PRODUCT = 'id-product';
+    /**
+     * @var string
+     */
     protected const PARAM_PRICE_DIMENSION = 'price-dimension';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function indexAction(Request $request)
     {
@@ -141,26 +150,11 @@ class AddController extends AbstractController
     }
 
     /**
-     * @param array $attributeCollection
-     *
-     * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer[]
-     */
-    protected function normalizeAttributeArray(array $attributeCollection)
-    {
-        $attributeArray = [];
-        foreach ($attributeCollection as $attributeTransfer) {
-            $attributeArray[$attributeTransfer->getKey()] = $attributeTransfer;
-        }
-
-        return $attributeArray;
-    }
-
-    /**
      * @param string $type
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      * @param \Symfony\Component\Form\FormInterface $form
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
      */
     protected function createProductConcreteCollection(
         $type,
@@ -173,11 +167,13 @@ class AddController extends AbstractController
             return [$productConcreteTransfer];
         }
 
-        $attributeCollection = $this->normalizeAttributeArray($this->getFactory()->getProductAttributeCollection());
+        $productSuperAttributes = $this->getFactory()
+            ->createProductAttributeReader()
+            ->getProductSuperAttributesIndexedByAttributeKey();
 
         $attributeValues = $this->getFactory()
             ->createProductFormTransferGenerator()
-            ->generateVariantAttributeArrayFromData($form->getData(), $attributeCollection);
+            ->generateVariantAttributeArrayFromData($form->getData(), $productSuperAttributes);
 
         $productAbstractTransfer = (new ProductAbstractTransfer())
             ->setIdProductAbstract($productAbstractTransfer->getIdProductAbstract())

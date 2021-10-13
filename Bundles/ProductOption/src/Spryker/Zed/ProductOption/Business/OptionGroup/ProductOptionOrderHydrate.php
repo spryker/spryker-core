@@ -147,7 +147,7 @@ class ProductOptionOrderHydrate implements ProductOptionOrderHydrateInterface
     /**
      * @param int $idSalesOrder
      *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Sales\Persistence\SpySalesOrderItem>
      */
     protected function getSalesOrderItemsByIdSalesOrder($idSalesOrder)
     {

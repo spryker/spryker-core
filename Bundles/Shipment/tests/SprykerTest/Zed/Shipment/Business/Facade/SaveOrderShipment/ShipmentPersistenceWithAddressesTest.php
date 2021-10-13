@@ -73,7 +73,7 @@ class ShipmentPersistenceWithAddressesTest extends Test
 
         // Assert
         $salesShipmentEntities = $salesShipmentQuery->find();
-        $idSalesAddressList = $idSalesAddressQuery->find()->getData();
+        $idSalesAddressList = array_map('intval', $idSalesAddressQuery->find()->getData());
 
         $this->assertCount($countOfNewShippingAddresses, $idSalesAddressList, 'Saved order shipping addresses count mismatch!');
         foreach ($salesShipmentEntities as $i => $salesShipmentEntity) {

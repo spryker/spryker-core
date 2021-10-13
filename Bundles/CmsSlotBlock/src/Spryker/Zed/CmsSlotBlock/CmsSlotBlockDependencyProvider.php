@@ -18,8 +18,17 @@ use Spryker\Zed\Kernel\Container;
  */
 class CmsSlotBlockDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_EVENT = 'FACADE_EVENT';
+    /**
+     * @var string
+     */
     public const FACADE_CMS_SLOT = 'FACADE_CMS_SLOT';
+    /**
+     * @var string
+     */
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
     /**

@@ -17,10 +17,10 @@ use Propel\Runtime\Collection\ObjectCollection;
 class MerchantOpeningHoursMapper implements MerchantOpeningHoursMapperInterface
 {
     /**
-     * @param \Orm\Zed\MerchantOpeningHours\Persistence\SpyMerchantOpeningHoursWeekdaySchedule[]|\Propel\Runtime\Collection\ObjectCollection $weekdayScheduleEntities
-     * @param \ArrayObject|\Generated\Shared\Transfer\WeekdayScheduleTransfer[] $weekdayScheduleTransfers
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\MerchantOpeningHours\Persistence\SpyMerchantOpeningHoursWeekdaySchedule> $weekdayScheduleEntities
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\WeekdayScheduleTransfer> $weekdayScheduleTransfers
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\WeekdayScheduleTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\WeekdayScheduleTransfer>
      */
     public function mapMerchantOpeningHoursWeekdayScheduleEntitiesToWeekdayScheduleTransfers(
         ObjectCollection $weekdayScheduleEntities,
@@ -51,10 +51,10 @@ class MerchantOpeningHoursMapper implements MerchantOpeningHoursMapperInterface
     }
 
     /**
-     * @param \Orm\Zed\MerchantOpeningHours\Persistence\SpyMerchantOpeningHoursDateSchedule[]|\Propel\Runtime\Collection\ObjectCollection $dateScheduleEntities
-     * @param \ArrayObject|\Generated\Shared\Transfer\DateScheduleTransfer[] $dateScheduleTransfers
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\MerchantOpeningHours\Persistence\SpyMerchantOpeningHoursDateSchedule> $dateScheduleEntities
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\DateScheduleTransfer> $dateScheduleTransfers
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\DateScheduleTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\DateScheduleTransfer>
      */
     public function mapMerchantOpeningHoursDateScheduleEntitiesToDateScheduleTransfers(
         ObjectCollection $dateScheduleEntities,

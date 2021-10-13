@@ -89,7 +89,7 @@ class ProductReviewSearchWriter implements ProductReviewSearchWriterInterface
     }
 
     /**
-     * @param \Orm\Zed\ProductReviewSearch\Persistence\SpyProductReviewSearch[] $productReviewSearchEntities
+     * @param array<\Orm\Zed\ProductReviewSearch\Persistence\SpyProductReviewSearch> $productReviewSearchEntities
      *
      * @return void
      */
@@ -101,7 +101,7 @@ class ProductReviewSearchWriter implements ProductReviewSearchWriterInterface
     }
 
     /**
-     * @param \Orm\Zed\ProductReview\Persistence\SpyProductReview[] $productReviewEntities
+     * @param array<\Orm\Zed\ProductReview\Persistence\SpyProductReview> $productReviewEntities
      * @param array $spyProductReviewSearchEntities
      *
      * @return void

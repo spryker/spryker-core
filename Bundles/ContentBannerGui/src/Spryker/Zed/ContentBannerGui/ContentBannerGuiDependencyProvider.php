@@ -17,7 +17,13 @@ use Spryker\Zed\Kernel\Container;
  */
 class ContentBannerGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_CONTENT_BANNER = 'FACADE_CONTENT_BANNER';
+    /**
+     * @var string
+     */
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
     /**

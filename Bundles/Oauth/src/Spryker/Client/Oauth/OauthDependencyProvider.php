@@ -16,8 +16,17 @@ use Spryker\Client\Oauth\Dependency\Client\OauthToZedRequestClientBridge;
  */
 class OauthDependencyProvider extends AbstractDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
+    /**
+     * @var string
+     */
     public const PLUGINS_KEY_LOADER = 'PLUGINS_KEY_LOADER';
+    /**
+     * @var string
+     */
     public const PLUGINS_AUTHORIZATION_VALIDATOR = 'PLUGINS_AUTHORIZATION_VALIDATOR';
 
     /**
@@ -65,7 +74,7 @@ class OauthDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @return \Spryker\Client\OauthExtension\Dependency\Plugin\KeyLoaderPluginInterface[]
+     * @return array<\Spryker\Client\OauthExtension\Dependency\Plugin\KeyLoaderPluginInterface>
      */
     protected function getKeyLoaderPlugins(): array
     {
@@ -87,7 +96,7 @@ class OauthDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @return \Spryker\Client\OauthExtension\Dependency\Plugin\AuthorizationValidatorPluginInterface[]
+     * @return array<\Spryker\Client\OauthExtension\Dependency\Plugin\AuthorizationValidatorPluginInterface>
      */
     protected function getAuthorizationValidatorPlugins(): array
     {

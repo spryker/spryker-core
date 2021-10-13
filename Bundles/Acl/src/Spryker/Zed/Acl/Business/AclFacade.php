@@ -19,6 +19,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 /**
  * @method \Spryker\Zed\Acl\Business\AclBusinessFactory getFactory()
  * @method \Spryker\Zed\Acl\Persistence\AclRepositoryInterface getRepository()
+ * @method \Spryker\Zed\Acl\Persistence\AclEntityManagerInterface getEntityManager()
  */
 class AclFacade extends AbstractFacade implements AclFacadeInterface
 {
@@ -39,6 +40,8 @@ class AclFacade extends AbstractFacade implements AclFacadeInterface
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\Acl\Business\AclFacade::createGroup()} instead.
+     *
      * @param string $groupName
      * @param \Generated\Shared\Transfer\RolesTransfer $rolesTransfer
      *
@@ -53,6 +56,24 @@ class AclFacade extends AbstractFacade implements AclFacadeInterface
         if (!empty($rolesTransfer)) {
             $this->addRolesToGroup($groupTransfer, $rolesTransfer);
         }
+
+        return $groupTransfer;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\GroupTransfer $groupTransfer
+     * @param \Generated\Shared\Transfer\RolesTransfer $rolesTransfer
+     *
+     * @return \Generated\Shared\Transfer\GroupTransfer
+     */
+    public function createGroup(GroupTransfer $groupTransfer, RolesTransfer $rolesTransfer): GroupTransfer
+    {
+        $groupTransfer = $this->getFactory()->createGroupWriter()->createGroup($groupTransfer);
+        $this->addRolesToGroup($groupTransfer, $rolesTransfer);
 
         return $groupTransfer;
     }
@@ -233,6 +254,8 @@ class AclFacade extends AbstractFacade implements AclFacadeInterface
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\Acl\Business\AclFacade::createRole()} instead.
+     *
      * @param string $name
      *
      * @return \Generated\Shared\Transfer\RoleTransfer
@@ -240,6 +263,20 @@ class AclFacade extends AbstractFacade implements AclFacadeInterface
     public function addRole($name)
     {
         return $this->getFactory()->createRoleModel()->addRole($name);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\RoleTransfer $roleTransfer
+     *
+     * @return \Generated\Shared\Transfer\RoleTransfer
+     */
+    public function createRole(RoleTransfer $roleTransfer): RoleTransfer
+    {
+        return $this->getFactory()->createRoleWriter()->createRole($roleTransfer);
     }
 
     /**

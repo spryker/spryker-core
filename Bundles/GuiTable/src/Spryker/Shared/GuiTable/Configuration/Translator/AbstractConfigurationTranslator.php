@@ -117,7 +117,7 @@ abstract class AbstractConfigurationTranslator implements ConfigurationTranslato
             /** @var \Generated\Shared\Transfer\SelectGuiTableFilterTypeOptionsTransfer $selectTypeOptions */
             $selectTypeOptions = $guiTableFilterTransfer->getTypeOptions();
             foreach ($selectTypeOptions->getValues() as $selectOption) {
-                $translatedTitle = $this->translate($selectOption->getTitle());
+                $translatedTitle = $this->translate($selectOption->getTitleOrFail());
                 $selectOption->setTitle($translatedTitle);
             }
         }
@@ -254,7 +254,7 @@ abstract class AbstractConfigurationTranslator implements ConfigurationTranslato
         }
 
         $guiTableTitleConfigurationTransfer->setTitle($this->translate(
-            $guiTableTitleConfigurationTransfer->getTitle()
+            $guiTableTitleConfigurationTransfer->getTitleOrFail()
         ));
         $guiTableConfigurationTransfer->setTitle($guiTableTitleConfigurationTransfer);
 

@@ -22,7 +22,7 @@ interface AttributeLoaderInterface
     public function getCombinedAbstractAttributeKeys(ProductAbstractTransfer $productAbstractTransfer, ?LocaleTransfer $localeTransfer = null);
 
     /**
-     * @param int[] $productIds
+     * @param array<int> $productIds
      * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
      *
      * @return array

@@ -23,11 +23,29 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class AvailabilityAbstractTable extends AbstractTable
 {
+    /**
+     * @var string
+     */
     public const TABLE_COL_ACTION = 'Actions';
+    /**
+     * @var string
+     */
     public const URL_PARAM_ID_PRODUCT_ABSTRACT = 'id-product';
+    /**
+     * @var string
+     */
     public const AVAILABLE = 'Available';
+    /**
+     * @var string
+     */
     public const NOT_AVAILABLE = 'Not available';
+    /**
+     * @var string
+     */
     public const IS_BUNDLE_PRODUCT = 'Is bundle product';
+    /**
+     * @var string
+     */
     public const URL_PARAM_ID_STORE = 'id-store';
 
     /**
@@ -142,7 +160,7 @@ class AvailabilityAbstractTable extends AbstractTable
 
         $this->expandPropelQuery();
 
-        /** @var \Orm\Zed\Product\Persistence\Base\SpyProductAbstract[]|\Propel\Runtime\Collection\ObjectCollection $productAbstractEntities */
+        /** @var \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Product\Persistence\Base\SpyProductAbstract> $productAbstractEntities */
         $productAbstractEntities = $this->runQuery($this->queryProductAbstractAvailability, $config, true);
 
         $productAbstractIds = $this->getProductAbstractIds($productAbstractEntities);
@@ -164,8 +182,8 @@ class AvailabilityAbstractTable extends AbstractTable
                 SpyAvailabilityAbstractTableMap::COL_QUANTITY => $this->getAvailabilityLabel($productAbstractEntity, $isNeverOutOfStock),
                 AvailabilityHelperInterface::STOCK_QUANTITY => $this->getStockQuantity($productAbstractEntity)->trim(),
                 AvailabilityHelperInterface::RESERVATION_QUANTITY => ($haveBundledProducts) ? 'N/A' : $this->calculateReservation($productAbstractEntity)->trim(),
-                static::IS_BUNDLE_PRODUCT => $this->generateLabel($haveBundledProducts ? 'Yes' : 'No', null),
-                AvailabilityHelperInterface::CONCRETE_NEVER_OUT_OF_STOCK_SET => $this->generateLabel($isNeverOutOfStock ? 'Yes' : 'No', null),
+                static::IS_BUNDLE_PRODUCT => $this->generateLabel($haveBundledProducts ? 'Yes' : 'No', $haveBundledProducts ? 'label-primary' : ''),
+                AvailabilityHelperInterface::CONCRETE_NEVER_OUT_OF_STOCK_SET => $this->generateLabel($isNeverOutOfStock ? 'Yes' : 'No', $isNeverOutOfStock ? 'label-primary' : ''),
                 static::TABLE_COL_ACTION => $this->createViewButton($productAbstractEntity),
             ];
         }
@@ -174,9 +192,9 @@ class AvailabilityAbstractTable extends AbstractTable
     }
 
     /**
-     * @param \Orm\Zed\Product\Persistence\Base\SpyProductAbstract[]|\Propel\Runtime\Collection\ObjectCollection $productAbstractEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Product\Persistence\Base\SpyProductAbstract> $productAbstractEntities
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getProductAbstractIds(ObjectCollection $productAbstractEntities): array
     {
@@ -195,9 +213,13 @@ class AvailabilityAbstractTable extends AbstractTable
      */
     protected function isNeverOutOfStock(SpyProductAbstract $productAbstractEntity): bool
     {
-        return $this->availabilityHelper->isNeverOutOfStock(
-            $productAbstractEntity->getVirtualColumn(AvailabilityHelperInterface::CONCRETE_NEVER_OUT_OF_STOCK_SET) ?? ''
-        );
+        $neverOutOfStockSet = '';
+
+        if ($productAbstractEntity->hasVirtualColumn(AvailabilityHelperInterface::CONCRETE_NEVER_OUT_OF_STOCK_SET)) {
+            $neverOutOfStockSet = $productAbstractEntity->getVirtualColumn(AvailabilityHelperInterface::CONCRETE_NEVER_OUT_OF_STOCK_SET);
+        }
+
+        return $this->availabilityHelper->isNeverOutOfStock($neverOutOfStockSet);
     }
 
     /**
@@ -283,8 +305,14 @@ class AvailabilityAbstractTable extends AbstractTable
      */
     protected function calculateReservation(SpyProductAbstract $productAbstractEntity): Decimal
     {
+        $reservationQuantity = '';
+
+        if ($productAbstractEntity->hasVirtualColumn(AvailabilityHelperInterface::RESERVATION_QUANTITY)) {
+            $reservationQuantity = $productAbstractEntity->getVirtualColumn(AvailabilityHelperInterface::RESERVATION_QUANTITY) ?? '';
+        }
+
         return $this->availabilityHelper->calculateReservation(
-            $productAbstractEntity->getVirtualColumn(AvailabilityHelperInterface::RESERVATION_QUANTITY) ?? '',
+            $reservationQuantity,
             $this->storeFacade->getStoreById($this->idStore)
         );
     }

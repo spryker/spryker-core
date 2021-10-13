@@ -15,6 +15,9 @@ use Spryker\Zed\CompanyBusinessUnitGui\Dependency\Facade\CompanyBusinessUnitGuiT
 
 class CompanyBusinessUnitFormDataProvider
 {
+    /**
+     * @var string
+     */
     protected const OPTION_ATTRIBUTE_DATA = 'data-id_company';
 
     /**
@@ -52,7 +55,7 @@ class CompanyBusinessUnitFormDataProvider
     /**
      * @param int|null $idCompanyBusinessUnit
      *
-     * @return array
+     * @return array<mixed>
      */
     public function getOptions(?int $idCompanyBusinessUnit = null): array
     {
@@ -83,14 +86,19 @@ class CompanyBusinessUnitFormDataProvider
     }
 
     /**
-     * @return int[] [company name => company id]
+     * @return array<int> [company name => company id]
      */
     protected function prepareCompanyChoices(): array
     {
         $result = [];
 
-        foreach ($this->companyFacade->getCompanies()->getCompanies() as $company) {
-            $result[$company->getName()] = $company->getIdCompany();
+        foreach ($this->companyFacade->getCompanies()->getCompanies() as $companyTransfer) {
+            $key = sprintf(
+                '%s (ID: %d)',
+                $companyTransfer->getName(),
+                $companyTransfer->getIdCompany()
+            );
+            $result[$key] = $companyTransfer->getIdCompany();
         }
 
         return $result;
@@ -102,7 +110,7 @@ class CompanyBusinessUnitFormDataProvider
      *
      * @param int|null $idCompanyBusinessUnit
      *
-     * @return array [[unitKey => idUnit], [unitKey => ['data-id_company' => idCompany]]]
+     * @return array<mixed> [[unitKey => idUnit], [unitKey => ['data-id_company' => idCompany]]]
      *                Where unitKey: "<idUnit> - <unitName>"
      */
     protected function prepareUnitParentAttributeMap(?int $idCompanyBusinessUnit = null): array

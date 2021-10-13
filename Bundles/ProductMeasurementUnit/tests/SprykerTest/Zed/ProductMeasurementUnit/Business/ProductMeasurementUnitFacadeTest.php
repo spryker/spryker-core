@@ -29,7 +29,13 @@ use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
  */
 class ProductMeasurementUnitFacadeTest extends Unit
 {
+    /**
+     * @var int
+     */
     protected const PRODUCT_MEASUREMENT_SALES_UNIT_ID = 777;
+    /**
+     * @var int
+     */
     protected const NON_EXISTING_PRODUCT_MEASUREMENT_SALES_UNIT_ID = 9999;
 
     /**
@@ -90,7 +96,7 @@ class ProductMeasurementUnitFacadeTest extends Unit
         $actualResult = $this->productMeasurementUnitFacade->expandItemGroupKeyWithQuantitySalesUnit($itemTransfer);
 
         // Assert
-        $this->assertRegExp($expectedPregMatch, $actualResult);
+        $this->assertMatchesRegularExpression($expectedPregMatch, $actualResult);
     }
 
     /**

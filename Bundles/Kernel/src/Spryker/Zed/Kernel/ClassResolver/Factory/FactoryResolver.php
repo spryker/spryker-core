@@ -16,8 +16,14 @@ use Spryker\Zed\Kernel\ClassResolver\AbstractClassResolver;
  */
 class FactoryResolver extends AbstractClassResolver
 {
+    /**
+     * @var string
+     */
     public const CLASS_NAME_PATTERN = '\\%1$s\\Zed\\%2$s%4$s\\%3$s\\%2$s%3$sFactory';
 
+    /**
+     * @var string
+     */
     protected const RESOLVABLE_TYPE = 'ZedFactory';
 
     /**

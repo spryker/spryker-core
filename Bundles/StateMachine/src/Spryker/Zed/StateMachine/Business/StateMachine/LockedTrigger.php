@@ -61,7 +61,7 @@ class LockedTrigger implements TriggerInterface
 
     /**
      * @param string $eventName
-     * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItemTransfers
+     * @param array<\Generated\Shared\Transfer\StateMachineItemTransfer> $stateMachineItemTransfers
      *
      * @return int
      */
@@ -91,7 +91,7 @@ class LockedTrigger implements TriggerInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems
+     * @param array<\Generated\Shared\Transfer\StateMachineItemTransfer> $stateMachineItems
      *
      * @return string
      */

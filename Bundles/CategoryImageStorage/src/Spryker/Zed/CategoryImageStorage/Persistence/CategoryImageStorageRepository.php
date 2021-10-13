@@ -19,12 +19,15 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
  */
 class CategoryImageStorageRepository extends AbstractRepository implements CategoryImageStorageRepositoryInterface
 {
+    /**
+     * @var string
+     */
     public const FK_CATEGORY = 'fkCategory';
 
     /**
      * @param array $categoryImageSetIds
      *
-     * @return \Propel\Runtime\ActiveRecord\ActiveRecordInterface[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Propel\Runtime\Collection\ObjectCollection<\Propel\Runtime\ActiveRecord\ActiveRecordInterface>
      */
     public function getCategoryIdsByCategoryImageSetIds(array $categoryImageSetIds)
     {
@@ -38,7 +41,7 @@ class CategoryImageStorageRepository extends AbstractRepository implements Categ
     /**
      * @param array $categoryIds
      *
-     * @return \Generated\Shared\Transfer\SpyCategoryImageSetEntityTransfer[]
+     * @return array<\Generated\Shared\Transfer\SpyCategoryImageSetEntityTransfer>
      */
     public function getCategoryImageSetsByFkCategoryIn(array $categoryIds): array
     {
@@ -59,7 +62,7 @@ class CategoryImageStorageRepository extends AbstractRepository implements Categ
     /**
      * @param array $categoryIds
      *
-     * @return \Generated\Shared\Transfer\SpyCategoryImageStorageEntityTransfer[]
+     * @return array<\Generated\Shared\Transfer\SpyCategoryImageStorageEntityTransfer>
      */
     public function getCategoryImageStorageByFkCategoryIn(array $categoryIds): array
     {
@@ -73,7 +76,7 @@ class CategoryImageStorageRepository extends AbstractRepository implements Categ
     /**
      * @param array $categoryImageIds
      *
-     * @return \Propel\Runtime\ActiveRecord\ActiveRecordInterface[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Propel\Runtime\Collection\ObjectCollection<\Propel\Runtime\ActiveRecord\ActiveRecordInterface>
      */
     public function getCategoryIdsByCategoryImageIds(array $categoryImageIds)
     {
@@ -89,9 +92,9 @@ class CategoryImageStorageRepository extends AbstractRepository implements Categ
 
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     * @param int[] $categoryIds
+     * @param array<int> $categoryIds
      *
-     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     * @return array<\Generated\Shared\Transfer\SynchronizationDataTransfer>
      */
     public function getSynchronizationDataTransfersByFilterAndCategoryIds(FilterTransfer $filterTransfer, array $categoryIds = []): array
     {

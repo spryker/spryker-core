@@ -14,6 +14,15 @@ use Twig\Environment;
 
 class RoutingTwigPlugin implements TwigPluginInterface
 {
+    /**
+     * @see \Spryker\Shared\Application\Application::SERVICE_ROUTER
+     * @var string
+     */
+    protected const SERVICE_ROUTERS = 'routers';
+
+    /**
+     * @var string
+     */
     protected const SERVICE_URL_GENERATOR = 'url_generator';
 
     /**
@@ -28,11 +37,21 @@ class RoutingTwigPlugin implements TwigPluginInterface
      */
     public function extend(Environment $twig, ContainerInterface $container): Environment
     {
-        if (!class_exists(RoutingExtension::class) || $container->has(static::SERVICE_URL_GENERATOR) === false) {
+        if (!class_exists(RoutingExtension::class)) {
             return $twig;
         }
 
-        $twig->addExtension(new RoutingExtension($container->get(static::SERVICE_URL_GENERATOR)));
+        if ($container->has(static::SERVICE_ROUTERS)) {
+            $twig->addExtension(new RoutingExtension($container->get(static::SERVICE_ROUTERS)));
+
+            return $twig;
+        }
+
+        if ($container->has(static::SERVICE_URL_GENERATOR)) {
+            $twig->addExtension(new RoutingExtension($container->get(static::SERVICE_URL_GENERATOR)));
+
+            return $twig;
+        }
 
         return $twig;
     }

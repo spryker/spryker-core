@@ -37,7 +37,7 @@ class StoresCurrencyReader implements StoresCurrencyReaderInterface
     /**
      * @param array $isoCodes
      *
-     * @return \Generated\Shared\Transfer\StoreCurrencyRestAttributesTransfer[]
+     * @return array<\Generated\Shared\Transfer\StoreCurrencyRestAttributesTransfer>
      */
     public function getStoresCurrencyAttributes(array $isoCodes): array
     {

@@ -27,8 +27,17 @@ use Spryker\Client\Queue\QueueDependencyProvider;
  */
 class GetFilteredProductConfigurationStorageDataTransfersTest extends Unit
 {
+    /**
+     * @var int
+     */
     protected const DEFAULT_QUERY_OFFSET = 0;
+    /**
+     * @var int
+     */
     protected const DEFAULT_QUERY_LIMIT = 100;
+    /**
+     * @var int
+     */
     protected const FAKE_PRODUCT_CONFIGURATION_STORAGE_ID = 66666;
 
     /**

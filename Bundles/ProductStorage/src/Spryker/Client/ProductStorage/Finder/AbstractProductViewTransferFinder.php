@@ -14,6 +14,9 @@ use Spryker\Client\ProductStorage\ProductStorageConfig;
 
 abstract class AbstractProductViewTransferFinder implements ProductViewTransferFinderInterface
 {
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_PRODUCT_VIEW_TRANSFER_NOT_FOUND_IN_CACHE = 'There is no `ProductViewTransfer` in the cache with provided product id and local name.';
 
     /**
@@ -64,11 +67,11 @@ abstract class AbstractProductViewTransferFinder implements ProductViewTransferF
     }
 
     /**
-     * @param int[] $productIds
+     * @param array<int> $productIds
      * @param string $localeName
      * @param array $selectedAttributes
      *
-     * @return \Generated\Shared\Transfer\ProductViewTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductViewTransfer>
      */
     public function getProductViewTransfers(array $productIds, string $localeName, array $selectedAttributes = []): array
     {
@@ -90,7 +93,7 @@ abstract class AbstractProductViewTransferFinder implements ProductViewTransferF
      * @param string $localeName
      * @param array $selectedAttributes
      *
-     * @return \Generated\Shared\Transfer\ProductViewTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductViewTransfer>
      */
     protected function mapProductData(array $productStorageDataCollection, string $localeName, array $selectedAttributes = []): array
     {
@@ -161,11 +164,11 @@ abstract class AbstractProductViewTransferFinder implements ProductViewTransferF
     }
 
     /**
-     * @param int[] $productIds
+     * @param array<int> $productIds
      * @param string $localeName
      * @param array $selectedAttributes
      *
-     * @return \Generated\Shared\Transfer\ProductViewTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductViewTransfer>
      */
     protected function getProductViewTransfersFromCache(array $productIds, string $localeName, array $selectedAttributes = []): array
     {
@@ -226,7 +229,7 @@ abstract class AbstractProductViewTransferFinder implements ProductViewTransferF
     abstract protected function findProductStorageData(int $idProduct, string $localeName): ?array;
 
     /**
-     * @param int[] $productIds
+     * @param array<int> $productIds
      * @param string $localeName
      *
      * @return array

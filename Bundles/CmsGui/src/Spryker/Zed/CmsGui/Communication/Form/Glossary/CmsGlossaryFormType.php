@@ -21,10 +21,19 @@ class CmsGlossaryFormType extends AbstractType
 {
     use ArrayObjectTransformerTrait;
 
+    /**
+     * @var string
+     */
     public const FIELD_GLOSSARY_ATTRIBUTES = 'glossaryAttributes';
 
+    /**
+     * @var string
+     */
     public const OPTION_DATA_CLASS_ATTRIBUTES = 'data_class_glossary_attributes';
 
+    /**
+     * @var string
+     */
     public const OPTION_GLOSSARY_KEY_SEARCH_OPTIONS = 'glossaryKeySearchOptions';
 
     /**

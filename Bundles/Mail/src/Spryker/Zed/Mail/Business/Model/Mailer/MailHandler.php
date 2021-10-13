@@ -105,7 +105,7 @@ class MailHandler implements MailHandlerInterface
     /**
      * @param \Generated\Shared\Transfer\MailTransfer $mailTransfer
      *
-     * @return \Spryker\Zed\Mail\Dependency\Plugin\MailProviderPluginInterface[]
+     * @return array<\Spryker\Zed\Mail\Dependency\Plugin\MailProviderPluginInterface>
      */
     protected function getMailProviderByMailType(MailTransfer $mailTransfer)
     {

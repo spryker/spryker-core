@@ -25,6 +25,7 @@ use Spryker\Zed\MerchantSalesOrder\Business\Reader\MerchantSalesOrderReaderInter
 use Spryker\Zed\MerchantSalesOrder\Business\Writer\MerchantOrderItemWriter;
 use Spryker\Zed\MerchantSalesOrder\Business\Writer\MerchantOrderItemWriterInterface;
 use Spryker\Zed\MerchantSalesOrder\Dependency\Facade\MerchantSalesOrderToCalculationFacadeInterface;
+use Spryker\Zed\MerchantSalesOrder\Dependency\Facade\MerchantSalesOrderToMerchantFacadeInterface;
 use Spryker\Zed\MerchantSalesOrder\Dependency\Facade\MerchantSalesOrderToSalesFacadeInterface;
 use Spryker\Zed\MerchantSalesOrder\MerchantSalesOrderDependencyProvider;
 
@@ -69,7 +70,7 @@ class MerchantSalesOrderBusinessFactory extends AbstractBusinessFactory
      */
     public function createOrderExpander(): OrderExpanderInterface
     {
-        return new OrderExpander($this->getRepository());
+        return new OrderExpander($this->createMerchantSalesOrderReader());
     }
 
     /**
@@ -105,7 +106,8 @@ class MerchantSalesOrderBusinessFactory extends AbstractBusinessFactory
             $this->getSalesFacade(),
             $this->getRepository(),
             $this->getMerchantOrderFilterPlugins(),
-            $this->getMerchantOrderExpanderPlugins()
+            $this->getMerchantOrderExpanderPlugins(),
+            $this->getMerchantFacade(),
         );
     }
 
@@ -118,6 +120,14 @@ class MerchantSalesOrderBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\MerchantSalesOrder\Dependency\Facade\MerchantSalesOrderToMerchantFacadeInterface
+     */
+    public function getMerchantFacade(): MerchantSalesOrderToMerchantFacadeInterface
+    {
+        return $this->getProvidedDependency(MerchantSalesOrderDependencyProvider::FACADE_MERCHANT);
+    }
+
+    /**
      * @return \Spryker\Zed\MerchantSalesOrder\Dependency\Facade\MerchantSalesOrderToSalesFacadeInterface
      */
     public function getSalesFacade(): MerchantSalesOrderToSalesFacadeInterface
@@ -126,7 +136,7 @@ class MerchantSalesOrderBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\MerchantSalesOrderExtension\Dependency\Plugin\MerchantOrderPostCreatePluginInterface[]
+     * @return array<\Spryker\Zed\MerchantSalesOrderExtension\Dependency\Plugin\MerchantOrderPostCreatePluginInterface>
      */
     public function getMerchantOrderPostCreatePlugins(): array
     {
@@ -134,7 +144,7 @@ class MerchantSalesOrderBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\MerchantSalesOrderExtension\Dependency\Plugin\MerchantOrderExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\MerchantSalesOrderExtension\Dependency\Plugin\MerchantOrderExpanderPluginInterface>
      */
     public function getMerchantOrderExpanderPlugins(): array
     {
@@ -142,7 +152,7 @@ class MerchantSalesOrderBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\MerchantSalesOrderExtension\Dependency\Plugin\MerchantOrderFilterPluginInterface[]
+     * @return array<\Spryker\Zed\MerchantSalesOrderExtension\Dependency\Plugin\MerchantOrderFilterPluginInterface>
      */
     public function getMerchantOrderFilterPlugins(): array
     {

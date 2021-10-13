@@ -13,6 +13,9 @@ use Spryker\Client\ProductCategoryFilter\Dependency\Client\ProductCategoryFilter
 
 class ProductCategoryFilterDependencyProvider extends AbstractDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_STORAGE = 'CLIENT_STORAGE';
 
     /**

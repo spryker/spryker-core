@@ -31,7 +31,7 @@ interface SearchDelegatorAdapterInterface
     public function write(array $documentDataSet, ?string $typeName = null, ?string $indexName = null): bool;
 
     /**
-     * @param \Generated\Shared\Transfer\SearchDocumentTransfer[] $searchDocumentTransfers
+     * @param array<\Generated\Shared\Transfer\SearchDocumentTransfer> $searchDocumentTransfers
      *
      * @return bool
      */
@@ -47,7 +47,7 @@ interface SearchDelegatorAdapterInterface
     public function delete(array $documentDataSet, ?string $typeName = null, ?string $indexName = null): bool;
 
     /**
-     * @param \Generated\Shared\Transfer\SearchDocumentTransfer[] $searchDocumentTransfers
+     * @param array<\Generated\Shared\Transfer\SearchDocumentTransfer> $searchDocumentTransfers
      *
      * @return bool
      */

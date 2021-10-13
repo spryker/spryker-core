@@ -50,7 +50,7 @@ interface StorageRedisToRedisClientInterface
 
     /**
      * @param string $connectionKey
-     * @param string[] $keys
+     * @param array<string> $keys
      *
      * @return int
      */
@@ -89,7 +89,7 @@ interface StorageRedisToRedisClientInterface
 
     /**
      * @param string $connectionKey
-     * @param string[] $keys
+     * @param array<string> $keys
      *
      * @return array
      */
@@ -115,7 +115,7 @@ interface StorageRedisToRedisClientInterface
      * @param string $connectionKey
      * @param string $pattern
      *
-     * @return string[]
+     * @return array<string>
      */
     public function keys(string $connectionKey, string $pattern): array;
 

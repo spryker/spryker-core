@@ -23,7 +23,7 @@ class CmsBlockToLocaleBridge implements CmsBlockToLocaleInterface
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getAvailableLocales()
     {

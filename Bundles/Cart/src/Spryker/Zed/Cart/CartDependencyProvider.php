@@ -18,21 +18,66 @@ use Spryker\Zed\Kernel\Container;
  */
 class CartDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_CALCULATION = 'calculation facade';
+    /**
+     * @var string
+     */
     public const FACADE_MESSENGER = 'messenger facade';
+    /**
+     * @var string
+     */
     public const FACADE_QUOTE = 'FACADE_QUOTE';
 
+    /**
+     * @var string
+     */
     public const CART_EXPANDER_PLUGINS = 'cart expander plugins';
+    /**
+     * @var string
+     */
     public const CART_PRE_CHECK_PLUGINS = 'pre check plugins';
+    /**
+     * @var string
+     */
     public const CART_BEFORE_PRE_CHECK_NORMALIZER_PLUGINS = 'CART_BEFORE_PRE_CHECK_NORMALIZER_PLUGINS';
+    /**
+     * @var string
+     */
     public const CART_REMOVAL_PRE_CHECK_PLUGINS = 'CART_REMOVAL_PRE_CHECK_PLUGINS';
+    /**
+     * @var string
+     */
     public const CART_POST_SAVE_PLUGINS = 'cart post save plugins';
+    /**
+     * @var string
+     */
     public const CART_PRE_RELOAD_PLUGINS = 'cart pre reload plugins';
+    /**
+     * @var string
+     */
     public const CART_TERMINATION_PLUGINS = 'CART_TERMINATION_PLUGINS';
+    /**
+     * @var string
+     */
     public const PLUGINS_QUOTE_CHANGE_OBSERVER = 'PLUGINS_QUOTE_CHANGE_OBSERVER';
+    /**
+     * @var string
+     */
     public const PLUGINS_CART_ADD_ITEM_STRATEGY = 'PLUGINS_CART_ADD_ITEM_STRATEGY';
+    /**
+     * @var string
+     */
     public const PLUGINS_CART_REMOVE_ITEM_STRATEGY = 'PLUGINS_CART_REMOVE_ITEM_STRATEGY';
+    /**
+     * @var string
+     */
     public const PLUGINS_POST_RELOAD_ITEMS = 'PLUGINS_POST_RELOAD_ITEMS';
+    /**
+     * @var string
+     */
     public const PLUGINS_QUOTE_LOCK_PRE_RESET = 'PLUGINS_QUOTE_LOCK_PRE_RESET';
 
     /**
@@ -276,7 +321,7 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return \Spryker\Zed\CartExtension\Dependency\Plugin\ItemExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\CartExtension\Dependency\Plugin\ItemExpanderPluginInterface>
      */
     protected function getExpanderPlugins(Container $container)
     {
@@ -286,7 +331,7 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return \Spryker\Zed\CartExtension\Dependency\Plugin\CartOperationPostSavePluginInterface[]
+     * @return array<\Spryker\Zed\CartExtension\Dependency\Plugin\CartOperationPostSavePluginInterface>
      */
     protected function getPostSavePlugins(Container $container)
     {
@@ -296,7 +341,7 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return \Spryker\Zed\CartExtension\Dependency\Plugin\CartPreCheckPluginInterface[]
+     * @return array<\Spryker\Zed\CartExtension\Dependency\Plugin\CartPreCheckPluginInterface>
      */
     protected function getCartPreCheckPlugins(Container $container)
     {
@@ -306,7 +351,7 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return \Spryker\Zed\CartExtension\Dependency\Plugin\CartChangeTransferNormalizerPluginInterface[]
+     * @return array<\Spryker\Zed\CartExtension\Dependency\Plugin\CartChangeTransferNormalizerPluginInterface>
      */
     protected function getCartBeforePreCheckNormalizerPlugins(Container $container): array
     {
@@ -316,7 +361,7 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return \Spryker\Zed\CartExtension\Dependency\Plugin\CartRemovalPreCheckPluginInterface[]
+     * @return array<\Spryker\Zed\CartExtension\Dependency\Plugin\CartRemovalPreCheckPluginInterface>
      */
     protected function getCartRemovalPreCheckPlugins(Container $container)
     {
@@ -326,7 +371,7 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return \Spryker\Zed\CartExtension\Dependency\Plugin\PreReloadItemsPluginInterface[]
+     * @return array<\Spryker\Zed\CartExtension\Dependency\Plugin\PreReloadItemsPluginInterface>
      */
     protected function getPreReloadPlugins(Container $container)
     {
@@ -336,7 +381,7 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return \Spryker\Zed\CartExtension\Dependency\Plugin\CartTerminationPluginInterface[]
+     * @return array<\Spryker\Zed\CartExtension\Dependency\Plugin\CartTerminationPluginInterface>
      */
     protected function getTerminationPlugins(Container $container)
     {
@@ -346,7 +391,7 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return \Spryker\Zed\CartExtension\Dependency\Plugin\QuoteChangeObserverPluginInterface[]
+     * @return array<\Spryker\Zed\CartExtension\Dependency\Plugin\QuoteChangeObserverPluginInterface>
      */
     protected function getQuoteChangeObserverPlugins(Container $container): array
     {
@@ -356,7 +401,7 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return \Spryker\Zed\CartExtension\Dependency\Plugin\CartOperationStrategyPluginInterface[]
+     * @return array<\Spryker\Zed\CartExtension\Dependency\Plugin\CartOperationStrategyPluginInterface>
      */
     protected function getCartAddItemStrategyPlugins(Container $container): array
     {
@@ -366,7 +411,7 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return \Spryker\Zed\CartExtension\Dependency\Plugin\CartOperationStrategyPluginInterface[]
+     * @return array<\Spryker\Zed\CartExtension\Dependency\Plugin\CartOperationStrategyPluginInterface>
      */
     protected function getCartRemoveItemStrategyPlugins(Container $container): array
     {
@@ -376,7 +421,7 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return \Spryker\Zed\CartExtension\Dependency\Plugin\PostReloadItemsPluginInterface[]
+     * @return array<\Spryker\Zed\CartExtension\Dependency\Plugin\PostReloadItemsPluginInterface>
      */
     protected function getPostReloadItemsPlugins(Container $container): array
     {
@@ -384,7 +429,7 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\CartExtension\Dependency\Plugin\QuoteLockPreResetPluginInterface[]
+     * @return array<\Spryker\Zed\CartExtension\Dependency\Plugin\QuoteLockPreResetPluginInterface>
      */
     protected function getQuoteLockPreResetPlugins(): array
     {

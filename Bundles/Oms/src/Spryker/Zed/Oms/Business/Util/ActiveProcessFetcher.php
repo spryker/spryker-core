@@ -22,9 +22,14 @@ class ActiveProcessFetcher implements ActiveProcessFetcherInterface
     protected $builder;
 
     /**
-     * @var \Spryker\Zed\Oms\Business\Process\StateInterface[]
+     * @var array<\Spryker\Zed\Oms\Business\Process\StateInterface>
      */
     protected static $reservedStatesCache = [];
+
+    /**
+     * @var array<string[]>
+     */
+    protected static $reservedStateProcessNamesCache = [];
 
     /**
      * @param \Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject $activeProcesses
@@ -39,7 +44,7 @@ class ActiveProcessFetcher implements ActiveProcessFetcherInterface
     }
 
     /**
-     * @return \Spryker\Zed\Oms\Business\Process\StateInterface[]
+     * @return array<\Spryker\Zed\Oms\Business\Process\StateInterface>
      */
     public function getReservedStatesFromAllActiveProcesses(): array
     {
@@ -51,7 +56,7 @@ class ActiveProcessFetcher implements ActiveProcessFetcherInterface
     }
 
     /**
-     * @return \Spryker\Zed\Oms\Business\Process\StateInterface[]
+     * @return array<\Spryker\Zed\Oms\Business\Process\StateInterface>
      */
     protected function retrieveReservedStates(): array
     {
@@ -63,5 +68,54 @@ class ActiveProcessFetcher implements ActiveProcessFetcherInterface
         }
 
         return $reservedStates;
+    }
+
+    /**
+     * @param string $processName
+     *
+     * @return array<string>
+     */
+    public function getReservedStateNamesForActiveProcessByProcessName(string $processName): array
+    {
+        if (!isset(static::$reservedStateProcessNamesCache[$processName])) {
+            static::$reservedStateProcessNamesCache[$processName] = $this->retrieveReservedStateNamesForActiveProcessByProcessName(
+                $processName
+            );
+        }
+
+        return static::$reservedStateProcessNamesCache[$processName];
+    }
+
+    /**
+     * @param string $processName
+     *
+     * @return array<string>
+     */
+    protected function retrieveReservedStateNamesForActiveProcessByProcessName(string $processName): array
+    {
+        if (!in_array($processName, $this->activeProcesses->getArrayCopy(), true)) {
+            return [];
+        }
+
+        $builder = clone $this->builder;
+        $process = $builder->createProcess($processName);
+
+        return $this->getReservedStateNames($process->getAllReservedStates());
+    }
+
+    /**
+     * @param array<\Spryker\Zed\Oms\Business\Process\StateInterface> $processReservedStates
+     *
+     * @return array<string>
+     */
+    protected function getReservedStateNames(array $processReservedStates): array
+    {
+        $reservedStateProcessNames = [];
+
+        foreach ($processReservedStates as $reservedState) {
+            $reservedStateProcessNames[] = $reservedState->getName();
+        }
+
+        return $reservedStateProcessNames;
     }
 }

@@ -1,7 +1,5 @@
 <?xml version="1.0"?>
-<transfers xmlns="spryker:transfer-01"
-           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-           xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+<transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="Order">
         <property name="items" type="Item[]" singular="item"/>
@@ -48,6 +46,34 @@
         <property name="idProductConcrete" type="int"/>
         <property name="fkProductAbstract" type="int"/>
         <property name="sku" type="string"/>
+    </transfer>
+
+    <transfer name="ProductPayload">
+        <property name="popularity" type="int"/>
+        <property name="idProductAbstract" type="int"/>
+    </transfer>
+
+    <transfer name="ProductPageSearch">
+        <property name="popularity" type="int"/>
+    </transfer>
+
+    <transfer name="SortConfig">
+        <property name="name" type="string"/>
+        <property name="parameterName" type="string"/>
+        <property name="fieldName" type="string"/>
+        <property name="isDescending" type="bool"/>
+        <property name="unmappedType" type="string"/>
+    </transfer>
+
+    <transfer name="ProductPageLoad">
+        <property name="productAbstractIds" type="array" singular="productAbstractIds"/>
+        <property name="payloadTransfers" type="array" singular="payloadTransfers"/>
+    </transfer>
+
+    <transfer name="Locale">
+    </transfer>
+
+    <transfer name="PageMap">
     </transfer>
 
 </transfers>

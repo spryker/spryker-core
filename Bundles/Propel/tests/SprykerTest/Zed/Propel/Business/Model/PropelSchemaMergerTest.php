@@ -28,7 +28,13 @@ use Symfony\Component\Finder\SplFileInfo;
  */
 class PropelSchemaMergerTest extends Unit
 {
+    /**
+     * @var string
+     */
     public const LEVEL_PROJECT = 'Project';
+    /**
+     * @var string
+     */
     public const LEVEL_VENDOR = 'Vendor';
 
     /**

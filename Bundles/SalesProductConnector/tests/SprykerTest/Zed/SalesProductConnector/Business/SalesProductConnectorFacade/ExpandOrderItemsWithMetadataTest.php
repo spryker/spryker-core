@@ -23,8 +23,14 @@ use Generated\Shared\Transfer\ItemTransfer;
  */
 class ExpandOrderItemsWithMetadataTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const DEFAULT_OMS_PROCESS_NAME = 'Test01';
 
+    /**
+     * @var int
+     */
     protected const FAKE_ID_SALES_ORDER_ITEM = 6666;
 
     /**

@@ -28,7 +28,7 @@ class UserTableActionExpanderPlugin extends AbstractPlugin implements UserTableA
      *
      * @param array $user
      *
-     * @return \Generated\Shared\Transfer\ButtonTransfer[]
+     * @return array<\Generated\Shared\Transfer\ButtonTransfer>
      */
     public function getActionButtonDefinitions(array $user)
     {
@@ -48,7 +48,7 @@ class UserTableActionExpanderPlugin extends AbstractPlugin implements UserTableA
             ->setUrl($this->getEditCustomerUserConnectionUrl($user[SpyUserTableMap::COL_ID_USER]))
             ->setTitle('Assign Customers')
             ->setDefaultOptions([
-                'class' => 'btn-edit',
+                'class' => 'btn-edit btn-view',
                 'icon' => 'fa-pencil-square-o',
             ]);
     }

@@ -9,22 +9,37 @@ namespace Spryker\Zed\Queue\Business;
 
 use Generated\Shared\Transfer\QueueDumpRequestTransfer;
 use Generated\Shared\Transfer\QueueDumpResponseTransfer;
+use Generated\Shared\Transfer\QueueTaskResponseTransfer;
 use Symfony\Component\Console\Output\OutputInterface;
 
 interface QueueFacadeInterface
 {
     /**
      * Specification:
-     *  - Starts receiving and processing messages task for one specific queue
+     *  - Starts receiving and processing messages task for one specific queue.
      *
      * @api
      *
      * @param string $queueName
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
     public function startTask($queueName, array $options = []);
+
+    /**
+     * Specification:
+     *  - Starts receiving and processing messages task for one specific queue.
+     *  - Returns a QueueTaskResponseTransfer which is either successful or not, can be used for debugging purposes.
+     *
+     * @api
+     *
+     * @param string $queueName
+     * @param array<string, mixed> $options
+     *
+     * @return \Generated\Shared\Transfer\QueueTaskResponseTransfer
+     */
+    public function startTaskWithReport(string $queueName, array $options = []): QueueTaskResponseTransfer;
 
     /**
      * Specification:
@@ -34,7 +49,7 @@ interface QueueFacadeInterface
      *
      * @param string $command
      * @param \Symfony\Component\Console\Output\OutputInterface $output
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */

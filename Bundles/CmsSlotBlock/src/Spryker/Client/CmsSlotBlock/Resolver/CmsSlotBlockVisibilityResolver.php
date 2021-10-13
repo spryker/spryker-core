@@ -19,13 +19,13 @@ class CmsSlotBlockVisibilityResolver implements CmsSlotBlockVisibilityResolverIn
     protected $cmsSlotBlockConfig;
 
     /**
-     * @var \Spryker\Client\CmsSlotBlockExtension\Dependency\Plugin\CmsSlotBlockVisibilityResolverPluginInterface[]
+     * @var array<\Spryker\Client\CmsSlotBlockExtension\Dependency\Plugin\CmsSlotBlockVisibilityResolverPluginInterface>
      */
     protected $cmsSlotBlockVisibilityResolverPlugins;
 
     /**
      * @param \Spryker\Client\CmsSlotBlock\CmsSlotBlockConfig $cmsSlotBlockConfig
-     * @param \Spryker\Client\CmsSlotBlockExtension\Dependency\Plugin\CmsSlotBlockVisibilityResolverPluginInterface[] $cmsSlotBlockVisibilityResolverPlugins
+     * @param array<\Spryker\Client\CmsSlotBlockExtension\Dependency\Plugin\CmsSlotBlockVisibilityResolverPluginInterface> $cmsSlotBlockVisibilityResolverPlugins
      */
     public function __construct(
         CmsSlotBlockConfig $cmsSlotBlockConfig,
@@ -63,7 +63,7 @@ class CmsSlotBlockVisibilityResolver implements CmsSlotBlockVisibilityResolverIn
     /**
      * @param \Generated\Shared\Transfer\CmsSlotBlockTransfer $cmsSlotBlockTransfer
      *
-     * @return \Spryker\Client\CmsSlotBlockExtension\Dependency\Plugin\CmsSlotBlockVisibilityResolverPluginInterface[]
+     * @return array<\Spryker\Client\CmsSlotBlockExtension\Dependency\Plugin\CmsSlotBlockVisibilityResolverPluginInterface>
      */
     protected function getApplicablePlugins(CmsSlotBlockTransfer $cmsSlotBlockTransfer): array
     {

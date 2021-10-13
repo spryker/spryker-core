@@ -23,7 +23,7 @@ class ConcreteProductBySkuResourceRelationshipPlugin extends AbstractPlugin impl
      *
      * @api
      *
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
+     * @param array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface> $resources
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return void
@@ -31,8 +31,8 @@ class ConcreteProductBySkuResourceRelationshipPlugin extends AbstractPlugin impl
     public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
         $this->getFactory()
-            ->createConcreteProductsRelationshipExpander()
-            ->addResourceRelationshipsBySku($resources, $restRequest);
+            ->createConcreteProductsBySkuResourceRelationshipExpander()
+            ->addResourceRelationships($resources, $restRequest);
     }
 
     /**

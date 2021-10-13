@@ -11,6 +11,9 @@ use Generated\Shared\Transfer\SecurityCheckAuthContextTransfer;
 
 class SecurityBlockerStorageKeyBuilder implements SecurityBlockerStorageKeyBuilderInterface
 {
+    /**
+     * @var string
+     */
     protected const KEY_PART_SEPARATOR = ':';
 
     /**

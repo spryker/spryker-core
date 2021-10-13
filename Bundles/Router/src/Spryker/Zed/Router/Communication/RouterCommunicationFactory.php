@@ -17,7 +17,7 @@ use Spryker\Zed\Router\RouterDependencyProvider;
 class RouterCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
-     * @return \Spryker\Zed\RouterExtension\Dependency\Plugin\RouterPluginInterface[]
+     * @return array<\Spryker\Zed\RouterExtension\Dependency\Plugin\RouterPluginInterface>
      */
     public function getRouterPlugins(): array
     {

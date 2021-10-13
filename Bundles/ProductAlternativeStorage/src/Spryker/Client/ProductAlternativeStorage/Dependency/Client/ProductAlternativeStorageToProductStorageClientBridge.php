@@ -60,7 +60,7 @@ class ProductAlternativeStorageToProductStorageClientBridge implements ProductAl
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      * @param string $localeName
      *
      * @return array

@@ -19,10 +19,25 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class DeactivateController extends AbstractController
 {
+    /**
+     * @var string
+     */
     protected const URL_PARAM_ID_DATASET = 'id-dataset';
+    /**
+     * @var string
+     */
     protected const URL_PARAM_REDIRECT_URL = 'redirect-url';
+    /**
+     * @var string
+     */
     protected const REDIRECT_URL_DEFAULT = '/dataset';
+    /**
+     * @var string
+     */
     protected const REFERER_PARAM = 'referer';
+    /**
+     * @var string
+     */
     protected const MESSAGE_DATASET_DEACTIVATE_SUCCESS = 'Dataset was deactivated successfully.';
 
     /**

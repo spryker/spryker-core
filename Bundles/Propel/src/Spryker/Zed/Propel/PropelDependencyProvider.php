@@ -18,9 +18,21 @@ use Spryker\Zed\Propel\Dependency\Service\PropelToUtilTextServiceBridge;
  */
 class PropelDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const UTIL_TEXT_SERVICE = 'util text service';
+    /**
+     * @var string
+     */
     public const FACADE_LOG = 'FACADE_LOG';
+    /**
+     * @var string
+     */
     public const FACADE_TRANSFER = 'FACADE_TRANSFER';
+    /**
+     * @var string
+     */
     public const PLUGINS_PROPEL_SCHEMA_ELEMENT_FILTER = 'PLUGINS_PROPEL_SCHEMA_ELEMENT_FILTER';
 
     /**
@@ -106,7 +118,7 @@ class PropelDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\Propel\Dependency\Plugin\PropelSchemaElementFilterPluginInterface[]
+     * @return array<\Spryker\Zed\Propel\Dependency\Plugin\PropelSchemaElementFilterPluginInterface>
      */
     protected function getPropelSchemaElementFilterPlugins(): array
     {

@@ -16,6 +16,9 @@ use Spryker\Zed\Kernel\Container;
  */
 class CompanyRoleDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_PERMISSION = 'FACADE_PERMISSION';
 
     /**

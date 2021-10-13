@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ItemCollectionTransfer;
 use Generated\Shared\Transfer\OrderCancelRequestTransfer;
 use Generated\Shared\Transfer\OrderCancelResponseTransfer;
+use Generated\Shared\Transfer\OrderFilterTransfer;
 use Generated\Shared\Transfer\OrderItemFilterTransfer;
 use Generated\Shared\Transfer\OrderListRequestTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
@@ -34,6 +35,8 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\Sales\Business\SalesFacade::getOrder()} instead.
+     *
      * @param int $idSalesOrder
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
@@ -43,6 +46,22 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
         return $this->getFactory()
             ->createOrderHydratorWithMultiShippingAddress()
             ->hydrateOrderTransferFromPersistenceByIdSalesOrder($idSalesOrder);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderFilterTransfer $orderFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function getOrder(OrderFilterTransfer $orderFilterTransfer): OrderTransfer
+    {
+        return $this->getFactory()
+            ->createSalesOrderReader()
+            ->getOrderTransfer($orderFilterTransfer);
     }
 
     /**
@@ -182,7 +201,7 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
      *
      * @api
      *
-     * @deprecated Use {@link saveSalesOrder()} instead
+     * @deprecated Use {@link \Spryker\Zed\Sales\Business\SalesFacade::saveSalesOrder()} instead
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
@@ -216,6 +235,51 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
     /**
      * {@inheritDoc}
      *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
+     *
+     * @return void
+     */
+    public function saveOrderRaw(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer): void
+    {
+        $this->getFactory()->createSalesOrderWriter()->saveOrder($quoteTransfer, $saveOrderTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
+     *
+     * @return void
+     */
+    public function saveSalesOrderItems(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer): void
+    {
+        $this->getFactory()->createOrderItemsSaver()->saveOrderItems($quoteTransfer, $saveOrderTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
+     *
+     * @return void
+     */
+    public function saveSalesOrderTotals(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer): void
+    {
+        $this->getEntityManager()->saveSalesOrderTotals($quoteTransfer, $saveOrderTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
      * @CR check why return wrong
      *
      * @api
@@ -238,7 +302,7 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
      *
      * @param int $idSalesOrder
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getDistinctOrderStates($idSalesOrder)
     {
@@ -367,11 +431,11 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
      *
      * @api
      *
-     * @deprecated Use {@link getUniqueItemsFromOrder()} instead.
+     * @deprecated Use {@link \Spryker\Zed\Sales\Business\SalesFacade::getUniqueItemsFromOrder()} instead.
      *
-     * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param iterable<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     public function getUniqueOrderItems(iterable $itemTransfers): array
     {
@@ -403,7 +467,7 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     public function getUniqueItemsFromOrder(OrderTransfer $orderTransfer): array
     {
@@ -449,9 +513,9 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     public function expandOrderItemsWithCurrencyIsoCode(array $itemTransfers): array
     {
@@ -474,5 +538,22 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
         return $this->getFactory()
             ->createOrderWriter()
             ->cancelOrder($orderCancelRequestTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     *
+     * @return bool
+     */
+    public function checkDuplicateOrder(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): bool
+    {
+        return $this->getFactory()
+            ->createDuplicateOrderChecker()
+            ->checkDuplicateOrder($quoteTransfer, $checkoutResponseTransfer);
     }
 }

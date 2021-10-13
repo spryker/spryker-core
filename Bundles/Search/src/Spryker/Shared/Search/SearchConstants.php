@@ -19,6 +19,7 @@ interface SearchConstants
      * I.e. to set the boost factor to 3 add this to your config: `$config[SearchConstants::FULL_TEXT_BOOSTED_BOOSTING_VALUE] = 3;`.
      *
      * @api
+     * @var string
      */
     public const FULL_TEXT_BOOSTED_BOOSTING_VALUE = 'FULL_TEXT_BOOSTED_BOOSTING_VALUE';
 
@@ -28,6 +29,7 @@ interface SearchConstants
      * Elasticsearch connection host name. (Required)
      *
      * @api
+     * @var string
      */
     public const ELASTICA_PARAMETER__HOST = 'ELASTICA_PARAMETER__HOST';
 
@@ -37,6 +39,7 @@ interface SearchConstants
      * Elasticsearch connection port number. (Required)
      *
      * @api
+     * @var string
      */
     public const ELASTICA_PARAMETER__PORT = 'ELASTICA_PARAMETER__PORT';
 
@@ -46,6 +49,7 @@ interface SearchConstants
      * Elasticsearch connection transport name (i.e. "http"). (Required)
      *
      * @api
+     * @var string
      */
     public const ELASTICA_PARAMETER__TRANSPORT = 'ELASTICA_PARAMETER__TRANSPORT';
 
@@ -55,6 +59,7 @@ interface SearchConstants
      * Elasticsearch connection index name. (Required)
      *
      * @api
+     * @var string
      */
     public const ELASTICA_PARAMETER__INDEX_NAME = 'ELASTICA_PARAMETER__INDEX_NAME';
 
@@ -64,6 +69,7 @@ interface SearchConstants
      * Elasticsearch connection document type. (Required)
      *
      * @api
+     * @var string
      */
     public const ELASTICA_PARAMETER__DOCUMENT_TYPE = 'ELASTICA_PARAMETER__DOCUMENT_TYPE';
 
@@ -73,6 +79,7 @@ interface SearchConstants
      * Elasticsearch connection authentication header parameters. (Optional)
      *
      * @api
+     * @var string
      */
     public const ELASTICA_PARAMETER__AUTH_HEADER = 'ELASTICA_PARAMETER__AUTH_HEADER';
 
@@ -83,6 +90,7 @@ interface SearchConstants
      * - Defines an array of extra Elasticsearch connection parameters (i.e. ['foo' => 'bar', ...]). (Optional)
      *
      * @api
+     * @var string
      */
     public const ELASTICA_PARAMETER__EXTRA = 'ELASTICA_PARAMETER__EXTRA';
 
@@ -93,6 +101,7 @@ interface SearchConstants
      * - Defines a suffix string for the index name to be installed. (Optional)
      *
      * @api
+     * @var string
      */
     public const SEARCH_INDEX_NAME_SUFFIX = 'SEARCH_INDEX_NAME_SUFFIX';
 
@@ -105,6 +114,7 @@ interface SearchConstants
      * - @see http://elastica.io/ for details.
      *
      * @api
+     * @var string
      */
     public const ELASTICA_CLIENT_CONFIGURATION = 'ELASTICA_CLIENT_CONFIGURATION';
 
@@ -115,6 +125,7 @@ interface SearchConstants
      * - Sets the permission mode for generated directories.
      *
      * @api
+     * @var string
      */
     public const DIRECTORY_PERMISSION = 'SEARCH:DIRECTORY_PERMISSION';
 
@@ -123,6 +134,7 @@ interface SearchConstants
      * - A map to map a filename e.g. `search.json` to an index name `de_search`.
      *
      * @api
+     * @var string
      */
     public const INDEX_NAME_MAP = 'SEARCH:INDEX_NAME_MAP';
 }

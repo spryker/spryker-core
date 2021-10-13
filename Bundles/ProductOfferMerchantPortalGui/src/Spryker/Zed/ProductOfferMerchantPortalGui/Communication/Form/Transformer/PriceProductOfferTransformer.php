@@ -8,11 +8,16 @@
 namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Form\Transformer;
 
 use ArrayObject;
+use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductOfferTableViewTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
+use Generated\Shared\Transfer\PriceTypeTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\DataProvider\PriceProductOfferDataProviderInterface;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Form\Transformer\Merger\PriceProductsMergerInterface;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\GuiTable\Column\ColumnIdCreatorInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToCurrencyFacadeInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToMoneyFacadeInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToPriceProductFacadeInterface;
@@ -21,6 +26,12 @@ use Symfony\Component\Form\DataTransformerInterface;
 
 class PriceProductOfferTransformer implements DataTransformerInterface
 {
+    /**
+     * @uses \Spryker\Shared\PriceProduct\PriceProductConfig::PRICE_TYPE_DEFAULT
+     * @var string
+     */
+    protected const PRICE_TYPE_DEFAULT = 'DEFAULT';
+
     /**
      * @var int|null
      */
@@ -47,10 +58,28 @@ class PriceProductOfferTransformer implements DataTransformerInterface
     protected $moneyFacade;
 
     /**
+     * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Form\Transformer\Merger\PriceProductsMergerInterface
+     */
+    protected $priceProductsMerger;
+
+    /**
+     * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\GuiTable\Column\ColumnIdCreatorInterface
+     */
+    protected $columnIdCreator;
+
+    /**
+     * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\DataProvider\PriceProductOfferDataProviderInterface
+     */
+    protected $priceProductOfferDataProvider;
+
+    /**
      * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Service\ProductOfferMerchantPortalGuiToUtilEncodingServiceInterface $utilEncodingService
      * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToPriceProductFacadeInterface $priceProductFacade
      * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToCurrencyFacadeInterface $currencyFacade
      * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToMoneyFacadeInterface $moneyFacade
+     * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Form\Transformer\Merger\PriceProductsMergerInterface $priceProductsMerger
+     * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\GuiTable\Column\ColumnIdCreatorInterface $columnIdCreator
+     * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\DataProvider\PriceProductOfferDataProviderInterface $priceProductOfferDataProvider
      * @param int|null $idProductOffer
      */
     public function __construct(
@@ -58,6 +87,9 @@ class PriceProductOfferTransformer implements DataTransformerInterface
         ProductOfferMerchantPortalGuiToPriceProductFacadeInterface $priceProductFacade,
         ProductOfferMerchantPortalGuiToCurrencyFacadeInterface $currencyFacade,
         ProductOfferMerchantPortalGuiToMoneyFacadeInterface $moneyFacade,
+        PriceProductsMergerInterface $priceProductsMerger,
+        ColumnIdCreatorInterface $columnIdCreator,
+        PriceProductOfferDataProviderInterface $priceProductOfferDataProvider,
         ?int $idProductOffer = null
     ) {
         $this->utilEncodingService = $utilEncodingService;
@@ -65,6 +97,9 @@ class PriceProductOfferTransformer implements DataTransformerInterface
         $this->currencyFacade = $currencyFacade;
         $this->moneyFacade = $moneyFacade;
         $this->idProductOffer = $idProductOffer;
+        $this->priceProductsMerger = $priceProductsMerger;
+        $this->columnIdCreator = $columnIdCreator;
+        $this->priceProductOfferDataProvider = $priceProductOfferDataProvider;
     }
 
     /**
@@ -104,15 +139,15 @@ class PriceProductOfferTransformer implements DataTransformerInterface
      */
     public function reverseTransform($value)
     {
-        $newPriceProductOffers = $this->utilEncodingService->decodeJson($value, true);
-        $priceProductTransfers = new ArrayObject();
+        $priceProductTransfers = $this->getPersistedPriceProductTransfers();
 
+        $newPriceProductOffers = $this->utilEncodingService->decodeJson($value, true);
         if (!$newPriceProductOffers) {
             return $priceProductTransfers;
         }
 
         $priceProductDimensionTransfer = (new PriceProductDimensionTransfer())
-            ->setIdProductOffer($this->idProductOffer ?? 0);
+            ->setIdProductOffer($this->idProductOffer);
         $priceTypes = $this->priceProductFacade->getPriceTypeValues();
 
         foreach ($newPriceProductOffers as $newPriceProductOffer) {
@@ -128,17 +163,26 @@ class PriceProductOfferTransformer implements DataTransformerInterface
     }
 
     /**
-     * @phpstan-param array<mixed> $newPriceProductOffer
-     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
+     * @phpstan-return ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>
      *
-     * @phpstan-return \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>
-     *
-     * @param array $newPriceProductOffer
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>
+     */
+    protected function getPersistedPriceProductTransfers(): ArrayObject
+    {
+        if ($this->idProductOffer === null) {
+            return new ArrayObject();
+        }
+
+        return $this->priceProductOfferDataProvider->getPriceProductTransfers($this->idProductOffer);
+    }
+
+    /**
+     * @param array<mixed> $newPriceProductOffer
      * @param \Generated\Shared\Transfer\PriceProductDimensionTransfer $priceProductDimensionTransfer
-     * @param \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
-     * @param \Generated\Shared\Transfer\PriceTypeTransfer[] $priceTypes
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
+     * @param array<\Generated\Shared\Transfer\PriceTypeTransfer> $priceTypes
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>
      */
     protected function addPriceProductTransfers(
         array $newPriceProductOffer,
@@ -146,108 +190,111 @@ class PriceProductOfferTransformer implements DataTransformerInterface
         ArrayObject $priceProductTransfers,
         array $priceTypes
     ): ArrayObject {
-        $currency = $newPriceProductOffer[PriceProductOfferTableViewTransfer::CURRENCY];
-        $currencyTransfer = $currency ?
-            $this->currencyFacade->getByIdCurrency($currency)
+        $idCurrency = $newPriceProductOffer[PriceProductOfferTableViewTransfer::CURRENCY];
+        $currencyTransfer = $idCurrency ?
+            $this->currencyFacade->getByIdCurrency($idCurrency)
             : null;
 
         foreach ($priceTypes as $priceTypeTransfer) {
-            $storeTransfer = (new StoreTransfer())
-                ->setIdStore($newPriceProductOffer[PriceProductOfferTableViewTransfer::STORE]);
-
-            $moneyValueTransfer = (new MoneyValueTransfer())
-                ->setCurrency($currencyTransfer)
-                ->setStore($storeTransfer)
-                ->setFkStore($newPriceProductOffer[PriceProductOfferTableViewTransfer::STORE])
-                ->setFkCurrency($newPriceProductOffer[PriceProductOfferTableViewTransfer::CURRENCY]);
-
-            $priceTypeName = mb_strtolower((string)$priceTypeTransfer->getName());
-            $netAmountKey = $this->createNetKey($priceTypeName);
-            $grossAmountKey = $this->createGrossKey($priceTypeName);
-
-            $netAmount = $newPriceProductOffer[$netAmountKey] ?
-                $this->moneyFacade->convertDecimalToInteger((float)$newPriceProductOffer[$netAmountKey]) : null;
-            $grossAmount = $newPriceProductOffer[$grossAmountKey] ?
-                $this->moneyFacade->convertDecimalToInteger((float)$newPriceProductOffer[$grossAmountKey]) : null;
-
-            $moneyValueTransfer->setNetAmount($netAmount)
-                ->setGrossAmount($grossAmount);
-
-            $priceProductTransfers->append(
-                (new PriceProductTransfer())
-                    ->setFkPriceType($priceTypeTransfer->getIdPriceType())
-                    ->setPriceType($priceTypeTransfer)
-                    ->setMoneyValue($moneyValueTransfer)
-                    ->setPriceDimension($priceProductDimensionTransfer)
+            $newPriceProductTransfer = $this->createPriceProductTransfer(
+                $newPriceProductOffer,
+                $priceProductDimensionTransfer,
+                $currencyTransfer,
+                $priceTypeTransfer
             );
+
+            if ($newPriceProductTransfer === null) {
+                continue;
+            }
+
+            $priceProductTransfers = $this->priceProductsMerger
+                ->merge($priceProductTransfers, $newPriceProductTransfer);
         }
 
         return $priceProductTransfers;
     }
 
     /**
-     * @phpstan-param array<mixed> $prices
+     * @param array $newPriceProductOfferData
+     * @param \Generated\Shared\Transfer\PriceProductDimensionTransfer $priceProductDimensionTransfer
+     * @param \Generated\Shared\Transfer\CurrencyTransfer|null $currencyTransfer
+     * @param \Generated\Shared\Transfer\PriceTypeTransfer $priceTypeTransfer
      *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer|null
+     */
+    protected function createPriceProductTransfer(
+        array $newPriceProductOfferData,
+        PriceProductDimensionTransfer $priceProductDimensionTransfer,
+        ?CurrencyTransfer $currencyTransfer,
+        PriceTypeTransfer $priceTypeTransfer
+    ): ?PriceProductTransfer {
+        $storeTransfer = (new StoreTransfer())
+            ->setIdStore($newPriceProductOfferData[$this->columnIdCreator->createStoreColumnId()]);
+
+        $moneyValueTransfer = (new MoneyValueTransfer())
+            ->setCurrency($currencyTransfer)
+            ->setStore($storeTransfer)
+            ->setFkStore($newPriceProductOfferData[$this->columnIdCreator->createStoreColumnId()])
+            ->setFkCurrency($newPriceProductOfferData[$this->columnIdCreator->createCurrencyColumnId()]);
+
+        $priceTypeName = (string)$priceTypeTransfer->getName();
+        $netAmountKey = $this->columnIdCreator->createNetAmountColumnId($priceTypeName);
+        $grossAmountKey = $this->columnIdCreator->createGrossAmountColumnId($priceTypeName);
+
+        $netAmount = $newPriceProductOfferData[$netAmountKey] ?
+            $this->moneyFacade->convertDecimalToInteger((float)$newPriceProductOfferData[$netAmountKey]) : null;
+        $grossAmount = $newPriceProductOfferData[$grossAmountKey] ?
+            $this->moneyFacade->convertDecimalToInteger((float)$newPriceProductOfferData[$grossAmountKey]) : null;
+        $volumeQuantity = (int)$newPriceProductOfferData[$this->columnIdCreator->createVolumeQuantityColumnId()];
+
+        $isEmptyNonDefaultVolumePrice = (
+            $volumeQuantity !== 1 && $priceTypeName !== static::PRICE_TYPE_DEFAULT
+            && $grossAmount === null && $netAmount === null
+        );
+
+        if ($isEmptyNonDefaultVolumePrice) {
+            return null;
+        }
+
+        $moneyValueTransfer
+            ->setNetAmount($netAmount)
+            ->setGrossAmount($grossAmount);
+
+        return (new PriceProductTransfer())
+            ->setFkPriceType($priceTypeTransfer->getIdPriceType())
+            ->setPriceType($priceTypeTransfer)
+            ->setMoneyValue($moneyValueTransfer)
+            ->setPriceDimension($priceProductDimensionTransfer)
+            ->setVolumeQuantity($volumeQuantity);
+    }
+
+    /**
      * @phpstan-return array<mixed>
      *
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
-     * @param array $prices
-     * @param \Generated\Shared\Transfer\PriceTypeTransfer[] $priceTypes
+     * @param array<mixed> $prices
+     * @param array<\Generated\Shared\Transfer\PriceTypeTransfer> $priceTypes
      *
      * @return array
      */
     protected function addPrices(PriceProductTransfer $priceProductTransfer, array $prices, array $priceTypes): array
     {
         foreach ($priceTypes as $priceTypeTransfer) {
-            /** @var string $priceTypeName */
-            $priceTypeName = $priceTypeTransfer->getName();
+            $priceTypeName = $priceTypeTransfer->getNameOrFail();
 
-            /** @var \Generated\Shared\Transfer\PriceTypeTransfer $currentPriceTypeTransfer */
             $currentPriceTypeTransfer = $priceProductTransfer->getPriceTypeOrFail();
             if ($currentPriceTypeTransfer->getName() !== $priceTypeName) {
                 continue;
             }
 
-            $priceTypeName = mb_strtolower((string)$priceTypeName);
-            $netAmountKey = $this->createNetKey($priceTypeName);
-            $grossAmountKey = $this->createGrossKey($priceTypeName);
-            /** @var \Generated\Shared\Transfer\MoneyValueTransfer $moneyValueTransfer */
-            $moneyValueTransfer = $priceProductTransfer->getMoneyValue();
+            $netAmountKey = $this->columnIdCreator->createNetAmountColumnId($priceTypeName);
+            $grossAmountKey = $this->columnIdCreator->createGrossAmountColumnId($priceTypeName);
+            $moneyValueTransfer = $priceProductTransfer->getMoneyValueOrFail();
 
             $prices[$netAmountKey] = $this->moneyFacade->convertIntegerToDecimal((int)$moneyValueTransfer->getNetAmount());
             $prices[$grossAmountKey] = $this->moneyFacade->convertIntegerToDecimal((int)$moneyValueTransfer->getGrossAmount());
         }
 
         return $prices;
-    }
-
-    /**
-     * @param string $pryceTypeName
-     *
-     * @return string
-     */
-    protected function createGrossKey(string $pryceTypeName): string
-    {
-        return sprintf(
-            '%s[%s][%s]',
-            $pryceTypeName,
-            PriceProductTransfer::MONEY_VALUE,
-            MoneyValueTransfer::GROSS_AMOUNT
-        );
-    }
-
-    /**
-     * @param string $pryceTypeName
-     *
-     * @return string
-     */
-    protected function createNetKey(string $pryceTypeName): string
-    {
-        return sprintf(
-            '%s[%s][%s]',
-            $pryceTypeName,
-            PriceProductTransfer::MONEY_VALUE,
-            MoneyValueTransfer::NET_AMOUNT
-        );
     }
 }

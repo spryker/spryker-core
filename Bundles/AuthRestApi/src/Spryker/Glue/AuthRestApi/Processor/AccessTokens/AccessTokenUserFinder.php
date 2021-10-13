@@ -16,7 +16,13 @@ use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
 class AccessTokenUserFinder implements AccessTokenUserFinderInterface
 {
+    /**
+     * @var string
+     */
     protected const KEY_CUSTOMER_REFERENCE = 'customer_reference';
+    /**
+     * @var string
+     */
     protected const KEY_ID_CUSTOMER = 'id_customer';
 
     /**
@@ -30,14 +36,14 @@ class AccessTokenUserFinder implements AccessTokenUserFinderInterface
     protected $utilEncodingService;
 
     /**
-     * @var \Spryker\Glue\AuthRestApiExtension\Dependency\Plugin\RestUserMapperPluginInterface[]
+     * @var array<\Spryker\Glue\AuthRestApiExtension\Dependency\Plugin\RestUserMapperPluginInterface>
      */
     protected $restUserMapperPlugins;
 
     /**
      * @param \Spryker\Glue\AuthRestApi\Dependency\Service\AuthRestApiToOauthServiceInterface $oauthService
      * @param \Spryker\Glue\AuthRestApi\Dependency\Service\AuthRestApiToUtilEncodingServiceInterface $utilEncodingService
-     * @param \Spryker\Glue\AuthRestApiExtension\Dependency\Plugin\RestUserMapperPluginInterface[] $restUserExpanderPlugins
+     * @param array<\Spryker\Glue\AuthRestApiExtension\Dependency\Plugin\RestUserMapperPluginInterface> $restUserExpanderPlugins
      */
     public function __construct(
         AuthRestApiToOauthServiceInterface $oauthService,

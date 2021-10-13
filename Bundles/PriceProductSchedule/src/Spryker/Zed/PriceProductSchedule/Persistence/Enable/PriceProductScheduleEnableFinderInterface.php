@@ -14,7 +14,7 @@ interface PriceProductScheduleEnableFinderInterface
     /**
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductScheduleTransfer>
      */
     public function findPriceProductSchedulesToEnableByStore(StoreTransfer $storeTransfer): array;
 
@@ -22,7 +22,7 @@ interface PriceProductScheduleEnableFinderInterface
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      * @param int $idProductAbstract
      *
-     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductScheduleTransfer>
      */
     public function findPriceProductSchedulesToEnableByStoreAndIdProductAbstract(StoreTransfer $storeTransfer, int $idProductAbstract): array;
 
@@ -30,7 +30,7 @@ interface PriceProductScheduleEnableFinderInterface
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      * @param int $idProductConcrete
      *
-     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductScheduleTransfer>
      */
     public function findPriceProductSchedulesToEnableByStoreAndIdProductConcrete(StoreTransfer $storeTransfer, int $idProductConcrete): array;
 }

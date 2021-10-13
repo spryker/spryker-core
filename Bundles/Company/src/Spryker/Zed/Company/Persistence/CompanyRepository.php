@@ -9,8 +9,11 @@ namespace Spryker\Zed\Company\Persistence;
 
 use ArrayObject;
 use Generated\Shared\Transfer\CompanyCollectionTransfer;
+use Generated\Shared\Transfer\CompanyCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Orm\Zed\Company\Persistence\SpyCompanyQuery;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -23,7 +26,7 @@ class CompanyRepository extends AbstractRepository implements CompanyRepositoryI
      *
      * @param int $idCompany
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\StoreTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\StoreTransfer>
      */
     public function getRelatedStoresByCompanyId(int $idCompany)
     {
@@ -120,5 +123,51 @@ class CompanyRepository extends AbstractRepository implements CompanyRepositoryI
         return $this->getFactory()
             ->createCompanyMapper()
             ->mapEntityToCompanyTransfer($companyEntity, new CompanyTransfer());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyCriteriaFilterTransfer $companyCriteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyCollectionTransfer
+     */
+    public function getCompanyCollection(CompanyCriteriaFilterTransfer $companyCriteriaFilterTransfer): CompanyCollectionTransfer
+    {
+        $companyQuery = $this->getFactory()
+            ->createCompanyQuery();
+
+        $companyQuery = $this->setCompanyFilters(
+            $companyQuery,
+            $companyCriteriaFilterTransfer
+        );
+
+        return $this->getFactory()
+            ->createCompanyMapper()
+            ->mapCompanyEntityCollectionToCompanyCollectionTransfer($companyQuery->find());
+    }
+
+    /**
+     * @param \Orm\Zed\Company\Persistence\SpyCompanyQuery $companyQuery
+     * @param \Generated\Shared\Transfer\CompanyCriteriaFilterTransfer $companyCriteriaFilterTransfer
+     *
+     * @return \Orm\Zed\Company\Persistence\SpyCompanyQuery
+     */
+    protected function setCompanyFilters(
+        SpyCompanyQuery $companyQuery,
+        CompanyCriteriaFilterTransfer $companyCriteriaFilterTransfer
+    ): SpyCompanyQuery {
+        if ($companyCriteriaFilterTransfer->getIdCompany()) {
+            $companyQuery->filterByIdCompany($companyCriteriaFilterTransfer->getIdCompany());
+        }
+
+        if ($companyCriteriaFilterTransfer->getName()) {
+            $companyQuery->filterByName(sprintf('%%%s%%', $companyCriteriaFilterTransfer->getName()), Criteria::LIKE);
+            $companyQuery->setIgnoreCase(true);
+        }
+
+        if ($companyCriteriaFilterTransfer->getFilter() && $companyCriteriaFilterTransfer->getFilter()->getLimit()) {
+            $companyQuery->limit($companyCriteriaFilterTransfer->getFilter()->getLimit());
+        }
+
+        return $companyQuery;
     }
 }

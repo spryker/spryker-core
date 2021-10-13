@@ -18,8 +18,17 @@ use Spryker\Zed\ProductCustomerPermission\Dependency\Facade\ProductCustomerPermi
  */
 class ProductCustomerPermissionDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_GLOSSARY = 'FACADE_GLOSSARY';
+    /**
+     * @var string
+     */
     public const FACADE_PRODUCT = 'FACADE_PRODUCT';
+    /**
+     * @var string
+     */
     public const FACADE_TOUCH = 'FACADE_TOUCH';
 
     /**

@@ -24,20 +24,20 @@ class ReturnReasonSearchReader implements ReturnReasonSearchReaderInterface
     protected $returnReasonSearchQueryPlugin;
 
     /**
-     * @var \Spryker\Client\SearchExtension\Dependency\Plugin\QueryExpanderPluginInterface[]
+     * @var array<\Spryker\Client\SearchExtension\Dependency\Plugin\QueryExpanderPluginInterface>
      */
     protected $returnReasonSearchQueryExpanderPlugins;
 
     /**
-     * @var \Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface[]
+     * @var array<\Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface>
      */
     protected $returnReasonSearchResultFormatterPlugins;
 
     /**
      * @param \Spryker\Client\SalesReturnSearch\Dependency\Client\SalesReturnSearchToSearchClientInterface $searchClient
      * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface $returnReasonSearchQueryPlugin
-     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryExpanderPluginInterface[] $returnReasonSearchQueryExpanderPlugins
-     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface[] $returnReasonSearchResultFormatterPlugins
+     * @param array<\Spryker\Client\SearchExtension\Dependency\Plugin\QueryExpanderPluginInterface> $returnReasonSearchQueryExpanderPlugins
+     * @param array<\Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface> $returnReasonSearchResultFormatterPlugins
      */
     public function __construct(
         SalesReturnSearchToSearchClientInterface $searchClient,

@@ -1,6 +1,6 @@
 # ProductQuantityStorage Module
-[![Build Status](https://travis-ci.org/spryker/product-quantity-storage.svg)](https://travis-ci.org/spryker/product-quantity-storage)
-[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
+[![Latest Stable Version](https://poser.pugx.org/spryker/product-quantity-storage/v/stable.svg)](https://packagist.org/packages/spryker/product-quantity-storage)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.4-8892BF.svg)](https://php.net/)
 
 Manages storage for product quantity entities.
 

@@ -16,6 +16,9 @@ use Spryker\Shared\SessionRedis\Redis\SessionRedisWrapperInterface;
 
 class SessionHandlerRedisLocking implements SessionHandlerInterface
 {
+    /**
+     * @var string
+     */
     public const KEY_PREFIX = 'session:';
 
     /**

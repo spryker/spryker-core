@@ -27,6 +27,9 @@ use SprykerTest\Zed\Sales\Helper\BusinessHelper;
  */
 class OrderCustomReferenceFacadeTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const ORDER_CUSTOM_REFERENCE = 'ORDER_CUSTOM_REFERENCE';
 
     /**

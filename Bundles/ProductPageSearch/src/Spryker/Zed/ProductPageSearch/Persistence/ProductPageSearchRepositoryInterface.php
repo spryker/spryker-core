@@ -12,70 +12,70 @@ use Generated\Shared\Transfer\FilterTransfer;
 interface ProductPageSearchRepositoryInterface
 {
     /**
-     * @param int[] $productIds
+     * @param array<int> $productIds
      *
-     * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConcretePageSearchTransfer>
      */
     public function getProductConcretePageSearchTransfers(array $productIds): array;
 
     /**
-     * @param string[] $productConcreteSkus
+     * @param array<string> $productConcreteSkus
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getProductAbstractIdsByProductConcreteSkus(array $productConcreteSkus): array;
 
     /**
      * @param array $productAbstractStoreMap Keys are product abstract IDs, values are store IDs.
      *
-     * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConcretePageSearchTransfer>
      */
     public function getProductConcretePageSearchTransfersByProductAbstractStoreMap(array $productAbstractStoreMap): array;
 
     /**
      * @deprecated Will be removed without replacement.
      *
-     * @param int[] $productIds
+     * @param array<int> $productIds
      *
-     * @return \Generated\Shared\Transfer\SpyProductEntityTransfer[]
+     * @return array<\Generated\Shared\Transfer\SpyProductEntityTransfer>
      */
     public function getProductEntityTransfers(array $productIds): array;
 
     /**
      * @module PriceProduct
      *
-     * @param int[] $priceProductStoreIds
+     * @param array<int> $priceProductStoreIds
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getProductAbstractIdsByPriceProductStoreIds(array $priceProductStoreIds): array;
 
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     * @param int[] $productIds
+     * @param array<int> $productIds
      *
-     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     * @return array<\Generated\Shared\Transfer\SynchronizationDataTransfer>
      */
     public function getSynchronizationDataTransfersByFilterAndProductIds(FilterTransfer $filterTransfer, array $productIds = []): array;
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getEligibleForAddToCartProductAbstractsIds(array $productAbstractIds): array;
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getProductConcreteSkusByProductAbstractIds(array $productAbstractIds): array;
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
      */
     public function getConcreteProductsByProductAbstractIds(array $productAbstractIds): array;
 }

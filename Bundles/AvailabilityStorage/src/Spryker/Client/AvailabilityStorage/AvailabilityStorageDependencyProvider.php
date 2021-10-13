@@ -17,10 +17,19 @@ use Spryker\Client\Kernel\Container;
  */
 class AvailabilityStorageDependencyProvider extends AbstractDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_STORAGE = 'CLIENT_STORAGE';
 
+    /**
+     * @var string
+     */
     public const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
 
+    /**
+     * @var string
+     */
     public const PLUGINS_AVAILABILITY_STORAGE_STRATEGY = 'PLUGINS_AVAILABILITY_STORAGE_STRATEGY';
 
     /**
@@ -81,9 +90,9 @@ class AvailabilityStorageDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @return \Spryker\Client\AvailabilityStorageExtension\Dependency\Plugin\AvailabilityStorageStrategyPluginInterface[]
+     * @return array<\Spryker\Client\AvailabilityStorageExtension\Dependency\Plugin\AvailabilityStorageStrategyPluginInterface>
      */
-    public function getAvailabilityStorageStrategyPlugins(): array
+    protected function getAvailabilityStorageStrategyPlugins(): array
     {
         return [];
     }

@@ -14,15 +14,20 @@ use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 
 class CmsPageKeysToIdsConditionsStep implements DataImportStepInterface
 {
+    /**
+     * @var string
+     */
     protected const KEY_CONDITION_CMS_PAGE = 'cms_page';
 
     /**
      * @uses \Spryker\Zed\CmsSlotBlockDataImport\Business\Resolver\AllConditionResolver::KEY_ALL
+     * @var string
      */
     protected const KEY_ALL = 'all';
 
     /**
      * @uses \Spryker\Zed\CmsSlotBlockDataImport\Business\Resolver\CmsPageKeysToIdsConditionResolver::KEY_CMS_PAGE_IDS
+     * @var string
      */
     protected const KEY_CMS_PAGE_IDS = 'pageIds';
 

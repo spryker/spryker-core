@@ -10,7 +10,7 @@ namespace Spryker\Zed\Oms\Business\Lock;
 interface LockerInterface
 {
     /**
-     * @param string|string[] $identifiers
+     * @param array<string>|string $identifiers
      * @param string|null $details
      *
      * @return bool
@@ -18,7 +18,7 @@ interface LockerInterface
     public function acquire($identifiers, $details = null);
 
     /**
-     * @param string|string[] $identifiers
+     * @param array<string>|string $identifiers
      *
      * @return void
      */

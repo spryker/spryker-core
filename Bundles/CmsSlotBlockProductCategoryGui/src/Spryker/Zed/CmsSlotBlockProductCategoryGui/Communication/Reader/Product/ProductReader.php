@@ -15,12 +15,30 @@ use Spryker\Zed\CmsSlotBlockProductCategoryGui\Persistence\CmsSlotBlockProductCa
 
 class ProductReader implements ProductReaderInterface
 {
+    /**
+     * @var string
+     */
     protected const KEY_RESULTS = 'results';
+    /**
+     * @var string
+     */
     protected const KEY_PAGINATION = 'pagination';
+    /**
+     * @var string
+     */
     protected const KEY_PAGINATION_MORE = 'more';
+    /**
+     * @var string
+     */
     protected const KEY_DATA_ID = 'id';
+    /**
+     * @var string
+     */
     protected const KEY_DATA_TEXT = 'text';
 
+    /**
+     * @var int
+     */
     protected const DEFAULT_ITEMS_PER_PAGE = 10;
 
     /**
@@ -54,9 +72,9 @@ class ProductReader implements ProductReaderInterface
     }
 
     /**
-     * @param int[]|null $productAbstractIds
+     * @param array<int>|null $productAbstractIds
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getProductAbstracts(?array $productAbstractIds = []): array
     {
@@ -91,9 +109,9 @@ class ProductReader implements ProductReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer[] $productAbstractTransfers
+     * @param array<\Generated\Shared\Transfer\ProductAbstractTransfer> $productAbstractTransfers
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function mapProductAbstractTransfersToArray(array $productAbstractTransfers): array
     {
@@ -111,7 +129,7 @@ class ProductReader implements ProductReaderInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ProductAbstractTransfer[] $productAbstractTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ProductAbstractTransfer> $productAbstractTransfers
      *
      * @return array
      */

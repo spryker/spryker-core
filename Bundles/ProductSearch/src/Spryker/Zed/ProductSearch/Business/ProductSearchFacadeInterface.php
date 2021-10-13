@@ -72,7 +72,7 @@ interface ProductSearchFacadeInterface
      * @api
      *
      * @param int $idProduct
-     * @param \Generated\Shared\Transfer\LocaleTransfer[] $localeCollection
+     * @param array<\Generated\Shared\Transfer\LocaleTransfer> $localeCollection
      *
      * @return void
      */
@@ -85,7 +85,7 @@ interface ProductSearchFacadeInterface
      * @api
      *
      * @param int $idProduct
-     * @param \Generated\Shared\Transfer\LocaleTransfer[] $localeCollection
+     * @param array<\Generated\Shared\Transfer\LocaleTransfer> $localeCollection
      *
      * @return void
      */
@@ -231,7 +231,7 @@ interface ProductSearchFacadeInterface
      *
      * @api
      *
-     * @return \Generated\Shared\Transfer\ProductSearchAttributeTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductSearchAttributeTransfer>
      */
     public function getProductSearchAttributeList();
 
@@ -241,7 +241,7 @@ interface ProductSearchFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductSearchAttributeTransfer[] $productSearchAttributes
+     * @param array<\Generated\Shared\Transfer\ProductSearchAttributeTransfer> $productSearchAttributes
      *
      * @return void
      */

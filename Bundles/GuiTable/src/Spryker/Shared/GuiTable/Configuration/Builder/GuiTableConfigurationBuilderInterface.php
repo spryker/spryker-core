@@ -11,21 +11,90 @@ use Generated\Shared\Transfer\GuiTableConfigurationTransfer;
 
 interface GuiTableConfigurationBuilderInterface
 {
+    /**
+     * @var string
+     */
+    public const COLUMN_TYPE_AUTOCOMPLETE = 'autocomplete';
+    /**
+     * @var string
+     */
     public const COLUMN_TYPE_TEXT = 'text';
+    /**
+     * @var string
+     */
     public const COLUMN_TYPE_IMAGE = 'image';
+    /**
+     * @var string
+     */
     public const COLUMN_TYPE_DATE = 'date';
+    /**
+     * @var string
+     */
     public const COLUMN_TYPE_CHIP = 'chip';
+    /**
+     * @var string
+     */
     public const COLUMN_TYPE_LIST = 'list';
+    /**
+     * @var string
+     */
     public const COLUMN_TYPE_SELECT = 'select';
+    /**
+     * @var string
+     */
     public const COLUMN_TYPE_INPUT = 'input';
+    /**
+     * @var string
+     */
+    public const COLUMN_TYPE_DYNAMIC = 'dynamic';
 
+    /**
+     * @var string
+     */
     public const FILTER_TYPE_SELECT = 'select';
+    /**
+     * @var string
+     */
     public const FILTER_TYPE_TREE_SELECT = 'tree-select';
+    /**
+     * @var string
+     */
     public const FILTER_TYPE_DATE_RANGE = 'date-range';
 
-    public const ACTION_TYPE_FORM_OVERLAY = 'form-overlay';
-    public const ACTION_TYPE_HTML_OVERLAY = 'html-overlay';
-    public const ACTION_TYPE_URL = 'url';
+    /**
+     * @var string
+     */
+    public const ACTION_TYPE_DRAWER = 'drawer';
+    /**
+     * @var string
+     */
+    public const ACTION_TYPE_HTTP = 'http';
+
+    /**
+     * @var string
+     */
+    public const ACTION_DRAWER_COMPONENT_TYPE_AJAX_FORM = 'ajax-form';
+    /**
+     * @var string
+     */
+    public const ACTION_DRAWER_COMPONENT_TYPE_URL_HTML_RENDERER = 'url-html-renderer';
+
+    /**
+     * @var string
+     */
+    public const DATA_SOURCE_TYPE_INLINE = 'inline';
+    /**
+     * @var string
+     */
+    public const DATA_SOURCE_TYPE_DEPENDABLE = 'dependable';
+    /**
+     * @var string
+     */
+    public const DATA_SOURCE_TYPE_HTTP = 'http';
+    /**
+     * @var string
+     */
+    public const DATA_SOURCE_TYPE_INLINE_TABLE = 'inline.table';
 
     /**
      * @api
@@ -88,7 +157,7 @@ interface GuiTableConfigurationBuilderInterface
      * @param bool $isSortable
      * @param bool $isHideable
      * @param string|null $color
-     * @param mixed[]|null $colorMapping
+     * @param array<mixed>|null $colorMapping
      *
      * @return $this
      */
@@ -130,7 +199,7 @@ interface GuiTableConfigurationBuilderInterface
      * @param string $id
      * @param string $title
      * @param bool $isMultiselect
-     * @param string[] $values select values in format of ['value1' => 'title1', 'value2' => 'title2']
+     * @param array<string> $values select values in format of ['value1' => 'title1', 'value2' => 'title2']
      *
      * @return $this
      */
@@ -142,7 +211,7 @@ interface GuiTableConfigurationBuilderInterface
      * @param string $id
      * @param string $title
      * @param bool $isMultiselect
-     * @param \Generated\Shared\Transfer\OptionSelectGuiTableFilterTypeOptionsTransfer[] $options
+     * @param array<\Generated\Shared\Transfer\OptionSelectGuiTableFilterTypeOptionsTransfer> $options
      *
      * @return $this
      */
@@ -173,13 +242,15 @@ interface GuiTableConfigurationBuilderInterface
      * @param string $id
      * @param string $title
      * @param string $url
+     * @param string|null $method
      *
      * @return $this
      */
-    public function addRowActionOpenFormOverlay(
+    public function addRowActionDrawerAjaxForm(
         string $id,
         string $title,
-        string $url
+        string $url,
+        ?string $method = null
     );
 
     /**
@@ -190,13 +261,15 @@ interface GuiTableConfigurationBuilderInterface
      * @param string $id
      * @param string $title
      * @param string $url
+     * @param string|null $method
      *
      * @return $this
      */
-    public function addRowActionOpenPageOverlay(
+    public function addRowActionDrawerUrlHtmlRenderer(
         string $id,
         string $title,
-        string $url
+        string $url,
+        ?string $method = null
     );
 
     /**
@@ -207,27 +280,73 @@ interface GuiTableConfigurationBuilderInterface
      * @param string $id
      * @param string $title
      * @param string $url
+     * @param string|null $method
      *
      * @return $this
      */
-    public function addRowActionUrl(
+    public function addRowActionHttp(
         string $id,
         string $title,
-        string $url
+        string $url,
+        ?string $method = null
     );
 
     /**
-     * Adds a new batch action with type url for rows.
+     * Adds a new action with type `drawer` and component `ajax-form` for batch.
      *
      * @api
      *
      * @param string $id
      * @param string $title
      * @param string $url
+     * @param string|null $method
      *
      * @return $this
      */
-    public function addBatchActionUrl(string $id, string $title, string $url);
+    public function addBatchActionDrawerAjaxForm(
+        string $id,
+        string $title,
+        string $url,
+        ?string $method = null
+    );
+
+    /**
+     * Adds a new action with type `drawer` and component `url-html-renderer` for batch.
+     *
+     * @api
+     *
+     * @param string $id
+     * @param string $title
+     * @param string $url
+     * @param string|null $method
+     *
+     * @return $this
+     */
+    public function addBatchActionDrawerUrlHtmlRenderer(
+        string $id,
+        string $title,
+        string $url,
+        ?string $method = null
+    );
+
+    /**
+     * Adds a new action with type http for batch.
+     *
+     * @api
+     *
+     * @param string $id
+     * @param string $title
+     * @param string $url
+     * @param string|null $method
+     *
+     * @return $this
+     */
+    public function addBatchActionHttp(
+        string $id,
+        string $title,
+        string $url,
+        ?string $method = null
+    );
 
     /**
      * Sets an action ID which will be triggered when clicking on a row.
@@ -309,6 +428,17 @@ interface GuiTableConfigurationBuilderInterface
     public function setDataSourceUrl(string $url);
 
     /**
+     * Sets inline data.
+     *
+     * @api
+     *
+     * @param array<string[]> $data
+     *
+     * @return $this
+     */
+    public function setDataSourceInlineData(array $data);
+
+    /**
      * Sets a number if rows which will be displayed by default.
      *
      * @api
@@ -360,11 +490,24 @@ interface GuiTableConfigurationBuilderInterface
     public function setIsItemSelectionEnabled(bool $isItemSelectionEnabled);
 
     /**
+     * Sets table title.
+     *
      * @param string $title
      *
      * @return $this
      */
     public function setTableTitle(string $title);
+
+    /**
+     * Sets if pagination is enabled.
+     *
+     * @api
+     *
+     * @param bool $isPaginationEnabled
+     *
+     * @return $this
+     */
+    public function setIsPaginationEnabled(bool $isPaginationEnabled);
 
     /**
      * @api
@@ -401,7 +544,7 @@ interface GuiTableConfigurationBuilderInterface
      * @phpstan-param array<mixed> $cancelButton
      *
      * @param string $url
-     * @param string|null $method
+     * @param string $method
      * @param array|null $saveButton
      * @param array|null $cancelButton
      *
@@ -409,7 +552,7 @@ interface GuiTableConfigurationBuilderInterface
      */
     public function enableInlineDataEditing(
         string $url,
-        ?string $method = 'POST',
+        string $method = 'POST',
         ?array $saveButton = null,
         ?array $cancelButton = null
     );
@@ -422,11 +565,11 @@ interface GuiTableConfigurationBuilderInterface
      * @param string $id
      * @param string $title
      * @param string $inputType
-     * @param array|null $options
+     * @param array $options
      *
      * @return $this
      */
-    public function addEditableColumnInput(string $id, string $title, string $inputType = 'text', ?array $options = []);
+    public function addEditableColumnInput(string $id, string $title, string $inputType = 'text', array $options = []);
 
     /**
      * @api
@@ -437,6 +580,7 @@ interface GuiTableConfigurationBuilderInterface
      * @param string $title
      * @param bool $isMultiselect
      * @param array $options
+     * @param string|null $placeholder
      *
      * @return $this
      */
@@ -444,6 +588,21 @@ interface GuiTableConfigurationBuilderInterface
         string $id,
         string $title,
         bool $isMultiselect,
-        array $options
+        array $options,
+        ?string $placeholder = null
     );
+
+    /**
+     * @api
+     *
+     * @param string $id
+     * @param string $title
+     * @param string $dependableColumn
+     * @param string $dependableUrl
+     *
+     * @throws \Spryker\Shared\GuiTable\Exception\InvalidConfigurationException
+     *
+     * @return $this
+     */
+    public function addEditableColumnDynamic(string $id, string $title, string $dependableColumn, string $dependableUrl);
 }

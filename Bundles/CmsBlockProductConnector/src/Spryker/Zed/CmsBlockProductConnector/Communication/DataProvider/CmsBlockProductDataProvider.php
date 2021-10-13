@@ -15,6 +15,9 @@ use Spryker\Zed\CmsBlockProductConnector\Persistence\CmsBlockProductConnectorRep
 
 class CmsBlockProductDataProvider
 {
+    /**
+     * @var string
+     */
     public const OPTION_PRODUCT_AUTOCOMPLETE_URL = '/cms-block-product-connector/product-autocomplete/';
 
     /**
@@ -82,7 +85,7 @@ class CmsBlockProductDataProvider
     /**
      * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getAssignedProductAbstracts(CmsBlockTransfer $cmsBlockTransfer): array
     {
@@ -104,9 +107,9 @@ class CmsBlockProductDataProvider
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer[] $productAbstractTransfers
+     * @param array<\Generated\Shared\Transfer\ProductAbstractTransfer> $productAbstractTransfers
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function transformProductAbstractTransfersToSelectFieldData(array $productAbstractTransfers): array
     {

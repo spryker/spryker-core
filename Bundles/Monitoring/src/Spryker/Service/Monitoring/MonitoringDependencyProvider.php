@@ -12,6 +12,9 @@ use Spryker\Service\Kernel\Container;
 
 class MonitoringDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const MONITORING_EXTENSIONS = 'monitoring extensions';
 
     /**
@@ -41,7 +44,7 @@ class MonitoringDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Service\MonitoringExtension\Dependency\Plugin\MonitoringExtensionPluginInterface[]
+     * @return array<\Spryker\Service\MonitoringExtension\Dependency\Plugin\MonitoringExtensionPluginInterface>
      */
     protected function getMonitoringExtensions(): array
     {

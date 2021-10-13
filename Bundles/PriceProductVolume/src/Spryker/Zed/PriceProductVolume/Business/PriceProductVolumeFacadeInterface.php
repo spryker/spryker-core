@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\PriceProductVolume\Business;
 
+use ArrayObject;
+use Generated\Shared\Transfer\ValidationResponseTransfer;
+
 interface PriceProductVolumeFacadeInterface
 {
     /**
@@ -15,9 +18,9 @@ interface PriceProductVolumeFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function extractPriceProductVolumesForProductAbstract(array $priceProductTransfers): array;
 
@@ -28,9 +31,36 @@ interface PriceProductVolumeFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function extractPriceProductVolumesForProductConcrete(array $priceProductTransfers): array;
+
+    /**
+     * Specification:
+     * - Extracts additional product prices from price product data volume prices
+     *
+     * @api
+     *
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
+     *
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
+     */
+    public function extractPriceProductVolumeTransfersFromArray(array $priceProductTransfers): array;
+
+    /**
+     * Specification:
+     * - Provides validation for a collection of PriceProduct transfers.
+     * - Returns ValidationResponseTransfer.isSuccess = true if validation is passed, false otherwise.
+     *
+     * @api
+     *
+     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
+     *
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
+     *
+     * @return \Generated\Shared\Transfer\ValidationResponseTransfer
+     */
+    public function validateVolumePrices(ArrayObject $priceProductTransfers): ValidationResponseTransfer;
 }

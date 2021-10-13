@@ -9,6 +9,9 @@ namespace Spryker\Zed\SalesDataExport\Persistence\Propel\Mapper;
 
 class SalesOrderMapper
 {
+    /**
+     * @var string
+     */
     public const KEY_ORDER_COMMENTS = 'order_comments';
 
     /**
@@ -19,7 +22,7 @@ class SalesOrderMapper
     /**
      * @phpstan-var array<string, string>
      *
-     * @var string[]
+     * @var array<string>
      */
     protected $fieldMapping = [
         'order_reference' => 'SpySalesOrder.OrderReference',
@@ -73,7 +76,7 @@ class SalesOrderMapper
     /**
      * @phpstan-return array<string, string>
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getFieldMapping(): array
     {
@@ -82,7 +85,7 @@ class SalesOrderMapper
 
     /**
      * @param array $salesOrderRows
-     * @param string[] $fields
+     * @param array<string> $fields
      *
      * @return array
      */

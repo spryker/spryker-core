@@ -49,14 +49,14 @@ interface FileManagerRepositoryInterface
     /**
      * @param int $idFileDirectory
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\FileTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\FileTransfer>
      */
     public function getDirectoryFiles(int $idFileDirectory);
 
     /**
      * @param int|null $idParentFileDirectory
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\FileDirectoryTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\FileDirectoryTransfer>
      */
     public function getFileDirectories(?int $idParentFileDirectory = null);
 
@@ -80,9 +80,9 @@ interface FileManagerRepositoryInterface
     public function getAllowedMimeTypes();
 
     /**
-     * @param int[] $idFiles
+     * @param array<int> $idFiles
      *
-     * @return \Generated\Shared\Transfer\FileTransfer[]
+     * @return array<\Generated\Shared\Transfer\FileTransfer>
      */
     public function getFilesByIds(array $idFiles): array;
 

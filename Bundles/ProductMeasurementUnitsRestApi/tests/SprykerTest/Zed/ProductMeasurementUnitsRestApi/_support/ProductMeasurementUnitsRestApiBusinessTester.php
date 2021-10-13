@@ -37,8 +37,17 @@ class ProductMeasurementUnitsRestApiBusinessTester extends Actor
 {
     use _generated\ProductMeasurementUnitsRestApiBusinessTesterActions;
 
+    /**
+     * @var string
+     */
     public const PRODUCT_CONCRETE_SKU = 'PRODUCT_CONCRETE_SKU';
+    /**
+     * @var string
+     */
     public const DIFFERENT_PRODUCT_CONCRETE_SKU = 'DIFFERENT_PRODUCT_CONCRETE_SKU';
+    /**
+     * @var string
+     */
     public const ID_PRODUCT_MEASUREMENT_SALES_UNIT_ID = '1';
 
     /**

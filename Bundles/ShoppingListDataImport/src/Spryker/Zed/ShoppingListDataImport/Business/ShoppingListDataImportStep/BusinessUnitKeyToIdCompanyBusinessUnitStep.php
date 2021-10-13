@@ -17,7 +17,7 @@ use Spryker\Zed\ShoppingListDataImport\Business\DataSet\ShoppingListCompanyBusin
 class BusinessUnitKeyToIdCompanyBusinessUnitStep implements DataImportStepInterface
 {
     /**
-     * @var int[]
+     * @var array<int>
      */
     protected $idCompanyBusinessUnitCache = [];
 

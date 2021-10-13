@@ -18,15 +18,42 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class RenderFormController extends AbstractController
 {
+    /**
+     * @var string
+     */
     public const URL_PARAM_IDENTIFIER = 'identifier';
+    /**
+     * @var string
+     */
     public const URL_PARAM_ID_STATE = 'id-state';
+    /**
+     * @var string
+     */
     public const URL_PARAM_ID_PROCESS = 'id-process';
+    /**
+     * @var string
+     */
     public const URL_PARAM_STATE_MACHINE_NAME = 'state-machine-name';
+    /**
+     * @var string
+     */
     public const URL_PARAM_PROCESS_NAME = 'process-name';
+    /**
+     * @var string
+     */
     public const URL_PARAM_REDIRECT = 'redirect';
+    /**
+     * @var string
+     */
     public const URL_PARAM_EVENTS = 'events';
+    /**
+     * @var string
+     */
     public const URL_PARAM_EVENT_NAME = 'event-name';
 
+    /**
+     * @var string
+     */
     public const DEFAULT_REDIRECT_URL = '/state-machine/list';
 
     /**

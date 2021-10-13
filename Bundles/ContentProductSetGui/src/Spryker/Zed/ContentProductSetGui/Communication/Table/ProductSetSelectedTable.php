@@ -18,20 +18,56 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class ProductSetSelectedTable extends AbstractTable
 {
+    /**
+     * @var string
+     */
     public const TABLE_IDENTIFIER = 'product-set-selected-table';
+    /**
+     * @var string
+     */
     public const TABLE_CLASS = 'product-set-selected-table gui-table-data';
+    /**
+     * @var string
+     */
     public const BASE_URL = '/content-product-set-gui/product-set/';
 
+    /**
+     * @var string
+     */
     public const COL_ALIAS_NAME = 'name';
 
+    /**
+     * @var string
+     */
     public const COL_ID_PRODUCT_SET = 'ID';
+    /**
+     * @var string
+     */
     public const COL_NAME = 'Name';
+    /**
+     * @var string
+     */
     public const COL_COUNT = 'Number of Products';
+    /**
+     * @var string
+     */
     public const COL_STATUS = 'Status';
+    /**
+     * @var string
+     */
     public const COL_ACTIONS = 'Actions';
 
+    /**
+     * @var string
+     */
     public const TITLE_BUTTON_DELETE = 'Delete';
+    /**
+     * @var string
+     */
     public const CLASS_BUTTON_DELETE = 'js-delete-product-set btn btn-sm btn-outline btn-danger';
+    /**
+     * @var string
+     */
     public const ICON_BUTTON_DELETE = 'fa-trash';
 
     /**

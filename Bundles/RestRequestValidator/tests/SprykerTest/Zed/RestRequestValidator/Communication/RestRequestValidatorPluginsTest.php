@@ -38,10 +38,25 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class RestRequestValidatorPluginsTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const VALIDATION_CACHE_FILENAME_PATTERN = '%s/result.validation.yaml';
+    /**
+     * @var string
+     */
     protected const VALIDATION_CACHE_WRONG_FILENAME_PATTERN = '%s/wrong.validation.yaml';
+    /**
+     * @var string
+     */
     protected const STORE_NAME_DE = 'DE';
+    /**
+     * @var string
+     */
     protected const STORE_NAME_AT = 'AT';
+    /**
+     * @var array
+     */
     protected const CORRECT_ENDPOINT_DATA = [
         'emailField' => 'tester@test.com',
         'stringField' => 'xxxxxxxx',
@@ -51,6 +66,9 @@ class RestRequestValidatorPluginsTest extends Unit
             'test_email' => 'tester@test.com',
         ],
     ];
+    /**
+     * @var array
+     */
     protected const INCORRECT_ENDPOINT_DATA = [
         'stringField' => 'xxxx',
         'integerField' => 111111,

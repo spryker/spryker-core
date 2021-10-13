@@ -21,6 +21,9 @@ use Spryker\Shared\Config\Profiler;
  */
 class ProfilerTest extends Unit
 {
+    /**
+     * @var string
+     */
     public const PROFILE_KEY = 'profile-key';
 
     /**

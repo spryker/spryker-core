@@ -14,6 +14,9 @@ use Spryker\Client\ProductListStorage\ProductListProductAbstractStorage\ProductL
 
 class ProductAbstractProductRestrictionFilter extends AbstractProductRestrictionFilter
 {
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_WRONG_PRODUCT_LIST_TRANSFER_TYPE = 'Type `%s` is not supported for getting concrete product id. Please use `%s` instead.';
 
     /**
@@ -34,9 +37,9 @@ class ProductAbstractProductRestrictionFilter extends AbstractProductRestriction
     }
 
     /**
-     * @param int[] $productIds
+     * @param array<int> $productIds
      *
-     * @return \Generated\Shared\Transfer\ProductAbstractProductListStorageTransfer[]|\Generated\Shared\Transfer\ProductConcreteProductListStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductAbstractProductListStorageTransfer|\Generated\Shared\Transfer\ProductConcreteProductListStorageTransfer>
      */
     protected function getProductListStorageTransfers(array $productIds): array
     {

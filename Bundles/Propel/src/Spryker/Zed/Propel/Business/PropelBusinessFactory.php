@@ -26,6 +26,8 @@ use Spryker\Zed\Propel\Business\Model\PropelSchema;
 use Spryker\Zed\Propel\Business\Model\PropelSchemaFinder;
 use Spryker\Zed\Propel\Business\Model\PropelSchemaMerger;
 use Spryker\Zed\Propel\Business\Model\PropelSchemaWriter;
+use Spryker\Zed\Propel\Business\Model\PropelTableMapLoader;
+use Spryker\Zed\Propel\Business\Model\PropelTableMapLoaderInterface;
 use Spryker\Zed\Propel\Business\Model\Schema\Validator\PropelSchemaValidator;
 use Spryker\Zed\Propel\Business\Model\Schema\XmlValidator\PropelSchemaXmlNameValidator;
 use Spryker\Zed\Propel\Business\SchemaElementFilter\PropelSchemaElementFilter;
@@ -238,9 +240,17 @@ class PropelBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\Propel\Business\Model\PropelTableMapLoaderInterface
+     */
+    public function createPropelTableMapLoader(): PropelTableMapLoaderInterface
+    {
+        return new PropelTableMapLoader($this->getConfig());
+    }
+
+    /**
      * @deprecated Please add the needed Commands into your ConsoleDependencyProvider
      *
-     * @return \Symfony\Component\Console\Command\Command[]
+     * @return array<\Symfony\Component\Console\Command\Command>
      */
     public function getConsoleCommands()
     {
@@ -376,8 +386,9 @@ class PropelBusinessFactory extends AbstractBusinessFactory
     {
         $adapterCollection = new AdapterCollection($this->getConfig()->getCurrentDatabaseEngine());
 
-        $adapterCollection->addAdapter($this->createAdapterFactory()->createMySqlAdapter());
-        $adapterCollection->addAdapter($this->createAdapterFactory()->createPostgreSqlAdapter());
+        $adapterFactory = $this->createAdapterFactory();
+        $adapterCollection->addAdapter($adapterFactory->createMySqlAdapter());
+        $adapterCollection->addAdapter($adapterFactory->createPostgreSqlAdapter());
 
         return $adapterCollection;
     }
@@ -439,7 +450,7 @@ class PropelBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Propel\Dependency\Plugin\PropelSchemaElementFilterPluginInterface[]
+     * @return array<\Spryker\Zed\Propel\Dependency\Plugin\PropelSchemaElementFilterPluginInterface>
      */
     public function getPropelSchemaElementFilterPlugins(): array
     {

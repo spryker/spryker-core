@@ -46,9 +46,9 @@ class ProductMeasurementUnitReader implements ProductMeasurementUnitReaderInterf
     }
 
     /**
-     * @param int[] $productMeasurementUnitIds
+     * @param array<int> $productMeasurementUnitIds
      *
-     * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductMeasurementUnitTransfer>
      */
     public function getProductMeasurementUnits(array $productMeasurementUnitIds): array
     {
@@ -76,9 +76,9 @@ class ProductMeasurementUnitReader implements ProductMeasurementUnitReaderInterf
 
     /**
      * @param string $mappingType
-     * @param string[] $identifiers
+     * @param array<string> $identifiers
      *
-     * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductMeasurementUnitTransfer>
      */
     public function getProductMeasurementUnitsByMapping(string $mappingType, array $identifiers): array
     {

@@ -16,6 +16,9 @@ use Spryker\Zed\PriceProductScheduleDataImport\Business\Model\DataSet\PriceProdu
 
 class PriceProductScheduleWriterStep implements DataImportStepInterface
 {
+    /**
+     * @var string
+     */
     protected const EXCEPTION_MESSAGE = 'One of "%s" or "%s" must be in the data set. Given: "%s"';
 
     /**

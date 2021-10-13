@@ -14,12 +14,12 @@ use Spryker\Zed\DataImport\Business\Model\DataImporterInterface;
 class DataImporterCollectionCollector implements DataImporterCollectionCollectorInterface
 {
     /**
-     * @var (\Spryker\Zed\DataImport\Dependency\Plugin\DataImportPluginInterface|array)[]
+     * @var array<\Spryker\Zed\DataImport\Dependency\Plugin\DataImportPluginInterface|array>
      */
     protected $dataImporterPlugins;
 
     /**
-     * @param (\Spryker\Zed\DataImport\Dependency\Plugin\DataImportPluginInterface|array)[] $dataImporterPlugins
+     * @param array<\Spryker\Zed\DataImport\Dependency\Plugin\DataImportPluginInterface|array> $dataImporterPlugins
      */
     public function __construct(array $dataImporterPlugins)
     {

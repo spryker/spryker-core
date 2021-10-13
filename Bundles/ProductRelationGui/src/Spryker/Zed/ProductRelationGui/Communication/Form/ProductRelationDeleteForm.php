@@ -17,6 +17,9 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 class ProductRelationDeleteForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const FIELD_SUBMIT = 'submit';
 
     /**

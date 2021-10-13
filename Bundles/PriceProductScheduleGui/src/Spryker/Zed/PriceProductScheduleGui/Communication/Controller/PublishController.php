@@ -17,12 +17,15 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class PublishController extends AbstractController
 {
+    /**
+     * @var string
+     */
     public const URL_IMPORT_PAGE = '/price-product-schedule-gui/import';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function indexAction(Request $request)
     {
@@ -52,7 +55,7 @@ class PublishController extends AbstractController
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\PriceProductScheduleListErrorTransfer[] $priceProductScheduleListErrorTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductScheduleListErrorTransfer> $priceProductScheduleListErrorTransfers
      *
      * @return void
      */

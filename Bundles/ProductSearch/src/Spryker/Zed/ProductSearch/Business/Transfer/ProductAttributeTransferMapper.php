@@ -28,7 +28,7 @@ class ProductAttributeTransferMapper implements ProductAttributeTransferMapperIn
     protected $glossaryFacade;
 
     /**
-     * @var \Spryker\Shared\ProductSearch\Code\KeyBuilder\GlossaryKeyBuilderInterface $glossaryKeyBuilder
+     * @var \Spryker\Shared\ProductSearch\Code\KeyBuilder\GlossaryKeyBuilderInterface
      */
     protected $glossaryKeyBuilder;
 

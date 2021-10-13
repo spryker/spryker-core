@@ -12,9 +12,18 @@ use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToMessengerFacadeInte
 
 class ShoppingListItemMessageAdder implements ShoppingListItemMessageAdderInterface
 {
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEM_ADD_SUCCESS = 'customer.account.shopping_list.item.add.success';
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEM_ADD_FAILED = 'customer.account.shopping_list.item.add.failed';
 
+    /**
+     * @var string
+     */
     protected const GLOSSARY_PARAM_SKU = '%sku%';
 
     /**

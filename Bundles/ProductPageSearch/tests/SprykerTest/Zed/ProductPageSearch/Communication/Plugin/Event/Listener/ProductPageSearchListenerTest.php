@@ -76,7 +76,13 @@ use Spryker\Zed\Url\Dependency\UrlEvents;
  */
 class ProductPageSearchListenerTest extends Unit
 {
+    /**
+     * @var int
+     */
     protected const NUMBER_OF_LOCALES = 1;
+    /**
+     * @var int
+     */
     protected const NUMBER_OF_STORES = 3;
 
     /**

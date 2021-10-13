@@ -48,7 +48,8 @@ class DropMySqlDatabaseTest extends Unit
             ->method('getConnection')
             ->willReturn($pdoMock);
         $dropMySqlDatabaseMock->expects($this->once())
-            ->method('getQuery');
+            ->method('getQuery')
+            ->willReturn('');
         $pdoMock->expects($this->once())
             ->method('exec');
 

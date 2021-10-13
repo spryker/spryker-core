@@ -9,19 +9,49 @@ namespace Spryker\Zed\Product\Dependency;
 
 interface ProductEvents
 {
+    /**
+     * @var string
+     */
     public const PRODUCT_ABSTRACT_BEFORE_CREATE = 'Product.product_abstract.before.create';
+    /**
+     * @var string
+     */
     public const PRODUCT_ABSTRACT_BEFORE_UPDATE = 'Product.product_abstract.before.update';
 
+    /**
+     * @var string
+     */
     public const PRODUCT_CONCRETE_BEFORE_CREATE = 'Product.product_concrete.before.create';
+    /**
+     * @var string
+     */
     public const PRODUCT_CONCRETE_BEFORE_UPDATE = 'Product.product_concrete.before.update';
 
+    /**
+     * @var string
+     */
     public const PRODUCT_ABSTRACT_AFTER_UPDATE = 'Product.product_abstract.after.update';
+    /**
+     * @var string
+     */
     public const PRODUCT_ABSTRACT_AFTER_CREATE = 'Product.product_abstract.after.create';
 
+    /**
+     * @var string
+     */
     public const PRODUCT_CONCRETE_AFTER_CREATE = 'Product.product_concrete.after.create';
+    /**
+     * @var string
+     */
     public const PRODUCT_CONCRETE_AFTER_UPDATE = 'Product.product_concrete.after.update';
 
+    /**
+     * @var string
+     */
     public const PRODUCT_ABSTRACT_READ = 'Product.product_abstract.read';
+    /**
+     * @var string
+     */
     public const PRODUCT_CONCRETE_READ = 'Product.product_concrete.read';
 
     /**
@@ -29,6 +59,7 @@ interface ProductEvents
      * - This events will be used for product_abstract publishing
      *
      * @api
+     * @var string
      */
     public const PRODUCT_ABSTRACT_PUBLISH = 'Product.product_abstract.publish';
 
@@ -37,6 +68,7 @@ interface ProductEvents
      * - This events will be used for product_abstract un-publishing
      *
      * @api
+     * @var string
      */
     public const PRODUCT_ABSTRACT_UNPUBLISH = 'Product.product_abstract.unpublish';
 
@@ -45,6 +77,7 @@ interface ProductEvents
      * - This events will be used for product_abstract publishing
      *
      * @api
+     * @var string
      */
     public const PRODUCT_CONCRETE_PUBLISH = 'Product.product_concrete.publish';
 
@@ -53,6 +86,7 @@ interface ProductEvents
      * - This events will be used for product_abstract un-publishing
      *
      * @api
+     * @var string
      */
     public const PRODUCT_CONCRETE_UNPUBLISH = 'Product.product_concrete.unpublish';
 
@@ -61,6 +95,7 @@ interface ProductEvents
      * - Represents spy_product entity creation.
      *
      * @api
+     * @var string
      */
     public const ENTITY_SPY_PRODUCT_CREATE = 'Entity.spy_product.create';
 
@@ -69,6 +104,7 @@ interface ProductEvents
      * - Represents spy_product entity changes.
      *
      * @api
+     * @var string
      */
     public const ENTITY_SPY_PRODUCT_UPDATE = 'Entity.spy_product.update';
 
@@ -77,6 +113,7 @@ interface ProductEvents
      * - Represents spy_product entity deletion.
      *
      * @api
+     * @var string
      */
     public const ENTITY_SPY_PRODUCT_DELETE = 'Entity.spy_product.delete';
 
@@ -85,6 +122,7 @@ interface ProductEvents
      * - Represents spy_product_localized_attributes entity creation.
      *
      * @api
+     * @var string
      */
     public const ENTITY_SPY_PRODUCT_LOCALIZED_ATTRIBUTES_CREATE = 'Entity.spy_product_localized_attributes.create';
 
@@ -93,6 +131,7 @@ interface ProductEvents
      * - Represents spy_product_localized_attributes entity changes.
      *
      * @api
+     * @var string
      */
     public const ENTITY_SPY_PRODUCT_LOCALIZED_ATTRIBUTES_UPDATE = 'Entity.spy_product_localized_attributes.update';
 
@@ -101,6 +140,7 @@ interface ProductEvents
      * - Represents spy_product_localized_attributes entity deletion.
      *
      * @api
+     * @var string
      */
     public const ENTITY_SPY_PRODUCT_LOCALIZED_ATTRIBUTES_DELETE = 'Entity.spy_product_localized_attributes.delete';
 
@@ -109,6 +149,7 @@ interface ProductEvents
      * - Represents spy_product_abstract entity creation.
      *
      * @api
+     * @var string
      */
     public const ENTITY_SPY_PRODUCT_ABSTRACT_CREATE = 'Entity.spy_product_abstract.create';
 
@@ -117,6 +158,7 @@ interface ProductEvents
      * - Represents spy_product_abstract entity changes.
      *
      * @api
+     * @var string
      */
     public const ENTITY_SPY_PRODUCT_ABSTRACT_UPDATE = 'Entity.spy_product_abstract.update';
 
@@ -125,6 +167,7 @@ interface ProductEvents
      * - Represents spy_product_abstract entity deletion.
      *
      * @api
+     * @var string
      */
     public const ENTITY_SPY_PRODUCT_ABSTRACT_DELETE = 'Entity.spy_product_abstract.delete';
 
@@ -133,6 +176,7 @@ interface ProductEvents
      * - Represents spy_product_abstract_localized_attributes entity creation.
      *
      * @api
+     * @var string
      */
     public const ENTITY_SPY_PRODUCT_ABSTRACT_LOCALIZED_ATTRIBUTES_CREATE = 'Entity.spy_product_abstract_localized_attributes.create';
 
@@ -141,6 +185,7 @@ interface ProductEvents
      * - Represents spy_product_abstract_localized_attributes entity changes.
      *
      * @api
+     * @var string
      */
     public const ENTITY_SPY_PRODUCT_ABSTRACT_LOCALIZED_ATTRIBUTES_UPDATE = 'Entity.spy_product_abstract_localized_attributes.update';
 
@@ -149,6 +194,7 @@ interface ProductEvents
      * - Represents spy_product_abstract_localized_attributes entity deletion.
      *
      * @api
+     * @var string
      */
     public const ENTITY_SPY_PRODUCT_ABSTRACT_LOCALIZED_ATTRIBUTES_DELETE = 'Entity.spy_product_abstract_localized_attributes.delete';
 
@@ -157,6 +203,7 @@ interface ProductEvents
      * - Represents spy_product_attribute_key entity creation.
      *
      * @api
+     * @var string
      */
     public const ENTITY_SPY_PRODUCT_ATTRIBUTE_KEY_CREATE = 'Entity.spy_product_attribute_key.create';
 
@@ -165,6 +212,7 @@ interface ProductEvents
      * - Represents spy_product_attribute_key entity changes.
      *
      * @api
+     * @var string
      */
     public const ENTITY_SPY_PRODUCT_ATTRIBUTE_KEY_UPDATE = 'Entity.spy_product_attribute_key.update';
 
@@ -173,6 +221,7 @@ interface ProductEvents
      * - Represents spy_product_attribute_key entity deletion.
      *
      * @api
+     * @var string
      */
     public const ENTITY_SPY_PRODUCT_ATTRIBUTE_KEY_DELETE = 'Entity.spy_product_attribute_key.delete';
 
@@ -181,6 +230,7 @@ interface ProductEvents
      * - Represents spy_product_abstract_store entity creation.
      *
      * @api
+     * @var string
      */
     public const ENTITY_SPY_PRODUCT_ABSTRACT_STORE_CREATE = 'Entity.spy_product_abstract_store.create';
 
@@ -189,6 +239,7 @@ interface ProductEvents
      * - Represents spy_product_abstract_store entity changes.
      *
      * @api
+     * @var string
      */
     public const ENTITY_SPY_PRODUCT_ABSTRACT_STORE_UPDATE = 'Entity.spy_product_abstract_store.update';
 
@@ -197,6 +248,7 @@ interface ProductEvents
      * - Represents spy_product_abstract_store entity deletion.
      *
      * @api
+     * @var string
      */
     public const ENTITY_SPY_PRODUCT_ABSTRACT_STORE_DELETE = 'Entity.spy_product_abstract_store.delete';
 }

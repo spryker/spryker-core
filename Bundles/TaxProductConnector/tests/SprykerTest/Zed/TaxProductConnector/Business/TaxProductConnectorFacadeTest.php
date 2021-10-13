@@ -110,6 +110,42 @@ class TaxProductConnectorFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testExpandProductAbstractExpandsProductTransferWithTaxSet(): void
+    {
+        // Arrange
+        $taxProductConnectorFacade = $this->createTaxProductConnectorFacade();
+        $taxSetTransfer = $this->createTaxSet();
+        $productAbstractTransfer = $this->createProductAbstract();
+        $productAbstractTransfer->setIdTaxSet($taxSetTransfer->getIdTaxSet());
+        $taxProductConnectorFacade->saveTaxSetToProductAbstract($productAbstractTransfer);
+        $productAbstractTransfer->setIdTaxSet(null);
+
+        // Act
+        $productAbstractTransfer = $taxProductConnectorFacade->expandProductAbstract($productAbstractTransfer);
+
+        // Assert
+        $this->assertSame($productAbstractTransfer->getIdTaxSet(), $taxSetTransfer->getIdTaxSet());
+    }
+
+    /**
+     * @return void
+     */
+    public function testExpandProductAbstractDoesNothingForProductWithoutTaxSet(): void
+    {
+        // Arrange
+        $taxProductConnectorFacade = $this->createTaxProductConnectorFacade();
+        $productAbstractTransfer = $this->createProductAbstract();
+
+        // Act
+        $productAbstractTransfer = $taxProductConnectorFacade->expandProductAbstract($productAbstractTransfer);
+
+        // Assert
+        $this->assertNull($productAbstractTransfer->getIdTaxSet());
+    }
+
+    /**
+     * @return void
+     */
     public function testAddTaxSetWhenTaxSetDoesNotExistShouldThrowException(): void
     {
         $this->expectException(TaxSetNotFoundException::class);
@@ -235,7 +271,7 @@ class TaxProductConnectorFacadeTest extends Unit
     }
 
     /**
-     * @return \Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginReadInterface[]
+     * @return array<\Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginReadInterface>
      */
     protected function getProductAbstractReadPlugins(): array
     {

@@ -8,6 +8,7 @@
 namespace Spryker\Zed\MerchantProductOfferSearch\Persistence;
 
 use Generated\Shared\Transfer\ProductAbstractMerchantTransfer;
+use Orm\Zed\Merchant\Persistence\Map\SpyMerchantStoreTableMap;
 use Orm\Zed\Merchant\Persistence\Map\SpyMerchantTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
@@ -21,18 +22,36 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
  */
 class MerchantProductOfferSearchRepository extends AbstractRepository implements MerchantProductOfferSearchRepositoryInterface
 {
+    /**
+     * @var string
+     */
     protected const KEY_ABSTRACT_PRODUCT_ID = 'id';
+    /**
+     * @var string
+     */
     protected const KEY_MERCHANT_NAME = 'name';
+    /**
+     * @var string
+     */
     protected const KEY_MERCHANT_REFERENCE = 'reference';
+    /**
+     * @var string
+     */
     protected const KEY_MERCHANT_NAMES = 'names';
+    /**
+     * @var string
+     */
     protected const KEY_MERCHANT_REFERENCES = 'references';
+    /**
+     * @var string
+     */
     protected const KEY_STORE_NAME = 'storeName';
 
     /**
      * @module Store
      * @module Merchant
      *
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return array
      */
@@ -40,12 +59,10 @@ class MerchantProductOfferSearchRepository extends AbstractRepository implements
     {
         $productOfferPropelQuery = $this->getFactory()->getProductOfferPropelQuery();
         $productOfferPropelQuery->filterByIsActive(true)
-            ->useSpyMerchantQuery()
-                ->useSpyMerchantStoreQuery()
-                    ->joinSpyStore()
-                ->endUse()
-                ->filterByIsActive(true)
-            ->endUse()
+            ->addJoin(SpyProductOfferTableMap::COL_MERCHANT_REFERENCE, SpyMerchantTableMap::COL_MERCHANT_REFERENCE, Criteria::INNER_JOIN)
+            ->addAnd($productOfferPropelQuery->getNewCriterion(SpyMerchantTableMap::COL_IS_ACTIVE, true, Criteria::EQUAL))
+            ->addJoin(SpyMerchantTableMap::COL_ID_MERCHANT, SpyMerchantStoreTableMap::COL_FK_MERCHANT, Criteria::INNER_JOIN)
+            ->addJoin(SpyMerchantStoreTableMap::COL_FK_STORE, SpyStoreTableMap::COL_ID_STORE, Criteria::INNER_JOIN)
             ->addJoin(SpyProductOfferTableMap::COL_CONCRETE_SKU, SpyProductTableMap::COL_SKU, Criteria::INNER_JOIN)
             ->addJoin(SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT, SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT, Criteria::INNER_JOIN)
             ->addAnd($productOfferPropelQuery->getNewCriterion(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT, $productAbstractIds, Criteria::IN));
@@ -76,9 +93,9 @@ class MerchantProductOfferSearchRepository extends AbstractRepository implements
     }
 
     /**
-     * @param int[] $merchantIds
+     * @param array<int> $merchantIds
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getProductAbstractIdsByMerchantIds(array $merchantIds): array
     {
@@ -86,7 +103,7 @@ class MerchantProductOfferSearchRepository extends AbstractRepository implements
         $productAbstractPropelQuery
             ->innerJoinSpyProduct()
             ->addJoin(SpyProductTableMap::COL_SKU, SpyProductOfferTableMap::COL_CONCRETE_SKU, Criteria::INNER_JOIN)
-            ->addJoin(SpyProductOfferTableMap::COL_FK_MERCHANT, SpyMerchantTableMap::COL_ID_MERCHANT, Criteria::INNER_JOIN)
+            ->addJoin(SpyProductOfferTableMap::COL_MERCHANT_REFERENCE, SpyMerchantTableMap::COL_MERCHANT_REFERENCE, Criteria::INNER_JOIN)
             ->addAnd($productAbstractPropelQuery->getNewCriterion(SpyMerchantTableMap::COL_ID_MERCHANT, $merchantIds, Criteria::IN));
 
         return $productAbstractPropelQuery
@@ -97,9 +114,9 @@ class MerchantProductOfferSearchRepository extends AbstractRepository implements
     }
 
     /**
-     * @param int[] $productOfferIds
+     * @param array<int> $productOfferIds
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getProductAbstractIdsByProductOfferIds(array $productOfferIds): array
     {
@@ -107,7 +124,7 @@ class MerchantProductOfferSearchRepository extends AbstractRepository implements
         $productAbstractPropelQuery
             ->innerJoinSpyProduct()
             ->addJoin(SpyProductTableMap::COL_SKU, SpyProductOfferTableMap::COL_CONCRETE_SKU, Criteria::INNER_JOIN)
-            ->addJoin(SpyProductOfferTableMap::COL_FK_MERCHANT, SpyMerchantTableMap::COL_ID_MERCHANT, Criteria::INNER_JOIN)
+            ->addJoin(SpyProductOfferTableMap::COL_MERCHANT_REFERENCE, SpyMerchantTableMap::COL_MERCHANT_REFERENCE, Criteria::INNER_JOIN)
             ->addAnd($productAbstractPropelQuery->getNewCriterion(SpyProductOfferTableMap::COL_ID_PRODUCT_OFFER, $productOfferIds, Criteria::IN));
 
         return $productAbstractPropelQuery

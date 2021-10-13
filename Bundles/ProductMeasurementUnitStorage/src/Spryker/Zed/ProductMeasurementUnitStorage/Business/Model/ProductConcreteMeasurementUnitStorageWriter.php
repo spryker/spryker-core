@@ -58,7 +58,7 @@ class ProductConcreteMeasurementUnitStorageWriter implements ProductConcreteMeas
     }
 
     /**
-     * @param int[] $productIds
+     * @param array<int> $productIds
      *
      * @return void
      */
@@ -82,7 +82,7 @@ class ProductConcreteMeasurementUnitStorageWriter implements ProductConcreteMeas
 
     /**
      * @param int $idProduct
-     * @param \Generated\Shared\Transfer\SpyProductConcreteMeasurementUnitStorageEntityTransfer[] $storageEntityTransfers Keys are store names
+     * @param array<\Generated\Shared\Transfer\SpyProductConcreteMeasurementUnitStorageEntityTransfer> $storageEntityTransfers Keys are store names
      *
      * @return void
      */
@@ -111,7 +111,7 @@ class ProductConcreteMeasurementUnitStorageWriter implements ProductConcreteMeas
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SpyProductConcreteMeasurementUnitStorageEntityTransfer[] $productConcreteMeasurementUnitStorageEntityTransfers Keys are store names
+     * @param array<\Generated\Shared\Transfer\SpyProductConcreteMeasurementUnitStorageEntityTransfer> $productConcreteMeasurementUnitStorageEntityTransfers Keys are store names
      *
      * @return void
      */
@@ -127,7 +127,7 @@ class ProductConcreteMeasurementUnitStorageWriter implements ProductConcreteMeas
     /**
      * @param int $idProduct
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteMeasurementUnitStorageTransfer[] Keys are store names
+     * @return array<\Generated\Shared\Transfer\ProductConcreteMeasurementUnitStorageTransfer> Keys are store names
      */
     protected function generateProductConcreteMeasurementUnitStorageTransfersByIdProduct(int $idProduct): array
     {
@@ -135,7 +135,7 @@ class ProductConcreteMeasurementUnitStorageWriter implements ProductConcreteMeas
     }
 
     /**
-     * @param int[] $productIds
+     * @param array<int> $productIds
      *
      * @return array First level keys are product IDs, second level keys are store names, values are storage entities
      */

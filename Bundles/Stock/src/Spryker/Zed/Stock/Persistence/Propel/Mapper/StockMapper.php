@@ -27,9 +27,9 @@ class StockMapper
     }
 
     /**
-     * @param \Orm\Zed\Stock\Persistence\SpyStock[] $stockEntities
+     * @param array<\Orm\Zed\Stock\Persistence\SpyStock> $stockEntities
      *
-     * @return \Generated\Shared\Transfer\StockTransfer[]
+     * @return array<\Generated\Shared\Transfer\StockTransfer>
      */
     public function mapStockEntitiesToStockTransfers(array $stockEntities): array
     {

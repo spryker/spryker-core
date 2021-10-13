@@ -13,6 +13,9 @@ use Spryker\Client\ProductBarcode\Dependency\Service\ProductBarcodeToBarcodeServ
 
 class ProductBarcodeDependencyProvider extends AbstractDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const SERVICE_BARCODE = 'SERVICE_BARCODE';
 
     /**

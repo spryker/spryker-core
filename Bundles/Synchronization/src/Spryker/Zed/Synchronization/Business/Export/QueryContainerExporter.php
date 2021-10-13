@@ -15,11 +15,15 @@ use Spryker\Zed\Synchronization\Business\Iterator\SynchronizationDataQueryContai
 use Spryker\Zed\Synchronization\Business\Message\QueueMessageCreatorInterface;
 use Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToQueueClientInterface;
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQueryContainerPluginInterface;
+use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQueryExpanderStrategyPluginInterface;
 
 class QueryContainerExporter implements ExporterInterface
 {
     use InstancePoolingTrait;
 
+    /**
+     * @var int
+     */
     protected const DEFAULT_CHUNK_SIZE = 100;
 
     /**
@@ -33,9 +37,14 @@ class QueryContainerExporter implements ExporterInterface
     protected $queueMessageCreator;
 
     /**
-     * @var \Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQueryContainerPluginInterface[]
+     * @var array<\Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQueryContainerPluginInterface>
      */
     protected $synchronizationDataPlugins;
+
+    /**
+     * @var \Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQueryExpanderStrategyPluginInterface
+     */
+    protected $synchronizationDataQueryExpanderStrategyPlugin;
 
     /**
      * @var int
@@ -45,21 +54,24 @@ class QueryContainerExporter implements ExporterInterface
     /**
      * @param \Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToQueueClientInterface $queueClient
      * @param \Spryker\Zed\Synchronization\Business\Message\QueueMessageCreatorInterface $synchronizationQueueMessageCreator
+     * @param \Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQueryExpanderStrategyPluginInterface $synchronizationDataQueryExpanderStrategyPlugin
      * @param int $chunkSize
      */
     public function __construct(
         SynchronizationToQueueClientInterface $queueClient,
         QueueMessageCreatorInterface $synchronizationQueueMessageCreator,
+        SynchronizationDataQueryExpanderStrategyPluginInterface $synchronizationDataQueryExpanderStrategyPlugin,
         $chunkSize
     ) {
         $this->queueClient = $queueClient;
         $this->queueMessageCreator = $synchronizationQueueMessageCreator;
+        $this->synchronizationDataQueryExpanderStrategyPlugin = $synchronizationDataQueryExpanderStrategyPlugin;
         $this->chunkSize = $chunkSize ?? static::DEFAULT_CHUNK_SIZE;
     }
 
     /**
-     * @param \Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQueryContainerPluginInterface[] $plugins
-     * @param int[] $ids
+     * @param array<\Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQueryContainerPluginInterface> $plugins
+     * @param array<int> $ids
      *
      * @return void
      */
@@ -77,7 +89,7 @@ class QueryContainerExporter implements ExporterInterface
     }
 
     /**
-     * @param int[] $ids
+     * @param array<int> $ids
      * @param \Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQueryContainerPluginInterface $plugin
      *
      * @return void
@@ -90,19 +102,19 @@ class QueryContainerExporter implements ExporterInterface
     }
 
     /**
-     * @param int[] $ids
+     * @param array<int> $ids
      * @param \Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQueryContainerPluginInterface $plugin
      *
      * @return \Iterator
      */
     protected function createSynchronizationDataQueryContainerPluginIterator(array $ids, SynchronizationDataQueryContainerPluginInterface $plugin): Iterator
     {
-        return new SynchronizationDataQueryContainerPluginIterator($plugin, $this->chunkSize, $ids);
+        return new SynchronizationDataQueryContainerPluginIterator($plugin, $this->synchronizationDataQueryExpanderStrategyPlugin, $this->chunkSize, $ids);
     }
 
     /**
      * @param \Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQueryContainerPluginInterface $plugin
-     * @param array $synchronizationEntities
+     * @param array<\Propel\Runtime\ActiveRecord\ActiveRecordInterface> $synchronizationEntities
      *
      * @return void
      */

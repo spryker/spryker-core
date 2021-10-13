@@ -23,9 +23,9 @@ class ProductIdOrderItemExpanderPlugin extends AbstractPlugin implements OrderIt
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     public function expand(array $itemTransfers): array
     {

@@ -12,7 +12,10 @@ use Symfony\Component\Validator\Constraint as SymfonyConstraint;
 
 class ValidUniqueStoreCurrencyGrossNetConstraint extends SymfonyConstraint
 {
-    protected const MESSAGE = 'The set of inputs Store and Currency needs to be unique.';
+    /**
+     * @var string
+     */
+    protected const MESSAGE = 'The set of Store and Currency needs to be unique.';
 
     /**
      * @var \Spryker\Zed\PriceProductOffer\Persistence\PriceProductOfferRepositoryInterface

@@ -18,6 +18,9 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class SearchHealthCheckPlugin extends AbstractPlugin implements HealthCheckPluginInterface
 {
+    /**
+     * @var string
+     */
     protected const SEARCH_HEALTH_CHECK_SERVICE_NAME = 'search';
 
     /**

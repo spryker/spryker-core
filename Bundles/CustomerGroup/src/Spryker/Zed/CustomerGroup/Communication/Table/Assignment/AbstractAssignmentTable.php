@@ -11,13 +11,20 @@ use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Orm\Zed\Customer\Persistence\SpyCustomer;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\CustomerGroup\Dependency\Service\CustomerGroupToUtilEncodingInterface;
+use Spryker\Zed\CustomerGroup\Dependency\Service\CustomerGroupToUtilSanitizeServiceInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 abstract class AbstractAssignmentTable extends AbstractTable
 {
+    /**
+     * @var string
+     */
     public const PARAM_ID_CUSTOMER_GROUP = 'id-customer-group';
 
+    /**
+     * @var string
+     */
     public const COL_SELECT_CHECKBOX = 'select-checkbox';
     public const COL_CUSTOMER_ID = SpyCustomerTableMap::COL_ID_CUSTOMER;
     public const COL_CUSTOMER_EMAIL = SpyCustomerTableMap::COL_EMAIL;
@@ -35,6 +42,11 @@ abstract class AbstractAssignmentTable extends AbstractTable
     protected $tableQueryBuilder;
 
     /**
+     * @var \Spryker\Zed\CustomerGroup\Dependency\Service\CustomerGroupToUtilSanitizeServiceInterface
+     */
+    protected $utilSanitizeService;
+
+    /**
      * @var int
      */
     protected $idCustomerGroup;
@@ -43,15 +55,18 @@ abstract class AbstractAssignmentTable extends AbstractTable
      * @param \Spryker\Zed\CustomerGroup\Communication\Table\Assignment\AssignmentCustomerQueryBuilderInterface $tableQueryBuilder
      * @param \Spryker\Zed\CustomerGroup\Dependency\Service\CustomerGroupToUtilEncodingInterface $utilEncoding
      * @param int $idCustomerGroup
+     * @param \Spryker\Zed\CustomerGroup\Dependency\Service\CustomerGroupToUtilSanitizeServiceInterface $utilSanitizeService
      */
     public function __construct(
         AssignmentCustomerQueryBuilderInterface $tableQueryBuilder,
         CustomerGroupToUtilEncodingInterface $utilEncoding,
-        $idCustomerGroup
+        $idCustomerGroup,
+        CustomerGroupToUtilSanitizeServiceInterface $utilSanitizeService
     ) {
         $this->tableQueryBuilder = $tableQueryBuilder;
         $this->utilEncoding = $utilEncoding;
         $this->idCustomerGroup = $idCustomerGroup;
+        $this->utilSanitizeService = $utilSanitizeService;
     }
 
     /**
@@ -165,7 +180,7 @@ abstract class AbstractAssignmentTable extends AbstractTable
     }
 
     /**
-     * @param \Orm\Zed\Customer\Persistence\SpyCustomer[]|\Propel\Runtime\Collection\ObjectCollection $customerEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Customer\Persistence\SpyCustomer> $customerEntities
      *
      * @return array
      */
@@ -189,7 +204,7 @@ abstract class AbstractAssignmentTable extends AbstractTable
     {
         $query = $this->getQuery();
 
-        /** @var \Orm\Zed\Customer\Persistence\SpyCustomer[]|\Propel\Runtime\Collection\ObjectCollection $customerEntities */
+        /** @var \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Customer\Persistence\SpyCustomer> $customerEntities */
         $customerEntities = $this->runQuery($query, $config, true);
         $rows = $this->buildResultData($customerEntities);
 
@@ -208,11 +223,11 @@ abstract class AbstractAssignmentTable extends AbstractTable
             'js-item-checkbox',
             $customerEntity->getIdCustomer(),
             $this->getCheckboxCheckedAttribute(),
-            htmlspecialchars($this->utilEncoding->encodeJson([
+            $this->utilSanitizeService->escapeHtml($this->utilEncoding->encodeJson([
                 'id' => $customerEntity->getIdCustomer(),
                 'email' => $customerEntity->getEmail(),
-                'firstName' => $customerEntity->getFirstName(),
-                'lastName' => $customerEntity->getLastName(),
+                'firstName' => $this->utilSanitizeService->escapeHtml($customerEntity->getFirstName()),
+                'lastName' => $this->utilSanitizeService->escapeHtml($customerEntity->getLastName()),
             ]))
         );
     }

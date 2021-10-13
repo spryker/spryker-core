@@ -33,10 +33,10 @@ class ProductImageBulkReader implements ProductImageBulkReaderInterface
     }
 
     /**
-     * @param int[] $productIds
+     * @param array<int> $productIds
      * @param string $productImageSetName
      *
-     * @return \Generated\Shared\Transfer\ProductImageTransfer[][]
+     * @return array<\Generated\Shared\Transfer\ProductImageTransfer[]>
      */
     public function getProductImagesByProductIdsAndProductImageSetName(array $productIds, string $productImageSetName): array
     {
@@ -55,10 +55,10 @@ class ProductImageBulkReader implements ProductImageBulkReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductImageSetTransfer[] $productImageSetTransfers
+     * @param array<\Generated\Shared\Transfer\ProductImageSetTransfer> $productImageSetTransfers
      * @param string $productImageSetName
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getImageSetIdsByName(array $productImageSetTransfers, string $productImageSetName): array
     {
@@ -78,9 +78,9 @@ class ProductImageBulkReader implements ProductImageBulkReaderInterface
     }
 
     /**
-     * @param int[] $productSetIds
+     * @param array<int> $productSetIds
      *
-     * @return \Generated\Shared\Transfer\ProductImageTransfer[][]
+     * @return array<\Generated\Shared\Transfer\ProductImageTransfer[]>
      */
     protected function getProductImagesByProductSetIds(array $productSetIds): array
     {

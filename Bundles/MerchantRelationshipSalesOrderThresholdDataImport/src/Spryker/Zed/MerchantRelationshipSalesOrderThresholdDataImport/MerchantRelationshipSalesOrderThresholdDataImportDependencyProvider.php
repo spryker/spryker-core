@@ -19,9 +19,21 @@ use Spryker\Zed\MerchantRelationshipSalesOrderThresholdDataImport\Dependency\Fac
  */
 class MerchantRelationshipSalesOrderThresholdDataImportDependencyProvider extends DataImportDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_MERCHANT_RELATIONSHIP_SALES_ORDER_THRESHOLD = 'FACADE_MERCHANT_RELATIONSHIP_SALES_ORDER_THRESHOLD';
+    /**
+     * @var string
+     */
     public const FACADE_MERCHANT_RELATIONSHIP = 'FACADE_MERCHANT_RELATIONSHIP';
+    /**
+     * @var string
+     */
     public const FACADE_STORE = 'FACADE_STORE';
+    /**
+     * @var string
+     */
     public const FACADE_CURRENCY = 'FACADE_CURRENCY';
 
     /**

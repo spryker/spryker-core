@@ -13,6 +13,9 @@ use Spryker\Zed\Payment\Persistence\PaymentRepositoryInterface;
 
 class PaymentMethodFinder implements PaymentMethodFinderInterface
 {
+    /**
+     * @var string
+     */
     protected const MESSAGE_PAYMENT_METHOD_NOT_FOUND = 'Payment method not found';
 
     /**

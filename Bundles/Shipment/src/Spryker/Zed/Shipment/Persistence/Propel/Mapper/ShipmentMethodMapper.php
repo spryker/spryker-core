@@ -146,10 +146,10 @@ class ShipmentMethodMapper implements ShipmentMethodMapperInterface
     }
 
     /**
-     * @param iterable|\Orm\Zed\Shipment\Persistence\SpyShipmentMethod[]|\Propel\Runtime\Collection\ObjectCollection $shipmentMethodsEntities
-     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer[] $shipmentMethodTransfers
+     * @param \Propel\Runtime\Collection\ObjectCollection|iterable<\Orm\Zed\Shipment\Persistence\SpyShipmentMethod> $shipmentMethodsEntities
+     * @param array<\Generated\Shared\Transfer\ShipmentMethodTransfer> $shipmentMethodTransfers
      *
-     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer[]
+     * @return array<\Generated\Shared\Transfer\ShipmentMethodTransfer>
      */
     public function mapShipmentMethodEntitiesToShipmentMethodTransfers(
         iterable $shipmentMethodsEntities,
@@ -168,7 +168,7 @@ class ShipmentMethodMapper implements ShipmentMethodMapperInterface
     /**
      * @param \Orm\Zed\Shipment\Persistence\SpyShipmentMethod $salesShipmentMethodEntity
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\MoneyValueTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\MoneyValueTransfer>
      */
     protected function getPriceCollection(SpyShipmentMethod $salesShipmentMethodEntity): ArrayObject
     {

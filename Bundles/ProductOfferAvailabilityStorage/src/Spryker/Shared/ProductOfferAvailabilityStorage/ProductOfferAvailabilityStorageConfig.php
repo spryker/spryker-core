@@ -16,6 +16,7 @@ class ProductOfferAvailabilityStorageConfig extends AbstractBundleConfig
      * - Queue name, used for processing product offer availability messages.
      *
      * @api
+     * @var string
      */
     public const PRODUCT_OFFER_AVAILABILITY_SYNC_STORAGE_QUEUE = 'sync.storage.product_offer_availability';
 
@@ -24,6 +25,7 @@ class ProductOfferAvailabilityStorageConfig extends AbstractBundleConfig
      * - Queue name, used for processing product offer availability messages.
      *
      * @api
+     * @var string
      */
     public const PRODUCT_OFFER_AVAILABILITY_SYNC_STORAGE_ERROR_QUEUE = 'sync.storage.product_offer_availability.error';
 
@@ -32,6 +34,7 @@ class ProductOfferAvailabilityStorageConfig extends AbstractBundleConfig
      * - Key generation resource name for product offer availability messages.
      *
      * @api
+     * @var string
      */
     public const PRODUCT_OFFER_AVAILABILITY_RESOURCE_NAME = 'product_offer_availability';
 }

@@ -11,9 +11,18 @@ use Propel\Runtime\Connection\StatementInterface;
 
 class PostgreSqlStorageReader extends AbstractStorageReader
 {
+    /**
+     * @var string
+     */
     protected const DEFAULT_PLACEHOLDER_KEY = ':key';
+    /**
+     * @var string
+     */
     protected const DEFAULT_PLACEHOLDER_ALIAS_KEY = ':alias_key';
 
+    /**
+     * @var string
+     */
     protected const SELECT_STATEMENT_PATTERN = '
       SELECT *
         FROM (
@@ -52,7 +61,7 @@ class PostgreSqlStorageReader extends AbstractStorageReader
     }
 
     /**
-     * @param string[] $resourceKeys
+     * @param array<string> $resourceKeys
      *
      * @return array
      */
@@ -91,7 +100,7 @@ class PostgreSqlStorageReader extends AbstractStorageReader
 
     /**
      * @param \Propel\Runtime\Connection\StatementInterface $statement
-     * @param string[][] $queryDataPerTable
+     * @param array<string[]> $queryDataPerTable
      *
      * @return \Propel\Runtime\Connection\StatementInterface
      */

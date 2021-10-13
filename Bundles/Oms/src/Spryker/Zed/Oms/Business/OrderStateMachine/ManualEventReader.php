@@ -23,14 +23,14 @@ class ManualEventReader implements ManualEventReaderInterface
     protected $salesFacade;
 
     /**
-     * @var \Spryker\Zed\OmsExtension\Dependency\Plugin\OmsManualEventGrouperPluginInterface[]
+     * @var array<\Spryker\Zed\OmsExtension\Dependency\Plugin\OmsManualEventGrouperPluginInterface>
      */
     protected $eventGrouperPlugins;
 
     /**
      * @param \Spryker\Zed\Oms\Business\OrderStateMachine\OrderItemManualEventReaderInterface $orderItemManualEventReader
      * @param \Spryker\Zed\Oms\Dependency\Facade\OmsToSalesInterface $salesFacade
-     * @param \Spryker\Zed\OmsExtension\Dependency\Plugin\OmsManualEventGrouperPluginInterface[] $eventGrouperPlugins
+     * @param array<\Spryker\Zed\OmsExtension\Dependency\Plugin\OmsManualEventGrouperPluginInterface> $eventGrouperPlugins
      */
     public function __construct(
         OrderItemManualEventReaderInterface $orderItemManualEventReader,
@@ -45,7 +45,7 @@ class ManualEventReader implements ManualEventReaderInterface
     /**
      * @param int $idSalesOrder
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getGroupedDistinctManualEventsByIdSalesOrder(int $idSalesOrder): array
     {
@@ -58,9 +58,9 @@ class ManualEventReader implements ManualEventReaderInterface
 
     /**
      * @param array $events
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $orderItemTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $orderItemTransfers
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getManualEventsGroupingUsingPlugins(array $events, ArrayObject $orderItemTransfers): array
     {

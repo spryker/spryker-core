@@ -29,6 +29,9 @@ use Spryker\Shared\DummyMarketplacePayment\DummyMarketplacePaymentConfig;
  */
 class DummyMarketplacePaymentFacadeTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const TEST_PRODUCT_MERCHANT = 'TEST_PRODUCT_MERCHANT';
 
     /**

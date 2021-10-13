@@ -1,0 +1,9 @@
+[
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/StateMachine/src/Spryker/Zed/StateMachine/Business/StateMachineFacade.php",
+        "description": "\n      Zed Business Layer - Facade: The method Spryker\\Zed\\StateMachine\\Business\\StateMachineFacade::drawProcess() has 2 factory calls and violates the rule \"Every Facade method should have no more than one factory call.\".\n    ",
+        "rule": "FacadeRule",
+        "ruleset": "Spryker Zed",
+        "priority": "1"
+    }
+]

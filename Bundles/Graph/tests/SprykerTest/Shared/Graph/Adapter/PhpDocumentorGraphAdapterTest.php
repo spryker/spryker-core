@@ -22,12 +22,30 @@ use Spryker\Shared\Graph\Adapter\PhpDocumentorGraphAdapter;
  */
 class PhpDocumentorGraphAdapterTest extends Unit
 {
+    /**
+     * @var string
+     */
     public const GRAPH_NAME = 'graph name';
+    /**
+     * @var string
+     */
     public const NODE_A = 'node A';
+    /**
+     * @var string
+     */
     public const NODE_B = 'node B';
+    /**
+     * @var string
+     */
     public const GROUP_NAME = 'group name';
+    /**
+     * @var string
+     */
     public const CLUSTER_NAME = 'cluster name';
-    public const ATTRIBUTES = ['attribute' => 'value', 'html attribute' => '<h1>Html Value</h1>'];
+    /**
+     * @var array
+     */
+    public const ATTRIBUTES = ['label' => 'label value'];
 
     /**
      * @return void
@@ -134,6 +152,23 @@ class PhpDocumentorGraphAdapterTest extends Unit
         $adapter->create(self::GRAPH_NAME);
 
         $this->assertIsString($adapter->render('svg'));
+    }
+
+    /**
+     * @return void
+     */
+    public function testRenderAttributes(): void
+    {
+        $adapter = new PhpDocumentorGraphAdapter();
+        $adapter->create(self::GRAPH_NAME);
+        $adapter->addNode(self::NODE_A, ['label' => 'Node 1']);
+        $adapter->addNode(self::NODE_B);
+        $adapter->addEdge(self::NODE_A, self::NODE_B, ['label' => 'Arrow 1']);
+
+        $renderingResult = $adapter->render('dot');
+
+        $this->assertStringContainsString('label="Node 1"', $renderingResult);
+        $this->assertStringContainsString('label="Arrow 1"', $renderingResult);
     }
 
     /**

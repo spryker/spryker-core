@@ -36,7 +36,7 @@ class ProductManagementToPriceProductBridge implements ProductManagementToPriceP
     }
 
     /**
-     * @return \Generated\Shared\Transfer\PriceTypeTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceTypeTransfer>
      */
     public function getPriceTypeValues()
     {
@@ -55,7 +55,7 @@ class ProductManagementToPriceProductBridge implements ProductManagementToPriceP
      * @param int $idProductConcrete
      * @param int $idProductAbstract
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function findProductConcretePrices($idProductConcrete, $idProductAbstract)
     {
@@ -74,7 +74,7 @@ class ProductManagementToPriceProductBridge implements ProductManagementToPriceP
      * @param int $idProductAbstract
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer|null $priceProductCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function findProductAbstractPricesWithoutPriceExtraction(
         int $idProductAbstract,
@@ -91,7 +91,7 @@ class ProductManagementToPriceProductBridge implements ProductManagementToPriceP
      * @param int $idProductAbstract
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer|null $priceProductCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function findProductConcretePricesWithoutPriceExtraction(
         int $idProductConcrete,

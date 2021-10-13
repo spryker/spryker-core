@@ -16,6 +16,9 @@ use Spryker\Zed\Kernel\Container;
  */
 class CompanyUserAgentDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_COMPANY_USER = 'FACADE_COMPANY_USER';
 
     /**

@@ -47,7 +47,7 @@ class PriceProductMerchantRelationshipAbstractReader implements PriceProductMerc
      * @param int $idProductAbstract
      * @param int $idCompanyBusinessUnit
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function findProductAbstractPrices(int $idProductAbstract, int $idCompanyBusinessUnit): array
     {
@@ -63,7 +63,7 @@ class PriceProductMerchantRelationshipAbstractReader implements PriceProductMerc
     /**
      * @param string $key
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     protected function findPriceProductTransfers(string $key): array
     {

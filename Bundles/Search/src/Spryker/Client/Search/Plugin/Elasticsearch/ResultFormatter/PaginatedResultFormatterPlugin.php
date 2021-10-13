@@ -17,6 +17,9 @@ use Generated\Shared\Transfer\PaginationSearchResultTransfer;
  */
 class PaginatedResultFormatterPlugin extends AbstractElasticsearchResultFormatterPlugin
 {
+    /**
+     * @var string
+     */
     public const NAME = 'pagination';
 
     /**

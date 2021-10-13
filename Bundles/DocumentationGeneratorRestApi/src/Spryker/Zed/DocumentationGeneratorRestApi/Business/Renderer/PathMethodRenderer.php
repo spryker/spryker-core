@@ -21,14 +21,35 @@ use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\PathRe
 
 class PathMethodRenderer implements PathMethodRendererInterface
 {
+    /**
+     * @var string
+     */
     protected const PATTERN_REGEX_RESOURCE_ID = '/(?<=\{)[\w\-_]+?(?=\})/';
+    /**
+     * @var string
+     */
     protected const PATTERN_REGEX_WORD_SLICE = '/(?=[A-Z])/';
+    /**
+     * @var string
+     */
     protected const PATTERN_DESCRIPTION_PATH_PARAMETER = 'Id of %s.';
 
+    /**
+     * @var string
+     */
     protected const PARAMETER_LOCATION_PATH = 'path';
+    /**
+     * @var string
+     */
     protected const PARAMETER_SCHEMA_TYPE_STRING = 'string';
+    /**
+     * @var string
+     */
     protected const PARAMETER_SECURITY_BEARER_AUTH = 'BearerAuth';
 
+    /**
+     * @var string
+     */
     protected const PATTERN_PARAMETER_REFERENCE = '#/components/parameters/%s';
 
     /**
@@ -98,6 +119,10 @@ class PathMethodRenderer implements PathMethodRendererInterface
             $this->addPathParameterComponents($pathMethodComponentTransfer, $pathMethodDataTransfer);
         }
 
+        if ($pathMethodDataTransfer->getDeprecated()) {
+            $pathMethodComponentTransfer->setDeprecated($pathMethodDataTransfer->getDeprecated());
+        }
+
         $this->pathMethodSpecificationComponent->setPathMethodComponentTransfer($pathMethodComponentTransfer);
         $pathMethodSpecificationData = $this->pathMethodSpecificationComponent->getSpecificationComponentData();
 
@@ -120,7 +145,7 @@ class PathMethodRenderer implements PathMethodRendererInterface
 
     /**
      * @param \Generated\Shared\Transfer\PathMethodComponentTransfer $methodComponent
-     * @param \ArrayObject|\Generated\Shared\Transfer\PathSchemaDataTransfer[] $responseSchemas
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\PathSchemaDataTransfer> $responseSchemas
      *
      * @return void
      */

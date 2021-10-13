@@ -8,12 +8,12 @@
 namespace Spryker\Service\FlysystemLocalFileSystem\Model\Builder\Adapter;
 
 use Generated\Shared\Transfer\FlysystemConfigLocalTransfer;
-use League\Flysystem\Adapter\Local as LocalAdapter;
+use League\Flysystem\Local\LocalFilesystemAdapter as LocalAdapter;
 
 class LocalAdapterBuilder implements AdapterBuilderInterface
 {
     /**
-     * @var \League\Flysystem\Adapter\Local
+     * @var \League\Flysystem\FilesystemAdapter
      */
     protected $adapter;
 
@@ -36,7 +36,7 @@ class LocalAdapterBuilder implements AdapterBuilderInterface
     }
 
     /**
-     * @return \League\Flysystem\AdapterInterface
+     * @return \League\Flysystem\FilesystemAdapter
      */
     public function build()
     {
@@ -67,7 +67,7 @@ class LocalAdapterBuilder implements AdapterBuilderInterface
      */
     protected function buildAdapter()
     {
-        $this->adapter = new LocalAdapter($this->path, LOCK_EX, LocalAdapter::DISALLOW_LINKS);
+        $this->adapter = new LocalAdapter($this->path, null, LOCK_EX, LocalAdapter::DISALLOW_LINKS);
 
         return $this;
     }

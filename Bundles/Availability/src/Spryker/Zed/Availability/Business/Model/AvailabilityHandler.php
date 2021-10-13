@@ -23,7 +23,13 @@ use Spryker\Zed\Availability\Persistence\AvailabilityRepositoryInterface;
 
 class AvailabilityHandler implements AvailabilityHandlerInterface
 {
+    /**
+     * @var string
+     */
     protected const PRODUCT_SKU_NOT_FOUND_EXCEPTION_MESSAGE_FORMAT = 'The product was not found with this SKU: %s';
+    /**
+     * @var string
+     */
     protected const PRODUCT_ID_NOT_FOUND_EXCEPTION_MESSAGE_FORMAT = 'The product was not found with this ID: %d';
 
     /**
@@ -125,6 +131,7 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
             $this->availabilityRepository->findProductConcreteAvailabilityBySkuAndStore($concreteSku, $storeTransfer)
         );
 
+        /** @var string $abstractSku */
         $abstractSku = $this->availabilityRepository->getAbstractSkuFromProductConcrete($concreteSku);
         $productConcreteAvailabilityTransfer = (new ProductConcreteAvailabilityTransfer())
             ->setSku($concreteSku)
@@ -204,8 +211,10 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
             $abstractSku
         );
 
+        /** @var string $sku */
+        $sku = $productConcreteAvailabilityTransfer->requireSku()->getSku();
         if ($isAvailabilityChanged && !$wasProductConcreteAvailable && $this->isProductConcreteAvailable($productConcreteAvailabilityTransfer)) {
-            $this->triggerProductIsAvailableAgainEvent($productConcreteAvailabilityTransfer->getSku(), $storeTransfer);
+            $this->triggerProductIsAvailableAgainEvent($sku, $storeTransfer);
         }
 
         return $productConcreteAvailabilityTransfer;
@@ -256,7 +265,10 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
             return false;
         }
 
-        return $productConcreteAvailabilityTransfer->getAvailability()->greaterThan(0) ||
+        /** @var \Spryker\DecimalObject\Decimal $availability */
+        $availability = $productConcreteAvailabilityTransfer->requireAvailability()->getAvailability();
+
+        return $availability->greaterThan(0) ||
             $productConcreteAvailabilityTransfer->getIsNeverOutOfStock() === true;
     }
 

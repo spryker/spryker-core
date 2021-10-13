@@ -19,7 +19,7 @@ class ProductNewFacade extends AbstractFacade implements ProductNewFacadeInterfa
      *
      * @api
      *
-     * @return \Generated\Shared\Transfer\ProductLabelProductAbstractRelationsTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductLabelProductAbstractRelationsTransfer>
      */
     public function findProductLabelProductAbstractRelationChanges()
     {

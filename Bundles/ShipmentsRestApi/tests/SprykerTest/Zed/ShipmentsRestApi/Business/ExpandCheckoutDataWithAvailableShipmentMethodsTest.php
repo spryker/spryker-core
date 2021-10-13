@@ -28,6 +28,9 @@ use Spryker\Zed\ShipmentsRestApi\Dependency\Facade\ShipmentsRestApiToShipmentFac
  */
 class ExpandCheckoutDataWithAvailableShipmentMethodsTest extends Unit
 {
+    /**
+     * @var array
+     */
     protected const DEFAULT_PRICE_LIST = [
         'DE' => [
             'EUR' => [

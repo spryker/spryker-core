@@ -15,6 +15,9 @@ use Spryker\Zed\Kernel\Container;
  */
 class BarcodeDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const SERVICE_BARCODE = 'SERVICE_BARCODE';
 
     /**

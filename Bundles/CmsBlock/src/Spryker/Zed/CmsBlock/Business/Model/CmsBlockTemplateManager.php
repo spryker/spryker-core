@@ -17,6 +17,9 @@ use Symfony\Component\Finder\Finder;
 
 class CmsBlockTemplateManager implements CmsBlockTemplateManagerInterface
 {
+    /**
+     * @var string
+     */
     public const TEMPLATE_FILE_SUFFIX = '.twig';
 
     /**

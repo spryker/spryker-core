@@ -27,22 +27,22 @@ class State implements StateInterface
     protected $process;
 
     /**
-     * @var string[]
+     * @var array<string>
      */
     protected $flags = [];
 
     /**
-     * @var \Spryker\Zed\StateMachine\Business\Process\TransitionInterface[]
+     * @var array<\Spryker\Zed\StateMachine\Business\Process\TransitionInterface>
      */
     protected $outgoingTransitions = [];
 
     /**
-     * @var \Spryker\Zed\StateMachine\Business\Process\TransitionInterface[]
+     * @var array<\Spryker\Zed\StateMachine\Business\Process\TransitionInterface>
      */
     protected $incomingTransitions = [];
 
     /**
-     * @param \Spryker\Zed\StateMachine\Business\Process\TransitionInterface[] $incomingTransitions
+     * @param array<\Spryker\Zed\StateMachine\Business\Process\TransitionInterface> $incomingTransitions
      *
      * @return $this
      */
@@ -54,7 +54,7 @@ class State implements StateInterface
     }
 
     /**
-     * @return \Spryker\Zed\StateMachine\Business\Process\TransitionInterface[]
+     * @return array<\Spryker\Zed\StateMachine\Business\Process\TransitionInterface>
      */
     public function getIncomingTransitions()
     {
@@ -70,7 +70,7 @@ class State implements StateInterface
     }
 
     /**
-     * @param \Spryker\Zed\StateMachine\Business\Process\TransitionInterface[] $outgoingTransitions
+     * @param array<\Spryker\Zed\StateMachine\Business\Process\TransitionInterface> $outgoingTransitions
      *
      * @return $this
      */
@@ -82,7 +82,7 @@ class State implements StateInterface
     }
 
     /**
-     * @return \Spryker\Zed\StateMachine\Business\Process\TransitionInterface[]
+     * @return array<\Spryker\Zed\StateMachine\Business\Process\TransitionInterface>
      */
     public function getOutgoingTransitions()
     {
@@ -100,7 +100,7 @@ class State implements StateInterface
     /**
      * @param \Spryker\Zed\StateMachine\Business\Process\EventInterface $event
      *
-     * @return \Spryker\Zed\StateMachine\Business\Process\TransitionInterface[]
+     * @return array<\Spryker\Zed\StateMachine\Business\Process\TransitionInterface>
      */
     public function getOutgoingTransitionsByEvent(EventInterface $event)
     {
@@ -117,7 +117,7 @@ class State implements StateInterface
     }
 
     /**
-     * @return \Spryker\Zed\StateMachine\Business\Process\EventInterface[]
+     * @return array<\Spryker\Zed\StateMachine\Business\Process\EventInterface>
      */
     public function getEvents()
     {
@@ -309,7 +309,7 @@ class State implements StateInterface
     }
 
     /**
-     * @return \Spryker\Zed\StateMachine\Business\Process\EventInterface[]
+     * @return array<\Spryker\Zed\StateMachine\Business\Process\EventInterface>
      */
     public function getTimeoutEvents()
     {
@@ -358,7 +358,7 @@ class State implements StateInterface
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getFlags()
     {

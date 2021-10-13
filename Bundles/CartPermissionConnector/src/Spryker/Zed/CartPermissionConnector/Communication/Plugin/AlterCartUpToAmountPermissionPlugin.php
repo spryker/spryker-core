@@ -24,9 +24,18 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class AlterCartUpToAmountPermissionPlugin extends AbstractPlugin implements ExecutablePermissionPluginInterface, CartTerminationPluginInterface
 {
+    /**
+     * @var string
+     */
     public const KEY = 'AlterCartUpToAmountPermissionPlugin';
 
+    /**
+     * @var string
+     */
     protected const FIELD_CENT_AMOUNT = 'cent_amount';
+    /**
+     * @var array
+     */
     protected const SUBSCRIBED_TERMINATION_NAMES = [
         'add',
         'reload',

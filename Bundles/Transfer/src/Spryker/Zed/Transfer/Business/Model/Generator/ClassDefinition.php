@@ -20,10 +20,22 @@ use Spryker\Zed\Transfer\TransferConfig;
 
 class ClassDefinition implements ClassDefinitionInterface
 {
+    /**
+     * @var string
+     */
     public const TYPE_FULLY_QUALIFIED = 'type_fully_qualified';
+    /**
+     * @var string
+     */
     public const DEFAULT_ASSOCIATIVE_ARRAY_TYPE = 'string|int';
 
+    /**
+     * @var string
+     */
     protected const EXTRA_TYPE_HINTS = 'extra_type_hints';
+    /**
+     * @var array
+     */
     protected const SUPPORTED_VALUE_OBJECTS = [
         'decimal' => [
             self::TYPE_FULLY_QUALIFIED => Decimal::class,
@@ -31,6 +43,9 @@ class ClassDefinition implements ClassDefinitionInterface
         ],
     ];
 
+    /**
+     * @var string
+     */
     protected const SHIM_NOTICE_TEMPLATE = 'Forward compatibility warning: %s is the actual type (please use that, %s is kept for BC).';
 
     /**
@@ -69,7 +84,7 @@ class ClassDefinition implements ClassDefinitionInterface
     protected $deprecationDescription;
 
     /**
-     * @var string[]
+     * @var array<string>
      */
     protected $useStatements = [];
 
@@ -174,7 +189,7 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getUseStatements(): array
     {
@@ -285,6 +300,7 @@ class ClassDefinition implements ClassDefinitionInterface
             }
 
             $property['is_associative'] = $this->isAssociativeArray($property);
+            $property['is_strict'] = $this->isStrictProperty($property);
 
             $normalizedProperties[] = $property;
         }
@@ -731,7 +747,7 @@ class ClassDefinition implements ClassDefinitionInterface
     /**
      * @param array $property
      *
-     * @return bool|string
+     * @return string|bool
      */
     protected function getSetTypeHint(array $property)
     {
@@ -769,7 +785,7 @@ class ClassDefinition implements ClassDefinitionInterface
     /**
      * @param array $property
      *
-     * @return bool|string
+     * @return string|bool
      */
     protected function getAddTypeHint(array $property)
     {
@@ -787,7 +803,7 @@ class ClassDefinition implements ClassDefinitionInterface
     /**
      * @param array $property
      *
-     * @return bool|string
+     * @return string|bool
      */
     protected function getStrictCollectionElementTypeHint(array $property)
     {
@@ -1181,7 +1197,7 @@ class ClassDefinition implements ClassDefinitionInterface
 
     /**
      * @param array $propertyDefinition
-     * @param string[] $shimChange
+     * @param array<string> $shimChange
      *
      * @return array
      */

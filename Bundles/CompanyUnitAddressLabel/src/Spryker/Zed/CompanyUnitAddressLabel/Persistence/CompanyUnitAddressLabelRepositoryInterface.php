@@ -27,15 +27,15 @@ interface CompanyUnitAddressLabelRepositoryInterface
     /**
      * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
      *
-     * @return int[]
+     * @return array<int>
      */
     public function findCompanyUnitAddressLabelIdsByAddress(CompanyUnitAddressTransfer $companyUnitAddressTransfer): array;
 
     /**
      * @param int $idCompanyUnitAddress
-     * @param int[] $labelIds
+     * @param array<int> $labelIds
      *
-     * @return int[]
+     * @return array<int>
      */
     public function findCompanyUnitAddressLabelToCompanyUnitAddressRelationIdsByAddressIdAndLabelIds(
         int $idCompanyUnitAddress,

@@ -18,7 +18,13 @@ use Symfony\Component\Validator\Constraints\Collection;
 
 class RestRequestValidatorConstraintResolver implements RestRequestValidatorConstraintResolverInterface
 {
+    /**
+     * @var string
+     */
     protected const FIELDS = 'fields';
+    /**
+     * @var string
+     */
     protected const CONSTRAINTS = 'constraints';
 
     /**

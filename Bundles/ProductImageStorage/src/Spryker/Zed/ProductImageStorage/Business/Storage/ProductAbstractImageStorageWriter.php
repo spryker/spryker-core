@@ -60,7 +60,7 @@ class ProductAbstractImageStorageWriter implements ProductAbstractImageStorageWr
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return void
      */
@@ -105,7 +105,7 @@ class ProductAbstractImageStorageWriter implements ProductAbstractImageStorageWr
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return void
      */
@@ -129,6 +129,10 @@ class ProductAbstractImageStorageWriter implements ProductAbstractImageStorageWr
             $localeName = $productAbstractLocalizedEntity->getLocale()->getLocaleName();
 
             if (isset($productAbstractImageSetsBulk[$idProductAbstract][$idLocale])) {
+                $imageSets[$idProductAbstract][$idAbstractAttributes] = $this->generateProductAbstractImageSets(
+                    $productAbstractImageSetsBulk[$idProductAbstract][$idLocale]
+                );
+
                 continue;
             }
 
@@ -152,7 +156,7 @@ class ProductAbstractImageStorageWriter implements ProductAbstractImageStorageWr
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SpyProductImageSetEntityTransfer[] $productImageSets
+     * @param array<\Generated\Shared\Transfer\SpyProductImageSetEntityTransfer> $productImageSets
      *
      * @return array
      */
@@ -170,7 +174,7 @@ class ProductAbstractImageStorageWriter implements ProductAbstractImageStorageWr
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SpyProductImageSetEntityTransfer[] $productImageSets
+     * @param array<\Generated\Shared\Transfer\SpyProductImageSetEntityTransfer> $productImageSets
      *
      * @return array
      */
@@ -249,9 +253,9 @@ class ProductAbstractImageStorageWriter implements ProductAbstractImageStorageWr
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SpyProductImageSetEntityTransfer[] $productImageSetEntityTransfers
+     * @param array<\Generated\Shared\Transfer\SpyProductImageSetEntityTransfer> $productImageSetEntityTransfers
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ProductImageSetStorageTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\ProductImageSetStorageTransfer>
      */
     protected function generateProductAbstractImageSets(array $productImageSetEntityTransfers)
     {
@@ -275,9 +279,9 @@ class ProductAbstractImageStorageWriter implements ProductAbstractImageStorageWr
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
-     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributes[]
+     * @return array<\Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributes>
      */
     protected function findProductAbstractLocalizedEntities(array $productAbstractIds)
     {
@@ -285,9 +289,9 @@ class ProductAbstractImageStorageWriter implements ProductAbstractImageStorageWr
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
-     * @return \Orm\Zed\ProductImageStorage\Persistence\SpyProductAbstractImageStorage[][]
+     * @return array<\Orm\Zed\ProductImageStorage\Persistence\SpyProductAbstractImageStorage[]>
      */
     protected function findProductAbstractImageStorageEntitiesByProductAbstractIds(array $productAbstractIds)
     {

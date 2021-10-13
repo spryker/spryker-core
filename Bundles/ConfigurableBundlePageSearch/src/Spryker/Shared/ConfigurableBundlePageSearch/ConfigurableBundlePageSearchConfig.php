@@ -19,6 +19,7 @@ class ConfigurableBundlePageSearchConfig extends AbstractBundleConfig
      * - Resource name, used for key generating.
      *
      * @api
+     * @var string
      */
     public const CONFIGURABLE_BUNDLE_TEMPLATE_RESOURCE_NAME = 'configurable_bundle_template';
 
@@ -27,6 +28,7 @@ class ConfigurableBundlePageSearchConfig extends AbstractBundleConfig
      * - Queue name, used for processing Configurable Bundle messages.
      *
      * @api
+     * @var string
      */
     public const CONFIGURABLE_BUNDLE_SEARCH_QUEUE = 'sync.search.configurable_bundle';
 
@@ -35,6 +37,7 @@ class ConfigurableBundlePageSearchConfig extends AbstractBundleConfig
      * - Queue name, used for processing Configurable Bundle error messages.
      *
      * @api
+     * @var string
      */
     public const CONFIGURABLE_BUNDLE_SEARCH_ERROR_QUEUE = 'sync.search.configurable_bundle.error';
 }

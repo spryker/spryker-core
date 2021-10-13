@@ -52,9 +52,7 @@ class SearchContextExpander implements SearchContextExpanderInterface
         $elasticsearchSearchContextTransfer = new ElasticsearchSearchContextTransfer();
         $elasticsearchSearchContextTransfer->setIndexName($indexName);
 
-        /**
-         * Source identifier will be used as type name instead of _doc for the sake of compatibility with Elasticsearch 5.
-         */
+        // Source identifier will be used as type name instead of _doc for the sake of compatibility with Elasticsearch 5.
         $elasticsearchSearchContextTransfer->setTypeName($sourceIdentifier);
 
         return $elasticsearchSearchContextTransfer;

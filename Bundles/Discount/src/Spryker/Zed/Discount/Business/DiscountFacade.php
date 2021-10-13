@@ -172,7 +172,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      *
-     * @return \Generated\Shared\Transfer\DiscountableItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\DiscountableItemTransfer>
      */
     public function collectByItemQuantity(QuoteTransfer $quoteTransfer, ClauseTransfer $clauseTransfer)
     {
@@ -210,7 +210,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      *
-     * @return \Generated\Shared\Transfer\DiscountableItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\DiscountableItemTransfer>
      */
     public function collectByItemPrice(QuoteTransfer $quoteTransfer, ClauseTransfer $clauseTransfer)
     {
@@ -236,8 +236,8 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
         ClauseTransfer $clauseTransfer
     ) {
         return $this->getFactory()
-           ->createCalendarWeekDecisionRule()
-           ->isSatisfiedBy($quoteTransfer, $itemTransfer, $clauseTransfer);
+            ->createCalendarWeekDecisionRule()
+            ->isSatisfiedBy($quoteTransfer, $itemTransfer, $clauseTransfer);
     }
 
     /**
@@ -310,7 +310,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      *
      * @param string $type
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getQueryStringFieldsByType($type)
     {
@@ -328,7 +328,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      * @param string $type
      * @param string $fieldName
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getQueryStringFieldExpressionsForField($type, $fieldName)
     {
@@ -345,7 +345,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      *
      * @param string $type
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getQueryStringComparatorExpressions($type)
     {
@@ -362,7 +362,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      *
      * @param string $type
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getQueryStringLogicalComparators($type)
     {
@@ -397,7 +397,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      * @param string $type
      * @param string $queryString
      *
-     * @return string[]
+     * @return array<string>
      */
     public function validateQueryStringByType($type, $queryString)
     {
@@ -494,7 +494,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\DiscountableItemTransfer[] $discountableObjects
+     * @param array<\Generated\Shared\Transfer\DiscountableItemTransfer> $discountableObjects
      * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
      *
      * @return int
@@ -511,7 +511,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\DiscountableItemTransfer[] $discountableObjects
+     * @param array<\Generated\Shared\Transfer\DiscountableItemTransfer> $discountableObjects
      * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
      *
      * @return int
@@ -544,7 +544,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      *
      * @api
      *
-     * @param string[] $voucherCodes
+     * @param array<string> $voucherCodes
      *
      * @return int
      */
@@ -560,7 +560,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      *
      * @api
      *
-     * @param string[] $voucherCodes
+     * @param array<string> $voucherCodes
      *
      * @return int
      */
@@ -658,9 +658,9 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
         ItemTransfer $itemTransfer,
         ClauseTransfer $clauseTransfer
     ) {
-         return $this->getFactory()
-             ->createPriceModeDecisionRule()
-             ->isSatisfiedBy($quoteTransfer, $itemTransfer, $clauseTransfer);
+        return $this->getFactory()
+            ->createPriceModeDecisionRule()
+            ->isSatisfiedBy($quoteTransfer, $itemTransfer, $clauseTransfer);
     }
 
     /**

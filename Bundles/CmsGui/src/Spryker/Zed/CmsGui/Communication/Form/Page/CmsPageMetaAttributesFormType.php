@@ -19,12 +19,30 @@ use Symfony\Component\Validator\Constraints\Length;
  */
 class CmsPageMetaAttributesFormType extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const FIELD_META_TITLE = 'metaTitle';
+    /**
+     * @var string
+     */
     public const FIELD_META_KEYWORDS = 'metaKeywords';
+    /**
+     * @var string
+     */
     public const FIELD_META_DESCRIPTION = 'metaDescription';
+    /**
+     * @var string
+     */
     public const FIELD_LOCALE_NAME = 'localeName';
+    /**
+     * @var string
+     */
     public const FIELD_ID_CMS_PAGE_LOCALIZED_ATTRIBUTES = 'idCmsPageLocalizedAttributes';
 
+    /**
+     * @var int
+     */
     protected const MAX_LENGTH_META_TITLE = 255;
 
     /**

@@ -71,7 +71,7 @@ class CountryIsoCodeToIdCountryStep implements DataImportStepInterface
      * @param string|null $iso2Code
      * @param string|null $iso3Code
      *
-     * @return bool|int
+     * @return int|bool
      */
     protected function getIdCountryFromCache($iso2Code, $iso3Code)
     {

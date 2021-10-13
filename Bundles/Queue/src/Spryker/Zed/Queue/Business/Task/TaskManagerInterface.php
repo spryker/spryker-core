@@ -11,7 +11,7 @@ interface TaskManagerInterface
 {
     /**
      * @param string $queueName
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */

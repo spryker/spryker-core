@@ -56,6 +56,22 @@ class TaxProductConnectorFacade extends AbstractFacade implements TaxProductConn
      *
      * @api
      *
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
+     */
+    public function expandProductAbstract(ProductAbstractTransfer $productAbstractTransfer): ProductAbstractTransfer
+    {
+        return $this->getFactory()
+            ->createProductAbstractTaxSetExpander()
+            ->expand($productAbstractTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void

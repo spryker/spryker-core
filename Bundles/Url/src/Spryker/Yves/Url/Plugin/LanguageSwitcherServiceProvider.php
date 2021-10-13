@@ -20,6 +20,9 @@ use Twig\TwigFunction;
  */
 class LanguageSwitcherServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
+    /**
+     * @var string
+     */
     public const FUNCTION_RENDER_LANGUAGE_SWITCHER = 'render_language_switcher';
 
     /**
@@ -82,7 +85,7 @@ class LanguageSwitcherServiceProvider extends AbstractPlugin implements ServiceP
 
     /**
      * @param array $locales
-     * @param \Generated\Shared\Transfer\UrlTransfer[] $localeUrls
+     * @param array<\Generated\Shared\Transfer\UrlTransfer> $localeUrls
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array

@@ -45,8 +45,7 @@ class UrlCollectorFacade extends AbstractFacade implements UrlCollectorFacadeInt
         TouchUpdaterInterface $touchUpdater,
         OutputInterface $output
     ) {
-        $this->getFactory()->getCollectorFacade()->runCollector(
-            $this->getFactory()->createStorageUrlCollector(),
+        $this->getFactory()->createStorageUrlCollectorRunner()->run(
             $baseQuery,
             $localeTransfer,
             $result,

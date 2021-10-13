@@ -21,7 +21,7 @@ class ProductDiscontinuedStorageFacade extends AbstractFacade implements Product
      *
      * @api
      *
-     * @param int[] $productDiscontinuedIds
+     * @param array<int> $productDiscontinuedIds
      *
      * @return void
      */
@@ -35,7 +35,7 @@ class ProductDiscontinuedStorageFacade extends AbstractFacade implements Product
      *
      * @api
      *
-     * @param int[] $productDiscontinuedIds
+     * @param array<int> $productDiscontinuedIds
      *
      * @return void
      */

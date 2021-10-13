@@ -74,13 +74,13 @@ class PriceModeDecisionRulePlugin extends AbstractPlugin implements DecisionRule
      *
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getQueryStringValueOptions()
     {
         return [
-          'GROSS_MODE' => 'Gross mode',
-          'NET_MODE' => 'Net Mode',
+            'GROSS_MODE' => 'Gross mode',
+            'NET_MODE' => 'Net Mode',
         ];
     }
 }

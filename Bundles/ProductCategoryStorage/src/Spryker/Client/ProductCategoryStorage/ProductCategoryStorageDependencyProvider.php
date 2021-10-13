@@ -17,7 +17,13 @@ use Spryker\Client\ProductCategoryStorage\Dependency\Service\ProductCategoryStor
  */
 class ProductCategoryStorageDependencyProvider extends AbstractDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_STORAGE = 'CLIENT_STORAGE';
+    /**
+     * @var string
+     */
     public const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
 
     /**

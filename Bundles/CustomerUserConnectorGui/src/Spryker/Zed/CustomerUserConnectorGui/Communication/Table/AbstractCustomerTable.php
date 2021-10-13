@@ -12,24 +12,53 @@ use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Orm\Zed\Customer\Persistence\SpyCustomer;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\CustomerUserConnectorGui\Dependency\QueryContainer\CustomerUserConnectorGuiToCustomerQueryContainerInterface;
+use Spryker\Zed\CustomerUserConnectorGui\Dependency\Service\CustomerUserConnectorGuiToUtilEncodingServiceInterface;
+use Spryker\Zed\CustomerUserConnectorGui\Dependency\Service\CustomerUserConnectorGuiToUtilSanitizeServiceInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 abstract class AbstractCustomerTable extends AbstractTable
 {
+    /**
+     * @var string
+     */
     public const COL_ID = 'id_customer';
+    /**
+     * @var string
+     */
     public const COL_FIRST_NAME = 'first_name';
+    /**
+     * @var string
+     */
     public const COL_LAST_NAME = 'last_name';
+    /**
+     * @var string
+     */
     public const COL_GENDER = 'gender';
+    /**
+     * @var string
+     */
     public const COL_EMAIL = 'email';
+    /**
+     * @var string
+     */
     public const COL_ASSIGNED_USER = 'assigned_zed_user';
+    /**
+     * @var string
+     */
     public const COL_CHECKBOX = 'checkbox';
 
+    /**
+     * @var array
+     */
     public const GENDER_MAP = [
         0 => 'Male',
         1 => 'Female',
     ];
 
+    /**
+     * @var bool
+     */
     public const IS_CHECKBOX_SET_BY_DEFAULT = true;
 
     /**
@@ -43,13 +72,31 @@ abstract class AbstractCustomerTable extends AbstractTable
     protected $userTransfer;
 
     /**
+     * @var \Spryker\Zed\CustomerUserConnectorGui\Dependency\Service\CustomerUserConnectorGuiToUtilSanitizeServiceInterface
+     */
+    protected $utilSanitizeService;
+
+    /**
+     * @var \Spryker\Zed\CustomerUserConnectorGui\Dependency\Service\CustomerUserConnectorGuiToUtilEncodingServiceInterface
+     */
+    protected $utilEncoding;
+
+    /**
      * @param \Spryker\Zed\CustomerUserConnectorGui\Dependency\QueryContainer\CustomerUserConnectorGuiToCustomerQueryContainerInterface $customerQueryContainer
      * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
+     * @param \Spryker\Zed\CustomerUserConnectorGui\Dependency\Service\CustomerUserConnectorGuiToUtilSanitizeServiceInterface $utilSanitizeService
+     * @param \Spryker\Zed\CustomerUserConnectorGui\Dependency\Service\CustomerUserConnectorGuiToUtilEncodingServiceInterface $utilEncoding
      */
-    public function __construct(CustomerUserConnectorGuiToCustomerQueryContainerInterface $customerQueryContainer, UserTransfer $userTransfer)
-    {
+    public function __construct(
+        CustomerUserConnectorGuiToCustomerQueryContainerInterface $customerQueryContainer,
+        UserTransfer $userTransfer,
+        CustomerUserConnectorGuiToUtilSanitizeServiceInterface $utilSanitizeService,
+        CustomerUserConnectorGuiToUtilEncodingServiceInterface $utilEncoding
+    ) {
         $this->customerQueryContainer = $customerQueryContainer;
         $this->userTransfer = $userTransfer;
+        $this->utilSanitizeService = $utilSanitizeService;
+        $this->utilEncoding = $utilEncoding;
     }
 
     /**
@@ -106,7 +153,7 @@ abstract class AbstractCustomerTable extends AbstractTable
     }
 
     /**
-     * @param \Orm\Zed\Customer\Persistence\SpyCustomer[]|\Propel\Runtime\Collection\ObjectCollection $customerEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Customer\Persistence\SpyCustomer> $customerEntities
      *
      * @return array
      */
@@ -150,10 +197,10 @@ abstract class AbstractCustomerTable extends AbstractTable
             'js-customer-checkbox',
             $customerEntity->getIdCustomer(),
             static::IS_CHECKBOX_SET_BY_DEFAULT ? 'checked' : '',
-            htmlspecialchars(json_encode([
+            $this->utilSanitizeService->escapeHtml($this->utilEncoding->encodeJson([
                 'idCustomer' => $customerEntity->getIdCustomer(),
-                'firstname' => $customerEntity->getFirstName(),
-                'lastname' => $customerEntity->getLastName(),
+                'firstname' => $this->utilSanitizeService->escapeHtml($customerEntity->getFirstName()),
+                'lastname' => $this->utilSanitizeService->escapeHtml($customerEntity->getLastName()),
                 'gender' => $customerEntity->getGender(),
             ]))
         );

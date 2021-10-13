@@ -69,13 +69,26 @@ class SalesOrderThresholdToGlossaryFacadeBridge implements SalesOrderThresholdTo
     }
 
     /**
-     * @param string $glossaryKey
-     * @param \Generated\Shared\Transfer\LocaleTransfer[] $localeTransfers
+     * @deprecated Use {@link \Spryker\Zed\SalesOrderThreshold\Dependency\Facade\SalesOrderThresholdToGlossaryFacadeBridge::getTranslationsByGlossaryKeysAndLocaleTransfers()} instead.
      *
-     * @return \Generated\Shared\Transfer\TranslationTransfer[]
+     * @param string $glossaryKey
+     * @param array<\Generated\Shared\Transfer\LocaleTransfer> $localeTransfers
+     *
+     * @return array<\Generated\Shared\Transfer\TranslationTransfer>
      */
     public function getTranslationsByGlossaryKeyAndLocales(string $glossaryKey, array $localeTransfers): array
     {
         return $this->glossaryFacade->getTranslationsByGlossaryKeyAndLocales($glossaryKey, $localeTransfers);
+    }
+
+    /**
+     * @param array<string> $glossaryKeys
+     * @param array<\Generated\Shared\Transfer\LocaleTransfer> $localeTransfers
+     *
+     * @return array<\Generated\Shared\Transfer\TranslationTransfer>
+     */
+    public function getTranslationsByGlossaryKeysAndLocaleTransfers(array $glossaryKeys, array $localeTransfers): array
+    {
+        return $this->glossaryFacade->getTranslationsByGlossaryKeysAndLocaleTransfers($glossaryKeys, $localeTransfers);
     }
 }

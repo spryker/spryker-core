@@ -19,6 +19,9 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class PromotionCollectedDiscountGroupingStrategyPlugin extends AbstractPlugin implements CollectedDiscountGroupingStrategyPluginInterface
 {
+    /**
+     * @var string
+     */
     protected const GROUP_NAME = 'PROMOTION';
 
     /**

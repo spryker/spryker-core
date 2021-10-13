@@ -8,6 +8,8 @@
 namespace Spryker\Zed\ProductCategoryFilterCollector\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\ProductCategoryFilterCollector\Business\Collector\ProductCategoryFilterCollectorRunner;
+use Spryker\Zed\ProductCategoryFilterCollector\Business\Collector\ProductCategoryFilterCollectorRunnerInterface;
 use Spryker\Zed\ProductCategoryFilterCollector\Business\Collector\Storage\ProductCategoryFilterCollector;
 use Spryker\Zed\ProductCategoryFilterCollector\Persistence\Collector\Propel\ProductCategoryFilterCollectorQuery;
 use Spryker\Zed\ProductCategoryFilterCollector\ProductCategoryFilterCollectorDependencyProvider;
@@ -20,7 +22,7 @@ class ProductCategoryFilterCollectorBusinessFactory extends AbstractBusinessFact
     /**
      * @return \Spryker\Zed\Collector\Business\Collector\DatabaseCollectorInterface
      */
-    public function createStorageProductGroupCollector()
+    public function createProductCategoryFilterCollector()
     {
         $collector = new ProductCategoryFilterCollector($this->getUtilDataReaderService());
 
@@ -39,7 +41,7 @@ class ProductCategoryFilterCollectorBusinessFactory extends AbstractBusinessFact
     }
 
     /**
-     * @return \Spryker\Zed\ProductLabelCollector\Dependency\Facade\ProductLabelCollectorToCollectorInterface
+     * @return \Spryker\Zed\ProductCategoryFilterCollector\Dependency\Facade\ProductCategoryFilterCollectorToCollectorFacadeInterface
      */
     public function getCollectorFacade()
     {
@@ -60,5 +62,16 @@ class ProductCategoryFilterCollectorBusinessFactory extends AbstractBusinessFact
     protected function createProductCategoryFilterCollectorQuery()
     {
         return new ProductCategoryFilterCollectorQuery();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductCategoryFilterCollector\Business\Collector\ProductCategoryFilterCollectorRunnerInterface
+     */
+    public function createProductCategoryFilterCollectorRunner(): ProductCategoryFilterCollectorRunnerInterface
+    {
+        return new ProductCategoryFilterCollectorRunner(
+            $this->createProductCategoryFilterCollector(),
+            $this->getCollectorFacade()
+        );
     }
 }

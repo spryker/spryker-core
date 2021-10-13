@@ -32,9 +32,21 @@ class TwigFilesystemLoaderZedTest extends Unit
     public const PATH_TO_CORE_NON_SPLIT = __DIR__ . '/Fixtures/vendor/spryker/spryker/Bundles/%s/src/CoreNamespace/Zed/Bundle/Presentation';
     public const PATH_TO_CORE_3RD_PARTY = __DIR__ . '/Fixtures/vendor/spryker/3rd-party/src/CoreNamespace/Zed/Bundle/Presentation';
 
+    /**
+     * @var string
+     */
     public const CONTENT_PROJECT_FILE = 'project zed file' . PHP_EOL;
+    /**
+     * @var string
+     */
     public const CONTENT_CORE_FILE = 'core zed file' . PHP_EOL;
+    /**
+     * @var string
+     */
     public const CONTENT_CORE_NON_SPLIT_FILE = 'core zed non split file' . PHP_EOL;
+    /**
+     * @var string
+     */
     public const CONTENT_CORE_3RD_PARTY_FILE = 'core zed 3rd party file' . PHP_EOL;
 
     /**

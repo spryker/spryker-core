@@ -18,8 +18,14 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class ReturnCreateForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const FIELD_RETURN_ITEMS = 'returnItems';
 
+    /**
+     * @var string
+     */
     public const OPTION_RETURN_REASONS = 'option_return_reasons';
 
     /**

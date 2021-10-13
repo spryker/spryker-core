@@ -16,10 +16,19 @@ use Spryker\Zed\ProductMeasurementUnit\Persistence\ProductMeasurementUnitReposit
 
 class ItemProductMeasurementSalesUnitChecker implements ItemProductMeasurementSalesUnitCheckerInterface
 {
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_CART_ITEM_SALES_UNIT_IS_NOT_FOUND = 'cart.item.sales_unit.not_found';
 
+    /**
+     * @var string
+     */
     protected const MESSAGE_TYPE_ERROR = 'error';
 
+    /**
+     * @var string
+     */
     protected const SKU_TRANSLATION_PARAMETER = '%sku%';
 
     /**
@@ -87,7 +96,7 @@ class ItemProductMeasurementSalesUnitChecker implements ItemProductMeasurementSa
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param \Generated\Shared\Transfer\CartPreCheckResponseTransfer $cartPreCheckResponseTransfer
-     * @param int[] $productMeasurementSalesUnitIds
+     * @param array<int> $productMeasurementSalesUnitIds
      *
      * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
      */
@@ -120,7 +129,7 @@ class ItemProductMeasurementSalesUnitChecker implements ItemProductMeasurementSa
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getProductConcreteSkus(CartChangeTransfer $cartChangeTransfer): array
     {

@@ -34,7 +34,13 @@ use Spryker\Zed\QuoteRequestDataImport\QuoteRequestDataImportConfig;
  */
 class QuoteRequestVersionDataImportPluginTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const TEST_QUOTE_REQUEST_REFERENCE = 'test-quote-request-reference';
+    /**
+     * @var string
+     */
     protected const INCORRECT_QUOTE_REQUEST_REFERENCE = 'incorrect-quote-request-reference';
 
     /**

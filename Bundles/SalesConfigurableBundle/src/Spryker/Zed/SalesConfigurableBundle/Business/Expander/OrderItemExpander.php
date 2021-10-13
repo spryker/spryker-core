@@ -39,9 +39,9 @@ class OrderItemExpander implements OrderItemExpanderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     public function expandOrderItemsWithSalesOrderConfiguredBundles(array $itemTransfers): array
     {
@@ -66,9 +66,9 @@ class OrderItemExpander implements OrderItemExpanderInterface
     }
 
     /**
-     * @param int[] $salesOrderItemIds
+     * @param array<int> $salesOrderItemIds
      *
-     * @return \Generated\Shared\Transfer\SalesOrderConfiguredBundleTransfer[]
+     * @return array<\Generated\Shared\Transfer\SalesOrderConfiguredBundleTransfer>
      */
     protected function getSalesOrderConfiguredBundleTransfers(array $salesOrderItemIds): array
     {
@@ -84,9 +84,9 @@ class OrderItemExpander implements OrderItemExpanderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getSalesOrderItemIds(array $itemTransfers): array
     {
@@ -102,9 +102,9 @@ class OrderItemExpander implements OrderItemExpanderInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\SalesOrderConfiguredBundleTransfer[] $salesOrderConfiguredBundleTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\SalesOrderConfiguredBundleTransfer> $salesOrderConfiguredBundleTransfers
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\SalesOrderConfiguredBundleTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\SalesOrderConfiguredBundleTransfer>
      */
     protected function translateConfigurableBundleTemplateNames(ArrayObject $salesOrderConfiguredBundleTransfers): ArrayObject
     {
@@ -123,9 +123,9 @@ class OrderItemExpander implements OrderItemExpanderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SalesOrderConfiguredBundleTransfer[] $salesOrderConfiguredBundleTransfers
+     * @param array<\Generated\Shared\Transfer\SalesOrderConfiguredBundleTransfer> $salesOrderConfiguredBundleTransfers
      *
-     * @return \Generated\Shared\Transfer\SalesOrderConfiguredBundleItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\SalesOrderConfiguredBundleItemTransfer>
      */
     protected function indexSalesOrderConfiguredBundleItems(array $salesOrderConfiguredBundleTransfers): array
     {
@@ -142,9 +142,9 @@ class OrderItemExpander implements OrderItemExpanderInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\SalesOrderConfiguredBundleTransfer[] $salesOrderConfiguredBundleTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\SalesOrderConfiguredBundleTransfer> $salesOrderConfiguredBundleTransfers
      *
-     * @return \Generated\Shared\Transfer\SalesOrderConfiguredBundleTransfer[]
+     * @return array<\Generated\Shared\Transfer\SalesOrderConfiguredBundleTransfer>
      */
     protected function indexSalesOrderConfiguredBundleTransfersById(ArrayObject $salesOrderConfiguredBundleTransfers): array
     {

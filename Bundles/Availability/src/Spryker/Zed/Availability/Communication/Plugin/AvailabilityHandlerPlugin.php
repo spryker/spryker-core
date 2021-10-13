@@ -12,7 +12,7 @@ use Spryker\Zed\Oms\Dependency\Plugin\ReservationHandlerPluginInterface;
 use Spryker\Zed\Stock\Dependency\Plugin\StockUpdateHandlerPluginInterface;
 
 /**
- * @deprecated Use {@link \Spryker\Zed\Oms\Communication\Plugin\Oms\ReservationHandler\ReservationVersionPostSaveTerminationAwareStrategyPlugin} instead.
+ * @deprecated Use {@link \Spryker\Zed\Oms\Communication\Plugin\Oms\ReservationHandler\ReservationVersionPostSaveTerminationAwareStrategyPlugin} or {@link \Spryker\Zed\Availability\Communication\Plugin\Stock\AvailabilityStockUpdateHandlerPlugin} respectively instead.
  *
  * @method \Spryker\Zed\Availability\Business\AvailabilityFacadeInterface getFacade()
  * @method \Spryker\Zed\Availability\Communication\AvailabilityCommunicationFactory getFactory()

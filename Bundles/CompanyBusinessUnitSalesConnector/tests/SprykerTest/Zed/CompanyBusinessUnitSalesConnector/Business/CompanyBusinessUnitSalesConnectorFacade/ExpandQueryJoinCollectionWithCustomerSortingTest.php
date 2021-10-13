@@ -28,16 +28,19 @@ class ExpandQueryJoinCollectionWithCustomerSortingTest extends Unit
 {
     /**
      * @uses \Spryker\Zed\CompanyBusinessUnitSalesConnector\Business\Expander\OrderSearchQueryExpander::COLUMN_EMAIL
+     * @var string
      */
     protected const COLUMN_EMAIL = 'spy_sales_order.email';
 
     /**
      * @uses \Spryker\Zed\CompanyBusinessUnitSalesConnector\Business\Expander\OrderSearchQueryExpander::COLUMN_FULL_NAME
+     * @var string
      */
     protected const COLUMN_FULL_NAME = 'full_name';
 
     /**
      * @see \Spryker\Zed\CompanyBusinessUnitSalesConnector\Business\Expander\OrderSearchQueryExpander::getConcatenatedFullNameColumn()
+     * @var string
      */
     protected const COLUMN_FULL_NAME_EXPRESSION = 'CONCAT(first_name,\' \', last_name)';
 

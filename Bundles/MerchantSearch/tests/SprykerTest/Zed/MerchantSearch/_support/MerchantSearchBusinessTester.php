@@ -37,10 +37,14 @@ class MerchantSearchBusinessTester extends Actor
 {
     use _generated\MerchantSearchBusinessTesterActions;
 
+    /**
+     * @var int
+     */
     protected const MERCHANT_COUNT = 3;
 
     /**
      * @uses \Spryker\Zed\Merchant\MerchantConfig::STATUS_APPROVED
+     * @var string
      */
     protected const MERCHANT_STATUS_APPROVED = 'approved';
 
@@ -61,9 +65,9 @@ class MerchantSearchBusinessTester extends Actor
     }
 
     /**
-     * @param int[] $ids
+     * @param array<int> $ids
      *
-     * @return \Generated\Shared\Transfer\EventEntityTransfer[]
+     * @return array<\Generated\Shared\Transfer\EventEntityTransfer>
      */
     public function createEventEntityTransfersFromIds(array $ids): array
     {
@@ -76,7 +80,7 @@ class MerchantSearchBusinessTester extends Actor
     }
 
     /**
-     * @param int[] $merchantIds
+     * @param array<int> $merchantIds
      *
      * @return int
      */
@@ -92,9 +96,9 @@ class MerchantSearchBusinessTester extends Actor
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantTransfer[] $merchantTransfers
+     * @param array<\Generated\Shared\Transfer\MerchantTransfer> $merchantTransfers
      *
-     * @return int[]
+     * @return array<int>
      */
     public function extractMerchantIdsFromMerchantTransfers(array $merchantTransfers): array
     {
@@ -109,7 +113,7 @@ class MerchantSearchBusinessTester extends Actor
     /**
      * @param int $merchantCount
      *
-     * @return \Generated\Shared\Transfer\MerchantTransfer[]
+     * @return array<\Generated\Shared\Transfer\MerchantTransfer>
      */
     public function createActiveMerchants(int $merchantCount = self::MERCHANT_COUNT): array
     {
@@ -138,9 +142,9 @@ class MerchantSearchBusinessTester extends Actor
     }
 
     /**
-     * @param int[] $merchantIds
+     * @param array<int> $merchantIds
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\MerchantSearch\Persistence\SpyMerchantSearch[]
+     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\MerchantSearch\Persistence\SpyMerchantSearch>
      */
     public function getSynchronizationDataTransfersByMerchantIds(array $merchantIds): ObjectCollection
     {

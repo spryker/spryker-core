@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\HealthCheckRequestTransfer;
 interface ValidatorInterface
 {
     /**
-     * @param \Spryker\Shared\HealthCheckExtension\Dependency\Plugin\HealthCheckPluginInterface[] $healthCheckPlugins
+     * @param array<\Spryker\Shared\HealthCheckExtension\Dependency\Plugin\HealthCheckPluginInterface> $healthCheckPlugins
      * @param \Generated\Shared\Transfer\HealthCheckRequestTransfer $healthCheckRequestTransfer
      *
      * @return bool

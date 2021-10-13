@@ -19,10 +19,22 @@ use Symfony\Component\Finder\Finder;
  */
 class TransferDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const SERVICE_UTIL_GLOB = 'util glob service';
+    /**
+     * @var string
+     */
     public const SYMFONY_FILE_SYSTEM = 'symfony_file_system';
+    /**
+     * @var string
+     */
     public const SYMFONY_FINDER = 'symfony_finder';
 
+    /**
+     * @var string
+     */
     public const FACADE_PROPEL = 'FACADE_PROPEL';
 
     /**

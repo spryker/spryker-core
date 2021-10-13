@@ -23,6 +23,9 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class CreateGlossaryController extends AbstractController
 {
+    /**
+     * @var string
+     */
     public const URL_PARAM_ID_CMS_PAGE = 'id-cms-page';
 
     /**
@@ -30,7 +33,7 @@ class CreateGlossaryController extends AbstractController
      *
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function indexAction(Request $request)
     {
@@ -95,7 +98,7 @@ class CreateGlossaryController extends AbstractController
     /**
      * @param \Generated\Shared\Transfer\CmsPageTransfer $cmsPageTransfer
      *
-     * @return \Generated\Shared\Transfer\ButtonTransfer[]
+     * @return array<\Generated\Shared\Transfer\ButtonTransfer>
      */
     protected function getViewActionButtons(CmsPageTransfer $cmsPageTransfer)
     {

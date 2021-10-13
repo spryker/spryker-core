@@ -24,6 +24,9 @@ use Spryker\Zed\Testify\Locator\Business\BusinessLocator as Locator;
  */
 class BusinessHelper extends Module
 {
+    /**
+     * @var string
+     */
     protected const BUSINESS_CLASS_NAME_PATTERN = '\%1$s\%2$s\%3$s\Business\%3$sBusinessFactory';
 
     /**
@@ -42,7 +45,7 @@ class BusinessHelper extends Module
     protected $mockedFactoryMethods = [];
 
     /**
-     * @return \Spryker\Shared\Kernel\LocatorLocatorInterface|\Generated\Zed\Ide\AutoCompletion|\Generated\Service\Ide\AutoCompletion
+     * @return \Spryker\Shared\Kernel\LocatorLocatorInterface&\Generated\Zed\Ide\AutoCompletion|\Generated\Service\Ide\AutoCompletion
      */
     public function getLocator()
     {
@@ -91,7 +94,7 @@ class BusinessHelper extends Module
      *
      * @throws \Exception
      *
-     * @return object|\Spryker\Zed\Kernel\Business\AbstractBusinessFactory
+     * @return \Spryker\Zed\Kernel\Business\AbstractBusinessFactory|object
      */
     public function mockFactoryMethod(string $methodName, $return)
     {

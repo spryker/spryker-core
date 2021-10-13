@@ -7,15 +7,16 @@
 
 namespace Spryker\Shared\Event;
 
-use Spryker\Shared\Kernel\AbstractBundleConfig;
+use Spryker\Shared\Kernel\AbstractSharedConfig;
 
-class EventConfig extends AbstractBundleConfig
+class EventConfig extends AbstractSharedConfig
 {
     /**
      * Specification:
      * - Routing key for forwarding message to retry queue
      *
      * @api
+     * @var string
      */
     public const EVENT_ROUTING_KEY_RETRY = 'retry';
 
@@ -24,6 +25,7 @@ class EventConfig extends AbstractBundleConfig
      * - Routing key for forwarding message to error queue
      *
      * @api
+     * @var string
      */
     public const EVENT_ROUTING_KEY_ERROR = 'error';
 }

@@ -183,7 +183,7 @@ class GuestQuoteItemAdder implements GuestQuoteItemAdderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer[]|\ArrayObject $customerQuoteTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\QuoteTransfer> $customerQuoteTransfers
      * @param string|null $quoteUuid
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer|null

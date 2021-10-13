@@ -13,7 +13,7 @@ use Codeception\Module;
 trait ModuleLocatorTrait
 {
     /**
-     * @return \Codeception\Module[]
+     * @return array<\Codeception\Module>
      */
     abstract protected function getModules();
 

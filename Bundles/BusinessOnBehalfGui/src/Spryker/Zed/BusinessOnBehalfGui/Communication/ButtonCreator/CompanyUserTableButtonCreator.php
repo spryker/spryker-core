@@ -13,20 +13,36 @@ class CompanyUserTableButtonCreator extends AbstractButtonCreator implements Com
 {
     /**
      * @uses \Spryker\Zed\BusinessOnBehalfGui\Communication\Controller\CustomerController::attachCustomerAction
+     * @var string
      */
     protected const PATH_ATTACH_CUSTOMER_TO_BUSINESS_UNIT = '/business-on-behalf-gui/customer/attach-customer';
 
+    /**
+     * @var string
+     */
     protected const PARAM_ID_CUSTOMER = 'id-customer';
+    /**
+     * @var string
+     */
     protected const PARAM_ID_COMPANY = 'id-company';
 
+    /**
+     * @var string
+     */
     protected const COL_FK_CUSTOMER = 'spy_company_user.fk_customer';
+    /**
+     * @var string
+     */
     protected const COL_FK_COMPANY = 'spy_company_user.fk_company';
 
+    /**
+     * @var string
+     */
     protected const BUTTON_ATTACH_TO_BUSINESS_UNIT_TITLE = 'Attach to BU';
 
     /**
      * @param array $companyUserTableRowItem
-     * @param string[] $buttons
+     * @param array<string> $buttons
      *
      * @return \Generated\Shared\Transfer\ButtonTransfer
      */

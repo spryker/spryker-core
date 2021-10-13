@@ -21,7 +21,7 @@ class MerchantProductStorageFacade extends AbstractFacade implements MerchantPro
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
      *
      * @return void
      */
@@ -35,7 +35,7 @@ class MerchantProductStorageFacade extends AbstractFacade implements MerchantPro
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
      *
      * @return void
      */

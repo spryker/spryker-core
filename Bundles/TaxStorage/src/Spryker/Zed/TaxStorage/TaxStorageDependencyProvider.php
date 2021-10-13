@@ -17,8 +17,14 @@ use Spryker\Zed\TaxStorage\Dependency\Facade\TaxSetStorageToEventBehaviorFacadeB
  */
 class TaxStorageDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
 
+    /**
+     * @var string
+     */
     public const PROPEL_QUERY_TAX_SET = 'PROPEL_QUERY_TAX_SET';
 
     /**

@@ -19,7 +19,13 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class ExportReservationConsole extends Console
 {
+    /**
+     * @var string
+     */
     public const COMMAND_NAME = 'oms:export-reservation';
+    /**
+     * @var string
+     */
     public const COMMAND_DESCRIPTION = 'Export reservation to other stores';
 
     /**

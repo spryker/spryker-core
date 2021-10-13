@@ -28,6 +28,9 @@ use Spryker\Client\SearchElasticsearch\SearchElasticsearchFactory;
  */
 class SortedResultFormatterPluginTest extends AbstractResultFormatterPluginTest
 {
+    /**
+     * @var string
+     */
     protected const DIRECTION_ASC = 'asc';
 
     /**

@@ -60,7 +60,7 @@ class ProcessManager implements ProcessManagerInterface
      */
     public function getBusyProcessNumber($queueName)
     {
-        /** @var int[] $processIds */
+        /** @var array<int> $processIds */
         $processIds = $this->queryContainer
             ->queryProcessesByServerIdAndQueueName($this->serverUniqueId, $queueName)
             ->find();
@@ -75,7 +75,7 @@ class ProcessManager implements ProcessManagerInterface
      */
     public function flushIdleProcesses()
     {
-        /** @var int[] $processIds */
+        /** @var array<int> $processIds */
         $processIds = $this->queryContainer
             ->queryProcessesByServerId($this->serverUniqueId)
             ->find();
@@ -119,7 +119,7 @@ class ProcessManager implements ProcessManagerInterface
             return false;
         }
 
-        $output = exec(sprintf('ps -p %s | grep %s | grep -v \'<defunct>\'', $processId, $processId));
+        $output = (string)exec(sprintf('ps -p %s | grep %s | grep -v \'<defunct>\'', $processId, $processId));
 
         return trim($output) !== '';
     }
@@ -187,10 +187,12 @@ class ProcessManager implements ProcessManagerInterface
      */
     protected function createProcess($command)
     {
-        if (method_exists(Process::class, 'fromShellCommandline')) {
-            return Process::fromShellCommandline($command, APPLICATION_ROOT_DIR);
+        // Shim for Symfony 3.x, to be removed when Symfony dependency becomes 4.2+
+        if (!method_exists(Process::class, 'fromShellCommandline')) {
+            //@phpstan-ignore-next-line
+            return new Process($command);
         }
 
-        return new Process(explode(' ', $command));
+        return Process::fromShellCommandline($command, APPLICATION_ROOT_DIR);
     }
 }

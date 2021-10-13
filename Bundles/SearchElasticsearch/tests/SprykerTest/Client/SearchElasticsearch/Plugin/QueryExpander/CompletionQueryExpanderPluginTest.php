@@ -25,7 +25,13 @@ use Spryker\Client\SearchElasticsearch\Plugin\QueryExpander\CompletionQueryExpan
  */
 class CompletionQueryExpanderPluginTest extends AbstractQueryExpanderPluginTest
 {
+    /**
+     * @var int
+     */
     protected const SIZE = 10;
+    /**
+     * @var string
+     */
     protected const AGGREGATION_NAME = 'completion';
 
     /**

@@ -26,7 +26,7 @@ class ProductSearchMarker implements ProductSearchMarkerInterface
 
     /**
      * @param int $idProduct
-     * @param \Generated\Shared\Transfer\LocaleTransfer[] $localeCollection
+     * @param array<\Generated\Shared\Transfer\LocaleTransfer> $localeCollection
      *
      * @return void
      */
@@ -37,7 +37,7 @@ class ProductSearchMarker implements ProductSearchMarkerInterface
 
     /**
      * @param int $idProduct
-     * @param \Generated\Shared\Transfer\LocaleTransfer[] $localeCollection
+     * @param array<\Generated\Shared\Transfer\LocaleTransfer> $localeCollection
      *
      * @return void
      */
@@ -48,7 +48,7 @@ class ProductSearchMarker implements ProductSearchMarkerInterface
 
     /**
      * @param int $idProduct
-     * @param \Generated\Shared\Transfer\LocaleTransfer[] $localeCollection
+     * @param array<\Generated\Shared\Transfer\LocaleTransfer> $localeCollection
      * @param bool $searchable
      *
      * @return void

@@ -40,10 +40,10 @@ class ProductImageBusinessTester extends Actor
     {
         $imageSetConcrete = new SpyProductImageSet();
         $imageSetConcrete
-           ->setName($name)
-           ->setFkProductAbstract($fkProductAbstract)
-           ->setFkProduct($fkProduct)
-           ->setFkLocale($fkLocale)
-           ->save();
+            ->setName($name)
+            ->setFkProductAbstract($fkProductAbstract)
+            ->setFkProduct($fkProduct)
+            ->setFkLocale($fkLocale)
+            ->save();
     }
 }

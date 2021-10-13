@@ -119,7 +119,7 @@ class CartClient extends AbstractClient implements CartClientInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      * @param array $params
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
@@ -149,7 +149,7 @@ class CartClient extends AbstractClient implements CartClientInterface
      *
      * @api
      *
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $items
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
@@ -392,5 +392,20 @@ class CartClient extends AbstractClient implements CartClientInterface
     public function replaceItem(ItemReplaceTransfer $itemReplaceTransfer): QuoteResponseTransfer
     {
         return $this->getFactory()->createQuoteStorageStrategyProxy()->replaceItem($itemReplaceTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     * @param array $params
+     *
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
+     */
+    public function expandCartItemsWithGroupKeyPrefix(CartChangeTransfer $cartChangeTransfer, array $params): CartChangeTransfer
+    {
+        return $this->getFactory()->createGroupKeyPrefixItemExpander()->expandCartItemsWithGroupKeyPrefix($cartChangeTransfer, $params);
     }
 }

@@ -13,15 +13,42 @@ use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 
 class ResourceTransferAnalyzer implements ResourceTransferAnalyzerInterface
 {
+    /**
+     * @var string
+     */
     protected const TRANSFER_NAME_PARTIAL_ATTRIBUTES = 'Attributes';
+    /**
+     * @var string
+     */
     protected const TRANSFER_NAME_PARTIAL_TRANSFER = 'Transfer';
 
+    /**
+     * @var string
+     */
     protected const SCHEMA_NAME_PARTIAL_ATTRIBUTES = 'Attributes';
+    /**
+     * @var string
+     */
     protected const SCHEMA_NAME_PARTIAL_COLLECTION = 'Collection';
+    /**
+     * @var string
+     */
     protected const SCHEMA_NAME_PARTIAL_DATA = 'Data';
+    /**
+     * @var string
+     */
     protected const SCHEMA_NAME_PARTIAL_RELATIONSHIPS = 'Relationships';
+    /**
+     * @var string
+     */
     protected const SCHEMA_NAME_PARTIAL_INCLUDED = 'Included';
+    /**
+     * @var string
+     */
     protected const SCHEMA_NAME_PARTIAL_REQUEST = 'Request';
+    /**
+     * @var string
+     */
     protected const SCHEMA_NAME_PARTIAL_RESPONSE = 'Response';
 
     /**
@@ -217,7 +244,7 @@ class ResourceTransferAnalyzer implements ResourceTransferAnalyzerInterface
     /**
      * @param string $transferClassName
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getTransferClassNameExploded(string $transferClassName): array
     {

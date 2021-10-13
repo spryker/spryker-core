@@ -21,14 +21,22 @@ class DeleteCompanyBusinessUnitController extends AbstractController
 {
     /**
      * @see CompanyBusinessUnitForm::FIELD_ID_COMPANY_BUSINESS_UNIT
+     * @var string
      */
     protected const PARAM_ID_COMPANY_BUSINESS_UNIT = 'id-company-business-unit';
     /**
      * @see ListCompanyBusinessUnitController::indexAction()
+     * @var string
      */
     protected const URL_BUSINESS_UNIT_LIST = '/company-business-unit-gui/list-company-business-unit';
 
+    /**
+     * @var string
+     */
     protected const MESSAGE_SUCCESS_COMPANY_BUSINESS_UNIT_DELETE = 'Company Business Unit "%s" was deleted.';
+    /**
+     * @var string
+     */
     protected const MESSAGE_ERROR_COMPANY_BUSINESS_UNIT_DELETE = 'You can not delete a business unit "%s" while it contains users';
 
     /**

@@ -13,6 +13,9 @@ use Spryker\Zed\TaxProductConnector\Persistence\TaxProductConnectorRepositoryInt
 
 class ProductAbstractTaxReader implements ProductAbstractTaxReaderInterface
 {
+    /**
+     * @var string
+     */
     protected const EXCEPTION_MESSAGE_TAX_SET_NOT_FOUND_FOR_ABSTRACT = 'Could not get tax set, product abstract with id "%d" not found.';
 
     /**

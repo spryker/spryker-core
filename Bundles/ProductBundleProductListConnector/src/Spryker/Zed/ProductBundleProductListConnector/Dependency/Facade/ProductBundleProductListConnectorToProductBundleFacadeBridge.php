@@ -39,7 +39,7 @@ class ProductBundleProductListConnectorToProductBundleFacadeBridge implements Pr
     /**
      * @param int $idProductConcrete
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ProductForBundleTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\ProductForBundleTransfer>
      */
     public function findBundledProductsByIdProductConcrete($idProductConcrete)
     {

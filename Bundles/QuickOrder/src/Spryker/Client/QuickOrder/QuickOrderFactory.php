@@ -63,7 +63,7 @@ class QuickOrderFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\QuickOrderExtension\Dependency\Plugin\ProductConcreteExpanderPluginInterface[]
+     * @return array<\Spryker\Client\QuickOrderExtension\Dependency\Plugin\ProductConcreteExpanderPluginInterface>
      */
     public function getProductConcreteExpanderPlugins(): array
     {
@@ -71,7 +71,7 @@ class QuickOrderFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\QuickOrderExtension\Dependency\Plugin\ItemValidatorPluginInterface[]
+     * @return array<\Spryker\Client\QuickOrderExtension\Dependency\Plugin\ItemValidatorPluginInterface>
      */
     public function getQuickOrderValidationPlugins(): array
     {

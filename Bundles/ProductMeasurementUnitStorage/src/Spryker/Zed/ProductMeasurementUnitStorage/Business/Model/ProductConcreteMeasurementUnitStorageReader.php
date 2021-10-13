@@ -31,7 +31,7 @@ class ProductConcreteMeasurementUnitStorageReader implements ProductConcreteMeas
     /**
      * @param int $idProduct
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteMeasurementUnitStorageTransfer[] Keys are store names
+     * @return array<\Generated\Shared\Transfer\ProductConcreteMeasurementUnitStorageTransfer> Keys are store names
      */
     public function generateProductConcreteMeasurementUnitStorageTransfersByIdProduct(int $idProduct): array
     {
@@ -54,7 +54,7 @@ class ProductConcreteMeasurementUnitStorageReader implements ProductConcreteMeas
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[] $productMeasurementSalesUnitTransfers
+     * @param array<\Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer> $productMeasurementSalesUnitTransfers
      *
      * @return array First level keys are store names, second level keys are numeric, values are ProductConcreteMeasurementSalesUnitTransfers
      */
@@ -73,7 +73,7 @@ class ProductConcreteMeasurementUnitStorageReader implements ProductConcreteMeas
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[] $productMeasurementSalesUnitTransfers
+     * @param array<\Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer> $productMeasurementSalesUnitTransfers
      *
      * @return \Generated\Shared\Transfer\ProductConcreteMeasurementBaseUnitTransfer|null
      */
@@ -92,9 +92,9 @@ class ProductConcreteMeasurementUnitStorageReader implements ProductConcreteMeas
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[] $productMeasurementSalesUnitTransfers
+     * @param array<\Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer> $productMeasurementSalesUnitTransfers
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function extractRelatedStoreNames(array $productMeasurementSalesUnitTransfers): array
     {

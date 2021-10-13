@@ -24,15 +24,30 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class VoucherForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const FIELD_QUANTITY = 'quantity';
+    /**
+     * @var string
+     */
     public const FIELD_CUSTOM_CODE = 'custom_code';
+    /**
+     * @var string
+     */
     public const FIELD_RANDOM_GENERATED_CODE_LENGTH = 'random_generated_code_length';
+    /**
+     * @var string
+     */
     public const FIELD_MAX_NUMBER_OF_USES = 'max_number_of_uses';
+    /**
+     * @var string
+     */
     public const FIELD_ID_DISCOUNT = 'id_discount';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param string[] $options
+     * @param array<string> $options
      *
      * @return void
      */
@@ -149,7 +164,7 @@ class VoucherForm extends AbstractType
     }
 
     /**
-     * @return int[]
+     * @return array<int>
      */
     protected function createCodeLengthRangeList()
     {

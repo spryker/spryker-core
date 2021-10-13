@@ -20,12 +20,22 @@ class EditWarehouseController extends AbstractController
 {
     /**
      * @uses \Spryker\Zed\StockGui\Communication\Controller\WarehouseController::listAction()
+     * @var string
      */
     protected const REDIRECT_URL = '/stock-gui/warehouse/list';
 
+    /**
+     * @var string
+     */
     protected const MESSAGE_SUCCESS = 'Warehouse has been successfully updated';
+    /**
+     * @var string
+     */
     protected const MESSAGE_STOCK_NOT_FOUND = 'Stock not found';
 
+    /**
+     * @var string
+     */
     protected const PARAMETER_ID_STOCK = 'id-stock';
 
     /**

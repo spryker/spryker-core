@@ -20,6 +20,9 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  */
 class ProductConcreteRelationCsvConfigurableBundleTemplateSlotEditFormFileUploadHandlerPlugin extends AbstractPlugin implements ConfigurableBundleTemplateSlotEditFormFileUploadHandlerPluginInterface
 {
+    /**
+     * @var string
+     */
     protected const FIELD_PATH_SEPARATOR = '.';
 
     /**

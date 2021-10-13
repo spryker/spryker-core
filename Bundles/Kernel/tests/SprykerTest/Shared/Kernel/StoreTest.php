@@ -106,7 +106,7 @@ class StoreTest extends Unit
 
         $storeMock = $this->createStoreMock();
         $storeMock->method('getStoreSetup')
-           ->willReturn($mockConfig);
+            ->willReturn($mockConfig);
 
         $storeMock->initializeSetup('DE');
 

@@ -26,42 +26,117 @@ class DataImportConsole extends Console
 {
     use BundleConfigResolverAwareTrait;
 
+    /**
+     * @var string
+     */
     public const DEFAULT_IMPORTER_TYPE = 'full';
 
+    /**
+     * @var string
+     */
     public const DEFAULT_NAME = 'data:import';
+    /**
+     * @var string
+     */
     public const DEFAULT_DESCRIPTION = 'This command executes your importers (full-import). Add this command with another name e.g. "new DataImportConsole(\'data:import:category\')" to your ConsoleDependencyProvider and you can run a single DataImporter which is mapped to the latter part of the command name.';
 
+    /**
+     * @var string
+     */
     public const IMPORTER_TYPE_DESCRIPTION = 'This command executes your "%s" importer.';
 
+    /**
+     * @var string
+     */
     public const OPTION_FILE_NAME = 'file-name';
+    /**
+     * @var string
+     */
     public const OPTION_FILE_NAME_SHORT = 'f';
 
+    /**
+     * @var string
+     */
     public const OPTION_OFFSET = 'offset';
+    /**
+     * @var string
+     */
     public const OPTION_OFFSET_SHORT = 'o';
 
+    /**
+     * @var string
+     */
     public const OPTION_LIMIT = 'limit';
+    /**
+     * @var string
+     */
     public const OPTION_LIMIT_SHORT = 'l';
 
+    /**
+     * @var string
+     */
     public const OPTION_CSV_DELIMITER = 'delimiter';
+    /**
+     * @var string
+     */
     public const OPTION_CSV_DELIMITER_SHORT = 'd';
 
+    /**
+     * @var string
+     */
     public const OPTION_CSV_ENCLOSURE = 'enclosure';
+    /**
+     * @var string
+     */
     public const OPTION_CSV_ENCLOSURE_SHORT = 'e';
 
+    /**
+     * @var string
+     */
     public const OPTION_CSV_ESCAPE = 'escape';
+    /**
+     * @var string
+     */
     public const OPTION_CSV_ESCAPE_SHORT = 's';
 
+    /**
+     * @var string
+     */
     public const OPTION_CSV_HAS_HEADER = 'has-header';
+    /**
+     * @var string
+     */
     public const OPTION_CSV_HAS_HEADER_SHORT = 'r';
 
+    /**
+     * @var string
+     */
     public const OPTION_THROW_EXCEPTION = 'throw-exception';
+    /**
+     * @var string
+     */
     public const OPTION_THROW_EXCEPTION_SHORT = 't';
+    /**
+     * @var string
+     */
     public const ARGUMENT_IMPORTER = 'importer';
 
+    /**
+     * @var string
+     */
     public const OPTION_IMPORT_GROUP = 'group';
+    /**
+     * @var string
+     */
     public const OPTION_IMPORT_GROUP_SHORT = 'g';
 
+    /**
+     * @var string
+     */
     public const OPTION_CONFIG = 'config';
+    /**
+     * @var string
+     */
     public const OPTION_CONFIG_SHORT = 'c';
 
     /**
@@ -251,7 +326,7 @@ class DataImportConsole extends Console
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\DataImporterReportTransfer[] $dataImporterReports
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\DataImporterReportTransfer> $dataImporterReports
      *
      * @return void
      */
@@ -315,7 +390,7 @@ class DataImportConsole extends Console
      */
     protected function getYamlConfigPath(InputInterface $input): ?string
     {
-        if ($input->hasParameterOption('--' . static::OPTION_CONFIG) || $input->hasParameterOption('--' . static::OPTION_CONFIG_SHORT)) {
+        if ($input->hasParameterOption('--' . static::OPTION_CONFIG) || $input->hasParameterOption('-' . static::OPTION_CONFIG_SHORT)) {
             return $input->getOption(static::OPTION_CONFIG);
         }
 

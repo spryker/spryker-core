@@ -16,6 +16,9 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class RouterCacheWarmUpConsole extends Console
 {
+    /**
+     * @var string
+     */
     protected const NAME = 'router:cache:warm-up';
 
     /**

@@ -15,6 +15,9 @@ use Spryker\Zed\PriceProductSchedule\PriceProductScheduleConfig;
 
 class PriceProductScheduleListFinder implements PriceProductScheduleListFinderInterface
 {
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_PRICE_PRODUCT_SCHEDULE_LIST_NOT_FOUND = 'Price product schedule list was not found by provided id %s';
 
     /**

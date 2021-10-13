@@ -10,7 +10,7 @@ namespace Spryker\Zed\ContentNavigation\Business\Validator;
 interface ContentNavigationConstraintsProviderInterface
 {
     /**
-     * @return \Symfony\Component\Validator\Constraint[][]
+     * @return array<\Symfony\Component\Validator\Constraint[]>
      */
     public function getConstraintsMap(): array;
 }

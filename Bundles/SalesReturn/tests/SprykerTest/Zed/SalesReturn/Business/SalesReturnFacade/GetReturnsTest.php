@@ -24,9 +24,18 @@ use Generated\Shared\Transfer\ReturnFilterTransfer;
  */
 class GetReturnsTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const DEFAULT_OMS_PROCESS_NAME = 'Test01';
 
+    /**
+     * @var string
+     */
     protected const FAKE_CUSTOMER_REFERENCE = 'FAKE_CUSTOMER_REFERENCE';
+    /**
+     * @var string
+     */
     protected const FAKE_RETURN_REFERENCE = 'FAKE_RETURN_REFERENCE';
 
     /**

@@ -17,11 +17,23 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class DeleteController extends AbstractController
 {
+    /**
+     * @var string
+     */
     protected const FIELD_ID_PRODUCT_ALTERNATIVE = 'id-product-alternative';
 
+    /**
+     * @var string
+     */
     protected const MESSAGE_DELETE_PRODUCT_ALTERNATIVE_SUCCESS = 'Product Alternative was removed successfully.';
+    /**
+     * @var string
+     */
     protected const MESSAGE_DELETE_PRODUCT_ALTERNATIVE_ERROR = 'Product Alternative was not removed.';
 
+    /**
+     * @var string
+     */
     protected const KEY_TAB_PRODUCT_ALTERNATIVE = '#tab-content-alternatives';
 
     /**

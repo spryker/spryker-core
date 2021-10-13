@@ -21,20 +21,62 @@ use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToProductFacadeBridge
  */
 class ShoppingListDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_COMPANY_USER = 'FACADE_COMPANY_USER';
+    /**
+     * @var string
+     */
     public const FACADE_MESSENGER = 'FACADE_MESSENGER';
+    /**
+     * @var string
+     */
     public const FACADE_PRODUCT = 'FACADE_PRODUCT';
+    /**
+     * @var string
+     */
     public const FACADE_PERMISSION = 'FACADE_PERMISSION';
+    /**
+     * @var string
+     */
     public const FACADE_PERSISTENT_CART = 'FACADE_PERSISTENT_CART';
+    /**
+     * @var string
+     */
     public const FACADE_EVENT = 'FACADE_EVENT';
 
+    /**
+     * @var string
+     */
     public const PLUGINS_ITEM_EXPANDER = 'PLUGINS_ITEM_EXPANDER';
+    /**
+     * @var string
+     */
     public const PLUGINS_ITEM_COLLECTION_EXPANDER = 'PLUGINS_ITEM_COLLECTION_EXPANDER';
+    /**
+     * @var string
+     */
     public const PLUGINS_QUOTE_ITEM_EXPANDER = 'PLUGINS_QUOTE_ITEM_EXPANDER';
+    /**
+     * @var string
+     */
     public const PLUGINS_ADD_ITEM_PRE_CHECK = 'PLUGINS_ADD_ITEM_PRE_CHECK';
+    /**
+     * @var string
+     */
     public const PLUGINS_SHOPPING_LIST_ITEM_POST_SAVE = 'PLUGINS_SHOPPING_LIST_ITEM_POST_SAVE';
+    /**
+     * @var string
+     */
     public const PLUGINS_SHOPPING_LIST_ITEM_BULK_POST_SAVE = 'PLUGINS_SHOPPING_LIST_ITEM_BULK_POST_SAVE';
+    /**
+     * @var string
+     */
     public const PLUGINS_SHOPPING_LIST_ITEM_BEFORE_DELETE = 'PLUGINS_SHOPPING_LIST_ITEM_BEFORE_DELETE';
+    /**
+     * @var string
+     */
     public const PLUGINS_ITEM_TO_SHOPPING_LIST_ITEM_MAPPER = 'PLUGINS_ITEM_TO_SHOPPING_LIST_ITEM_MAPPER';
 
     /**
@@ -208,7 +250,7 @@ class ShoppingListDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @deprecated Use {@link \Spryker\Zed\ShoppingList\ShoppingListDependencyProvider::getItemCollectionExpanderPlugins()} instead.
      *
-     * @return \Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ItemExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ItemExpanderPluginInterface>
      */
     protected function getItemExpanderPlugins(): array
     {
@@ -216,7 +258,7 @@ class ShoppingListDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ShoppingListItemCollectionExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ShoppingListItemCollectionExpanderPluginInterface>
      */
     protected function getItemCollectionExpanderPlugins(): array
     {
@@ -224,7 +266,7 @@ class ShoppingListDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\ShoppingListExtension\Dependency\Plugin\AddItemPreCheckPluginInterface[]
+     * @return array<\Spryker\Zed\ShoppingListExtension\Dependency\Plugin\AddItemPreCheckPluginInterface>
      */
     protected function getAddItemPreCheckPlugins(): array
     {
@@ -232,7 +274,7 @@ class ShoppingListDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\ShoppingListExtension\Dependency\Plugin\QuoteItemsPreConvertPluginInterface[]
+     * @return array<\Spryker\Zed\ShoppingListExtension\Dependency\Plugin\QuoteItemsPreConvertPluginInterface>
      */
     protected function getQuoteItemExpanderPlugins(): array
     {
@@ -272,7 +314,7 @@ class ShoppingListDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @deprecated Use {@link \Spryker\Zed\ShoppingList\ShoppingListDependencyProvider::getShoppingListItemBulkPostSavePlugins()} instead.
      *
-     * @return \Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ShoppingListItemPostSavePluginInterface[]
+     * @return array<\Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ShoppingListItemPostSavePluginInterface>
      */
     protected function getShoppingListItemPostSavePlugins(): array
     {
@@ -280,7 +322,7 @@ class ShoppingListDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ShoppingListItemBulkPostSavePluginInterface[]
+     * @return array<\Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ShoppingListItemBulkPostSavePluginInterface>
      */
     protected function getShoppingListItemBulkPostSavePlugins(): array
     {
@@ -302,7 +344,7 @@ class ShoppingListDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ShoppingListItemBeforeDeletePluginInterface[]
+     * @return array<\Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ShoppingListItemBeforeDeletePluginInterface>
      */
     protected function getBeforeDeleteShoppingListItemPlugins(): array
     {
@@ -324,7 +366,7 @@ class ShoppingListDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ItemToShoppingListItemMapperPluginInterface[]
+     * @return array<\Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ItemToShoppingListItemMapperPluginInterface>
      */
     protected function getItemToShoppingListItemMapperPlugins(): array
     {

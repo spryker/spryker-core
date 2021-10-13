@@ -10,7 +10,7 @@ namespace Spryker\Zed\ProductQuantityStorage\Business\Model;
 interface ProductQuantityStorageWriterInterface
 {
     /**
-     * @param int[] $productIds
+     * @param array<int> $productIds
      *
      * @return void
      */

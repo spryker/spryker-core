@@ -24,7 +24,7 @@ class CmsSlotBlockStorageFacade extends AbstractFacade implements CmsSlotBlockSt
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CmsSlotBlockTransfer[] $cmsSlotBlockTransfers
+     * @param array<\Generated\Shared\Transfer\CmsSlotBlockTransfer> $cmsSlotBlockTransfers
      *
      * @return void
      */
@@ -56,9 +56,9 @@ class CmsSlotBlockStorageFacade extends AbstractFacade implements CmsSlotBlockSt
      * @api
      *
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     * @param int[] $cmsSlotBlockStorageIds
+     * @param array<int> $cmsSlotBlockStorageIds
      *
-     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     * @return array<\Generated\Shared\Transfer\SynchronizationDataTransfer>
      */
     public function getSynchronizationDataTransfersByCmsSlotBlockStorageIds(
         FilterTransfer $filterTransfer,

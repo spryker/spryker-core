@@ -12,7 +12,7 @@ use ArrayObject;
 interface LocalizedAttributesCollectionWriterInterface
 {
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ProductLabelLocalizedAttributesTransfer[] $localizedAttributesTransferCollection
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ProductLabelLocalizedAttributesTransfer> $localizedAttributesTransferCollection
      *
      * @return void
      */

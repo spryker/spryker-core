@@ -17,7 +17,13 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class PlaceOrderController extends AbstractController
 {
+    /**
+     * @var string
+     */
     public const PARAM_ID_OFFER = 'id-offer';
+    /**
+     * @var string
+     */
     public const URL_ORDER_ENTRY = '/manual-order-entry-gui/create';
 
     /**

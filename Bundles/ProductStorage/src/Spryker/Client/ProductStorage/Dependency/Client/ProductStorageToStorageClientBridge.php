@@ -33,7 +33,7 @@ class ProductStorageToStorageClientBridge implements ProductStorageToStorageClie
     }
 
     /**
-     * @param string[] $keys
+     * @param array<string> $keys
      *
      * @return array
      */

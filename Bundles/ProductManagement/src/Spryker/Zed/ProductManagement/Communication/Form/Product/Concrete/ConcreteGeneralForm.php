@@ -18,6 +18,9 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 class ConcreteGeneralForm extends GeneralForm
 {
+    /**
+     * @var string
+     */
     public const FIELD_IS_SEARCHABLE = 'is_searchable';
 
     /**

@@ -19,7 +19,6 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
 
 /**
  * @method \Spryker\Zed\SecuritySystemUser\SecuritySystemUserConfig getConfig()
- * @method \Spryker\Zed\SecuritySystemUser\Business\SecuritySystemUserFacadeInterface getFacade()
  */
 class SecuritySystemUserCommunicationFactory extends AbstractCommunicationFactory
 {

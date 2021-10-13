@@ -51,7 +51,13 @@ class MerchantProductRepository extends AbstractRepository implements MerchantPr
      */
     public function get(MerchantProductCriteriaTransfer $merchantProductCriteriaTransfer): MerchantProductCollectionTransfer
     {
-        $merchantProductAbstractQuery = $this->getFactory()->getMerchantProductAbstractPropelQuery();
+        /** @var \Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstractQuery $merchantProductAbstractQuery */
+        $merchantProductAbstractQuery = $this->getFactory()
+            ->getMerchantProductAbstractPropelQuery()
+            ->leftJoinWithProductAbstract()
+            ->useProductAbstractQuery()
+                ->leftJoinWithSpyProduct()
+            ->endUse();
 
         $merchantProductAbstractQuery = $this->applyFilters($merchantProductAbstractQuery, $merchantProductCriteriaTransfer);
 
@@ -62,7 +68,7 @@ class MerchantProductRepository extends AbstractRepository implements MerchantPr
 
         foreach ($merchantProductAbstractEntities as $merchantProductAbstractEntity) {
             $merchantProductCollectionTransfer->addMerchantProduct(
-                $merchantProductMapper->mapMerchantProductEntityToMerchantProductTransfer(
+                $merchantProductMapper->mapMerchantProductAbstractEntityToMerchantProductTransfer(
                     $merchantProductAbstractEntity,
                     new MerchantProductTransfer()
                 )
@@ -75,7 +81,7 @@ class MerchantProductRepository extends AbstractRepository implements MerchantPr
     /**
      * @phpstan-return array<string, string>
      *
-     * @param string[] $concreteSku
+     * @param array<string> $concreteSku
      *
      * @return array
      */
@@ -92,6 +98,29 @@ class MerchantProductRepository extends AbstractRepository implements MerchantPr
             ->endUse()
             ->find()
             ->toKeyValue(SpyProductTableMap::COL_SKU, SpyMerchantTableMap::COL_MERCHANT_REFERENCE);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantProductCriteriaTransfer $merchantProductCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantProductTransfer|null
+     */
+    public function findMerchantProduct(
+        MerchantProductCriteriaTransfer $merchantProductCriteriaTransfer
+    ): ?MerchantProductTransfer {
+        $merchantProductAbstractQuery = $this->getFactory()->getMerchantProductAbstractPropelQuery();
+        $merchantProductAbstractQuery = $this->applyFilters($merchantProductAbstractQuery, $merchantProductCriteriaTransfer);
+
+        $merchantProductAbstractEntity = $merchantProductAbstractQuery->findOne();
+
+        if (!$merchantProductAbstractEntity) {
+            return null;
+        }
+
+        return $this->getFactory()->createMerchantProductMapper()->mapMerchantProductAbstractEntityToMerchantProductTransfer(
+            $merchantProductAbstractEntity,
+            new MerchantProductTransfer()
+        );
     }
 
     /**
@@ -114,6 +143,15 @@ class MerchantProductRepository extends AbstractRepository implements MerchantPr
 
         if ($merchantProductCriteriaTransfer->getMerchantIds()) {
             $merchantProductAbstractQuery->filterByFkMerchant_In($merchantProductCriteriaTransfer->getMerchantIds());
+        }
+
+        if ($merchantProductCriteriaTransfer->getProductConcreteIds()) {
+            $merchantProductAbstractQuery
+                ->useProductAbstractQuery()
+                    ->useSpyProductQuery()
+                        ->filterByIdProduct_In($merchantProductCriteriaTransfer->getProductConcreteIds())
+                    ->endUse()
+                ->endUse();
         }
 
         return $merchantProductAbstractQuery;

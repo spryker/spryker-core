@@ -27,7 +27,7 @@ class CmsSlotTemplateConstraintsProvider implements ConstraintsProviderInterface
     }
 
     /**
-     * @return \Symfony\Component\Validator\Constraint[]
+     * @return array<\Symfony\Component\Validator\Constraint>
      */
     protected function getPathConstraints(): array
     {
@@ -40,7 +40,7 @@ class CmsSlotTemplateConstraintsProvider implements ConstraintsProviderInterface
     }
 
     /**
-     * @return \Symfony\Component\Validator\Constraint[]
+     * @return array<\Symfony\Component\Validator\Constraint>
      */
     protected function getNameConstraints(): array
     {
@@ -51,7 +51,7 @@ class CmsSlotTemplateConstraintsProvider implements ConstraintsProviderInterface
     }
 
     /**
-     * @return \Symfony\Component\Validator\Constraint[]
+     * @return array<\Symfony\Component\Validator\Constraint>
      */
     protected function getDescriptionConstraints(): array
     {

@@ -83,7 +83,7 @@ interface DiscountQueryContainerInterface extends QueryContainerInterface
      * @api
      *
      * @param int $idStore
-     * @param string[] $voucherCodes
+     * @param array<string> $voucherCodes
      *
      * @return \Orm\Zed\Discount\Persistence\SpyDiscountQuery
      */
@@ -190,7 +190,7 @@ interface DiscountQueryContainerInterface extends QueryContainerInterface
      * @api
      *
      * @param int $idDiscount
-     * @param int[] $idStores
+     * @param array<int> $idStores
      *
      * @return \Orm\Zed\Discount\Persistence\SpyDiscountStoreQuery
      */

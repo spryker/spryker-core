@@ -11,6 +11,9 @@ use Spryker\Service\Kernel\ClassResolver\AbstractClassResolver;
 
 class ServiceResolver extends AbstractClassResolver
 {
+    /**
+     * @var string
+     */
     protected const RESOLVABLE_TYPE = 'ServiceService';
 
     /**

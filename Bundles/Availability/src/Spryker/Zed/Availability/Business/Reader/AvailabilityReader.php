@@ -36,9 +36,9 @@ class AvailabilityReader implements AvailabilityReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteTransfers
+     * @param array<\Generated\Shared\Transfer\ProductConcreteTransfer> $productConcreteTransfers
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
      */
     public function filterAvailableProducts(array $productConcreteTransfers): array
     {
@@ -47,6 +47,7 @@ class AvailabilityReader implements AvailabilityReaderInterface
         }
 
         $storeTransfer = $this->storeFacade->getCurrentStore();
+        /** @var array<int> $productConcreteIds */
         $productConcreteIds = $this->extractProductConcreteIdsFromProductConcreteTransfers($productConcreteTransfers);
 
         $mappedProductConcreteAvailabilityTransfers = $this->availabilityRepository
@@ -56,10 +57,10 @@ class AvailabilityReader implements AvailabilityReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteTransfers
-     * @param \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer[] $mappedProductConcreteAvailabilityTransfers
+     * @param array<\Generated\Shared\Transfer\ProductConcreteTransfer> $productConcreteTransfers
+     * @param array<\Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer> $mappedProductConcreteAvailabilityTransfers
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
      */
     protected function getEligibleProductConcreteTransfers(
         array $productConcreteTransfers,
@@ -85,9 +86,11 @@ class AvailabilityReader implements AvailabilityReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteTransfers
+     * @phpstan-return array<int, int|null>
      *
-     * @return int[]
+     * @param array<\Generated\Shared\Transfer\ProductConcreteTransfer> $productConcreteTransfers
+     *
+     * @return array
      */
     protected function extractProductConcreteIdsFromProductConcreteTransfers(array $productConcreteTransfers): array
     {

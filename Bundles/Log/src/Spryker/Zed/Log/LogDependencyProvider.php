@@ -16,11 +16,26 @@ use Symfony\Component\Filesystem\Filesystem;
  */
 class LogDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_QUEUE = 'queue client';
+    /**
+     * @var string
+     */
     public const FILESYSTEM = 'filesystem';
 
+    /**
+     * @var string
+     */
     public const LOG_PROCESSORS = 'LOG_PROCESSORS';
+    /**
+     * @var string
+     */
     public const LOG_LISTENERS = 'LOG_LISTENERS';
+    /**
+     * @var string
+     */
     public const LOG_HANDLERS = 'LOG_HANDLERS';
 
     /**
@@ -93,7 +108,7 @@ class LogDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\Log\Business\Model\LogListener\LogListenerInterface[]
+     * @return array<\Spryker\Zed\Log\Business\Model\LogListener\LogListenerInterface>
      */
     protected function getLogListeners()
     {
@@ -115,7 +130,7 @@ class LogDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Shared\Log\Dependency\Plugin\LogHandlerPluginInterface[]
+     * @return array<\Spryker\Shared\Log\Dependency\Plugin\LogHandlerPluginInterface>
      */
     protected function getLogHandlers()
     {
@@ -137,7 +152,7 @@ class LogDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Shared\Log\Dependency\Plugin\LogProcessorPluginInterface[]
+     * @return array<\Spryker\Shared\Log\Dependency\Plugin\LogProcessorPluginInterface>
      */
     protected function getLogProcessors()
     {

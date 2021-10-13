@@ -49,6 +49,11 @@ class FileDirectoryFormDataProvider
         }
 
         $fileDirectoryTransfer = $this->fileManagerFacade->findFileDirectory($idFileDirectory);
+
+        if ($fileDirectoryTransfer === null) {
+            return new FileDirectoryTransfer();
+        }
+
         $this->setFileDirectoryLocalizedAttributes($fileDirectoryTransfer);
 
         return $fileDirectoryTransfer;
@@ -65,7 +70,7 @@ class FileDirectoryFormDataProvider
     }
 
     /**
-     * @return \Generated\Shared\Transfer\LocaleTransfer[]
+     * @return array<\Generated\Shared\Transfer\LocaleTransfer>
      */
     protected function getAvailableLocales()
     {

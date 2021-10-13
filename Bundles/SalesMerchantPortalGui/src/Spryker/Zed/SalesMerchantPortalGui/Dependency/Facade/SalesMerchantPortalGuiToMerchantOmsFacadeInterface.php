@@ -24,9 +24,9 @@ interface SalesMerchantPortalGuiToMerchantOmsFacadeInterface
     ): StateMachineProcessTransfer;
 
     /**
-     * @param int[] $stateIds
+     * @param array<int> $stateIds
      *
-     * @return \Generated\Shared\Transfer\StateMachineItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\StateMachineItemTransfer>
      */
     public function getStateMachineItemsByStateIds(array $stateIds): array;
 

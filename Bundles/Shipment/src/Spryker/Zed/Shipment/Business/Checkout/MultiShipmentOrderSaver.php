@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Shipment\Business\Checkout;
 
 use Generated\Shared\Transfer\ExpenseTransfer;
+use Generated\Shared\Transfer\OrderFilterTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
@@ -45,7 +46,7 @@ class MultiShipmentOrderSaver implements MultiShipmentOrderSaverInterface
     protected $expenseSanitizer;
 
     /**
-     * @var \Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentExpenseExpanderPluginInterface[]
+     * @var array<\Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentExpenseExpanderPluginInterface>
      */
     protected $shipmentExpenseExpanderPlugins;
 
@@ -54,7 +55,7 @@ class MultiShipmentOrderSaver implements MultiShipmentOrderSaverInterface
      * @param \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToSalesFacadeInterface $salesFacade
      * @param \Spryker\Service\Shipment\ShipmentServiceInterface $shipmentService
      * @param \Spryker\Zed\Shipment\Business\Sanitizer\ExpenseSanitizerInterface $expenseSanitizer
-     * @param \Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentExpenseExpanderPluginInterface[] $shipmentExpenseExpanderPlugins
+     * @param array<\Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentExpenseExpanderPluginInterface> $shipmentExpenseExpanderPlugins
      */
     public function __construct(
         ShipmentEntityManagerInterface $entityManager,
@@ -71,6 +72,8 @@ class MultiShipmentOrderSaver implements MultiShipmentOrderSaverInterface
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\Shipment\Business\Checkout\MultiShipmentOrderSaver::saveSalesOrderShipment()} instead.
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
      *
@@ -82,6 +85,21 @@ class MultiShipmentOrderSaver implements MultiShipmentOrderSaverInterface
 
         $this->handleDatabaseTransaction(function () use ($quoteTransfer, $saveOrderTransfer) {
             $this->saveOrderShipmentTransaction($quoteTransfer, $saveOrderTransfer);
+        });
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
+     *
+     * @return void
+     */
+    public function saveSalesOrderShipment(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer): void
+    {
+        $this->assertShipmentRequirements($quoteTransfer->getItems());
+
+        $this->handleDatabaseTransaction(function () use ($quoteTransfer, $saveOrderTransfer) {
+            $this->saveSalesOrderShipmentTransaction($quoteTransfer, $saveOrderTransfer);
         });
     }
 
@@ -115,6 +133,8 @@ class MultiShipmentOrderSaver implements MultiShipmentOrderSaverInterface
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\Shipment\Business\Checkout\MultiShipmentOrderSaver::saveSalesOrderShipmentTransaction()} instead.
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
      *
@@ -136,6 +156,101 @@ class MultiShipmentOrderSaver implements MultiShipmentOrderSaverInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
+     *
+     * @return void
+     */
+    protected function saveSalesOrderShipmentTransaction(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer): void
+    {
+        $orderFilterTransfer = (new OrderFilterTransfer())->setSalesOrderId($saveOrderTransfer->getIdSalesOrder());
+        $orderTransfer = $this->salesFacade->getOrder($orderFilterTransfer);
+        $shipmentGroups = $this->shipmentService->groupItemsByShipment($saveOrderTransfer->getOrderItems());
+        $orderTransfer = $this->addShipmentExpensesFromQuoteToOrder($quoteTransfer, $orderTransfer);
+
+        foreach ($shipmentGroups as $shipmentGroupTransfer) {
+            $shipmentGroupTransfer = $this->saveSalesShipment(
+                $orderTransfer,
+                $shipmentGroupTransfer,
+                $saveOrderTransfer
+            );
+
+            $this->addShipmentToQuoteItems($shipmentGroupTransfer, $quoteTransfer);
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
+     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShipmentGroupTransfer
+     */
+    protected function saveSalesShipment(
+        OrderTransfer $orderTransfer,
+        ShipmentGroupTransfer $shipmentGroupTransfer,
+        SaveOrderTransfer $saveOrderTransfer
+    ): ShipmentGroupTransfer {
+        $shipmentTransfer = $shipmentGroupTransfer->requireShipment()->getShipment();
+
+        $expenseTransfer = $this->findShipmentExpense($orderTransfer, $shipmentTransfer);
+        if ($expenseTransfer !== null) {
+            $expenseTransfer = $this->saveShipmentExpense($expenseTransfer, $saveOrderTransfer, $shipmentGroupTransfer);
+            $orderTransfer->addExpense($expenseTransfer);
+            $saveOrderTransfer->addOrderExpense($expenseTransfer);
+        }
+
+        $this->hydrateShippingAddressToShipmentTransfer($shipmentTransfer, $orderTransfer);
+
+        $shipmentTransfer = $this->saveSalesOrderAddress($shipmentTransfer);
+        $shipmentTransfer = $this->entityManager->saveSalesShipment($shipmentTransfer, $orderTransfer, $expenseTransfer);
+
+        $shipmentGroupTransfer->setShipment($shipmentTransfer);
+
+        return $shipmentGroupTransfer;
+    }
+
+    /**
+     * @deprecated Exists for Backward Compatibility reasons only.
+     *
+     * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return void
+     */
+    protected function hydrateShippingAddressToShipmentTransfer(ShipmentTransfer $shipmentTransfer, OrderTransfer $orderTransfer): void
+    {
+        if ($shipmentTransfer->getShippingAddress() === null) {
+            $shipmentTransfer->setShippingAddress($orderTransfer->getShippingAddress());
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function addShipmentToQuoteItems(ShipmentGroupTransfer $shipmentGroupTransfer, QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            if ($this->shipmentService->getShipmentHashKey($itemTransfer->getShipment()) !== $shipmentGroupTransfer->getHash()) {
+                continue;
+            }
+
+            if (!$shipmentGroupTransfer->getShipment()->getIdSalesShipment()) {
+                continue;
+            }
+
+            $itemTransfer->setShipment($shipmentGroupTransfer->getShipment());
+        }
+
+        return $quoteTransfer;
+    }
+
+    /**
+     * @deprecated Use {@link \Spryker\Zed\Shipment\Business\Checkout\MultiShipmentOrderSaver::saveOrderShipmentTransactionByShipmentGroupAndCopyToQuote()} instead.
+     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
      * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
@@ -156,12 +271,7 @@ class MultiShipmentOrderSaver implements MultiShipmentOrderSaverInterface
             $saveOrderTransfer->addOrderExpense($expenseTransfer);
         }
 
-        /**
-         * @deprecated Exists for Backward Compatibility reasons only.
-         */
-        if ($shipmentTransfer->getShippingAddress() === null) {
-            $shipmentTransfer->setShippingAddress($orderTransfer->getShippingAddress());
-        }
+        $this->hydrateShippingAddressToShipmentTransfer($shipmentTransfer, $orderTransfer);
 
         $shipmentTransfer = $this->saveSalesOrderAddress($shipmentTransfer);
 
@@ -252,7 +362,9 @@ class MultiShipmentOrderSaver implements MultiShipmentOrderSaverInterface
     }
 
     /**
-     * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @deprecated Use {@link \Spryker\Zed\Shipment\Business\Checkout\MultiShipmentOrderSaver::addShipmentToQuoteItems()} instead.
+     *
+     * @param iterable<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
      *
      * @return void
@@ -265,7 +377,7 @@ class MultiShipmentOrderSaver implements MultiShipmentOrderSaverInterface
     }
 
     /**
-     * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param iterable<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
      * @return void
      */

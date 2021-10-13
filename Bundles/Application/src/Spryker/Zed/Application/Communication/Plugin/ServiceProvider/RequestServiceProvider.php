@@ -24,12 +24,30 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class RequestServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
+    /**
+     * @var string
+     */
     public const BUNDLE = 'module';
+    /**
+     * @var string
+     */
     public const CONTROLLER = 'controller';
+    /**
+     * @var string
+     */
     public const ACTION = 'action';
 
+    /**
+     * @var string
+     */
     public const DEFAULT_BUNDLE = 'application';
+    /**
+     * @var string
+     */
     public const DEFAULT_CONTROLLER = 'index';
+    /**
+     * @var string
+     */
     public const DEFAULT_ACTION = 'index';
 
     /**

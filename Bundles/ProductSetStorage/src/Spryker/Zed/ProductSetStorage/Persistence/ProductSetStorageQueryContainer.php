@@ -22,6 +22,9 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class ProductSetStorageQueryContainer extends AbstractQueryContainer implements ProductSetStorageQueryContainerInterface
 {
+    /**
+     * @var string
+     */
     public const FK_PRODUCT_RESOURCE_SET = 'fkProductSet';
 
     /**
@@ -68,7 +71,7 @@ class ProductSetStorageQueryContainer extends AbstractQueryContainer implements 
      *
      * @api
      *
-     * @param int[] $productSetIds
+     * @param array<int> $productSetIds
      *
      * @return \Orm\Zed\ProductSet\Persistence\SpyProductSetDataQuery
      */
@@ -163,7 +166,7 @@ class ProductSetStorageQueryContainer extends AbstractQueryContainer implements 
      *
      * @api
      *
-     * @param int[] $productSetIds
+     * @param array<int> $productSetIds
      *
      * @return \Orm\Zed\ProductSet\Persistence\SpyProductSetQuery
      */

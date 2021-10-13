@@ -9,5 +9,8 @@ namespace Spryker\Shared\ProductSetCollector;
 
 class ProductSetCollectorConfig
 {
+    /**
+     * @var string
+     */
     public const SEARCH_TYPE_PRODUCT_SET = 'product_set';
 }

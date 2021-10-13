@@ -14,8 +14,17 @@ use Spryker\Client\Kernel\AbstractPlugin;
 
 class RatingSortConfigTransferBuilderPlugin extends AbstractPlugin implements SortConfigTransferBuilderPluginInterface
 {
+    /**
+     * @var string
+     */
     public const NAME = 'rating';
+    /**
+     * @var string
+     */
     public const PARAMETER_NAME = 'rating';
+    /**
+     * @var string
+     */
     protected const UNMAPPED_TYPE = 'integer';
 
     /**

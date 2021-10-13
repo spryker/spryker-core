@@ -35,9 +35,18 @@ use Spryker\Zed\Country\Persistence\CountryQueryContainer;
  */
 class CountryFacadeTest extends Unit
 {
+    /**
+     * @var string
+     */
     public const ISO2_CODE = 'qx';
+    /**
+     * @var string
+     */
     public const ISO3_CODE = 'qxz';
 
+    /**
+     * @var string
+     */
     protected const ISO2_COUNTRY_DE = 'DE';
 
     /**

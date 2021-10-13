@@ -59,7 +59,7 @@ class KernelConfig extends AbstractSharedConfig implements ClassNameCandidatesBu
     /**
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getProjectOrganizations(): array
     {
@@ -69,7 +69,7 @@ class KernelConfig extends AbstractSharedConfig implements ClassNameCandidatesBu
     /**
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getCoreOrganizations(): array
     {
@@ -99,7 +99,7 @@ class KernelConfig extends AbstractSharedConfig implements ClassNameCandidatesBu
      *
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getResolvableTypeClassNamePatternMap(): array
     {

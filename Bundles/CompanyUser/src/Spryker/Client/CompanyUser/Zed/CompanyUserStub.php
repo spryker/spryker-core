@@ -20,6 +20,9 @@ class CompanyUserStub implements CompanyUserStubInterface
 {
     use PermissionAwareTrait;
 
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_PERMISSION_FAILED = 'global.permission.failed';
 
     /**

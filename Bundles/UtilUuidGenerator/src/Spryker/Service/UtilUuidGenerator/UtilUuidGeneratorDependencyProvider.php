@@ -13,6 +13,9 @@ use Spryker\Service\UtilUuidGenerator\Dependency\External\UtilUuidGeneratorToRam
 
 class UtilUuidGeneratorDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const UUID_GENERATOR = 'UUID_GENERATOR';
 
     /**

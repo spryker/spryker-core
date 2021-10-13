@@ -18,12 +18,24 @@ use Spryker\Zed\ProductCustomerPermissionCollector\Dependency\Facade\ProductCust
  */
 class ProductCustomerPermissionCollectorDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_COLLECTOR = 'FACADE_COLLECTOR';
 
+    /**
+     * @var string
+     */
     public const FACADE_STORE = 'FACADE_STORE';
 
+    /**
+     * @var string
+     */
     public const SERVICE_DATA_READER = 'SERVICE_DATA_READER';
 
+    /**
+     * @var string
+     */
     public const QUERY_CONTAINER_TOUCH = 'QUERY_CONTAINER_TOUCH';
 
     /**

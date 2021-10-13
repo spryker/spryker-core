@@ -13,24 +13,24 @@ use Generated\Shared\Transfer\ProductDiscontinuedTransfer;
 class ProductDiscontinuedPluginExecutor implements ProductDiscontinuedPluginExecutorInterface
 {
     /**
-     * @var \Spryker\Zed\ProductDiscontinuedExtension\Dependency\Plugin\PostProductDiscontinuePluginInterface[]
+     * @var array<\Spryker\Zed\ProductDiscontinuedExtension\Dependency\Plugin\PostProductDiscontinuePluginInterface>
      */
     protected $postProductDiscontinuePlugins;
 
     /**
-     * @var \Spryker\Zed\ProductDiscontinuedExtension\Dependency\Plugin\PostDeleteProductDiscontinuedPluginInterface[]
+     * @var array<\Spryker\Zed\ProductDiscontinuedExtension\Dependency\Plugin\PostDeleteProductDiscontinuedPluginInterface>
      */
     protected $postDeleteProductDiscontinuedPlugins;
 
     /**
-     * @var \Spryker\Zed\ProductDiscontinuedExtension\Dependency\Plugin\PostDeleteBulkProductDiscontinuedPluginInterface[]
+     * @var array<\Spryker\Zed\ProductDiscontinuedExtension\Dependency\Plugin\PostDeleteBulkProductDiscontinuedPluginInterface>
      */
     protected $postDeleteBulkProductDiscontinuedPlugins;
 
     /**
-     * @param \Spryker\Zed\ProductDiscontinuedExtension\Dependency\Plugin\PostProductDiscontinuePluginInterface[] $postProductDiscontinuePlugins
-     * @param \Spryker\Zed\ProductDiscontinuedExtension\Dependency\Plugin\PostDeleteProductDiscontinuedPluginInterface[] $postDeleteProductDiscontinuedPlugins
-     * @param \Spryker\Zed\ProductDiscontinuedExtension\Dependency\Plugin\PostDeleteBulkProductDiscontinuedPluginInterface[] $postDeleteBulkProductDiscontinuedPlugins
+     * @param array<\Spryker\Zed\ProductDiscontinuedExtension\Dependency\Plugin\PostProductDiscontinuePluginInterface> $postProductDiscontinuePlugins
+     * @param array<\Spryker\Zed\ProductDiscontinuedExtension\Dependency\Plugin\PostDeleteProductDiscontinuedPluginInterface> $postDeleteProductDiscontinuedPlugins
+     * @param array<\Spryker\Zed\ProductDiscontinuedExtension\Dependency\Plugin\PostDeleteBulkProductDiscontinuedPluginInterface> $postDeleteBulkProductDiscontinuedPlugins
      */
     public function __construct(
         array $postProductDiscontinuePlugins,

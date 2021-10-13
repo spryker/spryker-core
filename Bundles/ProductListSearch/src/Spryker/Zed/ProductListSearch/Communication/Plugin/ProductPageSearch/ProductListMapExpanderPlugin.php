@@ -23,6 +23,9 @@ use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInt
  */
 class ProductListMapExpanderPlugin extends AbstractPlugin implements ProductPageMapExpanderInterface
 {
+    /**
+     * @var string
+     */
     protected const KEY_PRODUCT_LIST_MAP = 'product_list_map';
 
     /**

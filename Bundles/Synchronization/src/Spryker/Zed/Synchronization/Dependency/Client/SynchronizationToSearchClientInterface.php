@@ -28,7 +28,7 @@ interface SynchronizationToSearchClientInterface
     public function write(array $dataSet, $typeName = null, $indexName = null);
 
     /**
-     * @param \Generated\Shared\Transfer\SearchDocumentTransfer[] $searchDocumentTransfers
+     * @param array<\Generated\Shared\Transfer\SearchDocumentTransfer> $searchDocumentTransfers
      *
      * @return bool
      */
@@ -44,7 +44,7 @@ interface SynchronizationToSearchClientInterface
     public function delete(array $dataSet, $typeName = null, $indexName = null);
 
     /**
-     * @param \Generated\Shared\Transfer\SearchDocumentTransfer[] $searchDocumentTransfers
+     * @param array<\Generated\Shared\Transfer\SearchDocumentTransfer> $searchDocumentTransfers
      *
      * @return bool
      */

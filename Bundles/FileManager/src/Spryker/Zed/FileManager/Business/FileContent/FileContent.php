@@ -48,7 +48,7 @@ class FileContent implements FileContentInterface
         $fileSystemContentTransfer->setPath($fileTransfer->getFileName());
         $fileSystemContentTransfer->setContent($fileTransfer->getFileContent());
 
-        $this->fileSystemService->put($fileSystemContentTransfer);
+        $this->fileSystemService->write($fileSystemContentTransfer);
     }
 
     /**

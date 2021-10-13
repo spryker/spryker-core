@@ -18,11 +18,26 @@ use Spryker\Yves\Kernel\Container;
  */
 class SessionRedisDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const SERVICE_MONITORING = 'SERVICE_MONITORING';
+    /**
+     * @var string
+     */
     public const CLIENT_REDIS = 'CLIENT_REDIS';
+    /**
+     * @var string
+     */
     public const PLUGINS_SESSION_REDIS_LIFE_TIME_CALCULATOR = 'PLUGINS_SESSION_REDIS_LIFE_TIME_CALCULATOR';
+    /**
+     * @var string
+     */
     public const REQUEST_STACK = 'REQUEST_STACK';
 
+    /**
+     * @var string
+     */
     protected const REQUEST_STACK_CONTAINER_KEY = 'request_stack';
 
     /**
@@ -101,7 +116,7 @@ class SessionRedisDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\SessionRedisExtension\Dependency\Plugin\SessionRedisLifeTimeCalculatorPluginInterface[]
+     * @return array<\Spryker\Shared\SessionRedisExtension\Dependency\Plugin\SessionRedisLifeTimeCalculatorPluginInterface>
      */
     protected function getSessionRedisLifeTimeCalculatorPlugins(): array
     {

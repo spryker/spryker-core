@@ -29,6 +29,9 @@ use Spryker\Zed\ProductBundleStorage\Communication\Plugin\Publisher\ProductBundl
  */
 class ProductBundlePublishWritePublisherPluginTest extends Unit
 {
+    /**
+     * @var int
+     */
     protected const FAKE_ID_PRODUCT_CONCRETE = 6666;
 
     /**

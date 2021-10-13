@@ -25,7 +25,7 @@ class TaxProductStorageUnpublisher implements TaxProductStorageUnpublisherInterf
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return void
      */

@@ -40,7 +40,7 @@ class ConfigurableBundleItemTransformer implements ConfigurableBundleItemTransfo
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     protected function transformConfigurableBundleItem(ItemTransfer $itemTransfer): array
     {

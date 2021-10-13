@@ -12,12 +12,15 @@ use Generated\Shared\Transfer\PriceProductMerchantRelationshipValueTransfer;
 
 class CompanyBusinessUnitPriceProductMapper implements CompanyBusinessUnitPriceProductMapperInterface
 {
+    /**
+     * @var string
+     */
     protected const PRICE_KEY_SEPARATOR = ':';
 
     /**
      * @param array $priceProductMerchantRelationshipsData
      *
-     * @return \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer>
      */
     public function mapPriceProductMerchantRelationshipArrayToTransfers(array $priceProductMerchantRelationshipsData): array
     {
@@ -31,7 +34,10 @@ class CompanyBusinessUnitPriceProductMapper implements CompanyBusinessUnitPriceP
                 );
             }
 
-            $this->addUngroupedPrice($pricesByKey[$uniquePriceIndex], $priceProductMerchantRelationshipData);
+            $this->addUngroupedPrice(
+                $pricesByKey[$uniquePriceIndex],
+                $priceProductMerchantRelationshipData
+            );
         }
 
         return $pricesByKey;

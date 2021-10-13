@@ -18,9 +18,24 @@ use Spryker\Zed\SecurityMerchantPortalGui\Dependency\Facade\SecurityMerchantPort
  */
 class SecurityMerchantPortalGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_MERCHANT_USER = 'FACADE_MERCHANT_USER';
+    /**
+     * @var string
+     */
     public const FACADE_MESSENGER = 'FACADE_MESSENGER';
+    /**
+     * @var string
+     */
     public const FACADE_SECURITY = 'FACADE_SECURITY';
+
+    /**
+     * @uses \Spryker\Zed\Security\Communication\Plugin\Application\SecurityApplicationPlugin::SERVICE_SECURITY_TOKEN_STORAGE
+     * @var string
+     */
+    public const SERVICE_SECURITY_TOKEN_STORAGE = 'security.token_storage';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -34,6 +49,8 @@ class SecurityMerchantPortalGuiDependencyProvider extends AbstractBundleDependen
         $container = $this->addMerchantUserFacade($container);
         $container = $this->addMessengerFacade($container);
         $container = $this->addSecurityFacade($container);
+
+        $container = $this->addTokenStorage($container);
 
         return $container;
     }
@@ -95,6 +112,20 @@ class SecurityMerchantPortalGuiDependencyProvider extends AbstractBundleDependen
             return new SecurityMerchantPortalGuiToSecurityFacadeBridge(
                 $container->getLocator()->security()->facade()
             );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addTokenStorage(Container $container): Container
+    {
+        $container->set(static::SERVICE_SECURITY_TOKEN_STORAGE, function (Container $container) {
+            return $container->getApplicationService(static::SERVICE_SECURITY_TOKEN_STORAGE);
         });
 
         return $container;

@@ -75,7 +75,7 @@ class QuoteValidator implements QuoteValidatorInterface
             return $quoteResponseTransfer;
         }
 
-        $originalQuoteTransfer = clone $quoteTransfer;
+        $originalQuoteTransfer = (new QuoteTransfer())->fromArray($quoteTransfer->toArray());
         $quoteTransfer = $this->operation->reloadItems($quoteTransfer);
         $this->changeNote->checkChanges($quoteTransfer, $originalQuoteTransfer);
 

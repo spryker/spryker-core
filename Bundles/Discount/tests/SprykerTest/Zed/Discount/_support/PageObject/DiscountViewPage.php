@@ -11,6 +11,9 @@ use SprykerTest\Zed\Discount\DiscountPresentationTester;
 
 class DiscountViewPage
 {
+    /**
+     * @var string
+     */
     public const URL = '/discount/index/view';
 
     /**

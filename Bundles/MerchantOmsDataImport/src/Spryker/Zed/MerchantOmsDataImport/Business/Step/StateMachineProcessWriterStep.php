@@ -18,13 +18,21 @@ class StateMachineProcessWriterStep extends PublishAwareStep implements DataImpo
 {
     /**
      * @uses \Spryker\Zed\MerchantOms\MerchantOmsConfig::MERCHANT_OMS_STATE_MACHINE_NAME
+     * @var string
      */
     protected const MERCHANT_OMS_STATE_MACHINE_NAME = 'Merchant';
+
+    /**
+     * @phpstan-var array<string>
+     * @var array
+     */
     protected const REQUIRED_DATA_SET_KEYS = [
         MerchantOmsProcessDataSetInterface::MERCHANT_OMS_PROCESS_NAME,
     ];
 
     /**
+     * @phpstan-param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface<mixed> $dataSet
+     *
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
      *
      * @return void
@@ -48,6 +56,8 @@ class StateMachineProcessWriterStep extends PublishAwareStep implements DataImpo
     }
 
     /**
+     * @phpstan-return \Orm\Zed\StateMachine\Persistence\Base\SpyStateMachineProcessQuery<\Orm\Zed\StateMachine\Persistence\Base\SpyStateMachineProcess>
+     *
      * @return \Orm\Zed\StateMachine\Persistence\Base\SpyStateMachineProcessQuery
      */
     protected function createStateMachineProcessPropelQuery(): SpyStateMachineProcessQuery
@@ -56,6 +66,8 @@ class StateMachineProcessWriterStep extends PublishAwareStep implements DataImpo
     }
 
     /**
+     * @phpstan-param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface<mixed> $dataSet
+     *
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
      *
      * @throws \Spryker\Zed\DataImport\Business\Exception\InvalidDataException

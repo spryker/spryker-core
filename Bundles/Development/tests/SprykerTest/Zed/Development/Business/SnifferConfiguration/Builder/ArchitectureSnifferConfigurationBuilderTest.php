@@ -23,7 +23,13 @@ use Codeception\Test\Unit;
  */
 class ArchitectureSnifferConfigurationBuilderTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const CONFIG_PRIORITY_NAME = 'priority';
+    /**
+     * @var string
+     */
     protected const CONFIG_IGNORE_ERRORS = 'ignoreErrors';
 
     /**
@@ -55,11 +61,11 @@ class ArchitectureSnifferConfigurationBuilderTest extends Unit
      */
     public function testCustomerModuleWillBeSkipped(): void
     {
+        $this->expectExceptionMessage('Priority should be more than 0');
+
         $customerModuleArchitectureSnifferConfig = $this->tester->createArchitectureSnifferConfigurationBuilder()->getConfiguration(
             $this->tester->getZedCustomerModulePath()
         );
-
-        $this->assertEmpty($customerModuleArchitectureSnifferConfig);
     }
 
     /**

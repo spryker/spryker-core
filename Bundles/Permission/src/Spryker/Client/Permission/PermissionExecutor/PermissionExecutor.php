@@ -16,7 +16,7 @@ use Spryker\Shared\PermissionExtension\Dependency\Plugin\ExecutablePermissionPlu
 class PermissionExecutor implements PermissionExecutorInterface
 {
     /**
-     * @var \Spryker\Client\PermissionExtension\Dependency\Plugin\PermissionStoragePluginInterface[]
+     * @var array<\Spryker\Client\PermissionExtension\Dependency\Plugin\PermissionStoragePluginInterface>
      */
     protected $permissionStoragePlugins;
 
@@ -26,12 +26,12 @@ class PermissionExecutor implements PermissionExecutorInterface
     protected $permissionFinder;
 
     /**
-     * @var \Generated\Shared\Transfer\PermissionCollectionTransfer[]
+     * @var array<\Generated\Shared\Transfer\PermissionCollectionTransfer>
      */
     protected static $permissionCollectionTransfersCache = [];
 
     /**
-     * @param \Spryker\Client\PermissionExtension\Dependency\Plugin\PermissionStoragePluginInterface[] $permissionStoragePlugins
+     * @param array<\Spryker\Client\PermissionExtension\Dependency\Plugin\PermissionStoragePluginInterface> $permissionStoragePlugins
      * @param \Spryker\Client\Permission\PermissionFinder\PermissionFinderInterface $permissionConfigurator
      */
     public function __construct(
@@ -44,7 +44,7 @@ class PermissionExecutor implements PermissionExecutorInterface
 
     /**
      * @param string $permissionKey
-     * @param string|int|array|null $context
+     * @param array|string|int|null $context
      *
      * @return bool
      */
@@ -77,7 +77,7 @@ class PermissionExecutor implements PermissionExecutorInterface
      *
      * @param \Spryker\Shared\PermissionExtension\Dependency\Plugin\ExecutablePermissionPluginInterface $permissionPlugin
      * @param \Generated\Shared\Transfer\PermissionCollectionTransfer $permissionCollectionTransfer
-     * @param string|int|array|null $context
+     * @param array|string|int|null $context
      *
      * @return bool
      */
@@ -98,7 +98,7 @@ class PermissionExecutor implements PermissionExecutorInterface
     /**
      * @param \Spryker\Shared\PermissionExtension\Dependency\Plugin\ExecutablePermissionPluginInterface $permissionPlugin
      * @param \Generated\Shared\Transfer\PermissionTransfer $permissionTransfer
-     * @param string|int|array|null $context
+     * @param array|string|int|null $context
      *
      * @return bool
      */

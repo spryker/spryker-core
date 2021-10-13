@@ -16,12 +16,21 @@ use Generated\Shared\Transfer\PathParameterComponentTransfer;
  */
 class PathParameterSpecificationComponent implements PathParameterSpecificationComponentInterface
 {
+    /**
+     * @var string
+     */
     protected const KEY_SCHEMA = 'schema';
+    /**
+     * @var string
+     */
     protected const KEY_TYPE = 'type';
+    /**
+     * @var string
+     */
     protected const KEY_REF = '$ref';
 
     /**
-     * @var \Generated\Shared\Transfer\PathParameterComponentTransfer|null $pathParameterComponentTransfer
+     * @var \Generated\Shared\Transfer\PathParameterComponentTransfer|null
      */
     protected $pathParameterComponentTransfer;
 

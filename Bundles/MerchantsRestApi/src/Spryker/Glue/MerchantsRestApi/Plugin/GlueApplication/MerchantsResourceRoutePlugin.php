@@ -53,7 +53,7 @@ class MerchantsResourceRoutePlugin extends AbstractPlugin implements ResourceRou
      */
     public function getController(): string
     {
-         return 'merchants-resource';
+        return 'merchants-resource';
     }
 
     /**

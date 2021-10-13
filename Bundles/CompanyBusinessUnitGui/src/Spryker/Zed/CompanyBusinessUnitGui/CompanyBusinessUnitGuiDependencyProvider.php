@@ -18,10 +18,25 @@ use Spryker\Zed\Kernel\Container;
  */
 class CompanyBusinessUnitGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const PROPEL_QUERY_COMPANY_BUSINESS_UNIT = 'PROPEL_QUERY_COMPANY_BUSINESS_UNIT';
+    /**
+     * @var string
+     */
     public const FACADE_COMPANY_BUSINESS_UNIT = 'FACADE_COMPANY_BUSINESS_UNIT';
+    /**
+     * @var string
+     */
     public const FACADE_COMPANY = 'FACADE_COMPANY';
+    /**
+     * @var string
+     */
     public const COMPANY_BUSINESS_UNIT_FORM_EXPANDER_PLUGINS = 'COMPANY_BUSINESS_UNIT_FORM_EXPANDER_PLUGINS';
+    /**
+     * @var string
+     */
     public const COMPANY_BUSINESS_UNIT_EDIT_FORM_EXPANDER_PLUGINS = 'COMPANY_BUSINESS_UNIT_EDIT_FORM_EXPANDER_PLUGINS';
 
     /**
@@ -131,7 +146,7 @@ class CompanyBusinessUnitGuiDependencyProvider extends AbstractBundleDependencyP
     }
 
     /**
-     * @return \Spryker\Zed\CompanyBusinessUnitGuiExtension\Communication\Plugin\CompanyBusinessUnitFormExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\CompanyBusinessUnitGuiExtension\Communication\Plugin\CompanyBusinessUnitFormExpanderPluginInterface>
      */
     protected function getCompanyBusinessUnitFormExpanderPlugins(): array
     {
@@ -139,7 +154,7 @@ class CompanyBusinessUnitGuiDependencyProvider extends AbstractBundleDependencyP
     }
 
     /**
-     * @return \Spryker\Zed\CompanyBusinessUnitGuiExtension\Communication\Plugin\CompanyBusinessUnitFormExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\CompanyBusinessUnitGuiExtension\Communication\Plugin\CompanyBusinessUnitFormExpanderPluginInterface>
      */
     protected function getCompanyBusinessUnitEditFormExpanderPlugins(): array
     {

@@ -28,13 +28,20 @@ use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToCompanyUserFacadeIn
 use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToMessengerFacadeInterface;
 use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToProductFacadeInterface;
 use Spryker\Zed\ShoppingList\Persistence\ShoppingListRepositoryInterface;
+use Spryker\Zed\ShoppingList\ShoppingListConfig as ModuleShoppingListConfig;
 
 class ShoppingListReader implements ShoppingListReaderInterface
 {
     use PermissionAwareTrait;
 
+    /**
+     * @var string
+     */
     protected const MESSAGE_SHOPPING_LIST_REMOVED = 'shopping_list.already_removed';
 
+    /**
+     * @var string
+     */
     protected const MESSAGE_SHOPPING_LIST_NO_ACCESS = 'shopping_list.no_access';
 
     /**
@@ -63,24 +70,32 @@ class ShoppingListReader implements ShoppingListReaderInterface
     protected $messengerFacade;
 
     /**
+     * @var \Spryker\Zed\ShoppingList\ShoppingListConfig
+     */
+    protected $config;
+
+    /**
      * @param \Spryker\Zed\ShoppingList\Persistence\ShoppingListRepositoryInterface $shoppingListRepository
      * @param \Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToProductFacadeInterface $productFacade
      * @param \Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToCompanyUserFacadeInterface $customerFacade
      * @param \Spryker\Zed\ShoppingList\Business\ShoppingListItem\ShoppingListItemPluginExecutorInterface $pluginExecutor
      * @param \Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToMessengerFacadeInterface $messengerFacade
+     * @param \Spryker\Zed\ShoppingList\ShoppingListConfig $config
      */
     public function __construct(
         ShoppingListRepositoryInterface $shoppingListRepository,
         ShoppingListToProductFacadeInterface $productFacade,
         ShoppingListToCompanyUserFacadeInterface $customerFacade,
         ShoppingListItemPluginExecutorInterface $pluginExecutor,
-        ShoppingListToMessengerFacadeInterface $messengerFacade
+        ShoppingListToMessengerFacadeInterface $messengerFacade,
+        ModuleShoppingListConfig $config
     ) {
         $this->shoppingListRepository = $shoppingListRepository;
         $this->productFacade = $productFacade;
         $this->companyUserFacade = $customerFacade;
         $this->pluginExecutor = $pluginExecutor;
         $this->messengerFacade = $messengerFacade;
+        $this->config = $config;
     }
 
     /**
@@ -165,7 +180,10 @@ class ShoppingListReader implements ShoppingListReaderInterface
         $customerTransfer->setCompanyUserTransfer($requestCompanyUserTransfer);
 
         $shoppingListOverviewResponseTransfer->setShoppingList($shoppingListTransfer);
-        $shoppingListOverviewResponseTransfer->setShoppingLists($this->getCustomerShoppingListCollection($customerTransfer));
+
+        if ($this->config->isShoppingListOverviewWithShoppingLists()) {
+            $shoppingListOverviewResponseTransfer->setShoppingLists($this->getCustomerShoppingListCollection($customerTransfer));
+        }
         $shoppingListOverviewResponseTransfer->setIsSuccess(true);
 
         return $shoppingListOverviewResponseTransfer;
@@ -283,7 +301,6 @@ class ShoppingListReader implements ShoppingListReaderInterface
             $companyUserTransfer->getFkCompanyBusinessUnit(),
             ShoppingListConfig::PERMISSION_GROUP_FULL_ACCESS
         );
-        $companyBusinessUnitBlacklistedShoppingListIds = $this->shoppingListRepository->getBlacklistedShoppingListIdsByIdCompanyUser($companyUserTransfer->getIdCompanyUser());
         $companyBusinessUnitSharedShoppingListIds = array_diff($companyBusinessUnitSharedShoppingListIds, $companyBusinessUnitBlacklistedShoppingListIds);
 
         $companyUserPermissionCollectionTransfer = $this->addWritePermissionToPermissionCollectionTransfer(
@@ -514,7 +531,7 @@ class ShoppingListReader implements ShoppingListReaderInterface
     /**
      * @param \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getShoppingListItemsSkus(ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer): array
     {
@@ -526,9 +543,9 @@ class ShoppingListReader implements ShoppingListReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteTransfers
+     * @param array<\Generated\Shared\Transfer\ProductConcreteTransfer> $productConcreteTransfers
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
      */
     protected function getKeyedProductConcreteTransfers(array $productConcreteTransfers): array
     {
@@ -542,10 +559,10 @@ class ShoppingListReader implements ShoppingListReaderInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ShoppingListItemTransfer[] $shoppingListItemTransfers
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $keyedProductConcreteTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ShoppingListItemTransfer> $shoppingListItemTransfers
+     * @param array<\Generated\Shared\Transfer\ProductConcreteTransfer> $keyedProductConcreteTransfers
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ShoppingListItemTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\ShoppingListItemTransfer>
      */
     protected function mapProductConcreteIdToShoppingListItem(ArrayObject $shoppingListItemTransfers, array $keyedProductConcreteTransfers): ArrayObject
     {

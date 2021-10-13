@@ -33,7 +33,7 @@ class ProductOfferAvailabilityStorageToStorageClientBridge implements ProductOff
     }
 
     /**
-     * @param string[] $keys
+     * @param array<string> $keys
      *
      * @return array
      */

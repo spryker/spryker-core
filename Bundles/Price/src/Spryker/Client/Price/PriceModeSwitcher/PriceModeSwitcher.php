@@ -25,7 +25,7 @@ class PriceModeSwitcher implements PriceModeSwitcherInterface
     protected $priceConfig;
 
     /**
-     * @var \Spryker\Client\PriceExtension\Dependency\Plugin\PriceModePostUpdatePluginInterface[]
+     * @var array<\Spryker\Client\PriceExtension\Dependency\Plugin\PriceModePostUpdatePluginInterface>
      */
     protected $priceModePostUpdatePlugins;
 
@@ -37,7 +37,7 @@ class PriceModeSwitcher implements PriceModeSwitcherInterface
     /**
      * @param \Spryker\Client\Price\Dependency\Client\PriceToQuoteClientInterface $quoteClient
      * @param \Spryker\Client\Price\PriceConfig $priceConfig
-     * @param \Spryker\Client\PriceExtension\Dependency\Plugin\PriceModePostUpdatePluginInterface[] $priceModePostUpdatePlugins
+     * @param array<\Spryker\Client\PriceExtension\Dependency\Plugin\PriceModePostUpdatePluginInterface> $priceModePostUpdatePlugins
      * @param \Spryker\Client\Price\PriceModeCache\PriceModeCacheInterface $priceModeCache
      */
     public function __construct(

@@ -24,10 +24,22 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  */
 class InvoiceSubForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const PAYMENT_METHOD = 'invoice';
+    /**
+     * @var string
+     */
     public const FIELD_DATE_OF_BIRTH = 'date_of_birth';
+    /**
+     * @var string
+     */
     public const MIN_BIRTHDAY_DATE_STRING = '-18 years';
 
+    /**
+     * @var string
+     */
     public const OPTIONS_FIELD_NAME = 'select_options';
 
     /**

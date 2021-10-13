@@ -19,6 +19,7 @@ use Spryker\Shared\CartsRestApi\CartsRestApiConfig as CartsRestApiSharedConfig;
 use Spryker\Zed\CartsRestApi\Business\PermissionChecker\QuotePermissionCheckerInterface;
 use Spryker\Zed\CartsRestApi\Business\Quote\QuoteReaderInterface;
 use Spryker\Zed\CartsRestApi\Business\QuoteItem\Mapper\QuoteItemMapperInterface;
+use Spryker\Zed\CartsRestApi\Business\Reloader\QuoteReloaderInterface;
 use Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToPersistentCartFacadeInterface;
 
 class QuoteItemAdder implements QuoteItemAdderInterface
@@ -44,7 +45,12 @@ class QuoteItemAdder implements QuoteItemAdderInterface
     protected $quotePermissionChecker;
 
     /**
-     * @var \Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\CartItemMapperPluginInterface[]
+     * @var \Spryker\Zed\CartsRestApi\Business\Reloader\QuoteReloaderInterface
+     */
+    protected $quoteReloader;
+
+    /**
+     * @var array<\Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\CartItemMapperPluginInterface>
      */
     protected $cartItemMapperPlugins;
 
@@ -53,19 +59,22 @@ class QuoteItemAdder implements QuoteItemAdderInterface
      * @param \Spryker\Zed\CartsRestApi\Business\Quote\QuoteReaderInterface $quoteReader
      * @param \Spryker\Zed\CartsRestApi\Business\QuoteItem\Mapper\QuoteItemMapperInterface $quoteItemMapper
      * @param \Spryker\Zed\CartsRestApi\Business\PermissionChecker\QuotePermissionCheckerInterface $quotePermissionChecker
-     * @param \Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\CartItemMapperPluginInterface[] $cartItemMapperPlugins
+     * @param \Spryker\Zed\CartsRestApi\Business\Reloader\QuoteReloaderInterface $quoteReloader
+     * @param array<\Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\CartItemMapperPluginInterface> $cartItemMapperPlugins
      */
     public function __construct(
         CartsRestApiToPersistentCartFacadeInterface $persistentCartFacade,
         QuoteReaderInterface $quoteReader,
         QuoteItemMapperInterface $quoteItemMapper,
         QuotePermissionCheckerInterface $quotePermissionChecker,
+        QuoteReloaderInterface $quoteReloader,
         array $cartItemMapperPlugins
     ) {
         $this->persistentCartFacade = $persistentCartFacade;
         $this->quoteReader = $quoteReader;
         $this->quoteItemMapper = $quoteItemMapper;
         $this->quotePermissionChecker = $quotePermissionChecker;
+        $this->quoteReloader = $quoteReloader;
         $this->cartItemMapperPlugins = $cartItemMapperPlugins;
     }
 
@@ -134,7 +143,11 @@ class QuoteItemAdder implements QuoteItemAdderInterface
                     ->setErrorIdentifier(CartsRestApiSharedConfig::ERROR_IDENTIFIER_FAILED_ADDING_CART_ITEM));
         }
 
-        return $quoteResponseTransfer;
+        $quoteTransfer = $this->quoteReloader->reloadQuoteItems(
+            $quoteResponseTransfer->getQuoteTransfer()
+        );
+
+        return $quoteResponseTransfer->setQuoteTransfer($quoteTransfer);
     }
 
     /**

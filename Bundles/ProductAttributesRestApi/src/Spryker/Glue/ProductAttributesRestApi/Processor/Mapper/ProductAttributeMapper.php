@@ -34,7 +34,7 @@ class ProductAttributeMapper implements ProductAttributeMapperInterface
     /**
      * @param \Generated\Shared\Transfer\ProductManagementAttributeTransfer $productManagementAttributeTransfer
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\RestLocalizedProductManagementAttributeKeyAttributesTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\RestLocalizedProductManagementAttributeKeyAttributesTransfer>
      */
     protected function getRestLocalizedProductManagementAttributeKeyAttributes(
         ProductManagementAttributeTransfer $productManagementAttributeTransfer

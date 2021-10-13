@@ -15,9 +15,21 @@ use Spryker\Client\Kernel\Container;
 
 class CmsBlockStorageDependencyProvider extends AbstractDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_STORAGE = 'CLIENT_STORAGE';
+    /**
+     * @var string
+     */
     public const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
+    /**
+     * @var string
+     */
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
+    /**
+     * @var string
+     */
     public const PLUGINS_CMS_BLOCK_STORAGE_READER = 'PLUGINS_CMS_BLOCK_STORAGE_READER';
 
     /**
@@ -94,7 +106,7 @@ class CmsBlockStorageDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @return \Spryker\Client\CmsBlockStorageExtension\Dependency\Plugin\CmsBlockStorageReaderPluginInterface[]
+     * @return array<\Spryker\Client\CmsBlockStorageExtension\Dependency\Plugin\CmsBlockStorageReaderPluginInterface>
      */
     protected function getCmsBlockStorageReaderPlugins(): array
     {

@@ -18,7 +18,7 @@ interface ConsoleFacadeInterface
      *
      * @api
      *
-     * @return \Symfony\Component\Console\Command\Command[]
+     * @return array<\Symfony\Component\Console\Command\Command>
      */
     public function getConsoleCommands();
 
@@ -28,7 +28,7 @@ interface ConsoleFacadeInterface
      *
      * @api
      *
-     * @return \Symfony\Component\EventDispatcher\EventSubscriberInterface[]
+     * @return array<\Symfony\Component\EventDispatcher\EventSubscriberInterface>
      */
     public function getEventSubscriber();
 
@@ -38,7 +38,7 @@ interface ConsoleFacadeInterface
      *
      * @api
      *
-     * @return \Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface[]
+     * @return array<\Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface>
      */
     public function getApplicationPlugins(): array;
 
@@ -50,7 +50,7 @@ interface ConsoleFacadeInterface
      *
      * @deprecated Use {@link \Spryker\Zed\Console\Business\ConsoleFacadeInterface::getApplicationPlugins()} instead.
      *
-     * @return \Silex\ServiceProviderInterface[]
+     * @return array<\Silex\ServiceProviderInterface>
      */
     public function getServiceProviders();
 

@@ -133,9 +133,9 @@ class PriceProductMapper implements PriceProductMapperInterface
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore[] $priceProductStoreEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore> $priceProductStoreEntities
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function mapPriceProductStoreEntitiesToPriceProductTransfers(
         $priceProductStoreEntities
@@ -161,6 +161,7 @@ class PriceProductMapper implements PriceProductMapperInterface
         $priceProductEntity = $priceProductStoreEntity->getPriceProduct();
 
         $priceTypeTransfer = (new PriceTypeTransfer())
+            ->setIdPriceType($priceProductEntity->getPriceType()->getIdPriceType())
             ->setName($priceProductEntity->getPriceType()->getName())
             ->setPriceModeConfiguration($priceProductEntity->getPriceType()->getPriceModeConfiguration());
 

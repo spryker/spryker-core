@@ -2,18 +2,20 @@
 
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Client\PriceProductOfferVolume;
 
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
-use Spryker\Client\PriceProductOfferVolume\Dependency\Service\PriceProductOfferVolumeToUtilEncodingServiceServiceBridge;
 
 class PriceProductOfferVolumeDependencyProvider extends AbstractDependencyProvider
 {
-    public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
+    /**
+     * @var string
+     */
+    public const SERVICE_PRICE_PRODUCT_OFFER_VOLUME = 'SERVICE_PRICE_PRODUCT_OFFER_VOLUME';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -24,7 +26,7 @@ class PriceProductOfferVolumeDependencyProvider extends AbstractDependencyProvid
     {
         $container = parent::provideServiceLayerDependencies($container);
 
-        $container = $this->addUtilEncodingService($container);
+        $container = $this->addPriceProductOfferVolumeService($container);
 
         return $container;
     }
@@ -34,10 +36,10 @@ class PriceProductOfferVolumeDependencyProvider extends AbstractDependencyProvid
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    protected function addUtilEncodingService(Container $container): Container
+    protected function addPriceProductOfferVolumeService(Container $container): Container
     {
-        $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
-            return new PriceProductOfferVolumeToUtilEncodingServiceServiceBridge($container->getLocator()->utilEncoding()->service());
+        $container->set(static::SERVICE_PRICE_PRODUCT_OFFER_VOLUME, function (Container $container) {
+            return $container->getLocator()->priceProductOfferVolume()->service();
         });
 
         return $container;

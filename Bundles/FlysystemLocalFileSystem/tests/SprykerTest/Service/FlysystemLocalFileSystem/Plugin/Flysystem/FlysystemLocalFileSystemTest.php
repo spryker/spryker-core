@@ -11,7 +11,7 @@ use Codeception\Configuration;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\FlysystemConfigLocalTransfer;
 use Generated\Shared\Transfer\FlysystemConfigTransfer;
-use League\Flysystem\FilesystemInterface;
+use League\Flysystem\FilesystemOperator;
 use Spryker\Service\FlysystemLocalFileSystem\Plugin\Flysystem\LocalFilesystemBuilderPlugin;
 
 /**
@@ -27,7 +27,13 @@ use Spryker\Service\FlysystemLocalFileSystem\Plugin\Flysystem\LocalFilesystemBui
  */
 class FlysystemLocalFileSystemTest extends Unit
 {
+    /**
+     * @var string
+     */
     public const ROOT_DIRECTORY = 'fileSystemRoot/uploads/';
+    /**
+     * @var string
+     */
     public const PATH_DOCUMENT = 'documents/';
 
     /**
@@ -61,7 +67,7 @@ class FlysystemLocalFileSystemTest extends Unit
 
         $localFilesystem = $localFilesystemBuilderPlugin->build($configTransfer);
 
-        $this->assertInstanceOf(FilesystemInterface::class, $localFilesystem);
+        $this->assertInstanceOf(FilesystemOperator::class, $localFilesystem);
     }
 
     /**

@@ -13,7 +13,7 @@ use Spryker\Zed\Event\Dependency\Plugin\EventSubscriberInterface;
 class EventSubscriberCollection implements EventSubscriberCollectionInterface
 {
     /**
-     * @var array|\Spryker\Zed\Event\Dependency\Plugin\EventSubscriberInterface[]
+     * @var array<\Spryker\Zed\Event\Dependency\Plugin\EventSubscriberInterface>
      */
     protected $eventSubscribers = [];
 
@@ -48,7 +48,7 @@ class EventSubscriberCollection implements EventSubscriberCollectionInterface
      *
      * @param mixed $offset
      *
-     * @return array|\Spryker\Zed\Event\Dependency\Plugin\EventSubscriberInterface
+     * @return \Spryker\Zed\Event\Dependency\Plugin\EventSubscriberInterface|array
      */
     public function offsetGet($offset)
     {
@@ -61,7 +61,7 @@ class EventSubscriberCollection implements EventSubscriberCollectionInterface
      * @link http://php.net/manual/en/arrayaccess.offsetset.php
      *
      * @param mixed $offset
-     * @param mixed|\Spryker\Zed\Event\Dependency\Plugin\EventSubscriberInterface $value
+     * @param \Spryker\Zed\Event\Dependency\Plugin\EventSubscriberInterface|mixed $value
      *
      * @return void
      */
@@ -89,7 +89,7 @@ class EventSubscriberCollection implements EventSubscriberCollectionInterface
      *
      * @link http://php.net/manual/en/iteratoraggregate.getiterator.php
      *
-     * @return \Traversable|\Spryker\Zed\Event\Dependency\Plugin\EventSubscriberInterface[]
+     * @return \Traversable<\Spryker\Zed\Event\Dependency\Plugin\EventSubscriberInterface>
      */
     public function getIterator()
     {

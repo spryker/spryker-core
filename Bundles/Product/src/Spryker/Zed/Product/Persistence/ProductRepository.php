@@ -36,7 +36,13 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
  */
 class ProductRepository extends AbstractRepository implements ProductRepositoryInterface
 {
+    /**
+     * @var string
+     */
     public const KEY_FILTERED_PRODUCTS_RESULT = 'result';
+    /**
+     * @var string
+     */
     public const KEY_FILTERED_PRODUCTS_PRODUCT_NAME = 'name';
 
     /**
@@ -165,9 +171,9 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
     }
 
     /**
-     * @param int[] $productConcreteIds
+     * @param array<int> $productConcreteIds
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getProductAbstractIdsByProductConcreteIds(array $productConcreteIds): array
     {
@@ -185,7 +191,7 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
     /**
      * @param int $idProductAbstract
      *
-     * @return int[]
+     * @return array<int>
      */
     public function findProductConcreteIdsByAbstractProductId(int $idProductAbstract): array
     {
@@ -234,9 +240,9 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
     }
 
     /**
-     * @param string[] $skus
+     * @param array<string> $skus
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getProductConcreteIdsByConcreteSkus(array $skus): array
     {
@@ -259,7 +265,7 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
     }
 
     /**
-     * @param int[] $productIds
+     * @param array<int> $productIds
      *
      * @return array
      */
@@ -287,9 +293,9 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
      * @module Locale
      * @module Store
      *
-     * @param int[] $productIds
+     * @param array<int> $productIds
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
      */
     public function getProductConcreteTransfersByProductIds(array $productIds): array
     {
@@ -318,9 +324,9 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
      */
     public function getProductConcreteTransfersByProductAbstractIds(array $productAbstractIds): array
     {
@@ -383,7 +389,7 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
      */
     public function getProductConcretesByFilter(FilterTransfer $filterTransfer): array
     {
@@ -419,7 +425,7 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
     /**
      * @param \Propel\Runtime\Collection\ObjectCollection $productConcreteEntities
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
      */
     protected function getProductConcreteTransfersMappedFromProductConcreteEntities(ObjectCollection $productConcreteEntities): array
     {
@@ -437,9 +443,9 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
     }
 
     /**
-     * @param string[] $productConcreteSkus
+     * @param array<string> $productConcreteSkus
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
      */
     public function getProductConcretesByConcreteSkus(array $productConcreteSkus): array
     {
@@ -463,7 +469,7 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
     /**
      * @param \Propel\Runtime\Collection\ObjectCollection $productEntities
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
      */
     protected function mapProductEntitiesToProductConcreteTransfersWithoutStores(ObjectCollection $productEntities): array
     {
@@ -481,7 +487,7 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
     /**
      * @param \Propel\Runtime\Collection\ObjectCollection $productAbstractEntities
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ProductAbstractTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\ProductAbstractTransfer>
      */
     protected function getProductAbstractTransfersMappedFromProductAbstractEntities(ObjectCollection $productAbstractEntities): ArrayObject
     {
@@ -501,7 +507,7 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
      */
     public function getRawProductConcreteTransfersByFilter(FilterTransfer $filterTransfer): array
     {
@@ -514,9 +520,9 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Product\Persistence\SpyProduct[] $productConcreteEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Product\Persistence\SpyProduct> $productConcreteEntities
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
      */
     protected function mapProductConcreteEntitiesToProductConcreteTransfersWithoutRelations(
         ObjectCollection $productConcreteEntities
@@ -537,7 +543,7 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
     /**
      * @param \Generated\Shared\Transfer\ProductUrlCriteriaFilterTransfer $productUrlCriteriaFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\UrlTransfer[]
+     * @return array<\Generated\Shared\Transfer\UrlTransfer>
      */
     public function getProductUrls(ProductUrlCriteriaFilterTransfer $productUrlCriteriaFilterTransfer): array
     {
@@ -579,9 +585,9 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
     }
 
     /**
-     * @param string[] $productAbstractSkus
+     * @param array<string> $productAbstractSkus
      *
-     * @return \Generated\Shared\Transfer\ProductAbstractTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductAbstractTransfer>
      */
     public function getRawProductAbstractTransfersByAbstractSkus(array $productAbstractSkus): array
     {
@@ -593,13 +599,13 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
-     * @return \Generated\Shared\Transfer\ProductAbstractTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductAbstractTransfer>
      */
     public function getActiveProductAbstractsByProductAbstractIds(array $productAbstractIds): array
     {
-        /** @var \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Product\Persistence\SpyProductAbstract[] $productAbstractEntities */
+        /** @var \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Product\Persistence\SpyProductAbstract> $productAbstractEntities */
         $productAbstractEntities = $this->getFactory()
             ->createProductAbstractQuery()
             ->filterByIdProductAbstract_In($productAbstractIds)
@@ -613,9 +619,9 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
-     * @return \Generated\Shared\Transfer\ProductAbstractTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductAbstractTransfer>
      */
     public function getRawProductAbstractsByProductAbstractIds(array $productAbstractIds): array
     {
@@ -629,7 +635,7 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
     /**
      * @param \Generated\Shared\Transfer\ProductCriteriaTransfer $productCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
      */
     public function getProductConcretesByCriteria(ProductCriteriaTransfer $productCriteriaTransfer): array
     {
@@ -657,9 +663,11 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
         if ($productCriteriaTransfer->getSkus()) {
             $productQuery->filterBySku_In($productCriteriaTransfer->getSkus());
         }
+
         if ($productCriteriaTransfer->getIsActive() !== null) {
             $productQuery->filterByIsActive($productCriteriaTransfer->getIsActive());
         }
+
         if ($productCriteriaTransfer->getIdStore()) {
             $productQuery->useSpyProductAbstractQuery()
                 ->useSpyProductAbstractStoreQuery()
@@ -668,13 +676,29 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
             ->endUse();
         }
 
+        if ($productCriteriaTransfer->getIdProductAbstract()) {
+            $productQuery->filterByFkProductAbstract($productCriteriaTransfer->getIdProductAbstract());
+        }
+
+        if (count($productCriteriaTransfer->getAttributes()) > 0) {
+            $criteria = new Criteria();
+            foreach ($productCriteriaTransfer->getAttributes() as $key => $value) {
+                $attributesLikeCriteria = $criteria->getNewCriterion(
+                    SpyProductTableMap::COL_ATTRIBUTES,
+                    sprintf('%%"%s":"%s"%%', $key, $value),
+                    Criteria::LIKE
+                );
+                $productQuery->addAnd($attributesLikeCriteria);
+            }
+        }
+
         return $productQuery;
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Product\Persistence\SpyProductAbstract[] $productAbstractEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Product\Persistence\SpyProductAbstract> $productAbstractEntities
      *
-     * @return \Generated\Shared\Transfer\ProductAbstractTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductAbstractTransfer>
      */
     protected function mapProductAbstractEntitiesToProductAbstractTransfersWithoutRelations(ObjectCollection $productAbstractEntities): array
     {

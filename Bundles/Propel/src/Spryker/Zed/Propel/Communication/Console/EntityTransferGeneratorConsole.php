@@ -17,7 +17,13 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class EntityTransferGeneratorConsole extends Console
 {
+    /**
+     * @var string
+     */
     public const COMMAND_NAME = 'transfer:entity:generate';
+    /**
+     * @var string
+     */
     public const COMMAND_DESCRIPTION = 'Generates entity transfer objects from Propel schema definition files';
 
     /**

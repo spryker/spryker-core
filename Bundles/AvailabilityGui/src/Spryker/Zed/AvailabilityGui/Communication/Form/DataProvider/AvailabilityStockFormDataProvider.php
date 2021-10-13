@@ -14,6 +14,9 @@ use Spryker\Zed\AvailabilityGui\Dependency\Facade\AvailabilityGuiToStockInterfac
 
 class AvailabilityStockFormDataProvider
 {
+    /**
+     * @var string
+     */
     public const DATA_CLASS = 'data_class';
 
     /**
@@ -71,7 +74,7 @@ class AvailabilityStockFormDataProvider
 
     /**
      * @param \Generated\Shared\Transfer\AvailabilityStockTransfer $availabilityGuiStockTransfer
-     * @param \Generated\Shared\Transfer\StockProductTransfer[] $stockProducts
+     * @param array<\Generated\Shared\Transfer\StockProductTransfer> $stockProducts
      *
      * @return \Generated\Shared\Transfer\AvailabilityStockTransfer
      */

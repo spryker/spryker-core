@@ -18,7 +18,7 @@ interface CompanyUserStorageRepositoryInterface
      *
      * @param array $companyUserIds
      *
-     * @return \Orm\Zed\CompanyUserStorage\Persistence\SpyCompanyUserStorage[]
+     * @return array<\Orm\Zed\CompanyUserStorage\Persistence\SpyCompanyUserStorage>
      */
     public function findCompanyUserStorageEntities(array $companyUserIds): array;
 
@@ -27,15 +27,15 @@ interface CompanyUserStorageRepositoryInterface
      *
      * @see \Spryker\Zed\CompanyUserStorage\Persistence\CompanyUserStorageRepositoryInterface::getSynchronizationDataTransfersByFilterAndCompanyUserIds()
      *
-     * @return \Orm\Zed\CompanyUserStorage\Persistence\SpyCompanyUserStorage[]
+     * @return array<\Orm\Zed\CompanyUserStorage\Persistence\SpyCompanyUserStorage>
      */
     public function findAllCompanyUserStorageEntities(): array;
 
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     * @param int[] $companyUserIds
+     * @param array<int> $companyUserIds
      *
-     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     * @return array<\Generated\Shared\Transfer\SynchronizationDataTransfer>
      */
     public function getSynchronizationDataTransfersByFilterAndCompanyUserIds(FilterTransfer $filterTransfer, array $companyUserIds = []): array;
 }

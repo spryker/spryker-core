@@ -18,8 +18,17 @@ use Spryker\Zed\Kernel\Container;
  */
 class DatasetDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_LOCALE = 'FACADE_LOCALE';
+    /**
+     * @var string
+     */
     public const PROPEL_DATASET_QUERY = 'PROPEL_DATASET_QUERY';
+    /**
+     * @var string
+     */
     public const CSV_ADAPTER = 'CSV_ADAPTER';
 
     /**

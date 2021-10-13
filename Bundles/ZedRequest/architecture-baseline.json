@@ -1,0 +1,51 @@
+[
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/ZedRequest/src/Spryker/Client/ZedRequest/Dependency/Client/ZedRequestToMessengerClientInterface.php",
+        "description": "\n      Bridges: The bridge interface has incorrect method 'addErrorMessage' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/ZedRequest/src/Spryker/Client/ZedRequest/Dependency/Client/ZedRequestToMessengerClientInterface.php",
+        "description": "\n      Bridges: The bridge interface has incorrect method 'addInfoMessage' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/ZedRequest/src/Spryker/Client/ZedRequest/Dependency/Client/ZedRequestToMessengerClientInterface.php",
+        "description": "\n      Bridges: The bridge interface has incorrect method 'addSuccessMessage' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/ZedRequest/src/Spryker/Shared/ZedRequest/Client/AbstractHttpClient.php",
+        "description": "\n      Access: Method Spryker\\Shared\\ZedRequest\\Client\\AbstractHttpClient::getTransferFromResponse() accesses Spryker\\Client\\ZedRequest\\Client\\Response which violates rule \"No call from Shared to Client\"\n    ",
+        "rule": "LayerAccessRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/ZedRequest/src/Spryker/Shared/ZedRequest/Client/AbstractHttpClient.php",
+        "description": "\n      Access: Method Spryker\\Shared\\ZedRequest\\Client\\AbstractHttpClient::getRequest() accesses Spryker\\Client\\ZedRequest\\Client\\Request which violates rule \"No call from Shared to Client\"\n    ",
+        "rule": "LayerAccessRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/ZedRequest/src/Spryker/Zed/ZedRequest/Dependency/Facade/ZedRequestToStoreInterface.php",
+        "description": "\n      Bridges: The bridge interface has incorrect method 'setCurrencyIsoCode' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/ZedRequest/src/Spryker/Zed/ZedRequest/Dependency/Facade/ZedRequestToStoreInterface.php",
+        "description": "\n      Bridges: The bridge interface has incorrect method 'setCurrentLocale' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    }
+]

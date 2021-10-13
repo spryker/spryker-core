@@ -36,7 +36,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      *
      * @param int $idOrderItem
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getManualEvents($idOrderItem)
     {
@@ -153,7 +153,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      *
      * @api
      *
-     * @return \Spryker\Zed\Oms\Business\Process\ProcessInterface[]
+     * @return array<\Spryker\Zed\Oms\Business\Process\ProcessInterface>
      */
     public function getProcesses()
     {
@@ -241,7 +241,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      *
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $order
      *
-     * @return \Spryker\Zed\Oms\Business\Process\Event[]
+     * @return array<\Spryker\Zed\Oms\Business\Process\Event>
      */
     public function getGroupedManuallyExecutableEvents(SpySalesOrder $order)
     {
@@ -258,7 +258,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $order
      * @param string $flag
      *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem[]
+     * @return array<\Orm\Zed\Sales\Persistence\SpySalesOrderItem>
      */
     public function getItemsWithFlag(SpySalesOrder $order, $flag)
     {
@@ -275,7 +275,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $order
      * @param string $flag
      *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem[]
+     * @return array<\Orm\Zed\Sales\Persistence\SpySalesOrderItem>
      */
     public function getItemsWithoutFlag(SpySalesOrder $order, $flag)
     {
@@ -294,7 +294,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $order
      * @param array $logContext
      *
-     * @return \Orm\Zed\Oms\Persistence\SpyOmsTransitionLog[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Oms\Persistence\SpyOmsTransitionLog>
      */
     public function getLogForOrder(SpySalesOrder $order, array $logContext = [])
     {
@@ -344,7 +344,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      *
      * @api
      *
-     * @param string[] $skus
+     * @param array<string> $skus
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return \Spryker\DecimalObject\Decimal
@@ -483,7 +483,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      *
      * @param int $idSalesOrder
      *
-     * @return string[][]
+     * @return array<string[]>
      */
     public function getManualEventsByIdSalesOrder($idSalesOrder)
     {
@@ -499,7 +499,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      *
      * @param int $idSalesOrder
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getDistinctManualEventsByIdSalesOrder($idSalesOrder)
     {
@@ -515,7 +515,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      *
      * @param int $idSalesOrder
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getGroupedDistinctManualEventsByIdSalesOrder(int $idSalesOrder): array
     {
@@ -644,7 +644,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      * @param string $processName
      * @param string $stateName
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getStateFlags(string $processName, string $stateName): array
     {
@@ -724,9 +724,9 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     public function expandOrderItemsWithStateHistory(array $itemTransfers): array
     {
@@ -758,7 +758,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      *
      * @param \Generated\Shared\Transfer\OrderItemFilterTransfer $orderItemFilterTransfer
      *
-     * @return string[][]
+     * @return array<string[]>
      */
     public function getOrderItemManualEvents(OrderItemFilterTransfer $orderItemFilterTransfer): array
     {
@@ -786,9 +786,9 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     public function expandOrderItemsWithItemState(array $itemTransfers): array
     {
@@ -802,9 +802,9 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\OrderTransfer[] $orderTransfers
+     * @param array<\Generated\Shared\Transfer\OrderTransfer> $orderTransfers
      *
-     * @return \Generated\Shared\Transfer\OrderTransfer[]
+     * @return array<\Generated\Shared\Transfer\OrderTransfer>
      */
     public function expandOrdersWithAggregatedItemStates(array $orderTransfers): array
     {
@@ -818,9 +818,9 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\OrderTransfer[] $orderTransfers
+     * @param array<\Generated\Shared\Transfer\OrderTransfer> $orderTransfers
      *
-     * @return \Generated\Shared\Transfer\OrderTransfer[]
+     * @return array<\Generated\Shared\Transfer\OrderTransfer>
      */
     public function setOrderIsCancellableByItemState(array $orderTransfers): array
     {

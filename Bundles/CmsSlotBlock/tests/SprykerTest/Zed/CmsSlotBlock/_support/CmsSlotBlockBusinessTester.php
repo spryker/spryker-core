@@ -42,7 +42,7 @@ class CmsSlotBlockBusinessTester extends Actor
      * @param int $blocksNumber
      * @param string $blockNamePattern
      *
-     * @return \Generated\Shared\Transfer\CmsBlockTransfer[]
+     * @return array<\Generated\Shared\Transfer\CmsBlockTransfer>
      */
     public function createCmsBlocksInDb(int $blocksNumber = 1, string $blockNamePattern = ''): array
     {
@@ -67,7 +67,7 @@ class CmsSlotBlockBusinessTester extends Actor
     /**
      * @param int $slotsNumber
      *
-     * @return \Generated\Shared\Transfer\CmsSlotTransfer[]
+     * @return array<\Generated\Shared\Transfer\CmsSlotTransfer>
      */
     public function createCmsSlotsInDb(int $slotsNumber = 1): array
     {
@@ -84,7 +84,7 @@ class CmsSlotBlockBusinessTester extends Actor
     /**
      * @param int $slotTemplatesNumber
      *
-     * @return \Generated\Shared\Transfer\CmsSlotTemplateTransfer[]
+     * @return array<\Generated\Shared\Transfer\CmsSlotTemplateTransfer>
      */
     public function createCmsSlotTemplatesInDb(int $slotTemplatesNumber = 1): array
     {
@@ -143,7 +143,7 @@ class CmsSlotBlockBusinessTester extends Actor
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CmsSlotBlockTransfer[] $cmsSlotBlockCollection
+     * @param array<\Generated\Shared\Transfer\CmsSlotBlockTransfer> $cmsSlotBlockCollection
      *
      * @return \Generated\Shared\Transfer\CmsSlotBlockCollectionTransfer
      */

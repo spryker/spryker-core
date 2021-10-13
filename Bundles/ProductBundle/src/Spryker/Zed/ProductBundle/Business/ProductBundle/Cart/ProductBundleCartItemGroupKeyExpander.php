@@ -12,6 +12,9 @@ use Generated\Shared\Transfer\ItemTransfer;
 
 class ProductBundleCartItemGroupKeyExpander implements ProductBundleCartItemGroupKeyExpanderInterface
 {
+    /**
+     * @var string
+     */
     public const GROUP_KEY_DELIMITER = '_';
 
     /**

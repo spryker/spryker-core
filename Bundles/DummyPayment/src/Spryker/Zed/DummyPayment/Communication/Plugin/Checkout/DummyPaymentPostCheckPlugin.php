@@ -15,12 +15,17 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPostCheckPluginInterface;
 
 /**
+ * @deprecated Use {@link \Spryker\Zed\DummyPayment\Communication\Plugin\Checkout\DummyPaymentCheckoutPostSavePlugin} instead.
+ *
  * @method \Spryker\Zed\DummyPayment\Business\DummyPaymentFacadeInterface getFacade()
  * @method \Spryker\Zed\DummyPayment\Communication\DummyPaymentCommunicationFactory getFactory()
  * @method \Spryker\Zed\DummyPayment\DummyPaymentConfig getConfig()
  */
 class DummyPaymentPostCheckPlugin extends AbstractPlugin implements CheckoutPostCheckPluginInterface
 {
+    /**
+     * @var string
+     */
     public const ERROR_CODE_PAYMENT_FAILED = 'payment failed';
 
     /**

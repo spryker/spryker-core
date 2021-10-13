@@ -10,13 +10,29 @@ namespace Spryker\Zed\AvailabilityStorage\Business\Storage;
 use Orm\Zed\AvailabilityStorage\Persistence\SpyAvailabilityStorage;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\AvailabilityStorage\Persistence\AvailabilityStorageQueryContainerInterface;
+use Spryker\Zed\AvailabilityStorage\Persistence\AvailabilityStorageRepositoryInterface;
 
 class AvailabilityStorage implements AvailabilityStorageInterface
 {
+    /**
+     * @var string
+     */
     public const ID_PRODUCT_ABSTRACT = 'id_product_abstract';
+    /**
+     * @var string
+     */
     public const ID_AVAILABILITY_ABSTRACT = 'id_availability_abstract';
+    /**
+     * @var string
+     */
     public const FK_AVAILABILITY_ABSTRACT = 'fkAvailabilityAbstract';
+    /**
+     * @var string
+     */
     public const STORE = 'Store';
+    /**
+     * @var string
+     */
     public const STORE_NAME = 'name';
 
     /**
@@ -37,15 +53,26 @@ class AvailabilityStorage implements AvailabilityStorageInterface
     protected $isSendingToQueue = true;
 
     /**
+     * @var \Spryker\Zed\AvailabilityStorage\Persistence\AvailabilityStorageRepositoryInterface
+     */
+    protected $availabilityStorageRepository;
+
+    /**
      * @param \Spryker\Shared\Kernel\Store $store
      * @param \Spryker\Zed\AvailabilityStorage\Persistence\AvailabilityStorageQueryContainerInterface $queryContainer
      * @param bool $isSendingToQueue
+     * @param \Spryker\Zed\AvailabilityStorage\Persistence\AvailabilityStorageRepositoryInterface $availabilityStorageRepository
      */
-    public function __construct(Store $store, AvailabilityStorageQueryContainerInterface $queryContainer, $isSendingToQueue)
-    {
+    public function __construct(
+        Store $store,
+        AvailabilityStorageQueryContainerInterface $queryContainer,
+        $isSendingToQueue,
+        AvailabilityStorageRepositoryInterface $availabilityStorageRepository
+    ) {
         $this->store = $store;
         $this->queryContainer = $queryContainer;
         $this->isSendingToQueue = $isSendingToQueue;
+        $this->availabilityStorageRepository = $availabilityStorageRepository;
     }
 
     /**
@@ -72,6 +99,28 @@ class AvailabilityStorage implements AvailabilityStorageInterface
         foreach ($availabilityStorageEntityCollection as $availabilityStorageEntity) {
             $availabilityStorageEntity->delete();
         }
+    }
+
+    /**
+     * @param array<int> $productAbstractIds
+     *
+     * @return void
+     */
+    public function publishByProductAbstractIds(array $productAbstractIds): void
+    {
+        $availabilityAbstractIds = $this->availabilityStorageRepository->getAvailabilityAbstractIdsByProductAbstractIds($productAbstractIds);
+        $this->publish($availabilityAbstractIds);
+    }
+
+    /**
+     * @param array<int> $productAbstractIds
+     *
+     * @return void
+     */
+    public function unpublishByProductAbstractIds(array $productAbstractIds): void
+    {
+        $availabilityAbstractIds = $this->availabilityStorageRepository->getAvailabilityAbstractIdsByProductAbstractIds($productAbstractIds);
+        $this->unpublish($availabilityAbstractIds);
     }
 
     /**
@@ -134,7 +183,7 @@ class AvailabilityStorage implements AvailabilityStorageInterface
     /**
      * @param array $availabilityAbstractIds
      *
-     * @return \Orm\Zed\AvailabilityStorage\Persistence\SpyAvailabilityStorage[]
+     * @return array<\Orm\Zed\AvailabilityStorage\Persistence\SpyAvailabilityStorage>
      */
     protected function findAvailabilityStorageEntitiesByAvailabilityAbstractIds(array $availabilityAbstractIds)
     {

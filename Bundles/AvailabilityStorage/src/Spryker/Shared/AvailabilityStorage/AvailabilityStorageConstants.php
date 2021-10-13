@@ -17,6 +17,7 @@ class AvailabilityStorageConstants
      * - Queue name as used for processing availability messages
      *
      * @api
+     * @var string
      */
     public const AVAILABILITY_SYNC_STORAGE_QUEUE = 'sync.storage.availability';
 
@@ -25,6 +26,7 @@ class AvailabilityStorageConstants
      * - Queue name as used for processing availability messages
      *
      * @api
+     * @var string
      */
     public const AVAILABILITY_SYNC_STORAGE_ERROR_QUEUE = 'sync.storage.availability.error';
 
@@ -33,6 +35,7 @@ class AvailabilityStorageConstants
      * - Resource name, this will use for key generating
      *
      * @api
+     * @var string
      */
     public const AVAILABILITY_RESOURCE_NAME = 'availability';
 }

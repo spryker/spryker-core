@@ -17,19 +17,55 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class PriceProductScheduleCsvExporter implements PriceProductScheduleCsvExporterInterface
 {
+    /**
+     * @var string
+     */
     protected const HEADER_ABSTRACT_SKU = 'abstract_sku';
+    /**
+     * @var string
+     */
     protected const HEADER_CONCRETE_SKU = 'concrete_sku';
+    /**
+     * @var string
+     */
     protected const HEADER_PRICE_TYPE = 'price_type';
+    /**
+     * @var string
+     */
     protected const HEADER_STORE = 'store';
+    /**
+     * @var string
+     */
     protected const HEADER_CURRENCY = 'currency';
+    /**
+     * @var string
+     */
     protected const HEADER_NET_PRICE = 'value_net';
+    /**
+     * @var string
+     */
     protected const HEADER_GROSS_PRICE = 'value_gross';
+    /**
+     * @var string
+     */
     protected const HEADER_FROM = 'from_included';
+    /**
+     * @var string
+     */
     protected const HEADER_TO = 'to_included';
 
+    /**
+     * @var string
+     */
     protected const FORMAT_FILE_NAME = '%s.csv';
+    /**
+     * @var string
+     */
     protected const PARAM_FILE_NAME = 'price_product_schedule_export';
 
+    /**
+     * @var string
+     */
     protected const PATTERN_DATE_TIME = 'Y-m-d\TH:i:s-00:00';
 
     /**
@@ -104,7 +140,7 @@ class PriceProductScheduleCsvExporter implements PriceProductScheduleCsvExporter
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductScheduleTransfer[] $priceProductScheduleTransferCollection
+     * @param array<\Generated\Shared\Transfer\PriceProductScheduleTransfer> $priceProductScheduleTransferCollection
      *
      * @return array
      */

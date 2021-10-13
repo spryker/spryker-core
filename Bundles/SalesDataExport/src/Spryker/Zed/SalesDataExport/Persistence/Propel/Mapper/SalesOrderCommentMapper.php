@@ -27,10 +27,10 @@ class SalesOrderCommentMapper
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Sales\Persistence\Base\SpySalesOrderComment[] $salesOrderCommentEntities
-     * @param \Generated\Shared\Transfer\CommentTransfer[] $commentTransfers
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Sales\Persistence\Base\SpySalesOrderComment> $salesOrderCommentEntities
+     * @param array<\Generated\Shared\Transfer\CommentTransfer> $commentTransfers
      *
-     * @return \Generated\Shared\Transfer\CommentTransfer[]
+     * @return array<\Generated\Shared\Transfer\CommentTransfer>
      */
     public function mapSalesOrderCommentEntitiesToCommentTransfersByIdSalesOrder(
         ObjectCollection $salesOrderCommentEntities,
@@ -47,7 +47,7 @@ class SalesOrderCommentMapper
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CommentTransfer[] $salesOrderCommentTransfers
+     * @param array<\Generated\Shared\Transfer\CommentTransfer> $salesOrderCommentTransfers
      *
      * @return string
      */

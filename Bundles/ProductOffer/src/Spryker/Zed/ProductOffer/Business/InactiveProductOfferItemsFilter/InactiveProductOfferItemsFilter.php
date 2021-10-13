@@ -9,15 +9,22 @@ namespace Spryker\Zed\ProductOffer\Business\InactiveProductOfferItemsFilter;
 
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\ProductOfferCollectionTransfer;
-use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
+use Generated\Shared\Transfer\ProductOfferCriteriaTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Shared\ProductOffer\ProductOfferConfig;
 use Spryker\Zed\ProductOffer\Dependency\Facade\ProductOfferToMessengerFacadeInterface;
 use Spryker\Zed\ProductOffer\Dependency\Facade\ProductOfferToStoreFacadeInterface;
 use Spryker\Zed\ProductOffer\Persistence\ProductOfferRepositoryInterface;
 
 class InactiveProductOfferItemsFilter implements InactiveProductOfferItemsFilterInterface
 {
+    /**
+     * @var string
+     */
     protected const MESSAGE_PARAM_SKU = '%sku%';
+    /**
+     * @var string
+     */
     protected const MESSAGE_INFO_OFFER_INACTIVE_PRODUCT_REMOVED = 'product-offer.info.product-offer-inactive.removed';
 
     /**
@@ -63,13 +70,14 @@ class InactiveProductOfferItemsFilter implements InactiveProductOfferItemsFilter
             return $quoteTransfer;
         }
 
-        $productOfferCriteriaFilterTransfer = (new ProductOfferCriteriaFilterTransfer())
+        $productOfferCriteriaTransfer = (new ProductOfferCriteriaTransfer())
             ->setProductOfferReferences($productOfferReferences)
             ->setIsActive(true)
+            ->setApprovalStatuses([ProductOfferConfig::STATUS_APPROVED])
             ->setIdStore(
                 $this->storeFacade->getStoreByName($quoteTransfer->getStore()->getName())->getIdStore()
             );
-        $productOfferCollectionTransfer = $this->productOfferRepository->find($productOfferCriteriaFilterTransfer);
+        $productOfferCollectionTransfer = $this->productOfferRepository->get($productOfferCriteriaTransfer);
 
         $indexedProductConcreteTransfers = $this->indexByProductOfferReferences($productOfferCollectionTransfer);
 
@@ -105,7 +113,7 @@ class InactiveProductOfferItemsFilter implements InactiveProductOfferItemsFilter
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getProductOfferReferencesFromQuoteTransfer(QuoteTransfer $quoteTransfer): array
     {
@@ -123,7 +131,7 @@ class InactiveProductOfferItemsFilter implements InactiveProductOfferItemsFilter
     /**
      * @param \Generated\Shared\Transfer\ProductOfferCollectionTransfer $productOfferCollectionTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductOfferTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductOfferTransfer>
      */
     protected function indexByProductOfferReferences(ProductOfferCollectionTransfer $productOfferCollectionTransfer): array
     {

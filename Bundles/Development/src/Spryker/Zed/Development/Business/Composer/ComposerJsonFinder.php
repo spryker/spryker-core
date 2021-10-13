@@ -13,6 +13,9 @@ use Symfony\Component\Finder\SplFileInfo;
 
 class ComposerJsonFinder implements ComposerJsonFinderInterface
 {
+    /**
+     * @var string
+     */
     protected const COMPOSER_JSON_FILE_NAME = 'composer.json';
 
     /**

@@ -105,7 +105,7 @@ class QuoteApproverListProvider implements QuoteApproverListProviderInterface
     /**
      * @param int|null $idCompany
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getApproversIds(?int $idCompany = null): array
     {

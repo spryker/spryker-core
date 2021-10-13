@@ -1,0 +1,156 @@
+[
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Service/Kernel/AbstractServiceFactory.php",
+        "description": "\n      Factories: The factory method setContainer() violates rule \"Factories should only contain get*() and create*() methods.\"\n    ",
+        "rule": "FactoryOnlyGetAndCreateRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Service/Kernel/AbstractServiceFactory.php",
+        "description": "\n      Factories: The factory method Spryker\\Service\\Kernel\\AbstractServiceFactory::getProvidedDependency() contains 1 new statements which violates rule \"A `get*()` method in factories must not contain a `new` keyword.\"\n    ",
+        "rule": "FactoryGetContainNoNewRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Service/Kernel/AbstractServiceFactory.php",
+        "description": "\n      Factories: The factory method resolveDependencyProvider() violates rule \"Factories should only contain get*() and create*() methods.\"\n    ",
+        "rule": "FactoryOnlyGetAndCreateRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Service/Kernel/AbstractServiceFactory.php",
+        "description": "\n      Factories: The factory method provideExternalDependencies() violates rule \"Factories should only contain get*() and create*() methods.\"\n    ",
+        "rule": "FactoryOnlyGetAndCreateRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Zed/Kernel/Business/AbstractBusinessFactory.php",
+        "description": "\n      Factories: The factory method provideExternalDependencies() violates rule \"Factories should only contain get*() and create*() methods.\"\n    ",
+        "rule": "FactoryOnlyGetAndCreateRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Zed/Kernel/Business/AbstractBusinessFactory.php",
+        "description": "\n      Factories: The factory method injectExternalDependencies() violates rule \"Factories should only contain get*() and create*() methods.\"\n    ",
+        "rule": "FactoryOnlyGetAndCreateRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Zed/Kernel/Business/AbstractFacade.php",
+        "description": "\n      Zed Business Layer - Facade: The are properties in class Spryker\\Zed\\Kernel\\Business\\AbstractFacade which violates rule \"A facade must not have properties. It must also not contain any instantiations, only delegation.\"\n    ",
+        "rule": "FacadeRule",
+        "ruleset": "Spryker Zed",
+        "priority": "1"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Zed/Kernel/Business/AbstractFacade.php",
+        "description": "\n      Zed Business Layer - Facade: The Spryker\\Zed\\Kernel\\Business\\AbstractFacade::setFactory() is using an invalid return type \"$this\" which violates the rule \"Every Facade should only return native types or transfer objects.\"\n    ",
+        "rule": "FacadeReturnValueRule",
+        "ruleset": "Spryker Zed",
+        "priority": "1"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Zed/Kernel/Business/AbstractFacade.php",
+        "description": "\n      Zed Business Layer - Facade: The method \"Spryker\\Zed\\Kernel\\Business\\AbstractFacade::getFactory()\" is not public which violates rule \"A facade must only contain public methods.\"\n    ",
+        "rule": "AllMethodsPublicInFacadeRule",
+        "ruleset": "Spryker Zed",
+        "priority": "1"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Zed/Kernel/Business/AbstractFacade.php",
+        "description": "\n      Zed Business Layer - Facade: The method Spryker\\Zed\\Kernel\\Business\\AbstractFacade::getFactory() contains a \"if\" statement which violates the rule \"A Facade must not contain logic and only delegate.\"\n    ",
+        "rule": "FacadeNoLogicRule",
+        "ruleset": "Spryker Zed",
+        "priority": "1"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Zed/Kernel/Business/AbstractFacade.php",
+        "description": "\n      Zed Business Layer - Facade: The Spryker\\Zed\\Kernel\\Business\\AbstractFacade::getFactory() is using an invalid return type \"\\Spryker\\Zed\\Kernel\\Business\\BusinessFactoryInterface\" which violates the rule \"Every Facade should only return native types or transfer objects.\"\n    ",
+        "rule": "FacadeReturnValueRule",
+        "ruleset": "Spryker Zed",
+        "priority": "1"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Zed/Kernel/Business/AbstractFacade.php",
+        "description": "\n      Zed Business Layer - Facade: The method \"Spryker\\Zed\\Kernel\\Business\\AbstractFacade::resolveFactory()\" is not public which violates rule \"A facade must only contain public methods.\"\n    ",
+        "rule": "AllMethodsPublicInFacadeRule",
+        "ruleset": "Spryker Zed",
+        "priority": "1"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Zed/Kernel/Business/AbstractFacade.php",
+        "description": "\n      Zed Business Layer - Facade: The Spryker\\Zed\\Kernel\\Business\\AbstractFacade::resolveFactory() is using an invalid return type \"\\Spryker\\Zed\\Kernel\\Business\\AbstractBusinessFactory\" which violates the rule \"Every Facade should only return native types or transfer objects.\"\n    ",
+        "rule": "FacadeReturnValueRule",
+        "ruleset": "Spryker Zed",
+        "priority": "1"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Zed/Kernel/Business/AbstractFacade.php",
+        "description": "\n      Zed Business Layer - Facade: The method \"Spryker\\Zed\\Kernel\\Business\\AbstractFacade::getFactoryResolver()\" is not public which violates rule \"A facade must only contain public methods.\"\n    ",
+        "rule": "AllMethodsPublicInFacadeRule",
+        "ruleset": "Spryker Zed",
+        "priority": "1"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Zed/Kernel/Business/AbstractFacade.php",
+        "description": "\n      Zed Business Layer - Facade: The method Spryker\\Zed\\Kernel\\Business\\AbstractFacade::getFactoryResolver() uses \"new\" to instantiate an object which violates rule \"No instantiations with 'new'\"\n    ",
+        "rule": "FacadeRule",
+        "ruleset": "Spryker Zed",
+        "priority": "1"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Zed/Kernel/Business/AbstractFacade.php",
+        "description": "\n      Zed Business Layer - Facade: The Spryker\\Zed\\Kernel\\Business\\AbstractFacade::getFactoryResolver() is using an invalid return type \"\\Spryker\\Zed\\Kernel\\ClassResolver\\Business\\BusinessFactoryResolver\" which violates the rule \"Every Facade should only return native types or transfer objects.\"\n    ",
+        "rule": "FacadeReturnValueRule",
+        "ruleset": "Spryker Zed",
+        "priority": "1"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Zed/Kernel/Communication/AbstractCommunicationFactory.php",
+        "description": "\n      Factories: The factory method resolveFacade() violates rule \"Factories should only contain get*() and create*() methods.\"\n    ",
+        "rule": "FactoryOnlyGetAndCreateRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Zed/Kernel/Communication/AbstractCommunicationFactory.php",
+        "description": "\n      Factories: The factory method Spryker\\Zed\\Kernel\\Communication\\AbstractCommunicationFactory::getFacadeResolver() contains 1 new statements which violates rule \"A `get*()` method in factories must not contain a `new` keyword.\"\n    ",
+        "rule": "FactoryGetContainNoNewRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Zed/Kernel/Communication/AbstractCommunicationFactory.php",
+        "description": "\n      Factories: The factory method provideExternalDependencies() violates rule \"Factories should only contain get*() and create*() methods.\"\n    ",
+        "rule": "FactoryOnlyGetAndCreateRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Zed/Kernel/Communication/AbstractCommunicationFactory.php",
+        "description": "\n      Factories: The factory method injectExternalDependencies() violates rule \"Factories should only contain get*() and create*() methods.\"\n    ",
+        "rule": "FactoryOnlyGetAndCreateRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Zed/Kernel/Persistence/AbstractPersistenceFactory.php",
+        "description": "\n      Factories: The factory method provideExternalDependencies() violates rule \"Factories should only contain get*() and create*() methods.\"\n    ",
+        "rule": "FactoryOnlyGetAndCreateRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Zed/Kernel/Persistence/AbstractPersistenceFactory.php",
+        "description": "\n      Factories: The factory method injectExternalDependencies() violates rule \"Factories should only contain get*() and create*() methods.\"\n    ",
+        "rule": "FactoryOnlyGetAndCreateRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    }
+]

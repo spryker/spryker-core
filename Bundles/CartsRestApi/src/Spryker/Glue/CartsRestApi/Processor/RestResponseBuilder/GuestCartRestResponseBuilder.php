@@ -39,7 +39,7 @@ class GuestCartRestResponseBuilder implements GuestCartRestResponseBuilderInterf
     protected $cartsRestApiConfig;
 
     /**
-     * @var \Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\CartItemFilterPluginInterface[]
+     * @var array<\Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\CartItemFilterPluginInterface>
      */
     protected $cartItemFilterPlugins;
 
@@ -48,7 +48,7 @@ class GuestCartRestResponseBuilder implements GuestCartRestResponseBuilderInterf
      * @param \Spryker\Glue\CartsRestApi\Processor\Mapper\CartMapperInterface $cartMapper
      * @param \Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\ItemResponseBuilderInterface $itemResponseBuilder
      * @param \Spryker\Glue\CartsRestApi\CartsRestApiConfig $cartsRestApiConfig
-     * @param \Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\CartItemFilterPluginInterface[] $cartItemFilterPlugins
+     * @param array<\Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\CartItemFilterPluginInterface> $cartItemFilterPlugins
      */
     public function __construct(
         RestResourceBuilderInterface $restResourceBuilder,
@@ -98,7 +98,7 @@ class GuestCartRestResponseBuilder implements GuestCartRestResponseBuilderInterf
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteErrorTransfer[]|\ArrayObject $errors
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\QuoteErrorTransfer> $errors
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
@@ -153,10 +153,10 @@ class GuestCartRestResponseBuilder implements GuestCartRestResponseBuilderInterf
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     protected function executeCartItemFilterPlugins(array $itemTransfers, QuoteTransfer $quoteTransfer): array
     {

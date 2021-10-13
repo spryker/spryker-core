@@ -18,14 +18,23 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class UpdatePaymentMethodController extends AbstractController
 {
+    /**
+     * @var string
+     */
     protected const REDIRECT_URL = '/payment-gui/payment-method/index';
+    /**
+     * @var string
+     */
     protected const MESSAGE_SUCCESS = 'Payment method has been successfully updated';
+    /**
+     * @var string
+     */
     protected const PARAMETER_ID_PAYMENT_METHOD = 'id-payment-method';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function indexAction(Request $request)
     {

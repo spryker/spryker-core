@@ -18,14 +18,14 @@ class TestStateMachineHandler implements StateMachineHandlerInterface
     protected $itemStateUpdated;
 
     /**
-     * @var \Generated\Shared\Transfer\StateMachineItemTransfer[]
+     * @var array<\Generated\Shared\Transfer\StateMachineItemTransfer>
      */
-    protected $stateMachineItemsByStateIds;
+    protected $stateMachineItems;
 
     /**
      * List of command plugins for this state machine for all processes.
      *
-     * @return \Spryker\Zed\StateMachine\Dependency\Plugin\CommandPluginInterface[]
+     * @return array<\Spryker\Zed\StateMachine\Dependency\Plugin\CommandPluginInterface>
      */
     public function getCommandPlugins(): array
     {
@@ -38,7 +38,7 @@ class TestStateMachineHandler implements StateMachineHandlerInterface
     /**
      * List of condition plugins for this state machine for all processes.
      *
-     * @return \Spryker\Zed\StateMachine\Dependency\Plugin\ConditionPluginInterface[]
+     * @return array<\Spryker\Zed\StateMachine\Dependency\Plugin\ConditionPluginInterface>
      */
     public function getConditionPlugins(): array
     {
@@ -61,12 +61,13 @@ class TestStateMachineHandler implements StateMachineHandlerInterface
     /**
      * List of active processes used for this state machine
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getActiveProcesses(): array
     {
         return [
           'TestProcess',
+          'TestProcessWithoutEvent',
         ];
     }
 
@@ -98,14 +99,14 @@ class TestStateMachineHandler implements StateMachineHandlerInterface
     /**
      * This method should return all item identifiers which are in passed state ids.
      *
-     * @param int[] $stateIds
+     * @param array<int> $stateIds
      *
-     * @return \Generated\Shared\Transfer\StateMachineItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\StateMachineItemTransfer>
      */
     public function getStateMachineItemsByStateIds(array $stateIds = []): array
     {
         $result = [];
-        foreach ($this->stateMachineItemsByStateIds as $stateMachineItemTransfer) {
+        foreach ($this->stateMachineItems as $stateMachineItemTransfer) {
             if (in_array($stateMachineItemTransfer->getIdItemState(), $stateIds)) {
                 $result[] = $stateMachineItemTransfer;
             }
@@ -123,12 +124,12 @@ class TestStateMachineHandler implements StateMachineHandlerInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItemsByStateIds
+     * @param array<\Generated\Shared\Transfer\StateMachineItemTransfer> $stateMachineItems
      *
      * @return void
      */
-    public function setStateMachineItemsByStateIds(array $stateMachineItemsByStateIds): void
+    public function setStateMachineItems(array $stateMachineItems): void
     {
-        $this->stateMachineItemsByStateIds = $stateMachineItemsByStateIds;
+        $this->stateMachineItems = $stateMachineItems;
     }
 }

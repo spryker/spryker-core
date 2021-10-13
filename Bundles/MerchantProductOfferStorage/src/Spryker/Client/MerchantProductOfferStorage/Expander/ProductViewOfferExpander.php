@@ -15,7 +15,13 @@ use Spryker\Shared\MerchantProductOfferStorage\MerchantProductOfferStorageConfig
 
 class ProductViewOfferExpander implements ProductViewOfferExpanderInterface
 {
+    /**
+     * @var string
+     */
     protected const PARAM_SELECTED_MERCHANT_REFERENCE = 'selected_merchant_reference';
+    /**
+     * @var string
+     */
     protected const PARAM_SELECTED_MERCHANT_REFERENCE_TYPE = 'selected_merchant_reference_type';
 
     /**

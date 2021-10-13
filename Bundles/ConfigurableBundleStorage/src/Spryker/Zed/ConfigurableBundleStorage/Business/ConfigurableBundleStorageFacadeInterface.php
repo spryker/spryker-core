@@ -15,7 +15,7 @@ interface ConfigurableBundleStorageFacadeInterface
      *
      * @api
      *
-     * @param int[] $configurableBundleTemplateIds
+     * @param array<int> $configurableBundleTemplateIds
      *
      * @return void
      */
@@ -27,7 +27,7 @@ interface ConfigurableBundleStorageFacadeInterface
      *
      * @api
      *
-     * @param int[] $configurableBundleTemplateIds
+     * @param array<int> $configurableBundleTemplateIds
      *
      * @return void
      */
@@ -39,7 +39,7 @@ interface ConfigurableBundleStorageFacadeInterface
      *
      * @api
      *
-     * @param int[] $configurableBundleTemplateIds
+     * @param array<int> $configurableBundleTemplateIds
      *
      * @return void
      */
@@ -51,7 +51,7 @@ interface ConfigurableBundleStorageFacadeInterface
      *
      * @api
      *
-     * @param int[] $configurableBundleTemplateIds
+     * @param array<int> $configurableBundleTemplateIds
      *
      * @return void
      */

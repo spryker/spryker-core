@@ -11,6 +11,9 @@ use Spryker\Client\ProductResourceAliasStorage\Dependency\Client\ProductResource
 
 class ProductAbstractBulkStorageReader implements ProductAbstractBulkStorageReaderInterface
 {
+    /**
+     * @var string
+     */
     protected const PRODUCT_ABSTRACT_MAPPING_TYPE = 'sku';
 
     /**
@@ -27,7 +30,7 @@ class ProductAbstractBulkStorageReader implements ProductAbstractBulkStorageRead
     }
 
     /**
-     * @param string[] $identifiers
+     * @param array<string> $identifiers
      * @param string $localeName
      *
      * @return array

@@ -14,6 +14,9 @@ use Symfony\Component\HttpFoundation\Response;
 
 class PaginationParametersHttpRequestValidator implements PaginationParametersHttpRequestValidatorInterface
 {
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_INVALID_PAGE_PARAMETERS = 'Pagination parameters are invalid.';
 
     /**

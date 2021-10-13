@@ -55,7 +55,7 @@ class CmsBlockStoreRelationWriter implements CmsBlockStoreRelationWriterInterfac
     }
 
     /**
-     * @param int[] $idStores
+     * @param array<int> $idStores
      * @param int $idCmsBlock
      *
      * @return void
@@ -71,7 +71,7 @@ class CmsBlockStoreRelationWriter implements CmsBlockStoreRelationWriterInterfac
     }
 
     /**
-     * @param int[] $idStores
+     * @param array<int> $idStores
      * @param int $idCmsBlock
      *
      * @return void
@@ -94,7 +94,7 @@ class CmsBlockStoreRelationWriter implements CmsBlockStoreRelationWriterInterfac
     /**
      * @param int $idCmsBlock
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getIdStoresByIdCmsBlock(int $idCmsBlock): array
     {
@@ -109,7 +109,7 @@ class CmsBlockStoreRelationWriter implements CmsBlockStoreRelationWriterInterfac
     /**
      * @param \Generated\Shared\Transfer\StoreRelationTransfer $storeRelationTransfer
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function findStoreRelationIdStores(StoreRelationTransfer $storeRelationTransfer): array
     {

@@ -17,7 +17,13 @@ use Spryker\Glue\SecurityBlockerRestApi\Dependency\Client\SecurityBlockerRestApi
  */
 class SecurityBlockerRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_SECURITY_BLOCKER = 'CLIENT_SECURITY_BLOCKER';
+    /**
+     * @var string
+     */
     public const CLIENT_GLOSSARY_STORAGE = 'CLIENT_GLOSSARY_STORAGE';
 
     /**

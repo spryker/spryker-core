@@ -1,6 +1,6 @@
 # Translator Module
-[![Build Status](https://travis-ci.org/spryker/translator.svg)](https://travis-ci.org/spryker/translator)
-[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
+[![Latest Stable Version](https://poser.pugx.org/spryker/translator/v/stable.svg)](https://packagist.org/packages/spryker/translator)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.4-8892BF.svg)](https://php.net/)
 
 Translator extends Symfony translator.
 

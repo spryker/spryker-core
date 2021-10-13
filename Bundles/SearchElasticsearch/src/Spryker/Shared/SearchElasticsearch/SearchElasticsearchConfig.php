@@ -13,16 +13,32 @@ class SearchElasticsearchConfig extends AbstractSharedConfig
 {
     /**
      * Available facet types
+     *
+     * @var string
      */
     public const FACET_TYPE_ENUMERATION = 'enumeration';
+    /**
+     * @var string
+     */
     public const FACET_TYPE_RANGE = 'range';
+    /**
+     * @var string
+     */
     public const FACET_TYPE_PRICE_RANGE = 'price-range';
+    /**
+     * @var string
+     */
     public const FACET_TYPE_CATEGORY = 'category';
 
+    /**
+     * @var array
+     */
     protected const SUPPORTED_SOURCE_IDENTIFIERS = [];
 
     /**
      * @api
+     *
+     * @phpstan-return array<mixed>
      *
      * @return array
      */
@@ -40,9 +56,11 @@ class SearchElasticsearchConfig extends AbstractSharedConfig
         $config['port'] = $this->get(SearchElasticsearchConstants::PORT);
         $config['host'] = $this->get(SearchElasticsearchConstants::HOST);
 
-        if ($this->getConfig()->hasValue(SearchElasticsearchConstants::AUTH_HEADER)) {
+        $authHeader = (string)$this->get(SearchElasticsearchConstants::AUTH_HEADER, '');
+
+        if ($authHeader !== '') {
             $config['headers'] = [
-                'Authorization' => sprintf('Basic %s', $this->get(SearchElasticsearchConstants::AUTH_HEADER)),
+                'Authorization' => sprintf('Basic %s', $authHeader),
             ];
         }
 
@@ -52,10 +70,20 @@ class SearchElasticsearchConfig extends AbstractSharedConfig
     /**
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getSupportedSourceIdentifiers(): array
     {
         return static::SUPPORTED_SOURCE_IDENTIFIERS;
+    }
+
+    /**
+     * @api
+     *
+     * @return string
+     */
+    public function getIndexPrefix(): string
+    {
+        return $this->get(SearchElasticsearchConstants::INDEX_PREFIX, '');
     }
 }

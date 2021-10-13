@@ -25,9 +25,21 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class ProductConcreteSuperAttributeForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const FIELD_DROPDOWN = 'dropdown';
+    /**
+     * @var string
+     */
     public const FIELD_INPUT = 'input';
+    /**
+     * @var string
+     */
     public const FIELD_CHECKBOX = 'checkbox';
+    /**
+     * @var string
+     */
     public const OPTION_PRODUCT_MANAGEMENT_ATTRIBUTE_TRANSFER = 'OPTION_PRODUCT_MANAGEMENT_ATTRIBUTE_TRANSFER';
 
     /**

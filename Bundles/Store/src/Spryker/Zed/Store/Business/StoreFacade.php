@@ -35,7 +35,7 @@ class StoreFacade extends AbstractFacade implements StoreFacadeInterface
      *
      * @api
      *
-     * @return \Generated\Shared\Transfer\StoreTransfer[]
+     * @return array<\Generated\Shared\Transfer\StoreTransfer>
      */
     public function getAllStores()
     {
@@ -97,7 +97,7 @@ class StoreFacade extends AbstractFacade implements StoreFacadeInterface
      *
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return \Generated\Shared\Transfer\StoreTransfer[]
+     * @return array<\Generated\Shared\Transfer\StoreTransfer>
      */
     public function getStoresWithSharedPersistence(StoreTransfer $storeTransfer)
     {
@@ -111,7 +111,7 @@ class StoreFacade extends AbstractFacade implements StoreFacadeInterface
      *
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getCountries()
     {
@@ -141,14 +141,42 @@ class StoreFacade extends AbstractFacade implements StoreFacadeInterface
      *
      * @api
      *
-     * @param string[] $storeNames
+     * @param array<string> $storeNames
      *
-     * @return \Generated\Shared\Transfer\StoreTransfer[]
+     * @return array<\Generated\Shared\Transfer\StoreTransfer>
      */
     public function getStoreTransfersByStoreNames(array $storeNames): array
     {
         return $this->getFactory()
             ->createStoreReader()
             ->getStoreTransfersByStoreNames($storeNames);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function isMultiStorePerZedEnabled(): bool
+    {
+        return $this->getFactory()
+            ->getConfig()
+            ->isMultiStorePerZedEnabled();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return array<\Generated\Shared\Transfer\StoreTransfer>
+     */
+    public function getStoresAvailableForCurrentPersistence(): array
+    {
+        return $this->getFactory()
+            ->createStoreReader()
+            ->getStoresAvailableForCurrentPersistence();
     }
 }

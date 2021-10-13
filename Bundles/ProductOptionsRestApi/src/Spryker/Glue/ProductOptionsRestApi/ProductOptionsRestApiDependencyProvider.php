@@ -19,9 +19,21 @@ use Spryker\Glue\ProductOptionsRestApi\Dependency\Client\ProductOptionsRestApiTo
  */
 class ProductOptionsRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_PRODUCT_OPTION_STORAGE = 'CLIENT_PRODUCT_OPTION_STORAGE';
+    /**
+     * @var string
+     */
     public const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE';
+    /**
+     * @var string
+     */
     public const CLIENT_GLOSSARY_STORAGE = 'CLIENT_GLOSSARY_STORAGE';
+    /**
+     * @var string
+     */
     public const CLIENT_CURRENCY = 'CLIENT_CURRENCY';
 
     /**

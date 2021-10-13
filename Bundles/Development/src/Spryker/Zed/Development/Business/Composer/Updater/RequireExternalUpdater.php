@@ -16,8 +16,17 @@ use Symfony\Component\Finder\SplFileInfo;
 
 class RequireExternalUpdater implements UpdaterInterface
 {
+    /**
+     * @var string
+     */
     public const KEY_REQUIRE = 'require';
+    /**
+     * @var string
+     */
     public const RELEASE_OPERATOR = '^';
+    /**
+     * @var string
+     */
     public const KEY_NAME = 'name';
 
     /**
@@ -106,7 +115,7 @@ class RequireExternalUpdater implements UpdaterInterface
         foreach ($this->externalDependencyTree as $dependency) {
             if (
                 $dependency[DependencyTree::META_MODULE] === $bundleName
-                && !in_array($dependency[DependencyTree::META_COMPOSER_NAME], $this->ignorableDependencies)
+                && !in_array($dependency[DependencyTree::META_COMPOSER_NAME], $this->ignorableDependencies, true)
             ) {
                 $dependentModule = $this->mapExternalToInternal($dependency[DependencyTree::META_COMPOSER_NAME]);
 

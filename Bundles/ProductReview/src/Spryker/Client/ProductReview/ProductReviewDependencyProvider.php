@@ -25,12 +25,38 @@ use Spryker\Client\Search\Plugin\Config\PaginationConfigBuilder;
  */
 class ProductReviewDependencyProvider extends AbstractDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
+    /**
+     * @var string
+     */
     public const CLIENT_STORAGE = 'CLIENT_STORAGE';
+    /**
+     * @var string
+     */
     public const CLIENT_SEARCH = 'CLIENT_SEARCH';
 
+    /**
+     * @var string
+     */
     public const PRODUCT_REVIEWS_QUERY_EXPANDER_PLUGINS = 'PRODUCT_REVIEWS_QUERY_EXPANDER_PLUGINS';
+    /**
+     * @var string
+     */
+    public const PLUGINS_PRODUCT_REVIEWS_BULK_QUERY_EXPANDER = 'PLUGINS_PRODUCT_REVIEWS_BULK_QUERY_EXPANDER';
+    /**
+     * @var string
+     */
     public const PRODUCT_REVIEWS_SEARCH_RESULT_FORMATTER_PLUGINS = 'PRODUCT_REVIEWS_SEARCH_RESULT_FORMATTER_PLUGINS';
+    /**
+     * @var string
+     */
+    public const PLUGINS_PRODUCT_REVIEWS_BULK_SEARCH_RESULT_FORMATTER = 'PLUGINS_PRODUCT_REVIEWS_BULK_SEARCH_RESULT_FORMATTER';
+    /**
+     * @var string
+     */
     public const PAGINATION_CONFIG_BUILDER_PLUGIN = 'PAGINATION_CONFIG_BUILDER_PLUGIN';
 
     /**
@@ -46,6 +72,8 @@ class ProductReviewDependencyProvider extends AbstractDependencyProvider
         $container = $this->addProductReviewsQueryExpanderPlugins($container);
         $container = $this->addProductReviewsSearchResultFormatterPlugins($container);
         $container = $this->addPaginationConfigBuilderPlugin($container);
+        $container = $this->addProductReviewsBulkQueryExpanderPlugins($container);
+        $container = $this->addProductReviewsBulkSearchResultFormatterPlugins($container);
 
         return $container;
     }
@@ -121,7 +149,7 @@ class ProductReviewDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @return \Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface[]
+     * @return array<\Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface>
      */
     protected function getProductReviewsQueryExpanderPlugins()
     {
@@ -130,6 +158,28 @@ class ProductReviewDependencyProvider extends AbstractDependencyProvider
             new RatingAggregationQueryExpanderPlugin(),
             new SortByCreatedAtQueryExpanderPlugin(),
         ];
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addProductReviewsBulkQueryExpanderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_PRODUCT_REVIEWS_BULK_QUERY_EXPANDER, function () {
+            return $this->getProductReviewsBulkQueryExpanderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return array<\Spryker\Client\SearchExtension\Dependency\Plugin\QueryExpanderPluginInterface>
+     */
+    protected function getProductReviewsBulkQueryExpanderPlugins(): array
+    {
+        return [];
     }
 
     /**
@@ -147,7 +197,7 @@ class ProductReviewDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @return \Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface[]
+     * @return array<\Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface>
      */
     public function getProductReviewsSearchResultFormatterPlugins()
     {
@@ -156,5 +206,27 @@ class ProductReviewDependencyProvider extends AbstractDependencyProvider
             new PaginatedProductReviewsResultFormatterPlugin(),
             new RatingAggregationResultFormatterPlugin(),
         ];
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addProductReviewsBulkSearchResultFormatterPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_PRODUCT_REVIEWS_BULK_SEARCH_RESULT_FORMATTER, function () {
+            return $this->getProductReviewsBulkSearchResultFormatterPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return array<\Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface>
+     */
+    public function getProductReviewsBulkSearchResultFormatterPlugins(): array
+    {
+        return [];
     }
 }

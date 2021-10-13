@@ -17,6 +17,8 @@ class ShoppingListCustomerStoragePublisher implements ShoppingListCustomerStorag
     /**
      * The name on the customer_reference column related to Propel's ObjectCollection.
      * There is no equivalent replacement in *TableMap constants.
+     *
+     * @var string
      */
     public const COL_CUSTOMER_REFERENCE = 'customerReference';
 
@@ -43,7 +45,7 @@ class ShoppingListCustomerStoragePublisher implements ShoppingListCustomerStorag
     }
 
     /**
-     * @param string[] $customerReferences
+     * @param array<string> $customerReferences
      *
      * @return void
      */
@@ -57,8 +59,8 @@ class ShoppingListCustomerStoragePublisher implements ShoppingListCustomerStorag
     }
 
     /**
-     * @param string[] $customerReferences
-     * @param \Orm\Zed\ShoppingListStorage\Persistence\SpyShoppingListCustomerStorage[] $shoppingListCustomerStorageEntities
+     * @param array<string> $customerReferences
+     * @param array<\Orm\Zed\ShoppingListStorage\Persistence\SpyShoppingListCustomerStorage> $shoppingListCustomerStorageEntities
      *
      * @return void
      */

@@ -19,7 +19,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 class CmsSlotBlockEntityManager extends AbstractEntityManager implements CmsSlotBlockEntityManagerInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\CmsSlotBlockTransfer[] $cmsSlotBlockTransfers
+     * @param array<\Generated\Shared\Transfer\CmsSlotBlockTransfer> $cmsSlotBlockTransfers
      *
      * @return \Generated\Shared\Transfer\CmsSlotBlockCollectionTransfer
      */

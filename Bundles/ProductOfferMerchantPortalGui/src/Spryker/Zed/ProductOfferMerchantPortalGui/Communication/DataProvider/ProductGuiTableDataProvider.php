@@ -78,7 +78,7 @@ class ProductGuiTableDataProvider extends AbstractGuiTableDataProvider
     {
         return (new ProductTableCriteriaTransfer())
             ->setLocale($this->localeFacade->getCurrentLocale())
-            ->setIdMerchant($this->merchantUserFacade->getCurrentMerchantUser()->getIdMerchant());
+            ->setMerchantReference($this->merchantUserFacade->getCurrentMerchantUser()->getMerchantOrFail()->getMerchantReference());
     }
 
     /**
@@ -121,7 +121,7 @@ class ProductGuiTableDataProvider extends AbstractGuiTableDataProvider
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getStoresColumnData(ProductConcreteTransfer $productConcreteTransfer): array
     {

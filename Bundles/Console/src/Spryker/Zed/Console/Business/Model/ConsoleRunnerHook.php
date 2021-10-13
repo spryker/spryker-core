@@ -16,18 +16,18 @@ use Symfony\Component\Console\Output\OutputInterface;
 class ConsoleRunnerHook implements ConsoleRunnerHookInterface
 {
     /**
-     * @var \Spryker\Zed\Console\Dependency\Plugin\ConsolePreRunHookPluginInterface[]
+     * @var array<\Spryker\Zed\Console\Dependency\Plugin\ConsolePreRunHookPluginInterface>
      */
     protected $preHookPlugins;
 
     /**
-     * @var \Spryker\Zed\Console\Dependency\Plugin\ConsolePostRunHookPluginInterface[]
+     * @var array<\Spryker\Zed\Console\Dependency\Plugin\ConsolePostRunHookPluginInterface>
      */
     protected $postHookPlugins;
 
     /**
-     * @param \Spryker\Zed\Console\Dependency\Plugin\ConsolePreRunHookPluginInterface[] $preHookPlugins
-     * @param \Spryker\Zed\Console\Dependency\Plugin\ConsolePostRunHookPluginInterface[] $postHookPlugins
+     * @param array<\Spryker\Zed\Console\Dependency\Plugin\ConsolePreRunHookPluginInterface> $preHookPlugins
+     * @param array<\Spryker\Zed\Console\Dependency\Plugin\ConsolePostRunHookPluginInterface> $postHookPlugins
      */
     public function __construct(array $preHookPlugins, array $postHookPlugins)
     {

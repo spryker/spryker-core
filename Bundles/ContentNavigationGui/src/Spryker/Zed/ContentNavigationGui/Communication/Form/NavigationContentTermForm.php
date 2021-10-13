@@ -20,8 +20,14 @@ use Symfony\Component\Validator\Constraint;
  */
 class NavigationContentTermForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const FIELD_NAVIGATION_KEY = 'navigationKey';
 
+    /**
+     * @var string
+     */
     public const LABEL_NAVIGATION = 'Navigation';
 
     /**
@@ -93,7 +99,7 @@ class NavigationContentTermForm extends AbstractType
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function getNavigationChoices(): array
     {

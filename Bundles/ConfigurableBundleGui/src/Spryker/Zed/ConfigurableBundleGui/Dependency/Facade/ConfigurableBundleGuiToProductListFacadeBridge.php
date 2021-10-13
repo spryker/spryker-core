@@ -23,9 +23,9 @@ class ConfigurableBundleGuiToProductListFacadeBridge implements ConfigurableBund
     }
 
     /**
-     * @param int[] $productListIds
+     * @param array<int> $productListIds
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getProductConcreteIdsByProductListIds(array $productListIds): array
     {

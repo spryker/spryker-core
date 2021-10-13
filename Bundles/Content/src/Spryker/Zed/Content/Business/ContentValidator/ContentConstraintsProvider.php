@@ -28,7 +28,7 @@ class ContentConstraintsProvider implements ContentConstraintsProviderInterface
     }
 
     /**
-     * @return \Symfony\Component\Validator\Constraint[]
+     * @return array<\Symfony\Component\Validator\Constraint>
      */
     protected function getNameConstraints(): array
     {
@@ -39,7 +39,7 @@ class ContentConstraintsProvider implements ContentConstraintsProviderInterface
     }
 
     /**
-     * @return \Symfony\Component\Validator\Constraint[]
+     * @return array<\Symfony\Component\Validator\Constraint>
      */
     protected function getDescriptionConstraints(): array
     {
@@ -49,7 +49,7 @@ class ContentConstraintsProvider implements ContentConstraintsProviderInterface
     }
 
     /**
-     * @return \Symfony\Component\Validator\Constraint[]
+     * @return array<\Symfony\Component\Validator\Constraint>
      */
     protected function getKeyConstraints(): array
     {

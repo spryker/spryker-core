@@ -16,8 +16,17 @@ use Spryker\Shared\CmsBlockCategoryStorage\CmsBlockCategoryStorageConstants;
 
 class CmsBlockCategoryStorageReader implements CmsBlockCategoryStorageReaderInterface
 {
+    /**
+     * @var string
+     */
     protected const OPTION_KEY_POSITION = 'position';
+    /**
+     * @var string
+     */
     protected const KEY_CMS_BLOCK_CATEGORIES = 'cms_block_categories';
+    /**
+     * @var string
+     */
     protected const KEY_BLOCK_KEYS = 'block_keys';
 
     /**
@@ -45,7 +54,7 @@ class CmsBlockCategoryStorageReader implements CmsBlockCategoryStorageReaderInte
     /**
      * @param \Generated\Shared\Transfer\CmsBlockRequestTransfer $cmsBlockRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\CmsBlockTransfer[]
+     * @return array<\Generated\Shared\Transfer\CmsBlockTransfer>
      */
     public function getCmsBlocksByOptions(CmsBlockRequestTransfer $cmsBlockRequestTransfer): array
     {
@@ -97,9 +106,9 @@ class CmsBlockCategoryStorageReader implements CmsBlockCategoryStorageReaderInte
     }
 
     /**
-     * @param string[] $blockKeys
+     * @param array<string> $blockKeys
      *
-     * @return \Generated\Shared\Transfer\CmsBlockTransfer[]
+     * @return array<\Generated\Shared\Transfer\CmsBlockTransfer>
      */
     protected function mapBlockKeysArrayToCmsBlockTransfers(array $blockKeys): array
     {

@@ -50,9 +50,9 @@ class OrderExpander implements OrderExpanderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\OrderTransfer[] $orderTransfers
+     * @param array<\Generated\Shared\Transfer\OrderTransfer> $orderTransfers
      *
-     * @return \Generated\Shared\Transfer\OrderTransfer[]
+     * @return array<\Generated\Shared\Transfer\OrderTransfer>
      */
     public function setOrderIsCancellableByItemState(array $orderTransfers): array
     {
@@ -74,9 +74,9 @@ class OrderExpander implements OrderExpanderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\OrderTransfer[] $orderTransfers
+     * @param array<\Generated\Shared\Transfer\OrderTransfer> $orderTransfers
      *
-     * @return \Generated\Shared\Transfer\OrderTransfer[]
+     * @return array<\Generated\Shared\Transfer\OrderTransfer>
      */
     protected function mapOrdersByIdSalesOrder(array $orderTransfers): array
     {
@@ -90,12 +90,16 @@ class OrderExpander implements OrderExpanderInterface
     }
 
     /**
-     * @param int[] $salesOrderIds
+     * @param array<int> $salesOrderIds
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[][]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer[]>
      */
     protected function getMappedOrderItemsBySalesOrderIds(array $salesOrderIds): array
     {
+        if (!$salesOrderIds) {
+            return [];
+        }
+
         $mappedItemTransfers = [];
         $orderItemFilterTransfer = (new OrderItemFilterTransfer())->setSalesOrderIds($salesOrderIds);
 
@@ -111,7 +115,7 @@ class OrderExpander implements OrderExpanderInterface
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getItemStates(OrderTransfer $orderTransfer): array
     {

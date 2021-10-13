@@ -73,7 +73,7 @@ class MvcRouter implements RouterInterface
      *
      * @throws \Symfony\Component\Routing\Exception\RouteNotFoundException
      *
-     * @return string|void
+     * @return string
      */
     public function generate($name, $parameters = [], $referenceType = self::ABSOLUTE_PATH)
     {

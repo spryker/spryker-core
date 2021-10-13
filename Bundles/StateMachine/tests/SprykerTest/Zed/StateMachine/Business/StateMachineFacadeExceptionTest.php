@@ -33,7 +33,13 @@ use SprykerTest\Zed\StateMachine\Mocks\TestStateMachineHandlerException;
  */
 class StateMachineFacadeExceptionTest extends Unit
 {
+    /**
+     * @var string
+     */
     public const TESTING_SM = 'TestingSm';
+    /**
+     * @var string
+     */
     public const TEST_PROCESS_NAME = 'TestProcess';
 
     /**
@@ -91,11 +97,11 @@ class StateMachineFacadeExceptionTest extends Unit
         };
 
         $container[StateMachineDependencyProvider::PLUGIN_GRAPH] = function () {
-             return new GraphPlugin();
+            return new GraphPlugin();
         };
 
         $container[StateMachineDependencyProvider::SERVICE_NETWORK] = function () {
-             return new UtilNetworkService();
+            return new UtilNetworkService();
         };
 
         $stateMachineBusinessFactory->setContainer($container);

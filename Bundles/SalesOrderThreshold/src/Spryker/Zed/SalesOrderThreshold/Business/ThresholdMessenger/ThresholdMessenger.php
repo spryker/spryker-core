@@ -20,7 +20,13 @@ use Spryker\Zed\SalesOrderThreshold\Dependency\Facade\SalesOrderThresholdToMoney
 
 class ThresholdMessenger implements ThresholdMessengerInterface
 {
+    /**
+     * @var string
+     */
     protected const THRESHOLD_GLOSSARY_PARAMETER = '{{threshold}}';
+    /**
+     * @var string
+     */
     protected const FEE_GLOSSARY_PARAMETER = '{{fee}}';
 
     /**
@@ -80,7 +86,7 @@ class ThresholdMessenger implements ThresholdMessengerInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\MessageTransfer[]
+     * @return array<\Generated\Shared\Transfer\MessageTransfer>
      */
     protected function getMessagesForThresholds(QuoteTransfer $quoteTransfer): array
     {
@@ -158,10 +164,10 @@ class ThresholdMessenger implements ThresholdMessengerInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SalesOrderThresholdValueTransfer[] $salesOrderThresholdValueTransfers
+     * @param array<\Generated\Shared\Transfer\SalesOrderThresholdValueTransfer> $salesOrderThresholdValueTransfers
      * @param string $thresholdGroup
      *
-     * @return \Generated\Shared\Transfer\SalesOrderThresholdValueTransfer[]
+     * @return array<\Generated\Shared\Transfer\SalesOrderThresholdValueTransfer>
      */
     protected function filterSalesOrderThresholdsByThresholdGroup(array $salesOrderThresholdValueTransfers, string $thresholdGroup): array
     {

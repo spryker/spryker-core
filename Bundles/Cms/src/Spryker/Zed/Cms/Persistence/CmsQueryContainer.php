@@ -40,29 +40,101 @@ use Spryker\Zed\Url\Persistence\UrlQueryContainerInterface;
  */
 class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContainerInterface
 {
+    /**
+     * @var string
+     */
     public const TEMPLATE_NAME = 'template_name';
+    /**
+     * @var string
+     */
     public const TEMPLATE_PATH = 'template_path';
+    /**
+     * @var string
+     */
     public const CATEGORY_NODE_ID = 'categoryNodeId';
+    /**
+     * @var string
+     */
     public const CATEGORY_NAME = 'categoryName';
+    /**
+     * @var string
+     */
     public const ID_URL = 'id_url';
+    /**
+     * @var string
+     */
     public const URL = 'url';
+    /**
+     * @var string
+     */
     public const TO_URL = 'toUrl';
+    /**
+     * @var string
+     */
     public const TRANS = 'trans';
+    /**
+     * @var string
+     */
     public const KEY = 'keyname';
+    /**
+     * @var string
+     */
     public const LABEL = 'label';
+    /**
+     * @var string
+     */
     public const VALUE = 'value';
+    /**
+     * @var string
+     */
     public const IS_ACTIVE = 'is_active';
+    /**
+     * @var string
+     */
     public const CMS_URLS = 'cmsUrls';
+    /**
+     * @var string
+     */
     public const CMS_VERSION_COUNT = 'cmsVersionCount';
+    /**
+     * @var string
+     */
     public const ALIAS_CMS_PAGE_LOCALIZED_ATTRIBUTE = 'aliasCmsPageLocalizedAttribute';
+    /**
+     * @var string
+     */
     public const ALIAS_CMS_PAGE_TEMPLATE = 'aliasCmsPageTemplate';
+    /**
+     * @var string
+     */
     public const ALIAS_CMS_GLOSSARY_KEY_MAPPING = 'aliasCmsGlossaryKeyMapping';
+    /**
+     * @var string
+     */
     public const ALIAS_GLOSSARY_KEY = 'aliasGlossaryKey';
+    /**
+     * @var string
+     */
     public const ALIAS_TRANSLATION = 'aliasTranslation';
+    /**
+     * @var string
+     */
     public const ALIAS_LOCALE_FOR_LOCALIZED_ATTRIBUTE = 'aliasLocaleForLocalizedAttribute';
+    /**
+     * @var string
+     */
     public const ALIAS_LOCALE_FOR_TRANSLATION = 'aliasLocaleForTranslation';
+    /**
+     * @var string
+     */
     public const ALIAS_CMS_PAGE_STORE_RELATION = 'aliasCmsPageStoreRelation';
+    /**
+     * @var string
+     */
     public const ALIAS_STORE_FOR_STORE_RELATION = 'aliasStoreForStoreRelation';
+    /**
+     * @var string
+     */
     public const CMS_NAME = 'name';
 
     /**

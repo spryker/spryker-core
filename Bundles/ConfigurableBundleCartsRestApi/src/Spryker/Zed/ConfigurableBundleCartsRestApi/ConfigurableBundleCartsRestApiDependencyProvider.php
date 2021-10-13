@@ -19,10 +19,22 @@ use Spryker\Zed\Kernel\Container;
  */
 class ConfigurableBundleCartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_PERSISTENT_CART = 'FACADE_PERSISTENT_CART';
+    /**
+     * @var string
+     */
     public const FACADE_CARTS_REST_API = 'FACADE_CARTS_REST_API';
+    /**
+     * @var string
+     */
     public const FACADE_STORE = 'FACADE_STORE';
 
+    /**
+     * @var string
+     */
     public const SERVICE_CONFIGURABLE_BUNDLE_CART = 'SERVICE_CONFIGURABLE_BUNDLE_CART';
 
     /**

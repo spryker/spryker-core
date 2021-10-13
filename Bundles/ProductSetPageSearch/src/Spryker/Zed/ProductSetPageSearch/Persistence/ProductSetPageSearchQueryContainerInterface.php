@@ -65,7 +65,7 @@ interface ProductSetPageSearchQueryContainerInterface extends QueryContainerInte
      *
      * @api
      *
-     * @param int[] $ids
+     * @param array<int> $ids
      *
      * @return \Orm\Zed\ProductSet\Persistence\SpyProductSetQuery
      */

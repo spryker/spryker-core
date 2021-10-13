@@ -149,7 +149,7 @@ class CheckoutRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\CheckoutRestApiExtension\Dependency\Plugin\CheckoutRequestAttributesValidatorPluginInterface[]
+     * @return array<\Spryker\Glue\CheckoutRestApiExtension\Dependency\Plugin\CheckoutRequestAttributesValidatorPluginInterface>
      */
     public function getCheckoutRequestAttributesValidatorPlugins(): array
     {
@@ -157,7 +157,7 @@ class CheckoutRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\CheckoutRestApiExtension\Dependency\Plugin\CheckoutRequestValidatorPluginInterface[]
+     * @return array<\Spryker\Glue\CheckoutRestApiExtension\Dependency\Plugin\CheckoutRequestValidatorPluginInterface>
      */
     public function getCheckoutRequestValidatorPlugins(): array
     {
@@ -165,7 +165,7 @@ class CheckoutRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\CheckoutRestApiExtension\Dependency\Plugin\CheckoutResponseMapperPluginInterface[]
+     * @return array<\Spryker\Glue\CheckoutRestApiExtension\Dependency\Plugin\CheckoutResponseMapperPluginInterface>
      */
     public function getCheckoutResponseMapperPlugins(): array
     {
@@ -173,7 +173,7 @@ class CheckoutRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\CheckoutRestApiExtension\Dependency\Plugin\CheckoutDataResponseMapperPluginInterface[]
+     * @return array<\Spryker\Glue\CheckoutRestApiExtension\Dependency\Plugin\CheckoutDataResponseMapperPluginInterface>
      */
     public function getCheckoutDataResponseMapperPlugins(): array
     {
@@ -181,7 +181,7 @@ class CheckoutRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\CheckoutRestApi\Processor\CheckoutData\CheckoutDataResponseMapper\CheckoutDataResponseMapperInterface[]
+     * @return array<\Spryker\Glue\CheckoutRestApi\Processor\CheckoutData\CheckoutDataResponseMapper\CheckoutDataResponseMapperInterface>
      */
     protected function getCheckoutDataResponseMappers(): array
     {
@@ -217,7 +217,7 @@ class CheckoutRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\CheckoutRestApiExtension\Dependency\Plugin\CheckoutRequestExpanderPluginInterface[]
+     * @return array<\Spryker\Glue\CheckoutRestApiExtension\Dependency\Plugin\CheckoutRequestExpanderPluginInterface>
      */
     public function getCheckoutRequestExpanderPlugins(): array
     {

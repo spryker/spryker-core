@@ -24,6 +24,7 @@ class PriceProductAbstractMerchantRelationEventResourceBulkRepositoryPlugin exte
 {
     /**
      * @uses \Propel\Runtime\ActiveQuery\Criteria::ASC
+     * @var string
      */
     protected const ORDER_DIRECTION = 'ASC';
 
@@ -47,7 +48,7 @@ class PriceProductAbstractMerchantRelationEventResourceBulkRepositoryPlugin exte
      * @param int $offset
      * @param int $limit
      *
-     * @return \Generated\Shared\Transfer\PriceProductMerchantRelationshipTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductMerchantRelationshipTransfer|\Spryker\Shared\Kernel\Transfer\AbstractTransfer>
      */
     public function getData(int $offset, int $limit): array
     {

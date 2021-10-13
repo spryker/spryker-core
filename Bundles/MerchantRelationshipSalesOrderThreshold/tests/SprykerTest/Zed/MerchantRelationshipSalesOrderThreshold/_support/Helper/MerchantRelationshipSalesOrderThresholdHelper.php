@@ -13,8 +13,14 @@ use Orm\Zed\MerchantRelationshipSalesOrderThreshold\Persistence\SpyMerchantRelat
 
 class MerchantRelationshipSalesOrderThresholdHelper extends Module
 {
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_FOUND = 'Found at least one entry in the database table but database table `%s` was expected to be empty.';
 
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_EXPECTED = 'Expected at least one entry in the database table `%s` but table is empty.';
 
     /**

@@ -291,8 +291,6 @@ class ComparatorOperatorsTest extends Unit
      */
     public function testWhenNoneOfComparatorsAcceptsClauseShouldThrowException(): void
     {
-        $this->expectException(ComparatorException::class);
-
         $equalComparatorMock = $this->createComparatorMock();
         $equalComparatorMock->expects($this->once())
             ->method('accept')
@@ -303,13 +301,13 @@ class ComparatorOperatorsTest extends Unit
         $clauseTransfer = new ClauseTransfer();
         $clauseTransfer->setOperator('not existing');
 
-        $isValid = $comparatorOperators->compare($clauseTransfer, 'value');
+        $this->expectException(ComparatorException::class);
 
-        $this->assertFalse($isValid);
+        $comparatorOperators->compare($clauseTransfer, 'value');
     }
 
     /**
-     * @param \Spryker\Zed\Discount\Business\QueryString\Comparator\ComparatorInterface[] $comparators
+     * @param array<\Spryker\Zed\Discount\Business\QueryString\Comparator\ComparatorInterface> $comparators
      *
      * @return \Spryker\Zed\Discount\Business\QueryString\ComparatorOperators
      */

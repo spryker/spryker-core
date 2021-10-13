@@ -14,6 +14,7 @@ use Spryker\Client\ProductStorage\Dependency\Client\ProductStorageToStorageClien
 use Spryker\Client\ProductStorage\Dependency\Client\ProductStorageToStoreClientBridge;
 use Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToSynchronizationServiceBridge;
 use Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToUtilEncodingServiceBridge;
+use Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToUtilSanitizeServiceBridge;
 use Spryker\Shared\Kernel\Store;
 
 /**
@@ -21,17 +22,57 @@ use Spryker\Shared\Kernel\Store;
  */
 class ProductStorageDependencyProvider extends AbstractDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_LOCALE = 'CLIENT_LOCALE';
+    /**
+     * @var string
+     */
     public const CLIENT_STORAGE = 'CLIENT_STORAGE';
+    /**
+     * @var string
+     */
     public const CLIENT_STORE = 'CLIENT_STORE';
+    /**
+     * @var string
+     */
     public const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
+    /**
+     * @var string
+     */
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
+    /**
+     * @var string
+     */
+    public const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
+    /**
+     * @var string
+     */
     public const STORE = 'STORE';
+    /**
+     * @var string
+     */
     public const PLUGIN_PRODUCT_VIEW_EXPANDERS = 'PLUGIN_STORAGE_PRODUCT_EXPANDERS';
+    /**
+     * @var string
+     */
     public const PLUGINS_PRODUCT_ABSTRACT_RESTRICTION = 'PLUGINS_PRODUCT_ABSTRACT_RESTRICTION';
+    /**
+     * @var string
+     */
     public const PLUGINS_PRODUCT_CONCRETE_RESTRICTION = 'PLUGINS_PRODUCT_CONCRETE_RESTRICTION';
+    /**
+     * @var string
+     */
     public const PLUGINS_PRODUCT_CONCRETE_EXPANDER = 'PLUGINS_PRODUCT_CONCRETE_EXPANDER';
+    /**
+     * @var string
+     */
     public const PLUGINS_PRODUCT_ABSTRACT_RESTRICTION_FILTER = 'PLUGINS_PRODUCT_ABSTRACT_RESTRICTION_FILTER';
+    /**
+     * @var string
+     */
     public const PLUGINS_PRODUCT_CONCRETE_RESTRICTION_FILTER = 'PLUGINS_PRODUCT_CONCRETE_RESTRICTION_FILTER';
 
     /**
@@ -54,6 +95,7 @@ class ProductStorageDependencyProvider extends AbstractDependencyProvider
         $container = $this->addProductAbstractRestrictionFilterPlugins($container);
         $container = $this->addProductConcreteRestrictionFilterPlugins($container);
         $container = $this->addStoreClient($container);
+        $container = $this->addUtilSanitizeService($container);
 
         return $container;
     }
@@ -112,6 +154,22 @@ class ProductStorageDependencyProvider extends AbstractDependencyProvider
         $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new ProductStorageToUtilEncodingServiceBridge(
                 $container->getLocator()->utilEncoding()->service()
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addUtilSanitizeService(Container $container): Container
+    {
+        $container->set(static::SERVICE_UTIL_SANITIZE, function (Container $container) {
+            return new ProductStorageToUtilSanitizeServiceBridge(
+                $container->getLocator()->utilSanitize()->service()
             );
         });
 
@@ -231,7 +289,7 @@ class ProductStorageDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @return \Spryker\Client\ProductStorage\Dependency\Plugin\ProductViewExpanderPluginInterface[]
+     * @return array<\Spryker\Client\ProductStorage\Dependency\Plugin\ProductViewExpanderPluginInterface>
      */
     protected function getProductViewExpanderPlugins()
     {
@@ -239,7 +297,7 @@ class ProductStorageDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @return \Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductAbstractRestrictionPluginInterface[]
+     * @return array<\Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductAbstractRestrictionPluginInterface>
      */
     protected function getProductAbstractRestrictionPlugins(): array
     {
@@ -247,7 +305,7 @@ class ProductStorageDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @return \Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductConcreteRestrictionPluginInterface[]
+     * @return array<\Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductConcreteRestrictionPluginInterface>
      */
     protected function getProductConcreteRestrictionPlugins(): array
     {
@@ -255,7 +313,7 @@ class ProductStorageDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @return \Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductConcreteExpanderPluginInterface[]
+     * @return array<\Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductConcreteExpanderPluginInterface>
      */
     protected function getProductConcreteExpanderPlugins(): array
     {
@@ -263,7 +321,7 @@ class ProductStorageDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @return \Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductAbstractRestrictionFilterPluginInterface[]
+     * @return array<\Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductAbstractRestrictionFilterPluginInterface>
      */
     protected function getProductAbstractRestrictionFilterPlugins(): array
     {
@@ -271,7 +329,7 @@ class ProductStorageDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @return \Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductConcreteRestrictionFilterPluginInterface[]
+     * @return array<\Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductConcreteRestrictionFilterPluginInterface>
      */
     protected function getProductConcreteRestrictionFilterPlugins(): array
     {

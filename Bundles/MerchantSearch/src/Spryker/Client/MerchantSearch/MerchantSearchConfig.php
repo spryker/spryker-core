@@ -11,9 +11,21 @@ use Spryker\Client\Kernel\AbstractBundleConfig;
 
 class MerchantSearchConfig extends AbstractBundleConfig
 {
+    /**
+     * @var int
+     */
     protected const PAGINATION_DEFAULT_ITEMS_PER_PAGE = 10;
+    /**
+     * @var int
+     */
     protected const PAGINATION_MAX_ITEMS_PER_PAGE = 10000;
+    /**
+     * @var string
+     */
     protected const PAGINATION_PARAMETER_NAME_PAGE = 'page';
+    /**
+     * @var string
+     */
     protected const PAGINATION_ITEMS_PER_PAGE_PARAMETER_NAME = 'ipp';
 
     /**

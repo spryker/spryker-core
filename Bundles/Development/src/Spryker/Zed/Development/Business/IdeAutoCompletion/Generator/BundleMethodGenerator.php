@@ -18,7 +18,7 @@ class BundleMethodGenerator extends AbstractGenerator
     }
 
     /**
-     * @param \Generated\Shared\Transfer\IdeAutoCompletionBundleTransfer[] $moduleTransferCollection
+     * @param array<\Generated\Shared\Transfer\IdeAutoCompletionBundleTransfer> $moduleTransferCollection
      *
      * @return void
      */

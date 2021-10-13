@@ -19,10 +19,22 @@ use Spryker\Zed\ProductAttributeGui\Dependency\QueryContainer\ProductAttributeGu
  */
 class ProductAttributeGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_LOCALE = 'FACADE_LOCALE';
+    /**
+     * @var string
+     */
     public const FACADE_PRODUCT_ATTRIBUTE = 'FACADE_PRODUCT_ATTRIBUTE';
 
+    /**
+     * @var string
+     */
     public const QUERY_CONTAINER_PRODUCT = 'QUERY_CONTAINER_PRODUCT';
+    /**
+     * @var string
+     */
     public const QUERY_CONTAINER_PRODUCT_ATTRIBUTE = 'QUERY_CONTAINER_PRODUCT_ATTRIBUTE';
 
     /**

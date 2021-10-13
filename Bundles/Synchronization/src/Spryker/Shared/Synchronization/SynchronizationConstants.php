@@ -12,7 +12,16 @@ namespace Spryker\Shared\Synchronization;
  */
 interface SynchronizationConstants
 {
+    /**
+     * @var string
+     */
     public const DEFAULT_SYNC_STORAGE_QUEUE_MESSAGE_CHUNK_SIZE = 'SYNCHRONIZATION:DEFAULT_SYNC_STORAGE_QUEUE_MESSAGE_CHUNK_SIZE';
+    /**
+     * @var string
+     */
     public const DEFAULT_SYNC_SEARCH_QUEUE_MESSAGE_CHUNK_SIZE = 'SYNCHRONIZATION:DEFAULT_SYNC_SEARCH_QUEUE_MESSAGE_CHUNK_SIZE';
+    /**
+     * @var string
+     */
     public const EXPORT_MESSAGE_CHUNK_SIZE = 'SYNCHRONIZATION:EXPORT_MESSAGE_CHUNK_SIZE';
 }

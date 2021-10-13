@@ -18,7 +18,7 @@ interface ProductImageStorageQueryContainerInterface extends QueryContainerInter
      *
      * @api
      *
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return \Orm\Zed\ProductImageStorage\Persistence\SpyProductAbstractImageStorageQuery
      */
@@ -42,7 +42,7 @@ interface ProductImageStorageQueryContainerInterface extends QueryContainerInter
      *
      * @api
      *
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributesQuery
      */
@@ -92,7 +92,7 @@ interface ProductImageStorageQueryContainerInterface extends QueryContainerInter
      *
      * @deprecated Will be removed without replacement.
      *
-     * @param int[] $productImageSetToProductImageIds
+     * @param array<int> $productImageSetToProductImageIds
      *
      * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetToProductImageQuery
      */

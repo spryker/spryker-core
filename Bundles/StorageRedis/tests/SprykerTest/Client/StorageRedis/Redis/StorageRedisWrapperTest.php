@@ -25,13 +25,31 @@ use Spryker\Client\StorageRedis\StorageRedisConfig;
  */
 class StorageRedisWrapperTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const CONNECTION_KEY = 'connection key';
+    /**
+     * @var string
+     */
     protected const KEY_PREFIX = 'kv';
 
+    /**
+     * @var string
+     */
     protected const PLAIN_TEXT_DATA = 'plain text data';
+    /**
+     * @var string
+     */
     protected const JSON_DATA = '{"data": "dummy data"}';
 
+    /**
+     * @var string
+     */
     protected const PLAIN_TEXT_KEY = 'plainTextKey';
+    /**
+     * @var string
+     */
     protected const JSON_KEY = 'jsonKey';
 
     /**

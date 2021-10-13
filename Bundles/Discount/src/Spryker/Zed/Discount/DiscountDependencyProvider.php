@@ -38,27 +38,90 @@ use Spryker\Zed\Kernel\Container;
  */
 class DiscountDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_MESSENGER = 'MESSENGER_FACADE';
+    /**
+     * @var string
+     */
     public const FACADE_MONEY = 'MONEY_FACADE';
+    /**
+     * @var string
+     */
     public const FACADE_CURRENCY = 'CURRENCY_FACADE';
+    /**
+     * @var string
+     */
     public const FACADE_STORE = 'FACADE_STORE';
 
+    /**
+     * @var string
+     */
     public const PLUGIN_CALCULATOR_PERCENTAGE = 'PLUGIN_CALCULATOR_PERCENTAGE';
+    /**
+     * @var string
+     */
     public const PLUGIN_CALCULATOR_FIXED = 'PLUGIN_CALCULATOR_FIXED';
+    /**
+     * @var string
+     */
     public const PLUGIN_DISCOUNTABLE_ITEM_FILTER = 'PLUGIN_DISCOUNTABLE_ITEM_FILTER';
+    /**
+     * @var string
+     */
     public const PLUGIN_COLLECTOR_STRATEGY_PLUGINS = 'PLUGIN_COLLECTOR_STRATEGY';
+    /**
+     * @var string
+     */
     public const PLUGIN_DISCOUNT_POST_CREATE = 'PLUGIN_DISCOUNT_POST_CREATE';
+    /**
+     * @var string
+     */
     public const PLUGIN_DISCOUNT_POST_UPDATE = 'PLUGIN_DISCOUNT_POST_UPDATE';
+    /**
+     * @var string
+     */
     public const PLUGIN_DISCOUNT_CONFIGURATION_EXPANDER = 'PLUGIN_DISCOUNT_CONFIGURATION_EXPANDER';
+    /**
+     * @var string
+     */
     public const PLUGIN_DISCOUNT_FORM_TYPE_EXPANDER = 'PLUGIN_DISCOUNT_FORM_EXPANDER';
+    /**
+     * @var string
+     */
     public const PLUGIN_DISCOUNT_FORM_DATA_PROVIDER_EXPANDER = 'PLUGIN_DISCOUNT_FORM_DATA_PROVIDER_EXPANDER';
+    /**
+     * @var string
+     */
     public const PLUGIN_DISCOUNT_VIEW_BLOCK_PROVIDER = 'PLUGIN_DISCOUNT_VIEW_BLOCK_PROVIDER';
+    /**
+     * @var string
+     */
     public const PLUGIN_DISCOUNT_APPLICABLE_FILTER_PLUGINS = 'PLUGIN_DISCOUNT_APPLICABLE_FILTER_PLUGINS';
+    /**
+     * @var string
+     */
     public const PLUGIN_DISCOUNTABLE_ITEM_TRANSFORMER_STRATEGY = 'PLUGIN_DISCOUNTABLE_ITEM_TRANSFORMER_STRATEGY';
+    /**
+     * @var string
+     */
     public const DECISION_RULE_PLUGINS = 'DECISION_RULE_PLUGINS';
+    /**
+     * @var string
+     */
     public const CALCULATOR_PLUGINS = 'CALCULATOR_PLUGINS';
+    /**
+     * @var string
+     */
     public const COLLECTED_DISCOUNT_GROUPING_PLUGINS = 'COLLECTED_DISCOUNT_GROUPING_PLUGINS';
+    /**
+     * @var string
+     */
     public const COLLECTOR_PLUGINS = 'COLLECTOR_PLUGINS';
+    /**
+     * @var string
+     */
     public const PLUGIN_STORE_RELATION_FORM_TYPE = 'PLUGIN_STORE_RELATION_FORM_TYPE';
 
     /**
@@ -108,7 +171,7 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface[]
+     * @return array<\Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface>
      */
     public function getAvailableCalculatorPlugins()
     {
@@ -119,7 +182,7 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\DiscountExtension\Dependency\Plugin\CollectedDiscountGroupingStrategyPluginInterface[]
+     * @return array<\Spryker\Zed\DiscountExtension\Dependency\Plugin\CollectedDiscountGroupingStrategyPluginInterface>
      */
     protected function getCollectedDiscountGroupingPlugins(): array
     {
@@ -127,7 +190,7 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\DiscountExtension\Dependency\Plugin\DiscountableItemTransformerStrategyPluginInterface[]
+     * @return array<\Spryker\Zed\DiscountExtension\Dependency\Plugin\DiscountableItemTransformerStrategyPluginInterface>
      */
     protected function getDiscountableItemTransformerStrategyPlugins(): array
     {
@@ -135,7 +198,7 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\Discount\Dependency\Plugin\CollectorPluginInterface[]
+     * @return array<\Spryker\Zed\Discount\Dependency\Plugin\CollectorPluginInterface>
      */
     protected function getCollectorPlugins()
     {
@@ -147,7 +210,7 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\Discount\Dependency\Plugin\DecisionRulePluginInterface[]
+     * @return array<\Spryker\Zed\Discount\Dependency\Plugin\DecisionRulePluginInterface>
      */
     protected function getDecisionRulePlugins()
     {
@@ -171,7 +234,7 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
      * This is additional filter applied to discountable items, the plugins are triggered after discount collectors run
      * this ensures that certain items are never picked by discount calculation and removed from DiscountableItem stack.
      *
-     * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountableItemFilterPluginInterface[]
+     * @return array<\Spryker\Zed\Discount\Dependency\Plugin\DiscountableItemFilterPluginInterface>
      */
     protected function getDiscountableItemFilterPlugins()
     {
@@ -293,7 +356,7 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\Discount\Dependency\Plugin\CollectorStrategyPluginInterface[]
+     * @return array<\Spryker\Zed\Discount\Dependency\Plugin\CollectorStrategyPluginInterface>
      */
     protected function getCollectorStrategyPlugins()
     {
@@ -315,7 +378,7 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountPostCreatePluginInterface[]
+     * @return array<\Spryker\Zed\Discount\Dependency\Plugin\DiscountPostCreatePluginInterface>
      */
     protected function getDiscountPostCreatePlugins()
     {
@@ -337,7 +400,7 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountPostUpdatePluginInterface[]
+     * @return array<\Spryker\Zed\Discount\Dependency\Plugin\DiscountPostUpdatePluginInterface>
      */
     protected function getDiscountPostUpdatePlugins()
     {
@@ -361,7 +424,7 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * This plugin allows to expand DiscountConfigurationTransfer when using
      *
-     * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountConfigurationExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\Discount\Dependency\Plugin\DiscountConfigurationExpanderPluginInterface>
      */
     protected function getDiscountConfigurationExpanderPlugins()
     {
@@ -385,7 +448,7 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * This plugin allows to expand DiscountConfigurationTransfer when using
      *
-     * @return \Spryker\Zed\Discount\Dependency\Plugin\Form\DiscountFormExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\Discount\Dependency\Plugin\Form\DiscountFormExpanderPluginInterface>
      */
     protected function getDiscountFormExpanderPlugins()
     {
@@ -407,7 +470,7 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\Discount\Dependency\Plugin\Form\DiscountFormDataProviderExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\Discount\Dependency\Plugin\Form\DiscountFormDataProviderExpanderPluginInterface>
      */
     protected function getDiscountFormDataProviderExpanderPlugins()
     {
@@ -429,7 +492,7 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountViewBlockProviderPluginInterface[]
+     * @return array<\Spryker\Zed\Discount\Dependency\Plugin\DiscountViewBlockProviderPluginInterface>
      */
     protected function getDiscountViewTemplateProviderPlugins()
     {
@@ -451,7 +514,7 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountViewBlockProviderPluginInterface[]
+     * @return array<\Spryker\Zed\Discount\Dependency\Plugin\DiscountViewBlockProviderPluginInterface>
      */
     protected function getDiscountApplicableFilterPlugins()
     {

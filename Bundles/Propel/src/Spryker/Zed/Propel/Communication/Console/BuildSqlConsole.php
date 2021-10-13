@@ -17,7 +17,13 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class BuildSqlConsole extends Console
 {
+    /**
+     * @var string
+     */
     public const COMMAND_NAME = 'propel:sql:build';
+    /**
+     * @var string
+     */
     public const COMMAND_DESCRIPTION = 'Build SQL with Propel2';
 
     /**

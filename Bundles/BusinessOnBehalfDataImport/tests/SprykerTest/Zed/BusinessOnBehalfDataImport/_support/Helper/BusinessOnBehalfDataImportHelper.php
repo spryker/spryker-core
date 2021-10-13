@@ -23,6 +23,9 @@ class BusinessOnBehalfDataImportHelper extends Module
     use DataCleanupHelperTrait;
     use LocatorHelperTrait;
 
+    /**
+     * @var string
+     */
     protected const CUSTOMER_REFERENCE = 'TEST--1';
 
     /**

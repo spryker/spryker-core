@@ -18,6 +18,9 @@ use Spryker\Zed\ProductCustomerPermissionCollector\Persistence\Search\Propel\Pro
 
 class ProductCustomerPermissionSearchCollector extends AbstractConfigurableSearchPropelCollector
 {
+    /**
+     * @var string
+     */
     protected const ID_CUSTOMER = 'id-customer';
 
     /**

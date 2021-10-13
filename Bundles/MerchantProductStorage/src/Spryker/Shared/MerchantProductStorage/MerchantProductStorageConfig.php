@@ -16,6 +16,7 @@ class MerchantProductStorageConfig extends AbstractBundleConfig
      * - This event will be used for merchant product abstract publishing.
      *
      * @api
+     * @var string
      */
     public const MERCHANT_PRODUCT_ABSTRACT_PUBLISH = 'MerchantProductAbstract.publish';
 
@@ -24,6 +25,7 @@ class MerchantProductStorageConfig extends AbstractBundleConfig
      * - This events will be used for spy_merchant entity changes.
      *
      * @api
+     * @var string
      */
     public const ENTITY_SPY_MERCHANT_UPDATE = 'Entity.spy_merchant.update';
 }

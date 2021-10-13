@@ -25,7 +25,13 @@ class ConsoleBootstrap extends Application
 {
     use BundleConfigResolverAwareTrait;
 
+    /**
+     * @var string
+     */
     protected const VERSION = '1';
+    /**
+     * @var string
+     */
     protected const NAME = 'Spryker Glue Console';
 
     /**
@@ -39,7 +45,7 @@ class ConsoleBootstrap extends Application
     protected $container;
 
     /**
-     * @var \Spryker\Shared\ApplicationExtension\Dependency\Plugin\BootableApplicationPluginInterface[]
+     * @var array<\Spryker\Shared\ApplicationExtension\Dependency\Plugin\BootableApplicationPluginInterface>
      */
     protected $bootablePlugins = [];
 
@@ -100,7 +106,7 @@ class ConsoleBootstrap extends Application
     }
 
     /**
-     * @return \Symfony\Component\Console\Command\Command[]
+     * @return array<\Symfony\Component\Console\Command\Command>
      */
     protected function getDefaultCommands(): array
     {

@@ -35,7 +35,7 @@ class ProductConfigurationStorageDeleter implements ProductConfigurationStorageD
     }
 
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
      *
      * @return void
      */

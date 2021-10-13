@@ -27,7 +27,13 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class CacheKeyGeneratorTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const KEY_NAME_PREFIX = 'storage';
+    /**
+     * @var string
+     */
     protected const KEY_NAME_SEPARATOR = ':';
 
     /**
@@ -36,7 +42,7 @@ class CacheKeyGeneratorTest extends Unit
     protected $cacheKeyGenerator;
 
     /**
-     * @var string[]
+     * @var array<string>
      */
     protected $allowedQueryStringParameters = [
         'allowedParameter1',
@@ -102,7 +108,7 @@ class CacheKeyGeneratorTest extends Unit
      *
      * @param string $expectedCacheKey
      * @param string $requestUri
-     * @param string[] $queryStringParameters
+     * @param array<string> $queryStringParameters
      * @param bool $isCacheEnabled
      *
      * @return void

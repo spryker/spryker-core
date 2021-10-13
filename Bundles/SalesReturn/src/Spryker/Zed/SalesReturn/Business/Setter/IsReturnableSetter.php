@@ -15,7 +15,13 @@ use Spryker\Zed\SalesReturn\SalesReturnConfig;
 
 class IsReturnableSetter implements IsReturnableSetterInterface
 {
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_RETURNABLE_TILL_DATE = 'return.return_policy.returnable_till.message';
+    /**
+     * @var string
+     */
     protected const GLOSSARY_PARAMETER_RETURNABLE_TILL_DATE = '%date%';
 
     /**
@@ -41,9 +47,9 @@ class IsReturnableSetter implements IsReturnableSetterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     public function setOrderItemIsReturnableByGlobalReturnableNumberOfDays(array $itemTransfers): array
     {
@@ -84,9 +90,9 @@ class IsReturnableSetter implements IsReturnableSetterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     public function setOrderItemIsReturnableByItemState(array $itemTransfers): array
     {

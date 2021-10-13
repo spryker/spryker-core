@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductOfferGui\Communication\Controller;
 
-use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
+use Generated\Shared\Transfer\ProductOfferCriteriaTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Spryker\Zed\ProductOfferGui\ProductOfferGuiConfig;
@@ -19,15 +19,21 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ViewController extends AbstractController
 {
+    /**
+     * @var string
+     */
     protected const PARAM_ID_PRODUCT_OFFER = 'id-product-offer';
+    /**
+     * @var string
+     */
     protected const MESSAGE_PRODUCT_OFFER_NOT_FOUND = 'Product offer not found';
 
     /**
-     * @phpstan-return array<string, mixed>|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @phpstan-return \Symfony\Component\HttpFoundation\RedirectResponse|array<string, mixed>
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function indexAction(Request $request)
     {
@@ -35,12 +41,12 @@ class ViewController extends AbstractController
             static::PARAM_ID_PRODUCT_OFFER
         ));
 
-        $productOfferCriteriaFilter = (new ProductOfferCriteriaFilterTransfer())
+        $productOfferCriteria = (new ProductOfferCriteriaTransfer())
             ->setIdProductOffer($idProductOffer);
 
         $productOfferTransfer = $this->getFactory()
             ->getProductOfferFacade()
-            ->findOne($productOfferCriteriaFilter);
+            ->findOne($productOfferCriteria);
 
         if (!$productOfferTransfer) {
             $this->addErrorMessage(static::MESSAGE_PRODUCT_OFFER_NOT_FOUND);

@@ -14,7 +14,13 @@ use Spryker\Zed\ProductDiscontinued\Persistence\ProductDiscontinuedRepositoryInt
 
 class ShoppingListAddItemPreCheck implements ShoppingListAddItemPreCheckInterface
 {
+    /**
+     * @var string
+     */
     protected const TRANSLATION_PARAMETER_SKU = '%sku%';
+    /**
+     * @var string
+     */
     protected const SHOPPING_LIST_PRE_ADD_CHECK_PRODUCT_DISCONTINUED = 'shopping_list.pre.check.product_discontinued';
 
     /**

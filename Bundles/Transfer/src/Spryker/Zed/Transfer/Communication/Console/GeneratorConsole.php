@@ -20,7 +20,13 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class GeneratorConsole extends Console
 {
+    /**
+     * @var string
+     */
     public const COMMAND_NAME = 'transfer:generate';
+    /**
+     * @var string
+     */
     public const COMMAND_DESCRIPTION = 'Generates data and entity transfer objects from transfer XML definition files and Propel schema definition files';
 
     /**

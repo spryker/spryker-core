@@ -12,6 +12,9 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class SchedulerJenkinsConfig extends AbstractBundleConfig
 {
+    /**
+     * @var int
+     */
     protected const DEFAULT_AMOUNT_OF_DAYS_FOR_LOGFILE_ROTATION = 7;
 
     protected const DEFAULT_JENKINS_TEMPLATE_PATH = __DIR__ . '/Business/TemplateGenerator/Template/jenkins-job.default.xml.twig';
@@ -51,7 +54,7 @@ class SchedulerJenkinsConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getJenkinsTemplateFolders(): array
     {

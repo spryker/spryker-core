@@ -19,4 +19,11 @@ interface ProductConfigurationInstanceReaderInterface
     public function findProductConfigurationInstanceBySku(
         string $sku
     ): ?ProductConfigurationInstanceTransfer;
+
+    /**
+     * @param array<string> $skus
+     *
+     * @return array<\Generated\Shared\Transfer\ProductConfigurationInstanceTransfer>
+     */
+    public function findProductConfigurationInstancesIndexedBySku(array $skus): array;
 }

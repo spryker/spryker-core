@@ -15,10 +15,22 @@ use Spryker\Zed\Country\Persistence\CountryRepositoryInterface;
 
 class CountryCheckoutDataValidator implements CountryCheckoutDataValidatorInterface
 {
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_BILLING_ADDRESS_IS_MISSING = 'billing.address.validation.is_missing';
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_BILLING_ADDRESS_COUNTRY_NOT_FOUND = 'billing.address.country.validation.not_found';
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_SHIPPING_ADDRESS_COUNTRY_NOT_FOUND = 'shipping.address.country.validation.not_found';
 
+    /**
+     * @var string
+     */
     protected const COUNTRY_CODE_PARAMETER = '%code%';
 
     /**
@@ -158,7 +170,7 @@ class CountryCheckoutDataValidator implements CountryCheckoutDataValidatorInterf
     /**
      * @param \Generated\Shared\Transfer\CheckoutDataTransfer $checkoutDataTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function extractIso2CodesFromShipments(CheckoutDataTransfer $checkoutDataTransfer): array
     {
@@ -174,9 +186,9 @@ class CountryCheckoutDataValidator implements CountryCheckoutDataValidatorInterf
     }
 
     /**
-     * @param string[] $iso2Codes
+     * @param array<string> $iso2Codes
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getCountriesIsoCodes(array $iso2Codes): array
     {
@@ -196,7 +208,7 @@ class CountryCheckoutDataValidator implements CountryCheckoutDataValidatorInterf
     /**
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      * @param string $message
-     * @param mixed[] $parameters
+     * @param array<mixed> $parameters
      *
      * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */

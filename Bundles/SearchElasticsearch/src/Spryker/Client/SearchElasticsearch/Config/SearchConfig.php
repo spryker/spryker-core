@@ -28,7 +28,7 @@ class SearchConfig implements SearchConfigInterface
     protected $paginationConfig;
 
     /**
-     * @var \Spryker\Client\SearchExtension\Dependency\Plugin\SearchConfigExpanderPluginInterface[]
+     * @var array<\Spryker\Client\SearchExtension\Dependency\Plugin\SearchConfigExpanderPluginInterface>
      */
     protected $configExpanderPlugins;
 
@@ -36,8 +36,8 @@ class SearchConfig implements SearchConfigInterface
      * @param \Spryker\Client\SearchElasticsearch\Config\FacetConfigInterface $facetConfig
      * @param \Spryker\Client\SearchElasticsearch\Config\SortConfigInterface $sortConfig
      * @param \Spryker\Client\SearchElasticsearch\Config\PaginationConfigInterface $paginationConfig
-     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\SearchConfigBuilderPluginInterface[] $configBuilderPlugins
-     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\SearchConfigExpanderPluginInterface[] $searchConfigExpanderPlugins
+     * @param array<\Spryker\Client\SearchExtension\Dependency\Plugin\SearchConfigBuilderPluginInterface> $configBuilderPlugins
+     * @param array<\Spryker\Client\SearchExtension\Dependency\Plugin\SearchConfigExpanderPluginInterface> $searchConfigExpanderPlugins
      */
     public function __construct(
         FacetConfigInterface $facetConfig,
@@ -80,7 +80,7 @@ class SearchConfig implements SearchConfigInterface
     }
 
     /**
-     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\SearchConfigBuilderPluginInterface[] $searchConfigBuilderPlugins
+     * @param array<\Spryker\Client\SearchExtension\Dependency\Plugin\SearchConfigBuilderPluginInterface> $searchConfigBuilderPlugins
      *
      * @return void
      */
@@ -138,7 +138,7 @@ class SearchConfig implements SearchConfigInterface
     }
 
     /**
-     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\SearchConfigExpanderPluginInterface[] $configExpanderPlugins
+     * @param array<\Spryker\Client\SearchExtension\Dependency\Plugin\SearchConfigExpanderPluginInterface> $configExpanderPlugins
      *
      * @return void
      */

@@ -13,7 +13,13 @@ use Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGu
 
 class PriceProductScheduleDataExtractor implements PriceProductScheduleDataExtractorInterface
 {
+    /**
+     * @var string
+     */
     protected const TITLE_PRODUCT_ABSTRACT_PATTERN = 'Edit Product Abstract: %s';
+    /**
+     * @var string
+     */
     protected const TITLE_PRODUCT_CONCRETE_PATTERN = 'Edit Product Concrete: %s';
 
     /**

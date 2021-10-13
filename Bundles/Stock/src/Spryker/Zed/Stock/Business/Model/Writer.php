@@ -24,8 +24,17 @@ class Writer implements WriterInterface
 {
     use TransactionTrait;
 
+    /**
+     * @var string
+     */
     public const TOUCH_STOCK_TYPE = 'stock-type';
+    /**
+     * @var string
+     */
     public const TOUCH_STOCK_PRODUCT = 'stock-product';
+    /**
+     * @var string
+     */
     public const ERROR_STOCK_TYPE_UNKNOWN = 'stock type unknown';
 
     /**
@@ -49,7 +58,7 @@ class Writer implements WriterInterface
     protected $touchFacade;
 
     /**
-     * @var \Spryker\Zed\StockExtension\Dependency\Plugin\StockUpdateHandlerPluginInterface[]
+     * @var array<\Spryker\Zed\StockExtension\Dependency\Plugin\StockUpdateHandlerPluginInterface>
      */
     protected $stockUpdateHandlerPlugins;
 
@@ -58,7 +67,7 @@ class Writer implements WriterInterface
      * @param \Spryker\Zed\Stock\Business\Stock\StockReaderInterface $stockReader
      * @param \Spryker\Zed\Stock\Business\StockProduct\StockProductReaderInterface $stockProductReader
      * @param \Spryker\Zed\Stock\Dependency\Facade\StockToTouchInterface $touchFacade
-     * @param \Spryker\Zed\StockExtension\Dependency\Plugin\StockUpdateHandlerPluginInterface[] $stockUpdateHandlerPlugins
+     * @param array<\Spryker\Zed\StockExtension\Dependency\Plugin\StockUpdateHandlerPluginInterface> $stockUpdateHandlerPlugins
      */
     public function __construct(
         StockQueryContainerInterface $queryContainer,

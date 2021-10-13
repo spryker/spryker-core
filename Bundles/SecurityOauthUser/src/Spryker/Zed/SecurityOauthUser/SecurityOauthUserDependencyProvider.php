@@ -19,13 +19,37 @@ use Spryker\Zed\SecurityOauthUser\Dependency\Service\SecurityOauthUserToUtilText
  */
 class SecurityOauthUserDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_USER = 'FACADE_USER';
+    /**
+     * @var string
+     */
     public const FACADE_ACL = 'FACADE_ACL';
+    /**
+     * @var string
+     */
     public const FACADE_MESSENGER = 'FACADE_MESSENGER';
+    /**
+     * @var string
+     */
     public const SERVICE_UTIL_TEXT = 'SERVICE_UTIL_TEXT';
 
+    /**
+     * @var string
+     */
     public const PLUGINS_OAUTH_USER_CLIENT_STRATEGY = 'PLUGINS_OAUTH_USER_CLIENT_STRATEGY';
+    /**
+     * @var string
+     */
     public const PLUGINS_OAUTH_USER_RESTRICTION = 'PLUGINS_OAUTH_USER_RESTRICTION';
+
+    /**
+     * @see \Spryker\Shared\Application\Application::SERVICE_ROUTER
+     * @var string
+     */
+    public const SERVICE_ROUTER = 'routers';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -38,6 +62,7 @@ class SecurityOauthUserDependencyProvider extends AbstractBundleDependencyProvid
 
         $container = $this->addUserFacade($container);
         $container = $this->addMessengerFacade($container);
+        $container = $this->addRouter($container);
 
         return $container;
     }
@@ -139,7 +164,7 @@ class SecurityOauthUserDependencyProvider extends AbstractBundleDependencyProvid
     }
 
     /**
-     * @return \Spryker\Zed\SecurityOauthUserExtension\Dependency\Plugin\OauthUserClientStrategyPluginInterface[]
+     * @return array<\Spryker\Zed\SecurityOauthUserExtension\Dependency\Plugin\OauthUserClientStrategyPluginInterface>
      */
     protected function getOauthUserClientStrategyPlugins(): array
     {
@@ -161,10 +186,24 @@ class SecurityOauthUserDependencyProvider extends AbstractBundleDependencyProvid
     }
 
     /**
-     * @return \Spryker\Zed\SecurityOauthUserExtension\Dependency\Plugin\OauthUserRestrictionPluginInterface[]
+     * @return array<\Spryker\Zed\SecurityOauthUserExtension\Dependency\Plugin\OauthUserRestrictionPluginInterface>
      */
     protected function getOauthUserRestrictionPlugins(): array
     {
         return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addRouter(Container $container): Container
+    {
+        $container->set(static::SERVICE_ROUTER, function (Container $container) {
+            return $container->getApplicationService(static::SERVICE_ROUTER);
+        });
+
+        return $container;
     }
 }

@@ -16,11 +16,26 @@ use Spryker\Glue\ProductOptionsRestApi\ProductOptionsRestApiConfig;
 
 class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
 {
+    /**
+     * @var string
+     */
     protected const PRODUCT_ABSTRACT_MAPPING_TYPE = 'sku';
+    /**
+     * @var string
+     */
     protected const PRODUCT_CONCRETE_MAPPING_TYPE = 'sku';
 
+    /**
+     * @var string
+     */
     protected const KEY_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
+    /**
+     * @var string
+     */
     protected const KEY_PRODUCT_ABSTRACT_SKU = 'sku';
+    /**
+     * @var string
+     */
     protected const KEY_PRODUCT_CONCRETE_SKU = 'sku';
 
     /**
@@ -62,11 +77,11 @@ class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
     }
 
     /**
-     * @param string[] $productAbstractSkus
+     * @param array<string> $productAbstractSkus
      * @param string $localeName
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\SortInterface[] $sorts
+     * @param array<\Spryker\Glue\GlueApplication\Rest\Request\Data\SortInterface> $sorts
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[][]
+     * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]>
      */
     public function getProductOptionsByProductAbstractSkus(
         array $productAbstractSkus,
@@ -81,8 +96,10 @@ class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
         $productAbstractOptionStorageTransfers = $this->productOptionStorageClient->getBulkProductOptions(
             $productAbstractIds
         );
-        $productAbstractOptionStorageTransfers = $this->productOptionTranslator
-            ->translateProductAbstractOptionStorageTransfers($productAbstractOptionStorageTransfers, $localeName);
+        if ($productAbstractOptionStorageTransfers) {
+            $productAbstractOptionStorageTransfers = $this->productOptionTranslator
+                ->translateProductAbstractOptionStorageTransfers($productAbstractOptionStorageTransfers, $localeName);
+        }
 
         return $this->productOptionRestResponseBuilder
             ->createProductOptionRestResources(
@@ -94,11 +111,11 @@ class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
     }
 
     /**
-     * @param string[] $productConcreteSkus
+     * @param array<string> $productConcreteSkus
      * @param string $localeName
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\SortInterface[] $sorts
+     * @param array<\Spryker\Glue\GlueApplication\Rest\Request\Data\SortInterface> $sorts
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[][]
+     * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]>
      */
     public function getProductOptionsByProductConcreteSkus(
         array $productConcreteSkus,
@@ -109,8 +126,11 @@ class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
         $productAbstractOptionStorageTransfers = $this->productOptionStorageClient->getBulkProductOptions(
             array_unique($productAbstractIds)
         );
-        $productAbstractOptionStorageTransfers = $this->productOptionTranslator
-            ->translateProductAbstractOptionStorageTransfers($productAbstractOptionStorageTransfers, $localeName);
+
+        if ($productAbstractOptionStorageTransfers) {
+            $productAbstractOptionStorageTransfers = $this->productOptionTranslator
+                ->translateProductAbstractOptionStorageTransfers($productAbstractOptionStorageTransfers, $localeName);
+        }
 
         return $this->productOptionRestResponseBuilder
             ->createProductOptionRestResources(
@@ -124,7 +144,7 @@ class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
     /**
      * @param string $productConcreteSku
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getProductOptionIdsByProductConcreteSku(string $productConcreteSku): array
     {
@@ -161,7 +181,7 @@ class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer $productAbstractOptionStorageTransfer
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getProductOptionIdsGroupedByProductOptionSku(
         ProductAbstractOptionStorageTransfer $productAbstractOptionStorageTransfer
@@ -178,10 +198,10 @@ class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
     }
 
     /**
-     * @param string[] $productConcreteSkus
+     * @param array<string> $productConcreteSkus
      * @param string $localeName
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getProductAbstractIdsByProductConcreteSkus(array $productConcreteSkus, string $localeName): array
     {

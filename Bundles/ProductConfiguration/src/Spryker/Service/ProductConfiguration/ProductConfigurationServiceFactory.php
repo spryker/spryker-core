@@ -10,6 +10,10 @@ namespace Spryker\Service\ProductConfiguration;
 use Spryker\Service\Kernel\AbstractServiceFactory;
 use Spryker\Service\ProductConfiguration\Dependency\Service\ProductConfigurationToUtilEncodingServiceInterface;
 use Spryker\Service\ProductConfiguration\Dependency\Service\ProductConfigurationToUtilTextServiceInterface;
+use Spryker\Service\ProductConfiguration\Filter\PriceProductConfigurationFilter;
+use Spryker\Service\ProductConfiguration\Filter\PriceProductConfigurationFilterInterface;
+use Spryker\Service\ProductConfiguration\Filter\PriceProductConfigurationVolumeFilter;
+use Spryker\Service\ProductConfiguration\Filter\PriceProductConfigurationVolumeFilterInterface;
 use Spryker\Service\ProductConfiguration\HashGenerator\ProductConfigurationInstanceHashGenerator;
 use Spryker\Service\ProductConfiguration\HashGenerator\ProductConfigurationInstanceHashGeneratorInterface;
 
@@ -40,5 +44,23 @@ class ProductConfigurationServiceFactory extends AbstractServiceFactory
     public function getUtilTextService(): ProductConfigurationToUtilTextServiceInterface
     {
         return $this->getProvidedDependency(ProductConfigurationDependencyProvider::SERVICE_UTIL_TEXT);
+    }
+
+    /**
+     * @return \Spryker\Service\ProductConfiguration\Filter\PriceProductConfigurationFilterInterface
+     */
+    public function createPriceProductConfigurationFilter(): PriceProductConfigurationFilterInterface
+    {
+        return new PriceProductConfigurationFilter();
+    }
+
+    /**
+     * @return \Spryker\Service\ProductConfiguration\Filter\PriceProductConfigurationVolumeFilterInterface
+     */
+    public function createVolumePriceProductConfigurationFilter(): PriceProductConfigurationVolumeFilterInterface
+    {
+        return new PriceProductConfigurationVolumeFilter(
+            $this->createPriceProductConfigurationFilter()
+        );
     }
 }

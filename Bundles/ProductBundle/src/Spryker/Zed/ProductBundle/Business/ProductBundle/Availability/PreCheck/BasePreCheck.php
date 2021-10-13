@@ -18,8 +18,17 @@ use Spryker\Zed\ProductBundle\ProductBundleConfig;
 
 class BasePreCheck
 {
+    /**
+     * @var string
+     */
     protected const ERROR_BUNDLE_ITEM_UNAVAILABLE_TRANSLATION_KEY = 'product_bundle.unavailable';
+    /**
+     * @var string
+     */
     protected const ERROR_BUNDLE_ITEM_UNAVAILABLE_PARAMETER_BUNDLE_SKU = '%bundleSku%';
+    /**
+     * @var string
+     */
     protected const ERROR_BUNDLE_ITEM_UNAVAILABLE_PARAMETER_PRODUCT_SKU = '%productSku%';
 
     /**
@@ -63,7 +72,7 @@ class BasePreCheck
     /**
      * @param string $sku
      *
-     * @return \Orm\Zed\ProductBundle\Persistence\SpyProductBundle[]
+     * @return array<\Orm\Zed\ProductBundle\Persistence\SpyProductBundle>
      */
     protected function findBundledProducts(string $sku): array
     {
@@ -74,8 +83,8 @@ class BasePreCheck
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
-     * @param \Orm\Zed\ProductBundle\Persistence\SpyProductBundle[] $bundledProducts
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $itemTransfers
+     * @param array<\Orm\Zed\ProductBundle\Persistence\SpyProductBundle> $bundledProducts
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
@@ -107,7 +116,7 @@ class BasePreCheck
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      * @param \Spryker\DecimalObject\Decimal|null $itemQuantity
@@ -131,7 +140,7 @@ class BasePreCheck
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      * @param string $sku
      *
      * @return \Spryker\DecimalObject\Decimal

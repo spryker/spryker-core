@@ -45,7 +45,7 @@ class UrlsRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\UrlsRestApiExtension\Dependency\Plugin\RestUrlResolverAttributesTransferProviderPluginInterface[]
+     * @return array<\Spryker\Glue\UrlsRestApiExtension\Dependency\Plugin\RestUrlResolverAttributesTransferProviderPluginInterface>
      */
     public function getRestUrlResolverAttributesTransferProviderPlugins(): array
     {

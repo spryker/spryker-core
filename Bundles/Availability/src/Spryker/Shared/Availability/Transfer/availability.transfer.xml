@@ -1,12 +1,32 @@
 <?xml version="1.0"?>
-<transfers xmlns="spryker:transfer-01"
-           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-           xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+<transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="AvailabilityStock">
         <property name="idAvailability" type="int"/>
         <property name="sku" type="string"/>
         <property name="stocks" type="StockProduct[]" singular="stockProduct"/>
+    </transfer>
+
+    <transfer name="SellableItemRequest">
+        <property name="isProcessed" type="bool"/>
+        <property name="sku" type="string"/>
+        <property name="quantity" type="decimal"/>
+        <property name="productAvailabilityCriteria" type="ProductAvailabilityCriteria"/>
+    </transfer>
+
+    <transfer name="SellableItemResponse">
+        <property name="sku" type="string"/>
+        <property name="isSellable" type="bool"/>
+        <property name="availableQuantity" type="decimal"/>
+    </transfer>
+
+    <transfer name="SellableItemsRequest">
+        <property name="store" type="Store"/>
+        <property name="sellableItemRequests" type="SellableItemRequest[]" singular="sellableItemRequest"/>
+    </transfer>
+
+    <transfer name="SellableItemsResponse">
+        <property name="sellableItemResponses" type="SellableItemResponse[]" singular="sellableItemResponse"/>
     </transfer>
 
     <transfer name="StorageAvailability">
@@ -72,6 +92,8 @@
     </transfer>
 
     <transfer name="ProductAvailabilityCriteria">
+        <property name="productConcreteSkus" type="string[]" singular="productConcreteSku"/>
+        <property name="storeIds" type="int[]" singular="idStore"/>
     </transfer>
 
     <transfer name="ReservationRequest">
@@ -84,6 +106,16 @@
 
     <transfer name="CartItemQuantity">
         <property name="quantity" type="int"/>
+    </transfer>
+
+    <transfer name="ProductConcreteAvailabilityCollection">
+        <property name="productConcreteAvailabilities" type="ProductConcreteAvailability[]" singular="productConcreteAvailability"/>
+    </transfer>
+
+    <transfer name="WishlistItem">
+        <property name="productConcreteAvailability" type="ProductConcreteAvailability"/>
+        <property name="isSellable" type="bool"/>
+        <property name="sku" type="string"/>
     </transfer>
 
 </transfers>

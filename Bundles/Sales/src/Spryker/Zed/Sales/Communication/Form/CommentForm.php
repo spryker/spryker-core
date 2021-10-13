@@ -23,6 +23,9 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class CommentForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const FORM_NAME = 'comment';
 
     /**

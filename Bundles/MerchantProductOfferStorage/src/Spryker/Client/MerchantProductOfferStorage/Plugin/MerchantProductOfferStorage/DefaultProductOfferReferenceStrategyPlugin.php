@@ -50,7 +50,7 @@ class DefaultProductOfferReferenceStrategyPlugin extends AbstractPlugin implemen
                 (new ProductOfferStorageCriteriaTransfer())
                     ->setProductConcreteSkus($productOfferStorageCriteriaTransfer->getProductConcreteSkus())
             )
-            ->getProductOffersStorage()
+            ->getProductOffers()
             ->getArrayCopy();
 
         if (!$productOfferStorageTransfers) {

@@ -20,13 +20,31 @@ use Symfony\Component\Routing\RouteCollection;
 
 class RouterDebugYvesConsole extends Command
 {
+    /**
+     * @var int
+     */
     protected const CODE_SUCCESS = 0;
 
+    /**
+     * @var string
+     */
     protected const NAME = 'router:debug';
+    /**
+     * @var string
+     */
     protected const NAME_ALIAS = 'router:debug:yves';
 
+    /**
+     * @var string
+     */
     protected const ARGUMENT_ROUTE_NAME = 'name';
+    /**
+     * @var string
+     */
     protected const OPTION_SHOW_CONTROLLERS = 'show-controllers';
+    /**
+     * @var string
+     */
     protected const OPTION_SHOW_CONTROLLERS_SHORT = 'c';
 
     /**

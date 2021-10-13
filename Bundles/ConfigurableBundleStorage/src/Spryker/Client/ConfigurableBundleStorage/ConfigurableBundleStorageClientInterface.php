@@ -37,7 +37,7 @@ interface ConfigurableBundleStorageClientInterface
      *
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateStorageFilterTransfer $configurableBundleTemplateStorageFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer>
      */
     public function getConfigurableBundleTemplateStorageCollection(
         ConfigurableBundleTemplateStorageFilterTransfer $configurableBundleTemplateStorageFilterTransfer
@@ -69,10 +69,10 @@ interface ConfigurableBundleStorageClientInterface
      *
      * @api
      *
-     * @param string[] $skus
+     * @param array<string> $skus
      * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\ProductViewTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductViewTransfer>
      */
     public function getProductConcretesBySkusAndLocale(array $skus, string $localeName): array;
 }

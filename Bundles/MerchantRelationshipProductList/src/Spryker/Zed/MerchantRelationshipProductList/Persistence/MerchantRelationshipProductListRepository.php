@@ -29,7 +29,7 @@ class MerchantRelationshipProductListRepository extends AbstractRepository imple
      */
     public function getProductListCollectionByIdCompanyBusinessUnit(int $idCompanyBusinessUnit): ProductListCollectionTransfer
     {
-        /** @var \Orm\Zed\ProductList\Persistence\SpyProductList[] $productListEntities */
+        /** @var array<\Orm\Zed\ProductList\Persistence\SpyProductList> $productListEntities */
         $productListEntities = $this->getFactory()
             ->getProductListQuery()
             ->useSpyMerchantRelationshipQuery()
@@ -74,7 +74,7 @@ class MerchantRelationshipProductListRepository extends AbstractRepository imple
                 ->endUse();
         }
 
-        /** @var \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductList\Persistence\SpyProductList[] $productListEntities */
+        /** @var \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductList\Persistence\SpyProductList> $productListEntities */
         $productListEntities = $productListQuery->find();
 
         return $this->getFactory()
@@ -109,7 +109,7 @@ class MerchantRelationshipProductListRepository extends AbstractRepository imple
     /**
      * @param int $idProductList
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getMerchantRelationshipIdsByProductListId(int $idProductList): array
     {

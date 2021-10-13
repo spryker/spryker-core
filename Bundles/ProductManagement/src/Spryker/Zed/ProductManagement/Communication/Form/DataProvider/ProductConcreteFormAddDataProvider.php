@@ -17,6 +17,7 @@ use Spryker\Zed\ProductManagement\Communication\Form\Product\ImageCollectionForm
 use Spryker\Zed\ProductManagement\Communication\Form\Product\ImageSetForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\SeoForm;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductConcreteFormAdd;
+use Spryker\Zed\ProductManagement\Communication\Reader\ProductAttributeReaderInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductAttributeInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToStoreInterface;
@@ -25,18 +26,54 @@ use Spryker\Zed\Stock\Persistence\StockQueryContainerInterface;
 
 class ProductConcreteFormAddDataProvider
 {
+    /**
+     * @var string
+     */
     public const DEFAULT_INPUT_TYPE = 'text';
+    /**
+     * @var string
+     */
     public const TEXT_AREA_INPUT_TYPE = 'textarea';
 
+    /**
+     * @var string
+     */
     protected const FORM_FIELD_ID = 'id';
+    /**
+     * @var string
+     */
     protected const FORM_FIELD_VALUE = 'value';
+    /**
+     * @var string
+     */
     protected const FORM_FIELD_NAME = 'name';
+    /**
+     * @var string
+     */
     protected const FORM_FIELD_PRODUCT_SPECIFIC = 'product_specific';
+    /**
+     * @var string
+     */
     protected const FORM_FIELD_LABEL = 'label';
+    /**
+     * @var string
+     */
     protected const FORM_FIELD_SUPER = 'super';
+    /**
+     * @var string
+     */
     protected const FORM_FIELD_INPUT_TYPE = 'input_type';
+    /**
+     * @var string
+     */
     protected const FORM_FIELD_VALUE_DISABLED = 'value_disabled';
+    /**
+     * @var string
+     */
     protected const FORM_FIELD_NAME_DISABLED = 'name_disabled';
+    /**
+     * @var string
+     */
     protected const FORM_FIELD_ALLOW_INPUT = 'allow_input';
 
     /**
@@ -65,7 +102,7 @@ class ProductConcreteFormAddDataProvider
     protected $productAttributeFacade;
 
     /**
-     * @var \Generated\Shared\Transfer\ProductManagementAttributeTransfer[]|\Everon\Component\Collection\CollectionInterface
+     * @var \Everon\Component\Collection\CollectionInterface<\Generated\Shared\Transfer\ProductManagementAttributeTransfer>
      */
     protected $attributeTransferCollection;
 
@@ -80,26 +117,30 @@ class ProductConcreteFormAddDataProvider
     protected $store;
 
     /**
+     * @var \Spryker\Zed\ProductManagement\Communication\Reader\ProductAttributeReaderInterface|null
+     */
+    protected $productAttributeReader;
+
+    /**
      * @param \Spryker\Zed\Stock\Persistence\StockQueryContainerInterface $stockQueryContainer
      * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductInterface $productFacade
      * @param \Spryker\Zed\ProductManagement\Communication\Form\DataProvider\LocaleProvider $localeProvider
      * @param \Generated\Shared\Transfer\LocaleTransfer $currentLocale
-     * @param array $attributeCollection
      * @param array $taxCollection
      * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToStoreInterface $store
      * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductAttributeInterface $productAttributeFacade
+     * @param \Spryker\Zed\ProductManagement\Communication\Reader\ProductAttributeReaderInterface|null $productAttributeReader
      */
     public function __construct(
         StockQueryContainerInterface $stockQueryContainer,
         ProductManagementToProductInterface $productFacade,
         LocaleProvider $localeProvider,
         LocaleTransfer $currentLocale,
-        array $attributeCollection,
         array $taxCollection,
         ProductManagementToStoreInterface $store,
-        ProductManagementToProductAttributeInterface $productAttributeFacade
+        ProductManagementToProductAttributeInterface $productAttributeFacade,
+        ?ProductAttributeReaderInterface $productAttributeReader = null
     ) {
-        $this->attributeTransferCollection = new Collection($attributeCollection);
         $this->stockQueryContainer = $stockQueryContainer;
         $this->productFacade = $productFacade;
         $this->localeProvider = $localeProvider;
@@ -107,6 +148,8 @@ class ProductConcreteFormAddDataProvider
         $this->taxCollection = $taxCollection;
         $this->store = $store;
         $this->productAttributeFacade = $productAttributeFacade;
+        $this->productAttributeReader = $productAttributeReader;
+        $this->attributeTransferCollection = $this->getAttributeTransferCollection();
     }
 
     /**
@@ -189,7 +232,7 @@ class ProductConcreteFormAddDataProvider
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductManagementAttributeTransfer>
      */
     protected function getSuperAttributesOption(ProductAbstractTransfer $productAbstractTransfer)
     {
@@ -395,5 +438,17 @@ class ProductConcreteFormAddDataProvider
         }
 
         return $values;
+    }
+
+    /**
+     * @return \Everon\Component\Collection\Collection
+     */
+    protected function getAttributeTransferCollection(): Collection
+    {
+        if ($this->productAttributeReader === null) {
+            return new Collection([]);
+        }
+
+        return new Collection($this->productAttributeReader->getProductSuperAttributesIndexedByAttributeKey());
     }
 }

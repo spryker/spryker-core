@@ -28,6 +28,9 @@ class ProductListFormType extends AbstractType
     public const FIELD_TITLE = ProductListTransfer::TITLE;
     public const FIELD_TYPE = ProductListTransfer::TYPE;
 
+    /**
+     * @var string
+     */
     public const BLOCK_PREFIX = 'productList';
 
     /**

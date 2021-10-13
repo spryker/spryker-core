@@ -44,10 +44,10 @@ class MerchantRestResponseBuilder implements MerchantRestResponseBuilderInterfac
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantStorageTransfer[] $merchantStorageTransfers
+     * @param array<\Generated\Shared\Transfer\MerchantStorageTransfer> $merchantStorageTransfers
      * @param string $localeName
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>
      */
     public function createMerchantRestResources(array $merchantStorageTransfers, string $localeName): array
     {
@@ -110,7 +110,7 @@ class MerchantRestResponseBuilder implements MerchantRestResponseBuilderInterfac
     /**
      * @param \Generated\Shared\Transfer\MerchantSearchRequestTransfer $merchantSearchRequestTransfer
      * @param \Generated\Shared\Transfer\MerchantSearchCollectionTransfer $merchantSearchCollectionTransfer
-     * @param \Generated\Shared\Transfer\MerchantStorageTransfer[] $merchantStorageTransfers
+     * @param array<\Generated\Shared\Transfer\MerchantStorageTransfer> $merchantStorageTransfers
      * @param string $localeName
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface

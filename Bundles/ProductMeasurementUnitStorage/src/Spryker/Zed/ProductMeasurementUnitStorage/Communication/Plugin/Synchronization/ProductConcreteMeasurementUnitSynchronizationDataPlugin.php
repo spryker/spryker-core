@@ -51,9 +51,9 @@ class ProductConcreteMeasurementUnitSynchronizationDataPlugin extends AbstractPl
      *
      * @api
      *
-     * @param int[] $ids
+     * @param array<int> $ids
      *
-     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     * @return array<\Generated\Shared\Transfer\SynchronizationDataTransfer>
      */
     public function getData(array $ids = []): array
     {

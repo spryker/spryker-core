@@ -17,7 +17,13 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class DeleteLogFilesConsole extends Console
 {
+    /**
+     * @var string
+     */
     public const COMMAND_NAME = 'log:clear';
+    /**
+     * @var string
+     */
     public const DESCRIPTION = 'This command will clear all logs.';
 
     /**

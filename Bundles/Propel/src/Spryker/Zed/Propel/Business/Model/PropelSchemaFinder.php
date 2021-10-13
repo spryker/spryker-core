@@ -11,6 +11,9 @@ use Symfony\Component\Finder\Finder;
 
 class PropelSchemaFinder implements PropelSchemaFinderInterface
 {
+    /**
+     * @var string
+     */
     public const FILE_NAME_PATTERN = '*_*.schema.xml';
 
     /**
@@ -27,7 +30,7 @@ class PropelSchemaFinder implements PropelSchemaFinderInterface
     }
 
     /**
-     * @return \Symfony\Component\Finder\Finder|\Symfony\Component\Finder\SplFileInfo[]
+     * @return \Symfony\Component\Finder\Finder<\Symfony\Component\Finder\SplFileInfo>
      */
     public function getSchemaFiles()
     {

@@ -19,26 +19,62 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class EditController extends AbstractController
 {
+    /**
+     * @var string
+     */
     protected const PARAM_ID_PRICE_PRODUCT_SCHEDULE = 'id-price-product-schedule';
+    /**
+     * @var string
+     */
     protected const PARAM_ID_PRICE_PRODUCT_SCHEDULE_LIST = 'id-price-product-schedule-list';
 
+    /**
+     * @var string
+     */
     protected const KEY_HEADER_REFERER = 'referer';
+    /**
+     * @var string
+     */
     protected const MESSAGE_SUCCESS = 'Scheduled price has been successfully saved';
 
+    /**
+     * @var string
+     */
     protected const KEY_FORM = 'form';
+    /**
+     * @var string
+     */
     protected const KEY_TITLE = 'title';
+    /**
+     * @var string
+     */
     protected const KEY_REDIRECT_URL = 'redirectUrl';
+    /**
+     * @var string
+     */
     protected const KEY_TIMEZONE_TEXT = 'timezoneText';
+    /**
+     * @var string
+     */
     protected const KEY_ID_PRODUCT = 'idProduct';
+    /**
+     * @var string
+     */
     protected const KEY_TIMEZONE = 'timezone';
+    /**
+     * @var string
+     */
     protected const MESSAGE_TIMEZONE_TEXT = 'The timezone used for the scheduled price will be <b>%timezone%</b> as defined on the store selected';
 
+    /**
+     * @var string
+     */
     protected const REDIRECT_URL_MAIN_PAGE = '/';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function indexAction(Request $request)
     {

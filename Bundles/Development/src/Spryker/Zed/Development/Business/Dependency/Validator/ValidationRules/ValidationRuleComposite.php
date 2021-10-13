@@ -12,12 +12,12 @@ use Generated\Shared\Transfer\ModuleDependencyTransfer;
 class ValidationRuleComposite implements ValidationRuleInterface
 {
     /**
-     * @var \Spryker\Zed\Development\Business\Dependency\Validator\ValidationRules\ValidationRuleInterface[]
+     * @var array<\Spryker\Zed\Development\Business\Dependency\Validator\ValidationRules\ValidationRuleInterface>
      */
     protected $validationRules;
 
     /**
-     * @param \Spryker\Zed\Development\Business\Dependency\Validator\ValidationRules\ValidationRuleInterface[] $validationRules
+     * @param array<\Spryker\Zed\Development\Business\Dependency\Validator\ValidationRules\ValidationRuleInterface> $validationRules
      */
     public function __construct(array $validationRules)
     {

@@ -16,7 +16,13 @@ use Spryker\Zed\PriceProductScheduleDataImport\Business\Model\DataSet\PriceProdu
 
 class DateValidatorStep implements DataImportStepInterface
 {
+    /**
+     * @var string
+     */
     protected const DATE_EMPTY_EXCEPTION_MESSAGE = 'Both dates should not be empty';
+    /**
+     * @var string
+     */
     protected const END_DATE_SHOULD_BE_GREATER_THAN_START_DATE_EXCEPTION_MESSAGE = 'End date should be greater than start date';
 
     /**

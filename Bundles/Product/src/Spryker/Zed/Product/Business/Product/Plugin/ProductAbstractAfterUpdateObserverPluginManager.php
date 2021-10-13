@@ -13,12 +13,12 @@ use Spryker\Zed\Product\Business\Product\Observer\ProductAbstractUpdateObserverI
 class ProductAbstractAfterUpdateObserverPluginManager implements ProductAbstractUpdateObserverInterface
 {
     /**
-     * @var \Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginUpdateInterface[]
+     * @var array<\Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginUpdateInterface>
      */
     protected $afterUpdateCollection;
 
     /**
-     * @param \Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginUpdateInterface[] $afterUpdateCollection
+     * @param array<\Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginUpdateInterface> $afterUpdateCollection
      */
     public function __construct(array $afterUpdateCollection)
     {

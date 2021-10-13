@@ -19,7 +19,7 @@ interface CmsSlotClientInterface
      *
      * @api
      *
-     * @param string[] $dataKeys
+     * @param array<string> $dataKeys
      *
      * @return \Generated\Shared\Transfer\CmsSlotExternalDataTransfer
      */

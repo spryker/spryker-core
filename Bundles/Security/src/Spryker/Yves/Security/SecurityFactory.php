@@ -21,7 +21,7 @@ use Symfony\Component\Security\Http\Session\SessionAuthenticationStrategyInterfa
 class SecurityFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Shared\SecurityExtension\Dependency\Plugin\SecurityPluginInterface[]
+     * @return array<\Spryker\Shared\SecurityExtension\Dependency\Plugin\SecurityPluginInterface>
      */
     public function getSecurityPlugins(): array
     {

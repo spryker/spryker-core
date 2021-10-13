@@ -14,7 +14,13 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 class ProductDiscontinuedCheckoutPreConditionChecker implements ProductDiscontinuedCheckoutPreConditionCheckerInterface
 {
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_PLACE_ORDER_PRE_CHECK_PRODUCT_DISCONTINUED = 'place_order.pre_check.product_discontinued';
+    /**
+     * @var string
+     */
     protected const GLOSSARY_PARAM_NAME = '%name%';
 
     /**

@@ -38,14 +38,14 @@ interface ShoppingListItemNoteMapperInterface
     ): SpyShoppingListItemNote;
 
     /**
-     * @param \Orm\Zed\ShoppingListNote\Persistence\SpyShoppingListItemNote[]|\Propel\Runtime\Collection\ObjectCollection $shoppingListItemEntityCollection
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ShoppingListNote\Persistence\SpyShoppingListItemNote> $shoppingListItemEntityCollection
      *
-     * @return \Generated\Shared\Transfer\ShoppingListItemNoteTransfer[]|\ArrayObject
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\ShoppingListItemNoteTransfer>
      */
     public function mapShoppingListItemEntityCollectionToTransferCollection(ObjectCollection $shoppingListItemEntityCollection): ArrayObject;
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ShoppingListNote\Persistence\SpyShoppingListItemNote[] $shoppingListItemNoteEntityCollection
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ShoppingListNote\Persistence\SpyShoppingListItemNote> $shoppingListItemNoteEntityCollection
      * @param \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer

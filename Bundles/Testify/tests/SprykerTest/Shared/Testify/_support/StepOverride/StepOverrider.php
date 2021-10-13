@@ -31,7 +31,7 @@ class StepOverrider extends Scenario
     protected $releaseHook;
 
     /**
-     * @var string[]
+     * @var array<string>
      */
     protected $prepositions = [];
 
@@ -96,8 +96,6 @@ class StepOverrider extends Scenario
 
         return $this;
     }
-
-    // ------------------------------------------------------------------------
 
     /**
      * @inheritDoc

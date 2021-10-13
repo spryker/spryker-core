@@ -17,6 +17,8 @@ use Spryker\Zed\MerchantRelationshipDataImport\Business\Model\DataSet\MerchantRe
 class CompanyBusinessUnitAssigneeKeysToIdCompanyBusinessUnitCollectionStep implements DataImportStepInterface
 {
     /**
+     * @phpstan-var non-empty-string
+     *
      * @var string
      */
     protected $assigneeDelimiter = ';';
@@ -39,6 +41,7 @@ class CompanyBusinessUnitAssigneeKeysToIdCompanyBusinessUnitCollectionStep imple
             return;
         }
 
+        /** @var array<string> $companyBusinessUnitKeys */
         $companyBusinessUnitKeys = explode(
             $this->getAssigneeDelimiter(),
             $dataSet[MerchantRelationshipDataSetInterface::COMPANY_BUSINESS_UNIT_ASSIGNEE_KEYS]
@@ -53,6 +56,8 @@ class CompanyBusinessUnitAssigneeKeysToIdCompanyBusinessUnitCollectionStep imple
     }
 
     /**
+     * @phpstan-return non-empty-string
+     *
      * @return string
      */
     public function getAssigneeDelimiter(): string
@@ -61,6 +66,8 @@ class CompanyBusinessUnitAssigneeKeysToIdCompanyBusinessUnitCollectionStep imple
     }
 
     /**
+     * @phpstan-param non-empty-string $assigneeDelimiter
+     *
      * @param string $assigneeDelimiter
      *
      * @return void

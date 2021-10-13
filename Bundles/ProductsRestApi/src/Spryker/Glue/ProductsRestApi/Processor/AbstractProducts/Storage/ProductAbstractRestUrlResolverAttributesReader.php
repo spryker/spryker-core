@@ -14,6 +14,9 @@ use Spryker\Glue\ProductsRestApi\ProductsRestApiConfig;
 
 class ProductAbstractRestUrlResolverAttributesReader implements ProductAbstractRestUrlResolverAttributesReaderInterface
 {
+    /**
+     * @var string
+     */
     protected const KEY_SKU = 'sku';
 
     /**

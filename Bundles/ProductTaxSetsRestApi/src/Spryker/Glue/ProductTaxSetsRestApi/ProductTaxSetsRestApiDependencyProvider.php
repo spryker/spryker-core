@@ -17,7 +17,13 @@ use Spryker\Glue\ProductTaxSetsRestApi\Dependency\Client\ProductTaxSetsRestApiTo
  */
 class ProductTaxSetsRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_TAX_PRODUCT_STORAGE = 'CLIENT_TAX_PRODUCT_STORAGE';
+    /**
+     * @var string
+     */
     public const CLIENT_TAX_STORAGE = 'CLIENT_TAX_STORAGE';
 
     /**

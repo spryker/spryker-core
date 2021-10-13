@@ -11,7 +11,7 @@ interface ProductOptionsRestApiToProductStorageClientInterface
 {
     /**
      * @param string $mappingType
-     * @param string[] $identifiers
+     * @param array<string> $identifiers
      * @param string $localeName
      *
      * @return array
@@ -38,7 +38,7 @@ interface ProductOptionsRestApiToProductStorageClientInterface
      * @param array $identifiers
      * @param string $localeName
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getBulkProductAbstractIdsByMapping(
         string $mappingType,

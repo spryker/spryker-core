@@ -14,7 +14,13 @@ use Spryker\Zed\ProductAlternativeGui\Dependency\Facade\ProductAlternativeGuiToP
 
 class ProductAlternativeGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_PRODUCT = 'FACADE_PRODUCT';
+    /**
+     * @var string
+     */
     public const FACADE_PRODUCT_ALTERNATIVE = 'FACADE_PRODUCT_ALTERNATIVE';
 
     /**

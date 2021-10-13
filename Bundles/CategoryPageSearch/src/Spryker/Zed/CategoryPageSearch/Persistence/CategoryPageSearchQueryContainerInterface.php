@@ -14,59 +14,15 @@ interface CategoryPageSearchQueryContainerInterface extends QueryContainerInterf
 {
     /**
      * Specification:
-     * - TODO: Add method specification.
+     * - Creates category node query.
+     * - Finds all category node entities sorted by node order.
+     * - Filters query on the `fk_category` column.
      *
      * @api
      *
-     * @param array $localeNames
+     * @deprecated Will be removed with next major release.
      *
-     * @return \Orm\Zed\Locale\Persistence\SpyLocaleQuery
-     */
-    public function queryLocalesWithLocaleNames(array $localeNames);
-
-    /**
-     * Specification:
-     * - TODO: Add method specification.
-     *
-     * @api
-     *
-     * @param array $categoryNodeIds
-     * @param int $idLocale
-     *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
-     */
-    public function queryCategoryNodeTree(array $categoryNodeIds, $idLocale);
-
-    /**
-     * Specification:
-     * - TODO: Add method specification.
-     *
-     * @api
-     *
-     * @param int[] $categoryNodeIds
-     * @param int $idLocale
-     *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
-     */
-    public function queryWholeCategoryNodeTree(array $categoryNodeIds, int $idLocale): SpyCategoryNodeQuery;
-
-    /**
-     * Specification:
-     * - TODO: Add method specification.
-     *
-     * @api
-     *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
-     */
-    public function queryCategoryRoot();
-
-    /**
-     * Specification:
-     * - TODO: Add method specification.
-     *
-     * @api
-     *
-     * @param int[] $categoryIds
+     * @param array<int> $categoryIds
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery|\Propel\Runtime\ActiveQuery\ModelCriteria
      */
@@ -74,11 +30,12 @@ interface CategoryPageSearchQueryContainerInterface extends QueryContainerInterf
 
     /**
      * Specification:
-     * - TODO: Add method specification.
+     * - Creates category node page query.
+     * - Filters query on the `fk_category_node` column.
      *
      * @api
      *
-     * @param int[] $categoryNodeIds
+     * @param array<int> $categoryNodeIds
      *
      * @return \Orm\Zed\CategoryPageSearch\Persistence\SpyCategoryNodePageSearchQuery
      */
@@ -86,11 +43,13 @@ interface CategoryPageSearchQueryContainerInterface extends QueryContainerInterf
 
     /**
      * Specification:
-     * - TODO: Add method specification.
+     * - Creates category node query.
+     * - Finds all category node entities sorted by node order.
+     * - Filters query on the `fk_category_template` column.
      *
      * @api
      *
-     * @param int[] $categoryTemplateIds
+     * @param array<int> $categoryTemplateIds
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery|\Propel\Runtime\ActiveQuery\ModelCriteria
      */
@@ -98,11 +57,13 @@ interface CategoryPageSearchQueryContainerInterface extends QueryContainerInterf
 
     /**
      * Specification:
-     * - TODO: Add method specification.
+     * - Creates category node query.
+     * - Finds all category node entities sorted by node order.
+     * - Filters query on the `id_category_node` column.
      *
      * @api
      *
-     * @param int[] $ids
+     * @param array<int> $ids
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
      */

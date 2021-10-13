@@ -17,15 +17,27 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
  */
 class MerchantProductSearchRepository extends AbstractRepository implements MerchantProductSearchRepositoryInterface
 {
+    /**
+     * @var string
+     */
     protected const KEY_PRODUCT_ABSTRACT_ID = 'id_product_abstract';
+    /**
+     * @var string
+     */
     protected const KEY_MERCHANT_NAME = 'merchant_name';
+    /**
+     * @var string
+     */
     protected const KEY_MERCHANT_NAMES = 'merchant_names';
+    /**
+     * @var string
+     */
     protected const KEY_STORE_NAME = 'store_name';
 
     /**
-     * @param int[] $merchantIds
+     * @param array<int> $merchantIds
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getProductAbstractIdsByMerchantIds(array $merchantIds): array
     {
@@ -40,9 +52,9 @@ class MerchantProductSearchRepository extends AbstractRepository implements Merc
     }
 
     /**
-     * @param int[] $merchantProductAbstractIds
+     * @param array<int> $merchantProductAbstractIds
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getProductAbstractIdsByMerchantProductAbstractIds(array $merchantProductAbstractIds): array
     {
@@ -60,9 +72,9 @@ class MerchantProductSearchRepository extends AbstractRepository implements Merc
      * @module Store
      * @module Merchant
      *
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
-     * @return \Generated\Shared\Transfer\ProductAbstractMerchantTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductAbstractMerchantTransfer>
      */
     public function getMerchantDataByProductAbstractIds(array $productAbstractIds): array
     {

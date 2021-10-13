@@ -39,7 +39,7 @@ class PriceProductConcreteEventResourceQueryContainerPlugin extends AbstractPlug
      *
      * @api
      *
-     * @param int[] $ids
+     * @param array<int> $ids
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria|null
      */
@@ -51,7 +51,7 @@ class PriceProductConcreteEventResourceQueryContainerPlugin extends AbstractPlug
             $query->clear();
         }
 
-        return $query->orderBy($this->getIdColumnName());
+        return $query->distinct()->orderBy($this->getIdColumnName());
     }
 
     /**

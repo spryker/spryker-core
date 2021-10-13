@@ -22,11 +22,26 @@ use Spryker\Zed\SalesReturn\Persistence\SalesReturnRepositoryInterface;
 
 class ReturnReader implements ReturnReaderInterface
 {
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_RETURN_NOT_EXISTS = 'return.validation.error.not_exists';
 
+    /**
+     * @var string
+     */
     protected const ID_SALES_RETURN_SORT_FIELD = 'id_sales_return';
+    /**
+     * @var string
+     */
     protected const DEFAULT_SORT_DIRECTION = 'DESC';
+    /**
+     * @var int
+     */
     protected const DEFAULT_OFFSET = 1;
+    /**
+     * @var int
+     */
     protected const DEFAULT_LIMIT = 10;
 
     /**
@@ -45,18 +60,36 @@ class ReturnReader implements ReturnReaderInterface
     protected $returnTotalCalculator;
 
     /**
+     * @var array<\Spryker\Zed\SalesReturnExtension\Dependency\Plugin\ReturnExpanderPluginInterface>
+     */
+    protected $returnExpanderPlugins;
+
+    /**
+     * @deprecated Will be removed without replacement.
+     *
+     * @var array<\Spryker\Zed\SalesReturnExtension\Dependency\Plugin\ReturnCollectionExpanderPluginInterface>
+     */
+    protected $returnCollectionExpanderPlugins;
+
+    /**
      * @param \Spryker\Zed\SalesReturn\Persistence\SalesReturnRepositoryInterface $salesReturnRepository
      * @param \Spryker\Zed\SalesReturn\Dependency\Facade\SalesReturnToSalesFacadeInterface $salesFacade
      * @param \Spryker\Zed\SalesReturn\Business\Calculator\ReturnTotalCalculatorInterface $returnTotalCalculator
+     * @param array<\Spryker\Zed\SalesReturnExtension\Dependency\Plugin\ReturnExpanderPluginInterface> $returnExpanderPlugins
+     * @param array<\Spryker\Zed\SalesReturnExtension\Dependency\Plugin\ReturnCollectionExpanderPluginInterface> $returnCollectionExpanderPlugins
      */
     public function __construct(
         SalesReturnRepositoryInterface $salesReturnRepository,
         SalesReturnToSalesFacadeInterface $salesFacade,
-        ReturnTotalCalculatorInterface $returnTotalCalculator
+        ReturnTotalCalculatorInterface $returnTotalCalculator,
+        array $returnExpanderPlugins,
+        array $returnCollectionExpanderPlugins
     ) {
         $this->salesReturnRepository = $salesReturnRepository;
         $this->salesFacade = $salesFacade;
         $this->returnTotalCalculator = $returnTotalCalculator;
+        $this->returnExpanderPlugins = $returnExpanderPlugins;
+        $this->returnCollectionExpanderPlugins = $returnCollectionExpanderPlugins;
     }
 
     /**
@@ -96,6 +129,11 @@ class ReturnReader implements ReturnReaderInterface
 
         $returnCollectionTransfer = $this->expandReturnCollectionWithReturnItems($returnCollectionTransfer);
         $returnCollectionTransfer = $this->expandReturnCollectionWithReturnTotals($returnCollectionTransfer);
+        $returnCollectionTransfer = $this->executeReturnExpanderPlugins($returnCollectionTransfer);
+
+        foreach ($this->returnCollectionExpanderPlugins as $collectionExpanderPlugin) {
+            $returnCollectionTransfer = $collectionExpanderPlugin->expand($returnCollectionTransfer);
+        }
 
         return $returnCollectionTransfer;
     }
@@ -103,7 +141,7 @@ class ReturnReader implements ReturnReaderInterface
     /**
      * @param \Generated\Shared\Transfer\OrderItemFilterTransfer $orderItemFilterTransfer
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer>
      */
     public function getOrderItems(OrderItemFilterTransfer $orderItemFilterTransfer): ArrayObject
     {
@@ -139,7 +177,7 @@ class ReturnReader implements ReturnReaderInterface
     /**
      * @param \Generated\Shared\Transfer\ReturnCollectionTransfer $returnCollectionTransfer
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function extractReturnIds(ReturnCollectionTransfer $returnCollectionTransfer): array
     {
@@ -177,23 +215,23 @@ class ReturnReader implements ReturnReaderInterface
     /**
      * @param \Generated\Shared\Transfer\ReturnTransfer $returnTransfer
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function extractSalesOrderItemIds(ReturnTransfer $returnTransfer): array
     {
         $salesOrderItemIds = [];
 
         foreach ($returnTransfer->getReturnItems() as $returnItemTransfer) {
-            $salesOrderItemIds[] = $returnItemTransfer->getOrderItem()->getIdSalesOrderItem();
+            $salesOrderItemIds[] = $returnItemTransfer->getOrderItem()->getIdSalesOrderItemOrFail();
         }
 
         return $salesOrderItemIds;
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     protected function mapOrderItemsByIdSalesOrderItem(ArrayObject $itemTransfers): array
     {
@@ -207,9 +245,9 @@ class ReturnReader implements ReturnReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ReturnItemTransfer[] $returnItemTransfers
+     * @param array<\Generated\Shared\Transfer\ReturnItemTransfer> $returnItemTransfers
      *
-     * @return \Generated\Shared\Transfer\ReturnItemTransfer[][]
+     * @return array<\Generated\Shared\Transfer\ReturnItemTransfer[]>
      */
     protected function mapReturnItemsByIdReturn(array $returnItemTransfers): array
     {
@@ -233,6 +271,22 @@ class ReturnReader implements ReturnReaderInterface
             $returnTransfer->setReturnTotals(
                 $this->returnTotalCalculator->calculateReturnTotals($returnTransfer)
             );
+        }
+
+        return $returnCollectionTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ReturnCollectionTransfer $returnCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\ReturnCollectionTransfer
+     */
+    protected function executeReturnExpanderPlugins(ReturnCollectionTransfer $returnCollectionTransfer): ReturnCollectionTransfer
+    {
+        foreach ($returnCollectionTransfer->getReturns() as $returnTransfer) {
+            foreach ($this->returnExpanderPlugins as $plugin) {
+                $returnTransfer = $plugin->expand($returnTransfer);
+            }
         }
 
         return $returnCollectionTransfer;

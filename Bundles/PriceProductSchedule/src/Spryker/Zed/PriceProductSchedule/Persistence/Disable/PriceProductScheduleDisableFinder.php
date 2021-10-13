@@ -8,6 +8,7 @@
 namespace Spryker\Zed\PriceProductSchedule\Persistence\Disable;
 
 use Generated\Shared\Transfer\PriceProductScheduleTransfer;
+use Generated\Shared\Transfer\PriceProductTransfer;
 use Orm\Zed\PriceProductSchedule\Persistence\Map\SpyPriceProductScheduleTableMap;
 use Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery;
 use Spryker\Zed\PriceProductSchedule\Persistence\Propel\Mapper\PriceProductScheduleMapperInterface;
@@ -42,7 +43,7 @@ class PriceProductScheduleDisableFinder implements PriceProductScheduleDisableFi
      * @module PriceProduct
      * @module Currency
      *
-     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductScheduleTransfer>
      */
     public function findPriceProductSchedulesToDisable(): array
     {
@@ -61,13 +62,55 @@ class PriceProductScheduleDisableFinder implements PriceProductScheduleDisableFi
     }
 
     /**
+     * @param \Generated\Shared\Transfer\PriceProductScheduleTransfer $priceProductScheduleTransfer
+     *
+     * @return bool
+     */
+    public function isScheduledPriceForSwitchExists(PriceProductScheduleTransfer $priceProductScheduleTransfer): bool
+    {
+        $priceProductTransfer = $priceProductScheduleTransfer->getPriceProductOrFail();
+        $moneyValueTransfer = $priceProductTransfer->getMoneyValueOrFail();
+
+        /** @var \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery $priceProductScheduleQuery */
+        $priceProductScheduleQuery = $this->priceProductScheduleQuery
+            ->filterByFkCurrency($moneyValueTransfer->getCurrencyOrFail()->getIdCurrencyOrFail())
+            ->filterByFkStore($moneyValueTransfer->getStoreOrFail()->getIdStoreOrFail())
+            ->filterByFkPriceType($priceProductTransfer->getFkPriceType())
+            ->where(sprintf('%s > now()', SpyPriceProductScheduleTableMap::COL_ACTIVE_TO));
+
+        $priceProductScheduleQuery = $this->addProductIdentifierToIsScheduledPriceForSwitchExists(
+            $priceProductScheduleQuery,
+            $priceProductTransfer
+        );
+
+        return $priceProductScheduleQuery->exists();
+    }
+
+    /**
+     * @param \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery $priceProductScheduleQuery
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     *
+     * @return \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery
+     */
+    protected function addProductIdentifierToIsScheduledPriceForSwitchExists(
+        SpyPriceProductScheduleQuery $priceProductScheduleQuery,
+        PriceProductTransfer $priceProductTransfer
+    ): SpyPriceProductScheduleQuery {
+        if ($priceProductTransfer->getIdProduct()) {
+            return $priceProductScheduleQuery->filterByFkProduct($priceProductTransfer->getIdProductOrFail());
+        }
+
+        return $priceProductScheduleQuery->filterByFkProductAbstract($priceProductTransfer->getIdProductAbstractOrFail());
+    }
+
+    /**
      * @module Product
      * @module PriceProduct
      * @module Currency
      *
      * @param int $idProductAbstract
      *
-     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductScheduleTransfer>
      */
     public function findPriceProductSchedulesToDisableByIdProductAbstract(int $idProductAbstract): array
     {
@@ -93,7 +136,7 @@ class PriceProductScheduleDisableFinder implements PriceProductScheduleDisableFi
      *
      * @param int $idProductConcrete
      *
-     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductScheduleTransfer>
      */
     public function findPriceProductSchedulesToDisableByIdProductConcrete(int $idProductConcrete): array
     {
@@ -119,7 +162,7 @@ class PriceProductScheduleDisableFinder implements PriceProductScheduleDisableFi
      *
      * @param \Generated\Shared\Transfer\PriceProductScheduleTransfer $priceProductScheduleTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductScheduleTransfer>
      */
     public function findSimilarPriceProductSchedulesToDisable(
         PriceProductScheduleTransfer $priceProductScheduleTransfer

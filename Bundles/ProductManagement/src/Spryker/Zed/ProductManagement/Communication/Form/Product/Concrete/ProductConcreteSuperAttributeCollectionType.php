@@ -24,11 +24,29 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class ProductConcreteSuperAttributeCollectionType extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const FORM_PRODUCT_CONCRETE_SUPER_ATTRIBUTES = 'form_product_concrete_super_attributes';
+    /**
+     * @var string
+     */
     public const FORM_PRODUCT_CONCRETE_SUPER_ATTRIBUTES_LABEL = 'Super attributes';
+    /**
+     * @var string
+     */
     public const OPTION_SUPER_ATTRIBUTES = 'option_super_attributes';
+    /**
+     * @var string
+     */
     public const OPTION_ID_PRODUCT_ABSTRACT = 'option_id_product_abstract';
+    /**
+     * @var string
+     */
     public const CONTAINER_PRODUCT_CONCRETE_SUPER_ATTRIBUTES = 'container_product_concrete_super_attributes';
+    /**
+     * @var string
+     */
     public const FORM_PRODUCT_CONCRETE_SUPER_ATTRIBUTES_LABEL_CLASS = 'super_attributes_label';
 
     /**

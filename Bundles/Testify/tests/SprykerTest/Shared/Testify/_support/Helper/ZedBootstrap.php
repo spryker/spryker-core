@@ -21,7 +21,13 @@ use Symfony\Component\HttpKernel\HttpKernelBrowser;
 
 class ZedBootstrap extends Framework implements DependsOnModule
 {
+    /**
+     * @var string
+     */
     public const CONFIG_KEY_SERVICE_PROVIDER = 'serviceProvider';
+    /**
+     * @var string
+     */
     public const CONFIG_KEY_APPLICATION_PLUGINS = 'applicationPlugins';
 
     /**

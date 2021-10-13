@@ -24,7 +24,13 @@ use Spryker\Shared\Twig\Dependency\Service\TwigToUtilTextServiceBridge;
  */
 class TwigToUtilTextServiceBridgeTest extends Unit
 {
+    /**
+     * @var string
+     */
     public const STRING_TO_CONVERT = 'StringToConvert';
+    /**
+     * @var string
+     */
     public const EXPECTED_STRING = 'string-to-convert';
 
     /**

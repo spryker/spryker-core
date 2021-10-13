@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Stock\Business\Stock;
 
+use ArrayObject;
+use Generated\Shared\Transfer\StockCollectionTransfer;
 use Generated\Shared\Transfer\StockCriteriaFilterTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use InvalidArgumentException;
@@ -15,6 +17,9 @@ use Spryker\Zed\Stock\Persistence\StockRepositoryInterface;
 
 class StockReader implements StockReaderInterface
 {
+    /**
+     * @var string
+     */
     public const ERROR_STOCK_TYPE_UNKNOWN = 'stock type unknown';
 
     /**
@@ -33,22 +38,30 @@ class StockReader implements StockReaderInterface
     protected $storeFacade;
 
     /**
+     * @var array<\Spryker\Zed\StockExtension\Dependency\Plugin\StockCollectionExpanderPluginInterface>
+     */
+    protected $stockCollectionExpanderPlugins;
+
+    /**
      * @param \Spryker\Zed\Stock\Persistence\StockRepositoryInterface $stockRepository
      * @param \Spryker\Zed\Stock\Business\Stock\StockMapperInterface $stockMapper
      * @param \Spryker\Zed\Stock\Dependency\Facade\StockToStoreFacadeInterface $storeFacade
+     * @param array<\Spryker\Zed\StockExtension\Dependency\Plugin\StockCollectionExpanderPluginInterface> $stockCollectionExpanderPlugins
      */
     public function __construct(
         StockRepositoryInterface $stockRepository,
         StockMapperInterface $stockMapper,
-        StockToStoreFacadeInterface $storeFacade
+        StockToStoreFacadeInterface $storeFacade,
+        array $stockCollectionExpanderPlugins
     ) {
         $this->stockRepository = $stockRepository;
         $this->stockMapper = $stockMapper;
         $this->storeFacade = $storeFacade;
+        $this->stockCollectionExpanderPlugins = $stockCollectionExpanderPlugins;
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getStockTypes(): array
     {
@@ -60,7 +73,7 @@ class StockReader implements StockReaderInterface
     /**
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getStockTypesForStore(StoreTransfer $storeTransfer): array
     {
@@ -73,7 +86,7 @@ class StockReader implements StockReaderInterface
     /**
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return \Generated\Shared\Transfer\StockTransfer[]
+     * @return array<\Generated\Shared\Transfer\StockTransfer>
      */
     public function getAvailableWarehousesForStore(StoreTransfer $storeTransfer): array
     {
@@ -83,11 +96,16 @@ class StockReader implements StockReaderInterface
             ->setIsActive(true)
             ->setStoreNames([$storeTransfer->getName()]);
 
-        return $this->stockRepository->getStocksWithRelatedStoresByCriteriaFilter($stockCriteriaFilterTransfer);
+        $stockTransfers = $this->stockRepository->getStocksWithRelatedStoresByCriteriaFilter($stockCriteriaFilterTransfer);
+
+        $stockCollectionTransfer = (new StockCollectionTransfer())->setStocks(new ArrayObject($stockTransfers));
+        $stockCollectionTransfer = $this->executeStockCollectionExpanderPlugins($stockCollectionTransfer);
+
+        return $stockCollectionTransfer->getStocks()->getArrayCopy();
     }
 
     /**
-     * @return string[][]
+     * @return array<string[]>
      */
     public function getWarehouseToStoreMapping(): array
     {
@@ -97,7 +115,7 @@ class StockReader implements StockReaderInterface
     }
 
     /**
-     * @return string[][]
+     * @return array<string[]>
      */
     public function getStoreToWarehouseMapping(): array
     {
@@ -123,5 +141,33 @@ class StockReader implements StockReaderInterface
         }
 
         return $stockTransfer->getIdStock();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\StockCriteriaFilterTransfer $stockCriteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\StockCollectionTransfer
+     */
+    public function getStocksByStockCriteriaFilter(StockCriteriaFilterTransfer $stockCriteriaFilterTransfer): StockCollectionTransfer
+    {
+        $stockTransfers = $this->stockRepository->getStocksWithRelatedStoresByCriteriaFilter($stockCriteriaFilterTransfer);
+
+        $stockCollectionTransfer = (new StockCollectionTransfer())->setStocks(new ArrayObject($stockTransfers));
+
+        return $this->executeStockCollectionExpanderPlugins($stockCollectionTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\StockCollectionTransfer $stockCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\StockCollectionTransfer
+     */
+    protected function executeStockCollectionExpanderPlugins(StockCollectionTransfer $stockCollectionTransfer): StockCollectionTransfer
+    {
+        foreach ($this->stockCollectionExpanderPlugins as $stockCollectionExpanderPlugin) {
+            $stockCollectionTransfer = $stockCollectionExpanderPlugin->expandStockCollection($stockCollectionTransfer);
+        }
+
+        return $stockCollectionTransfer;
     }
 }

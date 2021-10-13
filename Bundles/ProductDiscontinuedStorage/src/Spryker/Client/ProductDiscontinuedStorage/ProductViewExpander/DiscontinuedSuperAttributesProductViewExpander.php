@@ -14,9 +14,21 @@ use Spryker\Client\ProductDiscontinuedStorage\Storage\ProductDiscontinuedStorage
 
 class DiscontinuedSuperAttributesProductViewExpander implements DiscontinuedSuperAttributesProductViewExpanderInterface
 {
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_SUPER_ATTRIBUTE_DISCONTINUED = 'product_discontinued.super_attribute_discontinued';
+    /**
+     * @var string
+     */
     protected const PATTERN_DISCONTINUED_ATTRIBUTE_NAME = '%s - %s';
+    /**
+     * @var string
+     */
     protected const PATTERN_ATTRIBUTE_KEY_VALUE_KEY = '%s:%s';
+    /**
+     * @var string
+     */
     protected const ID_PRODUCT_CONCRETE = 'id_product_concrete';
 
     /**
@@ -58,12 +70,18 @@ class DiscontinuedSuperAttributesProductViewExpander implements DiscontinuedSupe
             return $productViewTransfer;
         }
 
+        if ($productViewTransfer->getAttributeMap()->getAttributeVariantMap()) {
+            return $this->expandProductAttributeValuesWithDiscontinuedPostfix($productViewTransfer, $localeName);
+        }
+
         $this->prepareProductSuperAttributes($productViewTransfer->getAttributeMap(), $localeName);
 
         return $productViewTransfer;
     }
 
     /**
+     * @deprecated Exists for Backward Compatibility reasons only. Use {@link expandProductAttributeValuesWithDiscontinuedPostfix()} instead.
+     *
      * @param \Generated\Shared\Transfer\AttributeMapStorageTransfer $attributeMapStorageTransfer
      * @param string $localeName
      *
@@ -95,6 +113,66 @@ class DiscontinuedSuperAttributesProductViewExpander implements DiscontinuedSupe
     }
 
     /**
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\ProductViewTransfer
+     */
+    protected function expandProductAttributeValuesWithDiscontinuedPostfix(
+        ProductViewTransfer $productViewTransfer,
+        string $localeName
+    ): ProductViewTransfer {
+        $attributeMapStorageTransfer = $productViewTransfer->getAttributeMapOrFail();
+
+        $superAttributes = $attributeMapStorageTransfer->getSuperAttributes();
+        $attributeVariantMap = $attributeMapStorageTransfer->getAttributeVariantMap();
+
+        foreach ($attributeVariantMap as $idProductConcrete => $attributes) {
+            foreach ($attributes as $attributeName => $attributeValue) {
+                $sku = $this->getSkuByIdProductConcrete($idProductConcrete, $attributeMapStorageTransfer);
+                $expandedAttributeValue = $this->expandAttributeName($attributeValue, $sku, $localeName);
+
+                if ($attributeValue === $expandedAttributeValue) {
+                    continue;
+                }
+
+                $attributeVariantMap[$idProductConcrete][$attributeName] = $expandedAttributeValue;
+                $superAttributes[$attributeName] = $this->expandSuperAttributeValues(
+                    $superAttributes[$attributeName],
+                    $attributeValue,
+                    $expandedAttributeValue
+                );
+            }
+        }
+
+        $attributeMapStorageTransfer
+            ->setSuperAttributes($superAttributes)
+            ->setAttributeVariantMap($attributeVariantMap);
+
+        return $productViewTransfer;
+    }
+
+    /**
+     * @param array $productAttributes
+     * @param string $attributeValue
+     * @param string $expandedAttributeValue
+     *
+     * @return array
+     */
+    protected function expandSuperAttributeValues(
+        array $productAttributes,
+        string $attributeValue,
+        string $expandedAttributeValue
+    ): array {
+        $newSuperAttributes = [];
+        foreach ($productAttributes as $productAttributeValue) {
+            $newSuperAttributes[] = ($productAttributeValue === $attributeValue) ? $expandedAttributeValue : $productAttributeValue;
+        }
+
+        return $newSuperAttributes;
+    }
+
+    /**
      * @param string $attributeKey
      * @param string $attributeName
      *
@@ -110,6 +188,8 @@ class DiscontinuedSuperAttributesProductViewExpander implements DiscontinuedSupe
     }
 
     /**
+     * @deprecated Exists for Backward Compatibility reasons only.
+     *
      * @param string $attributeValueKey
      * @param \Generated\Shared\Transfer\AttributeMapStorageTransfer $attributeMapStorageTransfer
      *

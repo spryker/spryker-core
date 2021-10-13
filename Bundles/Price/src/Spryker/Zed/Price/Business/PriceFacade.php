@@ -21,7 +21,7 @@ class PriceFacade extends AbstractFacade implements PriceFacadeInterface
      *
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getPriceModes()
     {
@@ -68,8 +68,8 @@ class PriceFacade extends AbstractFacade implements PriceFacadeInterface
     public function getGrossPriceModeIdentifier()
     {
         return $this->getFactory()
-           ->getModuleConfig()
-           ->getGrossPriceModeIdentifier();
+            ->getModuleConfig()
+            ->getGrossPriceModeIdentifier();
     }
 
     /**

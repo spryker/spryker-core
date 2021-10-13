@@ -26,21 +26,6 @@ interface FileSystemServiceInterface
 {
     /**
      * Specification:
-     * - Get resource metadata
-     * - Return resource metadata transfer, throw exception on failure
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
-     *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
-     *
-     * @return \Generated\Shared\Transfer\FileSystemResourceMetadataTransfer
-     */
-    public function getMetadata(FileSystemQueryTransfer $fileSystemQueryTransfer);
-
-    /**
-     * Specification:
      * - Get resource mime type
      * - Return resource mime type, throw exception on failure
      *
@@ -48,7 +33,7 @@ interface FileSystemServiceInterface
      *
      * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
      *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
+     * @throws \Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemReadException
      *
      * @return string
      */
@@ -63,7 +48,7 @@ interface FileSystemServiceInterface
      *
      * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
      *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
+     * @throws \Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemReadException
      *
      * @return int|null
      */
@@ -78,7 +63,7 @@ interface FileSystemServiceInterface
      *
      * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
      *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
+     * @throws \Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemReadException
      *
      * @return int
      */
@@ -93,7 +78,7 @@ interface FileSystemServiceInterface
      *
      * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
      *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
+     * @throws \Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemReadException
      *
      * @return bool
      */
@@ -108,7 +93,7 @@ interface FileSystemServiceInterface
      *
      * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
      *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
+     * @throws \Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemReadException
      *
      * @return string
      */
@@ -123,9 +108,9 @@ interface FileSystemServiceInterface
      *
      * @param \Generated\Shared\Transfer\FileSystemListTransfer $fileSystemListTransfer
      *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
+     * @throws \Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemReadException
      *
-     * @return \Generated\Shared\Transfer\FileSystemResourceTransfer[]
+     * @return array<\Generated\Shared\Transfer\FileSystemResourceTransfer>
      */
     public function listContents(FileSystemListTransfer $fileSystemListTransfer);
 
@@ -138,7 +123,7 @@ interface FileSystemServiceInterface
      *
      * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
      *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
+     * @throws \Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemReadException
      *
      * @return bool
      */
@@ -153,7 +138,7 @@ interface FileSystemServiceInterface
      *
      * @param \Generated\Shared\Transfer\FileSystemVisibilityTransfer $fileSystemVisibilityTransfer
      *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
+     * @throws \Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemWriteException
      *
      * @return void
      */
@@ -168,7 +153,7 @@ interface FileSystemServiceInterface
      *
      * @param \Generated\Shared\Transfer\FileSystemVisibilityTransfer $fileSystemVisibilityTransfer
      *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
+     * @throws \Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemWriteException
      *
      * @return void
      */
@@ -183,7 +168,7 @@ interface FileSystemServiceInterface
      *
      * @param \Generated\Shared\Transfer\FileSystemCreateDirectoryTransfer $fileSystemCreateDirectoryTransfer
      *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
+     * @throws \Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemWriteException
      *
      * @return void
      */
@@ -198,7 +183,7 @@ interface FileSystemServiceInterface
      *
      * @param \Generated\Shared\Transfer\FileSystemDeleteDirectoryTransfer $fileSystemDeleteDirectoryTransfer
      *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
+     * @throws \Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemWriteException
      *
      * @return void
      */
@@ -213,7 +198,7 @@ interface FileSystemServiceInterface
      *
      * @param \Generated\Shared\Transfer\FileSystemCopyTransfer $fileSystemCopyTransfer
      *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
+     * @throws \Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemWriteException
      *
      * @return void
      */
@@ -228,7 +213,7 @@ interface FileSystemServiceInterface
      *
      * @param \Generated\Shared\Transfer\FileSystemDeleteTransfer $fileSystemDeleteTransfer
      *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
+     * @throws \Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemWriteException
      *
      * @return void
      */
@@ -241,43 +226,13 @@ interface FileSystemServiceInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\FileSystemContentTransfer $fileSystemContentTransfer
-     *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
-     *
-     * @return void
-     */
-    public function put(FileSystemContentTransfer $fileSystemContentTransfer);
-
-    /**
-     * Specification:
-     * - Create a file or update if exists
-     * - Return true on success, throw exception on failure
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\FileSystemRenameTransfer $fileSystemRenameTransfer
      *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
+     * @throws \Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemWriteException
      *
      * @return void
      */
     public function rename(FileSystemRenameTransfer $fileSystemRenameTransfer);
-
-    /**
-     * Specification:
-     * - Update an existing file
-     * - Return true on success, throw exception on failure
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\FileSystemContentTransfer $fileSystemContentTransfer
-     *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
-     *
-     * @return void
-     */
-    public function update(FileSystemContentTransfer $fileSystemContentTransfer);
 
     /**
      * Specification:
@@ -288,27 +243,11 @@ interface FileSystemServiceInterface
      *
      * @param \Generated\Shared\Transfer\FileSystemContentTransfer $fileSystemContentTransfer
      *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
+     * @throws \Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemWriteException
      *
      * @return void
      */
     public function write(FileSystemContentTransfer $fileSystemContentTransfer);
-
-    /**
-     * Specification:
-     * - Create a file or update if exists using stream
-     * - Return true on success, throw exception on failure
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\FileSystemStreamTransfer $fileSystemStreamTransfer
-     * @param mixed $stream
-     *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemStreamException
-     *
-     * @return void
-     */
-    public function putStream(FileSystemStreamTransfer $fileSystemStreamTransfer, $stream);
 
     /**
      * Specification:
@@ -319,27 +258,11 @@ interface FileSystemServiceInterface
      *
      * @param \Generated\Shared\Transfer\FileSystemStreamTransfer $fileSystemStreamTransfer
      *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemStreamException
+     * @throws \Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemStreamException
      *
      * @return mixed
      */
     public function readStream(FileSystemStreamTransfer $fileSystemStreamTransfer);
-
-    /**
-     * Specification:
-     * - Update an existing file using a stream
-     * - Return true on success, throw exception on failure
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\FileSystemStreamTransfer $fileSystemStreamTransfer
-     * @param mixed $stream
-     *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemStreamException
-     *
-     * @return void
-     */
-    public function updateStream(FileSystemStreamTransfer $fileSystemStreamTransfer, $stream);
 
     /**
      * Specification:
@@ -351,7 +274,7 @@ interface FileSystemServiceInterface
      * @param \Generated\Shared\Transfer\FileSystemStreamTransfer $fileSystemStreamTransfer
      * @param mixed $stream
      *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemStreamException
+     * @throws \Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemStreamException
      *
      * @return void
      */

@@ -32,6 +32,7 @@ use Orm\Zed\Sales\Persistence\Map\SpySalesOrderTableMap;
 use Orm\Zed\StateMachine\Persistence\Map\SpyStateMachineItemStateTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\Criterion\LikeCriterion;
+use Propel\Runtime\ActiveQuery\Join;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Util\PropelModelPager;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
@@ -45,11 +46,13 @@ class SalesMerchantPortalGuiRepository extends AbstractRepository implements Sal
 {
     /**
      * @uses \Spryker\Zed\SalesMerchantPortalGui\Communication\ConfigurationProvider\MerchantOrderGuiTableConfigurationProvider::COL_KEY_REFERENCE
+     * @var string
      */
     public const COL_KEY_REFERENCE = 'reference';
 
     /**
      * @uses \Spryker\Zed\SalesMerchantPortalGui\Communication\ConfigurationProvider\MerchantOrderItemGuiTableConfigurationProvider::COL_KEY_SKU
+     * @var string
      */
     protected const COL_KEY_SKU = 'sku';
 
@@ -187,7 +190,7 @@ class SalesMerchantPortalGuiRepository extends AbstractRepository implements Sal
                 ->leftJoinStateMachineItemState()
             ->endUse()
             ->addAsColumn(MerchantOrderTransfer::ID_MERCHANT_ORDER, SpyMerchantSalesOrderTableMap::COL_ID_MERCHANT_SALES_ORDER)
-            ->addAsColumn(MerchantOrderTransfer::MERCHANT_ORDER_ITEM_COUNT, sprintf('COUNT(%s)', SpyMerchantSalesOrderItemTableMap::COL_ID_MERCHANT_SALES_ORDER_ITEM))
+            ->addAsColumn(MerchantOrderTransfer::MERCHANT_ORDER_ITEM_COUNT, sprintf('COUNT(DISTINCT %s)', SpyMerchantSalesOrderItemTableMap::COL_ID_MERCHANT_SALES_ORDER_ITEM))
             ->addAsColumn(OrderTransfer::ORDER_REFERENCE, SpySalesOrderTableMap::COL_ORDER_REFERENCE)
             ->addAsColumn(MerchantOrderTransfer::MERCHANT_ORDER_REFERENCE, SpyMerchantSalesOrderTableMap::COL_MERCHANT_SALES_ORDER_REFERENCE)
             ->addAsColumn(MerchantOrderTransfer::CREATED_AT, SpyMerchantSalesOrderTableMap::COL_CREATED_AT)
@@ -223,7 +226,7 @@ class SalesMerchantPortalGuiRepository extends AbstractRepository implements Sal
         $merchantSalesOrderItemQuery = $this->getFactory()->getMerchantSalesOrderItemPropelQuery();
         $merchantSalesOrderItemQuery
             ->joinSalesOrderItem()
-            ->joinMerchantSalesOder()
+            ->joinMerchantSalesOrder()
             ->useSalesOrderItemQuery()
               ->joinMetadata()
             ->endUse()
@@ -263,11 +266,12 @@ class SalesMerchantPortalGuiRepository extends AbstractRepository implements Sal
         SpyMerchantSalesOrderQuery $merchantSalesOrderQuery,
         int $idMerchant
     ): SpyMerchantSalesOrderQuery {
-        $merchantSalesOrderQuery->addJoin(
+        $merchantSalesOrderQuery
+        ->addJoinObject(new Join(
             SpyMerchantSalesOrderTableMap::COL_MERCHANT_REFERENCE,
-            SpyMerchantTableMap::COL_MERCHANT_REFERENCE,
-            Criteria::INNER_JOIN
-        );
+            SpyMerchantTableMap::COL_MERCHANT_REFERENCE
+        ), 'SpyMerchant');
+
         $merchantSalesOrderQuery->addAnd(
             SpyMerchantTableMap::COL_ID_MERCHANT,
             $idMerchant
@@ -688,7 +692,7 @@ class SalesMerchantPortalGuiRepository extends AbstractRepository implements Sal
     /**
      * @param int $idMerchant
      *
-     * @return mixed[][]
+     * @return array<mixed[]>
      */
     protected function getOrderTotalsPerStore(int $idMerchant): array
     {

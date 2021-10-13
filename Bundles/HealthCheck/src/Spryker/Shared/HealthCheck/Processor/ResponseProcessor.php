@@ -13,15 +13,27 @@ use Symfony\Component\HttpFoundation\Response;
 class ResponseProcessor implements ResponseProcessorInterface
 {
     public const HEALTH_CHECK_SUCCESS_STATUS_CODE = Response::HTTP_OK;
+    /**
+     * @var string
+     */
     public const HEALTH_CHECK_SUCCESS_STATUS_MESSAGE = 'healthy';
 
     public const HEALTH_CHECK_UNAVAILABLE_STATUS_CODE = Response::HTTP_SERVICE_UNAVAILABLE;
+    /**
+     * @var string
+     */
     public const HEALTH_CHECK_UNAVAILABLE_STATUS_MESSAGE = 'unhealthy';
 
     public const HEALTH_CHECK_FORBIDDEN_STATUS_CODE = Response::HTTP_FORBIDDEN;
+    /**
+     * @var string
+     */
     public const HEALTH_CHECK_FORBIDDEN_STATUS_MESSAGE = 'HealthCheck endpoints are disabled for all applications.';
 
     public const HEALTH_CHECK_BAD_REQUEST_STATUS_CODE = Response::HTTP_BAD_REQUEST;
+    /**
+     * @var string
+     */
     public const HEALTH_CHECK_BAD_REQUEST_STATUS_MESSAGE = 'Requested services not found.';
 
     /**
@@ -38,7 +50,7 @@ class ResponseProcessor implements ResponseProcessorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\HealthCheckServiceResponseTransfer[] $healthCheckServiceResponseTransfers
+     * @param array<\Generated\Shared\Transfer\HealthCheckServiceResponseTransfer> $healthCheckServiceResponseTransfers
      *
      * @return \Generated\Shared\Transfer\HealthCheckResponseTransfer
      */
@@ -65,7 +77,7 @@ class ResponseProcessor implements ResponseProcessorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\HealthCheckServiceResponseTransfer[] $healthCheckServiceResponseTransfers
+     * @param array<\Generated\Shared\Transfer\HealthCheckServiceResponseTransfer> $healthCheckServiceResponseTransfers
      *
      * @return \Generated\Shared\Transfer\HealthCheckResponseTransfer
      */

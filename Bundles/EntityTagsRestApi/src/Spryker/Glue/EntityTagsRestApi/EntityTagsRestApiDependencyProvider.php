@@ -16,6 +16,9 @@ use Spryker\Glue\Kernel\Container;
  */
 class EntityTagsRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_ENTITY_TAG = 'CLIENT_ENTITY_TAG';
 
     /**

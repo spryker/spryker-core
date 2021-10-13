@@ -9,11 +9,13 @@ namespace SprykerTest\Zed\ProductOffer\Business;
 
 use ArrayObject;
 use Codeception\Test\Unit;
+use Generated\Shared\DataBuilder\ItemBuilder;
 use Generated\Shared\DataBuilder\ProductOfferBuilder;
 use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductOfferCollectionTransfer;
-use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
+use Generated\Shared\Transfer\ProductOfferCriteriaTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
@@ -36,6 +38,43 @@ use Spryker\Zed\ProductOffer\ProductOfferDependencyProvider;
 class ProductOfferFacadeTest extends Unit
 {
     /**
+     * @var string
+     */
+    protected const TEST_SKU_1 = 'sku_1';
+    /**
+     * @var string
+     */
+    protected const TEST_SKU_2 = 'sku_2';
+    /**
+     * @var string
+     */
+    protected const TEST_MERCHANT_REFERENCE_1 = 'merchant_reference_1';
+    /**
+     * @var string
+     */
+    protected const TEST_MERCHANT_REFERENCE_2 = 'merchant_reference_2';
+    /**
+     * @var string
+     */
+    protected const TEST_MERCHANT_REFERENCE_3 = 'merchant_reference_3';
+    /**
+     * @var string
+     */
+    protected const TEST_PRODUCT_REFERENCE_1 = 'product_reference_1';
+    /**
+     * @var string
+     */
+    protected const TEST_PRODUCT_REFERENCE_2 = 'product_reference_2';
+    /**
+     * @var string
+     */
+    protected const TEST_PRODUCT_REFERENCE_3 = 'product_reference_3';
+    /**
+     * @var string
+     */
+    protected const TEST_PRODUCT_REFERENCE_4 = 'product_reference_4';
+
+    /**
      * @var \SprykerTest\Zed\ProductOffer\ProductOfferBusinessTester
      */
     protected $tester;
@@ -53,17 +92,18 @@ class ProductOfferFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testFind(): void
+    public function testGet(): void
     {
         // Arrange
         $productOfferTransfer = $this->tester->haveProductOffer([
             ProductOfferTransfer::FK_MERCHANT => $this->tester->haveMerchant()->getIdMerchant(),
         ]);
-        $productOfferCriteriaFilterTransfer = new ProductOfferCriteriaFilterTransfer();
-        $productOfferCriteriaFilterTransfer->setProductOfferReference($productOfferTransfer->getProductOfferReference());
+        $productOfferCriteriaTransfer = new ProductOfferCriteriaTransfer();
+        $productOfferCriteriaTransfer->setProductOfferReference($productOfferTransfer->getProductOfferReference());
 
         // Act
-        $productOfferCollectionTransfer = $this->tester->getFacade()->find($productOfferCriteriaFilterTransfer);
+        $productOfferCollectionTransfer = $this->tester->getFacade()->get($productOfferCriteriaTransfer);
+
         // Assert
         $this->assertNotEmpty($productOfferCollectionTransfer);
     }
@@ -71,7 +111,7 @@ class ProductOfferFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testFindAddsStoresToProductOffer(): void
+    public function testGetAddsStoresToProductOffer(): void
     {
         // Arrange
         $productOfferTransfer = $this->tester->haveProductOffer();
@@ -79,11 +119,11 @@ class ProductOfferFacadeTest extends Unit
         $storeTransfer2 = $this->tester->haveStore();
         $this->tester->haveProductOfferStore($productOfferTransfer, $storeTransfer1);
         $this->tester->haveProductOfferStore($productOfferTransfer, $storeTransfer2);
-        $productOfferCriteriaFilterTransfer = (new ProductOfferCriteriaFilterTransfer())
+        $productOfferCriteriaTransfer = (new ProductOfferCriteriaTransfer())
             ->setProductOfferReference($productOfferTransfer->getProductOfferReference());
 
         // Act
-        $productOfferTransfer = $this->tester->getFacade()->find($productOfferCriteriaFilterTransfer)->getProductOffers()[0];
+        $productOfferTransfer = $this->tester->getFacade()->get($productOfferCriteriaTransfer)->getProductOffers()[0];
 
         // Assert
         $this->assertCount(2, $productOfferTransfer->getStores());
@@ -97,11 +137,11 @@ class ProductOfferFacadeTest extends Unit
     {
         // Arrange
         $productOfferTransfer = $this->tester->haveProductOffer();
-        $productOfferCriteriaFilterTransfer = (new ProductOfferCriteriaFilterTransfer())
+        $productOfferCriteriaTransfer = (new ProductOfferCriteriaTransfer())
             ->setProductOfferReference($productOfferTransfer->getProductOfferReference());
 
         // Act
-        $productOfferTransfer = $this->tester->getFacade()->findOne($productOfferCriteriaFilterTransfer);
+        $productOfferTransfer = $this->tester->getFacade()->findOne($productOfferCriteriaTransfer);
 
         // Assert
         $this->assertNotEmpty($productOfferTransfer);
@@ -114,11 +154,11 @@ class ProductOfferFacadeTest extends Unit
     {
         // Arrange
         $productOfferTransfer = $this->tester->haveProductOffer();
-        $productOfferCriteriaFilterTransfer = (new ProductOfferCriteriaFilterTransfer())
+        $productOfferCriteriaTransfer = (new ProductOfferCriteriaTransfer())
             ->setIdProductOffer($productOfferTransfer->getIdProductOffer());
 
         // Act
-        $productOfferTransfer = $this->tester->getFacade()->findOne($productOfferCriteriaFilterTransfer);
+        $productOfferTransfer = $this->tester->getFacade()->findOne($productOfferCriteriaTransfer);
 
         // Assert
         $this->assertNotEmpty($productOfferTransfer);
@@ -135,11 +175,11 @@ class ProductOfferFacadeTest extends Unit
         $storeTransfer2 = $this->tester->haveStore();
         $this->tester->haveProductOfferStore($productOfferTransfer, $storeTransfer1);
         $this->tester->haveProductOfferStore($productOfferTransfer, $storeTransfer2);
-        $productOfferCriteriaFilterTransfer = (new ProductOfferCriteriaFilterTransfer())
+        $productOfferCriteriaTransfer = (new ProductOfferCriteriaTransfer())
             ->setProductOfferReference($productOfferTransfer->getProductOfferReference());
 
         // Act
-        $productOfferTransfer = $this->tester->getFacade()->findOne($productOfferCriteriaFilterTransfer);
+        $productOfferTransfer = $this->tester->getFacade()->findOne($productOfferCriteriaTransfer);
 
         // Assert
         $this->assertCount(2, $productOfferTransfer->getStores());
@@ -177,13 +217,13 @@ class ProductOfferFacadeTest extends Unit
         ]))->build();
         $productOfferTransfer->addStore($this->tester->haveStore());
         $productOfferTransfer->addStore($this->tester->haveStore());
-        $productOfferCriteriaFilterTransfer = (new ProductOfferCriteriaFilterTransfer())
+        $productOfferCriteriaTransfer = (new ProductOfferCriteriaTransfer())
             ->setIdProductOffer($productOfferTransfer->getIdProductOffer());
 
         // Act
         $productOfferTransfer = $this->tester->getFacade()->create($productOfferTransfer);
         $storeTransfers = $this->tester->getProductOfferRepository()
-            ->findOne($productOfferCriteriaFilterTransfer)
+            ->findOne($productOfferCriteriaTransfer)
             ->getStores();
 
         // Assert
@@ -253,10 +293,10 @@ class ProductOfferFacadeTest extends Unit
         );
 
         $productOfferRepositoryMock = $this->getMockBuilder(ProductOfferRepositoryInterface::class)
-            ->onlyMethods(['find', 'findOne', 'getProductOfferStores', 'getMaxIdProductOffer', 'isProductOfferReferenceUsed'])
+            ->onlyMethods(['get', 'findOne', 'getProductOfferStores'])
             ->getMock();
         $productOfferRepositoryMock
-            ->method('find')
+            ->method('get')
             ->willReturn($productOfferCollectionTransfer);
 
         $productOfferBusinessFactoryMock = $this->getMockBuilder(ProductOfferBusinessFactory::class)
@@ -363,13 +403,13 @@ class ProductOfferFacadeTest extends Unit
         $productOfferTransfer->addStore($storeTransfer);
         $productOfferTransfer->addStore($this->tester->haveStore());
         $productOfferTransfer->addStore($this->tester->haveStore());
-        $productOfferCriteriaFilterTransfer = (new ProductOfferCriteriaFilterTransfer())
+        $productOfferCriteriaTransfer = (new ProductOfferCriteriaTransfer())
             ->setIdProductOffer($productOfferTransfer->getIdProductOffer());
 
         // Act
         $this->tester->getFacade()->update($productOfferTransfer);
         $storeTransfers = $this->tester->getProductOfferRepository()
-            ->findOne($productOfferCriteriaFilterTransfer)
+            ->findOne($productOfferCriteriaTransfer)
             ->getStores();
 
         // Assert
@@ -389,13 +429,13 @@ class ProductOfferFacadeTest extends Unit
         $this->tester->haveProductOfferStore($productOfferTransfer, $storeTransfer1);
         $this->tester->haveProductOfferStore($productOfferTransfer, $storeTransfer2);
         $productOfferTransfer->addStore($storeTransfer1);
-        $productOfferCriteriaFilterTransfer = (new ProductOfferCriteriaFilterTransfer())
+        $productOfferCriteriaTransfer = (new ProductOfferCriteriaTransfer())
             ->setIdProductOffer($productOfferTransfer->getIdProductOffer());
 
         // Act
         $this->tester->getFacade()->update($productOfferTransfer);
         $storeTransfers = $this->tester->getProductOfferRepository()
-            ->findOne($productOfferCriteriaFilterTransfer)
+            ->findOne($productOfferCriteriaTransfer)
             ->getStores();
 
         // Assert
@@ -449,5 +489,251 @@ class ProductOfferFacadeTest extends Unit
 
         // Assert
         $this->assertSame($expectedResult, $result);
+    }
+
+    /**
+     * @return void
+     */
+    public function testIsQuoteReadyForCheckoutWithValidProductOffer(): void
+    {
+        // Arrange
+        $productOfferTransfer = $this->tester->haveProductOffer([
+            ProductOfferTransfer::IS_ACTIVE => true,
+            ProductOfferTransfer::APPROVAL_STATUS => 'approved',
+        ]);
+
+        $itemTransfer = (new ItemBuilder([
+            ItemTransfer::PRODUCT_OFFER_REFERENCE => $productOfferTransfer->getProductOfferReference(),
+        ]))->build();
+
+        $quoteTransfer = (new QuoteTransfer())->addItem($itemTransfer);
+
+        //Act
+        $isCheckoutProductOfferValid = $this->tester->getFacade()
+            ->isQuoteReadyForCheckout($quoteTransfer, new CheckoutResponseTransfer());
+
+        //Assert
+        $this->assertTrue(
+            $isCheckoutProductOfferValid,
+            'Expects that quote transfer will be valid when product offer is valid.'
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testIsQuoteReadyForCheckoutWithInactiveProductOffer(): void
+    {
+        // Arrange
+        $productOfferTransfer = $this->tester->haveProductOffer([
+            ProductOfferTransfer::IS_ACTIVE => false,
+            ProductOfferTransfer::APPROVAL_STATUS => 'approved',
+        ]);
+
+        $itemTransfer = (new ItemBuilder([
+            ItemTransfer::PRODUCT_OFFER_REFERENCE => $productOfferTransfer->getProductOfferReference(),
+        ]))->build();
+
+        $quoteTransfer = (new QuoteTransfer())->addItem($itemTransfer);
+
+        //Act
+        $isCheckoutProductOfferValid = $this->tester->getFacade()
+            ->isQuoteReadyForCheckout($quoteTransfer, new CheckoutResponseTransfer());
+
+        //Assert
+        $this->assertFalse(
+            $isCheckoutProductOfferValid,
+            'Expects that quote transfer will be invalid when product offer is inactive.'
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testIsQuoteReadyForCheckoutWithNotApprovedProductOffer(): void
+    {
+        // Arrange
+        $productOfferTransfer = $this->tester->haveProductOffer([
+            ProductOfferTransfer::IS_ACTIVE => true,
+            ProductOfferTransfer::APPROVAL_STATUS => 'waiting_for_approval',
+        ]);
+
+        $itemTransfer = (new ItemBuilder([
+            ItemTransfer::PRODUCT_OFFER_REFERENCE => $productOfferTransfer->getProductOfferReference(),
+        ]))->build();
+
+        $quoteTransfer = (new QuoteTransfer())->addItem($itemTransfer);
+
+        //Act
+        $isCheckoutProductOfferValid = $this->tester->getFacade()
+            ->isQuoteReadyForCheckout($quoteTransfer, new CheckoutResponseTransfer());
+
+        //Assert
+        $this->assertFalse(
+            $isCheckoutProductOfferValid,
+            'Expects that quote transfer will be invalid when product offer not approved.'
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testCountCartItemQuantityForExistingProductOffer(): void
+    {
+        // Arrange
+        $itemsInCart = $this->createCartItems();
+
+        $itemTransfer = $this->createItemTransfer(
+            static::TEST_SKU_1,
+            2,
+            static::TEST_MERCHANT_REFERENCE_1,
+            static::TEST_PRODUCT_REFERENCE_1
+        );
+
+        // Act
+        $cartItemQuantityTransfer = $this->tester->getFacade()
+            ->countCartItemQuantity($itemsInCart, $itemTransfer);
+
+        // Assert
+        $this->assertSame(3, $cartItemQuantityTransfer->getQuantity());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCountCartItemQuantityForNonExistingProductOffer(): void
+    {
+        // Arrange
+        $itemsInCart = $this->createCartItems();
+
+        $itemTransfer = $this->createItemTransfer(
+            static::TEST_SKU_1,
+            2,
+            static::TEST_MERCHANT_REFERENCE_1,
+            static::TEST_PRODUCT_REFERENCE_4
+        );
+
+        // Act
+        $cartItemQuantityTransfer = $this->tester->getFacade()
+            ->countCartItemQuantity($itemsInCart, $itemTransfer);
+
+        // Assert
+        $this->assertSame(0, $cartItemQuantityTransfer->getQuantity());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCountCartItemQuantityForExistingMerchantProduct(): void
+    {
+        // Arrange
+        $itemsInCart = $this->createCartItems();
+
+        $itemTransfer = $this->createItemTransfer(
+            static::TEST_SKU_1,
+            2,
+            static::TEST_MERCHANT_REFERENCE_3
+        );
+
+        // Act
+        $cartItemQuantityTransfer = $this->tester->getFacade()
+            ->countCartItemQuantity($itemsInCart, $itemTransfer);
+
+        // Assert
+        $this->assertSame(2, $cartItemQuantityTransfer->getQuantity());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCountCartItemQuantityForNonExistingMerchantProduct(): void
+    {
+        // Arrange
+        $itemsInCart = $this->createCartItems();
+
+        $itemTransfer = $this->createItemTransfer(
+            static::TEST_SKU_1,
+            2,
+            static::TEST_MERCHANT_REFERENCE_2
+        );
+
+        // Act
+        $cartItemQuantityTransfer = $this->tester->getFacade()
+            ->countCartItemQuantity($itemsInCart, $itemTransfer);
+
+        // Assert
+        $this->assertSame(0, $cartItemQuantityTransfer->getQuantity());
+    }
+
+    /**
+     * @param string $sku
+     * @param int $quantity
+     * @param string $merchantReference
+     * @param string|null $productOfferReference
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer
+     */
+    protected function createItemTransfer(
+        string $sku,
+        int $quantity,
+        string $merchantReference,
+        ?string $productOfferReference = null
+    ): ItemTransfer {
+        return (new ItemTransfer())
+            ->setSku($sku)
+            ->setMerchantReference($merchantReference)
+            ->setQuantity($quantity)
+            ->setProductOfferReference($productOfferReference);
+    }
+
+    /**
+     * @phpstan-return \ArrayObject<string, \Generated\Shared\Transfer\ItemTransfer>
+     *
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer>
+     */
+    protected function createCartItems(): ArrayObject
+    {
+        $itemsInCart = new ArrayObject();
+        $itemsInCart->append(
+            $this->createItemTransfer(
+                static::TEST_SKU_1,
+                1,
+                static::TEST_MERCHANT_REFERENCE_1,
+                static::TEST_PRODUCT_REFERENCE_1
+            )
+        );
+        $itemsInCart->append(
+            $this->createItemTransfer(
+                static::TEST_SKU_1,
+                2,
+                static::TEST_MERCHANT_REFERENCE_1,
+                static::TEST_PRODUCT_REFERENCE_1
+            )
+        );
+        $itemsInCart->append(
+            $this->createItemTransfer(
+                static::TEST_SKU_1,
+                2,
+                static::TEST_MERCHANT_REFERENCE_3
+            )
+        );
+        $itemsInCart->append(
+            $this->createItemTransfer(
+                static::TEST_SKU_1,
+                2,
+                static::TEST_MERCHANT_REFERENCE_1,
+                static::TEST_PRODUCT_REFERENCE_2
+            )
+        );
+        $itemsInCart->append(
+            $this->createItemTransfer(
+                static::TEST_SKU_2,
+                2,
+                static::TEST_MERCHANT_REFERENCE_2,
+                static::TEST_PRODUCT_REFERENCE_3
+            )
+        );
+
+        return $itemsInCart;
     }
 }

@@ -25,7 +25,13 @@ use Generated\Shared\Transfer\ProductPageSearchTransfer;
  */
 class ProductListSearchFacadeTest extends Unit
 {
+    /**
+     * @var int
+     */
     protected const TEST_WHITELIST_KEY = 1;
+    /**
+     * @var int
+     */
     protected const TEST_BLACKLIST_KEY = 2;
 
     /**

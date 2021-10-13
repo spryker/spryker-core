@@ -15,6 +15,9 @@ use Spryker\Shared\CompanyUserStorage\CompanyUserStorageConfig;
 
 class CompanyUserStorage implements CompanyUserStorageInterface
 {
+    /**
+     * @var string
+     */
     protected const KEY_ID = 'id';
 
     /**

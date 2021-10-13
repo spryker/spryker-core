@@ -15,12 +15,12 @@ use Psr\Http\Message\ServerRequestInterface;
 class ResourceServer extends LeagueResourceServer
 {
     /**
-     * @var \Spryker\Client\OauthExtension\Dependency\Plugin\AuthorizationValidatorPluginInterface[]
+     * @var array<\Spryker\Client\OauthExtension\Dependency\Plugin\AuthorizationValidatorPluginInterface>
      */
     protected $authorizationValidators;
 
     /**
-     * @var \League\OAuth2\Server\CryptKey[]
+     * @var array<\League\OAuth2\Server\CryptKey>
      */
     protected $publicKeys;
 
@@ -30,9 +30,9 @@ class ResourceServer extends LeagueResourceServer
     protected $accessTokenRepository;
 
     /**
-     * @param \League\OAuth2\Server\CryptKey[] $publicKeys
+     * @param array<\League\OAuth2\Server\CryptKey> $publicKeys
      * @param \League\OAuth2\Server\Repositories\AccessTokenRepositoryInterface $accessTokenRepository
-     * @param \Spryker\Client\OauthExtension\Dependency\Plugin\AuthorizationValidatorPluginInterface[] $authorizationValidatorPlugins
+     * @param array<\Spryker\Client\OauthExtension\Dependency\Plugin\AuthorizationValidatorPluginInterface> $authorizationValidatorPlugins
      */
     public function __construct(
         array $publicKeys,

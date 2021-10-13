@@ -13,6 +13,9 @@ use Spryker\Zed\Translator\TranslatorConfig;
 
 class ValidatorResourceFileLoader implements TranslationResourceFileLoaderInterface
 {
+    /**
+     * @var string
+     */
     protected const TRANSLATION_DOMAIN = 'validators';
 
     /**
@@ -83,7 +86,7 @@ class ValidatorResourceFileLoader implements TranslationResourceFileLoaderInterf
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getFilePaths(): array
     {

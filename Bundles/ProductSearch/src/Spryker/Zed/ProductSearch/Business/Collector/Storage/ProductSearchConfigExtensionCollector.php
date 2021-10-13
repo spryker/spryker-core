@@ -110,7 +110,7 @@ class ProductSearchConfigExtensionCollector extends AbstractStoragePropelCollect
     }
 
     /**
-     * @param \Generated\Shared\Transfer\FacetConfigTransfer[] $availableProductSearchFilterConfigs
+     * @param array<\Generated\Shared\Transfer\FacetConfigTransfer> $availableProductSearchFilterConfigs
      * @param \Generated\Shared\Transfer\ProductSearchAttributeTransfer $productSearchAttributeTransfer
      *
      * @throws \Spryker\Zed\ProductSearch\Business\Exception\InvalidFilterTypeException

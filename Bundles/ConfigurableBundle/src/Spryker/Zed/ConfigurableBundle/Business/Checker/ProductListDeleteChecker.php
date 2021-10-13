@@ -17,9 +17,18 @@ use Spryker\Zed\ConfigurableBundle\Business\Reader\ConfigurableBundleTemplateSlo
 
 class ProductListDeleteChecker implements ProductListDeleteCheckerInterface
 {
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_UNABLE_TO_DELETE_PRODUCT_LIST = 'Unable to delete Product List since it\'s used by Configurable Bundle Template "%template%" ("%slot%" slot).';
 
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_PARAM_TEMPLATE = '%template%';
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_PARAM_SLOT = '%slot%';
 
     /**

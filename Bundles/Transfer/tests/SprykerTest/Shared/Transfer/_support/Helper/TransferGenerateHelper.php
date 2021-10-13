@@ -15,8 +15,17 @@ use Symfony\Component\Finder\Finder;
 
 class TransferGenerateHelper extends Module
 {
+    /**
+     * @var string
+     */
     protected const TARGET_DIRECTORY = 'target_directory';
+    /**
+     * @var string
+     */
     protected const CONFIG_SCHEMA_DIRECTORIES = 'schemaDirectories';
+    /**
+     * @var string
+     */
     protected const CONFIG_IS_ISOLATED_MODULE_TEST = 'isolated';
 
     /**
@@ -104,7 +113,7 @@ class TransferGenerateHelper extends Module
     /**
      * @param array $schemaDirectories
      *
-     * @return \Symfony\Component\Finder\Finder|\Symfony\Component\Finder\SplFileInfo[]
+     * @return \Symfony\Component\Finder\Finder<\Symfony\Component\Finder\SplFileInfo>
      */
     protected function createTransferSchemaFinder(array $schemaDirectories)
     {

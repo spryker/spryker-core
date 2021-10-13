@@ -1,9 +1,9 @@
 # DoctrineInflector Module
-[![Build Status](https://travis-ci.org/spryker/doctrine-inflector.svg)](https://travis-ci.org/spryker/doctrine-inflector)
-[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
+[![Latest Stable Version](https://poser.pugx.org/spryker/doctrine-inflector/v/stable.svg)](https://packagist.org/packages/spryker/doctrine-inflector)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.4-8892BF.svg)](https://php.net/)
 
-DoctrineInflector module is a 3rd party connector module for "doctrine/inflector" vendor library.
-"doctrine/inflector" is PHP library, that has static methods for inflecting text.
+DoctrineInflector module is a 3rd party connector module for [doctrine/inflector](https://github.com/doctrine/inflector) vendor library.
+`doctrine/inflector` is a PHP library that can inflect text.
 DoctrineInflector module has a central role in managing dependencies and supports better decoupling.
 
 ## Installation

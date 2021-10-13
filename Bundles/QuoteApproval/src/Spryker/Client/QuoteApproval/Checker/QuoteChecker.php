@@ -19,13 +19,13 @@ class QuoteChecker implements QuoteCheckerInterface
     protected $quoteApprovalConfig;
 
     /**
-     * @var \Spryker\Client\QuoteApprovalExtension\Dependency\Plugin\QuoteApplicableForApprovalCheckPluginInterface[]
+     * @var array<\Spryker\Client\QuoteApprovalExtension\Dependency\Plugin\QuoteApplicableForApprovalCheckPluginInterface>
      */
     protected $quoteApplicableForApprovalCheckPlugins;
 
     /**
      * @param \Spryker\Client\QuoteApproval\QuoteApprovalConfig $quoteApprovalConfig
-     * @param \Spryker\Client\QuoteApprovalExtension\Dependency\Plugin\QuoteApplicableForApprovalCheckPluginInterface[] $quoteApplicableForApprovalCheckPlugins
+     * @param array<\Spryker\Client\QuoteApprovalExtension\Dependency\Plugin\QuoteApplicableForApprovalCheckPluginInterface> $quoteApplicableForApprovalCheckPlugins
      */
     public function __construct(QuoteApprovalConfig $quoteApprovalConfig, array $quoteApplicableForApprovalCheckPlugins)
     {

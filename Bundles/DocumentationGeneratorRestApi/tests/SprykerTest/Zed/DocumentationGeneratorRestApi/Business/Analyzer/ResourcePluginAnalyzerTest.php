@@ -26,6 +26,9 @@ class ResourcePluginAnalyzerTest extends Unit
 {
     use ArraySubsetAsserts;
 
+    /**
+     * @var array
+     */
     protected const EXPECTED_KEYS = [
         'paths',
         'tags',

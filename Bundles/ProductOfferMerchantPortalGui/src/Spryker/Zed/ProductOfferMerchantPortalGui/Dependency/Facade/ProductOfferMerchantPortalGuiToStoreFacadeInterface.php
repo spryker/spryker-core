@@ -10,7 +10,12 @@ namespace Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade;
 interface ProductOfferMerchantPortalGuiToStoreFacadeInterface
 {
     /**
-     * @return \Generated\Shared\Transfer\StoreTransfer[]
+     * @return \Generated\Shared\Transfer\StoreTransfer
+     */
+    public function getCurrentStore();
+
+    /**
+     * @return array<\Generated\Shared\Transfer\StoreTransfer>
      */
     public function getAllStores();
 }

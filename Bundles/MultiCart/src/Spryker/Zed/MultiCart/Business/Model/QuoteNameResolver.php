@@ -45,7 +45,7 @@ class QuoteNameResolver implements QuoteNameResolverInterface
     }
 
     /**
-     * @param string[] $quoteNameCollection
+     * @param array<string> $quoteNameCollection
      *
      * @return int
      */

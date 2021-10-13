@@ -17,7 +17,13 @@ use Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInter
  */
 class GlueApplicationApplicationPlugin extends AbstractPlugin implements ApplicationPluginInterface
 {
+    /**
+     * @var string
+     */
     protected const SERVICE_RESOURCE_BUILDER = 'resource_builder';
+    /**
+     * @var string
+     */
     protected const DEBUG = 'debug';
 
     /**

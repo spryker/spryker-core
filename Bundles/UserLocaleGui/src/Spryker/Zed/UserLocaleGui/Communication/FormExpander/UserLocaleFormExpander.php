@@ -17,8 +17,14 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class UserLocaleFormExpander extends AbstractType
 {
+    /**
+     * @var string
+     */
     protected const FIELD_FK_LOCALE = 'fk_locale';
 
+    /**
+     * @var string
+     */
     public const OPTIONS_LOCALE = 'OPTIONS_LOCALE';
 
     /**

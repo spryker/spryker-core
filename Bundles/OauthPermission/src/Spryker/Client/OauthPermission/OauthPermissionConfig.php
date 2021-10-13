@@ -13,6 +13,7 @@ class OauthPermissionConfig extends AbstractBundleConfig
 {
     /**
      * @uses \Spryker\Glue\GlueApplication\Rest\RequestConstantsInterface::HEADER_AUTHORIZATION
+     * @var string
      */
     public const HEADER_AUTHORIZATION = 'authorization';
 }

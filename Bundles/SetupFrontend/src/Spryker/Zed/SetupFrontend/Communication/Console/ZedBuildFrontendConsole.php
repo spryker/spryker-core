@@ -18,11 +18,26 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class ZedBuildFrontendConsole extends Console
 {
+    /**
+     * @var string
+     */
     public const COMMAND_NAME = 'frontend:zed:build';
+    /**
+     * @var string
+     */
     public const DESCRIPTION = 'This command will build Zed\'s frontend.';
 
+    /**
+     * @var string
+     */
     protected const OPTION_ENVIRONMENT = 'environment';
+    /**
+     * @var string
+     */
     protected const OPTION_ENVIRONMENT_SHORT = 'e';
+    /**
+     * @var string
+     */
     protected const OPTION_ENVIRONMENT_DESCRIPTION = 'Sets the environment to run the command. Currently available environments: production';
 
     /**

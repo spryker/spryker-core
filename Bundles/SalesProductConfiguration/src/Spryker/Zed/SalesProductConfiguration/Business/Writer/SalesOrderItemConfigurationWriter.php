@@ -45,7 +45,7 @@ class SalesOrderItemConfigurationWriter implements SalesOrderItemConfigurationWr
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SalesOrderItemConfigurationTransfer[] $salesOrderItemConfigurationTransfers
+     * @param array<\Generated\Shared\Transfer\SalesOrderItemConfigurationTransfer> $salesOrderItemConfigurationTransfers
      *
      * @return void
      */
@@ -60,7 +60,7 @@ class SalesOrderItemConfigurationWriter implements SalesOrderItemConfigurationWr
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\SalesOrderItemConfigurationTransfer[]
+     * @return array<\Generated\Shared\Transfer\SalesOrderItemConfigurationTransfer>
      */
     protected function mapSalesOrderItemConfigurations(QuoteTransfer $quoteTransfer): array
     {
@@ -80,9 +80,9 @@ class SalesOrderItemConfigurationWriter implements SalesOrderItemConfigurationWr
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param \Generated\Shared\Transfer\SalesOrderItemConfigurationTransfer[] $salesOrderItemConfigurationTransfers
+     * @param array<\Generated\Shared\Transfer\SalesOrderItemConfigurationTransfer> $salesOrderItemConfigurationTransfers
      *
-     * @return \Generated\Shared\Transfer\SalesOrderItemConfigurationTransfer[]
+     * @return array<\Generated\Shared\Transfer\SalesOrderItemConfigurationTransfer>
      */
     protected function mapSalesOrderItemConfiguration(ItemTransfer $itemTransfer, array $salesOrderItemConfigurationTransfers): array
     {

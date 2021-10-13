@@ -30,13 +30,13 @@ class ProductConcreteReader implements ProductConcreteReaderInterface
      */
     protected $productConcretePageSearchQueryPlugin;
 
-    /***
-     * @var \Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface[]
+    /**
+     * @var array<\Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface>
      */
     protected $productConcretePageSearchQueryExpanderPlugins;
 
     /**
-     * @var \Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface[]
+     * @var array<\Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface>
      */
     protected $productConcretePageSearchResultFormatterPlugins;
 
@@ -64,7 +64,7 @@ class ProductConcreteReader implements ProductConcreteReaderInterface
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteCriteriaFilterTransfer $productConcreteCriteriaFilterTransfer
      *
-     * @return array|\Elastica\ResultSet
+     * @return \Elastica\ResultSet|array
      */
     public function searchProductConcretesByFullText(ProductConcreteCriteriaFilterTransfer $productConcreteCriteriaFilterTransfer)
     {

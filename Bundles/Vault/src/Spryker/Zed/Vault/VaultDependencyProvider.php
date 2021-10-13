@@ -16,6 +16,9 @@ use Spryker\Zed\Vault\Dependency\Service\VaultToUtilEncryptionServiceBridge;
  */
 class VaultDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const SERVICE_UTIL_ENCRYPTION = 'SERVICE_UTIL_ENCRYPTION';
 
     /**

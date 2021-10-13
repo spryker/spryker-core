@@ -34,9 +34,9 @@ class DiscountStoreRelationMapper implements DiscountStoreRelationMapperInterfac
     }
 
     /**
-     * @param \Traversable|\Orm\Zed\Discount\Persistence\SpyDiscountStore[] $discountStoreEntityCollection
+     * @param \Traversable<\Orm\Zed\Discount\Persistence\SpyDiscountStore> $discountStoreEntityCollection
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\StoreTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\StoreTransfer>
      */
     protected function getRelatedStoreTransferCollection(Traversable $discountStoreEntityCollection)
     {
@@ -55,9 +55,9 @@ class DiscountStoreRelationMapper implements DiscountStoreRelationMapperInterfac
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\StoreTransfer[] $storeTransferCollection
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\StoreTransfer> $storeTransferCollection
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getIdStores(ArrayObject $storeTransferCollection)
     {

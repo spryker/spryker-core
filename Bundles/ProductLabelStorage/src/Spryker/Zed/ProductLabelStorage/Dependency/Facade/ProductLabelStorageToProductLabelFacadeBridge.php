@@ -26,9 +26,9 @@ class ProductLabelStorageToProductLabelFacadeBridge implements ProductLabelStora
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
-     * @return \Generated\Shared\Transfer\ProductLabelProductAbstractTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductLabelProductAbstractTransfer>
      */
     public function getProductLabelProductAbstractsByProductAbstractIds(array $productAbstractIds): array
     {
@@ -38,7 +38,7 @@ class ProductLabelStorageToProductLabelFacadeBridge implements ProductLabelStora
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductLabelProductAbstractTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductLabelProductAbstractTransfer>
      */
     public function getProductLabelProductAbstractsByFilter(FilterTransfer $filterTransfer): array
     {
@@ -48,7 +48,7 @@ class ProductLabelStorageToProductLabelFacadeBridge implements ProductLabelStora
     /**
      * @param \Generated\Shared\Transfer\ProductLabelCriteriaTransfer $productLabelCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductLabelTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductLabelTransfer>
      */
     public function getActiveLabelsByCriteria(ProductLabelCriteriaTransfer $productLabelCriteriaTransfer): array
     {

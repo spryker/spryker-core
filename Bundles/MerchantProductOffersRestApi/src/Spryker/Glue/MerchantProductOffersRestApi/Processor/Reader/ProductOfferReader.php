@@ -60,6 +60,9 @@ class ProductOfferReader implements ProductOfferReaderInterface
         }
 
         $defaultMerchantProductOfferReference = $this->getDefaultProductOfferReference($productOfferStorageTransfer);
+        if (!$defaultMerchantProductOfferReference) {
+            return $this->productOfferRestResponseBuilder->createProductOfferNotFoundErrorResponse();
+        }
 
         return $this->productOfferRestResponseBuilder->createProductOfferRestResponse(
             $productOfferStorageTransfer,
@@ -91,9 +94,9 @@ class ProductOfferReader implements ProductOfferReaderInterface
     }
 
     /**
-     * @param string[] $productConcreteSkus
+     * @param array<string> $productConcreteSkus
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[][]
+     * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]>
      */
     public function getProductOfferResourcesByProductConcreteSkus(array $productConcreteSkus): array
     {

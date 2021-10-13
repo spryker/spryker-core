@@ -29,6 +29,9 @@ use Spryker\Zed\PriceProductOfferDataImport\PriceProductOfferDataImportConfig;
  */
 class PriceProductOfferDataImportPluginTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const PRODUCT_OFFER_REFERENCE = 'offer-1';
 
     /**

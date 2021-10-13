@@ -21,12 +21,27 @@ use Spryker\Client\StorageRedis\StorageRedisClient;
  */
 class StorageRedisClientTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const DUMMY_KEY = 'dummy-key';
+    /**
+     * @var string
+     */
     protected const ANOTHER_DUMMY_KEY = 'another-dummy-key';
 
+    /**
+     * @var string
+     */
     protected const DUMMY_VALUE = 'dummy-value';
+    /**
+     * @var string
+     */
     protected const ANOTHER_DUMMY_VALUE = 'another-dummy-value';
 
+    /**
+     * @var string
+     */
     protected const KEY_PREFIX = 'kv';
 
     /**
@@ -156,9 +171,9 @@ class StorageRedisClientTest extends Unit
     }
 
     /**
-     * @param string[] $keys
+     * @param array<string> $keys
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function prefixKeys(array $keys): array
     {

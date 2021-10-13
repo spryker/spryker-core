@@ -19,13 +19,13 @@ class ContentBannerTypeMapper implements ContentBannerTypeMapperInterface
     protected $contentStorageClient;
 
     /**
-     * @var \Spryker\Client\ContentBanner\Executor\ContentBannerTermExecutorInterface[]
+     * @var array<\Spryker\Client\ContentBanner\Executor\ContentBannerTermExecutorInterface>
      */
     protected $contentBannerTermExecutors;
 
     /**
      * @param \Spryker\Client\ContentBanner\Dependency\Client\ContentBannerToContentStorageClientInterface $contentStorageClient
-     * @param \Spryker\Client\ContentBanner\Executor\ContentBannerTermExecutorInterface[] $contentBannerTermExecutors
+     * @param array<\Spryker\Client\ContentBanner\Executor\ContentBannerTermExecutorInterface> $contentBannerTermExecutors
      */
     public function __construct(ContentBannerToContentStorageClientInterface $contentStorageClient, array $contentBannerTermExecutors)
     {
@@ -63,10 +63,10 @@ class ContentBannerTypeMapper implements ContentBannerTypeMapperInterface
     /**
      * @phpstan-return array<string, \Generated\Shared\Transfer\ContentBannerTypeTransfer>
      *
-     * @param string[] $contentKeys
+     * @param array<string> $contentKeys
      * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\ContentBannerTypeTransfer[]
+     * @return array<\Generated\Shared\Transfer\ContentBannerTypeTransfer>
      */
     public function executeBannerTypeByKeys(array $contentKeys, string $localeName): array
     {

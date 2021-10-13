@@ -20,7 +20,13 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ProductCategoryFilterController extends AbstractController
 {
+    /**
+     * @var string
+     */
     public const PARAM_ID_CATEGORY_NODE = 'id-category-node';
+    /**
+     * @var string
+     */
     public const REDIRECT_ADDRESS = '/product-category-filter-gui/product-category-filter';
 
     /**
@@ -33,7 +39,7 @@ class ProductCategoryFilterController extends AbstractController
         $idCategory = $this->castId($request->query->get(self::PARAM_ID_CATEGORY_NODE));
         $localeTransfer = $this->getCurrentLocale();
 
-        $category = $this->getCategory($idCategory, $localeTransfer->getIdLocale());
+        $category = $this->getCategory($idCategory, $localeTransfer->getIdLocaleOrFail());
 
         $productCategoryFilterDataProvider = $this->getFactory()
             ->createProductCategoryFilterDataProvider();
@@ -88,7 +94,7 @@ class ProductCategoryFilterController extends AbstractController
                 );
         }
 
-        /** @var \Generated\Shared\Transfer\ProductCategoryFilterItemTransfer[]|null $productCategoryFilters */
+        /** @var array<\Generated\Shared\Transfer\ProductCategoryFilterItemTransfer>|null $productCategoryFilters */
         $productCategoryFilters = $productCategoryFilterTransfer->getFilters();
         $nonSearchFilters = $this->getNonSearchFilters(
             ($productCategoryFilters !== null) ? (array)$productCategoryFilters : [],
@@ -106,8 +112,8 @@ class ProductCategoryFilterController extends AbstractController
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductCategoryFilterItemTransfer[] $filters
-     * @param \Generated\Shared\Transfer\FacetSearchResultTransfer[] $searchFilters
+     * @param array<\Generated\Shared\Transfer\ProductCategoryFilterItemTransfer> $filters
+     * @param array<\Generated\Shared\Transfer\FacetSearchResultTransfer> $searchFilters
      *
      * @return array
      */
@@ -133,7 +139,7 @@ class ProductCategoryFilterController extends AbstractController
         $idCategory = $this->castId($request->query->get(self::PARAM_ID_CATEGORY_NODE));
 
         $localeTransfer = $this->getCurrentLocale();
-        $category = $this->getCategory($idCategory, $localeTransfer->getIdLocale());
+        $category = $this->getCategory($idCategory, $localeTransfer->getIdLocaleOrFail());
 
         $this->getFactory()
             ->getProductCategoryFilterFacade()
@@ -164,11 +170,15 @@ class ProductCategoryFilterController extends AbstractController
      */
     protected function getCategory($idCategory, $idLocale)
     {
+        $category = new CategoryTransfer();
         $mainCategory = $this->getQueryContainer()
             ->queryCategoryByIdAndLocale($idCategory, $idLocale)
             ->findOne();
 
-        $category = new CategoryTransfer();
+        if ($mainCategory === null) {
+            return $category;
+        }
+
         $category->setIdCategory($mainCategory->getFkCategory());
         $category->setName($mainCategory->getName());
 

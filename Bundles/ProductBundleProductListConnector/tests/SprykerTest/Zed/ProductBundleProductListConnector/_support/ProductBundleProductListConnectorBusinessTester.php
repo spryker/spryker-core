@@ -35,7 +35,7 @@ class ProductBundleProductListConnectorBusinessTester extends Actor
     use _generated\ProductBundleProductListConnectorBusinessTesterActions;
 
     /**
-     * @param int[] $productIds
+     * @param array<int> $productIds
      * @param string $type
      *
      * @return \Generated\Shared\Transfer\ProductListTransfer

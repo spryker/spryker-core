@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\MerchantsRestApi\Processor\Reader;
 
+use Generated\Shared\Transfer\MerchantStorageCriteriaTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\MerchantsRestApi\Dependency\Client\MerchantsRestApiToMerchantStorageClientInterface;
@@ -55,7 +56,9 @@ class MerchantAddressReader implements MerchantAddressReaderInterface
          */
         $merchantReference = $merchantResource->getId();
 
-        $merchantStorageTransfer = $this->merchantStorageClient->findOneByMerchantReference($merchantReference);
+        $merchantStorageTransfer = $this->merchantStorageClient->findOne(
+            (new MerchantStorageCriteriaTransfer())->addMerchantReference($merchantReference)
+        );
 
         if (!$merchantStorageTransfer) {
             return $this->merchantsAddressRestResponseBuilder->createMerchantNotFoundErrorResponse();
@@ -74,13 +77,15 @@ class MerchantAddressReader implements MerchantAddressReaderInterface
     }
 
     /**
-     * @param string[] $merchantReferences
+     * @param array<string> $merchantReferences
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>
      */
     public function getMerchantAddressResources(array $merchantReferences): array
     {
-        $merchantStorageTransfers = $this->merchantStorageClient->getByMerchantReferences($merchantReferences);
+        $merchantStorageTransfers = $this->merchantStorageClient->get(
+            (new MerchantStorageCriteriaTransfer())->setMerchantReferences($merchantReferences)
+        );
 
         $merchantStorageTransfers = $this->indexMerchantStorageTransfersByMerchantReference($merchantStorageTransfers);
 
@@ -88,9 +93,9 @@ class MerchantAddressReader implements MerchantAddressReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantStorageTransfer[] $merchantStorageTransfers
+     * @param array<\Generated\Shared\Transfer\MerchantStorageTransfer> $merchantStorageTransfers
      *
-     * @return \Generated\Shared\Transfer\MerchantStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\MerchantStorageTransfer>
      */
     protected function indexMerchantStorageTransfersByMerchantReference(array $merchantStorageTransfers): array
     {

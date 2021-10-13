@@ -15,8 +15,20 @@ use Spryker\Zed\Collector\Persistence\Collector\AbstractPropelCollectorQuery;
 
 class ProductAbstractRelationCollectorQuery extends AbstractPropelCollectorQuery
 {
+    /**
+     * @var string
+     */
     public const RESULT_FIELD_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
+
+    /**
+     * @var string
+     */
     public const RESULT_FIELD_ID_PRODUCT_LABELS_CSV = 'id_product_labels_csv';
+
+    /**
+     * @phpstan-var non-empty-string
+     * @var string
+     */
     public const LABEL_DELIMITER = ':#:';
 
     /**

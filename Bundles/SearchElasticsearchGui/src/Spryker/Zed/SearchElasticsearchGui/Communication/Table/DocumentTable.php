@@ -16,8 +16,17 @@ use Spryker\Zed\SearchElasticsearchGui\Dependency\Client\SearchElasticsearchGuiT
 
 class DocumentTable extends AbstractTable
 {
+    /**
+     * @var string
+     */
     protected const COL_ID = 'COL_ID';
+    /**
+     * @var string
+     */
     protected const COL_INDEX = 'COL_INDEX';
+    /**
+     * @var string
+     */
     protected const COL_SCORE = 'COL_SCORE';
 
     /**

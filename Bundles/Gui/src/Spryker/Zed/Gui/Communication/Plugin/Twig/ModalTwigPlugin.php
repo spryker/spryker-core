@@ -19,6 +19,9 @@ use Twig\TwigFunction;
  */
 class ModalTwigPlugin extends AbstractPlugin implements TwigPluginInterface
 {
+    /**
+     * @var string
+     */
     public const FUNCTION_NAME_MODAL = 'modal';
 
     /**

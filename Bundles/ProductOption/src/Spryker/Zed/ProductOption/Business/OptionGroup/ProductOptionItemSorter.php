@@ -49,7 +49,7 @@ class ProductOptionItemSorter implements ProductOptionItemSorterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $items
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $items
      *
      * @return array
      */

@@ -19,7 +19,13 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 abstract class AbstractSubForm extends AbstractSubFormType implements SubFormInterface, SubFormProviderNameInterface
 {
+    /**
+     * @var string
+     */
     public const FIELD_DATE_OF_BIRTH = 'date_of_birth';
+    /**
+     * @var string
+     */
     public const MIN_BIRTHDAY_DATE_STRING = '-18 years';
 
     /**

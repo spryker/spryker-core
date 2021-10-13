@@ -74,8 +74,14 @@ use Spryker\Zed\UrlStorage\Communication\Plugin\Synchronization\UrlSynchronizati
  */
 class SynchronizationFacadeTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const PARAM_PROJECT = 'PROJECT';
 
+    /**
+     * @var string
+     */
     protected const PROJECT_SUITE = 'suite';
 
     /**
@@ -367,8 +373,11 @@ class SynchronizationFacadeTest extends Unit
 
         $this->tester->setConfig(KernelConstants::PROJECT_NAMESPACES, ['Pyz']);
 
-        $container = new Container();
-        $container[SynchronizationDependencyProvider::CLIENT_QUEUE] = function (Container $container) {
+        $this->tester->setDependency(SynchronizationDependencyProvider::PLUGINS_SYNCHRONIZATION_DATA, function () {
+            return $this->createSynchronizationDataPlugins();
+        });
+
+        $this->tester->setDependency(SynchronizationDependencyProvider::CLIENT_QUEUE, function () {
             $queueMock = $this->createQueueClientBridge();
             $synchronizationPlugins = $this->createSynchronizationDataPlugins();
 
@@ -381,15 +390,11 @@ class SynchronizationFacadeTest extends Unit
             $queueMock->expects($this->never())->method('sendMessages');
 
             return $queueMock;
-        };
+        });
 
-        $container[SynchronizationDependencyProvider::PLUGINS_SYNCHRONIZATION_DATA] = function (Container $container) {
-            return $this->createSynchronizationDataPlugins();
-        };
-        $container[SynchronizationDependencyProvider::SERVICE_UTIL_ENCODING] = $this->createUtilEncodingServiceBridge();
+        $this->tester->setDependency(SynchronizationDependencyProvider::SERVICE_UTIL_ENCODING, $this->createUtilEncodingServiceBridge());
 
-        $this->prepareFacade($container);
-        $this->synchronizationFacade->executeResolvedPluginsBySources([]);
+        $this->tester->getFacade()->executeResolvedPluginsBySources([]);
     }
 
     /**

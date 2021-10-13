@@ -16,14 +16,38 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class AttributeController extends AbstractController
 {
+    /**
+     * @var string
+     */
     public const PARAM_ID = 'id';
+    /**
+     * @var string
+     */
     public const PARAM_SEARCH_TEXT = 'q';
+    /**
+     * @var string
+     */
     public const PARAM_TERM = 'term';
+    /**
+     * @var string
+     */
     public const PARAM_LOCALE_CODE = 'locale_code';
 
+    /**
+     * @var string
+     */
     public const MESSAGE_ATTRIBUTE_CREATE_SUCCESS = 'Product attribute was created successfully.';
+    /**
+     * @var string
+     */
     public const MESSAGE_ATTRIBUTE_CREATE_ERROR = 'Product attribute was not created.';
+    /**
+     * @var string
+     */
     public const MESSAGE_ATTRIBUTE_UPDATE_SUCCESS = 'Product attribute was updated successfully.';
+    /**
+     * @var string
+     */
     public const MESSAGE_TRANSLATION_UPDATE_SUCCESS = 'Translation was updated successfully.';
 
     /**
@@ -57,7 +81,7 @@ class AttributeController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function createAction(Request $request)
     {
@@ -105,7 +129,7 @@ class AttributeController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function translateAction(Request $request)
     {
@@ -164,7 +188,7 @@ class AttributeController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function editAction(Request $request)
     {
@@ -205,7 +229,7 @@ class AttributeController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function viewAction(Request $request)
     {

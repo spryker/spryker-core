@@ -17,6 +17,9 @@ use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceProductInte
 
 class PriceProductValidator implements PriceProductValidatorInterface
 {
+    /**
+     * @var string
+     */
     public const CART_PRE_CHECK_PRICE_FAILED_TRANSLATION_KEY = 'cart.pre.check.price.failed';
 
     /**
@@ -56,7 +59,7 @@ class PriceProductValidator implements PriceProductValidatorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $validPriceProductTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $validPriceProductTransfers
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      * @param \Generated\Shared\Transfer\CartPreCheckResponseTransfer $cartPreCheckResponseTransfer
      *
@@ -79,7 +82,7 @@ class PriceProductValidator implements PriceProductValidatorInterface
     }
 
     /**
-     * @param string[] $productWithoutPriceSkus
+     * @param array<string> $productWithoutPriceSkus
      *
      * @return string
      */
@@ -96,15 +99,15 @@ class PriceProductValidator implements PriceProductValidatorInterface
     protected function createMessage(string $sku): MessageTransfer
     {
         return (new MessageTransfer())
-         ->setValue(static::CART_PRE_CHECK_PRICE_FAILED_TRANSLATION_KEY)
-         ->setParameters(['%sku%' => $sku]);
+            ->setValue(static::CART_PRE_CHECK_PRICE_FAILED_TRANSLATION_KEY)
+            ->setParameters(['%sku%' => $sku]);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $items
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $items
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getProductWithoutPriceSkus(array $priceProductTransfers, array $items): array
     {
@@ -122,7 +125,7 @@ class PriceProductValidator implements PriceProductValidatorInterface
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductFilterTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductFilterTransfer>
      */
     protected function createPriceProductFilters(CartChangeTransfer $cartChangeTransfer): array
     {

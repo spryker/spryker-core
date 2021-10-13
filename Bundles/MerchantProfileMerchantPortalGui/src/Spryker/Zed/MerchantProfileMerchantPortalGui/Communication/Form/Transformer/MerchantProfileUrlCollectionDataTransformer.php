@@ -13,11 +13,9 @@ use Symfony\Component\Form\DataTransformerInterface;
 class MerchantProfileUrlCollectionDataTransformer implements DataTransformerInterface
 {
     /**
-     * @phpstan-return \ArrayObject<int, \Generated\Shared\Transfer\UrlTransfer>
+     * @param array<\Generated\Shared\Transfer\UrlTransfer> $value
      *
-     * @param \Generated\Shared\Transfer\UrlTransfer[] $value
-     *
-     * @return \ArrayObject|\Generated\Shared\Transfer\UrlTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\UrlTransfer>
      */
     public function transform($value): ArrayObject
     {
@@ -41,11 +39,9 @@ class MerchantProfileUrlCollectionDataTransformer implements DataTransformerInte
     }
 
     /**
-     * @phpstan-return \ArrayObject<int, \Generated\Shared\Transfer\UrlTransfer>
+     * @param array<\Generated\Shared\Transfer\UrlTransfer> $value
      *
-     * @param \Generated\Shared\Transfer\UrlTransfer[] $value
-     *
-     * @return \ArrayObject|\Generated\Shared\Transfer\UrlTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\UrlTransfer>
      */
     public function reverseTransform($value): ArrayObject
     {

@@ -26,6 +26,9 @@ use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface;
 use Spryker\Zed\Sales\Persistence\Propel\Mapper\SalesOrderItemMapperInterface;
 use Spryker\Zed\Sales\SalesConfig;
 
+/**
+ * @deprecated Use {@link \Spryker\Zed\Sales\Business\OrderWriter\SalesOrderWriter} instead.
+ */
 class SalesOrderSaver implements SalesOrderSaverInterface
 {
     use DatabaseTransactionHandlerTrait;
@@ -61,7 +64,7 @@ class SalesOrderSaver implements SalesOrderSaverInterface
     protected $store;
 
     /**
-     * @var \Spryker\Zed\Sales\Dependency\Plugin\OrderExpanderPreSavePluginInterface[]
+     * @var array<\Spryker\Zed\Sales\Dependency\Plugin\OrderExpanderPreSavePluginInterface>
      */
     protected $orderExpanderPreSavePlugins;
 
@@ -76,7 +79,7 @@ class SalesOrderSaver implements SalesOrderSaverInterface
     protected $salesOrderItemMapper;
 
     /**
-     * @var \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderPostSavePluginInterface[]
+     * @var array<\Spryker\Zed\SalesExtension\Dependency\Plugin\OrderPostSavePluginInterface>
      */
     protected $orderPostSavePlugins;
 
@@ -87,10 +90,10 @@ class SalesOrderSaver implements SalesOrderSaverInterface
      * @param \Spryker\Zed\Sales\SalesConfig $salesConfiguration
      * @param \Spryker\Zed\Locale\Persistence\LocaleQueryContainerInterface $localeQueryContainer
      * @param \Spryker\Shared\Kernel\Store $store
-     * @param \Spryker\Zed\Sales\Dependency\Plugin\OrderExpanderPreSavePluginInterface[] $orderExpanderPreSavePlugins
+     * @param array<\Spryker\Zed\Sales\Dependency\Plugin\OrderExpanderPreSavePluginInterface> $orderExpanderPreSavePlugins
      * @param \Spryker\Zed\Sales\Business\Model\Order\SalesOrderSaverPluginExecutorInterface $salesOrderSaverPluginExecutor
      * @param \Spryker\Zed\Sales\Persistence\Propel\Mapper\SalesOrderItemMapperInterface $salesOrderItemMapper
-     * @param \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderPostSavePluginInterface[] $orderPostSavePlugins
+     * @param array<\Spryker\Zed\SalesExtension\Dependency\Plugin\OrderPostSavePluginInterface> $orderPostSavePlugins
      */
     public function __construct(
         SalesToCountryInterface $countryFacade,
@@ -291,7 +294,7 @@ class SalesOrderSaver implements SalesOrderSaverInterface
     protected function hydrateSalesOrderEntityFromPlugins(QuoteTransfer $quoteTransfer, SpySalesOrder $salesOrderEntity): void
     {
         $salesOrderEntityTransfer = new SpySalesOrderEntityTransfer();
-        $salesOrderEntityTransfer->fromArray($salesOrderEntity->toArray(), true);
+        $salesOrderEntityTransfer->fromArray((array)$salesOrderEntity->toArray(), true);
 
         foreach ($this->orderExpanderPreSavePlugins as $preSaveHydrateOrderPlugin) {
             $salesOrderEntityTransfer = $preSaveHydrateOrderPlugin->expand($salesOrderEntityTransfer, $quoteTransfer);
@@ -432,7 +435,7 @@ class SalesOrderSaver implements SalesOrderSaverInterface
             $saveOrderTransfer->addOrderItem(clone $itemTransfer);
         }
 
-        $saveOrderTransfer->fromArray($salesOrderEntity->toArray(), true);
+        $saveOrderTransfer->fromArray((array)$salesOrderEntity->toArray(), true);
     }
 
     /**

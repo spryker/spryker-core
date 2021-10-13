@@ -15,10 +15,17 @@ class CustomerTableButtonCreator extends AbstractButtonCreator implements Custom
 {
     /**
      * @uses \Spryker\Zed\CompanyUserGui\Communication\Controller\CreateCompanyUserController::attachCustomerAction
+     * @var string
      */
     protected const PATH_ATTACH_CUSTOMER_TO_COMPANY = '/company-user-gui/create-company-user/attach-customer';
+    /**
+     * @var string
+     */
     protected const BUTTON_ATTACH_CUSTOMER_TO_COMPANY_TITLE = 'Attach to company';
 
+    /**
+     * @var string
+     */
     protected const PARAM_ID_CUSTOMER = 'id-customer';
 
     /**
@@ -37,9 +44,9 @@ class CustomerTableButtonCreator extends AbstractButtonCreator implements Custom
 
     /**
      * @param int $idCustomer
-     * @param \Generated\Shared\Transfer\ButtonTransfer[] $buttonTransfers
+     * @param array<\Generated\Shared\Transfer\ButtonTransfer> $buttonTransfers
      *
-     * @return \Generated\Shared\Transfer\ButtonTransfer[]
+     * @return array<\Generated\Shared\Transfer\ButtonTransfer>
      */
     public function addAttachCustomerToCompanyButton(int $idCustomer, array $buttonTransfers): array
     {

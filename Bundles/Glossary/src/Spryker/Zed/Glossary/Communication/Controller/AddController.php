@@ -19,14 +19,20 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class AddController extends AbstractController
 {
+    /**
+     * @var string
+     */
     public const FORM_ADD_TYPE = 'add';
 
+    /**
+     * @var string
+     */
     public const MESSAGE_CREATE_SUCCESS = 'Translation %d was created successfully.';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function indexAction(Request $request)
     {

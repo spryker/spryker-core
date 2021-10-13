@@ -17,7 +17,7 @@ interface ProductAlternativeStorageFacadeInterface
      *
      * @api
      *
-     * @param int[] $idProduct
+     * @param array<int> $idProduct
      *
      * @return void
      */
@@ -29,7 +29,7 @@ interface ProductAlternativeStorageFacadeInterface
      *
      * @api
      *
-     * @param int[] $productIds
+     * @param array<int> $productIds
      *
      * @return void
      */
@@ -41,7 +41,7 @@ interface ProductAlternativeStorageFacadeInterface
      *
      * @api
      *
-     * @param int[] $productIds
+     * @param array<int> $productIds
      *
      * @return void
      */
@@ -55,9 +55,9 @@ interface ProductAlternativeStorageFacadeInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     * @param int[] $productAlternativeStorageIds
+     * @param array<int> $productAlternativeStorageIds
      *
-     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     * @return array<\Generated\Shared\Transfer\SynchronizationDataTransfer>
      */
     public function getSynchronizationDataTransfersByFilterAndProductAlternativeStorageIds(
         FilterTransfer $filterTransfer,
@@ -72,9 +72,9 @@ interface ProductAlternativeStorageFacadeInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     * @param int[] $productReplacementForStorageIds
+     * @param array<int> $productReplacementForStorageIds
      *
-     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     * @return array<\Generated\Shared\Transfer\SynchronizationDataTransfer>
      */
     public function getSynchronizationDataTransfersByFilterAndProductReplacementForStorageIds(
         FilterTransfer $filterTransfer,

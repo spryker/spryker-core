@@ -43,6 +43,9 @@ use SprykerTest\Zed\PriceProductStorage\PriceProductStorageConfigMock;
  */
 class PriceProductAbstractStorageListenerTest extends Unit
 {
+    /**
+     * @var int
+     */
     protected const EXPECTED_PRICES_COUNT = 1;
 
     /**

@@ -1,0 +1,44 @@
+[
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/UtilDataReader/src/Spryker/Service/UtilDataReader/Model/BatchIterator/PdoBatchIterator.php",
+        "description": "\n      Access: Method Spryker\\Service\\UtilDataReader\\Model\\BatchIterator\\PdoBatchIterator::__construct() accesses Spryker\\Zed\\Kernel\\Persistence\\QueryContainer\\QueryContainerInterface which violates rule \"No call from Service to Zed\"\n    ",
+        "rule": "LayerAccessRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/UtilDataReader/src/Spryker/Service/UtilDataReader/Model/BatchIterator/PdoBatchIterator.php",
+        "description": "\n      Access: Method Spryker\\Service\\UtilDataReader\\Model\\BatchIterator\\PdoBatchIterator::loadChunk() accesses Spryker\\Zed\\PropelOrm\\Business\\Runtime\\ActiveQuery\\Criteria which violates rule \"No call from Service to Zed\"\n    ",
+        "rule": "LayerAccessRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/UtilDataReader/src/Spryker/Service/UtilDataReader/Model/BatchIterator/PropelBatchIterator.php",
+        "description": "\n      Access: Method Spryker\\Service\\UtilDataReader\\Model\\BatchIterator\\PropelBatchIterator::loadChunk() accesses Spryker\\Zed\\PropelOrm\\Business\\Runtime\\ActiveQuery\\Criteria which violates rule \"No call from Service to Zed\"\n    ",
+        "rule": "LayerAccessRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/UtilDataReader/src/Spryker/Service/UtilDataReader/UtilDataReaderService.php",
+        "description": "\n      Access: Method Spryker\\Service\\UtilDataReader\\UtilDataReaderService::getPdoBatchIterator() accesses Spryker\\Zed\\Kernel\\Persistence\\QueryContainer\\QueryContainerInterface which violates rule \"No call from Service to Zed\"\n    ",
+        "rule": "LayerAccessRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/UtilDataReader/src/Spryker/Service/UtilDataReader/UtilDataReaderService.php",
+        "description": "\n      Access: Method Spryker\\Service\\UtilDataReader\\UtilDataReaderService::getBatchIteratorOrdered() accesses Spryker\\Zed\\Kernel\\Persistence\\QueryContainer\\QueryContainerInterface which violates rule \"No call from Service to Zed\"\n    ",
+        "rule": "LayerAccessRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/UtilDataReader/src/Spryker/Service/UtilDataReader/UtilDataReaderServiceFactory.php",
+        "description": "\n      Access: Method Spryker\\Service\\UtilDataReader\\UtilDataReaderServiceFactory::createPdoBatchIterator() accesses Spryker\\Zed\\Kernel\\Persistence\\QueryContainer\\QueryContainerInterface which violates rule \"No call from Service to Zed\"\n    ",
+        "rule": "LayerAccessRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    }
+]

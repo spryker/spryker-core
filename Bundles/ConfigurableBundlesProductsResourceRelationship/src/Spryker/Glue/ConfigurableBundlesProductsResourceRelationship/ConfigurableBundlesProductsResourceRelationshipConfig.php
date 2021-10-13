@@ -13,11 +13,13 @@ class ConfigurableBundlesProductsResourceRelationshipConfig extends AbstractBund
 {
     /**
      * @uses \Spryker\Glue\ProductsRestApi\ProductsRestApiConfig::RESOURCE_CONCRETE_PRODUCTS
+     * @var string
      */
     public const RESOURCE_CONCRETE_PRODUCTS = 'concrete-products';
 
     /**
      * @uses \Spryker\Glue\ConfigurableBundlesRestApi\ConfigurableBundlesRestApiConfig::RESOURCE_CONFIGURABLE_BUNDLE_TEMPLATE_SLOTS
+     * @var string
      */
     public const RESOURCE_CONFIGURABLE_BUNDLE_TEMPLATE_SLOTS = 'configurable-bundle-template-slots';
 }

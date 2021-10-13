@@ -1,21 +1,21 @@
 {
-  "name": "spryker/csv",
-  "type": "library",
-  "description": "Csv module",
-  "license": "proprietary",
-  "require": {
-    "league/csv": "^9.2",
-    "php": ">=7.3"
-  },
-  "minimum-stability": "dev",
-  "prefer-stable": true,
-  "scripts": {},
-  "extra": {
-    "branch-alias": {
-      "dev-master": "3.0.x-dev"
+    "name": "spryker/csv",
+    "type": "library",
+    "description": "Csv module",
+    "license": "proprietary",
+    "require": {
+        "league/csv": "^9.2",
+        "php": ">=7.4"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "scripts": {},
+    "extra": {
+        "branch-alias": {
+            "dev-master": "3.0.x-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true
     }
-  },
-  "config": {
-    "sort-packages": true
-  }
 }

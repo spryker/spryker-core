@@ -23,44 +23,55 @@ class ProductTableDataMapper
 {
     /**
      * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductGuiTableConfigurationProvider::COL_KEY_SKU
+     * @var string
      */
     protected const COL_KEY_SKU = 'sku';
 
     /**
      * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductGuiTableConfigurationProvider::COL_KEY_NAME
+     * @var string
      */
     protected const COL_KEY_NAME = 'name';
 
     /**
      * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductGuiTableConfigurationProvider::COL_KEY_STATUS
+     * @var string
      */
     protected const COL_KEY_STATUS = 'status';
 
     /**
      * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductGuiTableConfigurationProvider::COL_KEY_IMAGE
+     * @var string
      */
     protected const COL_KEY_IMAGE = 'image';
 
     /**
      * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductGuiTableConfigurationProvider::COL_KEY_OFFERS
+     * @var string
      */
     protected const COL_KEY_OFFERS = 'offers';
 
     /**
      * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductGuiTableConfigurationProvider::COL_KEY_STORES
+     * @var string
      */
     protected const COL_KEY_STORES = 'stores';
 
     /**
      * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductGuiTableConfigurationProvider::COL_KEY_VALID_FROM
+     * @var string
      */
     protected const COL_KEY_VALID_FROM = 'validFrom';
 
     /**
      * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductGuiTableConfigurationProvider::COL_KEY_VALID_TO
+     * @var string
      */
     protected const COL_KEY_VALID_TO = 'validTo';
 
+    /**
+     * @var array
+     */
     public const PRODUCT_DATA_COLUMN_MAP = [
         self::COL_KEY_SKU => SpyProductTableMap::COL_SKU,
         self::COL_KEY_NAME => SpyProductLocalizedAttributesTableMap::COL_NAME,
@@ -86,9 +97,7 @@ class ProductTableDataMapper
     }
 
     /**
-     * @phpstan-param array<mixed> $productTableDataArray
-     *
-     * @param array $productTableDataArray
+     * @param array<mixed> $productTableDataArray
      * @param \Generated\Shared\Transfer\ProductConcreteCollectionTransfer $productConcreteCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConcreteCollectionTransfer
@@ -118,13 +127,9 @@ class ProductTableDataMapper
     }
 
     /**
-     * @phpstan-param array<mixed> $productTableRowDataArray
+     * @param array<mixed> $productTableRowDataArray
      *
-     * @phpstan-return array<mixed>
-     *
-     * @param array $productTableRowDataArray
-     *
-     * @return array
+     * @return array<mixed>
      */
     protected function prepareProductStoresTableData(array $productTableRowDataArray): array
     {
@@ -142,13 +147,9 @@ class ProductTableDataMapper
     }
 
     /**
-     * @phpstan-param array<mixed> $productTableRowDataArray
+     * @param array<mixed> $productTableRowDataArray
      *
-     * @phpstan-return array<mixed>
-     *
-     * @param array $productTableRowDataArray
-     *
-     * @return array
+     * @return array<mixed>
      */
     protected function prepareProductAttributesTableData(array $productTableRowDataArray): array
     {
@@ -175,9 +176,7 @@ class ProductTableDataMapper
     }
 
     /**
-     * @phpstan-param array<mixed> $productTableRowDataArray
-     *
-     * @param array $productTableRowDataArray
+     * @param array<mixed> $productTableRowDataArray
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer

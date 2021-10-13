@@ -28,15 +28,28 @@ class CompanyUnitAddressTable extends AbstractTable
     protected const COL_COUNTRY_NAME = SpyCountryTableMap::COL_NAME;
     protected const COL_COMPANY_NAME = SpyCompanyTableMap::COL_NAME;
 
+    /**
+     * @var string
+     */
     protected const COL_COUNTRY_RELATION = 'Country';
+    /**
+     * @var string
+     */
     protected const COL_COMPANY_RELATION = 'Company';
 
+    /**
+     * @var string
+     */
     protected const COL_ACTIONS = 'Actions';
 
+    /**
+     * @var string
+     */
     protected const REQUEST_ID_COMPANY_UNIT_ADDRESS = 'id-company-unit-address';
 
     /**
      * @uses \Spryker\Zed\CompanyUnitAddressGui\Communication\Controller\EditCompanyUnitAddressController::indexAction()
+     * @var string
      */
     protected const URL_COMPANY_UNIT_ADDRESS_EDIT = '/company-unit-address-gui/edit-company-unit-address';
 
@@ -46,25 +59,25 @@ class CompanyUnitAddressTable extends AbstractTable
     protected $companyUnitAddressQuery;
 
     /**
-     * @var \Spryker\Zed\CompanyUnitAddressGuiExtension\Dependency\Plugin\CompanyUnitAddressTableConfigExpanderPluginInterface[]
+     * @var array<\Spryker\Zed\CompanyUnitAddressGuiExtension\Dependency\Plugin\CompanyUnitAddressTableConfigExpanderPluginInterface>
      */
     protected $companyUnitAddressTableConfigExpanderPlugins;
 
     /**
-     * @var \Spryker\Zed\CompanyUnitAddressGuiExtension\Dependency\Plugin\CompanyUnitAddressTableHeaderExpanderPluginInterface[]
+     * @var array<\Spryker\Zed\CompanyUnitAddressGuiExtension\Dependency\Plugin\CompanyUnitAddressTableHeaderExpanderPluginInterface>
      */
     protected $companyUnitAddressTableHeaderExpanderPlugins;
 
     /**
-     * @var \Spryker\Zed\CompanyUnitAddressGuiExtension\Dependency\Plugin\CompanyUnitAddressTableDataExpanderPluginInterface[]
+     * @var array<\Spryker\Zed\CompanyUnitAddressGuiExtension\Dependency\Plugin\CompanyUnitAddressTableDataExpanderPluginInterface>
      */
     protected $companyUnitAddressTableDataExpanderPlugins;
 
     /**
      * @param \Orm\Zed\CompanyUnitAddress\Persistence\SpyCompanyUnitAddressQuery $companyUnitAddressQuery
-     * @param \Spryker\Zed\CompanyUnitAddressGuiExtension\Dependency\Plugin\CompanyUnitAddressTableConfigExpanderPluginInterface[] $companyTableConfigExpanderPlugins
-     * @param \Spryker\Zed\CompanyUnitAddressGuiExtension\Dependency\Plugin\CompanyUnitAddressTableHeaderExpanderPluginInterface[] $companyTableHeaderExpanderPlugins
-     * @param \Spryker\Zed\CompanyUnitAddressGuiExtension\Dependency\Plugin\CompanyUnitAddressTableDataExpanderPluginInterface[] $companyTableDataExpanderPlugins
+     * @param array<\Spryker\Zed\CompanyUnitAddressGuiExtension\Dependency\Plugin\CompanyUnitAddressTableConfigExpanderPluginInterface> $companyTableConfigExpanderPlugins
+     * @param array<\Spryker\Zed\CompanyUnitAddressGuiExtension\Dependency\Plugin\CompanyUnitAddressTableHeaderExpanderPluginInterface> $companyTableHeaderExpanderPlugins
+     * @param array<\Spryker\Zed\CompanyUnitAddressGuiExtension\Dependency\Plugin\CompanyUnitAddressTableDataExpanderPluginInterface> $companyTableDataExpanderPlugins
      */
     public function __construct(
         SpyCompanyUnitAddressQuery $companyUnitAddressQuery,

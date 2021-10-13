@@ -31,7 +31,13 @@ use Twig\Environment;
  */
 class TwigRendererTest extends Unit
 {
+    /**
+     * @var int
+     */
     public const INDEX_OF_TEMPLATE_TEXT = 0;
+    /**
+     * @var int
+     */
     public const INDEX_OF_TEMPLATE_HTML = 1;
 
     /**
@@ -66,18 +72,12 @@ class TwigRendererTest extends Unit
     protected function getTwigEnvironmentMock(): MailToRendererInterface
     {
         $twigEnvironmentMock = $this->getMockBuilder(Environment::class)->disableOriginalConstructor()->setMethods(['render', 'getExtension'])->getMock();
-        $twigEnvironmentMock->expects($this->at(0))->method('getExtension')->with(TwigTranslatorPlugin::class)->willReturn(new TwigTranslatorPlugin());
+        $twigEnvironmentMock->expects($this->once())->method('getExtension')->with(TwigTranslatorPlugin::class)->willReturn(new TwigTranslatorPlugin());
         $twigEnvironmentMock
-            ->expects($this->at(1))
+            ->expects($this->exactly(2))
             ->method('render')
-            ->with(TwigRenderer::LAYOUT_TEMPLATE_TEXT)
-            ->willReturn('TextTemplate');
-
-        $twigEnvironmentMock
-            ->expects($this->at(2))
-            ->method('render')
-            ->with(TwigRenderer::LAYOUT_TEMPLATE_HTML)
-            ->willReturn('HtmlTemplate');
+            ->withConsecutive([TwigRenderer::LAYOUT_TEMPLATE_TEXT], [TwigRenderer::LAYOUT_TEMPLATE_HTML])
+            ->willReturnOnConsecutiveCalls('TextTemplate', 'HtmlTemplate');
 
         $rendererBridge = new MailToRendererBridge($twigEnvironmentMock);
 

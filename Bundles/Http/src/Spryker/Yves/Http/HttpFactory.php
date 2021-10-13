@@ -31,7 +31,7 @@ class HttpFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Shared\HttpExtension\Dependency\Plugin\FragmentHandlerPluginInterface[]
+     * @return array<\Spryker\Shared\HttpExtension\Dependency\Plugin\FragmentHandlerPluginInterface>
      */
     public function getFragmentHandlerPlugins(): array
     {

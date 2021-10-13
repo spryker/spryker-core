@@ -16,6 +16,9 @@ use Spryker\Glue\Kernel\Container;
  */
 class ContentBannersRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_CONTENT_BANNER = 'CLIENT_CONTENT_BANNER';
 
     /**

@@ -23,10 +23,10 @@ interface ConfigurableBundleTemplateImageStorageReaderInterface
     ): ?ConfigurableBundleTemplateImageStorageTransfer;
 
     /**
-     * @param int[] $configurableBundleTemplateIds
+     * @param array<int> $configurableBundleTemplateIds
      * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateImageStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\ConfigurableBundleTemplateImageStorageTransfer>
      */
     public function getBulkConfigurableBundleTemplateImageStorage(array $configurableBundleTemplateIds, string $localeName): array;
 }

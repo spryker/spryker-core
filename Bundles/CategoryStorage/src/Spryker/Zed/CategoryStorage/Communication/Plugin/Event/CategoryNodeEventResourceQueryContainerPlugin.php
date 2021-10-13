@@ -15,6 +15,8 @@ use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourceQueryContainerPlugi
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
+ * @deprecated Use {@link \Spryker\Zed\CategoryStorage\Communication\Plugin\Publisher\CategoryNodePublisherTriggerPlugin} instead.
+ *
  * @method \Spryker\Zed\CategoryStorage\Business\CategoryStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\CategoryStorage\Persistence\CategoryStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\CategoryStorage\Communication\CategoryStorageCommunicationFactory getFactory()
@@ -39,7 +41,7 @@ class CategoryNodeEventResourceQueryContainerPlugin extends AbstractPlugin imple
      *
      * @api
      *
-     * @param int[] $ids
+     * @param array<int> $ids
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria|null
      */
@@ -51,7 +53,12 @@ class CategoryNodeEventResourceQueryContainerPlugin extends AbstractPlugin imple
             $query->clear();
         }
 
-        return $query->orderBy($this->getIdColumnName());
+        $idColumnName = $this->getIdColumnName();
+        if (!$idColumnName) {
+            return $query;
+        }
+
+        return $query->orderBy($idColumnName);
     }
 
     /**

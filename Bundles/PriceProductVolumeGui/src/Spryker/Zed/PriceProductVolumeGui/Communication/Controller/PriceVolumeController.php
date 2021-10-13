@@ -19,27 +19,73 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class PriceVolumeController extends AbstractController
 {
+    /**
+     * @var string
+     */
     protected const REQUEST_PARAM_ID_PRODUCT_ABSTRACT = 'id-product-abstract';
+    /**
+     * @var string
+     */
     protected const REQUEST_PARAM_ID_PRODUCT_CONCRETE = 'id-product-concrete';
+    /**
+     * @var string
+     */
     protected const REQUEST_PARAM_ID_PRODUCT = 'id-product';
+    /**
+     * @var string
+     */
     protected const REQUEST_PARAM_STORE_NAME = 'store-name';
+    /**
+     * @var string
+     */
     protected const REQUEST_PARAM_CURRENCY_CODE = 'currency-code';
+    /**
+     * @var string
+     */
     protected const REQUEST_PARAM_PRICE_DIMENSION = 'price-dimension';
+    /**
+     * @var string
+     */
+    protected const REQUEST_PARAM_PRICE_TYPE = 'price-type';
+    /**
+     * @var string
+     */
     protected const REQUEST_PARAM_SAVE_AND_EXIT = 'save_and_exit';
+    /**
+     * @var string
+     */
     protected const REQUEST_PARAM_SKU = 'sku';
 
+    /**
+     * @var string
+     */
     protected const PRICE_PRODUCT_VOLUME_EDIT_URL = '/price-product-volume-gui/price-volume/edit';
+    /**
+     * @var string
+     */
     protected const PRODUCT_CONCRETE_EDIT_URL = '/product-management/edit/variant';
+    /**
+     * @var string
+     */
     protected const PRODUCT_ABSTRACT_EDIT_URL = '/product-management/edit';
 
+    /**
+     * @var string
+     */
     protected const MESSAGE_VOLUME_PRICES_UPDATE_SUCCESS = 'Volume prices successfully saved.';
+    /**
+     * @var string
+     */
     protected const PARAM_URL_FRAGMENT = 'fragment';
+    /**
+     * @var string
+     */
     protected const PARAM_URL_FRAGMENT_DEFAULT_VALUE = 'tab-content-%s';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function addAction(Request $request)
     {
@@ -69,7 +115,7 @@ class PriceVolumeController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function editAction(Request $request)
     {
@@ -153,7 +199,8 @@ class PriceVolumeController extends AbstractController
             $request->get(static::REQUEST_PARAM_ID_PRODUCT_CONCRETE),
             $request->get(static::REQUEST_PARAM_STORE_NAME),
             $request->get(static::REQUEST_PARAM_CURRENCY_CODE),
-            $request->get(static::REQUEST_PARAM_PRICE_DIMENSION, [])
+            $request->get(static::REQUEST_PARAM_PRICE_DIMENSION, []),
+            $request->get(static::REQUEST_PARAM_PRICE_TYPE)
         );
 
         return $priceProductTransfer;
@@ -172,6 +219,7 @@ class PriceVolumeController extends AbstractController
             static::REQUEST_PARAM_STORE_NAME => $request->get(static::REQUEST_PARAM_STORE_NAME),
             static::REQUEST_PARAM_CURRENCY_CODE => $request->get(static::REQUEST_PARAM_CURRENCY_CODE),
             static::REQUEST_PARAM_PRICE_DIMENSION => $request->get(static::REQUEST_PARAM_PRICE_DIMENSION, []),
+            static::REQUEST_PARAM_PRICE_TYPE => $request->get(static::REQUEST_PARAM_PRICE_TYPE),
         ];
 
         return $this->generateUrl(static::PRICE_PRODUCT_VOLUME_EDIT_URL, $query);

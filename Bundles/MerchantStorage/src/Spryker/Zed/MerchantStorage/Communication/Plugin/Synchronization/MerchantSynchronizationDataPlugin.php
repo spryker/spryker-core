@@ -8,7 +8,7 @@
 namespace Spryker\Zed\MerchantStorage\Communication\Plugin\Synchronization;
 
 use Generated\Shared\Transfer\FilterTransfer;
-use Generated\Shared\Transfer\MerchantCriteriaTransfer;
+use Generated\Shared\Transfer\MerchantStorageCriteriaTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Shared\MerchantStorage\MerchantStorageConfig;
@@ -25,6 +25,7 @@ class MerchantSynchronizationDataPlugin extends AbstractPlugin implements Synchr
 {
     /**
      * @uses \Propel\Runtime\ActiveQuery\Criteria::ASC
+     * @var string
      */
     protected const ORDER_DIRECTION = 'ASC';
 
@@ -59,15 +60,15 @@ class MerchantSynchronizationDataPlugin extends AbstractPlugin implements Synchr
      *
      * @param int $offset
      * @param int $limit
-     * @param int[] $ids
+     * @param array<int> $ids
      *
-     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     * @return array<\Generated\Shared\Transfer\SynchronizationDataTransfer>
      */
     public function getData(int $offset, int $limit, array $ids = []): array
     {
         $merchantStorageEntities = $this->getRepository()
             ->getFilteredMerchantStorageEntityTransfers(
-                (new MerchantCriteriaTransfer())
+                (new MerchantStorageCriteriaTransfer())
                     ->setFilter($this->createFilterTransfer($offset, $limit))
                     ->setMerchantIds($ids)
             );
@@ -127,7 +128,7 @@ class MerchantSynchronizationDataPlugin extends AbstractPlugin implements Synchr
     /**
      * @param \Propel\Runtime\Collection\ObjectCollection $merchantStorageEntities
      *
-     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     * @return array<\Generated\Shared\Transfer\SynchronizationDataTransfer>
      */
     protected function mapMerchantStorageEntitiesToSynchronizationDataTransfers(ObjectCollection $merchantStorageEntities): array
     {

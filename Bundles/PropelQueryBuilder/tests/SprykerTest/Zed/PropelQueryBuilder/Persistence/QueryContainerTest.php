@@ -36,11 +36,26 @@ use Spryker\Zed\PropelQueryBuilder\Persistence\PropelQueryBuilderQueryContainer;
  */
 class QueryContainerTest extends Unit
 {
+    /**
+     * @var int
+     */
     public const LIMIT = 10;
+    /**
+     * @var int
+     */
     public const PAGE = 2;
 
+    /**
+     * @var int
+     */
     public const EXPECTED_COUNT = 8;
+    /**
+     * @var int
+     */
     public const EXPECTED_OFFSET = 10;
+    /**
+     * @var array
+     */
     public const EXPECTED_SKU_COLLECTION = [
         'test_concrete_sku_1',
         'test_concrete_sku_2',
@@ -411,7 +426,7 @@ class QueryContainerTest extends Unit
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Product\Persistence\SpyProduct[] $collection
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Product\Persistence\SpyProduct> $collection
      * @param array $expectedSkuCollection
      *
      * @return void

@@ -14,6 +14,9 @@ use org\bovigo\vfs\vfsStreamDirectory;
 
 class VirtualFilesystemHelper extends Module
 {
+    /**
+     * @var string
+     */
     protected const ASSERT_EXISTS_DIR_MESSAGE = 'Virtual directory "%s" doesn\'t exist';
 
     /**
@@ -34,7 +37,7 @@ class VirtualFilesystemHelper extends Module
     /**
      * @param string $path
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getVirtualDirectoryContents(string $path): array
     {

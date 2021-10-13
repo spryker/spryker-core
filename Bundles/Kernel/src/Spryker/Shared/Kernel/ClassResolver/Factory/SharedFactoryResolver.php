@@ -14,6 +14,9 @@ use Spryker\Shared\Kernel\ClassResolver\AbstractClassResolver;
  */
 class SharedFactoryResolver extends AbstractClassResolver
 {
+    /**
+     * @var string
+     */
     protected const RESOLVABLE_TYPE = 'SharedFactory';
 
     /**

@@ -25,11 +25,17 @@ class FactoryHelper extends Module
     use ConfigHelperTrait;
     use ClassResolverTrait;
 
+    /**
+     * @var string
+     */
     protected const FACTORY_CLASS_NAME_PATTERN = '\%1$s\Client\%3$s\%3$sFactory';
+    /**
+     * @var int
+     */
     protected const MODULE_NAME_POSITION = 2;
 
     /**
-     * @var \Spryker\Client\Kernel\AbstractFactory[]
+     * @var array<\Spryker\Client\Kernel\AbstractFactory>
      */
     protected $factoryStubs = [];
 

@@ -35,7 +35,7 @@ class ClassNameCandidatesBuilder implements ClassNameCandidatesBuilderInterface
      * @param string $moduleName
      * @param string $classNamePattern
      *
-     * @return string[]
+     * @return array<string>
      */
     public function buildClassNames(string $moduleName, string $classNamePattern): array
     {
@@ -49,10 +49,10 @@ class ClassNameCandidatesBuilder implements ClassNameCandidatesBuilderInterface
 
     /**
      * @param string $moduleName
-     * @param string[] $classNames
+     * @param array<string> $classNames
      * @param string $classNamePattern
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function addProjectClassNames(string $moduleName, array $classNames, string $classNamePattern): array
     {
@@ -67,10 +67,10 @@ class ClassNameCandidatesBuilder implements ClassNameCandidatesBuilderInterface
 
     /**
      * @param string $moduleName
-     * @param string[] $classNames
+     * @param array<string> $classNames
      * @param string $classNamePattern
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function addCoreClassNames(string $moduleName, array $classNames, string $classNamePattern): array
     {

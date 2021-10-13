@@ -13,16 +13,34 @@ use Spryker\Shared\Kernel\Transfer\TransferInterface;
 
 class AbstractTransfer extends ParentAbstractTransfer
 {
+    /**
+     * @var string
+     */
     public const STRING = 'string';
 
+    /**
+     * @var string
+     */
     public const INT = 'int';
 
+    /**
+     * @var string
+     */
     public const BOOL = 'bool';
 
+    /**
+     * @var string
+     */
     public const ARRAY_PROPERTY = 'array';
 
+    /**
+     * @var string
+     */
     public const TRANSFER = 'transfer';
 
+    /**
+     * @var string
+     */
     public const TRANSFER_COLLECTION = 'transferCollection';
 
     /**
@@ -51,7 +69,7 @@ class AbstractTransfer extends ParentAbstractTransfer
     protected $transfer;
 
     /**
-     * @var \ArrayObject|\Spryker\Shared\Kernel\Transfer\TransferInterface[]
+     * @var \ArrayObject<int, \Spryker\Shared\Kernel\Transfer\TransferInterface>
      */
     protected $transferCollection;
 
@@ -279,7 +297,7 @@ class AbstractTransfer extends ParentAbstractTransfer
     }
 
     /**
-     * @param \ArrayObject|\Spryker\Shared\Kernel\Transfer\TransferInterface[] $transferCollection
+     * @param \ArrayObject<int, \Spryker\Shared\Kernel\Transfer\TransferInterface> $transferCollection
      *
      * @return $this
      */
@@ -292,7 +310,7 @@ class AbstractTransfer extends ParentAbstractTransfer
     }
 
     /**
-     * @return \ArrayObject|\Spryker\Shared\Kernel\Transfer\TransferInterface[]
+     * @return \ArrayObject<int, \Spryker\Shared\Kernel\Transfer\TransferInterface>
      */
     public function getTransferCollection()
     {

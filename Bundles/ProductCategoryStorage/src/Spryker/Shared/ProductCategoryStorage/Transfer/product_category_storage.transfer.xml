@@ -1,13 +1,38 @@
 <?xml version="1.0"?>
-<transfers xmlns="spryker:transfer-01"
-           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-           xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+<transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="ProductCategoryStorage">
         <property name="categoryNodeId" type="int"/>
         <property name="categoryId" type="int"/>
         <property name="name" type="string"/>
         <property name="url" type="string"/>
+    </transfer>
+
+    <transfer name="ProductCategory">
+        <property name="category" type="Category"/>
+        <property name="fkProductAbstract" type="int"/>
+    </transfer>
+
+    <transfer name="Category">
+        <property name="nodeCollection" type="NodeCollection"/>
+    </transfer>
+
+    <transfer name="NodeCollection">
+        <property name="nodes" type="Node[]" singular="node"/>
+    </transfer>
+
+    <transfer name="Node">
+        <property name="idCategoryNode" type="int"/>
+        <property name="fkCategory" type="int"/>
+    </transfer>
+
+    <transfer name="ProductAbstractLocalizedAttributes">
+        <property name="idProductAbstract" type="int"/>
+        <property name="locale" type="Locale"/>
+    </transfer>
+
+    <transfer name="Locale">
+        <property name="localeName" type="string"/>
     </transfer>
 
     <transfer name="ProductAbstractCategoryStorage">
@@ -18,10 +43,32 @@
     <transfer name="SynchronizationData">
         <property name="locale" type="string"/>
         <property name="reference" type="string"/>
+        <property name="store" type="string"/>
     </transfer>
 
-    <transfer name="Node">
+    <transfer name="CategoryNodeAggregation">
         <property name="idCategoryNode" type="int"/>
+        <property name="idCategoryNodeDescendant" type="int"/>
+        <property name="idCategory" type="int"/>
+        <property name="name" type="string"/>
+        <property name="url" type="string"/>
+        <property name="locale" type="string"/>
+        <property name="store" type="string"/>
+    </transfer>
+
+    <transfer name="Store">
+        <property name="name" type="string"/>
+        <property name="availableLocaleIsoCodes" type="array" singular="availableLocaleCode"/>
+    </transfer>
+
+    <transfer name="Filter">
+        <property name="limit" type="int"/>
+        <property name="offset" type="int"/>
+        <property name="orderBy" type="string"/>
+    </transfer>
+
+    <transfer name="CategoryNodeCriteria">
+        <property name="categoryNodeIds" type="int[]" singular="idCategoryNode"/>
     </transfer>
 
 </transfers>

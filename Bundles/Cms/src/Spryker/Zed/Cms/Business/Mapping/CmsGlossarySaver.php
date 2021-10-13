@@ -22,6 +22,9 @@ use Throwable;
 
 class CmsGlossarySaver implements CmsGlossarySaverInterface
 {
+    /**
+     * @var string
+     */
     public const DEFAULT_TRANSLATION = '';
 
     /**

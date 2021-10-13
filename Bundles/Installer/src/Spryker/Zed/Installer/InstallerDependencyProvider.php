@@ -15,6 +15,9 @@ use Spryker\Zed\Kernel\Container;
  */
 class InstallerDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const INSTALLER_PLUGINS = 'installer plugins';
 
     /**
@@ -36,7 +39,7 @@ class InstallerDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * Overwrite on project level.
      *
-     * @return \Spryker\Zed\Installer\Dependency\Plugin\InstallerPluginInterface[]
+     * @return array<\Spryker\Zed\Installer\Dependency\Plugin\InstallerPluginInterface>
      */
     public function getInstallerPlugins()
     {

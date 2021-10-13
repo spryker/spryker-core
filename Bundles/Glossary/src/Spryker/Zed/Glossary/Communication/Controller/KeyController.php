@@ -21,6 +21,9 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class KeyController extends AbstractController
 {
+    /**
+     * @var string
+     */
     public const TERM = 'term';
 
     /**

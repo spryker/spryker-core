@@ -17,11 +17,29 @@ use Spryker\Shared\ZedRequest\Dependency\Service\ZedRequestToUtilEncodingService
  */
 class ZedRequestDependencyProvider extends AbstractDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const SERVICE_NETWORK = 'util network service';
+    /**
+     * @var string
+     */
     public const SERVICE_TEXT = 'util text service';
+    /**
+     * @var string
+     */
     public const META_DATA_PROVIDER_PLUGINS = 'META_DATA_PROVIDER_PLUGINS';
+    /**
+     * @var string
+     */
     public const CLIENT_MESSENGER = 'CLIENT_MESSENGER';
+    /**
+     * @var string
+     */
     public const PLUGINS_HEADER_EXPANDER = 'PLUGINS_HEADER_EXPANDER';
+    /**
+     * @var string
+     */
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
     /**
@@ -103,7 +121,7 @@ class ZedRequestDependencyProvider extends AbstractDependencyProvider
      * Key value pair of mata data provider plugins, array key is the index key of transfer in
      * Spryker\Shared\ZedRequest\Client\AbstractRequest::metaTransfers, you can read back by this key in Zed.
      *
-     * @return \Spryker\Client\ZedRequest\Dependency\Plugin\MetaDataProviderPluginInterface[]
+     * @return array<\Spryker\Client\ZedRequest\Dependency\Plugin\MetaDataProviderPluginInterface>
      */
     protected function getMetaDataProviderPlugins()
     {
@@ -125,7 +143,7 @@ class ZedRequestDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @return \Spryker\Client\ZedRequestExtension\Dependency\Plugin\HeaderExpanderPluginInterface[]
+     * @return array<\Spryker\Client\ZedRequestExtension\Dependency\Plugin\HeaderExpanderPluginInterface>
      */
     protected function getHeaderExpanderPlugins(): array
     {

@@ -13,7 +13,7 @@ use Spryker\Zed\Quote\QuoteConfig;
 class QuoteFieldsConfigurator implements QuoteFieldsConfiguratorInterface
 {
     /**
-     * @var \Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteFieldsAllowedForSavingProviderPluginInterface[]
+     * @var array<\Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteFieldsAllowedForSavingProviderPluginInterface>
      */
     protected $quoteFieldsAllowedForSavingProviderPlugins;
 
@@ -24,7 +24,7 @@ class QuoteFieldsConfigurator implements QuoteFieldsConfiguratorInterface
 
     /**
      * @param \Spryker\Zed\Quote\QuoteConfig $quoteConfig
-     * @param \Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteFieldsAllowedForSavingProviderPluginInterface[] $quoteFieldsAllowedForSavingProviderPlugins
+     * @param array<\Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteFieldsAllowedForSavingProviderPluginInterface> $quoteFieldsAllowedForSavingProviderPlugins
      */
     public function __construct(
         QuoteConfig $quoteConfig,
@@ -37,7 +37,7 @@ class QuoteFieldsConfigurator implements QuoteFieldsConfiguratorInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getQuoteFieldsAllowedForSaving(QuoteTransfer $quoteTransfer): array
     {
@@ -63,7 +63,7 @@ class QuoteFieldsConfigurator implements QuoteFieldsConfiguratorInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function executeQuoteFieldsAllowedForSavingProviderPlugins(QuoteTransfer $quoteTransfer): array
     {

@@ -24,7 +24,13 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class GlobalController extends AbstractController
 {
+    /**
+     * @var string
+     */
     protected const PARAM_STORE_CURRENCY_REQUEST = 'store_currency';
+    /**
+     * @var string
+     */
     protected const MESSAGE_UPDATE_SUCCESSFUL = 'The Global Thresholds is saved successfully.';
 
     /**

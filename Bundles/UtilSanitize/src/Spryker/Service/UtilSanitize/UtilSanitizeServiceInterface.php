@@ -48,4 +48,16 @@ interface UtilSanitizeServiceInterface
      * @return array
      */
     public function filterOutBlankValuesRecursively(array $array): array;
+
+    /**
+     * Specification:
+     *  - Sanitizes a string value with enabled SanitizerPluginInterface's.
+     *
+     * @api
+     *
+     * @param string $value
+     *
+     * @return string
+     */
+    public function sanitizeString(string $value): string;
 }

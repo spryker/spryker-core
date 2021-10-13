@@ -13,10 +13,14 @@ use Generated\Shared\Transfer\GuiTableDataResponseTransfer;
 
 class MerchantOrderItemTableExpander implements MerchantOrderItemTableExpanderInterface
 {
+    /**
+     * @var string
+     */
     protected const COL_KEY_CART_NOTE = 'cartNote';
 
     /**
      * @uses \Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface::COLUMN_TYPE_TEXT
+     * @var string
      */
     protected const COLUMN_TYPE_TEXT = 'text';
 
@@ -49,10 +53,9 @@ class MerchantOrderItemTableExpander implements MerchantOrderItemTableExpanderIn
         foreach ($guiTableDataResponseTransfer->getRows() as $guiTableRowDataResponseTransfer) {
             $responseData = $guiTableRowDataResponseTransfer->getResponseData();
 
-            $responseData[static::COL_KEY_CART_NOTE] = $guiTableRowDataResponseTransfer->requirePayload()
-                ->getPayload()
-                ->requireItem()
-                ->getItem()
+            $responseData[static::COL_KEY_CART_NOTE] = $guiTableRowDataResponseTransfer
+                ->getPayloadOrFail()
+                ->getItemOrFail()
                 ->getCartNote();
 
             $guiTableRowDataResponseTransfer->setResponseData($responseData);

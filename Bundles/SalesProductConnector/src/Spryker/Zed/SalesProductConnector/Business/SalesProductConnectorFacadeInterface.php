@@ -9,6 +9,7 @@ namespace Spryker\Zed\SalesProductConnector\Business;
 
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\ProductPageLoadTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 
@@ -76,9 +77,9 @@ interface SalesProductConnectorFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     public function expandOrderItemsWithMetadata(array $itemTransfers): array;
 
@@ -90,9 +91,9 @@ interface SalesProductConnectorFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\OrderTransfer[] $orderTransfers
+     * @param array<\Generated\Shared\Transfer\OrderTransfer> $orderTransfers
      *
-     * @return \Generated\Shared\Transfer\OrderTransfer[]
+     * @return array<\Generated\Shared\Transfer\OrderTransfer>
      */
     public function expandOrdersWithMetadata(array $orderTransfers): array;
 
@@ -102,9 +103,33 @@ interface SalesProductConnectorFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     public function expandOrderItemsWithProductIds(array $itemTransfers): array;
+
+    /**
+     * Specification:
+     * - Expands `ProductPageLoadTransfer` with popularity data and returns the modified object.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductPageLoadTransfer $productPageLoadTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductPageLoadTransfer
+     */
+    public function expandProductAbstractPageWithPopularity(
+        ProductPageLoadTransfer $productPageLoadTransfer
+    ): ProductPageLoadTransfer;
+
+    /**
+     * Specification:
+     * - Retrieves the list of productAbstractIds which need refresh.
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\ProductPageLoadTransfer
+     */
+    public function getProductPageLoadTransferForRefresh(): ProductPageLoadTransfer;
 }

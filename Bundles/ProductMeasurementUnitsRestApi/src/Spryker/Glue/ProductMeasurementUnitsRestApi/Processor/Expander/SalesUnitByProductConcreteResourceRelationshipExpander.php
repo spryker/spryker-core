@@ -17,6 +17,9 @@ use Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\RestResponseBuilder\Sa
 
 class SalesUnitByProductConcreteResourceRelationshipExpander implements SalesUnitByProductConcreteResourceRelationshipExpanderInterface
 {
+    /**
+     * @var string
+     */
     protected const PRODUCT_CONCRETE_MAPPING_TYPE = 'sku';
 
     /**
@@ -50,7 +53,7 @@ class SalesUnitByProductConcreteResourceRelationshipExpander implements SalesUni
     }
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
+     * @param array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface> $resources
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return void
@@ -114,9 +117,9 @@ class SalesUnitByProductConcreteResourceRelationshipExpander implements SalesUni
     }
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
+     * @param array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface> $resources
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getProductConcreteSkus(array $resources): array
     {

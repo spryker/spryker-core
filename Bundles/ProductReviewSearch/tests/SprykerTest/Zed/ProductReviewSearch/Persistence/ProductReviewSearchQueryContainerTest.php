@@ -27,6 +27,9 @@ use Spryker\Zed\ProductReviewSearch\Persistence\ProductReviewSearchQueryContaine
  */
 class ProductReviewSearchQueryContainerTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const TEST_LOCALE_NAME = 'xxx';
 
     /**

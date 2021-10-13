@@ -15,6 +15,8 @@ use Orm\Zed\Category\Persistence\Map\SpyCategoryTableMap;
 use Orm\Zed\ProductCategory\Persistence\Map\SpyProductCategoryTableMap;
 use Orm\Zed\ProductCategoryStorage\Persistence\SpyProductAbstractCategoryStorageQuery;
 use Orm\Zed\Url\Persistence\Map\SpyUrlTableMap;
+use Spryker\Client\Kernel\Container;
+use Spryker\Client\Queue\QueueDependencyProvider;
 use Spryker\Zed\Category\Dependency\CategoryEvents;
 use Spryker\Zed\ProductCategory\Dependency\ProductCategoryEvents;
 use Spryker\Zed\ProductCategoryStorage\Business\ProductCategoryStorageBusinessFactory;
@@ -44,6 +46,25 @@ use SprykerTest\Zed\ProductCategoryStorage\ProductCategoryStorageConfigMock;
  */
 class ProductCategoryStorageListenerTest extends Unit
 {
+    /**
+     * @var \SprykerTest\Zed\ProductCategoryStorage\ProductCategoryStorageCommunicationTester
+     */
+    protected $tester;
+
+    /**
+     * @return void
+     */
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $this->tester->setDependency(QueueDependencyProvider::QUEUE_ADAPTERS, function (Container $container) {
+            return [
+                $container->getLocator()->rabbitMq()->client()->createQueueAdapter(),
+            ];
+        });
+    }
+
     /**
      * @return void
      */

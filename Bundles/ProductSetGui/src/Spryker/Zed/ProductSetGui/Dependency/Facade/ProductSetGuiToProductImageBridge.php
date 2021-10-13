@@ -25,7 +25,7 @@ class ProductSetGuiToProductImageBridge implements ProductSetGuiToProductImageIn
     /**
      * @param int $idProductAbstract
      *
-     * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductImageSetTransfer>
      */
     public function getProductImagesSetCollectionByProductAbstractId($idProductAbstract)
     {

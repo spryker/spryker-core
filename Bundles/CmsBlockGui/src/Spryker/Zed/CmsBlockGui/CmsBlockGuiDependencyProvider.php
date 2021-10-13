@@ -21,23 +21,51 @@ use Spryker\Zed\Kernel\Container;
  */
 class CmsBlockGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_CMS_BLOCK = 'CMS_BLOCK_GUI:FACADE_CMS_BLOCK';
+    /**
+     * @var string
+     */
     public const FACADE_LOCALE = 'CMS_BLOCK_GUI:FACADE_LOCALE';
 
+    /**
+     * @var string
+     */
     public const QUERY_CONTAINER_CMS_BLOCK = 'CMS_BLOCK_GUI:QUERY_CONTAINER_CMS_BLOCK';
 
+    /**
+     * @var string
+     */
     public const PLUGINS_CMS_BLOCK_FORM = 'CMS_BLOCK_GUI:PLUGINS_CMS_BLOCK_FORM';
+    /**
+     * @var string
+     */
     public const PLUGINS_CMS_BLOCK_VIEW = 'CMS_BLOCK_GUI:PLUGINS_CMS_BLOCK_VIEW';
+    /**
+     * @var string
+     */
     public const PLUGIN_STORE_RELATION_FORM_TYPE = 'PLUGIN_STORE_RELATION_FORM_TYPE';
 
+    /**
+     * @var string
+     */
     public const TWIG_ENVIRONMENT = 'CMS_BLOCK_GUI:TWIG_ENVIRONMENT';
 
     /**
      * @uses \Spryker\Zed\Twig\Communication\Plugin\Application\TwigApplicationPlugin::SERVICE_TWIG
+     * @var string
      */
     public const SERVICE_TWIG = 'twig';
 
+    /**
+     * @var string
+     */
     public const PLUGINS_CMS_BLOCK_GLOSSARY_BEFORE_SAVE = 'PLUGINS_CMS_BLOCK_GLOSSARY_BEFORE_SAVE';
+    /**
+     * @var string
+     */
     public const PLUGINS_CMS_BLOCK_GLOSSARY_AFTER_FIND = 'PLUGINS_CMS_BLOCK_GLOSSARY_AFTER_FIND';
 
     /**
@@ -219,7 +247,7 @@ class CmsBlockGuiDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\CmsBlockGuiExtension\Dependency\Plugin\CmsBlockGlossaryAfterFindPluginInterface[]
+     * @return array<\Spryker\Zed\CmsBlockGuiExtension\Dependency\Plugin\CmsBlockGlossaryAfterFindPluginInterface>
      */
     protected function getCmsBlockGlossaryAfterFindPlugins(): array
     {
@@ -241,7 +269,7 @@ class CmsBlockGuiDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\CmsBlockGuiExtension\Dependency\Plugin\CmsBlockGlossaryBeforeSavePluginInterface[]
+     * @return array<\Spryker\Zed\CmsBlockGuiExtension\Dependency\Plugin\CmsBlockGlossaryBeforeSavePluginInterface>
      */
     protected function getCmsBlockGlossaryBeforeSavePlugins(): array
     {

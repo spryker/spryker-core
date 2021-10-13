@@ -111,7 +111,7 @@ class CmsPageReader implements CmsPageReaderInterface
     }
 
     /**
-     * @param string[] $urlLocaleMap
+     * @param array<string> $urlLocaleMap
      * @param \Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributes $cmsPageLocalizedAttributesEntity
      *
      * @return string|null
@@ -131,7 +131,7 @@ class CmsPageReader implements CmsPageReaderInterface
     /**
      * @param \Orm\Zed\Cms\Persistence\SpyCmsPage $cmsPageEntity
      *
-     * @return \Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributes[]
+     * @return array<\Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributes>
      */
     protected function createKeyMappingByLocalizedAttributes(SpyCmsPage $cmsPageEntity): array
     {
@@ -144,7 +144,7 @@ class CmsPageReader implements CmsPageReaderInterface
     }
 
     /**
-     * @param \Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributes[] $localizedAttributesIdEntityMap
+     * @param array<\Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributes> $localizedAttributesIdEntityMap
      * @param int $idLocale
      *
      * @return \Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributes

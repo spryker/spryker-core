@@ -20,9 +20,18 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class DatabaseImportConsole extends Console
 {
+    /**
+     * @var string
+     */
     public const COMMAND_NAME = 'propel:database:import';
+    /**
+     * @var string
+     */
     public const COMMAND_DESCRIPTION = 'Import an existing backup file.';
 
+    /**
+     * @var string
+     */
     public const ARGUMENT_BACKUP_PATH = 'backup-path';
 
     /**

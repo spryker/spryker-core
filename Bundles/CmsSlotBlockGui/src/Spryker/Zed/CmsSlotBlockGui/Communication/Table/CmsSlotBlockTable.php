@@ -17,6 +17,9 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class CmsSlotBlockTable extends AbstractTable
 {
+    /**
+     * @var string
+     */
     public const TABLE_CLASS = 'js-cms-slot-block-table';
 
     protected const COL_ID_CMS_BLOCK = SpyCmsBlockTableMap::COL_ID_CMS_BLOCK;
@@ -24,15 +27,39 @@ class CmsSlotBlockTable extends AbstractTable
     protected const COL_VALID_FROM = SpyCmsBlockTableMap::COL_VALID_FROM;
     protected const COL_VALID_TO = SpyCmsBlockTableMap::COL_VALID_TO;
     protected const COL_IS_ACTIVE = SpyCmsBlockTableMap::COL_IS_ACTIVE;
+    /**
+     * @var string
+     */
     protected const COL_STORE_RELATION = 'Store';
+    /**
+     * @var string
+     */
     protected const COL_ACTIONS = 'Actions';
 
+    /**
+     * @var string
+     */
     protected const BUTTON_MOVE_UP = 'Move Up';
+    /**
+     * @var string
+     */
     protected const BUTTON_MOVE_DOWN = 'Move Down';
+    /**
+     * @var string
+     */
     protected const BUTTON_VIEW_BLOCK = 'View Block';
+    /**
+     * @var string
+     */
     protected const BUTTON_DELETE = 'Delete';
 
+    /**
+     * @var string
+     */
     protected const URL_CMS_BLOCK_VIEW = '/cms-block-gui/view-block';
+    /**
+     * @var string
+     */
     protected const REQUEST_ID_CMS_BLOCK = 'id-cms-block';
 
     /**

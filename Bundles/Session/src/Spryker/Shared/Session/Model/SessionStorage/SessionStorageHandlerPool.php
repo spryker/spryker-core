@@ -13,12 +13,12 @@ use Spryker\Shared\Session\Exception\SessionHandlerNotFoundInSessionHandlerPoolE
 class SessionStorageHandlerPool implements SessionStorageHandlerPoolInterface
 {
     /**
-     * @var \SessionHandlerInterface[]
+     * @var array<\SessionHandlerInterface>
      */
     protected $sessionHandler = [];
 
     /**
-     * @param \Spryker\Shared\SessionExtension\Dependency\Plugin\SessionHandlerProviderPluginInterface[] $sessionHandlerProviderPlugins
+     * @param array<\Spryker\Shared\SessionExtension\Dependency\Plugin\SessionHandlerProviderPluginInterface> $sessionHandlerProviderPlugins
      */
     public function __construct(array $sessionHandlerProviderPlugins = [])
     {
@@ -67,7 +67,7 @@ class SessionStorageHandlerPool implements SessionStorageHandlerPoolInterface
     }
 
     /**
-     * @param \Spryker\Shared\SessionExtension\Dependency\Plugin\SessionHandlerProviderPluginInterface[] $sessionHandlerProviderPlugins
+     * @param array<\Spryker\Shared\SessionExtension\Dependency\Plugin\SessionHandlerProviderPluginInterface> $sessionHandlerProviderPlugins
      *
      * @return void
      */

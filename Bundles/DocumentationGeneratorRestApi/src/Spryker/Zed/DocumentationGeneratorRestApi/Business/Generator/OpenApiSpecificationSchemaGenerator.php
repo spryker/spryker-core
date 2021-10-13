@@ -22,11 +22,29 @@ use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\SchemaRendererIn
 
 class OpenApiSpecificationSchemaGenerator implements SchemaGeneratorInterface
 {
+    /**
+     * @var string
+     */
     protected const KEY_IS_TRANSFER = 'is_transfer';
+    /**
+     * @var string
+     */
     protected const KEY_REST_REQUEST_PARAMETER = 'rest_request_parameter';
+    /**
+     * @var string
+     */
     protected const KEY_TYPE = 'type';
+    /**
+     * @var string
+     */
     protected const MESSAGE_INVALID_TRANSFER_CLASS = 'Invalid transfer class provided in plugin %s';
+    /**
+     * @var string
+     */
     protected const PATTERN_SCHEMA_REFERENCE = '#/components/schemas/%s';
+    /**
+     * @var string
+     */
     protected const REST_REQUEST_BODY_PARAMETER_NOT_REQUIRED = 'no';
 
     /**

@@ -18,7 +18,7 @@ use Generated\Shared\Transfer\RestOrdersAttributesTransfer;
 class OrderMapper implements OrderMapperInterface
 {
     /**
-     * @var \Spryker\Glue\OrdersRestApiExtension\Dependency\Plugin\RestOrderItemsAttributesMapperPluginInterface[]
+     * @var array<\Spryker\Glue\OrdersRestApiExtension\Dependency\Plugin\RestOrderItemsAttributesMapperPluginInterface>
      */
     protected $restOrderItemsAttributesMapperPlugins;
 
@@ -28,14 +28,14 @@ class OrderMapper implements OrderMapperInterface
     protected $orderShipmentMapper;
 
     /**
-     * @var \Spryker\Glue\OrdersRestApiExtension\Dependency\Plugin\RestOrderDetailsAttributesMapperPluginInterface[]
+     * @var array<\Spryker\Glue\OrdersRestApiExtension\Dependency\Plugin\RestOrderDetailsAttributesMapperPluginInterface>
      */
     protected $restOrderDetailsAttributesMapperPlugins;
 
     /**
      * @param \Spryker\Glue\OrdersRestApi\Processor\Mapper\OrderShipmentMapperInterface $orderShipmentMapper
-     * @param \Spryker\Glue\OrdersRestApiExtension\Dependency\Plugin\RestOrderItemsAttributesMapperPluginInterface[] $restOrderItemsAttributesMapperPlugins
-     * @param \Spryker\Glue\OrdersRestApiExtension\Dependency\Plugin\RestOrderDetailsAttributesMapperPluginInterface[] $restOrderDetailsAttributesMapperPlugins
+     * @param array<\Spryker\Glue\OrdersRestApiExtension\Dependency\Plugin\RestOrderItemsAttributesMapperPluginInterface> $restOrderItemsAttributesMapperPlugins
+     * @param array<\Spryker\Glue\OrdersRestApiExtension\Dependency\Plugin\RestOrderDetailsAttributesMapperPluginInterface> $restOrderDetailsAttributesMapperPlugins
      */
     public function __construct(
         OrderShipmentMapperInterface $orderShipmentMapper,

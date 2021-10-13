@@ -19,7 +19,7 @@ interface OrderSourceReaderInterface
     public function getOrderSourceById($idOrderSource): OrderSourceTransfer;
 
     /**
-     * @return \Generated\Shared\Transfer\OrderSourceTransfer[]
+     * @return array<\Generated\Shared\Transfer\OrderSourceTransfer>
      */
     public function findAllOrderSources(): array;
 }

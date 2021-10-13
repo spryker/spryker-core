@@ -11,6 +11,9 @@ use Exception;
 
 class UrlUniqueException extends Exception
 {
+    /**
+     * @var string
+     */
     public const ERROR_MESSAGE = 'The URL "%s" is already used in the Menu!';
 
     /**

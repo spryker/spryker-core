@@ -1,5 +1,6 @@
 # SecurityOauthUser Module
-[![Build Status](https://travis-ci.org/spryker/security-oauth-user.svg)](https://travis-ci.org/spryker/security-oauth-user)
+[![Latest Stable Version](https://poser.pugx.org/spryker/security-oauth-user/v/stable.svg)](https://packagist.org/packages/spryker/security-oauth-user)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.4-8892BF.svg)](https://php.net/)
 
 Module provides access to Zed for Oauth user.
 

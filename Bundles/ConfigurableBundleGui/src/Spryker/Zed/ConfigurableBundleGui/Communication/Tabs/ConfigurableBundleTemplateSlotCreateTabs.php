@@ -11,6 +11,9 @@ use Generated\Shared\Transfer\TabsViewTransfer;
 
 class ConfigurableBundleTemplateSlotCreateTabs extends AbstractConfigurableBundleTabs
 {
+    /**
+     * @var string
+     */
     protected const GENERAL_TAB_TEMPLATE = '@ConfigurableBundleGui/Slot/tabs/general-tab.twig';
 
     /**

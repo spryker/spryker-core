@@ -13,7 +13,7 @@ trait PermissionAwareTrait
      * @uses \Spryker\Client\Permission\PermissionClientInterface
      *
      * @param string $permissionKey
-     * @param string|int|array|null $context
+     * @param array|string|int|null $context
      *
      * @return bool
      */

@@ -31,7 +31,7 @@ class MerchantOrderCreator implements MerchantOrderCreatorInterface
     protected $merchantOrderTotalsCreator;
 
     /**
-     * @var \Spryker\Zed\MerchantSalesOrderExtension\Dependency\Plugin\MerchantOrderPostCreatePluginInterface[]
+     * @var array<\Spryker\Zed\MerchantSalesOrderExtension\Dependency\Plugin\MerchantOrderPostCreatePluginInterface>
      */
     protected $merchantOrderPostCreatePlugins;
 
@@ -39,7 +39,7 @@ class MerchantOrderCreator implements MerchantOrderCreatorInterface
      * @param \Spryker\Zed\MerchantSalesOrder\Persistence\MerchantSalesOrderEntityManagerInterface $merchantSalesOrderEntityManager
      * @param \Spryker\Zed\MerchantSalesOrder\Business\Creator\MerchantOrderItemCreatorInterface $merchantOrderItemCreator
      * @param \Spryker\Zed\MerchantSalesOrder\Business\Creator\MerchantOrderTotalsCreatorInterface $merchantOrderTotalsCreator
-     * @param \Spryker\Zed\MerchantSalesOrderExtension\Dependency\Plugin\MerchantOrderPostCreatePluginInterface[] $merchantOrderPostCreatePlugins
+     * @param array<\Spryker\Zed\MerchantSalesOrderExtension\Dependency\Plugin\MerchantOrderPostCreatePluginInterface> $merchantOrderPostCreatePlugins
      */
     public function __construct(
         MerchantSalesOrderEntityManagerInterface $merchantSalesOrderEntityManager,
@@ -95,7 +95,7 @@ class MerchantOrderCreator implements MerchantOrderCreatorInterface
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[][]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer[]>
      */
     protected function getOrderItemsGroupedByMerchantReference(OrderTransfer $orderTransfer): array
     {
@@ -105,8 +105,10 @@ class MerchantOrderCreator implements MerchantOrderCreatorInterface
             if (!$itemTransfer->getMerchantReference()) {
                 continue;
             }
+            /** @var string $merchantReference */
+            $merchantReference = $itemTransfer->getMerchantReference();
 
-            $orderItemsGroupedByMerchantReference[$itemTransfer->getMerchantReference()][] = $itemTransfer;
+            $orderItemsGroupedByMerchantReference[$merchantReference][] = $itemTransfer;
         }
 
         return $orderItemsGroupedByMerchantReference;
@@ -115,7 +117,7 @@ class MerchantOrderCreator implements MerchantOrderCreatorInterface
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param string $merchantReference
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
      * @return \Generated\Shared\Transfer\MerchantOrderTransfer
      */
@@ -145,7 +147,7 @@ class MerchantOrderCreator implements MerchantOrderCreatorInterface
 
     /**
      * @param \Generated\Shared\Transfer\MerchantOrderTransfer $merchantOrderTransfer
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
      * @return \Generated\Shared\Transfer\MerchantOrderTransfer
      */
@@ -163,8 +165,10 @@ class MerchantOrderCreator implements MerchantOrderCreatorInterface
     }
 
     /**
+     * @phpstan-param \ArrayObject<array-key, \Generated\Shared\Transfer\ExpenseTransfer> $expenseTransfers
+     *
      * @param \Generated\Shared\Transfer\MerchantOrderTransfer $merchantOrderTransfer
-     * @param \ArrayObject|\Generated\Shared\Transfer\ExpenseTransfer[] $expenseTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ExpenseTransfer> $expenseTransfers
      *
      * @return \Generated\Shared\Transfer\MerchantOrderTransfer
      */
@@ -191,12 +195,15 @@ class MerchantOrderCreator implements MerchantOrderCreatorInterface
      */
     public function createMerchantOrder(OrderTransfer $orderTransfer, string $merchantReference): MerchantOrderTransfer
     {
+        /** @var string $orderReference */
+        $orderReference = $orderTransfer->getOrderReference();
+
         $merchantOrderTransfer = (new MerchantOrderTransfer())
             ->setMerchantReference($merchantReference)
             ->setIdOrder($orderTransfer->getIdSalesOrder())
             ->setOrder($orderTransfer)
             ->setMerchantOrderReference(
-                sprintf('%s--%s', $orderTransfer->getOrderReference(), $merchantReference)
+                sprintf('%s--%s', $orderReference, $merchantReference)
             );
 
         return $this->merchantSalesOrderEntityManager->createMerchantOrder($merchantOrderTransfer);

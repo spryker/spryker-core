@@ -25,6 +25,9 @@ use Spryker\Shared\ProductReview\ProductReviewConfig;
  */
 class BulkProductReviewsQueryPlugin extends AbstractPlugin implements QueryInterface, SearchContextAwareQueryInterface
 {
+    /**
+     * @var string
+     */
     protected const SOURCE_IDENTIFIER = 'product-review';
 
     /**
@@ -122,7 +125,7 @@ class BulkProductReviewsQueryPlugin extends AbstractPlugin implements QueryInter
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function getSearchTermsForProductReviewsFilter(): array
     {

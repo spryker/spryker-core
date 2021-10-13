@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace  Spryker\Zed\CmsGui\Communication\Controller;
+namespace Spryker\Zed\CmsGui\Communication\Controller;
 
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Cms\Business\Exception\TemplateFileNotFoundException;
@@ -20,7 +20,13 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class CreatePageController extends AbstractController
 {
+    /**
+     * @var string
+     */
     public const ERROR_MESSAGE_INVALID_DATA_PROVIDED = 'Page was not created.';
+    /**
+     * @var string
+     */
     public const MESSAGE_PAGE_CREATE_SUCCESS = 'Page was created successfully.';
 
     /**

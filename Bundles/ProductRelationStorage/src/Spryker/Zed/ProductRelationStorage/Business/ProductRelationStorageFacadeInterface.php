@@ -25,7 +25,7 @@ interface ProductRelationStorageFacadeInterface
      *   {@link \Spryker\Zed\ProductRelationStorage\Business\ProductRelationStorageFacadeInterface::writeCollectionByProductRelationProductAbstractEvents()}
      *   instead.
      *
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return void
      */
@@ -44,7 +44,7 @@ interface ProductRelationStorageFacadeInterface
      *   {@link \Spryker\Zed\ProductRelationStorage\Business\ProductRelationStorageFacadeInterface::writeCollectionByProductRelationProductAbstractEvents()}
      *   instead.
      *
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return void
      */
@@ -56,7 +56,7 @@ interface ProductRelationStorageFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
      *
      * @return void
      */
@@ -68,7 +68,7 @@ interface ProductRelationStorageFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
      *
      * @return void
      */
@@ -80,7 +80,7 @@ interface ProductRelationStorageFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
      *
      * @return void
      */
@@ -92,7 +92,7 @@ interface ProductRelationStorageFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
      *
      * @return void
      */
@@ -105,9 +105,9 @@ interface ProductRelationStorageFacadeInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     * @param int[] $ids
+     * @param array<int> $ids
      *
-     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     * @return array<\Generated\Shared\Transfer\SynchronizationDataTransfer>
      */
     public function findProductRelationStorageDataTransfersByIds(FilterTransfer $filterTransfer, array $ids): array;
 }

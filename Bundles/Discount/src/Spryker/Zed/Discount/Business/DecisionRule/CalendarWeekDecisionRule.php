@@ -15,6 +15,9 @@ use Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface;
 
 class CalendarWeekDecisionRule implements DecisionRuleInterface
 {
+    /**
+     * @var string
+     */
     public const DATE_FORMAT = 'W';
 
     /**

@@ -23,6 +23,9 @@ use Symfony\Component\Validator\Constraints\Range;
  */
 class GlobalSoftThresholdFixedFeeFormExpanderPlugin extends AbstractPlugin implements SalesOrderThresholdFormExpanderPluginInterface, SalesOrderThresholdFormFieldDependenciesPluginInterface
 {
+    /**
+     * @var string
+     */
     protected const FIELD_SOFT_FIXED_FEE = 'fixedFee';
 
     /**
@@ -147,7 +150,7 @@ class GlobalSoftThresholdFixedFeeFormExpanderPlugin extends AbstractPlugin imple
      *
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getThresholdFieldDependentFieldNames(): array
     {

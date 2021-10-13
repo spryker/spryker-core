@@ -22,6 +22,9 @@ use Symfony\Component\HttpKernel\EventListener\RouterListener;
  */
 class RouterListenerEventDispatcherPlugin extends AbstractPlugin implements EventDispatcherPluginInterface
 {
+    /**
+     * @var string
+     */
     protected const BC_FEATURE_FLAG_ROUTER_LISTENER = 'BC_FEATURE_FLAG_ROUTER_LISTENER';
 
     /**

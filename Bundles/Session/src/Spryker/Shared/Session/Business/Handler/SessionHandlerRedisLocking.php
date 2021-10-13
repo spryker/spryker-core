@@ -18,6 +18,9 @@ use Spryker\Shared\Session\Business\Handler\Lock\SessionLockerInterface;
  */
 class SessionHandlerRedisLocking implements SessionHandlerInterface
 {
+    /**
+     * @var string
+     */
     public const KEY_PREFIX = 'session:';
 
     /**
@@ -168,7 +171,7 @@ class SessionHandlerRedisLocking implements SessionHandlerInterface
     }
 
     /**
-     * @param int|string $maxLifeTime
+     * @param string|int $maxLifeTime
      *
      * @return bool
      */

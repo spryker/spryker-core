@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 class HttpJsonResponseBuilder implements HttpResponseBuilderInterface
 {
     /**
-     * @param mixed[] $data
+     * @param array<mixed> $data
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */

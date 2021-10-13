@@ -18,11 +18,23 @@ use Spryker\Glue\Kernel\Container;
  */
 class AuthRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_OAUTH = 'CLIENT_OAUTH';
 
+    /**
+     * @var string
+     */
     public const SERVICE_OAUTH = 'SERVICE_OAUTH';
+    /**
+     * @var string
+     */
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
+    /**
+     * @var string
+     */
     public const PLUGINS_REST_USER_EXPANDER = 'PLUGINS_REST_USER_EXPANDER';
 
     /**
@@ -102,7 +114,7 @@ class AuthRestApiDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Glue\AuthRestApiExtension\Dependency\Plugin\RestUserMapperPluginInterface[]
+     * @return array<\Spryker\Glue\AuthRestApiExtension\Dependency\Plugin\RestUserMapperPluginInterface>
      */
     protected function getRestUserExpanderPlugins(): array
     {

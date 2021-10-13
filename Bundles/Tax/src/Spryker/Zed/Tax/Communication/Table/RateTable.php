@@ -18,8 +18,17 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class RateTable extends AbstractTable
 {
+    /**
+     * @var string
+     */
     public const TABLE_COL_ACTIONS = 'Actions';
+    /**
+     * @var string
+     */
     public const URL_PARAM_ID_TAX_RATE = 'id-tax-rate';
+    /**
+     * @var string
+     */
     public const COUNTRY_NOT_AVAILABLE = 'N/A';
 
     /**
@@ -92,7 +101,7 @@ class RateTable extends AbstractTable
         $query = $this->taxRateQuery
             ->leftJoinCountry(SpyCountryTableMap::TABLE_NAME);
 
-        /** @var \Orm\Zed\Tax\Persistence\SpyTaxRate[] $queryResult */
+        /** @var array<\Orm\Zed\Tax\Persistence\SpyTaxRate> $queryResult */
         $queryResult = $this->runQuery($query, $config, true);
 
         foreach ($queryResult as $taxRateEntity) {

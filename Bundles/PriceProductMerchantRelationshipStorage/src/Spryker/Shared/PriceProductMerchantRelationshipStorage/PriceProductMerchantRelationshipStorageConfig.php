@@ -15,11 +15,14 @@ class PriceProductMerchantRelationshipStorageConfig extends AbstractSharedConfig
      * Price Dimension Merchant Relationship
      *
      * @uses \Spryker\Shared\PriceProductMerchantRelationship\PriceProductMerchantRelationshipConfig::PRICE_DIMENSION_MERCHANT_RELATIONSHIP
+     * @var string
      */
     protected const PRICE_DIMENSION_MERCHANT_RELATIONSHIP = 'PRICE_DIMENSION_MERCHANT_RELATIONSHIP';
 
     /**
-     * @see \Spryker\Shared\PriceProduct\PriceProductConfig::PRICE_MODES
+     * @uses \Spryker\Shared\PriceProduct\PriceProductConfig::PRICE_MODES
+     *
+     * @var array<string>
      */
     public const PRICE_MODES = [
         'NET_MODE',
@@ -27,9 +30,22 @@ class PriceProductMerchantRelationshipStorageConfig extends AbstractSharedConfig
     ];
 
     /**
-     * @see \Spryker\Shared\Price\PriceConfig::PRICE_MODE_GROSS
+     * @uses \Spryker\Shared\Price\PriceConfig::PRICE_MODE_GROSS
+     * @var string
      */
     public const PRICE_GROSS_MODE = 'GROSS_MODE';
+
+    /**
+     * Specification:
+     * - This events will be used for spy_merchant entity changes.
+     *
+     * @uses \Spryker\Zed\Merchant\Dependency\MerchantEvents::ENTITY_SPY_MERCHANT_UPDATE
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const ENTITY_SPY_MERCHANT_UPDATE = 'Entity.spy_merchant.update';
 
     /**
      * @api

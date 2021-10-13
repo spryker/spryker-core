@@ -11,6 +11,12 @@ use Spryker\Shared\Kernel\AbstractBundleConfig;
 
 class CartCodesConfig extends AbstractBundleConfig
 {
+    /**
+     * @var string
+     */
     public const MESSAGE_TYPE_SUCCESS = 'success';
+    /**
+     * @var string
+     */
     public const MESSAGE_TYPE_ERROR = 'error';
 }

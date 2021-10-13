@@ -16,15 +16,27 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class CreateContentController extends AbstractController
 {
+    /**
+     * @var string
+     */
     protected const PARAM_TERM_KEY = 'term-key';
+    /**
+     * @var string
+     */
     protected const PARAM_REDIRECT_URL = 'redirect-url';
+    /**
+     * @var string
+     */
     protected const URL_REDIRECT_CONTENT_LIST_PAGE = '/content-gui/list-content';
+    /**
+     * @var string
+     */
     protected const MESSAGE_SUCCESS_CONTENT_CREATE = 'Content item has been successfully created.';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function indexAction(Request $request)
     {

@@ -18,7 +18,13 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class YvesInstallDependenciesConsole extends Console
 {
+    /**
+     * @var string
+     */
     public const COMMAND_NAME = 'frontend:yves:install-dependencies';
+    /**
+     * @var string
+     */
     public const DESCRIPTION = 'This command will install Yves Module dependencies.';
 
     /**

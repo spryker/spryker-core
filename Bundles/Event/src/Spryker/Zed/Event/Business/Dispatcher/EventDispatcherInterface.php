@@ -21,7 +21,7 @@ interface EventDispatcherInterface
 
     /**
      * @param string $eventName
-     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface[] $transfers
+     * @param array<\Spryker\Shared\Kernel\Transfer\TransferInterface> $transfers
      *
      * @return void
      */
@@ -30,7 +30,7 @@ interface EventDispatcherInterface
     /**
      * @param string $listenerName
      * @param string $eventName
-     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface[] $transfers
+     * @param array<\Spryker\Shared\Kernel\Transfer\TransferInterface> $transfers
      *
      * @throws \Spryker\Zed\Event\Business\Exception\EventListenerNotFoundException
      * @throws \Spryker\Zed\Event\Business\Exception\EventListenerAmbiguousException

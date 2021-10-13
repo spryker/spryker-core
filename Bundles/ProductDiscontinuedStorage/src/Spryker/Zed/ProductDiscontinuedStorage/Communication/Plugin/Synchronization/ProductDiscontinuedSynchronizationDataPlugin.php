@@ -50,9 +50,9 @@ class ProductDiscontinuedSynchronizationDataPlugin extends AbstractPlugin implem
      *
      * @api
      *
-     * @param int[] $ids
+     * @param array<int> $ids
      *
-     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     * @return array<\Generated\Shared\Transfer\SynchronizationDataTransfer>
      */
     public function getData(array $ids = [])
     {
@@ -100,9 +100,9 @@ class ProductDiscontinuedSynchronizationDataPlugin extends AbstractPlugin implem
     }
 
     /**
-     * @param int[] $ids
+     * @param array<int> $ids
      *
-     * @return \Orm\Zed\ProductDiscontinuedStorage\Persistence\SpyProductDiscontinuedStorage[]
+     * @return array<\Orm\Zed\ProductDiscontinuedStorage\Persistence\SpyProductDiscontinuedStorage>
      */
     protected function findProductDiscontinuedStorageEntities(array $ids): array
     {

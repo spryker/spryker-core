@@ -71,7 +71,7 @@ class ResponseHeadersTest extends Unit
     }
 
     /**
-     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\FormatResponseHeadersPluginInterface[] $plugins
+     * @param array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\FormatResponseHeadersPluginInterface> $plugins
      *
      * @return \Spryker\Glue\GlueApplication\Rest\Response\ResponseHeadersInterface
      */

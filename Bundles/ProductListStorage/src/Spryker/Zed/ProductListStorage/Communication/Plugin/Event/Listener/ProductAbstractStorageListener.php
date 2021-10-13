@@ -27,7 +27,7 @@ class ProductAbstractStorageListener extends AbstractPlugin implements EventBulk
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
      * @param string $eventName
      *
      * @return void
@@ -40,10 +40,10 @@ class ProductAbstractStorageListener extends AbstractPlugin implements EventBulk
     }
 
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
      * @param string $eventName
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getProductAbstractIds(array $eventTransfers, string $eventName): array
     {

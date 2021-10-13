@@ -11,13 +11,34 @@ use Spryker\Shared\Kernel\Store;
 
 class EnvironmentProcessor implements ProcessorInterface
 {
+    /**
+     * @var string
+     */
     public const EXTRA = 'environment';
 
+    /**
+     * @var string
+     */
     public const APPLICATION = 'application';
+    /**
+     * @var string
+     */
     public const ENVIRONMENT = 'environment';
+    /**
+     * @var string
+     */
     public const STORE = 'store';
+    /**
+     * @var string
+     */
     protected const CODE_BUCKET = 'codeBucket';
+    /**
+     * @var string
+     */
     public const LOCALE = 'locale';
+    /**
+     * @var string
+     */
     public const RECORD_EXTRA = 'extra';
 
     /**

@@ -19,7 +19,13 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class ProductRelationUpdaterConsole extends Console
 {
+    /**
+     * @var string
+     */
     public const COMMAND_NAME = 'product-relation:update';
+    /**
+     * @var string
+     */
     public const COMMAND_DESCRIPTION = 'Updates all active product relations';
 
     /**

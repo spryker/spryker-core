@@ -20,12 +20,30 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class StorageClient extends AbstractClient implements StorageClientInterface
 {
+    /**
+     * @var string
+     */
     public const KEY_NAME_PREFIX = 'storage';
+    /**
+     * @var string
+     */
     public const KEY_NAME_SEPARATOR = ':';
+    /**
+     * @var string
+     */
     public const KEY_USED = 'used';
+    /**
+     * @var string
+     */
     public const KEY_NEW = 'new';
+    /**
+     * @var string
+     */
     public const KEY_INIT = 'init';
 
+    /**
+     * @var string
+     */
     protected const CACHE_KEY_PREFIX = 'cache';
 
     /**
@@ -239,7 +257,7 @@ class StorageClient extends AbstractClient implements StorageClientInterface
      *
      * @api
      *
-     * @param string[] $keys
+     * @param array<string> $keys
      *
      * @return array
      */

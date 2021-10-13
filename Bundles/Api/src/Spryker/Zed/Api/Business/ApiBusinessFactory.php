@@ -91,7 +91,7 @@ class ApiBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Api\Dependency\Plugin\ApiValidatorPluginInterface[]
+     * @return array<\Spryker\Zed\Api\Dependency\Plugin\ApiValidatorPluginInterface>
      */
     protected function getApiValidatorPlugins()
     {
@@ -99,7 +99,7 @@ class ApiBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Api\Dependency\Plugin\ApiResourcePluginInterface[]
+     * @return array<\Spryker\Zed\Api\Dependency\Plugin\ApiResourcePluginInterface>
      */
     protected function getApiPlugins()
     {
@@ -107,7 +107,7 @@ class ApiBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface[]
+     * @return array<\Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface>
      */
     protected function getPreProcessorStack()
     {
@@ -134,7 +134,7 @@ class ApiBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Api\Business\Model\Processor\Post\PostProcessorInterface[]
+     * @return array<\Spryker\Zed\Api\Business\Model\Processor\Post\PostProcessorInterface>
      */
     protected function getPostProcessorStack()
     {
@@ -351,7 +351,7 @@ class ApiBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Api\Communication\Plugin\ApiRequestTransferFilterPluginInterface[]
+     * @return array<\Spryker\Zed\Api\Communication\Plugin\ApiRequestTransferFilterPluginInterface>
      */
     protected function getApiRequestTransferFilterPlugins()
     {

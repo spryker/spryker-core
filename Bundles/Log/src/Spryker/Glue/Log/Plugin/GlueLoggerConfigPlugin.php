@@ -25,7 +25,7 @@ class GlueLoggerConfigPlugin extends AbstractPlugin implements LoggerConfigInter
     }
 
     /**
-     * @return \Monolog\Handler\HandlerInterface[]
+     * @return array<\Monolog\Handler\HandlerInterface>
      */
     public function getHandlers(): array
     {
@@ -33,7 +33,7 @@ class GlueLoggerConfigPlugin extends AbstractPlugin implements LoggerConfigInter
     }
 
     /**
-     * @return callable[]
+     * @return array<callable>
      */
     public function getProcessors(): array
     {

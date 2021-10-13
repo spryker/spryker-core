@@ -16,12 +16,30 @@ use Spryker\Zed\StockGui\Dependency\Facade\StockGuiToStockFacadeInterface;
 
 class StockTable extends AbstractTable
 {
+    /**
+     * @var string
+     */
     public const COL_ID_STOCK = 'id_stock';
+    /**
+     * @var string
+     */
     public const COL_NAME = 'name';
+    /**
+     * @var string
+     */
     public const COL_IS_ACTIVE = 'is_active';
+    /**
+     * @var string
+     */
     public const COL_AVAILABLE_IN_STORE = 'available_in_store';
+    /**
+     * @var string
+     */
     public const COL_ACTIONS = 'actions';
 
+    /**
+     * @var string
+     */
     public const IDENTIFIER = 'stock_data_table';
 
     /**
@@ -122,14 +140,14 @@ class StockTable extends AbstractTable
     protected function getStatusLabel(bool $isActive): string
     {
         if (!$isActive) {
-            return $this->generateLabel('Inactive', 'label-inactive');
+            return $this->generateLabel('Inactive', 'label-danger');
         }
 
-        return $this->generateLabel('Active', 'label-info');
+        return $this->generateLabel('Active', 'label-success');
     }
 
     /**
-     * @param string[] $storeNames
+     * @param array<string> $storeNames
      *
      * @return string
      */
@@ -150,7 +168,7 @@ class StockTable extends AbstractTable
     /**
      * @param int $idStock
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function createActionColumnButtons(int $idStock): array
     {

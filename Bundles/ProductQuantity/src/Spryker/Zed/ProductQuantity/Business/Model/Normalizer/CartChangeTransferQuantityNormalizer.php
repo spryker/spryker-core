@@ -17,15 +17,39 @@ use Spryker\Zed\ProductQuantity\Business\Model\ProductQuantityReaderInterface;
 
 class CartChangeTransferQuantityNormalizer implements CartChangeTransferQuantityNormalizerInterface
 {
+    /**
+     * @var string
+     */
     protected const MESSAGE_QUANTITY_MIN_NOT_FULFILLED = 'product-quantity.notification.quantity.min.failed';
+    /**
+     * @var string
+     */
     protected const MESSAGE_QUANTITY_MAX_NOT_FULFILLED = 'product-quantity.notification.quantity.max.failed';
+    /**
+     * @var string
+     */
     protected const MESSAGE_QUANTITY_INTERVAL_NOT_FULFILLED = 'product-quantity.notification.quantity.interval.failed';
+    /**
+     * @var string
+     */
     protected const NOTIFICATION_MESSAGE_PARAM_MIN = '%min%';
+    /**
+     * @var string
+     */
     protected const NOTIFICATION_MESSAGE_PARAM_MAX = '%max%';
+    /**
+     * @var string
+     */
     protected const NOTIFICATION_MESSAGE_PARAM_STEP = '%step%';
 
+    /**
+     * @var string
+     */
     protected const NORMALIZABLE_FIELD = 'quantity';
 
+    /**
+     * @var string
+     */
     protected const MESSAGE_TYPE = 'notification';
 
     /**
@@ -151,7 +175,7 @@ class CartChangeTransferQuantityNormalizer implements CartChangeTransferQuantity
      *
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getItemAddCartQuantityMap(CartChangeTransfer $cartChangeTransfer): array
     {
@@ -172,7 +196,7 @@ class CartChangeTransferQuantityNormalizer implements CartChangeTransferQuantity
      *
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     protected function getItemTransferMap(CartChangeTransfer $cartChangeTransfer): array
     {
@@ -193,7 +217,7 @@ class CartChangeTransferQuantityNormalizer implements CartChangeTransferQuantity
      *
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductQuantityTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductQuantityTransfer>
      */
     protected function getProductQuantityTransferMap(CartChangeTransfer $cartChangeTransfer): array
     {
@@ -210,7 +234,7 @@ class CartChangeTransferQuantityNormalizer implements CartChangeTransferQuantity
      *
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getChangedSkuMap(CartChangeTransfer $cartChangeTransfer): array
     {
@@ -229,9 +253,9 @@ class CartChangeTransferQuantityNormalizer implements CartChangeTransferQuantity
     /**
      * Returns array where keys are product SKUs.
      *
-     * @param \Generated\Shared\Transfer\ProductQuantityTransfer[] $productQuantityTransfers
+     * @param array<\Generated\Shared\Transfer\ProductQuantityTransfer> $productQuantityTransfers
      *
-     * @return \Generated\Shared\Transfer\ProductQuantityTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductQuantityTransfer>
      */
     protected function mapProductQuantityTransfersBySku(array $productQuantityTransfers): array
     {

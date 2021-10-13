@@ -12,15 +12,28 @@ use Orm\Zed\SalesReclamation\Persistence\SpySalesReclamationQuery;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
+use Spryker\Zed\SalesReclamationGui\Communication\Form\CloseReclamationForm;
 use Spryker\Zed\SalesReclamationGui\Dependency\Service\SalesReclamationGuiToUtilDateTimeServiceInterface;
 
 class ReclamationTable extends AbstractTable
 {
+    /**
+     * @var string
+     */
     public const COL_ACTIONS = 'COL_ACTIONS';
 
+    /**
+     * @var string
+     */
     protected const PARAM_ID_RECLAMATION = 'id-reclamation';
 
+    /**
+     * @var string
+     */
     protected const URL_RECLAMATION_DETAIL = '/sales-reclamation-gui/detail';
+    /**
+     * @var string
+     */
     protected const URL_RECLAMATION_CLOSE = '/sales-reclamation-gui/detail/close';
 
     /**
@@ -96,6 +109,7 @@ class ReclamationTable extends AbstractTable
      */
     protected function prepareData(TableConfiguration $config): array
     {
+        /** @var array $queryResults */
         $queryResults = $this->runQuery($this->salesReclamationQuery, $config);
 
         return $this->formatQueryData($queryResults);
@@ -143,7 +157,7 @@ class ReclamationTable extends AbstractTable
     }
 
     /**
-     * @param string[] $item
+     * @param array<string> $item
      *
      * @return string
      */
@@ -183,14 +197,15 @@ class ReclamationTable extends AbstractTable
      */
     protected function createCloseAction(int $idReclamation): string
     {
-        return $this->generateViewButton(
+        return $this->generateFormButton(
             Url::generate(static::URL_RECLAMATION_CLOSE, [
                 static::PARAM_ID_RECLAMATION => $idReclamation,
             ]),
             'Close',
+            CloseReclamationForm::class,
             [
-                'class' => 'btn-remove',
-                'icon' => 'fa-close',
+                static::BUTTON_CLASS => 'btn-remove',
+                static::BUTTON_ICON => 'fa-close',
             ]
         );
     }

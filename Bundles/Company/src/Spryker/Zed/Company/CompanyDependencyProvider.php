@@ -16,9 +16,21 @@ use Spryker\Zed\Kernel\Container;
  */
 class CompanyDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_STORE = 'FACADE_STORE';
+    /**
+     * @var string
+     */
     public const COMPANY_PRE_SAVE_PLUGINS = 'COMPANY_PRE_SAVE_PLUGINS';
+    /**
+     * @var string
+     */
     public const COMPANY_POST_SAVE_PLUGINS = 'COMPANY_POST_SAVE_PLUGINS';
+    /**
+     * @var string
+     */
     public const COMPANY_POST_CREATE_PLUGINS = 'COMPANY_POST_CREATE_PLUGINS';
 
     /**
@@ -95,7 +107,7 @@ class CompanyDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\CompanyExtension\Dependency\Plugin\CompanyPreSavePluginInterface[]
+     * @return array<\Spryker\Zed\CompanyExtension\Dependency\Plugin\CompanyPreSavePluginInterface>
      */
     protected function getCompanyPreSavePlugins(): array
     {
@@ -103,7 +115,7 @@ class CompanyDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\CompanyExtension\Dependency\Plugin\CompanyPostSavePluginInterface[]
+     * @return array<\Spryker\Zed\CompanyExtension\Dependency\Plugin\CompanyPostSavePluginInterface>
      */
     protected function getCompanyPostSavePlugins(): array
     {
@@ -111,7 +123,7 @@ class CompanyDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\CompanyExtension\Dependency\Plugin\CompanyPostCreatePluginInterface[]
+     * @return array<\Spryker\Zed\CompanyExtension\Dependency\Plugin\CompanyPostCreatePluginInterface>
      */
     protected function getCompanyPostCreatePlugins(): array
     {

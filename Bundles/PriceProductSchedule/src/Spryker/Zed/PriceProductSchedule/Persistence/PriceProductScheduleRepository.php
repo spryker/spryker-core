@@ -19,7 +19,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 class PriceProductScheduleRepository extends AbstractRepository implements PriceProductScheduleRepositoryInterface
 {
     /**
-     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductScheduleTransfer>
      */
     public function findPriceProductSchedulesToDisable(): array
     {
@@ -29,9 +29,21 @@ class PriceProductScheduleRepository extends AbstractRepository implements Price
     }
 
     /**
+     * @param \Generated\Shared\Transfer\PriceProductScheduleTransfer $priceProductScheduleTransfer
+     *
+     * @return bool
+     */
+    public function isScheduledPriceForSwitchExists(PriceProductScheduleTransfer $priceProductScheduleTransfer): bool
+    {
+        return $this->getFactory()
+            ->createPriceProductScheduleDisableFinder()
+            ->isScheduledPriceForSwitchExists($priceProductScheduleTransfer);
+    }
+
+    /**
      * @param int $idProductAbstract
      *
-     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductScheduleTransfer>
      */
     public function findPriceProductSchedulesToDisableByIdProductAbstract(int $idProductAbstract): array
     {
@@ -43,7 +55,7 @@ class PriceProductScheduleRepository extends AbstractRepository implements Price
     /**
      * @param int $idProductConcrete
      *
-     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductScheduleTransfer>
      */
     public function findPriceProductSchedulesToDisableByIdProductConcrete(int $idProductConcrete): array
     {
@@ -55,7 +67,7 @@ class PriceProductScheduleRepository extends AbstractRepository implements Price
     /**
      * @param \Generated\Shared\Transfer\PriceProductScheduleTransfer $priceProductScheduleTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductScheduleTransfer>
      */
     public function findSimilarPriceProductSchedulesToDisable(
         PriceProductScheduleTransfer $priceProductScheduleTransfer
@@ -68,7 +80,7 @@ class PriceProductScheduleRepository extends AbstractRepository implements Price
     /**
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductScheduleTransfer>
      */
     public function findPriceProductSchedulesToEnableByStore(StoreTransfer $storeTransfer): array
     {
@@ -81,7 +93,7 @@ class PriceProductScheduleRepository extends AbstractRepository implements Price
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      * @param int $idProductAbstract
      *
-     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductScheduleTransfer>
      */
     public function findPriceProductSchedulesToEnableByStoreAndIdProductAbstract(
         StoreTransfer $storeTransfer,
@@ -96,7 +108,7 @@ class PriceProductScheduleRepository extends AbstractRepository implements Price
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      * @param int $idProductConcrete
      *
-     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductScheduleTransfer>
      */
     public function findPriceProductSchedulesToEnableByStoreAndIdProductConcrete(
         StoreTransfer $storeTransfer,
@@ -173,7 +185,7 @@ class PriceProductScheduleRepository extends AbstractRepository implements Price
     /**
      * @param int $idPriceProductScheduleList
      *
-     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductScheduleTransfer>
      */
     public function findPriceProductSchedulesByIdPriceProductScheduleList(
         int $idPriceProductScheduleList

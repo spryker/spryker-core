@@ -20,7 +20,7 @@ interface ProductLabelGuiToProductLabelInterface
     public function findLabelById($idProductLabel);
 
     /**
-     * @return \Generated\Shared\Transfer\ProductLabelTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductLabelTransfer>
      */
     public function findAllLabels();
 
@@ -40,7 +40,7 @@ interface ProductLabelGuiToProductLabelInterface
 
     /**
      * @param int $idProductLabel
-     * @param int[] $idsProductAbstract
+     * @param array<int> $idsProductAbstract
      *
      * @return void
      */
@@ -48,7 +48,7 @@ interface ProductLabelGuiToProductLabelInterface
 
     /**
      * @param int $idProductLabel
-     * @param int[] $idsProductAbstract
+     * @param array<int> $idsProductAbstract
      *
      * @return void
      */
@@ -64,7 +64,7 @@ interface ProductLabelGuiToProductLabelInterface
     /**
      * @param int $idProductLabel
      *
-     * @return int[]
+     * @return array<int>
      */
     public function findProductAbstractRelationsByIdProductLabel($idProductLabel);
 }

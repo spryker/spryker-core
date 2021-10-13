@@ -13,6 +13,9 @@ use Spryker\Zed\Kernel\Container;
 
 class CustomerNoteGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_CUSTOMER_NOTE = 'FACADE_CUSTOMER_NOTE';
 
     /**

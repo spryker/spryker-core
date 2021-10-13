@@ -60,9 +60,9 @@ class CmsPageStoreRelationReader implements CmsPageStoreRelationReaderInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\StoreTransfer[] $relatedStores
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\StoreTransfer> $relatedStores
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getIdStores(ArrayObject $relatedStores): array
     {

@@ -10,9 +10,9 @@ namespace Spryker\Zed\CmsContentWidgetContentConnector\Dependency\Facade;
 interface CmsContentWidgetContentConnectorToContentFacadeInterface
 {
     /**
-     * @param string[] $contentKeys
+     * @param array<string> $contentKeys
      *
-     * @return \Generated\Shared\Transfer\ContentTransfer[]
+     * @return array<\Generated\Shared\Transfer\ContentTransfer>
      */
     public function getContentByKeys(array $contentKeys): array;
 }

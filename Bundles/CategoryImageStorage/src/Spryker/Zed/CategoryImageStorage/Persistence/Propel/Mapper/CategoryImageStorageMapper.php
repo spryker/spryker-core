@@ -14,9 +14,9 @@ use Propel\Runtime\Collection\ObjectCollection;
 class CategoryImageStorageMapper
 {
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\CategoryImageStorage\Persistence\SpyCategoryImageStorage[] $categoryImageStorageEntityCollection
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\CategoryImageStorage\Persistence\SpyCategoryImageStorage> $categoryImageStorageEntityCollection
      *
-     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     * @return array<\Generated\Shared\Transfer\SynchronizationDataTransfer>
      */
     public function mapCategoryImageStorageEntityCollectionToSynchronizationDataTransfers(ObjectCollection $categoryImageStorageEntityCollection): array
     {

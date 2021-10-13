@@ -26,9 +26,21 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class UrlCollector extends AbstractStoragePropelCollector
 {
+    /**
+     * @var string
+     */
     public const FK_RESOURCE_ = 'fk_resource_';
+    /**
+     * @var string
+     */
     public const RESOURCE_VALUE = 'value';
+    /**
+     * @var string
+     */
     public const RESOURCE_TYPE = 'type';
+    /**
+     * @var string
+     */
     public const KEYS_RESOURCE_TYPE_SUFFIX = ' keys';
 
     /**
@@ -115,7 +127,7 @@ class UrlCollector extends AbstractStoragePropelCollector
      * @param array $localeUrls
      * @param array $urlResourceArguments
      *
-     * @return \Generated\Shared\Transfer\UrlStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\UrlStorageTransfer>
      */
     protected function getLocaleUrlsForUrl(array $localeUrls, array $urlResourceArguments)
     {
@@ -366,7 +378,7 @@ class UrlCollector extends AbstractStoragePropelCollector
         WriterInterface $storeWriter,
         $touchKeyPointer
     ) {
-        /** @var string[] $oldUrl */
+        /** @var array<string> $oldUrl */
         $oldUrl = $storeReader->read($touchKeyPointer);
 
         if (

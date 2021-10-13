@@ -10,7 +10,7 @@ namespace Spryker\Zed\TaxProductStorage\Dependency\Facade;
 interface TaxProductStorageToEventBehaviorFacadeInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
      *
      * @return array
      */

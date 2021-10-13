@@ -22,6 +22,9 @@ class FixturesCommand extends Run implements CustomCommandInterface
 {
     use CommandConfig;
 
+    /**
+     * @var int
+     */
     public const CODE_SUCCESS = 0;
 
     /**

@@ -25,6 +25,9 @@ use Spryker\Client\SearchExtension\Dependency\Plugin\SearchContextAwareQueryInte
  */
 class CatalogSearchQueryPlugin extends AbstractPlugin implements QueryInterface, SearchContextAwareQueryInterface, SearchStringSetterInterface, SearchStringGetterInterface
 {
+    /**
+     * @var string
+     */
     protected const SOURCE_IDENTIFIER = 'page';
 
     /**
@@ -146,19 +149,28 @@ class CatalogSearchQueryPlugin extends AbstractPlugin implements QueryInterface,
      *
      * @return \Elastica\Query\AbstractQuery
      */
-    protected function createFulltextSearchQuery($searchString)
+    protected function createFulltextSearchQuery(string $searchString)
     {
         $fields = [
             PageIndexMap::FULL_TEXT,
             PageIndexMap::FULL_TEXT_BOOSTED . '^' . $this->getFullTextBoostedBoostingValue(),
         ];
 
-        $matchQuery = (new MultiMatch())
+        return $this->createMultiMatchQuery($fields, $searchString);
+    }
+
+    /**
+     * @param array<string> $fields
+     * @param string $searchString
+     *
+     * @return \Elastica\Query\MultiMatch
+     */
+    protected function createMultiMatchQuery(array $fields, string $searchString): MultiMatch
+    {
+        return (new MultiMatch())
             ->setFields($fields)
             ->setQuery($searchString)
             ->setType(MultiMatch::TYPE_CROSS_FIELDS);
-
-        return $matchQuery;
     }
 
     /**

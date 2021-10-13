@@ -13,6 +13,9 @@ use Spryker\Client\Kernel\Container;
 
 class CmsSlotLocaleConnectorDependencyProvider extends AbstractDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_LOCALE = 'CLIENT_LOCALE';
 
     /**

@@ -16,7 +16,13 @@ use Spryker\Yves\Monitoring\Dependency\Service\MonitoringToUtilNetworkServiceBri
  */
 class MonitoringDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const MONITORING_SERVICE = 'monitoring service';
+    /**
+     * @var string
+     */
     public const SERVICE_NETWORK = 'util network service';
 
     /**

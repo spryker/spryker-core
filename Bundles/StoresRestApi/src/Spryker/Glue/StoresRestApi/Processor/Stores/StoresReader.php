@@ -34,7 +34,7 @@ class StoresReader implements StoresReaderInterface
     protected $restResourceBuilder;
 
     /**
-     * @var \Spryker\Glue\StoresRestApi\Processor\Mapper\StoresResourceMapperInterface $storesResourceMapper
+     * @var \Spryker\Glue\StoresRestApi\Processor\Mapper\StoresResourceMapperInterface
      */
     protected $storesResourceMapper;
 

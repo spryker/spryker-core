@@ -21,7 +21,13 @@ use Twig\TwigFunction;
  */
 class CurrencyTwigPlugin extends AbstractPlugin implements TwigPluginInterface
 {
+    /**
+     * @var string
+     */
     protected const NO_SYMBOL_FOUND = '-';
+    /**
+     * @var string
+     */
     protected const CURRENCY_SYMBOL_FUNCTION_NAME = 'currencySymbol';
 
     /**

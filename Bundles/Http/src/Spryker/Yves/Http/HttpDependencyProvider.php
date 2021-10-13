@@ -16,7 +16,13 @@ use Spryker\Yves\Kernel\Container;
  */
 class HttpDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_LOCALE = 'CLIENT_LOCALE';
+    /**
+     * @var string
+     */
     public const PLUGINS_FRAGMENT_HANDLER = 'PLUGINS_FRAGMENT_HANDLER';
 
     /**
@@ -61,7 +67,7 @@ class HttpDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Shared\HttpExtension\Dependency\Plugin\FragmentHandlerPluginInterface[]
+     * @return array<\Spryker\Shared\HttpExtension\Dependency\Plugin\FragmentHandlerPluginInterface>
      */
     protected function getFragmentHandlerPlugins(): array
     {

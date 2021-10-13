@@ -50,10 +50,11 @@ class PriceProductOfferRepository extends AbstractRepository implements PricePro
     /**
      * @param \Generated\Shared\Transfer\PriceProductOfferCriteriaTransfer $priceProductOfferCriteriaTransfer
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function getProductOfferPrices(PriceProductOfferCriteriaTransfer $priceProductOfferCriteriaTransfer): ArrayObject
     {
+        /** @var \Orm\Zed\PriceProductOffer\Persistence\SpyPriceProductOfferQuery $priceProductOfferQuery */
         $priceProductOfferQuery = $this->getFactory()
             ->getPriceProductOfferPropelQuery()
             ->joinWithSpyPriceProductStore()
@@ -82,11 +83,10 @@ class PriceProductOfferRepository extends AbstractRepository implements PricePro
      */
     public function count(PriceProductOfferCriteriaTransfer $priceProductOfferCriteriaTransfer): int
     {
+        /** @var \Orm\Zed\PriceProductOffer\Persistence\SpyPriceProductOfferQuery $priceProductOfferQuery */
         $priceProductOfferQuery = $this->getFactory()
             ->getPriceProductOfferPropelQuery()
-            ->joinWithSpyProductOffer()
-            ->useSpyProductOfferQuery()
-            ->endUse();
+            ->joinWithSpyProductOffer();
 
         $this->applyCriteria($priceProductOfferQuery, $priceProductOfferCriteriaTransfer);
 
@@ -106,15 +106,26 @@ class PriceProductOfferRepository extends AbstractRepository implements PricePro
         if ($priceProductOfferCriteriaTransfer->getPriceProductOfferIds()) {
             $priceProductOfferQuery->filterByIdPriceProductOffer_In($priceProductOfferCriteriaTransfer->getPriceProductOfferIds());
         }
-        if (
-            $priceProductOfferCriteriaTransfer->getProductOfferCriteriaFilter()
-            && $priceProductOfferCriteriaTransfer->getProductOfferCriteriaFilter()->getMerchantIds()
-        ) {
-            $priceProductOfferQuery->filterBy(
-                SpyProductOfferTableMap::COL_FK_MERCHANT,
-                $priceProductOfferCriteriaTransfer->getProductOfferCriteriaFilter()->getMerchantIds(),
-                Criteria::IN
-            );
+
+        if ($priceProductOfferCriteriaTransfer->getProductOfferCriteria()) {
+            /** @var \Generated\Shared\Transfer\ProductOfferCriteriaTransfer $productOfferCriteriaTransfer */
+            $productOfferCriteriaTransfer = $priceProductOfferCriteriaTransfer->getProductOfferCriteria();
+
+            if ($productOfferCriteriaTransfer->getProductOfferReferences()) {
+                $priceProductOfferQuery->filterBy(
+                    SpyProductOfferTableMap::COL_PRODUCT_OFFER_REFERENCE,
+                    $productOfferCriteriaTransfer->getProductOfferReferences(),
+                    Criteria::IN
+                );
+            }
+
+            if ($productOfferCriteriaTransfer->getProductOfferReference()) {
+                $priceProductOfferQuery->useSpyProductOfferQuery()
+                    ->filterByProductOfferReference(
+                        $productOfferCriteriaTransfer->getProductOfferReference()
+                    )
+                    ->endUse();
+            }
         }
 
         if ($priceProductOfferCriteriaTransfer->getIdProductOffer()) {
@@ -134,6 +145,12 @@ class PriceProductOfferRepository extends AbstractRepository implements PricePro
                 ->useStoreQuery()
                 ->filterByIdStore_In($priceProductOfferCriteriaTransfer->getStoreIds())
                 ->endUse()
+                ->endUse();
+        }
+
+        if ($priceProductOfferCriteriaTransfer->getPriceProductStoreIds()) {
+            $priceProductOfferQuery->useSpyPriceProductStoreQuery()
+                    ->filterByIdPriceProductStore_In($priceProductOfferCriteriaTransfer->getPriceProductStoreIds())
                 ->endUse();
         }
 

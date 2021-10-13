@@ -13,7 +13,7 @@ use Orm\Zed\Touch\Persistence\SpyTouchQuery;
 use Spryker\Zed\CmsBlockCollector\Business\CmsBlockCollectorBusinessFactory;
 use Spryker\Zed\CmsBlockCollector\Business\CmsBlockCollectorFacade;
 use Spryker\Zed\CmsBlockCollector\Business\Collector\Storage\CmsBlockCollector;
-use Spryker\Zed\Collector\Business\CollectorFacadeInterface;
+use Spryker\Zed\CmsBlockCollector\Dependency\Facade\CmsBlockCollectorToCollectorInterface;
 use Spryker\Zed\Collector\Business\Exporter\Reader\ReaderInterface;
 use Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface;
 use Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface;
@@ -70,7 +70,7 @@ class CmsBlockCollectorFacadeTest extends Unit
         parent::setUp();
 
         $this->collectorFacadeMock = $this
-            ->getMockBuilder(CollectorFacadeInterface::class)
+            ->getMockBuilder(CmsBlockCollectorToCollectorInterface::class)
             ->disableOriginalConstructor()
             ->getMock();
 

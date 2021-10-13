@@ -22,19 +22,26 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class DetailController extends AbstractController
 {
+    /**
+     * @var string
+     */
     protected const PARAM_ID_SALES_ORDER = 'id-sales-order';
 
+    /**
+     * @var string
+     */
     public const ROUTE_REDIRECT = '/sales/detail';
 
     /**
      * @uses \Spryker\Zed\Http\Communication\Plugin\Application\HttpApplicationPlugin::SERVICE_SUB_REQUEST
+     * @var string
      */
     protected const SERVICE_SUB_REQUEST = 'sub_request';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function indexAction(Request $request)
     {
@@ -94,7 +101,7 @@ class DetailController extends AbstractController
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return array|string|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     protected function renderSalesDetailBlocks(Request $request, OrderTransfer $orderTransfer)
     {
@@ -142,7 +149,7 @@ class DetailController extends AbstractController
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param string $blockUrl
      *
-     * @return string|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|string
      */
     protected function handleSubRequest(Request $request, $blockUrl)
     {
@@ -151,7 +158,7 @@ class DetailController extends AbstractController
             return $blockResponse;
         }
 
-        return $blockResponse->getContent();
+        return (string)$blockResponse->getContent();
     }
 
     /**

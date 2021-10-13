@@ -24,10 +24,22 @@ use Spryker\Zed\Oms\Dependency\Service\OmsToUtilTextInterface;
 
 class Drawer implements DrawerInterface
 {
+    /**
+     * @var string
+     */
     public const ATTRIBUTE_FONT_SIZE = 'fontsize';
 
+    /**
+     * @var string
+     */
     public const EDGE_UPPER_HALF = 'upper half';
+    /**
+     * @var string
+     */
     public const EDGE_LOWER_HALF = 'lower half';
+    /**
+     * @var string
+     */
     public const EDGE_FULL = 'edge full';
 
     /**
@@ -384,9 +396,9 @@ class Drawer implements DrawerInterface
 
     /**
      * @param \Spryker\Zed\Oms\Business\Process\TransitionInterface $transition
-     * @param string[] $label
+     * @param array<string> $label
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function addEdgeConditionText(TransitionInterface $transition, $label)
     {
@@ -405,9 +417,9 @@ class Drawer implements DrawerInterface
 
     /**
      * @param \Spryker\Zed\Oms\Business\Process\TransitionInterface $transition
-     * @param string[] $label
+     * @param array<string> $label
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function addEdgeEventText(TransitionInterface $transition, $label)
     {
@@ -470,7 +482,7 @@ class Drawer implements DrawerInterface
     }
 
     /**
-     * @param string[] $label
+     * @param array<string> $label
      *
      * @return string
      */

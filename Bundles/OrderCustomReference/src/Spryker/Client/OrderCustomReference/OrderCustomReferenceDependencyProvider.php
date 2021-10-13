@@ -16,6 +16,9 @@ use Spryker\Client\OrderCustomReference\Dependency\Client\OrderCustomReferenceTo
  */
 class OrderCustomReferenceDependencyProvider extends AbstractDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_PERSISTENT_CART = 'CLIENT_PERSISTENT_CART';
 
     /**

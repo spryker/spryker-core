@@ -14,8 +14,17 @@ use Spryker\Zed\ProductListGui\Communication\Expander\ProductListCreateAggregati
 
 abstract class AbstractProductListAggregationTabs extends AbstractTabs
 {
+    /**
+     * @var string
+     */
     public const GENERAL_TAB_NAME = 'general';
+    /**
+     * @var string
+     */
     public const GENERAL_TAB_TITLE = 'General Information';
+    /**
+     * @var string
+     */
     public const GENERAL_TAB_TEMPLATE = '@ProductListGui/_partials/_tabs/general-information.twig';
 
     /**

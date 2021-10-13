@@ -31,29 +31,29 @@ class FileDirectoryLocalizedAttributesSaver implements FileDirectoryLocalizedAtt
      *
      * @return void
      */
-    public function save(FileDirectoryTransfer $fileDirectoryTransfer)
+    public function save(FileDirectoryTransfer $fileDirectoryTransfer): void
     {
-        $fkFileDirectory = $fileDirectoryTransfer->getIdFileDirectory();
-
         foreach ($fileDirectoryTransfer->getFileDirectoryLocalizedAttributes() as $fileDirectoryLocalizedAttributesTransfer) {
-            $this->prepareFileDirectoryLocalizedAttributesTransfer($fileDirectoryLocalizedAttributesTransfer, $fkFileDirectory);
+            $this->prepareFileDirectoryLocalizedAttributesTransfer($fileDirectoryLocalizedAttributesTransfer, $fileDirectoryTransfer);
             $this->entityManager->saveFileDirectoryLocalizedAttribute($fileDirectoryLocalizedAttributesTransfer);
         }
     }
 
     /**
      * @param \Generated\Shared\Transfer\FileDirectoryLocalizedAttributesTransfer $fileDirectoryLocalizedAttributesTransfer
-     * @param int $fkFileDirectory
+     * @param \Generated\Shared\Transfer\FileDirectoryTransfer $fileDirectoryTransfer
      *
      * @return void
      */
     protected function prepareFileDirectoryLocalizedAttributesTransfer(
         FileDirectoryLocalizedAttributesTransfer $fileDirectoryLocalizedAttributesTransfer,
-        int $fkFileDirectory
-    ) {
-        $fileDirectoryLocalizedAttributesTransfer->setFkFileDirectory($fkFileDirectory);
-        $fileDirectoryLocalizedAttributesTransfer->setFkLocale(
-            $fileDirectoryLocalizedAttributesTransfer->getLocale()->getIdLocale()
-        );
+        FileDirectoryTransfer $fileDirectoryTransfer
+    ): void {
+        $fileDirectoryLocalizedAttributesTransfer->setFkFileDirectory($fileDirectoryTransfer->getIdFileDirectory());
+
+        $localeTransfer = $fileDirectoryLocalizedAttributesTransfer->getLocale();
+        if ($localeTransfer !== null) {
+            $fileDirectoryLocalizedAttributesTransfer->setFkLocale($localeTransfer->getIdLocale());
+        }
     }
 }

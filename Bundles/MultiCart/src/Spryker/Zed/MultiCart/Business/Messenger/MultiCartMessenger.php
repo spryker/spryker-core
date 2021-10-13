@@ -14,7 +14,13 @@ use Spryker\Zed\MultiCart\Persistence\MultiCartRepositoryInterface;
 
 class MultiCartMessenger implements MultiCartMessengerInterface
 {
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_MULTI_CART_SET_DEFAULT_SUCCESS = 'multi_cart.cart.set_default.success';
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_PARAMETER_QUOTE = '%quote%';
 
     /**

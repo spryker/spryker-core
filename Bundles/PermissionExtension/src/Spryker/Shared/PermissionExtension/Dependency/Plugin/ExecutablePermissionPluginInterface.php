@@ -9,8 +9,17 @@ namespace Spryker\Shared\PermissionExtension\Dependency\Plugin;
 
 interface ExecutablePermissionPluginInterface extends PermissionPluginInterface
 {
+    /**
+     * @var string
+     */
     public const CONFIG_FIELD_TYPE_STORE_MULTI_CURRENCY = 'CONFIG_FIELD_TYPE_STORE_MULTI_CURRENCY';
+    /**
+     * @var string
+     */
     public const CONFIG_FIELD_TYPE_INT = 'CONFIG_FIELD_TYPE_INT';
+    /**
+     * @var string
+     */
     public const CONFIG_FIELD_TYPE_STRING = 'CONFIG_FIELD_TYPE_STRING';
 
     /**
@@ -20,7 +29,7 @@ interface ExecutablePermissionPluginInterface extends PermissionPluginInterface
      * @api
      *
      * @param array $configuration
-     * @param int|string|array|null $context
+     * @param array|string|int|null $context
      *
      * @return bool
      */

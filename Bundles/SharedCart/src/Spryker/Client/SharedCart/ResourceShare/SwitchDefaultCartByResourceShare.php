@@ -16,6 +16,9 @@ use Spryker\Client\SharedCart\Dependency\Client\SharedCartToMultiCartClientInter
 
 class SwitchDefaultCartByResourceShare implements SwitchDefaultCartByResourceShareInterface
 {
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_QUOTE_IS_NOT_AVAILABLE = 'persistent_cart_share.error.quote_is_not_available';
 
     /**

@@ -20,6 +20,9 @@ use Spryker\Zed\ProductStorage\ProductStorageConfig;
 
 class AttributeMap implements AttributeMapInterface
 {
+    /**
+     * @var string
+     */
     public const KEY_ID_PRODUCT_ABSTRACT_FK_LOCALE = '%d_%d';
 
     /**
@@ -79,7 +82,7 @@ class AttributeMap implements AttributeMapInterface
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      * @param array $localeIds
      *
      * @throws \Spryker\Zed\ProductStorage\Exception\InvalidArgumentException
@@ -140,10 +143,22 @@ class AttributeMap implements AttributeMapInterface
             );
         }
 
+        $attributeVariants = [];
+        if (!$this->productStorageConfig->isOptimizedAttributeVariantsMapEnabled()) {
+            $attributeVariants = $this->buildProductVariants($productConcreteSuperAttributes);
+
+            return $this->createAttributeMapStorageTransfer(
+                $concreteProductIds,
+                $superAttributeVariations,
+                $attributeVariants
+            );
+        }
+
         return $this->createAttributeMapStorageTransfer(
             $concreteProductIds,
             $superAttributeVariations,
-            $this->buildProductVariants($productConcreteSuperAttributes)
+            $attributeVariants,
+            $productConcreteSuperAttributes
         );
     }
 
@@ -199,25 +214,28 @@ class AttributeMap implements AttributeMapInterface
      * @param array $concreteProductIds
      * @param array $superAttributes
      * @param array $attributeVariants
+     * @param array $attributeVariantMap
      *
      * @return \Generated\Shared\Transfer\AttributeMapStorageTransfer
      */
     protected function createAttributeMapStorageTransfer(
         array $concreteProductIds,
         array $superAttributes = [],
-        array $attributeVariants = []
+        array $attributeVariants = [],
+        array $attributeVariantMap = []
     ) {
         return (new AttributeMapStorageTransfer())
             ->setProductConcreteIds($concreteProductIds)
             ->setSuperAttributes($superAttributes)
-            ->setAttributeVariants($attributeVariants);
+            ->setAttributeVariants($attributeVariants)
+            ->setAttributeVariantMap($attributeVariantMap);
     }
 
     /**
      * @param int $idProductAbstract
      * @param int $idLocale
      *
-     * @return \Orm\Zed\Product\Persistence\SpyProduct[]
+     * @return array<\Orm\Zed\Product\Persistence\SpyProduct>
      */
     protected function getConcreteProducts($idProductAbstract, $idLocale)
     {
@@ -228,8 +246,8 @@ class AttributeMap implements AttributeMapInterface
     }
 
     /**
-     * @param int[] $productAbstractIds
-     * @param int[] $localeIds
+     * @param array<int> $productAbstractIds
+     * @param array<int> $localeIds
      *
      * @return array
      */
@@ -328,6 +346,8 @@ class AttributeMap implements AttributeMapInterface
     }
 
     /**
+     * @deprecated Exists for Backward Compatibility reasons only.
+     *
      * @param array $productSuperAttributes
      *
      * @return array

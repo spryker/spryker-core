@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\RestProductImageSetTransfer;
 class ConcreteProductImageSetsMapper implements ConcreteProductImageSetsMapperInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ProductImageSetStorageTransfer[] $productImageSetStorageTransfers
+     * @param array<\Generated\Shared\Transfer\ProductImageSetStorageTransfer> $productImageSetStorageTransfers
      *
      * @return \Generated\Shared\Transfer\RestProductImageSetsAttributesTransfer
      */

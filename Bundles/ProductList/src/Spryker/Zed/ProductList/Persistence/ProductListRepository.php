@@ -24,15 +24,27 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
  */
 class ProductListRepository extends AbstractRepository implements ProductListRepositoryInterface
 {
+    /**
+     * @var string
+     */
     public const COL_CONCRETE_PRODUCT_COUNT = 'concrete_product_count';
+    /**
+     * @var string
+     */
     public const COL_ID_PRODUCT_ABSTRACT = 'col_id_product_abstract';
+    /**
+     * @var string
+     */
     public const COL_TYPE = 'col_type';
+    /**
+     * @var string
+     */
     public const COL_ID_PRODUCT_LIST = 'col_id_product_list';
 
     /**
      * @param int $idProductList
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getRelatedCategoryIdsByIdProductList(int $idProductList): array
     {
@@ -49,7 +61,7 @@ class ProductListRepository extends AbstractRepository implements ProductListRep
     /**
      * @param int $idProductList
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getRelatedProductConcreteIdsByIdProductList(int $idProductList): array
     {
@@ -66,7 +78,7 @@ class ProductListRepository extends AbstractRepository implements ProductListRep
     /**
      * @param int $idProductAbstract
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getProductBlacklistIdsByIdProductAbstract(int $idProductAbstract): array
     {
@@ -83,7 +95,7 @@ class ProductListRepository extends AbstractRepository implements ProductListRep
     /**
      * @param int $idProductAbstract
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getAbstractProductWhitelistIds(int $idProductAbstract): array
     {
@@ -100,7 +112,7 @@ class ProductListRepository extends AbstractRepository implements ProductListRep
     /**
      * @param int $idProductAbstract
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getCategoryWhitelistIdsByIdProductAbstract(int $idProductAbstract): array
     {
@@ -108,7 +120,7 @@ class ProductListRepository extends AbstractRepository implements ProductListRep
     }
 
     /**
-     * @param int[] $productIds
+     * @param array<int> $productIds
      *
      * @return array
      */
@@ -134,10 +146,10 @@ class ProductListRepository extends AbstractRepository implements ProductListRep
     }
 
     /**
-     * @param string[] $productConcreteSkus
-     * @param int[] $blackListIds
+     * @param array<string> $productConcreteSkus
+     * @param array<int> $blackListIds
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getProductConcreteSkusInBlacklists(array $productConcreteSkus, array $blackListIds): array
     {
@@ -149,10 +161,10 @@ class ProductListRepository extends AbstractRepository implements ProductListRep
     }
 
     /**
-     * @param string[] $productConcreteSkus
-     * @param int[] $whiteListIds
+     * @param array<string> $productConcreteSkus
+     * @param array<int> $whiteListIds
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getProductConcreteSkusInWhitelists(array $productConcreteSkus, array $whiteListIds): array
     {
@@ -167,7 +179,7 @@ class ProductListRepository extends AbstractRepository implements ProductListRep
      * @param int $idProduct
      * @param string $listType
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getProductConcreteProductListIdsForType(int $idProduct, string $listType): array
     {
@@ -186,11 +198,11 @@ class ProductListRepository extends AbstractRepository implements ProductListRep
     /**
      * @module Product
      *
-     * @param string[] $productConcreteSkus
+     * @param array<string> $productConcreteSkus
      * @param string $listType
      * @param array $productListIds
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getConcreteProductSkusInList(array $productConcreteSkus, string $listType, array $productListIds): array
     {
@@ -242,7 +254,7 @@ class ProductListRepository extends AbstractRepository implements ProductListRep
      *
      * @param int $idProductAbstract
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getCategoryBlacklistIdsByIdAbstractProduct(int $idProductAbstract): array
     {
@@ -269,7 +281,7 @@ class ProductListRepository extends AbstractRepository implements ProductListRep
      *
      * @param int $idProductAbstract
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getProductBlacklistIdsByIdAbstractProduct(int $idProductAbstract): array
     {
@@ -298,7 +310,7 @@ class ProductListRepository extends AbstractRepository implements ProductListRep
      *
      * @param int $idProductAbstract
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getProductWhitelistIdsByIdAbstractProduct(int $idProductAbstract): array
     {
@@ -322,7 +334,7 @@ class ProductListRepository extends AbstractRepository implements ProductListRep
     /**
      * @param int $idProductAbstract
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getCategoryWhitelistIdsByIdAbstractProduct(int $idProductAbstract): array
     {
@@ -387,7 +399,7 @@ class ProductListRepository extends AbstractRepository implements ProductListRep
      * @param int $idProduct
      * @param string $listType
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getProductConcreteProductListIdsRelatedToCategoriesForType(int $idProduct, string $listType): array
     {
@@ -414,7 +426,7 @@ class ProductListRepository extends AbstractRepository implements ProductListRep
      * @module Category
      * @module ProductCategory
      *
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return array
      */
@@ -446,7 +458,7 @@ class ProductListRepository extends AbstractRepository implements ProductListRep
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return array
      */
@@ -487,7 +499,7 @@ class ProductListRepository extends AbstractRepository implements ProductListRep
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return array
      */
@@ -520,9 +532,9 @@ class ProductListRepository extends AbstractRepository implements ProductListRep
     /**
      * @module Product
      *
-     * @param int[] $productListIds
+     * @param array<int> $productListIds
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getProductAbstractIdsRelatedToProductConcrete(array $productListIds): array
     {
@@ -540,9 +552,9 @@ class ProductListRepository extends AbstractRepository implements ProductListRep
     }
 
     /**
-     * @param int[] $productListIds
+     * @param array<int> $productListIds
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getProductAbstractIdsRelatedToCategories(array $productListIds): array
     {
@@ -560,9 +572,9 @@ class ProductListRepository extends AbstractRepository implements ProductListRep
     }
 
     /**
-     * @param int[] $productListIds
+     * @param array<int> $productListIds
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getProductConcreteIdsRelatedToProductLists(array $productListIds): array
     {
@@ -579,9 +591,9 @@ class ProductListRepository extends AbstractRepository implements ProductListRep
      * @module Product
      * @module ProductCategory
      *
-     * @param int[] $productListIds
+     * @param array<int> $productListIds
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getProductConcreteIdsRelatedToProductListsCategories(array $productListIds): array
     {

@@ -9,8 +9,9 @@ namespace SprykerTest\Service\Flysystem;
 
 use Codeception\Configuration;
 use Codeception\Test\Unit;
-use Generated\Shared\Transfer\FlysystemResourceMetadataTransfer;
-use Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException;
+use Generated\Shared\Transfer\FlysystemResourceTransfer;
+use PHPUnit\Framework\Assert;
+use Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemReadException;
 use Spryker\Service\Flysystem\FlysystemDependencyProvider;
 use Spryker\Service\Flysystem\FlysystemService;
 use Spryker\Service\Flysystem\FlysystemServiceFactory;
@@ -29,19 +30,51 @@ use SprykerTest\Service\Flysystem\Stub\FlysystemConfigStub;
  */
 class FlysystemServiceTest extends Unit
 {
+    /**
+     * @var string
+     */
     public const RESOURCE_FILE_NAME = 'fileName.jpg';
 
+    /**
+     * @var string
+     */
     public const FILE_SYSTEM_DOCUMENT = 'customerFileSystem';
+    /**
+     * @var string
+     */
     public const FILE_SYSTEM_PRODUCT_IMAGE = 'productFileSystem';
 
+    /**
+     * @var string
+     */
     public const ROOT_DIRECTORY = 'fileSystemRoot/uploads/';
+    /**
+     * @var string
+     */
     public const PATH_DOCUMENT = 'documents/';
+    /**
+     * @var string
+     */
     public const PATH_PRODUCT_IMAGE = 'images/product/';
 
+    /**
+     * @var string
+     */
     public const FILE_DOCUMENT = 'customer.txt';
+    /**
+     * @var string
+     */
     public const FILE_PRODUCT_IMAGE = 'image.png';
 
+    /**
+     * @var string
+     */
     public const FILE_CONTENT = 'Hello World';
+
+    /**
+     * @var \SprykerTest\Service\Flysystem\FlysystemServiceTester
+     */
+    protected $tester;
 
     /**
      * @var \Spryker\Service\Flysystem\FlysystemServiceInterface
@@ -132,8 +165,6 @@ class FlysystemServiceTest extends Unit
             static::FILE_SYSTEM_PRODUCT_IMAGE,
             'nonExistingFile.nil'
         );
-
-        $this->assertNull($contents);
     }
 
     /**
@@ -149,24 +180,6 @@ class FlysystemServiceTest extends Unit
         );
 
         $this->assertSame(static::FILE_CONTENT, $contents);
-    }
-
-    /**
-     * @return void
-     */
-    public function testPut(): void
-    {
-        $this->createDocumentFile('Lorem Ipsum');
-
-        $this->flysystemService->put(
-            static::FILE_SYSTEM_DOCUMENT,
-            'foo/' . static::FILE_DOCUMENT,
-            static::FILE_CONTENT
-        );
-
-        $content = $this->getDocumentFileContent();
-
-        $this->assertSame(static::FILE_CONTENT, $content);
     }
 
     /**
@@ -198,7 +211,7 @@ class FlysystemServiceTest extends Unit
         );
 
         $file = $this->getLocalDocumentFile();
-        $this->assertFileNotExists($file);
+        $this->assertFileDoesNotExist($file);
     }
 
     /**
@@ -217,7 +230,7 @@ class FlysystemServiceTest extends Unit
         $originalFile = $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/' . static::FILE_DOCUMENT;
         $renamedFile = $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/NEW_' . static::FILE_DOCUMENT;
 
-        $this->assertFileNotExists($originalFile);
+        $this->assertFileDoesNotExist($originalFile);
         $this->assertFileExists($renamedFile);
     }
 
@@ -239,21 +252,6 @@ class FlysystemServiceTest extends Unit
 
         $this->assertFileExists($originalFile);
         $this->assertFileExists($copiedFile);
-    }
-
-    /**
-     * @return void
-     */
-    public function testGetMetadata(): void
-    {
-        $this->createDocumentFile();
-
-        $metadataTransfer = $this->flysystemService->getMetadata(
-            static::FILE_SYSTEM_DOCUMENT,
-            'foo/' . static::FILE_DOCUMENT
-        );
-
-        $this->assertInstanceOf(FlysystemResourceMetadataTransfer::class, $metadataTransfer);
     }
 
     /**
@@ -408,33 +406,7 @@ class FlysystemServiceTest extends Unit
             'foo/bar'
         );
 
-        $this->assertDirectoryNotExists($dir);
-    }
-
-    /**
-     * @return void
-     */
-    public function testPutStream(): void
-    {
-        $stream = tmpfile();
-        fwrite($stream, static::FILE_CONTENT);
-        rewind($stream);
-
-        $this->flysystemService->putStream(
-            static::FILE_SYSTEM_DOCUMENT,
-            'foo/' . static::FILE_DOCUMENT,
-            $stream
-        );
-
-        if ($stream !== false) {
-            fclose($stream);
-        }
-
-        $file = $this->getLocalDocumentFile();
-        $content = file_get_contents($file);
-
-        $this->assertFileExists($file);
-        $this->assertSame(static::FILE_CONTENT, $content);
+        $this->assertDirectoryDoesNotExist($dir);
     }
 
     /**
@@ -468,7 +440,7 @@ class FlysystemServiceTest extends Unit
         $file = $this->testDataFileSystemRootDirectory . static::FILE_DOCUMENT;
         $stream = fopen($file, 'r+');
 
-        $this->flysystemService->updateStream(
+        $this->flysystemService->writeStream(
             static::FILE_SYSTEM_DOCUMENT,
             'foo/' . static::FILE_DOCUMENT,
             $stream
@@ -528,6 +500,43 @@ class FlysystemServiceTest extends Unit
     }
 
     /**
+     * Tests that when a FilesystemReader returns data with properties that do not exists in the transfer object
+     * the `AbstractTransfer::fromArray()` method will not throw an exception.
+     *
+     * @return void
+     */
+    public function testListContentsIgnoresMissingProperties(): void
+    {
+        // Arrange
+        $this->tester->arrangeFilesystemProviderThatReturnsDataWithPropertiesThatAreNotPresentInTheFlysystemResourceTransfer();
+
+        // Act
+        $flysystemResourceTransferCollection = $this->tester->getService()->listContents('foo');
+
+        // Assert
+        $this->tester->assertAllInstanceOf(FlysystemResourceTransfer::class, $flysystemResourceTransferCollection);
+    }
+
+    /**
+     * @deprecated Will be removed once PHPUnit 8 support is dropped.
+     *
+     * @param string $directory
+     * @param string $message
+     *
+     * @return void
+     */
+    public static function assertDirectoryDoesNotExist(string $directory, string $message = ''): void
+    {
+        if (method_exists(Assert::class, 'assertDirectoryDoesNotExist')) {
+            parent::assertDirectoryDoesNotExist($directory, $message);
+
+            return;
+        }
+
+        static::assertDirectoryNotExists($directory, $message);
+    }
+
+    /**
      * @param string|null $content
      * @param string|null $modifiedTimestamp
      *
@@ -571,7 +580,7 @@ class FlysystemServiceTest extends Unit
     }
 
     /**
-     * @return bool|string
+     * @return string|bool
      */
     protected function getDocumentFileContent()
     {

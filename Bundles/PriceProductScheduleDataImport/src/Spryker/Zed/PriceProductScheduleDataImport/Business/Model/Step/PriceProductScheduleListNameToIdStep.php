@@ -21,7 +21,7 @@ class PriceProductScheduleListNameToIdStep implements DataImportStepInterface
     protected $config;
 
     /**
-     * @var string[]
+     * @var array<string>
      */
     protected $idPriceProductScheduleListCache = [];
 

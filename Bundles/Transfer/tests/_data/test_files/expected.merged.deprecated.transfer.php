@@ -102,6 +102,7 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
             'rest_request_parameter' => 'no',
             'is_associative' => false,
             'is_nullable' => false,
+            'is_strict' => false,
         ],
         self::ARRAY_FIELD => [
             'type' => 'array',
@@ -113,6 +114,7 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
             'rest_request_parameter' => 'no',
             'is_associative' => false,
             'is_nullable' => false,
+            'is_strict' => false,
         ],
         self::TRANSFER_FIELD => [
             'type' => 'Generated\Shared\Transfer\DeprecatedFooBarTransfer',
@@ -124,6 +126,7 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
             'rest_request_parameter' => 'no',
             'is_associative' => false,
             'is_nullable' => false,
+            'is_strict' => false,
         ],
         self::TRANSFER_COLLECTION_FIELD => [
             'type' => 'Generated\Shared\Transfer\DeprecatedFooBarTransfer',
@@ -135,6 +138,7 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
             'rest_request_parameter' => 'no',
             'is_associative' => false,
             'is_nullable' => false,
+            'is_strict' => false,
         ],
         self::PROJECT_LEVEL_DEPRECATED_FIELD => [
             'type' => 'string',
@@ -146,6 +150,7 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
             'rest_request_parameter' => 'no',
             'is_associative' => false,
             'is_nullable' => false,
+            'is_strict' => false,
         ],
     ];
 
@@ -181,6 +186,8 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
     /**
      * @module Deprecated
      *
+     * @throws \Spryker\Shared\Kernel\Transfer\Exception\NullValueException
+     *
      * @deprecated scalarField is deprecated.
      *
      * @return string
@@ -196,6 +203,8 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
 
     /**
      * @module Deprecated
+     *
+     * @throws \Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException
      *
      * @deprecated scalarField is deprecated.
      *
@@ -261,6 +270,8 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
     /**
      * @module Deprecated
      *
+     * @throws \Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException
+     *
      * @deprecated arrayField is deprecated.
      *
      * @return $this
@@ -304,6 +315,8 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
     /**
      * @module Deprecated
      *
+     * @throws \Spryker\Shared\Kernel\Transfer\Exception\NullValueException
+     *
      * @deprecated transferField is deprecated.
      *
      * @return \Generated\Shared\Transfer\DeprecatedFooBarTransfer
@@ -319,6 +332,8 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
 
     /**
      * @module Deprecated
+     *
+     * @throws \Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException
      *
      * @deprecated transferField is deprecated.
      *
@@ -380,6 +395,8 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
     /**
      * @module Deprecated
      *
+     * @throws \Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException
+     *
      * @deprecated transferCollectionField is deprecated.
      *
      * @return $this
@@ -423,6 +440,8 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
     /**
      * @module Deprecated
      *
+     * @throws \Spryker\Shared\Kernel\Transfer\Exception\NullValueException
+     *
      * @deprecated Deprecated on project level.
      *
      * @return string
@@ -439,6 +458,8 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
     /**
      * @module Deprecated
      *
+     * @throws \Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException
+     *
      * @deprecated Deprecated on project level.
      *
      * @return $this
@@ -453,7 +474,10 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
     /**
      * @param array $data
      * @param bool $ignoreMissingProperty
-     * @return MergedDeprecatedFooBarTransfer
+     *
+     * @throws \InvalidArgumentException
+     *
+     * @return $this
      */
     public function fromArray(array $data, $ignoreMissingProperty = false)
     {
@@ -466,12 +490,17 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
                 case 'projectLevelDeprecatedField':
                     $this->$normalizedPropertyName = $value;
                     $this->modifiedProperties[$normalizedPropertyName] = true;
+
                     break;
                 case 'transferField':
                     if (is_array($value)) {
                         $type = $this->transferMetadata[$normalizedPropertyName]['type'];
-                        /** @var \Spryker\Shared\Kernel\Transfer\TransferInterface $transferObject */
+                        /** @var \Spryker\Shared\Kernel\Transfer\TransferInterface $value */
                         $value = (new $type())->fromArray($value, $ignoreMissingProperty);
+                    }
+
+                    if ($this->isPropertyStrict($normalizedPropertyName)) {
+                        $this->assertInstanceOfTransfer($normalizedPropertyName, $value);
                     }
                     $this->$normalizedPropertyName = $value;
                     $this->modifiedProperties[$normalizedPropertyName] = true;
@@ -481,6 +510,7 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
                     $elementType = $this->transferMetadata[$normalizedPropertyName]['type'];
                     $this->$normalizedPropertyName = $this->processArrayObject($elementType, $value, $ignoreMissingProperty);
                     $this->modifiedProperties[$normalizedPropertyName] = true;
+
                     break;
                 default:
                     if (!$ignoreMissingProperty) {
@@ -493,10 +523,11 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
     }
 
     /**
-    * @param bool $isRecursive
-    * @param bool $camelCasedKeys
-    * @return array
-    */
+     * @param bool $isRecursive
+     * @param bool $camelCasedKeys
+     *
+     * @return array
+     */
     public function modifiedToArray($isRecursive = true, $camelCasedKeys = false)
     {
         if ($isRecursive && !$camelCasedKeys) {
@@ -514,10 +545,11 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
     }
 
     /**
-    * @param bool $isRecursive
-    * @param bool $camelCasedKeys
-    * @return array
-    */
+     * @param bool $isRecursive
+     * @param bool $camelCasedKeys
+     *
+     * @return array
+     */
     public function toArray($isRecursive = true, $camelCasedKeys = false)
     {
         if ($isRecursive && !$camelCasedKeys) {
@@ -535,17 +567,19 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
     }
 
     /**
-    * @param mixed $value
-    * @param bool $isRecursive
-    * @param bool $camelCasedKeys
-    * @return array
-    */
+     * @param mixed $value
+     * @param bool $isRecursive
+     * @param bool $camelCasedKeys
+     *
+     * @return array
+     */
     protected function addValuesToCollectionModified($value, $isRecursive, $camelCasedKeys)
     {
         $result = [];
         foreach ($value as $elementKey => $arrayElement) {
             if ($arrayElement instanceof AbstractTransfer) {
                 $result[$elementKey] = $arrayElement->modifiedToArray($isRecursive, $camelCasedKeys);
+
                 continue;
             }
             $result[$elementKey] = $arrayElement;
@@ -555,17 +589,19 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
     }
 
     /**
-    * @param mixed $value
-    * @param bool $isRecursive
-    * @param bool $camelCasedKeys
-    * @return array
-    */
+     * @param mixed $value
+     * @param bool $isRecursive
+     * @param bool $camelCasedKeys
+     *
+     * @return array
+     */
     protected function addValuesToCollection($value, $isRecursive, $camelCasedKeys)
     {
         $result = [];
         foreach ($value as $elementKey => $arrayElement) {
             if ($arrayElement instanceof AbstractTransfer) {
                 $result[$elementKey] = $arrayElement->toArray($isRecursive, $camelCasedKeys);
+
                 continue;
             }
             $result[$elementKey] = $arrayElement;
@@ -575,8 +611,8 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
     }
 
     /**
-    * @return array
-    */
+     * @return array
+     */
     public function modifiedToArrayRecursiveCamelCased()
     {
         $values = [];
@@ -587,6 +623,7 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
 
             if ($value instanceof AbstractTransfer) {
                 $values[$arrayKey] = $value->modifiedToArray(true, true);
+
                 continue;
             }
             switch ($property) {
@@ -594,12 +631,15 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
                 case 'arrayField':
                 case 'projectLevelDeprecatedField':
                     $values[$arrayKey] = $value;
+
                     break;
                 case 'transferField':
                     $values[$arrayKey] = $value instanceof AbstractTransfer ? $value->modifiedToArray(true, true) : $value;
+
                     break;
                 case 'transferCollectionField':
                     $values[$arrayKey] = $value ? $this->addValuesToCollectionModified($value, true, true) : $value;
+
                     break;
             }
         }
@@ -608,8 +648,8 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
     }
 
     /**
-    * @return array
-    */
+     * @return array
+     */
     public function modifiedToArrayRecursiveNotCamelCased()
     {
         $values = [];
@@ -620,6 +660,7 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
 
             if ($value instanceof AbstractTransfer) {
                 $values[$arrayKey] = $value->modifiedToArray(true, false);
+
                 continue;
             }
             switch ($property) {
@@ -627,12 +668,15 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
                 case 'arrayField':
                 case 'projectLevelDeprecatedField':
                     $values[$arrayKey] = $value;
+
                     break;
                 case 'transferField':
                     $values[$arrayKey] = $value instanceof AbstractTransfer ? $value->modifiedToArray(true, false) : $value;
+
                     break;
                 case 'transferCollectionField':
                     $values[$arrayKey] = $value ? $this->addValuesToCollectionModified($value, true, false) : $value;
+
                     break;
             }
         }
@@ -641,8 +685,8 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
     }
 
     /**
-    * @return array
-    */
+     * @return array
+     */
     public function modifiedToArrayNotRecursiveNotCamelCased()
     {
         $values = [];
@@ -658,8 +702,8 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
     }
 
     /**
-    * @return array
-    */
+     * @return array
+     */
     public function modifiedToArrayNotRecursiveCamelCased()
     {
         $values = [];
@@ -675,16 +719,16 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
     }
 
     /**
-    * @return void
-    */
+     * @return void
+     */
     protected function initCollectionProperties()
     {
         $this->transferCollectionField = $this->transferCollectionField ?: new ArrayObject();
     }
 
     /**
-    * @return array
-    */
+     * @return array
+     */
     public function toArrayNotRecursiveCamelCased()
     {
         return [
@@ -697,8 +741,8 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
     }
 
     /**
-    * @return array
-    */
+     * @return array
+     */
     public function toArrayNotRecursiveNotCamelCased()
     {
         return [
@@ -711,8 +755,8 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
     }
 
     /**
-    * @return array
-    */
+     * @return array
+     */
     public function toArrayRecursiveNotCamelCased()
     {
         return [
@@ -725,8 +769,8 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
     }
 
     /**
-    * @return array
-    */
+     * @return array
+     */
     public function toArrayRecursiveCamelCased()
     {
         return [

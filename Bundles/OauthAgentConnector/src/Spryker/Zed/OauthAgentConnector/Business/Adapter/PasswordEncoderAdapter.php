@@ -13,6 +13,9 @@ use Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface;
 
 class PasswordEncoderAdapter implements PasswordEncoderAdapterInterface
 {
+    /**
+     * @var int
+     */
     protected const BCRYPT_FACTOR = 12;
 
     /**

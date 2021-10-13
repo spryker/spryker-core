@@ -37,9 +37,9 @@ class JsonIndexDefinitionMapper implements IndexDefinitionMapperInterface
     }
 
     /**
-     * @param \Symfony\Component\Finder\SplFileInfo[] $splFiles
+     * @param array<\Symfony\Component\Finder\SplFileInfo> $splFiles
      *
-     * @return \Generated\Shared\Transfer\IndexDefinitionFileTransfer[]
+     * @return array<\Generated\Shared\Transfer\IndexDefinitionFileTransfer>
      */
     public function mapSplFilesToIndexDefinitionFileTransfers(array $splFiles): array
     {
@@ -60,7 +60,7 @@ class JsonIndexDefinitionMapper implements IndexDefinitionMapperInterface
     /**
      * @param \Symfony\Component\Finder\SplFileInfo $splFileInfo
      * @param \Generated\Shared\Transfer\IndexDefinitionFileTransfer $indexDefinitionFileTransfer
-     * @param string[] $storePrefixes
+     * @param array<string> $storePrefixes
      *
      * @return \Generated\Shared\Transfer\IndexDefinitionFileTransfer
      */
@@ -81,7 +81,7 @@ class JsonIndexDefinitionMapper implements IndexDefinitionMapperInterface
 
     /**
      * @param string $fileName
-     * @param string[] $storePrefixes
+     * @param array<string> $storePrefixes
      *
      * @return string|null
      */
@@ -97,9 +97,9 @@ class JsonIndexDefinitionMapper implements IndexDefinitionMapperInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\StoreTransfer[] $storeTransfers
+     * @param array<\Generated\Shared\Transfer\StoreTransfer> $storeTransfers
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getStorePrefixes(array $storeTransfers): array
     {

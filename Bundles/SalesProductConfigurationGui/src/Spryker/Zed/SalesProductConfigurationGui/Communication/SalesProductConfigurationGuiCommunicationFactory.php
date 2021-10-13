@@ -26,7 +26,7 @@ class SalesProductConfigurationGuiCommunicationFactory extends AbstractCommunica
     }
 
     /**
-     * @return \Spryker\Zed\SalesProductConfigurationGuiExtension\Dependency\Plugin\ProductConfigurationRenderStrategyPluginInterface[]
+     * @return array<\Spryker\Zed\SalesProductConfigurationGuiExtension\Dependency\Plugin\ProductConfigurationRenderStrategyPluginInterface>
      */
     public function getProductConfigurationRenderStrategyPlugins(): array
     {

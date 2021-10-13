@@ -21,6 +21,9 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class ShipmentMethodDecisionRulePlugin extends AbstractPlugin implements DecisionRulePluginInterface, DiscountRuleWithValueOptionsPluginInterface
 {
+    /**
+     * @var string
+     */
     public const DECISION_RULE_FIELD_NAME = 'shipment-method';
 
     /**
@@ -60,7 +63,7 @@ class ShipmentMethodDecisionRulePlugin extends AbstractPlugin implements Decisio
      *
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function acceptedDataTypes()
     {
@@ -74,7 +77,7 @@ class ShipmentMethodDecisionRulePlugin extends AbstractPlugin implements Decisio
      *
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getQueryStringValueOptions()
     {

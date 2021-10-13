@@ -50,7 +50,7 @@ class Storage implements StorageInterface
         $timestampData = [];
         $timestampKeys = $this->storageClient->getKeys('kv:*.timestamp');
         foreach ($timestampKeys as $timestampKey) {
-            $timestampKey = str_replace('kv:', '', $timestampKey);
+            $timestampKey = (string)str_replace('kv:', '', $timestampKey);
             $timestampData[$timestampKey] = $this->storageClient->get($timestampKey);
         }
 

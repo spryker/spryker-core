@@ -40,22 +40,61 @@ use Spryker\Zed\Shipment\ShipmentDependencyProvider;
  */
 class ShipmentFacadeTest extends Test
 {
+    /**
+     * @var string
+     */
     public const DELIVERY_TIME_PLUGIN = 'example_delivery_time_plugin';
+    /**
+     * @var string
+     */
     public const AVAILABILITY_PLUGIN = 'example_availability_plugin';
+    /**
+     * @var string
+     */
     public const PRICE_PLUGIN = 'example_price_plugin';
 
+    /**
+     * @var bool
+     */
     public const AVAILABLE = true;
+    /**
+     * @var bool
+     */
     public const NOT_AVAILABLE = false;
 
+    /**
+     * @var string
+     */
     public const DEFAULT_DELIVERY_TIME = 'example delivery time';
+    /**
+     * @var int
+     */
     public const DEFAULT_PLUGIN_PRICE = 1500;
 
+    /**
+     * @var string
+     */
     protected const VALUE_ANOTHER_EXPENSE_TYPE = 'VALUE_ANOTHER_EXPENSE_TYPE';
 
+    /**
+     * @var string
+     */
     protected const NOT_UNIQUE_SHIPMENT_NAME_STANDART = 'Standard';
+    /**
+     * @var string
+     */
     protected const NOT_UNIQUE_SHIPMENT_NAME_EXPRESS = 'Express';
+    /**
+     * @var string
+     */
     protected const UNIQUE_SHIPMENT_NAME = 'Example unique shipment name';
+    /**
+     * @var int
+     */
     protected const FK_SHIPMENT_CARRIER = 1;
+    /**
+     * @var int
+     */
     protected const FK_SHIPMENT_METHOD = 1;
 
     /**
@@ -530,5 +569,43 @@ class ShipmentFacadeTest extends Test
 
         // Assert
         $this->assertCount(1, $shipmentMethodsTransfer->getMethods());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetAvailableMethodsByShipmentShouldReturnAvailableShipmentMethodsWithMultiplePrices(): void
+    {
+        // Arrange
+        $this->tester->disableAllShipmentMethods();
+
+        $quoteTransfer = (new QuoteBuilder())->build();
+        $quoteTransfer->setStore($this->store)
+            ->setPriceMode(ShipmentConstants::PRICE_MODE_GROSS)
+            ->setCurrency((new CurrencyTransfer())->setCode('EUR'));
+
+        $priceList = $this->createDefaultPriceList();
+        $shipmentMethodTransfer = $this->tester->haveShipmentMethod(
+            [],
+            [],
+            $priceList,
+            [$this->store->getIdStore()]
+        );
+
+        $quoteTransfer = $this->tester->addNewItemIntoQuoteTransfer($quoteTransfer, 'XX', $shipmentMethodTransfer);
+
+        // Act
+        $shipmentMethodsCollectionTransfer = $this->tester->getShipmentFacade()->getAvailableMethodsByShipment($quoteTransfer);
+
+        // Assert
+        $this->assertCount(1, $shipmentMethodsCollectionTransfer->getShipmentMethods());
+
+        /** @var \Generated\Shared\Transfer\ShipmentMethodsTransfer $shipmentMethodsTransfer */
+        $shipmentMethodsTransfer = $shipmentMethodsCollectionTransfer->getShipmentMethods()->getIterator()->current();
+        $this->assertCount(1, $shipmentMethodsTransfer->getMethods());
+
+        /** @var \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer */
+        $shipmentMethodTransfer = $shipmentMethodsTransfer->getMethods()->getIterator()->current();
+        $this->assertCount(2, $shipmentMethodTransfer->getPrices());
     }
 }

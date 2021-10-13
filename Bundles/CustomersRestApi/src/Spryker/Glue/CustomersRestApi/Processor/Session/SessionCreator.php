@@ -19,13 +19,13 @@ class SessionCreator implements SessionCreatorInterface
     protected $customerClient;
 
     /**
-     * @var array|\Spryker\Glue\CustomersRestApiExtension\Dependency\Plugin\CustomerExpanderPluginInterface[]
+     * @var array<\Spryker\Glue\CustomersRestApiExtension\Dependency\Plugin\CustomerExpanderPluginInterface>
      */
     protected $customerExpanderPlugins;
 
     /**
      * @param \Spryker\Glue\CustomersRestApi\Dependency\Client\CustomersRestApiToCustomerClientInterface $customerClient
-     * @param \Spryker\Glue\CustomersRestApiExtension\Dependency\Plugin\CustomerExpanderPluginInterface[] $customerExpanderPlugins
+     * @param array<\Spryker\Glue\CustomersRestApiExtension\Dependency\Plugin\CustomerExpanderPluginInterface> $customerExpanderPlugins
      */
     public function __construct(
         CustomersRestApiToCustomerClientInterface $customerClient,

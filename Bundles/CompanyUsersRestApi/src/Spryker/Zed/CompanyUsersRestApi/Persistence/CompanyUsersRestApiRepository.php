@@ -71,7 +71,7 @@ class CompanyUsersRestApiRepository extends AbstractRepository implements Compan
     /**
      * @module CompanyRole
      *
-     * @param int[] $companyUserIds
+     * @param array<int> $companyUserIds
      *
      * @return \Propel\Runtime\Collection\ObjectCollection
      */

@@ -16,9 +16,21 @@ use Spryker\Zed\Storage\Dependency\Service\StorageToUtilSanitizeServiceInterface
 
 class StorageTable extends AbstractTable
 {
+    /**
+     * @var string
+     */
     protected const KV_PREFIX = 'kv:';
+    /**
+     * @var string
+     */
     protected const MATCH_ALL = '*';
+    /**
+     * @var int
+     */
     protected const DEFAULT_PAGE_LENGTH = 100;
+    /**
+     * @var int
+     */
     protected const VALUE_LENGTH_LIMIT = 120;
 
     /**

@@ -72,7 +72,7 @@ class CsvResourceFileLoader implements TranslationResourceFileLoaderInterface
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getFilePaths(): array
     {

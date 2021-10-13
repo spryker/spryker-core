@@ -17,6 +17,9 @@ use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
  */
 class SortedQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPluginInterface
 {
+    /**
+     * @var string
+     */
     protected const KEY_UNMAPPED_TYPE = 'unmapped_type';
 
     /**

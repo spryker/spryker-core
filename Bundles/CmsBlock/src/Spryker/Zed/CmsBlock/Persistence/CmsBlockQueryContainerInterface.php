@@ -153,7 +153,7 @@ interface CmsBlockQueryContainerInterface
      * @api
      *
      * @param int $idCmsBlock
-     * @param int[] $idStores
+     * @param array<int> $idStores
      *
      * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockStoreQuery
      */

@@ -54,6 +54,9 @@ class ShipmentBusinessTester extends Actor
 {
     use _generated\ShipmentBusinessTesterActions;
 
+    /**
+     * @var string
+     */
     protected const FAKE_EXPENSE_TYPE = 'FAKE_EXPENSE_TYPE';
 
     /**
@@ -75,7 +78,7 @@ class ShipmentBusinessTester extends Actor
     /**
      * @param \Generated\Shared\Transfer\ShipmentMethodsTransfer $shipmentMethodsTransfer
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getIdShipmentMethodCollection(ShipmentMethodsTransfer $shipmentMethodsTransfer): array
     {
@@ -94,7 +97,7 @@ class ShipmentBusinessTester extends Actor
      * @param \Generated\Shared\Transfer\ShipmentMethodsTransfer $shipmentMethodsTransfer
      * @param int $idShipmentMethod
      *
-     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|mixed|null
+     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
      */
     public function findShipmentMethod(ShipmentMethodsTransfer $shipmentMethodsTransfer, int $idShipmentMethod)
     {
@@ -139,7 +142,7 @@ class ShipmentBusinessTester extends Actor
     /**
      * @param int $shipmentMethodCount
      *
-     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer[]
+     * @return array<\Generated\Shared\Transfer\ShipmentMethodTransfer>
      */
     public function haveActiveShipmentMethods(int $shipmentMethodCount): array
     {
@@ -206,7 +209,7 @@ class ShipmentBusinessTester extends Actor
 
     /**
      * @param string $countryIso2Code
-     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer[] $shipmentMethodTransferList
+     * @param array<\Generated\Shared\Transfer\ShipmentMethodTransfer> $shipmentMethodTransferList
      *
      * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
      */

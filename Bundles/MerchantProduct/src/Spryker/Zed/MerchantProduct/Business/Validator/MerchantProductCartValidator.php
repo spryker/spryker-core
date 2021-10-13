@@ -16,9 +16,21 @@ use Spryker\Zed\MerchantProduct\Persistence\MerchantProductRepositoryInterface;
 
 class MerchantProductCartValidator implements MerchantProductCartValidatorInterface
 {
+    /**
+     * @var string
+     */
     protected const MESSAGE_TYPE_ERROR = 'error';
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_INVALID_MERCHANT_PRODUCT = 'merchant_product.message.invalid';
+    /**
+     * @var string
+     */
     protected const GLOSSARY_PARAM_MERCHANT_REFERENCE = '%merchant_reference%';
+    /**
+     * @var string
+     */
     protected const GLOSSARY_PARAM_CONCRETE_SKU = '%sku%';
 
     /**
@@ -95,7 +107,7 @@ class MerchantProductCartValidator implements MerchantProductCartValidatorInterf
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function extractMerchantProductConcreteSkus(CartChangeTransfer $cartChangeTransfer): array
     {
@@ -106,9 +118,7 @@ class MerchantProductCartValidator implements MerchantProductCartValidatorInterf
                 continue;
             }
 
-            /**
-             * @var string $sku
-             */
+            /** @var string $sku */
             $sku = $itemTransfer->getSku();
 
             $merchantProductConcreteSkus[] = $sku;

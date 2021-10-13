@@ -10,20 +10,20 @@ namespace Spryker\Client\CmsStorage\Reader;
 interface CmsPageStorageReaderInterface
 {
     /**
-     * @param string[] $cmsPageUuids
+     * @param array<string> $cmsPageUuids
      * @param string $localeName
      * @param string $storeName
      *
-     * @return \Generated\Shared\Transfer\CmsPageStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\CmsPageStorageTransfer>
      */
     public function getCmsPagesByUuids(array $cmsPageUuids, string $localeName, string $storeName): array;
 
     /**
-     * @param int[] $cmsPageIds
+     * @param array<int> $cmsPageIds
      * @param string $localeName
      * @param string $storeName
      *
-     * @return \Generated\Shared\Transfer\CmsPageStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\CmsPageStorageTransfer>
      */
     public function getCmsPagesByIds(array $cmsPageIds, string $localeName, string $storeName): array;
 }

@@ -20,10 +20,25 @@ use Spryker\Zed\ProductDiscontinuedProductLabelConnector\Dependency\Facade\Produ
  */
 class ProductDiscontinuedProductLabelConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_PRODUCT_LABEL = 'FACADE_PRODUCT_LABEL';
+    /**
+     * @var string
+     */
     public const FACADE_PRODUCT_DISCONTINUED = 'FACADE_PRODUCT_DISCONTINUED';
+    /**
+     * @var string
+     */
     public const FACADE_PRODUCT = 'FACADE_PRODUCT';
+    /**
+     * @var string
+     */
     public const FACADE_LOCALE = 'FACADE_LOCALE';
+    /**
+     * @var string
+     */
     public const PROPEL_QUERY_PRODUCT = 'PROPEL_QUERY_PRODUCT';
 
     /**

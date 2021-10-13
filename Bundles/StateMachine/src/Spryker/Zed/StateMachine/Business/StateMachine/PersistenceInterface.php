@@ -37,9 +37,9 @@ interface PersistenceInterface
     public function saveStateMachineItem(StateMachineItemTransfer $stateMachineItemTransfer, $stateName);
 
     /**
-     * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems
+     * @param array<\Generated\Shared\Transfer\StateMachineItemTransfer> $stateMachineItems
      *
-     * @return \Generated\Shared\Transfer\StateMachineItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\StateMachineItemTransfer>
      */
     public function updateStateMachineItemsFromPersistence(array $stateMachineItems);
 
@@ -47,7 +47,7 @@ interface PersistenceInterface
      * @param int $itemIdentifier
      * @param int $idStateMachineProcess
      *
-     * @return \Generated\Shared\Transfer\StateMachineItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\StateMachineItemTransfer>
      */
     public function getStateHistoryByStateItemIdentifier($itemIdentifier, $idStateMachineProcess);
 
@@ -59,18 +59,18 @@ interface PersistenceInterface
     public function getProcessedStateMachineItemTransfer(StateMachineItemTransfer $stateMachineItemTransfer);
 
     /**
-     * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems
+     * @param array<\Generated\Shared\Transfer\StateMachineItemTransfer> $stateMachineItems
      *
-     * @return \Generated\Shared\Transfer\StateMachineItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\StateMachineItemTransfer>
      */
     public function getProcessedStateMachineItems(array $stateMachineItems);
 
     /**
      * @param string $processName
      * @param string $stateMachineName
-     * @param string[] $states
+     * @param array<string> $states
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getStateMachineItemIdsByStatesProcessAndStateMachineName(
         $processName,
@@ -110,7 +110,7 @@ interface PersistenceInterface
     /**
      * @param string $stateMachineName
      *
-     * @return \Generated\Shared\Transfer\StateMachineItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\StateMachineItemTransfer>
      */
     public function getItemsWithExpiredTimeouts($stateMachineName);
 }

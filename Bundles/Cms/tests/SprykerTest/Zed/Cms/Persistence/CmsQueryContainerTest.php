@@ -27,6 +27,9 @@ use Spryker\Zed\Cms\Persistence\CmsQueryContainer;
  */
 class CmsQueryContainerTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const TEST_LOCALE = 'xxx';
 
     /**

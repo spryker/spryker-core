@@ -17,7 +17,13 @@ use Spryker\Zed\SalesQuantity\Dependency\Facade\SalesQuantityToProductFacadeBrid
  */
 class SalesQuantityDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const PROPEL_QUERY_PRODUCT = 'PROPEL_QUERY_PRODUCT';
+    /**
+     * @var string
+     */
     public const FACADE_PRODUCT = 'FACADE_PRODUCT';
 
     /**

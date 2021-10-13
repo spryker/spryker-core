@@ -22,7 +22,7 @@ interface ExporterInterface
     public function exportByType($type, LocaleTransfer $locale, OutputInterface $output);
 
     /**
-     * @return \Spryker\Zed\Collector\Dependency\Plugin\CollectorPluginInterface[]
+     * @return array<\Spryker\Zed\Collector\Dependency\Plugin\CollectorPluginInterface>
      */
     public function getCollectorPlugins();
 }

@@ -14,8 +14,17 @@ use Elastica\ResultSet;
  */
 class CompletionResultFormatterPlugin extends AbstractElasticsearchResultFormatterPlugin
 {
+    /**
+     * @var string
+     */
     protected const NAME = 'completion';
+    /**
+     * @var string
+     */
     protected const KEY_BUCKETS = 'buckets';
+    /**
+     * @var string
+     */
     protected const KEY_KEY = 'key';
 
     /**

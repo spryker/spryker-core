@@ -13,6 +13,9 @@ use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
 class RestUserMapper implements RestUserMapperInterface
 {
+    /**
+     * @var string
+     */
     protected const MAPPING_TYPE_UUID = 'uuid';
 
     /**

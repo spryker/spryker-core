@@ -16,11 +16,26 @@ use Spryker\Zed\ProductPackagingUnit\Persistence\ProductPackagingUnitRepositoryI
 
 class ProductPackagingUnitAmountRestrictionValidator implements ProductPackagingUnitAmountRestrictionValidatorInterface
 {
+    /**
+     * @var string
+     */
     protected const ERROR_AMOUNT_MIN_NOT_FULFILLED = 'cart.pre.check.amount.min.failed';
+    /**
+     * @var string
+     */
     protected const ERROR_AMOUNT_MAX_NOT_FULFILLED = 'cart.pre.check.amount.max.failed';
+    /**
+     * @var string
+     */
     protected const ERROR_AMOUNT_INTERVAL_NOT_FULFILLED = 'cart.pre.check.amount.interval.failed';
+    /**
+     * @var string
+     */
     protected const ERROR_AMOUNT_IS_NOT_VARIABLE = 'cart.pre.check.amount.is_not_variable.failed';
 
+    /**
+     * @var int
+     */
     protected const DIVISION_SCALE = 10;
 
     /**
@@ -87,7 +102,7 @@ class ProductPackagingUnitAmountRestrictionValidator implements ProductPackaging
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     protected function selectItemTransfersWithAmountSalesUnit(CartChangeTransfer $cartChangeTransfer): array
     {
@@ -105,9 +120,9 @@ class ProductPackagingUnitAmountRestrictionValidator implements ProductPackaging
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getChangedSkuMap(array $itemTransfers): array
     {
@@ -121,15 +136,15 @@ class ProductPackagingUnitAmountRestrictionValidator implements ProductPackaging
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
-     * @return \Spryker\DecimalObject\Decimal[]
+     * @return array<\Spryker\DecimalObject\Decimal>
      */
     protected function getItemAddCartAmountMap(array $itemTransfers, CartChangeTransfer $cartChangeTransfer): array
     {
         $quoteAmountMapByGroupKey = $this->getQuoteAmountMap($cartChangeTransfer);
-        /** @var \Spryker\DecimalObject\Decimal[] $cartAmountMap */
+        /** @var array<\Spryker\DecimalObject\Decimal> $cartAmountMap */
         $cartAmountMap = [];
 
         foreach ($itemTransfers as $itemTransfer) {
@@ -167,9 +182,9 @@ class ProductPackagingUnitAmountRestrictionValidator implements ProductPackaging
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return \Generated\Shared\Transfer\ProductPackagingUnitAmountTransfer[].
+     * @return array<\Generated\Shared\Transfer\ProductPackagingUnitAmountTransfer> .
      */
     protected function getProductPackagingUnitAmountTransferMap(array $itemTransfers): array
     {
@@ -304,15 +319,15 @@ class ProductPackagingUnitAmountRestrictionValidator implements ProductPackaging
             ->setValue($message)
             ->setParameters([
                 '%sku%' => $sku,
-                '%restrictionValue%' => $restrictionValue->toString(),
-                '%actualValue%' => $actualValue->toString(),
+                '%restrictionValue%' => $restrictionValue->truncate(2)->toString(),
+                '%actualValue%' => $actualValue->truncate(2)->toString(),
             ]);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return \Generated\Shared\Transfer\ProductPackagingUnitAmountTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductPackagingUnitAmountTransfer>
      */
     protected function mapProductPackagingUnitAmountTransfersBySku(array $itemTransfers): array
     {

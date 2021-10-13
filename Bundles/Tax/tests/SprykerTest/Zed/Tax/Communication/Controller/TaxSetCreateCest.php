@@ -23,6 +23,9 @@ use SprykerTest\Zed\Tax\TaxCommunicationTester;
  */
 class TaxSetCreateCest
 {
+    /**
+     * @var string
+     */
     public const TAX_RATE_NAME = 'Tax Rate Name';
 
     /**

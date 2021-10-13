@@ -16,18 +16,30 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class EditCompanyRoleController extends AbstractController
 {
+    /**
+     * @var string
+     */
     protected const URL_REDIRECT_LIST_COMPANY_ROLE = '/company-role-gui/list-company-role';
 
+    /**
+     * @var string
+     */
     protected const MESSAGE_SUCCESS_COMPANY_ROLE_UPDATE = 'Company role has been successfully updated';
 
+    /**
+     * @var string
+     */
     protected const MESSAGE_COMPANY_ROLE_NOT_FOUND = 'Company role not found';
 
+    /**
+     * @var string
+     */
     protected const REQUEST_ID_COMPANY_ROLE = 'id-company-role';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function indexAction(Request $request)
     {

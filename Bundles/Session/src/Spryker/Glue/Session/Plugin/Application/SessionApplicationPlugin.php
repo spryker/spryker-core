@@ -16,7 +16,13 @@ use Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInter
  */
 class SessionApplicationPlugin extends AbstractPlugin implements ApplicationPluginInterface
 {
+    /**
+     * @var string
+     */
     protected const SERVICE_SESSION = 'session';
+    /**
+     * @var string
+     */
     protected const FLAG_SESSION_TEST = 'session.test';
 
     /**

@@ -17,7 +17,7 @@ use Spryker\Zed\Payment\Persistence\PaymentRepositoryInterface;
 class PaymentMethodReader implements PaymentMethodReaderInterface
 {
     /**
-     * @var \Spryker\Zed\Payment\Dependency\Plugin\Payment\PaymentMethodFilterPluginInterface[]
+     * @var array<\Spryker\Zed\PaymentExtension\Dependency\Plugin\PaymentMethodFilterPluginInterface>
      */
     protected $paymentMethodFilterPlugins;
 
@@ -37,7 +37,7 @@ class PaymentMethodReader implements PaymentMethodReaderInterface
     protected $paymentRepository;
 
     /**
-     * @param \Spryker\Zed\Payment\Dependency\Plugin\Payment\PaymentMethodFilterPluginInterface[] $paymentMethodFilterPlugins
+     * @param array<\Spryker\Zed\PaymentExtension\Dependency\Plugin\PaymentMethodFilterPluginInterface> $paymentMethodFilterPlugins
      * @param \Spryker\Zed\Payment\PaymentConfig $paymentConfig
      * @param \Spryker\Zed\Payment\Dependency\Facade\PaymentToStoreFacadeInterface $storeFacade
      * @param \Spryker\Zed\Payment\Persistence\PaymentRepositoryInterface $paymentRepository
@@ -111,7 +111,7 @@ class PaymentMethodReader implements PaymentMethodReaderInterface
     }
 
     /**
-     * @param string[] $infrastructuralMethodNames
+     * @param array<string> $infrastructuralMethodNames
      * @param \Generated\Shared\Transfer\PaymentMethodsTransfer $paymentMethodsTransfer
      *
      * @return \Generated\Shared\Transfer\PaymentMethodsTransfer
@@ -121,7 +121,10 @@ class PaymentMethodReader implements PaymentMethodReaderInterface
         PaymentMethodsTransfer $paymentMethodsTransfer
     ): PaymentMethodsTransfer {
         foreach ($infrastructuralMethodNames as $methodKey) {
-            $infrastructurePaymentMethod = $this->createPaymentMethodTransfer($methodKey);
+            $infrastructurePaymentMethod = (new PaymentMethodTransfer())
+                ->setMethodName($methodKey)
+                ->setPaymentMethodKey($methodKey);
+
             $paymentMethodsTransfer->addMethod($infrastructurePaymentMethod);
         }
 
@@ -152,14 +155,14 @@ class PaymentMethodReader implements PaymentMethodReaderInterface
     /**
      * @param \Generated\Shared\Transfer\PaymentMethodsTransfer $paymentMethodsFromPersistence
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getPersistentPaymentMethodKeys(PaymentMethodsTransfer $paymentMethodsFromPersistence): array
     {
         $persistentMethodNames = [];
 
         foreach ($paymentMethodsFromPersistence->getMethods() as $paymentMethodTransfer) {
-            $persistentMethodNames[] = $paymentMethodTransfer->getMethodName();
+            $persistentMethodNames[] = $paymentMethodTransfer->getPaymentMethodKey();
         }
 
         return $persistentMethodNames;
@@ -179,19 +182,6 @@ class PaymentMethodReader implements PaymentMethodReaderInterface
         $storeRelationTransfer = $paymentMethodTransfer->getStoreRelation();
 
         return $paymentMethodTransfer->getIsActive() && in_array($idStore, $storeRelationTransfer->getIdStores());
-    }
-
-    /**
-     * @param string $methodKey
-     *
-     * @return \Generated\Shared\Transfer\PaymentMethodTransfer
-     */
-    protected function createPaymentMethodTransfer($methodKey)
-    {
-        $paymentMethodTransfer = new PaymentMethodTransfer();
-        $paymentMethodTransfer->setMethodName($methodKey);
-
-        return $paymentMethodTransfer;
     }
 
     /**

@@ -18,12 +18,15 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class DiscountViewBlockController extends AbstractController
 {
+    /**
+     * @var string
+     */
     public const URL_PARAM_ID_DISCOUNT = 'id-discount';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function indexAction(Request $request)
     {

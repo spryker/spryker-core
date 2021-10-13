@@ -26,7 +26,13 @@ use Spryker\Zed\SecurityOauthUser\SecurityOauthUserConfig;
  */
 class ResolveOauthUserTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const FAKE_EMAIL = 'fake@mail.com';
+    /**
+     * @var string
+     */
     protected const SOME_GROUP = 'SOME_GROUP';
 
     /**
@@ -152,7 +158,7 @@ class ResolveOauthUserTest extends Unit
     }
 
     /**
-     * @return string[][]
+     * @return array<string[]>
      */
     public function resolveOauthUserShouldNotResolveOauthUserWithInactiveStatusDataProvider(): array
     {

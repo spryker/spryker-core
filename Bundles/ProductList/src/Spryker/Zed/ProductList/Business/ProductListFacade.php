@@ -110,7 +110,7 @@ class ProductListFacade extends AbstractFacade implements ProductListFacadeInter
      *
      * @param int $idProductAbstract
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getProductAbstractBlacklistIdsByIdProductAbstract(int $idProductAbstract): array
     {
@@ -124,7 +124,7 @@ class ProductListFacade extends AbstractFacade implements ProductListFacadeInter
      *
      * @param int $idProductAbstract
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getProductBlacklistIdsByIdProductAbstract(int $idProductAbstract): array
     {
@@ -138,7 +138,7 @@ class ProductListFacade extends AbstractFacade implements ProductListFacadeInter
      *
      * @api
      *
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return array
      */
@@ -154,7 +154,7 @@ class ProductListFacade extends AbstractFacade implements ProductListFacadeInter
      *
      * @api
      *
-     * @param int[] $productIds
+     * @param array<int> $productIds
      *
      * @return array
      */
@@ -174,7 +174,7 @@ class ProductListFacade extends AbstractFacade implements ProductListFacadeInter
      *
      * @param int $idProductAbstract
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getProductAbstractWhitelistIdsByIdProductAbstract(int $idProductAbstract): array
     {
@@ -188,7 +188,7 @@ class ProductListFacade extends AbstractFacade implements ProductListFacadeInter
      *
      * @param int $idProductAbstract
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getProductWhitelistIdsByIdProductAbstract(int $idProductAbstract): array
     {
@@ -204,7 +204,7 @@ class ProductListFacade extends AbstractFacade implements ProductListFacadeInter
      *
      * @param int $idProductAbstract
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getCategoryWhitelistIdsByIdProductAbstract(int $idProductAbstract): array
     {
@@ -222,7 +222,7 @@ class ProductListFacade extends AbstractFacade implements ProductListFacadeInter
      *
      * @param int $idProduct
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getProductAbstractBlacklistIdsByIdProductConcrete(int $idProduct): array
     {
@@ -236,7 +236,7 @@ class ProductListFacade extends AbstractFacade implements ProductListFacadeInter
      *
      * @param int $idProduct
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getProductBlacklistIdsByIdProduct(int $idProduct): array
     {
@@ -254,7 +254,7 @@ class ProductListFacade extends AbstractFacade implements ProductListFacadeInter
      *
      * @param int $idProduct
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getProductAbstractWhitelistIdsByIdProductConcrete(int $idProduct): array
     {
@@ -268,7 +268,7 @@ class ProductListFacade extends AbstractFacade implements ProductListFacadeInter
      *
      * @param int $idProduct
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getProductWhitelistIdsByIdProduct(int $idProduct): array
     {
@@ -298,9 +298,9 @@ class ProductListFacade extends AbstractFacade implements ProductListFacadeInter
      *
      * @api
      *
-     * @param int[] $productListIds
+     * @param array<int> $productListIds
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getProductAbstractIdsByProductListIds(array $productListIds): array
     {
@@ -346,9 +346,9 @@ class ProductListFacade extends AbstractFacade implements ProductListFacadeInter
      *
      * @api
      *
-     * @param int[] $productListIds
+     * @param array<int> $productListIds
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getProductConcreteIdsByProductListIds(array $productListIds): array
     {

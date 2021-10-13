@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\QueryJoinCollectionTransfer;
 interface OrderSearchQueryExpanderInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\FilterFieldTransfer[] $filterFieldTransfers
+     * @param array<\Generated\Shared\Transfer\FilterFieldTransfer> $filterFieldTransfers
      * @param \Generated\Shared\Transfer\QueryJoinCollectionTransfer $queryJoinCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\QueryJoinCollectionTransfer
@@ -23,7 +23,7 @@ interface OrderSearchQueryExpanderInterface
     ): QueryJoinCollectionTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\FilterFieldTransfer[] $filterFieldTransfers
+     * @param array<\Generated\Shared\Transfer\FilterFieldTransfer> $filterFieldTransfers
      * @param \Generated\Shared\Transfer\QueryJoinCollectionTransfer $queryJoinCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\QueryJoinCollectionTransfer
@@ -34,7 +34,7 @@ interface OrderSearchQueryExpanderInterface
     ): QueryJoinCollectionTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\FilterFieldTransfer[] $filterFieldTransfers
+     * @param array<\Generated\Shared\Transfer\FilterFieldTransfer> $filterFieldTransfers
      * @param \Generated\Shared\Transfer\QueryJoinCollectionTransfer $queryJoinCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\QueryJoinCollectionTransfer

@@ -34,7 +34,7 @@ class ContentBannerContentGuiEditorPlugin extends AbstractPlugin implements Cont
      *
      * @api
      *
-     * @return \Generated\Shared\Transfer\ContentWidgetTemplateTransfer[]
+     * @return array<\Generated\Shared\Transfer\ContentWidgetTemplateTransfer>
      */
     public function getTemplates(): array
     {

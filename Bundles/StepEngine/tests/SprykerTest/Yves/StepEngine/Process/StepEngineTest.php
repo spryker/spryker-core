@@ -26,6 +26,9 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
  */
 class StepEngineTest extends AbstractStepEngineTest
 {
+    /**
+     * @var string
+     */
     public const FORM_NAME = 'formName';
 
     /**

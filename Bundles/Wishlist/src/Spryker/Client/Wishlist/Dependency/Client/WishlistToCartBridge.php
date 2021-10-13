@@ -27,17 +27,22 @@ class WishlistToCartBridge implements WishlistToCartInterface
     }
 
     /**
+     * @phpstan-param array<mixed> $params
+     *
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param array $params
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function addItem(ItemTransfer $itemTransfer)
+    public function addItem(ItemTransfer $itemTransfer, array $params = [])
     {
-        return $this->cartClient->addItem($itemTransfer);
+        return $this->cartClient->addItem($itemTransfer, $params);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @phpstan-param array<mixed> $params
+     *
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      * @param array $params
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
@@ -48,6 +53,8 @@ class WishlistToCartBridge implements WishlistToCartInterface
     }
 
     /**
+     * @phpstan-param array<mixed> $params
+     *
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      * @param array $params
      *

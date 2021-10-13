@@ -39,7 +39,7 @@ class ProductOptionEventResourceQueryContainerPlugin extends AbstractPlugin impl
      *
      * @api
      *
-     * @param int[] $ids
+     * @param array<int> $ids
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria|null
      */
@@ -51,7 +51,7 @@ class ProductOptionEventResourceQueryContainerPlugin extends AbstractPlugin impl
             $query->clear();
         }
 
-        return $query;
+        return $query->distinct();
     }
 
     /**

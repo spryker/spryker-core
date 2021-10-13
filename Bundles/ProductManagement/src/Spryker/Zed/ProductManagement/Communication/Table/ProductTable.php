@@ -22,15 +22,51 @@ use Spryker\Zed\ProductManagement\Persistence\ProductManagementRepositoryInterfa
 
 class ProductTable extends AbstractProductTable
 {
+    /**
+     * @var string
+     */
     public const COL_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
+    /**
+     * @var string
+     */
     public const COL_NAME = 'name';
+    /**
+     * @var string
+     */
     public const COL_SKU = 'sku';
+    /**
+     * @var string
+     */
     public const COL_TAX_SET = 'tax_set';
+    /**
+     * @var string
+     */
     public const COL_VARIANT_COUNT = 'variants';
+    /**
+     * @var string
+     */
     public const COL_STATUS = 'status';
+    /**
+     * @var string
+     */
     public const COL_ACTIONS = 'actions';
+    /**
+     * @var string
+     */
     public const COL_STORE_RELATION = 'store_relation';
+    /**
+     * @var string
+     */
     public const COL_PRODUCT_TYPES = 'product_types';
+
+    /**
+     * @var string
+     */
+    protected const COL_NAME_FALLBACK = 'name_fallback';
+    /**
+     * @var string
+     */
+    protected const RELATION_LOCALE_FALLBACK = 'locale_fallback';
 
     /**
      * @var \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface
@@ -53,7 +89,7 @@ class ProductTable extends AbstractProductTable
     protected $productManagementRepository;
 
     /**
-     * @var \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductTableDataExpanderPluginInterface[]
+     * @var array<\Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductTableDataExpanderPluginInterface>
      */
     protected $productTableDataExpanderPlugins;
 
@@ -62,7 +98,7 @@ class ProductTable extends AbstractProductTable
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param \Spryker\Zed\ProductManagement\Communication\Helper\ProductTypeHelperInterface $productTypeHelper
      * @param \Spryker\Zed\ProductManagement\Persistence\ProductManagementRepositoryInterface $productManagementRepository
-     * @param \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductTableDataExpanderPluginInterface[] $productTableDataExpanderPlugins
+     * @param array $productTableDataExpanderPlugins
      */
     public function __construct(
         ProductQueryContainerInterface $productQueryContainer,
@@ -139,12 +175,20 @@ class ProductTable extends AbstractProductTable
         $query = $this
             ->productQueryQueryContainer
             ->queryProductAbstract()
-            ->innerJoinSpyTaxSet()
-            ->useSpyProductAbstractLocalizedAttributesQuery()
-            ->filterByFkLocale($this->localeTransfer->getIdLocale())
-            ->endUse()
+            ->leftJoinSpyTaxSet()
+            ->leftJoinSpyProductAbstractLocalizedAttributes()
+            ->addJoinCondition('SpyProductAbstractLocalizedAttributes', 'SpyProductAbstractLocalizedAttributes.fk_locale = ?', $this->localeTransfer->getIdLocale())
             ->withColumn(SpyProductAbstractLocalizedAttributesTableMap::COL_NAME, static::COL_NAME)
-            ->withColumn(SpyTaxSetTableMap::COL_NAME, static::COL_TAX_SET);
+            ->leftJoinSpyProductAbstractLocalizedAttributes(static::RELATION_LOCALE_FALLBACK)
+            ->addJoinCondition(
+                static::RELATION_LOCALE_FALLBACK,
+                '(SpyProductAbstractLocalizedAttributes.name is null OR SpyProductAbstractLocalizedAttributes.name = \'\')'
+            )
+            ->addJoinCondition(static::RELATION_LOCALE_FALLBACK, static::RELATION_LOCALE_FALLBACK . '.name is not null')
+            ->addJoinCondition(static::RELATION_LOCALE_FALLBACK, static::RELATION_LOCALE_FALLBACK . '.name != \'\'')
+            ->withColumn(static::RELATION_LOCALE_FALLBACK . '.name', static::COL_NAME_FALLBACK)
+            ->withColumn(SpyTaxSetTableMap::COL_NAME, static::COL_TAX_SET)
+            ->groupByIdProductAbstract();
 
         $query = $this->expandPropelQuery($query);
 
@@ -168,7 +212,7 @@ class ProductTable extends AbstractProductTable
         $item = [
             static::COL_ID_PRODUCT_ABSTRACT => $productAbstractEntity->getIdProductAbstract(),
             static::COL_SKU => $productAbstractEntity->getSku(),
-            static::COL_NAME => $productAbstractEntity->getVirtualColumn(static::COL_NAME),
+            static::COL_NAME => $this->resolveProductName($productAbstractEntity),
             static::COL_TAX_SET => $productAbstractEntity->getVirtualColumn(static::COL_TAX_SET),
             static::COL_VARIANT_COUNT => $productAbstractEntity->getSpyProducts()->count(),
             static::COL_STATUS => $this->getAbstractProductStatusLabel($productAbstractEntity),
@@ -201,7 +245,7 @@ class ProductTable extends AbstractProductTable
      */
     protected function getStoreNames($idProductAbstract)
     {
-        /** @var \Orm\Zed\Product\Persistence\SpyProductAbstractStore[] $productAbstractStoreCollection */
+        /** @var array<\Orm\Zed\Product\Persistence\SpyProductAbstractStore> $productAbstractStoreCollection */
         $productAbstractStoreCollection = $this->getProductAbstractStoreWithStore($idProductAbstract);
 
         $storeNames = [];
@@ -319,5 +363,15 @@ class ProductTable extends AbstractProductTable
     protected function expandPropelQuery(ModelCriteria $query): ModelCriteria
     {
         return $this->productManagementRepository->expandQuery($query);
+    }
+
+    /**
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity
+     *
+     * @return string|null
+     */
+    protected function resolveProductName(SpyProductAbstract $productAbstractEntity): ?string
+    {
+        return $productAbstractEntity->getVirtualColumn(static::COL_NAME) ?: $productAbstractEntity->getVirtualColumn(static::COL_NAME_FALLBACK);
     }
 }

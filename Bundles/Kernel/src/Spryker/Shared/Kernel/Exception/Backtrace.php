@@ -18,6 +18,9 @@ use Spryker\Shared\Kernel\KernelConstants;
  */
 class Backtrace
 {
+    /**
+     * @var string
+     */
     public const CURRENT_PATH = '/data/shop/development/current';
 
     /**

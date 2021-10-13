@@ -16,6 +16,7 @@ use Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnitQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Util\PropelModelPager;
+use Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitException\CompanyBusinessUnitNotFoundException;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -23,17 +24,26 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
  */
 class CompanyBusinessUnitRepository extends AbstractRepository implements CompanyBusinessUnitRepositoryInterface
 {
+    /**
+     * @var string
+     */
     protected const TABLE_JOIN_PARENT_BUSINESS_UNIT = 'parentCompanyBusinessUnit';
 
     /**
      * @see \Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap::COL_CUSTOMER_REFERENCE
+     * @var string
      */
     protected const COL_CUSTOMER_REFERENCE = 'spy_customer.customer_reference';
 
+    /**
+     * @var string
+     */
     protected const COL_FK_CUSTOMER = 'fk_customer';
 
     /**
      * @param int $idCompanyBusinessUnit
+     *
+     * @throws \Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitException\CompanyBusinessUnitNotFoundException
      *
      * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer
      */
@@ -43,6 +53,14 @@ class CompanyBusinessUnitRepository extends AbstractRepository implements Compan
         $query = $this->getSpyCompanyBusinessUnitQuery()
             ->filterByIdCompanyBusinessUnit($idCompanyBusinessUnit);
         $entityTransfer = $this->buildQueryFromCriteria($query)->findOne();
+        if ($entityTransfer === null) {
+            throw new CompanyBusinessUnitNotFoundException(
+                sprintf(
+                    'Company business unit with ID `%d` not found.',
+                    $idCompanyBusinessUnit
+                )
+            );
+        }
 
         return $this->getFactory()
             ->createCompanyBusinessUnitMapper()
@@ -132,9 +150,9 @@ class CompanyBusinessUnitRepository extends AbstractRepository implements Compan
      * @module CompanyUser
      * @module Customer
      *
-     * @param int[] $companyBusinessUnitIds
+     * @param array<int> $companyBusinessUnitIds
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getCustomerReferencesByCompanyBusinessUnitIds(array $companyBusinessUnitIds): array
     {
@@ -197,7 +215,7 @@ class CompanyBusinessUnitRepository extends AbstractRepository implements Compan
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
      * @param \Generated\Shared\Transfer\PaginationTransfer|null $paginationTransfer
      *
-     * @return \Generated\Shared\Transfer\SpyCompanyBusinessUnitEntityTransfer[]|\Propel\Runtime\Collection\Collection|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Propel\Runtime\Collection\Collection|\Propel\Runtime\Collection\ObjectCollection<\Generated\Shared\Transfer\SpyCompanyBusinessUnitEntityTransfer>
      */
     protected function getPaginatedCollection(ModelCriteria $query, ?PaginationTransfer $paginationTransfer = null)
     {
@@ -259,6 +277,19 @@ class CompanyBusinessUnitRepository extends AbstractRepository implements Compan
     ): void {
         if ($criteriaFilterTransfer->getCompanyBusinessUnitIds()) {
             $companyBusinessUnitQuery->filterByIdCompanyBusinessUnit_In($criteriaFilterTransfer->getCompanyBusinessUnitIds());
+        }
+
+        if ($criteriaFilterTransfer->getName()) {
+            $companyBusinessUnitQuery->filterByName(sprintf('%%%s%%', $criteriaFilterTransfer->getName()), Criteria::LIKE);
+            $companyBusinessUnitQuery->setIgnoreCase(true);
+        }
+
+        if ($criteriaFilterTransfer->getIdCompany()) {
+            $companyBusinessUnitQuery->filterByFkCompany($criteriaFilterTransfer->getIdCompany());
+        }
+
+        if ($criteriaFilterTransfer->getFilter() && $criteriaFilterTransfer->getFilter()->getLimit()) {
+            $companyBusinessUnitQuery->limit($criteriaFilterTransfer->getFilter()->getLimit());
         }
     }
 

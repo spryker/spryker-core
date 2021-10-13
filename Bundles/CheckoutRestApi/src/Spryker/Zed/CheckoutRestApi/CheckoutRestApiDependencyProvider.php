@@ -23,17 +23,53 @@ use Spryker\Zed\Kernel\Container;
  */
 class CheckoutRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_CART = 'FACADE_CART';
+    /**
+     * @var string
+     */
     public const FACADE_CARTS_REST_API = 'FACADE_CARTS_REST_API';
+    /**
+     * @var string
+     */
     public const FACADE_CHECKOUT = 'FACADE_CHECKOUT';
+    /**
+     * @var string
+     */
     public const FACADE_CUSTOMER = 'FACADE_CUSTOMER';
+    /**
+     * @var string
+     */
     public const FACADE_PAYMENT = 'FACADE_PAYMENT';
+    /**
+     * @var string
+     */
     public const FACADE_QUOTE = 'FACADE_QUOTE';
+    /**
+     * @var string
+     */
     public const FACADE_SHIPMENT = 'FACADE_SHIPMENT';
+    /**
+     * @var string
+     */
     public const FACADE_CALCULATION = 'FACADE_CALCULATION';
+    /**
+     * @var string
+     */
     public const PLUGINS_QUOTE_MAPPER = 'PLUGINS_QUOTE_MAPPER';
+    /**
+     * @var string
+     */
     public const PLUGINS_CHECKOUT_DATA_VALIDATOR = 'PLUGINS_CHECKOUT_DATA_VALIDATOR';
+    /**
+     * @var string
+     */
     public const PLUGINS_READ_CHECKOUT_DATA_VALIDATOR = 'PLUGINS_READ_CHECKOUT_DATA_VALIDATOR';
+    /**
+     * @var string
+     */
     public const PLUGINS_CHECKOUT_DATA_EXPANDER = 'PLUGINS_CHECKOUT_DATA_EXPANDER';
 
     /**
@@ -229,7 +265,7 @@ class CheckoutRestApiDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\QuoteMapperPluginInterface[]
+     * @return array<\Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\QuoteMapperPluginInterface>
      */
     protected function getQuoteMapperPlugins(): array
     {
@@ -237,7 +273,7 @@ class CheckoutRestApiDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\CheckoutDataValidatorPluginInterface[]
+     * @return array<\Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\CheckoutDataValidatorPluginInterface>
      */
     protected function getCheckoutDataValidatorPlugins(): array
     {
@@ -245,7 +281,7 @@ class CheckoutRestApiDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\ReadCheckoutDataValidatorPluginInterface[]
+     * @return array<\Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\ReadCheckoutDataValidatorPluginInterface>
      */
     protected function getReadCheckoutDataValidatorPlugins(): array
     {
@@ -253,7 +289,7 @@ class CheckoutRestApiDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\CheckoutDataExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\CheckoutDataExpanderPluginInterface>
      */
     protected function getCheckoutDataExpanderPlugins(): array
     {

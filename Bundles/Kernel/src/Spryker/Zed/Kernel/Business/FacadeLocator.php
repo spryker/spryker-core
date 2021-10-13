@@ -12,6 +12,9 @@ use Spryker\Zed\Kernel\ClassResolver\Facade\FacadeResolver;
 
 class FacadeLocator extends AbstractLocator
 {
+    /**
+     * @var string
+     */
     public const FACADE_SUFFIX = 'Facade';
 
     /**

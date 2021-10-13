@@ -13,7 +13,13 @@ use Spryker\Shared\KeyBuilder\KeyBuilderInterface;
 
 class CategoryTreeBuilder
 {
+    /**
+     * @var string
+     */
     public const SUBTREE_DEPTH_KEY = 'depth';
+    /**
+     * @var int
+     */
     public const SUBTREE_DEPTH = 3;
 
     /**

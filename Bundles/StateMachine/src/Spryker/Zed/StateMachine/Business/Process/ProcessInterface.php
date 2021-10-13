@@ -10,14 +10,14 @@ namespace Spryker\Zed\StateMachine\Business\Process;
 interface ProcessInterface
 {
     /**
-     * @param \Spryker\Zed\StateMachine\Business\Process\ProcessInterface[] $subProcesses
+     * @param array<\Spryker\Zed\StateMachine\Business\Process\ProcessInterface> $subProcesses
      *
      * @return void
      */
     public function setSubProcesses($subProcesses);
 
     /**
-     * @return \Spryker\Zed\StateMachine\Business\Process\ProcessInterface[]
+     * @return array<\Spryker\Zed\StateMachine\Business\Process\ProcessInterface>
      */
     public function getSubProcesses();
 
@@ -58,7 +58,7 @@ interface ProcessInterface
     public function getName();
 
     /**
-     * @param \Spryker\Zed\StateMachine\Business\Process\StateInterface[] $states
+     * @param array<\Spryker\Zed\StateMachine\Business\Process\StateInterface> $states
      *
      * @return void
      */
@@ -95,7 +95,7 @@ interface ProcessInterface
     public function getStateFromAllProcesses($stateName);
 
     /**
-     * @return \Spryker\Zed\StateMachine\Business\Process\StateInterface[]
+     * @return array<\Spryker\Zed\StateMachine\Business\Process\StateInterface>
      */
     public function getStates();
 
@@ -112,14 +112,14 @@ interface ProcessInterface
     public function addTransition(TransitionInterface $transition);
 
     /**
-     * @param \Spryker\Zed\StateMachine\Business\Process\TransitionInterface[] $transitions
+     * @param array<\Spryker\Zed\StateMachine\Business\Process\TransitionInterface> $transitions
      *
      * @return void
      */
     public function setTransitions($transitions);
 
     /**
-     * @return \Spryker\Zed\StateMachine\Business\Process\TransitionInterface[]
+     * @return array<\Spryker\Zed\StateMachine\Business\Process\TransitionInterface>
      */
     public function getTransitions();
 
@@ -129,32 +129,32 @@ interface ProcessInterface
     public function hasTransitions();
 
     /**
-     * @return \Spryker\Zed\StateMachine\Business\Process\StateInterface[]
+     * @return array<\Spryker\Zed\StateMachine\Business\Process\StateInterface>
      */
     public function getAllStates();
 
     /**
-     * @return \Spryker\Zed\StateMachine\Business\Process\TransitionInterface[]
+     * @return array<\Spryker\Zed\StateMachine\Business\Process\TransitionInterface>
      */
     public function getAllTransitions();
 
     /**
-     * @return \Spryker\Zed\StateMachine\Business\Process\TransitionInterface[]
+     * @return array<\Spryker\Zed\StateMachine\Business\Process\TransitionInterface>
      */
     public function getAllTransitionsWithoutEvent();
 
     /**
-     * @return \Spryker\Zed\StateMachine\Business\Process\EventInterface[]
+     * @return array<\Spryker\Zed\StateMachine\Business\Process\EventInterface>
      */
     public function getManuallyExecutableEvents();
 
     /**
-     * @return string[][]
+     * @return array<string[]>
      */
     public function getManuallyExecutableEventsBySource();
 
     /**
-     * @return \Spryker\Zed\StateMachine\Business\Process\ProcessInterface[]
+     * @return array<\Spryker\Zed\StateMachine\Business\Process\ProcessInterface>
      */
     public function getAllProcesses();
 

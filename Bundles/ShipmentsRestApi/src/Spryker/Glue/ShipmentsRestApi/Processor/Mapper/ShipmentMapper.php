@@ -36,7 +36,7 @@ class ShipmentMapper implements ShipmentMapperInterface
     /**
      * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getItemsGroupKeys(ShipmentGroupTransfer $shipmentGroupTransfer): array
     {

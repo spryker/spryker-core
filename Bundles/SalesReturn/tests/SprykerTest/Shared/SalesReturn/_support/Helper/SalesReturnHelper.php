@@ -17,9 +17,9 @@ class SalesReturnHelper extends Module
     use LocatorHelperTrait;
 
     /**
-     * @param string[] $glossaryKeyReasons
+     * @param array<string> $glossaryKeyReasons
      *
-     * @return \Generated\Shared\Transfer\ReturnReasonTransfer[]
+     * @return array<\Generated\Shared\Transfer\ReturnReasonTransfer>
      */
     public function haveReturnReasons(array $glossaryKeyReasons): array
     {

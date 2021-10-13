@@ -34,7 +34,7 @@ interface ProductDiscontinuedProductLabelConnectorToProductLabelFacadeInterface
 
     /**
      * @param int $idProductLabel
-     * @param int[] $idsProductAbstract
+     * @param array<int> $idsProductAbstract
      *
      * @return void
      */
@@ -42,7 +42,7 @@ interface ProductDiscontinuedProductLabelConnectorToProductLabelFacadeInterface
 
     /**
      * @param int $idProductLabel
-     * @param int[] $idsProductAbstract
+     * @param array<int> $idsProductAbstract
      *
      * @return void
      */
@@ -51,14 +51,14 @@ interface ProductDiscontinuedProductLabelConnectorToProductLabelFacadeInterface
     /**
      * @param int $idsProductAbstract
      *
-     * @return int[]
+     * @return array<int>
      */
     public function findActiveLabelIdsByIdProductAbstract(int $idsProductAbstract);
 
     /**
      * @param int $idProductLabel
      *
-     * @return int[]
+     * @return array<int>
      */
     public function findProductAbstractRelationsByIdProductLabel(int $idProductLabel);
 }

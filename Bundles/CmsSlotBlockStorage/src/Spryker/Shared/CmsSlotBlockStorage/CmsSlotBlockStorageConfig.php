@@ -19,6 +19,7 @@ class CmsSlotBlockStorageConfig extends AbstractSharedConfig
      * - Queue name as used for processing CMS slot block messages.
      *
      * @api
+     * @var string
      */
     public const CMS_SLOT_BLOCK_SYNC_STORAGE_QUEUE = 'sync.storage.cms';
 
@@ -27,6 +28,7 @@ class CmsSlotBlockStorageConfig extends AbstractSharedConfig
      * - Resource name, that is used for key generating.
      *
      * @api
+     * @var string
      */
     public const CMS_SLOT_BLOCK_RESOURCE_NAME = 'cms_slot_block';
 }

@@ -16,7 +16,13 @@ use Symfony\Component\Routing\Route;
  */
 class SslPostAddRouteManipulatorPlugin extends AbstractPlugin implements PostAddRouteManipulatorPluginInterface
 {
+    /**
+     * @var string
+     */
     protected const SCHEME_HTTPS = 'https';
+    /**
+     * @var string
+     */
     protected const SCHEME_HTTP = 'http';
 
     /**
@@ -61,7 +67,7 @@ class SslPostAddRouteManipulatorPlugin extends AbstractPlugin implements PostAdd
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function getSslExcludedRouteNames(): array
     {

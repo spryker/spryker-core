@@ -11,7 +11,7 @@ interface QueueWriterInterface
 {
     /**
      * @param string $queueName
-     * @param \Generated\Shared\Transfer\DataSetItemTransfer[] $dataSetItemTransfers
+     * @param array<\Generated\Shared\Transfer\DataSetItemTransfer> $dataSetItemTransfers
      *
      * @return void
      */

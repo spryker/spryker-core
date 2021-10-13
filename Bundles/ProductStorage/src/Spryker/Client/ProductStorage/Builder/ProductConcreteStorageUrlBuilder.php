@@ -11,6 +11,9 @@ use Generated\Shared\Transfer\ProductConcreteStorageTransfer;
 
 class ProductConcreteStorageUrlBuilder implements ProductConcreteStorageUrlBuilderInterface
 {
+    /**
+     * @var string
+     */
     protected const ATTRIBUTE_QUERY_STRING_PREFIX = 'attribute';
 
     /**
@@ -50,10 +53,10 @@ class ProductConcreteStorageUrlBuilder implements ProductConcreteStorageUrlBuild
     }
 
     /**
-     * @param string[] $attributes
-     * @param string[] $superAttributesDefinition
+     * @param array<string> $attributes
+     * @param array<string> $superAttributesDefinition
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function filterOutSuperAttributes(array $attributes, array $superAttributesDefinition): array
     {

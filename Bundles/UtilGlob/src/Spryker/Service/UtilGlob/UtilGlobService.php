@@ -15,7 +15,7 @@ use Spryker\Service\Kernel\AbstractService;
 class UtilGlobService extends AbstractService implements UtilGlobServiceInterface
 {
     /**
-     * {@inheriDoc}
+     * {@inheritDoc}
      *
      * @api
      *

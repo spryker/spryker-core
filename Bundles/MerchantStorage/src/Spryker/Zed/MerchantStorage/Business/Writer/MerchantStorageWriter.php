@@ -21,8 +21,15 @@ class MerchantStorageWriter implements MerchantStorageWriterInterface
 {
     /**
      * @uses \Orm\Zed\MerchantCategory\Persistence\Map\SpyMerchantCategoryTableMap::COL_FK_MERCHANT
+     * @var string
      */
     protected const FK_CATEGORY_MERCHANT = 'spy_merchant_category.fk_merchant';
+
+    /**
+     * @uses \Spryker\Zed\Merchant\MerchantConfig::STATUS_APPROVED
+     * @var string
+     */
+    protected const MERCHANT_STATUS_APPROVED = 'approved';
 
     /**
      * @var \Spryker\Zed\MerchantStorage\Dependency\Facade\MerchantStorageToEventBehaviorFacadeInterface
@@ -71,7 +78,7 @@ class MerchantStorageWriter implements MerchantStorageWriterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
      *
      * @return void
      */
@@ -87,7 +94,7 @@ class MerchantStorageWriter implements MerchantStorageWriterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
      *
      * @return void
      */
@@ -103,7 +110,7 @@ class MerchantStorageWriter implements MerchantStorageWriterInterface
     }
 
     /**
-     * @param int[] $merchantIds
+     * @param array<int> $merchantIds
      *
      * @return void
      */
@@ -116,7 +123,11 @@ class MerchantStorageWriter implements MerchantStorageWriterInterface
 
         foreach ($merchantCollectionTransfer->getMerchants() as $merchantTransfer) {
             foreach ($storeTransfers as $storeTransfer) {
-                if ($merchantTransfer->getIsActive() && $this->isMerchantAvailableInStore($merchantTransfer, $storeTransfer)) {
+                if (
+                    $merchantTransfer->getIsActive()
+                    && $this->isMerchantAvailableInStore($merchantTransfer, $storeTransfer)
+                    && $merchantTransfer->getStatus() === static::MERCHANT_STATUS_APPROVED
+                ) {
                     $this->merchantStorageEntityManager->saveMerchantStorage(
                         $this->mapMerchantTransferToStorageTransfer($merchantTransfer, new MerchantStorageTransfer()),
                         $storeTransfer

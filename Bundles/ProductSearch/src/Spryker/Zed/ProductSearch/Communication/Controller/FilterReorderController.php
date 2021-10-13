@@ -17,6 +17,9 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class FilterReorderController extends AbstractController
 {
+    /**
+     * @var string
+     */
     public const PARAM_FILTER_LIST = 'filter_list';
 
     /**

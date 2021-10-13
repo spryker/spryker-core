@@ -11,6 +11,9 @@ use Symfony\Component\Translation\Loader\XliffFileLoader as SymfonyXliffFileLoad
 
 class XliffLoader extends SymfonyXliffFileLoader implements TranslationLoaderInterface
 {
+    /**
+     * @var string
+     */
     protected const LOADER_FORMAT = 'xlf';
 
     /**

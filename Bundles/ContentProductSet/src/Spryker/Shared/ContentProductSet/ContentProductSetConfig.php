@@ -13,26 +13,36 @@ class ContentProductSetConfig extends AbstractSharedConfig
 {
     /**
      * Content item product set
+     *
+     * @var string
      */
     public const CONTENT_TYPE_PRODUCT_SET = 'Product Set';
 
     /**
      * Content item product set
+     *
+     * @var string
      */
     public const CONTENT_TERM_PRODUCT_SET = 'Product Set';
 
     /**
      * Content item product set twig function name
+     *
+     * @var string
      */
     public const TWIG_FUNCTION_NAME = 'content_product_set';
 
     /**
      * Content item product set cart-button-top template identifier
+     *
+     * @var string
      */
     public const WIDGET_TEMPLATE_IDENTIFIER_CART_BUTTON_TOP = 'cart-button-top';
 
     /**
      * Content item product set cart-button-btm template identifier
+     *
+     * @var string
      */
     public const WIDGET_TEMPLATE_IDENTIFIER_CART_BUTTON_BOTTOM = 'cart-button-btm';
 }

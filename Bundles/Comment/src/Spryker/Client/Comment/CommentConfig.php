@@ -17,7 +17,7 @@ class CommentConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getAvailableCommentTags(): array
     {

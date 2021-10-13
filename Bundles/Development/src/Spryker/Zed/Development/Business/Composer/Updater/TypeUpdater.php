@@ -11,6 +11,9 @@ use Symfony\Component\Finder\SplFileInfo;
 
 class TypeUpdater implements UpdaterInterface
 {
+    /**
+     * @var string
+     */
     public const KEY_TYPE = 'type';
 
     /**

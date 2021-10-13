@@ -22,6 +22,9 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class PropelApplicationPlugin extends AbstractPlugin implements ApplicationPluginInterface
 {
+    /**
+     * @var string
+     */
     protected const DATA_SOURCE_NAME = 'zed';
 
     /**
@@ -40,6 +43,8 @@ class PropelApplicationPlugin extends AbstractPlugin implements ApplicationPlugi
         $manager->setName(static::DATA_SOURCE_NAME);
         $manager->setWriteConfiguration($this->getPropelWriteConfiguration());
         $manager->setReadConfiguration($this->getPropelReadConfiguration());
+
+        $this->getFacade()->loadPropelTableMap();
 
         $serviceContainer = $this->getServiceContainer();
         $serviceContainer->setAdapterClass(static::DATA_SOURCE_NAME, $this->getConfig()->getCurrentDatabaseEngine());
@@ -83,7 +88,7 @@ class PropelApplicationPlugin extends AbstractPlugin implements ApplicationPlugi
     }
 
     /**
-     * @return array
+     * @return array<string, mixed>
      */
     private function getPropelWriteConfiguration(): array
     {
@@ -96,7 +101,7 @@ class PropelApplicationPlugin extends AbstractPlugin implements ApplicationPlugi
     }
 
     /**
-     * @return array|null
+     * @return array<string, mixed>|null
      */
     private function getPropelReadConfiguration(): ?array
     {

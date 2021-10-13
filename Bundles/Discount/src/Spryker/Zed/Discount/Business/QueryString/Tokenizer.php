@@ -11,6 +11,9 @@ use Spryker\Zed\Discount\Business\Exception\QueryStringException;
 
 class Tokenizer implements TokenizerInterface
 {
+    /**
+     * @var string
+     */
     public const STRING_TO_TOKENS_REGEXP = '((\(|\)|["\'].*?["\'])|\s+)';
 
     /**
@@ -18,7 +21,7 @@ class Tokenizer implements TokenizerInterface
      *
      * @throws \Spryker\Zed\Discount\Business\Exception\QueryStringException
      *
-     * @return string[]
+     * @return array<string>
      */
     public function tokenizeQueryString($queryString)
     {

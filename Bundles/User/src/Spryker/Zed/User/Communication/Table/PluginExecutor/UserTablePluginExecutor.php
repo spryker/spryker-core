@@ -12,24 +12,24 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 class UserTablePluginExecutor implements UserTablePluginExecutorInterface
 {
     /**
-     * @var \Spryker\Zed\UserExtension\Dependency\Plugin\UserTableActionExpanderPluginInterface[]
+     * @var array<\Spryker\Zed\UserExtension\Dependency\Plugin\UserTableActionExpanderPluginInterface>
      */
     protected $userTableActionExpanderPlugins;
 
     /**
-     * @var \Spryker\Zed\UserExtension\Dependency\Plugin\UserTableConfigExpanderPluginInterface[]
+     * @var array<\Spryker\Zed\UserExtension\Dependency\Plugin\UserTableConfigExpanderPluginInterface>
      */
     protected $userTableConfigExpanderPlugins;
 
     /**
-     * @var \Spryker\Zed\UserExtension\Dependency\Plugin\UserTableDataExpanderPluginInterface[]
+     * @var array<\Spryker\Zed\UserExtension\Dependency\Plugin\UserTableDataExpanderPluginInterface>
      */
     protected $userTableDataExpanderPlugins;
 
     /**
-     * @param \Spryker\Zed\UserExtension\Dependency\Plugin\UserTableActionExpanderPluginInterface[] $userTableActionExpanderPlugins
-     * @param \Spryker\Zed\UserExtension\Dependency\Plugin\UserTableConfigExpanderPluginInterface[] $userTableConfigExpanderPlugins
-     * @param \Spryker\Zed\UserExtension\Dependency\Plugin\UserTableDataExpanderPluginInterface[] $userTableDataExpanderPlugins
+     * @param array<\Spryker\Zed\UserExtension\Dependency\Plugin\UserTableActionExpanderPluginInterface> $userTableActionExpanderPlugins
+     * @param array<\Spryker\Zed\UserExtension\Dependency\Plugin\UserTableConfigExpanderPluginInterface> $userTableConfigExpanderPlugins
+     * @param array<\Spryker\Zed\UserExtension\Dependency\Plugin\UserTableDataExpanderPluginInterface> $userTableDataExpanderPlugins
      */
     public function __construct(
         array $userTableActionExpanderPlugins,
@@ -44,7 +44,7 @@ class UserTablePluginExecutor implements UserTablePluginExecutorInterface
     /**
      * @param array $user
      *
-     * @return \Generated\Shared\Transfer\ButtonTransfer[]
+     * @return array<\Generated\Shared\Transfer\ButtonTransfer>
      */
     public function executeActionButtonExpanderPlugins(array $user): array
     {

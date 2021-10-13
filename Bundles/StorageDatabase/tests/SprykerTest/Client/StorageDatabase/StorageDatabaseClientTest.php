@@ -31,18 +31,48 @@ use SprykerTest\Client\StorageDatabase\Helper\StorageDatabaseHelper;
  */
 class StorageDatabaseClientTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const KEY_PREFIX = 'kv:';
 
+    /**
+     * @var string
+     */
     protected const FIRST_FIXTURE_ROW = 'row1';
+    /**
+     * @var string
+     */
     protected const SECOND_FIXTURE_ROW = 'row2';
+    /**
+     * @var string
+     */
     protected const THIRD_FIXTURE_ROW = 'row3';
 
+    /**
+     * @var string
+     */
     protected const FIRST_DUMMY_KEY = 'test_fixture:1';
+    /**
+     * @var string
+     */
     protected const SECOND_DUMMY_KEY = 'test_fixture:2';
+    /**
+     * @var string
+     */
     protected const THIRD_DUMMY_KEY = 'test_fixture:3';
 
+    /**
+     * @var string
+     */
     protected const FIRST_DUMMY_ALIAS_KEY = 'test_fixture:alias:1';
+    /**
+     * @var string
+     */
     protected const SECOND_DUMMY_ALIAS_KEY = 'test_fixture:alias:2';
+    /**
+     * @var string
+     */
     protected const THIRD_DUMMY_ALIAS_KEY = 'test_fixture:alias:3';
 
     /**

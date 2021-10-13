@@ -24,6 +24,9 @@ use Twig\TwigFilter;
  */
 class DateTimeFormatterTwigExtensionTest extends Unit
 {
+    /**
+     * @var string
+     */
     public const DATE_TO_FORMAT = '1980-12-06 08:00:00';
 
     /**

@@ -61,7 +61,7 @@ class SalesOrderConfiguredBundleWriter implements SalesOrderConfiguredBundleWrit
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\SalesOrderConfiguredBundleTransfer[]
+     * @return array<\Generated\Shared\Transfer\SalesOrderConfiguredBundleTransfer>
      */
     protected function mapSalesOrderConfiguredBundles(QuoteTransfer $quoteTransfer): array
     {
@@ -81,9 +81,9 @@ class SalesOrderConfiguredBundleWriter implements SalesOrderConfiguredBundleWrit
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param \Generated\Shared\Transfer\SalesOrderConfiguredBundleTransfer[] $salesOrderConfiguredBundleTransfers
+     * @param array<\Generated\Shared\Transfer\SalesOrderConfiguredBundleTransfer> $salesOrderConfiguredBundleTransfers
      *
-     * @return \Generated\Shared\Transfer\SalesOrderConfiguredBundleTransfer[]
+     * @return array<\Generated\Shared\Transfer\SalesOrderConfiguredBundleTransfer>
      */
     protected function mapSalesOrderConfiguredBundle(ItemTransfer $itemTransfer, array $salesOrderConfiguredBundleTransfers): array
     {

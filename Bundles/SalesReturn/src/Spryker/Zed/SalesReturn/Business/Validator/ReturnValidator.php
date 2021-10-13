@@ -16,9 +16,21 @@ use Spryker\Zed\SalesReturn\SalesReturnConfig;
 
 class ReturnValidator implements ReturnValidatorInterface
 {
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_CREATE_RETURN_ITEM_ERROR = 'return.create_return.validation.items_error';
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_CREATE_RETURN_ITEM_CURRENCY_ERROR = 'return.create_return.validation.items_currency_error';
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_CREATE_RETURN_RETURNABLE_ITEM_ERROR = 'return.create_return.validation.returnable_items_error';
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_CREATE_RETURN_STORE_ERROR = 'return.create_return.validation.store_error';
 
     /**
@@ -32,20 +44,28 @@ class ReturnValidator implements ReturnValidatorInterface
     protected $salesReturnConfig;
 
     /**
+     * @var array<\Spryker\Zed\SalesReturnExtension\Dependency\Plugin\ReturnCreateRequestValidatorPluginInterface>
+     */
+    protected $returnRequestValidatorPlugins;
+
+    /**
      * @param \Spryker\Zed\SalesReturn\Dependency\Facade\SalesReturnToStoreFacadeInterface $storeFacade
      * @param \Spryker\Zed\SalesReturn\SalesReturnConfig $salesReturnConfig
+     * @param array<\Spryker\Zed\SalesReturnExtension\Dependency\Plugin\ReturnCreateRequestValidatorPluginInterface> $returnRequestValidatorPlugins
      */
     public function __construct(
         SalesReturnToStoreFacadeInterface $storeFacade,
-        SalesReturnConfig $salesReturnConfig
+        SalesReturnConfig $salesReturnConfig,
+        array $returnRequestValidatorPlugins
     ) {
         $this->storeFacade = $storeFacade;
         $this->salesReturnConfig = $salesReturnConfig;
+        $this->returnRequestValidatorPlugins = $returnRequestValidatorPlugins;
     }
 
     /**
      * @param \Generated\Shared\Transfer\ReturnCreateRequestTransfer $returnCreateRequestTransfer
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
      * @return \Generated\Shared\Transfer\ReturnResponseTransfer
      */
@@ -69,12 +89,18 @@ class ReturnValidator implements ReturnValidatorInterface
             return $this->createErrorReturnResponse(static::GLOSSARY_KEY_CREATE_RETURN_STORE_ERROR);
         }
 
+        $returnResponseTransfer = $this->executeReturnRequestValidatorPlugins($returnCreateRequestTransfer);
+
+        if (!$returnResponseTransfer->getIsSuccessful()) {
+            return $returnResponseTransfer;
+        }
+
         return (new ReturnResponseTransfer())
             ->setIsSuccessful(true);
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
      * @return bool
      */
@@ -90,7 +116,7 @@ class ReturnValidator implements ReturnValidatorInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
      * @return bool
      */
@@ -120,5 +146,25 @@ class ReturnValidator implements ReturnValidatorInterface
         return (new ReturnResponseTransfer())
             ->setIsSuccessful(false)
             ->addMessage($messageTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ReturnCreateRequestTransfer $returnCreateRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ReturnResponseTransfer
+     */
+    protected function executeReturnRequestValidatorPlugins(
+        ReturnCreateRequestTransfer $returnCreateRequestTransfer
+    ): ReturnResponseTransfer {
+        foreach ($this->returnRequestValidatorPlugins as $requestValidatorPlugin) {
+            $returnResponseTransfer = $requestValidatorPlugin->validate($returnCreateRequestTransfer);
+
+            if (!$returnResponseTransfer->getIsSuccessful()) {
+                return $returnResponseTransfer;
+            }
+        }
+
+        return (new ReturnResponseTransfer())
+            ->setIsSuccessful(true);
     }
 }

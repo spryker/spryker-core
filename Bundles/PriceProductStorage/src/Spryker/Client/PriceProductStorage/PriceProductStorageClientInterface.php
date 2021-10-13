@@ -21,7 +21,7 @@ interface PriceProductStorageClientInterface
      *
      * @param int $idProductAbstract
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function getPriceProductAbstractTransfers(int $idProductAbstract): array;
 
@@ -33,7 +33,7 @@ interface PriceProductStorageClientInterface
      *
      * @param int $idProductConcrete
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function getPriceProductConcreteTransfers(int $idProductConcrete): array;
 
@@ -49,7 +49,7 @@ interface PriceProductStorageClientInterface
      * @param int $idProductConcrete
      * @param int $idProductAbstract
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function getResolvedPriceProductConcreteTransfers(int $idProductConcrete, int $idProductAbstract): array;
 

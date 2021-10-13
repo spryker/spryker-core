@@ -20,11 +20,29 @@ use Spryker\Zed\Dataset\Dependency\Adapter\CsvReaderInterface;
 
 class Reader implements ReaderInterface
 {
+    /**
+     * @var string
+     */
     public const OPEN_MODE = 'r';
+    /**
+     * @var int
+     */
     public const HEADER_OFFSET = 0;
+    /**
+     * @var int
+     */
     public const FIRST_HEADER_KEY = 0;
+    /**
+     * @var int
+     */
     public const MIN_COLUMNS = 0;
+    /**
+     * @var string
+     */
     public const UTF_16 = 'utf-16';
+    /**
+     * @var string
+     */
     public const UTF_8 = 'utf-8';
 
     /**
@@ -45,7 +63,7 @@ class Reader implements ReaderInterface
      *
      * @throws \Spryker\Zed\Dataset\Business\Exception\DatasetParseException
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\DatasetRowColumnValueTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\DatasetRowColumnValueTransfer>
      */
     public function parseFileToDataTransfers(DatasetFilePathTransfer $filePathTransfer): ArrayObject
     {
@@ -97,7 +115,7 @@ class Reader implements ReaderInterface
      *
      * @throws \Spryker\Zed\Dataset\Business\Exception\DatasetParseFormatException
      *
-     * @return \Generated\Shared\Transfer\DatasetColumnTransfer[]
+     * @return array<\Generated\Shared\Transfer\DatasetColumnTransfer>
      */
     protected function getDatasetColumnTransfers(CsvReaderInterface $readerAdapter): array
     {

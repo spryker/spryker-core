@@ -17,7 +17,7 @@ use Spryker\Zed\ProductRelationDataImport\Business\Writer\ProductRelationStore\D
 class ProductRelationKeyToIdProductRelationStep implements DataImportStepInterface
 {
     /**
-     * @var int[]
+     * @var array<int>
      */
     protected static $idProductRelationCache = [];
 

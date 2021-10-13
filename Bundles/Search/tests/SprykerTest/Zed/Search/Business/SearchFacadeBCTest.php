@@ -32,8 +32,17 @@ use Spryker\Zed\Search\Business\SearchFacadeInterface;
  */
 class SearchFacadeBCTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const INDEX_NAME = 'de_search_devtest';
+    /**
+     * @var string
+     */
     protected const REPOSITORY_LOCATION_FILE_NAME = 'search_test_file';
+    /**
+     * @var string
+     */
     protected const REPOSITORY_NAME = 'search_test_repository';
 
     /**

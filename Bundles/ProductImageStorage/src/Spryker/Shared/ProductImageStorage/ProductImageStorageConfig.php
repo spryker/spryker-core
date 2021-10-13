@@ -17,6 +17,7 @@ class ProductImageStorageConfig extends AbstractBundleConfig
      * - Queue name as used for processing price messages
      *
      * @api
+     * @var string
      */
     public const PRODUCT_ABSTRACT_IMAGE_SYNC_STORAGE_QUEUE = 'sync.storage.product';
 
@@ -25,6 +26,7 @@ class ProductImageStorageConfig extends AbstractBundleConfig
      * - Queue name as used for processing price messages
      *
      * @api
+     * @var string
      */
     public const PRODUCT_ABSTRACT_IMAGE_SYNC_STORAGE_ERROR_QUEUE = 'sync.storage.product.error';
 
@@ -33,6 +35,7 @@ class ProductImageStorageConfig extends AbstractBundleConfig
      * - Resource name, this will use for key generating
      *
      * @api
+     * @var string
      */
     public const PRODUCT_ABSTRACT_IMAGE_RESOURCE_NAME = 'product_abstract_image';
 
@@ -41,6 +44,7 @@ class ProductImageStorageConfig extends AbstractBundleConfig
      * - Resource name, this will use for key generating
      *
      * @api
+     * @var string
      */
     public const PRODUCT_CONCRETE_IMAGE_RESOURCE_NAME = 'product_concrete_image';
 
@@ -54,11 +58,15 @@ class ProductImageStorageConfig extends AbstractBundleConfig
 
     /**
      * Defines queue name for publish.
+     *
+     * @var string
      */
     public const PUBLISH_PRODUCT_ABSTRACT_IMAGE = 'publish.product_image_abstract';
 
     /**
      * Defines queue name for publish.
+     *
+     * @var string
      */
     public const PUBLISH_PRODUCT_CONCRETE_IMAGE = 'publish.product_image_concrete';
 }

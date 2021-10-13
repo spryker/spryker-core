@@ -10,21 +10,21 @@ namespace Spryker\Zed\CompanyUserStorage\Business\Storage;
 interface CompanyUserStorageWriterInterface
 {
     /**
-     * @param int[] $companyUserIds
+     * @param array<int> $companyUserIds
      *
      * @return void
      */
     public function publishByCompanyUserIds(array $companyUserIds): void;
 
     /**
-     * @param int[] $companyIds
+     * @param array<int> $companyIds
      *
      * @return void
      */
     public function publishByCompanyIds(array $companyIds): void;
 
     /**
-     * @param int[] $companyUserIds
+     * @param array<int> $companyUserIds
      *
      * @return void
      */

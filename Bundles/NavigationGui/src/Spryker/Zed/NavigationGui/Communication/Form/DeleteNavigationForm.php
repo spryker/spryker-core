@@ -18,6 +18,9 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 class DeleteNavigationForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const FIELD_SUBMIT = 'submit';
 
     /**

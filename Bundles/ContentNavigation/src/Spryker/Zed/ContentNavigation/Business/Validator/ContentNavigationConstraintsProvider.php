@@ -27,7 +27,7 @@ class ContentNavigationConstraintsProvider implements ContentNavigationConstrain
     }
 
     /**
-     * @return \Symfony\Component\Validator\Constraint[][]
+     * @return array<\Symfony\Component\Validator\Constraint[]>
      */
     public function getConstraintsMap(): array
     {
@@ -37,7 +37,7 @@ class ContentNavigationConstraintsProvider implements ContentNavigationConstrain
     }
 
     /**
-     * @return \Symfony\Component\Validator\Constraint[]
+     * @return array<\Symfony\Component\Validator\Constraint>
      */
     protected function getNavigationKeyConstraints(): array
     {

@@ -43,7 +43,7 @@ class ShipmentCarrierFormDataProvider
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getOptions(): array
     {

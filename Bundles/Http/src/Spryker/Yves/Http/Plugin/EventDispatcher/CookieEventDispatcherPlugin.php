@@ -21,6 +21,9 @@ use Symfony\Component\HttpKernel\KernelEvents;
  */
 class CookieEventDispatcherPlugin extends AbstractPlugin implements EventDispatcherPluginInterface
 {
+    /**
+     * @var string
+     */
     protected const SERVICE_COOKIES = 'cookies';
     protected const COOKIES_HANDLER_PRIORITY = -255;
 

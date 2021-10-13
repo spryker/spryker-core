@@ -14,18 +14,6 @@ class CategoryStorageConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @deprecated Use {@link \Spryker\Zed\SynchronizationBehavior\SynchronizationBehaviorConfig::isSynchronizationEnabled()} instead.
-     *
-     * @return bool
-     */
-    public function isSendingToQueue(): bool
-    {
-        return true;
-    }
-
-    /**
-     * @api
-     *
      * @return string|null
      */
     public function getCategoryTreeSynchronizationPoolName(): ?string

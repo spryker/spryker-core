@@ -54,7 +54,7 @@ class MerchantAddressesResourceRoutePlugin extends AbstractPlugin implements Res
      */
     public function getController(): string
     {
-         return 'merchant-addresses-resource';
+        return 'merchant-addresses-resource';
     }
 
     /**

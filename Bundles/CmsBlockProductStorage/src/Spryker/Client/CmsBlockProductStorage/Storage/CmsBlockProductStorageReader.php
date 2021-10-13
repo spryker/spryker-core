@@ -15,7 +15,13 @@ use Spryker\Client\CmsBlockProductStorage\Dependency\Service\CmsBlockProductStor
 
 class CmsBlockProductStorageReader implements CmsBlockProductStorageReaderInterface
 {
+    /**
+     * @var string
+     */
     protected const RESOURCE_CMS_BLOCK_PRODUCT = 'cms_block_product';
+    /**
+     * @var string
+     */
     protected const KEY_BLOCK_KEYS = 'block_keys';
 
     /**
@@ -43,7 +49,7 @@ class CmsBlockProductStorageReader implements CmsBlockProductStorageReaderInterf
     /**
      * @param \Generated\Shared\Transfer\CmsBlockRequestTransfer $cmsBlockRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\CmsBlockTransfer[]
+     * @return array<\Generated\Shared\Transfer\CmsBlockTransfer>
      */
     public function getCmsBlocksByOptions(CmsBlockRequestTransfer $cmsBlockRequestTransfer): array
     {
@@ -88,9 +94,9 @@ class CmsBlockProductStorageReader implements CmsBlockProductStorageReaderInterf
     }
 
     /**
-     * @param string[] $blockKeys
+     * @param array<string> $blockKeys
      *
-     * @return \Generated\Shared\Transfer\CmsBlockTransfer[]
+     * @return array<\Generated\Shared\Transfer\CmsBlockTransfer>
      */
     protected function mapBlockKeysArrayToCmsBlockTransfers(array $blockKeys): array
     {

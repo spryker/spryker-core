@@ -28,10 +28,25 @@ class HttpMethodProcessorTest extends Unit
 {
     use ArraySubsetAsserts;
 
+    /**
+     * @var string
+     */
     protected const RESOURCE_PATH = '/test-resource';
+    /**
+     * @var string
+     */
     protected const RESOURCE_ID = '{testResourceId}';
+    /**
+     * @var string
+     */
     protected const BAD_REQUEST_RESPONSE_DESCRIPTION = 'Bad Request.';
+    /**
+     * @var string
+     */
     protected const NOT_FOUND_RESPONSE_DESCRIPTION = 'Not found.';
+    /**
+     * @var string
+     */
     protected const SUMMARY = 'Test summary.';
 
     /**
@@ -208,5 +223,24 @@ class HttpMethodProcessorTest extends Unit
         $this->assertNotEmpty($generatedPaths);
         $this->assertArrayHasKey(static::RESOURCE_PATH . '/' . static::RESOURCE_ID, $generatedPaths);
         $this->assertArraySubset($this->tester->getMethodProcessorGetResourceByIdPathExpectedData(), $generatedPaths);
+    }
+
+    /**
+     * @return void
+     */
+    public function testAddDeprecatedFlagToMethod(): void
+    {
+        $this->methodProcessor->addGetResourceByIdPath(
+            new TestResourceRoutePlugin(),
+            static::RESOURCE_PATH,
+            false,
+            static::RESOURCE_ID,
+            (new AnnotationTransfer())
+                ->setDeprecated(true)
+        );
+
+        $generatedPaths = $this->methodProcessor->getGeneratedPaths();
+
+        $this->assertTrue($generatedPaths[static::RESOURCE_PATH . '/' . static::RESOURCE_ID]['get']['deprecated']);
     }
 }

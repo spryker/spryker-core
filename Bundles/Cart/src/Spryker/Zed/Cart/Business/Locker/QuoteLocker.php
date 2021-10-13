@@ -25,14 +25,14 @@ class QuoteLocker implements QuoteLockerInterface
     protected $operation;
 
     /**
-     * @var \Spryker\Zed\CartExtension\Dependency\Plugin\QuoteLockPreResetPluginInterface[]
+     * @var array<\Spryker\Zed\CartExtension\Dependency\Plugin\QuoteLockPreResetPluginInterface>
      */
     protected $quoteLockPreResetPlugins;
 
     /**
      * @param \Spryker\Zed\Cart\Dependency\Facade\CartToQuoteFacadeInterface $quoteFacade
      * @param \Spryker\Zed\Cart\Business\Model\OperationInterface $operation
-     * @param \Spryker\Zed\CartExtension\Dependency\Plugin\QuoteLockPreResetPluginInterface[] $quoteLockPreResetPlugins
+     * @param array<\Spryker\Zed\CartExtension\Dependency\Plugin\QuoteLockPreResetPluginInterface> $quoteLockPreResetPlugins
      */
     public function __construct(
         CartToQuoteFacadeInterface $quoteFacade,

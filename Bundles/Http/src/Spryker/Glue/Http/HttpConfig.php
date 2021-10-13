@@ -15,7 +15,13 @@ use Spryker\Shared\Http\HttpConstants;
  */
 class HttpConfig extends AbstractBundleConfig
 {
+    /**
+     * @var int
+     */
     protected const DEFAULT_REQUEST_HTTP_PORT = 80;
+    /**
+     * @var int
+     */
     protected const DEFAULT_REQUEST_HTTPS_PORT = 443;
 
     /**
@@ -51,7 +57,7 @@ class HttpConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return array
+     * @return array<string>
      */
     public function getTrustedProxies(): array
     {
@@ -61,10 +67,32 @@ class HttpConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return array
+     * @return array<string>
      */
     public function getTrustedHosts(): array
     {
         return $this->get(HttpConstants::GLUE_TRUSTED_HOSTS, []);
+    }
+
+    /**
+     * @api
+     *
+     * @return bool
+     */
+    public function isStrictTransportSecurityEnabled(): bool
+    {
+        return $this->get(HttpConstants::GLUE_HTTP_STRICT_TRANSPORT_SECURITY_ENABLED, false);
+    }
+
+    /**
+     * @phpstan-return array<string, mixed>
+     *
+     * @api
+     *
+     * @return array
+     */
+    public function getStrictTransportSecurityConfig(): array
+    {
+        return $this->get(HttpConstants::GLUE_HTTP_STRICT_TRANSPORT_SECURITY_CONFIG, []);
     }
 }

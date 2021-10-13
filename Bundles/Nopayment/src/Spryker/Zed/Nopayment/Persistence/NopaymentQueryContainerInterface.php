@@ -19,7 +19,7 @@ interface NopaymentQueryContainerInterface
      *
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItem
      *
-     * @return \Orm\Zed\Nopayment\Persistence\SpyNopaymentPaid[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Nopayment\Persistence\SpyNopaymentPaid>
      */
     public function queryOrderItem(SpySalesOrderItem $orderItem);
 }

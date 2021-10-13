@@ -237,7 +237,7 @@ class NavigationFacade extends AbstractFacade implements NavigationFacadeInterfa
      *
      * @api
      *
-     * @return \Generated\Shared\Transfer\NavigationTransfer[]
+     * @return array<\Generated\Shared\Transfer\NavigationTransfer>
      */
     public function getAllNavigations(): array
     {

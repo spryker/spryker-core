@@ -15,6 +15,9 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 class ProductPackagingUnitCheckoutPreCheck extends ProductPackagingUnitAvailabilityPreCheck implements ProductPackagingUnitCheckoutPreCheckInterface
 {
+    /**
+     * @var string
+     */
     public const CHECKOUT_PRODUCT_UNAVAILABLE_TRANSLATION_KEY = 'product.unavailable';
 
     /**
@@ -43,7 +46,7 @@ class ProductPackagingUnitCheckoutPreCheck extends ProductPackagingUnitAvailabil
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\CheckoutErrorTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\CheckoutErrorTransfer>
      */
     protected function getCheckoutAvailabilityFailedItemsErrorMessages(QuoteTransfer $quoteTransfer): ArrayObject
     {
@@ -119,17 +122,17 @@ class ProductPackagingUnitCheckoutPreCheck extends ProductPackagingUnitAvailabil
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\CheckoutErrorTransfer[] $checkoutErrorMessages
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\CheckoutErrorTransfer> $checkoutErrorMessages
      * @param \Generated\Shared\Transfer\CheckoutErrorTransfer|null $messageTransfer
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\CheckoutErrorTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\CheckoutErrorTransfer>
      */
     protected function collectCheckoutErrorMessages(
         ArrayObject $checkoutErrorMessages,
         ?CheckoutErrorTransfer $messageTransfer
     ): ArrayObject {
         if ($messageTransfer !== null) {
-            $checkoutErrorMessages->append($checkoutErrorMessages);
+            $checkoutErrorMessages->append($messageTransfer);
         }
 
         return $checkoutErrorMessages;

@@ -72,7 +72,7 @@ interface CmsBlockCategoryConnectorFacadeInterface
      * @param int $idCmsBlock
      * @param int $idLocale
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getRenderedCategoryList($idCmsBlock, $idLocale);
 
@@ -85,7 +85,7 @@ interface CmsBlockCategoryConnectorFacadeInterface
      * @param int $idCategory
      * @param int $idCategoryTemplate
      *
-     * @return \Generated\Shared\Transfer\CmsBlockTransfer[]
+     * @return array<\Generated\Shared\Transfer\CmsBlockTransfer>
      */
     public function getCmsBlockCollection($idCategory, $idCategoryTemplate);
 
@@ -141,4 +141,17 @@ interface CmsBlockCategoryConnectorFacadeInterface
         TouchUpdaterInterface $touchUpdater,
         OutputInterface $output
     );
+
+    /**
+     * Specification:
+     * - Gets a collection of related CMS Block names indexed by `idCmsBlock`.
+     * - Requires `CategoryTransfer::idCategory` and `CategoryTransfer::fkCategoryTemplate` to be set.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     *
+     * @return array<string>
+     */
+    public function getCmsBlockNamesIndexedByCmsBlockIdsForCategory(CategoryTransfer $categoryTransfer): array;
 }

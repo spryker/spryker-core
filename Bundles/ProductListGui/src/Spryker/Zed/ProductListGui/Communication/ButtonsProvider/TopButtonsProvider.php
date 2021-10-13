@@ -14,21 +14,28 @@ class TopButtonsProvider implements TopButtonsProviderInterface
 {
     /**
      * @uses \Spryker\Zed\ProductListGui\Communication\Controller\CreateController::indexAction()
+     * @var string
      */
     protected const CREATE_PRODUCT_LIST_BUTTON_URL = '/product-list-gui/create';
+    /**
+     * @var string
+     */
     protected const CREATE_PRODUCT_LIST_BUTTON_TITLE = 'Create a Product List';
+    /**
+     * @var array
+     */
     protected const CREATE_PRODUCT_LIST_BUTTON_OPTIONS = [
         'class' => 'btn-create',
         'iconClass' => 'fa fa-plus',
     ];
 
     /**
-     * @var \Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListTopButtonsExpanderPluginInterface[]
+     * @var array<\Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListTopButtonsExpanderPluginInterface>
      */
     protected $productListTopButtonsExpanderPlugins;
 
     /**
-     * @param \Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListTopButtonsExpanderPluginInterface[] $productListTopButtonsExpanderPlugins
+     * @param array<\Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListTopButtonsExpanderPluginInterface> $productListTopButtonsExpanderPlugins
      */
     public function __construct(array $productListTopButtonsExpanderPlugins)
     {

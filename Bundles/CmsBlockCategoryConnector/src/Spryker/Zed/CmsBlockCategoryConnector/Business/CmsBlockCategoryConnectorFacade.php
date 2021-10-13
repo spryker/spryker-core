@@ -83,7 +83,7 @@ class CmsBlockCategoryConnectorFacade extends AbstractFacade implements CmsBlock
      * @param int $idCmsBlock
      * @param int $idLocale
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getRenderedCategoryList($idCmsBlock, $idLocale)
     {
@@ -100,7 +100,7 @@ class CmsBlockCategoryConnectorFacade extends AbstractFacade implements CmsBlock
      * @param int $idCategory
      * @param int $idCategoryTemplate
      *
-     * @return \Generated\Shared\Transfer\CmsBlockTransfer[]
+     * @return array<\Generated\Shared\Transfer\CmsBlockTransfer>
      */
     public function getCmsBlockCollection($idCategory, $idCategoryTemplate)
     {
@@ -163,11 +163,7 @@ class CmsBlockCategoryConnectorFacade extends AbstractFacade implements CmsBlock
         TouchUpdaterInterface $touchUpdater,
         OutputInterface $output
     ) {
-        $collector = $this->getFactory()
-            ->createStorageCmsBlockCategoryConnectorCollector();
-
-        $this->getFactory()->getCollectorFacade()->runCollector(
-            $collector,
+        $this->getFactory()->createCmsBlockCategoryCollectorRunner()->run(
             $baseQuery,
             $localeTransfer,
             $result,
@@ -176,5 +172,21 @@ class CmsBlockCategoryConnectorFacade extends AbstractFacade implements CmsBlock
             $touchUpdater,
             $output
         );
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     *
+     * @return array<string>
+     */
+    public function getCmsBlockNamesIndexedByCmsBlockIdsForCategory(CategoryTransfer $categoryTransfer): array
+    {
+        return $this->getFactory()
+            ->createCmsBlockCategoryReader()
+            ->getCmsBlockNamesIndexedByCmsBlockIdsForCategory($categoryTransfer);
     }
 }

@@ -11,6 +11,9 @@ use Generated\Shared\Transfer\PaymentMethodTransfer;
 
 class ViewPaymentMethodFormDataProvider
 {
+    /**
+     * @var string
+     */
     public const OPTION_STORE_RELATION_DISABLED = 'option_store_relation_disabled';
 
     /**

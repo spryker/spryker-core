@@ -11,6 +11,9 @@ use Spryker\Shared\Kernel\Locator\LocatorMatcherInterface;
 
 class QueryContainerLocatorMatcher implements LocatorMatcherInterface
 {
+    /**
+     * @var string
+     */
     public const METHOD_PREFIX = 'queryContainer';
 
     /**

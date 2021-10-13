@@ -11,8 +11,17 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class ProductDiscontinuedProductLabelConnectorConfig extends AbstractBundleConfig
 {
+    /**
+     * @var string
+     */
     protected const PRODUCT_DISCONTINUE_LABEL_NAME = 'Discontinued';
+    /**
+     * @var string
+     */
     protected const PRODUCT_DISCONTINUE_LABEL_FRONT_END_REFERENCE = 'discontinued';
+    /**
+     * @var int
+     */
     protected const PRODUCT_LABEL_DEFAULT_POSITION = 0;
 
     /**

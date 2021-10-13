@@ -43,7 +43,22 @@ class LogConfig extends AbstractBundleConfig
     }
 
     /**
+     * Specification:
+     * - Defines the log destination path, e.g 'php://stderr' or '/data/log/Glue/application.log'.
+     *
      * @api
+     *
+     * @return resource|string
+     */
+    public function getLogDestinationPath()
+    {
+        return $this->get(LogConstants::LOG_FILE_PATH_GLUE, 'php://stderr');
+    }
+
+    /**
+     * @api
+     *
+     * @deprecated Use {@link \Spryker\Glue\Log\LogConfig::getLogDestinationPath()} instead.
      *
      * @return string
      */
@@ -59,7 +74,9 @@ class LogConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return int|string
+     * @phpstan-return 100|200|250|300|400|500|550|600|non-empty-string
+     *
+     * @return string|int
      */
     public function getLogLevel()
     {
@@ -67,7 +84,22 @@ class LogConfig extends AbstractBundleConfig
     }
 
     /**
+     * Specification:
+     * - Defines the log destination path, e.g 'php://stderr' or '/data/log/Glue/exception.log'.
+     *
      * @api
+     *
+     * @return resource|string
+     */
+    public function getExceptionLogDestinationPath()
+    {
+        return $this->get(LogConstants::EXCEPTION_LOG_FILE_PATH_GLUE, 'php://stderr');
+    }
+
+    /**
+     * @api
+     *
+     * @deprecated Use {@link \Spryker\Glue\Log\LogConfig::getExceptionLogDestination()} instead.
      *
      * @return string
      */

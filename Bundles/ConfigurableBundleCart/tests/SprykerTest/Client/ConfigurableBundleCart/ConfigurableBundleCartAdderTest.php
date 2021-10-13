@@ -30,11 +30,23 @@ use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
  */
 class ConfigurableBundleCartAdderTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const FAKE_CONFIGURABLE_BUNDLE_NAME = 'FAKE_CONFIGURABLE_BUNDLE_NAME';
 
+    /**
+     * @var string
+     */
     protected const FAKE_CONFIGURABLE_BUNDLE_UUID_1 = 'FAKE_CONFIGURABLE_BUNDLE_UUID_1';
 
+    /**
+     * @var string
+     */
     protected const FAKE_CONFIGURABLE_BUNDLE_SLOT_UUID_1 = 'FAKE_CONFIGURABLE_BUNDLE_SLOT_UUID_1';
+    /**
+     * @var string
+     */
     protected const FAKE_CONFIGURABLE_BUNDLE_SLOT_UUID_2 = 'FAKE_CONFIGURABLE_BUNDLE_SLOT_UUID_2';
 
     /**

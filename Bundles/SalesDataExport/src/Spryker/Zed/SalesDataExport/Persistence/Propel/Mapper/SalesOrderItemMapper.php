@@ -14,7 +14,7 @@ class SalesOrderItemMapper
      *
      * @module SalesOms
      *
-     * @var string[]
+     * @var array<string>
      */
     protected $fieldMapping = [
         'order_reference' => 'Order.OrderReference',
@@ -80,7 +80,7 @@ class SalesOrderItemMapper
     /**
      * @phpstan-return array<string, string>
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getFieldMapping(): array
     {
@@ -108,7 +108,7 @@ class SalesOrderItemMapper
     /**
      * @phpstan-return array<string, string>
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getFields(): array
     {

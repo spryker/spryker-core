@@ -15,7 +15,7 @@ use Symfony\Component\Routing\RequestContext;
 class ChainRouter extends SymfonyChainRouter implements RouterInterface
 {
     /**
-     * @param \Spryker\Yves\RouterExtension\Dependency\Plugin\RouterPluginInterface[] $routerPlugins
+     * @param array<\Spryker\Yves\RouterExtension\Dependency\Plugin\RouterPluginInterface> $routerPlugins
      * @param \Psr\Log\LoggerInterface|null $logger
      * @param \Symfony\Component\Routing\RequestContext|null $requestContext
      */
@@ -28,7 +28,7 @@ class ChainRouter extends SymfonyChainRouter implements RouterInterface
     }
 
     /**
-     * @param \Spryker\Yves\RouterExtension\Dependency\Plugin\RouterPluginInterface[] $routerPlugins
+     * @param array<\Spryker\Yves\RouterExtension\Dependency\Plugin\RouterPluginInterface> $routerPlugins
      *
      * @return void
      */

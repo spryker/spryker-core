@@ -42,7 +42,7 @@ class PromotionItemByQuoteResourceRelationshipExpander implements PromotionItemB
     }
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
+     * @param array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface> $resources
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return void
@@ -72,7 +72,7 @@ class PromotionItemByQuoteResourceRelationshipExpander implements PromotionItemB
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $resource
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\PromotionItemTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\PromotionItemTransfer>
      */
     protected function getPromotionItemsFromPayload(RestResourceInterface $resource): ArrayObject
     {

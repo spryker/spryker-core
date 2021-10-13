@@ -19,13 +19,34 @@ use Spryker\Client\Quote\Dependency\Plugin\QuoteToCurrencyBridge;
  */
 class QuoteDependencyProvider extends AbstractDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_SESSION = 'session client';
 
+    /**
+     * @var string
+     */
     public const CURRENCY_PLUGIN = 'currency plugin';
+    /**
+     * @var string
+     */
     public const QUOTE_TRANSFER_EXPANDER_PLUGINS = 'QUOTE_TRANSFER_EXPANDER_PLUGINS';
+    /**
+     * @var string
+     */
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
+    /**
+     * @var string
+     */
     public const SERVICE_ZED = 'SERVICE_ZED';
+    /**
+     * @var string
+     */
     public const CLIENT_CURRENCY = 'CLIENT_CURRENCY';
+    /**
+     * @var string
+     */
     public const PLUGINS_DATABASE_STRATEGY_PRE_CHECK_PLUGINS = 'PLUGINS_DATABASE_STRATEGY_PRE_CHECK_PLUGINS';
 
     /**
@@ -147,7 +168,7 @@ class QuoteDependencyProvider extends AbstractDependencyProvider
     /**
      * @param \Spryker\Client\Kernel\Container $container
      *
-     * @return \Spryker\Client\Quote\Dependency\Plugin\QuoteTransferExpanderPluginInterface[]
+     * @return array<\Spryker\Client\Quote\Dependency\Plugin\QuoteTransferExpanderPluginInterface>
      */
     protected function getQuoteTransferExpanderPlugins(Container $container)
     {
@@ -155,7 +176,7 @@ class QuoteDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @return \Spryker\Client\QuoteExtension\Dependency\Plugin\DatabaseStrategyPreCheckPluginInterface[]
+     * @return array<\Spryker\Client\QuoteExtension\Dependency\Plugin\DatabaseStrategyPreCheckPluginInterface>
      */
     protected function getDatabaseStrategyPreCheckPlugins(): array
     {

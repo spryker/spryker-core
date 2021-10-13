@@ -23,7 +23,7 @@ class PublisherEventCollator implements PublisherEventCollatorInterface
     protected $publisherConfig;
 
     /**
-     * @var string[]
+     * @var array<string>
      */
     protected static $eventCollectionBuffer;
 
@@ -73,7 +73,7 @@ class PublisherEventCollator implements PublisherEventCollatorInterface
 
     /**
      * @param array $eventCollection
-     * @param \Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface[] $publisherPlugins
+     * @param array<\Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface> $publisherPlugins
      * @param string $publishQueueName
      *
      * @return array
@@ -89,7 +89,7 @@ class PublisherEventCollator implements PublisherEventCollatorInterface
 
     /**
      * @param array $eventCollection
-     * @param string[] $subscribedEvents
+     * @param array<string> $subscribedEvents
      * @param string $publisherClassName
      * @param string|null $publishQueueName
      *

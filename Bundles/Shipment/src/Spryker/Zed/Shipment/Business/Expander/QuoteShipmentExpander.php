@@ -49,7 +49,7 @@ class QuoteShipmentExpander implements QuoteShipmentExpanderInterface
     protected $calculationFacade;
 
     /**
-     * @var \Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentGroupsSanitizerPluginInterface[]
+     * @var array<\Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentGroupsSanitizerPluginInterface>
      */
     protected $shipmentGroupsSanitizers;
 
@@ -59,7 +59,7 @@ class QuoteShipmentExpander implements QuoteShipmentExpanderInterface
      * @param \Spryker\Zed\Shipment\Business\Sanitizer\ExpenseSanitizerInterface $expenseSanitizer
      * @param \Spryker\Zed\Shipment\Business\Mapper\ShipmentMapperInterface $shipmentMapper
      * @param \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToCalculationFacadeInterface $calculationFacade
-     * @param \Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentGroupsSanitizerPluginInterface[] $shipmentGroupsSanitizers
+     * @param array<\Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentGroupsSanitizerPluginInterface> $shipmentGroupsSanitizers
      */
     public function __construct(
         ShipmentServiceInterface $shipmentService,
@@ -97,9 +97,9 @@ class QuoteShipmentExpander implements QuoteShipmentExpanderInterface
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param iterable|\Generated\Shared\Transfer\ShipmentGroupTransfer[] $shipmentGroupCollection
+     * @param iterable<\Generated\Shared\Transfer\ShipmentGroupTransfer> $shipmentGroupCollection
      *
-     * @return iterable|\Generated\Shared\Transfer\ShipmentGroupTransfer[]
+     * @return iterable<\Generated\Shared\Transfer\ShipmentGroupTransfer>
      */
     protected function setAvailableShipmentMethodsToShipmentGroups(
         QuoteTransfer $quoteTransfer,
@@ -145,9 +145,9 @@ class QuoteShipmentExpander implements QuoteShipmentExpanderInterface
     }
 
     /**
-     * @param iterable|\Generated\Shared\Transfer\ShipmentGroupTransfer[] $shipmentGroupCollection
+     * @param iterable<\Generated\Shared\Transfer\ShipmentGroupTransfer> $shipmentGroupCollection
      *
-     * @return iterable|\Generated\Shared\Transfer\ShipmentGroupTransfer[]
+     * @return iterable<\Generated\Shared\Transfer\ShipmentGroupTransfer>
      */
     protected function setShipmentGroupsSelectedMethodTransfer(iterable $shipmentGroupCollection): iterable
     {
@@ -267,7 +267,7 @@ class QuoteShipmentExpander implements QuoteShipmentExpanderInterface
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param iterable|\Generated\Shared\Transfer\ShipmentGroupTransfer[] $shipmentGroupCollection
+     * @param iterable<\Generated\Shared\Transfer\ShipmentGroupTransfer> $shipmentGroupCollection
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
@@ -298,7 +298,7 @@ class QuoteShipmentExpander implements QuoteShipmentExpanderInterface
      * @deprecated Exists for Backward Compatibility reasons only.
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param iterable|\Generated\Shared\Transfer\ShipmentGroupTransfer[] $shipmentGroupCollection
+     * @param iterable<\Generated\Shared\Transfer\ShipmentGroupTransfer> $shipmentGroupCollection
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
@@ -316,9 +316,9 @@ class QuoteShipmentExpander implements QuoteShipmentExpanderInterface
     }
 
     /**
-     * @param iterable|\Generated\Shared\Transfer\ShipmentGroupTransfer[] $shipmentGroupCollection
+     * @param iterable<\Generated\Shared\Transfer\ShipmentGroupTransfer> $shipmentGroupCollection
      *
-     * @return iterable|\Generated\Shared\Transfer\ShipmentGroupTransfer[]
+     * @return iterable<\Generated\Shared\Transfer\ShipmentGroupTransfer>
      */
     protected function sanitizeShipmentGroupCollection(iterable $shipmentGroupCollection): iterable
     {

@@ -14,7 +14,7 @@ use Generated\Shared\Transfer\FileSystemDeleteDirectoryTransfer;
 use Generated\Shared\Transfer\FileSystemDeleteTransfer;
 use Generated\Shared\Transfer\FileSystemRenameTransfer;
 use Generated\Shared\Transfer\FileSystemVisibilityTransfer;
-use Spryker\Service\FileSystem\Dependency\Plugin\FileSystemWriterPluginInterface;
+use Spryker\Service\FileSystemExtension\Dependency\Plugin\FileSystemWriterPluginInterface;
 use Spryker\Service\Kernel\AbstractPlugin;
 
 /**
@@ -30,8 +30,8 @@ class FileSystemWriterPlugin extends AbstractPlugin implements FileSystemWriterP
     public function markAsPrivate(FileSystemVisibilityTransfer $fileSystemVisibilityTransfer)
     {
         $this->getService()->markAsPrivate(
-            $fileSystemVisibilityTransfer->getFileSystemName(),
-            $fileSystemVisibilityTransfer->getPath()
+            $fileSystemVisibilityTransfer->getFileSystemNameOrFail(),
+            $fileSystemVisibilityTransfer->getPathOrFail()
         );
     }
 
@@ -43,8 +43,8 @@ class FileSystemWriterPlugin extends AbstractPlugin implements FileSystemWriterP
     public function markAsPublic(FileSystemVisibilityTransfer $fileSystemVisibilityTransfer)
     {
         $this->getService()->markAsPublic(
-            $fileSystemVisibilityTransfer->getFileSystemName(),
-            $fileSystemVisibilityTransfer->getPath()
+            $fileSystemVisibilityTransfer->getFileSystemNameOrFail(),
+            $fileSystemVisibilityTransfer->getPathOrFail()
         );
     }
 
@@ -56,8 +56,8 @@ class FileSystemWriterPlugin extends AbstractPlugin implements FileSystemWriterP
     public function createDirectory(FileSystemCreateDirectoryTransfer $fileSystemCreateDirectoryTransfer)
     {
         $this->getService()->createDir(
-            $fileSystemCreateDirectoryTransfer->getFileSystemName(),
-            $fileSystemCreateDirectoryTransfer->getPath(),
+            $fileSystemCreateDirectoryTransfer->getFileSystemNameOrFail(),
+            $fileSystemCreateDirectoryTransfer->getPathOrFail(),
             $fileSystemCreateDirectoryTransfer->getConfig()
         );
     }
@@ -70,8 +70,8 @@ class FileSystemWriterPlugin extends AbstractPlugin implements FileSystemWriterP
     public function deleteDirectory(FileSystemDeleteDirectoryTransfer $fileSystemDeleteDirectoryTransfer)
     {
         $this->getService()->deleteDir(
-            $fileSystemDeleteDirectoryTransfer->getFileSystemName(),
-            $fileSystemDeleteDirectoryTransfer->getPath()
+            $fileSystemDeleteDirectoryTransfer->getFileSystemNameOrFail(),
+            $fileSystemDeleteDirectoryTransfer->getPathOrFail()
         );
     }
 
@@ -83,9 +83,9 @@ class FileSystemWriterPlugin extends AbstractPlugin implements FileSystemWriterP
     public function copy(FileSystemCopyTransfer $fileSystemCopyTransfer)
     {
         $this->getService()->copy(
-            $fileSystemCopyTransfer->getFileSystemName(),
-            $fileSystemCopyTransfer->getSourcePath(),
-            $fileSystemCopyTransfer->getDestinationPath()
+            $fileSystemCopyTransfer->getFileSystemNameOrFail(),
+            $fileSystemCopyTransfer->getSourcePathOrFail(),
+            $fileSystemCopyTransfer->getDestinationPathOrFail()
         );
     }
 
@@ -97,23 +97,8 @@ class FileSystemWriterPlugin extends AbstractPlugin implements FileSystemWriterP
     public function delete(FileSystemDeleteTransfer $fileSystemDeleteTransfer)
     {
         $this->getService()->delete(
-            $fileSystemDeleteTransfer->getFileSystemName(),
-            $fileSystemDeleteTransfer->getPath()
-        );
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\FileSystemContentTransfer $fileSystemContentTransfer
-     *
-     * @return void
-     */
-    public function put(FileSystemContentTransfer $fileSystemContentTransfer)
-    {
-        $this->getService()->put(
-            $fileSystemContentTransfer->getFileSystemName(),
-            $fileSystemContentTransfer->getPath(),
-            $fileSystemContentTransfer->getContent(),
-            $fileSystemContentTransfer->getConfig()
+            $fileSystemDeleteTransfer->getFileSystemNameOrFail(),
+            $fileSystemDeleteTransfer->getPathOrFail()
         );
     }
 
@@ -125,24 +110,9 @@ class FileSystemWriterPlugin extends AbstractPlugin implements FileSystemWriterP
     public function rename(FileSystemRenameTransfer $fileSystemRenameTransfer)
     {
         $this->getService()->rename(
-            $fileSystemRenameTransfer->getFileSystemName(),
-            $fileSystemRenameTransfer->getPath(),
-            $fileSystemRenameTransfer->getNewPath()
-        );
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\FileSystemContentTransfer $fileSystemContentTransfer
-     *
-     * @return void
-     */
-    public function update(FileSystemContentTransfer $fileSystemContentTransfer)
-    {
-        $this->getService()->update(
-            $fileSystemContentTransfer->getFileSystemName(),
-            $fileSystemContentTransfer->getPath(),
-            $fileSystemContentTransfer->getContent(),
-            $fileSystemContentTransfer->getConfig()
+            $fileSystemRenameTransfer->getFileSystemNameOrFail(),
+            $fileSystemRenameTransfer->getPathOrFail(),
+            $fileSystemRenameTransfer->getNewPathOrFail()
         );
     }
 
@@ -154,9 +124,9 @@ class FileSystemWriterPlugin extends AbstractPlugin implements FileSystemWriterP
     public function write(FileSystemContentTransfer $fileSystemContentTransfer)
     {
         $this->getService()->write(
-            $fileSystemContentTransfer->getFileSystemName(),
-            $fileSystemContentTransfer->getPath(),
-            $fileSystemContentTransfer->getContent(),
+            $fileSystemContentTransfer->getFileSystemNameOrFail(),
+            $fileSystemContentTransfer->getPathOrFail(),
+            $fileSystemContentTransfer->getContentOrFail(),
             $fileSystemContentTransfer->getConfig()
         );
     }

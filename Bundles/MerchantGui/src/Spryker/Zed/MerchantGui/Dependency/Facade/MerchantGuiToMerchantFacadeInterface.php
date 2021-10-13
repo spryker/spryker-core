@@ -38,7 +38,7 @@ interface MerchantGuiToMerchantFacadeInterface
     /**
      * @param string $currentStatus
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getApplicableMerchantStatuses(string $currentStatus): array;
 

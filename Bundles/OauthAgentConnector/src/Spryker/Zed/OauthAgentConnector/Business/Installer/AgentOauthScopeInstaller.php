@@ -58,9 +58,9 @@ class AgentOauthScopeInstaller implements AgentOauthScopeInstallerInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\OauthScopeTransfer[] $oauthScopeTransfers
+     * @param array<\Generated\Shared\Transfer\OauthScopeTransfer> $oauthScopeTransfers
      *
-     * @return \Generated\Shared\Transfer\OauthScopeTransfer[]
+     * @return array<\Generated\Shared\Transfer\OauthScopeTransfer>
      */
     protected function indexScopesByIdentifier(array $oauthScopeTransfers): array
     {

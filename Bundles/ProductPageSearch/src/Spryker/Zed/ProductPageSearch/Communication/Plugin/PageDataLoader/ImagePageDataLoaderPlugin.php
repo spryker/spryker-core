@@ -25,21 +25,21 @@ class ImagePageDataLoaderPlugin extends AbstractPlugin implements ProductPageDat
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductPageLoadTransfer $loadTransfer
+     * @param \Generated\Shared\Transfer\ProductPageLoadTransfer $productPageLoadTransfer
      *
      * @return \Generated\Shared\Transfer\ProductPageLoadTransfer
      */
-    public function expandProductPageDataTransfer(ProductPageLoadTransfer $loadTransfer)
+    public function expandProductPageDataTransfer(ProductPageLoadTransfer $productPageLoadTransfer)
     {
-        $payloadTransfers = $this->setProductImages($loadTransfer->getProductAbstractIds(), $loadTransfer->getPayloadTransfers());
-        $loadTransfer->setPayloadTransfers($payloadTransfers);
+        $payloadTransfers = $this->setProductImages($productPageLoadTransfer->getProductAbstractIds(), $productPageLoadTransfer->getPayloadTransfers());
+        $productPageLoadTransfer->setPayloadTransfers($payloadTransfers);
 
-        return $loadTransfer;
+        return $productPageLoadTransfer;
     }
 
     /**
-     * @param int[] $productAbstractIds
-     * @param \Generated\Shared\Transfer\ProductPayloadTransfer[] $payloadTransfers
+     * @param array<int> $productAbstractIds
+     * @param array<\Generated\Shared\Transfer\ProductPayloadTransfer> $payloadTransfers
      *
      * @return array
      */
@@ -67,7 +67,7 @@ class ImagePageDataLoaderPlugin extends AbstractPlugin implements ProductPageDat
     }
 
     /**
-     * @param \Orm\Zed\ProductImage\Persistence\SpyProductImageSet[]|\Propel\Runtime\Collection\ObjectCollection $productImageSetCollection
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductImage\Persistence\SpyProductImageSet> $productImageSetCollection
      *
      * @return array
      */
@@ -83,7 +83,7 @@ class ImagePageDataLoaderPlugin extends AbstractPlugin implements ProductPageDat
     }
 
     /**
-     * @param \Orm\Zed\ProductImage\Persistence\SpyProductImageSet[]|\Propel\Runtime\Collection\ObjectCollection $productImageSetCollection
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductImage\Persistence\SpyProductImageSet> $productImageSetCollection
      *
      * @return array
      */
@@ -103,8 +103,8 @@ class ImagePageDataLoaderPlugin extends AbstractPlugin implements ProductPageDat
     }
 
     /**
-     * @param array[] $imageSets
-     * @param array[] $defaultProductImageSets
+     * @param array<array> $imageSets
+     * @param array<array> $defaultProductImageSets
      *
      * @return array
      */

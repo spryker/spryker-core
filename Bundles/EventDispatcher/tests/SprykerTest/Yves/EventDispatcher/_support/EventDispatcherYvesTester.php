@@ -33,7 +33,13 @@ class EventDispatcherYvesTester extends Actor
 {
     use _generated\EventDispatcherYvesTesterActions;
 
+    /**
+     * @var string
+     */
     protected const SERVICE_DISPATCHER = 'dispatcher';
+    /**
+     * @var string
+     */
     protected const SERVICE_STOPWATCH = 'stopwatch';
 
     /**

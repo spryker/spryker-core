@@ -15,11 +15,20 @@ use Spryker\Zed\ProductManagement\Communication\Controller\ViewController;
 
 class RelatedProductOverviewTable extends AbstractRelatedProductTable
 {
+    /**
+     * @var string
+     */
     public const PARAM_ID_PRODUCT_LABEL = 'id-product-label';
+    /**
+     * @var string
+     */
     public const TABLE_IDENTIFIER = 'related-products-table';
     public const COL_PRODUCT_ABSTRACT_SKU = SpyProductAbstractTableMap::COL_SKU;
     public const COL_PRODUCT_ABSTRACT_RELATION_COUNT = RelatedProductTableQueryBuilder::RESULT_FIELD_PRODUCT_ABSTRACT_RELATION_COUNT;
 
+    /**
+     * @var string
+     */
     public const COL_ACTIONS = 'actions';
 
     /**

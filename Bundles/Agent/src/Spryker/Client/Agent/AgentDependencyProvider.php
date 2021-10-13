@@ -15,12 +15,27 @@ use Spryker\Client\Agent\Dependency\Client\AgentToZedRequestClientInterface;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 
+/**
+ * @method \Spryker\Client\Agent\AgentConfig getConfig()
+ */
 class AgentDependencyProvider extends AbstractDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
+    /**
+     * @var string
+     */
     public const CLIENT_SESSION = 'CLIENT_SESSION';
+    /**
+     * @var string
+     */
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
 
+    /**
+     * @var string
+     */
     public const PLUGINS_IMPERSONATION_SESSION_FINISHER = 'PLUGINS_IMPERSONATION_SESSION_FINISHER';
 
     /**
@@ -104,7 +119,7 @@ class AgentDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @return \Spryker\Client\AgentExtension\Dependency\Plugin\ImpersonationSessionFinisherPluginInterface[]
+     * @return array<\Spryker\Client\AgentExtension\Dependency\Plugin\ImpersonationSessionFinisherPluginInterface>
      */
     protected function getImpersonationSessionFinisherPlugins(): array
     {

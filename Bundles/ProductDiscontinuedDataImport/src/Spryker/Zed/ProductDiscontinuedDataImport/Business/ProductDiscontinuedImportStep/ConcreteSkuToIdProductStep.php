@@ -17,7 +17,7 @@ use Spryker\Zed\ProductDiscontinuedDataImport\Business\ProductDiscontinuedDataSe
 class ConcreteSkuToIdProductStep implements DataImportStepInterface
 {
     /**
-     * @var int[]
+     * @var array<int>
      */
     protected $idProductCache = [];
 

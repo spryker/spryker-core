@@ -14,11 +14,23 @@ use Symfony\Component\Process\Process;
 
 class PhpMdRunner
 {
+    /**
+     * @var int
+     */
     public const CODE_SUCCESS = 0;
 
+    /**
+     * @var string
+     */
     public const BUNDLE_ALL = 'all';
 
+    /**
+     * @var string
+     */
     public const OPTION_DRY_RUN = 'dry-run';
+    /**
+     * @var string
+     */
     public const OPTION_FORMAT = 'format';
 
     /**

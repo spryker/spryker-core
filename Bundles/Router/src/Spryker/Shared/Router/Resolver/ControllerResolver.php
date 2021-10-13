@@ -30,7 +30,7 @@ class ControllerResolver implements ControllerResolverInterface
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|bool|callable|object|false
+     * @return callable|object|array|bool|false
      */
     public function getController(Request $request)
     {
@@ -134,11 +134,15 @@ class ControllerResolver implements ControllerResolverInterface
     }
 
     /**
-     * @inheritDoc
-     *
      * @deprecated This method is deprecated as of 3.1 and will be removed in 4.0. Implement the ArgumentResolverInterface and inject it in the HttpKernel instead.
+     *
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Spryker\Zed\Kernel\Communication\Controller\AbstractController $controller
+     *
+     * @return array
      */
     public function getArguments(Request $request, $controller)
     {
+        return [];
     }
 }

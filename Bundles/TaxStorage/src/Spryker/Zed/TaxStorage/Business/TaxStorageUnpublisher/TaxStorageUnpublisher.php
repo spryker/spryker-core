@@ -25,7 +25,7 @@ class TaxStorageUnpublisher implements TaxStorageUnpublisherInterface
     }
 
     /**
-     * @param int[] $taxSetIds
+     * @param array<int> $taxSetIds
      *
      * @return void
      */

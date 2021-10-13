@@ -18,11 +18,27 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 class EventDispatcherCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
-     * @return \Spryker\Shared\EventDispatcherExtension\Dependency\Plugin\EventDispatcherPluginInterface[]
+     * @return array<\Spryker\Shared\EventDispatcherExtension\Dependency\Plugin\EventDispatcherPluginInterface>
      */
     public function getEventDispatcherPlugins(): array
     {
         return $this->getProvidedDependency(EventDispatcherDependencyProvider::PLUGINS_EVENT_DISPATCHER_PLUGINS);
+    }
+
+    /**
+     * @return array<\Spryker\Shared\EventDispatcherExtension\Dependency\Plugin\EventDispatcherPluginInterface>
+     */
+    public function getBackendGatewayEventDispatcherPlugins(): array
+    {
+        return $this->getProvidedDependency(EventDispatcherDependencyProvider::PLUGINS_BACKEND_GATEWAY_EVENT_DISPATCHER_PLUGINS);
+    }
+
+    /**
+     * @return array<\Spryker\Shared\EventDispatcherExtension\Dependency\Plugin\EventDispatcherPluginInterface>
+     */
+    public function getBackendApiEventDispatcherPlugins(): array
+    {
+        return $this->getProvidedDependency(EventDispatcherDependencyProvider::PLUGINS_BACKEND_API_EVENT_DISPATCHER_PLUGINS);
     }
 
     /**

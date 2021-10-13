@@ -49,11 +49,11 @@ class Reader implements ReaderInterface
     /**
      * @param int $idProductAbstract
      *
-     * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductImageSetTransfer>
      */
     public function getProductImagesSetCollectionByProductAbstractId($idProductAbstract)
     {
-        /** @var \Orm\Zed\ProductImage\Persistence\SpyProductImageSet[]|\Propel\Runtime\Collection\ObjectCollection $productImageSetCollection */
+        /** @var \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductImage\Persistence\SpyProductImageSet> $productImageSetCollection */
         $productImageSetCollection = $this->productImageContainer
             ->queryImageSetByProductAbstractId($idProductAbstract)
             ->find();
@@ -64,7 +64,7 @@ class Reader implements ReaderInterface
     /**
      * @param int $idProduct
      *
-     * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductImageSetTransfer>
      */
     public function getProductImagesSetCollectionByProductId($idProduct)
     {
@@ -78,7 +78,7 @@ class Reader implements ReaderInterface
     /**
      * @param int $idProduct
      *
-     * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductImageSetTransfer>
      */
     public function getProductImagesSetCollectionByProductIdForCurrentLocale(int $idProduct): array
     {

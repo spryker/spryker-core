@@ -12,6 +12,7 @@ use Psr\Log\LoggerInterface;
 use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface;
 use Spryker\Shared\ApplicationExtension\Dependency\Plugin\BootableApplicationPluginInterface;
+use Spryker\Shared\Security\EventListener\RedirectLogoutListener;
 use Spryker\Shared\SecurityExtension\Configuration\SecurityConfigurationInterface;
 use Spryker\Yves\Kernel\AbstractPlugin;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -53,7 +54,6 @@ use Symfony\Component\Security\Http\EntryPoint\BasicAuthenticationEntryPoint;
 use Symfony\Component\Security\Http\EntryPoint\FormAuthenticationEntryPoint;
 use Symfony\Component\Security\Http\EntryPoint\RetryAuthenticationEntryPoint;
 use Symfony\Component\Security\Http\Event\LogoutEvent;
-use Symfony\Component\Security\Http\EventListener\DefaultLogoutListener;
 use Symfony\Component\Security\Http\EventListener\RememberMeLogoutListener;
 use Symfony\Component\Security\Http\EventListener\SessionLogoutListener;
 use Symfony\Component\Security\Http\Firewall;
@@ -81,74 +81,194 @@ use Symfony\Component\Security\Http\Session\SessionAuthenticationStrategyInterfa
  */
 class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPluginInterface, BootableApplicationPluginInterface
 {
+    /**
+     * @var string
+     */
     protected const SERVICE_SECURITY_FIREWALL = 'security.firewall';
+    /**
+     * @var string
+     */
     protected const SERVICE_SECURITY_AUTHORIZATION_CHECKER = 'security.authorization_checker';
+    /**
+     * @var string
+     */
     protected const SERVICE_SECURITY_TOKEN_STORAGE = 'security.token_storage';
+    /**
+     * @var string
+     */
     protected const SERVICE_USER = 'user';
+    /**
+     * @var string
+     */
     protected const SERVICE_SECURITY_AUTHENTICATION_MANAGER = 'security.authentication_manager';
+    /**
+     * @var string
+     */
     protected const SERVICE_SECURITY_ACCESS_MANAGER = 'security.access_manager';
+    /**
+     * @var string
+     */
     protected const SERVICE_SECURITY_AUTHENTICATION_PROVIDERS = 'security.authentication_providers';
+    /**
+     * @var string
+     */
     protected const SERVICE_SECURITY_ENCODER_FACTORY = 'security.encoder_factory';
+    /**
+     * @var string
+     */
     protected const SERVICE_SECURITY_USER_CHECKER = 'security.user_checker';
+    /**
+     * @var string
+     */
     protected const SERVICE_SECURITY_VOTERS = 'security.voters';
+    /**
+     * @var string
+     */
     protected const SERVICE_SECURITY_TRUST_RESOLVER = 'security.trust_resolver';
+    /**
+     * @var string
+     */
     protected const SERVICE_SECURITY_HTTP_UTILS = 'security.http_utils';
+    /**
+     * @var string
+     */
     protected const SERVICE_SECURITY_LAST_ERROR = 'security.last_error';
+    /**
+     * @var string
+     */
     protected const SERVICE_SECURITY_ACCESS_MAP = 'security.access_map';
+    /**
+     * @var string
+     */
     protected const SERVICE_SECURITY_AUTHENTICATION_UTILS = 'security.authentication_utils';
+    /**
+     * @var string
+     */
     protected const SERVICE_SECURITY_CHANNEL_LISTENER = 'security.channel_listener';
+    /**
+     * @var string
+     */
     protected const SERVICE_SECURITY_ACCESS_LISTENER = 'security.access_listener';
+    /**
+     * @var string
+     */
     protected const SERVICE_SECURITY_USER_PROVIDER_INMEMORY_PROTO = 'security.user_provider.inmemory._proto';
+    /**
+     * @var string
+     */
     protected const SERVICE_SECURITY_CONTEXT_LISTENER_PROTO = 'security.context_listener._proto';
+    /**
+     * @var string
+     */
     protected const SERVICE_SECURITY_EXCEPTION_LISTENER_PROTO = 'security.exception_listener._proto';
+    /**
+     * @var string
+     */
     protected const SERVICE_SECURITY_AUTHENTICATION_SUCCESS_HANDLER_PROTO = 'security.authentication.success_handler._proto';
+    /**
+     * @var string
+     */
     protected const SERVICE_SECURITY_AUTHENTICATION_FAILURE_HANDLER_PROTO = 'security.authentication.failure_handler._proto';
+    /**
+     * @var string
+     */
     protected const SERVICE_SECURITY_AUTHENTICATION_LOGOUT_HANDLER_PROTO = 'security.authentication.logout_handler._proto';
+    /**
+     * @var string
+     */
     protected const SERVICE_SECURITY_AUTHENTICATION_LISTENER_GUARD_PROTO = 'security.authentication_listener.guard._proto';
+    /**
+     * @var string
+     */
     protected const SERVICE_SECURITY_AUTHENTICATION_GUARD_HANDLER = 'security.authentication.guard_handler';
+    /**
+     * @var string
+     */
     protected const SERVICE_SECURITY_AUTHENTICATION_LISTENER_FORM_PROTO = 'security.authentication_listener.form._proto';
+    /**
+     * @var string
+     */
     protected const SERVICE_SECURITY_AUTHENTICATION_LISTENER_HTTP_PROTO = 'security.authentication_listener.http._proto';
+    /**
+     * @var string
+     */
     protected const SERVICE_SECURITY_AUTHENTICATION_LISTENER_ANONYMOUS_PROTO = 'security.authentication_listener.anonymous._proto';
+    /**
+     * @var string
+     */
     protected const SERVICE_SECURITY_AUTHENTICATION_LISTENER_LOGOUT_PROTO = 'security.authentication_listener.logout._proto';
+    /**
+     * @var string
+     */
     protected const SERVICE_SECURITY_AUTHENTICATION_LISTENER_SWITCH_USER_PROTO = 'security.authentication_listener.switch_user._proto';
+    /**
+     * @var string
+     */
     protected const SERVICE_SECURITY_ENTRY_POINT_FORM_PROTO = 'security.entry_point.form._proto';
+    /**
+     * @var string
+     */
     protected const SERVICE_SECURITY_ENTRY_POINT_HTTP_PROTO = 'security.entry_point.http._proto';
+    /**
+     * @var string
+     */
     protected const SERVICE_SECURITY_ENTRY_POINT_GUARD_PROTO = 'security.entry_point.guard._proto';
+    /**
+     * @var string
+     */
     protected const SERVICE_SECURITY_AUTHENTICATION_PROVIDER_DAO_PROTO = 'security.authentication_provider.dao._proto';
+    /**
+     * @var string
+     */
     protected const SERVICE_SECURITY_AUTHENTICATION_PROVIDER_GUARD_PROTO = 'security.authentication_provider.guard._proto';
+    /**
+     * @var string
+     */
     protected const SERVICE_SECURITY_AUTHENTICATION_PROVIDER_ANONYMOUS_PROTO = 'security.authentication_provider.anonymous._proto';
+    /**
+     * @var string
+     */
     protected const SERVICE_LOGGER = 'logger';
 
     /**
      * @uses \Spryker\Yves\Form\Plugin\Application\FormApplicationPlugin::SERVICE_FORM_CSRF_PROVIDER
+     * @var string
      */
     protected const SERVICE_FORM_CSRF_PROVIDER = 'form.csrf_provider';
 
     /**
      * @uses \Spryker\Yves\Http\Plugin\Application\HttpApplicationPlugin::SERVICE_REQUEST_STACK
+     * @var string
      */
     protected const SERVICE_REQUEST_STACK = 'request_stack';
 
     /**
      * @uses \Spryker\Yves\Router\Plugin\Application\RouterApplicationPlugin::SERVICE_ROUTER
+     * @var string
      */
     protected const SERVICE_ROUTER = 'routers';
 
     /**
      * @uses \Spryker\Yves\Http\Plugin\Application\HttpApplicationPlugin::SERVICE_KERNEL
+     * @var string
      */
     protected const SERVICE_KERNEL = 'kernel';
 
     /**
      * @uses \Spryker\Yves\EventDispatcher\Plugin\Application\EventDispatcherApplicationPlugin::SERVICE_DISPATCHER
+     * @var string
      */
     protected const SERVICE_DISPATCHER = 'dispatcher';
 
     /**
      * @uses \Spryker\Yves\Validator\Plugin\Application\ValidatorApplicationPlugin::SERVICE_VALIDATOR
+     * @var string
      */
     protected const SERVICE_VALIDATOR = 'validator';
 
+    /**
+     * @var array
+     */
     protected const POSITIONS = ['logout', 'pre_auth', 'guard', 'form', 'http', 'remember_me', 'anonymous'];
 
     /**
@@ -1125,26 +1245,33 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
         $container->set(static::SERVICE_SECURITY_AUTHENTICATION_LISTENER_LOGOUT_PROTO, $container->protect(function ($name, $options) use ($container) {
             return function () use ($container, $name, $options) {
                 $tmp = $options['logout_path'] ?? '/logout';
-                $targetUrl = $options['target_url'] ?? '/';
                 $this->addSecurityRoute('get', $tmp);
 
-                if (class_exists(LogoutEvent::class)) {
+                $logoutEventClassExist = class_exists(LogoutEvent::class);
+                /** @var \Symfony\Contracts\EventDispatcher\EventDispatcherInterface|\Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher */
+                $eventDispatcher = $this->getDispatcher($container);
+                if ($logoutEventClassExist) {
                     $httpUtils = $container->get(static::SERVICE_SECURITY_HTTP_UTILS);
-                    $this->getDispatcher($container)->addSubscriber(new DefaultLogoutListener($httpUtils, $targetUrl));
+                    $requestMatcher = $this->createRequestMatcher($container, $name);
+
+                    $this->getDispatcher($container)->addSubscriber(new RedirectLogoutListener(
+                        $httpUtils,
+                        $requestMatcher,
+                        $options['target_url'] ?? '/',
+                        $options['priority'] ?? 64
+                    ));
                     $this->getDispatcher($container)->addSubscriber(new SessionLogoutListener());
                 }
 
-                /** @var \Symfony\Contracts\EventDispatcher\EventDispatcherInterface $eventDispatcher */
-                $eventDispatcher = $this->getDispatcher($container);
                 $listener = new LogoutListener(
                     $container->get(static::SERVICE_SECURITY_TOKEN_STORAGE),
                     $container->get(static::SERVICE_SECURITY_HTTP_UTILS),
-                    (class_exists(LogoutEvent::class)) ? $eventDispatcher : $this->getLogoutHandler($container, $name, $options),
+                    ($logoutEventClassExist) ? $eventDispatcher : $this->getLogoutHandler($container, $name, $options),
                     $options,
                     $this->getCsrfTokenManager($container, $options)
                 );
 
-                if (!class_exists(LogoutEvent::class)) {
+                if (!$logoutEventClassExist) {
                     $listener = $this->addSessionLogoutHandler($listener, $options);
                 }
 
@@ -1498,5 +1625,26 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
 
         $router = new Router($loader, $resource, []);
         $container->get(static::SERVICE_ROUTER)->add($router, 1);
+    }
+
+    /**
+     * @param \Spryker\Service\Container\ContainerInterface $container
+     * @param string $name
+     *
+     * @return \Symfony\Component\HttpFoundation\RequestMatcher|mixed
+     */
+    protected function createRequestMatcher(ContainerInterface $container, string $name)
+    {
+        $config = $this->getSecurityConfiguration($container)->getFirewalls()[$name];
+        $requestMatcher = $config['pattern'];
+        if (is_string($config['pattern'])) {
+            $requestMatcher = new RequestMatcher(
+                $config['pattern'],
+                $config['hosts'] ?? null,
+                $config['methods'] ?? null
+            );
+        }
+
+        return $requestMatcher;
     }
 }

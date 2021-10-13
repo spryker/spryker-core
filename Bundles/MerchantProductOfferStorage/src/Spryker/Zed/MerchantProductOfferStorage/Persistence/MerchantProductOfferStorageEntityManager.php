@@ -23,7 +23,7 @@ class MerchantProductOfferStorageEntityManager extends AbstractEntityManager imp
      *
      * @return void
      */
-    public function saveProductConcreteProductOffersStorage(string $concreteSku, array $data, string $storeName): void
+    public function saveProductConcreteProductOffers(string $concreteSku, array $data, string $storeName): void
     {
         $productConcreteProductOffersStorageEntity = $this->getFactory()
             ->createProductConcreteProductOffersStoragePropelQuery()
@@ -59,7 +59,7 @@ class MerchantProductOfferStorageEntityManager extends AbstractEntityManager imp
     }
 
     /**
-     * @param string[] $productSkus
+     * @param array<string> $productSkus
      * @param string|null $storeName
      *
      * @return void
@@ -80,7 +80,7 @@ class MerchantProductOfferStorageEntityManager extends AbstractEntityManager imp
     }
 
     /**
-     * @param string[] $productOfferReferences
+     * @param array<string> $productOfferReferences
      * @param string|null $storeName
      *
      * @return void

@@ -56,7 +56,13 @@ use SprykerTest\Zed\ProductStorage\ProductStorageConfigMock;
  */
 class ProductStorageListenerTest extends Unit
 {
+    /**
+     * @var int
+     */
     protected const NUMBER_OF_STORES = 3;
+    /**
+     * @var int
+     */
     protected const NUMBER_OF_LOCALES = 1;
 
     /**

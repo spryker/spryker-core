@@ -134,8 +134,10 @@ class ProductLabelBusinessFactory extends AbstractBusinessFactory
     public function createProductAbstractRelationDeleter()
     {
         return new ProductAbstractRelationDeleter(
-            $this->getQueryContainer(),
-            $this->createProductAbstractRelationTouchManager()
+            $this->createProductAbstractRelationTouchManager(),
+            $this->getRepository(),
+            $this->getEntityManager(),
+            $this->getConfig()
         );
     }
 
@@ -174,7 +176,7 @@ class ProductLabelBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductLabel\Dependency\Plugin\ProductLabelRelationUpdaterPluginInterface[]
+     * @return array<\Spryker\Zed\ProductLabel\Dependency\Plugin\ProductLabelRelationUpdaterPluginInterface>
      */
     protected function getProductLabelRelationUpdaterPlugins()
     {

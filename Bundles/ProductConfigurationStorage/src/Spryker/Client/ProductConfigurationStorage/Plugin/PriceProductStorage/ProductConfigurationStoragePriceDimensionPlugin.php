@@ -25,7 +25,7 @@ class ProductConfigurationStoragePriceDimensionPlugin extends AbstractPlugin imp
      *
      * @param int $idProductConcrete
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function findProductConcretePrices(int $idProductConcrete): array
     {
@@ -39,7 +39,7 @@ class ProductConfigurationStoragePriceDimensionPlugin extends AbstractPlugin imp
      *
      * @param int $idProductAbstract
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function findProductAbstractPrices(int $idProductAbstract): array
     {

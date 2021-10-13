@@ -21,8 +21,17 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class TaxProductConnectorQueryContainer extends AbstractQueryContainer implements TaxProductConnectorQueryContainerInterface
 {
+    /**
+     * @var string
+     */
     public const COL_MAX_TAX_RATE = 'MaxTaxRate';
+    /**
+     * @var string
+     */
     public const COL_ID_ABSTRACT_PRODUCT = 'IdProductAbstract';
+    /**
+     * @var string
+     */
     public const COL_COUNTRY_CODE = 'COUNTRY_CODE';
 
     /**
@@ -119,7 +128,7 @@ class TaxProductConnectorQueryContainer extends AbstractQueryContainer implement
      *
      * @deprecated Use {@link queryTaxSetByIdProductAbstractAndCountryIso2Codes()} instead.
      *
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      * @param string $countryIso2Code
      *
      * @return \Orm\Zed\Tax\Persistence\SpyTaxSetQuery
@@ -152,8 +161,8 @@ class TaxProductConnectorQueryContainer extends AbstractQueryContainer implement
      *
      * @module Country
      *
-     * @param int[] $productAbstractIds
-     * @param string[] $countryIso2Code
+     * @param array<int> $productAbstractIds
+     * @param array<string> $countryIso2Code
      *
      * @return \Orm\Zed\Tax\Persistence\SpyTaxSetQuery
      */

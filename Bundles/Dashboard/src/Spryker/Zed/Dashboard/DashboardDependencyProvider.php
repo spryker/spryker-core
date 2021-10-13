@@ -12,6 +12,9 @@ use Spryker\Zed\Kernel\Container;
 
 class DashboardDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const PLUGIN_RENDER_DASHBOARDS = 'PLUGIN_RENDER_DASHBOARDS';
 
     /**
@@ -42,7 +45,7 @@ class DashboardDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Shared\Dashboard\Dependency\Plugin\DashboardPluginInterface[]
+     * @return array<\Spryker\Shared\Dashboard\Dependency\Plugin\DashboardPluginInterface>
      */
     protected function getDashboardPlugins(): array
     {

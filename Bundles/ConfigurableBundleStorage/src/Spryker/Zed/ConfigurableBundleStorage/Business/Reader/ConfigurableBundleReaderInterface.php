@@ -12,16 +12,16 @@ use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
 interface ConfigurableBundleReaderInterface
 {
     /**
-     * @param int[] $configurableBundleTemplateIds
+     * @param array<int> $configurableBundleTemplateIds
      *
-     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer[]
+     * @return array<\Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer>
      */
     public function getConfigurableBundleTemplates(array $configurableBundleTemplateIds): array;
 
     /**
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
      *
-     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer[]
+     * @return array<\Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer>
      */
     public function getConfigurableBundleTemplateSlots(ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer): array;
 }

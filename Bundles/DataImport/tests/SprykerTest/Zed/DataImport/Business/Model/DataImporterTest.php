@@ -27,6 +27,9 @@ use Generated\Shared\Transfer\DataImporterReportTransfer;
  */
 class DataImporterTest extends Unit
 {
+    /**
+     * @var string
+     */
     public const IMPORTER_TYPE = 'specific-importer';
 
     /**

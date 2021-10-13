@@ -68,10 +68,10 @@ class ConfigurableBundleTemplateImageStorageReader implements ConfigurableBundle
     }
 
     /**
-     * @param int[] $configurableBundleTemplateIds
+     * @param array<int> $configurableBundleTemplateIds
      * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateImageStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\ConfigurableBundleTemplateImageStorageTransfer>
      */
     public function getBulkConfigurableBundleTemplateImageStorage(array $configurableBundleTemplateIds, string $localeName): array
     {
@@ -86,10 +86,10 @@ class ConfigurableBundleTemplateImageStorageReader implements ConfigurableBundle
     }
 
     /**
-     * @param int[] $configurableBundleTemplateIds
+     * @param array<int> $configurableBundleTemplateIds
      * @param string $localeName
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function prepareStorageKeys(array $configurableBundleTemplateIds, string $localeName): array
     {
@@ -105,7 +105,7 @@ class ConfigurableBundleTemplateImageStorageReader implements ConfigurableBundle
     /**
      * @param array $configurableBundleTemplateImageStorageData
      *
-     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateImageStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\ConfigurableBundleTemplateImageStorageTransfer>
      */
     protected function mapStorageDataToConfigurableBundleImageStorageTransfers(array $configurableBundleTemplateImageStorageData): array
     {

@@ -99,8 +99,8 @@ class ProductBundleSalesOrderSaverTest extends Unit
     protected function createSalesOrderItemBundleEntityMock(): SpySalesOrderItemBundle
     {
         $salesOrderItemBundleEntityMock = $this->getMockBuilder(SpySalesOrderItemBundle::class)
-           ->setMethods(['save'])
-           ->getMock();
+            ->setMethods(['save'])
+            ->getMock();
 
         $salesOrderItemBundleEntityMock->expects($this->once())
             ->method('save')

@@ -19,16 +19,18 @@ class RestRequest
 {
     /**
      * @param string $method
+     * @param string $resourceType
+     * @param string $uri
      *
      * @return \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface
      */
-    public function createRestRequest(string $method = Request::METHOD_GET): RestRequestInterface
+    public function createRestRequest(string $method = Request::METHOD_GET, string $resourceType = 'test', string $uri = '/'): RestRequestInterface
     {
         $metadata = $this->createMetadata($method);
 
-        $request = Request::create('/');
+        $request = Request::create($uri);
 
-        $restResource = new RestResource('test', 1);
+        $restResource = new RestResource($resourceType, '1');
 
         return (new RequestBuilder($restResource))
             ->addMetadata($metadata)

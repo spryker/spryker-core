@@ -14,7 +14,13 @@ use Spryker\Yves\Kernel\Container;
 
 class CmsContentWidgetProductSetConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const PRODUCT_SET_CLIENT = 'PRODUCT SET CLIENT';
+    /**
+     * @var string
+     */
     public const PRODUCT_CLIENT = 'PRODUCT CLIENT';
 
     /**

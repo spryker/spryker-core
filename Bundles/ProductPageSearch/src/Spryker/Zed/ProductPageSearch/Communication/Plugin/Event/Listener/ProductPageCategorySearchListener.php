@@ -21,9 +21,15 @@ class ProductPageCategorySearchListener extends AbstractProductPageSearchListene
     use DatabaseTransactionHandlerTrait;
 
     /**
+     * @uses \Spryker\Zed\Category\Dependency\CategoryEvents::ENTITY_CATEGORY_PUBLISH
+     * @var string
+     */
+    protected const ENTITY_CATEGORY_PUBLISH = 'Entity.spy_category.publish';
+
+    /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
      * @param string $eventName
      *
      * @return void
@@ -31,7 +37,7 @@ class ProductPageCategorySearchListener extends AbstractProductPageSearchListene
     public function handleBulk(array $eventEntityTransfers, $eventName)
     {
         $this->preventTransaction();
-        if ($eventName === CategoryEvents::ENTITY_SPY_CATEGORY_DELETE) {
+        if ($eventName === CategoryEvents::ENTITY_SPY_CATEGORY_DELETE || $eventName === static::ENTITY_CATEGORY_PUBLISH) {
             $categoryIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventEntityTransfers);
         } else {
             $categoryIds = $this->getValidCategoryIds($eventEntityTransfers);

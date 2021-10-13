@@ -12,8 +12,17 @@ use Spryker\Zed\DataImport\DataImportConfig;
 
 class ProductListDataImportConfig extends DataImportConfig
 {
+    /**
+     * @var string
+     */
     public const IMPORT_TYPE_PRODUCT_LIST = 'product-list';
+    /**
+     * @var string
+     */
     public const IMPORT_TYPE_PRODUCT_LIST_CATEGORY = 'product-list-category';
+    /**
+     * @var string
+     */
     public const IMPORT_TYPE_PRODUCT_LIST_PRODUCT_CONCRETE = 'product-list-product-concrete';
 
     /**

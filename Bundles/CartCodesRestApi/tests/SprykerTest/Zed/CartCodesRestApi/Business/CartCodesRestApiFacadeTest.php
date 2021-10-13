@@ -32,10 +32,14 @@ use Spryker\Zed\Discount\Communication\Plugin\CartCode\VoucherCartCodePlugin;
  */
 class CartCodesRestApiFacadeTest extends Test
 {
+    /**
+     * @var string
+     */
     protected const CODE = 'testCode1';
 
     /**
      * @uses \Spryker\Shared\CartsRestApi\CartsRestApiConfig::ERROR_IDENTIFIER_CART_NOT_FOUND
+     * @var string
      */
     protected const ERROR_IDENTIFIER_CART_NOT_FOUND = 'ERROR_IDENTIFIER_CART_NOT_FOUND';
 

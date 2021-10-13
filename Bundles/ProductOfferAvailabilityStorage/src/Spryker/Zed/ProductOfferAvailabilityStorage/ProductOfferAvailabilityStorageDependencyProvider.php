@@ -20,12 +20,27 @@ use Spryker\Zed\ProductOfferAvailabilityStorage\Dependency\Service\ProductOfferA
  */
 class ProductOfferAvailabilityStorageDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_PRODUCT_OFFER = 'FACADE_PRODUCT_OFFER';
+    /**
+     * @var string
+     */
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
+    /**
+     * @var string
+     */
     public const FACADE_PRODUCT_OFFER_AVAILABILITY_FACADE = 'FACADE_PRODUCT_OFFER_AVAILABILITY';
 
+    /**
+     * @var string
+     */
     public const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
 
+    /**
+     * @var string
+     */
     public const PROPEL_QUERY_PRODUCT_OFFER_STOCK = 'PROPEL_QUERY_PRODUCT_OFFER_STOCK';
 
     /**

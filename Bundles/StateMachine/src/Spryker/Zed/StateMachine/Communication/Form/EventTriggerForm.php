@@ -22,12 +22,27 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class EventTriggerForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const OPTION_EVENT = 'OPTION_EVENT';
+    /**
+     * @var string
+     */
     public const OPTION_SUBMIT_BUTTON_CLASS = 'OPTION_SUBMIT_BUTTON_CLASS';
+    /**
+     * @var string
+     */
     public const OPTION_ACTION_QUERY_PARAMETERS = 'OPTION_ACTION_QUERY_PARAMETERS';
 
+    /**
+     * @var string
+     */
     protected const BUTTON_SUBMIT = 'submit';
 
+    /**
+     * @var string
+     */
     protected const ACTION_ROUTE = '/state-machine/trigger/submit-trigger-event';
 
     /**

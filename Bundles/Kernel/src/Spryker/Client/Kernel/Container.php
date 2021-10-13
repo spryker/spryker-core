@@ -12,10 +12,13 @@ use Spryker\Shared\Kernel\Container\AbstractApplicationContainer;
 class Container extends AbstractApplicationContainer
 {
     /**
-     * @return \Generated\Client\Ide\AutoCompletion|\Spryker\Shared\Kernel\LocatorLocatorInterface
+     * @return \Generated\Client\Ide\AutoCompletion&\Spryker\Shared\Kernel\LocatorLocatorInterface
      */
     public function getLocator()
     {
-        return Locator::getInstance();
+        /** @var \Generated\Client\Ide\AutoCompletion&\Spryker\Shared\Kernel\LocatorLocatorInterface $locator */
+        $locator = Locator::getInstance();
+
+        return $locator;
     }
 }

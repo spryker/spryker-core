@@ -50,7 +50,7 @@ interface QuoteRequestRepositoryInterface
     /**
      * @param int $idCompanyUser
      *
-     * @return int[]
+     * @return array<int>
      */
     public function findQuoteRequestIdsByIdCompanyUser(int $idCompanyUser): array;
 }

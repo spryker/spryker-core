@@ -8,6 +8,7 @@
 namespace Spryker\Client\MerchantProductOfferStorage\Storage;
 
 use ArrayObject;
+use Generated\Shared\Transfer\MerchantStorageCriteriaTransfer;
 use Generated\Shared\Transfer\ProductOfferStorageCollectionTransfer;
 use Generated\Shared\Transfer\ProductOfferStorageCriteriaTransfer;
 use Generated\Shared\Transfer\ProductOfferStorageTransfer;
@@ -30,7 +31,7 @@ class ProductOfferStorageReader implements ProductOfferStorageReaderInterface
     protected $synchronizationService;
 
     /**
-     * @var \Spryker\Client\MerchantProductOfferStorage\Mapper\MerchantProductOfferMapperInterface $merchantProductOfferMapper
+     * @var \Spryker\Client\MerchantProductOfferStorage\Mapper\MerchantProductOfferMapperInterface
      */
     protected $merchantProductOfferMapper;
 
@@ -55,7 +56,7 @@ class ProductOfferStorageReader implements ProductOfferStorageReaderInterface
     protected $productOfferStorageKeyGenerator;
 
     /**
-     * @var \Spryker\Client\MerchantProductOfferStorageExtension\Dependency\Plugin\ProductOfferStorageExpanderPluginInterface[]
+     * @var array<\Spryker\Client\MerchantProductOfferStorageExtension\Dependency\Plugin\ProductOfferStorageExpanderPluginInterface>
      */
     protected $productOfferStorageExpanderPlugins;
 
@@ -71,7 +72,7 @@ class ProductOfferStorageReader implements ProductOfferStorageReaderInterface
      * @param \Spryker\Client\MerchantProductOfferStorage\Dependency\Service\MerchantProductOfferStorageToUtilEncodingServiceInterface $utilEncodingService
      * @param \Spryker\Client\MerchantProductOfferStorage\Storage\ProductOfferStorageKeyGeneratorInterface $productOfferStorageKeyGenerator
      * @param \Spryker\Client\MerchantProductOfferStorageExtension\Dependency\Plugin\ProductOfferStorageCollectionSorterPluginInterface $productOfferStorageCollectionSorterPlugin
-     * @param \Spryker\Client\MerchantProductOfferStorageExtension\Dependency\Plugin\ProductOfferStorageExpanderPluginInterface[] $productOfferStorageExpanderPlugins
+     * @param array<\Spryker\Client\MerchantProductOfferStorageExtension\Dependency\Plugin\ProductOfferStorageExpanderPluginInterface> $productOfferStorageExpanderPlugins
      */
     public function __construct(
         MerchantProductOfferStorageToStorageClientInterface $storageClient,
@@ -126,7 +127,7 @@ class ProductOfferStorageReader implements ProductOfferStorageReaderInterface
         $productOfferStorageTransfers = $this->expandProductOffersWithMerchants($productOfferStorageTransfers);
         $productOfferStorageTransfers = $this->executeProductOfferStorageExpanderPlugins($productOfferStorageTransfers);
 
-        $productOfferStorageCollectionTransfer->setProductOffersStorage(new ArrayObject($productOfferStorageTransfers));
+        $productOfferStorageCollectionTransfer->setProductOffers(new ArrayObject($productOfferStorageTransfers));
         $productOfferStorageCollectionTransfer = $this->productOfferStorageCollectionSorterPlugin
             ->sort($productOfferStorageCollectionTransfer);
 
@@ -146,9 +147,9 @@ class ProductOfferStorageReader implements ProductOfferStorageReaderInterface
     }
 
     /**
-     * @param string[] $productOfferReferences
+     * @param array<string> $productOfferReferences
      *
-     * @return \Generated\Shared\Transfer\ProductOfferStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductOfferStorageTransfer>
      */
     public function getProductOfferStorageByReferences(array $productOfferReferences): array
     {
@@ -177,9 +178,9 @@ class ProductOfferStorageReader implements ProductOfferStorageReaderInterface
     }
 
     /**
-     * @param string[] $productConcreteSkus
+     * @param array<string> $productConcreteSkus
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getProductOfferReferences(array $productConcreteSkus): array
     {
@@ -208,10 +209,10 @@ class ProductOfferStorageReader implements ProductOfferStorageReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductOfferStorageTransfer[] $productOfferStorageTransfers
+     * @param array<\Generated\Shared\Transfer\ProductOfferStorageTransfer> $productOfferStorageTransfers
      * @param string $merchantReference
      *
-     * @return \Generated\Shared\Transfer\ProductOfferStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductOfferStorageTransfer>
      */
     protected function filterProductOfferStorageTransfersByMerchantReference(
         array $productOfferStorageTransfers,
@@ -230,35 +231,39 @@ class ProductOfferStorageReader implements ProductOfferStorageReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductOfferStorageTransfer[] $productOfferStorageTransfers
+     * @param array<\Generated\Shared\Transfer\ProductOfferStorageTransfer> $productOfferStorageTransfers
      *
-     * @return \Generated\Shared\Transfer\ProductOfferStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductOfferStorageTransfer>
      */
     protected function expandProductOffersWithMerchants(array $productOfferStorageTransfers): array
     {
-        $merchantIds = $this->getMerchantIds($productOfferStorageTransfers);
-        $merchantStorageTransfers = $this->merchantStorageClient->get(array_unique($merchantIds));
-        $merchantStorageTransfers = $this->indexMerchantStorageTransfersByIdMerchant($merchantStorageTransfers);
+        $merchantReferences = $this->getMerchantReferences($productOfferStorageTransfers);
+
+        $merchantStorageTransfers = $this->merchantStorageClient->get(
+            (new MerchantStorageCriteriaTransfer())
+                ->setMerchantReferences($merchantReferences)
+        );
+        $merchantStorageTransfers = $this->indexMerchantStorageTransfersByMerchantReference($merchantStorageTransfers);
 
         foreach ($productOfferStorageTransfers as $key => $productOfferStorageTransfer) {
-            $idMerchant = $productOfferStorageTransfer->getIdMerchant();
+            $merchantReference = $productOfferStorageTransfer->getMerchantReference();
 
-            if (!isset($merchantStorageTransfers[$idMerchant])) {
+            if (!isset($merchantStorageTransfers[$merchantReference])) {
                 unset($productOfferStorageTransfers[$key]);
 
                 continue;
             }
 
-            $productOfferStorageTransfer->setMerchantStorage($merchantStorageTransfers[$idMerchant]);
+            $productOfferStorageTransfer->setMerchantStorage($merchantStorageTransfers[$merchantReference]);
         }
 
         return $productOfferStorageTransfers;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductOfferStorageTransfer[] $productOfferStorageTransfers
+     * @param array<\Generated\Shared\Transfer\ProductOfferStorageTransfer> $productOfferStorageTransfers
      *
-     * @return \Generated\Shared\Transfer\ProductOfferStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductOfferStorageTransfer>
      */
     protected function executeProductOfferStorageExpanderPlugins(array $productOfferStorageTransfers): array
     {
@@ -279,44 +284,44 @@ class ProductOfferStorageReader implements ProductOfferStorageReaderInterface
     protected function expandProductOffersWithDefaultProductOffer(
         ProductOfferStorageCollectionTransfer $productOfferStorageCollectionTransfer
     ): ProductOfferStorageCollectionTransfer {
-        if ($productOfferStorageCollectionTransfer->getProductOffersStorage()->count() < 1) {
+        if (!$productOfferStorageCollectionTransfer->getProductOffers()->count()) {
             return $productOfferStorageCollectionTransfer;
         }
 
-        $productOfferStorageTransfers = $productOfferStorageCollectionTransfer->getProductOffersStorage()->getArrayCopy();
+        $productOffers = $productOfferStorageCollectionTransfer->getProductOffers()->getArrayCopy();
 
-        foreach ($productOfferStorageTransfers as $key => $productOfferStorageTransfer) {
-            $productOfferStorageTransfers[$key] = $productOfferStorageTransfer->setIsDefault($key < 1);
+        foreach ($productOffers as $key => $productOffer) {
+            $productOffers[$key] = $productOffer->setIsDefault($key < 1);
         }
 
-        return $productOfferStorageCollectionTransfer->setProductOffersStorage(new ArrayObject($productOfferStorageTransfers));
+        return $productOfferStorageCollectionTransfer->setProductOffers(new ArrayObject($productOffers));
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductOfferStorageTransfer[] $productOfferStorageTransfers
+     * @param array<\Generated\Shared\Transfer\ProductOfferStorageTransfer> $productOfferStorageTransfers
      *
-     * @return int[]
+     * @return array<string>
      */
-    protected function getMerchantIds(array $productOfferStorageTransfers): array
+    protected function getMerchantReferences(array $productOfferStorageTransfers): array
     {
-        $merchantIds = [];
+        $merchantReferences = [];
         foreach ($productOfferStorageTransfers as $productOfferStorageTransfer) {
-            $merchantIds[] = $productOfferStorageTransfer->getIdMerchant();
+            $merchantReferences[] = $productOfferStorageTransfer->getMerchantReference();
         }
 
-        return $merchantIds;
+        return $merchantReferences;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantStorageTransfer[] $merchantStorageTransfers
+     * @param array<\Generated\Shared\Transfer\MerchantStorageTransfer> $merchantStorageTransfers
      *
-     * @return \Generated\Shared\Transfer\MerchantStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\MerchantStorageTransfer>
      */
-    protected function indexMerchantStorageTransfersByIdMerchant(array $merchantStorageTransfers): array
+    protected function indexMerchantStorageTransfersByMerchantReference(array $merchantStorageTransfers): array
     {
         $indexedMerchantStorageTransfers = [];
         foreach ($merchantStorageTransfers as $merchantStorageTransfer) {
-            $indexedMerchantStorageTransfers[$merchantStorageTransfer->getIdMerchant()] = $merchantStorageTransfer;
+            $indexedMerchantStorageTransfers[$merchantStorageTransfer->getMerchantReference()] = $merchantStorageTransfer;
         }
 
         return $indexedMerchantStorageTransfers;

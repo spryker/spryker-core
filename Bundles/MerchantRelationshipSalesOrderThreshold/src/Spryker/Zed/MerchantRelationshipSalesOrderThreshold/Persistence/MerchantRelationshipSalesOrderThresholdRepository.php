@@ -23,9 +23,9 @@ class MerchantRelationshipSalesOrderThresholdRepository extends AbstractReposito
      *
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
-     * @param int[] $merchantRelationshipIds
+     * @param array<int> $merchantRelationshipIds
      *
-     * @return \Generated\Shared\Transfer\MerchantRelationshipSalesOrderThresholdTransfer[]
+     * @return array<\Generated\Shared\Transfer\MerchantRelationshipSalesOrderThresholdTransfer>
      */
     public function getMerchantRelationshipSalesOrderThresholds(
         StoreTransfer $storeTransfer,

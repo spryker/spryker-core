@@ -13,6 +13,9 @@ use Spryker\Zed\OauthRevoke\Dependency\Service\OauthRevokeToUtilEncodingServiceI
 
 class OauthRefreshTokenMapper implements OauthRefreshTokenMapperInterface
 {
+    /**
+     * @var string
+     */
     protected const CUSTOMER_REFERENCE = 'customer_reference';
 
     /**
@@ -21,13 +24,13 @@ class OauthRefreshTokenMapper implements OauthRefreshTokenMapperInterface
     protected $utilEncodingService;
 
     /**
-     * @var \Spryker\Zed\OauthRevokeExtension\Dependency\Plugin\OauthUserIdentifierFilterPluginInterface[]
+     * @var array<\Spryker\Zed\OauthRevokeExtension\Dependency\Plugin\OauthUserIdentifierFilterPluginInterface>
      */
     protected $oauthUserIdentifierFilterPlugins;
 
     /**
      * @param \Spryker\Zed\OauthRevoke\Dependency\Service\OauthRevokeToUtilEncodingServiceInterface $utilEncodingService
-     * @param \Spryker\Zed\OauthRevokeExtension\Dependency\Plugin\OauthUserIdentifierFilterPluginInterface[] $oauthUserIdentifierFilterPlugins
+     * @param array<\Spryker\Zed\OauthRevokeExtension\Dependency\Plugin\OauthUserIdentifierFilterPluginInterface> $oauthUserIdentifierFilterPlugins
      */
     public function __construct(
         OauthRevokeToUtilEncodingServiceInterface $utilEncodingService,
@@ -47,7 +50,7 @@ class OauthRefreshTokenMapper implements OauthRefreshTokenMapperInterface
         RefreshTokenEntityInterface $refreshTokenEntity,
         OauthRefreshTokenTransfer $oauthRefreshTokenTransfer
     ): OauthRefreshTokenTransfer {
-        $encodedUserIdentifier = $refreshTokenEntity->getAccessToken()->getUserIdentifier();
+        $encodedUserIdentifier = (string)$refreshTokenEntity->getAccessToken()->getUserIdentifier();
         $userIdentifier = $this->utilEncodingService->decodeJson($encodedUserIdentifier, true);
         $filteredUserIdentifier = $this->filterUserIdentifier($userIdentifier);
         $encodedUserIdentifier = (string)$this->utilEncodingService->encodeJson($filteredUserIdentifier);

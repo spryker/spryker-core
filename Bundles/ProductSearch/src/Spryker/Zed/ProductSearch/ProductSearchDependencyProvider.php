@@ -21,13 +21,37 @@ use Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToTouchBridge;
  */
 class ProductSearchDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_PRODUCT = 'product facade';
+    /**
+     * @var string
+     */
     public const FACADE_LOCALE = 'locale facade';
+    /**
+     * @var string
+     */
     public const FACADE_GLOSSARY = 'glossary facade';
+    /**
+     * @var string
+     */
     public const FACADE_TOUCH = 'touch facade';
+    /**
+     * @var string
+     */
     public const FACADE_EVENT = 'FACADE_EVENT';
+    /**
+     * @var string
+     */
     public const FACADE_COLLECTOR = 'collector facade';
+    /**
+     * @var string
+     */
     public const QUERY_CONTAINER_TOUCH = 'touch query container';
+    /**
+     * @var string
+     */
     public const SERVICE_DATA = 'util data service';
 
     /**

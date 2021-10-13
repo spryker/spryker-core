@@ -17,8 +17,17 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class UrlSuggestionController extends AbstractController
 {
+    /**
+     * @var string
+     */
     public const PARAM_TERM = 'term';
+    /**
+     * @var string
+     */
     public const PARAM_ID_LOCALE = 'id-locale';
+    /**
+     * @var int
+     */
     public const SUGGESTION_LIMIT = 10;
 
     /**

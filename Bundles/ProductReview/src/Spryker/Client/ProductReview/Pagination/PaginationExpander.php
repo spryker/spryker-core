@@ -12,7 +12,13 @@ use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
 
 class PaginationExpander implements PaginationExpanderInterface
 {
+    /**
+     * @var string
+     */
     protected const PARAMETER_NAME_OFFSET = 'offset';
+    /**
+     * @var string
+     */
     protected const PARAMETER_NAME_LIMIT = 'limit';
 
     /**

@@ -13,6 +13,9 @@ use Symfony\Component\Finder\SplFileInfo;
 
 class LocatorDependencyFinder implements DependencyFinderInterface
 {
+    /**
+     * @var string
+     */
     public const TYPE_LOCATOR = 'locator';
 
     /**

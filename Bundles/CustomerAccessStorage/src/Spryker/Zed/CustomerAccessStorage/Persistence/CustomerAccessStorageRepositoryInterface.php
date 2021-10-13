@@ -25,7 +25,7 @@ interface CustomerAccessStorageRepositoryInterface
      *
      * @see \Spryker\Zed\CustomerAccessStorage\Persistence\CustomerAccessStorageRepositoryInterface::findFilteredCustomerAccessStorageEntities()
      *
-     * @return \Orm\Zed\CustomerAccessStorage\Persistence\SpyUnauthenticatedCustomerAccessStorage[]
+     * @return array<\Orm\Zed\CustomerAccessStorage\Persistence\SpyUnauthenticatedCustomerAccessStorage>
      */
     public function findAllCustomerAccessStorageEntities(): array;
 
@@ -33,7 +33,7 @@ interface CustomerAccessStorageRepositoryInterface
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      * @param array $customerAccessStorageEntityIds
      *
-     * @return \Generated\Shared\Transfer\SpyUnauthenticatedCustomerAccessStorageEntityTransfer[]
+     * @return array<\Generated\Shared\Transfer\SpyUnauthenticatedCustomerAccessStorageEntityTransfer>
      */
     public function findFilteredCustomerAccessStorageEntities(FilterTransfer $filterTransfer, array $customerAccessStorageEntityIds = []): array;
 }

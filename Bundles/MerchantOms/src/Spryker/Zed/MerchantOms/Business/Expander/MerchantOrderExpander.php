@@ -42,8 +42,11 @@ class MerchantOrderExpander implements MerchantOrderExpanderInterface
      */
     public function expandMerchantOrderWithMerchantOmsData(MerchantOrderTransfer $merchantOrderTransfer): MerchantOrderTransfer
     {
+        /** @var array<int> $stateMachineItemStateIds */
+        $stateMachineItemStateIds = $this->getStateMachineItemStateIds($merchantOrderTransfer);
+
         $stateMachineItemTransfers = $this->merchantOmsRepository->getStateMachineItemsByStateIds(
-            $this->getStateMachineItemStateIds($merchantOrderTransfer)
+            $stateMachineItemStateIds
         );
 
         $manualEvents = $this->stateMachineFacade->getManualEventsForStateMachineItems($stateMachineItemTransfers);
@@ -55,7 +58,7 @@ class MerchantOrderExpander implements MerchantOrderExpanderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItemTransfers
+     * @param array<\Generated\Shared\Transfer\StateMachineItemTransfer> $stateMachineItemTransfers
      *
      * @return string|null
      */
@@ -69,9 +72,11 @@ class MerchantOrderExpander implements MerchantOrderExpanderInterface
     }
 
     /**
+     * @phpstan-return array<array-key, int|null>
+     *
      * @param \Generated\Shared\Transfer\MerchantOrderTransfer $merchantOrderTransfer
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getStateMachineItemStateIds(MerchantOrderTransfer $merchantOrderTransfer): array
     {
@@ -84,13 +89,15 @@ class MerchantOrderExpander implements MerchantOrderExpanderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItemTransfers
+     * @param array<\Generated\Shared\Transfer\StateMachineItemTransfer> $stateMachineItemTransfers
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getUniqueItemStates(array $stateMachineItemTransfers): array
     {
+        /** @var array<mixed> $stateItems */
         $stateItems = [];
+
         foreach ($stateMachineItemTransfers as $stateMachineItemTransfer) {
             $stateItems[] = $stateMachineItemTransfer->getStateName();
         }

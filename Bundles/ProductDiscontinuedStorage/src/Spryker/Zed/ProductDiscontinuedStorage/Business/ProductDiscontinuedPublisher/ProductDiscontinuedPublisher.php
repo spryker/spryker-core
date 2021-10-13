@@ -68,7 +68,7 @@ class ProductDiscontinuedPublisher implements ProductDiscontinuedPublisherInterf
     }
 
     /**
-     * @param int[] $productDiscontinuedIds
+     * @param array<int> $productDiscontinuedIds
      *
      * @return void
      */
@@ -82,7 +82,7 @@ class ProductDiscontinuedPublisher implements ProductDiscontinuedPublisherInterf
 
     /**
      * @param \Generated\Shared\Transfer\ProductDiscontinuedCollectionTransfer $productDiscontinuedCollectionTransfer
-     * @param \Orm\Zed\ProductDiscontinuedStorage\Persistence\SpyProductDiscontinuedStorage[] $productDiscontinuedStorageEntities
+     * @param array<\Orm\Zed\ProductDiscontinuedStorage\Persistence\SpyProductDiscontinuedStorage> $productDiscontinuedStorageEntities
      *
      * @return void
      */
@@ -104,7 +104,7 @@ class ProductDiscontinuedPublisher implements ProductDiscontinuedPublisherInterf
     /**
      * @param \Generated\Shared\Transfer\ProductDiscontinuedTransfer $productDiscontinuedTransfer
      * @param array $indexProductDiscontinuedStorageEntities
-     * @param \Generated\Shared\Transfer\LocaleTransfer[] $localeTransfers
+     * @param array<\Generated\Shared\Transfer\LocaleTransfer> $localeTransfers
      *
      * @return void
      */
@@ -152,7 +152,7 @@ class ProductDiscontinuedPublisher implements ProductDiscontinuedPublisherInterf
     }
 
     /**
-     * @param int[] $productDiscontinuedIds
+     * @param array<int> $productDiscontinuedIds
      *
      * @return \Generated\Shared\Transfer\ProductDiscontinuedCollectionTransfer
      */
@@ -165,9 +165,9 @@ class ProductDiscontinuedPublisher implements ProductDiscontinuedPublisherInterf
     }
 
     /**
-     * @param int[] $productDiscontinuedIds
+     * @param array<int> $productDiscontinuedIds
      *
-     * @return \Orm\Zed\ProductDiscontinuedStorage\Persistence\SpyProductDiscontinuedStorage[]
+     * @return array<\Orm\Zed\ProductDiscontinuedStorage\Persistence\SpyProductDiscontinuedStorage>
      */
     protected function findProductDiscontinuedStorageEntitiesByIds(array $productDiscontinuedIds): array
     {
@@ -175,7 +175,7 @@ class ProductDiscontinuedPublisher implements ProductDiscontinuedPublisherInterf
     }
 
     /**
-     * @param \Orm\Zed\ProductDiscontinuedStorage\Persistence\SpyProductDiscontinuedStorage[] $productDiscontinuedStorageEntities
+     * @param array<\Orm\Zed\ProductDiscontinuedStorage\Persistence\SpyProductDiscontinuedStorage> $productDiscontinuedStorageEntities
      *
      * @return array
      */

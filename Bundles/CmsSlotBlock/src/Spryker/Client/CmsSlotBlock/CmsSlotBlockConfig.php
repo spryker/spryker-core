@@ -11,6 +11,9 @@ use Spryker\Client\Kernel\AbstractBundleConfig;
 
 class CmsSlotBlockConfig extends AbstractBundleConfig
 {
+    /**
+     * @var bool
+     */
     protected const IS_CMS_BLOCK_VISIBLE_IN_SLOT_BY_DEFAULT = true;
 
     /**

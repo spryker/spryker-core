@@ -15,6 +15,9 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class FilesController extends AbstractController
 {
+    /**
+     * @var string
+     */
     protected const FILE_DIRECTORY_ID = 'file-directory-id';
 
     /**

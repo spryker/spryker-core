@@ -22,13 +22,31 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class StockForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     protected const BLOCK_PREFIX = 'stock';
 
+    /**
+     * @var string
+     */
     protected const FIELD_ID_STOCK = 'idStock';
+    /**
+     * @var string
+     */
     protected const FIELD_NAME = 'name';
+    /**
+     * @var string
+     */
     protected const FIELD_IS_ACTIVE = 'isActive';
+    /**
+     * @var string
+     */
     protected const FIELD_STORE_RELATION = 'storeRelation';
 
+    /**
+     * @var int
+     */
     protected const FIELD_NAME_MAX_LENGTH = 256;
 
     /**

@@ -13,11 +13,21 @@ use Generated\Shared\Transfer\MessageTransfer;
 
 class CartValidator implements CartValidatorInterface
 {
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_ERROR_INVALID_PROMOTIONAL_ITEM = 'cart.promotion.items.invalid_for_quote';
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_PARAM_SKU = '%sku%';
+    /**
+     * @var string
+     */
     protected const MESSAGE_TYPE_ERROR = 'error';
     /**
      * @uses \Spryker\Zed\Cart\CartConfig::OPERATION_ADD
+     * @var string
      */
     protected const CART_CHANGE_OPERATION_ADD = 'add';
 
@@ -57,7 +67,7 @@ class CartValidator implements CartValidatorInterface
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     protected function getItemsWithDiscountPromotion(CartChangeTransfer $cartChangeTransfer): array
     {
@@ -74,7 +84,7 @@ class CartValidator implements CartValidatorInterface
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
-     * @return \Generated\Shared\Transfer\PromotionItemTransfer[][]
+     * @return array<\Generated\Shared\Transfer\PromotionItemTransfer[]>
      */
     protected function groupAvailableQuotePromotionItemsById(CartChangeTransfer $cartChangeTransfer): array
     {

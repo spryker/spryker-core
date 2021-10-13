@@ -14,6 +14,9 @@ use Symfony\Component\HttpFoundation\Request;
 
 class MerchantProductQueryCriteriaExpander implements MerchantProductQueryCriteriaExpanderInterface
 {
+    /**
+     * @var string
+     */
     protected const URL_PARAM_ID_MERCHANT = 'id-merchant';
 
     /**

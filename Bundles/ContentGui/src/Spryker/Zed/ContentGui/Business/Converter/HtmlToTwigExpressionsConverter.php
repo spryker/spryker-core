@@ -16,8 +16,17 @@ use Spryker\Zed\ContentGui\ContentGuiConfig;
 
 class HtmlToTwigExpressionsConverter implements HtmlToTwigExpressionsConverterInterface
 {
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_MAX_WIDGET_NUMBER = 'Limit exceeded, maximum number of widgets %d';
+    /**
+     * @var string
+     */
     protected const HTML_OUTPUT_ENCODING = 'HTML-ENTITIES';
+    /**
+     * @var string
+     */
     protected const HTML_INPUT_ENCODING = 'UTF-8';
 
     /**
@@ -108,7 +117,7 @@ class HtmlToTwigExpressionsConverter implements HtmlToTwigExpressionsConverterIn
      * @param \DOMText $twigExpression
      * @param \DOMNode $oldNode
      *
-     * @return \DOMNode[]
+     * @return array<\DOMNode>
      */
     protected function addReplacement(DOMText $twigExpression, DOMNode $oldNode): array
     {

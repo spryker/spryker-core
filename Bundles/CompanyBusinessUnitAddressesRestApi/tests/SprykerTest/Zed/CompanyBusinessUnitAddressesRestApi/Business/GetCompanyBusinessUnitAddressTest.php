@@ -32,9 +32,18 @@ use Spryker\Zed\CompanyBusinessUnitAddressesRestApi\Dependency\Facade\CompanyBus
  */
 class GetCompanyBusinessUnitAddressTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const FAKE_COMPANY_BUSINESS_UNIT_ADDRESS_UUID = 'FAKE_COMPANY_BUSINESS_UNIT_ADDRESS_UUID';
 
+    /**
+     * @var int
+     */
     protected const ID_COMPANY = 5555;
+    /**
+     * @var int
+     */
     protected const FAKE_ID_COMPANY = 6666;
 
     /**

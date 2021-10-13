@@ -34,7 +34,7 @@ interface ManualOrderEntryFacadeInterface
      *
      * @api
      *
-     * @return \Generated\Shared\Transfer\OrderSourceTransfer[]
+     * @return array<\Generated\Shared\Transfer\OrderSourceTransfer>
      */
     public function getAllOrderSources(): array;
 

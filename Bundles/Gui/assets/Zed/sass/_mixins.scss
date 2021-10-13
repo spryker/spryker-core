@@ -1,0 +1,13 @@
+// Contextual variations (linked labels get darker on :hover)
+@mixin label-variant($bg-color, $text-color) {
+    background-color: $bg-color;
+    color: $text-color;
+
+    &[href] {
+        &:hover,
+        &:focus {
+            background-color: darken($bg-color, 10%);
+            color: darken($text-color, 10%);
+        }
+    }
+}

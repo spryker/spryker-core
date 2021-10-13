@@ -19,30 +19,69 @@ use Symfony\Component\Filesystem\Filesystem;
 
 class BridgeBuilder
 {
+    /**
+     * @var string
+     */
     protected const TEMPLATE_INTERFACE = 'interface';
+    /**
+     * @var string
+     */
     protected const TEMPLATE_BRIDGE = 'bridge';
+    /**
+     * @var string
+     */
     protected const TEMPLATE_INTERFACE_METHOD = 'interface_method';
+    /**
+     * @var string
+     */
     protected const TEMPLATE_BRIDGE_METHOD = 'bridge_method';
 
+    /**
+     * @var string
+     */
     protected const DEFAULT_VENDOR = 'Spryker';
+    /**
+     * @var string
+     */
     protected const DEFAULT_TO_TYPE = 'Facade';
 
+    /**
+     * @var array
+     */
     protected const APPLICATION_LAYER_MAP = [
         'Facade' => 'Zed',
         'QueryContainer' => 'Zed',
     ];
 
+    /**
+     * @var array
+     */
     protected const MODULE_LAYER_MAP = [
         'Facade' => 'Business',
         'QueryContainer' => 'Persistence',
     ];
 
+    /**
+     * @var string
+     */
     protected const FUNCTION_RETURN = 'return ';
 
+    /**
+     * @var string
+     */
     protected const NULLABLE_RETURN_TYPE_HINT = ': ?';
+    /**
+     * @var string
+     */
     protected const NON_NULLABLE_RETURN_TYPE_HINT = ': ';
 
+    /**
+     * @var string
+     */
     protected const TYPE_HINT = 'type_hint';
+    /**
+     * @var string
+     */
     protected const FQCN = 'fqcn';
 
     /**

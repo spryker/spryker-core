@@ -81,10 +81,13 @@ class OfferClient extends AbstractClient implements OfferClientInterface
             ->createZedStub()
             ->placeOffer($offerTransfer);
 
+        /** @var \Generated\Shared\Transfer\OfferTransfer $offerTransfer */
+        $offerTransfer = $offerResponseTransfer->getOffer();
+
         $offerTransfers = $this->getFactory()
             ->createOfferHydrator()
             ->hydrateQuoteWithCustomer(
-                new ArrayObject([$offerResponseTransfer->getOffer()])
+                new ArrayObject([$offerTransfer])
             );
 
         $offerResponseTransfer->setOffer($offerTransfers[0]);

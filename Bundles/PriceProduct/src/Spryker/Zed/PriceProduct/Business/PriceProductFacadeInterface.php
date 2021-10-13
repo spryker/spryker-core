@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\PriceProduct\Business;
 
+use ArrayObject;
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
@@ -14,6 +15,8 @@ use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\PriceTypeTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\ValidationResponseTransfer;
+use Generated\Shared\Transfer\WishlistItemTransfer;
 
 interface PriceProductFacadeInterface
 {
@@ -23,7 +26,7 @@ interface PriceProductFacadeInterface
      *
      * @api
      *
-     * @return \Generated\Shared\Transfer\PriceTypeTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceTypeTransfer>
      */
     public function getPriceTypeValues();
 
@@ -251,7 +254,7 @@ interface PriceProductFacadeInterface
      *
      * @param string $sku
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function findPricesBySkuForCurrentStore($sku);
 
@@ -259,7 +262,8 @@ interface PriceProductFacadeInterface
      * Specification:
      *  - Reads prices same as findPricesBySkuForCurrentStore, then groups by currency, price mode, price type for current store.
      *  - Delegates call to findPricesBySkuForCurrentStore and groups result after by currency, price mode and price type.
-     *  - Groups provided transfers `priceData` by currency only.
+     *  - Groups provided transfers `priceData` by currency only for BC reasons.
+     *  - Groups provided transfers `priceData` by currency and price type.
      *
      * For example:
      *   $result = [
@@ -268,11 +272,17 @@ interface PriceProductFacadeInterface
      *           'DEFAULT' => 1000,
      *           'ORIGINAL' => 2000,
      *        ],
-     *      'priceData' => '{"volume_prices":[{"quantity":"2","net_price":900,"gross_price":1000}]}',
+     *        'priceData' => '{"volume_prices":[{"quantity":"2","net_price":900,"gross_price":1000}]}',
+     *        'priceDataByPriceType' => [
+     *            'DEFAULT' => '{"volume_prices":[{"quantity":"2","net_price":900,"gross_price":1000}]}',
+     *            'ORIGINAL' => '{"volume_prices":[{"quantity":"2","net_price":700,"gross_price":850}]}'
+     *        ],
      *     ]
      *  ];
      *
      * @api
+     *
+     * @phpstan-return array<mixed>
      *
      * @param string $sku
      * @param \Generated\Shared\Transfer\PriceProductDimensionTransfer|null $priceProductDimensionTransfer
@@ -284,7 +294,8 @@ interface PriceProductFacadeInterface
     /**
      * Specification:
      * - Groups provided transfers by currency, price mode and price type.
-     * - Groups provided transfers `priceData` by currency only.
+     * - Groups provided transfers `priceData` by currency only for BC reasons.
+     * - Groups provided transfers `priceData` by currency and price type.
      *
      * Example:
      *   $result = [
@@ -293,13 +304,19 @@ interface PriceProductFacadeInterface
      *           'DEFAULT' => 1000,
      *           'ORIGINAL' => 2000,
      *        ],
-     *      'priceData' => '{"volume_prices":[{"quantity":"2","net_price":900,"gross_price":1000}]}',
+     *        'priceData' => '{"volume_prices":[{"quantity":"2","net_price":900,"gross_price":1000}]}',
+     *        'priceDataByPriceType' => [
+     *            'DEFAULT' => '{"volume_prices":[{"quantity":"2","net_price":900,"gross_price":1000}]}',
+     *            'ORIGINAL' => '{"volume_prices":[{"quantity":"2","net_price":700,"gross_price":850}]}'
+     *        ],
      *     ]
      *  ];
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @phpstan-return array<mixed>
+     *
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      *
      * @return array
      */
@@ -318,7 +335,7 @@ interface PriceProductFacadeInterface
      * @param int $idProductAbstract
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer|null $priceProductCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function findProductAbstractPrices(
         int $idProductAbstract,
@@ -333,6 +350,7 @@ interface PriceProductFacadeInterface
      * - Filters results by currency when provided in criteria.
      * - Concrete prices overwrites abstracts for matching price types.
      * - Extracts additional prices array from price data.
+     * - Returns only concrete product prices if PriceProductCriteriaTransfer.onlyConcretePrices set to true.
      *
      * @api
      *
@@ -340,7 +358,7 @@ interface PriceProductFacadeInterface
      * @param int $idProductAbstract
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer|null $priceProductCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function findProductConcretePrices(
         int $idProductConcrete,
@@ -379,6 +397,8 @@ interface PriceProductFacadeInterface
      *  - Generates checksum hash for price data field.
      *
      * @api
+     *
+     * @phpstan-param array<mixed> $priceData
      *
      * @param array $priceData
      *
@@ -423,7 +443,7 @@ interface PriceProductFacadeInterface
      * @param int $idProductAbstract
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer|null $priceProductCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function findProductAbstractPricesWithoutPriceExtraction(
         int $idProductAbstract,
@@ -437,9 +457,9 @@ interface PriceProductFacadeInterface
      *
      * @api
      *
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function findProductAbstractPricesWithoutPriceExtractionByIdProductAbstractIn(array $productAbstractIds): array;
 
@@ -465,6 +485,7 @@ interface PriceProductFacadeInterface
      * - Filters results by store when provided in criteria.
      * - Filters results by currency when provided in criteria.
      * - Concrete prices overwrites abstracts for matching price types.
+     * - Returns only concrete product prices if PriceProductCriteriaTransfer.onlyConcretePrices set to true.
      *
      * @api
      *
@@ -472,7 +493,7 @@ interface PriceProductFacadeInterface
      * @param int $idProductAbstract
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer|null $priceProductCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function findProductConcretePricesWithoutPriceExtraction(
         int $idProductConcrete,
@@ -502,10 +523,10 @@ interface PriceProductFacadeInterface
      *
      * @api
      *
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer|null $priceProductCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function findProductAbstractPricesWithoutPriceExtractionByProductAbstractIdsAndCriteria(
         array $productAbstractIds,
@@ -549,9 +570,9 @@ interface PriceProductFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer[] $priceProductFilterTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductFilterTransfer> $priceProductFilterTransfers
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function getValidPrices(array $priceProductFilterTransfers): array;
 
@@ -585,4 +606,35 @@ interface PriceProductFacadeInterface
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     public function expandProductConcreteWithPrices(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer;
+
+    /**
+     * Specification:
+     * - Validates product prices collection.
+     * - Checks if there are duplicated prices for store-currency-gross-net combinations.
+     * - Checks that currency is assigned to a store for each price.
+     * - Executes PriceProductValidatorPluginInterface plugins.
+     * - Returns ValidationResponseTransfer transfer object.
+     *
+     * @api
+     *
+     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
+     *
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
+     *
+     * @return \Generated\Shared\Transfer\ValidationResponseTransfer
+     */
+    public function validatePrices(ArrayObject $priceProductTransfers): ValidationResponseTransfer;
+
+    /**
+     * Specification:
+     * - Expands `WishlistItem` transfer object with a price data.
+     * - Return expanded `WishlistItem` transfer object.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistItemTransfer
+     */
+    public function expandWishlistItem(WishlistItemTransfer $wishlistItemTransfer): WishlistItemTransfer;
 }

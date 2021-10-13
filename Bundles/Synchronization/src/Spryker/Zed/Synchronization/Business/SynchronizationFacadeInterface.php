@@ -10,13 +10,13 @@ namespace Spryker\Zed\Synchronization\Business;
 interface SynchronizationFacadeInterface
 {
     /**
-     * @api
-     *
-     * @deprecated Use {@link processStorageMessages()} instead.
-     *
      * Specification:
      * - Writes json encoded data to storage
      * - Will not write if the data is outdated compare to storage timestamp
+     *
+     * @api
+     *
+     * @deprecated Use {@link processStorageMessages()} instead.
      *
      * @param array $data
      * @param string $queueName
@@ -26,13 +26,13 @@ interface SynchronizationFacadeInterface
     public function storageWrite(array $data, $queueName);
 
     /**
-     * @api
-     *
-     * @deprecated Use {@link processStorageMessages()} instead.
-     *
      * Specification:
      * - Deletes all data keys from storage
      * - Will not delete if the data is outdated compare to storage timestamp
+     *
+     * @api
+     *
+     * @deprecated Use {@link processStorageMessages()} instead.
      *
      * @param array $data
      * @param string $queueName
@@ -42,13 +42,13 @@ interface SynchronizationFacadeInterface
     public function storageDelete(array $data, $queueName);
 
     /**
-     * @api
-     *
-     * @deprecated Use {@link \Spryker\Zed\Synchronization\Business\SynchronizationFacadeInterface::processSearchMessages()} instead.
-     *
      * Specification:
      * - Writes json encoded data to search
      * - Will not write if the data is outdated compare to search timestamp
+     *
+     * @api
+     *
+     * @deprecated Use {@link \Spryker\Zed\Synchronization\Business\SynchronizationFacadeInterface::processSearchMessages()} instead.
      *
      * @param array $data
      * @param string $queueName
@@ -58,13 +58,13 @@ interface SynchronizationFacadeInterface
     public function searchWrite(array $data, $queueName);
 
     /**
-     * @api
-     *
-     * @deprecated Use {@link \Spryker\Zed\Synchronization\Business\SynchronizationFacadeInterface::processSearchMessages()} instead.
-     *
      * Specification:
      * - Deletes all data keys from search
      * - Will not delete if the data is outdated compare to search timestamp
+     *
+     * @api
+     *
+     * @deprecated Use {@link \Spryker\Zed\Synchronization\Business\SynchronizationFacadeInterface::processSearchMessages()} instead.
      *
      * @param array $data
      * @param string $queueName
@@ -80,9 +80,9 @@ interface SynchronizationFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QueueReceiveMessageTransfer[] $queueMessageTransfers
+     * @param array<\Generated\Shared\Transfer\QueueReceiveMessageTransfer> $queueMessageTransfers
      *
-     * @return \Generated\Shared\Transfer\QueueReceiveMessageTransfer[]
+     * @return array<\Generated\Shared\Transfer\QueueReceiveMessageTransfer>
      */
     public function processSearchMessages(array $queueMessageTransfers): array;
 
@@ -93,9 +93,9 @@ interface SynchronizationFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QueueReceiveMessageTransfer[] $queueMessageTransfers
+     * @param array<\Generated\Shared\Transfer\QueueReceiveMessageTransfer> $queueMessageTransfers
      *
-     * @return \Generated\Shared\Transfer\QueueReceiveMessageTransfer[]
+     * @return array<\Generated\Shared\Transfer\QueueReceiveMessageTransfer>
      */
     public function processStorageMessages(array $queueMessageTransfers): array;
 
@@ -107,7 +107,7 @@ interface SynchronizationFacadeInterface
      *
      * @deprecated Use {@link executeResolvedPluginsBySourcesWithIds()} instead.
      *
-     * @param string[] $resources
+     * @param array<string> $resources
      *
      * @return void
      */
@@ -119,8 +119,8 @@ interface SynchronizationFacadeInterface
      *
      * @api
      *
-     * @param string[] $resources
-     * @param int[] $ids
+     * @param array<string> $resources
+     * @param array<int> $ids
      *
      * @return void
      */
@@ -132,7 +132,7 @@ interface SynchronizationFacadeInterface
      *
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getAvailableResourceNames(): array;
 }

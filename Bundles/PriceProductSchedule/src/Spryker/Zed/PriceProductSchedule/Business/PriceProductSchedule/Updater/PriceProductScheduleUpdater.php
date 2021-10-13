@@ -18,6 +18,9 @@ class PriceProductScheduleUpdater implements PriceProductScheduleUpdaterInterfac
 {
     use TransactionTrait;
 
+    /**
+     * @var string
+     */
     protected const MESSAGE_ERROR_SAVE_SCHEDULED_PRICE = 'Failed to save price schedule';
 
     /**

@@ -14,7 +14,13 @@ use Symfony\Component\HttpFoundation\Request;
 
 class CacheKeyGenerator implements CacheKeyGeneratorInterface
 {
+    /**
+     * @var string
+     */
     protected const KEY_NAME_PREFIX = 'storage';
+    /**
+     * @var string
+     */
     protected const KEY_NAME_SEPARATOR = ':';
 
     /**
@@ -106,7 +112,7 @@ class CacheKeyGenerator implements CacheKeyGeneratorInterface
     }
 
     /**
-     * @param string[] $queryStringParameters
+     * @param array<string> $queryStringParameters
      *
      * @return string
      */

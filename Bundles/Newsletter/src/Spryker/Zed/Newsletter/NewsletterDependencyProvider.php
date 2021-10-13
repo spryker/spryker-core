@@ -18,9 +18,18 @@ use Spryker\Zed\Newsletter\Dependency\Service\NewsletterToUtilValidateServiceBri
  */
 class NewsletterDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_MAIL = 'mail facade';
+    /**
+     * @var string
+     */
     public const FACADE_GLOSSARY = 'glossary facade';
 
+    /**
+     * @var string
+     */
     public const SERVICE_UTIL_VALIDATE = 'SERVICE_UTIL_VALIDATE';
 
     /**

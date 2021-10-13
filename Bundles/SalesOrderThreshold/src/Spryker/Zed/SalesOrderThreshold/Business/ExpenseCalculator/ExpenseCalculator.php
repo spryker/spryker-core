@@ -18,6 +18,9 @@ use Spryker\Zed\SalesOrderThreshold\Business\TaxRateReader\TaxRateReaderInterfac
 
 class ExpenseCalculator implements ExpenseCalculatorInterface
 {
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_TEMPLATE = 'sales-order-threshold.strategy.%s';
 
     /**
@@ -111,10 +114,10 @@ class ExpenseCalculator implements ExpenseCalculatorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SalesOrderThresholdValueTransfer[] $salesOrderThresholdValueTransfers
+     * @param array<\Generated\Shared\Transfer\SalesOrderThresholdValueTransfer> $salesOrderThresholdValueTransfers
      * @param string $thresholdGroup
      *
-     * @return \Generated\Shared\Transfer\SalesOrderThresholdValueTransfer[]
+     * @return array<\Generated\Shared\Transfer\SalesOrderThresholdValueTransfer>
      */
     protected function filterSalesOrderThresholdsByThresholdGroup(array $salesOrderThresholdValueTransfers, string $thresholdGroup): array
     {

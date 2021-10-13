@@ -54,6 +54,9 @@ use SprykerTest\Zed\Discount\Communication\Fixtures\VoucherCollectedDiscountGrou
  */
 class CalculatorTest extends Unit
 {
+    /**
+     * @var int
+     */
     public const ITEM_GROSS_PRICE_500 = 500;
 
     /**
@@ -234,7 +237,7 @@ class CalculatorTest extends Unit
     }
 
     /**
-     * @return \Spryker\Zed\Discount\Dependency\Plugin\DecisionRulePluginInterface[]
+     * @return array<\Spryker\Zed\Discount\Dependency\Plugin\DecisionRulePluginInterface>
      */
     protected function createDecisionRulePlugins(): array
     {
@@ -254,7 +257,7 @@ class CalculatorTest extends Unit
     }
 
     /**
-     * @return \Spryker\Zed\Discount\Dependency\Plugin\CollectorPluginInterface[]
+     * @return array<\Spryker\Zed\Discount\Dependency\Plugin\CollectorPluginInterface>
      */
     protected function createCollectorPlugins(): array
     {
@@ -285,7 +288,7 @@ class CalculatorTest extends Unit
     }
 
     /**
-     * @return \Spryker\Zed\DiscountExtension\Dependency\Plugin\DiscountableItemTransformerStrategyPluginInterface[]
+     * @return array<\Spryker\Zed\DiscountExtension\Dependency\Plugin\DiscountableItemTransformerStrategyPluginInterface>
      */
     protected function createDiscountableItemTransformerStrategyPlugins(): array
     {
@@ -337,7 +340,7 @@ class CalculatorTest extends Unit
     }
 
     /**
-     * @return \Spryker\Zed\DiscountExtension\Dependency\Plugin\CollectedDiscountGroupingStrategyPluginInterface[]
+     * @return array<\Spryker\Zed\DiscountExtension\Dependency\Plugin\CollectedDiscountGroupingStrategyPluginInterface>
      */
     protected function getCollectedDiscountGroupingPlugins(): array
     {
@@ -663,7 +666,7 @@ class CalculatorTest extends Unit
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\DiscountableItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\DiscountableItemTransfer>
      */
     protected function createDiscountableItemsFromQuoteTransfer(QuoteTransfer $quoteTransfer): array
     {

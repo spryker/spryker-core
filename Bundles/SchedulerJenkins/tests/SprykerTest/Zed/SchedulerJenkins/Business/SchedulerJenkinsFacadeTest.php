@@ -36,6 +36,9 @@ use Spryker\Zed\SchedulerJenkins\SchedulerJenkinsConfig;
  */
 class SchedulerJenkinsFacadeTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const ID_SCHEDULER = 'test';
 
     /**

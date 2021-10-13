@@ -42,7 +42,7 @@ class CompanyUserEventResourceBulkRepositoryPlugin extends AbstractPlugin implem
      * @param int $offset
      * @param int $limit
      *
-     * @return \Generated\Shared\Transfer\CompanyUserTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractTransfer[]
+     * @return array<\Generated\Shared\Transfer\CompanyUserTransfer|\Spryker\Shared\Kernel\Transfer\AbstractTransfer>
      */
     public function getData(int $offset, int $limit): array
     {

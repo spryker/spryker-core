@@ -13,9 +13,18 @@ use Spryker\Client\Kernel\Container;
 
 class ConfigurableBundlePageSearchDependencyProvider extends AbstractDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_SEARCH = 'CLIENT_SEARCH';
 
+    /**
+     * @var string
+     */
     public const PLUGINS_CONFIGURABLE_BUNDLE_TEMPLATE_PAGE_SEARCH_RESULT_FORMATTER = 'PLUGINS_CONFIGURABLE_BUNDLE_TEMPLATE_PAGE_SEARCH_RESULT_FORMATTER';
+    /**
+     * @var string
+     */
     public const PLUGINS_CONFIGURABLE_BUNDLE_TEMPLATE_PAGE_SEARCH_QUERY_EXPANDER = 'PLUGINS_CONFIGURABLE_BUNDLE_TEMPLATE_PAGE_SEARCH_QUERY_EXPANDER';
 
     /**
@@ -78,7 +87,7 @@ class ConfigurableBundlePageSearchDependencyProvider extends AbstractDependencyP
     }
 
     /**
-     * @return \Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface[]
+     * @return array<\Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface>
      */
     protected function getConfigurableBundleTemplatePageSearchResultFormatterPlugins(): array
     {
@@ -86,7 +95,7 @@ class ConfigurableBundlePageSearchDependencyProvider extends AbstractDependencyP
     }
 
     /**
-     * @return \Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface[]
+     * @return array<\Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface>
      */
     protected function getConfigurableBundleTemplatePageSearchQueryExpanderPlugins(): array
     {

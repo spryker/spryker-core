@@ -26,6 +26,9 @@ use Spryker\Shared\SessionRedis\Redis\SessionRedisWrapperInterface;
  */
 class SessionHandlerRedisLockingTest extends Unit
 {
+    /**
+     * @var int
+     */
     protected const TIME_TO_LIVE = 60;
 
     /**

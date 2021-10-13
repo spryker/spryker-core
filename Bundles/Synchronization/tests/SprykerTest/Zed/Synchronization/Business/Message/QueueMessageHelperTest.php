@@ -27,6 +27,9 @@ use Spryker\Zed\Synchronization\Dependency\Service\SynchronizationToUtilEncoding
  */
 class QueueMessageHelperTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const TEST_ERROR_MESSAGE = 'test error message';
 
     /**

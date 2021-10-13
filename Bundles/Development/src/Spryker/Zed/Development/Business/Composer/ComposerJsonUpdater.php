@@ -10,13 +10,19 @@ namespace Spryker\Zed\Development\Business\Composer;
 use Laminas\Filter\Word\CamelCaseToDash;
 use RuntimeException;
 use Spryker\Zed\Development\Business\Composer\Updater\UpdaterInterface;
+use Spryker\Zed\Development\Business\Composer\Util\ComposerJson;
 use Spryker\Zed\Development\Business\Exception\DependencyTree\InvalidComposerJsonException;
 use Symfony\Component\Finder\SplFileInfo;
 
 class ComposerJsonUpdater implements ComposerJsonUpdaterInterface
 {
-    public const REPLACE_4_WITH_2_SPACES = '/^(  +?)\\1(?=[^ ])/m';
+    /**
+     * @var string
+     */
     public const KEY_REQUIRE = 'require';
+    /**
+     * @var string
+     */
     public const KEY_REQUIRE_DEV = 'require-dev';
 
     /**
@@ -40,7 +46,7 @@ class ComposerJsonUpdater implements ComposerJsonUpdaterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ModuleTransfer[] $moduleTransferCollection
+     * @param array<\Generated\Shared\Transfer\ModuleTransfer> $moduleTransferCollection
      * @param bool $dryRun
      *
      * @return array
@@ -72,7 +78,7 @@ class ComposerJsonUpdater implements ComposerJsonUpdaterInterface
     protected function updateComposerJsonFile(SplFileInfo $composerJsonFile, $dryRun = false)
     {
         $composerJson = $composerJsonFile->getContents();
-        $composerJsonArray = json_decode($composerJson, true);
+        $composerJsonArray = ComposerJson::fromString($composerJson);
 
         if (!empty($composerJsonArray['abandoned'])) {
             return false;
@@ -84,8 +90,7 @@ class ComposerJsonUpdater implements ComposerJsonUpdaterInterface
         $composerJsonArray = $this->clean($composerJsonArray);
         $composerJsonArray = $this->order($composerJsonArray);
 
-        $modifiedComposerJson = json_encode($composerJsonArray, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
-        $modifiedComposerJson = preg_replace(static::REPLACE_4_WITH_2_SPACES, '$1', $modifiedComposerJson) . PHP_EOL;
+        $modifiedComposerJson = ComposerJson::toString($composerJsonArray);
 
         if ($modifiedComposerJson === $composerJson) {
             return false;

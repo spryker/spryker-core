@@ -26,6 +26,9 @@ use Spryker\Zed\SalesExtension\Dependency\Plugin\SearchOrderExpanderPluginInterf
  */
 class GetPaginatedCustomerOrdersOverviewTest extends Test
 {
+    /**
+     * @var string
+     */
     protected const DEFAULT_OMS_PROCESS_NAME = 'Test01';
 
     /**

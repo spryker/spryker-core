@@ -21,6 +21,8 @@ class PriceProductMerchantRelationshipStorageFacade extends AbstractFacade imple
      *
      * @api
      *
+     * @phpstan-param array<mixed> $businessUnitProducts
+     *
      * @deprecated Will be removed without replacement.
      *
      * @param array $businessUnitProducts
@@ -37,6 +39,8 @@ class PriceProductMerchantRelationshipStorageFacade extends AbstractFacade imple
      * {@inheritDoc}
      *
      * @api
+     *
+     * @phpstan-param array<mixed> $businessUnitProducts
      *
      * @deprecated Will be removed without replacement
      *
@@ -55,7 +59,7 @@ class PriceProductMerchantRelationshipStorageFacade extends AbstractFacade imple
      *
      * @api
      *
-     * @param int[] $companyBusinessUnitIds
+     * @param array<int> $companyBusinessUnitIds
      *
      * @return void
      */
@@ -70,7 +74,7 @@ class PriceProductMerchantRelationshipStorageFacade extends AbstractFacade imple
      *
      * @api
      *
-     * @param int[] $companyBusinessUnitIds
+     * @param array<int> $companyBusinessUnitIds
      *
      * @return void
      */
@@ -85,7 +89,7 @@ class PriceProductMerchantRelationshipStorageFacade extends AbstractFacade imple
      *
      * @api
      *
-     * @param int[] $priceProductMerchantRelationshipIds
+     * @param array<int> $priceProductMerchantRelationshipIds
      *
      * @return void
      */
@@ -100,7 +104,7 @@ class PriceProductMerchantRelationshipStorageFacade extends AbstractFacade imple
      *
      * @api
      *
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return void
      */
@@ -115,7 +119,7 @@ class PriceProductMerchantRelationshipStorageFacade extends AbstractFacade imple
      *
      * @api
      *
-     * @param int[] $priceProductMerchantRelationshipIds
+     * @param array<int> $priceProductMerchantRelationshipIds
      *
      * @return void
      */
@@ -130,7 +134,7 @@ class PriceProductMerchantRelationshipStorageFacade extends AbstractFacade imple
      *
      * @api
      *
-     * @param int[] $productIds
+     * @param array<int> $productIds
      *
      * @return void
      */
@@ -138,5 +142,21 @@ class PriceProductMerchantRelationshipStorageFacade extends AbstractFacade imple
     {
         $this->getFactory()->createPriceProductConcreteStorageWriter()
             ->publishConcretePriceProductByProductIds($productIds);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function writeCollectionByMerchantEvents(array $eventEntityTransfers): void
+    {
+        $this->getFactory()
+            ->createPriceProductMerchantRelationshipStorageWriter()
+            ->writeCollectionByMerchantEvents($eventEntityTransfers);
     }
 }

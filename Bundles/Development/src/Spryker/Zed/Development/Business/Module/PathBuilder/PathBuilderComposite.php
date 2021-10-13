@@ -12,12 +12,12 @@ use Generated\Shared\Transfer\ModuleTransfer;
 class PathBuilderComposite implements PathBuilderInterface
 {
     /**
-     * @var \Spryker\Zed\Development\Business\Module\PathBuilder\PathBuilderInterface[]
+     * @var array<\Spryker\Zed\Development\Business\Module\PathBuilder\PathBuilderInterface>
      */
     protected $pathBuilders;
 
     /**
-     * @param \Spryker\Zed\Development\Business\Module\PathBuilder\PathBuilderInterface[] $pathBuilders
+     * @param array<\Spryker\Zed\Development\Business\Module\PathBuilder\PathBuilderInterface> $pathBuilders
      */
     public function __construct(array $pathBuilders)
     {

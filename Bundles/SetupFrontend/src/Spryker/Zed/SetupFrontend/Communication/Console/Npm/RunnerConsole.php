@@ -14,29 +14,63 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Process\Process;
 
 /**
+ * @deprecated Will be removed without replacement.
+ * Use `frontend:yves:build` for build Yves frontend.
+ * Use `frontend:zed:build` for build Zed frontend.
+ *
  * @method \Spryker\Zed\Setup\Business\SetupFacadeInterface getFacade()
  * @method \Spryker\Zed\Setup\Communication\SetupCommunicationFactory getFactory()
  */
 class RunnerConsole extends Console
 {
+    /**
+     * @var string
+     */
     public const COMMAND_NAME = 'frontend:npm:run';
 
+    /**
+     * @var string
+     */
     public const NPM_COMMAND_TPL = 'npm run %s';
 
+    /**
+     * @var string
+     */
     public const OPTION_TASK_BUILD_ALL = 'build-all';
+    /**
+     * @var string
+     */
     public const OPTION_TASK_BUILD_ALL_SHORT = 'a';
 
+    /**
+     * @var string
+     */
     public const OPTION_TASK_BUILD_CORE = 'build-core';
+    /**
+     * @var string
+     */
     public const OPTION_TASK_BUILD_CORE_SHORT = 'c';
 
+    /**
+     * @var string
+     */
     public const OPTION_TASK_BUILD_YVES = 'build-yves';
+    /**
+     * @var string
+     */
     public const OPTION_TASK_BUILD_YVES_SHORT = 'y';
 
+    /**
+     * @var string
+     */
     public const OPTION_TASK_BUILD_ZED = 'build-zed';
+    /**
+     * @var string
+     */
     public const OPTION_TASK_BUILD_ZED_SHORT = 'z';
 
     /**
-     * @var string[]
+     * @var array<string>
      */
     protected $commands = [
         self::OPTION_TASK_BUILD_ALL => 'spy-setup all',

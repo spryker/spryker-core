@@ -19,9 +19,21 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class ImageType extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const OPTION_IMAGE_WIDTH = 'image_width';
+    /**
+     * @var string
+     */
     public const OPTION_IMAGE_HEIGHT = 'image_height';
+    /**
+     * @var string
+     */
     public const OPTION_IMAGE_TITLE = 'image_title';
+    /**
+     * @var string
+     */
     public const OPTION_IMAGE_URL = 'image_url';
 
     /**

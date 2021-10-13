@@ -12,7 +12,13 @@ use Symfony\Component\Finder\SplFileInfo;
 
 class UseStatement extends AbstractDependencyFinder
 {
+    /**
+     * @var string
+     */
     public const LAYER_DEFAULT = 'Default';
+    /**
+     * @var string
+     */
     public const BUNDLE = 'bundle';
 
     /**
@@ -60,7 +66,7 @@ class UseStatement extends AbstractDependencyFinder
         if (preg_match('/\\\/', $relativeClassName)) {
             $classNameParts = explode('\\', $relativeClassName);
             $layer = array_shift($classNameParts);
-            if (in_array($layer, [static::LAYER_BUSINESS, static::LAYER_COMMUNICATION, static::LAYER_PERSISTENCE])) {
+            if (in_array($layer, [static::LAYER_BUSINESS, static::LAYER_COMMUNICATION, static::LAYER_PERSISTENCE], true)) {
                 return $layer;
             }
         }

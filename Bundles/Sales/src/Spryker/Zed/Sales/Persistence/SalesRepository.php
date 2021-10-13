@@ -9,18 +9,26 @@ namespace Spryker\Zed\Sales\Persistence;
 
 use ArrayObject;
 use Generated\Shared\Transfer\AddressTransfer;
+use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\FilterTransfer;
+use Generated\Shared\Transfer\OrderFilterTransfer;
 use Generated\Shared\Transfer\OrderItemFilterTransfer;
 use Generated\Shared\Transfer\OrderListRequestTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
+use Generated\Shared\Transfer\TaxTotalTransfer;
+use Generated\Shared\Transfer\TotalsTransfer;
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderTableMap;
+use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 use Spryker\Zed\Propel\PropelFilterCriteria;
+use Spryker\Zed\Sales\Business\Exception\InvalidSalesOrderException;
 use Spryker\Zed\Sales\Persistence\Propel\QueryBuilder\OrderSearchFilterFieldQueryBuilder;
 
 /**
@@ -28,7 +36,17 @@ use Spryker\Zed\Sales\Persistence\Propel\QueryBuilder\OrderSearchFilterFieldQuer
  */
 class SalesRepository extends AbstractRepository implements SalesRepositoryInterface
 {
+    /**
+     * @var string
+     */
     protected const ID_SALES_ORDER = 'id_sales_order';
+    /**
+     * @var array
+     */
+    protected const SORT_KEYS_MAP = [
+        'createdAt' => SpySalesOrderTableMap::COL_CREATED_AT,
+        'updatedAt' => SpySalesOrderTableMap::COL_UPDATED_AT,
+    ];
 
     /**
      * @param string $customerReference
@@ -74,7 +92,7 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
      *
      * @param \Generated\Shared\Transfer\OrderItemFilterTransfer $orderItemFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     public function getOrderItems(OrderItemFilterTransfer $orderItemFilterTransfer): array
     {
@@ -99,9 +117,9 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
     }
 
     /**
-     * @param int[] $salesOrderIds
+     * @param array<int> $salesOrderIds
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getCurrencyIsoCodesBySalesOrderIds(array $salesOrderIds): array
     {
@@ -144,9 +162,9 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
     }
 
     /**
-     * @param int[] $salesOrderIds
+     * @param array<int> $salesOrderIds
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     public function getSalesOrderItemsByOrderIds(array $salesOrderIds): array
     {
@@ -160,9 +178,9 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
     }
 
     /**
-     * @param int[] $salesOrderIds
+     * @param array<int> $salesOrderIds
      *
-     * @return \Generated\Shared\Transfer\TotalsTransfer[]
+     * @return array<\Generated\Shared\Transfer\TotalsTransfer>
      */
     public function getMappedSalesOrderTotalsBySalesOrderIds(array $salesOrderIds): array
     {
@@ -301,6 +319,12 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
     protected function applyFilterToQuery(SpySalesOrderQuery $orderListQuery, ?FilterTransfer $filterTransfer): SpySalesOrderQuery
     {
         if ($filterTransfer) {
+            if ($filterTransfer->getOrderBy() && isset(static::SORT_KEYS_MAP[$filterTransfer->getOrderBy()])) {
+                $filterTransfer->setOrderBy(
+                    isset(static::SORT_KEYS_MAP[$filterTransfer->getOrderBy()]) ? static::SORT_KEYS_MAP[$filterTransfer->getOrderBy()] : null
+                );
+            }
+
             $orderListQuery->mergeWith(
                 (new PropelFilterCriteria($filterTransfer))->toCriteria()
             );
@@ -352,7 +376,7 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\FilterFieldTransfer[] $filterFieldTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\FilterFieldTransfer> $filterFieldTransfers
      *
      * @return bool
      */
@@ -365,5 +389,208 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
         }
 
         return false;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderFilterTransfer $orderFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function getSalesOrderDetails(OrderFilterTransfer $orderFilterTransfer): OrderTransfer
+    {
+        $orderEntity = $this->getSalesOrderEnity($orderFilterTransfer);
+
+        $orderTransfer = $this->getFactory()->createSalesOrderMapper()->mapSalesOrderEntityToSalesOrderTransfer($orderEntity, new OrderTransfer());
+        $orderTransfer = $this->setOrderTotals($orderEntity, $orderTransfer);
+        $orderTransfer = $this->setBillingAddress($orderEntity, $orderTransfer);
+        $orderTransfer = $this->setShippingAddress($orderEntity, $orderTransfer);
+        $orderTransfer = $this->setOrderExpenses($orderEntity, $orderTransfer);
+        $orderTransfer = $this->setMissingCustomer($orderEntity, $orderTransfer);
+
+        return $orderTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return int
+     */
+    public function getTotalCustomerOrderCount(OrderTransfer $orderTransfer): int
+    {
+        $customerReference = $orderTransfer->getCustomerReference();
+
+        if ($customerReference === null) {
+            return 0;
+        }
+
+        return $this->getFactory()
+            ->createSalesOrderQuery()
+            ->filterByCustomerReference($customerReference)
+            ->count();
+    }
+
+    /**
+     * @param int $idSalesOrder
+     *
+     * @return int
+     */
+    public function countUniqueProductsForOrder(int $idSalesOrder): int
+    {
+        return (int)$this->getFactory()
+            ->createSalesOrderItemQuery()
+            ->filterByFkSalesOrder($idSalesOrder)
+            ->withColumn('COUNT(*)', 'Count')
+            ->select(['Count'])
+            ->groupBySku()
+            ->orderBy('Count')
+            ->count();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderFilterTransfer $orderFilterTransfer
+     *
+     * @throws \Spryker\Zed\Sales\Business\Exception\InvalidSalesOrderException
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrder
+     */
+    protected function getSalesOrderEnity(OrderFilterTransfer $orderFilterTransfer): SpySalesOrder
+    {
+        $salesOrderQuery = $this->getFactory()->createSalesOrderQuery()
+            ->setModelAlias('order')
+            ->innerJoinWith('order.BillingAddress billingAddress')
+            ->innerJoinWith('billingAddress.Country billingCountry')
+            ->leftJoinWith('order.ShippingAddress shippingAddress')
+            ->leftJoinWith('shippingAddress.Country shippingCountry');
+        $salesOrderQuery = $this->setOrderFilters($salesOrderQuery, $orderFilterTransfer);
+        $salesOrderQuery = $this->buildQueryFromCriteria(
+            $salesOrderQuery,
+            $orderFilterTransfer->getFilter()
+        );
+        $salesOrderQuery->setFormatter(ModelCriteria::FORMAT_OBJECT);
+        $orderEntity = $salesOrderQuery->findOne();
+
+        if ($orderEntity === null) {
+            throw new InvalidSalesOrderException(
+                sprintf(
+                    'Order could not be found for ID %s',
+                    $orderFilterTransfer->getSalesOrderId()
+                )
+            );
+        }
+
+        return $orderEntity;
+    }
+
+    /**
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderQuery $salesOrderQuery
+     * @param \Generated\Shared\Transfer\OrderFilterTransfer $orderFilterTransfer
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
+     */
+    protected function setOrderFilters(SpySalesOrderQuery $salesOrderQuery, OrderFilterTransfer $orderFilterTransfer): SpySalesOrderQuery
+    {
+        if ($orderFilterTransfer->getSalesOrderId()) {
+            $salesOrderQuery->filterByIdSalesOrder($orderFilterTransfer->getSalesOrderId());
+        }
+
+        return $salesOrderQuery;
+    }
+
+    /**
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    protected function setOrderTotals(SpySalesOrder $orderEntity, OrderTransfer $orderTransfer): OrderTransfer
+    {
+        $salesOrderTotalsEntity = $orderEntity->getLastOrderTotals();
+
+        if (!$salesOrderTotalsEntity) {
+            return $orderTransfer;
+        }
+
+        $totalsTransfer = $this->getFactory()
+            ->createSalesOrderTotalsMapper()
+            ->mapSalesOrderTotalsTransfer($salesOrderTotalsEntity, new TotalsTransfer(), new TaxTotalTransfer());
+
+        $orderTransfer->setTotals($totalsTransfer);
+
+        return $orderTransfer;
+    }
+
+    /**
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    protected function setBillingAddress(SpySalesOrder $orderEntity, OrderTransfer $orderTransfer): OrderTransfer
+    {
+        $billingAddressTransfer = $this->getFactory()
+            ->createSalesOrderAddressMapper()
+            ->mapAddressEntityToAddressTransfer(new AddressTransfer(), $orderEntity->getBillingAddress());
+
+        $orderTransfer->setBillingAddress($billingAddressTransfer);
+
+        return $orderTransfer;
+    }
+
+    /**
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    protected function setShippingAddress(SpySalesOrder $orderEntity, OrderTransfer $orderTransfer): OrderTransfer
+    {
+        $orderShippingAddressEntity = $orderEntity->getShippingAddress();
+
+        if ($orderShippingAddressEntity === null) {
+            return $orderTransfer;
+        }
+
+        $shippingAddressTransfer = $this->getFactory()
+            ->createSalesOrderAddressMapper()
+            ->mapAddressEntityToAddressTransfer(new AddressTransfer(), $orderShippingAddressEntity);
+
+        $orderTransfer->setShippingAddress($shippingAddressTransfer);
+
+        return $orderTransfer;
+    }
+
+    /**
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    protected function setOrderExpenses(SpySalesOrder $orderEntity, OrderTransfer $orderTransfer): OrderTransfer
+    {
+        foreach ($orderEntity->getExpenses(new Criteria()) as $expenseEntity) {
+            $expenseTransfer = $this->getFactory()
+                ->createSalesExpenseMapper()
+                ->mapExpenseEntityToSalesExpenseTransfer(new ExpenseTransfer(), $expenseEntity);
+
+            $orderTransfer->addExpense($expenseTransfer);
+        }
+
+        return $orderTransfer;
+    }
+
+    /**
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    protected function setMissingCustomer(SpySalesOrder $orderEntity, OrderTransfer $orderTransfer): OrderTransfer
+    {
+        if (!$orderEntity->getCustomer()) {
+            $orderTransfer->setCustomerReference(null);
+            $orderTransfer->setFkCustomer(null);
+        }
+
+        return $orderTransfer;
     }
 }

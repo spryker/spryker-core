@@ -12,7 +12,13 @@ namespace Spryker\Client\Search\Model\Elasticsearch\Query;
  */
 abstract class AbstractNestedQuery implements NestedQueryInterface
 {
+    /**
+     * @var string
+     */
     public const FACET_NAME_SUFFIX = '.facet-name';
+    /**
+     * @var string
+     */
     public const FACET_VALUE_SUFFIX = '.facet-value';
 
     /**

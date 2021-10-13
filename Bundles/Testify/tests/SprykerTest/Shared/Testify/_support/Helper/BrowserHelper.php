@@ -12,6 +12,9 @@ use Codeception\TestInterface;
 
 class BrowserHelper extends Module
 {
+    /**
+     * @var string
+     */
     protected const PHANTOMJS_BROWSER_NAME = 'phantomjs';
 
     /**

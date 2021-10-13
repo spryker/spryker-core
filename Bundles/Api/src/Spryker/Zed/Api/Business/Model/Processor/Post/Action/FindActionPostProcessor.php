@@ -16,7 +16,13 @@ use Spryker\Zed\Api\Business\Model\Processor\Post\PostProcessorInterface;
 
 class FindActionPostProcessor implements PostProcessorInterface
 {
+    /**
+     * @var string
+     */
     public const QUERY_PAGE = 'page';
+    /**
+     * @var string
+     */
     public const QUERY_PAGES = 'pages';
 
     /**

@@ -51,7 +51,7 @@ class PricePageDataLoaderExpanderPlugin extends AbstractPlugin implements Produc
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      *
      * @return array
      */
@@ -66,7 +66,7 @@ class PricePageDataLoaderExpanderPlugin extends AbstractPlugin implements Produc
      * @param array $prices
      * @param string $storeName
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     protected function filterPricesByStore(array $prices, string $storeName): array
     {

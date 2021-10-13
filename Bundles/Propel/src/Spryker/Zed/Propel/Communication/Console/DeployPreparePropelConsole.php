@@ -17,7 +17,13 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class DeployPreparePropelConsole extends Console
 {
+    /**
+     * @var string
+     */
     public const COMMAND_NAME = 'propel:deploy:prepare';
+    /**
+     * @var string
+     */
     public const DESCRIPTION = 'Prepares Propel configuration on appserver';
 
     /**

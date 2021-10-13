@@ -24,10 +24,22 @@ use Symfony\Component\HttpKernel\KernelEvents;
  */
 class SessionEventDispatcherPlugin extends AbstractPlugin implements EventDispatcherPluginInterface
 {
+    /**
+     * @var string
+     */
     protected const SERVICE_SESSION = 'session';
+    /**
+     * @var string
+     */
     protected const FLAG_SESSION_TEST = 'session.test';
 
+    /**
+     * @var int
+     */
     protected const EVENT_PRIORITY_EARLY_KERNEL_REQUEST = 128;
+    /**
+     * @var int
+     */
     protected const EVENT_PRIORITY_KERNEL_REQUEST = 192;
     protected const EVENT_PRIORITY_KERNEL_RESPONSE = -128;
 

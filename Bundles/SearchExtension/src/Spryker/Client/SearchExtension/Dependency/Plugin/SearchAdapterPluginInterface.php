@@ -21,7 +21,7 @@ interface SearchAdapterPluginInterface
      * @api
      *
      * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface $searchQuery
-     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface[] $resultFormatters
+     * @param array<\Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface> $resultFormatters
      * @param array $requestParameters
      *
      * @return mixed
@@ -58,7 +58,7 @@ interface SearchAdapterPluginInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\SearchDocumentTransfer[] $searchDocumentTransfers
+     * @param array<\Generated\Shared\Transfer\SearchDocumentTransfer> $searchDocumentTransfers
      *
      * @return bool
      */
@@ -94,11 +94,11 @@ interface SearchAdapterPluginInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\SearchDocumentTransfer[] $searchContextTransfers
+     * @param array<\Generated\Shared\Transfer\SearchDocumentTransfer> $searchDocumentTransfers
      *
      * @return bool
      */
-    public function writeDocuments(array $searchContextTransfers): bool;
+    public function writeDocuments(array $searchDocumentTransfers): bool;
 
     /**
      * Specification:

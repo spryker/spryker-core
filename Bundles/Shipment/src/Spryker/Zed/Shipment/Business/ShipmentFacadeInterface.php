@@ -43,7 +43,7 @@ interface ShipmentFacadeInterface
      *
      * @api
      *
-     * @return \Generated\Shared\Transfer\ShipmentCarrierTransfer[]
+     * @return array<\Generated\Shared\Transfer\ShipmentCarrierTransfer>
      */
     public function getCarriers();
 
@@ -70,7 +70,7 @@ interface ShipmentFacadeInterface
      *
      * @api
      *
-     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer[]
+     * @return array<\Generated\Shared\Transfer\ShipmentMethodTransfer>
      */
     public function getMethods();
 
@@ -216,12 +216,29 @@ interface ShipmentFacadeInterface
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\Shipment\Business\ShipmentFacadeInterface::saveSalesOrderShipment()} instead.
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
      *
      * @return void
      */
     public function saveOrderShipment(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer);
+
+    /**
+     * Specification:
+     * - Expands shipment expense with a stack of ShipmentExpenseExpanderPluginInterface
+     * - Creates sales shipments for sales order.
+     * - Creates sales shipping addresses for each item level shipment.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
+     *
+     * @return void
+     */
+    public function saveSalesOrderShipment(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer): void;
 
     /**
      * Specification:
@@ -316,7 +333,7 @@ interface ShipmentFacadeInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
-     * @param bool[] $itemListUpdatedStatus
+     * @param array<bool> $itemListUpdatedStatus
      *
      * @return \Generated\Shared\Transfer\ShipmentGroupTransfer
      */
@@ -374,7 +391,7 @@ interface ShipmentFacadeInterface
      * @param int $idSalesOrder
      * @param int $idSalesShipment
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]|\ArrayObject
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer>
      */
     public function findSalesOrderItemsIdsBySalesShipmentId(int $idSalesOrder, int $idSalesShipment): ArrayObject;
 
@@ -398,7 +415,7 @@ interface ShipmentFacadeInterface
      * @api
      *
      * @param array $events
-     * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $orderItemTransfers
+     * @param iterable<\Generated\Shared\Transfer\ItemTransfer> $orderItemTransfers
      *
      * @return array
      */
@@ -444,7 +461,7 @@ interface ShipmentFacadeInterface
      *
      * @api
      *
-     * @return \Generated\Shared\Transfer\ShipmentCarrierTransfer[]
+     * @return array<\Generated\Shared\Transfer\ShipmentCarrierTransfer>
      */
     public function getActiveShipmentCarriers(): array;
 

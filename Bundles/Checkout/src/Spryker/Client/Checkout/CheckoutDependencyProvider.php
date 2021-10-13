@@ -12,7 +12,13 @@ use Spryker\Client\Kernel\Container;
 
 class CheckoutDependencyProvider extends AbstractDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const SERVICE_ZED = 'zed service';
+    /**
+     * @var string
+     */
     public const PLUGINS_CHECKOUT_PRE_CHECK = 'PLUGINS_CHECKOUT_PRE_CHECK';
 
     /**
@@ -46,7 +52,7 @@ class CheckoutDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @return \Spryker\Client\CheckoutExtension\Dependency\Plugin\CheckoutPreCheckPluginInterface[]
+     * @return array<\Spryker\Client\CheckoutExtension\Dependency\Plugin\CheckoutPreCheckPluginInterface>
      */
     protected function getCheckoutPreCheckPlugins(): array
     {

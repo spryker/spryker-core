@@ -18,6 +18,7 @@ class GlossaryTranslationStorageWriter implements GlossaryTranslationStorageWrit
 {
     /**
      * @uses \Orm\Zed\Glossary\Persistence\Map\SpyGlossaryTranslationTableMap::COL_FK_GLOSSARY_KEY
+     * @var string
      */
     protected const COL_FK_GLOSSARY_KEY = 'spy_glossary_translation.fk_glossary_key';
 
@@ -62,7 +63,7 @@ class GlossaryTranslationStorageWriter implements GlossaryTranslationStorageWrit
     /**
      * @deprecated Use {@link \Spryker\Zed\GlossaryStorage\Business\Writer\GlossaryTranslationStorageWriter::writeGlossaryStorageCollectionByGlossaryKeyEvents()} instead
      *
-     * @param int[] $glossaryKeyIds
+     * @param array<int> $glossaryKeyIds
      *
      * @return void
      */
@@ -72,7 +73,7 @@ class GlossaryTranslationStorageWriter implements GlossaryTranslationStorageWrit
     }
 
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
      *
      * @return void
      */
@@ -84,7 +85,7 @@ class GlossaryTranslationStorageWriter implements GlossaryTranslationStorageWrit
     }
 
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
      *
      * @return void
      */
@@ -96,7 +97,7 @@ class GlossaryTranslationStorageWriter implements GlossaryTranslationStorageWrit
     }
 
     /**
-     * @param int[] $glossaryKeyIds
+     * @param array<int> $glossaryKeyIds
      *
      * @return void
      */
@@ -121,7 +122,7 @@ class GlossaryTranslationStorageWriter implements GlossaryTranslationStorageWrit
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SpyGlossaryTranslationEntityTransfer[] $glossaryTranslationEntityTransfers
+     * @param array<\Generated\Shared\Transfer\SpyGlossaryTranslationEntityTransfer> $glossaryTranslationEntityTransfers
      * @param array $mappedGlossaryStorageEntityTransfers
      *
      * @return array
@@ -148,7 +149,7 @@ class GlossaryTranslationStorageWriter implements GlossaryTranslationStorageWrit
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SpyGlossaryTranslationEntityTransfer[] $glossaryTranslationEntityTransfers
+     * @param array<\Generated\Shared\Transfer\SpyGlossaryTranslationEntityTransfer> $glossaryTranslationEntityTransfers
      * @param array $mappedGlossaryStorageEntityTransfers
      *
      * @return void
@@ -189,12 +190,12 @@ class GlossaryTranslationStorageWriter implements GlossaryTranslationStorageWrit
         $glossaryStorageEntityTransfer->setGlossaryKey($glossaryTranslationEntityTransfer->getGlossaryKey()->getKey());
         $glossaryStorageEntityTransfer->setLocale($glossaryTranslationEntityTransfer->getLocale()->getLocaleName());
 
-        /**
+        /*
          * This line added to keep the glossary data structure in backward compatible and
          * will be removed in the next major version.
          */
         $data = $this->makeGlossaryDataBackwardCompatible($glossaryTranslationEntityTransfer->modifiedToArray());
-        $glossaryStorageEntityTransfer->setData(json_encode($data));
+        $glossaryStorageEntityTransfer->setData(json_encode($data) ?: null);
 
         return $glossaryStorageEntityTransfer;
     }

@@ -53,7 +53,7 @@ class AssociativeArrayFormatter extends SimpleArrayFormatter
             $phpName = lcfirst($phpName);
 
             $separator = '_';
-            $key = strtolower(preg_replace(
+            $key = strtolower((string)preg_replace(
                 '/([a-z])([A-Z])/',
                 '$1' . addcslashes($separator, '$') . '$2',
                 $phpName

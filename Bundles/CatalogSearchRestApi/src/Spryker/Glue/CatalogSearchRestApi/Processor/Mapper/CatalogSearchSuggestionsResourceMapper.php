@@ -14,13 +14,37 @@ use Generated\Shared\Transfer\RestCatalogSearchSuggestionsAttributesTransfer;
 
 class CatalogSearchSuggestionsResourceMapper implements CatalogSearchSuggestionsResourceMapperInterface
 {
+    /**
+     * @var string
+     */
     protected const SEARCH_RESPONSE_COMPLETION_KEY = 'completion';
+    /**
+     * @var string
+     */
     protected const SEARCH_RESPONSE_SUGGESTION_BY_TYPE_KEY = 'suggestionByType';
+    /**
+     * @var string
+     */
     protected const SEARCH_RESPONSE_PRODUCT_ABSTRACT_KEY = 'product_abstract';
+    /**
+     * @var string
+     */
     protected const SEARCH_RESPONSE_PRODUCT_ABSTRACT_IMAGES_KEY = 'images';
+    /**
+     * @var string
+     */
     protected const SEARCH_RESPONSE_CATEGORY_KEY = 'category';
+    /**
+     * @var string
+     */
     protected const SEARCH_RESPONSE_CMS_PAGE_KEY = 'cms_page';
+    /**
+     * @var string
+     */
     protected const SEARCH_RESPONSE_NAME_KEY = 'name';
+    /**
+     * @var string
+     */
     protected const SEARCH_RESPONSE_URL_KEY = 'url';
 
     /**

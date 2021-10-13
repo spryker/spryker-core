@@ -35,7 +35,7 @@ class CmsBlockStoreRelationMapper implements CmsBlockStoreRelationMapperInterfac
     /**
      * @param \Orm\Zed\CmsBlock\Persistence\SpyCmsBlock $cmsBlockEntity
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\StoreTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\StoreTransfer>
      */
     protected function mapStoreTransfers(SpyCmsBlock $cmsBlockEntity): ArrayObject
     {
@@ -54,9 +54,9 @@ class CmsBlockStoreRelationMapper implements CmsBlockStoreRelationMapperInterfac
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\StoreTransfer[] $storeTransferCollection
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\StoreTransfer> $storeTransferCollection
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function selectIdStores(ArrayObject $storeTransferCollection): array
     {

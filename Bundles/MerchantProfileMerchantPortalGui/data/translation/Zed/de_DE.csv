@@ -19,10 +19,10 @@ Email,E-Mail
 Imprint,Impressum
 "Is Active","Ist Aktiv"
 "Last Name",Nachname
-Latitude,Längengrad
+Latitude,Breitengrad
 "Logo URL","Logo URL"
-Longitude,Breitengrad
-"Merchant Reference",Händler-Referenznummer
+Longitude,Längengrad
+"Merchant Reference",Verkäufer-Referenznummer
 Mr,Herr
 Mrs,Fr.
 Ms,Fr.
@@ -56,3 +56,4 @@ Title,Titel
 "Your Store is online","Ihr Shop ist online"
 "Visual assets","Visuelle Elemente"
 "Zip Code",Postleitzahl
+Stores,Stores

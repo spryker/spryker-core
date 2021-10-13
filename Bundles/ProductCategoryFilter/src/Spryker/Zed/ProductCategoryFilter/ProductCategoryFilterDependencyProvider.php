@@ -17,7 +17,13 @@ use Spryker\Zed\ProductCategoryFilter\Dependency\Service\ProductCategoryFilterTo
  */
 class ProductCategoryFilterDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_TOUCH = 'FACADE_TOUCH';
+    /**
+     * @var string
+     */
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
     /**

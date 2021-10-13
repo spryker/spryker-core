@@ -29,7 +29,13 @@ use Spryker\Zed\DataImport\Dependency\Service\DataImportToUtilEncodingServiceInt
  */
 class QueueWriterTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const DUMMY_QUEUE_NAME = 'dummy_queue';
+    /**
+     * @var array
+     */
     protected const PAYLOAD_DUMMY_DATA = ['dummy payload'];
 
     /**
@@ -41,7 +47,7 @@ class QueueWriterTest extends Unit
      * @dataProvider getQueueWritableData
      *
      * @param int $expectedMessageCount
-     * @param \Generated\Shared\Transfer\DataSetItemTransfer[] $dataSetItemTransfers
+     * @param array<\Generated\Shared\Transfer\DataSetItemTransfer> $dataSetItemTransfers
      *
      * @return void
      */

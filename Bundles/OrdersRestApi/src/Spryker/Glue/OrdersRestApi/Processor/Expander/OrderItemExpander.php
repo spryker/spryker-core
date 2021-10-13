@@ -14,6 +14,9 @@ use Spryker\Glue\OrdersRestApi\Processor\RestResponseBuilder\OrderRestResponseBu
 
 class OrderItemExpander implements OrderItemExpanderInterface
 {
+    /**
+     * @var string
+     */
     protected const ORDER_ITEM_UUID = 'orderItemUuid';
 
     /**
@@ -39,14 +42,14 @@ class OrderItemExpander implements OrderItemExpanderInterface
     }
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
+     * @param array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface> $resources
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return void
      */
     public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
-        $customerReference = $restRequest->getUser()->getNaturalIdentifier();
+        $customerReference = $restRequest->getRestUser()->getNaturalIdentifier();
 
         if (!$customerReference) {
             return;
@@ -73,9 +76,9 @@ class OrderItemExpander implements OrderItemExpanderInterface
     }
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
+     * @param array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface> $resources
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function extractOrderItemUuids(array $resources): array
     {

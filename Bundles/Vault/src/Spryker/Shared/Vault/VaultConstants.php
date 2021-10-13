@@ -17,6 +17,7 @@ interface VaultConstants
      * - Provides encryption key for vault data.
      *
      * @api
+     * @var string
      */
     public const ENCRYPTION_KEY = 'VAULT:ENCRYPTION_KEY';
 }

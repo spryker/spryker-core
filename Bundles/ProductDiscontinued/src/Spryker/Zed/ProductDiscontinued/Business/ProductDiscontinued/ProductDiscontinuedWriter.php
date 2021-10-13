@@ -41,7 +41,7 @@ class ProductDiscontinuedWriter implements ProductDiscontinuedWriterInterface
     protected $productDiscontinuedPluginExecutor;
 
     /**
-     * @var \Spryker\Zed\ProductDiscontinuedExtension\Dependency\Plugin\ProductDiscontinuedPreDeleteCheckPluginInterface[]
+     * @var array<\Spryker\Zed\ProductDiscontinuedExtension\Dependency\Plugin\ProductDiscontinuedPreDeleteCheckPluginInterface>
      */
     protected $productDiscontinuedPreDeleteCheckPlugins;
 
@@ -50,7 +50,7 @@ class ProductDiscontinuedWriter implements ProductDiscontinuedWriterInterface
      * @param \Spryker\Zed\ProductDiscontinued\Persistence\ProductDiscontinuedRepositoryInterface $productDiscontinuedRepository
      * @param \Spryker\Zed\ProductDiscontinued\Business\ProductDiscontinued\ProductDiscontinuedPluginExecutorInterface $productDiscontinuedPluginExecutor
      * @param \Spryker\Zed\ProductDiscontinued\ProductDiscontinuedConfig $productDiscontinuedConfig
-     * @param \Spryker\Zed\ProductDiscontinuedExtension\Dependency\Plugin\ProductDiscontinuedPreDeleteCheckPluginInterface[] $productDiscontinuedPreDeleteCheckPlugins
+     * @param array<\Spryker\Zed\ProductDiscontinuedExtension\Dependency\Plugin\ProductDiscontinuedPreDeleteCheckPluginInterface> $productDiscontinuedPreDeleteCheckPlugins
      */
     public function __construct(
         ProductDiscontinuedEntityManagerInterface $productDiscontinuedEntityManager,
@@ -156,7 +156,7 @@ class ProductDiscontinuedWriter implements ProductDiscontinuedWriterInterface
     {
         return date(
             'Y-m-d',
-            strtotime(sprintf('+%s Days', $this->productDiscontinuedConfig->getDaysAmountBeforeProductDeactivate()))
+            (int)strtotime(sprintf('+%s Days', $this->productDiscontinuedConfig->getDaysAmountBeforeProductDeactivate()))
         );
     }
 

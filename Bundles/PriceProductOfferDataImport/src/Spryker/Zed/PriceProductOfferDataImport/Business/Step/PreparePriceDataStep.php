@@ -15,6 +15,8 @@ use Spryker\Zed\PriceProductOfferDataImport\Dependency\Facade\PriceProductOfferD
 
 class PreparePriceDataStep implements DataImportStepInterface
 {
+    protected const PRICE_DATA_VOLUME_PRICES = PriceProductOfferDataSetInterface::PRICE_DATA_VOLUME_PRICES;
+
     /**
      * @var \Spryker\Zed\PriceProductOfferDataImport\Dependency\Facade\PriceProductOfferDataImportToPriceProductFacadeInterface
      */
@@ -66,7 +68,7 @@ class PreparePriceDataStep implements DataImportStepInterface
     protected function getPriceData(DataSetInterface $dataSet): array
     {
         $volumePrices = $this->utilEncodingService->decodeJson(
-            $dataSet[PriceProductOfferDataSetInterface::PRICE_DATA_VOLUME_PRICES],
+            $dataSet[static::PRICE_DATA_VOLUME_PRICES],
             true
         );
 

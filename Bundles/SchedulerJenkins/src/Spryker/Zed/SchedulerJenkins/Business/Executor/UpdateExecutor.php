@@ -15,6 +15,9 @@ use Spryker\Zed\SchedulerJenkins\Business\TemplateGenerator\JenkinsJobTemplateGe
 
 class UpdateExecutor implements ExecutorInterface
 {
+    /**
+     * @var string
+     */
     protected const UPDATE_JOB_URL_TEMPLATE = 'job/%s/config.xml';
 
     /**

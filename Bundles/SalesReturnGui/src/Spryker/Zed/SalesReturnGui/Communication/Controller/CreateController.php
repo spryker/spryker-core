@@ -18,25 +18,47 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class CreateController extends AbstractController
 {
+    /**
+     * @var string
+     */
     protected const PARAM_ID_RETURN = 'id-return';
+    /**
+     * @var string
+     */
     protected const PARAM_ID_ORDER = 'id-order';
 
     /**
      * @uses \Spryker\Zed\SalesReturnGui\Communication\Controller\IndexController::indexAction()
+     * @var string
      */
     protected const ROUTE_RETURN_LIST = '/sales-return-gui';
 
     /**
      * @uses \Spryker\Zed\SalesReturnGui\Communication\Controller\DetailController::indexAction()
+     * @var string
      */
     protected const ROUTE_RETURN_DETAIL = '/sales-return-gui/detail';
 
+    /**
+     * @var string
+     */
     protected const MESSAGE_RETURN_CREATE_FAIL = 'Return has not been created.';
+    /**
+     * @var string
+     */
     protected const MESSAGE_ORDER_NOT_FOUND = 'Order with id "%id%" was not found.';
+    /**
+     * @var string
+     */
     protected const MESSAGE_RETURN_CREATED = 'Return was successfully created.';
+    /**
+     * @var string
+     */
     protected const MESSAGE_PARAM_ID = '%id%';
 
     /**
+     * @phpstan-return \Symfony\Component\HttpFoundation\RedirectResponse|array<string, mixed>
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
@@ -53,6 +75,8 @@ class CreateController extends AbstractController
     }
 
     /**
+     * @phpstan-return \Symfony\Component\HttpFoundation\RedirectResponse|array<string, mixed>
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
@@ -80,17 +104,14 @@ class CreateController extends AbstractController
             return $this->processReturnCreateForm($returnCreateForm, $orderTransfer);
         }
 
-        return [
-            'returnCreateForm' => $returnCreateForm->createView(),
-            'order' => $orderTransfer,
-        ];
+        return $this->provideTemplateData($returnCreateForm, $orderTransfer);
     }
 
     /**
-     * @param \Symfony\Component\Form\FormInterface $returnCreateForm
+     * @param \Symfony\Component\Form\FormInterface<mixed> $returnCreateForm
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array<string, mixed>
      */
     protected function processReturnCreateForm(FormInterface $returnCreateForm, OrderTransfer $orderTransfer)
     {
@@ -110,9 +131,27 @@ class CreateController extends AbstractController
 
         $this->addErrorMessage(static::MESSAGE_RETURN_CREATE_FAIL);
 
+        return $this->provideTemplateData($returnCreateForm, $orderTransfer);
+    }
+
+    /**
+     * @phpstan-param \Symfony\Component\Form\FormInterface<mixed> $returnCreateForm
+     *
+     * @phpstan-return array<string, mixed>
+     *
+     * @param \Symfony\Component\Form\FormInterface $returnCreateForm
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return array
+     */
+    protected function provideTemplateData(FormInterface $returnCreateForm, OrderTransfer $orderTransfer): array
+    {
         return [
             'returnCreateForm' => $returnCreateForm->createView(),
             'order' => $orderTransfer,
+            'templates' => $this->getFactory()
+                ->createReturnCreateTemplateProvider()
+                ->provide($returnCreateForm, $orderTransfer),
         ];
     }
 }

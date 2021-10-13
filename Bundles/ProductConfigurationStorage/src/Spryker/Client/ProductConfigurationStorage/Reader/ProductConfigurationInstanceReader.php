@@ -91,4 +91,79 @@ class ProductConfigurationInstanceReader implements ProductConfigurationInstance
                 new ProductConfigurationInstanceTransfer()
             );
     }
+
+    /**
+     * @param array<string> $skus
+     *
+     * @return array<\Generated\Shared\Transfer\ProductConfigurationInstanceTransfer>
+     */
+    public function findProductConfigurationInstancesIndexedBySku(array $skus): array
+    {
+        $productConfigurationInstancesIndexedBySku = $this->getProductConfigurationInstancesFromSession($skus);
+
+        $notConfiguredProductSkus = $this->getNotConfiguredProductSkus(
+            $skus,
+            array_keys($productConfigurationInstancesIndexedBySku)
+        );
+
+        if ($notConfiguredProductSkus) {
+            $productConfigurationInstancesIndexedBySku = array_merge(
+                $productConfigurationInstancesIndexedBySku,
+                $this->findProductConfigurationInstancesInStorageIndexedBySku($notConfiguredProductSkus)
+            );
+        }
+
+        return $productConfigurationInstancesIndexedBySku;
+    }
+
+    /**
+     * @param array<string> $skus
+     *
+     * @return array<\Generated\Shared\Transfer\ProductConfigurationInstanceTransfer>
+     */
+    protected function getProductConfigurationInstancesFromSession(array $skus): array
+    {
+        $productConfigurationInstancesIndexedBySku = [];
+        $sessionStorageData = $this->sessionClient->all();
+
+        foreach ($skus as $sku) {
+            $productConfigurationSessionKey = $this->productConfigurationSessionKeyBuilder->getProductConfigurationSessionKey($sku);
+            $productConfigurationInstanceTransfer = $sessionStorageData[$productConfigurationSessionKey] ?? null;
+
+            if (!$productConfigurationInstanceTransfer) {
+                continue;
+            }
+
+            $productConfigurationInstancesIndexedBySku[$sku] = $productConfigurationInstanceTransfer;
+        }
+
+        return $productConfigurationInstancesIndexedBySku;
+    }
+
+    /**
+     * @param array<string> $skus
+     * @param array<string> $configuredProductSkus
+     *
+     * @return array<string>
+     */
+    protected function getNotConfiguredProductSkus(array $skus, array $configuredProductSkus): array
+    {
+        return array_diff($skus, $configuredProductSkus);
+    }
+
+    /**
+     * @param array<string> $skus
+     *
+     * @return array<\Generated\Shared\Transfer\ProductConfigurationInstanceTransfer>
+     */
+    protected function findProductConfigurationInstancesInStorageIndexedBySku(array $skus): array
+    {
+        $productConfigurationStorageTransfers = $this->configurationStorageReader
+            ->findProductConfigurationStoragesBySkus($skus);
+
+        return $this->productConfigurationStorageMapper
+            ->mapProductConfigurationStorageTransfersToProductConfigurationInstanceTransfersIndexedBySku(
+                $productConfigurationStorageTransfers
+            );
+    }
 }

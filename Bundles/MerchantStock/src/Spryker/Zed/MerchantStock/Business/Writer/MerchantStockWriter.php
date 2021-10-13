@@ -16,6 +16,9 @@ use Spryker\Zed\MerchantStock\Persistence\MerchantStockEntityManagerInterface;
 
 class MerchantStockWriter implements MerchantStockWriterInterface
 {
+    /**
+     * @var string
+     */
     protected const ERROR_MERCHANT_STOCK_CREATE = 'Merchant stock can not be created.';
 
     /**
@@ -49,6 +52,7 @@ class MerchantStockWriter implements MerchantStockWriterInterface
     {
         $stockTransfer = (new StockTransfer())
             ->setName($this->generateStockNameByMerchant($merchantTransfer))
+            ->setStoreRelation($merchantTransfer->getStoreRelation())
             ->setIsActive(true);
 
         $stockTransfer = $this->stockFacade->createStock($stockTransfer)->getStock();
@@ -75,8 +79,8 @@ class MerchantStockWriter implements MerchantStockWriterInterface
     {
         return sprintf(
             '%s %s %s %d',
-            $merchantTransfer->requireName()->getName(),
-            $merchantTransfer->requireMerchantReference()->getMerchantReference(),
+            $merchantTransfer->getNameOrFail(),
+            $merchantTransfer->getMerchantReferenceOrFail(),
             'Warehouse',
             $merchantTransfer->getStocks()->count() + 1
         );

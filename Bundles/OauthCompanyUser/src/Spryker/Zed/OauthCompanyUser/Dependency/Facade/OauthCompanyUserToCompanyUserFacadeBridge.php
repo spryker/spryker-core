@@ -35,9 +35,9 @@ class OauthCompanyUserToCompanyUserFacadeBridge implements OauthCompanyUserToCom
     }
 
     /**
-     * @param int[] $companyUserIds
+     * @param array<int> $companyUserIds
      *
-     * @return \Generated\Shared\Transfer\CompanyUserTransfer[]
+     * @return array<\Generated\Shared\Transfer\CompanyUserTransfer>
      */
     public function findActiveCompanyUsersByIds(array $companyUserIds): array
     {

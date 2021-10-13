@@ -15,6 +15,9 @@ use Throwable;
 
 class RedisDataCollector extends DataCollector
 {
+    /**
+     * @var string
+     */
     protected const COLLECTOR_NAME = 'redis';
 
     /**

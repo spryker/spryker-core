@@ -325,7 +325,7 @@ class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\CmsGui\Dependency\Plugin\CmsPageTableExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\CmsGui\Dependency\Plugin\CmsPageTableExpanderPluginInterface>
      */
     protected function getCmsPageTableExpanderPlugins()
     {
@@ -333,7 +333,7 @@ class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\CmsGui\Dependency\Plugin\CreateGlossaryExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\CmsGui\Dependency\Plugin\CreateGlossaryExpanderPluginInterface>
      */
     public function getCreateGlossaryExpanderPlugins()
     {
@@ -349,7 +349,7 @@ class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\CmsGuiExtension\Dependency\Plugin\CmsGlossaryAfterFindPluginInterface[]
+     * @return array<\Spryker\Zed\CmsGuiExtension\Dependency\Plugin\CmsGlossaryAfterFindPluginInterface>
      */
     public function getCmsGlossaryAfterFindPlugins(): array
     {
@@ -357,7 +357,7 @@ class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\CmsGuiExtension\Dependency\Plugin\CmsGlossaryBeforeSavePluginInterface[]
+     * @return array<\Spryker\Zed\CmsGuiExtension\Dependency\Plugin\CmsGlossaryBeforeSavePluginInterface>
      */
     public function getCmsGlossaryBeforeSavePlugins(): array
     {

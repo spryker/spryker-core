@@ -10,12 +10,12 @@ namespace Spryker\Client\Oauth\ResourceServer\KeyLoader;
 class KeyLoader implements KeyLoaderInterface
 {
     /**
-     * @var \Spryker\Client\OauthExtension\Dependency\Plugin\KeyLoaderPluginInterface[]
+     * @var array<\Spryker\Client\OauthExtension\Dependency\Plugin\KeyLoaderPluginInterface>
      */
     protected $keyLoaderPlugins;
 
     /**
-     * @param \Spryker\Client\OauthExtension\Dependency\Plugin\KeyLoaderPluginInterface[] $keyLoaderPlugins
+     * @param array<\Spryker\Client\OauthExtension\Dependency\Plugin\KeyLoaderPluginInterface> $keyLoaderPlugins
      */
     public function __construct(array $keyLoaderPlugins)
     {
@@ -23,7 +23,7 @@ class KeyLoader implements KeyLoaderInterface
     }
 
     /**
-     * @return \League\OAuth2\Server\CryptKey[]
+     * @return array<\League\OAuth2\Server\CryptKey>
      */
     public function loadKeys(): array
     {

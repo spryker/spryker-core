@@ -11,7 +11,13 @@ use Symfony\Component\Finder\SplFileInfo;
 
 class StabilityUpdater implements UpdaterInterface
 {
+    /**
+     * @var string
+     */
     public const KEY_MINIMUM_STABILITY = 'minimum-stability';
+    /**
+     * @var string
+     */
     public const KEY_PREFER_STABLE = 'prefer-stable';
 
     /**

@@ -15,11 +15,18 @@ use Spryker\Zed\CmsSlotBlockCmsGui\Dependency\QueryContainer\CmsSlotBlockCmsGuiT
 
 class CmsPageConditionDataProvider implements CmsPageConditionDataProviderInterface
 {
+    /**
+     * @var string
+     */
     protected const KEY_OPTION_ALL_CMS_PAGES = 'All CMS Pages';
+    /**
+     * @var string
+     */
     protected const KEY_OPTION_SPECIFIC_CMS_PAGES = 'Specific CMS Pages';
 
     /**
      * @uses \Spryker\Zed\Cms\Persistence\CmsQueryContainer::CMS_NAME
+     * @var string
      */
     protected const CMS_PAGE_NAME = 'name';
 
@@ -76,7 +83,7 @@ class CmsPageConditionDataProvider implements CmsPageConditionDataProviderInterf
     }
 
     /**
-     * @return int[]
+     * @return array<int>
      */
     protected function getPages(): array
     {
@@ -88,9 +95,9 @@ class CmsPageConditionDataProvider implements CmsPageConditionDataProviderInterf
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Cms\Persistence\SpyCmsPage[] $cmsPageEntityCollection
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Cms\Persistence\SpyCmsPage> $cmsPageEntityCollection
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getCmsPageIdsFromCollection(ObjectCollection $cmsPageEntityCollection): array
     {

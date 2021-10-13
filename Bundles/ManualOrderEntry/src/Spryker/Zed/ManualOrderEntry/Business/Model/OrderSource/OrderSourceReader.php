@@ -40,7 +40,7 @@ class OrderSourceReader implements OrderSourceReaderInterface
     }
 
     /**
-     * @return \Generated\Shared\Transfer\OrderSourceTransfer[]
+     * @return array<\Generated\Shared\Transfer\OrderSourceTransfer>
      */
     public function findAllOrderSources(): array
     {

@@ -9,6 +9,8 @@ namespace Spryker\Glue\ShipmentsRestApi;
 
 use Spryker\Glue\Kernel\AbstractFactory;
 use Spryker\Glue\ShipmentsRestApi\Dependency\Service\ShipmentsRestApiToShipmentServiceInterface;
+use Spryker\Glue\ShipmentsRestApi\Processor\Expander\QuoteRequestItemExpander;
+use Spryker\Glue\ShipmentsRestApi\Processor\Expander\QuoteRequestItemExpanderInterface;
 use Spryker\Glue\ShipmentsRestApi\Processor\Expander\ShipmentByCheckoutDataExpander;
 use Spryker\Glue\ShipmentsRestApi\Processor\Expander\ShipmentByCheckoutDataExpanderInterface;
 use Spryker\Glue\ShipmentsRestApi\Processor\Expander\ShipmentMethodByCheckoutDataExpander;
@@ -161,7 +163,7 @@ class ShipmentsRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\ShipmentsRestApiExtension\Dependency\Plugin\AddressSourceCheckerPluginInterface[]
+     * @return array<\Spryker\Glue\ShipmentsRestApiExtension\Dependency\Plugin\AddressSourceCheckerPluginInterface>
      */
     public function getAddressSourceCheckerPlugins(): array
     {
@@ -174,5 +176,15 @@ class ShipmentsRestApiFactory extends AbstractFactory
     public function getShipmentService(): ShipmentsRestApiToShipmentServiceInterface
     {
         return $this->getProvidedDependency(ShipmentsRestApiDependencyProvider::SERVICE_SHIPMENT);
+    }
+
+    /**
+     * @return \Spryker\Glue\ShipmentsRestApi\Processor\Expander\QuoteRequestItemExpanderInterface
+     */
+    public function createQuoteRequestItemExpander(): QuoteRequestItemExpanderInterface
+    {
+        return new QuoteRequestItemExpander(
+            $this->getShipmentService()
+        );
     }
 }

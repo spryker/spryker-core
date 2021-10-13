@@ -16,7 +16,13 @@ use Symfony\Component\Form\FormEvents;
 
 class ProductListMerchantRelationshipFormExpander implements ProductListMerchantRelationshipFormExpanderInterface
 {
+    /**
+     * @var string
+     */
     public const OPTION_PRODUCT_LIST_CHOICES = 'choices';
+    /**
+     * @var string
+     */
     public const OPTION_DATA = 'data';
 
     /**

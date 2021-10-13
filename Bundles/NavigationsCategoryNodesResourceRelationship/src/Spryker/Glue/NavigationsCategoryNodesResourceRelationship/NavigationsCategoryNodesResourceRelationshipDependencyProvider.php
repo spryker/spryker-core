@@ -16,6 +16,9 @@ use Spryker\Glue\NavigationsCategoryNodesResourceRelationship\Dependency\RestRes
  */
 class NavigationsCategoryNodesResourceRelationshipDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const RESOURCE_CATEGORIES_REST_API = 'RESOURCE_CATEGORIES_REST_API';
 
     /**

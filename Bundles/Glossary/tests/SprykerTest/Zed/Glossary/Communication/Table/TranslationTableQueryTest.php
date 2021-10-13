@@ -32,11 +32,21 @@ class TranslationTableQueryTest extends Unit
 {
     /**
      * @uses \Spryker\Zed\Twig\Communication\Plugin\Application\TwigApplicationPlugin::SERVICE_TWIG
+     * @var string
      */
     public const SERVICE_TWIG = 'twig';
 
+    /**
+     * @var string
+     */
     protected const TEST_LOCALE_1 = 'xxx';
+    /**
+     * @var string
+     */
     protected const TEST_LOCALE_2 = 'yyy';
+    /**
+     * @var string
+     */
     protected const TEST_GLOSSARY_KEY = 'test_glossary_key';
 
     /**

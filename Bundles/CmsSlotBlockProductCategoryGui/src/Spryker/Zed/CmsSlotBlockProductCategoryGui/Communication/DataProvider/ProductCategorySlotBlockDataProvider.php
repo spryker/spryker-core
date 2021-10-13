@@ -14,7 +14,13 @@ use Spryker\Zed\CmsSlotBlockProductCategoryGui\Dependency\Facade\CmsSlotBlockPro
 
 class ProductCategorySlotBlockDataProvider implements ProductCategorySlotBlockDataProviderInterface
 {
+    /**
+     * @var string
+     */
     protected const KEY_OPTION_ALL_PRODUCTS = 'All Product Pages';
+    /**
+     * @var string
+     */
     protected const KEY_OPTION_SPECIFIC_PRODUCTS = 'Specific Product Pages';
 
     /**
@@ -48,7 +54,7 @@ class ProductCategorySlotBlockDataProvider implements ProductCategorySlotBlockDa
     }
 
     /**
-     * @param int[]|null $productAbstractIds
+     * @param array<int>|null $productAbstractIds
      *
      * @return array
      */

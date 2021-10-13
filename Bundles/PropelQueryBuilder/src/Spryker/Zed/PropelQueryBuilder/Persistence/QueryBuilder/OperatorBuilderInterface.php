@@ -10,7 +10,7 @@ namespace Spryker\Zed\PropelQueryBuilder\Persistence\QueryBuilder;
 interface OperatorBuilderInterface
 {
     /**
-     * @return \Spryker\Zed\PropelQueryBuilder\Persistence\QueryBuilder\Operator\OperatorInterface[]
+     * @return array<\Spryker\Zed\PropelQueryBuilder\Persistence\QueryBuilder\Operator\OperatorInterface>
      */
     public function buildOperators();
 

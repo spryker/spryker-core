@@ -27,7 +27,7 @@ class ConsoleFactory extends AbstractFactory
     }
 
     /**
-     * @return \Symfony\Component\Console\Command\Command[]
+     * @return array<\Symfony\Component\Console\Command\Command>
      */
     public function getConsoleCommands(): array
     {
@@ -43,7 +43,7 @@ class ConsoleFactory extends AbstractFactory
     }
 
     /**
-     * @return \Symfony\Component\EventDispatcher\EventSubscriberInterface[]
+     * @return array<\Symfony\Component\EventDispatcher\EventSubscriberInterface>
      */
     public function getEventSubscriber(): array
     {
@@ -51,7 +51,7 @@ class ConsoleFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface[]
+     * @return array<\Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface>
      */
     public function getApplicationPlugins(): array
     {
@@ -59,7 +59,7 @@ class ConsoleFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Shared\Console\Dependency\Plugin\ConsolePreRunHookPluginInterface[]
+     * @return array<\Spryker\Shared\Console\Dependency\Plugin\ConsolePreRunHookPluginInterface>
      */
     public function getPreRunHookPlugins(): array
     {
@@ -67,7 +67,7 @@ class ConsoleFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Shared\Console\Dependency\Plugin\ConsolePostRunHookPluginInterface[]
+     * @return array<\Spryker\Shared\Console\Dependency\Plugin\ConsolePostRunHookPluginInterface>
      */
     public function getPostRunHookPlugins(): array
     {

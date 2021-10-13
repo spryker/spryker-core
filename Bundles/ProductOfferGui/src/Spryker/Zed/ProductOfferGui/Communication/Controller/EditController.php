@@ -19,6 +19,9 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class EditController extends AbstractController
 {
+    /**
+     * @var string
+     */
     protected const MESSAGE_SUCCESS_APPROVAL_STATUS_UPDATE = 'The approval status was updated';
 
     /**
@@ -30,6 +33,7 @@ class EditController extends AbstractController
     {
         $approvalStatus = $request->get(ProductOfferGuiConfig::REQUEST_PARAM_APPROVAL_STATUS);
         $idProductOffer = $this->castId($request->get(ProductOfferGuiConfig::REQUEST_PARAM_ID_PRODUCT_OFFER));
+        $idProductConcrete = $this->castId($request->get(ProductOfferGuiConfig::REQUEST_PARAM_ID_PRODUCT_CONCRETE));
 
         $productOfferResponseTransfer = $this->getFactory()
             ->getProductOfferFacade()
@@ -37,6 +41,7 @@ class EditController extends AbstractController
                 (new ProductOfferTransfer())
                     ->setIdProductOffer($idProductOffer)
                     ->setApprovalStatus($approvalStatus)
+                    ->setIdProductConcrete($idProductConcrete)
             );
 
         if ($productOfferResponseTransfer->getIsSuccessful()) {

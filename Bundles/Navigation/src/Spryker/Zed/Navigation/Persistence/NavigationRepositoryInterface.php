@@ -20,7 +20,7 @@ interface NavigationRepositoryInterface
     public function findNavigationByCriteria(NavigationCriteriaTransfer $navigationCriteriaTransfer): ?NavigationTransfer;
 
     /**
-     * @return \Generated\Shared\Transfer\NavigationTransfer[]
+     * @return array<\Generated\Shared\Transfer\NavigationTransfer>
      */
     public function getAllNavigations(): array;
 

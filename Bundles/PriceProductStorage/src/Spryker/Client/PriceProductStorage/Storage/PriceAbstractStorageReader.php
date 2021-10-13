@@ -31,12 +31,12 @@ class PriceAbstractStorageReader implements PriceAbstractStorageReaderInterface
     protected $priceProductMapper;
 
     /**
-     * @var \Spryker\Client\PriceProductStorageExtension\Dependency\Plugin\PriceProductStoragePriceDimensionPluginInterface[]
+     * @var array<\Spryker\Client\PriceProductStorageExtension\Dependency\Plugin\PriceProductStoragePriceDimensionPluginInterface>
      */
     protected $priceDimensionPlugins;
 
     /**
-     * @var \Spryker\Client\PriceProductStorageExtension\Dependency\Plugin\PriceProductStoragePricesExtractorPluginInterface[]
+     * @var array<\Spryker\Client\PriceProductStorageExtension\Dependency\Plugin\PriceProductStoragePricesExtractorPluginInterface>
      */
     protected $priceProductExtractorPlugins;
 
@@ -44,8 +44,8 @@ class PriceAbstractStorageReader implements PriceAbstractStorageReaderInterface
      * @param \Spryker\Client\PriceProductStorage\Dependency\Client\PriceProductStorageToStorageInterface $storageClient
      * @param \Spryker\Client\PriceProductStorage\Storage\PriceProductStorageKeyGeneratorInterface $priceStorageKeyGenerator
      * @param \Spryker\Client\PriceProductStorage\Storage\PriceProductMapperInterface $priceProductMapper
-     * @param \Spryker\Client\PriceProductStorageExtension\Dependency\Plugin\PriceProductStoragePriceDimensionPluginInterface[] $priceDimensionPlugins
-     * @param \Spryker\Client\PriceProductStorageExtension\Dependency\Plugin\PriceProductStoragePricesExtractorPluginInterface[] $priceProductExtractorPlugins
+     * @param array<\Spryker\Client\PriceProductStorageExtension\Dependency\Plugin\PriceProductStoragePriceDimensionPluginInterface> $priceDimensionPlugins
+     * @param array<\Spryker\Client\PriceProductStorageExtension\Dependency\Plugin\PriceProductStoragePricesExtractorPluginInterface> $priceProductExtractorPlugins
      */
     public function __construct(
         PriceProductStorageToStorageInterface $storageClient,
@@ -64,7 +64,7 @@ class PriceAbstractStorageReader implements PriceAbstractStorageReaderInterface
     /**
      * @param int $idProductAbstract
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function findPriceProductAbstractTransfers(int $idProductAbstract): array
     {
@@ -82,7 +82,7 @@ class PriceAbstractStorageReader implements PriceAbstractStorageReaderInterface
     /**
      * @param int $idProductAbstract
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     protected function findDefaultPriceDimensionPriceProductTransfers(int $idProductAbstract): array
     {
@@ -127,9 +127,9 @@ class PriceAbstractStorageReader implements PriceAbstractStorageReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     protected function applyPriceProductExtractorPlugins(array $priceProductTransfers): array
     {

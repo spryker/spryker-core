@@ -82,7 +82,7 @@ class ProductBundleWriter implements ProductBundleWriterInterface
 
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     * @param \ArrayObject|\Generated\Shared\Transfer\ProductForBundleTransfer[] $bundledProducts
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ProductForBundleTransfer> $bundledProducts
      *
      * @return void
      */

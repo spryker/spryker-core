@@ -19,7 +19,13 @@ use Spryker\Zed\PriceCartConnector\Dependency\Service\PriceCartConnectorToPriceP
 
 class ItemsWithoutPriceFilter implements ItemFilterInterface
 {
+    /**
+     * @var string
+     */
     protected const MESSAGE_PARAM_SKU = '%sku%';
+    /**
+     * @var string
+     */
     protected const MESSAGE_INFO_CONCRETE_PRODUCT_WITHOUT_PRICE_REMOVED = 'price-cart-connector.info.concrete-product-without-price.removed';
 
     /**
@@ -75,7 +81,7 @@ class ItemsWithoutPriceFilter implements ItemFilterInterface
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
@@ -96,7 +102,7 @@ class ItemsWithoutPriceFilter implements ItemFilterInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      * @param string $sku
      *
      * @return int|null
@@ -215,7 +221,7 @@ class ItemsWithoutPriceFilter implements ItemFilterInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductFilterTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductFilterTransfer>
      */
     protected function createPriceProductFilters(QuoteTransfer $quoteTransfer): array
     {

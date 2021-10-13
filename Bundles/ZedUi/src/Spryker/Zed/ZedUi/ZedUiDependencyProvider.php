@@ -14,7 +14,13 @@ use Spryker\Zed\ZedUi\Dependency\Service\ZedUiToUtilEncodingServiceBridge;
 
 class ZedUiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
+    /**
+     * @var string
+     */
     public const FACADE_TRANSLATOR = 'FACADE_TRANSLATOR';
 
     /**
@@ -22,7 +28,7 @@ class ZedUiDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    public function provideCommunicationLayerDependencies(Container $container)
+    public function provideCommunicationLayerDependencies(Container $container): Container
     {
         $container = $this->addUtilEncodingService($container);
         $container = $this->addTranslatorFacade($container);

@@ -12,17 +12,53 @@ use Spryker\Client\Storage\StorageConfig;
 
 class CacheDataProvider
 {
+    /**
+     * @var string
+     */
     public const TEST_TYPE_NEW_KEYS = 'TEST_TYPE_NEW_CACHE';
+    /**
+     * @var string
+     */
     public const TEST_TYPE_USED_KEYS = 'TEST_TYPE_USED_KEYS';
+    /**
+     * @var string
+     */
     public const TEST_TYPE_UNUSED_KEYS = 'TEST_TYPE_UNUSED_KEYS';
+    /**
+     * @var string
+     */
     public const TEST_TYPE_NEW_AND_USED_KEYS = 'TEST_TYPE_NEW_AND_USED_KEYS';
+    /**
+     * @var string
+     */
     public const TEST_TYPE_NEW_AND_USED_AND_UNUSED_KEYS = 'TEST_TYPE_NEW_AND_USED_AND_UNUSED_KEYS';
+    /**
+     * @var string
+     */
     public const TEST_TYPE_NO_KEYS = 'TEST_TYPE_NO_KEYS';
+    /**
+     * @var string
+     */
     public const TEST_TYPE_OVER_LIMIT_WITH_NEW_KEYS = 'TEST_TYPE_OVER_LIMIT_WITH_NEW_KEYS';
+    /**
+     * @var string
+     */
     public const TEST_TYPE_OVER_LIMIT_WITH_USED_KEYS = 'TEST_TYPE_OVER_LIMIT_WITH_USED_KEYS';
+    /**
+     * @var string
+     */
     public const TEST_TYPE_OVER_LIMIT_WITH_UNUSED_KEYS = 'TEST_TYPE_OVER_LIMIT_WITH_UNUSED_KEYS';
+    /**
+     * @var string
+     */
     public const TEST_TYPE_OVER_LIMIT_WITH_NEW_AND_USED_KEYS = 'TEST_TYPE_OVER_LIMIT_WITH_NEW_AND_USED_KEYS';
+    /**
+     * @var string
+     */
     public const TEST_TYPE_OVER_LIMIT_WITH_NEW_AND_USED_AND_UNUSED_KEYS = 'TEST_TYPE_OVER_LIMIT_WITH_NEW_AND_USED_AND_UNUSED_KEYS';
+    /**
+     * @var int
+     */
     public const OVER_LIMIT_SIZE = 50;
 
     /**

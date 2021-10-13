@@ -14,12 +14,12 @@ use Spryker\Service\BarcodeExtension\Dependency\Plugin\BarcodeGeneratorPluginInt
 class BarcodeGeneratorPluginResolver implements BarcodeGeneratorPluginResolverInterface
 {
     /**
-     * @var \Spryker\Service\BarcodeExtension\Dependency\Plugin\BarcodeGeneratorPluginInterface[]
+     * @var array<\Spryker\Service\BarcodeExtension\Dependency\Plugin\BarcodeGeneratorPluginInterface>
      */
     protected $barcodeGeneratorPlugins = [];
 
     /**
-     * @param \Spryker\Service\BarcodeExtension\Dependency\Plugin\BarcodeGeneratorPluginInterface[] $barcodeGeneratorPlugins
+     * @param array<\Spryker\Service\BarcodeExtension\Dependency\Plugin\BarcodeGeneratorPluginInterface> $barcodeGeneratorPlugins
      */
     public function __construct(array $barcodeGeneratorPlugins)
     {

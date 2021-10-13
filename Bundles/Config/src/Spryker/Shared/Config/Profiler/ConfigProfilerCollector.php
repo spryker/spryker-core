@@ -14,6 +14,9 @@ use Throwable;
 
 class ConfigProfilerCollector implements DataCollectorInterface, ConfigProfilerCollectorInterface
 {
+    /**
+     * @var string
+     */
     public const SPRYKER_CONFIG_PROFILER = 'spryker_config_profiler';
 
     /**

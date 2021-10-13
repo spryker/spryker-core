@@ -25,7 +25,7 @@ class ProductListStorageToProductListFacadeBridge implements ProductListStorageT
     /**
      * @param int $idProductAbstract
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getProductBlacklistIdsByIdProductAbstract(int $idProductAbstract): array
     {
@@ -35,7 +35,7 @@ class ProductListStorageToProductListFacadeBridge implements ProductListStorageT
     /**
      * @param int $idProductAbstract
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getProductWhitelistIdsByIdProductAbstract(int $idProductAbstract): array
     {
@@ -45,7 +45,7 @@ class ProductListStorageToProductListFacadeBridge implements ProductListStorageT
     /**
      * @param int $idProductAbstract
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getCategoryWhitelistIdsByIdProductAbstract(int $idProductAbstract): array
     {
@@ -55,7 +55,7 @@ class ProductListStorageToProductListFacadeBridge implements ProductListStorageT
     /**
      * @param int $idProduct
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getProductBlacklistIdsByIdProduct(int $idProduct): array
     {
@@ -65,7 +65,7 @@ class ProductListStorageToProductListFacadeBridge implements ProductListStorageT
     /**
      * @param int $idProduct
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getProductWhitelistIdsByIdProduct(int $idProduct): array
     {
@@ -73,9 +73,9 @@ class ProductListStorageToProductListFacadeBridge implements ProductListStorageT
     }
 
     /**
-     * @param int[] $productListIds
+     * @param array<int> $productListIds
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getProductAbstractIdsByProductListIds(array $productListIds): array
     {
@@ -83,7 +83,7 @@ class ProductListStorageToProductListFacadeBridge implements ProductListStorageT
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return array
      */
@@ -93,7 +93,7 @@ class ProductListStorageToProductListFacadeBridge implements ProductListStorageT
     }
 
     /**
-     * @param int[] $productConcreteIds
+     * @param array<int> $productConcreteIds
      *
      * @return array
      */

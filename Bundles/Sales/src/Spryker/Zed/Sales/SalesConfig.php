@@ -17,8 +17,17 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class SalesConfig extends AbstractBundleConfig
 {
+    /**
+     * @var string
+     */
     public const PARAM_ID_SALES_ORDER = 'id-sales-order';
+    /**
+     * @var string
+     */
     public const PARAM_CUSTOMER_REFERENCE = 'customer-reference';
+    /**
+     * @var string
+     */
     public const TEST_CUSTOMER_FIRST_NAME = 'test order';
 
     /**
@@ -34,7 +43,15 @@ class SalesConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return array
+     * @example The format of returned array is:
+     * [
+     *    'PAYMENT_METHOD_1' => 'StateMachineProcess_1',
+     *    'PAYMENT_METHOD_2' => 'StateMachineProcess_2',
+     * ]
+     *
+     * @phpstan-return array<string, string>
+     *
+     * @return array<string>
      */
     protected function getPaymentMethodStatemachineMapping()
     {
@@ -110,7 +127,7 @@ class SalesConfig extends AbstractBundleConfig
      *
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getSalesDetailExternalBlocksUrls()
     {

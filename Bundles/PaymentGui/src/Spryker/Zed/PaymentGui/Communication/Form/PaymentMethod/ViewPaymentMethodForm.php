@@ -18,6 +18,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class ViewPaymentMethodForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const FIELD_STORE_RELATION = 'storeRelation';
 
     /**

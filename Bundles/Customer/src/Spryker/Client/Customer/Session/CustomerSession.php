@@ -13,6 +13,9 @@ use Spryker\Client\Session\SessionClientInterface;
 
 class CustomerSession implements CustomerSessionInterface
 {
+    /**
+     * @var string
+     */
     public const SESSION_KEY = 'customer data';
 
     /**
@@ -21,12 +24,12 @@ class CustomerSession implements CustomerSessionInterface
     protected $sessionClient;
 
     /**
-     * @var \Spryker\Client\Customer\Dependency\Plugin\CustomerSessionGetPluginInterface[]
+     * @var array<\Spryker\Client\Customer\Dependency\Plugin\CustomerSessionGetPluginInterface>
      */
     protected $customerSessionGetPlugins;
 
     /**
-     * @var \Spryker\Client\Customer\Dependency\Plugin\CustomerSessionSetPluginInterface[]
+     * @var array<\Spryker\Client\Customer\Dependency\Plugin\CustomerSessionSetPluginInterface>
      */
     protected $customerSessionSetPlugins;
 
@@ -37,8 +40,8 @@ class CustomerSession implements CustomerSessionInterface
 
     /**
      * @param \Spryker\Client\Session\SessionClientInterface $sessionClient
-     * @param \Spryker\Client\Customer\Dependency\Plugin\CustomerSessionGetPluginInterface[] $customerSessionGetPlugins
-     * @param \Spryker\Client\Customer\Dependency\Plugin\CustomerSessionSetPluginInterface[] $customerSessionSetPlugins
+     * @param array<\Spryker\Client\Customer\Dependency\Plugin\CustomerSessionGetPluginInterface> $customerSessionGetPlugins
+     * @param array<\Spryker\Client\Customer\Dependency\Plugin\CustomerSessionSetPluginInterface> $customerSessionSetPlugins
      */
     public function __construct(
         SessionClientInterface $sessionClient,

@@ -33,7 +33,13 @@ use SprykerTest\Shared\ProductOption\Helper\ProductOptionGroupDataHelper;
  */
 class ProductOptionCartConnectorFacadeTest extends Unit
 {
+    /**
+     * @var int
+     */
     public const ID_PRODUCT_OPTION = 5;
+    /**
+     * @var int
+     */
     public const DUMMY_PRICE = 1500;
 
     /**
@@ -446,7 +452,7 @@ class ProductOptionCartConnectorFacadeTest extends Unit
 
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cart
-     * @param \ArrayObject|\Generated\Shared\Transfer\ProductOptionTransfer[] $productOptionCollection
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ProductOptionTransfer> $productOptionCollection
      *
      * @return void
      */

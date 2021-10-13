@@ -78,9 +78,9 @@ class PriceCartConnectorToPriceProductAdapter implements PriceCartToPriceProduct
     /**
      * The method check for `method_exists` is for BC for supporting old majors of `PriceProduct` module.
      *
-     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer[] $priceProductFilterTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductFilterTransfer> $priceProductFilterTransfers
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function getValidPrices(array $priceProductFilterTransfers): array
     {
@@ -94,9 +94,9 @@ class PriceCartConnectorToPriceProductAdapter implements PriceCartToPriceProduct
     /**
      * @deprecated Will be removed with the next major.
      *
-     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer[] $priceProductFilterTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductFilterTransfer> $priceProductFilterTransfers
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     protected function findPriceProductsForPriceProductFilterTransfers(array $priceProductFilterTransfers): array
     {

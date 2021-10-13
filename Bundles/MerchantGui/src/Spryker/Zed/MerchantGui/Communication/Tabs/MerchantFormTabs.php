@@ -14,12 +14,12 @@ use Spryker\Zed\Gui\Communication\Tabs\AbstractTabs;
 class MerchantFormTabs extends AbstractTabs
 {
     /**
-     * @var \Spryker\Zed\MerchantGuiExtension\Dependency\Plugin\MerchantFormTabExpanderPluginInterface[]
+     * @var array<\Spryker\Zed\MerchantGuiExtension\Dependency\Plugin\MerchantFormTabExpanderPluginInterface>
      */
     protected $merchantFormTabExpanderPlugins;
 
     /**
-     * @param \Spryker\Zed\MerchantGuiExtension\Dependency\Plugin\MerchantFormTabExpanderPluginInterface[] $merchantFormTabExpanderPlugins
+     * @param array<\Spryker\Zed\MerchantGuiExtension\Dependency\Plugin\MerchantFormTabExpanderPluginInterface> $merchantFormTabExpanderPlugins
      */
     public function __construct(array $merchantFormTabExpanderPlugins)
     {

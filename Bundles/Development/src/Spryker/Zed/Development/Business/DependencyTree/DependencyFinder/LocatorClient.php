@@ -12,7 +12,13 @@ use Symfony\Component\Finder\SplFileInfo;
 
 class LocatorClient extends AbstractDependencyFinder
 {
+    /**
+     * @var string
+     */
     public const NO_LAYER = 'Default';
+    /**
+     * @var string
+     */
     public const BUNDLE = 'bundle';
 
     /**

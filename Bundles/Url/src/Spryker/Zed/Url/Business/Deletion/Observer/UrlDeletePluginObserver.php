@@ -14,12 +14,12 @@ use Spryker\Zed\Url\Business\Deletion\UrlDeleterBeforeDeleteObserverInterface;
 class UrlDeletePluginObserver implements UrlDeleterBeforeDeleteObserverInterface, UrlDeleterAfterDeleteObserverInterface
 {
     /**
-     * @var \Spryker\Zed\Url\Dependency\Plugin\UrlDeletePluginInterface[]
+     * @var array<\Spryker\Zed\Url\Dependency\Plugin\UrlDeletePluginInterface>
      */
     protected $urlDeletePlugins;
 
     /**
-     * @param \Spryker\Zed\Url\Dependency\Plugin\UrlDeletePluginInterface[] $urlDeletePlugins
+     * @param array<\Spryker\Zed\Url\Dependency\Plugin\UrlDeletePluginInterface> $urlDeletePlugins
      */
     public function __construct(array $urlDeletePlugins)
     {

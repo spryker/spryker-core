@@ -15,22 +15,56 @@ use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerc
 
 class ProductGuiTableConfigurationProvider implements GuiTableConfigurationProviderInterface
 {
+    /**
+     * @var string
+     */
     public const COL_KEY_NAME = 'name';
+    /**
+     * @var string
+     */
     public const COL_KEY_SKU = 'sku';
+    /**
+     * @var string
+     */
     public const COL_KEY_IMAGE = 'image';
+    /**
+     * @var string
+     */
     public const COL_KEY_STORES = 'stores';
+    /**
+     * @var string
+     */
     public const COL_KEY_STATUS = 'status';
+    /**
+     * @var string
+     */
     public const COL_KEY_OFFERS = 'offers';
+    /**
+     * @var string
+     */
     public const COL_KEY_VALID_FROM = 'validFrom';
+    /**
+     * @var string
+     */
     public const COL_KEY_VALID_TO = 'validTo';
 
+    /**
+     * @var string
+     */
     public const COLUMN_DATA_STATUS_ACTIVE = 'Online';
+    /**
+     * @var string
+     */
     public const COLUMN_DATA_STATUS_INACTIVE = 'Offline';
 
+    /**
+     * @var string
+     */
     protected const SEARCH_PLACEHOLDER = 'Search by SKU, Name';
 
     /**
      * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Controller\ProductListController::tableDataAction()
+     * @var string
      */
     protected const DATA_URL = '/product-offer-merchant-portal-gui/product-list/table-data';
 
@@ -85,8 +119,8 @@ class ProductGuiTableConfigurationProvider implements GuiTableConfigurationProvi
         $guiTableConfigurationBuilder->addColumnText(static::COL_KEY_SKU, 'SKU', true, false)
             ->addColumnImage(static::COL_KEY_IMAGE, 'Image', false, true)
             ->addColumnText(static::COL_KEY_NAME, 'Name', true, false)
-            ->addColumnListChip(static::COL_KEY_STORES, 'Stores', false, true, 2, 'grey')
-            ->addColumnChip(static::COL_KEY_STATUS, 'Status', true, true, 'grey', [
+            ->addColumnListChip(static::COL_KEY_STORES, 'Stores', false, true, 2, 'gray')
+            ->addColumnChip(static::COL_KEY_STATUS, 'Status', true, true, 'gray', [
                 $this->translatorFacade->trans(static::COLUMN_DATA_STATUS_ACTIVE) => 'green',
             ])
             ->addColumnDate(static::COL_KEY_VALID_FROM, 'Valid From', true, true)
@@ -122,7 +156,7 @@ class ProductGuiTableConfigurationProvider implements GuiTableConfigurationProvi
      */
     protected function addRowActions(GuiTableConfigurationBuilderInterface $guiTableConfigurationBuilder): GuiTableConfigurationBuilderInterface
     {
-        $guiTableConfigurationBuilder->addRowActionOpenFormOverlay(
+        $guiTableConfigurationBuilder->addRowActionDrawerAjaxForm(
             'create-offer',
             'Create Offer',
             sprintf(

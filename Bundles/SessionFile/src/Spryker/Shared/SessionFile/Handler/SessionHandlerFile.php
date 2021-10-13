@@ -12,8 +12,17 @@ use Spryker\Shared\SessionFile\Dependency\Service\SessionFileToMonitoringService
 
 class SessionHandlerFile implements SessionHandlerInterface
 {
+    /**
+     * @var string
+     */
     public const METRIC_SESSION_DELETE_TIME = 'File/Session_delete_time';
+    /**
+     * @var string
+     */
     public const METRIC_SESSION_WRITE_TIME = 'File/Session_write_time';
+    /**
+     * @var string
+     */
     public const METRIC_SESSION_READ_TIME = 'File/Session_read_time';
 
     /**
@@ -138,13 +147,31 @@ class SessionHandlerFile implements SessionHandlerInterface
      */
     public function gc($maxLifetime): bool
     {
-        foreach (glob($this->savePath . DIRECTORY_SEPARATOR . $this->keyPrefix . '*') as $file) {
-            if (filemtime($file) + $maxLifetime < time() && file_exists($file)) {
+        $time = time();
+        $files = glob($this->buildSessionFilePattern(), GLOB_NOSORT) ?: [];
+        foreach ($files as $file) {
+            $fileTime = filemtime($file);
+            $fileExpired = $fileTime + $maxLifetime < $time;
+            $fileExist = (bool)$fileTime;
+            if ($fileExist && $fileExpired) {
                 unlink($file);
             }
         }
 
         return true;
+    }
+
+    /**
+     * @return string
+     */
+    protected function buildSessionFilePattern(): string
+    {
+        return sprintf(
+            '%s%s%s*',
+            $this->savePath,
+            DIRECTORY_SEPARATOR,
+            $this->keyPrefix
+        );
     }
 
     /**

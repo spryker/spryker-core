@@ -14,7 +14,13 @@ use Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleReaderInterfac
 
 class ProductBundleCartActiveCheck implements ProductBundleCartActiveCheckInterface
 {
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_CART_PRE_CHECK_ACTIVE_FAILED = 'cart.pre.check.active.failed';
+    /**
+     * @var string
+     */
     protected const GLOSSARY_PARAMETER_SKU = '%sku%';
 
     /**
@@ -58,7 +64,7 @@ class ProductBundleCartActiveCheck implements ProductBundleCartActiveCheckInterf
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductForBundleTransfer[] $productForBundleTransfers
+     * @param array<\Generated\Shared\Transfer\ProductForBundleTransfer> $productForBundleTransfers
      *
      * @return bool
      */
@@ -90,7 +96,7 @@ class ProductBundleCartActiveCheck implements ProductBundleCartActiveCheckInterf
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getProductConcreteSkusFromCartChangeTransfer(CartChangeTransfer $cartChangeTransfer): array
     {

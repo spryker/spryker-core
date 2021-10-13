@@ -14,7 +14,13 @@ use Spryker\Client\ProductDiscontinuedStorage\Storage\ProductDiscontinuedStorage
 
 class ProductDiscontinuedItemValidator implements ProductDiscontinuedItemValidatorInterface
 {
+    /**
+     * @var string
+     */
     protected const MESSAGE_TYPE_ERROR = 'error';
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_DISCONTINUED_PRODUCT = 'product_discontinued.message.product_discontinued';
 
     /**

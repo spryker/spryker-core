@@ -16,6 +16,9 @@ use Spryker\Client\CompanyRole\Zed\CompanyRoleStubInterface;
 
 class CompanyRolePermissionsHandler implements CompanyRolePermissionsHandlerInterface
 {
+    /**
+     * @var string
+     */
     protected const PERMISSION_KEY_GLOSSARY_PREFIX = 'permission.name.';
 
     /**
@@ -93,11 +96,11 @@ class CompanyRolePermissionsHandler implements CompanyRolePermissionsHandlerInte
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\PermissionTransfer[] $availablePermissions
-     * @param \ArrayObject|\Generated\Shared\Transfer\PermissionTransfer[] $companyRolePermissions
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\PermissionTransfer> $availablePermissions
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\PermissionTransfer> $companyRolePermissions
      * @param \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleTransfer
      *
-     * @return \Generated\Shared\Transfer\PermissionTransfer[] Keys are permission keys
+     * @return array<\Generated\Shared\Transfer\PermissionTransfer> Keys are permission keys
      */
     protected function getAvailableCompanyRolePermissions(
         ArrayObject $availablePermissions,
@@ -126,7 +129,7 @@ class CompanyRolePermissionsHandler implements CompanyRolePermissionsHandlerInte
 
     /**
      * @param \Generated\Shared\Transfer\PermissionTransfer $availablePermission
-     * @param \ArrayObject|\Generated\Shared\Transfer\PermissionTransfer[] $companyRolePermissions
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\PermissionTransfer> $companyRolePermissions
      *
      * @return \Generated\Shared\Transfer\PermissionTransfer|null
      */

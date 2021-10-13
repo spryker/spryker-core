@@ -14,6 +14,7 @@ class MerchantEvents
      * - This events will be used for spy_merchant publishing.
      *
      * @api
+     * @var string
      */
     public const MERCHANT_PUBLISH = 'Merchant.merchant.publish';
 
@@ -22,6 +23,7 @@ class MerchantEvents
      * - This events will be used for spy_merchant entity changes.
      *
      * @api
+     * @var string
      */
     public const ENTITY_SPY_MERCHANT_UPDATE = 'Entity.spy_merchant.update';
 }

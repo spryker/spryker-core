@@ -12,8 +12,17 @@ use Spryker\Zed\DataImport\DataImportConfig;
 
 class CompanyRoleDataImportConfig extends DataImportConfig
 {
+    /**
+     * @var string
+     */
     public const IMPORT_TYPE_COMPANY_ROLE = 'company-role';
+    /**
+     * @var string
+     */
     public const IMPORT_TYPE_COMPANY_ROLE_PERMISSION = 'company-role-permission';
+    /**
+     * @var string
+     */
     public const IMPORT_TYPE_COMPANY_USER_ROLE = 'company-user-role';
 
     /**

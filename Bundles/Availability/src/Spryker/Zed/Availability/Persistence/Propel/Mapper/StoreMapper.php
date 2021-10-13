@@ -13,9 +13,9 @@ use Orm\Zed\Store\Persistence\SpyStore;
 class StoreMapper
 {
     /**
-     * @param \Orm\Zed\Store\Persistence\SpyStore[] $storeEntities
+     * @param array<\Orm\Zed\Store\Persistence\SpyStore> $storeEntities
      *
-     * @return \Generated\Shared\Transfer\StoreTransfer[]
+     * @return array<\Generated\Shared\Transfer\StoreTransfer>
      */
     public function mapStoreEntitiesToStoreTransfers(array $storeEntities): array
     {

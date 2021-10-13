@@ -17,9 +17,9 @@ class CmsSlotStorageRepository extends AbstractRepository implements CmsSlotStor
 {
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     * @param int[] $cmsSlotStorageIds
+     * @param array<int> $cmsSlotStorageIds
      *
-     * @return \Generated\Shared\Transfer\SpyCmsSlotStorageEntityTransfer[]
+     * @return array<\Generated\Shared\Transfer\SpyCmsSlotStorageEntityTransfer>
      */
     public function getFilteredCmsSlotStorageEntities(FilterTransfer $filterTransfer, array $cmsSlotStorageIds): array
     {

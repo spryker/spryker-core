@@ -31,11 +31,17 @@ class FormHelper extends Module
     use DependencyProviderHelperTrait;
     use EventDispatcherHelperTrait;
 
+    /**
+     * @var string
+     */
     protected const MODULE_NAME = 'Form';
+    /**
+     * @var string
+     */
     protected const CONFIG_KEY_FORM_PLUGINS = 'formPlugins';
 
     /**
-     * @var \Spryker\Shared\FormExtension\Dependency\Plugin\FormPluginInterface[]
+     * @var array<\Spryker\Shared\FormExtension\Dependency\Plugin\FormPluginInterface>
      */
     protected $formPlugins = [];
 

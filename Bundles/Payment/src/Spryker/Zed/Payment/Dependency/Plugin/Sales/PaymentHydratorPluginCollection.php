@@ -9,10 +9,13 @@ namespace Spryker\Zed\Payment\Dependency\Plugin\Sales;
 
 use Spryker\Zed\Payment\Exception\PaymentHydratorPluginNotFoundException;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 class PaymentHydratorPluginCollection implements PaymentHydratorPluginCollectionInterface
 {
     /**
-     * @var \Spryker\Zed\Payment\Dependency\Plugin\Sales\PaymentHydratorPluginInterface[]
+     * @var array<\Spryker\Zed\Payment\Dependency\Plugin\Sales\PaymentHydratorPluginInterface>
      */
     protected $plugins = [];
 

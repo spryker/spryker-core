@@ -12,12 +12,12 @@ use Generated\Shared\Transfer\LocaleTransfer;
 class LocaleCache implements LocaleCacheInterface
 {
     /**
-     * @var \Generated\Shared\Transfer\LocaleTransfer[]
+     * @var array<\Generated\Shared\Transfer\LocaleTransfer>
      */
     protected static $localeCache = [];
 
     /**
-     * @var \Generated\Shared\Transfer\LocaleTransfer[]
+     * @var array<\Generated\Shared\Transfer\LocaleTransfer>
      */
     protected static $localeCacheById = [];
 

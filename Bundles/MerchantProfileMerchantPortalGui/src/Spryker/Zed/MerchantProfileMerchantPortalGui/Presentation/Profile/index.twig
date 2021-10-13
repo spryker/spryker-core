@@ -1,4 +1,5 @@
 {% extends '@ZedUi/Layout/merchant-layout-main.twig' %}
+{% import _self as view %}
 {% form_theme form '@ZedUi/Form/form-webcomponent-layout.twig' %}
 
 {% block headTitle %}
@@ -67,6 +68,11 @@
                                     row_attr: {'no-spaces': 'true', }
                                 }) }}
                             </web-spy-card>
+                            <web-spy-card class="mp-profile__card" cloak spy-title="{{ 'Stores' | trans }}">
+                                {% for store in stores %}
+                                    <web-spy-chips color="blue">{{ store.name }}</web-spy-chips>
+                                {% endfor %}
+                            </web-spy-card>
                         </div>
                     </div>
                 </web-spy-tab>
@@ -120,10 +126,10 @@
                                         {{ form_row(addressCollectionFields.fk_country) }}
                                     </div>
                                     <div class="spy-col spy-col-gutter-md spy-col-6">
-                                        {{ form_row(onlineProfileMerchantProfileFields.longitude) }}
+                                        {{ form_row(addressCollectionFields.latitude) }}
                                     </div>
                                     <div class="spy-col spy-col-gutter-md spy-col-6">
-                                        {{ form_row(onlineProfileMerchantProfileFields.latitude) }}
+                                        {{ form_row(addressCollectionFields.longitude) }}
                                     </div>
                                     <div class="spy-col spy-col-gutter-md spy-col-6">
                                         {{ form_row(onlineProfileMerchantProfileFields.public_phone) }}
@@ -145,7 +151,7 @@
                                 {{ _self.merchantProfileLocalizedGlossaryFields('termsConditionsGlossaryKey', glossaryCollectionFields) }}
                             </web-spy-card>
 
-                            <web-spy-card class="mp-profile__card" cloak title="{{ 'Cancellation Policy' | trans }}">
+                            <web-spy-card class="mp-profile__card" cloak spy-title="{{ 'Cancellation Policy' | trans }}">
                                 {{ _self.merchantProfileLocalizedGlossaryFields('cancellationPolicyGlossaryKey', glossaryCollectionFields) }}
                             </web-spy-card>
 
@@ -187,7 +193,6 @@
 {% endblock %}
 
 {% block footerJs %}
-    <script src="{{ assetsPath('js/mp/spy/merchant-profile-merchant-portal-gui-es2015.js') }}" type="module"></script>
-    <script src="{{ assetsPath('js/mp/spy/merchant-profile-merchant-portal-gui-es5.js') }}" nomodule defer></script>
+    {{ view.importJsBundle('merchant-profile-merchant-portal-gui', importConfig) }}
     {{ parent() }}
 {% endblock %}

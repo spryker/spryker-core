@@ -13,6 +13,8 @@ class ContentGuiConfig extends AbstractSharedConfig
 {
     /**
      * Default locale name
+     *
+     * @var string
      */
     public const DEFAULT_LOCALE_NAME = 'Default';
 }

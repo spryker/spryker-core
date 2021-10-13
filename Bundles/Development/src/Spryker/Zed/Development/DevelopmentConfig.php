@@ -15,22 +15,55 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class DevelopmentConfig extends AbstractBundleConfig
 {
+    /**
+     * @var string
+     */
     public const BUNDLE_PLACEHOLDER = '[BUNDLE]';
+    /**
+     * @var string
+     */
     protected const PHPSTAN_CONFIG_FILENAME = 'phpstan.neon';
 
+    /**
+     * @var string
+     */
     protected const NAMESPACE_SPRYKER = 'Spryker';
+    /**
+     * @var string
+     */
     protected const NAMESPACE_SPRYKER_SHOP = 'SprykerShop';
+    /**
+     * @var string
+     */
     protected const NAMESPACE_SPRYKER_ECO = 'SprykerEco';
+    /**
+     * @var string
+     */
     protected const NAMESPACE_SPRYKER_SDK = 'SprykerSdk';
+    /**
+     * @var string
+     */
     protected const NAMESPACE_SPRYKER_MIDDLEWARE = 'SprykerMiddleware';
+    /**
+     * @var string
+     */
     protected const NAMESPACE_SPRYKER_MERCHANT_PORTAL = 'SprykerMerchantPortal';
 
+    /**
+     * @var string
+     */
     protected const GROUP_SPRYKER_TEST = 'SprykerTest';
 
+    /**
+     * @var array
+     */
     public const APPLICATION_NAMESPACES = [
         'Orm',
     ];
 
+    /**
+     * @var array
+     */
     public const APPLICATIONS = [
         'Client',
         'Service',
@@ -40,12 +73,19 @@ class DevelopmentConfig extends AbstractBundleConfig
         'Glue',
     ];
 
+    /**
+     * @var array
+     */
     protected const INTERNAL_NAMESPACES_LIST = [
         self::NAMESPACE_SPRYKER,
         self::NAMESPACE_SPRYKER_SHOP,
         self::NAMESPACE_SPRYKER_MERCHANT_PORTAL,
     ];
 
+    /**
+     * @phpstan-var array<string, string>
+     * @var array<string>
+     */
     protected const INTERNAL_NAMESPACES_TO_PATH_MAPPING = [
         self::NAMESPACE_SPRYKER => APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . 'vendor/spryker/',
         self::NAMESPACE_SPRYKER_SHOP => APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . 'vendor/spryker-shop/',
@@ -55,8 +95,15 @@ class DevelopmentConfig extends AbstractBundleConfig
         self::NAMESPACE_SPRYKER_MERCHANT_PORTAL => APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . 'vendor/spryker-merchant-portal/',
     ];
 
+    /**
+     * @phpstan-var array<string>
+     * @var array
+     */
     protected const INTERNAL_PACKAGE_DIRECTORIES = ['spryker', 'spryker-shop', 'spryker-merchant-portal'];
 
+    /**
+     * @var int
+     */
     protected const TIMEOUT_DEFAULT = 9000;
 
     /**
@@ -72,7 +119,7 @@ class DevelopmentConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getInternalNamespaces(): array
     {
@@ -82,7 +129,7 @@ class DevelopmentConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getTwigPathPatterns(): array
     {
@@ -194,7 +241,7 @@ class DevelopmentConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getOrganizationPathMap(): array
     {
@@ -303,6 +350,7 @@ class DevelopmentConfig extends AbstractBundleConfig
             'Codeception\\' => 'spryker/testify',
             'CodeItNow\\BarcodeBundle' => 'spryker/code-it-now',
             'Doctrine\\Common\\Inflector' => 'spryker/doctrine-inflector',
+            'Doctrine\\Inflector\\InflectorFactory' => 'spryker/doctrine-inflector',
             'DMS\\PHPUnitExtensions\\' => 'spryker/testify',
             'Egulias\\EmailValidator\\' => 'spryker/egulias',
             'Elastica\\' => 'spryker/elastica',
@@ -341,7 +389,7 @@ class DevelopmentConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getExternalToInternalMap()
     {
@@ -351,7 +399,7 @@ class DevelopmentConfig extends AbstractBundleConfig
             'dms/phpunit-arraysubset-asserts' => 'spryker/testify',
             'doctrine/inflector' => 'spryker/doctrine-inflector',
             'egulias/email-validator' => 'spryker/egulias',
-            'fzaninotto/faker' => 'spryker/testify',
+            'fakerphp/faker' => 'spryker/testify',
             'galbar/jsonpath' => 'spryker/json-path',
             'guzzlehttp/guzzle' => 'spryker/guzzle',
             'justinrainbow/json-schema' => 'spryker/json-schema',
@@ -382,6 +430,7 @@ class DevelopmentConfig extends AbstractBundleConfig
             'symfony/filesystem' => 'spryker/symfony',
             'symfony/finder' => 'spryker/symfony',
             'symfony/form' => 'spryker/symfony',
+            'symfony/http-client' => 'spryker/symfony',
             'symfony/http-foundation' => 'spryker/symfony',
             'symfony/http-kernel' => 'spryker/symfony',
             'symfony/intl' => 'spryker/symfony',
@@ -436,7 +485,7 @@ class DevelopmentConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getYvesIdeAutoCompletionOptions()
     {
@@ -449,7 +498,7 @@ class DevelopmentConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getZedIdeAutoCompletionOptions()
     {
@@ -520,7 +569,9 @@ class DevelopmentConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return string[]
+     * @phpstan-return array<string, string>
+     *
+     * @return array<string>
      */
     public function getIdeAutoCompletionSourceDirectoryGlobPatterns()
     {
@@ -533,7 +584,7 @@ class DevelopmentConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getIdeAutoCompletionGeneratorTemplatePaths()
     {
@@ -639,7 +690,7 @@ class DevelopmentConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getInternalNamespacesList(): array
     {
@@ -670,7 +721,7 @@ class DevelopmentConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getPathsToInternalNamespace(): array
     {
@@ -703,7 +754,7 @@ class DevelopmentConfig extends AbstractBundleConfig
      *
      * @deprecated Use `spryker/module-finder` instead.
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getInternalPackageDirectories(): array
     {
@@ -717,7 +768,7 @@ class DevelopmentConfig extends AbstractBundleConfig
      *
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getDefaultInclusiveGroups(): array
     {

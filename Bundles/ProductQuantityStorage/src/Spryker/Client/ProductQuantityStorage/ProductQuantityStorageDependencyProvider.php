@@ -16,8 +16,17 @@ use Spryker\Client\ProductQuantityStorage\Dependency\Service\ProductQuantityStor
 
 class ProductQuantityStorageDependencyProvider extends AbstractDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_STORAGE = 'CLIENT_STORAGE';
+    /**
+     * @var string
+     */
     public const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
+    /**
+     * @var string
+     */
     public const SERVICE_PRODUCT_QUANTITY = 'SERVICE_PRODUCT_QUANTITY';
 
     /**

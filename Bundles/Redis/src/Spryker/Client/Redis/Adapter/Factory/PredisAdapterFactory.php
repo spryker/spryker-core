@@ -21,7 +21,13 @@ use Spryker\Shared\Redis\Logger\RedisLoggerInterface;
 
 class PredisAdapterFactory implements RedisAdapterFactoryInterface
 {
+    /**
+     * @var string
+     */
     protected const CONNECTION_PARAMETERS = 'CONNECTION_PARAMETERS';
+    /**
+     * @var string
+     */
     protected const CONNECTION_OPTIONS = 'CONNECTION_OPTIONS';
 
     /**
@@ -143,6 +149,7 @@ class PredisAdapterFactory implements RedisAdapterFactoryInterface
 
         $connectionCredentials = $connectionCredentialsTransfer->toArray();
         $connectionCredentials = $this->clearEmptyPassword($connectionCredentials);
+        $connectionCredentials = $this->clearEmptySchema($connectionCredentials);
 
         return $connectionCredentials;
     }
@@ -156,6 +163,20 @@ class PredisAdapterFactory implements RedisAdapterFactoryInterface
     {
         if (isset($connectionCredentials[RedisCredentialsTransfer::PASSWORD]) && !$connectionCredentials[RedisCredentialsTransfer::PASSWORD]) {
             unset($connectionCredentials[RedisCredentialsTransfer::PASSWORD]);
+        }
+
+        return $connectionCredentials;
+    }
+
+    /**
+     * @param array $connectionCredentials
+     *
+     * @return array
+     */
+    protected function clearEmptySchema(array $connectionCredentials): array
+    {
+        if (array_key_exists(RedisCredentialsTransfer::SCHEME, $connectionCredentials) && !$connectionCredentials[RedisCredentialsTransfer::SCHEME]) {
+            unset($connectionCredentials[RedisCredentialsTransfer::SCHEME]);
         }
 
         return $connectionCredentials;

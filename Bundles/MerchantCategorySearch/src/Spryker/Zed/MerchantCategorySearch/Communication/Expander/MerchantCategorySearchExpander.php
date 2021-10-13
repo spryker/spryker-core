@@ -13,6 +13,9 @@ use Spryker\Zed\MerchantCategorySearch\Dependency\Facade\MerchantCategorySearchT
 
 class MerchantCategorySearchExpander implements MerchantCategorySearchExpanderInterface
 {
+    /**
+     * @var string
+     */
     protected const CATEGORY_KEYS = 'category-keys';
 
     /**
@@ -63,16 +66,14 @@ class MerchantCategorySearchExpander implements MerchantCategorySearchExpanderIn
     /**
      * @param \Generated\Shared\Transfer\MerchantSearchCollectionTransfer $merchantSearchCollectionTransfer
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function extractMerchantIds(MerchantSearchCollectionTransfer $merchantSearchCollectionTransfer): array
     {
         $merchantIds = [];
 
         foreach ($merchantSearchCollectionTransfer->getMerchants() as $merchantSearchTransfer) {
-            /**
-             * @var int $idMerchant
-             */
+            /** @var int $idMerchant */
             $idMerchant = $merchantSearchTransfer->getIdMerchant();
 
             $merchantIds[] = $idMerchant;

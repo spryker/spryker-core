@@ -7,12 +7,16 @@
 
 namespace Spryker\Zed\Development\Business\Dependency\DependencyFinder;
 
+use RuntimeException;
 use Spryker\Zed\Development\Business\Dependency\DependencyContainer\DependencyContainerInterface;
 use Spryker\Zed\Development\Business\Dependency\DependencyFinder\Context\DependencyFinderContextInterface;
 use Spryker\Zed\Development\DevelopmentConfig;
 
 class MappedDependencyFinder extends AbstractFileDependencyFinder
 {
+    /**
+     * @var string
+     */
     public const TYPE_MAPPED = 'mapped';
 
     /**
@@ -58,13 +62,18 @@ class MappedDependencyFinder extends AbstractFileDependencyFinder
      * @param \Spryker\Zed\Development\Business\Dependency\DependencyFinder\Context\DependencyFinderContextInterface $context
      * @param \Spryker\Zed\Development\Business\Dependency\DependencyContainer\DependencyContainerInterface $dependencyContainer
      *
+     * @throws \RuntimeException
+     *
      * @return \Spryker\Zed\Development\Business\Dependency\DependencyContainer\DependencyContainerInterface
      */
     public function findDependencies(DependencyFinderContextInterface $context, DependencyContainerInterface $dependencyContainer): DependencyContainerInterface
     {
         $fileContent = $context->getFileInfo()->getContents();
         $composerJsonAsArray = json_decode($fileContent, true);
-        $composerName = $composerJsonAsArray['name'];
+        $composerName = $composerJsonAsArray['name'] ?? null;
+        if (!$composerName) {
+            throw new RuntimeException('Composer name missing: ' . $context->getFileInfo()->getPath());
+        }
 
         foreach ($this->config->getExternalToInternalMap() as $externalPackageName => $internalModulePackageName) {
             if ($internalModulePackageName === $composerName) {

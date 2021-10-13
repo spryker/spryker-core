@@ -14,6 +14,9 @@ use Spryker\Zed\GiftCard\GiftCardConfig;
  */
 class ShipmentMethodGiftCardReader implements ShipmentMethodGiftCardReaderInterface
 {
+    /**
+     * @var string
+     */
     protected const NO_SHIPMENT_METHOD = 'NO_SHIPMENT_METHOD';
 
     /**
@@ -30,7 +33,7 @@ class ShipmentMethodGiftCardReader implements ShipmentMethodGiftCardReaderInterf
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getGiftCardOnlyShipmentMethods(): array
     {

@@ -10,7 +10,7 @@ namespace Spryker\Zed\ProductDiscontinuedProductLabelConnector\Dependency\Facade
 interface ProductDiscontinuedProductLabelConnectorToLocaleFacadeInterface
 {
     /**
-     * @return \Generated\Shared\Transfer\LocaleTransfer[]
+     * @return array<\Generated\Shared\Transfer\LocaleTransfer>
      */
     public function getLocaleCollection();
 }

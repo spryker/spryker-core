@@ -12,16 +12,41 @@ use Spryker\Zed\Transfer\Business\Model\Generator\Helper\PluralizerInterface;
 
 class EntityDefinitionNormalizer extends DefinitionNormalizer
 {
+    /**
+     * @phpstan-var array<string, string>
+     * @var array
+     */
     protected const TYPE_MAPPING = [
         'double' => 'float',
     ];
 
+    /**
+     * @var string
+     */
     public const KEY_TYPE = 'type';
+    /**
+     * @var string
+     */
     public const KEY_COLUMN = 'column';
+    /**
+     * @var string
+     */
     public const KEY_FOREIGN_KEY = 'foreign-key';
+    /**
+     * @var string
+     */
     public const KEY_ENTITY = 'Entity';
+    /**
+     * @var string
+     */
     public const FOREIGN_TABLE = 'foreignTable';
+    /**
+     * @var string
+     */
     public const KEY_PHP_NAME = 'phpName';
+    /**
+     * @var string
+     */
     public const ENTITY_NAMESPACE = 'entity-namespace';
 
     /**

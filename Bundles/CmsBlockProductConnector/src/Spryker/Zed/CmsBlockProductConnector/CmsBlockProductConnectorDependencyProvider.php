@@ -20,14 +20,35 @@ use Spryker\Zed\Kernel\Container;
  */
 class CmsBlockProductConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_LOCALE = 'CMS_BLOCK_PRODUCT_CONNECTOR:FACADE_LOCALE';
+    /**
+     * @var string
+     */
     public const FACADE_TOUCH = 'CMS_BLOCK_PRODUCT_CONNECTOR:FACADE_TOUCH';
+    /**
+     * @var string
+     */
     public const FACADE_COLLECTOR = 'CMS_BLOCK_PRODUCT_CONNECTOR:FACADE_COLLECTOR';
+    /**
+     * @var string
+     */
     public const FACADE_PRODUCT = 'CMS_BLOCK_PRODUCT_CONNECTOR:FACADE_PRODUCT';
 
+    /**
+     * @var string
+     */
     public const QUERY_CONTAINER_PRODUCT_ABSTRACT = 'CMS_BLOCK_PRODUCT_CONNECTOR:QUERY_CONTAINER_PRODUCT_ABSTRACT';
+    /**
+     * @var string
+     */
     public const QUERY_CONTAINER_TOUCH = 'CMS_BLOCK_PRODUCT_CONNECTOR:QUERY_CONTAINER_TOUCH';
 
+    /**
+     * @var string
+     */
     public const SERVICE_DATA_READER = 'CMS_BLOCK_PRODUCT_CONNECTOR:SERVICE_DATA_READER';
 
     /**

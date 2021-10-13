@@ -21,11 +21,26 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class UuidGeneratorConsole extends Console
 {
+    /**
+     * @var string
+     */
     public const COMMAND_NAME = 'uuid:generate';
+    /**
+     * @var string
+     */
     public const COMMAND_DESCRIPTION = 'Generates missing uuids for specified database table.';
 
+    /**
+     * @var string
+     */
     protected const ARGUMENT_MODULE = 'module';
+    /**
+     * @var string
+     */
     protected const ARGUMENT_TABLE = 'table';
+    /**
+     * @var string
+     */
     protected const SUCCESS_MESSAGE = 'Uuid was generated for %d records in %s table.';
 
     /**

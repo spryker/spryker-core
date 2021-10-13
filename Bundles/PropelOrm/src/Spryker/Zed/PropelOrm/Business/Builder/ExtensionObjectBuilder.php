@@ -15,7 +15,13 @@ use Propel\Generator\Builder\Om\ExtensionObjectBuilder as PropelExtensionObjectB
 
 class ExtensionObjectBuilder extends PropelExtensionObjectBuilder
 {
+    /**
+     * @var int
+     */
     public const POSITION_OF_ORM = 0;
+    /**
+     * @var int
+     */
     public const POSITION_OF_BASE = 4;
 
     /**
@@ -40,7 +46,7 @@ class ExtensionObjectBuilder extends PropelExtensionObjectBuilder
     }
 
     /**
-     * @param string[] $classes
+     * @param array<string> $classes
      * @param string $namespace
      * @param string $script
      *

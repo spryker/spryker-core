@@ -11,6 +11,9 @@ use Generated\Shared\Transfer\PriceProductScheduleRedirectTransfer;
 
 class PriceProductScheduleRedirectToProductAbstract implements PriceProductScheduleRedirectInterface
 {
+    /**
+     * @var string
+     */
     protected const REDIRECT_URL_PRODUCT_ABSTRACT_PATTERN = '/product-management/edit?id-product-abstract=%d#tab-content-scheduled_prices';
 
     /**

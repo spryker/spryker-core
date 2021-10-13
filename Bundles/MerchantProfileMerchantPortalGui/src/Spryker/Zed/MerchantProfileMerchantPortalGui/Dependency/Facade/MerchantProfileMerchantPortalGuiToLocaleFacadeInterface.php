@@ -10,7 +10,7 @@ namespace Spryker\Zed\MerchantProfileMerchantPortalGui\Dependency\Facade;
 interface MerchantProfileMerchantPortalGuiToLocaleFacadeInterface
 {
     /**
-     * @return \Generated\Shared\Transfer\LocaleTransfer[]
+     * @return array<\Generated\Shared\Transfer\LocaleTransfer>
      */
     public function getLocaleCollection();
 }

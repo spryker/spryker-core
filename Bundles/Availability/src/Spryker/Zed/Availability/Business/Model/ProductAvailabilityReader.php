@@ -38,7 +38,7 @@ class ProductAvailabilityReader implements ProductAvailabilityReaderInterface
     protected $productFacade;
 
     /**
-     * @var \Spryker\Zed\AvailabilityExtension\Dependency\Plugin\AvailabilityStrategyPluginInterface[]
+     * @var array<\Spryker\Zed\AvailabilityExtension\Dependency\Plugin\AvailabilityStrategyPluginInterface>
      */
     protected $availabilityStrategyPlugins;
 
@@ -47,7 +47,7 @@ class ProductAvailabilityReader implements ProductAvailabilityReaderInterface
      * @param \Spryker\Zed\Availability\Business\Model\AvailabilityHandlerInterface $availabilityHandler
      * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterface $storeFacade
      * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToProductFacadeInterface $productFacade
-     * @param \Spryker\Zed\AvailabilityExtension\Dependency\Plugin\AvailabilityStrategyPluginInterface[] $availabilityStrategyPlugins
+     * @param array<\Spryker\Zed\AvailabilityExtension\Dependency\Plugin\AvailabilityStrategyPluginInterface> $availabilityStrategyPlugins
      */
     public function __construct(
         AvailabilityRepositoryInterface $availabilityRepository,
@@ -163,9 +163,9 @@ class ProductAvailabilityReader implements ProductAvailabilityReaderInterface
             return $storeTransfer;
         }
 
-        $storeTransfer
-            ->requireName();
+        /** @var string $storeName */
+        $storeName = $storeTransfer->requireName()->getName();
 
-        return $this->storeFacade->getStoreByName($storeTransfer->getName());
+        return $this->storeFacade->getStoreByName($storeName);
     }
 }

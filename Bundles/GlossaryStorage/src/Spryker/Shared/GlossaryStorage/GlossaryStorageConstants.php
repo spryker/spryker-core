@@ -19,6 +19,7 @@ class GlossaryStorageConstants
      * - Queue name as used for processing translation messages
      *
      * @api
+     * @var string
      */
     public const SYNC_STORAGE_QUEUE = 'sync.storage.translation';
 
@@ -29,6 +30,7 @@ class GlossaryStorageConstants
      * - Queue name as used for processing translation messages
      *
      * @api
+     * @var string
      */
     public const SYNC_STORAGE_ERROR_QUEUE = 'sync.storage.translation.error';
 
@@ -39,6 +41,7 @@ class GlossaryStorageConstants
      * - Resource name, this will use for key generating
      *
      * @api
+     * @var string
      */
     public const RESOURCE_NAME = 'translation';
 }

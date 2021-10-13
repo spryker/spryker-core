@@ -48,7 +48,7 @@ class QuoteMapper implements QuoteMapperInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Orm\Zed\Quote\Persistence\SpyQuote $quoteEntity
-     * @param string[] $quoteFieldsAllowedForSaving
+     * @param array<string> $quoteFieldsAllowedForSaving
      *
      * @return \Orm\Zed\Quote\Persistence\SpyQuote
      */
@@ -78,7 +78,7 @@ class QuoteMapper implements QuoteMapperInterface
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param string[] $quoteFieldsAllowedForSaving
+     * @param array<string> $quoteFieldsAllowedForSaving
      *
      * @return string
      */

@@ -21,7 +21,7 @@ interface TransferGeneratorInterface
     /**
      * @param \Orm\Zed\Locale\Persistence\SpyLocale $localeEntityList
      *
-     * @return \Generated\Shared\Transfer\LocaleTransfer[]
+     * @return array<\Generated\Shared\Transfer\LocaleTransfer>
      */
     public function convertLocaleCollection(SpyLocale $localeEntityList);
 }

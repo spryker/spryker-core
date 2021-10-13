@@ -20,6 +20,9 @@ use Spryker\Client\Kernel\AbstractPlugin;
  */
 class QuoteApprovalCheckoutPreCheckPlugin extends AbstractPlugin implements CheckoutPreCheckPluginInterface
 {
+    /**
+     * @var string
+     */
     protected const MESSAGE_CART_REQUIRE_APPROVAL = 'quote_approval.cart.require_approval';
 
     /**

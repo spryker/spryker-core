@@ -26,10 +26,23 @@ use Symfony\Component\Form\FormView;
  */
 class ProductMoneyCollectionType extends AbstractCollectionType
 {
+    /**
+     * @phpstan-var non-empty-string
+     * @var string
+     */
     public const PRICE_DELIMITER = '-';
 
+    /**
+     * @var string
+     */
     protected const PRICE_PRODUCT_VOLUME_EDIT_URL = '/price-product-volume-gui/price-volume/edit';
+    /**
+     * @var string
+     */
     protected const PRICE_PRODUCT_VOLUME_ADD_URL = '/price-product-volume-gui/price-volume/add';
+    /**
+     * @var string
+     */
     protected const PRICE_PRODUCT_VOLUME_KEY = 'volumePrices';
 
     /**
@@ -44,7 +57,7 @@ class ProductMoneyCollectionType extends AbstractCollectionType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param string[] $options
+     * @param array<string> $options
      *
      * @return void
      */
@@ -90,7 +103,7 @@ class ProductMoneyCollectionType extends AbstractCollectionType
             return;
         }
 
-        /** @var \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[] $data */
+        /** @var \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $data */
         $data = $event->getData();
         $event->setData(
             $moneyCollectionInitialDataProvider->mergeMissingMoneyValues($data)
@@ -182,20 +195,27 @@ class ProductMoneyCollectionType extends AbstractCollectionType
         $moneyValueTransfer = $this->extractMoneyValueTransfer($moneyValueFormView);
         $utilEncodingService = $this->getFactory()->getUtilEncoding();
         $priceData = $utilEncodingService->decodeJson($moneyValueTransfer->getPriceData());
+        $priceProductTransfer = $this->extractPriceProductTransfer($productMoneyTypeFormView);
 
         if ($this->isVolumePriceNotApplicable($productMoneyTypeFormView)) {
             return $volumePrices;
         }
 
+        $priceTypeName = $priceProductTransfer->getPriceType()->getName();
+
         if (!empty($priceData) && isset($priceData->volume_prices)) {
-            $volumePrices[$storeName][$currencyIsoCode] = $this
-                ->buildVolumePriceData(static::PRICE_PRODUCT_VOLUME_EDIT_URL, 'Edit Product Volume Price');
+            $volumePrices[$storeName][$currencyIsoCode][$priceTypeName] = $this->buildVolumePriceData(
+                static::PRICE_PRODUCT_VOLUME_EDIT_URL,
+                sprintf('Edit Volume Price: %s', $priceTypeName)
+            );
 
             return $volumePrices;
         }
 
-        $volumePrices[$storeName][$currencyIsoCode] = $this
-            ->buildVolumePriceData(static::PRICE_PRODUCT_VOLUME_ADD_URL, 'Add Product Volume Price');
+        $volumePrices[$storeName][$currencyIsoCode][$priceTypeName] = $this->buildVolumePriceData(
+            static::PRICE_PRODUCT_VOLUME_ADD_URL,
+            sprintf('Add Volume Price: %s', $priceTypeName)
+        );
 
         return $volumePrices;
     }
@@ -217,10 +237,6 @@ class ProductMoneyCollectionType extends AbstractCollectionType
             return true;
         }
 
-        if ($priceProductTransfer->getPriceTypeName() !== $this->getFactory()->getConfig()->getPriceTypeDefault()) {
-            return true;
-        }
-
         return false;
     }
 
@@ -228,7 +244,7 @@ class ProductMoneyCollectionType extends AbstractCollectionType
      * @param string $url
      * @param string $title
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function buildVolumePriceData(string $url, string $title): array
     {

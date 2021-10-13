@@ -7,8 +7,11 @@
 
 namespace Spryker\Zed\PriceProductOffer\Business\Validator\Constraint;
 
+use ArrayObject;
 use Generated\Shared\Transfer\PriceProductOfferCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductOfferTransfer;
+use Generated\Shared\Transfer\PriceProductTransfer;
+use Generated\Shared\Transfer\ProductOfferTransfer;
 use Spryker\Zed\Kernel\Communication\Validator\AbstractConstraintValidator;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
@@ -16,53 +19,95 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 class ValidUniqueStoreCurrencyGrossNetConstraintValidator extends AbstractConstraintValidator
 {
     /**
-     * Checks if the Valid from value is earlier than Valid to.
-     *
-     * @param \Generated\Shared\Transfer\PriceProductOfferTransfer $value
+     * @param \Generated\Shared\Transfer\PriceProductOfferTransfer $priceProductOfferTransfer
      * @param \Symfony\Component\Validator\Constraint $constraint
      *
      * @throws \Symfony\Component\Validator\Exception\UnexpectedTypeException
      *
      * @return void
      */
-    public function validate($value, Constraint $constraint): void
+    public function validate($priceProductOfferTransfer, Constraint $constraint): void
     {
-        if (!$value instanceof PriceProductOfferTransfer) {
-            throw new UnexpectedTypeException($value, PriceProductOfferTransfer::class);
+        if (!$priceProductOfferTransfer instanceof PriceProductOfferTransfer) {
+            throw new UnexpectedTypeException($priceProductOfferTransfer, PriceProductOfferTransfer::class);
         }
 
         if (!$constraint instanceof ValidUniqueStoreCurrencyGrossNetConstraint) {
             throw new UnexpectedTypeException($constraint, ValidUniqueStoreCurrencyGrossNetConstraint::class);
         }
 
-        $priceProductTransfers = $value->getProductOfferOrFail()->getPrices();
+        $priceProductTransfers = $priceProductOfferTransfer->getProductOfferOrFail()->getPrices();
 
-        foreach ($priceProductTransfers as $priceProductTransfer) {
+        foreach ($priceProductTransfers as $priceProductIndex => $priceProductTransfer) {
+            if (!$priceProductTransfer->getPriceDimension()) {
+                return;
+            }
+
             $moneyValueTransfer = $priceProductTransfer->getMoneyValueOrFail();
-
+            $priceDimensionTransfer = $priceProductTransfer->getPriceDimensionOrFail();
             if (
-                !$priceProductTransfer->getPriceDimension()
-                || !$priceProductTransfer->getPriceDimension()->getIdProductOffer()
+                !$priceDimensionTransfer->getIdProductOffer()
                 || !$moneyValueTransfer->getFkStore()
                 || !$moneyValueTransfer->getFkCurrency()
             ) {
                 return;
             }
 
-            $priceProductOfferCriteriaTransfer = new PriceProductOfferCriteriaTransfer();
-            $priceProductOfferCriteriaTransfer->setIdProductOffer($priceProductTransfer->getPriceDimension()->getIdProductOffer())
-                ->addIdCurrency($moneyValueTransfer->getFkCurrency())
-                ->addIdStore($moneyValueTransfer->getFkStore())
-                ->addIdPriceType($priceProductTransfer->getPriceType()->getIdPriceTypeOrFail());
+            /** @var \ArrayObject<\Generated\Shared\Transfer\PriceProductTransfer> $persistedPriceProductTransfers */
+            $persistedPriceProductTransfers = $this->getProductOfferPrices(
+                $priceProductTransfer,
+                $constraint
+            );
 
-            $priceProductTransfers = $constraint->getPriceProductOfferRepository()->getProductOfferPrices($priceProductOfferCriteriaTransfer);
             if (
-                $priceProductTransfers->count() > 1
-                || ($priceProductTransfers->count() === 1
-                    && $priceProductTransfers->offsetGet(0)->getMoneyValue()->getIdEntity() !== $priceProductTransfer->getMoneyValue()->getIdEntity())
+                $persistedPriceProductTransfers->count() > 1
+                || ($persistedPriceProductTransfers->count() === 1
+                    && $persistedPriceProductTransfers->offsetGet(0)->getMoneyValueOrFail()->getIdEntity() !== $moneyValueTransfer->getIdEntity())
             ) {
-                $this->context->addViolation($constraint->getMessage());
+                $this->context->buildViolation($constraint->getMessage())
+                    ->atPath($this->createViolationPath($priceProductIndex))
+                    ->addViolation();
             }
         }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     * @param \Spryker\Zed\PriceProductOffer\Business\Validator\Constraint\ValidUniqueStoreCurrencyGrossNetConstraint $constraint
+     *
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>
+     */
+    protected function getProductOfferPrices(
+        PriceProductTransfer $priceProductTransfer,
+        ValidUniqueStoreCurrencyGrossNetConstraint $constraint
+    ): ArrayObject {
+        $moneyValueTransfer = $priceProductTransfer->getMoneyValueOrFail();
+        $priceDimensionTransfer = $priceProductTransfer->getPriceDimensionOrFail();
+
+        $priceProductOfferCriteriaTransfer = (new PriceProductOfferCriteriaTransfer())
+            ->setIdProductOffer($priceDimensionTransfer->getIdProductOfferOrFail())
+            ->addIdCurrency($moneyValueTransfer->getFkCurrencyOrFail())
+            ->addIdStore($moneyValueTransfer->getFkStoreOrFail())
+            ->addIdPriceType(
+                $priceProductTransfer->getPriceTypeOrFail()->getIdPriceTypeOrFail()
+            );
+
+        return $constraint->getPriceProductOfferRepository()
+            ->getProductOfferPrices($priceProductOfferCriteriaTransfer);
+    }
+
+    /**
+     * @param int $priceProductIndex
+     *
+     * @return string
+     */
+    protected function createViolationPath(int $priceProductIndex): string
+    {
+        return sprintf(
+            '[%s][%s][%d]',
+            PriceProductOfferTransfer::PRODUCT_OFFER,
+            ProductOfferTransfer::PRICES,
+            $priceProductIndex
+        );
     }
 }

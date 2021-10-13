@@ -7,16 +7,32 @@
 
 namespace Spryker\Shared\ErrorHandler;
 
+use Exception;
+use Spryker\Service\Kernel\Locator;
+use Spryker\Service\UtilSanitize\UtilSanitizeServiceInterface;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\ErrorHandler\ErrorRenderer\ApiErrorRenderer;
 use Spryker\Shared\ErrorHandler\ErrorRenderer\CliErrorRenderer;
+use Spryker\Shared\ErrorHandler\ErrorRenderer\ErrorRendererInterface;
 use Spryker\Shared\ErrorHandler\ErrorRenderer\WebHtmlErrorRenderer;
 
 class ErrorHandlerFactory
 {
+    /**
+     * @var string
+     */
     public const APPLICATION_ZED = 'ZED';
+    /**
+     * @var string
+     */
     public const APPLICATION_GLUE = 'GLUE';
+    /**
+     * @var string
+     */
     public const SAPI_CLI = 'cli';
+    /**
+     * @var string
+     */
     public const SAPI_PHPDBG = 'phpdbg';
 
     /**
@@ -37,10 +53,11 @@ class ErrorHandlerFactory
      */
     public function createErrorHandler()
     {
-        $errorLogger = ErrorLogger::getInstance();
-        $errorRenderer = $this->createErrorRenderer();
-
-        $errorHandler = new ErrorHandler($errorLogger, $errorRenderer);
+        $errorHandler = new ErrorHandler(
+            ErrorLogger::getInstance(),
+            $this->createErrorRenderer(),
+            $this->getUtilSanitizeService()
+        );
 
         return $errorHandler;
     }
@@ -59,7 +76,9 @@ class ErrorHandlerFactory
     protected function createErrorRenderer()
     {
         if ($this->isGlueApplication()) {
-            return $this->createApiRenderer();
+            $errorRendererClassName = Config::get(ErrorHandlerConstants::API_ERROR_RENDERER, ApiErrorRenderer::class);
+
+            return $this->createApiRenderer($errorRendererClassName);
         }
 
         if ($this->isCliCall()) {
@@ -69,6 +88,14 @@ class ErrorHandlerFactory
         $errorRendererClassName = Config::get(ErrorHandlerConstants::ERROR_RENDERER, WebHtmlErrorRenderer::class);
 
         return $this->createWebErrorRenderer($errorRendererClassName);
+    }
+
+    /**
+     * @return \Spryker\Service\UtilSanitize\UtilSanitizeServiceInterface
+     */
+    protected function getUtilSanitizeService(): UtilSanitizeServiceInterface
+    {
+        return Locator::getInstance()->utilSanitize()->service();
     }
 
     /**
@@ -96,11 +123,25 @@ class ErrorHandlerFactory
     }
 
     /**
-     * @return \Spryker\Shared\ErrorHandler\ErrorRenderer\ApiErrorRenderer
+     * @param string $errorRenderer
+     *
+     * @throws \Exception
+     *
+     * @return \Spryker\Shared\ErrorHandler\ErrorRenderer\ErrorRendererInterface
      */
-    protected function createApiRenderer()
+    protected function createApiRenderer(string $errorRenderer): ErrorRendererInterface
     {
-        return new ApiErrorRenderer();
+        if (!class_exists($errorRenderer)) {
+            throw new Exception(sprintf('Class %s not found', $errorRenderer));
+        }
+
+        $errorRendererObject = new $errorRenderer();
+
+        if (!$errorRendererObject instanceof ErrorRendererInterface) {
+            throw new Exception(sprintf('Api error renderer class is expected to be an instance of %s', ErrorRendererInterface::class));
+        }
+
+        return $errorRendererObject;
     }
 
     /**

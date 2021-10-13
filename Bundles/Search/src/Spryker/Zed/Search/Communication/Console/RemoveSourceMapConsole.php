@@ -17,7 +17,13 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class RemoveSourceMapConsole extends Console
 {
+    /**
+     * @var string
+     */
     public const COMMAND_NAME = 'search:source-map:remove';
+    /**
+     * @var string
+     */
     public const DESCRIPTION = 'Removes the IndexMap classes.';
 
     /**

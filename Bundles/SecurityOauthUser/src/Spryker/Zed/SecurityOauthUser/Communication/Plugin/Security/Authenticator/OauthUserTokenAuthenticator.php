@@ -63,7 +63,7 @@ class OauthUserTokenAuthenticator extends AbstractPlugin implements Authenticato
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|mixed|void
+     * @return array
      */
     public function getCredentials(Request $request)
     {

@@ -29,12 +29,15 @@ class AgentBusinessTester extends Actor
 {
     use _generated\AgentBusinessTesterActions;
 
+    /**
+     * @var string
+     */
     public const CUSTOMER_FIRST_NAME = 'customerFirstName';
 
     /**
      * @param int $count
      *
-     * @return \Generated\Shared\Transfer\CustomerTransfer[]
+     * @return array<\Generated\Shared\Transfer\CustomerTransfer>
      */
     public function createCustomers(int $count = 10): array
     {

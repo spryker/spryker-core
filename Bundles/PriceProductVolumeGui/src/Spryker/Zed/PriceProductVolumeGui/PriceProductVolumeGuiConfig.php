@@ -13,16 +13,19 @@ class PriceProductVolumeGuiConfig extends AbstractBundleConfig
 {
     /**
      * @uses \Spryker\Shared\PriceProductStorage\PriceProductStorageConstants::PRICE_DIMENSION_DEFAULT
+     * @var string
      */
     protected const PRICE_DIMENSION_DEFAULT = 'PRICE_DIMENSION_DEFAULT';
 
     /**
      * @uses \Spryker\Shared\PriceProduct\PriceProductConfig::PRICE_TYPE_DEFAULT
+     * @var string
      */
     protected const PRICE_TYPE_DEFAULT = 'DEFAULT';
 
     /**
      * @uses \Spryker\Shared\PriceProductVolume\VolumePriceProductConfig::VOLUME_PRICE_TYPE
+     * @var string
      */
     protected const VOLUME_PRICE_TYPE = 'volume_prices';
 

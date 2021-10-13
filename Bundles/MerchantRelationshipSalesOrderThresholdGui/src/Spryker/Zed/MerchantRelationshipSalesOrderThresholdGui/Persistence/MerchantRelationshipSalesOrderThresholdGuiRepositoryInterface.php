@@ -18,7 +18,7 @@ interface MerchantRelationshipSalesOrderThresholdGuiRepositoryInterface
     public function getMerchantRelationshipTableQuery(): SpyMerchantRelationshipQuery;
 
     /**
-     * @param int[] $merchantRelationshipIds
+     * @param array<int> $merchantRelationshipIds
      *
      * @return \Orm\Zed\MerchantRelationshipSalesOrderThreshold\Persistence\SpyMerchantRelationshipSalesOrderThresholdQuery
      */

@@ -20,7 +20,7 @@ interface LabelDictionaryInterface
     /**
      * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\StorageProductLabelTransfer[]
+     * @return array<\Generated\Shared\Transfer\StorageProductLabelTransfer>
      */
     public function getDictionary($localeName);
 }

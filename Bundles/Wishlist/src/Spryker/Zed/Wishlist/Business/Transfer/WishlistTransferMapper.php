@@ -7,8 +7,11 @@
 
 namespace Spryker\Zed\Wishlist\Business\Transfer;
 
+use ArrayObject;
+use Generated\Shared\Transfer\WishlistItemMetaTransfer;
 use Generated\Shared\Transfer\WishlistItemTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
+use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\Wishlist\Persistence\SpyWishlist;
 use Orm\Zed\Wishlist\Persistence\SpyWishlistItem;
 use Propel\Runtime\Collection\ObjectCollection;
@@ -16,12 +19,12 @@ use Propel\Runtime\Collection\ObjectCollection;
 class WishlistTransferMapper implements WishlistTransferMapperInterface
 {
     /**
-     * @var \Spryker\Zed\Wishlist\Dependency\Plugin\ItemExpanderPluginInterface[]
+     * @var array<\Spryker\Zed\Wishlist\Dependency\Plugin\ItemExpanderPluginInterface>
      */
     protected $itemExpanderPlugins;
 
     /**
-     * @param \Spryker\Zed\Wishlist\Dependency\Plugin\ItemExpanderPluginInterface[] $itemExpanderPlugins
+     * @param array<\Spryker\Zed\Wishlist\Dependency\Plugin\ItemExpanderPluginInterface> $itemExpanderPlugins
      */
     public function __construct(array $itemExpanderPlugins)
     {
@@ -43,9 +46,9 @@ class WishlistTransferMapper implements WishlistTransferMapperInterface
     }
 
     /**
-     * @param \Orm\Zed\Wishlist\Persistence\SpyWishlist[]|\Propel\Runtime\Collection\ObjectCollection $wishlistEntityCollection
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Wishlist\Persistence\SpyWishlist> $wishlistEntityCollection
      *
-     * @return \Generated\Shared\Transfer\WishlistTransfer[]
+     * @return array<\Generated\Shared\Transfer\WishlistTransfer>
      */
     public function convertWishlistCollection(ObjectCollection $wishlistEntityCollection)
     {
@@ -75,9 +78,9 @@ class WishlistTransferMapper implements WishlistTransferMapperInterface
     }
 
     /**
-     * @param \Orm\Zed\Wishlist\Persistence\SpyWishlistItem[]|\Propel\Runtime\Collection\ObjectCollection $wishlistItemEntityCollection
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Wishlist\Persistence\SpyWishlistItem> $wishlistItemEntityCollection
      *
-     * @return \Generated\Shared\Transfer\WishlistItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\WishlistItemTransfer>
      */
     public function convertWishlistItemCollection(ObjectCollection $wishlistItemEntityCollection)
     {
@@ -87,5 +90,41 @@ class WishlistTransferMapper implements WishlistTransferMapperInterface
         }
 
         return $transferCollection;
+    }
+
+    /**
+     * @param \Orm\Zed\Product\Persistence\SpyProduct $productEntity
+     * @param \Generated\Shared\Transfer\WishlistItemMetaTransfer $wishlistItemMetaTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistItemMetaTransfer
+     */
+    public function mapProductEntityToWishlistItemMetaTransfer(
+        SpyProduct $productEntity,
+        WishlistItemMetaTransfer $wishlistItemMetaTransfer
+    ): WishlistItemMetaTransfer {
+        return $wishlistItemMetaTransfer->fromArray($productEntity->toArray(), true);
+    }
+
+    /**
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\WishlistItemTransfer> $wishlistItemTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\WishlistItemMetaTransfer> $wishlistItemMetaTransfers
+     *
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\WishlistItemMetaTransfer>
+     */
+    public function mapWishlistItemTransfersToWishlistItemMetaTransfers(
+        ArrayObject $wishlistItemTransfers,
+        ArrayObject $wishlistItemMetaTransfers
+    ): ArrayObject {
+        foreach ($wishlistItemMetaTransfers as $wishlistItemMetaTransfer) {
+            foreach ($wishlistItemTransfers as $wishlistItemTransfer) {
+                if ($wishlistItemTransfer->getIdWishlistItem() !== $wishlistItemMetaTransfer->getIdWishlistItem()) {
+                    continue;
+                }
+
+                $wishlistItemMetaTransfer->fromArray($wishlistItemTransfer->toArray(), true);
+            }
+        }
+
+        return $wishlistItemMetaTransfers;
     }
 }

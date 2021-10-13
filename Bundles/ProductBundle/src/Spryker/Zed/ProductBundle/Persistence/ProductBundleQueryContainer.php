@@ -60,10 +60,10 @@ class ProductBundleQueryContainer extends AbstractQueryContainer implements Prod
     public function queryBundledProductBySku($sku)
     {
         return $this->getFactory()
-           ->createProductBundleQuery()
-           ->useSpyProductRelatedByFkBundledProductQuery()
-              ->filterBySku($sku)
-           ->endUse();
+            ->createProductBundleQuery()
+            ->useSpyProductRelatedByFkBundledProductQuery()
+                ->filterBySku($sku)
+            ->endUse();
     }
 
     /**
@@ -94,8 +94,8 @@ class ProductBundleQueryContainer extends AbstractQueryContainer implements Prod
     public function queryBundleByIdProductBundle($idProductBundle)
     {
         return $this->getFactory()
-           ->createProductBundleQuery()
-           ->filterByIdProductBundle($idProductBundle);
+            ->createProductBundleQuery()
+            ->filterByIdProductBundle($idProductBundle);
     }
 
     /**

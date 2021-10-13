@@ -28,10 +28,13 @@ use Spryker\Zed\DataImport\Dependency\Client\DataImportToQueueClientInterface;
  */
 class QueueReaderTest extends Unit
 {
+    /**
+     * @var int
+     */
     protected const EXPECTED_NUMBER_OF_DATA_SETS_IN_QUEUE = 3;
 
     /**
-     * @var \Generated\Shared\Transfer\QueueReceiveMessageTransfer[]
+     * @var array<\Generated\Shared\Transfer\QueueReceiveMessageTransfer>
      */
     protected static $queueMessages = [];
 

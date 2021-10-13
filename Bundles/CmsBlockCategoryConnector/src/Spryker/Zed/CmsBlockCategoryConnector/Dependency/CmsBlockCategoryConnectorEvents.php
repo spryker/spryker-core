@@ -14,6 +14,7 @@ interface CmsBlockCategoryConnectorEvents
      * - This events will be used for CmsBlockCategory connector publishing
      *
      * @api
+     * @var string
      */
     public const CMS_BLOCK_CATEGORY_CONNECTOR_PUBLISH = 'CmsBlockCategory.connector.publish';
 
@@ -22,6 +23,7 @@ interface CmsBlockCategoryConnectorEvents
      * - This events will be used for CmsBlockCategory connector un-publishing
      *
      * @api
+     * @var string
      */
     public const CMS_BLOCK_CATEGORY_CONNECTOR_UNPUBLISH = 'CmsBlockCategory.connector.unpublish';
 
@@ -30,6 +32,7 @@ interface CmsBlockCategoryConnectorEvents
      * - This events will be used for spy_cms_block_category_connector entity creation
      *
      * @api
+     * @var string
      */
     public const ENTITY_SPY_CMS_BLOCK_CATEGORY_CONNECTOR_CREATE = 'Entity.spy_cms_block_category_connector.create';
 
@@ -38,6 +41,7 @@ interface CmsBlockCategoryConnectorEvents
      * - This events will be used for spy_cms_block_category_connector entity update
      *
      * @api
+     * @var string
      */
     public const ENTITY_SPY_CMS_BLOCK_CATEGORY_CONNECTOR_UPDATE = 'Entity.spy_cms_block_category_connector.update';
 
@@ -46,6 +50,7 @@ interface CmsBlockCategoryConnectorEvents
      * - This events will be used for spy_cms_block_category_connector entity deletion
      *
      * @api
+     * @var string
      */
     public const ENTITY_SPY_CMS_BLOCK_CATEGORY_CONNECTOR_DELETE = 'Entity.spy_cms_block_category_connector.delete';
 
@@ -54,6 +59,7 @@ interface CmsBlockCategoryConnectorEvents
      * - This events will be used for spy_cms_block_category_position entity create
      *
      * @api
+     * @var string
      */
     public const ENTITY_SPY_CMS_BLOCK_CATEGORY_POSITION_CREATE = 'Entity.spy_cms_block_category_position.create';
 
@@ -62,6 +68,7 @@ interface CmsBlockCategoryConnectorEvents
      * - This events will be used for spy_cms_block_category_position entity update
      *
      * @api
+     * @var string
      */
     public const ENTITY_SPY_CMS_BLOCK_CATEGORY_POSITION_UPDATE = 'Entity.spy_cms_block_category_position.update';
 
@@ -70,6 +77,7 @@ interface CmsBlockCategoryConnectorEvents
      * - This events will be used for spy_cms_block_category_position entity deletion
      *
      * @api
+     * @var string
      */
     public const ENTITY_SPY_CMS_BLOCK_CATEGORY_POSITION_DELETE = 'Entity.spy_cms_block_category_position.delete';
 }

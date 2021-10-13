@@ -15,7 +15,13 @@ use Spryker\Zed\ProductList\Dependency\Facade\ProductListToMessengerFacadeInterf
 
 class RestrictedItemsFilter implements RestrictedItemsFilterInterface
 {
+    /**
+     * @var string
+     */
     protected const MESSAGE_PARAM_SKU = '%sku%';
+    /**
+     * @var string
+     */
     protected const MESSAGE_INFO_RESTRICTED_PRODUCT_REMOVED = 'product-cart.info.restricted-product.removed';
 
     /**
@@ -62,8 +68,8 @@ class RestrictedItemsFilter implements RestrictedItemsFilterInterface
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param int[] $blacklistIds
-     * @param int[] $whitelistIds
+     * @param array<int> $blacklistIds
+     * @param array<int> $whitelistIds
      *
      * @return void
      */
