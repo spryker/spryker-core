@@ -195,7 +195,7 @@ class GlossaryTranslationStorageWriter implements GlossaryTranslationStorageWrit
          * will be removed in the next major version.
          */
         $data = $this->makeGlossaryDataBackwardCompatible($glossaryTranslationEntityTransfer->modifiedToArray());
-        $glossaryStorageEntityTransfer->setData(json_encode($data));
+        $glossaryStorageEntityTransfer->setData(json_encode($data) ?: null);
 
         return $glossaryStorageEntityTransfer;
     }

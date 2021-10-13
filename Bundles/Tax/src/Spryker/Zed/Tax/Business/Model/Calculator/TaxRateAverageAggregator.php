@@ -107,6 +107,7 @@ class TaxRateAverageAggregator implements CalculatorInterface
         $itemTransfer->requireSumDiscountAmountAggregation();
 
         $sumPriceAfterDiscounts = $itemTransfer->getSumPrice() - $itemTransfer->getSumDiscountAmountAggregation();
+        /** @var int $sumTaxAmount */
         $sumTaxAmount = $this->priceCalculationHelper->getTaxValueFromPrice($sumPriceAfterDiscounts, $itemTransfer->getTaxRate(), false);
 
         foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {
@@ -114,6 +115,7 @@ class TaxRateAverageAggregator implements CalculatorInterface
             $productOptionTransfer->requireSumDiscountAmountAggregation();
 
             $sumOptionPriceAfterDiscounts = $productOptionTransfer->getSumPrice() - $productOptionTransfer->getSumDiscountAmountAggregation();
+            /** @var int $sumOptionTax */
             $sumOptionTax = $this->priceCalculationHelper->getTaxValueFromPrice($sumOptionPriceAfterDiscounts, $productOptionTransfer->getTaxRate(), false);
             $sumTaxAmount += $sumOptionTax;
         }

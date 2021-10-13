@@ -55,6 +55,7 @@ class StorageImportRdbConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        /** @var string $source */
         $source = $input->getArgument(static::ARGUMENT_SOURCE);
 
         if ($this->getFacade()->import($source)) {

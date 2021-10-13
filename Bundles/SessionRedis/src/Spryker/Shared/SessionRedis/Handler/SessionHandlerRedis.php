@@ -132,7 +132,7 @@ class SessionHandlerRedis implements SessionHandlerInterface
         $result = $this->redisClient->setex(
             $key,
             $this->sessionRedisLifeTimeCalculator->getSessionLifeTime(),
-            json_encode($sessionData)
+            (string)json_encode($sessionData)
         );
         $this->monitoringService->addCustomParameter(static::METRIC_SESSION_WRITE_TIME, microtime(true) - $startTime);
 

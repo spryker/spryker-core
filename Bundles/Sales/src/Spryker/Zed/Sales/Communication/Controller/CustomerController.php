@@ -42,7 +42,7 @@ class CustomerController extends AbstractController
      */
     public function ordersTableAction(Request $request)
     {
-        $customerReference = $request->query->get(SalesConfig::PARAM_CUSTOMER_REFERENCE);
+        $customerReference = (string)$request->query->getAlpha(SalesConfig::PARAM_CUSTOMER_REFERENCE);
         $ordersTable = $this->getFactory()->createCustomerOrdersTable($customerReference);
 
         return $this->jsonResponse($ordersTable->fetchData());

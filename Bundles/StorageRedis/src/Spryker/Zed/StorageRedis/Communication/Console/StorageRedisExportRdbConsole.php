@@ -52,6 +52,7 @@ class StorageRedisExportRdbConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        /** @var string $destination */
         $destination = $input->getArgument(static::ARGUMENT_DESTINATION);
         $storageRedisExporter = $this->getFactory()->createStorageRedisExporter();
 

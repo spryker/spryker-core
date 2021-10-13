@@ -9,6 +9,7 @@ namespace Spryker\Shared\Testify;
 
 use Exception;
 use InvalidArgumentException;
+use ReflectionException;
 use ReflectionObject;
 use Silex\Application;
 use Spryker\Shared\Config\Application\Environment;
@@ -135,6 +136,8 @@ class SystemUnderTestBootstrap
         $application = $this->getBootstrapClass(TestifyConstants::BOOTSTRAP_CLASS_ZED);
         $locator = KernelLocator::getInstance();
         $this->resetLocator($locator);
+
+        /** @var \Spryker\Shared\Application\Application $kernel */
         $kernel = $application->boot();
 
         $propelServiceProvider = new PropelServiceProvider();
@@ -184,12 +187,17 @@ class SystemUnderTestBootstrap
     /**
      * @param \Spryker\Shared\Kernel\LocatorLocatorInterface $locator
      *
+     * @throws \ReflectionException
+     *
      * @return void
      */
     private function resetLocator(LocatorLocatorInterface $locator)
     {
         $refObject = new ReflectionObject($locator);
         $parent = $refObject->getParentClass();
+        if (!$parent) {
+            throw new ReflectionException('Cannot get parent class of object ' . get_class($refObject));
+        }
 
         $refProperty = $parent->getProperty('instance');
         $refProperty->setAccessible(true);

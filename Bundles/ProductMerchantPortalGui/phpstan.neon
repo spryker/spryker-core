@@ -3,4 +3,3 @@ parameters:
     excludes_analyse:
         - '%rootDir%/../../../vendor/spryker/spryker/Bundles/ProductMerchantPortalGui/src/Spryker/Zed/ProductMerchantPortalGui/Persistence/ProductMerchantPortalGuiRepository.php'
     ignoreErrors:
-        - '#Call to an undefined method Generated\\Zed\\Ide\\AutoCompletion#'

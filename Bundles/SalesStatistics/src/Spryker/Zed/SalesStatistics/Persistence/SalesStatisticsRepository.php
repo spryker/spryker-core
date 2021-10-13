@@ -51,7 +51,7 @@ class SalesStatisticsRepository extends AbstractRepository implements SalesStati
      */
     public function getOrderCountStatisticByDays(int $day): ChartDataTraceTransfer
     {
-        $date = date('Y-m-d H:i:s.u', strtotime(sprintf('-%d days', $day)));
+        $date = date('Y-m-d H:i:s.u', (int)strtotime(sprintf('-%d days', $day)));
 
         $result = $this->getDataOrderCountStatisticByDays($date);
 

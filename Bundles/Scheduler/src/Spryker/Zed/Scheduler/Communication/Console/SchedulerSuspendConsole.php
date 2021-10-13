@@ -108,9 +108,12 @@ class SchedulerSuspendConsole extends AbstractSchedulerConsole
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $roles = $input->getOption(static::ROLES_OPTION);
-        $schedulers = $input->getOption(static::SCHEDULERS_OPTION);
-        $jobNames = $input->getOption(static::JOBS_OPTION);
+        /** @var array<string> $roles */
+        $roles = (array)$input->getOption(static::ROLES_OPTION);
+        /** @var array<string> $schedulers */
+        $schedulers = (array)$input->getOption(static::SCHEDULERS_OPTION);
+        /** @var array<string> $jobNames */
+        $jobNames = (array)$input->getOption(static::JOBS_OPTION);
 
         $schedulerFilterTransfer = $this->createSchedulerFilterTransfer($roles, $schedulers, $jobNames);
         $responseCollectionTransfer = $this->getFacade()->suspend($schedulerFilterTransfer);

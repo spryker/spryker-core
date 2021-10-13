@@ -244,6 +244,7 @@ abstract class AbstractTable
         $csvHeaders = $this->getCsvHeaders();
 
         return function () use ($csvHeaders) {
+            /** @var resource $csvHandle */
             $csvHandle = fopen('php://output', 'w+');
 
             $translatedHeaders = $this->translateCsvHeaders($csvHeaders);
@@ -701,7 +702,7 @@ abstract class AbstractTable
             return $this->request->query->all('order');
         }
 
-        return $this->request->query->get('order');
+        return (array)$this->request->query->get('order') ?: null;
     }
 
     /**
@@ -792,7 +793,7 @@ abstract class AbstractTable
     }
 
     /**
-     * @return mixed
+     * @return mixed|null
      */
     public function getSearchTerm()
     {
@@ -812,7 +813,7 @@ abstract class AbstractTable
             return $this->request->query->all('search');
         }
 
-        return $this->request->query->get('search');
+        return (array)$this->request->query->get('search');
     }
 
     /**

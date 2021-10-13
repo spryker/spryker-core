@@ -109,6 +109,7 @@ class ReclamationTable extends AbstractTable
      */
     protected function prepareData(TableConfiguration $config): array
     {
+        /** @var array $queryResults */
         $queryResults = $this->runQuery($this->salesReclamationQuery, $config);
 
         return $this->formatQueryData($queryResults);

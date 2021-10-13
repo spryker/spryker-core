@@ -39,10 +39,8 @@ class ObjectSpecification implements IteratorAggregate, ArrayAccess, Countable
         return $this;
     }
 
-    // ------------------------------------------------------------------------
-
     /**
-     * @inheritDoc
+     * @return \ArrayIterator<\Spryker\Glue\Testify\OpenApi3\Property\PropertyDefinition>
      */
     public function getIterator()
     {
@@ -50,7 +48,7 @@ class ObjectSpecification implements IteratorAggregate, ArrayAccess, Countable
     }
 
     /**
-     * @inheritDoc
+     * @return int
      */
     public function count()
     {
@@ -58,7 +56,9 @@ class ObjectSpecification implements IteratorAggregate, ArrayAccess, Countable
     }
 
     /**
-     * @inheritDoc
+     * @param mixed $offset
+     *
+     * @return bool
      */
     public function offsetExists($offset)
     {
@@ -66,7 +66,9 @@ class ObjectSpecification implements IteratorAggregate, ArrayAccess, Countable
     }
 
     /**
-     * @inheritDoc
+     * @param mixed $offset
+     *
+     * @return \Spryker\Glue\Testify\OpenApi3\Property\PropertyDefinition
      */
     public function offsetGet($offset)
     {
@@ -74,7 +76,10 @@ class ObjectSpecification implements IteratorAggregate, ArrayAccess, Countable
     }
 
     /**
-     * @inheritDoc
+     * @param mixed $offset
+     * @param mixed $value
+     *
+     * @return void
      */
     public function offsetSet($offset, $value)
     {
@@ -82,7 +87,9 @@ class ObjectSpecification implements IteratorAggregate, ArrayAccess, Countable
     }
 
     /**
-     * @inheritDoc
+     * @param mixed $offset
+     *
+     * @return void
      */
     public function offsetUnset($offset)
     {

@@ -87,10 +87,9 @@ abstract class AbstractTransferFileFinder implements GeneratedFileFinderInterfac
         }
 
         $reflectionClass = new ReflectionClass($transferClassName);
+        $parentClass = $reflectionClass->getParentClass();
 
-        return $reflectionClass->getParentClass()
-            ? $reflectionClass->getParentClass()->getName()
-            : null;
+        return $parentClass ? $parentClass->getName() : null;
     }
 
     /**

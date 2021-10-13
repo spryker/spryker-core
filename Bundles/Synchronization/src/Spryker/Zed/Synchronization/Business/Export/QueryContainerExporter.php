@@ -114,7 +114,7 @@ class QueryContainerExporter implements ExporterInterface
 
     /**
      * @param \Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQueryContainerPluginInterface $plugin
-     * @param array $synchronizationEntities
+     * @param array<\Propel\Runtime\ActiveRecord\ActiveRecordInterface> $synchronizationEntities
      *
      * @return void
      */

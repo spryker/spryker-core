@@ -177,7 +177,7 @@ class OrdersTable extends AbstractTable
      */
     protected function formatCsvRow(ActiveRecordInterface $entity): array
     {
-        $salesOrderRow = $entity->toArray(SpySalesOrderTableMap::TYPE_COLNAME);
+        $salesOrderRow = (array)$entity->toArray(SpySalesOrderTableMap::TYPE_COLNAME);
         $grandTotal = $salesOrderRow[OrdersTableQueryBuilder::FIELD_ORDER_GRAND_TOTAL] ?? 0;
         $customer = sprintf(
             '%s%s %s',
@@ -229,6 +229,7 @@ class OrdersTable extends AbstractTable
     protected function prepareData(TableConfiguration $config)
     {
         $query = $this->buildQuery();
+        /** @var array $queryResults */
         $queryResults = $this->runQuery($query, $config);
 
         return $this->formatQueryData($queryResults);
@@ -361,7 +362,7 @@ class OrdersTable extends AbstractTable
     {
         $idOrderItemProcess = $this->request->query->getInt(static::ID_ORDER_ITEM_PROCESS);
         $idOrderItemItemState = $this->request->query->getInt(static::ID_ORDER_ITEM_STATE);
-        $filter = $this->request->query->get(static::FILTER);
+        $filter = (string)$this->request->query->get(static::FILTER) ?: null;
 
         return $this->queryBuilder->buildQuery($idOrderItemProcess, $idOrderItemItemState, $filter);
     }

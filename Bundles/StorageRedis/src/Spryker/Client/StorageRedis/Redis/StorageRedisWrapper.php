@@ -137,7 +137,7 @@ class StorageRedisWrapper implements StorageRedisWrapperInterface
             $transformedKeys[] = $this->getKeyName($key);
         }
 
-        $values = array_combine($transformedKeys, $this->redisClient->mget($this->connectionKey, $transformedKeys));
+        $values = array_combine($transformedKeys, $this->redisClient->mget($this->connectionKey, $transformedKeys)) ?: [];
         $this->addMultiReadAccessStats($keys);
 
         return $values;

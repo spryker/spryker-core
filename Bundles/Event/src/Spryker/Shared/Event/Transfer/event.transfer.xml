@@ -25,4 +25,13 @@
         <property name="body" type="string"/>
     </transfer>
 
+    <transfer name="QueueConnection">
+        <property name="queueOptionCollection" singular="queueOptionItem" type="RabbitMqOption[]"/>
+    </transfer>
+
+    <transfer name="RabbitMqOption">
+        <property name="queueName" type="string"/>
+        <property name="bindingQueueCollection" singular="bindingQueueItem" type="RabbitMqOption[]"/>
+    </transfer>
+
 </transfers>

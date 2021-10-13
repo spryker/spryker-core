@@ -45,7 +45,7 @@ class ListController extends AbstractController
      */
     public function processAction(Request $request)
     {
-        $stateMachineName = $request->query->get(self::URL_PARAM_STATE_MACHINE);
+        $stateMachineName = (string)$request->query->get(self::URL_PARAM_STATE_MACHINE);
 
         return $this->viewResponse([
             'processes' => $this->getFacade()->getProcesses($stateMachineName),

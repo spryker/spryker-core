@@ -29,7 +29,7 @@ class SalesOrderMapper
     {
         foreach ($orderEntities as $orderEntity) {
             $orderListTransfer->addOrder(
-                (new OrderTransfer())->fromArray($orderEntity->toArray(), true)
+                (new OrderTransfer())->fromArray((array)$orderEntity->toArray(), true)
             );
         }
 
@@ -46,7 +46,7 @@ class SalesOrderMapper
         $orderTransfers = [];
 
         foreach ($salesOrderEntityCollection as $salesOrderEntity) {
-            $orderTransfers[] = (new OrderTransfer())->fromArray($salesOrderEntity->toArray(), true);
+            $orderTransfers[] = (new OrderTransfer())->fromArray((array)$salesOrderEntity->toArray(), true);
         }
 
         return $orderTransfers;
@@ -62,8 +62,10 @@ class SalesOrderMapper
     ): array {
         $mappedTotalsTransfers = [];
 
+        /** @var \Orm\Zed\Sales\Persistence\SpySalesOrderTotals $salesOrderTotalsEntity */
         foreach ($salesOrderTotalsEntityCollection as $salesOrderTotalsEntity) {
-            $mappedTotalsTransfers[$salesOrderTotalsEntity->getFkSalesOrder()] = (new TotalsTransfer())->fromArray($salesOrderTotalsEntity->toArray(), true);
+            $totalsTransfer = (new TotalsTransfer())->fromArray((array)$salesOrderTotalsEntity->toArray(), true);
+            $mappedTotalsTransfers[$salesOrderTotalsEntity->getFkSalesOrder()] = $totalsTransfer;
         }
 
         return $mappedTotalsTransfers;
@@ -94,7 +96,7 @@ class SalesOrderMapper
         SpySalesOrderAddressEntityTransfer $salesOrderAddressEntityTransfer,
         SpySalesOrderAddress $salesOrderAddressEntity
     ): SpySalesOrderAddressEntityTransfer {
-        return $salesOrderAddressEntityTransfer->fromArray($salesOrderAddressEntity->toArray(), true);
+        return $salesOrderAddressEntityTransfer->fromArray((array)$salesOrderAddressEntity->toArray(), true);
     }
 
     /**
@@ -122,7 +124,7 @@ class SalesOrderMapper
         SpySalesOrderEntityTransfer $salesOrderEntityTransfer,
         SpySalesOrder $salesOrderEntity
     ): SpySalesOrderEntityTransfer {
-        return $salesOrderEntityTransfer->fromArray($salesOrderEntity->toArray(), true);
+        return $salesOrderEntityTransfer->fromArray((array)$salesOrderEntity->toArray(), true);
     }
 
     /**
@@ -135,7 +137,7 @@ class SalesOrderMapper
         SpySalesOrder $salesOrderEntity,
         OrderTransfer $orderTransfer
     ): OrderTransfer {
-        $orderTransfer->fromArray($salesOrderEntity->toArray(), true);
+        $orderTransfer->fromArray((array)$salesOrderEntity->toArray(), true);
 
         return $orderTransfer;
     }

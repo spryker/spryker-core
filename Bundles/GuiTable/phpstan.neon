@@ -4,4 +4,3 @@ parameters:
     excludePaths:
             - %rootDir%/../../../vendor/spryker/spryker/Bundles/GuiTable/src/Spryker/Shared/GuiTable/Normalizer/DateRangeRequestFilterValueNormalizer.php
     ignoreErrors:
-        - '#Call to an undefined method Generated\\Zed\\Ide\\AutoCompletion#'

@@ -145,6 +145,7 @@ class EventConfig extends AbstractBundleConfig
     protected function hasEventRetryQueueConfig($config): bool
     {
         $connections = $config->getQueueConnections();
+        /** @var \Generated\Shared\Transfer\QueueConnectionTransfer $defaultConnection */
         $defaultConnection = current($connections);
         foreach ($defaultConnection->getQueueOptionCollection() as $option) {
             if ($option->getQueueName() !== 'event') {

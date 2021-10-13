@@ -24,7 +24,7 @@ class QueueWorkerSignalDispatcher implements SignalDispatcherInterface
     protected $queueConfig;
 
     /**
-     * @var array
+     * @var array<string>
      */
     protected $queueNames;
 

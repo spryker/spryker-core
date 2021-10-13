@@ -39,8 +39,6 @@ class PropertyValues implements IteratorAggregate, ArrayAccess, Countable
         return $this;
     }
 
-    // ------------------------------------------------------------------------
-
     /**
      * @return \Traversable
      */
@@ -78,7 +76,10 @@ class PropertyValues implements IteratorAggregate, ArrayAccess, Countable
     }
 
     /**
-     * @inheritDoc
+     * @param string $offset
+     * @param mixed $value
+     *
+     * @return void
      */
     public function offsetSet($offset, $value)
     {
@@ -86,7 +87,9 @@ class PropertyValues implements IteratorAggregate, ArrayAccess, Countable
     }
 
     /**
-     * @inheritDoc
+     * @param string $offset
+     *
+     * @return void
      */
     public function offsetUnset($offset)
     {

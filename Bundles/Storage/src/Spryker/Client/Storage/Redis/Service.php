@@ -226,6 +226,7 @@ class Service implements ServiceInterface
             $transformedKeys[] = $this->getKeyName($key);
         }
 
+        /** @var array $values */
         $values = array_combine($transformedKeys, $this->client->mget($transformedKeys));
         $this->addMultiReadAccessStats($keys);
 

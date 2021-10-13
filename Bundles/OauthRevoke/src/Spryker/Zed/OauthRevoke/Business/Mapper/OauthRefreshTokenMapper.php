@@ -50,7 +50,7 @@ class OauthRefreshTokenMapper implements OauthRefreshTokenMapperInterface
         RefreshTokenEntityInterface $refreshTokenEntity,
         OauthRefreshTokenTransfer $oauthRefreshTokenTransfer
     ): OauthRefreshTokenTransfer {
-        $encodedUserIdentifier = $refreshTokenEntity->getAccessToken()->getUserIdentifier();
+        $encodedUserIdentifier = (string)$refreshTokenEntity->getAccessToken()->getUserIdentifier();
         $userIdentifier = $this->utilEncodingService->decodeJson($encodedUserIdentifier, true);
         $filteredUserIdentifier = $this->filterUserIdentifier($userIdentifier);
         $encodedUserIdentifier = (string)$this->utilEncodingService->encodeJson($filteredUserIdentifier);

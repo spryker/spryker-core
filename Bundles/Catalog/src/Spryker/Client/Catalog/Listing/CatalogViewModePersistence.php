@@ -60,7 +60,7 @@ class CatalogViewModePersistence implements CatalogViewModePersistenceInterface
      */
     public function getViewMode(Request $request)
     {
-        $listingMode = $request->cookies->get(static::COOKIE_IDENTIFIER);
+        $listingMode = (string)$request->cookies->get(static::COOKIE_IDENTIFIER);
 
         if (!$listingMode) {
             return $this->defaultViewMode;

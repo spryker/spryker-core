@@ -23,7 +23,7 @@ class QuotePermissionStoragePlugin extends AbstractPlugin implements PermissionS
      *
      * @api
      *
-     * @param int $idCompanyUser
+     * @param string|int $idCompanyUser
      *
      * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
      */

@@ -38,15 +38,14 @@ class OrderItemsTableExpander implements OrderItemsTableExpanderInterface
     }
 
     /**
-     * @phpstan-return array<int, string[]>
-     *
      * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return array<string>
+     * @return array<array<string>>
      */
     public function getColumnCellsContent(ArrayObject $itemTransfers): array
     {
         $columnCellsContentGroupedByIdItem = [];
+        /** @var \Generated\Shared\Transfer\ItemTransfer $itemTransfer */
         foreach ($itemTransfers as $itemTransfer) {
             foreach ($this->orderItemsTableExpanderPlugins as $orderItemsTableExpanderPlugin) {
                 $columnCellsContentGroupedByIdItem[$itemTransfer->getIdSalesOrderItem()][] = $orderItemsTableExpanderPlugin->getColumnCellContent($itemTransfer);

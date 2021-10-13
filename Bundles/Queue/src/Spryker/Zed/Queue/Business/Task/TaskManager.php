@@ -44,7 +44,7 @@ class TaskManager implements TaskManagerInterface
 
     /**
      * @param string $queueName
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return \Generated\Shared\Transfer\QueueTaskResponseTransfer
      */
@@ -125,7 +125,7 @@ class TaskManager implements TaskManagerInterface
     /**
      * @param string $queueName
      * @param int $chunkSize
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return array<\Generated\Shared\Transfer\QueueReceiveMessageTransfer>
      */
@@ -136,7 +136,7 @@ class TaskManager implements TaskManagerInterface
 
     /**
      * @param array<\Generated\Shared\Transfer\QueueReceiveMessageTransfer> $queueReceiveMessageTransfers
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */

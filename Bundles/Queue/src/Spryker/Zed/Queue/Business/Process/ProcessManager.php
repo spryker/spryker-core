@@ -119,7 +119,7 @@ class ProcessManager implements ProcessManagerInterface
             return false;
         }
 
-        $output = exec(sprintf('ps -p %s | grep %s | grep -v \'<defunct>\'', $processId, $processId));
+        $output = (string)exec(sprintf('ps -p %s | grep %s | grep -v \'<defunct>\'', $processId, $processId));
 
         return trim($output) !== '';
     }

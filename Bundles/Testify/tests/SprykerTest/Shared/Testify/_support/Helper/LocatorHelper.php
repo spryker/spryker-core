@@ -184,7 +184,7 @@ class LocatorHelper extends Module
     }
 
     /**
-     * @return \Spryker\Shared\Kernel\LocatorLocatorInterface|\Generated\Zed\Ide\AutoCompletion|\Generated\Service\Ide\AutoCompletion|\Generated\Glue\Ide\AutoCompletion
+     * @return \Spryker\Shared\Kernel\LocatorLocatorInterface&\Generated\Zed\Ide\AutoCompletion&\Generated\Service\Ide\AutoCompletion&\Generated\Glue\Ide\AutoCompletion
      */
     public function getLocator()
     {

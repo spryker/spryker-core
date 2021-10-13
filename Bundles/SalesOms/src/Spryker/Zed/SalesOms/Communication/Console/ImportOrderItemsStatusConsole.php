@@ -214,9 +214,11 @@ class ImportOrderItemsStatusConsole extends Console
      */
     protected function resolveFilePath(): ?string
     {
+        /** @var string $filePath */
+        $filePath = $this->input->getArgument(static::ARGUMENT_FILE_PATH);
         $filePathResolverResponseTransfer = $this->getFactory()
             ->createFilePathResolver()
-            ->resolveFilePath($this->input->getArgument(static::ARGUMENT_FILE_PATH));
+            ->resolveFilePath($filePath);
 
         if (!$filePathResolverResponseTransfer->getIsSuccessful()) {
             $this->error($filePathResolverResponseTransfer->getMessage()->getMessage());

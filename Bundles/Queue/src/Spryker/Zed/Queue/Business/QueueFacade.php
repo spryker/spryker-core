@@ -24,7 +24,7 @@ class QueueFacade extends AbstractFacade implements QueueFacadeInterface
      * @api
      *
      * @param string $queueName
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -41,7 +41,7 @@ class QueueFacade extends AbstractFacade implements QueueFacadeInterface
      * @api
      *
      * @param string $queueName
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return \Generated\Shared\Transfer\QueueTaskResponseTransfer
      */
@@ -59,7 +59,7 @@ class QueueFacade extends AbstractFacade implements QueueFacadeInterface
      *
      * @param string $command
      * @param \Symfony\Component\Console\Output\OutputInterface $output
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */

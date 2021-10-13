@@ -146,7 +146,7 @@ class PhpDocumentorGraphAdapter implements GraphAdapterInterface
         }
         $this->graph->export($type, $fileName);
 
-        return file_get_contents($fileName);
+        return (string)file_get_contents($fileName);
     }
 
     /**

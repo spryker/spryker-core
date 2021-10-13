@@ -284,7 +284,7 @@ class OrderHydrator implements OrderHydratorInterface
     public function hydrateBaseOrderTransfer(SpySalesOrder $orderEntity)
     {
         $orderTransfer = new OrderTransfer();
-        $orderTransfer->fromArray($orderEntity->toArray(), true);
+        $orderTransfer->fromArray((array)$orderEntity->toArray(), true);
         $orderTransfer->setCustomerReference($orderEntity->getCustomerReference());
         // Deprecated: Using FK to customer is obsolete, but needed to prevent BC break.
         $orderTransfer->setFkCustomer($orderEntity->getFkCustomer());
@@ -611,7 +611,7 @@ class OrderHydrator implements OrderHydratorInterface
      */
     protected function isCustomerOrderAccessGranted(SpySalesOrder $orderEntity, CustomerTransfer $customerTransfer): bool
     {
-        $orderTransfer = (new OrderTransfer())->fromArray($orderEntity->toArray(), true);
+        $orderTransfer = (new OrderTransfer())->fromArray((array)$orderEntity->toArray(), true);
 
         foreach ($this->customerOrderAccessCheckPlugins as $customerOrderAccessCheckPlugin) {
             if ($customerOrderAccessCheckPlugin->check($orderTransfer, $customerTransfer)) {

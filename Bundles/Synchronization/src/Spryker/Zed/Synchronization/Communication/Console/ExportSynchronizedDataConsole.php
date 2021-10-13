@@ -62,11 +62,13 @@ class ExportSynchronizedDataConsole extends Console
         $ids = [];
 
         if ($input->getArgument(static::RESOURCE)) {
+            /** @var string $resourceString */
             $resourceString = $input->getArgument(static::RESOURCE);
             $resources = explode(',', $resourceString);
         }
 
         if ($input->getArgument(static::OPTION_IDS)) {
+            /** @var string $resourceString */
             $resourceString = $input->getArgument(static::OPTION_IDS);
             $ids = explode(',', $resourceString);
 

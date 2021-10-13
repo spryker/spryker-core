@@ -97,8 +97,6 @@ class StepOverrider extends Scenario
         return $this;
     }
 
-    // ------------------------------------------------------------------------
-
     /**
      * @inheritDoc
      */

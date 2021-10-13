@@ -52,6 +52,7 @@ class StorageRedisImportRdbConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        /** @var string $source */
         $source = $input->getArgument(static::ARGUMENT_SOURCE);
         $storageRedisImporter = $this->getFactory()->createStorageRedisImporter();
 

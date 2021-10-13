@@ -86,6 +86,7 @@ abstract class AbstractProductSearchDataMapper
             return $key;
         }
 
+        /** @var string $normalizedKey */
         $normalizedKey = $this->underscoreToDashFilter->filter($key);
 
         if (in_array($normalizedKey, $pageIndexMapProperties)) {

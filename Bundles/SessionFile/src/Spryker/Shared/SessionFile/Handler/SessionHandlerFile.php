@@ -148,7 +148,7 @@ class SessionHandlerFile implements SessionHandlerInterface
     public function gc($maxLifetime): bool
     {
         $time = time();
-        $files = glob($this->buildSessionFilePattern(), GLOB_NOSORT);
+        $files = glob($this->buildSessionFilePattern(), GLOB_NOSORT) ?: [];
         foreach ($files as $file) {
             $fileTime = filemtime($file);
             $fileExpired = $fileTime + $maxLifetime < $time;

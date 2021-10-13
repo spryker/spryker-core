@@ -192,6 +192,7 @@ class ProductViewVariantRestrictionExpander implements ProductViewVariantRestric
             }
         }
 
+        /** @var string $availableAttributeKey */
         foreach ($availableAttributes as $availableAttributeKey) {
             [$availableAttributeKey, $availableAttributeValue] = explode(ProductListStorageConfig::ATTRIBUTE_MAP_PATH_DELIMITER, $availableAttributeKey);
             $availableAttributesForSelectedOptions[$availableAttributeKey][] = $availableAttributeValue;

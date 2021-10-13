@@ -68,6 +68,6 @@ class BulkTouchHandlerUpdate extends AbstractBulkTouchHandler
     {
         $itemEventValueSet = SpyTouchTableMap::getValueSet(SpyTouchTableMap::COL_ITEM_EVENT);
 
-        return array_search($eventName, $itemEventValueSet);
+        return (string)array_search($eventName, $itemEventValueSet);
     }
 }

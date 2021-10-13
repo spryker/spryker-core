@@ -64,7 +64,7 @@ class Worker implements WorkerInterface
     protected $queueClient;
 
     /**
-     * @var array
+     * @var array<string>
      */
     protected $queueNames;
 
@@ -100,9 +100,9 @@ class Worker implements WorkerInterface
 
     /**
      * @param string $command
-     * @param array $options
+     * @param array<string, mixed> $options
      * @param int $round
-     * @param array $processes
+     * @param array<\Symfony\Component\Process\Process> $processes
      *
      * @return void
      */
@@ -145,7 +145,7 @@ class Worker implements WorkerInterface
      * @param string $command
      * @param int $round
      * @param int $delayIntervalSeconds
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -226,7 +226,7 @@ class Worker implements WorkerInterface
      * @param string $command
      * @param string $queue
      *
-     * @return array
+     * @return array<string, mixed>
      */
     protected function startProcesses(string $command, string $queue): array
     {
@@ -277,7 +277,7 @@ class Worker implements WorkerInterface
     /**
      * @param string $queueName
      *
-     * @return array
+     * @return array<string, mixed>
      */
     protected function getQueueAdapterDefaultConfiguration(string $queueName): array
     {
@@ -301,8 +301,8 @@ class Worker implements WorkerInterface
     }
 
     /**
-     * @param array $pendingProcesses
-     * @param array $options
+     * @param array<\Symfony\Component\Process\Process> $pendingProcesses
+     * @param array<string, mixed> $options
      *
      * @return bool
      */
@@ -312,7 +312,7 @@ class Worker implements WorkerInterface
     }
 
     /**
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return bool
      */
@@ -322,7 +322,7 @@ class Worker implements WorkerInterface
     }
 
     /**
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return bool
      */

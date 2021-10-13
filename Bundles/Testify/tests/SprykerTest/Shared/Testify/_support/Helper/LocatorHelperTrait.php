@@ -10,7 +10,7 @@ namespace SprykerTest\Shared\Testify\Helper;
 trait LocatorHelperTrait
 {
     /**
-     * @return \Generated\Service\Ide\AutoCompletion|\Generated\Zed\Ide\AutoCompletion|\Spryker\Shared\Kernel\LocatorLocatorInterface
+     * @return \Generated\Service\Ide\AutoCompletion&\Generated\Zed\Ide\AutoCompletion&\Spryker\Shared\Kernel\LocatorLocatorInterface
      */
     protected function getLocator()
     {

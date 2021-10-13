@@ -34,7 +34,7 @@ class CustomerOrderOverviewHydrator implements CustomerOrderOverviewHydratorInte
     protected function mapBaseOrderTransfer(SpySalesOrder $orderEntity): OrderTransfer
     {
         $orderTransfer = new OrderTransfer();
-        $orderTransfer->fromArray($orderEntity->toArray(), true);
+        $orderTransfer->fromArray((array)$orderEntity->toArray(), true);
 
         return $orderTransfer;
     }

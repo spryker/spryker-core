@@ -101,7 +101,7 @@ class DetailController extends AbstractController
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array|string
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     protected function renderSalesDetailBlocks(Request $request, OrderTransfer $orderTransfer)
     {
@@ -158,7 +158,7 @@ class DetailController extends AbstractController
             return $blockResponse;
         }
 
-        return $blockResponse->getContent();
+        return (string)$blockResponse->getContent();
     }
 
     /**

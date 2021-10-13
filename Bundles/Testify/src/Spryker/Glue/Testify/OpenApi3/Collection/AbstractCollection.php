@@ -76,10 +76,8 @@ abstract class AbstractCollection implements CollectionInterface, IteratorAggreg
         return $result;
     }
 
-    // ----------------------------------------------------
-
     /**
-     * @inheritDoc
+     * @return \Traversable
      */
     public function getIterator()
     {
@@ -89,7 +87,7 @@ abstract class AbstractCollection implements CollectionInterface, IteratorAggreg
     }
 
     /**
-     * @inheritDoc
+     * @return int
      */
     public function count()
     {
@@ -97,7 +95,9 @@ abstract class AbstractCollection implements CollectionInterface, IteratorAggreg
     }
 
     /**
-     * @inheritDoc
+     * @param mixed $offset
+     *
+     * @return bool
      */
     public function offsetExists($offset)
     {
@@ -105,7 +105,9 @@ abstract class AbstractCollection implements CollectionInterface, IteratorAggreg
     }
 
     /**
-     * @inheritDoc
+     * @param mixed $offset
+     *
+     * @return mixed
      */
     public function offsetGet($offset)
     {
@@ -121,7 +123,10 @@ abstract class AbstractCollection implements CollectionInterface, IteratorAggreg
     }
 
     /**
-     * @inheritDoc
+     * @param mixed $offset
+     * @param mixed $value
+     *
+     * @return void
      */
     public function offsetSet($offset, $value)
     {
@@ -129,7 +134,9 @@ abstract class AbstractCollection implements CollectionInterface, IteratorAggreg
     }
 
     /**
-     * @inheritDoc
+     * @param mixed $offset
+     *
+     * @return void
      */
     public function offsetUnset($offset)
     {
@@ -137,7 +144,7 @@ abstract class AbstractCollection implements CollectionInterface, IteratorAggreg
     }
 
     /**
-     * @inheritDoc
+     * @return array<\Spryker\Glue\Testify\OpenApi3\Property\PropertyValueInterface>
      */
     public function __debugInfo()
     {

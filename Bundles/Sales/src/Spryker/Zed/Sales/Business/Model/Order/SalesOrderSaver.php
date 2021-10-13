@@ -294,7 +294,7 @@ class SalesOrderSaver implements SalesOrderSaverInterface
     protected function hydrateSalesOrderEntityFromPlugins(QuoteTransfer $quoteTransfer, SpySalesOrder $salesOrderEntity): void
     {
         $salesOrderEntityTransfer = new SpySalesOrderEntityTransfer();
-        $salesOrderEntityTransfer->fromArray($salesOrderEntity->toArray(), true);
+        $salesOrderEntityTransfer->fromArray((array)$salesOrderEntity->toArray(), true);
 
         foreach ($this->orderExpanderPreSavePlugins as $preSaveHydrateOrderPlugin) {
             $salesOrderEntityTransfer = $preSaveHydrateOrderPlugin->expand($salesOrderEntityTransfer, $quoteTransfer);
@@ -435,7 +435,7 @@ class SalesOrderSaver implements SalesOrderSaverInterface
             $saveOrderTransfer->addOrderItem(clone $itemTransfer);
         }
 
-        $saveOrderTransfer->fromArray($salesOrderEntity->toArray(), true);
+        $saveOrderTransfer->fromArray((array)$salesOrderEntity->toArray(), true);
     }
 
     /**

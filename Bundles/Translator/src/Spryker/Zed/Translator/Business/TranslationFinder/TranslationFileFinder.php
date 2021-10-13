@@ -18,7 +18,7 @@ class TranslationFileFinder implements TranslationFileFinderInterface
     {
         $translationFilePaths = [];
         foreach ($translationFilePathPatterns as $translationFilePathPattern) {
-            $translationFilePaths[] = glob($translationFilePathPattern, GLOB_NOSORT);
+            $translationFilePaths[] = glob($translationFilePathPattern, GLOB_NOSORT) ?: [];
         }
 
         return array_filter(array_merge(...$translationFilePaths));

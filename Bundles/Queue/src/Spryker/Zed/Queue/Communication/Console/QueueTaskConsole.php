@@ -64,7 +64,9 @@ class QueueTaskConsole extends Console
             QueueConfig::CONFIG_QUEUE_OPTION_NO_ACK => $input->getOption(static::OPTION_NO_ACK),
         ];
 
-        $this->getFacade()->startTask($input->getArgument('queue'), $options);
+        /** @var string $name */
+        $name = $input->getArgument('queue');
+        $this->getFacade()->startTask($name, $options);
 
         return static::CODE_SUCCESS;
     }

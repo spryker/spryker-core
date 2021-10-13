@@ -25,7 +25,7 @@ class RequestBuilder implements RequestBuilderInterface
     protected $resource;
 
     /**
-     * @var array<\Spryker\Glue\GlueApplication\Rest\Request\Data\FilterInterface>
+     * @var array<string, array<\Spryker\Glue\GlueApplication\Rest\Request\Data\FilterInterface>>
      */
     protected $filters = [];
 

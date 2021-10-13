@@ -1,6 +1,5 @@
 parameters:
     ignoreErrors:
-        - '#Call to an undefined method Generated\\Zed\\Ide\\AutoCompletion\|Spryker\\Shared\\Kernel\\LocatorLocatorInterface::[a-zA-Z]*\(\)#'
         - '#Call to an undefined method Spryker\\Zed\\Kernel\\Locator::[a-zA-Z]*\(\)#'
         - '#Call to an undefined method Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface::isNew\(\).#'
         - '#Call to an undefined method Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface::isModified\(\).#'

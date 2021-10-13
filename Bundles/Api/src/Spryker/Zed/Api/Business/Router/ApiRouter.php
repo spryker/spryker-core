@@ -115,6 +115,7 @@ class ApiRouter implements RouterInterface
             static::ACTION_NAME
         );
 
+        /** @var \Spryker\Zed\Kernel\Communication\Controller\AbstractController $controller */
         $controller = $controllerResolver->resolve($bundleControllerAction);
         $controller->initialize();
 

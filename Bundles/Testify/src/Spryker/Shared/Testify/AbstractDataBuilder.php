@@ -21,17 +21,17 @@ abstract class AbstractDataBuilder
     protected static $faker;
 
     /**
-     * @var array
+     * @var array<string, string>
      */
     protected $defaultRules = [];
 
     /**
-     * @var array
+     * @var array<string, string>
      */
     protected $rules = [];
 
     /**
-     * @var array
+     * @var array<string, string>
      */
     protected $dependencies = [];
 
@@ -41,7 +41,7 @@ abstract class AbstractDataBuilder
     protected $nestedBuilders = [];
 
     /**
-     * @var array
+     * @var array<string, mixed>
      */
     protected $seedData = [];
 
@@ -60,7 +60,7 @@ abstract class AbstractDataBuilder
     abstract protected function locateDataBuilder($builder);
 
     /**
-     * @param array $seed
+     * @param array<string, mixed> $seed
      */
     public function __construct($seed = [])
     {
@@ -95,7 +95,7 @@ abstract class AbstractDataBuilder
     }
 
     /**
-     * @param array $seed
+     * @param array<string, mixed> $seed
      *
      * @return $this
      */
@@ -238,13 +238,17 @@ abstract class AbstractDataBuilder
             }
 
             if (method_exists($transfer, 'add' . $name)) {
-                call_user_func([$transfer, 'add' . $name], $nestedTransfer);
+                /** @var callable $callable */
+                $callable = [$transfer, 'add' . $name];
+                call_user_func($callable, $nestedTransfer);
 
                 continue;
             }
 
             if (method_exists($transfer, 'set' . $name)) {
-                call_user_func([$transfer, 'set' . $name], $nestedTransfer);
+                /** @var callable $callable */
+                $callable = [$transfer, 'set' . $name];
+                call_user_func($callable, $nestedTransfer);
 
                 continue;
             }
@@ -272,7 +276,7 @@ abstract class AbstractDataBuilder
     }
 
     /**
-     * @return array
+     * @return array<string, mixed>
      */
     public function getSeedData()
     {
