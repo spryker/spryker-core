@@ -244,7 +244,7 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
         );
 
         foreach ($pairedEntities as $pairedEntity) {
-            /** @var array $productAbstractLocalizedEntity */
+            /** @var array|null $productAbstractLocalizedEntity */
             $productAbstractLocalizedEntity = $pairedEntity[static::PRODUCT_ABSTRACT_LOCALIZED_ENTITY];
             /** @var \Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearch $productAbstractPageSearchEntity */
             $productAbstractPageSearchEntity = $pairedEntity[static::PRODUCT_ABSTRACT_PAGE_SEARCH_ENTITY];
