@@ -54,10 +54,11 @@ class Group implements GroupInterface
 
     /**
      * @param \Generated\Shared\Transfer\GroupTransfer $group
+     * @param \Generated\Shared\Transfer\RolesTransfer|null $rolesTransfer
      *
      * @return \Generated\Shared\Transfer\GroupTransfer
      */
-    public function updateGroup(GroupTransfer $group)
+    public function updateGroup(GroupTransfer $group, ?RolesTransfer $rolesTransfer)
     {
         $original = $this->getGroupById($group->getIdAclGroup());
 
@@ -65,7 +66,13 @@ class Group implements GroupInterface
             $this->assertGroupHasName($group);
         }
 
-        return $this->save($group);
+        $groupTransfer = $this->save($group);
+
+        if ($rolesTransfer !== null) {
+            $this->addRolesToGroup($groupTransfer, $rolesTransfer);
+        }
+
+        return $groupTransfer;
     }
 
     /**
@@ -201,6 +208,23 @@ class Group implements GroupInterface
             ->setFkAclRole($idRole);
 
         return $entity->save();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\GroupTransfer $groupTransfer
+     * @param \Generated\Shared\Transfer\RolesTransfer $rolesTransfer
+     *
+     * @return void
+     */
+    public function addRolesToGroup(GroupTransfer $groupTransfer, RolesTransfer $rolesTransfer): void
+    {
+        $this->removeRolesFromGroup($groupTransfer->getIdAclGroup());
+
+        foreach ($rolesTransfer->getRoles() as $roleTransfer) {
+            if ($roleTransfer->getIdAclRole() > 0) {
+                $this->addRoleToGroup($roleTransfer->getIdAclRole(), $groupTransfer->getIdAclGroup());
+            }
+        }
     }
 
     /**

@@ -90,15 +90,7 @@ class AclFacade extends AbstractFacade implements AclFacadeInterface
      */
     public function updateGroup(GroupTransfer $transfer, RolesTransfer $rolesTransfer)
     {
-        $groupTransfer = $this->getFactory()
-            ->createGroupModel()
-            ->updateGroup($transfer);
-
-        if (!empty($rolesTransfer)) {
-            $this->addRolesToGroup($groupTransfer, $rolesTransfer);
-        }
-
-        return $groupTransfer;
+        return $this->getFactory()->createGroupModel()->updateGroup($transfer, $rolesTransfer);
     }
 
     /**
@@ -567,14 +559,7 @@ class AclFacade extends AbstractFacade implements AclFacadeInterface
      */
     public function addRolesToGroup(GroupTransfer $groupTransfer, RolesTransfer $rolesTransfer)
     {
-        $groupModel = $this->getFactory()->createGroupModel();
-        $groupModel->removeRolesFromGroup($groupTransfer->getIdAclGroup());
-
-        foreach ($rolesTransfer->getRoles() as $roleTransfer) {
-            if ($roleTransfer->getIdAclRole() > 0) {
-                $groupModel->addRoleToGroup($roleTransfer->getIdAclRole(), $groupTransfer->getIdAclGroup());
-            }
-        }
+        $this->getFactory()->createGroupModel()->addRolesToGroup($groupTransfer, $rolesTransfer);
     }
 
     /**
