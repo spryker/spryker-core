@@ -1,9 +1,1 @@
-[
-    {
-        "fileName": "/vendor/spryker/spryker/Bundles/CustomerAccess/src/Spryker/Zed/CustomerAccess/Persistence/CustomerAccessPersistenceFactory.php",
-        "description": "\n      Factories: The factory method customerAccessQuery() violates rule \"Factories should only contain get*() and create*() methods.\"\n    ",
-        "rule": "FactoryOnlyGetAndCreateRule",
-        "ruleset": "Spryker",
-        "priority": "1"
-    }
-]
+[]

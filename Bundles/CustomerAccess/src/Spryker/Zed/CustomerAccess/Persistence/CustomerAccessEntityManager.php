@@ -26,7 +26,7 @@ class CustomerAccessEntityManager extends AbstractEntityManager implements Custo
      */
     public function createCustomerAccess(string $contentType, bool $isRestricted): CustomerAccessTransfer
     {
-        $customerAccessEntity = $this->getFactory()->customerAccessQuery()
+        $customerAccessEntity = $this->getFactory()->createCustomerAccessQuery()
             ->filterByContentType($contentType)
             ->findOneOrCreate();
 
@@ -43,7 +43,7 @@ class CustomerAccessEntityManager extends AbstractEntityManager implements Custo
      */
     public function setAllContentTypesToAccessible(): void
     {
-        $customerAccessEntities = $this->getFactory()->customerAccessQuery()->find();
+        $customerAccessEntities = $this->getFactory()->createCustomerAccessQuery()->find();
 
         foreach ($customerAccessEntities as $customerAccessEntity) {
             $customerAccessEntity->setIsRestricted(false);
@@ -83,7 +83,7 @@ class CustomerAccessEntityManager extends AbstractEntityManager implements Custo
     protected function getCustomerAccessEntityByContentType(ContentTypeAccessTransfer $contentTypeAccessTransfer): ?SpyUnauthenticatedCustomerAccess
     {
         return $this->getFactory()
-            ->customerAccessQuery()
+            ->createCustomerAccessQuery()
             ->filterByContentType($contentTypeAccessTransfer->getContentType())
             ->findOne();
     }
