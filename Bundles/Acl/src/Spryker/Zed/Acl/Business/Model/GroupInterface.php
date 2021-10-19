@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Acl\Business\Model;
 
 use Generated\Shared\Transfer\GroupTransfer;
+use Generated\Shared\Transfer\RolesTransfer;
 
 interface GroupInterface
 {
@@ -22,10 +23,11 @@ interface GroupInterface
 
     /**
      * @param \Generated\Shared\Transfer\GroupTransfer $group
+     * @param \Generated\Shared\Transfer\RolesTransfer $rolesTransfer
      *
      * @return \Generated\Shared\Transfer\GroupTransfer
      */
-    public function updateGroup(GroupTransfer $group);
+    public function updateGroup(GroupTransfer $group, RolesTransfer $rolesTransfer);
 
     /**
      * @param \Generated\Shared\Transfer\GroupTransfer $group
@@ -123,6 +125,14 @@ interface GroupInterface
      * @return int
      */
     public function addRoleToGroup($idRole, $idGroup);
+
+    /**
+     * @param \Generated\Shared\Transfer\GroupTransfer $groupTransfer
+     * @param \Generated\Shared\Transfer\RolesTransfer $rolesTransfer
+     *
+     * @return void
+     */
+    public function addRolesToGroup(GroupTransfer $groupTransfer, RolesTransfer $rolesTransfer): void;
 
     /**
      * @param int $idAclGroup
