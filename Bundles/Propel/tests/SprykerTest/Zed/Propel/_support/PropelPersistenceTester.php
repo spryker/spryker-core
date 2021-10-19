@@ -16,6 +16,8 @@ use Laminas\Filter\StringToLower;
 use Laminas\Filter\Word\CamelCaseToUnderscore;
 use Laminas\Filter\Word\UnderscoreToCamelCase;
 use PHPUnit\Framework\ExpectationFailedException;
+use Propel\Runtime\ActiveQuery\Criteria;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\ActiveRecord\ActiveRecordInterface;
 use Propel\Runtime\Map\ColumnMap;
 use Symfony\Component\Finder\Finder;
@@ -48,6 +50,11 @@ class PropelPersistenceTester extends Actor
      * @var array
      */
     protected $queryClasses;
+
+    /**
+     * @var array<string, array<int|string>>
+     */
+    protected $skipEntityPrimaryIds = [];
 
     /**
      * @param \Codeception\Scenario $scenario
@@ -101,6 +108,7 @@ class PropelPersistenceTester extends Actor
         $entityClassName = get_class($entity);
         $tableMapClassName = $entityClassName::TABLE_MAP;
         $tableMapClass = new $tableMapClassName();
+        /** @var \Propel\Runtime\Map\ColumnMap[] $columnMapCollection */
         $columnMapCollection = $tableMapClass->getColumns();
 
         foreach ($columnMapCollection as $columnMap) {
@@ -127,14 +135,15 @@ class PropelPersistenceTester extends Actor
     public function getValue(ColumnMap $columnMap)
     {
         if ($columnMap->getRelatedTableName() !== '') { // foreign_key column
-            $relatedQueryClass = $this->getQueryClassByRelatedTableName($columnMap->getRelatedTableName());
-            $relatedEntityCollection = $relatedQueryClass::create()->find();
-            $relatedEntity = $relatedEntityCollection->getFirst();
-
+            $relatedEntity = $this->findRelatedEntity($columnMap);
             if (!$relatedEntity) {
+                $relatedQueryClass = $this->getQueryClassByRelatedTableName($columnMap->getRelatedTableName());
                 $relatedEntity = $relatedQueryClass::create()->findOneOrCreate();
                 $relatedEntity = $this->fillEntityWithRequiredFields($relatedEntity);
                 $relatedEntity->save();
+            }
+            if ($columnMap->isPrimaryKey()) {
+                $this->skipEntityPrimaryIds[$columnMap->getTableName()][] = $relatedEntity->getPrimaryKey();
             }
             $filter = new UnderscoreToCamelCase();
             $getterMethod = sprintf('get%s', ucfirst($filter->filter($columnMap->getRelatedColumnName())));
@@ -210,5 +219,43 @@ class PropelPersistenceTester extends Actor
         }
 
         return new $this->queryClasses[$relatedTableName]();
+    }
+
+    /**
+     * @param \Propel\Runtime\Map\ColumnMap $columnMap
+     *
+     * @return \Propel\Runtime\ActiveRecord\ActiveRecordInterface|null
+     */
+    protected function findRelatedEntity(ColumnMap $columnMap): ?ActiveRecordInterface
+    {
+        $relatedEntityQuery = $this->getEntityQueryByTableName($columnMap->getRelatedTableName());
+        if (!$columnMap->isPrimaryKey()) {
+            return $relatedEntityQuery->find()->getFirst();
+        }
+
+        if (!isset($this->skipEntityPrimaryIds[$columnMap->getTableName()])) {
+            $entityQuery = $this->getQueryClassByRelatedTableName($columnMap->getTableName())::create();
+            $existingEntityIds = $entityQuery->select($columnMap->getName())->find();
+            $this->skipEntityPrimaryIds[$columnMap->getTableName()] = $existingEntityIds->toArray();
+        }
+
+        if (!empty($this->skipEntityPrimaryIds[$columnMap->getTableName()])) {
+            $filterByIdsMethod = sprintf('filterBy%s', $columnMap->getPhpName());
+            $relatedEntityQuery->$filterByIdsMethod($this->skipEntityPrimaryIds[$columnMap->getTableName()], Criteria::NOT_IN);
+        }
+
+        return $relatedEntityQuery->find()->getFirst();
+    }
+
+    /**
+     * @param string $tableName
+     *
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     */
+    protected function getEntityQueryByTableName(string $tableName): ModelCriteria
+    {
+        $relatedQueryClass = $this->getQueryClassByRelatedTableName($tableName);
+
+        return $relatedQueryClass::create();
     }
 }

@@ -476,7 +476,7 @@ trait ActiveRecordBatchProcessorTrait
 
         foreach ($columnMapCollection as $columnIdentifier => $columnMap) {
             $quotedColumnName = $this->quote($columnMap->getName(), $tableMapClass);
-            if ($columnMap->isPrimaryKey()) {
+            if ($columnMap->isPrimaryKey() && !$columnMap->isForeignKey()) {
                 if (!$requiresPrimaryKeyValue || $tableMapClass->getPrimaryKeyMethodInfo() === null) {
                     continue;
                 }
@@ -527,7 +527,10 @@ trait ActiveRecordBatchProcessorTrait
     protected function bindInsertValues(StatementInterface $statement, array $values): StatementInterface
     {
         $values = array_filter($values, function (array $columnDetails) {
-            return !$columnDetails['columnMap']->isPrimaryKey();
+            /** @var \Propel\Runtime\Map\ColumnMap $columnMap */
+            $columnMap = $columnDetails['columnMap'];
+
+            return !($columnMap->isPrimaryKey() && !$columnMap->isForeignKey());
         });
 
         foreach (array_values($values) as $index => $value) {
