@@ -46,7 +46,7 @@ class VoucherEngineTest extends Unit
         $voucherEngine = $this->createVoucherEngine(
             null,
             null,
-            $discountVoucherEntityMock
+            $discountVoucherEntityMock,
         );
 
         $discountVoucherTransfer = $this->createDiscountVoucherTransfer();
@@ -101,7 +101,7 @@ class VoucherEngineTest extends Unit
         $voucherEngine = $this->createVoucherEngine(
             $discountConfigMock,
             $discountVoucherContainerMock,
-            $discountVoucherEntityMock
+            $discountVoucherEntityMock,
         );
 
         $discountVoucherTransfer = $this->createDiscountVoucherTransfer();
@@ -142,7 +142,7 @@ class VoucherEngineTest extends Unit
         $voucherEngine = $this->createVoucherEngine(
             null,
             $discountVoucherContainerMock,
-            null
+            null,
         );
 
         $discountVoucherTransfer = $this->createDiscountVoucherTransfer();
@@ -191,7 +191,7 @@ class VoucherEngineTest extends Unit
         $voucherEngine = $this->createVoucherEngine(
             $discountConfigMock,
             $discountVoucherContainerMock,
-            null
+            null,
         );
 
         $discountVoucherTransfer = $this->createDiscountVoucherTransfer();

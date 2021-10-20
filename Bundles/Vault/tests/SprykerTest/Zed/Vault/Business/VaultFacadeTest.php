@@ -64,7 +64,7 @@ class VaultFacadeTest extends Unit
     {
         //Arrange
         $vaultFacade = $this->tester->getVaultFacadeWithSharedConfig(
-            $this->createVaultSharedConfigMock(static::TEST_ENCRYPTION_KEY)
+            $this->createVaultSharedConfigMock(static::TEST_ENCRYPTION_KEY),
         );
 
         //Act
@@ -89,7 +89,7 @@ class VaultFacadeTest extends Unit
     {
         //Arrange
         $vaultFacade = $this->tester->getVaultFacadeWithConfig(
-            $this->createVaultConfigMock(true, static::TEST_ENCRYPTION_KEY)
+            $this->createVaultConfigMock(true, static::TEST_ENCRYPTION_KEY),
         );
 
         //Act
@@ -114,7 +114,7 @@ class VaultFacadeTest extends Unit
     {
         //Arrange
         $vaultFacade = $this->tester->getVaultFacadeWithSharedConfig(
-            $this->createVaultSharedConfigMock(static::TEST_ENCRYPTION_KEY)
+            $this->createVaultSharedConfigMock(static::TEST_ENCRYPTION_KEY),
         );
         $vaultFacade->store(static::TEST_DATA_TYPE, static::TEST_DATA_KEY, static::TEST_DATA);
 
@@ -132,7 +132,7 @@ class VaultFacadeTest extends Unit
     {
         //Arrange
         $vaultFacade = $this->tester->getVaultFacadeWithSharedConfig(
-            $this->createVaultSharedConfigMock(static::TEST_ENCRYPTION_KEY)
+            $this->createVaultSharedConfigMock(static::TEST_ENCRYPTION_KEY),
         );
 
         //Act
@@ -149,7 +149,7 @@ class VaultFacadeTest extends Unit
     {
         //Arrange
         $vaultFacade = $this->tester->getVaultFacadeWithSharedConfig(
-            $this->createVaultSharedConfigMock(null)
+            $this->createVaultSharedConfigMock(null),
         );
 
         //Assert
@@ -166,7 +166,7 @@ class VaultFacadeTest extends Unit
     {
         //Arrange
         $vaultFacade = $this->tester->getVaultFacadeWithSharedConfig(
-            $this->createVaultSharedConfigMock(static::TEST_ENCRYPTION_KEY)
+            $this->createVaultSharedConfigMock(static::TEST_ENCRYPTION_KEY),
         );
         $vaultFacade->store(static::TEST_DATA_TYPE, static::TEST_DATA_KEY, static::TEST_DATA);
 

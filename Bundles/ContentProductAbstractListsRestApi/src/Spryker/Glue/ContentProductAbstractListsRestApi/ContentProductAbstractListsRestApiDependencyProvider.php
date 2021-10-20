@@ -58,7 +58,7 @@ class ContentProductAbstractListsRestApiDependencyProvider extends AbstractBundl
     {
         $container->set(static::CLIENT_CONTENT_PRODUCT, function (Container $container) {
             return new ContentProductAbstractListsRestApiToContentProductClientBridge(
-                $container->getLocator()->contentProduct()->client()
+                $container->getLocator()->contentProduct()->client(),
             );
         });
 
@@ -74,7 +74,7 @@ class ContentProductAbstractListsRestApiDependencyProvider extends AbstractBundl
     {
         $container->set(static::RESOURCE_PRODUCTS_REST_API, function (Container $container) {
             return new ContentProductAbstractListsRestApiToProductsRestApiResourceBridge(
-                $container->getLocator()->productsRestApi()->resource()
+                $container->getLocator()->productsRestApi()->resource(),
             );
         });
 
@@ -90,7 +90,7 @@ class ContentProductAbstractListsRestApiDependencyProvider extends AbstractBundl
     {
         $container->set(static::CLIENT_STORE, function (Container $container) {
             return new ContentProductAbstractListsRestApiToStoreClientBridge(
-                $container->getLocator()->store()->client()
+                $container->getLocator()->store()->client(),
             );
         });
 

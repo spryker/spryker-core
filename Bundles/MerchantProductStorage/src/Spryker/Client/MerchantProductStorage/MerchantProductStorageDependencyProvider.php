@@ -48,7 +48,7 @@ class MerchantProductStorageDependencyProvider extends AbstractDependencyProvide
     {
         $container->set(static::CLIENT_PRODUCT_STORAGE, function (Container $container) {
             return new MerchantProductStorageToProductStorageClientBridge(
-                $container->getLocator()->productStorage()->client()
+                $container->getLocator()->productStorage()->client(),
             );
         });
 
@@ -64,7 +64,7 @@ class MerchantProductStorageDependencyProvider extends AbstractDependencyProvide
     {
         $container->set(static::CLIENT_LOCALE, function (Container $container) {
             return new MerchantProductStorageToLocaleClientBridge(
-                $container->getLocator()->locale()->client()
+                $container->getLocator()->locale()->client(),
             );
         });
 

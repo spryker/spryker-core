@@ -140,7 +140,7 @@ class CatalogSearchReader implements CatalogSearchReaderInterface
         $restResource = $this->restResourceBuilder->createRestResource(
             CatalogSearchRestApiConfig::RESOURCE_CATALOG_SEARCH_SUGGESTIONS,
             null,
-            $restSuggestionsAttributesTransfer
+            $restSuggestionsAttributesTransfer,
         );
 
         return $response->addResource($restResource);
@@ -183,13 +183,13 @@ class CatalogSearchReader implements CatalogSearchReaderInterface
         $restSuggestionsAttributesTransfer = $this
             ->catalogSearchSuggestionsResourceMapper
             ->mapSuggestionsToRestAttributesTransfer(
-                $this->catalogSearchSuggestionsResourceMapper->getEmptySearchResponse()
+                $this->catalogSearchSuggestionsResourceMapper->getEmptySearchResponse(),
             );
 
         $restResource = $this->restResourceBuilder->createRestResource(
             CatalogSearchRestApiConfig::RESOURCE_CATALOG_SEARCH_SUGGESTIONS,
             null,
-            $restSuggestionsAttributesTransfer
+            $restSuggestionsAttributesTransfer,
         );
 
         return $response->addResource($restResource);
@@ -222,7 +222,7 @@ class CatalogSearchReader implements CatalogSearchReaderInterface
         $restResource = $this->restResourceBuilder->createRestResource(
             CatalogSearchRestApiConfig::RESOURCE_CATALOG_SEARCH,
             null,
-            $restSearchAttributesTransfer
+            $restSearchAttributesTransfer,
         );
 
         $response = $this->restResourceBuilder->createRestResponse($restSearchAttributesTransfer->getPagination()->getNumFound());

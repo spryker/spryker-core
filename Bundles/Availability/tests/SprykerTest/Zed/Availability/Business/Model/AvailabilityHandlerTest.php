@@ -85,7 +85,7 @@ class AvailabilityHandlerTest extends Unit
             $availabilityEntityManagerMock,
             $availabilityCalculatorMock,
             $touchFacadeMock,
-            $stockFacadeMock
+            $stockFacadeMock,
         );
 
         $availabilityHandler->updateAvailability($productTransfer->getSku());
@@ -121,7 +121,7 @@ class AvailabilityHandlerTest extends Unit
             $availabilityEntityManagerMock,
             $availabilityCalculatorMock,
             $touchFacadeMock,
-            $stockFacadeMock
+            $stockFacadeMock,
         );
 
         $availabilityHandler->updateAvailability(static::PRODUCT_SKU);
@@ -159,7 +159,7 @@ class AvailabilityHandlerTest extends Unit
             $availabilityCalculatorMock,
             $touchFacade,
             $availabilityToStockFacade,
-            $availabilityToEventFacade
+            $availabilityToEventFacade,
         );
     }
 

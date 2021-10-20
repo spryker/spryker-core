@@ -46,7 +46,7 @@ class GrandTotalDecisionRuleTest extends BaseRuleTester
         $isSatisfied = $grandTotalDecisionRule->isSatisfiedBy(
             $quoteTransfer,
             $this->createItemTransfer(),
-            $this->createClauseTransfer(10)
+            $this->createClauseTransfer(10),
         );
 
         $this->assertTrue($isSatisfied);
@@ -72,7 +72,7 @@ class GrandTotalDecisionRuleTest extends BaseRuleTester
         $isSatisfied = $grandTotalDecisionRule->isSatisfiedBy(
             $quoteTransfer,
             $this->createItemTransfer(),
-            $this->createClauseTransfer(10)
+            $this->createClauseTransfer(10),
         );
 
         $this->assertFalse($isSatisfied);
@@ -88,7 +88,7 @@ class GrandTotalDecisionRuleTest extends BaseRuleTester
         $isSatisfied = $grandTotalDecisionRule->isSatisfiedBy(
             $this->createQuoteTransfer(),
             $this->createItemTransfer(),
-            $this->createClauseTransfer(10)
+            $this->createClauseTransfer(10),
         );
 
         $this->assertFalse($isSatisfied);

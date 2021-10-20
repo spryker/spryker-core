@@ -174,7 +174,7 @@ class ZedRequestClient extends AbstractClient implements ZedRequestClientInterfa
         foreach ($plugins as $key => $plugin) {
             $this->getClient()->addMetaTransfer(
                 $key,
-                $plugin->getRequestMetaData($requestTransfer)
+                $plugin->getRequestMetaData($requestTransfer),
             );
         }
     }

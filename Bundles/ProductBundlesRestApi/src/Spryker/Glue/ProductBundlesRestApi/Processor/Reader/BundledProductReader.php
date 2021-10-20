@@ -60,7 +60,7 @@ class BundledProductReader implements BundledProductReaderInterface
     public function getBundledProducts(RestRequestInterface $restRequest): RestResponseInterface
     {
         $productConcreteResource = $restRequest->findParentResourceByType(
-            ProductBundlesRestApiConfig::RESOURCE_CONCRETE_PRODUCTS
+            ProductBundlesRestApiConfig::RESOURCE_CONCRETE_PRODUCTS,
         );
 
         if (!$productConcreteResource || !$productConcreteResource->getId()) {
@@ -70,7 +70,7 @@ class BundledProductReader implements BundledProductReaderInterface
 
         $bundledProductRestResources = $this->getBundledProductRestResourcesByProductConcreteSkus(
             [$productConcreteSku],
-            $restRequest
+            $restRequest,
         );
 
         if (!isset($bundledProductRestResources[$productConcreteSku])) {
@@ -95,7 +95,7 @@ class BundledProductReader implements BundledProductReaderInterface
     ): array {
         $productBundleStorageTransfers = $this->getProductBundlesFromStorage(
             $productConcreteSkus,
-            $restRequest->getMetadata()->getLocale()
+            $restRequest->getMetadata()->getLocale(),
         );
 
         if (!$productBundleStorageTransfers) {
@@ -124,7 +124,7 @@ class BundledProductReader implements BundledProductReaderInterface
         $productConcreteIds = $this->productStorageClient->getProductConcreteIdsByMapping(
             static::PRODUCT_CONCRETE_MAPPING_TYPE_SKU,
             $productConcreteSkus,
-            $localeName
+            $localeName,
         );
 
         if (!$productConcreteIds) {

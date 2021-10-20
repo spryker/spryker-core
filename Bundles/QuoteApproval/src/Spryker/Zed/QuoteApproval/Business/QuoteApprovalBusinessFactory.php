@@ -57,7 +57,7 @@ class QuoteApprovalBusinessFactory extends AbstractBusinessFactory
             $this->getSharedCartFacade(),
             $this->createQuoteApprovalRequestValidator(),
             $this->getEntityManager(),
-            $this->getRepository()
+            $this->getRepository(),
         );
     }
 
@@ -68,7 +68,7 @@ class QuoteApprovalBusinessFactory extends AbstractBusinessFactory
     {
         return new QuoteLocker(
             $this->getQuoteFacade(),
-            $this->getQuoteApprovalUnlockPreCheckPlugins()
+            $this->getQuoteApprovalUnlockPreCheckPlugins(),
         );
     }
 
@@ -82,7 +82,7 @@ class QuoteApprovalBusinessFactory extends AbstractBusinessFactory
             $this->createQuoteStatusCalculator(),
             $this->getRepository(),
             $this->getCompanyUserFacade(),
-            $this->createPermissionContextProvider()
+            $this->createPermissionContextProvider(),
         );
     }
 
@@ -104,7 +104,7 @@ class QuoteApprovalBusinessFactory extends AbstractBusinessFactory
             $this->createQuoteApprovalMessageBuilder(),
             $this->getEntityManager(),
             $this->createQuoteLocker(),
-            $this->getRepository()
+            $this->getRepository(),
         );
     }
 
@@ -126,7 +126,7 @@ class QuoteApprovalBusinessFactory extends AbstractBusinessFactory
             $this->createQuoteApprovalRequestValidator(),
             $this->getSharedCartFacade(),
             $this->getEntityManager(),
-            $this->getRepository()
+            $this->getRepository(),
         );
     }
 
@@ -137,7 +137,7 @@ class QuoteApprovalBusinessFactory extends AbstractBusinessFactory
     {
         return new QuoteFieldsProvider(
             $this->createQuoteStatusChecker(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -148,7 +148,7 @@ class QuoteApprovalBusinessFactory extends AbstractBusinessFactory
     {
         return new QuoteApprovalSanitizer(
             $this->getEntityManager(),
-            $this->getRepository()
+            $this->getRepository(),
         );
     }
 
@@ -159,7 +159,7 @@ class QuoteApprovalBusinessFactory extends AbstractBusinessFactory
     {
         return new QuoteApproverListProvider(
             $this->getCompanyRoleFacade(),
-            $this->getCompanyUserFacade()
+            $this->getCompanyUserFacade(),
         );
     }
 
@@ -170,7 +170,7 @@ class QuoteApprovalBusinessFactory extends AbstractBusinessFactory
     {
         return new QuoteApprovalMessageBuilder(
             $this->getQuoteFacade(),
-            $this->getCustomerFacade()
+            $this->getCustomerFacade(),
         );
     }
 
@@ -181,7 +181,7 @@ class QuoteApprovalBusinessFactory extends AbstractBusinessFactory
     {
         return new QuoteStatusChecker(
             $this->createQuoteStatusCalculator(),
-            $this->createPermissionContextProvider()
+            $this->createPermissionContextProvider(),
         );
     }
 

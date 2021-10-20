@@ -99,7 +99,7 @@ class CartItemProductConfigurationRestRequestValidator implements CartItemProduc
         return (new RestErrorCollectionTransfer())
             ->addRestError($this->createErrorMessageTransfer(
                 $productConcreteSku,
-                $restCartItemProductConfigurationInstanceAttributesTransfer->getConfiguratorKey()
+                $restCartItemProductConfigurationInstanceAttributesTransfer->getConfiguratorKey(),
             ));
     }
 
@@ -128,7 +128,7 @@ class CartItemProductConfigurationRestRequestValidator implements CartItemProduc
             ->setDetail(sprintf(
                 ProductConfigurationsRestApiConfig::ERROR_MESSAGE_DEFAULT_PRODUCT_CONFIGURATION_INSTANCE_IS_MISSING,
                 $sku,
-                $productConfigurationInstanceKey
+                $productConfigurationInstanceKey,
             ));
     }
 
@@ -147,7 +147,7 @@ class CartItemProductConfigurationRestRequestValidator implements CartItemProduc
             && $restCartItemProductConfigurationInstanceAttributesTransfer->getConfiguratorKey()
             && strcasecmp(
                 $productConfigurationInstanceTransfer->getConfiguratorKeyOrFail(),
-                $restCartItemProductConfigurationInstanceAttributesTransfer->getConfiguratorKeyOrFail()
+                $restCartItemProductConfigurationInstanceAttributesTransfer->getConfiguratorKeyOrFail(),
             ) === 0;
     }
 }

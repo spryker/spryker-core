@@ -102,7 +102,7 @@ class WhitelistProductListTypeExpander implements ProductListTypeExpanderInterfa
         return $this->expandProductListWithProductForBundle(
             $idProductConcrete,
             $productForBundleTransfers,
-            $productListResponseTransfer
+            $productListResponseTransfer,
         );
     }
 

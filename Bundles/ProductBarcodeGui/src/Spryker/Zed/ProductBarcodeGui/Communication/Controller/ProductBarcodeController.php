@@ -40,7 +40,7 @@ class ProductBarcodeController extends AbstractController
         $productBarcodeTable = $this->getFactory()->createProductBarcodeTable();
 
         return new JsonResponse(
-            $productBarcodeTable->fetchData()
+            $productBarcodeTable->fetchData(),
         );
     }
 }

@@ -61,7 +61,7 @@ class CategoryStoreWriteStep extends PublishAwareStep implements DataImportStepI
         }
 
         $existingStoreRelationTransfer = $this->getExistingCategoryStoreRelations(
-            $dataSet[CategoryStoreDataSetInterface::ID_CATEGORY]
+            $dataSet[CategoryStoreDataSetInterface::ID_CATEGORY],
         );
 
         $newStoreRelationTransfer = $this->createStoreRelationTransferToAssign($storeIdsToAdd, $storeIdsToDelete, $existingStoreRelationTransfer);

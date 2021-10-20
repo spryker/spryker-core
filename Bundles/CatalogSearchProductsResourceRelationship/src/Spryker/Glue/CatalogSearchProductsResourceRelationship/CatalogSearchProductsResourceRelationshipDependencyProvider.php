@@ -43,7 +43,7 @@ class CatalogSearchProductsResourceRelationshipDependencyProvider extends Abstra
     {
         $container->set(static::RESOURCE_PRODUCTS, function (Container $container) {
             return new CatalogSearchProductsResourceRelationshipToProductsRestApiBridge(
-                $container->getLocator()->productsRestApi()->resource()
+                $container->getLocator()->productsRestApi()->resource(),
             );
         });
 

@@ -95,7 +95,7 @@ class CompanyUserBusinessUnitForm extends AbstractType
         $form->add(
             static::FIELD_FK_COMPANY_BUSINESS_UNIT,
             SelectType::class,
-            $this->getCompanyBusinessUnitFieldParameters($companyBusinessUnitChoices)
+            $this->getCompanyBusinessUnitFieldParameters($companyBusinessUnitChoices),
         );
     }
 
@@ -122,7 +122,7 @@ class CompanyUserBusinessUnitForm extends AbstractType
         $builder->add(
             static::FIELD_FK_COMPANY_BUSINESS_UNIT,
             SelectType::class,
-            $this->getCompanyBusinessUnitFieldParameters($options)
+            $this->getCompanyBusinessUnitFieldParameters($options),
         );
 
         return $this;

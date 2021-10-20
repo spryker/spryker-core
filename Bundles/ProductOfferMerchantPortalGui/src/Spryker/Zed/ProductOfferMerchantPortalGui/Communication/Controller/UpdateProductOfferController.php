@@ -81,7 +81,7 @@ class UpdateProductOfferController extends AbstractProductOfferController
 
         $productOfferForm = $this->getFactory()->createProductOfferForm(
             $productOfferTransfer,
-            $productOfferUpdateFormDataProvider->getOptions($productAbstractTransfer)
+            $productOfferUpdateFormDataProvider->getOptions($productAbstractTransfer),
         );
         $productOfferForm->handleRequest($request);
 
@@ -96,7 +96,7 @@ class UpdateProductOfferController extends AbstractProductOfferController
                 $productAbstractTransfer,
                 $productOfferResponseTransfer,
                 $idProductOffer,
-                $initialData
+                $initialData,
             );
         }
 
@@ -120,7 +120,7 @@ class UpdateProductOfferController extends AbstractProductOfferController
                 ->mapValidationResponseTransferToInitialDataErrors(
                     $validationResponseTransfer,
                     $priceProductOfferCollectionTransfer,
-                    $initialData
+                    $initialData,
                 );
 
             return $this->getResponse(
@@ -129,7 +129,7 @@ class UpdateProductOfferController extends AbstractProductOfferController
                 $productAbstractTransfer,
                 $productOfferResponseTransfer,
                 $idProductOffer,
-                $initialData
+                $initialData,
             );
         }
 
@@ -141,7 +141,7 @@ class UpdateProductOfferController extends AbstractProductOfferController
             $productAbstractTransfer,
             $productOfferResponseTransfer,
             $idProductOffer,
-            $initialData
+            $initialData,
         );
     }
 
@@ -228,7 +228,7 @@ class UpdateProductOfferController extends AbstractProductOfferController
             ->getZedUiFactory()
             ->createZedUiFormResponseBuilder()
             ->addSuccessNotification(
-                $this->getFactory()->getTranslatorFacade()->trans(static::RESPONSE_NOTIFICATION_MESSAGE_SUCCESS)
+                $this->getFactory()->getTranslatorFacade()->trans(static::RESPONSE_NOTIFICATION_MESSAGE_SUCCESS),
             )
             ->addActionCloseDrawer()
             ->addActionRefreshTable()
@@ -249,7 +249,7 @@ class UpdateProductOfferController extends AbstractProductOfferController
         return $this->getFactory()->getGuiTableHttpDataRequestExecutor()->execute(
             $request,
             $this->getFactory()->createProductOfferPriceTableDataProvider($idProductOffer),
-            $this->getFactory()->createPriceProductOfferUpdateGuiTableConfigurationProvider()->getConfiguration($idProductOffer, [])
+            $this->getFactory()->createPriceProductOfferUpdateGuiTableConfigurationProvider()->getConfiguration($idProductOffer, []),
         );
     }
 }

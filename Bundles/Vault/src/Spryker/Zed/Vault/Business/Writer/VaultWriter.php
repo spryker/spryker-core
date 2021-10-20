@@ -75,7 +75,7 @@ class VaultWriter implements VaultWriterInterface
         $encryptedString = $this->utilEncryptionService->encryptOpenSsl(
             $data,
             $encryptInitVector,
-            $this->vaultConfig->getEncryptionKey()
+            $this->vaultConfig->getEncryptionKey(),
         );
 
         $vaultDepositTransfer = $this->createVaultDepositTransfer($encryptedString, $dataKey, $encryptInitVector, $dataType);

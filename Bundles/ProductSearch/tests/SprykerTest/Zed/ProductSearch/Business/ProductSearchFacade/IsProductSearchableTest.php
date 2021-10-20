@@ -57,14 +57,14 @@ class IsProductSearchableTest extends Unit
         $this->createProductSearchEntity(
             $productAbstractEntity->getSpyProducts()[0]->getIdProduct(),
             $localeTransfer->getIdLocale(),
-            true
+            true,
         );
 
         // make second variant not searchable
         $this->createProductSearchEntity(
             $productAbstractEntity->getSpyProducts()[1]->getIdProduct(),
             $localeTransfer->getIdLocale(),
-            false
+            false,
         );
 
         $isSearchable = $this->productSearchFacade->isProductAbstractSearchable($productAbstractEntity->getIdProductAbstract(), $localeTransfer);
@@ -84,7 +84,7 @@ class IsProductSearchableTest extends Unit
         $this->createProductSearchEntity(
             $productAbstractEntity->getSpyProducts()[0]->getIdProduct(),
             $localeTransfer->getIdLocale(),
-            false
+            false,
         );
 
         $isSearchable = $this->productSearchFacade->isProductAbstractSearchable($productAbstractEntity->getIdProductAbstract(), $localeTransfer);
@@ -140,12 +140,12 @@ class IsProductSearchableTest extends Unit
         $productConcreteTransfer->addLocalizedAttributes(
             (new LocalizedAttributesTransfer())
                 ->setIsSearchable(true)
-                ->setLocale($localeTransfer1)
+                ->setLocale($localeTransfer1),
         );
         $productConcreteTransfer->addLocalizedAttributes(
             (new LocalizedAttributesTransfer())
                 ->setIsSearchable(false)
-                ->setLocale($localeTransfer2)
+                ->setLocale($localeTransfer2),
         );
 
         $this->productSearchFacade->persistProductSearch($productConcreteTransfer);

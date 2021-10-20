@@ -30,7 +30,7 @@ class TaxStorageEntityManager extends AbstractEntityManager implements TaxStorag
         $taxStorageConfig = $this->getFactory()->getConfig();
 
         $taxSetStorageTransfersToUpdate = $this->findTaxSetStoragesByIdTaxSetsIndexedByFkTaxSet(
-            $this->getIdFromTransfers($taxSetStorageTransfers)
+            $this->getIdFromTransfers($taxSetStorageTransfers),
         );
 
         foreach ($taxSetStorageTransfers as $taxSetStorageTransfer) {

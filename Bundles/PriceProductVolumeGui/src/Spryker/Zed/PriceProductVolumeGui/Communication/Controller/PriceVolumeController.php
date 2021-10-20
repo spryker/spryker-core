@@ -165,7 +165,7 @@ class PriceVolumeController extends AbstractController
             ->createPriceVolumeCollectionFormHandler()
             ->savePriceProduct(
                 $priceVolumeCollectionFormType->getData(),
-                $priceProductTransfer
+                $priceProductTransfer,
             );
 
         $this->addSuccessMessage(static::MESSAGE_VOLUME_PRICES_UPDATE_SUCCESS);
@@ -190,9 +190,9 @@ class PriceVolumeController extends AbstractController
                 $dataProvider->getData(
                     $priceProductTransfer,
                     $request->get(static::REQUEST_PARAM_ID_PRODUCT_ABSTRACT),
-                    $request->get(static::REQUEST_PARAM_ID_PRODUCT_CONCRETE)
+                    $request->get(static::REQUEST_PARAM_ID_PRODUCT_CONCRETE),
                 ),
-                $dataProvider->getOptions($request->get(static::REQUEST_PARAM_CURRENCY_CODE))
+                $dataProvider->getOptions($request->get(static::REQUEST_PARAM_CURRENCY_CODE)),
             )->handleRequest($request);
 
         return $priceVolumeCollectionFormType;
@@ -212,7 +212,7 @@ class PriceVolumeController extends AbstractController
             $request->get(static::REQUEST_PARAM_STORE_NAME),
             $request->get(static::REQUEST_PARAM_CURRENCY_CODE),
             $request->get(static::REQUEST_PARAM_PRICE_DIMENSION, []),
-            $request->get(static::REQUEST_PARAM_PRICE_TYPE)
+            $request->get(static::REQUEST_PARAM_PRICE_TYPE),
         );
 
         return $priceProductTransfer;

@@ -120,13 +120,13 @@ class ProductVariantExpander implements ProductVariantExpanderInterface
         if ($productViewTransfer->getAttributeMap()->getAttributeVariantMap()) {
             return $this->getVariantNodeByAttributeVariantMap(
                 $productViewTransfer->getSelectedAttributes(),
-                $productViewTransfer->getAttributeMap()->getAttributeVariantMap()
+                $productViewTransfer->getAttributeMap()->getAttributeVariantMap(),
             );
         }
 
         return $this->buildAttributeMapFromSelected(
             $productViewTransfer->getSelectedAttributes(),
-            $productViewTransfer->getAttributeMap()->getAttributeVariants()
+            $productViewTransfer->getAttributeMap()->getAttributeVariants(),
         );
     }
 
@@ -217,7 +217,7 @@ class ProductVariantExpander implements ProductVariantExpanderInterface
         $idProductConcrete = array_shift($productConcreteIds);
         $productConcreteStorageData = $this->productConcreteStorageReader->findProductConcreteStorageData(
             $idProductConcrete,
-            $locale
+            $locale,
         );
         $productViewTransfer->getAttributeMap()->setSuperAttributes([]);
 

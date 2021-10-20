@@ -107,7 +107,7 @@ class ContentWidgetFunctionMatcher implements ContentWidgetFunctionMatcherInterf
             $content,
             $functionMatches,
             PREG_SET_ORDER,
-            0
+            0,
         );
 
         return $functionMatches;

@@ -23,11 +23,11 @@ class ProductPackagingUnitCartOperation implements ProductPackagingUnitCartOpera
         foreach ($quoteTransfer->getItems() as $currentItemTransfer) {
             if ($this->getItemIdentifier($currentItemTransfer) === $this->getItemIdentifier($itemTransfer)) {
                 $currentItemTransfer->setQuantity(
-                    $currentItemTransfer->getQuantity() + $itemTransfer->getQuantity()
+                    $currentItemTransfer->getQuantity() + $itemTransfer->getQuantity(),
                 );
 
                 $currentItemTransfer->setAmount(
-                    $currentItemTransfer->getAmount()->add($itemTransfer->getAmount())
+                    $currentItemTransfer->getAmount()->add($itemTransfer->getAmount()),
                 );
 
                 return $quoteTransfer;

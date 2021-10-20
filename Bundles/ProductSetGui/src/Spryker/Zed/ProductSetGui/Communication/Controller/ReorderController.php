@@ -28,7 +28,7 @@ class ReorderController extends AbstractController
         $reorderProductSetsForm = $this->getFactory()
             ->getReorderProductSetsForm(
                 $dataProvider->getData(),
-                $dataProvider->getOptions()
+                $dataProvider->getOptions(),
             )
             ->handleRequest($request);
 
@@ -68,7 +68,7 @@ class ReorderController extends AbstractController
             ->createProductSetReorderTable($currentLocaleTransfer);
 
         return $this->jsonResponse(
-            $productTable->fetchData()
+            $productTable->fetchData(),
         );
     }
 }

@@ -45,7 +45,7 @@ class ProductConfigurationStorageFactory extends AbstractFactory
     public function createProductViewExpander(): ProductViewExpanderInterface
     {
         return new ProductViewExpander(
-            $this->createProductConfigurationInstanceReader()
+            $this->createProductConfigurationInstanceReader(),
         );
     }
 
@@ -66,7 +66,7 @@ class ProductConfigurationStorageFactory extends AbstractFactory
             $this->createProductConfigurationStorageReader(),
             $this->getSessionClient(),
             $this->createProductConfigurationInstanceMapper(),
-            $this->createProductConfigurationSessionKeyBuilder()
+            $this->createProductConfigurationSessionKeyBuilder(),
         );
     }
 
@@ -77,7 +77,7 @@ class ProductConfigurationStorageFactory extends AbstractFactory
     {
         return new ProductConfigurationInstanceWriter(
             $this->getSessionClient(),
-            $this->createProductConfigurationSessionKeyBuilder()
+            $this->createProductConfigurationSessionKeyBuilder(),
         );
     }
 
@@ -89,7 +89,7 @@ class ProductConfigurationStorageFactory extends AbstractFactory
         return new ProductConfigurationStorageReader(
             $this->getSynchronizationService(),
             $this->getStorageClient(),
-            $this->createProductConfigurationStorageMapper()
+            $this->createProductConfigurationStorageMapper(),
         );
     }
 
@@ -115,7 +115,7 @@ class ProductConfigurationStorageFactory extends AbstractFactory
     public function createProductConfigurationAvailabilityReader(): ProductConfigurationAvailabilityReaderInterface
     {
         return new ProductConfigurationAvailabilityReader(
-            $this->createProductConfigurationInstanceReader()
+            $this->createProductConfigurationInstanceReader(),
         );
     }
 
@@ -127,7 +127,7 @@ class ProductConfigurationStorageFactory extends AbstractFactory
         return new ProductConfigurationPriceReader(
             $this->getLocaleClient(),
             $this->getProductStorageClient(),
-            $this->createProductConfigurationInstanceReader()
+            $this->createProductConfigurationInstanceReader(),
         );
     }
 

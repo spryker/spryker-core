@@ -92,7 +92,7 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
             ->createProductMeasurementUnitMapper()
             ->mapProductMeasurementSalesUnitTransfer(
                 $productMeasurementSalesUnitEntity,
-                new ProductMeasurementSalesUnitTransfer()
+                new ProductMeasurementSalesUnitTransfer(),
             );
     }
 
@@ -165,7 +165,7 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
             ->createProductMeasurementUnitMapper()
             ->mapProductMeasurementBaseUnitTransfer(
                 $productMeasurementBaseUnitEntity,
-                new ProductMeasurementBaseUnitTransfer()
+                new ProductMeasurementBaseUnitTransfer(),
             );
     }
 
@@ -206,7 +206,7 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
         foreach ($salesOrderItemEntities as $salesOrderItemEntity) {
             $spySalesOrderItemEntityTransfers[] = $mapper->mapSalesOrderItemTransfer(
                 $salesOrderItemEntity,
-                new SpySalesOrderItemEntityTransfer()
+                new SpySalesOrderItemEntityTransfer(),
             );
         }
 
@@ -249,7 +249,7 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
         foreach ($productMeasurementUnitEntityCollection as $productMeasurementUnitEntity) {
             $productMeasurementUnitTransfers[] = $mapper->mapProductMeasurementUnitTransfer(
                 $productMeasurementUnitEntity,
-                new ProductMeasurementUnitTransfer()
+                new ProductMeasurementUnitTransfer(),
             );
         }
 
@@ -283,7 +283,7 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
     {
         $productMeasurementUnitEntityCollection = $this->buildQueryFromCriteria(
             $this->getFactory()->createProductMeasurementUnitQuery(),
-            $filterTransfer
+            $filterTransfer,
         )->find();
 
         return $this->getMappedProductMeasurementUnitTransfers($productMeasurementUnitEntityCollection);
@@ -407,7 +407,7 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
         foreach ($productMeasurementUnitEntityCollection as $productMeasurementUnitEntity) {
             $productMeasurementUnitTransfers[] = $mapper->mapProductMeasurementUnitTransfer(
                 $productMeasurementUnitEntity,
-                new ProductMeasurementUnitTransfer()
+                new ProductMeasurementUnitTransfer(),
             );
         }
 
@@ -427,7 +427,7 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
         foreach ($productMeasurementSalesUnitEntityCollection as $productMeasurementSalesUnitEntity) {
             $productMeasurementSalesUnitTransfers[] = $mapper->mapProductMeasurementSalesUnitTransfer(
                 $productMeasurementSalesUnitEntity,
-                new ProductMeasurementSalesUnitTransfer()
+                new ProductMeasurementSalesUnitTransfer(),
             );
         }
 

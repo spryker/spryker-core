@@ -170,7 +170,7 @@ class ProductSetListQueryPlugin extends AbstractPlugin implements QueryInterface
                     'mode' => 'min',
                     'unmapped_type' => 'integer',
                 ],
-            ]
+            ],
         );
 
         return $this;

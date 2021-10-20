@@ -90,7 +90,7 @@ class ProductItemTaxRateCalculator implements CalculatorInterface
 
         $taxRates = $this->findTaxRatesByAllIdProductAbstractsAndCountryIso2Code(
             $allIdProductAbstracts,
-            $countryIso2Code
+            $countryIso2Code,
         );
 
         return $this->setItemsTax($itemTransfers, $taxRates);

@@ -287,7 +287,7 @@ class BusinessHelper extends AbstractHelper
             $this->writeMissingHelperMessage(sprintf(
                 'Could not inject <fg=yellow>%1$sConfig</> into <fg=yellow>%1$sBusinessFactory</>. You may want to add <fg=yellow>%2$s</> to your <fg=yellow>%1$s codeception.yml</> enabled modules.',
                 $moduleName,
-                ConfigHelper::class
+                ConfigHelper::class,
             ));
 
             return $businessFactory;

@@ -106,7 +106,7 @@ class OrderShippedMailTypePlugin extends AbstractPlugin implements MailTypePlugi
 
         $mailBuilder->addRecipient(
             $orderTransfer->getEmail(),
-            $orderTransfer->getFirstName() . ' ' . $orderTransfer->getLastName()
+            $orderTransfer->getFirstName() . ' ' . $orderTransfer->getLastName(),
         );
 
         return $this;

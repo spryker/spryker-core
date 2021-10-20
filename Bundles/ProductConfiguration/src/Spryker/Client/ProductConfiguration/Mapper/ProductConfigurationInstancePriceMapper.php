@@ -98,7 +98,7 @@ class ProductConfigurationInstancePriceMapper implements ProductConfigurationIns
         foreach ($configuratorResponsePrisesData as $currencyCode => $priceData) {
             $priceProductTransfer = $this->mapPriceDataToPriceProductTransfer(
                 $currencyCode,
-                $priceData
+                $priceData,
             );
 
             $priceProductTransfer->setGroupKey($this->priceProductService->buildPriceProductGroupKey($priceProductTransfer));
@@ -110,7 +110,7 @@ class ProductConfigurationInstancePriceMapper implements ProductConfigurationIns
 
         $this->fillUpPriceDimensionWithProductConfigurationInstanceHash(
             $productConfigurationInstanceTransfer->getPrices(),
-            $this->productConfigurationService->getProductConfigurationInstanceHash($productConfigurationInstanceTransfer)
+            $this->productConfigurationService->getProductConfigurationInstanceHash($productConfigurationInstanceTransfer),
         );
 
         return $productConfigurationInstanceTransfer;
@@ -134,7 +134,7 @@ class ProductConfigurationInstancePriceMapper implements ProductConfigurationIns
             ->setGrossAmount($priceData[static::KEY_PRICE_MODE_GROSS][static::DEFAULT_PRICE_TYPE_NAME] ?? null)
             ->setPriceData($priceData[static::KEY_PRICE_DATA] ?? null)
             ->setCurrency(
-                (new CurrencyTransfer())->setCode($currencyCode)
+                (new CurrencyTransfer())->setCode($currencyCode),
             );
 
         return (new PriceProductTransfer())
@@ -155,7 +155,7 @@ class ProductConfigurationInstancePriceMapper implements ProductConfigurationIns
 
         foreach ($this->productConfigurationPriceExtractorPlugins as $productConfigurationPriceExtractorPlugin) {
             $extractedPriceProductTransfers[] = $productConfigurationPriceExtractorPlugin->extractProductPrices(
-                $priceProductTransfers
+                $priceProductTransfers,
             );
         }
 

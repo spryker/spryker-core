@@ -29,7 +29,7 @@ class AvailabilityStorageBusinessFactory extends AbstractBusinessFactory
             $this->getStore(),
             $this->getQueryContainer(),
             $this->getConfig()->isSendingToQueue(),
-            $this->getRepository()
+            $this->getRepository(),
         );
     }
 

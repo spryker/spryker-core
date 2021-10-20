@@ -39,7 +39,7 @@ class PriceCartConnectorBusinessFactory extends AbstractBusinessFactory
             $this->getPriceFacade(),
             $this->createPriceProductFilter(),
             $this->getPriceProductService(),
-            $this->getPriceProductExpanderPlugins()
+            $this->getPriceProductExpanderPlugins(),
         );
     }
 
@@ -50,7 +50,7 @@ class PriceCartConnectorBusinessFactory extends AbstractBusinessFactory
     {
         return new PriceProductValidator(
             $this->getPriceProductFacade(),
-            $this->createPriceProductFilter()
+            $this->createPriceProductFilter(),
         );
     }
 
@@ -64,7 +64,7 @@ class PriceCartConnectorBusinessFactory extends AbstractBusinessFactory
             $this->getPriceFacade(),
             $this->getCurrencyFacade(),
             $this->getCartItemQuantityCounterStrategyPlugins(),
-            $this->createItemComparator()
+            $this->createItemComparator(),
         );
     }
 
@@ -77,7 +77,7 @@ class PriceCartConnectorBusinessFactory extends AbstractBusinessFactory
             $this->getPriceFacade(),
             $this->getPriceProductFacade(),
             $this->getMessengerFacade(),
-            $this->getPriceProductService()
+            $this->getPriceProductService(),
         );
     }
 

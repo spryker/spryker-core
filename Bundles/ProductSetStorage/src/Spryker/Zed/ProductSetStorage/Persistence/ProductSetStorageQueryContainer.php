@@ -54,7 +54,7 @@ class ProductSetStorageQueryContainer extends AbstractQueryContainer implements 
             ->addJoin(
                 SpyProductSetTableMap::COL_ID_PRODUCT_SET,
                 SpyUrlTableMap::COL_FK_RESOURCE_PRODUCT_SET,
-                Criteria::INNER_JOIN
+                Criteria::INNER_JOIN,
             )
             ->where(SpyUrlTableMap::COL_FK_LOCALE . ' = ' . SpyProductSetDataTableMap::COL_FK_LOCALE)
             ->withColumn(SpyUrlTableMap::COL_URL, 'url')
@@ -91,7 +91,7 @@ class ProductSetStorageQueryContainer extends AbstractQueryContainer implements 
             ->addJoin(
                 SpyProductSetTableMap::COL_ID_PRODUCT_SET,
                 SpyUrlTableMap::COL_FK_RESOURCE_PRODUCT_SET,
-                Criteria::INNER_JOIN
+                Criteria::INNER_JOIN,
             )
             ->where(SpyUrlTableMap::COL_FK_LOCALE . ' = ' . SpyProductSetDataTableMap::COL_FK_LOCALE)
             ->withColumn(SpyUrlTableMap::COL_URL, 'url')

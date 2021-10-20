@@ -93,7 +93,7 @@ class CodeBucketConfigTest extends Unit
         $this->assertSame(
             $currentCodeBucket,
             'test2',
-            'Current code bucket should be equal to expected one'
+            'Current code bucket should be equal to expected one',
         );
     }
 

@@ -22,7 +22,7 @@ class TransferToMoneyMapper implements TransferToMoneyMapperInterface
     {
         return new Money(
             $moneyTransfer->getAmount(),
-            new Currency($moneyTransfer->getCurrency()->getCode())
+            new Currency($moneyTransfer->getCurrency()->getCode()),
         );
     }
 }

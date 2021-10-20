@@ -57,7 +57,7 @@ class QuoteMergerTest extends Unit
         parent::setUp();
         $factory = $this->createPersistentCartBusinessFactoryMock();
         $this->cartMerger = new QuoteMerger(
-            $factory->getCartAddItemStrategyPlugins()
+            $factory->getCartAddItemStrategyPlugins(),
         );
     }
 
@@ -100,27 +100,27 @@ class QuoteMergerTest extends Unit
                     ->addItem(
                         (new ItemTransfer())
                             ->setSku(static::EXISTING_ITEM_SKU)
-                            ->setQuantity(1)
+                            ->setQuantity(1),
                     )->setCurrency(
                         (new CurrencyTransfer())
-                            ->setCode('EUR')
-                    )
+                            ->setCode('EUR'),
+                    ),
             )
             ->setTargetQuote(
                 (new QuoteTransfer())
                     ->addItem(
                         (new ItemTransfer())
                             ->setSku(static::EXISTING_ITEM_SKU)
-                            ->setQuantity(1)
+                            ->setQuantity(1),
                     )
                     ->addItem(
                         (new ItemTransfer())
                             ->setSku(static::NEW_ITEM_SKU)
-                            ->setQuantity(1)
+                            ->setQuantity(1),
                     )->setCurrency(
                         (new CurrencyTransfer())
-                            ->setCode('USD')
-                    )
+                            ->setCode('USD'),
+                    ),
             );
     }
 

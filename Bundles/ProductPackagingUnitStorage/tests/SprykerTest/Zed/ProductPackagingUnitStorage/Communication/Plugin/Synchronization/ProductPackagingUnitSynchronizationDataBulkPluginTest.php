@@ -69,7 +69,7 @@ class ProductPackagingUnitSynchronizationDataBulkPluginTest extends Unit
         $synchronizationDataTransfers = $productPackagingUnitSynchronizationDataBulkPlugin->getData(
             0,
             1,
-            [static::TEST_INVALID_ID]
+            [static::TEST_INVALID_ID],
         );
 
         $this->assertEmpty($synchronizationDataTransfers);

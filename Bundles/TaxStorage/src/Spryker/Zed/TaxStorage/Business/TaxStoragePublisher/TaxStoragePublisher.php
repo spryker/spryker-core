@@ -51,7 +51,7 @@ class TaxStoragePublisher implements TaxStoragePublisherInterface
     public function publishByTaxSetIds(array $taxSetIds): void
     {
         $this->taxStorageEntityManager->saveTaxSetStorage(
-            $this->taxStorageRepository->findTaxSetsByIds($taxSetIds)
+            $this->taxStorageRepository->findTaxSetsByIds($taxSetIds),
         );
     }
 
@@ -63,7 +63,7 @@ class TaxStoragePublisher implements TaxStoragePublisherInterface
     public function publishByTaxRateIds(array $taxRateIds): void
     {
         $this->publishByTaxSetIds(
-            $this->taxStorageRepository->findTaxSetIdsByTaxRateIds($taxRateIds)
+            $this->taxStorageRepository->findTaxSetIdsByTaxRateIds($taxRateIds),
         );
     }
 }

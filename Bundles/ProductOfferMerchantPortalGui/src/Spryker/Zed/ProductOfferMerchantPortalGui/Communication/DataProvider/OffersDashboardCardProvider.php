@@ -82,7 +82,7 @@ class OffersDashboardCardProvider implements OffersDashboardCardProviderInterfac
             '@ProductOfferMerchantPortalGui/Partials/offers_dashboard_card_title.twig',
             [
                 'merchantProductOfferCounts' => $merchantProductOfferCountsTransfer,
-            ]
+            ],
         );
         $content = $this->twigEnvironment->render(
             '@ProductOfferMerchantPortalGui/Partials/offers_dashboard_card_content.twig',
@@ -90,7 +90,7 @@ class OffersDashboardCardProvider implements OffersDashboardCardProviderInterfac
                 'merchantProductOfferCounts' => $merchantProductOfferCountsTransfer,
                 'expiringOffersDaysThreshold' => $this->productOfferMerchantPortalGuiConfig->getDashboardExpiringOffersDaysThreshold(),
                 'lowStockThreshold' => $this->productOfferMerchantPortalGuiConfig->getDashboardLowStockThreshold(),
-            ]
+            ],
         );
 
         return (new MerchantDashboardCardTransfer())

@@ -190,7 +190,7 @@ class CheckoutRestApiFacadeTest extends Unit
                 'getCalculationFacade',
                 'getConfig',
                 'getCheckoutDataExpanderPlugins',
-            ]
+            ],
         );
 
         $mockCheckoutRestApiFactory = $this->addMockShipmentFacade($mockCheckoutRestApiFactory);
@@ -254,7 +254,7 @@ class CheckoutRestApiFacadeTest extends Unit
     {
         $mockShipmentFacade = $this->createPartialMock(
             ShipmentFacade::class,
-            ['getAvailableMethodsByShipment']
+            ['getAvailableMethodsByShipment'],
         );
         $mockShipmentFacade
             ->method('getAvailableMethodsByShipment')
@@ -264,8 +264,8 @@ class CheckoutRestApiFacadeTest extends Unit
             ->method('getShipmentFacade')
             ->willReturn(
                 new CheckoutRestApiToShipmentFacadeBridge(
-                    $mockShipmentFacade
-                )
+                    $mockShipmentFacade,
+                ),
             );
 
         return $mockCheckoutRestApiFactory;
@@ -280,7 +280,7 @@ class CheckoutRestApiFacadeTest extends Unit
     {
         $mockCartFacade = $this->createPartialMock(
             CartFacade::class,
-            ['validateQuote']
+            ['validateQuote'],
         );
         $mockCartFacade
             ->method('validateQuote')
@@ -290,8 +290,8 @@ class CheckoutRestApiFacadeTest extends Unit
             ->method('getCartFacade')
             ->willReturn(
                 new CheckoutRestApiToCartFacadeBridge(
-                    $mockCartFacade
-                )
+                    $mockCartFacade,
+                ),
             );
 
         return $mockCheckoutRestApiFactory;
@@ -306,7 +306,7 @@ class CheckoutRestApiFacadeTest extends Unit
     {
         $mockCartsRestApiFacade = $this->createPartialMock(
             CartsRestApiFacade::class,
-            ['findQuoteByUuid']
+            ['findQuoteByUuid'],
         );
         $mockCartsRestApiFacade
             ->method('findQuoteByUuid')
@@ -316,8 +316,8 @@ class CheckoutRestApiFacadeTest extends Unit
             ->method('getCartsRestApiFacade')
             ->willReturn(
                 new CheckoutRestApiToCartsRestApiFacadeBridge(
-                    $mockCartsRestApiFacade
-                )
+                    $mockCartsRestApiFacade,
+                ),
             );
 
         return $mockCheckoutRestApiFactory;
@@ -332,7 +332,7 @@ class CheckoutRestApiFacadeTest extends Unit
     {
         $mockCartsRestApiFacade = $this->createPartialMock(
             CartsRestApiFacade::class,
-            ['findQuoteByUuid']
+            ['findQuoteByUuid'],
         );
         $mockCartsRestApiFacade
             ->method('findQuoteByUuid')
@@ -342,8 +342,8 @@ class CheckoutRestApiFacadeTest extends Unit
             ->method('getCartsRestApiFacade')
             ->willReturn(
                 new CheckoutRestApiToCartsRestApiFacadeBridge(
-                    $mockCartsRestApiFacade
-                )
+                    $mockCartsRestApiFacade,
+                ),
             );
 
         return $mockCheckoutRestApiFactory;
@@ -358,7 +358,7 @@ class CheckoutRestApiFacadeTest extends Unit
     {
         $mockCheckoutRestApiConfig = $this->createPartialMock(
             CheckoutRestApiConfig::class,
-            ['deleteCartAfterOrderCreation']
+            ['deleteCartAfterOrderCreation'],
         );
         $mockCheckoutRestApiConfig
             ->method('deleteCartAfterOrderCreation')
@@ -380,7 +380,7 @@ class CheckoutRestApiFacadeTest extends Unit
     {
         $mockCartsRestApiFacade = $this->createPartialMock(
             CalculationFacade::class,
-            ['recalculateQuote']
+            ['recalculateQuote'],
         );
         $mockCartsRestApiFacade
             ->method('recalculateQuote')
@@ -390,8 +390,8 @@ class CheckoutRestApiFacadeTest extends Unit
             ->method('getCalculationFacade')
             ->willReturn(
                 new CheckoutRestApiToCalculationFacadeBridge(
-                    $mockCartsRestApiFacade
-                )
+                    $mockCartsRestApiFacade,
+                ),
             );
 
         return $mockCheckoutRestApiFactory;
@@ -406,7 +406,7 @@ class CheckoutRestApiFacadeTest extends Unit
     {
         $mockCartFacade = $this->createPartialMock(
             CartFacade::class,
-            ['validateQuote']
+            ['validateQuote'],
         );
         $mockCartFacade
             ->method('validateQuote')
@@ -416,8 +416,8 @@ class CheckoutRestApiFacadeTest extends Unit
             ->method('getCartFacade')
             ->willReturn(
                 new CheckoutRestApiToCartFacadeBridge(
-                    $mockCartFacade
-                )
+                    $mockCartFacade,
+                ),
             );
 
         return $mockCheckoutRestApiFactory;
@@ -432,7 +432,7 @@ class CheckoutRestApiFacadeTest extends Unit
     {
         $mockCheckoutFacade = $this->createPartialMock(
             CheckoutFacade::class,
-            ['placeOrder']
+            ['placeOrder'],
         );
         $mockCheckoutFacade
             ->method('placeOrder')
@@ -442,8 +442,8 @@ class CheckoutRestApiFacadeTest extends Unit
             ->method('getCheckoutFacade')
             ->willReturn(
                 new CheckoutRestApiToCheckoutFacadeBridge(
-                    $mockCheckoutFacade
-                )
+                    $mockCheckoutFacade,
+                ),
             );
 
         return $mockCheckoutRestApiFactory;
@@ -461,7 +461,7 @@ class CheckoutRestApiFacadeTest extends Unit
             [
                 'getAvailablePaymentProvidersForStore',
                 'getAvailableMethods',
-            ]
+            ],
         );
         $mockPaymentFacade
             ->method('getAvailablePaymentProvidersForStore')
@@ -474,8 +474,8 @@ class CheckoutRestApiFacadeTest extends Unit
             ->method('getPaymentFacade')
             ->willReturn(
                 new CheckoutRestApiToPaymentFacadeBridge(
-                    $mockPaymentFacade
-                )
+                    $mockPaymentFacade,
+                ),
             );
 
         return $mockCheckoutRestApiFactory;
@@ -492,7 +492,7 @@ class CheckoutRestApiFacadeTest extends Unit
             CustomerFacade::class,
             [
                 'findCustomerByReference',
-            ]
+            ],
         );
         $mockCustomerFacade
             ->method('findCustomerByReference')
@@ -502,8 +502,8 @@ class CheckoutRestApiFacadeTest extends Unit
             ->method('getCustomerFacade')
             ->willReturn(
                 new CheckoutRestApiToCustomerFacadeBridge(
-                    $mockCustomerFacade
-                )
+                    $mockCustomerFacade,
+                ),
             );
 
         return $mockCheckoutRestApiFactory;
@@ -518,7 +518,7 @@ class CheckoutRestApiFacadeTest extends Unit
     {
         $mockCustomerFacade = $this->createPartialMock(
             CustomerFacade::class,
-            ['findCustomerByReference']
+            ['findCustomerByReference'],
         );
         $mockCustomerFacade
             ->method('findCustomerByReference')
@@ -528,8 +528,8 @@ class CheckoutRestApiFacadeTest extends Unit
             ->method('getCustomerFacade')
             ->willReturn(
                 new CheckoutRestApiToCustomerFacadeBridge(
-                    $mockCustomerFacade
-                )
+                    $mockCustomerFacade,
+                ),
             );
 
         return $mockCheckoutRestApiFactory;
@@ -544,7 +544,7 @@ class CheckoutRestApiFacadeTest extends Unit
     {
         $mockQuoteFacade = $this->createPartialMock(
             QuoteFacade::class,
-            ['deleteQuote']
+            ['deleteQuote'],
         );
         $mockQuoteFacade
             ->method('deleteQuote')
@@ -554,8 +554,8 @@ class CheckoutRestApiFacadeTest extends Unit
             ->method('getQuoteFacade')
             ->willReturn(
                 new CheckoutRestApiToQuoteFacadeBridge(
-                    $mockQuoteFacade
-                )
+                    $mockQuoteFacade,
+                ),
             );
 
         return $mockCheckoutRestApiFactory;
@@ -573,7 +573,7 @@ class CheckoutRestApiFacadeTest extends Unit
             ->willReturn(
                 [
                     $this->createMockCustomerMapperPlugin(),
-                ]
+                ],
             );
 
         return $mockCheckoutRestApiFactory;
@@ -586,7 +586,7 @@ class CheckoutRestApiFacadeTest extends Unit
     {
         $mockCustomerMapperPlugin = $this->createPartialMock(
             QuoteMapperPluginInterface::class,
-            ['map']
+            ['map'],
         );
         $mockCustomerMapperPlugin
             ->method('map')

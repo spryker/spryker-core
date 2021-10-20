@@ -77,7 +77,7 @@ class MerchantShipmentCreateController extends AbstractMerchantShipmentControlle
         $form = $this->getFactory()
             ->createMerchantShipmentGroupForm(
                 $dataProvider->getData($merchantOrderTransfer, $shipmentTransfer),
-                $dataProvider->getOptions($merchantOrderTransfer)
+                $dataProvider->getOptions($merchantOrderTransfer),
             )
             ->handleRequest($request);
 
@@ -89,7 +89,7 @@ class MerchantShipmentCreateController extends AbstractMerchantShipmentControlle
 
                 $redirectUrl = Url::generate(
                     static::REDIRECT_URL_DEFAULT,
-                    [static::PARAM_ID_MERCHANT_SALES_ORDER => $merchantOrderTransfer->getIdMerchantOrder()]
+                    [static::PARAM_ID_MERCHANT_SALES_ORDER => $merchantOrderTransfer->getIdMerchantOrder()],
                 )->build();
 
                 return $this->redirectResponse($redirectUrl);

@@ -49,7 +49,7 @@ class FixedTest extends Unit
                 self::ITEM_GROSS_PRICE_1000,
                 self::ITEM_GROSS_PRICE_1000,
                 self::ITEM_GROSS_PRICE_1000,
-            ]
+            ],
         );
 
         $calculator = new FixedType();
@@ -69,7 +69,7 @@ class FixedTest extends Unit
                 self::ITEM_GROSS_PRICE_1000,
                 self::ITEM_GROSS_PRICE_1000,
                 self::ITEM_GROSS_PRICE_1000,
-            ]
+            ],
         );
 
         $calculator = new FixedType();

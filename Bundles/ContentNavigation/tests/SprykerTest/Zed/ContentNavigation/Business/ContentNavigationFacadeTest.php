@@ -45,7 +45,7 @@ class ContentNavigationFacadeTest extends Unit
         $this->assertGreaterThanOrEqual(
             1,
             $contentValidationResponseTransfer->getParameterMessages()->count(),
-            'Validation messages count does not match expected value.'
+            'Validation messages count does not match expected value.',
         );
     }
 
@@ -66,7 +66,7 @@ class ContentNavigationFacadeTest extends Unit
         $this->assertCount(
             0,
             $contentValidationResponseTransfer->getParameterMessages(),
-            'Validation messages count does not match expected value.'
+            'Validation messages count does not match expected value.',
         );
     }
 

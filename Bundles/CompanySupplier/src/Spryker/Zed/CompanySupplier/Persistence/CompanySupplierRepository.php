@@ -28,7 +28,7 @@ class CompanySupplierRepository extends AbstractRepository implements CompanySup
     public function getCompanyTypes(): CompanyTypeCollectionTransfer
     {
         $spyCompanyTypes = $this->buildQueryFromCriteria(
-            $this->getFactory()->createCompanyTypeQuery()
+            $this->getFactory()->createCompanyTypeQuery(),
         )->find();
 
         $spyCompanyTypes = new ArrayObject($spyCompanyTypes);
@@ -80,7 +80,7 @@ class CompanySupplierRepository extends AbstractRepository implements CompanySup
     protected function getCompanySupplierCollectionFromQuery(SpyCompanyQuery $query): CompanySupplierCollectionTransfer
     {
         $companySuppliers = new ArrayObject(
-            $this->buildQueryFromCriteria($query)->find()
+            $this->buildQueryFromCriteria($query)->find(),
         );
         $companySupplierCollection = new CompanySupplierCollectionTransfer();
         $companySupplierCollection->setSuppliers($companySuppliers);
@@ -98,7 +98,7 @@ class CompanySupplierRepository extends AbstractRepository implements CompanySup
     public function getCompanyTypeByIdCompanyType(int $idCompanyType): SpyCompanyTypeEntityTransfer
     {
         $spyCompanyTypeEntityTransfer = $this->buildQueryFromCriteria(
-            $this->getFactory()->createCompanyTypeQuery()->filterByIdCompanyType($idCompanyType)
+            $this->getFactory()->createCompanyTypeQuery()->filterByIdCompanyType($idCompanyType),
         )->findOne();
 
         return $spyCompanyTypeEntityTransfer;

@@ -85,7 +85,7 @@ class DataExportWriter implements DataExportWriterInterface
             return $dataExportConnectionPlugin->write(
                 $dataFormatResponseTransfer,
                 $dataExportBatchTransfer,
-                $dataExportConfigurationTransfer
+                $dataExportConfigurationTransfer,
             );
         }
 
@@ -105,7 +105,7 @@ class DataExportWriter implements DataExportWriterInterface
     protected function createConnectionPluginNotFoundMessage(string $connectionType): MessageTransfer
     {
         return (new MessageTransfer())->setValue(
-            sprintf(static::MESSAGE_CONNECTION_PLUGIN_NOT_FOUND, $connectionType)
+            sprintf(static::MESSAGE_CONNECTION_PLUGIN_NOT_FOUND, $connectionType),
         );
     }
 }

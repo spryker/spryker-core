@@ -193,7 +193,7 @@ class CompanyBusinessUnitTable extends AbstractTable
             Url::generate(static::URL_COMPANY_BUSINESS_UNIT_EDIT, [
                 static::PARAM_ID_COMPANY_BUSINESS_UNIT => $idCompanyBusinessUnit,
             ]),
-            'Edit'
+            'Edit',
         );
 
         $buttons[] = $this->generateRemoveButton(
@@ -202,7 +202,7 @@ class CompanyBusinessUnitTable extends AbstractTable
             ]),
             'Delete',
             [],
-            DeleteCompanyBusinessUnitForm::class
+            DeleteCompanyBusinessUnitForm::class,
         );
 
         return implode(' ', $buttons);

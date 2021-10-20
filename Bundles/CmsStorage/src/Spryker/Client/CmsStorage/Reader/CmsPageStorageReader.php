@@ -56,7 +56,7 @@ class CmsPageStorageReader implements CmsPageStorageReaderInterface
     public function getCmsPagesByUuids(array $cmsPageUuids, string $localeName, string $storeName): array
     {
         $cmsPagesStorageMappingData = $this->storageClient->getMulti(
-            $this->generateUuidKeys($cmsPageUuids, $localeName, $storeName)
+            $this->generateUuidKeys($cmsPageUuids, $localeName, $storeName),
         );
 
         if (!$cmsPagesStorageMappingData) {
@@ -93,7 +93,7 @@ class CmsPageStorageReader implements CmsPageStorageReaderInterface
     public function getCmsPagesByIds(array $cmsPageIds, string $localeName, string $storeName): array
     {
         $cmsPagesStorageData = $this->storageClient->getMulti(
-            $this->generateIdKeys($cmsPageIds, $localeName, $storeName)
+            $this->generateIdKeys($cmsPageIds, $localeName, $storeName),
         );
 
         if (!$cmsPagesStorageData) {

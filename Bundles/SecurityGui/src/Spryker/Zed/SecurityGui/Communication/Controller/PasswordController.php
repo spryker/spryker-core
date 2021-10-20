@@ -40,11 +40,11 @@ class PasswordController extends AbstractController
                 ->getUserPasswordResetFacade()
                 ->requestPasswordReset(
                     (new UserPasswordResetRequestTransfer())
-                        ->setEmail($formData[ResetPasswordRequestForm::FIELD_EMAIL])
+                        ->setEmail($formData[ResetPasswordRequestForm::FIELD_EMAIL]),
                 );
 
             $this->addSuccessMessage(
-                'If there is an account associated with this email, you will receive an Email with further instructions.'
+                'If there is an account associated with this email, you will receive an Email with further instructions.',
             );
         }
 
@@ -65,7 +65,7 @@ class PasswordController extends AbstractController
             $this->addErrorMessage('Request token is missing!');
 
             return $this->redirectResponse(
-                $this->getFactory()->getConfig()->getUrlLogin()
+                $this->getFactory()->getConfig()->getUrlLogin(),
             );
         }
 
@@ -77,7 +77,7 @@ class PasswordController extends AbstractController
             $this->addErrorMessage('Invalid request token!');
 
             return $this->redirectResponse(
-                $this->getFactory()->getConfig()->getUrlLogin()
+                $this->getFactory()->getConfig()->getUrlLogin(),
             );
         }
 
@@ -91,7 +91,7 @@ class PasswordController extends AbstractController
                 ->getUserPasswordResetFacade()
                 ->setNewPassword(
                     $token,
-                    $formData[ResetPasswordForm::FIELD_PASSWORD]
+                    $formData[ResetPasswordForm::FIELD_PASSWORD],
                 );
 
             if ($isPasswordReset) {
@@ -101,7 +101,7 @@ class PasswordController extends AbstractController
             }
 
             return $this->redirectResponse(
-                $this->getFactory()->getConfig()->getUrlLogin()
+                $this->getFactory()->getConfig()->getUrlLogin(),
             );
         }
 

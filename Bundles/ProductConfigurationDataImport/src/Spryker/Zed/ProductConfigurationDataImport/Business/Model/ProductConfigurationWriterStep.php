@@ -40,8 +40,8 @@ class ProductConfigurationWriterStep extends PublishAwareStep implements DataImp
                 sprintf(
                     '"%s" key must be in the data set. Given: "%s"',
                     ProductConfigurationDataSet::KEY_CONFIGURATION_KEY,
-                    implode(', ', array_keys($dataSet->getArrayCopy()))
-                )
+                    implode(', ', array_keys($dataSet->getArrayCopy())),
+                ),
             );
         }
 
@@ -54,7 +54,7 @@ class ProductConfigurationWriterStep extends PublishAwareStep implements DataImp
 
         $this->addPublishEvents(
             static::EVENT_PRODUCT_CONFIGURATION_PUBLISH,
-            $productConfigurationEntity->getIdProductConfiguration()
+            $productConfigurationEntity->getIdProductConfiguration(),
         );
     }
 }

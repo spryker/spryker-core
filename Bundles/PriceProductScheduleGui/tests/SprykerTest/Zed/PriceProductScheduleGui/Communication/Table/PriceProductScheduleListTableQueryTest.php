@@ -108,7 +108,7 @@ class PriceProductScheduleListTableQueryTest extends Unit
 
         $priceProductScheduleListTableMock = new PriceProductScheduleListTableMock(
             SpyPriceProductScheduleListQuery::create(),
-            $this->getPriceProductScheduleGuiToStoreFacadeMock()
+            $this->getPriceProductScheduleGuiToStoreFacadeMock(),
         );
         $priceProductScheduleListTableMock->setTwig($this->getTwigMock());
 

@@ -58,7 +58,7 @@ class PriceProductOfferGuiDependencyProvider extends AbstractBundleDependencyPro
     {
         $container->set(static::FACADE_PRICE_PRODUCT, function (Container $container) {
             return new PriceProductOfferGuiToPriceProductFacadeBridge(
-                $container->getLocator()->priceProduct()->facade()
+                $container->getLocator()->priceProduct()->facade(),
             );
         });
 
@@ -74,7 +74,7 @@ class PriceProductOfferGuiDependencyProvider extends AbstractBundleDependencyPro
     {
         $container->set(static::FACADE_PRICE, function (Container $container) {
             return new PriceProductOfferGuiToPriceFacadeBridge(
-                $container->getLocator()->price()->facade()
+                $container->getLocator()->price()->facade(),
             );
         });
 
@@ -90,7 +90,7 @@ class PriceProductOfferGuiDependencyProvider extends AbstractBundleDependencyPro
     {
         $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new PriceProductOfferGuiToUtilEncodingServiceBridge(
-                $container->getLocator()->utilEncoding()->service()
+                $container->getLocator()->utilEncoding()->service(),
             );
         });
 

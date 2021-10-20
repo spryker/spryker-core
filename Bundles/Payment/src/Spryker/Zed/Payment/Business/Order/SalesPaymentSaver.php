@@ -133,7 +133,7 @@ class SalesPaymentSaver implements SalesPaymentSaverInterface
         $paymentMethodTypeEntity = $this->paymentQueryContainer
             ->queryPaymentMethodType(
                 $paymentTransfer->getPaymentProvider(),
-                $paymentTransfer->getPaymentMethod()
+                $paymentTransfer->getPaymentMethod(),
             )
             ->findOneOrCreate();
 

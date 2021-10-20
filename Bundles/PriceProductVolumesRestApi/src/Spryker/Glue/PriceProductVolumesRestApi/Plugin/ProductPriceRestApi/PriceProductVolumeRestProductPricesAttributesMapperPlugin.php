@@ -36,7 +36,7 @@ class PriceProductVolumeRestProductPricesAttributesMapperPlugin extends Abstract
             ->createPriceProductVolumeMapper()
             ->mapPriceProductVolumeDataToRestProductPricesAttributes(
                 $currentProductPriceTransfer,
-                $restProductPriceAttributesTransfer
+                $restProductPriceAttributesTransfer,
             );
     }
 }

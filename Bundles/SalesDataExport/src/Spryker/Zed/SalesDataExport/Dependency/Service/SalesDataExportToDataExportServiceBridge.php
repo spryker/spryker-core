@@ -49,7 +49,7 @@ class SalesDataExportToDataExportServiceBridge implements SalesDataExportToDataE
     ): DataExportConfigurationTransfer {
         return $this->dataExportService->resolveDataExportActionConfiguration(
             $dataExportActionConfigurationTransfer,
-            $additionalDataExportConfigurationsTransfer
+            $additionalDataExportConfigurationsTransfer,
         );
     }
 

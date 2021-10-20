@@ -25,7 +25,7 @@ class ShoppingListItemMapper implements ShoppingListItemMapperInterface
     ): RestShoppingListItemsAttributesTransfer {
         return $restShoppingListItemsAttributesTransfer->fromArray(
             $shoppingListItemTransfer->toArray(),
-            true
+            true,
         );
     }
 
@@ -41,7 +41,7 @@ class ShoppingListItemMapper implements ShoppingListItemMapperInterface
     ): ShoppingListItemRequestTransfer {
         $shoppingListItemRequestTransfer->getShoppingListItem()->fromArray(
             $restShoppingListItemsAttributesTransfer->modifiedToArray(),
-            true
+            true,
         );
 
         return $shoppingListItemRequestTransfer;

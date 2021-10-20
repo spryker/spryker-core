@@ -81,7 +81,7 @@ class PreConditionChecker implements PreConditionCheckerInterface
             $this->addViolation(
                 $checkoutResponseTransfer,
                 CustomerConfig::ERROR_CODE_CUSTOMER_INVALID_EMAIL,
-                static::ERROR_EMAIL_INVALID
+                static::ERROR_EMAIL_INVALID,
             );
 
             return false;
@@ -102,7 +102,7 @@ class PreConditionChecker implements PreConditionCheckerInterface
             $this->addViolation(
                 $checkoutResponseTransfer,
                 CustomerConfig::ERROR_CODE_CUSTOMER_ALREADY_REGISTERED,
-                static::ERROR_EMAIL_UNIQUE
+                static::ERROR_EMAIL_UNIQUE,
             );
 
             return false;
@@ -135,7 +135,7 @@ class PreConditionChecker implements PreConditionCheckerInterface
             ->addError(
                 $this->createCheckoutErrorTransfer()
                     ->setErrorCode($errorCode)
-                    ->setMessage($errorMessage)
+                    ->setMessage($errorMessage),
             );
     }
 

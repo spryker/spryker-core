@@ -133,7 +133,7 @@ class ProductRelationCollectorDependencyProvider extends AbstractBundleDependenc
     {
         $container->set(static::QUERY_CONTAINER_PRODUCT_RELATION, function (Container $container) {
             return new ProductRelationCollectorToProductRelationBridge(
-                $container->getLocator()->productRelation()->queryContainer()
+                $container->getLocator()->productRelation()->queryContainer(),
             );
         });
 
@@ -149,7 +149,7 @@ class ProductRelationCollectorDependencyProvider extends AbstractBundleDependenc
     {
         $container->set(static::QUERY_CONTAINER_PRODUCT_IMAGE, function (Container $container) {
             return new ProductRelationCollectorCollectorToProductImageBridge(
-                $container->getLocator()->productImage()->queryContainer()
+                $container->getLocator()->productImage()->queryContainer(),
             );
         });
 

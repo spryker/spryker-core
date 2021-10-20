@@ -25,7 +25,7 @@ class SearchElasticsearchFactory extends AbstractFactory
     public function createSearchDataCollector(): DataCollector
     {
         return new ElasticsearchDataCollector(
-            $this->createElasticsearchLogger()
+            $this->createElasticsearchLogger(),
         );
     }
 
@@ -36,7 +36,7 @@ class SearchElasticsearchFactory extends AbstractFactory
     {
         return new ElasticsearchInMemoryLogger(
             $this->getUtilEncodingService(),
-            $this->getConfig()->getClientConfig()
+            $this->getConfig()->getClientConfig(),
         );
     }
 

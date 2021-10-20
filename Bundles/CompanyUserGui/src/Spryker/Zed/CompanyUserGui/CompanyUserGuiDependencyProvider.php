@@ -107,7 +107,7 @@ class CompanyUserGuiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::FACADE_COMPANY_USER, function (Container $container) {
             return new CompanyUserGuiToCompanyUserFacadeBridge(
-                $container->getLocator()->companyUser()->facade()
+                $container->getLocator()->companyUser()->facade(),
             );
         });
 
@@ -123,7 +123,7 @@ class CompanyUserGuiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::FACADE_COMPANY, function (Container $container) {
             return new CompanyUserGuiToCompanyFacadeBridge(
-                $container->getLocator()->company()->facade()
+                $container->getLocator()->company()->facade(),
             );
         });
 
@@ -139,7 +139,7 @@ class CompanyUserGuiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::FACADE_CUSTOMER, function (Container $container) {
             return new CompanyUserGuiToCustomerFacadeBridge(
-                $container->getLocator()->customer()->facade()
+                $container->getLocator()->customer()->facade(),
             );
         });
 

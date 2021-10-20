@@ -29,14 +29,14 @@ class MerchantOrderDiscountFilter implements MerchantOrderDiscountFilterInterfac
 
         $generalCalculatedDiscountTransfers = $this->getGeneralDiscounts(
             $orderTransfer,
-            $merchantOrderTransfer->getMerchantOrderItems()->count()
+            $merchantOrderTransfer->getMerchantOrderItems()->count(),
         );
         $itemsCalculatedDiscountTransfers = $this->getMerchantOrderItemDiscounts($merchantOrderTransfer);
 
         $calculatedDiscountTransfers = array_merge($generalCalculatedDiscountTransfers, $itemsCalculatedDiscountTransfers);
 
         $orderTransfer->setCalculatedDiscounts(
-            new ArrayObject($calculatedDiscountTransfers)
+            new ArrayObject($calculatedDiscountTransfers),
         );
 
         $merchantOrderTransfer->setOrder($orderTransfer);
@@ -89,7 +89,7 @@ class MerchantOrderDiscountFilter implements MerchantOrderDiscountFilterInterfac
             $itemTransfer = $merchantOrderItemTransfer->requireOrderItem()->getOrderItem();
             $groupedCalculatedDiscounts = $this->getGroupedCalculatedDiscounts(
                 $itemTransfer,
-                $groupedCalculatedDiscounts
+                $groupedCalculatedDiscounts,
             );
         }
 
@@ -113,10 +113,10 @@ class MerchantOrderDiscountFilter implements MerchantOrderDiscountFilterInterfac
 
             $groupedCalculatedDiscountTransfer = $groupedCalculatedDiscounts[$calculatedDiscountTransfer->getDisplayName()];
             $groupedCalculatedDiscountTransfer->setQuantity(
-                $groupedCalculatedDiscountTransfer->getQuantity() + $calculatedDiscountTransfer->getQuantity()
+                $groupedCalculatedDiscountTransfer->getQuantity() + $calculatedDiscountTransfer->getQuantity(),
             );
             $groupedCalculatedDiscountTransfer->setSumAmount(
-                $groupedCalculatedDiscountTransfer->getSumAmount() + $calculatedDiscountTransfer->getSumAmount()
+                $groupedCalculatedDiscountTransfer->getSumAmount() + $calculatedDiscountTransfer->getSumAmount(),
             );
 
             $groupedCalculatedDiscounts[$calculatedDiscountTransfer->getDisplayName()] = $groupedCalculatedDiscountTransfer;

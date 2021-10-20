@@ -71,8 +71,8 @@ class ProductLabelDataImportPluginTest extends Unit
             sprintf(
                 'Imported number of product labels is %s expected %s.',
                 $dataImporterReportTransfer->getImportedDataSetCount(),
-                static::EXPECTED_IMPORT_COUNT
-            )
+                static::EXPECTED_IMPORT_COUNT,
+            ),
         );
     }
 }

@@ -61,7 +61,7 @@ class UniqueSkuInProductConcreteCollectionConstraintValidator extends AbstractCo
                     ->atPath(sprintf(
                         static::PROPERTY_PATH_TEMPLATE,
                         (int)$index,
-                        static::PRODUCT_CONCRETE_SUPER_ATTRIBUTE_FORM_FIELD_SKU
+                        static::PRODUCT_CONCRETE_SUPER_ATTRIBUTE_FORM_FIELD_SKU,
                     ))
                     ->addViolation();
             }
@@ -71,7 +71,7 @@ class UniqueSkuInProductConcreteCollectionConstraintValidator extends AbstractCo
         }
 
         $productConcreteTransfers = $this->getFactory()->getProductFacade()->getProductConcretesByCriteria(
-            (new ProductCriteriaTransfer())->setSkus(array_values($skus))
+            (new ProductCriteriaTransfer())->setSkus(array_values($skus)),
         );
 
         foreach ($productConcreteTransfers as $productConcreteTransfer) {
@@ -84,7 +84,7 @@ class UniqueSkuInProductConcreteCollectionConstraintValidator extends AbstractCo
                 ->atPath(sprintf(
                     static::PROPERTY_PATH_TEMPLATE,
                     (int)$skuIndexes[$productConcreteTransfer->getSku()],
-                    static::PRODUCT_CONCRETE_SUPER_ATTRIBUTE_FORM_FIELD_SKU
+                    static::PRODUCT_CONCRETE_SUPER_ATTRIBUTE_FORM_FIELD_SKU,
                 ))
                 ->addViolation();
         }

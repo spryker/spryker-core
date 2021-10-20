@@ -82,7 +82,7 @@ class DiscountPromotionFacadeTest extends Unit
         $this->tester->haveProductWithStock(
             [ProductAbstractTransfer::SKU => $discountPromotionTransfer->getAbstractSku()],
             [],
-            $discountPromotionTransfer->getQuantity()
+            $discountPromotionTransfer->getQuantity(),
         );
 
         // Act
@@ -115,7 +115,7 @@ class DiscountPromotionFacadeTest extends Unit
         $this->tester->haveProductWithStock(
             [ProductAbstractTransfer::SKU => $discountPromotionTransfer->getAbstractSku()],
             [],
-            $discountPromotionTransfer->getQuantity()
+            $discountPromotionTransfer->getQuantity(),
         );
 
         $itemTransfer = (new ItemBuilder([
@@ -156,7 +156,7 @@ class DiscountPromotionFacadeTest extends Unit
         $this->tester->haveProductWithStock(
             [ProductAbstractTransfer::SKU => $discountPromotionTransfer->getAbstractSku()],
             [],
-            0
+            0,
         );
 
         // Act
@@ -189,7 +189,7 @@ class DiscountPromotionFacadeTest extends Unit
         $this->tester->haveProductWithStock(
             [ProductAbstractTransfer::SKU => $discountPromotionTransfer->getAbstractSku()],
             [],
-            $promotionItemQuantity
+            $promotionItemQuantity,
         );
 
         $itemTransfer = (new ItemBuilder([
@@ -268,7 +268,7 @@ class DiscountPromotionFacadeTest extends Unit
 
         // Assert
         $discountPromotionTransferUpdated = $this->tester->getFacade()->findDiscountPromotionByIdDiscountPromotion(
-            $discountPromotionTransferSaved->getIdDiscountPromotion()
+            $discountPromotionTransferSaved->getIdDiscountPromotion(),
         );
         $this->assertSame($discountPromotionTransferUpdated->getAbstractSku(), $updateSku);
     }
@@ -358,7 +358,7 @@ class DiscountPromotionFacadeTest extends Unit
         $this->tester->getFacade()->removePromotionByIdDiscount($discountPromotionTransferSaved->getFkDiscount());
 
         $discountPromotionTransferUpdated = $this->tester->getFacade()->findDiscountPromotionByIdDiscount(
-            $discountPromotionTransferSaved->getFkDiscount()
+            $discountPromotionTransferSaved->getFkDiscount(),
         );
 
         // Assert
@@ -381,7 +381,7 @@ class DiscountPromotionFacadeTest extends Unit
         // Assert
         $discountPromotionTransferUpdated = $this->tester->getFacade()
             ->findDiscountPromotionByIdDiscount(
-                $discountPromotionTransfer->getFkDiscount()
+                $discountPromotionTransfer->getFkDiscount(),
             );
         $this->assertEmpty($discountPromotionTransferUpdated);
     }
@@ -398,7 +398,7 @@ class DiscountPromotionFacadeTest extends Unit
 
         // Act
         $discountPromotionTransferRead = $this->tester->getFacade()->findDiscountPromotionByIdDiscountPromotion(
-            $discountPromotionTransferSaved->getIdDiscountPromotion()
+            $discountPromotionTransferSaved->getIdDiscountPromotion(),
         );
 
         // Assert
@@ -423,7 +423,7 @@ class DiscountPromotionFacadeTest extends Unit
         // Act
         $discountConfigurationTransfer = $this->tester->getFacade()
             ->expandDiscountConfigurationWithPromotion(
-                $discountConfigurationTransfer
+                $discountConfigurationTransfer,
             );
 
         // Assert
@@ -445,7 +445,7 @@ class DiscountPromotionFacadeTest extends Unit
 
         // Assert
         $this->assertTrue(
-            $this->tester->getFacade()->isDiscountWithPromotion($discountPromotionTransfer->getFkDiscount())
+            $this->tester->getFacade()->isDiscountWithPromotion($discountPromotionTransfer->getFkDiscount()),
         );
     }
 
@@ -459,7 +459,7 @@ class DiscountPromotionFacadeTest extends Unit
 
         // Assert
         $this->assertFalse(
-            $this->tester->getFacade()->isDiscountWithPromotion($discountGeneralTransfer->getIdDiscount())
+            $this->tester->getFacade()->isDiscountWithPromotion($discountGeneralTransfer->getIdDiscount()),
         );
     }
 
@@ -481,7 +481,7 @@ class DiscountPromotionFacadeTest extends Unit
         $this->tester->haveProductWithStock(
             [ProductAbstractTransfer::SKU => $discountPromotionTransfer->getAbstractSku()],
             [],
-            $discountPromotionTransfer->getQuantity()
+            $discountPromotionTransfer->getQuantity(),
         );
 
         // Act

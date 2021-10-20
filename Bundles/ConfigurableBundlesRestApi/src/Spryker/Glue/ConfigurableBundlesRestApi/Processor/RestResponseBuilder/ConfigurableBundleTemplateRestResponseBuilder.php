@@ -82,7 +82,7 @@ class ConfigurableBundleTemplateRestResponseBuilder implements ConfigurableBundl
         $configurableBundleTemplateStorageTransfers = $this->configurableBundleTranslator
             ->translateConfigurableBundleTemplateStorageTransfers(
                 [$configurableBundleTemplateStorageTransfer],
-                $localeName
+                $localeName,
             );
 
         $restResource = $this->configurableBundleTemplateRestResourceBuilder
@@ -104,7 +104,7 @@ class ConfigurableBundleTemplateRestResponseBuilder implements ConfigurableBundl
         $configurableBundleTemplateStorageTransfers = $this->configurableBundleTranslator
             ->translateConfigurableBundleTemplateStorageTransfers(
                 $configurableBundleTemplateStorageTransfers,
-                $localeName
+                $localeName,
             );
 
         $restResponse = $this->createRestResponse();
@@ -112,7 +112,7 @@ class ConfigurableBundleTemplateRestResponseBuilder implements ConfigurableBundl
         foreach ($configurableBundleTemplateStorageTransfers as $configurableBundleTemplateStorageTransfer) {
             $restResponse->addResource(
                 $this->configurableBundleTemplateRestResourceBuilder
-                    ->buildConfigurableBundleTemplateRestResource($configurableBundleTemplateStorageTransfer)
+                    ->buildConfigurableBundleTemplateRestResource($configurableBundleTemplateStorageTransfer),
             );
         }
 

@@ -144,7 +144,7 @@ class CreateReturnTest extends Unit
         $this->assertSame($orderTransfer->getStore(), $returnTransfer->getStore());
         $this->assertSame(
             $orderTransfer->getCustomer()->getCustomerReference(),
-            $returnTransfer->getCustomerReference()
+            $returnTransfer->getCustomerReference(),
         );
 
         $this->assertSame(static::FAKE_RETURN_REASON, $returnItemTransfer->getReason());
@@ -153,9 +153,9 @@ class CreateReturnTest extends Unit
             sprintf(
                 $this->getConfig()->getReturnReferenceFormat(),
                 $orderTransfer->getCustomer()->getCustomerReference(),
-                1
+                1,
             ),
-            $returnTransfer->getReturnReference()
+            $returnTransfer->getReturnReference(),
         );
     }
 
@@ -266,7 +266,7 @@ class CreateReturnTest extends Unit
         $this->assertFalse($returnResponseTransfer->getIsSuccessful());
         $this->assertSame(
             static::GLOSSARY_KEY_CREATE_RETURN_ITEM_ERROR,
-            $returnResponseTransfer->getMessages()[0]->getValue()
+            $returnResponseTransfer->getMessages()[0]->getValue(),
         );
     }
 
@@ -313,7 +313,7 @@ class CreateReturnTest extends Unit
         $this->assertFalse($returnResponseTransfer->getIsSuccessful());
         $this->assertSame(
             static::GLOSSARY_KEY_CREATE_RETURN_ITEM_CURRENCY_ERROR,
-            $returnResponseTransfer->getMessages()[0]->getValue()
+            $returnResponseTransfer->getMessages()[0]->getValue(),
         );
     }
 
@@ -404,7 +404,7 @@ class CreateReturnTest extends Unit
         $this->assertFalse($returnResponseTransfer->getIsSuccessful());
         $this->assertSame(
             static::GLOSSARY_KEY_CREATE_RETURN_ITEM_ERROR,
-            $returnResponseTransfer->getMessages()[0]->getValue()
+            $returnResponseTransfer->getMessages()[0]->getValue(),
         );
     }
 
@@ -433,7 +433,7 @@ class CreateReturnTest extends Unit
         $this->assertFalse($returnResponseTransfer->getIsSuccessful());
         $this->assertSame(
             static::GLOSSARY_KEY_CREATE_RETURN_ITEM_REQUIRED_FIELDS_ERROR,
-            $returnResponseTransfer->getMessages()[0]->getValue()
+            $returnResponseTransfer->getMessages()[0]->getValue(),
         );
     }
 
@@ -465,7 +465,7 @@ class CreateReturnTest extends Unit
         $this->assertFalse($returnResponseTransfer->getIsSuccessful());
         $this->assertSame(
             static::GLOSSARY_KEY_CREATE_RETURN_STORE_ERROR,
-            $returnResponseTransfer->getMessages()[0]->getValue()
+            $returnResponseTransfer->getMessages()[0]->getValue(),
         );
     }
 
@@ -535,7 +535,7 @@ class CreateReturnTest extends Unit
         $this->assertFalse($returnResponseTransfer->getIsSuccessful());
         $this->assertSame(
             static::GLOSSARY_KEY_CREATE_RETURN_RETURNABLE_ITEM_ERROR,
-            $returnResponseTransfer->getMessages()[0]->getValue()
+            $returnResponseTransfer->getMessages()[0]->getValue(),
         );
     }
 

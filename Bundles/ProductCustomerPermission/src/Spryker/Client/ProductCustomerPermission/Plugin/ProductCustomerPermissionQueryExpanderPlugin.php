@@ -67,7 +67,7 @@ class ProductCustomerPermissionQueryExpanderPlugin extends AbstractPlugin implem
             throw new InvalidArgumentException(sprintf(
                 'Product Customer Permission Expander available only with %s, got: %s',
                 BoolQuery::class,
-                get_class($boolQuery)
+                get_class($boolQuery),
             ));
         }
 

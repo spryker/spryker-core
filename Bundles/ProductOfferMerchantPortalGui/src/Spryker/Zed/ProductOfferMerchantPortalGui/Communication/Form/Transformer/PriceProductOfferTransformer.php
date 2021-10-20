@@ -120,7 +120,7 @@ class PriceProductOfferTransformer implements DataTransformerInterface
             $key = sprintf(
                 '%d_%d',
                 $priceProductTransfer->getMoneyValue()->getFkStore(),
-                $priceProductTransfer->getMoneyValue()->getFkCurrency()
+                $priceProductTransfer->getMoneyValue()->getFkCurrency(),
             );
 
             $prices[$key][PriceProductOfferTableViewTransfer::STORE] = $priceProductTransfer->getMoneyValue()->getFkStore();
@@ -155,7 +155,7 @@ class PriceProductOfferTransformer implements DataTransformerInterface
                 $newPriceProductOffer,
                 $priceProductDimensionTransfer,
                 $priceProductTransfers,
-                $priceTypes
+                $priceTypes,
             );
         }
 
@@ -200,7 +200,7 @@ class PriceProductOfferTransformer implements DataTransformerInterface
                 $newPriceProductOffer,
                 $priceProductDimensionTransfer,
                 $currencyTransfer,
-                $priceTypeTransfer
+                $priceTypeTransfer,
             );
 
             if ($newPriceProductTransfer === null) {

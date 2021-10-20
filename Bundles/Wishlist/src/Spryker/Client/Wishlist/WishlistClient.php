@@ -254,7 +254,7 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
     {
         return $this->getFactory()->createCartHandler(
             $this->getFactory()->createCartClient(),
-            $this
+            $this,
         );
     }
 

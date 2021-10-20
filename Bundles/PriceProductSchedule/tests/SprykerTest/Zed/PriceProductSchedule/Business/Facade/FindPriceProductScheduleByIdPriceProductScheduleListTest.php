@@ -133,7 +133,7 @@ class FindPriceProductScheduleByIdPriceProductScheduleListTest extends Unit
         $this->assertCount(
             2,
             $foundPriceProductScheduleTransfers,
-            'Count of scheduled prices does not match expected value'
+            'Count of scheduled prices does not match expected value',
         );
     }
 
@@ -153,7 +153,7 @@ class FindPriceProductScheduleByIdPriceProductScheduleListTest extends Unit
         $this->assertCount(
             0,
             $foundPriceProductScheduleTransfers,
-            'Count of scheduled prices does not match expected value'
+            'Count of scheduled prices does not match expected value',
         );
     }
 }

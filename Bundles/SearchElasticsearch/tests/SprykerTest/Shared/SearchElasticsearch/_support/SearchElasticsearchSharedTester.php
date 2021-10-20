@@ -60,9 +60,9 @@ class SearchElasticsearchSharedTester extends Actor
 
         return new ElasticsearchInMemoryLogger(
             new SearchElasticsearchToUtilEncodingServiceBridge(
-                $this->getLocator()->utilEncoding()->service()
+                $this->getLocator()->utilEncoding()->service(),
             ),
-            $clientConfig
+            $clientConfig,
         );
     }
 }

@@ -25,7 +25,7 @@ class AvailabilityStorageFactory extends AbstractFactory
         return new AvailabilityStorageReader(
             $this->getStorage(),
             $this->getSynchronizationService(),
-            $this->createAvailabilityStorageMapper()
+            $this->createAvailabilityStorageMapper(),
         );
     }
 
@@ -44,7 +44,7 @@ class AvailabilityStorageFactory extends AbstractFactory
     {
         return new ProductViewAvailabilityExpander(
             $this->createAvailabilityStorageReader(),
-            $this->getAvailabilityStorageStrategyPlugins()
+            $this->getAvailabilityStorageStrategyPlugins(),
         );
     }
 

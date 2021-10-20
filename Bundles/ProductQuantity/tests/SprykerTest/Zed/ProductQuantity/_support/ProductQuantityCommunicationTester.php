@@ -38,7 +38,7 @@ class ProductQuantityCommunicationTester extends Actor
         return (new CartChangeTransfer())
             ->setQuote(
                 (new QuoteTransfer())
-                    ->setItems(new ArrayObject([]))
+                    ->setItems(new ArrayObject([])),
             )
             ->setItems(new ArrayObject([]));
     }

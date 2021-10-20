@@ -28,7 +28,7 @@ class PriceProductConfigurationFilter implements PriceProductConfigurationFilter
 
         $productConfigurationPriceProductTransfers = $this->filterOutPricesExceptCurrentProductConfigurationInstancePrices(
             $priceProductTransfers,
-            $priceProductFilterTransfer
+            $priceProductFilterTransfer,
         );
 
         if ($productConfigurationPriceProductTransfers !== []) {

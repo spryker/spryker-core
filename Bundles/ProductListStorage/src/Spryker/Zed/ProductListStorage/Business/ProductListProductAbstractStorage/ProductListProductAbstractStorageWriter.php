@@ -62,7 +62,7 @@ class ProductListProductAbstractStorageWriter implements ProductListProductAbstr
 
         $productAbstractIdsChunks = array_chunk(
             $productAbstractIds,
-            $this->productListStorageConfig->getProductListProductAbstractPublishChunkSize()
+            $this->productListStorageConfig->getProductListProductAbstractPublishChunkSize(),
         );
 
         foreach ($productAbstractIdsChunks as $productAbstractIdsChunk) {
@@ -72,12 +72,12 @@ class ProductListProductAbstractStorageWriter implements ProductListProductAbstr
             $savedProductAbstractProductListStorageEntities = $this->saveProductAbstractProductListStorageEntities(
                 $productAbstractIdsChunk,
                 $indexedProductAbstractProductListStorageEntities,
-                $productLists
+                $productLists,
             );
 
             $this->deleteProductAbstractProductListStorageEntitiesWithoutLists(
                 $indexedProductAbstractProductListStorageEntities,
-                $savedProductAbstractProductListStorageEntities
+                $savedProductAbstractProductListStorageEntities,
             );
         }
 
@@ -103,7 +103,7 @@ class ProductListProductAbstractStorageWriter implements ProductListProductAbstr
         foreach ($productAbstractIds as $idProductAbstract) {
             $productAbstractProductListsStorageTransfer = $this->getProductAbstractProductListsStorageTransfer(
                 $idProductAbstract,
-                $productLists
+                $productLists,
             );
 
             if (
@@ -115,7 +115,7 @@ class ProductListProductAbstractStorageWriter implements ProductListProductAbstr
 
             $productAbstractProductListStorageEntity = $this->getProductAbstractProductListStorageEntity(
                 $idProductAbstract,
-                $productAbstractProductListStorageEntities
+                $productAbstractProductListStorageEntities,
             );
 
             $productAbstractProductListStorageEntity->setFkProductAbstract($idProductAbstract)
@@ -224,7 +224,7 @@ class ProductListProductAbstractStorageWriter implements ProductListProductAbstr
     ): void {
         $productAbstractProductListStorageEntitiesToDelete = array_diff_key(
             $productAbstractProductListStorageEntities,
-            $productAbstractProductListStorageEntitiesWithLists
+            $productAbstractProductListStorageEntitiesWithLists,
         );
 
         foreach ($productAbstractProductListStorageEntitiesToDelete as $productAbstractProductListStorageEntity) {

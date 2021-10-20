@@ -117,7 +117,7 @@ class HeadersHttpRequestValidator implements HeadersHttpRequestValidatorInterfac
         $availableMethods = $this->resourceRouteLoader->getAvailableMethods(
             $request->attributes->get(RequestConstantsInterface::ATTRIBUTE_TYPE),
             $request->attributes->get(RequestConstantsInterface::ATTRIBUTE_ALL_RESOURCES),
-            $request
+            $request,
         );
 
         if (!in_array($requestedMethod, $availableMethods, false)) {

@@ -26,7 +26,7 @@ class ProductDiscontinuedDataImportBusinessFactory extends DataImportBusinessFac
     {
         /** @var \Spryker\Zed\DataImport\Business\Model\DataImporter $dataImporter */
         $dataImporter = $this->getCsvDataImporterFromConfig(
-            $this->getConfig()->getProductDiscontinuedDataImporterConfiguration()
+            $this->getConfig()->getProductDiscontinuedDataImporterConfiguration(),
         );
 
         /** @var \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerTransactionAware $dataSetStepBroker */

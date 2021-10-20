@@ -250,7 +250,7 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
     {
         trigger_error(
             '\Spryker\Zed\Application\ApplicationDependencyProvider::getServiceProviders is deprecated, please copy all required ServiceProvider and remove the call to this method',
-            E_USER_DEPRECATED
+            E_USER_DEPRECATED,
         );
 
         $providers = [

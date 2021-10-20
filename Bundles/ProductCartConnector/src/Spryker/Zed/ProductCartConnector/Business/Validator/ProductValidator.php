@@ -137,7 +137,7 @@ class ProductValidator implements ProductValidatorInterface
     protected function isProductConcreteActive(string $concreteSku): bool
     {
         return $this->productFacade->isProductConcreteActive(
-            (new ProductConcreteTransfer())->setSku($concreteSku)
+            (new ProductConcreteTransfer())->setSku($concreteSku),
         );
     }
 

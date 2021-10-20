@@ -39,7 +39,7 @@ class ProductListSearchListener extends AbstractPlugin implements EventBulkHandl
 
         $this->getFactory()->getProductPageSearchFacade()->refresh(
             $this->getFactory()->getProductListFacade()->getProductAbstractIdsByProductListIds($productListIds),
-            [ProductListSearchConfig::PLUGIN_PRODUCT_LIST_DATA]
+            [ProductListSearchConfig::PLUGIN_PRODUCT_LIST_DATA],
         );
     }
 }

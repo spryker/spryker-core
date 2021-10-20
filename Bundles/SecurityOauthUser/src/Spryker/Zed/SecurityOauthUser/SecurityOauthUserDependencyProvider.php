@@ -98,7 +98,7 @@ class SecurityOauthUserDependencyProvider extends AbstractBundleDependencyProvid
     {
         $container->set(static::FACADE_USER, function (Container $container) {
             return new SecurityOauthUserToUserFacadeBridge(
-                $container->getLocator()->user()->facade()
+                $container->getLocator()->user()->facade(),
             );
         });
 
@@ -114,7 +114,7 @@ class SecurityOauthUserDependencyProvider extends AbstractBundleDependencyProvid
     {
         $container->set(static::FACADE_ACL, function (Container $container) {
             return new SecurityOauthUserToAclFacadeBridge(
-                $container->getLocator()->acl()->facade()
+                $container->getLocator()->acl()->facade(),
             );
         });
 
@@ -130,7 +130,7 @@ class SecurityOauthUserDependencyProvider extends AbstractBundleDependencyProvid
     {
         $container->set(static::FACADE_MESSENGER, function (Container $container) {
             return new SecurityOauthUserToMessengerFacadeBridge(
-                $container->getLocator()->messenger()->facade()
+                $container->getLocator()->messenger()->facade(),
             );
         });
 
@@ -146,7 +146,7 @@ class SecurityOauthUserDependencyProvider extends AbstractBundleDependencyProvid
     {
         $container->set(static::SERVICE_UTIL_TEXT, function (Container $container) {
             return new SecurityOauthUserToUtilTextServiceBridge(
-                $container->getLocator()->utilText()->service()
+                $container->getLocator()->utilText()->service(),
             );
         });
 

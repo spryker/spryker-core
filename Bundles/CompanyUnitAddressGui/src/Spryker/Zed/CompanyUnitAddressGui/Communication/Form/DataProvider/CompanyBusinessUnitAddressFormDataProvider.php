@@ -58,8 +58,8 @@ class CompanyBusinessUnitAddressFormDataProvider
         $addressCollection = $this->companyUnitAddressFacade->getCompanyUnitAddressCollection(
             $this->prepareCompanyUnitAddressCriteriaFilterTransfer(
                 $companyBusinessUnitTransfer->getFkCompany(),
-                $companyBusinessUnitTransfer->getIdCompanyBusinessUnit()
-            )
+                $companyBusinessUnitTransfer->getIdCompanyBusinessUnit(),
+            ),
         );
         $companyBusinessUnitTransfer->setAddressCollection($addressCollection);
 
@@ -74,7 +74,7 @@ class CompanyBusinessUnitAddressFormDataProvider
     protected function getAddressChoices(?int $idCompany = null): array
     {
         $addressCollection = $this->companyUnitAddressFacade->getCompanyUnitAddressCollection(
-            $this->prepareCompanyUnitAddressCriteriaFilterTransfer($idCompany)
+            $this->prepareCompanyUnitAddressCriteriaFilterTransfer($idCompany),
         );
 
         $result = [];

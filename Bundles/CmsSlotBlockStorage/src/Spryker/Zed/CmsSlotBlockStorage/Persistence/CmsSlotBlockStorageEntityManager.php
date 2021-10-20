@@ -32,7 +32,7 @@ class CmsSlotBlockStorageEntityManager extends AbstractEntityManager implements 
             ->createCmsSlotBlockStorageMapper()
             ->mapCmsSlotBlockStorageTransferToCmsSlotBlockStorageEntity(
                 $cmsSlotBlockStorageTransfer,
-                $cmsSlotBlockStorageEntity
+                $cmsSlotBlockStorageEntity,
             );
 
         $cmsSlotBlockStorageEntity->setIsSendingToQueue($this->getFactory()->getConfig()->isSendingToQueue());

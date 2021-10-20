@@ -38,7 +38,7 @@ class QuoteRequestAgentsRestApiToQuoteRequestsRestApiResourceBridge implements Q
     ): RestResponseInterface {
         return $this->quoteRequestsRestApiResource->createQuoteRequestRestResponse(
             $quoteRequestResponseTransfer,
-            $localeName
+            $localeName,
         );
     }
 
@@ -54,7 +54,7 @@ class QuoteRequestAgentsRestApiToQuoteRequestsRestApiResourceBridge implements Q
     ): RestResponseInterface {
         return $this->quoteRequestsRestApiResource->createQuoteRequestCollectionRestResponse(
             $quoteRequestCollectionTransfer,
-            $localeName
+            $localeName,
         );
     }
 }

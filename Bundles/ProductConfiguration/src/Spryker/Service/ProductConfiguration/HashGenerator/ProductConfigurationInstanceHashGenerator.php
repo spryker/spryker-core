@@ -43,7 +43,7 @@ class ProductConfigurationInstanceHashGenerator implements ProductConfigurationI
     public function getProductConfigurationInstanceHash(ProductConfigurationInstanceTransfer $productConfigurationInstanceTransfer): string
     {
         $encodedProductConfigurationInstanceData = $this->utilEncodingService->encodeJson(
-            $productConfigurationInstanceTransfer->toArray()
+            $productConfigurationInstanceTransfer->toArray(),
         );
 
         return $this->utilTextService->hashValue($encodedProductConfigurationInstanceData, 'md5');

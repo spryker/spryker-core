@@ -31,7 +31,7 @@ class CmsContentWidgetServiceProvider extends AbstractPlugin implements ServiceP
         $app['twig'] = $app->share(
             $app->extend('twig', function (Environment $twig) {
                 return $this->registerCmsContentWidgets($twig);
-            })
+            }),
         );
     }
 
@@ -44,7 +44,7 @@ class CmsContentWidgetServiceProvider extends AbstractPlugin implements ServiceP
     {
         foreach ($this->getFactory()->getCmsContentWidgetPlugins() as $functionName => $cmsContentWidgetPlugin) {
             $twig->addFunction(
-                $this->createTwigSimpleFunction($functionName, $cmsContentWidgetPlugin)
+                $this->createTwigSimpleFunction($functionName, $cmsContentWidgetPlugin),
             );
         }
 
@@ -62,7 +62,7 @@ class CmsContentWidgetServiceProvider extends AbstractPlugin implements ServiceP
         return new TwigFunction(
             $functionName,
             $cmsContentWidgetPlugin->getContentWidgetFunction(),
-            $this->getTwigSimpleFunctionOptions()
+            $this->getTwigSimpleFunctionOptions(),
         );
     }
 

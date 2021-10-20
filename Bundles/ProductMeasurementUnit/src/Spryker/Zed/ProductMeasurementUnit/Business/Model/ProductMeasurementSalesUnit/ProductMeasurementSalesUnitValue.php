@@ -31,7 +31,7 @@ class ProductMeasurementSalesUnitValue implements ProductMeasurementSalesUnitVal
         return $this->calculateNormalizedValue(
             $itemTransfer->getQuantity(),
             $itemTransfer->getQuantitySalesUnit()->getConversion(),
-            $itemTransfer->getQuantitySalesUnit()->getPrecision()
+            $itemTransfer->getQuantitySalesUnit()->getPrecision(),
         );
     }
 
@@ -53,7 +53,7 @@ class ProductMeasurementSalesUnitValue implements ProductMeasurementSalesUnitVal
     protected function calculateNormalizedValue(int $availabilityValue, float $unitToAvailabilityConversion, int $unitPrecision): int
     {
         return (int)round(
-            $this->calculateFloatNormalizedValue($availabilityValue, $unitToAvailabilityConversion, $unitPrecision)
+            $this->calculateFloatNormalizedValue($availabilityValue, $unitToAvailabilityConversion, $unitPrecision),
         );
     }
 
@@ -84,7 +84,7 @@ class ProductMeasurementSalesUnitValue implements ProductMeasurementSalesUnitVal
             }
 
             $itemTransfer->getQuantitySalesUnit()->setValue(
-                $this->calculateQuantityNormalizedSalesUnitValue($itemTransfer)
+                $this->calculateQuantityNormalizedSalesUnitValue($itemTransfer),
             );
         }
 

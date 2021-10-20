@@ -98,7 +98,7 @@ class ProductLocalizedAttributesForm extends AbstractType
     {
         $builder->add(LocalizedAttributesTransfer::LOCALE, HiddenType::class);
         $builder->get(LocalizedAttributesTransfer::LOCALE)->addModelTransformer(
-            $this->getFactory()->createLocaleTransformer()
+            $this->getFactory()->createLocaleTransformer(),
         );
 
         return $this;

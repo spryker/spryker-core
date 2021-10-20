@@ -87,8 +87,8 @@ class CmsGlossaryFormTypeDataProvider
             throw new CmsGlossaryNotFoundException(
                 sprintf(
                     'Glossary attributes for page "%d" is not defined',
-                    $idCmsPage
-                )
+                    $idCmsPage,
+                ),
             );
         }
 

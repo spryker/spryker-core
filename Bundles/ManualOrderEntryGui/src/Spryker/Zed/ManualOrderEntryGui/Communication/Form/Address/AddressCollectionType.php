@@ -134,7 +134,7 @@ class AddressCollectionType extends AbstractType
             CheckboxType::class,
             [
                 'required' => false,
-            ]
+            ],
         );
 
         return $this;

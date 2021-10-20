@@ -34,7 +34,7 @@ class ProductConfigurationsRestApiFacade extends AbstractFacade implements Produ
             ->createProductConfigurationMapper()
             ->mapCartItemRequestTransferToPersistentCartChangeTransfer(
                 $cartItemRequestTransfer,
-                $persistentCartChangeTransfer
+                $persistentCartChangeTransfer,
             );
     }
 }

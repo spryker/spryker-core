@@ -40,7 +40,7 @@ class SchedulerBusinessFactory extends AbstractBusinessFactory
         return new SchedulerSetupCommand(
             $this->getScheduleReaderPlugins(),
             $this->createSchedulerFilter(),
-            $this->getGracefulRunnerFacade()
+            $this->getGracefulRunnerFacade(),
         );
     }
 
@@ -52,7 +52,7 @@ class SchedulerBusinessFactory extends AbstractBusinessFactory
         return new SchedulerCleanCommand(
             $this->getScheduleReaderPlugins(),
             $this->createSchedulerFilter(),
-            $this->getGracefulRunnerFacade()
+            $this->getGracefulRunnerFacade(),
         );
     }
 
@@ -64,7 +64,7 @@ class SchedulerBusinessFactory extends AbstractBusinessFactory
         return new SchedulerSuspendCommand(
             $this->getScheduleReaderPlugins(),
             $this->createSchedulerFilter(),
-            $this->getGracefulRunnerFacade()
+            $this->getGracefulRunnerFacade(),
         );
     }
 
@@ -76,7 +76,7 @@ class SchedulerBusinessFactory extends AbstractBusinessFactory
         return new SchedulerResumeCommand(
             $this->getScheduleReaderPlugins(),
             $this->createSchedulerFilter(),
-            $this->getGracefulRunnerFacade()
+            $this->getGracefulRunnerFacade(),
         );
     }
 
@@ -87,7 +87,7 @@ class SchedulerBusinessFactory extends AbstractBusinessFactory
     {
         return new PhpScheduleReader(
             $this->createPhpSchedulerMapper(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -97,7 +97,7 @@ class SchedulerBusinessFactory extends AbstractBusinessFactory
     public function createPhpSchedulerMapper(): PhpScheduleMapperInterface
     {
         return new PhpScheduleMapper(
-            $this->createJobsFilter()
+            $this->createJobsFilter(),
         );
     }
 
@@ -112,8 +112,8 @@ class SchedulerBusinessFactory extends AbstractBusinessFactory
 
         return $jobsFilterByName->setNextFilter(
             $jobsFilterByStore->setNextFilter(
-                $jobsFilterByRole
-            )
+                $jobsFilterByRole,
+            ),
         );
     }
 
@@ -139,7 +139,7 @@ class SchedulerBusinessFactory extends AbstractBusinessFactory
     public function createJobsFilterByRole(): ChainableJobsFilterInterface
     {
         return new JobsFilterByRole(
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -150,7 +150,7 @@ class SchedulerBusinessFactory extends AbstractBusinessFactory
     {
         return new SchedulerFilter(
             $this->getConfig(),
-            $this->getSchedulerAdapterPlugins()
+            $this->getSchedulerAdapterPlugins(),
         );
     }
 

@@ -38,7 +38,7 @@ class SalesInvoiceBusinessFactory extends AbstractBusinessFactory
     {
         return new OrderInvoiceReferenceGenerator(
             $this->getConfig(),
-            $this->getSequenceNumberFacade()
+            $this->getSequenceNumberFacade(),
         );
     }
 
@@ -52,7 +52,7 @@ class SalesInvoiceBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->getEntityManager(),
             $this->createOrderInvoiceReferenceGenerator(),
-            $this->getOrderInvoiceBeforeSavePlugins()
+            $this->getOrderInvoiceBeforeSavePlugins(),
         );
     }
 
@@ -65,7 +65,7 @@ class SalesInvoiceBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->createOrderInvoiceRenderer(),
             $this->getSalesFacade(),
-            $this->getOrderInvoicesExpanderPlugins()
+            $this->getOrderInvoicesExpanderPlugins(),
         );
     }
 
@@ -75,7 +75,7 @@ class SalesInvoiceBusinessFactory extends AbstractBusinessFactory
     public function createOrderInvoiceRenderer(): OrderInvoiceRendererInterface
     {
         return new OrderInvoiceRenderer(
-            $this->getTwigEnvironment()
+            $this->getTwigEnvironment(),
         );
     }
 
@@ -88,7 +88,7 @@ class SalesInvoiceBusinessFactory extends AbstractBusinessFactory
             $this->getEntityManager(),
             $this->createOrderInvoiceReader(),
             $this->getSalesFacade(),
-            $this->getMailFacade()
+            $this->getMailFacade(),
         );
     }
 

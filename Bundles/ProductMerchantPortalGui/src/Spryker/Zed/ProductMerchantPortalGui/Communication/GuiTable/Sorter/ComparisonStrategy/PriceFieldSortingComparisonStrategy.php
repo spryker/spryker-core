@@ -77,7 +77,7 @@ class PriceFieldSortingComparisonStrategy implements PriceProductSortingComparis
         $pattern = sprintf(
             '/(_%s|_%s)$/',
             static::SUFFIX_PRICE_TYPE_GROSS,
-            static::SUFFIX_PRICE_TYPE_NET
+            static::SUFFIX_PRICE_TYPE_NET,
         );
 
         preg_match($pattern, $fieldName, $matches);
@@ -97,7 +97,7 @@ class PriceFieldSortingComparisonStrategy implements PriceProductSortingComparis
             '%s[%s][%s]',
             $pryceTypeName,
             PriceProductTransfer::MONEY_VALUE,
-            $amountType
+            $amountType,
         );
     }
 }

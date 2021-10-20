@@ -33,7 +33,7 @@ class ProductConfiguratorRequestDataPriceExpander implements ProductConfigurator
     public function expand(ProductConfiguratorRequestDataTransfer $productConfiguratorRequestDataTransfer): ProductConfiguratorRequestDataTransfer
     {
         return $productConfiguratorRequestDataTransfer->setPriceMode(
-            $this->priceClient->getCurrentPriceMode()
+            $this->priceClient->getCurrentPriceMode(),
         );
     }
 }

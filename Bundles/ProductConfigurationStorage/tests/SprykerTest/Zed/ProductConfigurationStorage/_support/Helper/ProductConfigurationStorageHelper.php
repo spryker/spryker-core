@@ -34,7 +34,7 @@ class ProductConfigurationStorageHelper extends Module
         $productConfigurationStorageEntity->save();
 
         $productConfigurationStorageTransfer->setIdProductConfigurationStorage(
-            $productConfigurationStorageEntity->getIdProductConfigurationStorage()
+            $productConfigurationStorageEntity->getIdProductConfigurationStorage(),
         );
 
         $this->getDataCleanupHelper()->_addCleanup(function () use ($productConfigurationStorageTransfer) {
@@ -52,7 +52,7 @@ class ProductConfigurationStorageHelper extends Module
     protected function removeProductConfigurationStorage(ProductConfigurationStorageTransfer $productConfigurationStorageTransfer): void
     {
         $this->getProductConfigurationStorageQuery()->filterByIdProductConfigurationStorage(
-            $productConfigurationStorageTransfer->getIdProductConfigurationStorage()
+            $productConfigurationStorageTransfer->getIdProductConfigurationStorage(),
         )->delete();
     }
 

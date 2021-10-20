@@ -82,7 +82,7 @@ class ProductAttributeGuiToProductAttributeQueryContainerBridge implements Produ
                 $idLocale,
                 $searchText,
                 $offset,
-                $limit
+                $limit,
             );
     }
 }

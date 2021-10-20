@@ -87,7 +87,7 @@ class ProductOfferStoragePublishListenerTest extends AbstractStoragePublishListe
         //Act
         $this->productOfferStoragePublishListener->handleBulk(
             $eventTransfers,
-            MerchantProductOfferEvents::MERCHANT_PRODUCT_OFFER_PUBLISH
+            MerchantProductOfferEvents::MERCHANT_PRODUCT_OFFER_PUBLISH,
         );
         $merchantProductOfferStorageEntities = $this->tester->getProductOfferEntities($productOfferTransfer->getProductOfferReference());
 
@@ -104,7 +104,7 @@ class ProductOfferStoragePublishListenerTest extends AbstractStoragePublishListe
         $expectedCount = 0;
         $productOfferTransfer = $this->tester->createProductOffer(
             $this->tester->getLocator()->store()->facade()->getCurrentStore(),
-            [ProductOfferTransfer::IS_ACTIVE => false]
+            [ProductOfferTransfer::IS_ACTIVE => false],
         );
         $eventTransfers = [
             (new EventEntityTransfer())->setAdditionalValues([SpyProductOfferTableMap::COL_PRODUCT_OFFER_REFERENCE => $productOfferTransfer->getProductOfferReference()]),
@@ -113,7 +113,7 @@ class ProductOfferStoragePublishListenerTest extends AbstractStoragePublishListe
         //Act
         $this->productOfferStoragePublishListener->handleBulk(
             $eventTransfers,
-            MerchantProductOfferEvents::MERCHANT_PRODUCT_OFFER_PUBLISH
+            MerchantProductOfferEvents::MERCHANT_PRODUCT_OFFER_PUBLISH,
         );
         $merchantProductOfferStorageEntities = $this->tester->getProductOfferEntities($productOfferTransfer->getProductOfferReference());
 
@@ -130,7 +130,7 @@ class ProductOfferStoragePublishListenerTest extends AbstractStoragePublishListe
         $expectedCount = 0;
         $productOfferTransfer = $this->tester->createProductOffer(
             $this->tester->getLocator()->store()->facade()->getCurrentStore(),
-            [ProductOfferTransfer::APPROVAL_STATUS => static::STATUS_DENIED]
+            [ProductOfferTransfer::APPROVAL_STATUS => static::STATUS_DENIED],
         );
         $eventTransfers = [
             (new EventEntityTransfer())->setAdditionalValues([SpyProductOfferTableMap::COL_PRODUCT_OFFER_REFERENCE => $productOfferTransfer->getProductOfferReference()]),
@@ -139,7 +139,7 @@ class ProductOfferStoragePublishListenerTest extends AbstractStoragePublishListe
         //Act
         $this->productOfferStoragePublishListener->handleBulk(
             $eventTransfers,
-            MerchantProductOfferEvents::MERCHANT_PRODUCT_OFFER_PUBLISH
+            MerchantProductOfferEvents::MERCHANT_PRODUCT_OFFER_PUBLISH,
         );
         $merchantProductOfferStorageEntities = $this->tester->getProductOfferEntities($productOfferTransfer->getProductOfferReference());
 
@@ -157,7 +157,7 @@ class ProductOfferStoragePublishListenerTest extends AbstractStoragePublishListe
         $productOfferTransfer = $this->tester->createProductOffer(
             $this->tester->getLocator()->store()->facade()->getCurrentStore(),
             [],
-            [ProductConcreteTransfer::IS_ACTIVE => false]
+            [ProductConcreteTransfer::IS_ACTIVE => false],
         );
         $eventTransfers = [
             (new EventEntityTransfer())->setAdditionalValues([SpyProductOfferTableMap::COL_PRODUCT_OFFER_REFERENCE => $productOfferTransfer->getProductOfferReference()]),
@@ -166,7 +166,7 @@ class ProductOfferStoragePublishListenerTest extends AbstractStoragePublishListe
         //Act
         $this->productOfferStoragePublishListener->handleBulk(
             $eventTransfers,
-            MerchantProductOfferEvents::MERCHANT_PRODUCT_OFFER_PUBLISH
+            MerchantProductOfferEvents::MERCHANT_PRODUCT_OFFER_PUBLISH,
         );
         $merchantProductOfferStorageEntities = $this->tester->getProductOfferEntities($productOfferTransfer->getProductOfferReference());
 
@@ -214,7 +214,7 @@ class ProductOfferStoragePublishListenerTest extends AbstractStoragePublishListe
             ->withConsecutive(
                 [[$productOfferTransfer->getProductOfferReference()], 'AT'],
                 [[$productOfferTransfer->getProductOfferReference()], 'US'],
-                [[1 => 'wrong_reference'], null]
+                [[1 => 'wrong_reference'], null],
             );
 
         $productOfferStorageWriter = new ProductOfferStorageWriter(
@@ -223,7 +223,7 @@ class ProductOfferStoragePublishListenerTest extends AbstractStoragePublishListe
             $merchantProductOfferStorageRepository,
             $productOfferStorageDeleter,
             $this->getMerchantProductOfferStorageToStoreFacadeInterfaceMock(),
-            new ProductOfferCriteriaTransferProvider()
+            new ProductOfferCriteriaTransferProvider(),
         );
 
         //Act

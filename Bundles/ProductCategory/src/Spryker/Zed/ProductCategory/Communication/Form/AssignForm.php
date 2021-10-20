@@ -61,7 +61,7 @@ class AssignForm extends AbstractType
                 'attr' => [
                     'id' => 'products_to_be_assigned',
                 ],
-            ]
+            ],
         );
 
         return $this;
@@ -81,7 +81,7 @@ class AssignForm extends AbstractType
                 'attr' => [
                     'id' => 'products_to_be_de_assigned',
                 ],
-            ]
+            ],
         );
 
         return $this;
@@ -101,7 +101,7 @@ class AssignForm extends AbstractType
                 'attr' => [
                     'id' => 'product_order',
                 ],
-            ]
+            ],
         );
 
         return $this;

@@ -42,7 +42,7 @@ class ProductAbstractRelationTouchManager implements ProductAbstractRelationTouc
     {
         $this->touchFacade->touchActive(
             ProductLabelConstants::RESOURCE_TYPE_PRODUCT_ABSTRACT_PRODUCT_LABEL_RELATIONS,
-            $idProductAbstract
+            $idProductAbstract,
         );
 
         $this->productFacade->touchProductAbstract($idProductAbstract);
@@ -57,7 +57,7 @@ class ProductAbstractRelationTouchManager implements ProductAbstractRelationTouc
     {
         $this->touchFacade->touchDeleted(
             ProductLabelConstants::RESOURCE_TYPE_PRODUCT_ABSTRACT_PRODUCT_LABEL_RELATIONS,
-            $idProductAbstract
+            $idProductAbstract,
         );
 
         $this->productFacade->touchProductAbstract($idProductAbstract);

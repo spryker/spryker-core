@@ -36,11 +36,11 @@ class ProductOfferExpander implements ProductOfferExpanderInterface
         $productOfferTransfer->requireProductOfferReference();
 
         $productOfferStockRequestTransfer = (new ProductOfferStockRequestTransfer())->setProductOfferReference(
-            $productOfferTransfer->getProductOfferReference()
+            $productOfferTransfer->getProductOfferReference(),
         );
 
         $productOfferTransfer->setProductOfferStocks(
-            $this->productOfferStockRepository->find($productOfferStockRequestTransfer)
+            $this->productOfferStockRepository->find($productOfferStockRequestTransfer),
         );
 
         return $productOfferTransfer;

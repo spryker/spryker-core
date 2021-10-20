@@ -102,7 +102,7 @@ class CategorySlotBlockDataProvider implements CategorySlotBlockDataProviderInte
             ->setIdLocale($this->localeFacade->getCurrentLocale()->getIdLocale());
 
         static::$categoryCache = $this->getCategoryIdsFromCollection(
-            $this->categoryFacade->getCategoriesByCriteria($categoryCriteriaTransfer)
+            $this->categoryFacade->getCategoriesByCriteria($categoryCriteriaTransfer),
         );
 
         return static::$categoryCache;

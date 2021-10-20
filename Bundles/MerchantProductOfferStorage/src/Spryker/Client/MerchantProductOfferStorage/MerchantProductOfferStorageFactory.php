@@ -39,7 +39,7 @@ class MerchantProductOfferStorageFactory extends AbstractFactory
             $this->getUtilEncodingService(),
             $this->createProductOfferStorageKeyGenerator(),
             $this->getProductOfferStorageCollectionSorterPlugin(),
-            $this->getProductOfferStorageExpanderPlugins()
+            $this->getProductOfferStorageExpanderPlugins(),
         );
     }
 
@@ -66,7 +66,7 @@ class MerchantProductOfferStorageFactory extends AbstractFactory
     {
         return new ProductOfferStorageKeyGenerator(
             $this->getSynchronizationService(),
-            $this->getStoreClient()
+            $this->getStoreClient(),
         );
     }
 
@@ -76,7 +76,7 @@ class MerchantProductOfferStorageFactory extends AbstractFactory
     public function createProductViewOfferExpander(): ProductViewOfferExpanderInterface
     {
         return new ProductViewOfferExpander(
-            $this->createProductConcreteDefaultProductOfferReader()
+            $this->createProductConcreteDefaultProductOfferReader(),
         );
     }
 

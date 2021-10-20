@@ -34,7 +34,7 @@ class QuoteFactory extends AbstractFactory
         return new QuoteSession(
             $this->getSessionClient(),
             $this->getCurrencyClient(),
-            $this->getQuoteTransferExpanderPlugins()
+            $this->getQuoteTransferExpanderPlugins(),
         );
     }
 
@@ -62,7 +62,7 @@ class QuoteFactory extends AbstractFactory
     {
         return new StorageStrategyProvider(
             $this->getConfig(),
-            $this->getStorageStrategyList()
+            $this->getStorageStrategyList(),
         );
     }
 
@@ -86,7 +86,7 @@ class QuoteFactory extends AbstractFactory
             $this->createSession(),
             $this->createQuoteLockStatusValidator(),
             $this->createQuoteEditStatusValidator(),
-            $this->createQuoteLocker()
+            $this->createQuoteLocker(),
         );
     }
 
@@ -102,7 +102,7 @@ class QuoteFactory extends AbstractFactory
             $this->createQuoteLockStatusValidator(),
             $this->createQuoteEditStatusValidator(),
             $this->createQuoteLocker(),
-            $this->getDatabaseStrategyPreCheckPlugins()
+            $this->getDatabaseStrategyPreCheckPlugins(),
         );
     }
 
@@ -112,7 +112,7 @@ class QuoteFactory extends AbstractFactory
     public function createQuoteEditStatusValidator(): QuoteEditStatusValidatorInterface
     {
         return new QuoteEditStatusValidator(
-            $this->createQuoteLockStatusValidator()
+            $this->createQuoteLockStatusValidator(),
         );
     }
 

@@ -58,7 +58,7 @@ class PriceProductFilter implements PriceProductFilterInterface
 
         return in_array(
             $moneyValueTransfer->getFkCurrency(),
-            $priceProductOfferCriteriaTransfer->getCurrencyIds()
+            $priceProductOfferCriteriaTransfer->getCurrencyIds(),
         );
     }
 
@@ -78,7 +78,7 @@ class PriceProductFilter implements PriceProductFilterInterface
 
         return in_array(
             $moneyValueTransfer->getFkStore(),
-            $priceProductOfferCriteriaTransfer->getStoreIds()
+            $priceProductOfferCriteriaTransfer->getStoreIds(),
         );
     }
 
@@ -98,7 +98,7 @@ class PriceProductFilter implements PriceProductFilterInterface
 
         return in_array(
             $priceProductTransfer->getPriceTypeOrFail()->getIdPriceType(),
-            $priceProductOfferCriteriaTransfer->getPriceTypeIds()
+            $priceProductOfferCriteriaTransfer->getPriceTypeIds(),
         );
     }
 
@@ -118,7 +118,7 @@ class PriceProductFilter implements PriceProductFilterInterface
 
         return in_array(
             $priceProductTransfer->getVolumeQuantity(),
-            $priceProductOfferCriteriaTransfer->getVolumeQuantities()
+            $priceProductOfferCriteriaTransfer->getVolumeQuantities(),
         );
     }
 
@@ -138,7 +138,7 @@ class PriceProductFilter implements PriceProductFilterInterface
 
         return in_array(
             $priceProductTransfer->getPriceDimensionOrFail()->getIdPriceProductOffer(),
-            $priceProductOfferCriteriaTransfer->getPriceProductOfferIds()
+            $priceProductOfferCriteriaTransfer->getPriceProductOfferIds(),
         );
     }
 }

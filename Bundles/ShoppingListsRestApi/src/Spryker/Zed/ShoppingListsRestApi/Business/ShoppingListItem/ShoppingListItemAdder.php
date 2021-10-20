@@ -58,14 +58,14 @@ class ShoppingListItemAdder implements ShoppingListItemAdderInterface
         $shoppingListResponseTransferByUuid = $this->shoppingListFacade->findShoppingListByUuid(
             $this->shoppingListItemMapper->mapShoppingListItemRequestTransferToShoppingListTransfer(
                 $shoppingListItemRequestTransfer,
-                new ShoppingListTransfer()
-            )
+                new ShoppingListTransfer(),
+            ),
         );
 
         if (!$shoppingListResponseTransferByUuid->getIsSuccess()) {
             return $this->shoppingListItemMapper->mapShoppingListResponseErrorsToShoppingListItemResponseErrors(
                 $shoppingListResponseTransferByUuid,
-                new ShoppingListItemResponseTransfer()
+                new ShoppingListItemResponseTransfer(),
             );
         }
 
@@ -77,7 +77,7 @@ class ShoppingListItemAdder implements ShoppingListItemAdderInterface
 
         if ($shoppingListItemResponseTransfer->getIsSuccess() === false) {
             return $this->shoppingListItemMapper->mapShoppingListResponseErrorsToRestCodes(
-                $shoppingListItemResponseTransfer
+                $shoppingListItemResponseTransfer,
             );
         }
 

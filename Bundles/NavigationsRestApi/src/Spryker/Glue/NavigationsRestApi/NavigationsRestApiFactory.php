@@ -31,7 +31,7 @@ class NavigationsRestApiFactory extends AbstractFactory
             $this->getNavigationStorageClient(),
             $this->createNavigationMapper(),
             $this->getResourceBuilder(),
-            $this->createNavigationNodeExpander()
+            $this->createNavigationNodeExpander(),
         );
     }
 
@@ -50,7 +50,7 @@ class NavigationsRestApiFactory extends AbstractFactory
     {
         return new NavigationNodeExpander(
             $this->getUrlStorageClient(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 

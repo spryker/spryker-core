@@ -69,7 +69,7 @@ class UrlCollectorRunner implements UrlCollectorRunnerInterface
             $dataReader,
             $dataWriter,
             $touchUpdater,
-            $output
+            $output,
         );
     }
 }

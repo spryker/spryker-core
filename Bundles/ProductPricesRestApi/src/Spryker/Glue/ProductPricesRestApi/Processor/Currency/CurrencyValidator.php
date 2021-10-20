@@ -62,7 +62,7 @@ class CurrencyValidator implements CurrencyValidatorInterface
             (new RestErrorMessageTransfer())
                 ->setDetail(ProductPricesRestApiConfig::RESPONSE_DETAILS_INVALID_CURRENCY)
                 ->setCode(ProductPricesRestApiConfig::RESPONSE_CODE_INVALID_CURRENCY)
-                ->setStatus(Response::HTTP_BAD_REQUEST)
+                ->setStatus(Response::HTTP_BAD_REQUEST),
         );
     }
 

@@ -39,7 +39,7 @@ class ConfigSharedTester extends Actor
         $this->assertArrayHasKey(
             $expectedKey,
             $profileData,
-            sprintf('The profile data for key "%s" was not found', ProfilerTest::PROFILE_KEY)
+            sprintf('The profile data for key "%s" was not found', ProfilerTest::PROFILE_KEY),
         );
     }
 
@@ -76,7 +76,7 @@ class ConfigSharedTester extends Actor
         $this->assertSame(
             $profileData[Profiler::PROFILE_COUNT],
             $expectedCount,
-            sprintf('The count for "%s" was expected to be "%d"', ProfilerTest::PROFILE_KEY, $expectedCount)
+            sprintf('The count for "%s" was expected to be "%d"', ProfilerTest::PROFILE_KEY, $expectedCount),
         );
     }
 }

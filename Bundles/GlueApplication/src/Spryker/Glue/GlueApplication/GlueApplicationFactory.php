@@ -101,7 +101,7 @@ class GlueApplicationFactory extends AbstractFactory
             $this->createRestControllerCallbacks(),
             $this->getConfig(),
             $this->createUserProvider(),
-            $this->createFormattedControllerBeforeAction()
+            $this->createFormattedControllerBeforeAction(),
         );
     }
 
@@ -114,7 +114,7 @@ class GlueApplicationFactory extends AbstractFactory
             $this->createRestRequestMetaDataExtractor(),
             $this->createRestRequestResourceExtractor(),
             $this->getConfig(),
-            $this->getFormatRequestPlugins()
+            $this->getFormatRequestPlugins(),
         );
     }
 
@@ -126,7 +126,7 @@ class GlueApplicationFactory extends AbstractFactory
         return new ResponseFormatter(
             $this->createRestEncoderMatcher(),
             $this->createRestResponseBuilder(),
-            $this->getFormatResponseDataPlugins()
+            $this->getFormatResponseDataPlugins(),
         );
     }
 
@@ -148,7 +148,7 @@ class GlueApplicationFactory extends AbstractFactory
             $this->getGlueApplication(),
             $this->createRestUriParser(),
             $this->createRestResourceRouteLoader(),
-            $this->getRouterParameterExpanderPlugins()
+            $this->getRouterParameterExpanderPlugins(),
         );
     }
 
@@ -160,7 +160,7 @@ class GlueApplicationFactory extends AbstractFactory
         return new ResponseBuilder(
             $this->getConfig()->getGlueDomainName(),
             $this->createRestResponsePagination(),
-            $this->createRestResponseRelationship()
+            $this->createRestResponseRelationship(),
         );
     }
 
@@ -172,7 +172,7 @@ class GlueApplicationFactory extends AbstractFactory
         return new ResponseHeaders(
             $this->getFormatResponseHeadersPlugins(),
             $this->createRestContentTypeResolver(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -184,7 +184,7 @@ class GlueApplicationFactory extends AbstractFactory
         return new RequestMetaDataExtractor(
             $this->createRestVersionResolver(),
             $this->createRestContentTypeResolver(),
-            $this->createLanguageNegotiation()
+            $this->createLanguageNegotiation(),
         );
     }
 
@@ -240,7 +240,7 @@ class GlueApplicationFactory extends AbstractFactory
         return new ResourceRouteLoader(
             $this->getResourceRoutePlugins(),
             $this->createRestVersionResolver(),
-            $this->getRouterParameterExpanderPlugins()
+            $this->getRouterParameterExpanderPlugins(),
         );
     }
 
@@ -253,7 +253,7 @@ class GlueApplicationFactory extends AbstractFactory
             $this->getValidateRequestPlugins(),
             $this->createRestResourceRouteLoader(),
             $this->getConfig(),
-            $this->createHeadersHttpRequestValidator()
+            $this->createHeadersHttpRequestValidator(),
         );
     }
 
@@ -362,7 +362,7 @@ class GlueApplicationFactory extends AbstractFactory
     {
         return new RequestResourceExtractor(
             $this->createRestResourceBuilder(),
-            $this->createRestDecoderMatcher()
+            $this->createRestDecoderMatcher(),
         );
     }
 
@@ -372,7 +372,7 @@ class GlueApplicationFactory extends AbstractFactory
     public function createUserProvider(): UserProviderInterface
     {
         return new UserProvider(
-            $this->getRestUserFinderPlugins()
+            $this->getRestUserFinderPlugins(),
         );
     }
 
@@ -382,7 +382,7 @@ class GlueApplicationFactory extends AbstractFactory
     public function createRestUserValidator(): RestUserValidatorInterface
     {
         return new RestUserValidator(
-            $this->getRestUserValidatorPlugins()
+            $this->getRestUserValidatorPlugins(),
         );
     }
 
@@ -401,7 +401,7 @@ class GlueApplicationFactory extends AbstractFactory
     {
         return new HeadersHttpRequestValidator(
             $this->getConfig(),
-            $this->createRestResourceRouteLoader()
+            $this->createRestResourceRouteLoader(),
         );
     }
 

@@ -58,7 +58,7 @@ class DetailController extends AbstractController
     public function indexAction(Request $request)
     {
         $idMerchantSalesOrder = $this->castId(
-            $request->query->getInt(static::REQUEST_PARAM_ID_MERCHANT_SALES_ORDER)
+            $request->query->getInt(static::REQUEST_PARAM_ID_MERCHANT_SALES_ORDER),
         );
 
         $idMerchant = $this->getFactory()->getMerchantUserFacade()->getCurrentMerchantUser()->getIdMerchant();
@@ -83,21 +83,21 @@ class DetailController extends AbstractController
             ->getMerchantOmsFacade()
             ->expandMerchantOrderItemsWithManualEvents(
                 (new MerchantOrderItemCollectionTransfer())
-                ->setMerchantOrderItems($merchantOrderTransfer->getMerchantOrderItems())
+                ->setMerchantOrderItems($merchantOrderTransfer->getMerchantOrderItems()),
             );
         $merchantOrderTransfer->setMerchantOrderItems($merchantOrderItemCollectionTransfer->getMerchantOrderItems());
 
         $blockData = $this->renderActions(
             $request,
             $this->getFactory()->getMerchantSalesOrderDetailExternalBlocksUrls(),
-            $merchantOrderTransfer
+            $merchantOrderTransfer,
         );
 
         /** @var \Generated\Shared\Transfer\OrderTransfer $salesOrder */
         $salesOrder = $merchantOrderTransfer->requireOrder()->getOrder();
 
         $groupedMerchantOrderItemsByShipment = $this->getFactory()->getShipmentService()->groupItemsByShipment(
-            $salesOrder->getItems()
+            $salesOrder->getItems(),
         );
 
         $groupedMerchantOrderItems = $this->groupMerchantOrderItemsByIdSalesOrderItem($merchantOrderTransfer);
@@ -106,7 +106,7 @@ class DetailController extends AbstractController
             'merchantOrder' => $merchantOrderTransfer,
             'groupedMerchantOrderItemsByShipment' => $groupedMerchantOrderItemsByShipment,
             'totalMerchantOrderCount' => $this->getFactory()->getMerchantSalesOrderFacade()->getMerchantOrdersCount(
-                (new MerchantOrderCriteriaTransfer())->setMerchantReference($merchantOrderTransfer->getMerchantReference())
+                (new MerchantOrderCriteriaTransfer())->setMerchantReference($merchantOrderTransfer->getMerchantReference()),
             ),
             'changeStatusRedirectUrl' => $this->createRedirectLink($idMerchantSalesOrder),
             'groupedMerchantOrderItems' => $groupedMerchantOrderItems,
@@ -144,7 +144,7 @@ class DetailController extends AbstractController
 
         return $this->mapMerchantOrderItemsStateHistoryToMerchantOrderItems(
             $merchantOrderTransfer,
-            $merchantOrderItemsStateHistory
+            $merchantOrderItemsStateHistory,
         );
     }
 
@@ -166,7 +166,7 @@ class DetailController extends AbstractController
             }
 
             $merchantOrderItemTransfer->setStateHistory(
-                new ArrayObject($merchantOrderItemsStateHistory[$merchantOrderItemTransfer->getIdMerchantOrderItem()])
+                new ArrayObject($merchantOrderItemsStateHistory[$merchantOrderItemTransfer->getIdMerchantOrderItem()]),
             );
         }
 
@@ -188,7 +188,7 @@ class DetailController extends AbstractController
             function (MerchantOrderItemTransfer $merchantOrderItemTransfer) {
                 return $merchantOrderItemTransfer->getIdMerchantOrderItem();
             },
-            $merchantOrderItems->getArrayCopy()
+            $merchantOrderItems->getArrayCopy(),
         );
     }
 

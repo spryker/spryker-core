@@ -69,7 +69,7 @@ class ProductAttributeGuiCommunicationFactory extends AbstractCommunicationFacto
             ->create(
                 AttributeKeyForm::class,
                 $formData,
-                $formOptions
+                $formOptions,
             );
     }
 
@@ -115,7 +115,7 @@ class ProductAttributeGuiCommunicationFactory extends AbstractCommunicationFacto
     {
         return new AttributeFormDataProvider(
             $this->getProductAttributeQueryContainer(),
-            $this->getProductAttributeFacade()
+            $this->getProductAttributeFacade(),
         );
     }
 
@@ -125,7 +125,7 @@ class ProductAttributeGuiCommunicationFactory extends AbstractCommunicationFacto
     public function createAttributeTable()
     {
         return new AttributeTable(
-            $this->getProductAttributeQueryContainer()
+            $this->getProductAttributeQueryContainer(),
         );
     }
 
@@ -145,7 +145,7 @@ class ProductAttributeGuiCommunicationFactory extends AbstractCommunicationFacto
         return new AttributeTranslationFormCollectionDataProvider(
             $this->getProductAttributeFacade(),
             $this->getProductAttributeQueryContainer(),
-            $this->getLocaleFacade()
+            $this->getLocaleFacade(),
         );
     }
 

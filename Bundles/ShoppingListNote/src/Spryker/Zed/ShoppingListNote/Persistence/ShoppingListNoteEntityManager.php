@@ -100,7 +100,7 @@ class ShoppingListNoteEntityManager extends AbstractEntityManager implements Sho
             ->createShoppingListItemNoteMapper()
             ->mapShoppingListItemNoteEntityCollectionToShoppingListItemCollectionTransfer(
                 $shoppingListItemNoteObjectCollection,
-                $shoppingListItemCollectionTransfer
+                $shoppingListItemCollectionTransfer,
             );
     }
 

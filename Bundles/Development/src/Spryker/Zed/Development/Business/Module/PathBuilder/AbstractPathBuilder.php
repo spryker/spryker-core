@@ -41,7 +41,7 @@ abstract class AbstractPathBuilder implements PathBuilderInterface
             sprintf(
                 '%s%s/',
                 $this->config->getPathToInternalNamespace(static::ORGANIZATION),
-                $this->getModuleName($moduleTransfer)
+                $this->getModuleName($moduleTransfer),
             ),
         ];
     }

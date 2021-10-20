@@ -45,11 +45,11 @@ class CategoryNodeStorageByCategoryStoreEventsWriter implements CategoryNodeStor
     {
         $categoryIds = $this->eventBehaviorFacade->getEventTransferForeignKeys(
             $eventEntityTransfers,
-            SpyCategoryStoreTableMap::COL_FK_CATEGORY
+            SpyCategoryStoreTableMap::COL_FK_CATEGORY,
         );
 
         $this->categoryNodeStorageWriter->writeCategoryNodeStorageCollectionByCategoryNodeCriteria(
-            (new CategoryNodeCriteriaTransfer())->setCategoryIds($categoryIds)
+            (new CategoryNodeCriteriaTransfer())->setCategoryIds($categoryIds),
         );
     }
 
@@ -63,7 +63,7 @@ class CategoryNodeStorageByCategoryStoreEventsWriter implements CategoryNodeStor
         $categoryIds = $this->eventBehaviorFacade->getEventTransferIds($eventEntityTransfers);
 
         $this->categoryNodeStorageWriter->writeCategoryNodeStorageCollectionByCategoryNodeCriteria(
-            (new CategoryNodeCriteriaTransfer())->setCategoryIds($categoryIds)
+            (new CategoryNodeCriteriaTransfer())->setCategoryIds($categoryIds),
         );
     }
 }

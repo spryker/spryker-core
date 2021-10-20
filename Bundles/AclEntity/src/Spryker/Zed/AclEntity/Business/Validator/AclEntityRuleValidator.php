@@ -115,7 +115,7 @@ class AclEntityRuleValidator implements AclEntityRuleValidatorInterface
         if ($aclEntityRuleCollectionTransfer->getAclEntityRules()->count()) {
             throw new DuplicatedAclEntityRuleException(
                 $aclEntityRuleTransfer->getEntityOrFail(),
-                $aclEntityRuleTransfer->getIdAclRoleOrFail()
+                $aclEntityRuleTransfer->getIdAclRoleOrFail(),
             );
         }
     }

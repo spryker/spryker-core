@@ -33,7 +33,7 @@ class PriceProductScheduleDataImportConfig extends DataImportConfig
 
         return $this->buildImporterConfiguration(
             $moduleDataImportDirectory . 'product_price_schedule.csv',
-            static::IMPORT_TYPE_PRODUCT_PRICE_SCHEDULE
+            static::IMPORT_TYPE_PRODUCT_PRICE_SCHEDULE,
         );
     }
 
@@ -57,7 +57,7 @@ class PriceProductScheduleDataImportConfig extends DataImportConfig
             . DIRECTORY_SEPARATOR . '..'
             . DIRECTORY_SEPARATOR . '..'
             . DIRECTORY_SEPARATOR . '..'
-            . DIRECTORY_SEPARATOR . '..'
+            . DIRECTORY_SEPARATOR . '..',
         );
 
         return $moduleRoot . DIRECTORY_SEPARATOR;

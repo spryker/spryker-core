@@ -167,7 +167,7 @@ class ProductAbstractTableDataProvider extends AbstractGuiTableDataProvider
         $superAttributes = $this->localizedAttributesExtractor->extractSuperAttributes(
             $productAbstractTransfer->getAttributes(),
             $productAbstractTransfer->getLocalizedAttributes(),
-            $localeTransfer
+            $localeTransfer,
         );
 
         return array_map(function (string $attributeKey): string {

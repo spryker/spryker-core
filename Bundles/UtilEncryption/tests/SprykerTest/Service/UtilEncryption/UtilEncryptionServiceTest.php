@@ -60,7 +60,7 @@ class UtilEncryptionServiceTest extends Unit
         $encryptedString = $this->getUtilEncryptionService()->encryptOpenSsl(
             static::OPEN_SSL_ENCRYPTION_PLAIN_TEXT,
             $encryptInitVector,
-            static::OPEN_SSL_ENCRYPTION_KEY
+            static::OPEN_SSL_ENCRYPTION_KEY,
         );
 
         //Assert
@@ -78,7 +78,7 @@ class UtilEncryptionServiceTest extends Unit
         $encryptedString = $this->getUtilEncryptionService()->encryptOpenSsl(
             static::OPEN_SSL_ENCRYPTION_PLAIN_TEXT,
             $encryptInitVector,
-            static::OPEN_SSL_ENCRYPTION_KEY
+            static::OPEN_SSL_ENCRYPTION_KEY,
         );
 
         //Act

@@ -79,7 +79,7 @@ class PriceProductRepository extends AbstractRepository implements PriceProductR
             ->addJoinCondition(
                 static::PRICE_PRODUCT_RELATION_NAME,
                 SpyPriceProductTableMap::COL_FK_PRODUCT . ' = ?',
-                $idProductConcrete
+                $idProductConcrete,
             );
 
         return $priceProductStoreQuery->find();
@@ -100,7 +100,7 @@ class PriceProductRepository extends AbstractRepository implements PriceProductR
             ->addJoinCondition(
                 static::PRICE_PRODUCT_RELATION_NAME,
                 SpyPriceProductTableMap::COL_FK_PRODUCT_ABSTRACT . ' = ?',
-                $idProductAbstract
+                $idProductAbstract,
             );
 
         return $priceProductStoreQuery->find();
@@ -165,7 +165,7 @@ class PriceProductRepository extends AbstractRepository implements PriceProductR
             ->createPriceProductDimensionQueryExpander()
             ->expandPriceProductStoreQueryWithPriceDimensionForDelete(
                 $priceProductStoreQuery,
-                $priceProductCriteriaTransfer
+                $priceProductCriteriaTransfer,
             );
 
         return $this->buildQueryFromCriteria($priceProductStoreQuery)->find();
@@ -186,7 +186,7 @@ class PriceProductRepository extends AbstractRepository implements PriceProductR
                 ->add(
                     SpyPriceProductTableMap::COL_FK_PRODUCT_ABSTRACT,
                     $priceProductCriteriaTransfer->getIdProductAbstract(),
-                    Criteria::EQUAL
+                    Criteria::EQUAL,
                 );
 
             return $priceProductStoreQuery;
@@ -196,7 +196,7 @@ class PriceProductRepository extends AbstractRepository implements PriceProductR
                 ->add(
                     SpyPriceProductTableMap::COL_FK_PRODUCT,
                     $priceProductCriteriaTransfer->getIdProductConcrete(),
-                    Criteria::EQUAL
+                    Criteria::EQUAL,
                 );
         }
 
@@ -545,7 +545,7 @@ class PriceProductRepository extends AbstractRepository implements PriceProductR
 
         $priceProductQuery = $this->addProductIdentifierToQuery(
             $priceProductTransfer,
-            $priceProductQuery
+            $priceProductQuery,
         );
 
         return $priceProductQuery->count() > 0;

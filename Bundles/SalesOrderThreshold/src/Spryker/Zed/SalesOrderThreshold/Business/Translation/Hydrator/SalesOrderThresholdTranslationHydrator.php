@@ -78,7 +78,7 @@ class SalesOrderThresholdTranslationHydrator implements SalesOrderThresholdTrans
         $salesOrderThresholdTransfers = $this->expandSalesOrderThresholdTransferWithLocalizedMessagesCollection(
             $salesOrderThresholdTransfers,
             $translationTransfers,
-            $availableLocaleTransfers
+            $availableLocaleTransfers,
         );
 
         return $salesOrderThresholdTransfers;

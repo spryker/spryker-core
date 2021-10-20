@@ -50,7 +50,7 @@ class NavigationsRestApiDependencyProvider extends AbstractBundleDependencyProvi
     {
         $container->set(static::CLIENT_NAVIGATION_STORAGE, function (Container $container) {
             return new NavigationsRestApiToNavigationStorageClientBridge(
-                $container->getLocator()->navigationStorage()->client()
+                $container->getLocator()->navigationStorage()->client(),
             );
         });
 
@@ -66,7 +66,7 @@ class NavigationsRestApiDependencyProvider extends AbstractBundleDependencyProvi
     {
         $container->set(static::CLIENT_URL_STORAGE, function (Container $container) {
             return new NavigationsRestApiToUrlStorageClientBridge(
-                $container->getLocator()->urlStorage()->client()
+                $container->getLocator()->urlStorage()->client(),
             );
         });
 

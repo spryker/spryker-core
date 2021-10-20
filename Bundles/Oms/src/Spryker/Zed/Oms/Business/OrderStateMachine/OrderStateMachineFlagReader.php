@@ -42,8 +42,8 @@ class OrderStateMachineFlagReader implements OrderStateMachineFlagReaderInterfac
                 sprintf(
                     'State with name "%s" not found in %s Order state machine process',
                     $stateName,
-                    $processName
-                )
+                    $processName,
+                ),
             ));
         }
 

@@ -68,7 +68,7 @@ class DoubleSubmitProtectionServiceProvider extends AbstractPlugin implements Se
         return new DoubleSubmitProtectionExtension(
             $this->createTokenGenerator(),
             $this->createTokenStorage($app),
-            $translator
+            $translator,
         );
     }
 

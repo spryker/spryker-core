@@ -42,7 +42,7 @@ class OfferBusinessFactory extends AbstractBusinessFactory
     {
         return new OfferReader(
             $this->getRepository(),
-            $this->createOfferPluginExecutor()
+            $this->createOfferPluginExecutor(),
         );
     }
 
@@ -52,7 +52,7 @@ class OfferBusinessFactory extends AbstractBusinessFactory
     public function createOfferCalculator(): OfferCalculatorInterface
     {
         return new OfferCalculator(
-            $this->getCartFacade()
+            $this->getCartFacade(),
         );
     }
 
@@ -81,7 +81,7 @@ class OfferBusinessFactory extends AbstractBusinessFactory
             $this->getEntityManager(),
             $this->getRepository(),
             $this->getConfig(),
-            $this->createOfferPluginExecutor()
+            $this->createOfferPluginExecutor(),
         );
     }
 
@@ -92,7 +92,7 @@ class OfferBusinessFactory extends AbstractBusinessFactory
     {
         return new OfferPluginExecutor(
             $this->getOfferHydratorPlugins(),
-            $this->getOfferDoUpdatePlugins()
+            $this->getOfferDoUpdatePlugins(),
         );
     }
 
@@ -103,7 +103,7 @@ class OfferBusinessFactory extends AbstractBusinessFactory
     {
         return new OfferQuoteExpander(
             $this->getCustomerFacade(),
-            $this->createOfferReader()
+            $this->createOfferReader(),
         );
     }
 
@@ -113,7 +113,7 @@ class OfferBusinessFactory extends AbstractBusinessFactory
     public function createOfferSavingAmountHydrator(): OfferSavingAmountHydratorInterface
     {
         return new OfferSavingAmountHydrator(
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 

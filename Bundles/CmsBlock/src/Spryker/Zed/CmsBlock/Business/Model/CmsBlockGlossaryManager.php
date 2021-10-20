@@ -107,7 +107,7 @@ class CmsBlockGlossaryManager implements CmsBlockGlossaryManagerInterface
     {
         if (!is_readable($templateFile)) {
             throw new CmsBlockTemplateNotFoundException(
-                sprintf('Template file not found in "%s"', $templateFile)
+                sprintf('Template file not found in "%s"', $templateFile),
             );
         }
 

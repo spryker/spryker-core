@@ -41,7 +41,7 @@ class ShipmentMethodCheckoutDataResponseMapper implements CheckoutDataResponseMa
         if ($this->config->isShipmentMethodsMappedToAttributes()) {
             $restCheckoutDataResponseAttributesTransfer = $this->mapShipmentMethods(
                 $restCheckoutDataTransfer,
-                $restCheckoutDataResponseAttributesTransfer
+                $restCheckoutDataResponseAttributesTransfer,
             );
         }
 
@@ -64,7 +64,7 @@ class ShipmentMethodCheckoutDataResponseMapper implements CheckoutDataResponseMa
         foreach ($shipmentMethodTransfers as $shipmentMethodTransfer) {
             $restShipmentMethodTransfer = $this->mapShipmentMethodTransferToRestShipmentMethodTransfer(
                 $shipmentMethodTransfer,
-                new RestShipmentMethodTransfer()
+                new RestShipmentMethodTransfer(),
             );
 
             $restCheckoutDataResponseAttributesTransfer->addShipmentMethod($restShipmentMethodTransfer);

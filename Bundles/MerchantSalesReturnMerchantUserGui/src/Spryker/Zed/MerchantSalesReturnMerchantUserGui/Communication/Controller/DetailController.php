@@ -96,7 +96,7 @@ class DetailController extends AbstractController
     protected function findReturn(Request $request): ?ReturnTransfer
     {
         $idSalesReturn = $this->castId(
-            $request->get(static::PARAM_ID_RETURN)
+            $request->get(static::PARAM_ID_RETURN),
         );
 
         return $this->getFactory()

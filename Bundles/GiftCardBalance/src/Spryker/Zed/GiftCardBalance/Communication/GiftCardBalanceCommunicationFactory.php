@@ -30,7 +30,7 @@ class GiftCardBalanceCommunicationFactory extends AbstractCommunicationFactory
             $this->getQueryContainer(),
             $this->getMoneyFacade(),
             $this->getUtilDateTimeService(),
-            $idGiftCard
+            $idGiftCard,
         );
     }
 

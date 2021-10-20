@@ -39,8 +39,8 @@ class ProductOfferExpander implements ProductOfferExpanderInterface
             $this->priceProductOfferReader->getProductOfferPrices(
                 (new PriceProductOfferCriteriaTransfer())
                     ->setIdProductOffer($productOfferTransfer->getIdProductOffer())
-                    ->setWithExtractedPrices(false)
-            )
+                    ->setWithExtractedPrices(false),
+            ),
         );
 
         return $productOfferTransfer;

@@ -30,7 +30,7 @@ class ProductOfferStockRepository extends AbstractRepository implements ProductO
             ->joinWithSpyProductOffer();
         $productOfferStockEntity = $this->applyFilters(
             $productOfferStockQuery,
-            $productOfferStockRequestTransfer
+            $productOfferStockRequestTransfer,
         )->findOne();
 
         if (!$productOfferStockEntity) {
@@ -41,7 +41,7 @@ class ProductOfferStockRepository extends AbstractRepository implements ProductO
             ->createProductOfferStockMapper()
             ->mapProductOfferStockEntityToProductOfferStockTransfer(
                 $productOfferStockEntity,
-                new ProductOfferStockTransfer()
+                new ProductOfferStockTransfer(),
             );
     }
 
@@ -54,14 +54,14 @@ class ProductOfferStockRepository extends AbstractRepository implements ProductO
     {
         $productOfferStockEntities = $this->applyFilters(
             $this->getFactory()->getProductOfferStockPropelQuery(),
-            $productOfferStockRequestTransfer
+            $productOfferStockRequestTransfer,
         )->find();
 
         return $this->getFactory()
             ->createProductOfferStockMapper()
             ->mapProductOfferStockEntityCollectionToProductOfferStockTransfers(
                 $productOfferStockEntities,
-                new ArrayObject()
+                new ArrayObject(),
             );
     }
 

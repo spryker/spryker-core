@@ -24,7 +24,7 @@ class ContentNavigationFactory extends AbstractFactory
     {
         return new ContentNavigationTypeMapper(
             $this->getContentStorageClient(),
-            $this->getContentNavigationTermExecutorMap()
+            $this->getContentNavigationTermExecutorMap(),
         );
     }
 

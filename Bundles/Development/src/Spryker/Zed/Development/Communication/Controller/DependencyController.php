@@ -91,7 +91,7 @@ class DependencyController extends AbstractController
         $form = $this->getFactory()
             ->createBundlesForm(
                 $dataProvider->getData(),
-                $dataProvider->getOptions()
+                $dataProvider->getOptions(),
             )
             ->handleRequest($request);
 

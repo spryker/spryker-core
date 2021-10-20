@@ -75,7 +75,7 @@ class ValidatorTest extends Unit
             ->expects($this->once())
             ->method('buildFromQueryString')
             ->willThrowException(
-                new QueryStringException($queryStringException)
+                new QueryStringException($queryStringException),
             );
 
         $validator = $this->createValidator($decisionRuleMock);
@@ -98,7 +98,7 @@ class ValidatorTest extends Unit
             ->expects($this->once())
             ->method('buildFromQueryString')
             ->willThrowException(
-                new QueryStringException($queryStringException)
+                new QueryStringException($queryStringException),
             );
 
         $validator = $this->createValidator(null, $collectorMock);
@@ -121,7 +121,7 @@ class ValidatorTest extends Unit
             ->expects($this->once())
             ->method('buildFromQueryString')
             ->willThrowException(
-                new ComparatorException($queryStringException)
+                new ComparatorException($queryStringException),
             );
 
         $validator = $this->createValidator(null, $collectorMock);
@@ -164,7 +164,7 @@ class ValidatorTest extends Unit
 
         return new Validator(
             $decisionRuleMock,
-            $collectorMock
+            $collectorMock,
         );
     }
 

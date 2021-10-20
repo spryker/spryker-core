@@ -37,7 +37,7 @@ class BusinessOnBehalfDataImportConfig extends DataImportConfig
 
         return $this->buildImporterConfiguration(
             $moduleDataImportDirectory . static::IMPORT_FILE,
-            static::IMPORT_TYPE_COMPANY_USER
+            static::IMPORT_TYPE_COMPANY_USER,
         );
     }
 
@@ -51,7 +51,7 @@ class BusinessOnBehalfDataImportConfig extends DataImportConfig
             . DIRECTORY_SEPARATOR . '..'
             . DIRECTORY_SEPARATOR . '..'
             . DIRECTORY_SEPARATOR . '..'
-            . DIRECTORY_SEPARATOR . '..'
+            . DIRECTORY_SEPARATOR . '..',
         );
 
         return $moduleRoot . DIRECTORY_SEPARATOR;

@@ -73,7 +73,7 @@ class CreateController extends AbstractController
     {
         $priceProductScheduleTransfer = $this->setProductIdentifierFromRequest(
             $request,
-            new PriceProductScheduleTransfer()
+            new PriceProductScheduleTransfer(),
         );
 
         $priceProductScheduleFormDataProvider = $this->getFactory()->createPriceProductScheduleFormDataProvider();
@@ -142,7 +142,7 @@ class CreateController extends AbstractController
         $priceProductTransfer = $this->setProductIdentifierToPriceProductTransfer(
             $priceProductTransfer,
             $idProduct,
-            $idProductAbstract
+            $idProductAbstract,
         );
 
         return $priceProductScheduleTransfer->setPriceProduct($priceProductTransfer);

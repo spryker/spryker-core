@@ -100,7 +100,7 @@ class ProductConcreteTableExpander implements ProductConcreteTableExpanderInterf
         }, $guiTableDataResponseTransfer->getRows()->getArrayCopy());
         $idMerchant = $this->merchantUserFacade->getCurrentMerchantUser()->getIdMerchant();
         $stockTransfers = $this->merchantStockFacade->get(
-            ((new MerchantStockCriteriaTransfer())->setIdMerchant($idMerchant)->setIsDefault(true))
+            ((new MerchantStockCriteriaTransfer())->setIdMerchant($idMerchant)->setIsDefault(true)),
         )->getStocks();
 
         if (!$stockTransfers->count()) {
@@ -110,10 +110,10 @@ class ProductConcreteTableExpander implements ProductConcreteTableExpanderInterf
         $productConcreteAvailabilityCollectionTransfer = $this->availabilityFacade->getProductConcreteAvailabilityCollection(
             (new ProductAvailabilityCriteriaTransfer())
                 ->setProductConcreteSkus($productConcreteSkus)
-                ->setStoreIds($stockTransfers->offsetGet(0)->getStoreRelationOrFail()->getIdStores())
+                ->setStoreIds($stockTransfers->offsetGet(0)->getStoreRelationOrFail()->getIdStores()),
         );
         $productAvailabilities = $this->getProductAvailabilitiesGroupedByProductSkus(
-            $productConcreteAvailabilityCollectionTransfer
+            $productConcreteAvailabilityCollectionTransfer,
         );
 
         foreach ($guiTableDataResponseTransfer->getRows() as $guiTableRowDataResponseTransfer) {

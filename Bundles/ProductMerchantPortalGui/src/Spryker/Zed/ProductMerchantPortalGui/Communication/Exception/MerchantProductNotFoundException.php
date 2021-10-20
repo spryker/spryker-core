@@ -31,7 +31,7 @@ class MerchantProductNotFoundException extends NotFoundHttpException
         return sprintf(
             'Product abstract is not found for product abstract id %d and merchant id %d.',
             $idProductAbstract,
-            $idMerchant
+            $idMerchant,
         );
     }
 }

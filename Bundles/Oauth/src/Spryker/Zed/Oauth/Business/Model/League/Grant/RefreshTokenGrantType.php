@@ -78,7 +78,7 @@ class RefreshTokenGrantType extends AbstractGrant implements GrantTypeInterface
         $scopes = $this->validateScopes($this->getRequestParameter(
             static::REQUEST_PARAMETER_SCOPE,
             $request,
-            implode(self::SCOPE_DELIMITER_STRING, $oldRefreshToken[static::KEY_SCOPES])
+            implode(self::SCOPE_DELIMITER_STRING, $oldRefreshToken[static::KEY_SCOPES]),
         ));
 
         // The OAuth spec says that a refreshed access token can have the original scopes or fewer so ensure

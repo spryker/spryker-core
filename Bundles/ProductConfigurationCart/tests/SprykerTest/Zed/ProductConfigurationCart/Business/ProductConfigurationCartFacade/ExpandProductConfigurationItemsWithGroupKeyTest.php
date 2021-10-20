@@ -68,7 +68,7 @@ class ExpandProductConfigurationItemsWithGroupKeyTest extends Unit
         $itemProductConfigurationGroupKey = sprintf(
             '%s-%s',
             $itemTransfer->getGroupKey(),
-            static::TEST_PRODUCT_CONFIGURATION_HASH
+            static::TEST_PRODUCT_CONFIGURATION_HASH,
         );
 
         // Act
@@ -82,7 +82,7 @@ class ExpandProductConfigurationItemsWithGroupKeyTest extends Unit
         $this->assertSame(
             $itemProductConfigurationGroupKey,
             $expandedItemTransfer->getGroupKey(),
-            'Expects that item group key will be expanded with product configuration hash.'
+            'Expects that item group key will be expanded with product configuration hash.',
         );
     }
 
@@ -109,7 +109,7 @@ class ExpandProductConfigurationItemsWithGroupKeyTest extends Unit
         $this->assertSame(
             static::TEST_GROUP_KEY,
             $expandedItemTransfer->getGroupKey(),
-            'Expects that item group key will not be expanded with product configuration hash.'
+            'Expects that item group key will not be expanded with product configuration hash.',
         );
     }
 }

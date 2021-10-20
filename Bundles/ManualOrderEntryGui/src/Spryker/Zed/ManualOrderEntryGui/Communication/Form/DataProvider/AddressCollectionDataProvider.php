@@ -134,7 +134,7 @@ class AddressCollectionDataProvider implements FormDataProviderInterface
                 $address->getAddress1(),
                 $address->getAddress2(),
                 $address->getZipCode(),
-                $address->getCity()
+                $address->getCity(),
             );
         }
 

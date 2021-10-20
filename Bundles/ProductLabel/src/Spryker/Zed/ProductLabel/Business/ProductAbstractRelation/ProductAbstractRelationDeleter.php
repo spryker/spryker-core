@@ -97,7 +97,7 @@ class ProductAbstractRelationDeleter implements ProductAbstractRelationDeleterIn
     {
         $productLabelProductAbstractTransfers = $this->productLabelRepository->getProductAbstractRelationsByIdProductLabelAndProductAbstractIds(
             $idProductLabel,
-            $productAbstractIds
+            $productAbstractIds,
         );
 
         if (!count($productLabelProductAbstractTransfers)) {
@@ -108,7 +108,7 @@ class ProductAbstractRelationDeleter implements ProductAbstractRelationDeleterIn
 
         $this->productLabelEntityManager->deleteProductLabelProductAbstractRelations(
             $idProductLabel,
-            $productAbstractIds
+            $productAbstractIds,
         );
 
         if (!$isTouchEnabled) {

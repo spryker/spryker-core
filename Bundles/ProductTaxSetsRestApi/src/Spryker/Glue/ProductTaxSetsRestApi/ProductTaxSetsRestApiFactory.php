@@ -28,7 +28,7 @@ class ProductTaxSetsRestApiFactory extends AbstractFactory
             $this->getTaxProductStorageClient(),
             $this->getTaxStorageClient(),
             $this->getResourceBuilder(),
-            $this->createProductTaxSetResourceMapper()
+            $this->createProductTaxSetResourceMapper(),
         );
     }
 

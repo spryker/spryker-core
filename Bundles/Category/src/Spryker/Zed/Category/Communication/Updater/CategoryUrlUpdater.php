@@ -25,7 +25,7 @@ class CategoryUrlUpdater implements CategoryUrlUpdaterInterface
             $paths,
             [
                 UrlPathGenerator::CATEGORY_NAME => $languageIdentifier,
-            ]
+            ],
         );
 
         return $paths;

@@ -34,16 +34,16 @@ class FileWriter implements FileWriterInterface
     {
         $baseDirectory = rtrim(
             $options[IdeAutoCompletionOptionConstants::TARGET_BASE_DIRECTORY],
-            DIRECTORY_SEPARATOR
+            DIRECTORY_SEPARATOR,
         );
 
         $applicationPathFragment = trim(
             str_replace(
                 IdeAutoCompletionConstants::APPLICATION_NAME_PLACEHOLDER,
                 $options[IdeAutoCompletionOptionConstants::APPLICATION_NAME],
-                $options[IdeAutoCompletionOptionConstants::TARGET_DIRECTORY_PATTERN]
+                $options[IdeAutoCompletionOptionConstants::TARGET_DIRECTORY_PATTERN],
             ),
-            DIRECTORY_SEPARATOR
+            DIRECTORY_SEPARATOR,
         );
 
         return "{$baseDirectory}/{$applicationPathFragment}/";

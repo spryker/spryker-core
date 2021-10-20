@@ -55,7 +55,7 @@ class CompanyUsersRestApiRepository extends AbstractRepository implements Compan
             ->mapCompanyUserEntitiesToCompanyUserCollectionTransfer($companyUserEntityCollection, new CompanyUserCollectionTransfer());
 
         $companyRoleEntityCollection = $this->getCompanyRoleEntityCollectionForCompanyUserIds(
-            $companyUserEntityCollection->getColumnValues(SpyCompanyUserEntityTransfer::ID_COMPANY_USER)
+            $companyUserEntityCollection->getColumnValues(SpyCompanyUserEntityTransfer::ID_COMPANY_USER),
         );
 
         $companyUserCollectionTransfer = $this->getFactory()

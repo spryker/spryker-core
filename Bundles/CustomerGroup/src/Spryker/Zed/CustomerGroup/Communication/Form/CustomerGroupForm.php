@@ -163,7 +163,7 @@ class CustomerGroupForm extends AbstractType
             [
                 'label' => false,
                 'data_class' => CustomerGroupToCustomerAssignmentTransfer::class,
-            ]
+            ],
         );
 
         return $this;

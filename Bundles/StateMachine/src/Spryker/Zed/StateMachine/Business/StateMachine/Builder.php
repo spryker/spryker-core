@@ -274,8 +274,8 @@ class Builder implements BuilderInterface
             throw new StateMachineException(
                 sprintf(
                     'State machine XML file not found in "%s".',
-                    $pathToXml
-                )
+                    $pathToXml,
+                ),
             );
         }
 
@@ -284,8 +284,8 @@ class Builder implements BuilderInterface
             throw new StateMachineException(
                 sprintf(
                     'State machine XML file "%s" could not be read.',
-                    $pathToXml
-                )
+                    $pathToXml,
+                ),
             );
         }
 
@@ -520,15 +520,15 @@ class Builder implements BuilderInterface
         $transition->setCondition(
             $this->getAttributeString(
                 $xmlTransition,
-                self::TRANSITION_CONDITION_ATTRIBUTE
-            )
+                self::TRANSITION_CONDITION_ATTRIBUTE,
+            ),
         );
 
         $transition->setHappyCase(
             $this->getAttributeBoolean(
                 $xmlTransition,
-                self::TRANSITION_HAPPY_PATH_ATTRIBUTE
-            )
+                self::TRANSITION_HAPPY_PATH_ATTRIBUTE,
+            ),
         );
 
         $sourceState = (string)$xmlTransition->source;
@@ -580,8 +580,8 @@ class Builder implements BuilderInterface
                 sprintf(
                     'Target: "%s" does not exist from source: "%s"',
                     $targetStateName,
-                    $sourceName
-                )
+                    $sourceName,
+                ),
             );
         }
 
@@ -678,8 +678,8 @@ class Builder implements BuilderInterface
                 sprintf(
                     'Event: "%s" does not exist from source: "%s"',
                     $eventName,
-                    $sourceName
-                )
+                    $sourceName,
+                ),
             );
         }
     }

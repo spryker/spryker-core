@@ -128,7 +128,7 @@ class FileManagerEntityManager extends AbstractEntityManager implements FileMana
         $fileLocalizedAttributesEntity->save();
 
         $fileLocalizedAttributesTransfer->setIdFileLocalizedAttributes(
-            $fileLocalizedAttributesEntity->getIdFileLocalizedAttributes()
+            $fileLocalizedAttributesEntity->getIdFileLocalizedAttributes(),
         );
 
         return $fileLocalizedAttributesTransfer;
@@ -175,7 +175,7 @@ class FileManagerEntityManager extends AbstractEntityManager implements FileMana
         $fileDirectoryLocalizedAttributesEntity->save();
 
         $fileDirectoryLocalizedAttributesTransfer->setIdFileDirectoryLocalizedAttributes(
-            $fileDirectoryLocalizedAttributesEntity->getIdFileDirectoryLocalizedAttributes()
+            $fileDirectoryLocalizedAttributesEntity->getIdFileDirectoryLocalizedAttributes(),
         );
 
         return $fileDirectoryLocalizedAttributesTransfer;

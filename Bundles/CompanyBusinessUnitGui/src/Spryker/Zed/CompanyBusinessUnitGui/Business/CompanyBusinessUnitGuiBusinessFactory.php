@@ -24,7 +24,7 @@ class CompanyBusinessUnitGuiBusinessFactory extends AbstractBusinessFactory
     public function createCompanyBusinessUnitGuiReader(): CompanyBusinessUnitGuiReaderInterface
     {
         return new CompanyBusinessUnitGuiReader(
-            $this->getCompanyBusinessUnitFacade()
+            $this->getCompanyBusinessUnitFacade(),
         );
     }
 

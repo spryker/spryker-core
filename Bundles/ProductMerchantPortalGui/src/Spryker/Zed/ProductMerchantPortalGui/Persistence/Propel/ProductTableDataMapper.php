@@ -131,13 +131,13 @@ class ProductTableDataMapper
     {
         $productConcreteAttributes = $this->utilEncodingService->decodeJson(
             $productTableRowDataArray[ProductConcreteTransfer::ATTRIBUTES] ?? null,
-            true
+            true,
         );
         $productConcreteAttributes = is_array($productConcreteAttributes) ? $productConcreteAttributes : [];
 
         $productConcreteLocalizedAttributes = $this->utilEncodingService->decodeJson(
             $productTableRowDataArray[ProductConcreteTransfer::LOCALIZED_ATTRIBUTES] ?? null,
-            true
+            true,
         );
         $productConcreteLocalizedAttributes = is_array($productConcreteLocalizedAttributes) ? $productConcreteLocalizedAttributes : [];
 
@@ -166,7 +166,7 @@ class ProductTableDataMapper
     ): ProductConcreteTransfer {
         $productImageSetTransfer = (new ProductImageSetTransfer())
             ->addProductImage((new ProductImageTransfer())->setExternalUrlSmall(
-                $productTableRowDataArray[ProductImageTransfer::EXTERNAL_URL_SMALL]
+                $productTableRowDataArray[ProductImageTransfer::EXTERNAL_URL_SMALL],
             ));
 
         $productConcreteTransfer->setImageSets(new ArrayObject([$productImageSetTransfer]));

@@ -50,7 +50,7 @@ class SalesOrderThresholdGuiCommunicationFactory extends AbstractCommunicationFa
         return $this->getFormFactory()->create(
             GlobalThresholdType::class,
             $formDataProvider->getData($storeTransfer, $currencyTransfer),
-            $formDataProvider->getOptions($currencyTransfer)
+            $formDataProvider->getOptions($currencyTransfer),
         );
     }
 
@@ -64,7 +64,7 @@ class SalesOrderThresholdGuiCommunicationFactory extends AbstractCommunicationFa
         return $this->getFormFactory()->create(
             SettingsType::class,
             $settingsFormDataProvider->getData(),
-            $settingsFormDataProvider->getOptions()
+            $settingsFormDataProvider->getOptions(),
         );
     }
 
@@ -75,7 +75,7 @@ class SalesOrderThresholdGuiCommunicationFactory extends AbstractCommunicationFa
     {
         return new SettingsFormDataProvider(
             $this->getTaxFacade(),
-            $this->getSalesOrderThresholdFacade()
+            $this->getSalesOrderThresholdFacade(),
         );
     }
 
@@ -88,7 +88,7 @@ class SalesOrderThresholdGuiCommunicationFactory extends AbstractCommunicationFa
             $this->getSalesOrderThresholdFacade(),
             $this->getCurrencyFacade(),
             $this->createGlobalSoftThresholdDataProviderResolver(),
-            $this->getSalesOrderThresholdFormExpanderPlugins()
+            $this->getSalesOrderThresholdFormExpanderPlugins(),
         );
     }
 
@@ -99,7 +99,7 @@ class SalesOrderThresholdGuiCommunicationFactory extends AbstractCommunicationFa
     {
         return new StoreCurrencyFinder(
             $this->getCurrencyFacade(),
-            $this->getStoreFacade()
+            $this->getStoreFacade(),
         );
     }
 
@@ -111,7 +111,7 @@ class SalesOrderThresholdGuiCommunicationFactory extends AbstractCommunicationFa
         return new GlobalThresholdFormMapperResolver(
             $this->getLocaleFacade(),
             $this->getConfig(),
-            $this->getSalesOrderThresholdFormExpanderPlugins()
+            $this->getSalesOrderThresholdFormExpanderPlugins(),
         );
     }
 
@@ -122,7 +122,7 @@ class SalesOrderThresholdGuiCommunicationFactory extends AbstractCommunicationFa
     {
         return new GlobalThresholdDataProviderResolver(
             $this->getConfig(),
-            $this->getSalesOrderThresholdFormExpanderPlugins()
+            $this->getSalesOrderThresholdFormExpanderPlugins(),
         );
     }
 

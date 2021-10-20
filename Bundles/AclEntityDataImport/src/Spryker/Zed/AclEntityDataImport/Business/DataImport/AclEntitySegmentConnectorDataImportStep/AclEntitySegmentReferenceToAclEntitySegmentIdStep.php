@@ -46,7 +46,7 @@ class AclEntitySegmentReferenceToAclEntitySegmentIdStep implements DataImportSte
             ->findOne();
         if (!$aclEntitySegmentEntity) {
             throw new EntityNotFoundException(
-                sprintf(static::ACL_ENTITY_SEGMENT_NOT_FOUND_TEMPLATE, $aclEntitySegmentReference)
+                sprintf(static::ACL_ENTITY_SEGMENT_NOT_FOUND_TEMPLATE, $aclEntitySegmentReference),
             );
         }
         $this->idAclEntitySegmentCache[$aclEntitySegmentReference] = $aclEntitySegmentEntity->getIdAclEntitySegment();

@@ -69,7 +69,7 @@ class ProductSearchCollectorRunner implements ProductSearchCollectorRunnerInterf
             $dataReader,
             $dataWriter,
             $touchUpdater,
-            $output
+            $output,
         );
     }
 }

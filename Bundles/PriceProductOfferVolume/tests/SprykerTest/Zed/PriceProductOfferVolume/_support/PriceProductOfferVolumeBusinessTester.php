@@ -54,7 +54,7 @@ class PriceProductOfferVolumeBusinessTester extends Actor
                     ->setFkCurrency(1)
                     ->setNetAmount(1)
                     ->setGrossAmount(1)
-                    ->setPriceData('{"volume_prices":[{"quantity":100,"net_price":80,"gross_price":100}]}')
+                    ->setPriceData('{"volume_prices":[{"quantity":100,"net_price":80,"gross_price":100}]}'),
             );
         $priceProductTransfer2 = (new PriceProductTransfer())
             ->setPriceType((new PriceTypeTransfer())->setName(static::PRICE_TYPE_DEFAULT)->setIdPriceType(1))
@@ -65,11 +65,11 @@ class PriceProductOfferVolumeBusinessTester extends Actor
                     ->setFkCurrency(2)
                     ->setNetAmount(1)
                     ->setGrossAmount(1)
-                    ->setPriceData('{"volume_prices":[{"quantity":10,"net_price":100,"gross_price":120}]}')
+                    ->setPriceData('{"volume_prices":[{"quantity":10,"net_price":100,"gross_price":120}]}'),
             );
         $priceProductOfferTransfer = (new PriceProductOfferTransfer())
             ->setProductOffer(
-                (new ProductOfferTransfer())->addPrice($priceProductTransfer1)->addPrice($priceProductTransfer2)
+                (new ProductOfferTransfer())->addPrice($priceProductTransfer1)->addPrice($priceProductTransfer2),
             );
 
         return (new PriceProductOfferCollectionTransfer())->addPriceProductOffer($priceProductOfferTransfer);

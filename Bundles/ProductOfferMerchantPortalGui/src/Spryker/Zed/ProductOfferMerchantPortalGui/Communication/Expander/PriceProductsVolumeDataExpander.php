@@ -91,7 +91,7 @@ class PriceProductsVolumeDataExpander implements PriceProductsVolumeDataExpander
                 $priceProductTransfer,
                 $storedPriceProductTransfers,
                 $requestData,
-                $volumeQuantity
+                $volumeQuantity,
             );
         }
 
@@ -117,7 +117,7 @@ class PriceProductsVolumeDataExpander implements PriceProductsVolumeDataExpander
             (new PriceProductOfferCriteriaTransfer())
                 ->addIdCurrency($priceProductTransfer->getMoneyValueOrFail()->getFkCurrencyOrFail())
                 ->addIdStore($priceProductTransfer->getMoneyValueOrFail()->getFkStoreOrFail())
-                ->addIdPriceType($priceProductTransfer->getPriceTypeOrFail()->getIdPriceTypeOrFail())
+                ->addIdPriceType($priceProductTransfer->getPriceTypeOrFail()->getIdPriceTypeOrFail()),
         ));
 
         /** @var \Generated\Shared\Transfer\PriceProductTransfer|null $storedPriceProductTransfer */
@@ -131,7 +131,7 @@ class PriceProductsVolumeDataExpander implements PriceProductsVolumeDataExpander
                     $storedPriceProductTransfers,
                     $volumeQuantity,
                     $key,
-                    $value
+                    $value,
                 );
 
                 continue;
@@ -142,7 +142,7 @@ class PriceProductsVolumeDataExpander implements PriceProductsVolumeDataExpander
                 $storedPriceProductTransfers,
                 $volumeQuantity,
                 $key,
-                $value
+                $value,
             );
         }
 
@@ -179,9 +179,9 @@ class PriceProductsVolumeDataExpander implements PriceProductsVolumeDataExpander
             $this->priceProductVolumeService->addVolumePrice(
                 $priceProductTransfer,
                 (new PriceProductTransfer())->setVolumeQuantity($volumeQuantity)->setMoneyValue(
-                    (new MoneyValueTransfer())->setNetAmount($netAmount)->setGrossAmount($grossAmount)
-                )
-            )
+                    (new MoneyValueTransfer())->setNetAmount($netAmount)->setGrossAmount($grossAmount),
+                ),
+            ),
         );
 
         return $storedPriceProductTransfers;
@@ -212,29 +212,29 @@ class PriceProductsVolumeDataExpander implements PriceProductsVolumeDataExpander
                 $storedPriceProductTransfers,
                 $volumeQuantity,
                 $requestKey,
-                $requestValue
+                $requestValue,
             );
         }
 
         $priceProductTransferToReplace = (new PriceProductTransfer())->setMoneyValue(new MoneyValueTransfer());
         $priceProductTransferToReplace->setVolumeQuantity(
-            $this->getVolumeQuantity($volumeQuantity, $requestKey, $requestValue)
+            $this->getVolumeQuantity($volumeQuantity, $requestKey, $requestValue),
         );
         $priceProductTransferToReplace = $this->priceProductVolumeService->extractVolumePrice(
             $storedPriceProductTransfer,
-            $priceProductTransferToReplace
+            $priceProductTransferToReplace,
         );
 
         if ($priceProductTransferToReplace !== null) {
             $priceProductTransferToReplace = $this->priceProductOfferMapper->mapMoneyValuesToPriceProductTransfer(
                 $requestKey,
                 $requestValue,
-                $priceProductTransferToReplace
+                $priceProductTransferToReplace,
             );
 
             $this->priceProductVolumeService->deleteVolumePrice(
                 $storedPriceProductTransfer,
-                (new PriceProductTransfer())->setVolumeQuantity((int)$volumeQuantity)
+                (new PriceProductTransfer())->setVolumeQuantity((int)$volumeQuantity),
             );
             $this->priceProductVolumeService->addVolumePrice($storedPriceProductTransfer, $priceProductTransferToReplace);
         }
@@ -267,7 +267,7 @@ class PriceProductsVolumeDataExpander implements PriceProductsVolumeDataExpander
             (new PriceProductOfferCriteriaTransfer())
                 ->addIdCurrency($idCurrency)
                 ->addIdStore($idStore)
-                ->addIdPriceType($priceProductTransfer->getPriceTypeOrFail()->getIdPriceTypeOrFail())
+                ->addIdPriceType($priceProductTransfer->getPriceTypeOrFail()->getIdPriceTypeOrFail()),
         ));
 
         /** @var \Generated\Shared\Transfer\PriceProductTransfer|null $filteredPriceProductTransfer */
@@ -278,14 +278,14 @@ class PriceProductsVolumeDataExpander implements PriceProductsVolumeDataExpander
 
             $this->priceProductVolumeService->deleteVolumePrice(
                 $storedPriceProductTransfer,
-                (new PriceProductTransfer())->setVolumeQuantity($volumeQuantity)
+                (new PriceProductTransfer())->setVolumeQuantity($volumeQuantity),
             );
 
             foreach ($priceProductVolumeTransfers as $priceProductVolumeTransfer) {
                 if ($priceProductVolumeTransfer->getVolumeQuantityOrFail() === $volumeQuantity) {
                     $this->priceProductVolumeService->addVolumePrice(
                         $filteredPriceProductTransfer,
-                        $priceProductVolumeTransfer
+                        $priceProductVolumeTransfer,
                     );
                     $filteredPriceProductTransfer->setVolumeQuantity($priceProductVolumeTransfer->getVolumeQuantityOrFail());
                 }
@@ -299,7 +299,7 @@ class PriceProductsVolumeDataExpander implements PriceProductsVolumeDataExpander
             $storedPriceProductTransfers,
             $volumeQuantity,
             $requestKey,
-            $requestValue
+            $requestValue,
         );
 
         return $storedPriceProductTransfers;

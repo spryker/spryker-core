@@ -97,14 +97,14 @@ class OmsFacadeSumReservedItemsTest extends Unit
         $this->assertTrue(
             $this->getOmsFacade()
                 ->sumReservedProductQuantitiesForSku(static::ORDER_ITEM_SKU)
-                ->equals(100)
+                ->equals(100),
         );
 
         $order3 = $this->createTestOrder('789', 'Test03', 'new');
         $this->assertTrue(
             $this->getOmsFacade()
                 ->sumReservedProductQuantitiesForSku(static::ORDER_ITEM_SKU)
-                ->equals(150)
+                ->equals(150),
         );
 
         foreach ($order3->getItems() as $orderItem) {
@@ -114,7 +114,7 @@ class OmsFacadeSumReservedItemsTest extends Unit
         $this->assertTrue(
             $this->getOmsFacade()
                 ->sumReservedProductQuantitiesForSku(static::ORDER_ITEM_SKU)
-                ->equals(100)
+                ->equals(100),
         );
     }
 
@@ -140,12 +140,12 @@ class OmsFacadeSumReservedItemsTest extends Unit
         // Assert
         $this->assertTrue(
             $sumReservedProductQuantitiesForSkuBefore->equals(0),
-            'Expected reserved product quantity to be 0 for non-reserved state of subprocess.'
+            'Expected reserved product quantity to be 0 for non-reserved state of subprocess.',
         );
 
         $this->assertTrue(
             $sumReservedProductQuantitiesForSkuAfter->equals(50),
-            'Expected reserved product quantity to be 50 for reserved state of subprocess.'
+            'Expected reserved product quantity to be 50 for reserved state of subprocess.',
         );
     }
 

@@ -72,7 +72,7 @@ class LocalizedAttributesExtractor implements LocalizedAttributesExtractorInterf
         $localizedAttributes = $localizedAttributesTransfer ? $localizedAttributesTransfer->getAttributes() : [];
         $attributes = array_merge($attributes, $localizedAttributes);
         $productManagementAttributeTransfers = $this->productAttributeFacade->getProductManagementAttributes(
-            (new ProductManagementAttributeFilterTransfer())->setKeys(array_keys($attributes))
+            (new ProductManagementAttributeFilterTransfer())->setKeys(array_keys($attributes)),
         )->getProductManagementAttributes();
 
         $superAttributes = [];

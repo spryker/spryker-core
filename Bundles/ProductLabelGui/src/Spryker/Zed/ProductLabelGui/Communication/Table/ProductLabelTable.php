@@ -145,7 +145,7 @@ class ProductLabelTable extends AbstractTable
     {
         $config->setDefaultSortField(
             static::COL_ID_PRODUCT_LABEL,
-            TableConfiguration::SORT_ASC
+            TableConfiguration::SORT_ASC,
         );
 
         $config->setSortable([
@@ -212,7 +212,7 @@ class ProductLabelTable extends AbstractTable
             ->useSpyProductLabelProductAbstractQuery(null, Criteria::LEFT_JOIN)
                 ->withColumn(
                     sprintf('COUNT(%s)', SpyProductLabelProductAbstractTableMap::COL_FK_PRODUCT_ABSTRACT),
-                    static::COL_ABSTRACT_PRODUCT_RELATION_COUNT
+                    static::COL_ABSTRACT_PRODUCT_RELATION_COUNT,
                 )
                 ->groupByFkProductLabel()
             ->endUse();
@@ -227,7 +227,7 @@ class ProductLabelTable extends AbstractTable
     {
         return $this->generateLabel(
             $productLabelEntity->getIsExclusive() ? 'Yes' : 'No',
-            null
+            null,
         );
     }
 
@@ -240,7 +240,7 @@ class ProductLabelTable extends AbstractTable
     {
         return $this->generateLabel(
             $productLabelEntity->getIsDynamic() ? 'Yes' : 'No',
-            null
+            null,
         );
     }
 
@@ -301,12 +301,12 @@ class ProductLabelTable extends AbstractTable
                 static::URL_PRODUCT_LABEL_VIEW,
                 [
                     ViewController::PARAM_ID_PRODUCT_LABEL => $idProductLabel,
-                ]
+                ],
             ),
             'View',
             [
                 'icon' => 'fa-eye',
-            ]
+            ],
         );
     }
 
@@ -322,9 +322,9 @@ class ProductLabelTable extends AbstractTable
                 static::URL_PRODUCT_LABEL_EDIT,
                 [
                     EditController::PARAM_ID_PRODUCT_LABEL => $idProductLabel,
-                ]
+                ],
             ),
-            'Edit'
+            'Edit',
         );
     }
 
@@ -341,9 +341,9 @@ class ProductLabelTable extends AbstractTable
                 [
                     DeleteController::URL_PARAM_ID_PRODUCT_LABEL => $idProductLabel,
                     DeleteController::URL_PARAM_REDIRECT_URL => static::URL_PRODUCT_LABEL_LIST,
-                ]
+                ],
             ),
-            'Delete'
+            'Delete',
         );
     }
 }

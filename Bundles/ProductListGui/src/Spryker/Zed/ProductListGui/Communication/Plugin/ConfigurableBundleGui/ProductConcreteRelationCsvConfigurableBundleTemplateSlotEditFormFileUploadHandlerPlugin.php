@@ -49,8 +49,8 @@ class ProductConcreteRelationCsvConfigurableBundleTemplateSlotEditFormFileUpload
         $productListAggregateFormTransfer->setProductListProductConcreteRelation(
             $this->getFactory()->createProductListImporter()->importFromCsvFile(
                 $uploadedFile,
-                $productListAggregateFormTransfer->getProductListProductConcreteRelation()
-            )
+                $productListAggregateFormTransfer->getProductListProductConcreteRelation(),
+            ),
         );
 
         return $configurableBundleTemplateSlotEditFormTransfer->setProductListAggregateForm($productListAggregateFormTransfer);

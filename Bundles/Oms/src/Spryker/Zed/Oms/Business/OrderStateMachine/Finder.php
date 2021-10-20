@@ -283,7 +283,7 @@ class Finder implements FinderInterface
         $states = $this->getStatesByFlag(
             $items->getFirst()->getProcess()->getName(),
             $flag,
-            $hasFlag
+            $hasFlag,
         );
 
         $selectedItems = [];
@@ -351,8 +351,8 @@ class Finder implements FinderInterface
             throw new StateNotFoundException(sprintf(
                 sprintf(
                     'State with name "%s" not found in any StateMachine processes.',
-                    $stateName
-                )
+                    $stateName,
+                ),
             ));
         }
 

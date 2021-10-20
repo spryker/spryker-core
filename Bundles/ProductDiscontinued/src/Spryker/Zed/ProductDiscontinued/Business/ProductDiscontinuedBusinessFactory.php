@@ -47,7 +47,7 @@ class ProductDiscontinuedBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->createProductDiscontinuedPluginExecutor(),
             $this->getConfig(),
-            $this->getProductDiscontinuedPreDeleteCheckPlugins()
+            $this->getProductDiscontinuedPreDeleteCheckPlugins(),
         );
     }
 
@@ -59,7 +59,7 @@ class ProductDiscontinuedBusinessFactory extends AbstractBusinessFactory
         return new ProductDiscontinuedPluginExecutor(
             $this->getPostProductDiscontinuePlugins(),
             $this->getPostDeleteProductDiscontinuedPlugins(),
-            $this->getPostDeleteBulkProductDiscontinuedPlugins()
+            $this->getPostDeleteBulkProductDiscontinuedPlugins(),
         );
     }
 
@@ -83,7 +83,7 @@ class ProductDiscontinuedBusinessFactory extends AbstractBusinessFactory
             $this->getEntityManager(),
             $this->getProductFacade(),
             $this->createProductDiscontinuedPluginExecutor(),
-            $logger
+            $logger,
         );
     }
 
@@ -117,7 +117,7 @@ class ProductDiscontinuedBusinessFactory extends AbstractBusinessFactory
     public function createProductDiscontinuedNoteWriter(): ProductDiscontinuedNoteWriterInterface
     {
         return new ProductDiscontinuedNoteWriter(
-            $this->getEntityManager()
+            $this->getEntityManager(),
         );
     }
 
@@ -127,7 +127,7 @@ class ProductDiscontinuedBusinessFactory extends AbstractBusinessFactory
     public function createProductDiscontinuedCheckoutPreConditionChecker(): ProductDiscontinuedCheckoutPreConditionCheckerInterface
     {
         return new ProductDiscontinuedCheckoutPreConditionChecker(
-            $this->getRepository()
+            $this->getRepository(),
         );
     }
 

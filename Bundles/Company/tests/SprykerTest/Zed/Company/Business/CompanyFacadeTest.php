@@ -140,7 +140,7 @@ class CompanyFacadeTest extends Test
         $this->tester->getFacade()->update(
             $companyTransfer
                 ->setIsActive(true)
-                ->setStatus(static::STATUS_APPROVED)
+                ->setStatus(static::STATUS_APPROVED),
         );
         $updatedCompanyTransfer = $this->tester->getFacade()->findCompanyById($companyTransfer->getIdCompany());
 

@@ -212,13 +212,13 @@ class FileTable extends AbstractTable
             Url::generate(static::URL_FILE_MANAGER_GUI_VIEW, [
                 static::REQUEST_ID_FILE => $item[static::COL_ID_FILE],
             ]),
-            static::VIEW_TITLE
+            static::VIEW_TITLE,
         );
         $buttons[] = $this->generateEditButton(
             Url::generate(static::URL_FILE_MANAGER_GUI_EDIT, [
                 static::REQUEST_ID_FILE => $item[static::COL_ID_FILE],
             ]),
-            static::EDIT_TITLE
+            static::EDIT_TITLE,
         );
         $buttons[] = $this->generateRemoveButton(
             Url::generate(static::URL_FILE_MANAGER_GUI_DELETE, [
@@ -226,7 +226,7 @@ class FileTable extends AbstractTable
             ]),
             static::DELETE_TITLE,
             [],
-            DeleteFileForm::class
+            DeleteFileForm::class,
         );
 
         return $buttons;

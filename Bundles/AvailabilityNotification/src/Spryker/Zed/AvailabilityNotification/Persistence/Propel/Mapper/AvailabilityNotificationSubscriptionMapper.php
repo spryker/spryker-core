@@ -52,7 +52,7 @@ class AvailabilityNotificationSubscriptionMapper implements AvailabilityNotifica
     ): AvailabilityNotificationSubscriptionCollectionTransfer {
         foreach ($availabilityNotificationSubscriptionEntities as $availabilityNotificationSubscriptionEntity) {
             $availabilityNotificationSubscriptionCollectionTransfer->addAvailabilityNotificationSubscription(
-                $this->mapAvailabilityNotificationSubscriptionTransfer($availabilityNotificationSubscriptionEntity)
+                $this->mapAvailabilityNotificationSubscriptionTransfer($availabilityNotificationSubscriptionEntity),
             );
         }
 

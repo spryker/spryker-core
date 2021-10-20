@@ -200,7 +200,7 @@ class ForeignKeysProvider implements ForeignKeysProviderInterface
         $indexColumnXmlElements = $tableXmlElement->xpath(
             $hasNamespace
             ? 's:index/s:index-column | s:column[@primaryKey="true"]'
-            : 'index/index-column | column[@primaryKey="true"]'
+            : 'index/index-column | column[@primaryKey="true"]',
         );
 
         if ($indexColumnXmlElements === false) {

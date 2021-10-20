@@ -88,7 +88,7 @@ class MerchantProductWritePublisherPluginTest extends Unit
         // Act
         $this->merchantProductWritePublisherPlugin->handleBulk(
             $eventTransfers,
-            MerchantProductStorageConfig::MERCHANT_PRODUCT_ABSTRACT_PUBLISH
+            MerchantProductStorageConfig::MERCHANT_PRODUCT_ABSTRACT_PUBLISH,
         );
         $productAbstractStorageEntity = $this->tester->getAbstractProductStorageByIdProductAbstract($merchantProductTransfer->getIdProductAbstract());
 

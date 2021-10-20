@@ -55,11 +55,11 @@ class AbstractSchedulerConsole extends Console
             $outputColor = $status ? static::OUTPUT_SUCCESS_COLOR : static::OUTPUT_ERROR_COLOR;
             $output->writeln(sprintf(
                 "Scheduler Name: <fg=$outputColor;options=bold>%s</>",
-                $responseTransfer->getSchedule()->getIdScheduler()
+                $responseTransfer->getSchedule()->getIdScheduler(),
             ));
             $output->writeln(sprintf(
                 "Scheduler Status: <fg=$outputColor;options=bold>%s</>",
-                $status ? static::OUTPUT_SUCCESS_MESSAGE : static::OUTPUT_ERROR_MESSAGE
+                $status ? static::OUTPUT_SUCCESS_MESSAGE : static::OUTPUT_ERROR_MESSAGE,
             ));
             if ($output->getVerbosity() >= OutputInterface::VERBOSITY_VERBOSE) {
                 $this->outputJobResponse($responseTransfer, $output);

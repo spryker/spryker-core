@@ -122,8 +122,8 @@ class CheckoutProcessor implements CheckoutProcessorInterface
                 $this->restCheckoutErrorMapper->mapLocalizedRestCheckoutErrorTransferToRestErrorTransfer(
                     $restCheckoutErrorTransfer,
                     new RestErrorMessageTransfer(),
-                    $localeName
-                )
+                    $localeName,
+                ),
             );
         }
 
@@ -140,13 +140,13 @@ class CheckoutProcessor implements CheckoutProcessorInterface
         $restCheckoutResponseAttributesTransfer = $this->checkoutResponseMapper
             ->mapRestCheckoutResponseTransferToRestCheckoutResponseAttributesTransfer(
                 $restCheckoutResponseTransfer,
-                new RestCheckoutResponseAttributesTransfer()
+                new RestCheckoutResponseAttributesTransfer(),
             );
 
         $restResource = $this->restResourceBuilder->createRestResource(
             CheckoutRestApiConfig::RESOURCE_CHECKOUT,
             null,
-            $restCheckoutResponseAttributesTransfer
+            $restCheckoutResponseAttributesTransfer,
         );
 
         return $this->restResourceBuilder

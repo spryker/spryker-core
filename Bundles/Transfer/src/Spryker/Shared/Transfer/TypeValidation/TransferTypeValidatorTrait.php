@@ -33,7 +33,7 @@ trait TransferTypeValidatorTrait
             static::class,
             $propertyName,
             $propertyExpectedTypes,
-            $this->getActualValueType($value)
+            $this->getActualValueType($value),
         );
         $this->logTypeErrorMessage($message, 2);
     }
@@ -55,7 +55,7 @@ trait TransferTypeValidatorTrait
             'Value passed to `%s()` method is expected to be of type(s) %s. %s is given',
             $fullyQualifiedCalleeMethodName,
             $propertyExpectedTypes,
-            $this->getActualValueType($value)
+            $this->getActualValueType($value),
         );
         $this->logTypeErrorMessage($message, 2);
     }
@@ -114,7 +114,7 @@ trait TransferTypeValidatorTrait
 
         if (!function_exists($typeAssertFunctionName)) {
             throw new InvalidArgumentException(
-                sprintf('Variable type `%s` is not resolvable to an existing type assert function.', $varType)
+                sprintf('Variable type `%s` is not resolvable to an existing type assert function.', $varType),
             );
         }
 
@@ -176,7 +176,7 @@ trait TransferTypeValidatorTrait
             '%s. Called in %s:%d',
             $message,
             $callerFileName,
-            $callerLineNumber
+            $callerLineNumber,
         );
 
         file_put_contents($this->getLogFilePath(), $typeErrorMessage . PHP_EOL, FILE_APPEND);

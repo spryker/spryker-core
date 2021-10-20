@@ -40,7 +40,7 @@ class DataExportConfig extends AbstractBundleConfig
     public function getExportConfigurationsPath(): string
     {
         return (string)realpath(
-            APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . 'data' . DIRECTORY_SEPARATOR . 'export' . DIRECTORY_SEPARATOR . 'config'
+            APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . 'data' . DIRECTORY_SEPARATOR . 'export' . DIRECTORY_SEPARATOR . 'config',
         );
     }
 
@@ -50,7 +50,7 @@ class DataExportConfig extends AbstractBundleConfig
     protected function getModuleExportConfigurationPath(): string
     {
         $moduleRoot = realpath(
-            dirname(__DIR__, static::MODULE_ROOT_DIRECTORY_LEVEL)
+            dirname(__DIR__, static::MODULE_ROOT_DIRECTORY_LEVEL),
         );
 
         return $moduleRoot . DIRECTORY_SEPARATOR . 'data' . DIRECTORY_SEPARATOR . 'export' . DIRECTORY_SEPARATOR . 'config' . DIRECTORY_SEPARATOR;

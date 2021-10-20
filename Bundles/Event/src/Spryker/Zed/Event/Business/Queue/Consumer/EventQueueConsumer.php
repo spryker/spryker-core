@@ -82,7 +82,7 @@ class EventQueueConsumer implements EventQueueConsumerInterface
         $bulkListener = [];
         foreach ($queueMessageTransfers as $queueMessageTransfer) {
             $eventQueueSentMessageBodyTransfer = $this->createEventQueueSentMessageBodyTransfer(
-                $queueMessageTransfer->getQueueMessage()->getBody()
+                $queueMessageTransfer->getQueueMessage()->getBody(),
             );
 
             if (!$this->isMessageBodyValid($eventQueueSentMessageBodyTransfer)) {
@@ -105,8 +105,8 @@ class EventQueueConsumer implements EventQueueConsumerInterface
                     sprintf(
                         '"%s" listener "%s" was successfully handled.',
                         $eventQueueSentMessageBodyTransfer->getEventName(),
-                        $eventQueueSentMessageBodyTransfer->getListenerClassName()
-                    )
+                        $eventQueueSentMessageBodyTransfer->getListenerClassName(),
+                    ),
                 );
 
                 $queueMessageTransfer->setAcknowledge(true);
@@ -114,7 +114,7 @@ class EventQueueConsumer implements EventQueueConsumerInterface
                 $errorMessage = $this->createErrorMessage(
                     $eventQueueSentMessageBodyTransfer->getEventName(),
                     $eventQueueSentMessageBodyTransfer->getListenerClassName(),
-                    $exception
+                    $exception,
                 );
                 $this->logConsumerAction($errorMessage, $exception);
                 $this->handleFailedMessage($queueMessageTransfer, $errorMessage);
@@ -217,7 +217,7 @@ class EventQueueConsumer implements EventQueueConsumerInterface
             $eventName,
             $listenerClassName,
             $exception->getMessage(),
-            $exception->getTraceAsString()
+            $exception->getTraceAsString(),
         );
 
         return $errorMessage;
@@ -298,8 +298,8 @@ class EventQueueConsumer implements EventQueueConsumerInterface
             $this->logConsumerAction(
                 sprintf(
                     'Listener class "%s" not found.',
-                    $eventQueueSendMessageBodyTransfer->getListenerClassName()
-                )
+                    $eventQueueSendMessageBodyTransfer->getListenerClassName(),
+                ),
             );
 
             return false;
@@ -309,8 +309,8 @@ class EventQueueConsumer implements EventQueueConsumerInterface
             $this->logConsumerAction(
                 sprintf(
                     'Transfer class "%s" not found.',
-                    $eventQueueSendMessageBodyTransfer->getTransferClassName()
-                )
+                    $eventQueueSendMessageBodyTransfer->getTransferClassName(),
+                ),
             );
 
             return false;
@@ -364,7 +364,7 @@ class EventQueueConsumer implements EventQueueConsumerInterface
         $eventQueueSentMessageBodyTransfer = new EventQueueSendMessageBodyTransfer();
         $eventQueueSentMessageBodyTransfer->fromArray(
             $this->utilEncodingService->decodeJson($body, true),
-            true
+            true,
         );
 
         return $eventQueueSentMessageBodyTransfer;

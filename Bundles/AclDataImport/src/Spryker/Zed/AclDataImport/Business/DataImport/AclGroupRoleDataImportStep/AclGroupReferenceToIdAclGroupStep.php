@@ -38,7 +38,7 @@ class AclGroupReferenceToIdAclGroupStep implements DataImportStepInterface
         $aclGroupEntity = SpyAclGroupQuery::create()->findOneByReference($aclGroupReference);
         if (!$aclGroupEntity) {
             throw new EntityNotFoundException(
-                sprintf('Could not find AclGroup by reference: %s', $aclGroupReference)
+                sprintf('Could not find AclGroup by reference: %s', $aclGroupReference),
             );
         }
 

@@ -30,12 +30,12 @@ class FileManagerStorageMapper implements FileManagerStorageMapperInterface
     {
         $fileTransfer->fromArray(
             $file->toArray(),
-            true
+            true,
         );
 
         foreach ($file->getSpyFileInfos() as $fileInfo) {
             $fileTransfer->addFileInfo(
-                $this->mapFileInfoEntityToTransfer($fileInfo, new FileInfoTransfer())
+                $this->mapFileInfoEntityToTransfer($fileInfo, new FileInfoTransfer()),
             );
         }
 
@@ -60,7 +60,7 @@ class FileManagerStorageMapper implements FileManagerStorageMapperInterface
     {
         return $fileStorageTransfer->fromArray(
             $fileStorage->toArray(),
-            true
+            true,
         );
     }
 
@@ -91,7 +91,7 @@ class FileManagerStorageMapper implements FileManagerStorageMapperInterface
         foreach ($fileStorageEntities as $fileStorageEntity) {
             $fileStorageTransfers[] = $this->mapFileStorageEntityToTransfer(
                 $fileStorageEntity,
-                new FileStorageTransfer()
+                new FileStorageTransfer(),
             );
         }
 
@@ -108,7 +108,7 @@ class FileManagerStorageMapper implements FileManagerStorageMapperInterface
     {
         return $fileInfoTransfer->fromArray(
             $fileInfo->toArray(),
-            true
+            true,
         );
     }
 
@@ -124,7 +124,7 @@ class FileManagerStorageMapper implements FileManagerStorageMapperInterface
     ) {
         return $fileLocalizedAttributesTransfer->fromArray(
             $fileLocalizedAttributes->toArray(),
-            true
+            true,
         );
     }
 }

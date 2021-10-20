@@ -68,13 +68,13 @@ class ProductReviewSearchCollectorQuery extends AbstractPropelCollectorQuery
             ->addJoin(
                 SpyTouchTableMap::COL_ITEM_ID,
                 SpyProductReviewTableMap::COL_ID_PRODUCT_REVIEW,
-                Criteria::INNER_JOIN
+                Criteria::INNER_JOIN,
             );
 
         $this->touchQuery
             ->addAnd(
                 SpyProductReviewTableMap::COL_FK_LOCALE,
-                $this->getLocale()->getIdLocale()
+                $this->getLocale()->getIdLocale(),
             );
 
         $this->touchQuery

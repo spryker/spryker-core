@@ -44,7 +44,7 @@ class RestRequestValidatorBusinessFactory extends AbstractBusinessFactory
             $this->createRestRequestValidatorCacheCollector(),
             $this->createRestRequestValidatorSchemaMerger(),
             $this->createRestRequestValidatorCacheSaver(),
-            $this->getStore()
+            $this->getStore(),
         );
     }
 
@@ -56,7 +56,7 @@ class RestRequestValidatorBusinessFactory extends AbstractBusinessFactory
         return new RestRequestValidatorCodeBucketCacheBuilder(
             $this->createRestRequestValidatorCacheCollector(),
             $this->createRestRequestValidatorSchemaMerger(),
-            $this->createRestRequestValidatorCacheSaver()
+            $this->createRestRequestValidatorCacheSaver(),
         );
     }
 
@@ -68,7 +68,7 @@ class RestRequestValidatorBusinessFactory extends AbstractBusinessFactory
         return new RestRequestValidatorCacheCollector(
             $this->createRestRequestValidatorSchemaFinder(),
             $this->getFilesystemAdapter(),
-            $this->getYamlAdapter()
+            $this->getYamlAdapter(),
         );
     }
 
@@ -88,7 +88,7 @@ class RestRequestValidatorBusinessFactory extends AbstractBusinessFactory
         return new RestRequestValidatorCacheSaver(
             $this->getFilesystemAdapter(),
             $this->getYamlAdapter(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -100,7 +100,7 @@ class RestRequestValidatorBusinessFactory extends AbstractBusinessFactory
         return new RestRequestValidatorSchemaFinder(
             $this->getFinderAdapter(),
             $this->getConfig(),
-            $this->getStore()
+            $this->getStore(),
         );
     }
 
@@ -112,7 +112,7 @@ class RestRequestValidatorBusinessFactory extends AbstractBusinessFactory
         return new RestRequestValidatorCacheRemover(
             $this->getStore(),
             $this->getFilesystemAdapter(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -123,7 +123,7 @@ class RestRequestValidatorBusinessFactory extends AbstractBusinessFactory
     {
         return new RestRequestValidatorCodeBucketCacheRemover(
             $this->getFilesystemAdapter(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 

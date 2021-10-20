@@ -43,7 +43,7 @@ class ShoppingListDataImportConfig extends DataImportConfig
 
         return $this->buildImporterConfiguration(
             $moduleDataImportDirectory . 'shopping_list.csv',
-            static::IMPORT_TYPE_SHOPPING_LIST
+            static::IMPORT_TYPE_SHOPPING_LIST,
         );
     }
 
@@ -58,7 +58,7 @@ class ShoppingListDataImportConfig extends DataImportConfig
 
         return $this->buildImporterConfiguration(
             $moduleDataImportDirectory . 'shopping_list_item.csv',
-            static::IMPORT_TYPE_SHOPPING_LIST_ITEM
+            static::IMPORT_TYPE_SHOPPING_LIST_ITEM,
         );
     }
 
@@ -73,7 +73,7 @@ class ShoppingListDataImportConfig extends DataImportConfig
 
         return $this->buildImporterConfiguration(
             $moduleDataImportDirectory . 'shopping_list_company_user.csv',
-            static::IMPORT_TYPE_SHOPPING_LIST_COMPANY_USER
+            static::IMPORT_TYPE_SHOPPING_LIST_COMPANY_USER,
         );
     }
 
@@ -88,7 +88,7 @@ class ShoppingListDataImportConfig extends DataImportConfig
 
         return $this->buildImporterConfiguration(
             $moduleDataImportDirectory . 'shopping_list_company_business_unit.csv',
-            static::IMPORT_TYPE_SHOPPING_LIST_COMPANY_BUSINESS_UNIT
+            static::IMPORT_TYPE_SHOPPING_LIST_COMPANY_BUSINESS_UNIT,
         );
     }
 
@@ -102,7 +102,7 @@ class ShoppingListDataImportConfig extends DataImportConfig
             . DIRECTORY_SEPARATOR . '..'
             . DIRECTORY_SEPARATOR . '..'
             . DIRECTORY_SEPARATOR . '..'
-            . DIRECTORY_SEPARATOR . '..'
+            . DIRECTORY_SEPARATOR . '..',
         );
 
         return $moduleRoot . DIRECTORY_SEPARATOR;

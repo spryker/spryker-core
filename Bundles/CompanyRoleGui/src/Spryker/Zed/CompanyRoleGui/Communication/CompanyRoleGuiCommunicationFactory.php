@@ -63,7 +63,7 @@ class CompanyRoleGuiCommunicationFactory extends AbstractCommunicationFactory
         return $this->getFormFactory()->create(
             CompanyUserRoleForm::class,
             $companyUserTransfer,
-            $dataProvider->getOptions($companyUserTransfer)
+            $dataProvider->getOptions($companyUserTransfer),
         );
     }
 
@@ -81,7 +81,7 @@ class CompanyRoleGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createCompanyRoleTable(): CompanyRoleTable
     {
         return new CompanyRoleTable(
-            $this->getCompanyRolePropelQuery()
+            $this->getCompanyRolePropelQuery(),
         );
     }
 
@@ -111,7 +111,7 @@ class CompanyRoleGuiCommunicationFactory extends AbstractCommunicationFactory
         return $this->getFormFactory()->create(
             CompanyRoleCreateForm::class,
             $dataProvider->getData(),
-            $dataProvider->getOptions()
+            $dataProvider->getOptions(),
         );
     }
 
@@ -127,7 +127,7 @@ class CompanyRoleGuiCommunicationFactory extends AbstractCommunicationFactory
         return $this->getFormFactory()->create(
             CompanyRoleEditForm::class,
             $dataProvider->getData($companyRoleTransfer),
-            $dataProvider->getOptions()
+            $dataProvider->getOptions(),
         );
     }
 
@@ -148,7 +148,7 @@ class CompanyRoleGuiCommunicationFactory extends AbstractCommunicationFactory
             $this->getCompanyFacade(),
             $this->getCompanyRoleFacade(),
             $this->getGlossaryFacade(),
-            $this->getPermissionFacade()
+            $this->getPermissionFacade(),
         );
     }
 

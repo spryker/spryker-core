@@ -48,13 +48,13 @@ class OrderShipmentRestResponseBuilder implements OrderShipmentRestResponseBuild
         $restOrderShipmentsAttributesTransfer = $this->orderShipmentMapper
             ->mapShipmentGroupTransferToRestOrderShipmentsAttributesTransfer(
                 $shipmentGroupTransfer,
-                new RestOrderShipmentsAttributesTransfer()
+                new RestOrderShipmentsAttributesTransfer(),
             );
 
         return $this->restResourceBuilder->createRestResource(
             ShipmentsRestApiConfig::RESOURCE_ORDER_SHIPMENTS,
             (string)$shipmentGroupTransfer->getShipment()->getIdSalesShipment(),
-            $restOrderShipmentsAttributesTransfer
+            $restOrderShipmentsAttributesTransfer,
         );
     }
 }

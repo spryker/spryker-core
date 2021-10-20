@@ -315,7 +315,7 @@ SCRIPT;
         } elseif ($col->isSetType()) {
             $this->declareClasses(
                 'Propel\Common\Util\SetColumnConverter',
-                'Propel\Common\Exception\SetColumnConverterException'
+                'Propel\Common\Exception\SetColumnConverterException',
             );
             $script .= "
         \$valueSet = " . $this->getTableMapClassName() . '::getValueSet(' . $this->getColumnConstant($col) . ");

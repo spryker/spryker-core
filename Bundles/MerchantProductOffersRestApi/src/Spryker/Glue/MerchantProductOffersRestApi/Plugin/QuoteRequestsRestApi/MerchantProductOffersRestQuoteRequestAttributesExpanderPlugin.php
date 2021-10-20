@@ -37,7 +37,7 @@ class MerchantProductOffersRestQuoteRequestAttributesExpanderPlugin extends Abst
             ->expandRestQuoteRequestItemWithMerchantProductOffers(
                 $restQuoteRequestsAttributesTransfers,
                 $quoteRequestTransfers,
-                $localeName
+                $localeName,
             );
     }
 }

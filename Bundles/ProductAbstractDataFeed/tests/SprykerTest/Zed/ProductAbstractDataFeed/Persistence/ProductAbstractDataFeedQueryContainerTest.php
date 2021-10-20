@@ -78,7 +78,7 @@ class ProductAbstractDataFeedQueryContainerTest extends Unit
 
         $expectedJoinedTables = array_merge(
             $this->getDefaultJoinedTables(),
-            $this->getCategoryJoinedTables()
+            $this->getCategoryJoinedTables(),
         );
         $joinedTables = $this->getJoinedTablesNames($query);
         $expectedJoinedTables = $this->getSortedExpectedJoinedTables($expectedJoinedTables);
@@ -98,7 +98,7 @@ class ProductAbstractDataFeedQueryContainerTest extends Unit
 
         $expectedJoinedTables = array_merge(
             $this->getDefaultJoinedTables(),
-            $this->getPriceJoinedTables()
+            $this->getPriceJoinedTables(),
         );
         $joinedTables = $this->getJoinedTablesNames($query);
         $expectedJoinedTables = $this->getSortedExpectedJoinedTables($expectedJoinedTables);
@@ -118,7 +118,7 @@ class ProductAbstractDataFeedQueryContainerTest extends Unit
 
         $expectedJoinedTables = array_merge(
             $this->getDefaultJoinedTables(),
-            $this->getOptionJoinedTables()
+            $this->getOptionJoinedTables(),
         );
         $joinedTables = $this->getJoinedTablesNames($query);
         $expectedJoinedTables = $this->getSortedExpectedJoinedTables($expectedJoinedTables);
@@ -138,7 +138,7 @@ class ProductAbstractDataFeedQueryContainerTest extends Unit
 
         $expectedJoinedTables = array_merge(
             $this->getDefaultJoinedTables(),
-            $this->getImageJoinedTables()
+            $this->getImageJoinedTables(),
         );
         $joinedTables = $this->getJoinedTablesNames($query);
         $expectedJoinedTables = $this->getSortedExpectedJoinedTables($expectedJoinedTables);
@@ -159,7 +159,7 @@ class ProductAbstractDataFeedQueryContainerTest extends Unit
         $expectedJoinedTables = array_merge(
             $this->getDefaultJoinedTables(),
             $this->getVariantJoinedTables(),
-            $this->getImageJoinedTables()
+            $this->getImageJoinedTables(),
         );
         $joinedTables = $this->getJoinedTablesNames($query);
         $expectedJoinedTables = $this->getSortedExpectedJoinedTables($expectedJoinedTables);
@@ -187,7 +187,7 @@ class ProductAbstractDataFeedQueryContainerTest extends Unit
             $this->getImageJoinedTables(),
             $this->getPriceJoinedTables(),
             $this->getOptionJoinedTables(),
-            $this->getVariantJoinedTables()
+            $this->getVariantJoinedTables(),
         );
         $joinedTables = $this->getJoinedTablesNames($query);
         $expectedJoinedTables = $this->getSortedExpectedJoinedTables($expectedJoinedTables);

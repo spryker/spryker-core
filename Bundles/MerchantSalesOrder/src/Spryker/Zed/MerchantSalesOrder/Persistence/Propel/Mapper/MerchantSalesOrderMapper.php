@@ -36,7 +36,7 @@ class MerchantSalesOrderMapper
             ->setIdOrder($merchantSalesOrderEntity->getFkSalesOrder());
 
         $merchantOrderTransfer->setTotals(
-            $this->findTotalsTransferInMerchantSalesOrderEntity($merchantSalesOrderEntity)
+            $this->findTotalsTransferInMerchantSalesOrderEntity($merchantSalesOrderEntity),
         );
 
         $merchantSalesOrderEntity->initMerchantSalesOrderItems(false);
@@ -46,8 +46,8 @@ class MerchantSalesOrderMapper
                 $merchantOrderTransfer->addMerchantOrderItem(
                     $this->mapMerchantSalesOrderItemEntityToMerchantOrderItemTransfer(
                         $merchantSalesOrderItemEntity,
-                        new MerchantOrderItemTransfer()
-                    )
+                        new MerchantOrderItemTransfer(),
+                    ),
                 );
             }
         }
@@ -206,7 +206,7 @@ class MerchantSalesOrderMapper
         foreach ($merchantSalesOrderItemEntities as $merchantSalesOrderItemEntity) {
             $merchantOrderTransfer = $this->mapMerchantSalesOrderItemEntityToMerchantOrderItemTransfer(
                 $merchantSalesOrderItemEntity,
-                new MerchantOrderItemTransfer()
+                new MerchantOrderItemTransfer(),
             );
 
             $merchantOrderItemCollectionTransfer->addMerchantOrderItem($merchantOrderTransfer);

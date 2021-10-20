@@ -285,7 +285,7 @@ class QuoteRequestUserWriter implements QuoteRequestUserWriterInterface
             ->setMetadata($latestQuoteRequestVersionTransfer->getMetadata());
 
         $quoteRequestVersionTransfer->setVersionReference(
-            $this->quoteRequestReferenceGenerator->generateQuoteRequestVersionReference($quoteRequestTransfer, $quoteRequestVersionTransfer)
+            $this->quoteRequestReferenceGenerator->generateQuoteRequestVersionReference($quoteRequestTransfer, $quoteRequestVersionTransfer),
         );
 
         return $this->quoteRequestEntityManager->createQuoteRequestVersion($quoteRequestVersionTransfer);
@@ -307,7 +307,7 @@ class QuoteRequestUserWriter implements QuoteRequestUserWriterInterface
             ->setFkQuoteRequest($quoteRequestTransfer->getIdQuoteRequest());
 
         $quoteRequestVersionTransfer->setVersionReference(
-            $this->quoteRequestReferenceGenerator->generateQuoteRequestVersionReference($quoteRequestTransfer, $quoteRequestVersionTransfer)
+            $this->quoteRequestReferenceGenerator->generateQuoteRequestVersionReference($quoteRequestTransfer, $quoteRequestVersionTransfer),
         );
 
         return $this->quoteRequestEntityManager->createQuoteRequestVersion($quoteRequestVersionTransfer);
@@ -346,7 +346,7 @@ class QuoteRequestUserWriter implements QuoteRequestUserWriterInterface
         return $this->quoteRequestEntityManager->updateQuoteRequestStatus(
             $quoteRequestTransfer->getQuoteRequestReference(),
             $quoteRequestTransfer->getStatus(),
-            SharedQuoteRequestConfig::STATUS_IN_PROGRESS
+            SharedQuoteRequestConfig::STATUS_IN_PROGRESS,
         );
     }
 

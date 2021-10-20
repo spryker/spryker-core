@@ -80,8 +80,8 @@ class CustomerOrderSaverWithItemLevelShippingAddressTest extends Test
             sprintf(
                 'Should be saved %d adresses. Saved %d.',
                 $expectedResult,
-                $customerAddressEntity->count()
-            )
+                $customerAddressEntity->count(),
+            ),
         );
     }
 
@@ -115,8 +115,8 @@ class CustomerOrderSaverWithItemLevelShippingAddressTest extends Test
             $customerAddressEntity,
             sprintf(
                 'Any shipping or billing addresses should not be saved. Saved %d',
-                $customerAddressEntity->count()
-            )
+                $customerAddressEntity->count(),
+            ),
         );
     }
 
@@ -155,8 +155,8 @@ class CustomerOrderSaverWithItemLevelShippingAddressTest extends Test
                 (new ItemBuilder())
                     ->withShipment(
                         (new ShipmentBuilder())
-                            ->withAnotherShippingAddress()
-                    )
+                            ->withAnotherShippingAddress(),
+                    ),
             )
             ->withTotals()
             ->build();
@@ -176,15 +176,15 @@ class CustomerOrderSaverWithItemLevelShippingAddressTest extends Test
                 (new ItemBuilder())
                 ->withShipment(
                     (new ShipmentBuilder())
-                        ->withAnotherShippingAddress()
-                )
+                        ->withAnotherShippingAddress(),
+                ),
             )
             ->withAnotherItem(
                 (new ItemBuilder())
                     ->withAnotherShipment(
                         (new ShipmentBuilder())
-                            ->withAnotherShippingAddress()
-                    )
+                            ->withAnotherShippingAddress(),
+                    ),
             )
             ->withTotals()
             ->build();
@@ -207,22 +207,22 @@ class CustomerOrderSaverWithItemLevelShippingAddressTest extends Test
                 (new ItemBuilder())
                     ->withShipment(
                         (new ShipmentBuilder())
-                            ->withShippingAddress($addressTransfer1->toArray())
-                    )
+                            ->withShippingAddress($addressTransfer1->toArray()),
+                    ),
             )
             ->withAnotherItem(
                 (new ItemBuilder())
                     ->withAnotherShipment(
                         (new ShipmentBuilder())
-                            ->withAnotherShippingAddress($addressTransfer2->toArray())
-                    )
+                            ->withAnotherShippingAddress($addressTransfer2->toArray()),
+                    ),
             )
             ->withAnotherItem(
                 (new ItemBuilder())
                     ->withAnotherShipment(
                         (new ShipmentBuilder())
-                            ->withAnotherShippingAddress($addressTransfer2->toArray())
-                    )
+                            ->withAnotherShippingAddress($addressTransfer2->toArray()),
+                    ),
             )
             ->withTotals()
             ->build();

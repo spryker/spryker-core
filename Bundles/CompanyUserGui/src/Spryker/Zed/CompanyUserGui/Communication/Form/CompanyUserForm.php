@@ -87,7 +87,7 @@ class CompanyUserForm extends AbstractType
                 'label' => false,
                 CompanyUserCustomerForm::OPTION_GENDER_CHOICES => $options[CompanyUserCustomerForm::OPTION_GENDER_CHOICES],
                 CompanyUserCustomerForm::OPTION_SALUTATION_CHOICES => $options[CompanyUserCustomerForm::OPTION_SALUTATION_CHOICES],
-            ]
+            ],
         );
 
         return $this;

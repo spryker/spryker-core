@@ -32,7 +32,7 @@ class PriceProductReaderPluginExecutor implements PriceProductReaderPluginExecut
         foreach ($this->extractorPlugins as $extractorPlugin) {
             $priceProductTransfers = array_merge(
                 $priceProductTransfers,
-                $extractorPlugin->extractProductPricesForProductAbstract($priceProductTransfers)
+                $extractorPlugin->extractProductPricesForProductAbstract($priceProductTransfers),
             );
         }
 
@@ -49,7 +49,7 @@ class PriceProductReaderPluginExecutor implements PriceProductReaderPluginExecut
         foreach ($this->extractorPlugins as $extractorPlugin) {
             $priceProductTransfers = array_merge(
                 $priceProductTransfers,
-                $extractorPlugin->extractProductPricesForProductConcrete($priceProductTransfers)
+                $extractorPlugin->extractProductPricesForProductConcrete($priceProductTransfers),
             );
         }
 

@@ -68,7 +68,7 @@ class CmsSlotRepository extends AbstractRepository implements CmsSlotRepositoryI
     {
         $cmsSlotQuery = $this->setQueryFilters(
             $this->getFactory()->createCmsSlotQuery(),
-            $cmsSlotCriteriaTransfer->getFilter()
+            $cmsSlotCriteriaTransfer->getFilter(),
         );
 
         if ($cmsSlotCriteriaTransfer->getCmsSlotIds()) {

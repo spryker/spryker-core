@@ -47,7 +47,7 @@ class CmsSlotBlockStoragePublishListener extends AbstractPlugin implements Event
             $cmsSlotBlockTransfer = (new CmsSlotBlockTransfer())
                 ->setIdCmsSlotBlock((string)$eventEntityTransfer->getId())
                 ->setIdSlotTemplate(
-                    $eventEntityTransfer->getAdditionalValues()[CmsSlotBlockTransfer::ID_SLOT_TEMPLATE] ?? null
+                    $eventEntityTransfer->getAdditionalValues()[CmsSlotBlockTransfer::ID_SLOT_TEMPLATE] ?? null,
                 )
                 ->setIdSlot($eventEntityTransfer->getAdditionalValues()[CmsSlotBlockTransfer::ID_SLOT] ?? null);
 

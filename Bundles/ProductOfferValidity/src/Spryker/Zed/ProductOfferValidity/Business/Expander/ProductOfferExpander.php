@@ -36,8 +36,8 @@ class ProductOfferExpander implements ProductOfferExpanderInterface
 
         $productOfferTransfer->setProductOfferValidity(
             $this->productOfferValidityRepository->findProductOfferValidityByIdProductOffer(
-                $productOfferTransfer->getIdProductOffer()
-            )
+                $productOfferTransfer->getIdProductOffer(),
+            ),
         );
 
         return $productOfferTransfer;

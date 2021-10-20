@@ -43,7 +43,7 @@ class AddressQuoteMapper implements AddressQuoteMapperInterface
         if ($restCheckoutRequestAttributesTransfer->getBillingAddress() !== null) {
             $billingAddress = $this->getAddressTransfer(
                 $restCheckoutRequestAttributesTransfer->getBillingAddress(),
-                $restCheckoutRequestAttributesTransfer->getCustomer()
+                $restCheckoutRequestAttributesTransfer->getCustomer(),
             );
             $quoteTransfer->setBillingAddress($billingAddress);
         }
@@ -51,7 +51,7 @@ class AddressQuoteMapper implements AddressQuoteMapperInterface
         if ($restCheckoutRequestAttributesTransfer->getShippingAddress() !== null) {
             $shippingAddress = $this->getAddressTransfer(
                 $restCheckoutRequestAttributesTransfer->getShippingAddress(),
-                $restCheckoutRequestAttributesTransfer->getCustomer()
+                $restCheckoutRequestAttributesTransfer->getCustomer(),
             );
 
             $quoteTransfer = $this->setItemLevelShippingAddresses($quoteTransfer, $shippingAddress);

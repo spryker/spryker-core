@@ -37,7 +37,7 @@ class CreateController extends BaseOptionController
                 '/product-option/edit/index',
                 [
                     BaseOptionController::URL_PARAM_ID_PRODUCT_OPTION_GROUP => $idProductOptionGroup,
-                ]
+                ],
             )->build();
 
             $this->addSuccessMessage('Product option group created.');

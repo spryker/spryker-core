@@ -23,7 +23,7 @@ class AvailabilityOfferConnectorBusinessFactory extends AbstractBusinessFactory
     {
         return new OfferQuoteItemStockHydrator(
             $this->getStoreFacade(),
-            $this->getAvailabilityFacade()
+            $this->getAvailabilityFacade(),
         );
     }
 

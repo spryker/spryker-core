@@ -253,7 +253,7 @@ class RedisSpinLockLocker implements SessionLockerInterface
                 $this->getUnlockScript(),
                 1,
                 $lockKey,
-                $token
+                $token,
             );
 
         return ($result ? true : false);

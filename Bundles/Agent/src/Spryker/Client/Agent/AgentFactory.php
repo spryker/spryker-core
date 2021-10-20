@@ -31,7 +31,7 @@ class AgentFactory extends AbstractFactory
     public function createZedStub(): AgentStubInterface
     {
         return new AgentStub(
-            $this->getZedRequestClient()
+            $this->getZedRequestClient(),
         );
     }
 
@@ -41,7 +41,7 @@ class AgentFactory extends AbstractFactory
     public function createAgentSession(): AgentSessionInterface
     {
         return new AgentSession(
-            $this->getSessionClient()
+            $this->getSessionClient(),
         );
     }
 
@@ -52,7 +52,7 @@ class AgentFactory extends AbstractFactory
     {
         return new ImpersonationSessionFinisher(
             $this->getCustomerClient(),
-            $this->getImpersonationSessionFinisherPlugins()
+            $this->getImpersonationSessionFinisherPlugins(),
         );
     }
 

@@ -58,7 +58,7 @@ class ProductReviewsRestApiDependencyProvider extends AbstractBundleDependencyPr
     {
         $container->set(static::CLIENT_PRODUCT_REVIEW_STORAGE, function (Container $container) {
             return new ProductReviewsRestApiToProductReviewStorageClientBridge(
-                $container->getLocator()->productReviewStorage()->client()
+                $container->getLocator()->productReviewStorage()->client(),
             );
         });
 
@@ -74,7 +74,7 @@ class ProductReviewsRestApiDependencyProvider extends AbstractBundleDependencyPr
     {
         $container->set(static::CLIENT_PRODUCT_STORAGE, function (Container $container) {
             return new ProductReviewsRestApiToProductStorageClientBridge(
-                $container->getLocator()->productStorage()->client()
+                $container->getLocator()->productStorage()->client(),
             );
         });
 
@@ -90,7 +90,7 @@ class ProductReviewsRestApiDependencyProvider extends AbstractBundleDependencyPr
     {
         $container->set(static::CLIENT_PRODUCT_REVIEW, function (Container $container) {
             return new ProductReviewsRestApiToProductReviewClientBridge(
-                $container->getLocator()->productReview()->client()
+                $container->getLocator()->productReview()->client(),
             );
         });
 

@@ -55,7 +55,7 @@ class FixturesCommand extends Run implements CustomCommandInterface
                 'no-colors',
                 '',
                 InputOption::VALUE_NONE,
-                'Force no colors in output (useful to override config file)'
+                'Force no colors in output (useful to override config file)',
             ),
             new InputOption('silent', '', InputOption::VALUE_NONE, 'Only outputs suite names and final results'),
             new InputOption('steps', '', InputOption::VALUE_NONE, 'Show steps in output'),
@@ -65,31 +65,31 @@ class FixturesCommand extends Run implements CustomCommandInterface
                 'skip',
                 's',
                 InputOption::VALUE_IS_ARRAY | InputOption::VALUE_REQUIRED,
-                'Skip selected suites'
+                'Skip selected suites',
             ),
             new InputOption(
                 'group',
                 'g',
                 InputOption::VALUE_IS_ARRAY | InputOption::VALUE_REQUIRED,
-                'Groups of fixtures to be build'
+                'Groups of fixtures to be build',
             ),
             new InputOption(
                 'skip-group',
                 'x',
                 InputOption::VALUE_IS_ARRAY | InputOption::VALUE_REQUIRED,
-                'Skip selected groups'
+                'Skip selected groups',
             ),
             new InputOption(
                 'env',
                 '',
                 InputOption::VALUE_IS_ARRAY | InputOption::VALUE_REQUIRED,
-                'Run tests in selected environments.'
+                'Run tests in selected environments.',
             ),
             new InputOption(
                 'seed',
                 '',
                 InputOption::VALUE_REQUIRED,
-                'Define random seed for shuffle setting'
+                'Define random seed for shuffle setting',
             ),
         ]);
     }
@@ -112,10 +112,10 @@ class FixturesCommand extends Run implements CustomCommandInterface
 
         if (!$this->options['silent']) {
             $output->writeln(
-                Codecept::versionString() . "\nPowered by " . Version::getVersionString()
+                Codecept::versionString() . "\nPowered by " . Version::getVersionString(),
             );
             $output->writeln(
-                'Running with seed: ' . $this->options['seed'] . "\n"
+                'Running with seed: ' . $this->options['seed'] . "\n",
             );
         }
         if ($this->options['group']) {
@@ -145,7 +145,7 @@ class FixturesCommand extends Run implements CustomCommandInterface
 
         if ($this->executed === 0) {
             throw new TestRuntimeException(
-                sprintf("Suite '%s' could not be found", implode(', ', $suites))
+                sprintf("Suite '%s' could not be found", implode(', ', $suites)),
             );
         }
 

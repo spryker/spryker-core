@@ -73,7 +73,7 @@ class NonPersistentProvider implements StorageProviderInterface
         if (isset($cartIndex[$itemIdentifier])) {
             $this->increaseExistingItem(
                 $quoteTransfer->getItems()[$cartIndex[$itemIdentifier]],
-                $itemTransfer
+                $itemTransfer,
             );
 
             return;
@@ -119,7 +119,7 @@ class NonPersistentProvider implements StorageProviderInterface
             $this->decreaseExistingItem(
                 $quoteTransfer->getItems(),
                 $itemTransfer,
-                $cartIndex[$itemIdentifier]
+                $cartIndex[$itemIdentifier],
             );
         }
     }
@@ -200,8 +200,8 @@ class NonPersistentProvider implements StorageProviderInterface
                 sprintf(
                     'Could not change the quantity of cart item "%s" to "%d".',
                     $itemTransfer->getSku(),
-                    $itemTransfer->getQuantity()
-                )
+                    $itemTransfer->getQuantity(),
+                ),
             );
         }
 

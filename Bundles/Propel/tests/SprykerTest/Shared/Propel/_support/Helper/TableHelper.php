@@ -88,7 +88,7 @@ class TableHelper extends Module
         $dbEngine = Config::get(PropelConstants::ZED_DB_ENGINE);
         $class = sprintf(
             '\\Propel\\Generator\\Platform\\%sPlatform',
-            ucfirst(strtolower($dbEngine))
+            ucfirst(strtolower($dbEngine)),
         );
         if (!class_exists($class)) {
             return new DefaultPlatform();

@@ -84,7 +84,7 @@ class CodeTestConsole extends Console
 
         return $this->getFacade()->runTest(
             $module,
-            $this->extendOptions($input)
+            $this->extendOptions($input),
         );
     }
 

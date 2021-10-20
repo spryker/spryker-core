@@ -60,7 +60,7 @@ class CustomerAddressValidator implements CustomerAddressValidatorInterface
         if (!$this->isLoggedCustomer($checkoutDataTransfer)) {
             return $this->getErrorResponse(
                 $checkoutResponseTransfer,
-                static::GLOSSARY_KEY_CUSTOMER_ADDRESSES_APPLICABLE_FOR_CUSTOMERS_ONLY
+                static::GLOSSARY_KEY_CUSTOMER_ADDRESSES_APPLICABLE_FOR_CUSTOMERS_ONLY,
             );
         }
 
@@ -71,7 +71,7 @@ class CustomerAddressValidator implements CustomerAddressValidatorInterface
                 $checkoutResponseTransfer = $this->getErrorResponse(
                     $checkoutResponseTransfer,
                     static::GLOSSARY_KEY_CUSTOMER_ADDRESS_IN_CHECKOUT_DATA_NOT_FOUND,
-                    [static::GLOSSARY_PARAMETER_ID => $shippingAddressUuid]
+                    [static::GLOSSARY_PARAMETER_ID => $shippingAddressUuid],
                 );
             }
         }
@@ -148,7 +148,7 @@ class CustomerAddressValidator implements CustomerAddressValidatorInterface
             ->addError(
                 (new CheckoutErrorTransfer())
                     ->setMessage($message)
-                    ->setParameters($parameters)
+                    ->setParameters($parameters),
             );
     }
 }

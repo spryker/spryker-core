@@ -41,7 +41,7 @@ class CmsSlotBlockValidatorStep implements DataImportStepInterface
 
         if (!filter_var($position, FILTER_VALIDATE_INT)) {
             throw new InvalidDataException(
-                sprintf('Failed to import CMS Slot Block relationship with position %s.', $position)
+                sprintf('Failed to import CMS Slot Block relationship with position %s.', $position),
             );
         }
     }
@@ -63,8 +63,8 @@ class CmsSlotBlockValidatorStep implements DataImportStepInterface
             throw new InvalidDataException(
                 sprintf(
                     'Failed to import CMS Slot Block relationship with content provider type "%s":',
-                    $contentProviderType
-                )
+                    $contentProviderType,
+                ),
             );
         }
     }

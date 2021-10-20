@@ -104,7 +104,7 @@ class MerchantSalesOrderDependencyProvider extends AbstractBundleDependencyProvi
     {
         $container->set(static::FACADE_SALES, function (Container $container) {
             return new MerchantSalesOrderToSalesFacadeBridge(
-                $container->getLocator()->sales()->facade()
+                $container->getLocator()->sales()->facade(),
             );
         });
 

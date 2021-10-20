@@ -23,7 +23,7 @@ class ProductLabelFactory extends AbstractFactory
         return new ProductAbstractRelationReader(
             $this->getStorageClient(),
             $this->createLabelDictionaryReader(),
-            $this->createProductAbstractRelationKeyBuilder()
+            $this->createProductAbstractRelationKeyBuilder(),
         );
     }
 

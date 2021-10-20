@@ -106,7 +106,7 @@ class ProductAttributeGuiDependencyProvider extends AbstractBundleDependencyProv
     {
         $container->set(static::QUERY_CONTAINER_PRODUCT_ATTRIBUTE, function (Container $container) {
             return new ProductAttributeGuiToProductAttributeQueryContainerBridge(
-                $container->getLocator()->productAttribute()->queryContainer()
+                $container->getLocator()->productAttribute()->queryContainer(),
             );
         });
 

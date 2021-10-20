@@ -27,7 +27,7 @@ class StockDataImportBusinessFactory extends DataImportBusinessFactory
     {
         /** @var \Spryker\Zed\DataImport\Business\Model\DataImporter $dataImporter */
         $dataImporter = $this->getCsvDataImporterFromConfig(
-            $this->getConfig()->getStockDataImporterConfiguration()
+            $this->getConfig()->getStockDataImporterConfiguration(),
         );
 
         /** @var \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerTransactionAware $dataSetStepBroker */
@@ -47,7 +47,7 @@ class StockDataImportBusinessFactory extends DataImportBusinessFactory
     {
         /** @var \Spryker\Zed\DataImport\Business\Model\DataImporter $dataImporter */
         $dataImporter = $this->getCsvDataImporterFromConfig(
-            $this->getConfig()->getStockStoreDataImporterConfiguration()
+            $this->getConfig()->getStockStoreDataImporterConfiguration(),
         );
 
         /** @var \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerTransactionAware $dataSetStepBroker */

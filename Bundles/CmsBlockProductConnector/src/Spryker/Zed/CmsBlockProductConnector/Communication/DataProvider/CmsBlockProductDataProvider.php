@@ -100,7 +100,7 @@ class CmsBlockProductDataProvider
         }
         $productAbstractTransfers = $this->cmsBlockProductConnectorRepository->getAssignedProductAbstracts(
             $idLocale,
-            $cmsBlockTransfer->getIdCmsBlock()
+            $cmsBlockTransfer->getIdCmsBlock(),
         );
 
         return $this->transformProductAbstractTransfersToSelectFieldData($productAbstractTransfers);
@@ -118,7 +118,7 @@ class CmsBlockProductDataProvider
         foreach ($productAbstractTransfers as $productAbstractTransfer) {
             $label = $this->productLabelFormatter->format(
                 $productAbstractTransfer->getName(),
-                $productAbstractTransfer->getSku()
+                $productAbstractTransfer->getSku(),
             );
             $selectFieldData[$label] = $productAbstractTransfer->getIdProductAbstract();
         }

@@ -68,7 +68,7 @@ class ConfigurableBundleTemplateSlotEditFormDataProvider
         $configurableBundleTemplateSlotEditFormTransfer
             ->setProductListAggregateForm(
                 (new ProductListAggregateFormTransfer())
-                    ->setProductList($configurableBundleTemplateSlotTransfer->getProductList())
+                    ->setProductList($configurableBundleTemplateSlotTransfer->getProductList()),
             )
             ->setConfigurableBundleTemplateSlot($configurableBundleTemplateSlotTransfer);
 

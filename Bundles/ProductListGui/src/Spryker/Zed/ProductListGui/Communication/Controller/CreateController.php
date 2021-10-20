@@ -31,7 +31,7 @@ class CreateController extends ProductListAbstractController
         $productListAggregateForm = $this->createProductListAggregateForm($request);
         $productListTransfer = $this->findProductListTransfer(
             $request,
-            $productListAggregateForm
+            $productListAggregateForm,
         );
 
         $viewData = $this->prepareTemplateVariables($productListAggregateForm);
@@ -73,7 +73,7 @@ class CreateController extends ProductListAbstractController
         $availableProductConcreteTable = $this->getFactory()->createAvailableProductConcreteTable();
 
         return $this->jsonResponse(
-            $availableProductConcreteTable->fetchData()
+            $availableProductConcreteTable->fetchData(),
         );
     }
 
@@ -85,7 +85,7 @@ class CreateController extends ProductListAbstractController
         $assignedProductConcreteTable = $this->getFactory()->createAssignedProductConcreteTable();
 
         return $this->jsonResponse(
-            $assignedProductConcreteTable->fetchData()
+            $assignedProductConcreteTable->fetchData(),
         );
     }
 

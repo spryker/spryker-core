@@ -43,7 +43,7 @@ class LockedTrigger implements TriggerInterface
         $lockIdentifier = $this->buildLockIdentifier(
             $identifier,
             $stateMachineProcessTransfer->getStateMachineName(),
-            $stateMachineProcessTransfer->getProcessName()
+            $stateMachineProcessTransfer->getProcessName(),
         );
 
         $lockIdentifier = $this->hashIdentifier($lockIdentifier);
@@ -105,7 +105,7 @@ class LockedTrigger implements TriggerInterface
             $identifier .= $this->buildLockIdentifier(
                 $stateMachineItemTransfer->getIdentifier(),
                 $stateMachineItemTransfer->getProcessName(),
-                $stateMachineItemTransfer->getStateMachineName()
+                $stateMachineItemTransfer->getStateMachineName(),
             );
         }
 

@@ -86,7 +86,7 @@ class CategoryImageStorageCommunicationTester extends Actor
                 ->findOneByFkCategoryImage($categoryImage['id_category_image'])
                 ->getSortOrder();
             $this->assertTrue(
-                $sortOrder >= $sortOrderPrevious
+                $sortOrder >= $sortOrderPrevious,
             );
             $sortOrderPrevious = $sortOrder;
         }
@@ -105,7 +105,7 @@ class CategoryImageStorageCommunicationTester extends Actor
                 ->findOneByFkCategoryImage($categoryImage['id_category_image'])
                 ->getIdCategoryImageSetToCategoryImage();
             $this->assertTrue(
-                $idCategoryImageSetToCategoryImage > $idCategoryImageSetToCategoryImagePrevious
+                $idCategoryImageSetToCategoryImage > $idCategoryImageSetToCategoryImagePrevious,
             );
             $idCategoryImageSetToCategoryImagePrevious = $idCategoryImageSetToCategoryImage;
         }

@@ -39,7 +39,7 @@ class UrlResponseBuilder implements UrlResponseBuilderInterface
                 (new RestErrorMessageTransfer())
                     ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
                     ->setCode(UrlsRestApiConfig::RESPONSE_CODE_URL_REQUEST_PARAMETER_MISSING)
-                    ->setDetail(UrlsRestApiConfig::RESPONSE_DETAIL_URL_REQUEST_PARAMETER_MISSING)
+                    ->setDetail(UrlsRestApiConfig::RESPONSE_DETAIL_URL_REQUEST_PARAMETER_MISSING),
             );
     }
 
@@ -53,7 +53,7 @@ class UrlResponseBuilder implements UrlResponseBuilderInterface
                 (new RestErrorMessageTransfer())
                     ->setStatus(Response::HTTP_NOT_FOUND)
                     ->setCode(UrlsRestApiConfig::RESPONSE_CODE_URL_NOT_FOUND)
-                    ->setDetail(UrlsRestApiConfig::RESPONSE_DETAIL_URL_NOT_FOUND)
+                    ->setDetail(UrlsRestApiConfig::RESPONSE_DETAIL_URL_NOT_FOUND),
             );
     }
 
@@ -69,8 +69,8 @@ class UrlResponseBuilder implements UrlResponseBuilderInterface
             $this->restResourceBuilder->createRestResource(
                 UrlsRestApiConfig::RESOURCE_URL_RESOLVER,
                 null,
-                $restUrlResolverAttributesTransfer
-            )
+                $restUrlResolverAttributesTransfer,
+            ),
         );
     }
 }

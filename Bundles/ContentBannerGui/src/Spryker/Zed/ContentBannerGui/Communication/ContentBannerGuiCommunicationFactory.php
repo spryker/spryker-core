@@ -30,7 +30,7 @@ class ContentBannerGuiCommunicationFactory extends AbstractCommunicationFactory
         return new ContentBannerConstraint(
             $this->getContentBannerFacade(),
             $this->getUtilEncoding(),
-            $options
+            $options,
         );
     }
 

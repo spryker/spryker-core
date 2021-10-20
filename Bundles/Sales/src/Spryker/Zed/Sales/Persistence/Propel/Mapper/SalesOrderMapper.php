@@ -29,7 +29,7 @@ class SalesOrderMapper
     {
         foreach ($orderEntities as $orderEntity) {
             $orderListTransfer->addOrder(
-                (new OrderTransfer())->fromArray((array)$orderEntity->toArray(), true)
+                (new OrderTransfer())->fromArray((array)$orderEntity->toArray(), true),
             );
         }
 

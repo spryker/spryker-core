@@ -58,12 +58,12 @@ class FindProductConfigurationInstanceBySkuTest extends Unit
         // Assert
         $this->assertNotNull(
             $productConfigurationInstanceTransfer,
-            'Expects that product configuration instance will be found from session.'
+            'Expects that product configuration instance will be found from session.',
         );
         $this->assertInstanceOf(
             ProductConfigurationInstanceTransfer::class,
             $productConfigurationInstanceTransfer,
-            'Expects that product configuration instance will be found from session.'
+            'Expects that product configuration instance will be found from session.',
         );
     }
 
@@ -92,12 +92,12 @@ class FindProductConfigurationInstanceBySkuTest extends Unit
         // Assert
         $this->assertNotNull(
             $productConfigurationInstanceTransfer,
-            'Expects that product configuration instance will be found from storage.'
+            'Expects that product configuration instance will be found from storage.',
         );
         $this->assertInstanceOf(
             ProductConfigurationInstanceTransfer::class,
             $productConfigurationInstanceTransfer,
-            'Expects that product configuration instance will be found from storage.'
+            'Expects that product configuration instance will be found from storage.',
         );
     }
 
@@ -117,7 +117,7 @@ class FindProductConfigurationInstanceBySkuTest extends Unit
         // Assert
         $this->assertNull(
             $productConfigurationInstanceTransfer,
-            'Expects that product configuration instance wont be found.'
+            'Expects that product configuration instance wont be found.',
         );
     }
 

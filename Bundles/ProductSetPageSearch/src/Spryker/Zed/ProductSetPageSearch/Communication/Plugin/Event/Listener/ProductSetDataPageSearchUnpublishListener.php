@@ -39,7 +39,7 @@ class ProductSetDataPageSearchUnpublishListener extends AbstractPlugin implement
 
         $productSetIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferForeignKeys(
             $eventEntityTransfers,
-            SpyProductSetDataTableMap::COL_FK_PRODUCT_SET
+            SpyProductSetDataTableMap::COL_FK_PRODUCT_SET,
         );
 
         $this->getFacade()->unpublish($productSetIds);

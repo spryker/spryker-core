@@ -114,7 +114,7 @@ class ContentForm extends AbstractType
                 $this->getFieldDefaultConstraints(),
                 [
                     new Length(['max' => 255]),
-                ]
+                ],
             ),
         ]);
 
@@ -148,7 +148,7 @@ class ContentForm extends AbstractType
     {
         $builder->add(
             static::FIELD_CONTENT_TERM_KEY,
-            HiddenType::class
+            HiddenType::class,
         );
 
         return $this;
@@ -163,7 +163,7 @@ class ContentForm extends AbstractType
     {
         $builder->add(
             static::FIELD_CONTENT_TYPE_KEY,
-            HiddenType::class
+            HiddenType::class,
         );
 
         return $this;

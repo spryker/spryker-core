@@ -34,7 +34,7 @@ class FactoryNotFoundException extends Exception
         $message .= sprintf(
             'Can not resolve %2$s%1$sFactory in %s layer for your module "%s"',
             $callerClassInfo->getLayer(),
-            $callerClassInfo->getModule()
+            $callerClassInfo->getModule(),
         ) . PHP_EOL;
 
         $message .= 'You can fix this by adding the missing Factory to your module.' . PHP_EOL;
@@ -43,7 +43,7 @@ class FactoryNotFoundException extends Exception
             'E.g. %1$s\\Zed\\%2$s\\%3$s\\%2$s%3$sFactory' . PHP_EOL . PHP_EOL,
             Config::getInstance()->get(KernelConstants::PROJECT_NAMESPACE),
             $callerClassInfo->getModule(),
-            $callerClassInfo->getLayer()
+            $callerClassInfo->getLayer(),
         );
 
         $message .= new Backtrace();

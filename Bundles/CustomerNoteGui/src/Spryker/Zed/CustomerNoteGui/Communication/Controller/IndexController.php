@@ -45,7 +45,7 @@ class IndexController extends AbstractController
         $formDataProvider = $this->getFactory()->createNoteFormDataProvider();
         $form = $this->getFactory()->getNoteForm(
             $formDataProvider->getData($idCustomer),
-            $formDataProvider->getOptions()
+            $formDataProvider->getOptions(),
         );
         $form->handleRequest($request);
 
@@ -53,8 +53,8 @@ class IndexController extends AbstractController
             $this->getFactory()->getCustomerNoteFacade()->addNoteFromCurrentUser(
                 $this->createSpyCustomerNoteEntityTransfer(
                     $idCustomer,
-                    $form->getData()->getMessage()
-                )
+                    $form->getData()->getMessage(),
+                ),
             );
             $this->addSuccessMessage(static::MESSAGE_SUCCESS);
 

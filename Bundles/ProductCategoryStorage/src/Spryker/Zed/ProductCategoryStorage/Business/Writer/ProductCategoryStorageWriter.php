@@ -121,7 +121,7 @@ class ProductCategoryStorageWriter implements ProductCategoryStorageWriterInterf
                     $productAbstractCategoryStorageTransfers,
                     $productAbstractLocalizedAttributesTransfers,
                     $storeName,
-                    $localeName
+                    $localeName,
                 );
             }
         }
@@ -151,7 +151,7 @@ class ProductCategoryStorageWriter implements ProductCategoryStorageWriterInterf
                 $productAbstractCategoryStorageTransfers,
                 $productAbstractLocalizedAttributesTransfer,
                 $storeName,
-                $localeName
+                $localeName,
             );
         }
 
@@ -178,7 +178,7 @@ class ProductCategoryStorageWriter implements ProductCategoryStorageWriterInterf
         $productCategoryStorageTransfers = $this->productCategoryStorageReader->getProductCategoryStoragesFromCategoryTree(
             $productCategoryTransfers[$idProductAbstract] ?? [],
             $storeName,
-            $localeName
+            $localeName,
         );
 
         $productAbstractCategoryStorageTransfer
@@ -193,7 +193,7 @@ class ProductCategoryStorageWriter implements ProductCategoryStorageWriterInterf
             $this->productCategoryStorageEntityManager->deleteProductAbstractCategoryStorage(
                 $idProductAbstract,
                 $storeName,
-                $localeName
+                $localeName,
             );
         }
 
@@ -209,7 +209,7 @@ class ProductCategoryStorageWriter implements ProductCategoryStorageWriterInterf
             $idProductAbstract,
             $storeName,
             $localeName,
-            $productAbstractCategoryStorageTransfer
+            $productAbstractCategoryStorageTransfer,
         );
 
         return $productAbstractCategoryStorageTransfers;
@@ -249,7 +249,7 @@ class ProductCategoryStorageWriter implements ProductCategoryStorageWriterInterf
             $this->productCategoryStorageEntityManager->deleteProductAbstractCategoryStorage(
                 $idProductAbstract,
                 $storeName,
-                $localeName
+                $localeName,
             );
         }
     }

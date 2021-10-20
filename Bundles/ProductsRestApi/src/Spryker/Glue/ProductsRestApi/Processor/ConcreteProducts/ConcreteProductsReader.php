@@ -136,12 +136,12 @@ class ConcreteProductsReader implements ConcreteProductsReaderInterface
         $productConcreteStorageData = $this->productStorageClient->getBulkProductConcreteStorageDataByMapping(
             static::PRODUCT_CONCRETE_MAPPING_TYPE,
             $productConcreteSkus,
-            $restRequest->getMetadata()->getLocale()
+            $restRequest->getMetadata()->getLocale(),
         );
 
         return $this->createRestResourcesFromConcreteProductStorageData(
             $productConcreteStorageData,
-            $restRequest
+            $restRequest,
         );
     }
 
@@ -156,7 +156,7 @@ class ConcreteProductsReader implements ConcreteProductsReaderInterface
         $concreteProductData = $this->productStorageClient->findProductConcreteStorageDataByMapping(
             static::PRODUCT_CONCRETE_MAPPING_TYPE,
             $sku,
-            $restRequest->getMetadata()->getLocale()
+            $restRequest->getMetadata()->getLocale(),
         );
 
         if (!$concreteProductData) {
@@ -176,7 +176,7 @@ class ConcreteProductsReader implements ConcreteProductsReaderInterface
     {
         $concreteProductData = $this->productStorageClient->findProductConcreteStorageData(
             $idProductConcrete,
-            $restRequest->getMetadata()->getLocale()
+            $restRequest->getMetadata()->getLocale(),
         );
 
         if (!$concreteProductData) {
@@ -197,12 +197,12 @@ class ConcreteProductsReader implements ConcreteProductsReaderInterface
         $bulkProductConcreteStorageData = $this->productStorageClient
             ->getBulkProductConcreteStorageData(
                 $productConcreteIds,
-                $restRequest->getMetadata()->getLocale()
+                $restRequest->getMetadata()->getLocale(),
             );
 
         return $this->createRestResourcesFromConcreteProductStorageData(
             $bulkProductConcreteStorageData,
-            $restRequest
+            $restRequest,
         );
     }
 
@@ -225,20 +225,20 @@ class ConcreteProductsReader implements ConcreteProductsReaderInterface
             $restConcreteProductsAttributesTransfer = $this->expandRestConcreteProductsAttributesTransfer(
                 $restConcreteProductsAttributesTransfer,
                 $productConcreteStorageData[static::KEY_ID_PRODUCT_CONCRETE],
-                $restRequest
+                $restRequest,
             );
 
             $concreteProductRestResources[$restConcreteProductsAttributesTransfer->getSku()] = $this->restResourceBuilder->createRestResource(
                 ProductsRestApiConfig::RESOURCE_CONCRETE_PRODUCTS,
                 $restConcreteProductsAttributesTransfer->getSku(),
-                $restConcreteProductsAttributesTransfer
+                $restConcreteProductsAttributesTransfer,
             );
         }
 
         return $this->expandWithProductAbstractSku(
             $concreteProductRestResources,
             $multipleProductConcreteStorageData,
-            $restRequest->getMetadata()->getLocale()
+            $restRequest->getMetadata()->getLocale(),
         );
     }
 
@@ -261,7 +261,7 @@ class ConcreteProductsReader implements ConcreteProductsReaderInterface
             $concreteProductsRestAttributesTransfer = $concreteProductsResourceExpanderPlugin->expand(
                 $concreteProductsRestAttributesTransfer,
                 $idProductConcrete,
-                $restRequest
+                $restRequest,
             );
         }
 
@@ -324,7 +324,7 @@ class ConcreteProductsReader implements ConcreteProductsReaderInterface
                 $expandedRestResources[$productConcreteStorageData[static::KEY_SKU]] = $this->expandSingleProductConcreteResource(
                     $productConcreteStorageData,
                     $concreteProductRestResource,
-                    $productAbstractSkus
+                    $productAbstractSkus,
                 );
             }
         }
@@ -350,7 +350,7 @@ class ConcreteProductsReader implements ConcreteProductsReaderInterface
 
         $concreteProductRestResource->getAttributes()->offsetSet(
             ConcreteProductsRestAttributesTransfer::PRODUCT_ABSTRACT_SKU,
-            $productAbstractSkus[$productConcreteStorageData[static::KEY_ID_PRODUCT_ABSTRACT]]
+            $productAbstractSkus[$productConcreteStorageData[static::KEY_ID_PRODUCT_ABSTRACT]],
         );
 
         return $concreteProductRestResource;
@@ -368,7 +368,7 @@ class ConcreteProductsReader implements ConcreteProductsReaderInterface
             ->getBulkProductAbstractStorageDataByProductAbstractIdsForLocaleNameAndStore(
                 $productAbstractIds,
                 $localeName,
-                $this->storeClient->getCurrentStore()->getName()
+                $this->storeClient->getCurrentStore()->getName(),
             );
 
         $productAbstractSkus = [];

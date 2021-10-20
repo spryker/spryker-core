@@ -48,7 +48,7 @@ class ProductConfiguratorResponseValidator implements ProductConfiguratorRespons
     ): ProductConfiguratorResponseProcessorResponseTransfer {
         $productConfiguratorResponseProcessorResponseTransfer = $this->productConfigurationClient->validateProductConfiguratorCheckSumResponse(
             $productConfiguratorResponseProcessorResponseTransfer,
-            $configuratorResponseData
+            $configuratorResponseData,
         );
 
         if (!$productConfiguratorResponseProcessorResponseTransfer->getIsSuccessful()) {
@@ -76,12 +76,12 @@ class ProductConfiguratorResponseValidator implements ProductConfiguratorRespons
         } catch (RequiredTransferPropertyException $requiredTransferPropertyException) {
             $this->getLogger()->error(
                 static::GLOSSARY_KEY_RESPONSE_VALIDATION_ERROR,
-                ['exception' => $requiredTransferPropertyException]
+                ['exception' => $requiredTransferPropertyException],
             );
 
             return $this->addErrorToResponse(
                 $productConfiguratorResponseProcessorResponseTransfer,
-                static::GLOSSARY_KEY_RESPONSE_VALIDATION_ERROR
+                static::GLOSSARY_KEY_RESPONSE_VALIDATION_ERROR,
             );
         }
 

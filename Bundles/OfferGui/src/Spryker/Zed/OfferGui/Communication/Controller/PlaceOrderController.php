@@ -38,7 +38,7 @@ class PlaceOrderController extends AbstractController
 
         $redirectUrl = Url::generate(
             static::URL_ORDER_ENTRY,
-            [OfferQuoteExpanderPlugin::PARAM_ID_OFFER => $idOffer]
+            [OfferQuoteExpanderPlugin::PARAM_ID_OFFER => $idOffer],
         )->build();
 
         return $this->redirectResponse($redirectUrl);

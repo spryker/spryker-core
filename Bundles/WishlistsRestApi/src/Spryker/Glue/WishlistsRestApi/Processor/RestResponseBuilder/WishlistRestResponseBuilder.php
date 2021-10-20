@@ -92,7 +92,7 @@ class WishlistRestResponseBuilder implements WishlistRestResponseBuilderInterfac
         }
 
         return $restResponse->addResource(
-            $this->createWishlistsResource($wishlistTransfer)
+            $this->createWishlistsResource($wishlistTransfer),
         );
     }
 
@@ -117,11 +117,11 @@ class WishlistRestResponseBuilder implements WishlistRestResponseBuilderInterfac
         $wishlistItemResource = $this->restResourceBuilder->createRestResource(
             WishlistsRestApiConfig::RESOURCE_WISHLIST_ITEMS,
             $idRestWishlistItemsAttributes,
-            $restWishlistItemsAttributesTransfer
+            $restWishlistItemsAttributesTransfer,
         );
         $wishlistItemResource->addLink(
             RestLinkInterface::LINK_SELF,
-            $this->createSelfLinkForWishlistItem($idWishlist, $idRestWishlistItemsAttributes)
+            $this->createSelfLinkForWishlistItem($idWishlist, $idRestWishlistItemsAttributes),
         );
 
         return $this->restResourceBuilder
@@ -159,7 +159,7 @@ class WishlistRestResponseBuilder implements WishlistRestResponseBuilderInterfac
         $wishlistResource = $this->restResourceBuilder->createRestResource(
             WishlistsRestApiConfig::RESOURCE_WISHLISTS,
             $wishlistUuid,
-            $restWishlistsAttributesTransfer
+            $restWishlistsAttributesTransfer,
         );
 
         foreach ($wishlistTransfer->getWishlistItems() as $wishlistItemTransfer) {
@@ -173,8 +173,8 @@ class WishlistRestResponseBuilder implements WishlistRestResponseBuilderInterfac
                 $this->createWishlistItemsResource($wishlistItemTransfer)
                     ->addLink(
                         RestLinkInterface::LINK_SELF,
-                        $this->createSelfLinkForWishlistItem($wishlistUuid, $idRestWishlistItemsAttributes)
-                    )
+                        $this->createSelfLinkForWishlistItem($wishlistUuid, $idRestWishlistItemsAttributes),
+                    ),
             );
         }
 
@@ -321,7 +321,7 @@ class WishlistRestResponseBuilder implements WishlistRestResponseBuilderInterfac
         return $this->restResourceBuilder->createRestResource(
             WishlistsRestApiConfig::RESOURCE_WISHLIST_ITEMS,
             $restWishlistsItemAttributesTransfer->getId(),
-            $restWishlistsItemAttributesTransfer
+            $restWishlistsItemAttributesTransfer,
         );
     }
 
@@ -391,7 +391,7 @@ class WishlistRestResponseBuilder implements WishlistRestResponseBuilderInterfac
             WishlistsRestApiConfig::RESOURCE_WISHLISTS,
             $wishlistResourceId,
             WishlistsRestApiConfig::RESOURCE_WISHLIST_ITEMS,
-            $wishlistItemResourceId
+            $wishlistItemResourceId,
         );
     }
 }

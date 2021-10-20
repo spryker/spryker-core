@@ -70,7 +70,7 @@ class UuidGeneratorConsole extends Console
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $uuidGeneratorReportTransfer = $this->getFacade()->generateUuids(
-            (new UuidGeneratorConfigurationTransfer())->fromArray($input->getArguments(), true)
+            (new UuidGeneratorConfigurationTransfer())->fromArray($input->getArguments(), true),
         );
 
         $this->info($this->getSuccessMessage($uuidGeneratorReportTransfer));
@@ -88,7 +88,7 @@ class UuidGeneratorConsole extends Console
         return sprintf(
             static::SUCCESS_MESSAGE,
             $uuidGeneratorReportTransfer->getCount(),
-            $uuidGeneratorReportTransfer->getTable()
+            $uuidGeneratorReportTransfer->getTable(),
         );
     }
 }

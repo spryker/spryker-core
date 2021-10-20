@@ -135,7 +135,7 @@ class MethodReader implements MethodReaderInterface
             $shipmentMethodsTransfer = $this->getAvailableMethodsTransfer(
                 $activeShipmentMethodTransfers,
                 $quoteTransfer,
-                $shipmentGroupTransfer
+                $shipmentGroupTransfer,
             );
 
             $shipmentMethodsTransfer->setShipmentHash($shipmentGroupTransfer->getHash());
@@ -187,7 +187,7 @@ class MethodReader implements MethodReaderInterface
                 $quoteTransfer,
                 $shipmentMethodsTransfer,
                 $shipmentGroupCollection,
-                $shipmentMethodFilter
+                $shipmentMethodFilter,
             );
             $shipmentMethodsTransfer->setMethods($shipmentMethodCollection);
 
@@ -213,14 +213,14 @@ class MethodReader implements MethodReaderInterface
     ): ArrayObject {
         $shipmentGroupTransfer = $this->getShipmentGroupByHash(
             $shipmentGroupCollection,
-            $shipmentMethodsTransfer->getShipmentHash()
+            $shipmentMethodsTransfer->getShipmentHash(),
         );
 
         $shipmentGroupTransfer->setAvailableShipmentMethods($shipmentMethodsTransfer);
 
         return $shipmentMethodFilter->filterShipmentMethods(
             $shipmentGroupTransfer,
-            $quoteTransfer
+            $quoteTransfer,
         );
     }
 
@@ -241,7 +241,7 @@ class MethodReader implements MethodReaderInterface
             $shipmentMethodTransfer = $this->prepareAvailableShipmentMethod(
                 $shipmentMethodTransfer,
                 $quoteTransfer,
-                $shipmentGroupTransfer
+                $shipmentGroupTransfer,
             );
 
             if ($shipmentMethodTransfer === null) {
@@ -270,7 +270,7 @@ class MethodReader implements MethodReaderInterface
             ->isShipmentMethodAvailableForShipmentGroup(
                 $shipmentMethodTransfer,
                 $quoteTransfer,
-                $shipmentGroupTransfer
+                $shipmentGroupTransfer,
             );
         if (!$isShipmentMethodAvailable) {
             return null;
@@ -287,7 +287,7 @@ class MethodReader implements MethodReaderInterface
             $quoteTransfer,
             $shipmentMethodTransfer,
             $storeCurrencyPrice,
-            $shipmentGroupTransfer
+            $shipmentGroupTransfer,
         );
     }
 
@@ -308,7 +308,7 @@ class MethodReader implements MethodReaderInterface
         $deliveryTimeForShippingGroup = $this->methodDeliveryTimeReader->getDeliveryTimeForShippingGroup(
             $shipmentMethodTransfer,
             $quoteTransfer,
-            $shipmentGroupTransfer
+            $shipmentGroupTransfer,
         );
 
         $shipmentMethodTransfer

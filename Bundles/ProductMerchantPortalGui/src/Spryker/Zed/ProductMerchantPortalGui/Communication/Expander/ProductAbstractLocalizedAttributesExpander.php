@@ -49,7 +49,7 @@ class ProductAbstractLocalizedAttributesExpander implements ProductAbstractLocal
             $productAbstractTransfer->addLocalizedAttributes(
                 (new LocalizedAttributesTransfer())
                     ->setLocale($localeTransfer)
-                    ->setName($name)
+                    ->setName($name),
             );
         }
 

@@ -34,7 +34,7 @@ class ConfigurationReaderTest extends Unit
     public function testAclModuleHasToolingFileAndParseIt(): void
     {
         $data = $this->tester->createConfigurationReader()->getModuleConfigurationByAbsolutePath(
-            $this->tester->getZedAclModulePath()
+            $this->tester->getZedAclModulePath(),
         );
 
         $this->assertNotEmpty($data);
@@ -46,7 +46,7 @@ class ConfigurationReaderTest extends Unit
     public function testDiscountModuleHasToolingFileAndParseIt(): void
     {
         $data = $this->tester->createConfigurationReader()->getModuleConfigurationByAbsolutePath(
-            $this->tester->getZedDiscountModulePath()
+            $this->tester->getZedDiscountModulePath(),
         );
 
         $this->assertNotEmpty($data);
@@ -58,7 +58,7 @@ class ConfigurationReaderTest extends Unit
     public function testCustomerModuleHasToolingFileAndParseIt(): void
     {
         $data = $this->tester->createConfigurationReader()->getModuleConfigurationByAbsolutePath(
-            $this->tester->getZedCustomerModulePath()
+            $this->tester->getZedCustomerModulePath(),
         );
 
         $this->assertNotEmpty($data);
@@ -70,7 +70,7 @@ class ConfigurationReaderTest extends Unit
     public function testCountryModuleHasToolingFileWithWrongExtension(): void
     {
         $data = $this->tester->createConfigurationReader()->getModuleConfigurationByAbsolutePath(
-            $this->tester->getZedCountryPath()
+            $this->tester->getZedCountryPath(),
         );
 
         $this->assertEmpty($data);
@@ -82,7 +82,7 @@ class ConfigurationReaderTest extends Unit
     public function testProductModuleDoesNotHaveToolingFile(): void
     {
         $data = $this->tester->createConfigurationReader()->getModuleConfigurationByAbsolutePath(
-            $this->tester->getZedProductModulePath()
+            $this->tester->getZedProductModulePath(),
         );
 
         $this->assertEmpty($data);
@@ -94,7 +94,7 @@ class ConfigurationReaderTest extends Unit
     public function testCustomFolderHasToolingFileAndParseIt(): void
     {
         $data = $this->tester->createConfigurationReader()->getModuleConfigurationByAbsolutePath(
-            $this->tester->getZedCustomPath()
+            $this->tester->getZedCustomPath(),
         );
 
         $this->assertNotEmpty($data);

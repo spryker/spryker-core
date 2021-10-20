@@ -23,7 +23,7 @@ class CmsSlotBlockFactory extends AbstractFactory
     {
         return new CmsSlotBlockVisibilityResolver(
             $this->getConfig(),
-            $this->getCmsSlotBlockVisibilityResolverPlugins()
+            $this->getCmsSlotBlockVisibilityResolverPlugins(),
         );
     }
 

@@ -71,7 +71,7 @@ class CheckoutExpander implements CheckoutExpanderInterface
 
         $restCheckoutDataTransfer = $this->executeCheckoutDataExpanderPlugins(
             $restCheckoutDataTransfer,
-            $restCheckoutRequestAttributesTransfer
+            $restCheckoutRequestAttributesTransfer,
         );
 
         return $restCheckoutDataTransfer;
@@ -87,7 +87,7 @@ class CheckoutExpander implements CheckoutExpanderInterface
     ): RestCheckoutDataTransfer {
         $shipmentMethodsTransfer = new ShipmentMethodsTransfer();
         $shipmentMethodsCollectionTransfer = $this->shipmentFacade->getAvailableMethodsByShipment(
-            $restCheckoutDataTransfer->getQuote()
+            $restCheckoutDataTransfer->getQuote(),
         );
 
         if ($shipmentMethodsCollectionTransfer->getShipmentMethods()->count()) {
@@ -120,7 +120,7 @@ class CheckoutExpander implements CheckoutExpanderInterface
         RestCheckoutDataTransfer $restCheckoutDataTransfer
     ): RestCheckoutDataTransfer {
         $addressesTransfer = $this->addressReader->getAddressesTransfer(
-            $restCheckoutDataTransfer->getQuote()
+            $restCheckoutDataTransfer->getQuote(),
         );
 
         return $restCheckoutDataTransfer->setAddresses($addressesTransfer);
@@ -135,7 +135,7 @@ class CheckoutExpander implements CheckoutExpanderInterface
         RestCheckoutDataTransfer $restCheckoutDataTransfer
     ): RestCheckoutDataTransfer {
         $paymentMethodsTransfer = $this->paymentFacade->getAvailableMethods(
-            $restCheckoutDataTransfer->getQuote()
+            $restCheckoutDataTransfer->getQuote(),
         );
 
         return $restCheckoutDataTransfer->setAvailablePaymentMethods($paymentMethodsTransfer);
@@ -154,7 +154,7 @@ class CheckoutExpander implements CheckoutExpanderInterface
         foreach ($this->checkoutDataExpanderPlugins as $checkoutDataExpanderPlugin) {
             $restCheckoutDataTransfer = $checkoutDataExpanderPlugin->expandCheckoutData(
                 $restCheckoutDataTransfer,
-                $restCheckoutRequestAttributesTransfer
+                $restCheckoutRequestAttributesTransfer,
             );
         }
 

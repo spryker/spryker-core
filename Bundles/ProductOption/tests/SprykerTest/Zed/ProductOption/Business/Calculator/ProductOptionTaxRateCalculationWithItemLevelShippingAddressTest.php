@@ -90,7 +90,7 @@ class ProductOptionTaxRateCalculationWithItemLevelShippingAddressTest extends Un
                         ['netAmount' => 10000],
                     ],
                 ],
-            ]
+            ],
         );
     }
 
@@ -109,13 +109,13 @@ class ProductOptionTaxRateCalculationWithItemLevelShippingAddressTest extends Un
         // Arrange
         $this->tester->setDependency(
             ProductOptionDependencyProvider::FACADE_TAX,
-            $this->createProductOptionToTaxFacadeBridgeMock('MOON', 0.00)
+            $this->createProductOptionToTaxFacadeBridgeMock('MOON', 0.00),
         );
 
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {
                 $productOptionTransfer->setIdProductOptionValue(
-                    $this->getProductOptionValueIdBySku($productOptionTransfer->getSku())
+                    $this->getProductOptionValueIdBySku($productOptionTransfer->getSku()),
                 );
             }
         }
@@ -137,8 +137,8 @@ class ProductOptionTaxRateCalculationWithItemLevelShippingAddressTest extends Un
                         $expectedTaxRates[$iso2Code],
                         $productOptionTransfer->getTaxRate(),
                         $iterator,
-                        $productOptionTransfer->getSku()
-                    )
+                        $productOptionTransfer->getSku(),
+                    ),
                 );
             }
         }

@@ -220,7 +220,7 @@ class Worker implements WorkerInterface
                     ++$index,
                     $queue,
                     $queueProcesses[static::PROCESS_BUSY],
-                    $queueProcesses[static::PROCESS_NEW]
+                    $queueProcesses[static::PROCESS_NEW],
                 );
         }
 

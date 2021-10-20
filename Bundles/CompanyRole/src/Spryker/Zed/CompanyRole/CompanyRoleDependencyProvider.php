@@ -43,7 +43,7 @@ class CompanyRoleDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::FACADE_PERMISSION, function (Container $container) {
             return new CompanyRoleToPermissionFacadeBridge(
-                $container->getLocator()->permission()->facade()
+                $container->getLocator()->permission()->facade(),
             );
         });
 

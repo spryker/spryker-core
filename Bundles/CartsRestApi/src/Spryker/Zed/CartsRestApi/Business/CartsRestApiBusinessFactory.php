@@ -61,7 +61,7 @@ class CartsRestApiBusinessFactory extends AbstractBusinessFactory
     public function createQuoteUuidWriter(): QuoteUuidWriterInterface
     {
         return new QuoteUuidWriter(
-            $this->getEntityManager()
+            $this->getEntityManager(),
         );
     }
 
@@ -76,7 +76,7 @@ class CartsRestApiBusinessFactory extends AbstractBusinessFactory
             $this->createQuotePermissionChecker(),
             $this->createQuoteReloader(),
             $this->getQuoteCollectionExpanderPlugins(),
-            $this->getQuoteExpanderPlugins()
+            $this->getQuoteExpanderPlugins(),
         );
     }
 
@@ -88,7 +88,7 @@ class CartsRestApiBusinessFactory extends AbstractBusinessFactory
         return new QuoteCreator(
             $this->getQuoteCreatorPlugin(),
             $this->getStoreFacade(),
-            $this->createQuoteErrorIdentifierAdder()
+            $this->createQuoteErrorIdentifierAdder(),
         );
     }
 
@@ -99,7 +99,7 @@ class CartsRestApiBusinessFactory extends AbstractBusinessFactory
     {
         return new SingleQuoteCreator(
             $this->getPersistentCartFacade(),
-            $this->createQuoteReader()
+            $this->createQuoteReader(),
         );
     }
 
@@ -111,7 +111,7 @@ class CartsRestApiBusinessFactory extends AbstractBusinessFactory
         return new QuoteDeleter(
             $this->getPersistentCartFacade(),
             $this->createQuoteReader(),
-            $this->createQuotePermissionChecker()
+            $this->createQuotePermissionChecker(),
         );
     }
 
@@ -126,7 +126,7 @@ class CartsRestApiBusinessFactory extends AbstractBusinessFactory
             $this->createQuoteReader(),
             $this->createQuoteMapper(),
             $this->createQuotePermissionChecker(),
-            $this->createQuoteErrorIdentifierAdder()
+            $this->createQuoteErrorIdentifierAdder(),
         );
     }
 
@@ -138,7 +138,7 @@ class CartsRestApiBusinessFactory extends AbstractBusinessFactory
         return new QuoteMerger(
             $this->createQuoteReader(),
             $this->getPersistentCartFacade(),
-            $this->getQuoteFacade()
+            $this->getQuoteFacade(),
         );
     }
 
@@ -153,7 +153,7 @@ class CartsRestApiBusinessFactory extends AbstractBusinessFactory
             $this->createQuoteItemMapper(),
             $this->createQuotePermissionChecker(),
             $this->createQuoteReloader(),
-            $this->getCartItemMapperPlugins()
+            $this->getCartItemMapperPlugins(),
         );
     }
 
@@ -166,7 +166,7 @@ class CartsRestApiBusinessFactory extends AbstractBusinessFactory
             $this->createQuoteReader(),
             $this->createQuoteItemAdder(),
             $this->createQuoteCreator(),
-            $this->getStoreFacade()
+            $this->getStoreFacade(),
         );
     }
 
@@ -178,7 +178,7 @@ class CartsRestApiBusinessFactory extends AbstractBusinessFactory
         return new QuoteItemReader(
             $this->createQuoteReader(),
             $this->createQuoteItemMapper(),
-            $this->getQuoteItemReadValidatorPlugins()
+            $this->getQuoteItemReadValidatorPlugins(),
         );
     }
 
@@ -191,7 +191,7 @@ class CartsRestApiBusinessFactory extends AbstractBusinessFactory
             $this->getPersistentCartFacade(),
             $this->createQuoteItemReader(),
             $this->createQuotePermissionChecker(),
-            $this->createQuoteReloader()
+            $this->createQuoteReloader(),
         );
     }
 
@@ -204,7 +204,7 @@ class CartsRestApiBusinessFactory extends AbstractBusinessFactory
             $this->getPersistentCartFacade(),
             $this->createQuoteItemReader(),
             $this->createQuotePermissionChecker(),
-            $this->createQuoteReloader()
+            $this->createQuoteReloader(),
         );
     }
 
@@ -247,7 +247,7 @@ class CartsRestApiBusinessFactory extends AbstractBusinessFactory
     {
         return new QuoteReloader(
             $this->getCartFacade(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 

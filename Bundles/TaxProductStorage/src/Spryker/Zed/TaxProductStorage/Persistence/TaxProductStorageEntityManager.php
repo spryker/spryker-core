@@ -42,7 +42,7 @@ class TaxProductStorageEntityManager extends AbstractEntityManager implements Ta
     public function updateTaxProductStorages(array $taxProductStorageTransfers): void
     {
         $spyTaxProductStorages = $this->findSpyTaxProductStoragesByProductAbstractIdsIndexedByProductAbstractIds(
-            $this->getIdsFromTransfers($taxProductStorageTransfers)
+            $this->getIdsFromTransfers($taxProductStorageTransfers),
         );
 
         foreach ($taxProductStorageTransfers as $taxProductStorageTransfer) {

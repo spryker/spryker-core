@@ -75,7 +75,7 @@ class NoteWriter implements NoteWriterInterface
         return sprintf(
             static::USERNAME_FORMAT,
             $userTransfer->getFirstName(),
-            $userTransfer->getLastName()
+            $userTransfer->getLastName(),
         );
     }
 }

@@ -68,7 +68,7 @@ class UrlStorageCategoryNodeMapper implements UrlStorageCategoryNodeMapperInterf
         $resourceKey = $this->generateKey(
             $idCategoryNode,
             $this->storeClient->getCurrentStore()->getNameOrFail(),
-            $options['locale'] ?? $this->localeClient->getCurrentLocale()
+            $options['locale'] ?? $this->localeClient->getCurrentLocale(),
         );
 
         return $urlStorageResourceMapTransfer
@@ -90,7 +90,7 @@ class UrlStorageCategoryNodeMapper implements UrlStorageCategoryNodeMapperInterf
                 '%s.%s.resource.categorynode.%s',
                 strtolower($storeName),
                 strtolower($localeName),
-                $idCategoryNode
+                $idCategoryNode,
             );
         }
         $synchronizationDataTransfer = (new SynchronizationDataTransfer())

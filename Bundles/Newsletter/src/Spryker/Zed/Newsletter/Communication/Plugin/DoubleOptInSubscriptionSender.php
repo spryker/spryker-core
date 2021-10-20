@@ -42,7 +42,7 @@ class DoubleOptInSubscriptionSender extends AbstractPlugin implements Subscriber
         $this->setMailTransferSubject($mailTransfer, $config);
 
         $globalMergeVars = $this->getMailGlobalMergeVars(
-            $config->getDoubleOptInApproveTokenUrl($newsletterSubscriber->getSubscriberKey())
+            $config->getDoubleOptInApproveTokenUrl($newsletterSubscriber->getSubscriberKey()),
         );
         $this->setMailMergeData($mailTransfer, $globalMergeVars);
 

@@ -33,7 +33,7 @@ class GatewayMonitoringRequestTransactionEventDispatcherPlugin extends AbstractP
     public function extend(EventDispatcherInterface $eventDispatcher, ContainerInterface $container): EventDispatcherInterface
     {
         $eventDispatcher->addSubscriber(
-            $this->getFactory()->createGatewayControllerListener()
+            $this->getFactory()->createGatewayControllerListener(),
         );
 
         return $eventDispatcher;

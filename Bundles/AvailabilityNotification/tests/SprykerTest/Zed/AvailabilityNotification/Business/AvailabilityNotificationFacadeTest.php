@@ -60,7 +60,7 @@ class AvailabilityNotificationFacadeTest extends Unit
     public function testGuestSubscribeShouldSucceed(): void
     {
         $availabilityNotificationSubscription = $this->tester->haveAvailabilityNotificationSubscriptionTransfer(
-            $this->tester->haveProduct()
+            $this->tester->haveProduct(),
         );
 
         $this->mockMailDependency();
@@ -77,7 +77,7 @@ class AvailabilityNotificationFacadeTest extends Unit
     {
         $availabilityNotificationSubscription = $this->tester->haveAvailabilityNotificationSubscriptionTransfer(
             $this->tester->haveProduct(),
-            $this->tester->haveCustomer()
+            $this->tester->haveCustomer(),
         );
 
         $this->mockMailDependency();
@@ -97,7 +97,7 @@ class AvailabilityNotificationFacadeTest extends Unit
             null,
             [
                 'email' => static::TESTER_INVALID_EMAIL,
-            ]
+            ],
         );
 
         $this->mockMailDependency();
@@ -113,7 +113,7 @@ class AvailabilityNotificationFacadeTest extends Unit
     public function testSubscribeForAlreadySubscribedTypeShouldSucceed(): void
     {
         $availabilityNotificationSubscription = $this->tester->haveAvailabilityNotificationSubscriptionTransfer(
-            $this->tester->haveProduct()
+            $this->tester->haveProduct(),
         );
 
         $this->mockMailDependency();
@@ -131,7 +131,7 @@ class AvailabilityNotificationFacadeTest extends Unit
         $this->mockMailDependency();
 
         $availabilityNotificationSubscription = $this->tester->haveAvailabilityNotificationSubscription(
-            $this->tester->haveProduct()
+            $this->tester->haveProduct(),
         );
 
         $response = $this->availabilityNotificationFacade->unsubscribeBySubscriptionKey($availabilityNotificationSubscription);
@@ -146,7 +146,7 @@ class AvailabilityNotificationFacadeTest extends Unit
     {
         $availabilityNotificationSubscription = $this->tester->haveAvailabilityNotificationSubscriptionTransfer(
             $this->tester->haveProduct(),
-            $this->tester->haveCustomer()
+            $this->tester->haveCustomer(),
         );
 
         $this->mockMailDependency();
@@ -168,7 +168,7 @@ class AvailabilityNotificationFacadeTest extends Unit
             null,
             [
                 'subscription_key' => static::TESTER_INCORRECT_SUBSCRIPTION_KEY,
-            ]
+            ],
         );
 
         $this->mockMailDependency();
@@ -186,7 +186,7 @@ class AvailabilityNotificationFacadeTest extends Unit
         $customer = $this->tester->haveCustomer();
         $availabilityNotificationSubscription = $this->tester->haveAvailabilityNotificationSubscriptionTransfer(
             $this->tester->haveProduct(),
-            $customer
+            $customer,
         );
 
         $this->mockMailDependency();
@@ -199,7 +199,7 @@ class AvailabilityNotificationFacadeTest extends Unit
             ->findAvailabilityNotificationByCustomerReferenceAndSku(
                 $customer->getCustomerReference(),
                 $availabilityNotificationSubscription->getSku(),
-                $availabilityNotificationSubscription->getStore()->getIdStore()
+                $availabilityNotificationSubscription->getStore()->getIdStore(),
             );
 
         $this->assertNull($result);
@@ -217,14 +217,14 @@ class AvailabilityNotificationFacadeTest extends Unit
         $this->availabilityNotificationFacade->subscribe(
             $this->tester->haveAvailabilityNotificationSubscriptionTransfer(
                 $product1,
-                $customer
-            )
+                $customer,
+            ),
         );
         $this->availabilityNotificationFacade->subscribe(
             $this->tester->haveAvailabilityNotificationSubscriptionTransfer(
                 $product2,
-                $customer
-            )
+                $customer,
+            ),
         );
         $expandedCustomerTransfer = $this->availabilityNotificationFacade->expandCustomerTransferWithAvailabilityNotificationSubscriptionList($customer);
         $this->assertEmpty(
@@ -233,8 +233,8 @@ class AvailabilityNotificationFacadeTest extends Unit
                     $product1->getSku(),
                     $product2->getSku(),
                 ],
-                $expandedCustomerTransfer->getAvailabilityNotificationSubscriptionSkus()
-            )
+                $expandedCustomerTransfer->getAvailabilityNotificationSubscriptionSkus(),
+            ),
         );
     }
 
@@ -250,17 +250,17 @@ class AvailabilityNotificationFacadeTest extends Unit
         $this->availabilityNotificationFacade->subscribe(
             $this->tester->haveAvailabilityNotificationSubscriptionTransfer(
                 $product1,
-                $customer
-            )
+                $customer,
+            ),
         );
         $this->availabilityNotificationFacade->subscribe(
             $this->tester->haveAvailabilityNotificationSubscriptionTransfer(
                 $product2,
-                $customer
-            )
+                $customer,
+            ),
         );
         $availabilityNotificationSubscriptionCollectionTransfer = $this->availabilityNotificationFacade->getAvailabilityNotifications(
-            (new AvailabilityNotificationCriteriaTransfer())->addCustomerReference($customer->getCustomerReference())
+            (new AvailabilityNotificationCriteriaTransfer())->addCustomerReference($customer->getCustomerReference()),
         );
         $this->assertEquals(2, $availabilityNotificationSubscriptionCollectionTransfer->getAvailabilityNotificationSubscriptions()->count());
     }
@@ -273,7 +273,7 @@ class AvailabilityNotificationFacadeTest extends Unit
         $this->tester
             ->setDependency(
                 AvailabilityNotificationDependencyProvider::FACADE_MAIL,
-                $this->createMock(AvailabilityNotificationToMailFacadeInterface::class)
+                $this->createMock(AvailabilityNotificationToMailFacadeInterface::class),
             );
     }
 }

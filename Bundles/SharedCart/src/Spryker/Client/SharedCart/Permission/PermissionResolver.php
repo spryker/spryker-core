@@ -54,7 +54,7 @@ class PermissionResolver implements PermissionResolverInterface
 
         $writeAllowed = $this->can(
             WriteSharedCartPermissionPlugin::KEY,
-            $quoteTransfer->getIdQuote()
+            $quoteTransfer->getIdQuote(),
         );
         if ($writeAllowed) {
             return SharedCartConfig::PERMISSION_GROUP_FULL_ACCESS;
@@ -62,7 +62,7 @@ class PermissionResolver implements PermissionResolverInterface
 
         $readAllowed = $this->can(
             ReadSharedCartPermissionPlugin::KEY,
-            $quoteTransfer->getIdQuote()
+            $quoteTransfer->getIdQuote(),
         );
         if ($readAllowed) {
             return SharedCartConfig::PERMISSION_GROUP_READ_ONLY;

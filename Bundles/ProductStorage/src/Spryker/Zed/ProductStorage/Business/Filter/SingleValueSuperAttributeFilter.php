@@ -28,7 +28,7 @@ class SingleValueSuperAttributeFilter implements SingleValueSuperAttributeFilter
         foreach ($productConcreteSuperAttributeMap as $productId => $attributes) {
             $filteredSuperAttributes = $this->filterSingleValueSuperAttributes(
                 $attributes,
-                $superAttributeVariations
+                $superAttributeVariations,
             );
 
             $filteredProductConcreteSuperAttributeMap[$productId] = $filteredSuperAttributes;

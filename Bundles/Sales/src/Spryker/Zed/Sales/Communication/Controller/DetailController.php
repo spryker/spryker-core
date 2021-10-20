@@ -114,7 +114,7 @@ class DetailController extends AbstractController
         $blockData = $this->renderMultipleActions(
             $request,
             $this->getFactory()->getSalesDetailExternalBlocksUrls(),
-            $orderTransfer
+            $orderTransfer,
         );
 
         return [

@@ -81,7 +81,7 @@ class MerchantProfileGlossaryAttributeLocaleFormType extends AbstractType
             },
             function ($value) {
                 return (int)$value;
-            }
+            },
         );
     }
 }

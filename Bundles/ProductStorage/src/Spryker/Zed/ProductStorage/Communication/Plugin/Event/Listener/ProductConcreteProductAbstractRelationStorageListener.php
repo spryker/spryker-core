@@ -35,7 +35,7 @@ class ProductConcreteProductAbstractRelationStorageListener extends AbstractPlug
         $this->preventTransaction();
         $productAbstractIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferForeignKeys(
             $eventEntityTransfers,
-            SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT
+            SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT,
         );
 
         $this->getFacade()->publishAbstractProducts($productAbstractIds);

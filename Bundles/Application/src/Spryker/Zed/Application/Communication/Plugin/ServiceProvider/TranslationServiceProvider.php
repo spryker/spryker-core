@@ -49,7 +49,7 @@ class TranslationServiceProvider extends AbstractPlugin implements ServiceProvid
                 $twig->addExtension(new TranslationExtension($translator));
 
                 return $twig;
-            })
+            }),
         );
     }
 

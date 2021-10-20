@@ -70,7 +70,7 @@ class GetOrderItemManualEventsTest extends Unit
 
         // Act
         $orderItemManualEvents = $this->tester->getFacade()->getOrderItemManualEvents(
-            (new OrderItemFilterTransfer())->setSalesOrderItemIds($salesOrderItemIds)
+            (new OrderItemFilterTransfer())->setSalesOrderItemIds($salesOrderItemIds),
         );
 
         // Assert
@@ -87,7 +87,7 @@ class GetOrderItemManualEventsTest extends Unit
 
         // Act
         $orderItemManualEvents = $this->tester->getFacade()->getOrderItemManualEvents(
-            (new OrderItemFilterTransfer())->setSalesOrderItemIds([-1])
+            (new OrderItemFilterTransfer())->setSalesOrderItemIds([-1]),
         );
 
         // Assert

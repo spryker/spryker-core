@@ -22,7 +22,7 @@ class ConsoleFactory extends AbstractFactory
     {
         return new ConsoleRunnerHook(
             $this->getPreRunHookPlugins(),
-            $this->getPostRunHookPlugins()
+            $this->getPostRunHookPlugins(),
         );
     }
 

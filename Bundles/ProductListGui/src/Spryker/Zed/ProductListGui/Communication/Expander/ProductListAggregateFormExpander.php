@@ -76,7 +76,7 @@ class ProductListAggregateFormExpander implements ProductListAggregateFormExpand
         $builder->add(
             ProductListAggregateFormTransfer::PRODUCT_LIST_CATEGORY_RELATION,
             ProductListCategoryRelationFormType::class,
-            [ProductListAggregateFormType::OPTION_CATEGORY_IDS => $options[ProductListAggregateFormType::OPTION_CATEGORY_IDS]]
+            [ProductListAggregateFormType::OPTION_CATEGORY_IDS => $options[ProductListAggregateFormType::OPTION_CATEGORY_IDS]],
         );
 
         return $this;
@@ -91,7 +91,7 @@ class ProductListAggregateFormExpander implements ProductListAggregateFormExpand
     {
         $builder->add(
             ProductListAggregateFormTransfer::PRODUCT_LIST_PRODUCT_CONCRETE_RELATION,
-            ProductListProductConcreteRelationFormType::class
+            ProductListProductConcreteRelationFormType::class,
         );
 
         $this->addProductListProductConcreteRelationFormHelperFields($builder);
@@ -109,17 +109,17 @@ class ProductListAggregateFormExpander implements ProductListAggregateFormExpand
     {
         $builder->add(
             ProductListProductConcreteRelationFormType::FIELD_ASSIGNED_PRODUCT_IDS,
-            HiddenType::class
+            HiddenType::class,
         );
 
         $builder->add(
             ProductListProductConcreteRelationFormType::FIELD_PRODUCT_IDS_TO_BE_ASSIGNED,
-            HiddenType::class
+            HiddenType::class,
         );
 
         $builder->add(
             ProductListProductConcreteRelationFormType::FIELD_PRODUCT_IDS_TO_BE_DEASSIGNED,
-            HiddenType::class
+            HiddenType::class,
         );
     }
 
@@ -136,7 +136,7 @@ class ProductListAggregateFormExpander implements ProductListAggregateFormExpand
             $formEvent->getForm()
                 ->get($fieldName)
                 ->getPropertyPath()
-                ->__toString()
+                ->__toString(),
         );
     }
 

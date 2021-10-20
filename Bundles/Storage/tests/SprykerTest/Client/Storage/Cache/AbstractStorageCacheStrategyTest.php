@@ -79,7 +79,7 @@ abstract class AbstractStorageCacheStrategyTest extends Unit
 
         $this->storageCacheStrategyHelper = new StorageCacheStrategyHelper(
             $this->storageClientMock,
-            $this->storageClientConfigMock
+            $this->storageClientConfigMock,
         );
 
         $this->storageClientMock

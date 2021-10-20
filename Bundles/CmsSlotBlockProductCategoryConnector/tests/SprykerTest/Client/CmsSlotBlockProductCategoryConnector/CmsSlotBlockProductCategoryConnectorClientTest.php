@@ -55,7 +55,7 @@ class CmsSlotBlockProductCategoryConnectorClientTest extends Unit
         // Arrange
         $cmsSlotBlockTransfer = (new CmsSlotBlockTransfer())->addCondition(
             CmsSlotBlockProductCategoryConnectorConfig::CONDITION_KEY,
-            new CmsSlotBlockConditionTransfer()
+            new CmsSlotBlockConditionTransfer(),
         );
 
         // Act
@@ -74,7 +74,7 @@ class CmsSlotBlockProductCategoryConnectorClientTest extends Unit
         // Arrange
         $cmsSlotBlockTransfer = (new CmsSlotBlockTransfer())->addCondition(
             'incorrect-condition-key',
-            new CmsSlotBlockConditionTransfer()
+            new CmsSlotBlockConditionTransfer(),
         );
 
         // Act
@@ -93,7 +93,7 @@ class CmsSlotBlockProductCategoryConnectorClientTest extends Unit
         // Arrange
         $cmsSlotBlockTransfer = (new CmsSlotBlockTransfer())->addCondition(
             CmsSlotBlockProductCategoryConnectorConfig::CONDITION_KEY,
-            (new CmsSlotBlockConditionTransfer())->setAll(true)
+            (new CmsSlotBlockConditionTransfer())->setAll(true),
         );
 
         $cmsSlotParamsTransfer = $this->haveCmsSlotParams([
@@ -117,7 +117,7 @@ class CmsSlotBlockProductCategoryConnectorClientTest extends Unit
         $cmsSlotBlockTransfer = (new CmsSlotBlockTransfer())->addCondition(
             CmsSlotBlockProductCategoryConnectorConfig::CONDITION_KEY,
             (new CmsSlotBlockConditionTransfer())->setAll(false)
-                ->setProductIds([static::ID_PRODUCT_ABSTRACT])
+                ->setProductIds([static::ID_PRODUCT_ABSTRACT]),
         );
 
         $cmsSlotParamsTransfer = $this->haveCmsSlotParams([
@@ -142,7 +142,7 @@ class CmsSlotBlockProductCategoryConnectorClientTest extends Unit
             CmsSlotBlockProductCategoryConnectorConfig::CONDITION_KEY,
             (new CmsSlotBlockConditionTransfer())->setAll(false)
                 ->setProductIds([static::ID_PRODUCT_ABSTRACT + 1])
-                ->setCategoryIds([static::ID_CATEGORY])
+                ->setCategoryIds([static::ID_CATEGORY]),
         );
         $cmsSlotParamsTransfer = $this->haveCmsSlotParams([
             CmsSlotParamsTransfer::ID_PRODUCT_ABSTRACT => static::ID_PRODUCT_ABSTRACT,
@@ -174,7 +174,7 @@ class CmsSlotBlockProductCategoryConnectorClientTest extends Unit
             CmsSlotBlockProductCategoryConnectorConfig::CONDITION_KEY,
             (new CmsSlotBlockConditionTransfer())->setAll(false)
                 ->setProductIds([static::ID_PRODUCT_ABSTRACT + 1])
-                ->setCategoryIds([static::ID_CATEGORY + 1])
+                ->setCategoryIds([static::ID_CATEGORY + 1]),
         );
         $cmsSlotParamsTransfer = $this->haveCmsSlotParams([
             CmsSlotParamsTransfer::ID_PRODUCT_ABSTRACT => static::ID_PRODUCT_ABSTRACT,
@@ -212,7 +212,7 @@ class CmsSlotBlockProductCategoryConnectorClientTest extends Unit
             ->willReturn($productAbstractCategoryStorageTransfer);
         $this->tester->setDependency(
             CmsSlotBlockProductCategoryConnectorDependencyProvider::CLIENT_PRODUCT_CATEGORY_STORAGE,
-            $productCategoryStorageClientMock
+            $productCategoryStorageClientMock,
         );
     }
 

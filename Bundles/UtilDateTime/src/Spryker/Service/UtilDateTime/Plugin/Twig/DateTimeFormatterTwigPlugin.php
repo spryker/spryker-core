@@ -35,7 +35,7 @@ class DateTimeFormatterTwigPlugin extends AbstractTwigExtensionPlugin
             $filters[] = new TwigFilter(
                 $dateFormatterFunction,
                 [$this, $dateFormatterFunction],
-                ['is_safe' => ['html']]
+                ['is_safe' => ['html']],
             );
         }
 

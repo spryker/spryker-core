@@ -37,7 +37,7 @@ class ProductConcreteStorageListener extends AbstractPlugin implements EventBulk
         $this->preventTransaction();
 
         $this->getFacade()->publishProductConcrete(
-            $this->getProductConcreteIds($eventEntityTransfers, $eventName)
+            $this->getProductConcreteIds($eventEntityTransfers, $eventName),
         );
     }
 

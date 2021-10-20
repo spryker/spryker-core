@@ -43,7 +43,7 @@ class CartPermissionGroupReader implements CartPermissionGroupReaderInterface
     public function getCartPermissionGroupList(): RestResponseInterface
     {
         $quotePermissionGroupResponseTransfer = $this->sharedCartClient->getQuotePermissionGroupList(
-            new QuotePermissionGroupCriteriaFilterTransfer()
+            new QuotePermissionGroupCriteriaFilterTransfer(),
         );
 
         if (!$quotePermissionGroupResponseTransfer->getIsSuccessful()) {
@@ -51,7 +51,7 @@ class CartPermissionGroupReader implements CartPermissionGroupReaderInterface
         }
 
         return $this->cartPermissionGroupResponseBuilder->createCartPermissionGroupsCollectionResponse(
-            $quotePermissionGroupResponseTransfer->getQuotePermissionGroups()
+            $quotePermissionGroupResponseTransfer->getQuotePermissionGroups(),
         );
     }
 
@@ -63,7 +63,7 @@ class CartPermissionGroupReader implements CartPermissionGroupReaderInterface
     public function findCartPermissionGroupById(int $idCartPermissionGroup): RestResponseInterface
     {
         $quotePermissionGroupResponseTransfer = $this->sharedCartClient->findQuotePermissionGroupById(
-            (new QuotePermissionGroupTransfer())->setIdQuotePermissionGroup($idCartPermissionGroup)
+            (new QuotePermissionGroupTransfer())->setIdQuotePermissionGroup($idCartPermissionGroup),
         );
 
         if (!$quotePermissionGroupResponseTransfer->getIsSuccessful()) {
@@ -71,7 +71,7 @@ class CartPermissionGroupReader implements CartPermissionGroupReaderInterface
         }
 
         return $this->cartPermissionGroupResponseBuilder->createCartPermissionGroupsResponse(
-            $quotePermissionGroupResponseTransfer->getQuotePermissionGroups()->offsetGet(0)
+            $quotePermissionGroupResponseTransfer->getQuotePermissionGroups()->offsetGet(0),
         );
     }
 }

@@ -45,7 +45,7 @@ class CustomersListType extends AbstractType
     {
         $this->addCustomerIdField(
             $builder,
-            $options[static::OPTION_CUSTOMER_ARRAY]
+            $options[static::OPTION_CUSTOMER_ARRAY],
         );
     }
 

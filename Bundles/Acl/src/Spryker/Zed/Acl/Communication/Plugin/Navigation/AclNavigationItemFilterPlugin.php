@@ -43,7 +43,7 @@ class AclNavigationItemFilterPlugin extends AbstractPlugin implements Navigation
             $userFacade->getCurrentUser(),
             $navigationItemTransfer->getModule(),
             $navigationItemTransfer->getController(),
-            $navigationItemTransfer->getAction()
+            $navigationItemTransfer->getAction(),
         );
     }
 }

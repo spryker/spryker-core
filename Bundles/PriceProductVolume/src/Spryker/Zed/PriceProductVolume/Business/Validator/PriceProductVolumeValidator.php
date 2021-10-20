@@ -124,7 +124,7 @@ class PriceProductVolumeValidator implements PriceProductVolumeValidatorInterfac
                 [
                     PriceProductTransfer::VOLUME_QUANTITY => new VolumeQuantityConstraint(),
                     PriceProductTransfer::MONEY_VALUE => $this->getMoneyValueTransferConstraint(),
-                ]
+                ],
             ),
         ];
     }
@@ -139,7 +139,7 @@ class PriceProductVolumeValidator implements PriceProductVolumeValidatorInterfac
                 new TransferConstraint(
                     [
                         PriceProductTransfer::VOLUME_QUANTITY => $this->getVolumeQuantityConstraint(),
-                    ]
+                    ],
                 ),
             ]),
         ];
@@ -234,7 +234,7 @@ class PriceProductVolumeValidator implements PriceProductVolumeValidatorInterfac
             PriceProductTransfer::MONEY_VALUE,
             MoneyValueTransfer::PRICE_DATA,
             PriceProductVolumeConfig::VOLUME_PRICE_TYPE,
-            $volumePriceProductIndex
+            $volumePriceProductIndex,
         );
     }
 }

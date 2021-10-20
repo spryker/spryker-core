@@ -30,7 +30,7 @@ class PriceProductScheduleListMapper implements PriceProductScheduleListMapperIn
 
         $priceProductScheduleListMetadataTransfer = $this->mapPriceProductScheduleListEntityToPriceProductScheduleListMetaDataTransfer(
             $priceProductScheduleListEntity,
-            new PriceProductScheduleListMetaDataTransfer()
+            new PriceProductScheduleListMetaDataTransfer(),
         );
         $userTransfer = $this->mapPriceProductScheduleListEntityToUserTransfer($priceProductScheduleListEntity, new UserTransfer());
 
@@ -85,13 +85,13 @@ class PriceProductScheduleListMapper implements PriceProductScheduleListMapperIn
     ): PriceProductScheduleListMetaDataTransfer {
         if ($priceProductScheduleListEntity->hasVirtualColumn(PriceProductScheduleListFinder::ALIAS_NUMBER_OF_PRICES)) {
             $priceProductScheduleListMetadataTransfer->setNumberOfPrices(
-                $priceProductScheduleListEntity->getVirtualColumn(PriceProductScheduleListFinder::ALIAS_NUMBER_OF_PRICES)
+                $priceProductScheduleListEntity->getVirtualColumn(PriceProductScheduleListFinder::ALIAS_NUMBER_OF_PRICES),
             );
         }
 
         if ($priceProductScheduleListEntity->hasVirtualColumn(PriceProductScheduleListFinder::ALIAS_NUMBER_OF_PRODUCTS)) {
             $priceProductScheduleListMetadataTransfer->setNumberOfProducts(
-                $priceProductScheduleListEntity->getVirtualColumn(PriceProductScheduleListFinder::ALIAS_NUMBER_OF_PRODUCTS)
+                $priceProductScheduleListEntity->getVirtualColumn(PriceProductScheduleListFinder::ALIAS_NUMBER_OF_PRODUCTS),
             );
         }
 

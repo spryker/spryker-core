@@ -35,7 +35,7 @@ class MerchantProductBusinessFactory extends AbstractBusinessFactory
     public function createMerchantProductCartValidator(): MerchantProductCartValidatorInterface
     {
         return new MerchantProductCartValidator(
-            $this->getRepository()
+            $this->getRepository(),
         );
     }
 
@@ -46,7 +46,7 @@ class MerchantProductBusinessFactory extends AbstractBusinessFactory
     {
         return new MerchantProductReader(
             $this->getRepository(),
-            $this->getProductFacade()
+            $this->getProductFacade(),
         );
     }
 
@@ -57,7 +57,7 @@ class MerchantProductBusinessFactory extends AbstractBusinessFactory
     {
         return new MerchantProductWriter(
             $this->getEntityManager(),
-            $this->getRepository()
+            $this->getRepository(),
         );
     }
 
@@ -68,7 +68,7 @@ class MerchantProductBusinessFactory extends AbstractBusinessFactory
     {
         return new MerchantProductValidator(
             $this->getValidationAdapter(),
-            $this->getMerchantProductConstraints()
+            $this->getMerchantProductConstraints(),
         );
     }
 

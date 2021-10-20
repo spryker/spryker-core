@@ -45,7 +45,7 @@ class MerchantSalesOrderBusinessFactory extends AbstractBusinessFactory
             $this->getEntityManager(),
             $this->createMerchantOrderItemCreator(),
             $this->createMerchantOrderTotalsCreator(),
-            $this->getMerchantOrderPostCreatePlugins()
+            $this->getMerchantOrderPostCreatePlugins(),
         );
     }
 
@@ -107,7 +107,7 @@ class MerchantSalesOrderBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->getMerchantOrderFilterPlugins(),
             $this->getMerchantOrderExpanderPlugins(),
-            $this->getMerchantFacade()
+            $this->getMerchantFacade(),
         );
     }
 

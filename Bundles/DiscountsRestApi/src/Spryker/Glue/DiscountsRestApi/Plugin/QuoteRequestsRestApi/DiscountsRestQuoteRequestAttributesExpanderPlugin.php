@@ -36,7 +36,7 @@ class DiscountsRestQuoteRequestAttributesExpanderPlugin extends AbstractPlugin i
             ->createDiscountMapper()
             ->mapDiscountTransfersToRestQuoteRequestsAttributesTransfers(
                 $quoteRequestTransfers,
-                $restQuoteRequestsAttributesTransfers
+                $restQuoteRequestsAttributesTransfers,
             );
     }
 }

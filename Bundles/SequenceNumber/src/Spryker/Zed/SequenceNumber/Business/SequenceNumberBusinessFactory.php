@@ -29,7 +29,7 @@ class SequenceNumberBusinessFactory extends AbstractBusinessFactory
     {
         return new RandomNumberGenerator(
             $min,
-            $max
+            $max,
         );
     }
 
@@ -48,7 +48,7 @@ class SequenceNumberBusinessFactory extends AbstractBusinessFactory
             $generator,
             $settings,
             Propel::getConnection(),
-            $this->getConfig()->getSequenceLimits()
+            $this->getConfig()->getSequenceLimits(),
         );
     }
 }

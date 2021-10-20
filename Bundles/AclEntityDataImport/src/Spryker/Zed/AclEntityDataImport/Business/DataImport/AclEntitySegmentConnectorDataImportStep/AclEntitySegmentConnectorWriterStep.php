@@ -39,12 +39,12 @@ class AclEntitySegmentConnectorWriterStep implements DataImportStepInterface
         $connectorClassName = $this->aclEntityService->generateSegmentConnectorClassName($dataEntity);
         $connectorQuery = PropelQuery::from($connectorClassName);
         $referenceColumnName = $this->aclEntityService->generateSegmentConnectorReferenceColumnName(
-            PropelQuery::from($dataEntity)->getTableMap()->getName()
+            PropelQuery::from($dataEntity)->getTableMap()->getName(),
         );
         $entity = $connectorQuery
             ->filterBy(
                 $connectorQuery->getTableMap()->getColumn($referenceColumnName)->getPhpName(),
-                $dataSet[AclEntitySegmentConnectorDataSetInterface::FK_TARGET_ENTITY]
+                $dataSet[AclEntitySegmentConnectorDataSetInterface::FK_TARGET_ENTITY],
             )
             ->filterByFkAclEntitySegment($dataSet[AclEntitySegmentConnectorDataSetInterface::FK_ACL_ENTITY_SEGMENT])
             ->findOneOrCreate();

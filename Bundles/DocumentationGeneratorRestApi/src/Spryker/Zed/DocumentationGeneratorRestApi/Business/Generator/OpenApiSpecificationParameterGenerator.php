@@ -92,7 +92,7 @@ class OpenApiSpecificationParameterGenerator implements OpenApiSpecificationPara
             static::DEFAULT_ACCEPT_LANGUAGE_DESCRIPTION,
             static::DEFAULT_ACCEPT_LANGUAGE_NAME,
             false,
-            $this->createParameterScheme('string')
+            $this->createParameterScheme('string'),
         );
 
         $this->addParameter($language);

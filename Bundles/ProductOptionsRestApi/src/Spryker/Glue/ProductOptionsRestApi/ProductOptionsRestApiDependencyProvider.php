@@ -64,7 +64,7 @@ class ProductOptionsRestApiDependencyProvider extends AbstractBundleDependencyPr
     {
         $container->set(static::CLIENT_PRODUCT_OPTION_STORAGE, function (Container $container) {
             return new ProductOptionsRestApiToProductOptionStorageClientBridge(
-                $container->getLocator()->productOptionStorage()->client()
+                $container->getLocator()->productOptionStorage()->client(),
             );
         });
 
@@ -80,7 +80,7 @@ class ProductOptionsRestApiDependencyProvider extends AbstractBundleDependencyPr
     {
         $container->set(static::CLIENT_PRODUCT_STORAGE, function (Container $container) {
             return new ProductOptionsRestApiToProductStorageClientBridge(
-                $container->getLocator()->productStorage()->client()
+                $container->getLocator()->productStorage()->client(),
             );
         });
 
@@ -96,7 +96,7 @@ class ProductOptionsRestApiDependencyProvider extends AbstractBundleDependencyPr
     {
         $container->set(static::CLIENT_GLOSSARY_STORAGE, function (Container $container) {
             return new ProductOptionsRestApiToGlossaryStorageClientBridge(
-                $container->getLocator()->glossaryStorage()->client()
+                $container->getLocator()->glossaryStorage()->client(),
             );
         });
 
@@ -112,7 +112,7 @@ class ProductOptionsRestApiDependencyProvider extends AbstractBundleDependencyPr
     {
         $container->set(static::CLIENT_CURRENCY, function (Container $container) {
             return new ProductOptionsRestApiToCurrencyClientBridge(
-                $container->getLocator()->currency()->client()
+                $container->getLocator()->currency()->client(),
             );
         });
 

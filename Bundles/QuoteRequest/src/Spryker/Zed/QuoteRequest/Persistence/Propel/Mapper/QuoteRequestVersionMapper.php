@@ -52,7 +52,7 @@ class QuoteRequestVersionMapper
         foreach ($quoteRequestEntities as $quoteRequestEntity) {
             $quoteRequestVersionTransfer = $this->mapQuoteRequestVersionEntityToQuoteRequestVersionTransfer(
                 $quoteRequestEntity,
-                new QuoteRequestVersionTransfer()
+                new QuoteRequestVersionTransfer(),
             );
             $quoteRequestVersionCollectionTransfer->addQuoteRequestVersion($quoteRequestVersionTransfer);
         }

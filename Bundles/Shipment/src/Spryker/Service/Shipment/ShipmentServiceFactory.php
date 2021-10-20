@@ -36,7 +36,7 @@ class ShipmentServiceFactory extends AbstractServiceFactory
         return new ShipmentHashGenerator(
             $this->getCustomerService(),
             $this->getConfig(),
-            $this->getUtilEncodingService()
+            $this->getUtilEncodingService(),
         );
     }
 

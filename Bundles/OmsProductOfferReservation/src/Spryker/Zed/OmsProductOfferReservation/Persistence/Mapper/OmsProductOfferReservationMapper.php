@@ -25,7 +25,7 @@ class OmsProductOfferReservationMapper
         $omsProductOfferReservationEntity->fromArray($omsProductOfferReservationTransfer->modifiedToArray());
 
         return $omsProductOfferReservationEntity->setFkStore(
-            $omsProductOfferReservationTransfer->getIdStore()
+            $omsProductOfferReservationTransfer->getIdStore(),
         );
     }
 

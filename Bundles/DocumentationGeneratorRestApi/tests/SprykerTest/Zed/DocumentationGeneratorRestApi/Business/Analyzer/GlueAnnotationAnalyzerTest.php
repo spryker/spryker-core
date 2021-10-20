@@ -114,7 +114,7 @@ class GlueAnnotationAnalyzerTest extends Unit
     {
         $glueAnnotationAnalyzer = new GlueAnnotationAnalyzer(
             $this->getGlueControllerFinder(static::CONTROLLER_SOURCE_DIRECTORY . DIRECTORY_SEPARATOR . static::CONTROLLER_FILE_NAME),
-            $this->getUtilEncodingService()
+            $this->getUtilEncodingService(),
         );
         $parameters = $glueAnnotationAnalyzer->getResourceParametersFromPlugin(new TestResourceRoutePlugin());
 
@@ -144,7 +144,7 @@ class GlueAnnotationAnalyzerTest extends Unit
     {
         $glueAnnotationAnalyzer = new GlueAnnotationAnalyzer(
             $this->getGlueControllerFinder(static::CONTROLLER_SOURCE_DIRECTORY . DIRECTORY_SEPARATOR . static::CONTROLLER_WITH_INVALID_ANNOTATIONS_FILE_NAME),
-            $this->getUtilEncodingService()
+            $this->getUtilEncodingService(),
         );
 
         $this->expectException(InvalidAnnotationFormatException::class);
@@ -158,7 +158,7 @@ class GlueAnnotationAnalyzerTest extends Unit
     {
         $glueAnnotationAnalyzer = new GlueAnnotationAnalyzer(
             $this->getGlueControllerFinder(static::CONTROLLER_SOURCE_DIRECTORY . DIRECTORY_SEPARATOR . static::CONTROLLER_WITHOUT_ANNOTATIONS),
-            $this->getUtilEncodingService()
+            $this->getUtilEncodingService(),
         );
 
         $parameters = $glueAnnotationAnalyzer->getResourceParametersFromPlugin(new TestResourceRoutePlugin());
@@ -177,7 +177,7 @@ class GlueAnnotationAnalyzerTest extends Unit
     {
         $glueAnnotationAnalyzer = new GlueAnnotationAnalyzer(
             $this->getGlueControllerFinder(static::CONTROLLER_SOURCE_DIRECTORY . DIRECTORY_SEPARATOR . static::CONTROLLER_WITH_EMPTY_ANNOTATIONS),
-            $this->getUtilEncodingService()
+            $this->getUtilEncodingService(),
         );
 
         $parameters = $glueAnnotationAnalyzer->getResourceParametersFromPlugin(new TestResourceRoutePlugin());
@@ -196,7 +196,7 @@ class GlueAnnotationAnalyzerTest extends Unit
     {
         $glueAnnotationAnalyzer = new GlueAnnotationAnalyzer(
             $this->getGlueControllerFinder(static::CONTROLLER_SOURCE_DIRECTORY . DIRECTORY_SEPARATOR . static::CONTROLLER_WITH_NULLABLE_ID),
-            $this->getUtilEncodingService()
+            $this->getUtilEncodingService(),
         );
 
         $parameters = $glueAnnotationAnalyzer->getResourceParametersFromPlugin(new TestResourceRoutePlugin());

@@ -160,7 +160,7 @@ class LogCommunicationFactory extends AbstractCommunicationFactory
     {
         return new Sanitizer(
             $this->getConfig()->getSanitizerFieldNames(),
-            $this->getConfig()->getSanitizedFieldValue()
+            $this->getConfig()->getSanitizedFieldValue(),
         );
     }
 
@@ -174,7 +174,7 @@ class LogCommunicationFactory extends AbstractCommunicationFactory
             $this->getConfig()->getBufferLimit(),
             $this->getConfig()->getLogLevel(),
             $this->getConfig()->getIsBubble(),
-            $this->getConfig()->getIsFlushOnOverflow()
+            $this->getConfig()->getIsFlushOnOverflow(),
         );
     }
 
@@ -185,7 +185,7 @@ class LogCommunicationFactory extends AbstractCommunicationFactory
     {
         $streamHandler = new StreamHandler(
             $this->getConfig()->getLogDestinationPath(),
-            (int)$this->getConfig()->getLogLevel()
+            (int)$this->getConfig()->getLogLevel(),
         );
 
         $streamHandler->setFormatter($this->createLogstashFormatter());
@@ -208,7 +208,7 @@ class LogCommunicationFactory extends AbstractCommunicationFactory
     {
         $streamHandler = new StreamHandler(
             $this->getConfig()->getExceptionLogDestinationPath(),
-            Logger::ERROR
+            Logger::ERROR,
         );
         $streamHandler->setFormatter($this->createExceptionFormatter());
 
@@ -253,7 +253,7 @@ class LogCommunicationFactory extends AbstractCommunicationFactory
     {
         return new QueueHandler(
             $this->getProvidedDependency(LogDependencyProvider::CLIENT_QUEUE),
-            $this->getConfig()->getQueueName()
+            $this->getConfig()->getQueueName(),
         );
     }
 }

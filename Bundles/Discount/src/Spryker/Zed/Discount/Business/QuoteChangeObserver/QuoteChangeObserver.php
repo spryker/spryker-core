@@ -60,7 +60,7 @@ class QuoteChangeObserver implements QuoteChangeObserverInterface
 
         $itemSkuCollection = array_merge(
             $this->checkRemovedDiscountsItemsSku($indexResultDiscountTransferCollection, $indexSourceDiscountTransferCollection, $sourceQuoteTransfer),
-            $this->checkRemovedDiscountsItemsSku($indexResultCartRuleTransferCollection, $indexSourceCartRuleTransferCollection, $sourceQuoteTransfer)
+            $this->checkRemovedDiscountsItemsSku($indexResultCartRuleTransferCollection, $indexSourceCartRuleTransferCollection, $sourceQuoteTransfer),
         );
         if (!empty($itemSkuCollection)) {
             $this->createInfoMessageWithSkuCollection(static::GLOSSARY_KEY_DISCOUNT_QUOTE_CHANGE_DISCOUNT_NOT_AVAILABLE, $itemSkuCollection);
@@ -68,7 +68,7 @@ class QuoteChangeObserver implements QuoteChangeObserverInterface
 
         $itemSkuCollection = array_merge(
             $this->checkCurrentDiscountsDiffItemsSku($indexResultDiscountTransferCollection, $indexSourceDiscountTransferCollection, $resultQuoteTransfer),
-            $this->checkCurrentDiscountsDiffItemsSku($indexResultCartRuleTransferCollection, $indexSourceCartRuleTransferCollection, $resultQuoteTransfer)
+            $this->checkCurrentDiscountsDiffItemsSku($indexResultCartRuleTransferCollection, $indexSourceCartRuleTransferCollection, $resultQuoteTransfer),
         );
         if (!empty($itemSkuCollection)) {
             $this->createInfoMessageWithSkuCollection(static::GLOSSARY_KEY_DISCOUNT_QUOTE_CHANGE_DISCOUNT_AMOUNT_CHANGED, $itemSkuCollection);
@@ -94,7 +94,7 @@ class QuoteChangeObserver implements QuoteChangeObserverInterface
             if (!isset($indexResultDiscountTransferCollection[$discountTransfer->getIdDiscount()])) {
                 $itemSkuCollection = array_merge(
                     $itemSkuCollection,
-                    $this->findItemsWithAppliedDiscounts($quoteTransfer, $discountTransfer->getIdDiscount())
+                    $this->findItemsWithAppliedDiscounts($quoteTransfer, $discountTransfer->getIdDiscount()),
                 );
             }
         }
@@ -122,7 +122,7 @@ class QuoteChangeObserver implements QuoteChangeObserverInterface
             ) {
                 $itemSkuCollection = array_merge(
                     $itemSkuCollection,
-                    $this->findItemsWithAppliedDiscounts($quoteTransfer, $discountTransfer->getIdDiscount())
+                    $this->findItemsWithAppliedDiscounts($quoteTransfer, $discountTransfer->getIdDiscount()),
                 );
             }
         }

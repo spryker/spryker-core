@@ -76,7 +76,7 @@ class PaymentWriter implements PaymentWriterInterface
         if ($storeRelationTransfer && $storeRelationTransfer->getIdStores()) {
             $this->entityManager->addPaymentMethodStoreRelationsForStores(
                 $storeRelationTransfer->getIdStores(),
-                $paymentMethodTransfer->getIdPaymentMethod()
+                $paymentMethodTransfer->getIdPaymentMethod(),
             );
         }
 

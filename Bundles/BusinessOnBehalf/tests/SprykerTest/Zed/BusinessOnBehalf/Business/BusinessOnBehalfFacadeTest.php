@@ -172,7 +172,7 @@ class BusinessOnBehalfFacadeTest extends Unit
         //Assert
         $this->assertSame(
             $this->customer->getCompanyUserTransfer()->getIdCompanyUser(),
-            $customerTransfer->getCompanyUserTransfer()->getIdCompanyUser()
+            $customerTransfer->getCompanyUserTransfer()->getIdCompanyUser(),
         );
     }
 

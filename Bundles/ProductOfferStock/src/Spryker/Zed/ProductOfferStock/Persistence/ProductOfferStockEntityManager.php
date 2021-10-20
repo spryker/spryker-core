@@ -49,19 +49,19 @@ class ProductOfferStockEntityManager extends AbstractEntityManager implements Pr
 
         /** @var \Orm\Zed\ProductOfferStock\Persistence\SpyProductOfferStock $productOfferStockEntity */
         $productOfferStockEntity = $this->getFactory()->getProductOfferStockPropelQuery()->findOneByIdProductOfferStock(
-            $idProductOfferStock
+            $idProductOfferStock,
         );
 
         $productOfferStockMapper = $this->getFactory()->createProductOfferStockMapper();
         $productOfferStockEntity = $productOfferStockMapper->mapProductOfferStockTransferToProductOfferStockEntity(
             $productOfferStockTransfer,
-            $productOfferStockEntity
+            $productOfferStockEntity,
         );
         $productOfferStockEntity->save();
 
         return $productOfferStockMapper->mapProductOfferStockEntityToProductOfferStockTransfer(
             $productOfferStockEntity,
-            $productOfferStockTransfer
+            $productOfferStockTransfer,
         );
     }
 }

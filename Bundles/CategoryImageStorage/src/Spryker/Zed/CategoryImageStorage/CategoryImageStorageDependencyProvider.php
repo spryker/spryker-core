@@ -67,7 +67,7 @@ class CategoryImageStorageDependencyProvider extends AbstractBundleDependencyPro
     {
         $container->set(static::FACADE_EVENT_BEHAVIOR, function (Container $container) {
             return new CategoryImageStorageToEventBehaviorBridge(
-                $container->getLocator()->eventBehavior()->facade()
+                $container->getLocator()->eventBehavior()->facade(),
             );
         });
 

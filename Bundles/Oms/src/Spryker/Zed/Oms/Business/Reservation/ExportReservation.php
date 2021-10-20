@@ -157,7 +157,7 @@ class ExportReservation implements ExportReservationInterface
     {
         foreach ($reservations as $reservation) {
             $this->executeExportReservationPlugins(
-                $this->mapReservationRequestTransfer($currentStoreTransfer, $reservation)
+                $this->mapReservationRequestTransfer($currentStoreTransfer, $reservation),
             );
         }
     }

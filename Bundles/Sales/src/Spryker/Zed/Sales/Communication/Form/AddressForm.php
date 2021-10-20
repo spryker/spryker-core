@@ -312,7 +312,7 @@ class AddressForm extends AbstractType
             TextType::class,
             [
                 'required' => false,
-            ]
+            ],
         );
 
         return $this;

@@ -441,7 +441,7 @@ abstract class AbstractTable
         return str_replace(
             ['.', '(', ')'],
             '',
-            $name
+            $name,
         );
     }
 
@@ -637,7 +637,7 @@ abstract class AbstractTable
         $loaderChain = $twig->getLoader();
         $loaderChain->addLoader(new FilesystemLoader(
             $this->getTwigPaths(),
-            $this->getTwigRootPath()
+            $this->getTwigRootPath(),
         ));
 
         return $twig;
@@ -989,7 +989,7 @@ abstract class AbstractTable
                     'LOWER(%s%s) LIKE %s',
                     $value,
                     $filter,
-                    Propel::getConnection()->quote($conditionParameter)
+                    Propel::getConnection()->quote($conditionParameter),
                 );
 
                 $conditions[] = $condition;
@@ -1041,7 +1041,7 @@ abstract class AbstractTable
     {
         $gluedCondition = implode(
             sprintf(' %s ', Criteria::LOGICAL_OR),
-            $conditions
+            $conditions,
         );
 
         $gluedCondition = '(' . $gluedCondition . ')';
@@ -1532,8 +1532,8 @@ abstract class AbstractTable
                     $searchColumns[$column->getData()],
                     Propel::getConnection()->quote($this->filterSearchValue($search[self::PARAMETER_VALUE]) . ' 00:00:00'),
                     $searchColumns[$column->getData()],
-                    Propel::getConnection()->quote($this->filterSearchValue($search[self::PARAMETER_VALUE]) . ' 23:59:59')
-                )
+                    Propel::getConnection()->quote($this->filterSearchValue($search[self::PARAMETER_VALUE]) . ' 23:59:59'),
+                ),
             );
 
             return;
@@ -1547,7 +1547,7 @@ abstract class AbstractTable
         $query->where(sprintf(
             '%s = %s',
             $searchColumns[$column->getData()],
-            Propel::getConnection()->quote($value)
+            Propel::getConnection()->quote($value),
         ));
     }
 

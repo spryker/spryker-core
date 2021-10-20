@@ -38,7 +38,7 @@ class CompanyBusinessUnitGuiCommunicationFactory extends AbstractCommunicationFa
     public function createCompanyBusinessUnitTable(): CompanyBusinessUnitTable
     {
         return new CompanyBusinessUnitTable(
-            $this->getCompanyBusinessUnitQuery()
+            $this->getCompanyBusinessUnitQuery(),
         );
     }
 
@@ -71,7 +71,7 @@ class CompanyBusinessUnitGuiCommunicationFactory extends AbstractCommunicationFa
     {
         return new CompanyBusinessUnitFormDataProvider(
             $this->getCompanyBusinessUnitFacade(),
-            $this->getCompanyFacade()
+            $this->getCompanyFacade(),
         );
     }
 
@@ -90,7 +90,7 @@ class CompanyBusinessUnitGuiCommunicationFactory extends AbstractCommunicationFa
     {
         return new CompanyUserBusinessUnitFormDataProvider(
             $this->getCompanyBusinessUnitFacade(),
-            $this->createCompanyBusinessUnitNameGenerator()
+            $this->createCompanyBusinessUnitNameGenerator(),
         );
     }
 

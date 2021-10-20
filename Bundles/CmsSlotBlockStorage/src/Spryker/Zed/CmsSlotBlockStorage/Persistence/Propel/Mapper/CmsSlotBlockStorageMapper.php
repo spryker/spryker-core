@@ -50,7 +50,7 @@ class CmsSlotBlockStorageMapper
         foreach ($conditions as $conditionKey => $condition) {
             $cmsSlotBlockTransfer->addCondition(
                 $conditionKey,
-                (new CmsSlotBlockConditionTransfer())->fromArray($condition, true)
+                (new CmsSlotBlockConditionTransfer())->fromArray($condition, true),
             );
         }
 
@@ -71,7 +71,7 @@ class CmsSlotBlockStorageMapper
         $cmsSlotBlockStorageEntity->setFkCmsSlotTemplate($cmsSlotBlockStorageTransfer->getIdCmsSlotTemplate());
         $cmsSlotBlockStorageEntity->setSlotTemplateKey($cmsSlotBlockStorageTransfer->getSlotTemplateKey());
         $cmsSlotBlockStorageEntity->setData(
-            $cmsSlotBlockStorageTransfer->getData()->modifiedToArray(true, true)
+            $cmsSlotBlockStorageTransfer->getData()->modifiedToArray(true, true),
         );
 
         return $cmsSlotBlockStorageEntity;

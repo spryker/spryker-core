@@ -220,7 +220,7 @@ class SearchDelegator implements SearchDelegatorInterface
 
         throw new SearchDelegatorException(sprintf(
             'None of the applied "%s"s is applicable for the specified context.',
-            SearchAdapterPluginInterface::class
+            SearchAdapterPluginInterface::class,
         ));
     }
 

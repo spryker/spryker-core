@@ -76,13 +76,13 @@ abstract class AbstractCustomerResourceRelationshipExpander implements CustomerR
     {
         $restCustomersResponseAttributesTransfer = $this->customerResourceMapper->mapCustomerTransferToRestCustomersResponseAttributesTransfer(
             $customerTransfer,
-            new RestCustomersResponseAttributesTransfer()
+            new RestCustomersResponseAttributesTransfer(),
         );
 
         return $this->customerRestResponseBuilder->createCustomerRestResource(
             $customerTransfer->getCustomerReference(),
             $restCustomersResponseAttributesTransfer,
-            $customerTransfer
+            $customerTransfer,
         );
     }
 }

@@ -125,7 +125,7 @@ class ConsoleBootstrap extends Application
         return sprintf(
             '<fg=yellow>Store</fg=yellow>: <info>%s</info> | <fg=yellow>Environment</fg=yellow>: <info>%s</info>',
             APPLICATION_STORE,
-            APPLICATION_ENV
+            APPLICATION_ENV,
         );
     }
 

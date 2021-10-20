@@ -37,7 +37,7 @@ class PriceProductMerchantRelationshipStorageFactory extends AbstractFactory
         return new PriceProductMerchantRelationshipAbstractReader(
             $this->getStorageClient(),
             $this->createPriceProductMerchantRelationshipKeyGenerator(),
-            $this->createPriceProductMapper()
+            $this->createPriceProductMapper(),
         );
     }
 
@@ -49,7 +49,7 @@ class PriceProductMerchantRelationshipStorageFactory extends AbstractFactory
         return new PriceProductMerchantRelationshipConcreteReader(
             $this->getStorageClient(),
             $this->createPriceProductMerchantRelationshipKeyGenerator(),
-            $this->createPriceProductMapper()
+            $this->createPriceProductMapper(),
         );
     }
 
@@ -68,7 +68,7 @@ class PriceProductMerchantRelationshipStorageFactory extends AbstractFactory
     {
         return new PriceProductMerchantRelationshipKeyGenerator(
             $this->getSynchronizationService(),
-            $this->getStoreClient()
+            $this->getStoreClient(),
         );
     }
 
@@ -127,7 +127,7 @@ class PriceProductMerchantRelationshipStorageFactory extends AbstractFactory
     {
         return new PriceProductMapper(
             $this->getConfig(),
-            $this->getPriceProductService()
+            $this->getPriceProductService(),
         );
     }
 }

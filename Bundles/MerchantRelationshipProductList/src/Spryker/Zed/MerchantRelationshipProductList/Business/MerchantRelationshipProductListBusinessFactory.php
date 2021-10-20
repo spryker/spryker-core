@@ -53,7 +53,7 @@ class MerchantRelationshipProductListBusinessFactory extends AbstractBusinessFac
         return new ProductListWriter(
             $this->getRepository(),
             $this->getEntityManager(),
-            $this->getProductListFacade()
+            $this->getProductListFacade(),
         );
     }
 
@@ -64,7 +64,7 @@ class MerchantRelationshipProductListBusinessFactory extends AbstractBusinessFac
     {
         return new MerchantRelationshipReader(
             $this->getRepository(),
-            $this->getMerchantRelationshipFacade()
+            $this->getMerchantRelationshipFacade(),
         );
     }
 
@@ -74,7 +74,7 @@ class MerchantRelationshipProductListBusinessFactory extends AbstractBusinessFac
     public function createProductListDeleteChecker(): ProductListDeleteCheckerInterface
     {
         return new ProductListDeleteChecker(
-            $this->createMerchantRelationshipReader()
+            $this->createMerchantRelationshipReader(),
         );
     }
 

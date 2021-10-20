@@ -366,7 +366,7 @@ class RestApiError implements RestApiErrorInterface
         if (!count($restResponse->getErrors())) {
             return $this->addCustomerCantRegisterMessageError(
                 $restResponse,
-                CustomersRestApiConfig::RESPONSE_MESSAGE_CUSTOMER_CANT_REGISTER_CUSTOMER
+                CustomersRestApiConfig::RESPONSE_MESSAGE_CUSTOMER_CANT_REGISTER_CUSTOMER,
             );
         }
 
@@ -405,7 +405,7 @@ class RestApiError implements RestApiErrorInterface
         if (!count($restResponse->getErrors())) {
             return $this->addPasswordChangeError(
                 $restResponse,
-                CustomersRestApiConfig::RESPONSE_DETAILS_PASSWORD_CHANGE_FAILED
+                CustomersRestApiConfig::RESPONSE_DETAILS_PASSWORD_CHANGE_FAILED,
             );
         }
 
@@ -427,7 +427,7 @@ class RestApiError implements RestApiErrorInterface
         if (!count($restResponse->getErrors())) {
             return $this->addPasswordChangeError(
                 $restResponse,
-                CustomersRestApiConfig::RESPONSE_DETAILS_PASSWORD_CHANGE_FAILED
+                CustomersRestApiConfig::RESPONSE_DETAILS_PASSWORD_CHANGE_FAILED,
             );
         }
 

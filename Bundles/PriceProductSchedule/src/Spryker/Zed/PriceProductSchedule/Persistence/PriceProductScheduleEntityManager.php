@@ -64,7 +64,7 @@ class PriceProductScheduleEntityManager extends AbstractEntityManager implements
             ->createPriceProductScheduleMapper()
             ->mapPriceProductScheduleTransferToPriceProductScheduleEntity(
                 $priceProductScheduleTransfer,
-                $priceProductScheduleEntity
+                $priceProductScheduleEntity,
             );
 
         $priceProductScheduleEntity->save();
@@ -73,7 +73,7 @@ class PriceProductScheduleEntityManager extends AbstractEntityManager implements
             ->createPriceProductScheduleMapper()
             ->mapPriceProductScheduleEntityToPriceProductScheduleTransfer(
                 $priceProductScheduleEntity,
-                $priceProductScheduleTransfer
+                $priceProductScheduleTransfer,
             );
     }
 
@@ -92,13 +92,13 @@ class PriceProductScheduleEntityManager extends AbstractEntityManager implements
             ->createPriceProductScheduleMapper()
             ->mapPriceProductScheduleTransferToPriceProductScheduleEntity(
                 $priceProductScheduleTransfer,
-                new SpyPriceProductSchedule()
+                new SpyPriceProductSchedule(),
             );
 
         $priceProductScheduleEntity->save();
 
         return $priceProductScheduleTransfer->setIdPriceProductSchedule(
-            (int)$priceProductScheduleEntity->getIdPriceProductSchedule()
+            (int)$priceProductScheduleEntity->getIdPriceProductSchedule(),
         );
     }
 
@@ -116,7 +116,7 @@ class PriceProductScheduleEntityManager extends AbstractEntityManager implements
             ->createPriceProductScheduleListMapper()
             ->mapPriceProductScheduleListTransferToPriceProductScheduleListEntity(
                 $priceProductScheduleListTransfer,
-                new SpyPriceProductScheduleList()
+                new SpyPriceProductScheduleList(),
             );
 
         $priceProductScheduleListEntity->save();
@@ -147,8 +147,8 @@ class PriceProductScheduleEntityManager extends AbstractEntityManager implements
             throw new PriceProductScheduleListNotFoundException(
                 sprintf(
                     'Price product schedule list was not found by given id %s',
-                    $priceProductScheduleListTransfer->getIdPriceProductScheduleList()
-                )
+                    $priceProductScheduleListTransfer->getIdPriceProductScheduleList(),
+                ),
             );
         }
 
@@ -156,7 +156,7 @@ class PriceProductScheduleEntityManager extends AbstractEntityManager implements
             ->createPriceProductScheduleListMapper()
             ->mapPriceProductScheduleListTransferToPriceProductScheduleListEntity(
                 $priceProductScheduleListTransfer,
-                $priceProductScheduleListEntity
+                $priceProductScheduleListEntity,
             );
 
         $priceProductScheduleListEntity->save();

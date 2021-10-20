@@ -107,7 +107,7 @@ class SearchConfig extends AbstractBundleConfig
         return sprintf(
             '%s:%s/_reindex?pretty',
             $this->get(SearchConstants::ELASTICA_PARAMETER__HOST, $this->get(static::HOST)),
-            $this->get(SearchConstants::ELASTICA_PARAMETER__PORT, $this->get(static::PORT))
+            $this->get(SearchConstants::ELASTICA_PARAMETER__PORT, $this->get(static::PORT)),
         );
     }
 

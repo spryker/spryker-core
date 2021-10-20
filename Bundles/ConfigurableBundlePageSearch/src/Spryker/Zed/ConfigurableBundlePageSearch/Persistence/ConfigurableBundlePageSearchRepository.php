@@ -35,7 +35,7 @@ class ConfigurableBundlePageSearchRepository extends AbstractRepository implemen
         $configurableBundleTemplatePageSearchQuery = $this->getFactory()->getConfigurableBundlePageSearchQuery();
         $configurableBundleTemplatePageSearchQuery = $this->setConfigurableBundlePageSearchFilters(
             $configurableBundleTemplatePageSearchQuery,
-            $configurableBundleTemplatePageSearchFilterTransfer
+            $configurableBundleTemplatePageSearchFilterTransfer,
         );
 
         $configurableBundleTemplatePageSearchEntities = $configurableBundleTemplatePageSearchQuery->find();
@@ -49,7 +49,7 @@ class ConfigurableBundlePageSearchRepository extends AbstractRepository implemen
         foreach ($configurableBundleTemplatePageSearchEntities as $configurableBundleTemplatePageSearchEntity) {
             $configurableBundleTemplatePageSearchCollectionTransfer->addConfigurableBundleTemplatePageSearch(
                 (new ConfigurableBundleTemplatePageSearchTransfer())->fromArray($configurableBundleTemplatePageSearchEntity->toArray(), true)
-                    ->setType(ConfigurableBundlePageSearchConfig::CONFIGURABLE_BUNDLE_TEMPLATE_RESOURCE_NAME)
+                    ->setType(ConfigurableBundlePageSearchConfig::CONFIGURABLE_BUNDLE_TEMPLATE_RESOURCE_NAME),
             );
         }
 
@@ -76,7 +76,7 @@ class ConfigurableBundlePageSearchRepository extends AbstractRepository implemen
 
         foreach ($configurableBundleTemplateIds as $configurableBundleTemplateId) {
             $configurableBundleTemplateCollectionTransfer->addConfigurableBundleTemplate(
-                (new ConfigurableBundleTemplateTransfer())->setIdConfigurableBundleTemplate($configurableBundleTemplateId)
+                (new ConfigurableBundleTemplateTransfer())->setIdConfigurableBundleTemplate($configurableBundleTemplateId),
             );
         }
 
@@ -95,7 +95,7 @@ class ConfigurableBundlePageSearchRepository extends AbstractRepository implemen
     ): SpyConfigurableBundleTemplatePageSearchQuery {
         if ($configurableBundleTemplatePageSearchFilterTransfer->getConfigurableBundleTemplateIds()) {
             $configurableBundleTemplatePageSearchQuery->filterByFkConfigurableBundleTemplate_In(
-                $configurableBundleTemplatePageSearchFilterTransfer->getConfigurableBundleTemplateIds()
+                $configurableBundleTemplatePageSearchFilterTransfer->getConfigurableBundleTemplateIds(),
             );
         }
 

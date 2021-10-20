@@ -28,7 +28,7 @@ class NavigationCollectorBusinessFactory extends AbstractBusinessFactory
         $storageNavigationMenuCollector = new NavigationMenuCollector(
             $this->getUtilDataReaderService(),
             $this->getNavigationFacade(),
-            $this->createNavigationKeyBuilder()
+            $this->createNavigationKeyBuilder(),
         );
 
         $storageNavigationMenuCollector->setTouchQueryContainer($this->getTouchQueryContainer());
@@ -92,7 +92,7 @@ class NavigationCollectorBusinessFactory extends AbstractBusinessFactory
     {
         return new NavigationCollectorRunner(
             $this->createStorageNavigationMenuCollector(),
-            $this->getCollectorFacade()
+            $this->getCollectorFacade(),
         );
     }
 }

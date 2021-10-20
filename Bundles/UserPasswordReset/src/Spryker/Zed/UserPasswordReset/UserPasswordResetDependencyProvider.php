@@ -57,7 +57,7 @@ class UserPasswordResetDependencyProvider extends AbstractBundleDependencyProvid
     {
         $container->set(static::FACADE_USER, function (Container $container) {
             return new UserPasswordResetToUserFacadeBridge(
-                $container->getLocator()->user()->facade()
+                $container->getLocator()->user()->facade(),
             );
         });
 
@@ -73,7 +73,7 @@ class UserPasswordResetDependencyProvider extends AbstractBundleDependencyProvid
     {
         $container->set(static::SERVICE_UTIL_TEXT, function (Container $container) {
             return new UserPasswordResetToUtilTextServiceBridge(
-                $container->getLocator()->utilText()->service()
+                $container->getLocator()->utilText()->service(),
             );
         });
 

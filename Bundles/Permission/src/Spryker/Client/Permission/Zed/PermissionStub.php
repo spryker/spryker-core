@@ -33,7 +33,7 @@ class PermissionStub implements PermissionStubInterface
         /** @var \Generated\Shared\Transfer\PermissionCollectionTransfer $permissionCollectionTransfer */
         $permissionCollectionTransfer = $this->zedRequestClient->call(
             '/permission/gateway/find-all',
-            new PermissionCollectionTransfer()
+            new PermissionCollectionTransfer(),
         );
 
         return $permissionCollectionTransfer;
@@ -47,7 +47,7 @@ class PermissionStub implements PermissionStubInterface
         /** @var \Generated\Shared\Transfer\PermissionCollectionTransfer $permissionCollectionTransfer */
         $permissionCollectionTransfer = $this->zedRequestClient->call(
             '/permission/gateway/find-merged-registered-non-infrastructural-permissions',
-            new PermissionCollectionTransfer()
+            new PermissionCollectionTransfer(),
         );
 
         return $permissionCollectionTransfer;

@@ -46,7 +46,7 @@ class PropelSchemaXmlNameValidator implements PropelSchemaXmlValidatorInterface
                 'There is a problem with %s . The identifier "%s" has a length beyond the maximum identifier length "%s". Your database will persist a truncated identifier leading to more problems!',
                 key($identifier),
                 current($identifier),
-                PropelConfig::POSTGRES_INDEX_NAME_MAX_LENGTH
+                PropelConfig::POSTGRES_INDEX_NAME_MAX_LENGTH,
             ));
         }
 
@@ -100,7 +100,7 @@ class PropelSchemaXmlNameValidator implements PropelSchemaXmlValidatorInterface
             $xml->xpath('/database/table/unique/@name'),
             $xml->xpath('/database/table/foreign-key/@name'),
             $xml->xpath('/database/table/foreign-key/reference/@local'),
-            $xml->xpath('/database/table/id-method-parameter/@value')
+            $xml->xpath('/database/table/id-method-parameter/@value'),
         );
 
         $fileNames = [];

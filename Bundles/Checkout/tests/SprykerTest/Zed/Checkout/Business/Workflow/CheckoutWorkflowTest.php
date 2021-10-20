@@ -46,7 +46,7 @@ class CheckoutWorkflowTest extends Unit
             new CheckoutToOmsFacadeBridge(new OmsFacade()),
             [],
             [],
-            [new MockPostHook($checkoutResponse)]
+            [new MockPostHook($checkoutResponse)],
         );
         $quoteTransfer = new QuoteTransfer();
 
@@ -67,7 +67,7 @@ class CheckoutWorkflowTest extends Unit
 
         $mockBuilder->expects($this->once())->method('checkCondition')->with(
             $this->isInstanceOf(QuoteTransfer::class),
-            $this->isInstanceOf(CheckoutResponseTransfer::class)
+            $this->isInstanceOf(CheckoutResponseTransfer::class),
         );
 
         $checkoutResponse = $this->createBaseCheckoutResponse();
@@ -75,7 +75,7 @@ class CheckoutWorkflowTest extends Unit
             new CheckoutToOmsFacadeBridge(new OmsFacade()),
             [$mockBuilder],
             [],
-            [new MockPostHook($checkoutResponse)]
+            [new MockPostHook($checkoutResponse)],
         );
         $quoteTransfer = new QuoteTransfer();
 
@@ -96,19 +96,19 @@ class CheckoutWorkflowTest extends Unit
 
         $mock1->expects($this->once())->method('checkCondition')->with(
             $this->isInstanceOf(QuoteTransfer::class),
-            $this->isInstanceOf(CheckoutResponseTransfer::class)
+            $this->isInstanceOf(CheckoutResponseTransfer::class),
         );
 
         $mock2->expects($this->once())->method('checkCondition')->with(
             $this->isInstanceOf(QuoteTransfer::class),
-            $this->isInstanceOf(CheckoutResponseTransfer::class)
+            $this->isInstanceOf(CheckoutResponseTransfer::class),
         );
 
         $checkoutWorkflow = new CheckoutWorkflow(
             new CheckoutToOmsFacadeBridge(new OmsFacade()),
             [$mock1, $mock2],
             [],
-            []
+            [],
         );
 
         $quoteTransfer = new QuoteTransfer();
@@ -128,12 +128,12 @@ class CheckoutWorkflowTest extends Unit
 
         $mock1->expects($this->once())->method('saveOrder')->with(
             $this->isInstanceOf(QuoteTransfer::class),
-            $this->isInstanceOf(SaveOrderTransfer::class)
+            $this->isInstanceOf(SaveOrderTransfer::class),
         );
 
         $mock2->expects($this->once())->method('saveOrder')->with(
             $this->isInstanceOf(QuoteTransfer::class),
-            $this->isInstanceOf(SaveOrderTransfer::class)
+            $this->isInstanceOf(SaveOrderTransfer::class),
         );
 
         $checkoutWorkflow = new CheckoutWorkflow(
@@ -141,7 +141,7 @@ class CheckoutWorkflowTest extends Unit
             [],
             [$mock1, $mock2],
             [],
-            []
+            [],
         );
         $checkoutWorkflow->placeOrder($quoteTransfer);
     }
@@ -159,17 +159,17 @@ class CheckoutWorkflowTest extends Unit
 
         $mock1->expects($this->once())->method('saveOrder')->with(
             $this->isInstanceOf(QuoteTransfer::class),
-            $this->isInstanceOf(SaveOrderTransfer::class)
+            $this->isInstanceOf(SaveOrderTransfer::class),
         );
 
         $mock2->expects($this->once())->method('saveOrder')->with(
             $this->isInstanceOf(QuoteTransfer::class),
-            $this->isInstanceOf(CheckoutResponseTransfer::class)
+            $this->isInstanceOf(CheckoutResponseTransfer::class),
         );
 
         $mock3->expects($this->once())->method('saveOrder')->with(
             $this->isInstanceOf(QuoteTransfer::class),
-            $this->isInstanceOf(CheckoutResponseTransfer::class)
+            $this->isInstanceOf(CheckoutResponseTransfer::class),
         );
 
         $checkoutWorkflow = new CheckoutWorkflow(
@@ -177,7 +177,7 @@ class CheckoutWorkflowTest extends Unit
             [],
             [$mock1, $mock2, $mock3],
             [],
-            []
+            [],
         );
 
         $checkoutWorkflow->placeOrder($quoteTransfer);
@@ -195,19 +195,19 @@ class CheckoutWorkflowTest extends Unit
 
         $mock1->expects($this->once())->method('executeHook')->with(
             $this->isInstanceOf(QuoteTransfer::class),
-            $this->isInstanceOf(CheckoutResponseTransfer::class)
+            $this->isInstanceOf(CheckoutResponseTransfer::class),
         );
 
         $mock2->expects($this->once())->method('executeHook')->with(
             $this->isInstanceOf(QuoteTransfer::class),
-            $this->isInstanceOf(CheckoutResponseTransfer::class)
+            $this->isInstanceOf(CheckoutResponseTransfer::class),
         );
 
         $checkoutWorkflow = new CheckoutWorkflow(
             new CheckoutToOmsFacadeBridge(new OmsFacade()),
             [],
             [],
-            [$mock1, $mock2]
+            [$mock1, $mock2],
         );
         $checkoutWorkflow->placeOrder($quoteTransfer);
     }
@@ -231,12 +231,12 @@ class CheckoutWorkflowTest extends Unit
             new CheckoutToOmsFacadeBridge(new OmsFacade()),
             [$mock1],
             [$mock2],
-            []
+            [],
         );
 
         $mock2->expects($this->once())->method('saveOrder')->with(
             $this->isInstanceOf(QuoteTransfer::class),
-            $this->isInstanceOf(SaveOrderTransfer::class)
+            $this->isInstanceOf(SaveOrderTransfer::class),
         );
 
         $checkoutWorkflow->placeOrder($quoteTransfer);
@@ -258,7 +258,7 @@ class CheckoutWorkflowTest extends Unit
             new CheckoutToOmsFacadeBridge(new OmsFacade()),
             [],
             [],
-            [$mock]
+            [$mock],
         );
         $quoteTransfer = new QuoteTransfer();
 

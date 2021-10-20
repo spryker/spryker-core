@@ -128,7 +128,7 @@ class GetOrderInvoicesTest extends Unit
         $orderInvoiceCriteriaTransfer = (new OrderInvoiceCriteriaTransfer())
             ->setExpandWithRenderedInvoice(true)
             ->setFilter(
-                (new FilterTransfer())->setOffset(0)->setLimit(1)
+                (new FilterTransfer())->setOffset(0)->setLimit(1),
             );
 
         // Act

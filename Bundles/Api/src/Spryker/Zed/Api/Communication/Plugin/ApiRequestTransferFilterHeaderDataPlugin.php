@@ -28,8 +28,8 @@ class ApiRequestTransferFilterHeaderDataPlugin extends ApiRequestTransferFilterA
         $apiRequestTransfer->setHeaderData(
             $this->doFilter(
                 $apiRequestTransfer->getHeaderData(),
-                $this->getConfig()->getSafeHeaderDataKeys()
-            )
+                $this->getConfig()->getSafeHeaderDataKeys(),
+            ),
         );
 
         return $apiRequestTransfer;

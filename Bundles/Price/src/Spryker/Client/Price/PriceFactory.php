@@ -36,7 +36,7 @@ class PriceFactory extends AbstractFactory
             $this->getQuoteClient(),
             $this->getConfig(),
             $this->getPriceModePostUpdatePlugins(),
-            $this->createPriceModeCache()
+            $this->createPriceModeCache(),
         );
     }
 

@@ -61,7 +61,7 @@ class ItemComparatorTest extends Unit
         //Assert
         $this->assertTrue(
             $isSame,
-            'Expects that items with same value for all configured comparison fields are same.'
+            'Expects that items with same value for all configured comparison fields are same.',
         );
     }
 
@@ -93,7 +93,7 @@ class ItemComparatorTest extends Unit
         //Assert
         $this->assertFalse(
             $isSame,
-            'Expects that items with only same SKU are not same.'
+            'Expects that items with only same SKU are not same.',
         );
     }
 
@@ -107,7 +107,7 @@ class ItemComparatorTest extends Unit
     ): ItemComparatorInterface {
         return new ItemComparator(
             $this->createProductConfigurationServiceMock(),
-            $this->createProductConfigurationConfigMock($itemFieldsForIsSameItemComparison)
+            $this->createProductConfigurationConfigMock($itemFieldsForIsSameItemComparison),
         );
     }
 

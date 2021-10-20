@@ -87,7 +87,7 @@ class ProductConcreteMeasurementUnitStorageReader implements ProductConcreteMeas
 
         return $this
             ->mapProductMeasurementUnitStorageDataToProductConcreteMeasurementUnitStorageTransfers(
-                $productConcreteMeasurementUnitsStorageData
+                $productConcreteMeasurementUnitsStorageData,
             );
     }
 

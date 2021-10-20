@@ -51,8 +51,8 @@ class PriceProductConstraintProvider implements PriceProductConstraintProviderIn
             new AllConstraint(
                 array_merge(
                     [new TransferConstraint([PriceProductTransfer::MONEY_VALUE => $this->getMoneyValueConstraint()])],
-                    $this->priceProductConstraints
-                )
+                    $this->priceProductConstraints,
+                ),
             ),
         ];
     }

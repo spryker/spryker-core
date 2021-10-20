@@ -75,7 +75,7 @@ class IsAccountBlockedTest extends Test
             'kv:%s:%s:%s',
             $securityCheckAuthContextTransfer->getType(),
             $securityCheckAuthContextTransfer->getIp(),
-            $securityCheckAuthContextTransfer->getAccount()
+            $securityCheckAuthContextTransfer->getAccount(),
         );
 
         $expectedNumberOfAttempts = '1';
@@ -84,7 +84,7 @@ class IsAccountBlockedTest extends Test
             ->method('get')
             ->with(
                 $securityBlockerConfig->getRedisConnectionKey(),
-                $expectedRedisKey
+                $expectedRedisKey,
             )->willReturn($expectedNumberOfAttempts);
 
         // Act

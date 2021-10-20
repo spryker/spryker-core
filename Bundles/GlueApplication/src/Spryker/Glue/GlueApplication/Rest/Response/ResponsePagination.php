@@ -70,7 +70,7 @@ class ResponsePagination implements ResponsePaginationInterface
 
         return array_merge(
             $paginationLinks,
-            $restResponse->getLinks()
+            $restResponse->getLinks(),
         );
     }
 
@@ -196,7 +196,7 @@ class ResponsePagination implements ResponsePaginationInterface
             '%s/%s?%s',
             $this->config->getGlueDomainName(),
             implode('/', $resourceLinks),
-            ($queryString ? $queryString . '&' : '')
+            ($queryString ? $queryString . '&' : ''),
         );
     }
 
@@ -213,7 +213,7 @@ class ResponsePagination implements ResponsePaginationInterface
                 '&%s[%s]=%s',
                 RequestConstantsInterface::QUERY_PAGE,
                 RequestConstantsInterface::QUERY_LIMIT,
-                $pageOffsetsTransfer->getLimit()
+                $pageOffsetsTransfer->getLimit(),
             );
         }
 
@@ -231,7 +231,7 @@ class ResponsePagination implements ResponsePaginationInterface
             '%s[%s]=%s',
             RequestConstantsInterface::QUERY_PAGE,
             RequestConstantsInterface::QUERY_OFFSET,
-            (string)$offset
+            (string)$offset,
         );
     }
 

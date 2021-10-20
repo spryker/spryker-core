@@ -54,7 +54,7 @@ class StepFactoryTest extends Unit
     {
         $stepFactory = new StepFactory();
         $stepProcess = $stepFactory->createStepEngine(
-            new StepCollection($this->getUrlGeneratorMock(), 'escape-route')
+            new StepCollection($this->getUrlGeneratorMock(), 'escape-route'),
         );
 
         $this->assertInstanceOf(StepEngineInterface::class, $stepProcess);

@@ -111,7 +111,7 @@ class InvoiceSubForm extends AbstractSubFormType implements SubFormInterface, Su
                     new NotBlank(['groups' => $this->getPropertyPath()]),
                     $this->getFactory()->createDateOfBirthValueConstraint(),
                 ],
-            ]
+            ],
         );
 
         return $this;

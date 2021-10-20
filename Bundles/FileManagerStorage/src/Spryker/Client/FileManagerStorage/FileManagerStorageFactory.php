@@ -19,7 +19,7 @@ class FileManagerStorageFactory extends AbstractFactory
     {
         return new FileManagerStorage(
             $this->getStorageClient(),
-            $this->getSynchronizationService()
+            $this->getSynchronizationService(),
         );
     }
 

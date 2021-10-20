@@ -53,7 +53,7 @@ class UrlStorageProductSetMapperPlugin extends AbstractPlugin implements UrlStor
                 '%s.%s.resource.product_set.%s',
                 strtolower(Store::getInstance()->getStoreName()),
                 strtolower($locale),
-                $idProductSet
+                $idProductSet,
             );
 
             return $collectorDataKey;

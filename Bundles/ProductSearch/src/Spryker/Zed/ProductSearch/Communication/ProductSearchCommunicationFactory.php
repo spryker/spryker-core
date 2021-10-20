@@ -97,7 +97,7 @@ class ProductSearchCommunicationFactory extends AbstractCommunicationFactory
             $this->getConfig(),
             $this->getLocaleFacade(),
             $this->getGlossaryFacade(),
-            $this->createFilterGlossaryKeyBuilder()
+            $this->createFilterGlossaryKeyBuilder(),
         );
     }
 

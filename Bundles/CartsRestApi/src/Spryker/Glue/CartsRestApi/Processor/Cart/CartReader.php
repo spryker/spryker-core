@@ -83,7 +83,7 @@ class CartReader implements CartReaderInterface
 
         return $this->cartRestResponseBuilder->createCartRestResponse(
             $quoteResponseTransfer->getQuoteTransfer(),
-            $restRequest->getMetadata()->getLocale()
+            $restRequest->getMetadata()->getLocale(),
         );
     }
 
@@ -127,8 +127,8 @@ class CartReader implements CartReaderInterface
         $quoteCollectionTransfer = $this->cartsRestApiClient->getQuoteCollection(
             $this->createQuoteCriteriaFilter(
                 $restRequest->getRestUser()->getNaturalIdentifier(),
-                $restRequest->getRestUser()->getIdCompanyUser()
-            )
+                $restRequest->getRestUser()->getIdCompanyUser(),
+            ),
         );
 
         return $quoteCollectionTransfer;

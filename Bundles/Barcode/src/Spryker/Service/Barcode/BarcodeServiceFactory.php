@@ -21,7 +21,7 @@ class BarcodeServiceFactory extends AbstractServiceFactory
     public function createBarcodeGenerator(): BarcodeGeneratorInterface
     {
         return new BarcodeGenerator(
-            $this->createBarcodePluginResolver()
+            $this->createBarcodePluginResolver(),
         );
     }
 

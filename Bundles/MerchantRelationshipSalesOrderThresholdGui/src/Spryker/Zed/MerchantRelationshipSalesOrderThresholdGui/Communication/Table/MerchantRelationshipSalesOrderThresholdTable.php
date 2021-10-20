@@ -189,7 +189,7 @@ class MerchantRelationshipSalesOrderThresholdTable extends AbstractTable
         $urlParams = [static::REQUEST_ID_MERCHANT_RELATIONSHIP => $item[static::COL_ID_MERCHANT_RELATIONSHIP]];
         $buttons[] = $this->generateEditButton(
             Url::generate(static::URL_MERCHANT_RELATIONSHIP_EDIT, $urlParams),
-            'Edit'
+            'Edit',
         );
 
         return implode(' ', $buttons);
@@ -220,7 +220,7 @@ class MerchantRelationshipSalesOrderThresholdTable extends AbstractTable
 
             if (isset($thresholdMerchantRelationshipMapping[$row[static::COL_ID_MERCHANT_RELATIONSHIP]])) {
                 $row[static::COL_THRESHOLDS] = $this->formatThresholdsColumn(
-                    $thresholdMerchantRelationshipMapping[$row[static::COL_ID_MERCHANT_RELATIONSHIP]]
+                    $thresholdMerchantRelationshipMapping[$row[static::COL_ID_MERCHANT_RELATIONSHIP]],
                 );
             }
 

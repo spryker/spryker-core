@@ -24,7 +24,7 @@ class PaginatedCustomerOrderReader extends CustomerOrderReader
     {
         $ordersQuery = $this->queryContainer->queryCustomerOrders(
             $idCustomer,
-            $orderListTransfer->getFilter()
+            $orderListTransfer->getFilter(),
         );
 
         $orderCollection = $this->getOrderCollection($orderListTransfer, $ordersQuery);

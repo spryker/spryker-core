@@ -326,7 +326,7 @@ class ComposerDependencyParser implements ComposerDependencyParserInterface
             throw new InvalidComposerJsonException(sprintf(
                 'Unable to parse %s: %s.',
                 $dependencyJsonFilePath,
-                json_last_error_msg()
+                json_last_error_msg(),
             ));
         }
 
@@ -362,7 +362,7 @@ class ComposerDependencyParser implements ComposerDependencyParserInterface
             throw new InvalidComposerJsonException(sprintf(
                 'Unable to parse %s: %s.',
                 $composerJsonFilePath,
-                json_last_error_msg()
+                json_last_error_msg(),
             ));
         }
 

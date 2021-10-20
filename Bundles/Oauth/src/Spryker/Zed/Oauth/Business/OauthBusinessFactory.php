@@ -82,7 +82,7 @@ class OauthBusinessFactory extends AbstractBusinessFactory
         return new PasswordGrant(
             $this->createAuthorizationServerBuilder()->build(),
             $this->createRepositoryBuilder(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -95,7 +95,7 @@ class OauthBusinessFactory extends AbstractBusinessFactory
             $this->createGrantTypeConfigurationLoader(),
             $this->createGrantTypeBuilder(),
             $this->createGrantTypeExecutor(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -106,7 +106,7 @@ class OauthBusinessFactory extends AbstractBusinessFactory
     {
         return new GrantTypeBuilder(
             $this->createRepositoryBuilder(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -144,7 +144,7 @@ class OauthBusinessFactory extends AbstractBusinessFactory
         return new RefreshTokenGrant(
             $this->createAuthorizationServerBuilder()->build(),
             $this->createRepositoryBuilder(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -165,7 +165,7 @@ class OauthBusinessFactory extends AbstractBusinessFactory
             $this->getOauthRefreshTokensRevokerPlugins(),
             $this->getOauthRefreshTokenCheckerPlugins(),
             $this->getOauthRefreshTokenSaverPlugins(),
-            $this->getOauthRefreshTokenPersistencePlugins()
+            $this->getOauthRefreshTokenPersistencePlugins(),
         );
     }
 
@@ -177,7 +177,7 @@ class OauthBusinessFactory extends AbstractBusinessFactory
         return new AuthorizationServerBuilder(
             $this->getConfig(),
             $this->createRepositoryBuilder(),
-            $this->createBearerTokenResponse()
+            $this->createBearerTokenResponse(),
         );
     }
 
@@ -196,7 +196,7 @@ class OauthBusinessFactory extends AbstractBusinessFactory
     {
         return new GrantTypeExecutor(
             $this->createAuthorizationServerBuilder()->build(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -206,7 +206,7 @@ class OauthBusinessFactory extends AbstractBusinessFactory
     public function createGrantTypeConfigurationLoader(): GrantTypeConfigurationLoaderInterface
     {
         return new GrantTypeConfigurationLoader(
-            $this->getGrantTypeConfigurationProviderPlugins()
+            $this->getGrantTypeConfigurationProviderPlugins(),
         );
     }
 
@@ -216,7 +216,7 @@ class OauthBusinessFactory extends AbstractBusinessFactory
     public function createOauthScopeReader(): OauthScopeReaderInterface
     {
         return new OauthScopeReader(
-            $this->getRepository()
+            $this->getRepository(),
         );
     }
 
@@ -228,7 +228,7 @@ class OauthBusinessFactory extends AbstractBusinessFactory
         return new OauthClientInstaller(
             $this->getConfig(),
             $this->createOauthClientWriter(),
-            $this->createOauthClientReader()
+            $this->createOauthClientReader(),
         );
     }
 
@@ -242,7 +242,7 @@ class OauthBusinessFactory extends AbstractBusinessFactory
             $this->getUtilEncodingService(),
             $this->getConfig(),
             $this->getOauthRefreshTokenReaderPlugins(),
-            $this->getOauthRefreshTokensReaderPlugins()
+            $this->getOauthRefreshTokensReaderPlugins(),
         );
     }
 
@@ -254,7 +254,7 @@ class OauthBusinessFactory extends AbstractBusinessFactory
         return new OauthExpiredRefreshTokenRemover(
             $this->getConfig(),
             $this->createPresentDateTime(),
-            $this->getOauthExpiredRefreshTokenRemoverPlugins()
+            $this->getOauthExpiredRefreshTokenRemoverPlugins(),
         );
     }
 
@@ -288,7 +288,7 @@ class OauthBusinessFactory extends AbstractBusinessFactory
     public function createOauthClientReader(): OauthClientReaderInterface
     {
         return new OauthClientReader(
-            $this->getRepository()
+            $this->getRepository(),
         );
     }
 
@@ -307,7 +307,7 @@ class OauthBusinessFactory extends AbstractBusinessFactory
     {
         return new OauthRefreshTokenMapper(
             $this->getUtilEncodingService(),
-            $this->getOauthUserIdentifierFilterPlugins()
+            $this->getOauthUserIdentifierFilterPlugins(),
         );
     }
 

@@ -30,7 +30,7 @@ class OmsEntityManager extends AbstractEntityManager implements OmsEntityManager
             ->createOmsMapper()
             ->mapReservationRequestTransferToOmsProductReservationEntity(
                 $reservationRequestTransfer,
-                new SpyOmsProductReservation()
+                new SpyOmsProductReservation(),
             );
 
         $omsProductReservationEntity->save();

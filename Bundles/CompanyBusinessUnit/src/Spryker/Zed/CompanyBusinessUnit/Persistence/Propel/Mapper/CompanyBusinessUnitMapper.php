@@ -62,11 +62,11 @@ class CompanyBusinessUnitMapper implements CompanyBusinessUnitMapperInterface
     ): CompanyBusinessUnitTransfer {
         $companyBusinessUnitTransfer->fromArray(
             $companyBusinessUnitEntity->toArray(),
-            true
+            true,
         );
         $companyBusinessUnitTransfer->setCompany($this->mapCompanyEntityToCompanyTransfer(
             $companyBusinessUnitEntity->getCompany(),
-            new CompanyTransfer()
+            new CompanyTransfer(),
         ));
 
         return $companyBusinessUnitTransfer;
@@ -84,7 +84,7 @@ class CompanyBusinessUnitMapper implements CompanyBusinessUnitMapperInterface
     ): CompanyTransfer {
         return $companyTransfer->fromArray(
             $companyEntity->toArray(),
-            true
+            true,
         );
     }
 }

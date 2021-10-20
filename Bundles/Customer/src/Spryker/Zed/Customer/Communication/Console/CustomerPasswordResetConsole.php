@@ -85,7 +85,7 @@ class CustomerPasswordResetConsole extends Console
     {
         return new ConfirmationQuestion(
             sprintf('%s customers in the database will be affected. Do you want to continue? [Y/n]', $customersCount),
-            false
+            false,
         );
     }
 

@@ -62,7 +62,7 @@ class ProductBundleAvailabilityHandlerTest extends Unit
             ->willReturn(
                 (new ProductConcreteAvailabilityTransfer())
                     ->setSku($bundledItemSku)
-                    ->setAvailability($bundledItemAvailability)
+                    ->setAvailability($bundledItemAvailability),
             );
 
         $bundledProducts = [];
@@ -104,7 +104,7 @@ class ProductBundleAvailabilityHandlerTest extends Unit
             ->willReturn(
                 (new ProductConcreteAvailabilityTransfer())
                     ->setSku($bundledItemSku)
-                    ->setAvailability($bundledItemAvailability)
+                    ->setAvailability($bundledItemAvailability),
             );
 
         $bundleProductEntity = new SpyProductBundle();

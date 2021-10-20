@@ -86,7 +86,7 @@ class ProductSearchBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductSearchAttributeCollector(
             $this->createAttributeReader(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -97,7 +97,7 @@ class ProductSearchBusinessFactory extends AbstractBusinessFactory
     {
         return new AttributeMapWriter(
             $this->getQueryContainer(),
-            $this->getProductFacade()
+            $this->getProductFacade(),
         );
     }
 
@@ -111,7 +111,7 @@ class ProductSearchBusinessFactory extends AbstractBusinessFactory
             $this->getProductFacade(),
             $this->getLocaleFacade(),
             $this->getGlossaryFacade(),
-            $this->createFilterGlossaryKeyBuilder()
+            $this->createFilterGlossaryKeyBuilder(),
         );
     }
 
@@ -147,7 +147,7 @@ class ProductSearchBusinessFactory extends AbstractBusinessFactory
         return new AttributeReader(
             $this->getQueryContainer(),
             $this->getLocaleFacade(),
-            $this->createProductAttributeTransferMapper()
+            $this->createProductAttributeTransferMapper(),
         );
     }
 
@@ -159,7 +159,7 @@ class ProductSearchBusinessFactory extends AbstractBusinessFactory
         return new ProductAttributeTransferMapper(
             $this->getLocaleFacade(),
             $this->getGlossaryFacade(),
-            $this->createFilterGlossaryKeyBuilder()
+            $this->createFilterGlossaryKeyBuilder(),
         );
     }
 
@@ -179,7 +179,7 @@ class ProductSearchBusinessFactory extends AbstractBusinessFactory
         return new ProductSearchAttributeMarker(
             $this->getTouchFacade(),
             $this->getEventFacade(),
-            $this->getQueryContainer()
+            $this->getQueryContainer(),
         );
     }
 
@@ -191,7 +191,7 @@ class ProductSearchBusinessFactory extends AbstractBusinessFactory
         return new ProductSearchAttributeMapMarker(
             $this->getTouchFacade(),
             $this->getEventFacade(),
-            $this->getQueryContainer()
+            $this->getQueryContainer(),
         );
     }
 
@@ -204,14 +204,14 @@ class ProductSearchBusinessFactory extends AbstractBusinessFactory
             $this->createAttributeReader(),
             $this->getConfig(),
             $this->createProductSearchConfigExtensionKeyBuilder(),
-            $this->getUtilDataReaderService()
+            $this->getUtilDataReaderService(),
         );
 
         $productSearchConfigCollector->setTouchQueryContainer(
-            $this->getTouchQueryContainer()
+            $this->getTouchQueryContainer(),
         );
         $productSearchConfigCollector->setQueryBuilder(
-            $this->createProductSearchConfigPropelQuery()
+            $this->createProductSearchConfigPropelQuery(),
         );
 
         return $productSearchConfigCollector;
@@ -272,7 +272,7 @@ class ProductSearchBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductAbstractSearchReader(
             $this->getQueryContainer(),
-            $this->getLocaleFacade()
+            $this->getLocaleFacade(),
         );
     }
 
@@ -283,7 +283,7 @@ class ProductSearchBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductConcreteSearchReader(
             $this->getQueryContainer(),
-            $this->getLocaleFacade()
+            $this->getLocaleFacade(),
         );
     }
 
@@ -294,7 +294,7 @@ class ProductSearchBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductSearchWriter(
             $this->createProductSearchMarker(),
-            $this->getQueryContainer()
+            $this->getQueryContainer(),
         );
     }
 
@@ -313,7 +313,7 @@ class ProductSearchBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductSearchCollectorRunner(
             $this->createProductSearchConfigExtensionCollector(),
-            $this->getCollectorFacade()
+            $this->getCollectorFacade(),
         );
     }
 }

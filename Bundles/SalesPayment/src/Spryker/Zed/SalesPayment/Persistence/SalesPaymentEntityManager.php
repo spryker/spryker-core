@@ -25,7 +25,7 @@ class SalesPaymentEntityManager extends AbstractEntityManager implements SalesPa
     {
         $idSalesPaymentMethodType = $this->getIdSalesPaymentMethodType(
             $salesPaymentTransfer->getPaymentProviderOrFail(),
-            $salesPaymentTransfer->getPaymentMethodOrFail()
+            $salesPaymentTransfer->getPaymentMethodOrFail(),
         );
 
         $salesPaymentEntity = $this->getFactory()

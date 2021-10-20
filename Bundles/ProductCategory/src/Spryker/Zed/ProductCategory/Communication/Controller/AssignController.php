@@ -168,14 +168,14 @@ class AssignController extends AbstractController
         if (!empty($removeProductMappingCollection)) {
             $this->getFacade()->removeProductCategoryMappings(
                 $idCategory,
-                $removeProductMappingCollection
+                $removeProductMappingCollection,
             );
         }
 
         if (!empty($addProductsMappingCollection)) {
             $this->getFacade()->createProductCategoryMappings(
                 $idCategory,
-                $addProductsMappingCollection
+                $addProductsMappingCollection,
             );
         }
     }

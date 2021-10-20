@@ -137,7 +137,7 @@ class FlysystemServiceTest extends Unit
     {
         $result = $this->flysystemService->has(
             static::FILE_SYSTEM_DOCUMENT,
-            'foo/' . static::FILE_DOCUMENT
+            'foo/' . static::FILE_DOCUMENT,
         );
 
         $this->assertFalse($result);
@@ -152,7 +152,7 @@ class FlysystemServiceTest extends Unit
 
         $result = $this->flysystemService->has(
             static::FILE_SYSTEM_DOCUMENT,
-            'foo/' . static::FILE_DOCUMENT
+            'foo/' . static::FILE_DOCUMENT,
         );
 
         $this->assertTrue($result);
@@ -167,7 +167,7 @@ class FlysystemServiceTest extends Unit
 
         $contents = $this->flysystemService->read(
             static::FILE_SYSTEM_PRODUCT_IMAGE,
-            'nonExistingFile.nil'
+            'nonExistingFile.nil',
         );
     }
 
@@ -180,7 +180,7 @@ class FlysystemServiceTest extends Unit
 
         $contents = $this->flysystemService->read(
             static::FILE_SYSTEM_DOCUMENT,
-            'foo/' . static::FILE_DOCUMENT
+            'foo/' . static::FILE_DOCUMENT,
         );
 
         $this->assertSame(static::FILE_CONTENT, $contents);
@@ -194,7 +194,7 @@ class FlysystemServiceTest extends Unit
         $this->flysystemService->write(
             static::FILE_SYSTEM_DOCUMENT,
             'foo/' . static::FILE_DOCUMENT,
-            static::FILE_CONTENT
+            static::FILE_CONTENT,
         );
 
         $file = $this->getLocalDocumentFile();
@@ -211,7 +211,7 @@ class FlysystemServiceTest extends Unit
 
         $this->flysystemService->delete(
             static::FILE_SYSTEM_DOCUMENT,
-            'foo/' . static::FILE_DOCUMENT
+            'foo/' . static::FILE_DOCUMENT,
         );
 
         $file = $this->getLocalDocumentFile();
@@ -228,7 +228,7 @@ class FlysystemServiceTest extends Unit
         $this->flysystemService->rename(
             static::FILE_SYSTEM_DOCUMENT,
             'foo/' . static::FILE_DOCUMENT,
-            'foo/' . 'NEW_' . static::FILE_DOCUMENT
+            'foo/' . 'NEW_' . static::FILE_DOCUMENT,
         );
 
         $originalFile = $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/' . static::FILE_DOCUMENT;
@@ -248,7 +248,7 @@ class FlysystemServiceTest extends Unit
         $this->flysystemService->copy(
             static::FILE_SYSTEM_DOCUMENT,
             'foo/' . static::FILE_DOCUMENT,
-            'foo/' . 'NEW_' . static::FILE_DOCUMENT
+            'foo/' . 'NEW_' . static::FILE_DOCUMENT,
         );
 
         $originalFile = $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/' . static::FILE_DOCUMENT;
@@ -267,7 +267,7 @@ class FlysystemServiceTest extends Unit
 
         $mimeType = $this->flysystemService->getMimetype(
             static::FILE_SYSTEM_DOCUMENT,
-            'foo/' . static::FILE_DOCUMENT
+            'foo/' . static::FILE_DOCUMENT,
         );
 
         $this->assertSame('text/plain', $mimeType);
@@ -283,7 +283,7 @@ class FlysystemServiceTest extends Unit
 
         $timestamp = $this->flysystemService->getTimestamp(
             static::FILE_SYSTEM_DOCUMENT,
-            'foo/' . static::FILE_DOCUMENT
+            'foo/' . static::FILE_DOCUMENT,
         );
 
         $this->assertSame($timestamp, $timestampExpected);
@@ -300,7 +300,7 @@ class FlysystemServiceTest extends Unit
 
         $size = $this->flysystemService->getSize(
             static::FILE_SYSTEM_DOCUMENT,
-            'foo/' . static::FILE_DOCUMENT
+            'foo/' . static::FILE_DOCUMENT,
         );
 
         $this->assertSame($sizeExpected, $size);
@@ -315,7 +315,7 @@ class FlysystemServiceTest extends Unit
 
         $isPrivate = $this->flysystemService->isPrivate(
             static::FILE_SYSTEM_DOCUMENT,
-            'foo/' . static::FILE_DOCUMENT
+            'foo/' . static::FILE_DOCUMENT,
         );
 
         $this->assertFalse($isPrivate);
@@ -330,19 +330,19 @@ class FlysystemServiceTest extends Unit
 
         $isPrivate = $this->flysystemService->isPrivate(
             static::FILE_SYSTEM_DOCUMENT,
-            'foo/' . static::FILE_DOCUMENT
+            'foo/' . static::FILE_DOCUMENT,
         );
 
         $this->assertFalse($isPrivate);
 
         $this->flysystemService->markAsPrivate(
             static::FILE_SYSTEM_DOCUMENT,
-            'foo/' . static::FILE_DOCUMENT
+            'foo/' . static::FILE_DOCUMENT,
         );
 
         $isPrivate = $this->flysystemService->isPrivate(
             static::FILE_SYSTEM_DOCUMENT,
-            'foo/' . static::FILE_DOCUMENT
+            'foo/' . static::FILE_DOCUMENT,
         );
 
         $this->assertTrue($isPrivate);
@@ -357,7 +357,7 @@ class FlysystemServiceTest extends Unit
 
         $isPrivate = $this->flysystemService->isPrivate(
             static::FILE_SYSTEM_DOCUMENT,
-            'foo/' . static::FILE_DOCUMENT
+            'foo/' . static::FILE_DOCUMENT,
         );
 
         $this->assertFalse($isPrivate);
@@ -372,12 +372,12 @@ class FlysystemServiceTest extends Unit
 
         $this->flysystemService->markAsPublic(
             static::FILE_SYSTEM_DOCUMENT,
-            'foo/' . static::FILE_DOCUMENT
+            'foo/' . static::FILE_DOCUMENT,
         );
 
         $isPrivate = $this->flysystemService->isPrivate(
             static::FILE_SYSTEM_DOCUMENT,
-            'foo/' . static::FILE_DOCUMENT
+            'foo/' . static::FILE_DOCUMENT,
         );
 
         $this->assertFalse($isPrivate);
@@ -390,7 +390,7 @@ class FlysystemServiceTest extends Unit
     {
         $this->flysystemService->createDir(
             static::FILE_SYSTEM_DOCUMENT,
-            'foo/bar'
+            'foo/bar',
         );
 
         $dir = $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/bar/';
@@ -407,7 +407,7 @@ class FlysystemServiceTest extends Unit
 
         $this->flysystemService->deleteDir(
             static::FILE_SYSTEM_DOCUMENT,
-            'foo/bar'
+            'foo/bar',
         );
 
         $this->assertDirectoryDoesNotExist($dir);
@@ -422,7 +422,7 @@ class FlysystemServiceTest extends Unit
 
         $stream = $this->flysystemService->readStream(
             static::FILE_SYSTEM_DOCUMENT,
-            'foo/' . static::FILE_DOCUMENT
+            'foo/' . static::FILE_DOCUMENT,
         );
 
         $content = stream_get_contents($stream);
@@ -447,7 +447,7 @@ class FlysystemServiceTest extends Unit
         $this->flysystemService->writeStream(
             static::FILE_SYSTEM_DOCUMENT,
             'foo/' . static::FILE_DOCUMENT,
-            $stream
+            $stream,
         );
 
         if ($stream !== false) {
@@ -473,7 +473,7 @@ class FlysystemServiceTest extends Unit
         $this->flysystemService->writeStream(
             static::FILE_SYSTEM_DOCUMENT,
             'foo/' . static::FILE_DOCUMENT,
-            $stream
+            $stream,
         );
 
         if ($stream !== false) {
@@ -497,7 +497,7 @@ class FlysystemServiceTest extends Unit
         $content = $this->flysystemService->listContents(
             static::FILE_SYSTEM_DOCUMENT,
             '/',
-            true
+            true,
         );
 
         $this->assertGreaterThan(0, count($content));

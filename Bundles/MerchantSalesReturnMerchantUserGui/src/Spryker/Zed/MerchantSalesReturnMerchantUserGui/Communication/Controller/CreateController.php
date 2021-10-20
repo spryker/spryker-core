@@ -96,12 +96,12 @@ class CreateController extends AbstractController
             ]);
 
             return $this->redirectResponse(
-                Url::generate(static::ROUTE_RETURN_LIST)->build()
+                Url::generate(static::ROUTE_RETURN_LIST)->build(),
             );
         }
 
         $merchantOrderTransfer->setMerchantOrderItems(
-            new ArrayObject($this->getMerchantOrderItems($merchantOrderTransfer))
+            new ArrayObject($this->getMerchantOrderItems($merchantOrderTransfer)),
         );
 
         $orderTransfer = $merchantOrderTransfer->getOrderOrFail();
@@ -184,7 +184,7 @@ class CreateController extends AbstractController
 
         foreach ($merchantOrderTransfer->getMerchantOrderItems() as $merchantOrderItem) {
             $merchantOrderItemCriteriaTransfer->addMerchantOrderItemId(
-                $merchantOrderItem->getIdMerchantOrderItemOrFail()
+                $merchantOrderItem->getIdMerchantOrderItemOrFail(),
             );
         }
 

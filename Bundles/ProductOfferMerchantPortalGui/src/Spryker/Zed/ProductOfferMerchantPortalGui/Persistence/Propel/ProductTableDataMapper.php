@@ -134,7 +134,7 @@ class ProductTableDataMapper
     protected function prepareProductStoresTableData(array $productTableRowDataArray): array
     {
         $stores = array_filter(
-            explode(',', $productTableRowDataArray[ProductConcreteTransfer::STORES])
+            explode(',', $productTableRowDataArray[ProductConcreteTransfer::STORES]),
         );
 
         $storeTransfers = array_map(function (string $storeName): StoreTransfer {
@@ -155,13 +155,13 @@ class ProductTableDataMapper
     {
         $productConcreteAttributes = $this->utilEncodingService->decodeJson(
             $productTableRowDataArray[ProductConcreteTransfer::ATTRIBUTES] ?? null,
-            true
+            true,
         );
         $productConcreteAttributes = is_array($productConcreteAttributes) ? $productConcreteAttributes : [];
 
         $productConcreteLocalizedAttributes = $this->utilEncodingService->decodeJson(
             $productTableRowDataArray[ProductConcreteTransfer::LOCALIZED_ATTRIBUTES] ?? null,
-            true
+            true,
         );
         $productConcreteLocalizedAttributes = is_array($productConcreteLocalizedAttributes) ? $productConcreteLocalizedAttributes : [];
 

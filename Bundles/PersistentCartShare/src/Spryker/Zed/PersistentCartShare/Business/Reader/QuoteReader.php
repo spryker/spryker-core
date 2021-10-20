@@ -66,7 +66,7 @@ class QuoteReader implements QuoteReaderInterface
         }
 
         return $this->getQuoteByResourceShare(
-            $resourceShareResponseTransfer->getResourceShare()
+            $resourceShareResponseTransfer->getResourceShare(),
         );
     }
 
@@ -82,7 +82,7 @@ class QuoteReader implements QuoteReaderInterface
                 ->requireIdQuote();
 
         $quoteResponseTransfer = $this->quoteFacade->findQuoteById(
-            $resourceShareTransfer->getResourceShareData()->getIdQuote()
+            $resourceShareTransfer->getResourceShareData()->getIdQuote(),
         );
 
         $quoteResponseTransfer = $this->validateQuoteResponse($quoteResponseTransfer);
@@ -100,7 +100,7 @@ class QuoteReader implements QuoteReaderInterface
         $quoteResponseTransferErrors = new ArrayObject();
         foreach ($resourceShareResponseMessages as $resourceShareResponseMessageTransfer) {
             $quoteResponseTransferErrors->append(
-                (new QuoteErrorTransfer())->setMessage($resourceShareResponseMessageTransfer->getValue())
+                (new QuoteErrorTransfer())->setMessage($resourceShareResponseMessageTransfer->getValue()),
             );
         }
 
@@ -117,7 +117,7 @@ class QuoteReader implements QuoteReaderInterface
         $quoteErrorTransfers = new ArrayObject();
 
         $quoteErrorTransfers->append(
-            (new QuoteErrorTransfer())->setMessage($message)
+            (new QuoteErrorTransfer())->setMessage($message),
         );
 
         return (new QuoteResponseTransfer())
@@ -136,7 +136,7 @@ class QuoteReader implements QuoteReaderInterface
             return (new QuoteResponseTransfer())
                 ->setIsSuccessful(false)
                 ->setErrors(
-                    $this->mapResourceShareResponseMessagesToQuoteResponseTransferErrors($resourceShareResponseTransfer->getMessages())
+                    $this->mapResourceShareResponseMessagesToQuoteResponseTransferErrors($resourceShareResponseTransfer->getMessages()),
                 );
         }
         $resourceShareResponseTransfer->requireResourceShare();

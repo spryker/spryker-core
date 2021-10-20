@@ -32,7 +32,7 @@ class PriceProductStorageFactory extends AbstractFactory
             $this->createPriceConcreteStorageReader(),
             $this->getPriceProductClient(),
             $this->getPriceProductService(),
-            $this->getPriceProductFilterExpanderPlugins()
+            $this->getPriceProductFilterExpanderPlugins(),
         );
     }
 
@@ -46,7 +46,7 @@ class PriceProductStorageFactory extends AbstractFactory
             $this->createPriceProductStorageKeyGenerator(),
             $this->createPriceProductMapper(),
             $this->getPriceDimensionPlugins(),
-            $this->getPriceProductPricesExtractorPlugins()
+            $this->getPriceProductPricesExtractorPlugins(),
         );
     }
 
@@ -60,7 +60,7 @@ class PriceProductStorageFactory extends AbstractFactory
             $this->createPriceProductStorageKeyGenerator(),
             $this->createPriceProductMapper(),
             $this->getPriceDimensionPlugins(),
-            $this->getPriceProductPricesExtractorPlugins()
+            $this->getPriceProductPricesExtractorPlugins(),
         );
     }
 
@@ -73,7 +73,7 @@ class PriceProductStorageFactory extends AbstractFactory
             $this->createPriceAbstractStorageReader(),
             $this->createPriceConcreteStorageReader(),
             $this->getPriceProductService(),
-            $this->getPriceProductClient()
+            $this->getPriceProductClient(),
         );
     }
 
@@ -83,7 +83,7 @@ class PriceProductStorageFactory extends AbstractFactory
     public function createPriceProductItemValidator(): PriceProductItemValidatorInterface
     {
         return new PriceProductItemValidator(
-            $this->createPriceConcreteResolver()
+            $this->createPriceConcreteResolver(),
         );
     }
 
@@ -149,7 +149,7 @@ class PriceProductStorageFactory extends AbstractFactory
     public function createPriceProductMapper(): PriceProductMapperInterface
     {
         return new PriceProductMapper(
-            $this->getPriceProductService()
+            $this->getPriceProductService(),
         );
     }
 

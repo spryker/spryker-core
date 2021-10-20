@@ -28,7 +28,7 @@ class KernelSharedFactory extends AbstractSharedFactory
     {
         return new ClassNameFinder(
             $this->createClassNameCandidatesBuilder(),
-            $this->createResolverCacheManager()
+            $this->createResolverCacheManager(),
         );
     }
 

@@ -168,7 +168,7 @@ class ZedNavigationCacheTest extends ZedNavigationBusinessTester
     protected function getUtilEncodingService(): ZedNavigationToUtilEncodingBridge
     {
         $navigationToUtilEncodingBridge = new ZedNavigationToUtilEncodingBridge(
-            new UtilEncodingService()
+            new UtilEncodingService(),
         );
 
         return $navigationToUtilEncodingBridge;

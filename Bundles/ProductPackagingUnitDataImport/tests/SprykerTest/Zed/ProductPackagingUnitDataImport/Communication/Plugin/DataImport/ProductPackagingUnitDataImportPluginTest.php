@@ -143,13 +143,13 @@ class ProductPackagingUnitDataImportPluginTest extends Unit
         foreach (static::PRODUCT_SKUS as $sku) {
             $productMeasurementBaseUnitTransfer = $this->tester->haveProductMeasurementBaseUnit(
                 $this->productAbstractIds[$sku],
-                $productMeasurementUnitTransfer->getIdProductMeasurementUnit()
+                $productMeasurementUnitTransfer->getIdProductMeasurementUnit(),
             );
 
             $this->tester->haveProductMeasurementSalesUnit(
                 $this->productConcreteIds[$sku],
                 $productMeasurementUnitTransfer->getIdProductMeasurementUnit(),
-                $productMeasurementBaseUnitTransfer->getIdProductMeasurementBaseUnit()
+                $productMeasurementBaseUnitTransfer->getIdProductMeasurementBaseUnit(),
             );
         }
     }

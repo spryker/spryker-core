@@ -47,7 +47,7 @@ class QuoteApprovalFactory extends AbstractFactory
     {
         return new QuoteStatusChecker(
             $this->createQuoteStatusCalculator(),
-            $this->createPermissionContextProvider()
+            $this->createPermissionContextProvider(),
         );
     }
 
@@ -58,7 +58,7 @@ class QuoteApprovalFactory extends AbstractFactory
     {
         return new QuoteChecker(
             $this->getConfig(),
-            $this->getQuoteApplicableForApprovalCheckPlugins()
+            $this->getQuoteApplicableForApprovalCheckPlugins(),
         );
     }
 
@@ -92,7 +92,7 @@ class QuoteApprovalFactory extends AbstractFactory
     public function createQuoteApprovalStub(): QuoteApprovalStubInterface
     {
         return new QuoteApprovalStub(
-            $this->getZedRequestClient()
+            $this->getZedRequestClient(),
         );
     }
 
@@ -103,7 +103,7 @@ class QuoteApprovalFactory extends AbstractFactory
     {
         return new QuoteApprovalCreator(
             $this->createQuoteApprovalStub(),
-            $this->createQuoteChecker()
+            $this->createQuoteChecker(),
         );
     }
 

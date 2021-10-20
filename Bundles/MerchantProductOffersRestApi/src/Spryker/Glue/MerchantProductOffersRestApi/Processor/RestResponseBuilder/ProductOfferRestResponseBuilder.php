@@ -148,7 +148,7 @@ class ProductOfferRestResponseBuilder implements ProductOfferRestResponseBuilder
         return $this->restResourceBuilder->createRestResource(
             MerchantProductOffersRestApiConfig::RESOURCE_PRODUCT_OFFERS,
             $productOfferStorageTransfer->getProductOfferReference(),
-            $restProductOffersAttributesTransfer
+            $restProductOffersAttributesTransfer,
         );
     }
 }

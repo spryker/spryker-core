@@ -32,7 +32,7 @@ class LocaleBusinessFactory extends AbstractBusinessFactory
         return new LocaleManager(
             $this->getQueryContainer(),
             $this->createTransferGenerator(),
-            $this->getRepository()
+            $this->getRepository(),
         );
     }
 
@@ -51,7 +51,7 @@ class LocaleBusinessFactory extends AbstractBusinessFactory
     {
         $installer = new LocaleInstaller(
             $this->getQueryContainer(),
-            $this->getConfig()->getLocaleFile()
+            $this->getConfig()->getLocaleFile(),
         );
 
         return $installer;

@@ -177,7 +177,7 @@ class CategoryNodeDeleter implements CategoryNodeDeleterInterface
             do {
                 $childrenMoved = $this->categoryTree->moveSubTree(
                     $nodeTransfer->getIdCategoryNodeOrFail(),
-                    $idDestinationCategoryNode ?? $nodeTransfer->getFkParentCategoryNodeOrFail()
+                    $idDestinationCategoryNode ?? $nodeTransfer->getFkParentCategoryNodeOrFail(),
                 );
             } while ($childrenMoved > 0);
         }
@@ -199,7 +199,7 @@ class CategoryNodeDeleter implements CategoryNodeDeleterInterface
     {
         $this->categoryTree->moveSubTree(
             $nodeTransfer->getIdCategoryNodeOrFail(),
-            $nodeTransfer->getFkParentCategoryNodeOrFail()
+            $nodeTransfer->getFkParentCategoryNodeOrFail(),
         );
 
         $this->categoryUrlDeleter->deleteCategoryUrlsForCategoryNode($nodeTransfer->getIdCategoryNodeOrFail());

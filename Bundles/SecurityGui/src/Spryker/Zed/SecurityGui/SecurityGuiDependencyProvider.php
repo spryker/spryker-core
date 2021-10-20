@@ -85,7 +85,7 @@ class SecurityGuiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::FACADE_USER, function (Container $container) {
             return new SecurityGuiToUserFacadeBridge(
-                $container->getLocator()->user()->facade()
+                $container->getLocator()->user()->facade(),
             );
         });
 
@@ -101,7 +101,7 @@ class SecurityGuiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::FACADE_MESSENGER, function (Container $container) {
             return new SecurityGuiToMessengerFacadeBridge(
-                $container->getLocator()->messenger()->facade()
+                $container->getLocator()->messenger()->facade(),
             );
         });
 
@@ -117,7 +117,7 @@ class SecurityGuiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::FACADE_USER_PASSWORD_RESET, function (Container $container) {
             return new SecurityGuiToUserPasswordResetFacadeBridge(
-                $container->getLocator()->userPasswordReset()->facade()
+                $container->getLocator()->userPasswordReset()->facade(),
             );
         });
 
@@ -133,7 +133,7 @@ class SecurityGuiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::FACADE_SECURITY, function (Container $container) {
             return new SecurityGuiToSecurityFacadeBridge(
-                $container->getLocator()->security()->facade()
+                $container->getLocator()->security()->facade(),
             );
         });
 

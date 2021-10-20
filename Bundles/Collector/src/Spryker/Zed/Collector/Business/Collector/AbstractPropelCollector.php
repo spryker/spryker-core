@@ -47,7 +47,7 @@ abstract class AbstractPropelCollector extends AbstractDatabaseCollector
         if (!($this->queryBuilder instanceof AbstractPropelCollectorQuery)) {
             throw new DependencyException(sprintf(
                 'queryBuilder does not implement AbstractPropelCollectorQuery in %s',
-                static::class
+                static::class,
             ));
         }
     }
@@ -61,7 +61,7 @@ abstract class AbstractPropelCollector extends AbstractDatabaseCollector
             $this->queryBuilder->getTouchQuery(),
             $this->chunkSize,
             CollectorConfig::COLLECTOR_TOUCH_ID,
-            Criteria::ASC
+            Criteria::ASC,
         );
     }
 

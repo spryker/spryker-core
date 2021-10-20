@@ -51,7 +51,7 @@ class ProductListKeyGenerator implements ProductListKeyGeneratorInterface
             $candidate = sprintf(
                 static::PRODUCT_LIST_KEY_PATTERN,
                 $this->utilTextService->generateSlug($name),
-                ++$index
+                ++$index,
             );
         } while ($this->productListRepository->hasKey($candidate));
 

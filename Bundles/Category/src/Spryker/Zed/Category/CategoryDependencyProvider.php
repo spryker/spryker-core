@@ -291,8 +291,8 @@ class CategoryDependencyProvider extends AbstractBundleDependencyProvider
                 'Missing instance of %s! You need to configure a category store assigner plugin ' .
                 'in your own CategoryDependencyProvider::getCategoryStoreAssignerPlugin() ' .
                 'to be able to handle category store relation assigment.',
-                CategoryStoreAssignerPluginInterface::class
-            )
+                CategoryStoreAssignerPluginInterface::class,
+            ),
         );
     }
 }

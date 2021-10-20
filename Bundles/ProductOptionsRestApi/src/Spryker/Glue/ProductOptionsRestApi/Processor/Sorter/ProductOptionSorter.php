@@ -42,7 +42,7 @@ class ProductOptionSorter implements ProductOptionSorterInterface
             return $this->compareRestProductOptionsAttributesTransfers(
                 $currentRestProductOptionsAttributesTransfer,
                 $nextRestProductOptionsAttributesTransfer,
-                $sorts
+                $sorts,
             );
         });
 
@@ -76,7 +76,7 @@ class ProductOptionSorter implements ProductOptionSorterInterface
                 $currentRestProductOptionsAttributesTransfer,
                 $nextRestProductOptionsAttributesTransfer,
                 $sorts,
-                $index + 1
+                $index + 1,
             );
         }
 

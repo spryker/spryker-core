@@ -47,7 +47,7 @@ class ProductPopularityMapExpanderPlugin extends AbstractPlugin implements Produ
         $pageMapBuilder->addIntegerSort(
             $pageMapTransfer,
             static::KEY_POPULARITY,
-            (int)$productData[static::KEY_POPULARITY]
+            (int)$productData[static::KEY_POPULARITY],
         );
 
         return $pageMapTransfer;

@@ -46,7 +46,7 @@ class SalesReturnBusinessFactory extends AbstractBusinessFactory
     {
         return new ItemRemunerationAmountSetter(
             $this->getRepository(),
-            $this->getEntityManager()
+            $this->getEntityManager(),
         );
     }
 
@@ -61,7 +61,7 @@ class SalesReturnBusinessFactory extends AbstractBusinessFactory
             $this->createReturnReader(),
             $this->createReturnReferenceGenerator(),
             $this->createOmsEventTriggerer(),
-            $this->getReturnPreCreatePlugins()
+            $this->getReturnPreCreatePlugins(),
         );
     }
 
@@ -73,7 +73,7 @@ class SalesReturnBusinessFactory extends AbstractBusinessFactory
         return new ReturnValidator(
             $this->getStoreFacade(),
             $this->getConfig(),
-            $this->getReturnCreateRequestValidatorPlugins()
+            $this->getReturnCreateRequestValidatorPlugins(),
         );
     }
 
@@ -87,7 +87,7 @@ class SalesReturnBusinessFactory extends AbstractBusinessFactory
             $this->getSalesFacade(),
             $this->createReturnTotalCalculator(),
             $this->getReturnExpanderPlugins(),
-            $this->getReturnCollectionExpanderPlugins()
+            $this->getReturnCollectionExpanderPlugins(),
         );
     }
 
@@ -98,7 +98,7 @@ class SalesReturnBusinessFactory extends AbstractBusinessFactory
     {
         return new OmsEventTriggerer(
             $this->getOmsFacade(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -125,7 +125,7 @@ class SalesReturnBusinessFactory extends AbstractBusinessFactory
     {
         return new ReturnReferenceGenerator(
             $this->getRepository(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -136,7 +136,7 @@ class SalesReturnBusinessFactory extends AbstractBusinessFactory
     {
         return new IsReturnableSetter(
             $this->getConfig(),
-            $this->getUtilDateTimeService()
+            $this->getUtilDateTimeService(),
         );
     }
 

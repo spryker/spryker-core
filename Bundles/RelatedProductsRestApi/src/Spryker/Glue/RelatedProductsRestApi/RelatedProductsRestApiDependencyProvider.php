@@ -65,7 +65,7 @@ class RelatedProductsRestApiDependencyProvider extends AbstractBundleDependencyP
     {
         $container->set(static::CLIENT_STORE, function (Container $container) {
             return new RelatedProductsRestApiToStoreClientBridge(
-                $container->getLocator()->store()->client()
+                $container->getLocator()->store()->client(),
             );
         });
 
@@ -81,7 +81,7 @@ class RelatedProductsRestApiDependencyProvider extends AbstractBundleDependencyP
     {
         $container->set(static::CLIENT_PRODUCT_RELATION_STORAGE, function (Container $container) {
             return new RelatedProductsRestApiToProductRelationStorageClientBridge(
-                $container->getLocator()->productRelationStorage()->client()
+                $container->getLocator()->productRelationStorage()->client(),
             );
         });
 
@@ -97,7 +97,7 @@ class RelatedProductsRestApiDependencyProvider extends AbstractBundleDependencyP
     {
         $container->set(static::CLIENT_PRODUCT_STORAGE, function (Container $container) {
             return new RelatedProductsRestApiToProductStorageClientBridge(
-                $container->getLocator()->productStorage()->client()
+                $container->getLocator()->productStorage()->client(),
             );
         });
 
@@ -113,7 +113,7 @@ class RelatedProductsRestApiDependencyProvider extends AbstractBundleDependencyP
     {
         $container->set(static::RESOURCE_PRODUCTS_REST_API, function (Container $container) {
             return new RelatedProductsRestApiToProductsRestApiResourceBridge(
-                $container->getLocator()->productsRestApi()->resource()
+                $container->getLocator()->productsRestApi()->resource(),
             );
         });
 

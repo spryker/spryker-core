@@ -35,7 +35,7 @@ class TwigMoneyServiceProvider extends AbstractPlugin implements ServiceProvider
                 $twig->addFilter($this->getMoneyRawFilter());
 
                 return $twig;
-            })
+            }),
         );
     }
 

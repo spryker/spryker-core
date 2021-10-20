@@ -179,7 +179,7 @@ class ProductOfferValidityForm extends AbstractType
                 }
 
                 return $value;
-            }
+            },
         );
     }
 }

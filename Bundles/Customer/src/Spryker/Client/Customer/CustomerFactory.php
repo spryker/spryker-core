@@ -37,7 +37,7 @@ class CustomerFactory extends AbstractFactory
     {
         return new CustomerAddress(
             $this->createZedCustomerStub(),
-            $this->getDefaultAddressChangePlugins()
+            $this->getDefaultAddressChangePlugins(),
         );
     }
 
@@ -49,7 +49,7 @@ class CustomerFactory extends AbstractFactory
         return new CustomerSession(
             $this->getSessionClient(),
             $this->getCustomerSessionGetPlugins(),
-            $this->getCustomerSessionSetPlugin()
+            $this->getCustomerSessionSetPlugin(),
         );
     }
 
@@ -59,7 +59,7 @@ class CustomerFactory extends AbstractFactory
     public function createCustomerAccessTokenReader(): CustomerAccessTokenReaderInterface
     {
         return new CustomerAccessTokenReader(
-            $this->getAccessTokenAuthenticationHandlerPlugin()
+            $this->getAccessTokenAuthenticationHandlerPlugin(),
         );
     }
 

@@ -35,7 +35,7 @@ class OfferPersistenceFactory extends AbstractPersistenceFactory
     public function createOfferMapper(): OfferMapperInterface
     {
         return new OfferMapper(
-            $this->getUtilEncodingService()
+            $this->getUtilEncodingService(),
         );
     }
 

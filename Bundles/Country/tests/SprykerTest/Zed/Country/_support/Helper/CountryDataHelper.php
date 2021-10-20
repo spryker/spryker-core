@@ -28,7 +28,7 @@ class CountryDataHelper extends Module
         $countryTransfer = $countryTransferBuilder->build();
 
         return $this->getCountryFacade()->getCountryByIso2Code(
-            $countryTransfer->getIso2Code()
+            $countryTransfer->getIso2Code(),
         );
     }
 

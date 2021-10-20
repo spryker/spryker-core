@@ -39,7 +39,7 @@ abstract class AbstractPriceProductComparisonMergeStrategy implements PriceProdu
     ): bool {
         $isSameMoneyValue = $this->getIsSameMoneyValue(
             $priceProductTransferA->getMoneyValueOrFail(),
-            $priceProductTransferB->getMoneyValueOrFail()
+            $priceProductTransferB->getMoneyValueOrFail(),
         );
         if (!$isSameMoneyValue) {
             return false;

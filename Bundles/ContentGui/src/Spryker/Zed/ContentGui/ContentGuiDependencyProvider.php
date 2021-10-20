@@ -149,7 +149,7 @@ class ContentGuiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::FACADE_CONTENT, function (Container $container) {
             return new ContentGuiToContentFacadeBridge(
-                $container->getLocator()->content()->facade()
+                $container->getLocator()->content()->facade(),
             );
         });
 
@@ -201,7 +201,7 @@ class ContentGuiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::FACADE_TRANSLATOR, function (Container $container) {
             return new ContentGuiToTranslatorFacadeBridge(
-                $container->getLocator()->translator()->facade()
+                $container->getLocator()->translator()->facade(),
             );
         });
 

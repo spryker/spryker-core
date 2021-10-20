@@ -29,7 +29,7 @@ class PublishAndSynchronizeHealthCheckStorageBusinessFactory extends AbstractBus
     {
         return new PublishAndSynchronizeHealthCheckStorageWriter(
             $this->getEventBehaviorFacade(),
-            $this->getRepository()
+            $this->getRepository(),
         );
     }
 
@@ -48,7 +48,7 @@ class PublishAndSynchronizeHealthCheckStorageBusinessFactory extends AbstractBus
     {
         return new HealthCheck(
             $this->getStorageClient(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 

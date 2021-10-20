@@ -58,7 +58,7 @@ class MoneyBuilder implements MoneyBuilderInterface
         if (!is_int($amount)) {
             throw new InvalidAmountArgumentException(sprintf(
                 'Current amount was expected to be int. Current type is "%s"',
-                gettype($amount)
+                gettype($amount),
             ));
         }
 
@@ -78,7 +78,7 @@ class MoneyBuilder implements MoneyBuilderInterface
         if (!is_float($amount)) {
             throw new InvalidAmountArgumentException(sprintf(
                 'Current amount was expected to be float. Current type is "%s"',
-                gettype($amount)
+                gettype($amount),
             ));
         }
 
@@ -98,7 +98,7 @@ class MoneyBuilder implements MoneyBuilderInterface
         if (!is_string($amount)) {
             throw new InvalidAmountArgumentException(sprintf(
                 'Current amount was expected to be string. Current type is "%s"',
-                gettype($amount)
+                gettype($amount),
             ));
         }
         if (strstr($amount, ',') || strstr($amount, '.')) {

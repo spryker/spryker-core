@@ -47,7 +47,7 @@ class ShoppingListRestRequestReader implements ShoppingListRestRequestReaderInte
 
         return $this->shoppingListResourceMapper->mapRestShoppingListsAttributesTransferToShoppingListTransfer(
             $restShoppingListRequestAttributesTransfer,
-            $shoppingListTransfer
+            $shoppingListTransfer,
         );
     }
 }

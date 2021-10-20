@@ -55,25 +55,25 @@ class ProductReviewSearchRepositoryTest extends Unit
             $localeTransfer->getIdLocale(),
             $customerTransfer->getCustomerReference(),
             $productAbstractTransfer1->getIdProductAbstract(),
-            SpyProductReviewTableMap::COL_STATUS_APPROVED
+            SpyProductReviewTableMap::COL_STATUS_APPROVED,
         );
         $productReviewTransfer12 = $this->tester->haveApprovedCustomerReviewForAbstractProduct(
             $localeTransfer->getIdLocale(),
             $customerTransfer->getCustomerReference(),
             $productAbstractTransfer1->getIdProductAbstract(),
-            SpyProductReviewTableMap::COL_STATUS_APPROVED
+            SpyProductReviewTableMap::COL_STATUS_APPROVED,
         );
         $productReviewTransfer21 = $this->tester->haveApprovedCustomerReviewForAbstractProduct(
             $localeTransfer->getIdLocale(),
             $customerTransfer->getCustomerReference(),
             $productAbstractTransfer2->getIdProductAbstract(),
-            SpyProductReviewTableMap::COL_STATUS_APPROVED
+            SpyProductReviewTableMap::COL_STATUS_APPROVED,
         );
         $productReviewTransfer22 = $this->tester->haveApprovedCustomerReviewForAbstractProduct(
             $localeTransfer->getIdLocale(),
             $customerTransfer->getCustomerReference(),
             $productAbstractTransfer2->getIdProductAbstract(),
-            SpyProductReviewTableMap::COL_STATUS_APPROVED
+            SpyProductReviewTableMap::COL_STATUS_APPROVED,
         );
         $productAbstract1RatingAverage = new Decimal(($productReviewTransfer11->getRating() + $productReviewTransfer12->getRating()) / 2);
         $productAbstract2RatingAverage = new Decimal(($productReviewTransfer21->getRating() + $productReviewTransfer22->getRating()) / 2);

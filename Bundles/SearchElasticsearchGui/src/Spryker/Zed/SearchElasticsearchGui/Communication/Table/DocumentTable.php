@@ -74,8 +74,8 @@ class DocumentTable extends AbstractTable
         $config->setUrl(
             sprintf(
                 'list-documents-ajax?index=%s',
-                $this->getIndexName()
-            )
+                $this->getIndexName(),
+            ),
         );
         $config->setDefaultSortField(static::COL_ID);
 
@@ -93,7 +93,7 @@ class DocumentTable extends AbstractTable
 
         /** @var \Elastica\ResultSet $results */
         $results = $this->searchElasticsearchClient->search(
-            $this->documentListQuery
+            $this->documentListQuery,
         );
 
         $this->setTotal($results->getTotalHits());
@@ -105,7 +105,7 @@ class DocumentTable extends AbstractTable
                     '<a href="/search-elasticsearch-gui/maintenance/document-info?documentId=%s&index=%s">%s</a>',
                     $result->getId(),
                     $result->getIndex(),
-                    $result->getId()
+                    $result->getId(),
                 ),
                 static::COL_INDEX => $result->getIndex(),
                 static::COL_SCORE => $result->getScore(),
@@ -121,7 +121,7 @@ class DocumentTable extends AbstractTable
     protected function configureDocumentListQuery(): void
     {
         $this->documentListQuery->setSearchContext(
-            $this->createSearchContextTransfer()
+            $this->createSearchContextTransfer(),
         );
     }
 

@@ -194,7 +194,7 @@ class GetOrderItemsTest extends Test
         // Arrange
         $this->tester->setDependency(
             SalesDependencyProvider::PLUGINS_ORDER_ITEM_EXPANDER,
-            [$this->getOrderItemExpanderPluginMock()]
+            [$this->getOrderItemExpanderPluginMock()],
         );
 
         $idSalesOrderItem = $this->tester->haveOrder([], static::DEFAULT_OMS_PROCESS_NAME)

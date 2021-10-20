@@ -26,7 +26,7 @@ class ProductLabelStoreRelationMapper
     ): StoreRelationTransfer {
         foreach ($productLabelStoreEntities as $productLabelStoreEntity) {
             $storeRelationTransfer->addStores(
-                $this->mapStoreEntityToStoreTransfer($productLabelStoreEntity->getStore(), new StoreTransfer())
+                $this->mapStoreEntityToStoreTransfer($productLabelStoreEntity->getStore(), new StoreTransfer()),
             );
             $storeRelationTransfer->addIdStores($productLabelStoreEntity->getFkStore());
         }

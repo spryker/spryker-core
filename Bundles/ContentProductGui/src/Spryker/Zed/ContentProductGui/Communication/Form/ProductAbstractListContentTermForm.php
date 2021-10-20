@@ -77,11 +77,11 @@ class ProductAbstractListContentTermForm extends AbstractType
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         $view->vars['tables']['productAbstractViewTable'] = $this->getFactory()->createProductAbstractViewTable(
-            $view->parent->vars['name']
+            $view->parent->vars['name'],
         );
         $view->vars['tables']['productAbstractSelectedTable'] = $this->getFactory()->createProductAbstractSelectedTable(
             $view->vars['value']->getIdProductAbstracts(),
-            $view->parent->vars['name']
+            $view->parent->vars['name'],
         );
         $view->vars['attr']['template_path'] = static::TEMPLATE_PATH;
     }
@@ -135,7 +135,7 @@ class ProductAbstractListContentTermForm extends AbstractType
                 $ids = array_filter(array_values($event->getData()));
                 $event->setData($ids);
                 $event->getForm()->setData($ids);
-            }
+            },
         );
 
         return $this;

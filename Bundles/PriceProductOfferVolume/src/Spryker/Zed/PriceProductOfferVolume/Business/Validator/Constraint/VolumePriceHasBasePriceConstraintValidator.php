@@ -48,7 +48,7 @@ class VolumePriceHasBasePriceConstraintValidator extends ConstraintValidator
             $this->context
                 ->buildViolation($constraint->getMessage())
                 ->atPath(
-                    $this->createViolationPath($priceProductIndex)
+                    $this->createViolationPath($priceProductIndex),
                 )
                 ->addViolation();
         }
@@ -65,7 +65,7 @@ class VolumePriceHasBasePriceConstraintValidator extends ConstraintValidator
             '[%s][%s][%d]',
             PriceProductOfferTransfer::PRODUCT_OFFER,
             ProductOfferTransfer::PRICES,
-            $priceProductIndex
+            $priceProductIndex,
         );
     }
 }

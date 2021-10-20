@@ -24,7 +24,7 @@ class QuoteApprovalShipmentConnectorBusinessFactory extends AbstractBusinessFact
     public function createShipmentQuoteFieldProvider(): ShipmentQuoteFieldProviderInterface
     {
         return new ShipmentQuoteFieldProvider(
-            $this->getQuoteApprovalFacade()
+            $this->getQuoteApprovalFacade(),
         );
     }
 

@@ -45,7 +45,7 @@ class TotalQuantityDecisionRuleTest extends BaseRuleTester
         $isSatisfied = $totalQuantityDecisionRule->isSatisfiedBy(
             $quoteTransfer,
             $this->createItemTransfer(),
-            $this->createClauseTransfer(8)
+            $this->createClauseTransfer(8),
         );
 
         $this->assertTrue($isSatisfied);

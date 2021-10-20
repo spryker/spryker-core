@@ -185,7 +185,7 @@ class EditBlockController extends AbstractCmsBlockController
     {
         return Url::generate(
             '/cms-block-gui/edit-block',
-            [static::URL_PARAM_ID_CMS_BLOCK => $idCmsBlock]
+            [static::URL_PARAM_ID_CMS_BLOCK => $idCmsBlock],
         )->build();
     }
 }

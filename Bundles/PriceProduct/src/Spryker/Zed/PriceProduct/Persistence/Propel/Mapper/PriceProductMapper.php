@@ -41,7 +41,7 @@ class PriceProductMapper
             $priceTypeTransfer,
             $moneyValueTransfer,
             $priceProductDimensionTransfer,
-            $priceProductStoreEntityData
+            $priceProductStoreEntityData,
         );
     }
 
@@ -68,7 +68,7 @@ class PriceProductMapper
                 $priceProductTransfers,
                 $priceProductStoreEntity,
                 $priceProductTransfer,
-                $allowedProductSkus
+                $allowedProductSkus,
             );
         }
 

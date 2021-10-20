@@ -737,7 +737,7 @@ class GeneratedTransferTest extends Unit
         $definitionBuilder = new TransferDefinitionBuilder(
             $loader,
             new TransferDefinitionMerger(),
-            new ClassDefinition(new TransferConfig())
+            new ClassDefinition(new TransferConfig()),
         );
 
         return $definitionBuilder;

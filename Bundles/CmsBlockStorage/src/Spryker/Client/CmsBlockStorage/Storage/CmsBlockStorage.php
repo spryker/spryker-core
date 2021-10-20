@@ -135,7 +135,7 @@ class CmsBlockStorage implements CmsBlockStorageInterface
                 $blockKey,
                 CmsBlockStorageConstants::CMS_BLOCK_RESOURCE_NAME,
                 $localeName,
-                $storeName
+                $storeName,
             );
         }
 
@@ -165,7 +165,7 @@ class CmsBlockStorage implements CmsBlockStorageInterface
                 $blockNameKey,
                 CmsBlockStorageConstants::CMS_BLOCK_RESOURCE_NAME,
                 $localeName,
-                $storeName
+                $storeName,
             );
         }
 

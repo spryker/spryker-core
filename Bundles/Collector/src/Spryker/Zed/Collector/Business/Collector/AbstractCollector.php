@@ -158,7 +158,7 @@ abstract class AbstractCollector
             $touchKey = $this->collectKey(
                 $collectedItemData[CollectorConfig::COLLECTOR_RESOURCE_ID],
                 $locale->getLocaleName(),
-                $collectedItemData
+                $collectedItemData,
             );
             $setToExport[$touchKey] = $this->processCollectedItem($touchKey, $collectedItemData, $touchUpdaterSet);
         }
@@ -184,7 +184,7 @@ abstract class AbstractCollector
             $touchKey = $this->collectKey(
                 $collectedItemData[CollectorConfig::COLLECTOR_RESOURCE_ID],
                 $locale->getLocaleName(),
-                $collectedItemData
+                $collectedItemData,
             );
             $expiredData[$touchKey] = $collectedItemData;
         }
@@ -217,7 +217,7 @@ abstract class AbstractCollector
             $touchUpdaterSet,
             $touchKey,
             $collectItemData[CollectorConfig::COLLECTOR_TOUCH_ID],
-            $collectItemData
+            $collectItemData,
         );
 
         return $this->collectItem($touchKey, $collectItemData);
@@ -309,7 +309,7 @@ abstract class AbstractCollector
                     $touchUpdaterSet,
                     $key,
                     $entityData[CollectorConfig::COLLECTOR_TOUCH_ID],
-                    $entityData
+                    $entityData,
                 );
             }
         }
@@ -327,14 +327,14 @@ abstract class AbstractCollector
         if (!($this->touchQueryContainer instanceof TouchQueryContainerInterface)) {
             throw new DependencyException(sprintf(
                 'touchQueryContainer does not implement TouchQueryContainerInterface in %s',
-                static::class
+                static::class,
             ));
         }
 
         if (!($this->queryBuilder instanceof AbstractCollectorQuery)) {
             throw new DependencyException(sprintf(
                 'queryBuilder does not implement AbstractCollectorQuery in %s',
-                static::class
+                static::class,
             ));
         }
     }

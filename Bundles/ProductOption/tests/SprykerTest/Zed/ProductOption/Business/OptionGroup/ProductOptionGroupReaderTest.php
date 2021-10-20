@@ -53,7 +53,7 @@ class ProductOptionGroupReaderTest extends MockProvider
             $queryContainerMock,
             $this->createGlossaryFacadeMock(),
             $this->createLocaleFacadeMock(),
-            []
+            [],
         );
 
         // Assert
@@ -84,7 +84,7 @@ class ProductOptionGroupReaderTest extends MockProvider
             $this->getQueryContainerMock($productOptionGroupEntity),
             $this->createGlossaryFacadeMock(),
             $localeFacadeMock,
-            []
+            [],
         );
 
         // Act

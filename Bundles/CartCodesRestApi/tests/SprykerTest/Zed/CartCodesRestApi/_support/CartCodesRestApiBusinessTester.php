@@ -77,7 +77,7 @@ class CartCodesRestApiBusinessTester extends Actor
             [
                 'uuid' => static::TEST_QUOTE_UUID,
                 'customerReference' => static::TEST_CUSTOMER_REFERENCE,
-            ]
+            ],
         ))->build();
     }
 
@@ -91,14 +91,14 @@ class CartCodesRestApiBusinessTester extends Actor
                 [
                     StoreTransfer::NAME => 'DE',
                     StoreTransfer::ID_STORE => 1,
-                ]
+                ],
             )
             ->withCustomer()
             ->withVoucherDiscount(
                 (new DiscountTransfer())
                     ->setVoucherCode(static::CODE)
                     ->setIdDiscount(static::ID_DISCOUNT)
-                    ->toArray()
+                    ->toArray(),
             )
             ->build();
     }
@@ -113,14 +113,14 @@ class CartCodesRestApiBusinessTester extends Actor
                 [
                     StoreTransfer::NAME => 'DE',
                     StoreTransfer::ID_STORE => 1,
-                ]
+                ],
             )
             ->withCustomer()
             ->withGiftCard(
                 (new GiftCardTransfer())
                     ->setCode(static::CODE)
                     ->setIdGiftCard(static::ID_GIFT_CARD)
-                    ->toArray()
+                    ->toArray(),
             )
             ->build();
     }
@@ -145,7 +145,7 @@ class CartCodesRestApiBusinessTester extends Actor
                     StoreTransfer::NAME => 'DE',
                     StoreTransfer::ID_STORE => 1,
                 ],
-            ]
+            ],
         );
     }
 
@@ -158,7 +158,7 @@ class CartCodesRestApiBusinessTester extends Actor
             [
                 QuoteTransfer::UUID => uniqid('uuid', true),
                 QuoteTransfer::CUSTOMER => $this->haveCustomer(),
-            ]
+            ],
         );
     }
 }

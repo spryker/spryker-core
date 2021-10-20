@@ -164,7 +164,7 @@ class Installer implements InstallerInterface
             $ruleTransfer->getBundle(),
             $ruleTransfer->getController(),
             $ruleTransfer->getAction(),
-            $ruleTransfer->getType()
+            $ruleTransfer->getType(),
         );
         if ($existsRoleRule) {
             return $ruleTransfer;

@@ -48,7 +48,7 @@ class StockAddressBusinessFactory extends AbstractBusinessFactory
         return new StockAddressUpdater(
             $this->getEntityManager(),
             $this->getRepository(),
-            $this->createStockAddressDeleter()
+            $this->createStockAddressDeleter(),
         );
     }
 

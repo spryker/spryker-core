@@ -26,7 +26,7 @@ class CustomerNoteBusinessFactory extends AbstractBusinessFactory
     {
         return new NoteWriter(
             $this->getUserFacade(),
-            $this->getEntityManager()
+            $this->getEntityManager(),
         );
     }
 

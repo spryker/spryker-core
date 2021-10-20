@@ -53,7 +53,7 @@ class QueryStringValidator extends ConstraintValidator
         return $constraint->getDiscountFacade()
             ->validateQueryStringByType(
                 $constraint->getQueryStringType(),
-                $queryString
+                $queryString,
             );
     }
 }

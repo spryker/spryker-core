@@ -67,7 +67,7 @@ class PropelBusinessFactory extends AbstractBusinessFactory
         return new PropelSchema(
             $this->createGroupedSchemaFinder(),
             $this->createSchemaWriter(),
-            $this->createSchemaMerger()
+            $this->createSchemaMerger(),
         );
     }
 
@@ -77,7 +77,7 @@ class PropelBusinessFactory extends AbstractBusinessFactory
     public function createGroupedSchemaFinder()
     {
         $schemaFinder = new PropelGroupedSchemaFinder(
-            $this->createSchemaFinder()
+            $this->createSchemaFinder(),
         );
 
         return $schemaFinder;
@@ -89,7 +89,7 @@ class PropelBusinessFactory extends AbstractBusinessFactory
     public function createSchemaFinder()
     {
         $schemaFinder = new PropelSchemaFinder(
-            $this->getConfig()->getPropelSchemaPathPatterns()
+            $this->getConfig()->getPropelSchemaPathPatterns(),
         );
 
         return $schemaFinder;
@@ -101,7 +101,7 @@ class PropelBusinessFactory extends AbstractBusinessFactory
     public function createCoreSchemaFinder()
     {
         $schemaFinder = new PropelSchemaFinder(
-            $this->getConfig()->getCorePropelSchemaPathPatterns()
+            $this->getConfig()->getCorePropelSchemaPathPatterns(),
         );
 
         return $schemaFinder;
@@ -114,7 +114,7 @@ class PropelBusinessFactory extends AbstractBusinessFactory
     {
         $schemaWriter = new PropelSchemaWriter(
             $this->createFilesystem(),
-            $this->getConfig()->getSchemaDirectory()
+            $this->getConfig()->getSchemaDirectory(),
         );
 
         return $schemaWriter;
@@ -128,7 +128,7 @@ class PropelBusinessFactory extends AbstractBusinessFactory
         $propelSchemaMerger = new PropelSchemaMerger(
             $this->getUtilTextService(),
             $this->createPropelSchemaElementFilter(),
-            $this->getConfig()
+            $this->getConfig(),
         );
 
         return $propelSchemaMerger;
@@ -140,7 +140,7 @@ class PropelBusinessFactory extends AbstractBusinessFactory
     public function createDirectoryRemover()
     {
         return new DirectoryRemover(
-            $this->getConfig()->getSchemaDirectory()
+            $this->getConfig()->getSchemaDirectory(),
         );
     }
 
@@ -150,7 +150,7 @@ class PropelBusinessFactory extends AbstractBusinessFactory
     public function createMigrationDirectoryRemover()
     {
         return new DirectoryRemover(
-            $this->getConfig()->getMigrationDirectory()
+            $this->getConfig()->getMigrationDirectory(),
         );
     }
 
@@ -160,7 +160,7 @@ class PropelBusinessFactory extends AbstractBusinessFactory
     public function createPostgresqlCompatibilityAdjuster()
     {
         return new PostgresqlCompatibilityAdjuster(
-            $this->createSchemaFinder()
+            $this->createSchemaFinder(),
         );
     }
 
@@ -170,7 +170,7 @@ class PropelBusinessFactory extends AbstractBusinessFactory
     public function createCorePostgresqlCompatibilityAdjuster()
     {
         return new PostgresqlCompatibilityAdjuster(
-            $this->createCoreSchemaFinder()
+            $this->createCoreSchemaFinder(),
         );
     }
 
@@ -192,7 +192,7 @@ class PropelBusinessFactory extends AbstractBusinessFactory
     public function createDatabaseCreator()
     {
         return new PropelDatabase(
-            $this->createDatabaseCreatorCollection()
+            $this->createDatabaseCreatorCollection(),
         );
     }
 
@@ -409,7 +409,7 @@ class PropelBusinessFactory extends AbstractBusinessFactory
         $propelSchemaValidator = new PropelSchemaValidator(
             $this->createGroupedSchemaFinder(),
             $this->getUtilTextService(),
-            $this->getConfig()->getWhitelistForAllowedAttributeValueChanges()
+            $this->getConfig()->getWhitelistForAllowedAttributeValueChanges(),
         );
 
         return $propelSchemaValidator;
@@ -421,7 +421,7 @@ class PropelBusinessFactory extends AbstractBusinessFactory
     public function createSchemaXmlValidator(): PropelSchemaXmlNameValidator
     {
         return new PropelSchemaXmlNameValidator(
-            $this->createCoreSchemaFinder()
+            $this->createCoreSchemaFinder(),
         );
     }
 

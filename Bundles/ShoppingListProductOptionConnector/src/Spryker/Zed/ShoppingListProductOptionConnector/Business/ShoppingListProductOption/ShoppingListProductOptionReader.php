@@ -95,7 +95,7 @@ class ShoppingListProductOptionReader implements ShoppingListProductOptionReader
 
         $shoppingListItemProductOptionIds = $this->shoppingListProductOptionRepository
             ->getShoppingListItemProductOptionIdsByIdShoppingListItem(
-                $shoppingListItemTransfer->getIdShoppingListItem()
+                $shoppingListItemTransfer->getIdShoppingListItem(),
             );
 
         $productOptionCriteriaTransfer->setProductOptionIds($shoppingListItemProductOptionIds)
@@ -103,11 +103,11 @@ class ShoppingListProductOptionReader implements ShoppingListProductOptionReader
             ->setProductOptionGroupIsActive(true);
 
         $productOptionCriteriaTransfer->setCurrencyIsoCode(
-            $shoppingListItemTransfer->getCurrencyIsoCode()
+            $shoppingListItemTransfer->getCurrencyIsoCode(),
         );
 
         $productOptionCriteriaTransfer->setPriceMode(
-            $shoppingListItemTransfer->getPriceMode()
+            $shoppingListItemTransfer->getPriceMode(),
         );
 
         return $productOptionCriteriaTransfer;

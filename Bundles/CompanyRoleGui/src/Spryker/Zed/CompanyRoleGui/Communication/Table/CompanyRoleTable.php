@@ -143,12 +143,12 @@ class CompanyRoleTable extends AbstractTable
 
         $buttons[] = $this->generateEditButton(
             Url::generate(self::UPDATE_ROLE_URL, [self::PARAM_ID_COMPANY_ROLE => $companyRole[SpyCompanyRoleTableMap::COL_ID_COMPANY_ROLE]]),
-            static::BUTTON_TITLE_EDIT
+            static::BUTTON_TITLE_EDIT,
         );
 
         $buttons[] = $this->generateRemoveButton(
             Url::generate(self::DELETE_ROLE_URL, [self::PARAM_ID_COMPANY_ROLE => $companyRole[SpyCompanyRoleTableMap::COL_ID_COMPANY_ROLE]]),
-            static::BUTTON_TITLE_DELETE
+            static::BUTTON_TITLE_DELETE,
         );
 
         return $buttons;

@@ -125,7 +125,7 @@ class BundledProductAvailabilityTable extends AbstractTable
         $this->productAbstractQuery = $this->availabilityHelper->queryAvailabilityWithStockByIdProductAbstractAndIdLocale(
             $idProductBundle,
             $idLocale,
-            $idStore
+            $idStore,
         );
     }
 
@@ -240,7 +240,7 @@ class BundledProductAvailabilityTable extends AbstractTable
         return $this->availabilityHelper->sumReservationsFromOtherStores(
             $productItem[AvailabilityQueryContainer::CONCRETE_SKU],
             $this->storeFacade->getStoreById($this->idStore),
-            $reservationQuantity
+            $reservationQuantity,
         );
     }
 
@@ -278,7 +278,7 @@ class BundledProductAvailabilityTable extends AbstractTable
                 static::URL_PARAM_SKU => $productItem[AvailabilityQueryContainer::CONCRETE_SKU],
                 static::URL_PARAM_ID_PRODUCT_ABSTRACT => $this->idBundleProductAbstract,
                 static::URL_PARAM_ID_STORE => $this->idStore,
-            ]
+            ],
         );
 
         return $this->generateEditButton($availabilityEditUrl, 'Edit Stock');

@@ -33,7 +33,7 @@ class UserServiceProvider extends AbstractPlugin implements ServiceProviderInter
                 $variables['username'] = $this->getUsername();
 
                 return $variables;
-            })
+            }),
         );
     }
 

@@ -120,7 +120,7 @@ class LocalizedContentForm extends AbstractType
                 'constraints' => [
                     new NotBlank(),
                 ],
-            ]
+            ],
         );
 
         $builder->get(static::FIELD_PARAMETERS)
@@ -143,7 +143,7 @@ class LocalizedContentForm extends AbstractType
                     $parameters = $arrayFilter($transfer->toArray());
 
                     return (!empty($parameters)) ? $this->getFactory()->getUtilEncoding()->encodeJson($transfer->toArray()) : null;
-                }
+                },
             ));
 
         return $this;

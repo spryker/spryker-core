@@ -32,7 +32,7 @@ class ProductPageProductConcreteLocalizedAttributesSearchListener extends Abstra
         $this->preventTransaction();
         $productIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferForeignKeys(
             $eventEntityTransfers,
-            SpyProductLocalizedAttributesTableMap::COL_FK_PRODUCT
+            SpyProductLocalizedAttributesTableMap::COL_FK_PRODUCT,
         );
 
         $productAbstractIds = $this->getQueryContainer()->queryProductAbstractIdsByProductIds($productIds)->find()->getData();

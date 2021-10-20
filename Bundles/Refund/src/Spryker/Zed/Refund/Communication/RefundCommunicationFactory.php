@@ -26,7 +26,7 @@ class RefundCommunicationFactory extends AbstractCommunicationFactory
         $refundTable = new RefundTable(
             $this->getQueryContainer(),
             $this->getDateFormatter(),
-            $this->getMoneyFacade()
+            $this->getMoneyFacade(),
         );
 
         return $refundTable;

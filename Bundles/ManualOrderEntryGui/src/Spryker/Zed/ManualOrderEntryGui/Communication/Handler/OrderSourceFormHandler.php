@@ -37,7 +37,7 @@ class OrderSourceFormHandler implements FormHandlerInterface
     public function handle(QuoteTransfer $quoteTransfer, &$form, Request $request): QuoteTransfer
     {
         $orderSourceTransfer = $this->manualOrderEntryFacade->getOrderSourceById(
-            $quoteTransfer->getOrderSource()->getIdOrderSource()
+            $quoteTransfer->getOrderSource()->getIdOrderSource(),
         );
         $quoteTransfer->setOrderSource($orderSourceTransfer);
 

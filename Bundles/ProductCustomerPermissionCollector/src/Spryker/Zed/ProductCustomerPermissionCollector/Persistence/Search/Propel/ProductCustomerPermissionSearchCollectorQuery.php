@@ -38,7 +38,7 @@ class ProductCustomerPermissionSearchCollectorQuery extends AbstractPropelCollec
             ->addJoin(
                 SpyTouchTableMap::COL_ITEM_ID,
                 SpyProductCustomerPermissionTableMap::COL_ID_PRODUCT_CUSTOMER_PERMISSION,
-                Criteria::INNER_JOIN
+                Criteria::INNER_JOIN,
             );
 
         $this->touchQuery

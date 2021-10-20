@@ -58,7 +58,7 @@ class CmsPagesContentProductAbstractListsResourceRelationshipDependencyProvider 
     {
         $container->set(static::CLIENT_CMS_STORAGE, function (Container $container) {
             return new CmsPagesContentProductAbstractListsResourceRelationshipToCmsStorageClientBridge(
-                $container->getLocator()->cmsStorage()->client()
+                $container->getLocator()->cmsStorage()->client(),
             );
         });
 
@@ -74,7 +74,7 @@ class CmsPagesContentProductAbstractListsResourceRelationshipDependencyProvider 
     {
         $container->set(static::CLIENT_STORE, function (Container $container) {
             return new CmsPagesContentProductAbstractListsResourceRelationshipToStoreClientBridge(
-                $container->getLocator()->store()->client()
+                $container->getLocator()->store()->client(),
             );
         });
 
@@ -90,7 +90,7 @@ class CmsPagesContentProductAbstractListsResourceRelationshipDependencyProvider 
     {
         $container->set(static::RESOURCE_CONTENT_PRODUCT_ABSTRACT_LISTS_REST_API, function (Container $container) {
             return new CmsPagesContentProductAbstractListsResourceRelationshipToContentProductAbstractListsRestApiResourceBridge(
-                $container->getLocator()->contentProductAbstractListsRestApi()->resource()
+                $container->getLocator()->contentProductAbstractListsRestApi()->resource(),
             );
         });
 

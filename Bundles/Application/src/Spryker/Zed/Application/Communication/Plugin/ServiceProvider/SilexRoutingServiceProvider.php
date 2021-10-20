@@ -39,7 +39,7 @@ class SilexRoutingServiceProvider implements ServiceProviderInterface
                 $chainRouter->add(new SilexRouter($app));
 
                 return $chainRouter;
-            })
+            }),
         );
     }
 }

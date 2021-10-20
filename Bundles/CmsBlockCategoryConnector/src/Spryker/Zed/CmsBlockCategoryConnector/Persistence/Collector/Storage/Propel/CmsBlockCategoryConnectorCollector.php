@@ -30,27 +30,27 @@ class CmsBlockCategoryConnectorCollector extends AbstractPropelCollectorQuery
         $this->touchQuery->addJoin(
             SpyTouchTableMap::COL_ITEM_ID,
             SpyCmsBlockCategoryConnectorTableMap::COL_FK_CATEGORY,
-            Criteria::INNER_JOIN
+            Criteria::INNER_JOIN,
         );
         $this->touchQuery->addJoin(
             SpyCmsBlockCategoryConnectorTableMap::COL_FK_CMS_BLOCK,
             SpyCmsBlockTableMap::COL_ID_CMS_BLOCK,
-            Criteria::INNER_JOIN
+            Criteria::INNER_JOIN,
         );
         $this->touchQuery->addJoin(
             [SpyCmsBlockCategoryConnectorTableMap::COL_FK_CATEGORY, SpyCmsBlockCategoryConnectorTableMap::COL_FK_CATEGORY_TEMPLATE],
             [SpyCategoryTableMap::COL_ID_CATEGORY, SpyCategoryTableMap::COL_FK_CATEGORY_TEMPLATE],
-            Criteria::INNER_JOIN
+            Criteria::INNER_JOIN,
         );
         $this->touchQuery->addJoin(
             SpyCmsBlockCategoryConnectorTableMap::COL_FK_CMS_BLOCK_CATEGORY_POSITION,
             SpyCmsBlockCategoryPositionTableMap::COL_ID_CMS_BLOCK_CATEGORY_POSITION,
-            Criteria::INNER_JOIN
+            Criteria::INNER_JOIN,
         );
 
         $this->touchQuery->withColumn(
             'GROUP_CONCAT(concat(lower(' . SpyCmsBlockCategoryPositionTableMap::COL_NAME . '), \':\' ,' . SpyCmsBlockTableMap::COL_NAME . '))',
-            static::COL_POSITIONS
+            static::COL_POSITIONS,
         );
 
         $this->touchQuery->addGroupByColumn(SpyCmsBlockCategoryConnectorTableMap::COL_FK_CATEGORY);

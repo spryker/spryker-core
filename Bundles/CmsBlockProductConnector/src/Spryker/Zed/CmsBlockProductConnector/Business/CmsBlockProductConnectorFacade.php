@@ -119,7 +119,7 @@ class CmsBlockProductConnectorFacade extends AbstractFacade implements CmsBlockP
             $dataReader,
             $dataWriter,
             $touchUpdater,
-            $output
+            $output,
         );
     }
 }

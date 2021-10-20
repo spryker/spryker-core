@@ -80,12 +80,12 @@ class QuoteItemReplacer implements QuoteItemReplacerInterface
         $itemTransfer = $this->cartClient->findQuoteItem(
             $quoteTransfer,
             $productConfiguratorResponseTransfer->getSkuOrFail(),
-            $productConfiguratorResponseTransfer->getItemGroupKeyOrFail()
+            $productConfiguratorResponseTransfer->getItemGroupKeyOrFail(),
         );
 
         if (!$itemTransfer) {
             $messageTransfer = $this->createConfigurationItemNotFoundMessage(
-                $productConfiguratorResponseTransfer->getSkuOrFail()
+                $productConfiguratorResponseTransfer->getSkuOrFail(),
             );
 
             return $productConfiguratorResponseProcessorResponseTransfer
@@ -96,12 +96,12 @@ class QuoteItemReplacer implements QuoteItemReplacerInterface
         $itemReplaceTransfer = $this->createItemReplaceTransfer(
             $productConfiguratorResponseTransfer,
             $itemTransfer,
-            $quoteTransfer
+            $quoteTransfer,
         );
 
         $productConfiguratorResponseProcessorResponseTransfer = $this->handleQuantityChange(
             $productConfiguratorResponseProcessorResponseTransfer,
-            $itemReplaceTransfer
+            $itemReplaceTransfer,
         );
 
         $quoteResponseTransfer = $this->cartClient->replaceItem($itemReplaceTransfer);
@@ -112,7 +112,7 @@ class QuoteItemReplacer implements QuoteItemReplacerInterface
 
         return $this->addQuoteErrors(
             $quoteResponseTransfer,
-            $productConfiguratorResponseProcessorResponseTransfer
+            $productConfiguratorResponseProcessorResponseTransfer,
         );
     }
 
@@ -181,7 +181,7 @@ class QuoteItemReplacer implements QuoteItemReplacerInterface
         }
 
         $messageTransfer = $this->createConfigurationItemAvailabilityMessage(
-            $itemReplaceTransfer->getNewItemOrFail()->getQuantityOrFail()
+            $itemReplaceTransfer->getNewItemOrFail()->getQuantityOrFail(),
         );
 
         return $productConfiguratorResponseProcessorResponseTransfer->addMessage($messageTransfer);
@@ -199,7 +199,7 @@ class QuoteItemReplacer implements QuoteItemReplacerInterface
     ): ProductConfiguratorResponseProcessorResponseTransfer {
         foreach ($quoteResponseTransfer->getErrors() as $quoteErrorTransfer) {
             $productConfiguratorResponseProcessorResponseTransfer->addMessage(
-                (new MessageTransfer())->setValue($quoteErrorTransfer->getMessage())
+                (new MessageTransfer())->setValue($quoteErrorTransfer->getMessage()),
             );
         }
 

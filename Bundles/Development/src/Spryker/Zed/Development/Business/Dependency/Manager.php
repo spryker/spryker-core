@@ -77,7 +77,7 @@ class Manager implements ManagerInterface
 
             $dependencyModuleViewTransfer = $this->dependencyModuleMapper->mapDependencyModuleTransferToDependencyModuleViewTransfer(
                 $dependencyModuleTransfer,
-                new DependencyModuleViewTransfer()
+                new DependencyModuleViewTransfer(),
             );
             $dependencyModuleViewTransfer->setName($foreignModuleName);
 

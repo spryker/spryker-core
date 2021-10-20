@@ -34,7 +34,7 @@ class ProductListStorageFactory extends AbstractFactory
     {
         return new ProductListProductAbstractStorageReader(
             $this->getStorageClient(),
-            $this->getSynchronizationService()
+            $this->getSynchronizationService(),
         );
     }
 
@@ -45,7 +45,7 @@ class ProductListStorageFactory extends AbstractFactory
     {
         return new ProductListProductConcreteStorageReader(
             $this->getStorageClient(),
-            $this->getSynchronizationService()
+            $this->getSynchronizationService(),
         );
     }
 
@@ -56,7 +56,7 @@ class ProductListStorageFactory extends AbstractFactory
     {
         return new ProductAbstractRestrictionReader(
             $this->getCustomerClient(),
-            $this->createProductListProductAbstractStorageReader()
+            $this->createProductListProductAbstractStorageReader(),
         );
     }
 
@@ -67,7 +67,7 @@ class ProductListStorageFactory extends AbstractFactory
     {
         return new ProductConcreteRestrictionReader(
             $this->getCustomerClient(),
-            $this->createProductListProductConcreteStorageReader()
+            $this->createProductListProductConcreteStorageReader(),
         );
     }
 

@@ -35,7 +35,7 @@ class PriceProductVolumeFilterPlugin extends AbstractPlugin implements PriceProd
 
         $minPriceProductTransfer = $this->getMinPrice(
             $priceProductTransfers,
-            $priceProductFilterTransfer->getQuantity()
+            $priceProductFilterTransfer->getQuantity(),
         );
 
         if ($minPriceProductTransfer == null) {

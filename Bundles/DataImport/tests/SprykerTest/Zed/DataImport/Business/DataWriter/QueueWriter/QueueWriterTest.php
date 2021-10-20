@@ -57,7 +57,7 @@ class QueueWriterTest extends Unit
         $queueWriter = $this->getQueueWriter($expectedMessageCount);
         $queueWriter->write(
             static::DUMMY_QUEUE_NAME,
-            $dataSetItemTransfers
+            $dataSetItemTransfers,
         );
     }
 
@@ -97,7 +97,7 @@ class QueueWriterTest extends Unit
     {
         return new QueueWriter(
             $this->getQueueClientMock($chunkSize),
-            $this->getUtilEncodingService()
+            $this->getUtilEncodingService(),
         );
     }
 
@@ -114,7 +114,7 @@ class QueueWriterTest extends Unit
                 $this->stringContains(static::DUMMY_QUEUE_NAME),
                 $this->callback(function ($messageBuffer) use ($messageBufferCount) {
                     return is_array($messageBuffer) && count($messageBuffer) === $messageBufferCount;
-                })
+                }),
             );
 
         return $queueClientMock;
@@ -126,7 +126,7 @@ class QueueWriterTest extends Unit
     protected function getUtilEncodingService(): DataImportToUtilEncodingServiceInterface
     {
         return new DataImportToUtilEncodingServiceBridge(
-            $this->tester->getLocator()->utilEncoding()->service()
+            $this->tester->getLocator()->utilEncoding()->service(),
         );
     }
 

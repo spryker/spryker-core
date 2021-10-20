@@ -57,7 +57,7 @@ class ConfigurableBundlesRestApiDependencyProvider extends AbstractBundleDepende
     {
         $container->set(static::CLIENT_CONFIGURABLE_BUNDLE_STORAGE, function (Container $container) {
             return new ConfigurableBundlesRestApiToConfigurableBundleStorageClientBridge(
-                $container->getLocator()->configurableBundleStorage()->client()
+                $container->getLocator()->configurableBundleStorage()->client(),
             );
         });
 
@@ -73,7 +73,7 @@ class ConfigurableBundlesRestApiDependencyProvider extends AbstractBundleDepende
     {
         $container->set(static::CLIENT_CONFIGURABLE_BUNDLE_PAGE_SEARCH, function (Container $container) {
             return new ConfigurableBundlesRestApiToConfigurableBundlePageSearchClientBridge(
-                $container->getLocator()->configurableBundlePageSearch()->client()
+                $container->getLocator()->configurableBundlePageSearch()->client(),
             );
         });
 
@@ -89,7 +89,7 @@ class ConfigurableBundlesRestApiDependencyProvider extends AbstractBundleDepende
     {
         $container->set(static::CLIENT_GLOSSARY_STORAGE, function (Container $container) {
             return new ConfigurableBundlesRestApiToGlossaryStorageClientBridge(
-                $container->getLocator()->glossaryStorage()->client()
+                $container->getLocator()->glossaryStorage()->client(),
             );
         });
 

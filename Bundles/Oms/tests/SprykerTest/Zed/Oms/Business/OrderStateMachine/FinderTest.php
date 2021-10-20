@@ -109,7 +109,7 @@ class FinderTest extends Unit
             $builder,
             [
                 self::TEST_STATE_MACHINE_NAME,
-            ]
+            ],
         );
     }
 
@@ -149,7 +149,7 @@ class FinderTest extends Unit
             new State(),
             new Transition(),
             new Process($drawerMock),
-            $this->getProcessLocation()
+            $this->getProcessLocation(),
         );
     }
 

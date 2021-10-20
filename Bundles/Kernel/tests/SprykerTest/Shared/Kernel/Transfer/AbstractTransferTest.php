@@ -195,7 +195,7 @@ class AbstractTransferTest extends Unit
             ->setInt(100)
             ->setTransfer(
                 (new AbstractTransfer())
-                    ->setInt(200)
+                    ->setInt(200),
             )
             ->setTransferCollection(new ArrayObject([
                 (new AbstractTransfer())

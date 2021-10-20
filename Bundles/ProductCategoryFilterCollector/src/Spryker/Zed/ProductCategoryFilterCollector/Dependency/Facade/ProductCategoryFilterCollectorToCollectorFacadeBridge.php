@@ -61,7 +61,7 @@ class ProductCategoryFilterCollectorToCollectorFacadeBridge implements ProductCa
             $dataReader,
             $dataWriter,
             $touchUpdater,
-            $output
+            $output,
         );
     }
 }

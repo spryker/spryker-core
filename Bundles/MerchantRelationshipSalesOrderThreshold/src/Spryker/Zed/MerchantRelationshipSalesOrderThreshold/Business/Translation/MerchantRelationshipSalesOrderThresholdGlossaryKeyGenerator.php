@@ -38,7 +38,7 @@ class MerchantRelationshipSalesOrderThresholdGlossaryKeyGenerator implements Mer
         $this->assertRequiredTransferAttributes($merchantRelationshipSalesOrderThresholdTransfer);
 
         $merchantRelationshipSalesOrderThresholdTransfer->getSalesOrderThresholdValue()->setMessageGlossaryKey(
-            $this->generateMessageGlossaryKey($merchantRelationshipSalesOrderThresholdTransfer)
+            $this->generateMessageGlossaryKey($merchantRelationshipSalesOrderThresholdTransfer),
         );
 
         return $merchantRelationshipSalesOrderThresholdTransfer;
@@ -63,7 +63,7 @@ class MerchantRelationshipSalesOrderThresholdGlossaryKeyGenerator implements Mer
                 $merchantRelationshipSalesOrderThresholdTransfer->getCurrency()->getCode(),
                 $this->getMerchantRelationshipIdentifier($merchantRelationshipSalesOrderThresholdTransfer->getMerchantRelationship()),
                 static::SALES_ORDER_THRESHOLD_GLOSSARY_MESSAGE,
-            ]
+            ],
         ));
     }
 

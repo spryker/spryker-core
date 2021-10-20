@@ -35,7 +35,7 @@ class CategoryUrlConstraintValidator extends ConstraintValidator
             throw new InvalidArgumentException(sprintf(
                 'Expected instance of %s, got %s',
                 NavigationNodeLocalizedAttributesTransfer::class,
-                $value
+                $value,
             ));
         }
 

@@ -33,7 +33,7 @@ class ProductDiscontinuedStorageBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->getProductDiscontinuedFacade(),
             $this->getLocaleFacade(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -44,7 +44,7 @@ class ProductDiscontinuedStorageBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductDiscontinuedUnpublisher(
             $this->getEntityManager(),
-            $this->getRepository()
+            $this->getRepository(),
         );
     }
 

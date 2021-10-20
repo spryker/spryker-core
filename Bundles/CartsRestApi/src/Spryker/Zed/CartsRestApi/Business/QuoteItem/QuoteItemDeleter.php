@@ -107,7 +107,7 @@ class QuoteItemDeleter implements QuoteItemDeleterInterface
 
         $persistentCartChangeTransfer = $this->createPersistentCartChangeTransfer(
             $quoteResponseTransfer->getQuoteTransfer(),
-            $cartItemRequestTransfer
+            $cartItemRequestTransfer,
         );
 
         $quoteResponseTransfer = $this->persistentCartFacade->remove($persistentCartChangeTransfer);
@@ -118,7 +118,7 @@ class QuoteItemDeleter implements QuoteItemDeleterInterface
         }
 
         $quoteTransfer = $this->quoteReloader->reloadQuoteItems(
-            $quoteResponseTransfer->getQuoteTransfer()
+            $quoteResponseTransfer->getQuoteTransfer(),
         );
 
         return $quoteResponseTransfer->setQuoteTransfer($quoteTransfer);

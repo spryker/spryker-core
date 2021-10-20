@@ -151,7 +151,7 @@ class RepositoryBuilder implements RepositoryBuilderInterface
             $this->oauthRepository,
             $this->oauthEntityManager,
             $this->utilEncodingService,
-            $this->oauthUserIdentifierFilterPlugins
+            $this->oauthUserIdentifierFilterPlugins,
         );
     }
 
@@ -174,7 +174,7 @@ class RepositoryBuilder implements RepositoryBuilderInterface
             $this->oauthRefreshTokensRevokePlugins,
             $this->oauthRefreshTokenCheckerPlugins,
             $this->oauthRefreshTokenSaverPlugins,
-            $this->oauthRefreshTokenPersistencePlugins
+            $this->oauthRefreshTokenPersistencePlugins,
         );
     }
 }

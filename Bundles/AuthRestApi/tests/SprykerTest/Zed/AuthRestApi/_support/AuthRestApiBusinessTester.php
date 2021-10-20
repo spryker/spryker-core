@@ -73,7 +73,7 @@ class AuthRestApiBusinessTester extends Actor
                 'grantType' => static::TEST_GRANT_TYPE,
                 'username' => $customerTransfer->getEmail(),
                 'password' => $customerTransfer->getNewPassword(),
-            ]
+            ],
         ))->build();
     }
 
@@ -86,7 +86,7 @@ class AuthRestApiBusinessTester extends Actor
             [
                 'customerReference' => static::TEST_ANONYMOUS_CUSTOMER_REFERENCE,
                 'grantType' => static::TEST_GRANT_TYPE,
-            ]
+            ],
         ))->build();
     }
 }

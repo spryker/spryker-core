@@ -114,7 +114,7 @@ class ConfigurableBundleGuiDependencyProvider extends AbstractBundleDependencyPr
     {
         $container->set(static::FACADE_CONFIGURABLE_BUNDLE, function (Container $container) {
             return new ConfigurableBundleGuiToConfigurableBundleFacadeBridge(
-                $container->getLocator()->configurableBundle()->facade()
+                $container->getLocator()->configurableBundle()->facade(),
             );
         });
 
@@ -130,7 +130,7 @@ class ConfigurableBundleGuiDependencyProvider extends AbstractBundleDependencyPr
     {
         $container->set(static::FACADE_LOCALE, function (Container $container) {
             return new ConfigurableBundleGuiToLocaleFacadeBridge(
-                $container->getLocator()->locale()->facade()
+                $container->getLocator()->locale()->facade(),
             );
         });
 
@@ -146,7 +146,7 @@ class ConfigurableBundleGuiDependencyProvider extends AbstractBundleDependencyPr
     {
         $container->set(static::FACADE_PRODUCT_LIST, function (Container $container) {
             return new ConfigurableBundleGuiToProductListFacadeBridge(
-                $container->getLocator()->productList()->facade()
+                $container->getLocator()->productList()->facade(),
             );
         });
 

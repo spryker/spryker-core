@@ -29,10 +29,10 @@ class SharedCartMapper implements SharedCartMapperInterface
         return $restSharedCartsAttributesTransfer
             ->fromArray($shareDetailTransfer->toArray(), true)
             ->setIdCompanyUser(
-                $shareDetailTransfer->getCompanyUser()->getUuid()
+                $shareDetailTransfer->getCompanyUser()->getUuid(),
             )
             ->setIdCartPermissionGroup(
-                $shareDetailTransfer->getQuotePermissionGroup()->getIdQuotePermissionGroup()
+                $shareDetailTransfer->getQuotePermissionGroup()->getIdQuotePermissionGroup(),
             );
     }
 }

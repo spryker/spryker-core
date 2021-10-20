@@ -90,7 +90,7 @@ class ShipmentFetcher implements ShipmentFetcherInterface
             ->queryMethodPriceByShipmentMethodAndStoreCurrency(
                 $shipmentMethodTransfer->getIdShipmentMethod(),
                 $storeTransfer->getIdStore(),
-                $idCurrencyIsoCode
+                $idCurrencyIsoCode,
             )
             ->findOne();
 

@@ -64,14 +64,14 @@ class PriceProductDataHelper extends Module
             $priceProductOverride,
             static::NET_PRICE,
             static::GROSS_PRICE,
-            static::EUR_ISO_CODE
+            static::EUR_ISO_CODE,
         );
 
         $priceProductTransfer = $priceProductFacade->createPriceForProduct($priceProductTransfer);
 
         $this->debug(sprintf(
             'Inserted Price Product Concrete: %d',
-            $priceProductTransfer->getIdPriceProduct()
+            $priceProductTransfer->getIdPriceProduct(),
         ));
 
         $this->getDataCleanupHelper()->_addCleanup(function () use ($priceProductTransfer): void {
@@ -93,11 +93,11 @@ class PriceProductDataHelper extends Module
             $priceProductOverride,
             static::NET_PRICE,
             static::GROSS_PRICE,
-            static::EUR_ISO_CODE
+            static::EUR_ISO_CODE,
         );
 
         $this->getPriceProductFacade()->persistProductAbstractPriceCollection(
-            (new ProductAbstractTransfer())->setIdProductAbstract($idProductAbstract)->addPrice($priceProductTransfer)
+            (new ProductAbstractTransfer())->setIdProductAbstract($idProductAbstract)->addPrice($priceProductTransfer),
         );
 
         $this->getDataCleanupHelper()->_addCleanup(function () use ($priceProductTransfer): void {
@@ -212,7 +212,7 @@ class PriceProductDataHelper extends Module
             $netPrice,
             $storeTransfer,
             $currencyTransfer,
-            $priceProductOverride[PriceProductTransfer::MONEY_VALUE] ?? []
+            $priceProductOverride[PriceProductTransfer::MONEY_VALUE] ?? [],
         );
 
         $priceProductTransfer->setMoneyValue($moneyValueTransfer);

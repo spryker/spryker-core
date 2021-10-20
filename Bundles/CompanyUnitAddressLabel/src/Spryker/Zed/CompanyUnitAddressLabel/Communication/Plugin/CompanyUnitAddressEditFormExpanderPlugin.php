@@ -40,7 +40,7 @@ class CompanyUnitAddressEditFormExpanderPlugin extends AbstractPlugin implements
 
         $formType->buildForm(
             $builder,
-            $dataProvider->getOptions()
+            $dataProvider->getOptions(),
         );
     }
 }

@@ -48,7 +48,7 @@ class EditController extends AddController
     public function indexAction(Request $request)
     {
         $idProductAbstract = $this->castId($request->get(
-            self::PARAM_ID_PRODUCT_ABSTRACT
+            self::PARAM_ID_PRODUCT_ABSTRACT,
         ));
 
         $productAbstractTransfer = $this->getFactory()
@@ -70,7 +70,7 @@ class EditController extends AddController
             ->getFactory()
             ->createProductFormEdit(
                 $dataProvider->getData($productAbstractTransfer, $priceDimension),
-                $dataProvider->getOptions($productAbstractTransfer)
+                $dataProvider->getOptions($productAbstractTransfer),
             )
             ->handleRequest($request);
 
@@ -99,7 +99,7 @@ class EditController extends AddController
                 $this->addSuccessMessage('The product [%s] was saved successfully.', ['%s' => $productAbstractTransfer->getSku()]);
 
                 return $this->redirectResponse(
-                    urldecode(Url::generate('/product-management/edit', $request->query->all())->build())
+                    urldecode(Url::generate('/product-management/edit', $request->query->all())->build()),
                 );
             } catch (CategoryUrlExistsException $exception) {
                 $this->addErrorMessage($exception->getMessage());
@@ -142,11 +142,11 @@ class EditController extends AddController
     public function variantAction(Request $request)
     {
         $idProductAbstract = $this->castId($request->get(
-            self::PARAM_ID_PRODUCT_ABSTRACT
+            self::PARAM_ID_PRODUCT_ABSTRACT,
         ));
 
         $idProduct = $this->castId($request->get(
-            self::PARAM_ID_PRODUCT
+            self::PARAM_ID_PRODUCT,
         ));
 
         $productTransfer = $this->getFactory()
@@ -179,7 +179,7 @@ class EditController extends AddController
             ->getFactory()
             ->createProductVariantFormEdit(
                 $dataProvider->getData($productAbstractTransfer, $idProduct, $priceDimension),
-                $dataProvider->getOptions($productAbstractTransfer, $type)
+                $dataProvider->getOptions($productAbstractTransfer, $type),
             )
             ->handleRequest($request);
 
@@ -209,7 +209,7 @@ class EditController extends AddController
                 ]);
 
                 return $this->redirectResponse(
-                    urldecode(Url::generate('/product-management/edit/variant', $request->query->all())->build())
+                    urldecode(Url::generate('/product-management/edit/variant', $request->query->all())->build()),
                 );
             } catch (CategoryUrlExistsException $exception) {
                 $this->addErrorMessage($exception->getMessage());
@@ -245,7 +245,7 @@ class EditController extends AddController
     public function variantTableAction(Request $request)
     {
         $idProductAbstract = $this->castId(
-            $request->get(self::PARAM_ID_PRODUCT_ABSTRACT)
+            $request->get(self::PARAM_ID_PRODUCT_ABSTRACT),
         );
 
         $type = $request->get(self::PARAM_PRODUCT_TYPE);
@@ -255,7 +255,7 @@ class EditController extends AddController
             ->createVariantTable($idProductAbstract, $type);
 
         return $this->jsonResponse(
-            $variantTable->fetchData()
+            $variantTable->fetchData(),
         );
     }
 }

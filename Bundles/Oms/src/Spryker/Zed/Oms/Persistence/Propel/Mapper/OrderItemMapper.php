@@ -70,11 +70,11 @@ class OrderItemMapper implements OrderItemMapperInterface
             $itemTransfer = (new ItemTransfer())->fromArray($salesOrderItemEntity->toArray(), true);
 
             $itemTransfer->setProcess(
-                $salesOrderItemEntity->getProcess()->getName()
+                $salesOrderItemEntity->getProcess()->getName(),
             );
 
             $itemTransfer->setState(
-                (new ItemStateTransfer())->fromArray($salesOrderItemEntity->getState()->toArray(), true)
+                (new ItemStateTransfer())->fromArray($salesOrderItemEntity->getState()->toArray(), true),
             );
 
             $itemTransfers[] = $itemTransfer;

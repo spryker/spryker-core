@@ -70,7 +70,7 @@ class CreateController extends AbstractController
         $form = $this->getFactory()
             ->createShipmentCreateForm(
                 $dataProvider->getData($orderTransfer, $this->createDefaultShipmentTransfer()),
-                $dataProvider->getOptions($orderTransfer)
+                $dataProvider->getOptions($orderTransfer),
             )
             ->handleRequest($request);
 
@@ -87,7 +87,7 @@ class CreateController extends AbstractController
 
             $redirectUrl = Url::generate(
                 static::REDIRECT_URL_DEFAULT,
-                [static::PARAM_ID_SALES_ORDER => $idSalesOrder]
+                [static::PARAM_ID_SALES_ORDER => $idSalesOrder],
             )->build();
 
             return $this->redirectResponse($redirectUrl);

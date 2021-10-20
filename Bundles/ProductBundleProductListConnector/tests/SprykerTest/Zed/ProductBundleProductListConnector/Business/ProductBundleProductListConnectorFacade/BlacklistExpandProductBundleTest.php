@@ -155,7 +155,7 @@ class BlacklistExpandProductBundleTest extends Unit
     {
         return $this->tester->createProductListTransfer(
             $productIds,
-            static::PRODUCT_LIST_TYPE_BLACKLIST
+            static::PRODUCT_LIST_TYPE_BLACKLIST,
         );
     }
 

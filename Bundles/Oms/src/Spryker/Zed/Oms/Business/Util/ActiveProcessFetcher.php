@@ -79,7 +79,7 @@ class ActiveProcessFetcher implements ActiveProcessFetcherInterface
     {
         if (!isset(static::$reservedStateProcessNamesCache[$processName])) {
             static::$reservedStateProcessNamesCache[$processName] = $this->retrieveReservedStateNamesForActiveProcessByProcessName(
-                $processName
+                $processName,
             );
         }
 

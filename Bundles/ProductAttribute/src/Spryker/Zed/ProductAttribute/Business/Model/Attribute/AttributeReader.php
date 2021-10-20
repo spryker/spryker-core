@@ -60,7 +60,7 @@ class AttributeReader implements AttributeReaderInterface
             $idLocale,
             $searchText,
             $offset,
-            $limit
+            $limit,
         );
 
         $results = [];
@@ -97,7 +97,7 @@ class AttributeReader implements AttributeReaderInterface
         $query = $this->productAttributeQueryContainer->queryProductManagementAttributeValueWithTranslation(
             $idProductManagementAttribute,
             $idLocale,
-            $searchText
+            $searchText,
         );
 
         return $query->count();

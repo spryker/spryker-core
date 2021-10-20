@@ -97,7 +97,7 @@ class MerchantRelationshipWriter implements MerchantRelationshipWriterInterface
         if (!$merchantRelationTransfer->getMerchantRelationshipKey()) {
             $merchantRelationTransfer->setMerchantRelationshipKey(
                 $this->merchantRelationshipKeyGenerator
-                    ->generateMerchantRelationshipKey()
+                    ->generateMerchantRelationshipKey(),
             );
         }
 
@@ -134,7 +134,7 @@ class MerchantRelationshipWriter implements MerchantRelationshipWriterInterface
         if (!$merchantRelationTransfer->getMerchantRelationshipKey()) {
             $merchantRelationTransfer->setMerchantRelationshipKey(
                 $this->merchantRelationshipKeyGenerator
-                    ->generateMerchantRelationshipKey()
+                    ->generateMerchantRelationshipKey(),
             );
         }
 
@@ -175,11 +175,11 @@ class MerchantRelationshipWriter implements MerchantRelationshipWriterInterface
 
         $this->entityManager->addAssignedCompanyBusinessUnits(
             $idAssignedCompanyBusinessUnitsToSave,
-            $merchantRelationTransfer->getIdMerchantRelationship()
+            $merchantRelationTransfer->getIdMerchantRelationship(),
         );
         $this->entityManager->removeAssignedCompanyBusinessUnits(
             $idAssignedCompanyBusinessUnitsToDelete,
-            $merchantRelationTransfer->getIdMerchantRelationship()
+            $merchantRelationTransfer->getIdMerchantRelationship(),
         );
     }
 

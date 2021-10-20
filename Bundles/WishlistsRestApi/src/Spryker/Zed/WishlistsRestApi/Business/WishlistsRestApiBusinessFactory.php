@@ -41,7 +41,7 @@ class WishlistsRestApiBusinessFactory extends AbstractBusinessFactory
     public function createWishlistUpdater(): WishlistUpdaterInterface
     {
         return new WishlistUpdater(
-            $this->getWishlistFacade()
+            $this->getWishlistFacade(),
         );
     }
 
@@ -51,7 +51,7 @@ class WishlistsRestApiBusinessFactory extends AbstractBusinessFactory
     public function createWishlistDeleter(): WishlistDeleterInterface
     {
         return new WishlistDeleter(
-            $this->getWishlistFacade()
+            $this->getWishlistFacade(),
         );
     }
 
@@ -61,7 +61,7 @@ class WishlistsRestApiBusinessFactory extends AbstractBusinessFactory
     public function createWishlistItemAdder(): WishlistItemAdderInterface
     {
         return new WishlistItemAdder(
-            $this->getWishlistFacade()
+            $this->getWishlistFacade(),
         );
     }
 
@@ -72,7 +72,7 @@ class WishlistsRestApiBusinessFactory extends AbstractBusinessFactory
     {
         return new WishlistItemDeleter(
             $this->getWishlistFacade(),
-            $this->getRestWishlistItemsAttributesDeleteStrategyPlugins()
+            $this->getRestWishlistItemsAttributesDeleteStrategyPlugins(),
         );
     }
 

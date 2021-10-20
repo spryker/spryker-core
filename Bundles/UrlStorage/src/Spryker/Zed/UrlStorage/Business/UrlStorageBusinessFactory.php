@@ -31,7 +31,7 @@ class UrlStorageBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->getEntityManager(),
             $this->getStoreFacade(),
-            $this->getConfig()->isSendingToQueue()
+            $this->getConfig()->isSendingToQueue(),
         );
     }
 
@@ -43,7 +43,7 @@ class UrlStorageBusinessFactory extends AbstractBusinessFactory
         return new RedirectStorageWriter(
             $this->getUtilSanitizeService(),
             $this->getQueryContainer(),
-            $this->getConfig()->isSendingToQueue()
+            $this->getConfig()->isSendingToQueue(),
         );
     }
 

@@ -193,7 +193,7 @@ class OrdersTable extends AbstractTable
             '%s%s %s',
             $entity->getSalutation() ? $entity->getSalutation() . ' ' : '',
             $entity->getFirstName(),
-            $entity->getLastName()
+            $entity->getLastName(),
         );
 
         $stateNames = $salesOrderRow[OrdersTableQueryBuilder::FIELD_ITEM_STATE_NAMES_CSV] ?? '';
@@ -273,14 +273,14 @@ class OrdersTable extends AbstractTable
             '%s%s %s',
             $salutation ? $salutation . ' ' : '',
             $item[SpySalesOrderTableMap::COL_FIRST_NAME],
-            $item[SpySalesOrderTableMap::COL_LAST_NAME]
+            $item[SpySalesOrderTableMap::COL_LAST_NAME],
         );
 
         $customer = $this->sanitizeService->escapeHtml($customer);
 
         if (isset($item[SpySalesOrderTableMap::COL_CUSTOMER_REFERENCE])) {
             $customerTransfer = $this->customerFacade->findByReference(
-                $item[SpySalesOrderTableMap::COL_CUSTOMER_REFERENCE]
+                $item[SpySalesOrderTableMap::COL_CUSTOMER_REFERENCE],
             );
 
             if (!$customerTransfer) {
@@ -359,7 +359,7 @@ class OrdersTable extends AbstractTable
             Url::generate(static::URL_SALES_DETAIL, [
                 static::PARAM_ID_SALES_ORDER => $item[SpySalesOrderTableMap::COL_ID_SALES_ORDER],
             ]),
-            'View'
+            'View',
         );
 
         return $urls;
@@ -394,8 +394,8 @@ class OrdersTable extends AbstractTable
                     'table?id-order-item-process=%s&id-order-item-state=%s&filter=%s',
                     $idOrderItemProcess,
                     $idOrderItemState,
-                    $filter
-                )
+                    $filter,
+                ),
             );
         }
     }
@@ -508,7 +508,7 @@ class OrdersTable extends AbstractTable
             static::FULL_NAME_SEARCHABLE_FIELD_PATTERN,
             SpySalesOrderTableMap::COL_FIRST_NAME,
             static::COLUMN_SEPARATOR,
-            SpySalesOrderTableMap::COL_LAST_NAME
+            SpySalesOrderTableMap::COL_LAST_NAME,
         );
     }
 }

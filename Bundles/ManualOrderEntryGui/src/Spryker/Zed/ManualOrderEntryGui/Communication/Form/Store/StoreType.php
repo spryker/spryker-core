@@ -45,7 +45,7 @@ class StoreType extends AbstractType
     {
         $this->addStoreField(
             $builder,
-            $options[static::OPTION_STORES_ARRAY]
+            $options[static::OPTION_STORES_ARRAY],
         );
     }
 

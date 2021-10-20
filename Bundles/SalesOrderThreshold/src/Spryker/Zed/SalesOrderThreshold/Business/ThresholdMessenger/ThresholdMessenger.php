@@ -93,13 +93,13 @@ class ThresholdMessenger implements ThresholdMessengerInterface
     {
         $salesOrderThresholdValueTransfers = $this->filterSalesOrderThresholdsByThresholdGroup(
             $this->salesOrderThresholdDataSourceStrategyResolver->findApplicableThresholds($quoteTransfer),
-            SalesOrderThresholdConfig::GROUP_SOFT
+            SalesOrderThresholdConfig::GROUP_SOFT,
         );
 
         $thresholdMessages = [];
         foreach ($salesOrderThresholdValueTransfers as $salesOrderThresholdValueTransfer) {
             $salesOrderThresholdStrategy = $this->salesOrderThresholdStrategyResolver->resolveSalesOrderThresholdStrategy(
-                $salesOrderThresholdValueTransfer->getSalesOrderThresholdType()->getKey()
+                $salesOrderThresholdValueTransfer->getSalesOrderThresholdType()->getKey(),
             );
 
             if (!$salesOrderThresholdStrategy->isApplicable($salesOrderThresholdValueTransfer)) {
@@ -111,7 +111,7 @@ class ThresholdMessenger implements ThresholdMessengerInterface
                 $key,
                 (string)$salesOrderThresholdValueTransfer->getThreshold(),
                 (string)$salesOrderThresholdStrategy->calculateFee($salesOrderThresholdValueTransfer),
-                $quoteTransfer->getCurrency()
+                $quoteTransfer->getCurrency(),
             );
         }
 
@@ -134,13 +134,13 @@ class ThresholdMessenger implements ThresholdMessengerInterface
     ): MessageTransfer {
         $messageParams = [
             static::THRESHOLD_GLOSSARY_PARAMETER => $this->moneyFacade->formatWithSymbol(
-                $this->createMoneyTransfer($threshold, $currencyTransfer)
+                $this->createMoneyTransfer($threshold, $currencyTransfer),
             ),
         ];
 
         if ($fee) {
             $messageParams[static::FEE_GLOSSARY_PARAMETER] = $this->moneyFacade->formatWithSymbol(
-                $this->createMoneyTransfer($fee, $currencyTransfer)
+                $this->createMoneyTransfer($fee, $currencyTransfer),
             );
         }
 

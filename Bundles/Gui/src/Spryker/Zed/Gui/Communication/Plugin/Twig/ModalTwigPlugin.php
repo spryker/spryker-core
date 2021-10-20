@@ -57,7 +57,7 @@ class ModalTwigPlugin extends AbstractPlugin implements TwigPluginInterface
                     'content' => $content,
                     'footer' => $footer,
                     'extras' => $this->getExtraData($extraData),
-                ]
+                ],
             );
         }, ['is_safe' => ['html']]);
     }

@@ -117,7 +117,7 @@ class StockUpdater implements StockUpdaterInterface
         $stockTransfer = $this->stockEntityManager->saveStock($stockTransfer);
         $this->stockStoreRelationshipUpdater->updateStockStoreRelationshipsForStock(
             $stockTransfer->getIdStock(),
-            $stockTransfer->getStoreRelation()
+            $stockTransfer->getStoreRelation(),
         );
 
         $this->insertActiveTouchRecordStockType($stockTransfer);
@@ -135,7 +135,7 @@ class StockUpdater implements StockUpdaterInterface
     {
         $this->touchFacade->touchActive(
             static::TOUCH_STOCK_TYPE,
-            $stockTransfer->getIdStock()
+            $stockTransfer->getIdStock(),
         );
     }
 

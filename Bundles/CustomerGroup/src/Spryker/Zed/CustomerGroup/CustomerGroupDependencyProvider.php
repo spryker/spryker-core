@@ -86,7 +86,7 @@ class CustomerGroupDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::QUERY_CONTAINER_CUSTOMER, function (Container $container) {
             return new CustomerGroupToCustomerQueryContainerBridge(
-                $container->getLocator()->customer()->queryContainer()
+                $container->getLocator()->customer()->queryContainer(),
             );
         });
 

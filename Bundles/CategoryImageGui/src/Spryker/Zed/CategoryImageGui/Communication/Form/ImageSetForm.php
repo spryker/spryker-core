@@ -143,7 +143,7 @@ class ImageSetForm extends AbstractType
         $builder->add(static::FIELD_LOCALE, HiddenType::class);
         $builder->get(static::FIELD_LOCALE)
             ->addModelTransformer(
-                $this->getFactory()->createLocaleTransformer()
+                $this->getFactory()->createLocaleTransformer(),
             );
 
         return $this;
@@ -195,7 +195,7 @@ class ImageSetForm extends AbstractType
             ]);
 
         $builder->get(static::CATEGORY_IMAGES)->addModelTransformer(
-            $this->getFactory()->createImageCollectionTransformer()
+            $this->getFactory()->createImageCollectionTransformer(),
         );
 
         return $this;

@@ -54,7 +54,7 @@ class RestRequest
             $method,
             'DE',
             true,
-            $version
+            $version,
         );
 
         return $metadata;

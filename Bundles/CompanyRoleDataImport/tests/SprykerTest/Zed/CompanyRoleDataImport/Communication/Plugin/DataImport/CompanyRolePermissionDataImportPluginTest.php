@@ -57,7 +57,7 @@ class CompanyRolePermissionDataImportPluginTest extends AbstractCompanyRoleDataI
     {
         $this->assertSame(
             CompanyRoleDataImportConfig::IMPORT_TYPE_COMPANY_ROLE_PERMISSION,
-            $this->getCompanyRolePermissionDataImportPlugin()->getImportType()
+            $this->getCompanyRolePermissionDataImportPlugin()->getImportType(),
         );
     }
 

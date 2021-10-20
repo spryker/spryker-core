@@ -331,11 +331,11 @@ class CustomerFacadeTest extends Unit
         $this->assertFalse($customerResponseTransfer->getIsSuccess());
         $this->assertTrue($this->hasMessageInCustomerResponseTransfer(
             static::GLOSSARY_KEY_MIN_LENGTH_ERROR,
-            $customerResponseTransfer
+            $customerResponseTransfer,
         ));
         $this->assertTrue($this->hasErrorInCustomerResponseTransfer(
             static::GLOSSARY_KEY_MIN_LENGTH_ERROR,
-            $customerResponseTransfer
+            $customerResponseTransfer,
         ));
     }
 
@@ -356,11 +356,11 @@ class CustomerFacadeTest extends Unit
         $this->assertFalse($customerResponseTransfer->getIsSuccess());
         $this->assertTrue($this->hasMessageInCustomerResponseTransfer(
             static::GLOSSARY_KEY_MAX_LENGTH_ERROR,
-            $customerResponseTransfer
+            $customerResponseTransfer,
         ));
         $this->assertTrue($this->hasErrorInCustomerResponseTransfer(
             static::GLOSSARY_KEY_MAX_LENGTH_ERROR,
-            $customerResponseTransfer
+            $customerResponseTransfer,
         ));
     }
 
@@ -423,7 +423,7 @@ class CustomerFacadeTest extends Unit
         $this->assertFalse($customerResponseTransfer->getIsSuccess());
         $this->assertTrue($this->hasErrorInCustomerResponseTransfer(
             static::GLOSSARY_KEY_PASSWORD_POLICY_ERROR_SEQUENCE,
-            $customerResponseTransfer
+            $customerResponseTransfer,
         ));
     }
 
@@ -447,7 +447,7 @@ class CustomerFacadeTest extends Unit
         $this->assertFalse($customerResponseTransfer->getIsSuccess());
         $this->assertTrue($this->hasErrorInCustomerResponseTransfer(
             static::GLOSSARY_KEY_PASSWORD_POLICY_ERROR_DENY_LIST,
-            $customerResponseTransfer
+            $customerResponseTransfer,
         ));
     }
 
@@ -471,7 +471,7 @@ class CustomerFacadeTest extends Unit
         $this->assertFalse($customerResponseTransfer->getIsSuccess());
         $this->assertTrue($this->hasErrorInCustomerResponseTransfer(
             static::GLOSSARY_KEY_PASSWORD_POLICY_ERROR_CHARACTER_SET,
-            $customerResponseTransfer
+            $customerResponseTransfer,
         ));
     }
 
@@ -492,11 +492,11 @@ class CustomerFacadeTest extends Unit
         $this->assertFalse($customerResponseTransfer->getIsSuccess());
         $this->assertTrue($this->hasMessageInCustomerResponseTransfer(
             static::GLOSSARY_KEY_MIN_LENGTH_ERROR,
-            $customerResponseTransfer
+            $customerResponseTransfer,
         ));
         $this->assertTrue($this->hasErrorInCustomerResponseTransfer(
             static::GLOSSARY_KEY_MIN_LENGTH_ERROR,
-            $customerResponseTransfer
+            $customerResponseTransfer,
         ));
     }
 
@@ -517,11 +517,11 @@ class CustomerFacadeTest extends Unit
         $this->assertFalse($customerResponseTransfer->getIsSuccess());
         $this->assertTrue($this->hasMessageInCustomerResponseTransfer(
             static::GLOSSARY_KEY_MAX_LENGTH_ERROR,
-            $customerResponseTransfer
+            $customerResponseTransfer,
         ));
         $this->assertTrue($this->hasErrorInCustomerResponseTransfer(
             static::GLOSSARY_KEY_MAX_LENGTH_ERROR,
-            $customerResponseTransfer
+            $customerResponseTransfer,
         ));
     }
 
@@ -584,7 +584,7 @@ class CustomerFacadeTest extends Unit
         $this->assertFalse($customerResponseTransfer->getIsSuccess());
         $this->assertTrue($this->hasErrorInCustomerResponseTransfer(
             static::GLOSSARY_KEY_PASSWORD_POLICY_ERROR_SEQUENCE,
-            $customerResponseTransfer
+            $customerResponseTransfer,
         ));
     }
 
@@ -608,7 +608,7 @@ class CustomerFacadeTest extends Unit
         $this->assertFalse($customerResponseTransfer->getIsSuccess());
         $this->assertTrue($this->hasErrorInCustomerResponseTransfer(
             static::GLOSSARY_KEY_PASSWORD_POLICY_ERROR_DENY_LIST,
-            $customerResponseTransfer
+            $customerResponseTransfer,
         ));
     }
 
@@ -632,7 +632,7 @@ class CustomerFacadeTest extends Unit
         $this->assertFalse($customerResponseTransfer->getIsSuccess());
         $this->assertTrue($this->hasErrorInCustomerResponseTransfer(
             static::GLOSSARY_KEY_PASSWORD_POLICY_ERROR_CHARACTER_SET,
-            $customerResponseTransfer
+            $customerResponseTransfer,
         ));
     }
 
@@ -718,11 +718,11 @@ class CustomerFacadeTest extends Unit
         $this->assertFalse($customerResponseTransfer->getIsSuccess());
         $this->assertTrue($this->hasMessageInCustomerResponseTransfer(
             static::GLOSSARY_KEY_MIN_LENGTH_ERROR,
-            $customerResponseTransfer
+            $customerResponseTransfer,
         ));
         $this->assertTrue($this->hasErrorInCustomerResponseTransfer(
             static::GLOSSARY_KEY_MIN_LENGTH_ERROR,
-            $customerResponseTransfer
+            $customerResponseTransfer,
         ));
     }
 
@@ -745,11 +745,11 @@ class CustomerFacadeTest extends Unit
         $this->assertFalse($customerResponseTransfer->getIsSuccess());
         $this->assertTrue($this->hasMessageInCustomerResponseTransfer(
             static::GLOSSARY_KEY_MAX_LENGTH_ERROR,
-            $customerResponseTransfer
+            $customerResponseTransfer,
         ));
         $this->assertTrue($this->hasErrorInCustomerResponseTransfer(
             static::GLOSSARY_KEY_MAX_LENGTH_ERROR,
-            $customerResponseTransfer
+            $customerResponseTransfer,
         ));
     }
 
@@ -775,7 +775,7 @@ class CustomerFacadeTest extends Unit
         $this->assertFalse($customerResponseTransfer->getIsSuccess());
         $this->assertTrue($this->hasErrorInCustomerResponseTransfer(
             static::GLOSSARY_KEY_PASSWORD_POLICY_ERROR_SEQUENCE,
-            $customerResponseTransfer
+            $customerResponseTransfer,
         ));
     }
 
@@ -801,7 +801,7 @@ class CustomerFacadeTest extends Unit
         $this->assertFalse($customerResponseTransfer->getIsSuccess());
         $this->assertTrue($this->hasErrorInCustomerResponseTransfer(
             static::GLOSSARY_KEY_PASSWORD_POLICY_ERROR_DENY_LIST,
-            $customerResponseTransfer
+            $customerResponseTransfer,
         ));
     }
 
@@ -827,7 +827,7 @@ class CustomerFacadeTest extends Unit
         $this->assertFalse($customerResponseTransfer->getIsSuccess());
         $this->assertTrue($this->hasErrorInCustomerResponseTransfer(
             static::GLOSSARY_KEY_PASSWORD_POLICY_ERROR_CHARACTER_SET,
-            $customerResponseTransfer
+            $customerResponseTransfer,
         ));
     }
 
@@ -893,11 +893,11 @@ class CustomerFacadeTest extends Unit
         $this->assertFalse($customerResponseTransfer->getIsSuccess());
         $this->assertTrue($this->hasMessageInCustomerResponseTransfer(
             static::GLOSSARY_KEY_MIN_LENGTH_ERROR,
-            $customerResponseTransfer
+            $customerResponseTransfer,
         ));
         $this->assertTrue($this->hasErrorInCustomerResponseTransfer(
             static::GLOSSARY_KEY_MIN_LENGTH_ERROR,
-            $customerResponseTransfer
+            $customerResponseTransfer,
         ));
     }
 
@@ -920,11 +920,11 @@ class CustomerFacadeTest extends Unit
         $this->assertFalse($customerResponseTransfer->getIsSuccess());
         $this->assertTrue($this->hasMessageInCustomerResponseTransfer(
             static::GLOSSARY_KEY_MAX_LENGTH_ERROR,
-            $customerResponseTransfer
+            $customerResponseTransfer,
         ));
         $this->assertTrue($this->hasErrorInCustomerResponseTransfer(
             static::GLOSSARY_KEY_MAX_LENGTH_ERROR,
-            $customerResponseTransfer
+            $customerResponseTransfer,
         ));
     }
 
@@ -993,7 +993,7 @@ class CustomerFacadeTest extends Unit
         $this->assertFalse($customerResponseTransfer->getIsSuccess());
         $this->assertTrue($this->hasErrorInCustomerResponseTransfer(
             static::GLOSSARY_KEY_PASSWORD_POLICY_ERROR_SEQUENCE,
-            $customerResponseTransfer
+            $customerResponseTransfer,
         ));
     }
 
@@ -1019,7 +1019,7 @@ class CustomerFacadeTest extends Unit
         $this->assertFalse($customerResponseTransfer->getIsSuccess());
         $this->assertTrue($this->hasErrorInCustomerResponseTransfer(
             static::GLOSSARY_KEY_PASSWORD_POLICY_ERROR_DENY_LIST,
-            $customerResponseTransfer
+            $customerResponseTransfer,
         ));
     }
 
@@ -1045,7 +1045,7 @@ class CustomerFacadeTest extends Unit
         $this->assertFalse($customerResponseTransfer->getIsSuccess());
         $this->assertTrue($this->hasErrorInCustomerResponseTransfer(
             static::GLOSSARY_KEY_PASSWORD_POLICY_ERROR_CHARACTER_SET,
-            $customerResponseTransfer
+            $customerResponseTransfer,
         ));
     }
 
@@ -1134,7 +1134,7 @@ class CustomerFacadeTest extends Unit
         $customerTransfer = $this->createTestCustomerTransfer();
         $this->tester->mockConfigMethod(
             'isRestorePasswordValidationEnabled',
-            static::PASSWORD_VALIDATION_ON_RESTORE_PASSWORD_ENABLED
+            static::PASSWORD_VALIDATION_ON_RESTORE_PASSWORD_ENABLED,
         );
         $customerResponseTransfer = $this->tester->getFacade()->registerCustomer($customerTransfer);
         $customerTransfer = $this->tester->getFacade()->confirmRegistration($customerResponseTransfer->getCustomerTransfer());
@@ -1149,11 +1149,11 @@ class CustomerFacadeTest extends Unit
         $this->assertFalse($customerResponseTransfer->getIsSuccess());
         $this->assertTrue($this->hasMessageInCustomerResponseTransfer(
             static::GLOSSARY_KEY_MIN_LENGTH_ERROR,
-            $customerResponseTransfer
+            $customerResponseTransfer,
         ));
         $this->assertTrue($this->hasErrorInCustomerResponseTransfer(
             static::GLOSSARY_KEY_MIN_LENGTH_ERROR,
-            $customerResponseTransfer
+            $customerResponseTransfer,
         ));
     }
 
@@ -1259,7 +1259,7 @@ class CustomerFacadeTest extends Unit
             ->setCustomer(
                 (new CustomerTransfer())
                     ->setIdCustomer($dummyIdCustomer)
-                    ->setEmail(static::TESTER_INVALID_EMAIL)
+                    ->setEmail(static::TESTER_INVALID_EMAIL),
             );
         $checkoutResponseTransfer = new CheckoutResponseTransfer();
 
@@ -1284,7 +1284,7 @@ class CustomerFacadeTest extends Unit
             ->setCustomer(
                 (new CustomerTransfer())
                     ->setIdCustomer($dummyCustomerId)
-                    ->setEmail($email)
+                    ->setEmail($email),
             );
         $checkoutResponseTransfer = new CheckoutResponseTransfer();
 
@@ -1305,7 +1305,7 @@ class CustomerFacadeTest extends Unit
             ->setCustomer(
                 (new CustomerTransfer())
                     ->setIsGuest(true)
-                    ->setEmail(static::TESTER_INVALID_EMAIL)
+                    ->setEmail(static::TESTER_INVALID_EMAIL),
             );
         $checkoutResponseTransfer = new CheckoutResponseTransfer();
 
@@ -1326,7 +1326,7 @@ class CustomerFacadeTest extends Unit
             ->setCustomer(
                 (new CustomerTransfer())
                     ->setIsGuest(true)
-                    ->setEmail(static::TESTER_EMAIL)
+                    ->setEmail(static::TESTER_EMAIL),
             );
         $checkoutResponseTransfer = new CheckoutResponseTransfer();
 
@@ -1350,7 +1350,7 @@ class CustomerFacadeTest extends Unit
             ->setCustomer(
                 (new CustomerTransfer())
                     ->setIsGuest(true)
-                    ->setEmail($email)
+                    ->setEmail($email),
             );
         $checkoutResponseTransfer = new CheckoutResponseTransfer();
 
@@ -1370,7 +1370,7 @@ class CustomerFacadeTest extends Unit
         $quoteTransfer = (new QuoteTransfer())
             ->setCustomer(
                 (new CustomerTransfer())
-                    ->setEmail(static::TESTER_INVALID_EMAIL)
+                    ->setEmail(static::TESTER_INVALID_EMAIL),
             );
         $checkoutResponseTransfer = new CheckoutResponseTransfer();
 
@@ -1393,7 +1393,7 @@ class CustomerFacadeTest extends Unit
         $quoteTransfer = (new QuoteTransfer())
             ->setCustomer(
                 (new CustomerTransfer())
-                    ->setEmail($email)
+                    ->setEmail($email),
             );
         $checkoutResponseTransfer = new CheckoutResponseTransfer();
 
@@ -1413,7 +1413,7 @@ class CustomerFacadeTest extends Unit
         $quoteTransfer = (new QuoteTransfer())
             ->setCustomer(
                 (new CustomerTransfer())
-                    ->setEmail(static::TESTER_EMAIL)
+                    ->setEmail(static::TESTER_EMAIL),
             );
         $checkoutResponseTransfer = new CheckoutResponseTransfer();
 
@@ -1577,7 +1577,7 @@ class CustomerFacadeTest extends Unit
 
         //Act
         $this->tester->getFacade()->sendPasswordRestoreMailForCustomerCollection(
-            (new CustomerCollectionTransfer())->addCustomer($customerResponseTransfer->getCustomerTransfer())
+            (new CustomerCollectionTransfer())->addCustomer($customerResponseTransfer->getCustomerTransfer()),
         );
 
         $customerResponseTransfer = $this->tester->getFacade()->findCustomerByReference('DE--112');
@@ -1607,7 +1607,7 @@ class CustomerFacadeTest extends Unit
         // Assert
         $this->assertSame(
             $expectedCount,
-            $this->tester->getFacade()->getCustomerCollectionByCriteria($criteriaFilterTransfer)->getCustomers()->count()
+            $this->tester->getFacade()->getCustomerCollectionByCriteria($criteriaFilterTransfer)->getCustomers()->count(),
         );
     }
 
@@ -1627,7 +1627,7 @@ class CustomerFacadeTest extends Unit
         $customerTransferExpanderPlugin->expects($this->never())->method('expandTransfer');
         $this->tester->setDependency(
             CustomerDependencyProvider::PLUGINS_CUSTOMER_TRANSFER_EXPANDER,
-            [$customerTransferExpanderPlugin]
+            [$customerTransferExpanderPlugin],
         );
 
         // Act
@@ -1672,7 +1672,7 @@ class CustomerFacadeTest extends Unit
         $customerTransferExpanderPlugin->expects($this->once())->method('expandTransfer');
         $this->tester->setDependency(
             CustomerDependencyProvider::PLUGINS_CUSTOMER_TRANSFER_EXPANDER,
-            [$customerTransferExpanderPlugin]
+            [$customerTransferExpanderPlugin],
         );
 
         // Act

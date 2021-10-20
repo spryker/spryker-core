@@ -89,7 +89,7 @@ class CompanyUserRoleFormDataProvider
             ->setWithoutExpanders(true);
 
         $companyRoleCollection = $this->companyRoleFacade->getCompanyRoleCollection(
-            $companyRoleCriteriaFilterTransfer
+            $companyRoleCriteriaFilterTransfer,
         );
 
         foreach ($companyRoleCollection->getRoles() as $companyRoleTransfer) {

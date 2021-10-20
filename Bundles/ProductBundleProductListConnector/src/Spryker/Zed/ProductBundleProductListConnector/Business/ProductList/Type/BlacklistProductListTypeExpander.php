@@ -107,7 +107,7 @@ class BlacklistProductListTypeExpander implements ProductListTypeExpanderInterfa
         return $this->expandProductListWithBundleProduct(
             $idProductConcrete,
             $productBundleCollectionTransfer,
-            $productListResponseTransfer
+            $productListResponseTransfer,
         );
     }
 

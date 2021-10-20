@@ -25,7 +25,7 @@ class ProductValidityBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductConcreteSwitcher(
             $this->getQueryContainer(),
-            $this->getProductFacade()
+            $this->getProductFacade(),
         );
     }
 
@@ -35,7 +35,7 @@ class ProductValidityBusinessFactory extends AbstractBusinessFactory
     public function createProductValidityHydrator()
     {
         return new ProductValidityHydrator(
-            $this->getQueryContainer()
+            $this->getQueryContainer(),
         );
     }
 
@@ -45,7 +45,7 @@ class ProductValidityBusinessFactory extends AbstractBusinessFactory
     public function createProductValidityUpdater()
     {
         return new ProductValidityUpdater(
-            $this->getQueryContainer()
+            $this->getQueryContainer(),
         );
     }
 

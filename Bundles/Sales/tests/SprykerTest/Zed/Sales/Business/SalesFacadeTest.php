@@ -144,7 +144,7 @@ class SalesFacadeTest extends Unit
             $this->createOrderTransferWithParams([
                 OrderTransfer::ORDER_REFERENCE => $orderEntity->getOrderReference(),
                 OrderTransfer::CUSTOMER_REFERENCE => $orderEntity->getCustomerReference(),
-            ])
+            ]),
         );
 
         //Assert
@@ -227,7 +227,7 @@ class SalesFacadeTest extends Unit
         $salesFacade = $this->createSalesFacade();
 
         $order = $salesFacade->getCustomerOrderByOrderReference(
-            $this->createOrderTransferWithParams(static::ORDER_WRONG_SEARCH_PARAMS)
+            $this->createOrderTransferWithParams(static::ORDER_WRONG_SEARCH_PARAMS),
         );
 
         $this->assertNull($order->getIdSalesOrder());

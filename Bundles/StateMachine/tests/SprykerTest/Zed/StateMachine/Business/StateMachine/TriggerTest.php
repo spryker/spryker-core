@@ -79,7 +79,7 @@ class TriggerTest extends StateMachineMocks
             ->willReturnCallback(
                 function ($stateMachineItems) {
                     return $stateMachineItems;
-                }
+                },
             );
 
         $finderMock = $this->createFinderMock();
@@ -95,7 +95,7 @@ class TriggerTest extends StateMachineMocks
             ->method('filterItemsWithOnEnterEvent')
             ->willReturnOnConsecutiveCalls(
                 $this->createStateMachineItems(),
-                []
+                [],
             );
 
         $conditionMock = $this->createTriggerConditionMock();
@@ -105,7 +105,7 @@ class TriggerTest extends StateMachineMocks
             $transitionLogMock,
             $finderMock,
             $stateMachinePersistenceMock,
-            $conditionMock
+            $conditionMock,
         );
 
         $stateMachineProcessTransfer = new StateMachineProcessTransfer();
@@ -131,7 +131,7 @@ class TriggerTest extends StateMachineMocks
             $transitionLogMock,
             $finderMock,
             $stateMachinePersistenceMock,
-            $conditionMock
+            $conditionMock,
         );
 
         $stateMachineItemTransfer = $this->createTriggerStateMachineItem();
@@ -141,7 +141,7 @@ class TriggerTest extends StateMachineMocks
 
         $affectedItems = $trigger->triggerEvent(
             'event',
-            $stateMachineItems
+            $stateMachineItems,
         );
 
         $this->assertSame(1, $affectedItems);
@@ -165,7 +165,7 @@ class TriggerTest extends StateMachineMocks
             $transitionLogMock,
             $finderMock,
             $stateMachinePersistenceMock,
-            $conditionMock
+            $conditionMock,
         );
 
         $affectedItems = $trigger->triggerConditionsWithoutEvent(static::TESTING_STATE_MACHINE);
@@ -191,7 +191,7 @@ class TriggerTest extends StateMachineMocks
             $transitionLogMock,
             $finderMock,
             $stateMachinePersistenceMock,
-            $conditionMock
+            $conditionMock,
         );
 
         $affectedItems = $trigger->triggerForTimeoutExpiredItems(static::TESTING_STATE_MACHINE);
@@ -215,7 +215,7 @@ class TriggerTest extends StateMachineMocks
             $transitionLogMock,
             $finderMock,
             $stateMachinePersistenceMock,
-            $conditionMock
+            $conditionMock,
         );
 
         $stateMachineItems = [
@@ -224,7 +224,7 @@ class TriggerTest extends StateMachineMocks
 
         $trigger->triggerEvent(
             'event',
-            $stateMachineItems
+            $stateMachineItems,
         );
     }
 
@@ -336,7 +336,7 @@ class TriggerTest extends StateMachineMocks
             $finderMock,
             $persistenceMock,
             $conditionMock,
-            $stateUpdaterMock
+            $stateUpdaterMock,
         );
     }
 
@@ -351,7 +351,7 @@ class TriggerTest extends StateMachineMocks
             ->willReturnCallback(
                 function ($stateMachineItems) {
                     return $stateMachineItems;
-                }
+                },
             );
 
         return $stateMachinePersistenceMock;

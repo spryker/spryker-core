@@ -67,7 +67,7 @@ class PanelTwigPlugin extends AbstractPlugin implements TwigPluginInterface
                     'content' => $content,
                     'options' => $options,
                     'footer' => $footer,
-                ]
+                ],
             );
         }, ['is_safe' => ['html']]);
     }

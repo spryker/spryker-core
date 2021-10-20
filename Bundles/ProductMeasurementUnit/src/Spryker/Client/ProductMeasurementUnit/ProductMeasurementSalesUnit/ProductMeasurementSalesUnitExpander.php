@@ -39,7 +39,7 @@ class ProductMeasurementSalesUnitExpander implements ProductMeasurementSalesUnit
 
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
             $itemTransfer->setQuantitySalesUnit(
-                $this->createSalesUnitTransfer($idSalesUnit)
+                $this->createSalesUnitTransfer($idSalesUnit),
             );
         }
 
@@ -63,7 +63,7 @@ class ProductMeasurementSalesUnitExpander implements ProductMeasurementSalesUnit
 
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
             $itemTransfer->setQuantitySalesUnit(
-                $this->createSalesUnitTransfer($idSalesUnit)
+                $this->createSalesUnitTransfer($idSalesUnit),
             );
         }
 

@@ -73,7 +73,7 @@ class ResourceSchemaNameStorageProcessor implements ResourceSchemaNameStoragePro
     {
         $this->addResourceSchemaNameToStorage(
             $plugin,
-            $this->glueAnnotationsAnalyser->getResourceParametersFromPlugin($plugin)
+            $this->glueAnnotationsAnalyser->getResourceParametersFromPlugin($plugin),
         );
     }
 
@@ -153,7 +153,7 @@ class ResourceSchemaNameStorageProcessor implements ResourceSchemaNameStoragePro
                 $responseResourceDataSchema = $this
                     ->resourceTransferAnalyzer
                     ->createResponseResourceDataSchemaNameFromTransferClassName(
-                        $pluginAnnotationsTransfer->getResourceAttributesClassName()
+                        $pluginAnnotationsTransfer->getResourceAttributesClassName(),
                     );
 
                 $this->resourceSchemaNameStorage->addResourceSchemaName($key, $responseResourceDataSchema);

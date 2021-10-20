@@ -36,7 +36,7 @@ class RestProductOfferPricesAttributesMapperPlugin extends AbstractPlugin implem
             ->createRestProductOfferPricesAttributesMapper()
             ->mapCurrentProductPriceTransferToRestProductOfferPricesAttributesTransfer(
                 $currentProductPriceTransfer,
-                $restProductOfferPricesAttributesTransfer
+                $restProductOfferPricesAttributesTransfer,
             );
     }
 }

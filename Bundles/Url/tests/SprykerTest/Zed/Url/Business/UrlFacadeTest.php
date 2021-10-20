@@ -99,7 +99,7 @@ class UrlFacadeTest extends Unit
         $this->assertGreaterThan(
             $urlCountBeforeCreation,
             $urlCountAfterCreation,
-            'Number of url entities in database should be higher after creating new entity.'
+            'Number of url entities in database should be higher after creating new entity.',
         );
 
         $this->assertNotNull($newUrlTransfer->getIdUrl(), 'Returned transfer object should have url ID.');
@@ -192,7 +192,7 @@ class UrlFacadeTest extends Unit
 
         // Act
         $existingUrlTransfer = $this->urlFacade->findUrlCaseInsensitive(
-            (new UrlTransfer())->setIdUrl($urlTransfer->getIdUrl())
+            (new UrlTransfer())->setIdUrl($urlTransfer->getIdUrl()),
         );
 
         // Assert
@@ -209,7 +209,7 @@ class UrlFacadeTest extends Unit
 
         // Act
         $urlTransfer->setUrl(
-            mb_strtoupper($urlTransfer->getUrl())
+            mb_strtoupper($urlTransfer->getUrl()),
         );
         $existingUrlTransfer = $this->urlFacade->findUrlCaseInsensitive($urlTransfer);
 
@@ -739,12 +739,12 @@ class UrlFacadeTest extends Unit
         $urlRedirectTouchQuery = $this->touchQueryContainer->queryUpdateTouchEntry(
             UrlConfig::RESOURCE_TYPE_REDIRECT,
             $urlRedirectTransfer->getIdUrlRedirect(),
-            SpyTouchTableMap::COL_ITEM_EVENT_DELETED
+            SpyTouchTableMap::COL_ITEM_EVENT_DELETED,
         );
         $urlTouchQuery = $this->touchQueryContainer->queryUpdateTouchEntry(
             UrlConfig::RESOURCE_TYPE_URL,
             $urlEntity->getIdUrl(),
-            SpyTouchTableMap::COL_ITEM_EVENT_DELETED
+            SpyTouchTableMap::COL_ITEM_EVENT_DELETED,
         );
 
         $this->assertSame(1, $urlRedirectQuery->count(), 'Url redirect entity should exist before deleting it.');

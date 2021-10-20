@@ -82,7 +82,7 @@ class CompanyUserInvitationHelper extends Module
                 ->setCriteriaFilter($criteriaFilter);
 
             $companyUserInvitations = $this->getCompanyUserInvitationFacade()->getCompanyUserInvitationCollection(
-                $companyUserInvitationGetCollectionRequestTransfer
+                $companyUserInvitationGetCollectionRequestTransfer,
             )->getCompanyUserInvitations();
 
             foreach ($companyUserInvitations as $companyUserInvitation) {

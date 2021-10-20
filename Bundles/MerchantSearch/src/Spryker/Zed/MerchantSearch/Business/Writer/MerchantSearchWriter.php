@@ -106,7 +106,7 @@ class MerchantSearchWriter implements MerchantSearchWriterInterface
             (new MerchantCriteriaTransfer())
                 ->setMerchantIds($merchantIds)
                 ->setIsActive(true)
-                ->setStatus(MerchantSearchConfig::MERCHANT_STATUS_APPROVED)
+                ->setStatus(MerchantSearchConfig::MERCHANT_STATUS_APPROVED),
         );
 
         if (!$merchantCollectionTransfer->getMerchants()->count()) {
@@ -115,7 +115,7 @@ class MerchantSearchWriter implements MerchantSearchWriterInterface
 
         $merchantSearchCollectionTransfer = $this->merchantSearchMapper->mapMerchantCollectionTransferToMerchantSearchCollectionTransfer(
             $merchantCollectionTransfer,
-            new MerchantSearchCollectionTransfer()
+            new MerchantSearchCollectionTransfer(),
         );
 
         $merchantSearchCollectionTransfer = $this->expandMerchantSearchData($merchantSearchCollectionTransfer);

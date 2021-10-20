@@ -51,7 +51,7 @@ class MerchantRelationshipChoiceFormDataProvider
             $merchantRelationshipKey = sprintf(
                 static::PATTERN_MERCHANT_RELATIONSHIP_KEY,
                 $merchantRelationshipTransfer->getMerchant()->getName(),
-                $merchantRelationshipTransfer->getOwnerCompanyBusinessUnit()->getName()
+                $merchantRelationshipTransfer->getOwnerCompanyBusinessUnit()->getName(),
             );
             $result[$merchantRelationshipKey] = $merchantRelationshipTransfer->getIdMerchantRelationship();
         }

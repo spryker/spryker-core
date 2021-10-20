@@ -57,8 +57,8 @@ class AddController extends AbstractController
                     $dataProvider->getOptions(),
                     [
                         'action' => (string)Url::generate('/customer/add', [static::REDIRECT_URL_KEY => $baseRedirectUrl]),
-                    ]
-                )
+                    ],
+                ),
             )
             ->handleRequest($request);
 

@@ -71,13 +71,13 @@ class CurrentUserSessionHandlerListener extends AbstractListener
         }
 
         $currentUser = $this->userFacade->getUserByUsername(
-            $token->getUser()->getUsername()
+            $token->getUser()->getUsername(),
         );
 
         $this->userFacade->setCurrentUser($currentUser);
 
         $event->setResponse(
-            new RedirectResponse($event->getRequest()->getPathInfo())
+            new RedirectResponse($event->getRequest()->getPathInfo()),
         );
     }
 }

@@ -328,7 +328,7 @@ class CompanyUserCustomerForm extends AbstractType
             },
             function ($dateAsObject) {
                 return $dateAsObject;
-            }
+            },
         );
     }
 }

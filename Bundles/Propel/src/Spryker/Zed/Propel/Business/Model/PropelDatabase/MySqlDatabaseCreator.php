@@ -38,7 +38,7 @@ class MySqlDatabaseCreator implements DatabaseCreatorInterface
         return new PDO(
             $this->getDatabaseSourceName(),
             Config::get(PropelConstants::ZED_DB_USERNAME),
-            Config::get(PropelConstants::ZED_DB_PASSWORD)
+            Config::get(PropelConstants::ZED_DB_PASSWORD),
         );
     }
 

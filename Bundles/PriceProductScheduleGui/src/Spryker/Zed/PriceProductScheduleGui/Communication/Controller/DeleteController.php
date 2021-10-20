@@ -81,7 +81,7 @@ class DeleteController extends AbstractController
             ->createPriceProductScheduleDeleteForm(
                 $dataProvider,
                 $priceProductScheduleTransfer,
-                $redirectUrl
+                $redirectUrl,
             );
         $form->handleRequest($request);
 

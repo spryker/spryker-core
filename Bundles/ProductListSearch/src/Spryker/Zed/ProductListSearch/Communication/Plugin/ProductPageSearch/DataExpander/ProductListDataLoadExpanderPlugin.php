@@ -83,7 +83,7 @@ class ProductListDataLoadExpanderPlugin extends AbstractPlugin implements Produc
         $productAbstractPageSearchTransfer->setProductListMap(
             (new ProductListMapTransfer())
                 ->setBlacklists($blacklistIds)
-                ->setWhitelists($whitelistIds)
+                ->setWhitelists($whitelistIds),
         );
     }
 }

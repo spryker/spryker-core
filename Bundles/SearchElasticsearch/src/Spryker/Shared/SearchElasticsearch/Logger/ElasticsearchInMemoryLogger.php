@@ -75,7 +75,7 @@ class ElasticsearchInMemoryLogger implements ElasticsearchLoggerInterface
             '%s://%s:%s',
             $this->elasticsearchClientConfig['transport'] ?? static::URI_STRING_TEMPLATE_UNKNOWN,
             $this->elasticsearchClientConfig['host'] ?? static::URI_STRING_TEMPLATE_UNKNOWN,
-            $this->elasticsearchClientConfig['port'] ?? static::URI_STRING_TEMPLATE_UNKNOWN
+            $this->elasticsearchClientConfig['port'] ?? static::URI_STRING_TEMPLATE_UNKNOWN,
         );
     }
 }

@@ -60,7 +60,7 @@ class RouterFactory extends AbstractFactory
             $this->createClosureLoader(),
             $this->createResource(),
             $this->getRouterEnhancerPlugins(),
-            $this->getConfig()->getRouterConfiguration()
+            $this->getConfig()->getRouterConfiguration(),
         );
     }
 
@@ -79,7 +79,7 @@ class RouterFactory extends AbstractFactory
     {
         return new RouterResource(
             $this->createRouteCollection(),
-            $this->getRouteProviderPlugins()
+            $this->getRouteProviderPlugins(),
         );
     }
 
@@ -89,7 +89,7 @@ class RouterFactory extends AbstractFactory
     public function createRouteCollection(): RouteCollection
     {
         return new RouteCollection(
-            $this->getRouteManipulatorPlugins()
+            $this->getRouteManipulatorPlugins(),
         );
     }
 
@@ -126,7 +126,7 @@ class RouterFactory extends AbstractFactory
             $this->createClosureLoader(),
             $this->createResource(),
             $this->getRouterEnhancerPlugins(),
-            $this->getConfig()->getDevelopmentRouterConfiguration()
+            $this->getConfig()->getDevelopmentRouterConfiguration(),
         );
     }
 
@@ -137,7 +137,7 @@ class RouterFactory extends AbstractFactory
     {
         return new ArgumentResolver(
             $this->createArgumentMetaDataFactory(),
-            $this->getArgumentValueResolvers()
+            $this->getArgumentValueResolvers(),
         );
     }
 

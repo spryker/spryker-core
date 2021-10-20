@@ -28,7 +28,7 @@ class CommentDataImportConfig extends DataImportConfig
 
         return $this->buildImporterConfiguration(
             $moduleDataImportDirectory . 'comment.csv',
-            static::IMPORT_TYPE_COMMENT
+            static::IMPORT_TYPE_COMMENT,
         );
     }
 
@@ -42,7 +42,7 @@ class CommentDataImportConfig extends DataImportConfig
             . DIRECTORY_SEPARATOR . '..'
             . DIRECTORY_SEPARATOR . '..'
             . DIRECTORY_SEPARATOR . '..'
-            . DIRECTORY_SEPARATOR . '..'
+            . DIRECTORY_SEPARATOR . '..',
         );
 
         return $moduleRoot . DIRECTORY_SEPARATOR;

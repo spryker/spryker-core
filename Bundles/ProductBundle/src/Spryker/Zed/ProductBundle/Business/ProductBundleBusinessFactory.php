@@ -69,7 +69,7 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductBundleWriter(
             $this->getQueryContainer(),
-            $this->createProductBundleStockWriter()
+            $this->createProductBundleStockWriter(),
         );
     }
 
@@ -83,7 +83,7 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
             $this->getAvailabilityFacade(),
             $this->getStoreFacade(),
             $this->getRepository(),
-            $this->createProductBundleCache()
+            $this->createProductBundleCache(),
         );
     }
 
@@ -93,7 +93,7 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
     public function createPriceReader(): PriceReaderInterface
     {
         return new PriceReaderWithCache(
-            $this->getPriceFacade()
+            $this->getPriceFacade(),
         );
     }
 
@@ -107,7 +107,7 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
             $this->getProductFacade(),
             $this->getLocaleFacade(),
             $this->createProductBundleReader(),
-            $this->createPriceReader()
+            $this->createPriceReader(),
         );
     }
 
@@ -171,7 +171,7 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
             $this->getQueryContainer(),
             $this->getStoreFacade(),
             $this->getConfig(),
-            $this->createProductBundleReader()
+            $this->createProductBundleReader(),
         );
     }
 
@@ -181,7 +181,7 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
     public function createProductBundleCartActiveCheck(): ProductBundleCartActiveCheckInterface
     {
         return new ProductBundleCartActiveCheck(
-            $this->createProductBundleReader()
+            $this->createProductBundleReader(),
         );
     }
 
@@ -192,7 +192,7 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductBundleCartPriceChecker(
             $this->getRepository(),
-            $this->getPriceProductFacade()
+            $this->getPriceProductFacade(),
         );
     }
 
@@ -205,7 +205,7 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
             $this->getAvailabilityFacade(),
             $this->getQueryContainer(),
             $this->getStoreFacade(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -217,7 +217,7 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
         return new ProductBundleAvailabilityHandler(
             $this->getAvailabilityFacade(),
             $this->getQueryContainer(),
-            $this->getStockFacade()
+            $this->getStockFacade(),
         );
     }
 
@@ -228,7 +228,7 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductBundleStatusUpdater(
             $this->getProductFacade(),
-            $this->getRepository()
+            $this->getRepository(),
         );
     }
 
@@ -239,7 +239,7 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductBundleStockHandler(
             $this->getQueryContainer(),
-            $this->createProductBundleStockWriter()
+            $this->createProductBundleStockWriter(),
         );
     }
 
@@ -252,7 +252,7 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
             $this->getQueryContainer(),
             $this->getStockQueryContainer(),
             $this->createProductBundleAvailabilityHandler(),
-            $this->getStoreFacade()
+            $this->getStoreFacade(),
         );
     }
 
@@ -263,7 +263,7 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductBundlesSalesOrderHydrate(
             $this->getSalesQueryContainer(),
-            $this->createProductBundlePriceCalculator()
+            $this->createProductBundlePriceCalculator(),
         );
     }
 
@@ -354,7 +354,7 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductBundleItemExpander(
             $this->getRepository(),
-            $this->createProductBundlePriceCalculator()
+            $this->createProductBundlePriceCalculator(),
         );
     }
 

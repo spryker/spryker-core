@@ -22,7 +22,7 @@ class CompanyUserStorageFactory extends AbstractFactory
     {
         return new CompanyUserStorage(
             $this->getStorageClient(),
-            $this->getSynchronizationService()
+            $this->getSynchronizationService(),
         );
     }
 

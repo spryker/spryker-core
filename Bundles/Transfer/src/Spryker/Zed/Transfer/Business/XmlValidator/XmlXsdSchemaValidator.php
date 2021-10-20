@@ -74,7 +74,7 @@ class XmlXsdSchemaValidator implements XmlValidatorInterface
     {
         $xmlDocument = new DOMDocument();
         $xmlDocument->loadXML(
-            $this->readXmlFileContent($filePath)
+            $this->readXmlFileContent($filePath),
         );
 
         return $xmlDocument;
@@ -93,7 +93,7 @@ class XmlXsdSchemaValidator implements XmlValidatorInterface
 
         if ($fileContent === false) {
             throw new RuntimeException(
-                sprintf('File "%s" could not be read.', $filePath)
+                sprintf('File "%s" could not be read.', $filePath),
             );
         }
 
@@ -112,7 +112,7 @@ class XmlXsdSchemaValidator implements XmlValidatorInterface
         return str_replace(
             static::XML_SCHEMA_INSTANCE_NAMESPACE_ATTRIBUTE,
             static::XML_SCHEMA_INSTANCE_NAMESPACE_ATTRIBUTE_SHIM,
-            $fileContent
+            $fileContent,
         );
     }
 

@@ -161,7 +161,7 @@ class RouterResource implements ResourceInterface
             '%s/%s/%s',
             $module,
             $controller,
-            $this->getFilterChain()->filter($action)
+            $this->getFilterChain()->filter($action),
         );
 
         return $template;

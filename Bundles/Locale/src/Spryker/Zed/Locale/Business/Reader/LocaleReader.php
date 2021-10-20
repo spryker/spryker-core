@@ -59,8 +59,8 @@ class LocaleReader implements LocaleReaderInterface
         throw new MissingLocaleException(
             sprintf(
                 'Tried to retrieve locale %s, but it does not exist',
-                $localeName
-            )
+                $localeName,
+            ),
         );
     }
 
@@ -89,8 +89,8 @@ class LocaleReader implements LocaleReaderInterface
         throw new MissingLocaleException(
             sprintf(
                 'Tried to retrieve locale with id %s, but it does not exist',
-                $idLocale
-            )
+                $idLocale,
+            ),
         );
     }
 }

@@ -103,7 +103,7 @@ abstract class AbstractBuilderTester extends Unit
         $table = $this->tester->createTable(
             static::TESTING_TABLE_NAME,
             $columns,
-            static::TESTING_TABLE_NAMESPACE
+            static::TESTING_TABLE_NAMESPACE,
         );
 
         $this->tester->writePropelFiles($this->getFilesToGenerate(), $table);

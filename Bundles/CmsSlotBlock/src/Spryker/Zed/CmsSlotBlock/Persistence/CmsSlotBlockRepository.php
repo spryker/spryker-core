@@ -49,7 +49,7 @@ class CmsSlotBlockRepository extends AbstractRepository implements CmsSlotBlockR
         $cmsSlotBlockEntities = $this
             ->buildQueryFromCriteria(
                 $query,
-                $cmsSlotBlockCriteriaTransfer->getFilter()
+                $cmsSlotBlockCriteriaTransfer->getFilter(),
             )
             ->setFormatter(ModelCriteria::FORMAT_OBJECT)
             ->orderBy(SpyCmsSlotBlockTableMap::COL_POSITION)
@@ -59,7 +59,7 @@ class CmsSlotBlockRepository extends AbstractRepository implements CmsSlotBlockR
             ->createCmsSlotBlockMapper()
             ->mapCmsSlotBlockEntityCollectionToTransferCollection(
                 $cmsSlotBlockEntities,
-                new CmsSlotBlockCollectionTransfer()
+                new CmsSlotBlockCollectionTransfer(),
             );
     }
 

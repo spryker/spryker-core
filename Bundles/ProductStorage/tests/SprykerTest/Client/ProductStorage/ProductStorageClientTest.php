@@ -115,7 +115,7 @@ class ProductStorageClientTest extends Unit
             ->getBulkProductAbstractStorageDataByProductAbstractIdsForLocaleNameAndStore(
                 [$idProductAbstract],
                 static::LOCALE_NAME,
-                $storeName
+                $storeName,
             );
 
         // Assert
@@ -240,7 +240,7 @@ class ProductStorageClientTest extends Unit
             if ($expandedProductViewTransfer->offsetExists($productConcreteStoragePropertyKey)) {
                 $this->assertSame(
                     $productConcreteStoragePropertyValue,
-                    $expandedProductViewTransfer->offsetGet($productConcreteStoragePropertyKey)
+                    $expandedProductViewTransfer->offsetGet($productConcreteStoragePropertyKey),
                 );
             }
         }
@@ -290,7 +290,7 @@ class ProductStorageClientTest extends Unit
                 static::SUPER_ATTRIBUTE_VALUE_2_1,
                 static::SUPER_ATTRIBUTE_VALUE_2_2,
             ]],
-            $expandedProductViewTransfer->getAvailableAttributes()
+            $expandedProductViewTransfer->getAvailableAttributes(),
         );
     }
 
@@ -313,7 +313,7 @@ class ProductStorageClientTest extends Unit
         $this->tester->setDependency(
             ProductStorageDependencyProvider::CLIENT_STORAGE,
             $storageClientMock,
-            ProductStorageFactory::class
+            ProductStorageFactory::class,
         );
 
         return $storageClientMock;

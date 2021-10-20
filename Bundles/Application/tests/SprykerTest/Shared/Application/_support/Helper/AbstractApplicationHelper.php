@@ -173,7 +173,7 @@ abstract class AbstractApplicationHelper extends Framework
     {
         if ($this->application === null) {
             $this->application = new Application(
-                $this->getContainer()
+                $this->getContainer(),
             );
         }
 

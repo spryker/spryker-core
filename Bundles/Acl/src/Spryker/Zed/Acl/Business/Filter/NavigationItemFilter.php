@@ -59,7 +59,7 @@ class NavigationItemFilter implements NavigationItemFilterInterface
                 $userTransfer,
                 $navigationItemTransfer->getModule(),
                 $navigationItemTransfer->getController(),
-                $navigationItemTransfer->getAction()
+                $navigationItemTransfer->getAction(),
             );
 
             if (!$isNavigationItemAllowed) {
@@ -68,7 +68,7 @@ class NavigationItemFilter implements NavigationItemFilterInterface
         }
 
         return $navigationItemCollectionTransfer->setNavigationItems(
-            new ArrayObject($navigationItemTransfers)
+            new ArrayObject($navigationItemTransfers),
         );
     }
 

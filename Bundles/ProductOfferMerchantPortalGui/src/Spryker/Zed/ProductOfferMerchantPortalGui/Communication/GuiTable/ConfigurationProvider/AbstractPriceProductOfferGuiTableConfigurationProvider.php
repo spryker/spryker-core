@@ -153,12 +153,12 @@ abstract class AbstractPriceProductOfferGuiTableConfigurationProvider
             $this->columnIdCreator->createStoreColumnId(),
             static::TITLE_COLUMN_STORE,
             false,
-            $this->getStoreOptions()
+            $this->getStoreOptions(),
         )->addEditableColumnSelect(
             $this->columnIdCreator->createCurrencyColumnId(),
             static::TITLE_COLUMN_CURRENCY,
             false,
-            $this->getCurrencyOptions()
+            $this->getCurrencyOptions(),
         );
 
         foreach ($priceTypeTransfers as $priceTypeTransfer) {
@@ -175,12 +175,12 @@ abstract class AbstractPriceProductOfferGuiTableConfigurationProvider
                 $this->columnIdCreator->createNetAmountColumnId($priceTypeName),
                 static::TITLE_COLUMN_PREFIX_PRICE_TYPE_NET . ' ' . $titlePriceTypeName,
                 static::INPUT_TYPE_NUMBER,
-                $fieldOptions
+                $fieldOptions,
             )->addEditableColumnInput(
                 $this->columnIdCreator->createGrossAmountColumnId($priceTypeName),
                 static::TITLE_COLUMN_PREFIX_PRICE_TYPE_GROSS . ' ' . $titlePriceTypeName,
                 static::INPUT_TYPE_NUMBER,
-                $fieldOptions
+                $fieldOptions,
             );
         }
 
@@ -188,7 +188,7 @@ abstract class AbstractPriceProductOfferGuiTableConfigurationProvider
             $this->columnIdCreator->createVolumeQuantityColumnId(),
             static::TITLE_COLUMN_VOLUME_QUANTITY,
             static::INPUT_TYPE_NUMBER,
-            $this->getVolumeQuantityColumnOptions()
+            $this->getVolumeQuantityColumnOptions(),
         );
 
         return $guiTableConfigurationBuilder;
@@ -210,14 +210,14 @@ abstract class AbstractPriceProductOfferGuiTableConfigurationProvider
             true,
             false,
             'gray',
-            []
+            [],
         )->addColumnChip(
             PriceProductOfferTableViewTransfer::CURRENCY,
             static::TITLE_COLUMN_CURRENCY,
             true,
             false,
             'blue',
-            []
+            [],
         );
 
         foreach ($priceTypeTransfers as $priceTypeTransfer) {
@@ -228,12 +228,12 @@ abstract class AbstractPriceProductOfferGuiTableConfigurationProvider
                 $this->columnIdCreator->createNetAmountColumnId($priceTypeName),
                 static::TITLE_COLUMN_PREFIX_PRICE_TYPE_NET . ' ' . $titlePriceTypeName,
                 true,
-                false
+                false,
             )->addColumnText(
                 $this->columnIdCreator->createGrossAmountColumnId($priceTypeName),
                 static::TITLE_COLUMN_PREFIX_PRICE_TYPE_GROSS . ' ' . $titlePriceTypeName,
                 true,
-                false
+                false,
             );
         }
 
@@ -241,7 +241,7 @@ abstract class AbstractPriceProductOfferGuiTableConfigurationProvider
             $this->columnIdCreator->createVolumeQuantityColumnId(),
             static::TITLE_COLUMN_VOLUME_QUANTITY,
             true,
-            false
+            false,
         );
 
         return $guiTableConfigurationBuilder;

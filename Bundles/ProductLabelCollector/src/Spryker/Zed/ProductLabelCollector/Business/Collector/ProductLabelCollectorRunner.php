@@ -69,7 +69,7 @@ class ProductLabelCollectorRunner implements ProductLabelCollectorRunnerInterfac
             $dataReader,
             $dataWriter,
             $touchUpdater,
-            $output
+            $output,
         );
     }
 }

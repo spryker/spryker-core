@@ -63,7 +63,7 @@ class BooleanToStringTwigPlugin extends AbstractPlugin implements TwigPluginInte
                 throw new RuntimeError(sprintf(
                     'The "%s" filter expects boolean, got "%s".',
                     static::FILTER_NAME_BOOL_TO_STR,
-                    is_object($value) ? get_class($value) : gettype($value)
+                    is_object($value) ? get_class($value) : gettype($value),
                 ));
             }
 

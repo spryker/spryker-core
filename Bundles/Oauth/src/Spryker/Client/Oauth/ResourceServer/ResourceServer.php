@@ -59,7 +59,7 @@ class ResourceServer extends LeagueResourceServer
                 $verifiedRequest = $authorizationValidator->validateAuthorization(
                     $request,
                     $this->publicKeys,
-                    $this->accessTokenRepository
+                    $this->accessTokenRepository,
                 );
             } catch (OAuthServerException $authServerException) {
                 continue;

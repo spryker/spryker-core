@@ -114,12 +114,12 @@ class LocalizedGeneralFormType extends AbstractType
 
         $builder->addEventListener(
             FormEvents::PRE_SET_DATA,
-            [$this, 'onPreSetData']
+            [$this, 'onPreSetData'],
         );
 
         $builder->addEventListener(
             FormEvents::SUBMIT,
-            [$this, 'onSubmit']
+            [$this, 'onSubmit'],
         );
     }
 

@@ -36,7 +36,7 @@ class ProductConcreteBatchAvailabilityStrategyPlugin extends AbstractPlugin impl
     ): SellableItemsResponseTransfer {
         return $this->getFacade()->areProductConcretesSellableForStore(
             $sellableItemsRequestTransfer,
-            $sellableItemsResponseTransfer
+            $sellableItemsResponseTransfer,
         );
     }
 }

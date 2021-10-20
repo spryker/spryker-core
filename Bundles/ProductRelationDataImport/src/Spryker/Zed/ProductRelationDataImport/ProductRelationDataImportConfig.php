@@ -77,7 +77,7 @@ class ProductRelationDataImportConfig extends DataImportConfig
     protected function getModuleRoot(): string
     {
         $moduleRoot = realpath(
-            dirname(__DIR__, static::MODULE_ROOT_DIRECTORY_LEVEL)
+            dirname(__DIR__, static::MODULE_ROOT_DIRECTORY_LEVEL),
         );
 
         return $moduleRoot . DIRECTORY_SEPARATOR;

@@ -71,7 +71,7 @@ abstract class AbstractEventDispatcherHelper extends Module
         parent::_before($test);
 
         $this->getApplicationHelper()->addApplicationPlugin(
-            $this->getEventDispatcherApplicationPluginStub()
+            $this->getEventDispatcherApplicationPluginStub(),
         );
     }
 

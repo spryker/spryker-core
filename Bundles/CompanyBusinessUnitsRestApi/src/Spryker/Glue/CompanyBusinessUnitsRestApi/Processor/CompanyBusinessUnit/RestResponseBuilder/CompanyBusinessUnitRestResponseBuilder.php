@@ -46,7 +46,7 @@ class CompanyBusinessUnitRestResponseBuilder implements CompanyBusinessUnitRestR
         $companyBusinessUnitRestResource = $this->createCompanyBusinessUnitRestResource(
             $companyBusinessUnitUuid,
             $restCompanyBusinessUnitAttributesTransfer,
-            $companyBusinessUnitTransfer
+            $companyBusinessUnitTransfer,
         );
 
         return $this->restResourceBuilder->createRestResponse()
@@ -68,7 +68,7 @@ class CompanyBusinessUnitRestResponseBuilder implements CompanyBusinessUnitRestR
         $restResource = $this->restResourceBuilder->createRestResource(
             CompanyBusinessUnitsRestApiConfig::RESOURCE_COMPANY_BUSINESS_UNITS,
             $companyBusinessUnitUuid,
-            $restCompanyBusinessUnitAttributesTransfer
+            $restCompanyBusinessUnitAttributesTransfer,
         );
 
         if (!$companyBusinessUnitTransfer) {

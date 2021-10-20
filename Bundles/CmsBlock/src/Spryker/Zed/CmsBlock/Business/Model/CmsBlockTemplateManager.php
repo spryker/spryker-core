@@ -109,7 +109,7 @@ class CmsBlockTemplateManager implements CmsBlockTemplateManagerInterface
     {
         if (!$this->isTemplateFileExists($path)) {
             throw new CmsBlockTemplateNotFoundException(
-                sprintf('Template file not found in "%s"', $path)
+                sprintf('Template file not found in "%s"', $path),
             );
         }
     }
@@ -169,8 +169,8 @@ class CmsBlockTemplateManager implements CmsBlockTemplateManagerInterface
             throw new CmsBlockTemplatePathExistsException(
                 sprintf(
                     'Tried to create a template with path %s, but it already exists',
-                    $path
-                )
+                    $path,
+                ),
             );
         }
     }

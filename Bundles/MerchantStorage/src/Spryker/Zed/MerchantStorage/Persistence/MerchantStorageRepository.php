@@ -34,7 +34,7 @@ class MerchantStorageRepository extends AbstractRepository implements MerchantSt
         if ($merchantStorageCriteriaTransfer->getFilter()) {
             $merchantStorageQuery = $this->buildQueryFromCriteria(
                 $merchantStorageQuery,
-                $merchantStorageCriteriaTransfer->getFilter()
+                $merchantStorageCriteriaTransfer->getFilter(),
             )->setFormatter(ObjectFormatter::class);
         }
 

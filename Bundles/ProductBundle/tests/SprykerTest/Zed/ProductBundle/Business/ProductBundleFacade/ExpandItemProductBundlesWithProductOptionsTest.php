@@ -58,7 +58,7 @@ class ExpandItemProductBundlesWithProductOptionsTest extends Unit
         // Assert
         $this->assertSame(
             ProductBundleBusinessTester::FAKE_PRODUCT_OPTION_SKU_1,
-            $itemTransfers[2]->getProductBundle()->getProductOptions()->getIterator()->offsetGet(0)->getSku()
+            $itemTransfers[2]->getProductBundle()->getProductOptions()->getIterator()->offsetGet(0)->getSku(),
         );
     }
 }

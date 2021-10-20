@@ -148,7 +148,7 @@ class SessionSpinLockLocker implements SessionLockerInterface
                 $this->getUnlockScript(),
                 1,
                 $lockKey,
-                $token
+                $token,
             );
     }
 

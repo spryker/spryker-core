@@ -58,7 +58,7 @@ class ClauseValidator implements ClauseValidatorInterface
         if ($this->comparatorOperators->isExistingComparator($clauseTransfer) === false) {
             throw new QueryStringException(sprintf(
                 'Could not find value "%s" as comparator operator.',
-                $clauseTransfer->getOperator()
+                $clauseTransfer->getOperator(),
             ));
         }
 
@@ -91,8 +91,8 @@ class ClauseValidator implements ClauseValidatorInterface
             throw new QueryStringException(
                 sprintf(
                     'Invalid "%s" field name. Valid characters (a-z 0-9 . -).',
-                    $clauseTransfer->getField()
-                )
+                    $clauseTransfer->getField(),
+                ),
             );
         }
     }
@@ -117,7 +117,7 @@ class ClauseValidator implements ClauseValidatorInterface
 
         throw new QueryStringException(sprintf(
             'Could not found for field with name "%s".',
-            $clauseTransfer->getField()
+            $clauseTransfer->getField(),
         ));
     }
 }

@@ -62,7 +62,7 @@ class MerchantOmsEventTrigger implements MerchantOmsEventTriggerInterface
 
         $stateMachineProcessTransfer = $this->stateMachineProcessReader
             ->resolveMerchantStateMachineProcess(
-                (new MerchantCriteriaTransfer())->setMerchantReference($merchantOmsTriggerRequestTransfer->getMerchantReference())
+                (new MerchantCriteriaTransfer())->setMerchantReference($merchantOmsTriggerRequestTransfer->getMerchantReference()),
             );
 
         $transitionCount = 0;
@@ -72,7 +72,7 @@ class MerchantOmsEventTrigger implements MerchantOmsEventTriggerInterface
 
             $transitionCount += $this->stateMachineFacade->triggerForNewStateMachineItem(
                 $stateMachineProcessTransfer,
-                $idMerchantOrderItem
+                $idMerchantOrderItem,
             );
         }
 
@@ -100,7 +100,7 @@ class MerchantOmsEventTrigger implements MerchantOmsEventTriggerInterface
 
         $transitionCount = $this->stateMachineFacade->triggerEventForItems(
             $merchantOmsEventName,
-            $stateMachineItemTransfers
+            $stateMachineItemTransfers,
         );
 
         return $transitionCount ?? 0;
@@ -131,14 +131,14 @@ class MerchantOmsEventTrigger implements MerchantOmsEventTriggerInterface
             return $merchantOmsTriggerResponseTransfer->setIsSuccessful(false)
                 ->setMessage(sprintf(
                     'Merchant order item with reference "%s" was not found.',
-                    $merchantOrderItemReference
+                    $merchantOrderItemReference,
                 ));
         }
 
         $transitionedItemsCount = $this->triggerEventForMerchantOrderItems(
             (new MerchantOmsTriggerRequestTransfer())
                 ->setMerchantOmsEventName($merchantOmsTriggerRequestTransfer->getMerchantOmsEventName())
-                ->addMerchantOrderItem($merchantOrderItemTransfer)
+                ->addMerchantOrderItem($merchantOrderItemTransfer),
         );
 
         if (!$transitionedItemsCount) {
@@ -152,7 +152,7 @@ class MerchantOmsEventTrigger implements MerchantOmsEventTriggerInterface
                 ->setMessage(sprintf(
                     'Event "%s" was not successfully triggered for merchant order item with reference "%s".',
                     $merchantOmsEventName,
-                    $merchantOrderItemReference
+                    $merchantOrderItemReference,
                 ));
         }
 

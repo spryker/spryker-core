@@ -169,7 +169,7 @@ class ShipmentFormDataProvider
     {
         $salesItems = $this->shipmentFacade->findSalesOrderItemsIdsBySalesShipmentId(
             $orderTransfer->getIdSalesOrder(),
-            $shipmentTransfer->getIdSalesShipment()
+            $shipmentTransfer->getIdSalesShipment(),
         );
 
         if ($salesItems->count() === 0) {
@@ -230,7 +230,7 @@ class ShipmentFormDataProvider
             $addressTransfer->getAddress1(),
             $addressTransfer->getAddress2(),
             $addressTransfer->getZipCode(),
-            $addressTransfer->getCity()
+            $addressTransfer->getCity(),
         );
     }
 
@@ -311,7 +311,7 @@ class ShipmentFormDataProvider
             $shipmentMethodOptionNameCollection[$idShipmentMethod] = sprintf(
                 static::SHIPMENT_METHODS_OPTIONS_NAMES_PATTERN,
                 $shipmentMethodTransfer->getCarrierName(),
-                $shipmentMethodTransfer->getName()
+                $shipmentMethodTransfer->getName(),
             );
         }
 

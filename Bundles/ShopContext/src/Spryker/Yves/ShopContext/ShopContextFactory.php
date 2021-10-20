@@ -19,7 +19,7 @@ class ShopContextFactory extends AbstractFactory
     public function createShopContextProvider(): ShopContextProviderInterface
     {
         return new ShopContextProvider(
-            $this->getShopContextExpanderPlugins()
+            $this->getShopContextExpanderPlugins(),
         );
     }
 

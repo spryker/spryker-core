@@ -59,7 +59,7 @@ class DataExportConfigurationYamlParser implements DataExportConfigurationParser
         $dataExportConfigurationsTransfer = $this->dataExportConfigurationMapper
             ->mapDataExportConfigurationDataToDataExportConfigurationsTransfer(
                 $configData,
-                new DataExportConfigurationsTransfer()
+                new DataExportConfigurationsTransfer(),
             );
 
         return $this->addDataExportConfigurationHooks($dataExportConfigurationsTransfer);

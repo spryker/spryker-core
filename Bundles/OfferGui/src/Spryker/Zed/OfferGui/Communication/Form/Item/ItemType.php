@@ -483,7 +483,7 @@ class ItemType extends AbstractType
                 if ($value !== null) {
                     return $value * 100;
                 }
-            }
+            },
         );
     }
 

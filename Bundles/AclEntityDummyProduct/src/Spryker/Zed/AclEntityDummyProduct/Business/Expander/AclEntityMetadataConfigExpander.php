@@ -36,8 +36,8 @@ class AclEntityMetadataConfigExpander implements AclEntityMetadataConfigExpander
                 ->setEntityName(SpyProduct::class)
                 ->setParent(
                     (new AclEntityParentMetadataTransfer())
-                        ->setEntityName(SpyProductAbstract::class)
-                )
+                        ->setEntityName(SpyProductAbstract::class),
+                ),
         );
 
         $aclEntityMetadataConfigTransfer->getAclEntityMetadataCollectionOrFail()->addAclEntityMetadata(
@@ -45,7 +45,7 @@ class AclEntityMetadataConfigExpander implements AclEntityMetadataConfigExpander
             (new AclEntityMetadataTransfer())
                 ->setEntityName(SpyStore::class)
                 ->setHasSegmentTable(true)
-                ->setDefaultGlobalOperationMask(AclEntityConstants::OPERATION_MASK_READ)
+                ->setDefaultGlobalOperationMask(AclEntityConstants::OPERATION_MASK_READ),
         );
 
         return $aclEntityMetadataConfigTransfer;
@@ -70,10 +70,10 @@ class AclEntityMetadataConfigExpander implements AclEntityMetadataConfigExpander
                             (new AclEntityParentConnectionMetadataTransfer())
                                 ->setPivotEntityName(SpyProductImageSetToProductImage::class)
                                 ->setReference('fk_product_image')
-                                ->setReferencedColumn('fk_product_image_set')
-                        )
+                                ->setReferencedColumn('fk_product_image_set'),
+                        ),
                 )
-                ->setIsSubEntity(true)
+                ->setIsSubEntity(true),
         );
 
         $aclEntityMetadataConfigTransfer->getAclEntityMetadataCollectionOrFail()->addAclEntityMetadata(
@@ -82,9 +82,9 @@ class AclEntityMetadataConfigExpander implements AclEntityMetadataConfigExpander
                 ->setEntityName(SpyProductLocalizedAttributes::class)
                 ->setParent(
                     (new AclEntityParentMetadataTransfer())
-                        ->setEntityName(SpyProduct::class)
+                        ->setEntityName(SpyProduct::class),
                 )
-                ->setIsSubEntity(true)
+                ->setIsSubEntity(true),
         );
 
         return $aclEntityMetadataConfigTransfer;

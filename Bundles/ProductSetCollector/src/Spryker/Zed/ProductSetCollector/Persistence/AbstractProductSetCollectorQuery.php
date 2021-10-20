@@ -81,22 +81,22 @@ abstract class AbstractProductSetCollectorQuery extends AbstractPropelCollectorQ
             ->addJoin(
                 SpyTouchTableMap::COL_ITEM_ID,
                 SpyProductAbstractSetTableMap::COL_FK_PRODUCT_SET,
-                Criteria::INNER_JOIN
+                Criteria::INNER_JOIN,
             )
             ->addJoin(
                 SpyProductAbstractSetTableMap::COL_FK_PRODUCT_SET,
                 SpyProductSetTableMap::COL_ID_PRODUCT_SET,
-                Criteria::INNER_JOIN
+                Criteria::INNER_JOIN,
             )
             ->addJoin(
                 SpyProductSetTableMap::COL_ID_PRODUCT_SET,
                 SpyProductSetDataTableMap::COL_FK_PRODUCT_SET,
-                Criteria::INNER_JOIN
+                Criteria::INNER_JOIN,
             )
             ->addJoin(
                 SpyProductSetTableMap::COL_ID_PRODUCT_SET,
                 SpyUrlTableMap::COL_FK_RESOURCE_PRODUCT_SET,
-                Criteria::INNER_JOIN
+                Criteria::INNER_JOIN,
             )
             ->add(SpyProductSetDataTableMap::COL_FK_LOCALE, $this->getLocale()->getIdLocale())
             ->add(SpyUrlTableMap::COL_FK_LOCALE, $this->getLocale()->getIdLocale())
@@ -117,9 +117,9 @@ abstract class AbstractProductSetCollectorQuery extends AbstractPropelCollectorQ
                 sprintf(
                     'GROUP_CONCAT(%s ORDER BY %s)',
                     SpyProductAbstractSetTableMap::COL_FK_PRODUCT_ABSTRACT,
-                    SpyProductAbstractSetTableMap::COL_POSITION
+                    SpyProductAbstractSetTableMap::COL_POSITION,
                 ),
-                static::FIELD_ID_PRODUCT_ABSTRACTS
+                static::FIELD_ID_PRODUCT_ABSTRACTS,
             );
     }
 }

@@ -106,7 +106,7 @@ class EditController extends AbstractController
         $idUser = $request->query->getInt(static::PARAM_ID_USER);
 
         return $this->jsonResponse(
-            $this->getFactory()->createAvailableCustomerTable((new UserTransfer())->setIdUser($idUser))->fetchData()
+            $this->getFactory()->createAvailableCustomerTable((new UserTransfer())->setIdUser($idUser))->fetchData(),
         );
     }
 
@@ -120,7 +120,7 @@ class EditController extends AbstractController
         $idUser = $request->query->getInt(static::PARAM_ID_USER);
 
         return $this->jsonResponse(
-            $this->getFactory()->createAssignedCustomerTable((new UserTransfer())->setIdUser($idUser))->fetchData()
+            $this->getFactory()->createAssignedCustomerTable((new UserTransfer())->setIdUser($idUser))->fetchData(),
         );
     }
 }

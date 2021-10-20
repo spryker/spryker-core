@@ -83,7 +83,7 @@ class MerchantRelationshipSalesOrderThresholdBusinessTester extends Actor
                 (new SalesOrderThresholdValueTransfer())
                     ->setSalesOrderThresholdType($salesOrderThresholdTypeTransfer)
                     ->setThreshold($thresholdValue)
-                    ->setFee($fee)
+                    ->setFee($fee),
             );
     }
 

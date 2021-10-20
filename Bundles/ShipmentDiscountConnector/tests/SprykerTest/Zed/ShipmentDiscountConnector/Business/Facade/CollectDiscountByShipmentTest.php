@@ -64,7 +64,7 @@ class CollectDiscountByShipmentTest extends Test
             $this->assertEquals(
                 $expectedValues[$i],
                 $discountableItemTransfer->getUnitPrice(),
-                sprintf('The actual discountable item expense\'s value is invalid (iteration #%d).', $i)
+                sprintf('The actual discountable item expense\'s value is invalid (iteration #%d).', $i),
             );
         }
     }
@@ -89,7 +89,7 @@ class CollectDiscountByShipmentTest extends Test
             $this->assertEquals(
                 $expectedValues[$i],
                 $discountableItemTransfer->getUnitPrice(),
-                sprintf('The actual discountable item expense\'s value is invalid (iteration #%d).', $i)
+                sprintf('The actual discountable item expense\'s value is invalid (iteration #%d).', $i),
             );
         }
     }
@@ -114,7 +114,7 @@ class CollectDiscountByShipmentTest extends Test
             $this->assertEquals(
                 $expectedValues[$i],
                 $discountableItemTransfer->getUnitPrice(),
-                sprintf('The actual discountable item expense\'s value is invalid (iteration #%d).', $i)
+                sprintf('The actual discountable item expense\'s value is invalid (iteration #%d).', $i),
             );
         }
     }
@@ -165,7 +165,7 @@ class CollectDiscountByShipmentTest extends Test
                 (new ExpenseBuilder([
                     ExpenseTransfer::TYPE => ShipmentDiscountConnectorConfig::SHIPMENT_EXPENSE_TYPE,
                     ExpenseTransfer::UNIT_GROSS_PRICE => 100,
-                ]))
+                ])),
             )
             ->build();
 

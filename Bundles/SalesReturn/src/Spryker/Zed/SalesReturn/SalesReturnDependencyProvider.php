@@ -168,7 +168,7 @@ class SalesReturnDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::SERVICE_UTIL_DATE_TIME, function (Container $container) {
             return new SalesReturnToUtilDateTimeServiceBridge(
-                $container->getLocator()->utilDateTime()->service()
+                $container->getLocator()->utilDateTime()->service(),
             );
         });
 

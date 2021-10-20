@@ -52,7 +52,7 @@ class ProductConcreteIsActiveChecker implements ProductConcreteIsActiveCheckerIn
             ->setIsSuccess(false)
             ->addMessage(
                 (new MessageTransfer())
-                    ->setValue(static::ERROR_SHOPPING_LIST_ITEM_PRODUCT_NOT_ACTIVE)
+                    ->setValue(static::ERROR_SHOPPING_LIST_ITEM_PRODUCT_NOT_ACTIVE),
             );
     }
 }

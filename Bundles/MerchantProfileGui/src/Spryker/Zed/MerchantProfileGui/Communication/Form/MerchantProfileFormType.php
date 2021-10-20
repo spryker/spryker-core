@@ -474,7 +474,7 @@ class MerchantProfileFormType extends AbstractType
         $builder->add(
             'addressCollection',
             MerchantProfileAddressFormType::class,
-            $merchantProfileAddressFormDataProvider->getOptions()
+            $merchantProfileAddressFormDataProvider->getOptions(),
         );
 
         return $this;

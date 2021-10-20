@@ -107,7 +107,7 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
 
         $salesOrderItemQuery = $this->buildQueryFromCriteria(
             $salesOrderItemQuery,
-            $orderItemFilterTransfer->getFilter()
+            $orderItemFilterTransfer->getFilter(),
         );
 
         $salesOrderItemQuery->setFormatter(ModelCriteria::FORMAT_OBJECT);
@@ -322,12 +322,12 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
         if ($filterTransfer) {
             if ($filterTransfer->getOrderBy() && isset(static::SORT_KEYS_MAP[$filterTransfer->getOrderBy()])) {
                 $filterTransfer->setOrderBy(
-                    isset(static::SORT_KEYS_MAP[$filterTransfer->getOrderBy()]) ? static::SORT_KEYS_MAP[$filterTransfer->getOrderBy()] : null
+                    isset(static::SORT_KEYS_MAP[$filterTransfer->getOrderBy()]) ? static::SORT_KEYS_MAP[$filterTransfer->getOrderBy()] : null,
                 );
             }
 
             $orderListQuery->mergeWith(
-                (new PropelFilterCriteria($filterTransfer))->toCriteria()
+                (new PropelFilterCriteria($filterTransfer))->toCriteria(),
             );
         }
 
@@ -465,7 +465,7 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
         $salesOrderQuery = $this->setOrderFilters($salesOrderQuery, $orderFilterTransfer);
         $salesOrderQuery = $this->buildQueryFromCriteria(
             $salesOrderQuery,
-            $orderFilterTransfer->getFilter()
+            $orderFilterTransfer->getFilter(),
         );
         $salesOrderQuery->setFormatter(ModelCriteria::FORMAT_OBJECT);
         $orderEntity = $salesOrderQuery->findOne();
@@ -474,8 +474,8 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
             throw new InvalidSalesOrderException(
                 sprintf(
                     'Order could not be found for ID %s',
-                    $orderFilterTransfer->getSalesOrderId()
-                )
+                    $orderFilterTransfer->getSalesOrderId(),
+                ),
             );
         }
 

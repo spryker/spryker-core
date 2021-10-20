@@ -60,7 +60,7 @@ class CalculationFacadeTest extends Unit
         $calculationFacade = $this->createCalculationFacade(
             [
                 new PriceCalculatorPlugin(),
-            ]
+            ],
         );
 
         $quoteTransfer = new QuoteTransfer();
@@ -116,7 +116,7 @@ class CalculationFacadeTest extends Unit
         $calculationFacade = $this->createCalculationFacade(
             [
                 new ItemProductOptionPriceAggregatorPlugin(),
-            ]
+            ],
         );
 
         $itemTransfer = new ItemTransfer();
@@ -146,7 +146,7 @@ class CalculationFacadeTest extends Unit
         $calculationFacade = $this->createCalculationFacade(
             [
                 new DiscountAmountAggregatorForGenericAmountPlugin(),
-            ]
+            ],
         );
 
         $quoteTransfer = new QuoteTransfer();
@@ -215,7 +215,7 @@ class CalculationFacadeTest extends Unit
         $calculationFacade = $this->createCalculationFacade(
             [
                 new ItemDiscountAmountFullAggregatorPlugin(),
-            ]
+            ],
         );
 
         $quoteTransfer = new QuoteTransfer();
@@ -245,7 +245,7 @@ class CalculationFacadeTest extends Unit
         $calculationFacade = $this->createCalculationFacade(
             [
                 new ItemTaxAmountFullAggregatorPlugin(),
-            ]
+            ],
         );
 
         $quoteTransfer = new QuoteTransfer();
@@ -274,7 +274,7 @@ class CalculationFacadeTest extends Unit
         $calculationFacade = $this->createCalculationFacade(
             [
                 new ItemSubtotalAggregatorPlugin(),
-            ]
+            ],
         );
 
         $quoteTransfer = new QuoteTransfer();
@@ -310,7 +310,7 @@ class CalculationFacadeTest extends Unit
         $calculationFacade = $this->createCalculationFacade(
             [
                 new PriceToPayAggregatorPlugin(),
-            ]
+            ],
         );
 
         $quoteTransfer = new QuoteTransfer();
@@ -336,7 +336,7 @@ class CalculationFacadeTest extends Unit
         $calculationFacade = $this->createCalculationFacade(
             [
                 new SubtotalCalculatorPlugin(),
-            ]
+            ],
         );
 
         $quoteTransfer = new QuoteTransfer();
@@ -366,7 +366,7 @@ class CalculationFacadeTest extends Unit
         $calculationFacade = $this->createCalculationFacade(
             [
                 new ExpenseTotalCalculatorPlugin(),
-            ]
+            ],
         );
 
         $quoteTransfer = new QuoteTransfer();
@@ -396,7 +396,7 @@ class CalculationFacadeTest extends Unit
         $calculationFacade = $this->createCalculationFacade(
             [
                 new DiscountTotalCalculatorPlugin(),
-            ]
+            ],
         );
 
         $quoteTransfer = new QuoteTransfer();
@@ -430,7 +430,7 @@ class CalculationFacadeTest extends Unit
         $calculationFacade = $this->createCalculationFacade(
             [
                 new TaxTotalCalculatorPlugin(),
-            ]
+            ],
         );
 
         $quoteTransfer = new QuoteTransfer();
@@ -465,7 +465,7 @@ class CalculationFacadeTest extends Unit
         $calculationFacade = $this->createCalculationFacade(
             [
                 new RefundTotalCalculatorPlugin(),
-            ]
+            ],
         );
 
         $quoteTransfer = new QuoteTransfer();
@@ -505,7 +505,7 @@ class CalculationFacadeTest extends Unit
         $calculationFacade = $this->createCalculationFacade(
             [
                 new RefundableAmountCalculatorPlugin(),
-            ]
+            ],
         );
 
         $quoteTransfer = new QuoteTransfer();
@@ -538,7 +538,7 @@ class CalculationFacadeTest extends Unit
         $calculationFacade = $this->createCalculationFacade(
             [
                 new GrandTotalCalculatorPlugin(),
-            ]
+            ],
         );
 
         $quoteTransfer = new QuoteTransfer();
@@ -570,7 +570,7 @@ class CalculationFacadeTest extends Unit
         $calculationFacade = $this->createCalculationFacade(
             [
                 new InitialGrandTotalCalculatorPlugin(),
-            ]
+            ],
         );
 
         $quoteTransfer = new QuoteTransfer();

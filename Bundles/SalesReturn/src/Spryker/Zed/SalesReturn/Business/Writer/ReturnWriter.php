@@ -127,7 +127,7 @@ class ReturnWriter implements ReturnWriterInterface
         $this->omsEventTriggerer->triggerOrderItemsReturnEvent($returnTransfer);
 
         return $this->returnReader->getReturn(
-            (new ReturnFilterTransfer())->setReturnReference($returnTransfer->getReturnReference())
+            (new ReturnFilterTransfer())->setReturnReference($returnTransfer->getReturnReference()),
         );
     }
 
@@ -272,7 +272,7 @@ class ReturnWriter implements ReturnWriterInterface
     {
         $orderItemFilterTransfer = $this->mapReturnCreateRequestTransferToOrderItemFilterTransfer(
             $returnCreateRequestTransfer,
-            new OrderItemFilterTransfer()
+            new OrderItemFilterTransfer(),
         );
 
         return $this->returnReader->getOrderItems($orderItemFilterTransfer);
@@ -357,7 +357,7 @@ class ReturnWriter implements ReturnWriterInterface
 
             if (isset($indexedItemsById[$idSalesOrderItem]) || isset($indexedItemsByUuid[$orderItemUuid])) {
                 $returnItemTransfer->setOrderItem(
-                    $indexedItemsById[$idSalesOrderItem] ?? $indexedItemsByUuid[$orderItemUuid]
+                    $indexedItemsById[$idSalesOrderItem] ?? $indexedItemsByUuid[$orderItemUuid],
                 );
             }
         }

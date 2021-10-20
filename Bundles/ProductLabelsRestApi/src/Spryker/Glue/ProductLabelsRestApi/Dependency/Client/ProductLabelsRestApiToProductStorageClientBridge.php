@@ -49,7 +49,7 @@ class ProductLabelsRestApiToProductStorageClientBridge implements ProductLabelsR
         return $this->productStorageClient->getBulkProductConcreteStorageDataByMapping(
             $mappingType,
             $identifiers,
-            $localeName
+            $localeName,
         );
     }
 }

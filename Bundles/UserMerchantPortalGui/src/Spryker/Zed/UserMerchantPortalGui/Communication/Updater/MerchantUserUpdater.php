@@ -57,7 +57,7 @@ class MerchantUserUpdater implements MerchantUserUpdaterInterface
     {
         $currentMerchantUserTransfer = $this->updateMerchantUserPassword(
             $this->merchantUserFacade->getCurrentMerchantUser(),
-            $newPassword
+            $newPassword,
         );
 
         $this->merchantUserFacade->setCurrentMerchantUser($currentMerchantUserTransfer);

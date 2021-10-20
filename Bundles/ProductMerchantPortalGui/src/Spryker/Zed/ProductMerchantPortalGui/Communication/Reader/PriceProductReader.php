@@ -65,7 +65,7 @@ class PriceProductReader implements PriceProductReaderInterface
             $priceProductCriteriaTransfer->setOnlyConcretePrices(true);
             $priceProductCriteriaTransfer->setPriceDimension(
                 (new PriceProductDimensionTransfer())
-                ->setType(PriceProductConfig::PRICE_DIMENSION_DEFAULT)
+                ->setType(PriceProductConfig::PRICE_DIMENSION_DEFAULT),
             );
 
             $idProductConcrete = $priceProductCriteriaTransfer->getIdProductConcreteOrFail();
@@ -75,11 +75,11 @@ class PriceProductReader implements PriceProductReaderInterface
                 $priceProductTransfers = $this->priceProductFacade->findProductConcretePricesWithoutPriceExtraction(
                     $idProductConcrete,
                     $idProductAbstract,
-                    $priceProductCriteriaTransfer
+                    $priceProductCriteriaTransfer,
                 );
                 $priceProductTransfers = array_merge(
                     $priceProductTransfers,
-                    $this->priceProductVolumeFacade->extractPriceProductVolumeTransfersFromArray($priceProductTransfers)
+                    $this->priceProductVolumeFacade->extractPriceProductVolumeTransfersFromArray($priceProductTransfers),
                 );
             }
         }
@@ -87,7 +87,7 @@ class PriceProductReader implements PriceProductReaderInterface
         if ($priceProductCriteriaTransfer->getIdProductAbstract() !== null) {
             $priceProductTransfers = $this->priceProductFacade->findProductAbstractPrices(
                 $priceProductCriteriaTransfer->getIdProductAbstractOrFail(),
-                $priceProductCriteriaTransfer
+                $priceProductCriteriaTransfer,
             );
         }
 
@@ -134,7 +134,7 @@ class PriceProductReader implements PriceProductReaderInterface
 
         return in_array(
             $moneyValueTransfer->getFkCurrency(),
-            $priceProductTableCriteriaTransfer->getFilterInCurrencies()
+            $priceProductTableCriteriaTransfer->getFilterInCurrencies(),
         );
     }
 
@@ -154,7 +154,7 @@ class PriceProductReader implements PriceProductReaderInterface
 
         return in_array(
             $moneyValueTransfer->getFkStore(),
-            $priceProductTableCriteriaTransfer->getFilterInStores()
+            $priceProductTableCriteriaTransfer->getFilterInStores(),
         );
     }
 }

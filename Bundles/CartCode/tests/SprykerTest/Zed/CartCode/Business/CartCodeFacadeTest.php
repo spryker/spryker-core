@@ -64,14 +64,14 @@ class CartCodeFacadeTest extends Unit
         $cartCodeResponseTransfer = $this->tester->getFacade()->addCartCode(
             (new CartCodeRequestTransfer())
                 ->setCartCode(static::CODE)
-                ->setQuote($quoteTransfer)
+                ->setQuote($quoteTransfer),
         );
 
         // Assert
         $this->assertSame(1, $cartCodeResponseTransfer->getQuote()->getVoucherDiscounts()->count());
         $this->assertEquals(
             static::CODE,
-            $cartCodeResponseTransfer->getQuote()->getVoucherDiscounts()->getIterator()->current()->getVoucherCode()
+            $cartCodeResponseTransfer->getQuote()->getVoucherDiscounts()->getIterator()->current()->getVoucherCode(),
         );
     }
 
@@ -87,14 +87,14 @@ class CartCodeFacadeTest extends Unit
         $cartCodeResponseTransfer = $this->tester->getFacade()->addCartCode(
             (new CartCodeRequestTransfer())
                 ->setCartCode(static::CODE)
-                ->setQuote($quoteTransfer)
+                ->setQuote($quoteTransfer),
         );
 
         // Assert
         $this->assertSame(1, $cartCodeResponseTransfer->getQuote()->getGiftCards()->count());
         $this->assertEquals(
             static::CODE,
-            $cartCodeResponseTransfer->getQuote()->getGiftCards()->getIterator()->current()->getCode()
+            $cartCodeResponseTransfer->getQuote()->getGiftCards()->getIterator()->current()->getCode(),
         );
     }
 
@@ -114,7 +114,7 @@ class CartCodeFacadeTest extends Unit
         $cartCodeResponseTransfer = $this->tester->getFacade()->addCartCode(
             (new CartCodeRequestTransfer())
                 ->setCartCode(static::CODE)
-                ->setQuote($quoteTransfer)
+                ->setQuote($quoteTransfer),
         );
 
         // Assert
@@ -133,7 +133,7 @@ class CartCodeFacadeTest extends Unit
         $cartCodeResponseTransfer = $this->tester->getFacade()->addCartCode(
             (new CartCodeRequestTransfer())
                 ->setCartCode(static::CODE)
-                ->setQuote($quoteTransfer)
+                ->setQuote($quoteTransfer),
         );
 
         // Assert
@@ -152,7 +152,7 @@ class CartCodeFacadeTest extends Unit
         $cartCodeResponseTransfer = $this->tester->getFacade()->removeCartCode(
             (new CartCodeRequestTransfer())
                 ->setCartCode(static::CODE)
-                ->setQuote($quoteTransfer)
+                ->setQuote($quoteTransfer),
         );
 
         // Assert
@@ -171,7 +171,7 @@ class CartCodeFacadeTest extends Unit
         $cartCodeResponseTransfer = $this->tester->getFacade()->removeCartCode(
             (new CartCodeRequestTransfer())
                 ->setCartCode(static::CODE)
-                ->setQuote($quoteTransfer)
+                ->setQuote($quoteTransfer),
         );
 
         // Assert
@@ -194,7 +194,7 @@ class CartCodeFacadeTest extends Unit
         $cartCodeResponseTransfer = $this->tester->getFacade()->removeCartCode(
             (new CartCodeRequestTransfer())
                 ->setCartCode(static::CODE)
-                ->setQuote($quoteTransfer)
+                ->setQuote($quoteTransfer),
         );
 
         // Assert
@@ -213,7 +213,7 @@ class CartCodeFacadeTest extends Unit
         $cartCodeResponseTransfer = $this->tester->getFacade()->removeCartCode(
             (new CartCodeRequestTransfer())
                 ->setCartCode(static::CODE)
-                ->setQuote($quoteTransfer)
+                ->setQuote($quoteTransfer),
         );
 
         // Assert
@@ -230,7 +230,7 @@ class CartCodeFacadeTest extends Unit
 
         // Act
         $cartCodeResponseTransfer = $this->tester->getFacade()->clearCartCodes(
-            (new CartCodeRequestTransfer())->setQuote($quoteTransfer)
+            (new CartCodeRequestTransfer())->setQuote($quoteTransfer),
         );
 
         // Assert
@@ -247,7 +247,7 @@ class CartCodeFacadeTest extends Unit
 
         // Act
         $cartCodeResponseTransfer = $this->tester->getFacade()->clearCartCodes(
-            (new CartCodeRequestTransfer())->setQuote($quoteTransfer)
+            (new CartCodeRequestTransfer())->setQuote($quoteTransfer),
         );
 
         // Assert
@@ -264,7 +264,7 @@ class CartCodeFacadeTest extends Unit
 
         // Act
         $cartCodeResponseTransfer = $this->tester->getFacade()->clearCartCodes(
-            (new CartCodeRequestTransfer())->setQuote($quoteTransfer)
+            (new CartCodeRequestTransfer())->setQuote($quoteTransfer),
         );
 
         // Assert

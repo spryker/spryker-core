@@ -43,7 +43,7 @@ class UrlRedirectValidator implements UrlRedirectValidatorInterface
                 ->setError(sprintf(
                     'Redirecting "%s" to "%s" resolves in a URL redirect loop.',
                     $urlRedirectTransfer->getSource()->getUrl(),
-                    $urlRedirectTransfer->getToUrl()
+                    $urlRedirectTransfer->getToUrl(),
                 ));
         }
 

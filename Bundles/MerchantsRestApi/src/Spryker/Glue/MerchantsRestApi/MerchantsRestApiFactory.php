@@ -48,7 +48,7 @@ class MerchantsRestApiFactory extends AbstractFactory
             $this->getMerchantStorageClient(),
             $this->createMerchantTranslator(),
             $this->createMerchantRestResponseBuilder(),
-            $this->getMerchantSearchClient()
+            $this->getMerchantSearchClient(),
         );
     }
 
@@ -59,7 +59,7 @@ class MerchantsRestApiFactory extends AbstractFactory
     {
         return new MerchantAddressReader(
             $this->getMerchantStorageClient(),
-            $this->createMerchantAddressRestResponseBuilder()
+            $this->createMerchantAddressRestResponseBuilder(),
         );
     }
 
@@ -94,7 +94,7 @@ class MerchantsRestApiFactory extends AbstractFactory
     {
         return new MerchantRestResponseBuilder(
             $this->getResourceBuilder(),
-            $this->createMerchantMapper()
+            $this->createMerchantMapper(),
         );
     }
 
@@ -105,7 +105,7 @@ class MerchantsRestApiFactory extends AbstractFactory
     {
         return new MerchantAddressRestResponseBuilder(
             $this->getResourceBuilder(),
-            $this->createMerchantAddressMapper()
+            $this->createMerchantAddressMapper(),
         );
     }
 
@@ -123,7 +123,7 @@ class MerchantsRestApiFactory extends AbstractFactory
     public function createMerchantMapper(): MerchantMapperInterface
     {
         return new MerchantMapper(
-            $this->getMerchantRestAttributesMapperPlugins()
+            $this->getMerchantRestAttributesMapperPlugins(),
         );
     }
 

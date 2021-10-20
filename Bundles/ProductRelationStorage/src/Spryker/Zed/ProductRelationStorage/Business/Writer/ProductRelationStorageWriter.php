@@ -241,7 +241,7 @@ class ProductRelationStorageWriter implements ProductRelationStorageWriterInterf
 
         $this->productRelationStorageEntityManager->saveProductAbstractRelationStorageEntity(
             $idProductAbstract,
-            $productAbstractRelationStorageTransfer
+            $productAbstractRelationStorageTransfer,
         );
     }
 

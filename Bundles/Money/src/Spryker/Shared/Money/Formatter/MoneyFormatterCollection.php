@@ -55,8 +55,8 @@ class MoneyFormatterCollection implements MoneyFormatterCollectionInterface
         throw new FormatterNotFoundException(
             sprintf(
                 'Could not find a formatter by type "%s". Maybe type is misspelled or type was not added?',
-                $type
-            )
+                $type,
+            ),
         );
     }
 }

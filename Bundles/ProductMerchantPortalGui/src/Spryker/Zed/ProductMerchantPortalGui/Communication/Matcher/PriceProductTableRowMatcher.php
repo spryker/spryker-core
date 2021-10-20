@@ -126,7 +126,7 @@ class PriceProductTableRowMatcher implements PriceProductTableRowMatcherInterfac
         $volumePriceProductTransfer = $this->getVolumePriceProductTransfer(
             $initialDataRow,
             $priceProductTransfer,
-            $propertyPath
+            $propertyPath,
         );
 
         if ($volumePriceProductTransfer !== null) {
@@ -163,7 +163,7 @@ class PriceProductTableRowMatcher implements PriceProductTableRowMatcherInterfac
         $volumePriceProductTransfer = $this->getVolumePriceProductTransfer(
             $initialDataRow,
             $priceProductTransfer,
-            $propertyPath
+            $propertyPath,
         );
 
         if ($volumePriceProductTransfer !== null) {
@@ -192,7 +192,7 @@ class PriceProductTableRowMatcher implements PriceProductTableRowMatcherInterfac
         $volumePriceProductTransfer = $this->getVolumePriceProductTransfer(
             $initialDataRow,
             $priceProductTransfer,
-            $propertyPath
+            $propertyPath,
         );
 
         if ($volumePriceProductTransfer !== null) {

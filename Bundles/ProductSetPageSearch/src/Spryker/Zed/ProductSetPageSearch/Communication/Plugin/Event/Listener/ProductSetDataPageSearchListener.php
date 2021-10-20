@@ -35,7 +35,7 @@ class ProductSetDataPageSearchListener extends AbstractPlugin implements EventBu
         $this->preventTransaction();
         $productSetIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferForeignKeys(
             $eventEntityTransfers,
-            SpyProductSetDataTableMap::COL_FK_PRODUCT_SET
+            SpyProductSetDataTableMap::COL_FK_PRODUCT_SET,
         );
 
         $this->getFacade()->publish($productSetIds);

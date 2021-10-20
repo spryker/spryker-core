@@ -108,12 +108,12 @@ class RuleQueryCreator implements RuleQueryCreatorInterface
             ->addJoin(
                 SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT,
                 SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT,
-                Criteria::LEFT_JOIN
+                Criteria::LEFT_JOIN,
             )
             ->addJoin(
                 SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT,
                 SpyProductCategoryTableMap::COL_FK_PRODUCT_ABSTRACT,
-                Criteria::LEFT_JOIN
+                Criteria::LEFT_JOIN,
             )
             ->addJoin(
                 [
@@ -124,7 +124,7 @@ class RuleQueryCreator implements RuleQueryCreatorInterface
                     SpyProductAbstractLocalizedAttributesTableMap::COL_FK_PRODUCT_ABSTRACT,
                     $idLocale,
                 ],
-                Criteria::LEFT_JOIN
+                Criteria::LEFT_JOIN,
             )
             ->addJoin(
                 [
@@ -135,7 +135,7 @@ class RuleQueryCreator implements RuleQueryCreatorInterface
                     SpyProductLocalizedAttributesTableMap::COL_FK_PRODUCT,
                     $idLocale,
                 ],
-                Criteria::LEFT_JOIN
+                Criteria::LEFT_JOIN,
             )
             ->addJoin(
                 [
@@ -146,12 +146,12 @@ class RuleQueryCreator implements RuleQueryCreatorInterface
                     SpyCategoryAttributeTableMap::COL_FK_CATEGORY,
                     $idLocale,
                 ],
-                Criteria::LEFT_JOIN
+                Criteria::LEFT_JOIN,
             )
             ->groupByIdProductAbstract()
             ->withColumn(
                 'GROUP_CONCAT(DISTINCT ' . SpyCategoryAttributeTableMap::COL_NAME . ')',
-                static::COL_CATEGORY_NAME
+                static::COL_CATEGORY_NAME,
             );
 
         return $this->filterByProductAbstract($query, $dataProviderTransfer);

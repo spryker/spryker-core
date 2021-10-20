@@ -149,17 +149,17 @@ class ProductOfferPriceGuiTableDataProvider extends AbstractGuiTableDataProvider
         $priceProductOfferTableViewCollectionTransfer = $this->priceProductOfferTableDataMapper
             ->mapPriceProductTransfersToPriceProductOfferTableViewCollectionTransfer(
                 $priceProductTransfers,
-                new PriceProductOfferTableViewCollectionTransfer()
+                new PriceProductOfferTableViewCollectionTransfer(),
             );
 
         $this->priceProductOfferTableViewSorter->sortPriceProductOfferTableViews(
             $priceProductOfferTableViewCollectionTransfer,
-            $criteriaTransfer
+            $criteriaTransfer,
         );
 
         $this->updatePaginationTransfer(
             $priceProductOfferTableViewCollectionTransfer,
-            $criteriaTransfer
+            $criteriaTransfer,
         );
 
         $this->applyPagination($priceProductOfferTableViewCollectionTransfer);
@@ -204,11 +204,11 @@ class ProductOfferPriceGuiTableDataProvider extends AbstractGuiTableDataProvider
         $priceProductOfferTableViewsOnCurrentPage = array_slice(
             $priceProductOfferTableViews,
             $positionStart,
-            $paginationTransfer->getMaxPerPage()
+            $paginationTransfer->getMaxPerPage(),
         );
 
         $priceProductOfferTableViewCollectionTransfer->setPriceProductOfferTableViews(
-            new ArrayObject($priceProductOfferTableViewsOnCurrentPage)
+            new ArrayObject($priceProductOfferTableViewsOnCurrentPage),
         );
 
         return $priceProductOfferTableViewCollectionTransfer;

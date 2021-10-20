@@ -166,7 +166,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
 
         $productOptionValueQuery = $this->applyProductOptionCriteriaFilter(
             $productOptionCriteriaTransfer,
-            $productOptionValueQuery
+            $productOptionValueQuery,
         );
 
         return $productOptionValueQuery;
@@ -308,42 +308,42 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
             ->addJoin(
                 SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT,
                 SpyProductAbstractLocalizedAttributesTableMap::COL_FK_PRODUCT_ABSTRACT,
-                Criteria::INNER_JOIN
+                Criteria::INNER_JOIN,
             )
             ->addJoin(
                 SpyProductAbstractLocalizedAttributesTableMap::COL_FK_LOCALE,
                 SpyLocaleTableMap::COL_ID_LOCALE,
-                Criteria::INNER_JOIN
+                Criteria::INNER_JOIN,
             )
             ->addAnd(
                 SpyLocaleTableMap::COL_ID_LOCALE,
                 $localeTransfer->getIdLocale(),
-                Criteria::EQUAL
+                Criteria::EQUAL,
             )
             ->addAnd(
                 SpyLocaleTableMap::COL_IS_ACTIVE,
                 true,
-                Criteria::EQUAL
+                Criteria::EQUAL,
             )
             ->withColumn(
                 SpyProductAbstractLocalizedAttributesTableMap::COL_NAME,
-                'name'
+                'name',
             )
             ->withColumn(
                 SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT,
-                'id_product_abstract'
+                'id_product_abstract',
             )
             ->withColumn(
                 SpyProductAbstractTableMap::COL_ATTRIBUTES,
-                'abstract_attributes'
+                'abstract_attributes',
             )
             ->withColumn(
                 SpyProductAbstractLocalizedAttributesTableMap::COL_ATTRIBUTES,
-                'abstract_localized_attributes'
+                'abstract_localized_attributes',
             )
             ->withColumn(
                 SpyProductAbstractTableMap::COL_SKU,
-                'sku'
+                'sku',
             )
             ->filterByFkProductOptionGroup($idProductOptionGroup);
     }
@@ -366,12 +366,12 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
         $query->addJoin(
             [SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT, $idProductOptionGroup],
             [SpyProductAbstractProductOptionGroupTableMap::COL_FK_PRODUCT_ABSTRACT, SpyProductAbstractProductOptionGroupTableMap::COL_FK_PRODUCT_OPTION_GROUP],
-            Criteria::LEFT_JOIN
+            Criteria::LEFT_JOIN,
         )
             ->addAnd(
                 SpyProductAbstractProductOptionGroupTableMap::COL_FK_PRODUCT_OPTION_GROUP,
                 null,
-                Criteria::ISNULL
+                Criteria::ISNULL,
             );
 
         return $query;
@@ -393,34 +393,34 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
         $query->addJoin(
             SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT,
             SpyProductAbstractLocalizedAttributesTableMap::COL_FK_PRODUCT_ABSTRACT,
-            Criteria::INNER_JOIN
+            Criteria::INNER_JOIN,
         )
             ->addJoin(
                 SpyProductAbstractLocalizedAttributesTableMap::COL_FK_LOCALE,
                 SpyLocaleTableMap::COL_ID_LOCALE,
-                Criteria::INNER_JOIN
+                Criteria::INNER_JOIN,
             )
             ->addAnd(
                 SpyLocaleTableMap::COL_ID_LOCALE,
                 $localeTransfer->getIdLocale(),
-                Criteria::EQUAL
+                Criteria::EQUAL,
             )
             ->addAnd(
                 SpyLocaleTableMap::COL_IS_ACTIVE,
                 true,
-                Criteria::EQUAL
+                Criteria::EQUAL,
             )
             ->withColumn(
                 SpyProductAbstractLocalizedAttributesTableMap::COL_NAME,
-                'name'
+                'name',
             )
             ->withColumn(
                 SpyProductAbstractTableMap::COL_ATTRIBUTES,
-                'abstract_attributes'
+                'abstract_attributes',
             )
             ->withColumn(
                 SpyProductAbstractLocalizedAttributesTableMap::COL_ATTRIBUTES,
-                'abstract_localized_attributes'
+                'abstract_localized_attributes',
             );
 
         $query->groupByAttributes();
@@ -536,16 +536,16 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     ): SpyProductOptionValueQuery {
         $productOptionValueQuery = $this->filterProductOptionGroupByActiveField(
             $productOptionCriteriaTransfer,
-            $productOptionValueQuery
+            $productOptionValueQuery,
         );
 
         $productOptionValueQuery = $this->filterProductOptionGroupByProductConcreteSku(
             $productOptionCriteriaTransfer,
-            $productOptionValueQuery
+            $productOptionValueQuery,
         );
 
         return $productOptionValueQuery->filterByIdProductOptionValue_In(
-            $productOptionCriteriaTransfer->getProductOptionIds()
+            $productOptionCriteriaTransfer->getProductOptionIds(),
         );
     }
 

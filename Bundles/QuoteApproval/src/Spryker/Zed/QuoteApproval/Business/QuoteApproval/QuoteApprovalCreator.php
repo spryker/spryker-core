@@ -114,12 +114,12 @@ class QuoteApprovalCreator implements QuoteApprovalCreatorInterface
 
         $quoteApprovalTransfer = $this->executeQuoteApprovalCreation(
             $quoteApprovalResponseTransfer,
-            $quoteApprovalRequestTransfer
+            $quoteApprovalRequestTransfer,
         );
 
         return $this->createSuccessfulQuoteApprovalResponseTransfer($quoteApprovalTransfer)
             ->setQuote(
-                $this->expandQuoteWithQuoteApprovals($quoteApprovalResponseTransfer->getQuote())
+                $this->expandQuoteWithQuoteApprovals($quoteApprovalResponseTransfer->getQuote()),
             );
     }
 
@@ -137,7 +137,7 @@ class QuoteApprovalCreator implements QuoteApprovalCreatorInterface
 
         $quoteApprovalTransfer = $this->createQuoteApprovalTransfer(
             $quoteTransfer->getIdQuote(),
-            $quoteApprovalRequestTransfer->getApproverCompanyUserId()
+            $quoteApprovalRequestTransfer->getApproverCompanyUserId(),
         );
 
         $quoteApprovalTransfer = $this->quoteApprovalEntityManager->createQuoteApproval($quoteApprovalTransfer);
@@ -166,7 +166,7 @@ class QuoteApprovalCreator implements QuoteApprovalCreatorInterface
             ->addShareDetail(
                 (new ShareDetailTransfer())
                     ->setIdCompanyUser($quoteApprovalTransfer->getApproverCompanyUserId())
-                    ->setQuotePermissionGroup($quotePermissionGroup)
+                    ->setQuotePermissionGroup($quotePermissionGroup),
             );
 
         $this->sharedCartFacade->addQuoteCompanyUser($shareCartRequestTransfer);
@@ -218,8 +218,8 @@ class QuoteApprovalCreator implements QuoteApprovalCreatorInterface
                     [
                         '%first_name%' => $approverCustomerTransfer->getFirstName(),
                         '%last_name%' => $approverCustomerTransfer->getLastName(),
-                    ]
-                )
+                    ],
+                ),
             );
     }
 
@@ -244,7 +244,7 @@ class QuoteApprovalCreator implements QuoteApprovalCreatorInterface
     protected function expandQuoteWithQuoteApprovals(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
         return $quoteTransfer->setQuoteApprovals(
-            new ArrayObject($this->quoteApprovalRepository->getQuoteApprovalsByIdQuote($quoteTransfer->getIdQuote()))
+            new ArrayObject($this->quoteApprovalRepository->getQuoteApprovalsByIdQuote($quoteTransfer->getIdQuote())),
         );
     }
 

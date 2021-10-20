@@ -111,7 +111,7 @@ class VoucherValidator implements VoucherValidatorInterface
         if (!$this->isValidNumberOfUses($discountVoucherEntity)) {
             $this->addErrorMessage(
                 static::REASON_VOUCHER_CODE_LIMIT_REACHED,
-                ['%code%' => $discountVoucherEntity->getCode()]
+                ['%code%' => $discountVoucherEntity->getCode()],
             );
 
             return false;

@@ -63,7 +63,7 @@ class QuoteValidator implements QuoteValidatorInterface
             return $this->addValidationError(
                 $quoteValidationResponseTransfer,
                 static::MESSAGE_PRICE_MODE_DATA_IS_INCORRECT,
-                [static::GLOSSARY_KEY_PRICE_MODE => $priceMode]
+                [static::GLOSSARY_KEY_PRICE_MODE => $priceMode],
             );
         }
 

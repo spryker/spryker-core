@@ -170,7 +170,7 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
             ></database>',
             $schemaDatabase,
             $schemaNamespace,
-            $schemaPackage
+            $schemaPackage,
         ));
     }
 
@@ -377,7 +377,7 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
         if (empty($elementName) || is_array($elementName)) {
             $elementName = sprintf(
                 static::PATTERN_ANONYMOUS_ELEMENT,
-                $this->utilTextService->generateRandomString(static::RANDOM_STRING_LENGTH)
+                $this->utilTextService->generateRandomString(static::RANDOM_STRING_LENGTH),
             );
         }
 

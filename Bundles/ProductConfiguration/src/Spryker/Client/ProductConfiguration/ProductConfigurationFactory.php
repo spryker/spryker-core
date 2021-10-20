@@ -52,7 +52,7 @@ class ProductConfigurationFactory extends AbstractFactory
     {
         return new ProductConfiguratorRequestExpander(
             $this->createProductConfiguratorRequestDataExpanderComposite(),
-            $this->getProductConfiguratorRequestExpanderPlugins()
+            $this->getProductConfiguratorRequestExpanderPlugins(),
         );
     }
 
@@ -68,7 +68,7 @@ class ProductConfigurationFactory extends AbstractFactory
                 $this->createProductConfiguratorRequestDataLocaleExpander(),
                 $this->createProductConfiguratorRequestDataCurrencyExpander(),
                 $this->createProductConfiguratorRequestDataPriceExpander(),
-            ]
+            ],
         );
     }
 
@@ -120,7 +120,7 @@ class ProductConfigurationFactory extends AbstractFactory
         return new ProductConfigurationInstancePriceMapper(
             $this->getPriceProductService(),
             $this->getProductConfigurationService(),
-            $this->getPriceProductConfigurationPriceExtractorPlugins()
+            $this->getPriceProductConfigurationPriceExtractorPlugins(),
         );
     }
 
@@ -130,7 +130,7 @@ class ProductConfigurationFactory extends AbstractFactory
     public function createProductConfiguratorCheckSumResponseValidatorComposite(): ProductConfiguratorResponseValidatorInterface
     {
         return new ProductConfiguratorCheckSumResponseValidatorComposite(
-            $this->createProductConfiguratorCheckSumResponseValidators()
+            $this->createProductConfiguratorCheckSumResponseValidators(),
         );
     }
 
@@ -153,7 +153,7 @@ class ProductConfigurationFactory extends AbstractFactory
     {
         return new ProductConfiguratorCheckSumResponseValidator(
             $this->getConfig(),
-            $this->getChecksumGenerator()
+            $this->getChecksumGenerator(),
         );
     }
 
@@ -180,7 +180,7 @@ class ProductConfigurationFactory extends AbstractFactory
     {
         return new ProductConfiguratorRequestSender(
             $this->getHttpClient(),
-            $this->getUtilEncodingService()
+            $this->getUtilEncodingService(),
         );
     }
 
@@ -294,7 +294,7 @@ class ProductConfigurationFactory extends AbstractFactory
     public function createProductConfigurationResponseMapper(): ProductConfigurationResponseMapperInterface
     {
         return new ProductConfigurationResponseMapper(
-            $this->createProductConfigurationInstancePriceMapper()
+            $this->createProductConfigurationInstancePriceMapper(),
         );
     }
 }

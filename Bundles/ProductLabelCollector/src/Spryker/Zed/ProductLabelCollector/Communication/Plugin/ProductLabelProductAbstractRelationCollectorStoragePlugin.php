@@ -52,7 +52,7 @@ class ProductLabelProductAbstractRelationCollectorStoragePlugin extends Abstract
             $dataReader,
             $dataWriter,
             $touchUpdater,
-            $output
+            $output,
         );
     }
 }

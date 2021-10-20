@@ -57,7 +57,7 @@ class ContentBannerDataImportDependencyProvider extends DataImportDependencyProv
     {
         $container->set(static::FACADE_CONTENT_BANNER, function (Container $container) {
             return new ContentBannerDataImportToContentBannerBridge(
-                $container->getLocator()->contentBanner()->facade()
+                $container->getLocator()->contentBanner()->facade(),
             );
         });
 

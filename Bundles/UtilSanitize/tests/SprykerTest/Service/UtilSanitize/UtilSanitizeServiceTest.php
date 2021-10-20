@@ -63,7 +63,7 @@ class UtilSanitizeServiceTest extends Unit
                 };
 
                 return [$sanitizer];
-            }
+            },
         );
         $utilSanitizeService = $this->createUtilSanitizeService();
 

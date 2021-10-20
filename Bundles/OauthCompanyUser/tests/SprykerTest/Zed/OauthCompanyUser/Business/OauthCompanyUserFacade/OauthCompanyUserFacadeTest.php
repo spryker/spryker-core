@@ -58,7 +58,7 @@ class OauthCompanyUserFacadeTest extends Unit
                 new CustomerOauthUserProviderPlugin(),
                 new CompanyUserOauthUserProviderPlugin(),
                 new CompanyUserAccessTokenOauthUserProviderPlugin(),
-            ]
+            ],
         );
 
         $this->tester->setDependency(
@@ -68,7 +68,7 @@ class OauthCompanyUserFacadeTest extends Unit
                 new RefreshTokenOauthGrantTypeConfigurationProviderPlugin(),
                 new IdCompanyUserOauthGrantTypeConfigurationProviderPlugin(),
                 new CompanyUserAccessTokenOauthGrantTypeConfigurationProviderPlugin(),
-            ]
+            ],
         );
     }
 
@@ -212,7 +212,7 @@ class OauthCompanyUserFacadeTest extends Unit
         $this->assertTrue($customerResponseTransfer->getIsSuccess());
         $this->assertSame(
             $customerTransfer->getIdCustomer(),
-            $customerResponseTransfer->getCustomerTransfer()->getIdCustomer()
+            $customerResponseTransfer->getCustomerTransfer()->getIdCustomer(),
         );
     }
 

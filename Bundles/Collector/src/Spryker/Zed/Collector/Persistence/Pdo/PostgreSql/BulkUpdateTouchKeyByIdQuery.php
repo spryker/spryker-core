@@ -27,7 +27,7 @@ class BulkUpdateTouchKeyByIdQuery extends AbstractBulkTouchQuery implements Bulk
             $tableName,
             $keyValue,
             $idColumnName,
-            $idValue
+            $idValue,
         );
 
         return $this;

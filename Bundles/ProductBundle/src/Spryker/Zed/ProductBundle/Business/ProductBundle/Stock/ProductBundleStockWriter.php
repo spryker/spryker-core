@@ -127,7 +127,7 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
     ) {
         $bundleTotalStockPerWarehouse = $this->removeBundleStockFromWarehousesWithoutBundledItems(
             $productConcreteTransfer,
-            $bundleTotalStockPerWarehouse
+            $bundleTotalStockPerWarehouse,
         );
 
         foreach ($bundleTotalStockPerWarehouse as $idStock => $bundleStock) {
@@ -373,7 +373,7 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
             $storeTransfer = $this->storeFacade->getStoreByName($storeName);
             $this->productBundleAvailabilityHandler->removeBundleAvailability(
                 $productConcreteTransfer->getSku(),
-                $storeTransfer
+                $storeTransfer,
             );
         }
     }

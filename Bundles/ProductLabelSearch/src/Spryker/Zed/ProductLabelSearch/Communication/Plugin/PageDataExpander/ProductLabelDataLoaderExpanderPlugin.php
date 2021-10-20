@@ -34,7 +34,7 @@ class ProductLabelDataLoaderExpanderPlugin extends AbstractPlugin implements Pro
     public function expandProductPageData(array $productData, ProductPageSearchTransfer $productAbstractPageSearchTransfer)
     {
         $productAbstractPageSearchTransfer->setLabelIds(
-            $this->getLabelIds($productData, $productAbstractPageSearchTransfer)
+            $this->getLabelIds($productData, $productAbstractPageSearchTransfer),
         );
     }
 

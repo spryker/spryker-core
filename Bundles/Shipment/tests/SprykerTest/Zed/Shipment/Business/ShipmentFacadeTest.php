@@ -181,7 +181,7 @@ class ShipmentFacadeTest extends Test
                 ->setFkStore(4)
                 ->setGrossAmount(100)
                 ->setNetAmount(200)
-                ->setCurrency((new CurrencyTransfer())->setIdCurrency(2))
+                ->setCurrency((new CurrencyTransfer())->setIdCurrency(2)),
         );
         $expectedPriceCollection->append(
             (new MoneyValueTransfer())
@@ -190,7 +190,7 @@ class ShipmentFacadeTest extends Test
                 ->setFkStore(5)
                 ->setGrossAmount(300)
                 ->setNetAmount(400)
-                ->setCurrency((new CurrencyTransfer())->setIdCurrency(3))
+                ->setCurrency((new CurrencyTransfer())->setIdCurrency(3)),
         );
         $expectedShipmentMethodTransfer = (new ShipmentMethodTransfer())
             ->setIdShipmentMethod(5)
@@ -206,7 +206,7 @@ class ShipmentFacadeTest extends Test
         // Assert
         $this->assertEquals(
             $expectedShipmentMethodTransfer->toArray(true),
-            $actualShipmentMethodTransfer->toArray(true)
+            $actualShipmentMethodTransfer->toArray(true),
         );
     }
 
@@ -403,7 +403,7 @@ class ShipmentFacadeTest extends Test
             ->willReturnCallback(
                 function ($idCurrency) {
                     return (new CurrencyTransfer())->setIdCurrency($idCurrency);
-                }
+                },
             );
 
         $this->tester->setDependency(ShipmentDependencyProvider::FACADE_CURRENCY, $currencyFacadeMock);
@@ -597,7 +597,7 @@ class ShipmentFacadeTest extends Test
             [],
             [],
             $priceList,
-            [$this->store->getIdStore()]
+            [$this->store->getIdStore()],
         );
 
         $quoteTransfer = $this->tester->addNewItemIntoQuoteTransfer($quoteTransfer, 'XX', $shipmentMethodTransfer);

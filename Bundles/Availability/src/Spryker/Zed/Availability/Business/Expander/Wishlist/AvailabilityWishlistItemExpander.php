@@ -85,7 +85,7 @@ class AvailabilityWishlistItemExpander implements AvailabilityWishlistItemExpand
             $sku,
             $availability,
             $this->storeFacade->getCurrentStore(),
-            $productAvailabilityCriteriaTransfer
+            $productAvailabilityCriteriaTransfer,
         );
 
         return $wishlistItemTransfer->setIsSellable($isWishlistItemSellable);
@@ -108,7 +108,7 @@ class AvailabilityWishlistItemExpander implements AvailabilityWishlistItemExpand
         return $this->productAvailabilityReader->findOrCreateProductConcreteAvailabilityBySkuForStore(
             $sku,
             $storeTransfer,
-            $productAvailabilityCriteriaTransfer
+            $productAvailabilityCriteriaTransfer,
         );
     }
 }

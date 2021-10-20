@@ -36,8 +36,8 @@ class CustomerExpander implements CustomerExpanderInterface
 
         $customerTransfer->setIsOnBehalf(
             $this->repository->isOnBehalfByCustomerId(
-                $customerTransfer->getIdCustomer()
-            )
+                $customerTransfer->getIdCustomer(),
+            ),
         );
 
         return $customerTransfer;

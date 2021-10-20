@@ -78,7 +78,7 @@ class JobsFilterByRole extends AbstractJobsFilter implements ChainableJobsFilter
             if (!in_array($role, $this->roles, true)) {
                 throw new RoleNotAllowedException(sprintf(
                     '%s is not in the list of allowed job roles.',
-                    $role
+                    $role,
                 ));
             }
         }

@@ -39,7 +39,7 @@ class WishlistItemMapper implements WishlistItemMapperInterface
         $restWishlistItemsAttributesTransfer->setId($wishlistItemTransfer->getSku());
         $restWishlistItemsAttributesTransfer = $this->executeRestWishlistItemsAttributesMapperPlugins(
             $wishlistItemTransfer,
-            $restWishlistItemsAttributesTransfer
+            $restWishlistItemsAttributesTransfer,
         );
 
         return $restWishlistItemsAttributesTransfer;
@@ -58,7 +58,7 @@ class WishlistItemMapper implements WishlistItemMapperInterface
         foreach ($this->restWishlistItemsAttributesMapperPlugins as $restWishlistItemsAttributesMapperPlugin) {
             $restWishlistItemsAttributesTransfer = $restWishlistItemsAttributesMapperPlugin->map(
                 $wishlistItemTransfer,
-                $restWishlistItemsAttributesTransfer
+                $restWishlistItemsAttributesTransfer,
             );
         }
 

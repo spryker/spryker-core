@@ -48,7 +48,7 @@ class QuoteRequestReferenceGenerator implements QuoteRequestReferenceGeneratorIn
         return sprintf(
             $this->quoteRequestConfig->getQuoteRequestReferenceFormat(),
             $customerReference,
-            $customerQuoteRequestCounter + 1
+            $customerQuoteRequestCounter + 1,
         );
     }
 
@@ -65,7 +65,7 @@ class QuoteRequestReferenceGenerator implements QuoteRequestReferenceGeneratorIn
         return sprintf(
             $this->quoteRequestConfig->getQuoteRequestReferenceFormat(),
             $quoteRequestTransfer->getQuoteRequestReference(),
-            $quoteRequestVersionTransfer->getVersion()
+            $quoteRequestVersionTransfer->getVersion(),
         );
     }
 }

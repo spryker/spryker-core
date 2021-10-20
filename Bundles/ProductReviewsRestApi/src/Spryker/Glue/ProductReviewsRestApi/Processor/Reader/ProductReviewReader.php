@@ -101,7 +101,7 @@ class ProductReviewReader implements ProductReviewReaderInterface
         $productAbstractData = $this->productStorageClient->findProductAbstractStorageDataByMapping(
             static::PRODUCT_ABSTRACT_MAPPING_TYPE,
             $parentResource->getId(),
-            $restRequest->getMetadata()->getLocale()
+            $restRequest->getMetadata()->getLocale(),
         );
 
         if (!$productAbstractData) {
@@ -113,7 +113,7 @@ class ProductReviewReader implements ProductReviewReaderInterface
         return $this->productReviewRestResponseBuilder->createProductReviewsCollectionRestResponse(
             $productReviews[static::PRODUCT_REVIEWS],
             $productReviews[static::PAGINATION]->getNumFound(),
-            $restRequest->getPage()->getLimit()
+            $restRequest->getPage()->getLimit(),
         );
     }
 
@@ -128,7 +128,7 @@ class ProductReviewReader implements ProductReviewReaderInterface
         /** @var array<\Generated\Shared\Transfer\ProductReviewTransfer> $productReviewTransfers */
         $productReviewTransfers = $this->getBulkProductReviewsInSearch(
             $productAbstractIds,
-            $filterTransfer
+            $filterTransfer,
         )[static::PRODUCT_REVIEWS];
 
         $indexedProductReviewTransfers = [];
@@ -160,7 +160,7 @@ class ProductReviewReader implements ProductReviewReaderInterface
         $productReviews = $this->productReviewClient->findProductReviewsInSearch(
             (new ProductReviewSearchRequestTransfer())
                 ->setRequestParams($requestParams)
-                ->setIdProductAbstract($idProductAbstract)
+                ->setIdProductAbstract($idProductAbstract),
         );
 
         return $productReviews;
@@ -179,7 +179,7 @@ class ProductReviewReader implements ProductReviewReaderInterface
         $productReviews = $this->productReviewClient->getBulkProductReviewsFromSearch(
             (new BulkProductReviewSearchRequestTransfer())
                 ->setFilter($filterTransfer)
-                ->setProductAbstractIds($productAbstractIds)
+                ->setProductAbstractIds($productAbstractIds),
         );
 
         return $productReviews;

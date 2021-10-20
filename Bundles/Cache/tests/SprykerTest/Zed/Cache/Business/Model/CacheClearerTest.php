@@ -141,7 +141,7 @@ class CacheClearerTest extends Unit
             ->method('exists')
             ->withConsecutive(
                 [$this->equalTo('/path/to/DE/cache')],
-                [$this->equalTo('/path/to/EN/cache')]
+                [$this->equalTo('/path/to/EN/cache')],
             )
             ->will($this->returnValue(true));
         $fileSystemMock
@@ -157,7 +157,7 @@ class CacheClearerTest extends Unit
             ->method('in')
             ->withConsecutive(
                 [$this->equalTo('/path/to/DE/cache')],
-                [$this->equalTo('/path/to/EN/cache')]
+                [$this->equalTo('/path/to/EN/cache')],
             )
             ->will($this->returnSelf());
 

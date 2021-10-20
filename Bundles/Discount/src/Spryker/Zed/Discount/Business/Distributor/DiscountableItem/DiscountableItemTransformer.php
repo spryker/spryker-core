@@ -45,7 +45,7 @@ class DiscountableItemTransformer implements DiscountableItemTransformerInterfac
 
             $isCalculatedDiscountAddable = $this->isCalculatedDiscountAddable(
                 $discountableItemTransfer,
-                $distributedDiscountTransfer
+                $distributedDiscountTransfer,
             );
 
             if ($isCalculatedDiscountAddable) {

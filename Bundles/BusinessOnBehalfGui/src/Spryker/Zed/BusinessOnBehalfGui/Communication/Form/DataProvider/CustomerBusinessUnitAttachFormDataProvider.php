@@ -67,7 +67,7 @@ class CustomerBusinessUnitAttachFormDataProvider
         $companyUserTransfer->setFkCompany($idCompany);
 
         $customerTransfer = $this->customerFacade->findCustomerById(
-            (new CustomerTransfer())->setIdCustomer($idCustomer)
+            (new CustomerTransfer())->setIdCustomer($idCustomer),
         );
 
         if (!$customerTransfer) {
@@ -103,7 +103,7 @@ class CustomerBusinessUnitAttachFormDataProvider
         $companyBusinessUnitChoicesValues = [];
 
         $companyBusinessUnitCollection = $this->companyBusinessUnitFacade->getCompanyBusinessUnitCollection(
-            (new CompanyBusinessUnitCriteriaFilterTransfer())->setIdCompany($idCompany)
+            (new CompanyBusinessUnitCriteriaFilterTransfer())->setIdCompany($idCompany),
         );
 
         foreach ($companyBusinessUnitCollection->getCompanyBusinessUnits() as $companyBusinessUnitTransfer) {
@@ -124,7 +124,7 @@ class CustomerBusinessUnitAttachFormDataProvider
         return sprintf(
             '%s (id: %s)',
             $companyBusinessUnitTransfer->getName(),
-            $companyBusinessUnitTransfer->getIdCompanyBusinessUnit()
+            $companyBusinessUnitTransfer->getIdCompanyBusinessUnit(),
         );
     }
 }

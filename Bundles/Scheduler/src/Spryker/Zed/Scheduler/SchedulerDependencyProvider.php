@@ -99,7 +99,7 @@ class SchedulerDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::FACADE_GRACEFUL_RUNNER, function (Container $container) {
             return new SchedulerToGracefulRunnerFacadeBridge(
-                $container->getLocator()->gracefulRunner()->facade()
+                $container->getLocator()->gracefulRunner()->facade(),
             );
         });
 

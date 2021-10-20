@@ -88,7 +88,7 @@ class MerchantProfileFormDataProvider
         $localeTransfers = $this->localeFacade->getLocaleCollection();
         foreach ($localeTransfers as $localeTransfer) {
             $merchantProfileGlossaryAttributeValues->append(
-                $this->addGlossaryAttributesByLocale($merchantProfileTransfer, $localeTransfer)
+                $this->addGlossaryAttributesByLocale($merchantProfileTransfer, $localeTransfer),
             );
         }
 
@@ -110,7 +110,7 @@ class MerchantProfileFormDataProvider
         $merchantProfileLocalizedGlossaryAttributesTransfer = new MerchantProfileLocalizedGlossaryAttributesTransfer();
         $merchantProfileLocalizedGlossaryAttributesTransfer->setLocale($localeTransfer);
         $merchantProfileLocalizedGlossaryAttributesTransfer->setMerchantProfileGlossaryAttributeValues(
-            $this->addGlossaryAttributeTranslations($merchantProfileTransfer, $localeTransfer)
+            $this->addGlossaryAttributeTranslations($merchantProfileTransfer, $localeTransfer),
         );
 
         return $merchantProfileLocalizedGlossaryAttributesTransfer;

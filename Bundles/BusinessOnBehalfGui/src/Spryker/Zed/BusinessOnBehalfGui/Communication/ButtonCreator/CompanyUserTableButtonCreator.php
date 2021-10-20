@@ -63,7 +63,7 @@ class CompanyUserTableButtonCreator extends AbstractButtonCreator implements Com
         return $this->generateButtonTransfer(
             $url,
             static::BUTTON_ATTACH_TO_BUSINESS_UNIT_TITLE,
-            $defaultOptions
+            $defaultOptions,
         );
     }
 }

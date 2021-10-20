@@ -68,7 +68,7 @@ class CommentFacadeAddCommentTest extends Unit
         $this->assertFalse($storedCommentTransfer->getIsUpdated());
         $this->assertEquals(
             $commentTransfer->getCustomer()->getIdCustomer(),
-            $storedCommentTransfer->getCustomer()->getIdCustomer()
+            $storedCommentTransfer->getCustomer()->getIdCustomer(),
         );
     }
 
@@ -105,11 +105,11 @@ class CommentFacadeAddCommentTest extends Unit
         $this->assertCount(2, $commentThreadTransfer->getComments());
         $this->assertEquals(
             $firstCommentTransfer->getMessage(),
-            $commentThreadTransfer->getComments()->offsetGet(0)->getMessage()
+            $commentThreadTransfer->getComments()->offsetGet(0)->getMessage(),
         );
         $this->assertEquals(
             $secondCommentTransfer->getMessage(),
-            $commentThreadTransfer->getComments()->offsetGet(1)->getMessage()
+            $commentThreadTransfer->getComments()->offsetGet(1)->getMessage(),
         );
     }
 

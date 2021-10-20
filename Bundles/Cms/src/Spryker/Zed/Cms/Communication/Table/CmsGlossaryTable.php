@@ -155,7 +155,7 @@ class CmsGlossaryTable extends AbstractTable
                 CmsTableConstants::REQUEST_ID_PAGE => $this->idPage,
                 self::REQUEST_ID_MAPPING => $item[SpyCmsGlossaryKeyMappingTableMap::COL_ID_CMS_GLOSSARY_KEY_MAPPING],
             ]),
-            'Edit'
+            'Edit',
         );
         $buttons[] = $this->generateRemoveButton(self::URL_CMS_GLOSSARY_DELETE, 'Delete', [
             CmsTableConstants::REQUEST_ID_PAGE => $this->idPage,

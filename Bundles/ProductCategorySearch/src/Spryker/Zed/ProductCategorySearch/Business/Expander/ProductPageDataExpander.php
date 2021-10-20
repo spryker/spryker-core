@@ -88,7 +88,7 @@ class ProductPageDataExpander implements ProductPageDataExpanderInterface
             $allParentCategoryNodeIds,
             $productAbstractPageSearchTransfer->getCategoryNodeIds(),
             $localeTransfer,
-            $productAbstractPageSearchTransfer
+            $productAbstractPageSearchTransfer,
         );
 
         $this->setSorting(
@@ -96,7 +96,7 @@ class ProductPageDataExpander implements ProductPageDataExpanderInterface
             $localeTransfer,
             $storeTransfer,
             $productAbstractPageSearchTransfer,
-            $productCategoryEntities
+            $productCategoryEntities,
         );
     }
 
@@ -168,14 +168,14 @@ class ProductPageDataExpander implements ProductPageDataExpanderInterface
             $directParentCategoryNodeIds,
             $localeTransfer,
             $productAbstractPageSearchTransfer,
-            $categoryTreeNames
+            $categoryTreeNames,
         );
         $this->setCategoryNames(
             $allParentCategoryNodeIds,
             $directParentCategoryNodeIds,
             $localeTransfer,
             $productAbstractPageSearchTransfer,
-            $categoryTreeNames
+            $categoryTreeNames,
         );
     }
 
@@ -313,7 +313,7 @@ class ProductPageDataExpander implements ProductPageDataExpanderInterface
         if (!isset(static::$categoryTreeIds[$storeName][$idLocale])) {
             static::$categoryTreeIds[$storeName][$idLocale] = $this->productCategoryTreeBuilder->buildProductCategoryTree(
                 $localeTransfer,
-                $storeTransfer
+                $storeTransfer,
             );
         }
 

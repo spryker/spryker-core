@@ -146,7 +146,7 @@ class CreateController extends AbstractController
                     $this->addSuccessMessage(static::SUCCESSFUL_MESSAGE_CUSTOMER_CREATED);
                     $redirectUrl = $this->createRedirectUrlAfterUserCreation(
                         $customerResponseTransfer->getCustomerTransfer(),
-                        $request
+                        $request,
                     );
 
                     return $this->redirectResponse($redirectUrl);
@@ -227,7 +227,7 @@ class CreateController extends AbstractController
 
         return Url::generate(
             '/manual-order-entry-gui/create',
-            $params
+            $params,
         )
             ->build();
     }
@@ -248,7 +248,7 @@ class CreateController extends AbstractController
 
         return Url::generate(
             '/sales/detail',
-            [SalesConfig::PARAM_ID_SALES_ORDER => $saveOrderTransfer->getIdSalesOrder()]
+            [SalesConfig::PARAM_ID_SALES_ORDER => $saveOrderTransfer->getIdSalesOrder()],
         )->build();
     }
 

@@ -92,15 +92,15 @@ class MoneyType extends AbstractType
                     $event->getForm(),
                     static::FIELD_NET_AMOUNT,
                     $validationGroups,
-                    $moneyCurrencyOptions
+                    $moneyCurrencyOptions,
                 );
                 $this->configureMoneyInputs(
                     $event->getForm(),
                     static::FIELD_GROSS_AMOUNT,
                     $validationGroups,
-                    $moneyCurrencyOptions
+                    $moneyCurrencyOptions,
                 );
-            }
+            },
         );
     }
 
@@ -215,7 +215,7 @@ class MoneyType extends AbstractType
             throw new Exception(sprintf(
                 'Transfer object "%s" missing "%s" method which should provide currency transfer for current formType.',
                 get_class($viewData),
-                'getCurrency'
+                'getCurrency',
             ));
         }
 

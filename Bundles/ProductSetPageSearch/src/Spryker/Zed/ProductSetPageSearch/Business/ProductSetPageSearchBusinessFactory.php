@@ -30,7 +30,7 @@ class ProductSetPageSearchBusinessFactory extends AbstractBusinessFactory
             $this->createProductSetSearchDataMapper(),
             $this->getProductSetFacade(),
             $this->getStore(),
-            $this->getConfig()->isSendingToQueue()
+            $this->getConfig()->isSendingToQueue(),
         );
     }
 

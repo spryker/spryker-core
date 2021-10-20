@@ -47,7 +47,7 @@ class CmsBlockCategoryFormExpander implements CmsBlockCategoryFormExpanderInterf
 
         $this->categoryType->buildForm(
             $builder,
-            $this->categoryDataProvider->getOptions()
+            $this->categoryDataProvider->getOptions(),
         );
     }
 }

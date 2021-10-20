@@ -203,7 +203,7 @@ class AvailabilityQueryContainer extends AbstractQueryContainer implements Avail
                 ->withColumn('SUM(' . SpyStockProductTableMap::COL_QUANTITY . ')', static::STOCK_QUANTITY)
                 ->withColumn(
                     static::GROUP_CONCAT . '(' . static::CONCAT . '(' . SpyProductTableMap::COL_SKU . ",':'," . SpyOmsProductReservationTableMap::COL_RESERVATION_QUANTITY . '))',
-                    static::RESERVATION_QUANTITY
+                    static::RESERVATION_QUANTITY,
                 );
         }
 
@@ -242,7 +242,7 @@ class AvailabilityQueryContainer extends AbstractQueryContainer implements Avail
             ->withColumn('SUM(' . SpyStockProductTableMap::COL_QUANTITY . ')', static::STOCK_QUANTITY)
             ->withColumn(
                 'SUM(' . SpyOmsProductReservationTableMap::COL_RESERVATION_QUANTITY . ')',
-                static::RESERVATION_QUANTITY
+                static::RESERVATION_QUANTITY,
             );
 
         return $query;
@@ -271,7 +271,7 @@ class AvailabilityQueryContainer extends AbstractQueryContainer implements Avail
                     SpyAvailabilityTableMap::COL_SKU,
                     SpyAvailabilityTableMap::COL_FK_STORE,
                 ],
-                Criteria::INNER_JOIN
+                Criteria::INNER_JOIN,
             )
             ->addAnd(SpyProductLocalizedAttributesTableMap::COL_FK_LOCALE, $idLocale);
     }
@@ -319,7 +319,7 @@ class AvailabilityQueryContainer extends AbstractQueryContainer implements Avail
         $joinStockProduct->setJoinType(Criteria::LEFT_JOIN);
 
         $joinStockProduct->setJoinCondition(
-            (new Criteria())->getNewCriterion(SpyStockTableMap::COL_NAME, $stockNames, Criteria::IN)
+            (new Criteria())->getNewCriterion(SpyStockTableMap::COL_NAME, $stockNames, Criteria::IN),
         );
 
         $productAbstractQuery
@@ -327,12 +327,12 @@ class AvailabilityQueryContainer extends AbstractQueryContainer implements Avail
             ->addJoin(
                 [SpyProductTableMap::COL_ID_PRODUCT, SpyStockTableMap::COL_ID_STOCK],
                 [SpyStockProductTableMap::COL_FK_PRODUCT, SpyStockProductTableMap::COL_FK_STOCK],
-                Criteria::LEFT_JOIN
+                Criteria::LEFT_JOIN,
             )
             ->addJoin(
                 [SpyProductTableMap::COL_SKU, SpyAvailabilityAbstractTableMap::COL_FK_STORE],
                 [SpyOmsProductReservationTableMap::COL_SKU, SpyOmsProductReservationTableMap::COL_FK_STORE],
-                Criteria::LEFT_JOIN
+                Criteria::LEFT_JOIN,
             );
 
         return $productAbstractQuery;
@@ -479,12 +479,12 @@ class AvailabilityQueryContainer extends AbstractQueryContainer implements Avail
     {
         $omsProductReservationFkStoreCriterion = (new Criteria())->getNewCriterion(
             SpyOmsProductReservationTableMap::COL_FK_STORE,
-            $idStore
+            $idStore,
         );
         $joinOmsProductReservation = new Join(
             SpyProductTableMap::COL_SKU,
             SpyOmsProductReservationTableMap::COL_SKU,
-            Criteria::LEFT_JOIN
+            Criteria::LEFT_JOIN,
         );
         $joinOmsProductReservation->buildJoinCondition($query);
         $joinOmsProductReservation->getJoinCondition()->addAnd($omsProductReservationFkStoreCriterion);
@@ -505,12 +505,12 @@ class AvailabilityQueryContainer extends AbstractQueryContainer implements Avail
         $stockIdsCriterion = (new Criteria())->getNewCriterion(
             SpyStockProductTableMap::COL_FK_STOCK,
             $stockIds,
-            Criteria::IN
+            Criteria::IN,
         );
         $joinStockProduct = new Join(
             SpyProductTableMap::COL_ID_PRODUCT,
             SpyStockProductTableMap::COL_FK_PRODUCT,
-            Criteria::LEFT_JOIN
+            Criteria::LEFT_JOIN,
         );
         $joinStockProduct->buildJoinCondition($query);
         $joinStockProduct->getJoinCondition()->addAnd($stockIdsCriterion);

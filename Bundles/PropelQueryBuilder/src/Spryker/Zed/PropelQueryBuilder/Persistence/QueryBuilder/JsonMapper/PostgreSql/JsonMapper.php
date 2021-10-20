@@ -49,7 +49,7 @@ class JsonMapper implements JsonMapperInterface
         $operatorValue = sprintf(
             "::JSON->>'%s' %s",
             $attributeName,
-            $operator->getOperator()
+            $operator->getOperator(),
         );
 
         return $operatorValue;

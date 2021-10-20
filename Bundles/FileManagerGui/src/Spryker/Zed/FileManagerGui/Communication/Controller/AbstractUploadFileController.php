@@ -70,7 +70,7 @@ abstract class AbstractUploadFileController extends AbstractController
 
         if ($fileTransfer->getFileUpload() !== null) {
             $fileManagerDataTransfer->setContent(
-                $this->getFileContent($fileTransfer->getFileUpload())
+                $this->getFileContent($fileTransfer->getFileUpload()),
             );
         }
 

@@ -137,7 +137,7 @@ class MySqlStorageReader extends AbstractStorageReader
             static::SELECT_STATEMENT_PATTERN,
             $keyPlaceholder,
             $aliasKeyPlaceholder,
-            $tableName
+            $tableName,
         );
     }
 

@@ -41,7 +41,7 @@ class MerchantRelationshipProductListMapper implements MerchantRelationshipProdu
     ): ProductListCollectionTransfer {
         foreach ($productListEntities as $productListEntity) {
             $productListCollectionTransfer->addProductList(
-                $this->mapProductList($productListEntity, new ProductListTransfer())
+                $this->mapProductList($productListEntity, new ProductListTransfer()),
             );
         }
 

@@ -88,14 +88,14 @@ class ProductRelationTableTest extends Unit
             $this->tester->haveFullProduct()->getSku(),
             $this->tester->haveFullProduct()->getFkProductAbstract(),
             static::PRODUCT_RELATION_KEY_1,
-            static::PRODUCT_RELATION_TYPE
+            static::PRODUCT_RELATION_TYPE,
         );
 
         $productRelation2 = $this->tester->haveProductRelation(
             $this->tester->haveFullProduct()->getSku(),
             $this->tester->haveFullProduct()->getFkProductAbstract(),
             static::PRODUCT_RELATION_KEY_2,
-            static::PRODUCT_RELATION_TYPE
+            static::PRODUCT_RELATION_TYPE,
         );
 
         // Act
@@ -119,7 +119,7 @@ class ProductRelationTableTest extends Unit
             $productRelationQuery,
             $this->getProductRelationGuiToProductFacadeMock(),
             $this->getProductRelationGuiConfigMock(),
-            $this->getProductRelationGuiToLocaleFacadeMock()
+            $this->getProductRelationGuiToLocaleFacadeMock(),
         );
     }
 

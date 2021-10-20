@@ -79,7 +79,7 @@ class IndexTest extends Unit
         $this->index = new Index(
             $this->elasticaClientMock,
             $this->sourceIdentifier,
-            $this->configMock
+            $this->configMock,
         );
     }
 
@@ -166,7 +166,7 @@ class IndexTest extends Unit
             ->method('request')
             ->with($reindexUrl, Request::POST, $expectedRequestData)
             ->willReturn(
-                $this->createResponseMock()
+                $this->createResponseMock(),
             );
 
         $this->index->copyIndex($sourceSearchContextTransfer, $targetSearchContextTransfer);

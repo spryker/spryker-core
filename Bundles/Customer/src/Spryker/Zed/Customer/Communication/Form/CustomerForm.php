@@ -387,7 +387,7 @@ class CustomerForm extends AbstractType
             },
             function ($dateAsObject) {
                 return $dateAsObject;
-            }
+            },
         );
     }
 
@@ -406,7 +406,7 @@ class CustomerForm extends AbstractType
                 if ($localeAsInt !== null) {
                     return $this->getFactory()->getLocaleFacadePublic()->getLocaleById($localeAsInt);
                 }
-            }
+            },
         );
     }
 

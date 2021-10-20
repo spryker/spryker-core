@@ -120,13 +120,13 @@ class MapProductConfiguratorCheckSumResponseTest extends Unit
         ];
 
         $productConfiguratorResponseTransfer = (new ProductConfiguratorResponseTransfer())->setProductConfigurationInstance(
-            new ProductConfigurationInstanceTransfer()
+            new ProductConfigurationInstanceTransfer(),
         );
 
         // Act
         $productConfiguratorResponseTransfer = $this->tester->getClient()->mapProductConfiguratorCheckSumResponse(
             $configuratorResponseData,
-            $productConfiguratorResponseTransfer
+            $productConfiguratorResponseTransfer,
         );
 
         /**
@@ -147,43 +147,43 @@ class MapProductConfiguratorCheckSumResponseTest extends Unit
         $this->assertSame(
             static::PRICE_DIMENSION_PRODUCT_CONFIGURATION,
             $priceProductDimensionTransfer->getType(),
-            'Expects product dimension type to be PRODUCT_CONFIGURATION.'
+            'Expects product dimension type to be PRODUCT_CONFIGURATION.',
         );
         $this->assertNotNull(
             $priceProductDimensionTransfer->getProductConfigurationInstanceHash(),
-            'Expects product configuration instance hash to be filled.'
+            'Expects product configuration instance hash to be filled.',
         );
 
         $this->assertSame(
             static::DEFAULT_PRICE_TYPE_NAME,
             $priceProductTransfer->getPriceTypeName(),
-            'Expects price type to be DEFAULT.'
+            'Expects price type to be DEFAULT.',
         );
         $this->assertSame(
             static::IS_PRICE_MERGEABLE,
             $priceProductTransfer->getIsMergeable(),
-            'Expects price to be not mergeable.'
+            'Expects price to be not mergeable.',
         );
 
         $this->assertSame(
             $netPrice,
             $moneyValueTransfer->getNetAmount(),
-            'Expects net amount to be equal to 111.'
+            'Expects net amount to be equal to 111.',
         );
         $this->assertSame(
             $grossPrice,
             $moneyValueTransfer->getGrossAmount(),
-            'Expects gross amount to be equal to 222.'
+            'Expects gross amount to be equal to 222.',
         );
         $this->assertSame(
             $currencyCode,
             $moneyValueTransfer->getCurrency()->getCode(),
-            'Expects to get EUR currency code.'
+            'Expects to get EUR currency code.',
         );
         $this->assertSame(
             $priceData,
             $moneyValueTransfer->getPriceData(),
-            'Expects to get same price data as provided at request.'
+            'Expects to get same price data as provided at request.',
         );
     }
 
@@ -194,13 +194,13 @@ class MapProductConfiguratorCheckSumResponseTest extends Unit
     {
         // Arrange
         $productConfiguratorResponseTransfer = (new ProductConfiguratorResponseTransfer())->setProductConfigurationInstance(
-            new ProductConfigurationInstanceTransfer()
+            new ProductConfigurationInstanceTransfer(),
         );
 
         // Act
         $productConfiguratorResponseTransfer = $this->tester->getClient()->mapProductConfiguratorCheckSumResponse(
             [],
-            $productConfiguratorResponseTransfer
+            $productConfiguratorResponseTransfer,
         );
 
         // Assert

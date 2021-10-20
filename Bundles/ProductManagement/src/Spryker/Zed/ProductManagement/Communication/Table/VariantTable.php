@@ -115,7 +115,7 @@ class VariantTable extends AbstractProductTable
             'variant-table?%s=%d&type=%s',
             EditController::PARAM_ID_PRODUCT_ABSTRACT,
             $idProductAbstract,
-            $type
+            $type,
         );
         $this->setTableIdentifier(self::TABLE_IDENTIFIER);
         $this->type = $type;
@@ -245,9 +245,9 @@ class VariantTable extends AbstractProductTable
                 $productEntity->getIdProduct(),
                 EditController::PARAM_ID_PRODUCT_ABSTRACT,
                 $productEntity->getFkProductAbstract(),
-                $this->type
+                $this->type,
             ),
-            'View'
+            'View',
         );
 
         $urls[] = $this->generateEditButton(
@@ -257,16 +257,16 @@ class VariantTable extends AbstractProductTable
                 $productEntity->getIdProduct(),
                 EditController::PARAM_ID_PRODUCT_ABSTRACT,
                 $productEntity->getFkProductAbstract(),
-                $this->type
+                $this->type,
             ),
-            'Edit'
+            'Edit',
         );
 
         $urls[] = $this->generateEditButton(
             Url::generate('/product-attribute-gui/view/product', [
                 EditController::PARAM_ID_PRODUCT => $productEntity->getIdProduct(),
             ]),
-            'Manage Attributes'
+            'Manage Attributes',
         );
 
         return $urls;

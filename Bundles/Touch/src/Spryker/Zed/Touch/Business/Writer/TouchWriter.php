@@ -89,7 +89,7 @@ class TouchWriter implements TouchWriterInterface
     protected function executeCleanTouchEntitiesForDeletedItemEventTransaction(): int
     {
         $touchEntityIds = $this->getTouchEntityIdsForDeletedItemEvent(
-            $this->touchQueryContainer->queryTouchListByItemEvent(static::COL_ITEM_EVENT_DELETED)
+            $this->touchQueryContainer->queryTouchListByItemEvent(static::COL_ITEM_EVENT_DELETED),
         );
 
         $deletedTouchEntitiesCount = $this->touchEntityManager->deleteTouchEntitiesByIds($touchEntityIds);

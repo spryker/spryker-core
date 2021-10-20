@@ -68,7 +68,7 @@ class DiscontinueProductForm extends AbstractType
             },
             function ($value) {
                 return new ArrayObject($value);
-            }
+            },
         );
     }
 }

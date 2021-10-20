@@ -51,7 +51,7 @@ class ProductOfferUpdateFormDataProvider extends AbstractProductOfferFormDataPro
         $productOfferTransfer = $this->productOfferFacade->findOne(
             (new ProductOfferCriteriaTransfer())
                 ->setIdProductOffer($idProductOffer)
-                ->addMerchantReference($currentMerchantReference)
+                ->addMerchantReference($currentMerchantReference),
         );
 
         if (!$productOfferTransfer) {

@@ -39,7 +39,7 @@ class ProductConfigurationGroupKeyItemExpander implements ProductConfigurationGr
             }
 
             $itemTransfer->setGroupKey(
-                $this->buildProductConfigurationGroupKey($itemTransfer)
+                $this->buildProductConfigurationGroupKey($itemTransfer),
             );
         }
 
@@ -64,13 +64,13 @@ class ProductConfigurationGroupKeyItemExpander implements ProductConfigurationGr
     protected function buildProductConfigurationGroupKey(ItemTransfer $itemTransfer): string
     {
         $productConfigurationInstanceHashKey = $this->productConfigurationService->getProductConfigurationInstanceHash(
-            $itemTransfer->getProductConfigurationInstanceOrFail()
+            $itemTransfer->getProductConfigurationInstanceOrFail(),
         );
 
         return sprintf(
             '%s-%s',
             $itemTransfer->getGroupKeyOrFail(),
-            $productConfigurationInstanceHashKey
+            $productConfigurationInstanceHashKey,
         );
     }
 }

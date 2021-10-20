@@ -63,7 +63,7 @@ class VolumePriceExtractor implements VolumePriceExtractorInterface
             && $priceProductTransfers[0]->getSkuProduct() !== null
         ) {
             $abstractProductPrices = $this->priceProductReader->getPriceProductAbstractFromPriceProduct(
-                $priceProductTransfers[0]
+                $priceProductTransfers[0],
             );
             $extractedPrices = $this->extractPriceProductVolumeTransfersFromArray($abstractProductPrices);
             $extractedPrices = $this->mapConcretePriceDataToExtractedPrice($extractedPrices, $priceProductTransfers[0]);
@@ -84,7 +84,7 @@ class VolumePriceExtractor implements VolumePriceExtractorInterface
         foreach ($priceProductTransfers as $priceProductTransfer) {
             $extractedPrices = array_merge(
                 $extractedPrices,
-                $this->extractVolumePriceFromTransfer($priceProductTransfer)
+                $this->extractVolumePriceFromTransfer($priceProductTransfer),
             );
         }
 
@@ -133,8 +133,8 @@ class VolumePriceExtractor implements VolumePriceExtractorInterface
                 sprintf(
                     '%s-%s',
                     $volumePriceTransfer->getGroupKey(),
-                    $volumePrice[PriceProductVolumeConfig::VOLUME_PRICE_QUANTITY]
-                )
+                    $volumePrice[PriceProductVolumeConfig::VOLUME_PRICE_QUANTITY],
+                ),
             )
             ->setIsMergeable(false)
             ->getMoneyValue()

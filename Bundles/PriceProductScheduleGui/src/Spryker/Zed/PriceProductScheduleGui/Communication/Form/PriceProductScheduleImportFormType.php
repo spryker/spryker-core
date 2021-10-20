@@ -98,7 +98,7 @@ class PriceProductScheduleImportFormType extends AbstractType
                 'attr' => [
                     'placeholder' => 'Eg: Christmas sales, etc.',
                 ],
-            ]
+            ],
         );
 
         return $this;
@@ -137,8 +137,8 @@ class PriceProductScheduleImportFormType extends AbstractType
                         }
 
                         return $this->mapSymfonyUploadedFileToUploadedFile($uploadedFile);
-                    }
-                )
+                    },
+                ),
             );
 
         return $this;
@@ -155,7 +155,7 @@ class PriceProductScheduleImportFormType extends AbstractType
             $uploadedFile->getRealPath(),
             $uploadedFile->getClientOriginalName(),
             $uploadedFile->getClientMimeType(),
-            $uploadedFile->getSize()
+            $uploadedFile->getSize(),
         );
     }
 }

@@ -22,7 +22,7 @@ class ProductBarcodeGuiCommunicationFactory extends AbstractCommunicationFactory
     {
         return new ProductBarcodeTable(
             $this->getProductBarcodeFacade(),
-            $this->getLocaleFacade()
+            $this->getLocaleFacade(),
         );
     }
 

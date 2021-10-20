@@ -153,7 +153,7 @@ class PriceProductOfferStorageDependencyProvider extends AbstractDependencyProvi
     {
         $container->set(static::CLIENT_PRICE_PRODUCT_STORAGE, function (Container $container) {
             return new PriceProductOfferStorageToPriceProductStorageClientBridge(
-                $container->getLocator()->priceProductStorage()->client()
+                $container->getLocator()->priceProductStorage()->client(),
             );
         });
 

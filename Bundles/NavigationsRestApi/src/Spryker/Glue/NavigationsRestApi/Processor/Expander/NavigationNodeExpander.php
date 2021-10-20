@@ -63,7 +63,7 @@ class NavigationNodeExpander implements NavigationNodeExpanderInterface
 
         return $this->mapUrlStorageTransfersToRestNavigationNodeTransfers(
             $urlStorageTransfers,
-            $restNavigationNodeTransfers
+            $restNavigationNodeTransfers,
         );
     }
 
@@ -100,7 +100,7 @@ class NavigationNodeExpander implements NavigationNodeExpanderInterface
             if (array_key_exists($restNavigationNodeTransfer->getUrl(), $urlStorageTransfers)) {
                 $resourceId = $this->findResourceIdByNodeType(
                     $urlStorageTransfers[$restNavigationNodeTransfer->getUrl()],
-                    $restNavigationNodeTransfer->getNodeType()
+                    $restNavigationNodeTransfer->getNodeType(),
                 );
                 $restNavigationNodeTransfer->setResourceId($resourceId);
             }
@@ -108,7 +108,7 @@ class NavigationNodeExpander implements NavigationNodeExpanderInterface
             if ($restNavigationNodeTransfer->getChildren()->count() > 0) {
                 $navigationNodeChildren = $this->mapUrlStorageTransfersToRestNavigationNodeTransfers(
                     $urlStorageTransfers,
-                    $restNavigationNodeTransfer->getChildren()
+                    $restNavigationNodeTransfer->getChildren(),
                 );
                 $restNavigationNodeTransfer->setChildren($navigationNodeChildren);
             }

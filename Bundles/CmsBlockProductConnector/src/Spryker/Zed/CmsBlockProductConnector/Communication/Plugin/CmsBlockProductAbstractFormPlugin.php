@@ -41,7 +41,7 @@ class CmsBlockProductAbstractFormPlugin extends AbstractPlugin implements CmsBlo
 
         $formType->buildForm(
             $builder,
-            $dataProvider->getOptions($cmsBlockTransfer)
+            $dataProvider->getOptions($cmsBlockTransfer),
         );
     }
 }

@@ -37,8 +37,8 @@ class ConditionCollection implements ConditionCollectionInterface, HasAwareColle
                     "Invalid condition '%s' interface!. Must implement '%s' or '%s'.",
                     get_class($condition),
                     DependencyConditionInterface::class,
-                    ConditionInterface::class
-                )
+                    ConditionInterface::class,
+                ),
             );
         }
 
@@ -68,7 +68,7 @@ class ConditionCollection implements ConditionCollectionInterface, HasAwareColle
     {
         if (empty($this->conditions[$name])) {
             throw new ConditionNotFoundException(
-                sprintf('Could not find condition "%s". You need to add the needed conditions within your DependencyInjector.', $name)
+                sprintf('Could not find condition "%s". You need to add the needed conditions within your DependencyInjector.', $name),
             );
         }
 

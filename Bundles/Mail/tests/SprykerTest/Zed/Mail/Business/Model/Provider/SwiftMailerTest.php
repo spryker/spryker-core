@@ -203,7 +203,7 @@ class SwiftMailerTest extends Unit
         $swiftMailer = $this->getSwiftMailerWithMocks($mailerMock);
         $mailTransfer = $this->getMailTransfer()->addRecipientBcc(
             (new MailRecipientTransfer())
-                ->setName(static::BCC_NAME)
+                ->setName(static::BCC_NAME),
         );
 
         // Assert

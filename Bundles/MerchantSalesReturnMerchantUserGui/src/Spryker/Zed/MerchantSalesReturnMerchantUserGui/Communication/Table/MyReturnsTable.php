@@ -171,7 +171,7 @@ class MyReturnsTable extends AbstractTable
         $salesReturnEntityCollection = $this->runQuery(
             $this->prepareQuery(),
             $config,
-            true
+            true,
         );
 
         if (!$salesReturnEntityCollection->count()) {
@@ -208,11 +208,11 @@ class MyReturnsTable extends AbstractTable
             ->endUse()
             ->withColumn(
                 sprintf('COUNT(%s)', SpySalesReturnItemTableMap::COL_ID_SALES_RETURN_ITEM),
-                static::COL_RETURNED_PRODUCTS
+                static::COL_RETURNED_PRODUCTS,
             )
             ->withColumn(
                 sprintf('GROUP_CONCAT(DISTINCT %s)', SpySalesOrderTableMap::COL_ORDER_REFERENCE),
-                static::COL_MARKETPLACE_ORDER_REFERENCE
+                static::COL_MARKETPLACE_ORDER_REFERENCE,
             );
 
         return $salesReturnQuery;
@@ -273,7 +273,7 @@ class MyReturnsTable extends AbstractTable
                         ->joinWithStateMachineItemState()
                         ->withColumn(
                             sprintf('GROUP_CONCAT(DISTINCT %s)', SpyStateMachineItemStateTableMap::COL_NAME),
-                            static::COL_STATE
+                            static::COL_STATE,
                         )
                     ->endUse()
                 ->endUse()
@@ -304,7 +304,7 @@ class MyReturnsTable extends AbstractTable
             Url::generate(static::ROUTE_DETAIL, [
                 static::PARAM_ID_RETURN => $salesReturnEntity->getIdSalesReturn(),
             ]),
-            'View'
+            'View',
         );
 
         $buttons[] = $this->generateViewButton(
@@ -315,7 +315,7 @@ class MyReturnsTable extends AbstractTable
             [
                 'icon' => '',
                 'class' => 'btn-create',
-            ]
+            ],
         );
 
         return implode(' ', $buttons);

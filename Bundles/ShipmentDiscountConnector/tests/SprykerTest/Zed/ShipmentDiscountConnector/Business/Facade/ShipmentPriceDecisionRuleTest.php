@@ -67,7 +67,7 @@ class ShipmentPriceDecisionRuleTest extends Test
             $this->assertEquals(
                 $expectedValues[$sku],
                 $isSatisfied,
-                sprintf('The actual item shipment\'s expense price does not satisfied the rule (iteration #%d).', $i++)
+                sprintf('The actual item shipment\'s expense price does not satisfied the rule (iteration #%d).', $i++),
             );
         }
     }

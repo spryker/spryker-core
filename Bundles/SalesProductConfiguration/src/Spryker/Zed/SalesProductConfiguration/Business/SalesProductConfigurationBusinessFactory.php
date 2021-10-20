@@ -26,7 +26,7 @@ class SalesProductConfigurationBusinessFactory extends AbstractBusinessFactory
     public function createSalesOrderItemConfigurationWriter(): SalesOrderItemConfigurationWriterInterface
     {
         return new SalesOrderItemConfigurationWriter(
-            $this->getEntityManager()
+            $this->getEntityManager(),
         );
     }
 
@@ -36,7 +36,7 @@ class SalesProductConfigurationBusinessFactory extends AbstractBusinessFactory
     public function createOrderItemExpander(): OrderItemExpanderInterface
     {
         return new OrderItemExpander(
-            $this->getRepository()
+            $this->getRepository(),
         );
     }
 }

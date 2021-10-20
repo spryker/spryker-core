@@ -95,7 +95,7 @@ class MerchantUpdatePublisherPluginTest extends Unit
         // Act
         $this->merchantProductWritePublisherPlugin->handleBulk(
             $eventTransfers,
-            MerchantProductStorageConfig::MERCHANT_PRODUCT_ABSTRACT_PUBLISH
+            MerchantProductStorageConfig::MERCHANT_PRODUCT_ABSTRACT_PUBLISH,
         );
 
         $merchantTransfer->setIsActive(false);
@@ -105,10 +105,10 @@ class MerchantUpdatePublisherPluginTest extends Unit
         ];
         $this->merchantUpdatePublisherPlugin->handleBulk(
             $eventTransfers,
-            MerchantProductStorageConfig::ENTITY_SPY_MERCHANT_UPDATE
+            MerchantProductStorageConfig::ENTITY_SPY_MERCHANT_UPDATE,
         );
         $productAbstractStorageEntityWithoutMerchant = $this->tester->getAbstractProductStorageByIdProductAbstract(
-            $merchantProductTransfer->getIdProductAbstract()
+            $merchantProductTransfer->getIdProductAbstract(),
         );
 
         // Assert

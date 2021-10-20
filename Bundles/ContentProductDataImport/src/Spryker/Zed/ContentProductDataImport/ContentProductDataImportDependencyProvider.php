@@ -58,7 +58,7 @@ class ContentProductDataImportDependencyProvider extends DataImportDependencyPro
     {
         $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new ContentProductDataImportToUtilEncodingServiceBridge(
-                $container->getLocator()->utilEncoding()->service()
+                $container->getLocator()->utilEncoding()->service(),
             );
         });
 
@@ -74,7 +74,7 @@ class ContentProductDataImportDependencyProvider extends DataImportDependencyPro
     {
         $container->set(static::FACADE_CONTENT_PRODUCT, function (Container $container) {
             return new ContentProductDataImportToContentProductFacadeBridge(
-                $container->getLocator()->contentProduct()->facade()
+                $container->getLocator()->contentProduct()->facade(),
             );
         });
 

@@ -47,7 +47,7 @@ class ConfigurableBundleTemplateUnpublisher implements ConfigurableBundleTemplat
     public function unpublish(array $configurableBundleTemplateIds): void
     {
         $configurableBundleTemplatePageSearchCollectionTransfer = $this->configurableBundlePageSearchRepository->getConfigurableBundleTemplatePageSearchCollection(
-            (new ConfigurableBundleTemplatePageSearchFilterTransfer())->setConfigurableBundleTemplateIds($configurableBundleTemplateIds)
+            (new ConfigurableBundleTemplatePageSearchFilterTransfer())->setConfigurableBundleTemplateIds($configurableBundleTemplateIds),
         );
 
         $this->getTransactionHandler()->handleTransaction(function () use ($configurableBundleTemplatePageSearchCollectionTransfer): void {

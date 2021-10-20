@@ -76,7 +76,7 @@ class InactiveProductOfferItemsFilter implements InactiveProductOfferItemsFilter
             ->setIsActive(true)
             ->setApprovalStatuses([ProductOfferConfig::STATUS_APPROVED])
             ->setIdStore(
-                $this->storeFacade->getStoreByName($quoteTransfer->getStore()->getName())->getIdStore()
+                $this->storeFacade->getStoreByName($quoteTransfer->getStore()->getName())->getIdStore(),
             );
         $productOfferCollectionTransfer = $this->productOfferRepository->get($productOfferCriteriaTransfer);
 

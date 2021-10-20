@@ -39,7 +39,7 @@ class RequestIdTest extends Unit
     {
         $this->assertSame(
             (new RequestId())->getRequestId(),
-            (new RequestId())->getRequestId()
+            (new RequestId())->getRequestId(),
         );
     }
 
@@ -52,7 +52,7 @@ class RequestIdTest extends Unit
 
         $this->assertSame(
             'requestId',
-            (new RequestId())->getRequestId()
+            (new RequestId())->getRequestId(),
         );
     }
 

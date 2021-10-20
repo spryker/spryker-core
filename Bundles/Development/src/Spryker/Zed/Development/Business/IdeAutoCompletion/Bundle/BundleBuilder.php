@@ -63,7 +63,7 @@ class BundleBuilder implements BundleBuilderInterface
         return str_replace(
             IdeAutoCompletionConstants::APPLICATION_NAME_PLACEHOLDER,
             $this->options[IdeAutoCompletionOptionConstants::APPLICATION_NAME],
-            $this->options[IdeAutoCompletionOptionConstants::TARGET_NAMESPACE_PATTERN]
+            $this->options[IdeAutoCompletionOptionConstants::TARGET_NAMESPACE_PATTERN],
         );
     }
 

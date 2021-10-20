@@ -50,7 +50,7 @@ class QuoteRequestsRestApiDependencyProvider extends AbstractBundleDependencyPro
     {
         $container->set(static::FACADE_QUOTE_REQUEST, function (Container $container) {
             return new QuoteRequestsRestApiToQuoteRequestFacadeBridge(
-                $container->getLocator()->quoteRequest()->facade()
+                $container->getLocator()->quoteRequest()->facade(),
             );
         });
 
@@ -66,7 +66,7 @@ class QuoteRequestsRestApiDependencyProvider extends AbstractBundleDependencyPro
     {
         $container->set(static::FACADE_CARTS_REST_API, function (Container $container) {
             return new QuoteRequestsRestApiToCartsRestApiFacadeBridge(
-                $container->getLocator()->cartsRestApi()->facade()
+                $container->getLocator()->cartsRestApi()->facade(),
             );
         });
 

@@ -30,7 +30,7 @@ class DefaultLoggerConfig implements LoggerConfigInterface
         return [
             new StreamHandler(
                 Config::get(LogConstants::LOG_FILE_PATH),
-                Config::get(LogConstants::LOG_LEVEL, Logger::ERROR)
+                Config::get(LogConstants::LOG_LEVEL, Logger::ERROR),
             ),
         ];
     }

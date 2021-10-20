@@ -74,7 +74,7 @@ class QuotePermissionChecker implements QuotePermissionCheckerInterface
         return $this->can(
             $permissionPluginKey,
             $quoteTransfer->getCustomer()->getCompanyUserTransfer()->getIdCompanyUser(),
-            $quoteTransfer->getIdQuote()
+            $quoteTransfer->getIdQuote(),
         );
     }
 }

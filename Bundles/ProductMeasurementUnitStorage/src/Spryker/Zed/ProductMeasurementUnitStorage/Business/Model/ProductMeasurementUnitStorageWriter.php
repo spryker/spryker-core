@@ -84,7 +84,7 @@ class ProductMeasurementUnitStorageWriter implements ProductMeasurementUnitStora
             ->setData(
                 (new ProductMeasurementUnitStorageTransfer())
                     ->fromArray($productMeasurementUnitTransfer->toArray(), true)
-                    ->toArray()
+                    ->toArray(),
             );
 
         $this->productMeasurementUnitStorageEntityManager->saveProductMeasurementUnitStorageEntity($productMeasurementUnitStorageEntity);
@@ -116,7 +116,7 @@ class ProductMeasurementUnitStorageWriter implements ProductMeasurementUnitStora
     {
         foreach ($productMeasurementUnitStorageEntities as $productMeasurementUnitStorageEntity) {
             $this->productMeasurementUnitStorageEntityManager->deleteProductMeasurementUnitStorage(
-                $productMeasurementUnitStorageEntity->getIdProductMeasurementUnitStorage()
+                $productMeasurementUnitStorageEntity->getIdProductMeasurementUnitStorage(),
             );
         }
     }

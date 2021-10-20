@@ -71,7 +71,7 @@ class SalesOrderConfiguredBundleWriter implements SalesOrderConfiguredBundleWrit
             if ($itemTransfer->getConfiguredBundleItem() && $itemTransfer->getConfiguredBundle()) {
                 $salesOrderConfiguredBundleTransfers = $this->mapSalesOrderConfiguredBundle(
                     $itemTransfer,
-                    $salesOrderConfiguredBundleTransfers
+                    $salesOrderConfiguredBundleTransfers,
                 );
             }
         }

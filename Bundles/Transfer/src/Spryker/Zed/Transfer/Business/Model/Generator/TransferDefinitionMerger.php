@@ -38,7 +38,7 @@ class TransferDefinitionMerger implements MergerInterface
                 $this->mergedTransferDefinitions[$transferDefinition['name']] = $this->mergeDefinitions(
                     $this->mergedTransferDefinitions[$transferDefinition['name']],
                     $transferDefinition,
-                    $transferDefinition['name']
+                    $transferDefinition['name'],
                 );
             } else {
                 $this->mergedTransferDefinitions[$transferDefinition['name']] = $transferDefinition;
@@ -116,7 +116,7 @@ class TransferDefinitionMerger implements MergerInterface
             $mergedProperties[$propertyToMerge['name']] = $this->mergeProperties(
                 $mergedProperties[$propertyToMerge['name']],
                 $propertyToMerge,
-                $transferName
+                $transferName,
             );
         }
 
@@ -159,7 +159,7 @@ class TransferDefinitionMerger implements MergerInterface
                             $transferName,
                             $property['name'],
                             $property[$propertyName],
-                            $propertyValue
+                            $propertyValue,
                         ));
                     }
 
@@ -219,8 +219,8 @@ class TransferDefinitionMerger implements MergerInterface
         throw new TransferDefinitionMismatchException(
             sprintf(
                 'Strict mode violation detected for transfer %s. "strict" attribute value for this transfer must be identical across all definitions.',
-                $existingTransferDefinition['name']
-            )
+                $existingTransferDefinition['name'],
+            ),
         );
     }
 
@@ -243,8 +243,8 @@ class TransferDefinitionMerger implements MergerInterface
             sprintf(
                 'Strict mode violation detected for transfer property %s.%s. "strict" attribute value for this property must be identical across all definitions.',
                 $transferName,
-                $existingTransferProperty['name']
-            )
+                $existingTransferProperty['name'],
+            ),
         );
     }
 

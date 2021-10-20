@@ -49,7 +49,7 @@ class NavigationBusinessFactory extends AbstractBusinessFactory
             $this->createNavigationTreeReader(),
             $this->getRepository(),
             $this->createNavigationCreator(),
-            $this->createNavigationNodeCreator()
+            $this->createNavigationNodeCreator(),
         );
     }
 

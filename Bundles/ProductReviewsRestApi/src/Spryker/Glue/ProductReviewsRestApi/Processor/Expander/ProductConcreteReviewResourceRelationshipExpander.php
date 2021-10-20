@@ -75,7 +75,7 @@ class ProductConcreteReviewResourceRelationshipExpander implements ProductConcre
         $productConcreteDataCollection = $this->productStorageClient->getBulkProductConcreteStorageDataByMapping(
             static::PRODUCT_MAPPING_TYPE,
             $productConcreteSkus,
-            $restRequest->getMetadata()->getLocale()
+            $restRequest->getMetadata()->getLocale(),
         );
 
         if (!$productConcreteDataCollection) {
@@ -90,7 +90,7 @@ class ProductConcreteReviewResourceRelationshipExpander implements ProductConcre
         $productReviewsRestResourcesCollection = $this->productReviewReader
             ->getProductReviewsResourceCollection(
                 $productAbstractIds,
-                $this->createFilterTransfer()
+                $this->createFilterTransfer(),
             );
 
         foreach ($resources as $resource) {

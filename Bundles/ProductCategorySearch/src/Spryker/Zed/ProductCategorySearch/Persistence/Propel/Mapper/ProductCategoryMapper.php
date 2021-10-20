@@ -25,7 +25,7 @@ class ProductCategoryMapper
         foreach ($productCategoryEntities as $productCategoryEntity) {
             $mappedProductCategoryEntities = $this->mapProductCategoryEntityByIdProductAbstractAndStore(
                 $productCategoryEntity,
-                $mappedProductCategoryEntities
+                $mappedProductCategoryEntities,
             );
         }
 

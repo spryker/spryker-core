@@ -67,7 +67,7 @@ class ArchitectureSnifferConfigurationBuilder implements SnifferConfigurationBui
 
         $priority = $this->getPriority(
             $moduleConfig,
-            $options
+            $options,
         );
 
         if ($priority === static::CONFIG_PRIORITY_SKIP_VALUE) {

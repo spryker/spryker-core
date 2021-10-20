@@ -21,7 +21,7 @@ class OfferFactory extends AbstractFactory
     public function createZedStub()
     {
         return new OfferStub(
-            $this->getZedRequestClient()
+            $this->getZedRequestClient(),
         );
     }
 
@@ -31,7 +31,7 @@ class OfferFactory extends AbstractFactory
     public function createOfferHydrator(): OfferHydratorInterface
     {
         return new OfferHydrator(
-            $this->getCustomerClient()
+            $this->getCustomerClient(),
         );
     }
 

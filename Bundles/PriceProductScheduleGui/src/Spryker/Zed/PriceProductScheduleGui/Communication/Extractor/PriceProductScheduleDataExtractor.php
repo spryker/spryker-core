@@ -73,7 +73,7 @@ class PriceProductScheduleDataExtractor implements PriceProductScheduleDataExtra
     ): string {
         $priceProductScheduleTransfer->requireStore();
         $storeTransfer = $this->storeFacade->getStoreById(
-            $priceProductScheduleTransfer->getStore()->getIdStore()
+            $priceProductScheduleTransfer->getStore()->getIdStore(),
         );
         $timezone = $storeTransfer->getTimezone();
 
@@ -90,7 +90,7 @@ class PriceProductScheduleDataExtractor implements PriceProductScheduleDataExtra
     ): string {
         $priceProductScheduleTransfer->requireStore();
         $storeTransfer = $this->storeFacade->getStoreById(
-            $priceProductScheduleTransfer->getStore()->getIdStore()
+            $priceProductScheduleTransfer->getStore()->getIdStore(),
         );
 
         return $storeTransfer->getTimezone();

@@ -61,7 +61,7 @@ abstract class AbstractSuggestionExpanderPlugin extends AbstractPlugin implement
     {
         if (!$query->hasParam('suggest')) {
             throw new MissingSuggestionQueryException(
-                'The base query to be extended needs to have "suggest" parameter set. Use `$query->setSuggest()`.'
+                'The base query to be extended needs to have "suggest" parameter set. Use `$query->setSuggest()`.',
             );
         }
     }

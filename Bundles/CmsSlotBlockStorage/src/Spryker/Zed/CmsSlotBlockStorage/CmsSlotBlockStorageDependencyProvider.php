@@ -84,7 +84,7 @@ class CmsSlotBlockStorageDependencyProvider extends AbstractBundleDependencyProv
     {
         $container->set(static::FACADE_CMS_SLOT_BLOCK, function (Container $container) {
             return new CmsSlotBlockStorageToCmsSlotBlockFacadeBridge(
-                $container->getLocator()->cmsSlotBlock()->facade()
+                $container->getLocator()->cmsSlotBlock()->facade(),
             );
         });
 
@@ -114,7 +114,7 @@ class CmsSlotBlockStorageDependencyProvider extends AbstractBundleDependencyProv
     {
         $container->set(static::FACADE_EVENT_BEHAVIOR, function (Container $container) {
             return new CmsSlotBlockStorageToEventBehaviorFacadeBridge(
-                $container->getLocator()->eventBehavior()->facade()
+                $container->getLocator()->eventBehavior()->facade(),
             );
         });
 
@@ -130,7 +130,7 @@ class CmsSlotBlockStorageDependencyProvider extends AbstractBundleDependencyProv
     {
         $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new CmsSlotBlockStorageToUtilEncodingServiceBridge(
-                $container->getLocator()->utilEncoding()->service()
+                $container->getLocator()->utilEncoding()->service(),
             );
         });
 

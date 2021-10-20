@@ -49,7 +49,7 @@ class PriceProductPageExpander implements PriceProductPageExpanderInterface
         $pricesByIdProductAbstract = $this->findPricesByIdProductAbstractIn($productAbstractIds);
 
         $productPageLoadTransfer->setPayloadTransfers(
-            $this->updatePayloadTransfers($productPageLoadTransfer->getPayloadTransfers(), $pricesByIdProductAbstract)
+            $this->updatePayloadTransfers($productPageLoadTransfer->getPayloadTransfers(), $pricesByIdProductAbstract),
         );
 
         return $productPageLoadTransfer;
@@ -65,7 +65,7 @@ class PriceProductPageExpander implements PriceProductPageExpanderInterface
         $productPrices = $this->priceProductFacade
             ->findProductAbstractPricesWithoutPriceExtractionByProductAbstractIdsAndCriteria(
                 $productAbstractIds,
-                $this->getPriceCriteriaTransferForDefaultPriceDimension()
+                $this->getPriceCriteriaTransferForDefaultPriceDimension(),
             );
         $productPricesMappedById = $this->getProductPricesMappedByIdAndStoreName($productPrices);
         $groupedProductPriceCollection = [];
@@ -139,7 +139,7 @@ class PriceProductPageExpander implements PriceProductPageExpanderInterface
         return (new PriceProductCriteriaTransfer())
             ->setPriceDimension(
                 (new PriceProductDimensionTransfer())
-                    ->setType(ProductPageSearchConfig::PRICE_DIMENSION_DEFAULT)
+                    ->setType(ProductPageSearchConfig::PRICE_DIMENSION_DEFAULT),
             );
     }
 }

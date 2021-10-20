@@ -32,7 +32,7 @@ class QuoteRequestAgentsRestApiFactory extends AbstractFactory
             $this->getQuoteRequestAgentClient(),
             $this->getCompanyUserStorageClient(),
             $this->getQuoteRequestsRestApiResource(),
-            $this->createQuoteRequestRestResponseBuilder()
+            $this->createQuoteRequestRestResponseBuilder(),
         );
     }
 
@@ -44,7 +44,7 @@ class QuoteRequestAgentsRestApiFactory extends AbstractFactory
         return new QuoteRequestAgentReader(
             $this->getQuoteRequestAgentClient(),
             $this->getQuoteRequestsRestApiResource(),
-            $this->createQuoteRequestRestResponseBuilder()
+            $this->createQuoteRequestRestResponseBuilder(),
         );
     }
 
@@ -55,7 +55,7 @@ class QuoteRequestAgentsRestApiFactory extends AbstractFactory
     {
         return new QuoteRequestRestResponseBuilder(
             $this->getResourceBuilder(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 

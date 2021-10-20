@@ -121,7 +121,7 @@ class ProductStorageDependencyProvider extends AbstractDependencyProvider
     {
         $container->set(static::CLIENT_STORE, function (Container $container) {
             return new ProductStorageToStoreClientBridge(
-                $container->getLocator()->store()->client()
+                $container->getLocator()->store()->client(),
             );
         });
 
@@ -165,7 +165,7 @@ class ProductStorageDependencyProvider extends AbstractDependencyProvider
     {
         $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new ProductStorageToUtilEncodingServiceBridge(
-                $container->getLocator()->utilEncoding()->service()
+                $container->getLocator()->utilEncoding()->service(),
             );
         });
 
@@ -181,7 +181,7 @@ class ProductStorageDependencyProvider extends AbstractDependencyProvider
     {
         $container->set(static::SERVICE_UTIL_SANITIZE, function (Container $container) {
             return new ProductStorageToUtilSanitizeServiceBridge(
-                $container->getLocator()->utilSanitize()->service()
+                $container->getLocator()->utilSanitize()->service(),
             );
         });
 

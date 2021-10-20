@@ -45,7 +45,7 @@ class CurrentPasswordConstraintValidatorTest extends ConstraintValidatorTestCase
     {
         // Arrange
         $currentPasswordConstraint = $this->createCurrentPasswordConstraint(
-            $this->createMerchantUserFacadeMock(true)
+            $this->createMerchantUserFacadeMock(true),
         );
 
         // Act
@@ -62,7 +62,7 @@ class CurrentPasswordConstraintValidatorTest extends ConstraintValidatorTestCase
     {
         // Arrange
         $currentPasswordConstraint = $this->createCurrentPasswordConstraint(
-            $this->createMerchantUserFacadeMock(false)
+            $this->createMerchantUserFacadeMock(false),
         );
 
         // Act
@@ -103,7 +103,7 @@ class CurrentPasswordConstraintValidatorTest extends ConstraintValidatorTestCase
         $merchantUserFacade
             ->method('getCurrentMerchantUser')
             ->willReturn(
-                (new MerchantUserTransfer())->setUser($user)
+                (new MerchantUserTransfer())->setUser($user),
             );
 
         $merchantUserFacade

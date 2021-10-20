@@ -283,7 +283,7 @@ class CategoryImageStorageListenerTest extends Unit
     {
         SpyCategoryImageStorageQuery::create()
             ->filterByFkCategory(
-                $this->categoryTransfer->getIdCategory()
+                $this->categoryTransfer->getIdCategory(),
             )
             ->delete();
     }

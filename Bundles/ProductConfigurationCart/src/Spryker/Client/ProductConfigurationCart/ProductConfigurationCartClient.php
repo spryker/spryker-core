@@ -73,7 +73,7 @@ class ProductConfigurationCartClient extends AbstractClient implements ProductCo
             ->createProductConfiguratorResponseProcessor()
             ->processProductConfiguratorCheckSumResponse(
                 $productConfiguratorResponseTransfer,
-                $configuratorResponseData
+                $configuratorResponseData,
             );
     }
 

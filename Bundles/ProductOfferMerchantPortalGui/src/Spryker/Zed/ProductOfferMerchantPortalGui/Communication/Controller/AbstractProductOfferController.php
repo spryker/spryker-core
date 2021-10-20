@@ -55,11 +55,11 @@ class AbstractProductOfferController extends AbstractController
     ): array {
         $productAbstractLocalizedAttributes = $this->getLocalizedAttributesByLocale(
             $productAbstractTransfer->getLocalizedAttributes()->getArrayCopy(),
-            $localeTransfer
+            $localeTransfer,
         );
         $productConcreteLocalizedAttributes = $this->getLocalizedAttributesByLocale(
             $productConcreteTransfer->getLocalizedAttributes()->getArrayCopy(),
-            $localeTransfer
+            $localeTransfer,
         );
         $rawProductAttributesTransfer = (new RawProductAttributesTransfer())
             ->setAbstractAttributes($productAbstractTransfer->getAttributes())
@@ -113,7 +113,7 @@ class AbstractProductOfferController extends AbstractController
 
         $requestTableData = $this->getFactory()->getUtilEncodingService()->decodeJson(
             $requestTableData[PriceProductOfferTableViewTransfer::PRICES],
-            true
+            true,
         );
 
         if (!$requestTableData) {

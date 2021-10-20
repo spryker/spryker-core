@@ -38,7 +38,7 @@ class MerchantReturnValidator implements MerchantReturnValidatorInterface
             ) {
                 return $this->addErrorMessageToResponse(
                     static::ERROR_MESSAGE_MERCHANT_RETURN_ITEMS_FROM_DIFFERENT_MERCHANTS,
-                    $returnResponseTransfer
+                    $returnResponseTransfer,
                 );
             }
 

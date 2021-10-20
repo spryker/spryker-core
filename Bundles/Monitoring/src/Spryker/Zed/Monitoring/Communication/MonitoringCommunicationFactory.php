@@ -28,7 +28,7 @@ class MonitoringCommunicationFactory extends AbstractCommunicationFactory
     public function createGatewayControllerListener(): GatewayControllerListener
     {
         return new GatewayControllerListener(
-            $this->getMonitoringService()
+            $this->getMonitoringService(),
         );
     }
 
@@ -42,7 +42,7 @@ class MonitoringCommunicationFactory extends AbstractCommunicationFactory
             $this->getStoreFacade(),
             $this->getLocaleFacade(),
             $this->getUtilNetworkService(),
-            $this->getConfig()->getIgnorableTransactions()
+            $this->getConfig()->getIgnorableTransactions(),
         );
     }
 

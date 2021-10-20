@@ -111,7 +111,7 @@ class OmsTriggerForm extends AbstractType
     protected function setAction(FormBuilderInterface $builder, array $options)
     {
         $builder->setAction(
-            $this->createAction($options)
+            $this->createAction($options),
         );
 
         return $this;
@@ -126,7 +126,7 @@ class OmsTriggerForm extends AbstractType
     {
         return Url::generate(
             static::ROUTE_OMS_TRIGGER . $options[static::OPTION_OMS_ACTION],
-            $options[static::OPTION_QUERY_PARAMS]
+            $options[static::OPTION_QUERY_PARAMS],
         );
     }
 }

@@ -47,7 +47,7 @@ class CollectorAndSpecification implements CollectorSpecificationInterface
             $rightCollectedItems,
             function (DiscountableItemTransfer $collected, DiscountableItemTransfer $toCollect) {
                 return strcmp(spl_object_hash($collected->getOriginalItemCalculatedDiscounts()), spl_object_hash($toCollect->getOriginalItemCalculatedDiscounts()));
-            }
+            },
         );
     }
 }

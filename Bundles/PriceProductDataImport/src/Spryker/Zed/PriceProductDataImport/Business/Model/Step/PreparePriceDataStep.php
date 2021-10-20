@@ -101,8 +101,8 @@ class PreparePriceDataStep implements DataImportStepInterface
             throw new InvalidPriceDataKeyException(
                 sprintf(
                     'Price data key "%s" has invalid format. Should be in following format: "price_data.some_key"',
-                    $key
-                )
+                    $key,
+                ),
             );
         }
 

@@ -44,12 +44,12 @@ class GlossaryReader implements GlossaryReaderInterface
         $glossaryKeys = $this->extractGlossaryKeysFromReturnReasonTransfers($returnReasonTransfers);
 
         $glossaryKeyTransfers = $this->indexGlossaryKeyTransfersByIdGlossaryKey(
-            $this->glossaryFacade->getGlossaryKeyTransfersByGlossaryKeys($glossaryKeys)
+            $this->glossaryFacade->getGlossaryKeyTransfersByGlossaryKeys($glossaryKeys),
         );
 
         $translationTransfers = $this->glossaryFacade->getTranslationsByGlossaryKeysAndLocaleTransfers(
             $glossaryKeys,
-            $this->localeFacade->getLocaleCollection()
+            $this->localeFacade->getLocaleCollection(),
         );
 
         return $this->mapReturnReasonTranslations($translationTransfers, $glossaryKeyTransfers);

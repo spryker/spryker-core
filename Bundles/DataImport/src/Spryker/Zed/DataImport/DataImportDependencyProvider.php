@@ -128,7 +128,7 @@ class DataImportDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::FACADE_TOUCH, function (Container $container) {
             return new DataImportToTouchBridge(
-                $container->getLocator()->touch()->facade()
+                $container->getLocator()->touch()->facade(),
             );
         });
 
@@ -144,7 +144,7 @@ class DataImportDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::FACADE_EVENT, function (Container $container) {
             return new DataImportToEventBridge(
-                $container->getLocator()->event()->facade()
+                $container->getLocator()->event()->facade(),
             );
         });
 
@@ -160,7 +160,7 @@ class DataImportDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::FACADE_GRACEFUL_RUNNER, function (Container $container) {
             return new DataImportToGracefulRunnerBridge(
-                $container->getLocator()->gracefulRunner()->facade()
+                $container->getLocator()->gracefulRunner()->facade(),
             );
         });
 
@@ -190,7 +190,7 @@ class DataImportDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::PROPEL_CONNECTION, function () {
             return new DataImportToPropelConnectionBridge(
-                Propel::getConnection()
+                Propel::getConnection(),
             );
         });
 

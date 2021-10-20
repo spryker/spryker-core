@@ -28,7 +28,7 @@ class CategoryResourceRoutePlugin extends AbstractPlugin implements ResourceRout
     {
         $resourceRouteCollection->addGet(
             CategoriesRestApiConfig::RESOURCE_CATEGORY_NODES_ACTION_NAME,
-            CategoriesRestApiConfig::RESOURCE_CATEGORY_NODES_IS_PROTECTED
+            CategoriesRestApiConfig::RESOURCE_CATEGORY_NODES_IS_PROTECTED,
         );
 
         return $resourceRouteCollection;

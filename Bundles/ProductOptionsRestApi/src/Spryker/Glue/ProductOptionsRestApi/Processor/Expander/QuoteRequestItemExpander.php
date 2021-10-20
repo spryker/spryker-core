@@ -71,7 +71,7 @@ class QuoteRequestItemExpander implements QuoteRequestItemExpanderInterface
 
         return $this->setTranslations(
             $restQuoteRequestsAttributesTransfers,
-            $translations
+            $translations,
         );
     }
 

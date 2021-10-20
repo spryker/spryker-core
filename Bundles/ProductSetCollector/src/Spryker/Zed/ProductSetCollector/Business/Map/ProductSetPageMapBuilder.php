@@ -110,7 +110,7 @@ class ProductSetPageMapBuilder implements PageMapInterface
     {
         $imageSets = $this->storageProductImageReader->getProductSetImageSets(
             $productSetStorageTransfer->getIdProductSet(),
-            $localeTransfer->getIdLocale()
+            $localeTransfer->getIdLocale(),
         );
 
         $productSetStorageTransfer->setImageSets($imageSets);

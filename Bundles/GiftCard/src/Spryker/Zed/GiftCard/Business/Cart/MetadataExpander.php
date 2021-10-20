@@ -60,7 +60,7 @@ class MetadataExpander implements MetadataExpanderInterface
             $giftCardMetadata = $this->getGiftCardMetadata(
                 $itemTransfer,
                 $indexedGiftCardAbstractConfigurationForAbstractProductTransfers,
-                $indexedGiftCartConfigurationForProductTransfers
+                $indexedGiftCartConfigurationForProductTransfers,
             );
             $itemTransfer->setGiftCardMetadata($giftCardMetadata);
         }

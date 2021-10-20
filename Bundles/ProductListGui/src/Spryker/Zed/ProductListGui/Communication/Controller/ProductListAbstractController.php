@@ -47,7 +47,7 @@ class ProductListAbstractController extends AbstractController
             ->getFactory()
             ->getProductListAggregateForm(
                 $aggregateFormDataProvider->getData($idProductList),
-                $aggregateFormDataProvider->getOptions()
+                $aggregateFormDataProvider->getOptions(),
             );
 
         return $aggregateForm;
@@ -75,13 +75,13 @@ class ProductListAbstractController extends AbstractController
         $productListTransfer = $aggregateFormTransfer->getProductList();
         $productListTransfer->setProductListCategoryRelation($aggregateFormTransfer->getProductListCategoryRelation());
         $productListTransfer->setProductListProductConcreteRelation(
-            $aggregateFormTransfer->getProductListProductConcreteRelation()
+            $aggregateFormTransfer->getProductListProductConcreteRelation(),
         );
         $productListTransfer->setProductListProductConcreteRelation(
             $this->getProductListProductConcreteRelationFromCsv(
                 $productListTransfer->getProductListProductConcreteRelation(),
-                $aggregateForm->get(ProductListAggregateFormTransfer::PRODUCT_LIST_PRODUCT_CONCRETE_RELATION)
-            )
+                $aggregateForm->get(ProductListAggregateFormTransfer::PRODUCT_LIST_PRODUCT_CONCRETE_RELATION),
+            ),
         );
 
         return $productListTransfer;

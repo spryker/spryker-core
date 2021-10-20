@@ -115,7 +115,7 @@ class OauthUserSecurityPluginTest extends Unit
         ]);
 
         $this->tester->setOauthUserClientStrategyPlugin(
-            $this->createOauthUserClientStrategyPluginMock(true, $userTransfer->getUsername())
+            $this->createOauthUserClientStrategyPluginMock(true, $userTransfer->getUsername()),
         );
 
         $securityPlugin = new OauthUserSecurityPlugin();
@@ -133,7 +133,7 @@ class OauthUserSecurityPluginTest extends Unit
         $httpKernelBrowser->request(
             'get',
             '/security-oauth-user/login',
-            ['code' => static::SOME_CODE, 'state' => static::SOME_EMAIL]
+            ['code' => static::SOME_CODE, 'state' => static::SOME_EMAIL],
         );
 
         // Assert
@@ -164,7 +164,7 @@ class OauthUserSecurityPluginTest extends Unit
         $this->assertNotNull($firewalls[static::SECURITY_USER_FIREWALL_NAME]['users']);
         $this->assertSame(
             static::SECURITY_OAUTH_USER_TOKEN_AUTHENTICATOR,
-            $firewalls[static::SECURITY_USER_FIREWALL_NAME]['guard']['authenticators'][0]
+            $firewalls[static::SECURITY_USER_FIREWALL_NAME]['guard']['authenticators'][0],
         );
     }
 
@@ -187,7 +187,7 @@ class OauthUserSecurityPluginTest extends Unit
         $this->assertNotNull($firewalls[static::SECURITY_FIREWALL_NAME]['users']);
         $this->assertSame(
             static::SECURITY_OAUTH_USER_TOKEN_AUTHENTICATOR,
-            $firewalls[static::SECURITY_FIREWALL_NAME]['guard']['authenticators'][0]
+            $firewalls[static::SECURITY_FIREWALL_NAME]['guard']['authenticators'][0],
         );
     }
 
@@ -200,7 +200,7 @@ class OauthUserSecurityPluginTest extends Unit
         $container = $this->tester->getContainer();
 
         $this->tester->setOauthUserClientStrategyPlugin(
-            $this->createOauthUserClientStrategyPluginMock(false)
+            $this->createOauthUserClientStrategyPluginMock(false),
         );
 
         $securityPlugin = new OauthUserSecurityPlugin();
@@ -217,7 +217,7 @@ class OauthUserSecurityPluginTest extends Unit
         $httpKernelBrowser->request(
             'get',
             '/security-oauth-user/login',
-            ['code' => static::SOME_CODE, 'state' => static::SOME_EMAIL]
+            ['code' => static::SOME_CODE, 'state' => static::SOME_EMAIL],
         );
 
         // Assert
@@ -250,7 +250,7 @@ class OauthUserSecurityPluginTest extends Unit
         $this->assertSame(
             'test-text',
             $httpKernelBrowser->getResponse()->getContent(),
-            'Expected that ignorable paths are accessible.'
+            'Expected that ignorable paths are accessible.',
         );
     }
 
@@ -276,7 +276,7 @@ class OauthUserSecurityPluginTest extends Unit
 
         if ($successFlow) {
             $resourceOwnerResponseTransfer->setResourceOwner(
-                (new ResourceOwnerTransfer())->setEmail($email)
+                (new ResourceOwnerTransfer())->setEmail($email),
             );
         }
 

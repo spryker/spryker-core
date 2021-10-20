@@ -77,14 +77,14 @@ class OrdersDashboardCardProvider implements OrdersDashboardCardProviderInterfac
             '@SalesMerchantPortalGui/Partials/orders_dashboard_card_title.twig',
             [
                 'merchantOrderCounts' => $merchantOrderCountsTransfer,
-            ]
+            ],
         );
         $content = $this->twigEnvironment->render(
             '@SalesMerchantPortalGui/Partials/orders_dashboard_card_content.twig',
             [
                 'merchantOrderCounts' => $merchantOrderCountsTransfer,
                 'newOrdersDaysThreshold' => $this->salesMerchantPortalGuiConfig->getDashboardNewOrdersDaysThreshold(),
-            ]
+            ],
         );
 
         return (new MerchantDashboardCardTransfer())

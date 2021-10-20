@@ -165,7 +165,7 @@ class WebDriverHelper extends Extension
             if (!file_exists(realpath($this->config['path']))) {
                 throw new ExtensionException(
                     $this,
-                    sprintf('Webdriver executable not found: %s', $this->config['path'])
+                    sprintf('Webdriver executable not found: %s', $this->config['path']),
                 );
             }
 
@@ -198,7 +198,7 @@ class WebDriverHelper extends Extension
         }
 
         $this->getWebDriver()->_reconfigure(
-            $this->getWebDriverConfig()
+            $this->getWebDriverConfig(),
         );
     }
 
@@ -238,7 +238,7 @@ class WebDriverHelper extends Extension
             $this->pipes,
             null,
             null,
-            ['bypass_shell' => true]
+            ['bypass_shell' => true],
         );
 
         // phpcs:disable

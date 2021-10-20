@@ -168,7 +168,7 @@ class SearchPreferencesTable extends AbstractTable
     {
         return $this->generateLabel(
             $boolValue ? 'yes' : 'no',
-            null
+            null,
         );
     }
 
@@ -184,19 +184,19 @@ class SearchPreferencesTable extends AbstractTable
                 sprintf(
                     '/product-search/search-preferences/edit?%s=%d',
                     SearchPreferencesController::PARAM_ID,
-                    $productAttributeKeyEntity->getIdProductAttributeKey()
+                    $productAttributeKeyEntity->getIdProductAttributeKey(),
                 ),
-                'Edit'
+                'Edit',
             ),
             $this->generateRemoveButton(
                 sprintf(
                     '/product-search/search-preferences/clean?%s=%d',
                     SearchPreferencesController::PARAM_ID,
-                    $productAttributeKeyEntity->getIdProductAttributeKey()
+                    $productAttributeKeyEntity->getIdProductAttributeKey(),
                 ),
                 'Deactivate all',
                 [],
-                CleanSearchPreferencesForm::class
+                CleanSearchPreferencesForm::class,
             ),
         ];
 

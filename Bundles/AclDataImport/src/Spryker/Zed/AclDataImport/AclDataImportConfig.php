@@ -53,7 +53,7 @@ class AclDataImportConfig extends DataImportConfig
 
         return $this->buildImporterConfiguration(
             $moduleDataImportDirectory . static::FILE_ACL_ROLE,
-            static::IMPORT_TYPE_ACL_ROLE
+            static::IMPORT_TYPE_ACL_ROLE,
         );
     }
 
@@ -68,7 +68,7 @@ class AclDataImportConfig extends DataImportConfig
 
         return $this->buildImporterConfiguration(
             $moduleDataImportDirectory . static::FILE_ACL_GROUP,
-            static::IMPORT_TYPE_ACL_GROUP
+            static::IMPORT_TYPE_ACL_GROUP,
         );
     }
 
@@ -83,7 +83,7 @@ class AclDataImportConfig extends DataImportConfig
 
         return $this->buildImporterConfiguration(
             $moduleDataImportDirectory . static::FILE_ACL_GROUP_ROLE,
-            static::IMPORT_TYPE_ACL_GROUP_ROLE
+            static::IMPORT_TYPE_ACL_GROUP_ROLE,
         );
     }
 
@@ -105,7 +105,7 @@ class AclDataImportConfig extends DataImportConfig
             . DIRECTORY_SEPARATOR . '..'
             . DIRECTORY_SEPARATOR . '..'
             . DIRECTORY_SEPARATOR . '..'
-            . DIRECTORY_SEPARATOR . '..'
+            . DIRECTORY_SEPARATOR . '..',
         );
 
         return $moduleRoot . DIRECTORY_SEPARATOR;

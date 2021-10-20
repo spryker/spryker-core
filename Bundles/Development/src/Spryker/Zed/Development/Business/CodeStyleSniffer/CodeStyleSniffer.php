@@ -164,7 +164,7 @@ class CodeStyleSniffer
         $message = sprintf(
             'Could not find a valid path to your module "%s". Expected path "%s". Maybe there is a typo in the module name?',
             $module,
-            $path
+            $path,
         );
 
         throw new PathDoesNotExistException($message);
@@ -276,7 +276,7 @@ class CodeStyleSniffer
             'vendor/bin/%s %s%s',
             $optionFix ? 'phpcbf' : 'phpcs',
             $path,
-            $processConfig
+            $processConfig,
         );
 
         $optionDryRun = $codeStyleSnifferConfiguration->isDryRun();

@@ -90,7 +90,7 @@ class TableHelper extends Module
             count(array_intersect_assoc($expectedRow, $actualRow)),
             'Row does not contain the provided data' . PHP_EOL
             . '- <info>' . var_export($expectedRow, true) . '</info>' . PHP_EOL
-            . '+ ' . var_export($actualRow, true)
+            . '+ ' . var_export($actualRow, true),
         );
     }
 
@@ -140,7 +140,7 @@ class TableHelper extends Module
             $this->fail(sprintf(
                 'Current data set has only "%d" number of entries. The requested row "%d" doesn\'t exists.',
                 count($this->currentData['data']),
-                $rowPosition
+                $rowPosition,
             ));
         }
 
@@ -223,7 +223,7 @@ class TableHelper extends Module
             count(array_intersect_assoc($expectedRow, $actualRow)),
             "Row accidentally contains the provided data\n"
             . '- <info>' . var_export($expectedRow, true) . "</info>\n"
-            . '+ ' . var_export($actualRow, true)
+            . '+ ' . var_export($actualRow, true),
         );
     }
 

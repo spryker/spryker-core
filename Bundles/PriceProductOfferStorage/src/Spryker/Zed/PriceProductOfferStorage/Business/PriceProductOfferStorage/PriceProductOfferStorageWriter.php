@@ -338,7 +338,7 @@ class PriceProductOfferStorageWriter implements PriceProductOfferStorageWriterIn
         $priceProductStoreIds = $this->eventBehaviorFacade->getEventTransferIds($eventEntityTransfers);
 
         $priceProductTransfers = $this->priceProductOfferFacade->getProductOfferPrices(
-            (new PriceProductOfferCriteriaTransfer())->setPriceProductStoreIds($priceProductStoreIds)
+            (new PriceProductOfferCriteriaTransfer())->setPriceProductStoreIds($priceProductStoreIds),
         );
 
         $priceProductOfferIds = [];

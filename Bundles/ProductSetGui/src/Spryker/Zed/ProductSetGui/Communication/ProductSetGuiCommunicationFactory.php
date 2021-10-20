@@ -272,7 +272,7 @@ class ProductSetGuiCommunicationFactory extends AbstractCommunicationFactory
         return new ProductAbstractTableHelper(
             $this->getProductImageFacade(),
             $this->getPriceProductFacade(),
-            $this->getMoneyFacade()
+            $this->getMoneyFacade(),
         );
     }
 

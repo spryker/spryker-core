@@ -36,7 +36,7 @@ class PaymentDataProvider implements FormDataProviderInterface
         foreach ($this->subFormPlugins as $subFormPlugin) {
             $options = array_merge(
                 $options,
-                $subFormPlugin->getOptions($quoteTransfer)
+                $subFormPlugin->getOptions($quoteTransfer),
             );
         }
 

@@ -25,7 +25,7 @@ class SalesOrderThresholdDataImportBusinessFactory extends DataImportBusinessFac
     public function createSalesOrderThresholdDataImport()
     {
         $dataImporter = $this->getCsvDataImporterFromConfig(
-            $this->getConfig()->getSalesOrderThresholdDataImporterConfiguration()
+            $this->getConfig()->getSalesOrderThresholdDataImporterConfiguration(),
         );
 
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();
@@ -33,8 +33,8 @@ class SalesOrderThresholdDataImportBusinessFactory extends DataImportBusinessFac
             new SalesOrderThresholdWriterStep(
                 $this->getSalesOrderThresholdFacade(),
                 $this->getStoreFacade(),
-                $this->getCurrencyFacade()
-            )
+                $this->getCurrencyFacade(),
+            ),
         );
 
         $dataImporter->addDataSetStepBroker($dataSetStepBroker);

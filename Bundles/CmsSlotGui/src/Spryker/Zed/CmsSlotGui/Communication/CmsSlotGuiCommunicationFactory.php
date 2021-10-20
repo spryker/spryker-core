@@ -26,7 +26,7 @@ class CmsSlotGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createTemplateListTable(): TemplateTable
     {
         return new TemplateTable(
-            $this->getCmsSlotTemplateQuery()
+            $this->getCmsSlotTemplateQuery(),
         );
     }
 
@@ -40,7 +40,7 @@ class CmsSlotGuiCommunicationFactory extends AbstractCommunicationFactory
         return new SlotTable(
             $this->getCmsSlotQuery(),
             $this->getTranslatorFacade(),
-            $idSlotTemplate
+            $idSlotTemplate,
         );
     }
 

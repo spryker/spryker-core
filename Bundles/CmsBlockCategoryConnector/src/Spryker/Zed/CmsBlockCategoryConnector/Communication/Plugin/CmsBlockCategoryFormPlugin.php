@@ -41,7 +41,7 @@ class CmsBlockCategoryFormPlugin extends AbstractPlugin implements CmsBlockFormP
 
         $formType->buildForm(
             $builder,
-            $dataProvider->getOptions()
+            $dataProvider->getOptions(),
         );
     }
 }

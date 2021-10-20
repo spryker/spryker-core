@@ -30,7 +30,7 @@ class TaxSetMapper implements TaxSetMapperInterface
             if ($countryEntity) {
                 $countryTransfer = (new CountryTransfer())->fromArray(
                     $countryEntity->toArray(),
-                    true
+                    true,
                 );
                 $taxRateTransfer->setCountry($countryTransfer);
             }

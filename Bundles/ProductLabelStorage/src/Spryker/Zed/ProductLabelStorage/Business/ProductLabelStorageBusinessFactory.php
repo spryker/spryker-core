@@ -34,7 +34,7 @@ class ProductLabelStorageBusinessFactory extends AbstractBusinessFactory
             $this->getProductLabelFacade(),
             $this->getRepository(),
             $this->getEntityManager(),
-            $this->createProductLabelDictionaryItemMapper()
+            $this->createProductLabelDictionaryItemMapper(),
         );
     }
 
@@ -47,7 +47,7 @@ class ProductLabelStorageBusinessFactory extends AbstractBusinessFactory
             $this->getEventBehaviorFacade(),
             $this->getProductLabelFacade(),
             $this->getRepository(),
-            $this->getEntityManager()
+            $this->getEntityManager(),
         );
     }
 

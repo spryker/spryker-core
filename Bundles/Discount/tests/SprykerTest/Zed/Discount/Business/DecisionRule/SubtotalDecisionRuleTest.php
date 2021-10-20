@@ -46,7 +46,7 @@ class SubtotalDecisionRuleTest extends BaseRuleTester
         $isSatisfied = $subtotalDecisionRule->isSatisfiedBy(
             $quoteTransfer,
             $this->createItemTransfer(),
-            $this->createClauseTransfer(10)
+            $this->createClauseTransfer(10),
         );
 
         $this->assertTrue($isSatisfied);
@@ -62,7 +62,7 @@ class SubtotalDecisionRuleTest extends BaseRuleTester
         $isSatisfied = $subtotalDecisionRule->isSatisfiedBy(
             $this->createQuoteTransfer(),
             $this->createItemTransfer(),
-            $this->createClauseTransfer(10)
+            $this->createClauseTransfer(10),
         );
 
         $this->assertFalse($isSatisfied);

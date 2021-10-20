@@ -80,7 +80,7 @@ class AddProductConcreteForm extends AbstractType
 
             $formData[static::FIELD_PRODUCTS] = $this->getFactory()->getUtilEncodingService()->decodeJson(
                 $formData[static::FIELD_PRODUCTS],
-                true
+                true,
             );
 
             $event->setData($formData);

@@ -53,7 +53,7 @@ class PaymentHydratorPluginCollection implements PaymentHydratorPluginCollection
     {
         if (empty($this->plugins[$provider])) {
             throw new PaymentHydratorPluginNotFoundException(
-                sprintf('Could not find plugin for "%s" provider. You need to add the needed plugins within your DependencyInjector.', $provider)
+                sprintf('Could not find plugin for "%s" provider. You need to add the needed plugins within your DependencyInjector.', $provider),
             );
         }
 

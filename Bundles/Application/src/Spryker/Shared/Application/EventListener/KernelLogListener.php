@@ -57,7 +57,7 @@ class KernelLogListener implements EventSubscriberInterface
             $this->getSapi(),
             APPLICATION,
             $request->getMethod(),
-            $request->getRequestUri()
+            $request->getRequestUri(),
         );
 
         $this->logger->info($message, ['request' => $request]);
@@ -90,14 +90,14 @@ class KernelLogListener implements EventSubscriberInterface
                 $this->getSapi(),
                 APPLICATION,
                 $response->getStatusCode(),
-                $response->getTargetUrl()
+                $response->getTargetUrl(),
             );
         } else {
             $message = sprintf(
                 '%s Response %s [%s]',
                 $this->getSapi(),
                 APPLICATION,
-                $response->getStatusCode()
+                $response->getStatusCode(),
             );
         }
 

@@ -49,7 +49,7 @@ class PropelDatabase implements PropelDatabaseInterface
 
         if (!$this->databaseCreatorCollection->has($engine)) {
             throw new DatabaseCreatorNotFoundException(
-                sprintf('Can not find a DatabaseCreator for "%s" engine', $engine)
+                sprintf('Can not find a DatabaseCreator for "%s" engine', $engine),
             );
         }
 

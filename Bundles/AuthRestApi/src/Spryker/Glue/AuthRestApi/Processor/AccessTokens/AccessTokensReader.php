@@ -92,7 +92,7 @@ class AccessTokensReader implements AccessTokensReaderInterface
             ->createRestResource(
                 AuthRestApiConfig::RESOURCE_ACCESS_TOKENS,
                 null,
-                $restTokenAttributesTransfer
+                $restTokenAttributesTransfer,
             );
 
         $response = $this->restResourceBuilder->createRestResponse();

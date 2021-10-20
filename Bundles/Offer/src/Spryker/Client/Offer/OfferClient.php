@@ -36,7 +36,7 @@ class OfferClient extends AbstractClient implements OfferClientInterface
         $this->getFactory()
             ->createOfferHydrator()
             ->hydrateQuoteWithCustomer(
-                $offerListTransfer->getOffers()
+                $offerListTransfer->getOffers(),
             );
 
         return $offerListTransfer;
@@ -60,7 +60,7 @@ class OfferClient extends AbstractClient implements OfferClientInterface
         $offerTransfers = $this->getFactory()
             ->createOfferHydrator()
             ->hydrateQuoteWithCustomer(
-                new ArrayObject([$offerTransfer])
+                new ArrayObject([$offerTransfer]),
             );
 
         return $offerTransfers[0];
@@ -87,7 +87,7 @@ class OfferClient extends AbstractClient implements OfferClientInterface
         $offerTransfers = $this->getFactory()
             ->createOfferHydrator()
             ->hydrateQuoteWithCustomer(
-                new ArrayObject([$offerTransfer])
+                new ArrayObject([$offerTransfer]),
             );
 
         $offerResponseTransfer->setOffer($offerTransfers[0]);

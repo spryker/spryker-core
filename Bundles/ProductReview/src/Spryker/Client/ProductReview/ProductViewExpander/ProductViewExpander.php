@@ -105,7 +105,7 @@ class ProductViewExpander implements ProductViewExpanderInterface
 
             if (isset($productViewTransfers[$productId])) {
                 $productReviewSummaryTransfer = $this->productReviewSummaryCalculator->calculate(
-                    $this->createRatingAggregationTransfer($productReviews)
+                    $this->createRatingAggregationTransfer($productReviews),
                 );
 
                 $productViewTransfers[$productId]->setRating($productReviewSummaryTransfer);

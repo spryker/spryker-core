@@ -43,7 +43,7 @@ class CreateShipmentMethodController extends AbstractController
             ->setStoreRelation(new StoreRelationTransfer());
         $shipmentMethodForm = $this->getFactory()->createShipmentMethodForm(
             $dataProvider->getData($shipmentMethodTransfer),
-            $dataProvider->getOptions()
+            $dataProvider->getOptions(),
         );
         $shipmentMethodForm->handleRequest($request);
 

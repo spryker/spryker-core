@@ -30,7 +30,7 @@ class MerchantSearchRepository extends AbstractRepository implements MerchantSea
 
         $merchantSearchEntityCollection = $this->getMerchantSearchEntityCollection(
             $filterTransfer,
-            $merchantIds
+            $merchantIds,
         );
 
         foreach ($merchantSearchEntityCollection as $merchantSearchEntity) {

@@ -63,7 +63,7 @@ class ReclamationSalesTablePlugin implements SalesTablePluginInterface
             [
                 'class' => 'btn-remove',
                 'icon' => 'fa-repeat',
-            ]
+            ],
         );
     }
 }

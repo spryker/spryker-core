@@ -40,7 +40,7 @@ class ProductListCategorySearchListener extends AbstractPlugin implements EventB
 
         $this->getFactory()->getProductPageSearchFacade()->refresh(
             $this->getFacade()->getProductAbstractIdsByCategoryIds($categoryIds),
-            [ProductListSearchConfig::PLUGIN_PRODUCT_LIST_DATA]
+            [ProductListSearchConfig::PLUGIN_PRODUCT_LIST_DATA],
         );
     }
 

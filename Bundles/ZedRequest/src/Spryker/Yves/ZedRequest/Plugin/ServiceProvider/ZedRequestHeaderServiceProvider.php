@@ -39,7 +39,7 @@ class ZedRequestHeaderServiceProvider extends AbstractPlugin implements ServiceP
     {
         $handlerStackContainer = new HandlerStackContainer();
         $handlerStackContainer->addMiddleware(
-            $this->getFactory()->createZedRequestHeaderMiddleware()
+            $this->getFactory()->createZedRequestHeaderMiddleware(),
         );
     }
 }

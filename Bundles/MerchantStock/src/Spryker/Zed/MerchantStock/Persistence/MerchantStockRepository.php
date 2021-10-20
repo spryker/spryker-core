@@ -42,7 +42,7 @@ class MerchantStockRepository extends AbstractRepository implements MerchantStoc
 
         foreach ($merchantStocksEntities as $merchantStockEntity) {
             $stockCollectionTransfer->addStock(
-                $merchantStockMapper->mapStockEntityToStockTransfer($merchantStockEntity->getSpyStock(), new StockTransfer())
+                $merchantStockMapper->mapStockEntityToStockTransfer($merchantStockEntity->getSpyStock(), new StockTransfer()),
             );
         }
 

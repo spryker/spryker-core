@@ -67,7 +67,7 @@ class NavigationCollectorRunner implements NavigationCollectorRunnerInterface
             $dataReader,
             $dataWriter,
             $touchUpdater,
-            $output
+            $output,
         );
     }
 }

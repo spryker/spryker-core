@@ -137,7 +137,7 @@ class CmsPageFormType extends AbstractType
         $builder->add(
             static::FIELD_SEARCHABLE,
             CheckboxType::class,
-            ['required' => false]
+            ['required' => false],
         );
 
         return $this;
@@ -267,7 +267,7 @@ class CmsPageFormType extends AbstractType
             [
                 'label' => false,
                 'required' => false,
-            ]
+            ],
         );
 
         return $this;
@@ -337,7 +337,7 @@ class CmsPageFormType extends AbstractType
             },
             function ($value) {
                 return $value;
-            }
+            },
         );
     }
 

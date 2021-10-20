@@ -91,7 +91,7 @@ class CompanySupplierFacadeTest extends Test
         // Act
         $this->tester->getFacade()
             ->saveCompanySupplierRelationsForProductConcrete(
-                $productConcreteTransfer
+                $productConcreteTransfer,
             );
         $CompanySupplierProductRelations = $this->tester->getFacade()
             ->getSuppliersByIdProduct($productConcreteTransfer->getIdProductConcrete());

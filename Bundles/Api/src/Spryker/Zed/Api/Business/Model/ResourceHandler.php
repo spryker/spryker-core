@@ -68,7 +68,7 @@ class ResourceHandler implements ResourceHandlerInterface
         throw new ApiDispatchingException(sprintf(
             'Unsupported method "%s" for resource "%s"',
             $method,
-            $resource
+            $resource,
         ));
     }
 

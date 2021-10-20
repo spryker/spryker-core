@@ -67,7 +67,7 @@ class CmsBlockCategoryCollectorRunner implements CmsBlockCategoryCollectorRunner
             $dataReader,
             $dataWriter,
             $touchUpdater,
-            $output
+            $output,
         );
     }
 }

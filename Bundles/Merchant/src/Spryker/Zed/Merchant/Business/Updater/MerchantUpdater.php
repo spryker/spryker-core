@@ -176,7 +176,7 @@ class MerchantUpdater implements MerchantUpdaterInterface
         if (!$currentStoreRelationTransfer->getIdStores()) {
             return $this->createMerchantStores(
                 $merchantTransfer,
-                $storeRelationTransfer->getIdStores()
+                $storeRelationTransfer->getIdStores(),
             );
         }
 

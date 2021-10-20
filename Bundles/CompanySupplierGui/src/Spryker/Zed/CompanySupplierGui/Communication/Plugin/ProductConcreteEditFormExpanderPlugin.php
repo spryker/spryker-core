@@ -33,7 +33,7 @@ class ProductConcreteEditFormExpanderPlugin extends AbstractPlugin implements Pr
 
         $formType->buildForm(
             $builder,
-            $dataProvider->getOptions()
+            $dataProvider->getOptions(),
         );
     }
 }

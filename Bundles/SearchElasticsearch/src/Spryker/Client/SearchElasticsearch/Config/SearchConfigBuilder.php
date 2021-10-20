@@ -65,7 +65,7 @@ class SearchConfigBuilder implements SearchConfigBuilderInterface
                 $this->sortConfig,
                 $this->paginationConfig,
                 $this->searchConfigBuilderPlugins,
-                $this->searchConfigExpanderPlugins
+                $this->searchConfigExpanderPlugins,
             );
         }
 

@@ -175,7 +175,7 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
             $bundledItems = $this->createBundledItemsTransferCollection(
                 $productForBundleTransfers,
                 $bundleItemIdentifier,
-                $quoteTransfer
+                $quoteTransfer,
             );
 
             $lastBundledItemTransfer = $bundledItems[count($bundledItems) - 1];
@@ -184,7 +184,7 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
             $this->distributeBundleUnitPrice(
                 $bundledItems,
                 $this->getPriceByPriceMode($itemTransfer, $priceMode),
-                $quoteTransfer->getPriceMode()
+                $quoteTransfer->getPriceMode(),
             );
 
             $addToCartItems = array_merge($addToCartItems, $bundledItems);
@@ -204,7 +204,7 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
             $options,
             function (ProductOptionTransfer $productOptionLeft, ProductOptionTransfer $productOptionRight) {
                 return ($productOptionLeft->getSku() < $productOptionRight->getSku()) ? -1 : 1;
-            }
+            },
         );
 
         return $options;
@@ -244,7 +244,7 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
                 $bundledItems[] = $this->createBundledItemTransfer(
                     $productForBundleTransfer,
                     $bundleItemIdentifier,
-                    $quoteTransfer
+                    $quoteTransfer,
                 );
             }
         }
@@ -311,17 +311,17 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
         QuoteTransfer $quoteTransfer
     ) {
         $productConcreteTransfer = $this->getProductConcreteTransfer(
-            $productForBundleTransfer->getSku()
+            $productForBundleTransfer->getSku(),
         );
 
         $localizedProductName = $this->getLocalizedProductName(
             $productConcreteTransfer,
-            $this->localeFacade->getCurrentLocale()
+            $this->localeFacade->getCurrentLocale(),
         );
 
         $unitPrice = $this->getProductPrice(
             $productForBundleTransfer->getSku(),
-            $quoteTransfer
+            $quoteTransfer,
         );
 
         $itemTransfer = new ItemTransfer();
@@ -384,7 +384,7 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
         if (!isset(static::$localizedProductNameCache[$localeMapKey])) {
             static::$localizedProductNameCache[$localeMapKey] = $this->productFacade->getLocalizedProductConcreteName(
                 $productConcreteTransfer,
-                $this->localeFacade->getCurrentLocale()
+                $this->localeFacade->getCurrentLocale(),
             );
         }
 

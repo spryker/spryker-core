@@ -57,7 +57,7 @@ class ProductConcreteProductListPageMapExpanderPlugin extends AbstractPlugin imp
     protected function setProductListsData(PageMapTransfer $pageMapTransfer, array $productData): PageMapTransfer
     {
         $pageMapTransfer->setProductLists(
-            $this->getFacade()->mapProductDataToProductListMapTransfer($productData, new ProductListMapTransfer())
+            $this->getFacade()->mapProductDataToProductListMapTransfer($productData, new ProductListMapTransfer()),
         );
 
         return $pageMapTransfer;

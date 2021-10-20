@@ -70,7 +70,7 @@ class ProductOptionRestResponseBuilder implements ProductOptionRestResponseBuild
     ): array {
         $restProductOptionsAttributesTransfers = $this->getSortedRestProductOptionsAttributesTransfers(
             $productAbstractOptionStorageTransfers,
-            $sorts
+            $sorts,
         );
         $productOptionRestResources = [];
         foreach ($resourceMapping as $parentResourceId => $idProductAbstract) {
@@ -81,7 +81,7 @@ class ProductOptionRestResponseBuilder implements ProductOptionRestResponseBuild
             $productOptionRestResources[$parentResourceId] = $this->createRestResources(
                 $restProductOptionsAttributesTransfers[$idProductAbstract],
                 $parentResourceType,
-                $parentResourceId
+                $parentResourceId,
             );
         }
 
@@ -103,19 +103,19 @@ class ProductOptionRestResponseBuilder implements ProductOptionRestResponseBuild
         foreach ($productAbstractOptionStorageTransfers as $idProductAbstract => $productAbstractOptionStorageTransfer) {
             $restProductOptionsAttributesTransfers[$idProductAbstract] = $this->productOptionMapper
                 ->mapProductAbstractOptionStorageTransferToRestProductOptionsAttributesTransfers(
-                    $productAbstractOptionStorageTransfer
+                    $productAbstractOptionStorageTransfer,
                 );
 
             $restProductOptionsAttributesTransfers[$idProductAbstract] =
                 $this->expandRestProductOptionsAttributesTransfersByCurrencyIsoCode(
                     $restProductOptionsAttributesTransfers[$idProductAbstract],
-                    $currencyIsoCode
+                    $currencyIsoCode,
                 );
 
             $restProductOptionsAttributesTransfers[$idProductAbstract] = $this->productOptionSorter
                 ->sortRestProductOptionsAttributesTransfers(
                     $restProductOptionsAttributesTransfers[$idProductAbstract],
-                    $sorts
+                    $sorts,
                 );
         }
 
@@ -139,11 +139,11 @@ class ProductOptionRestResponseBuilder implements ProductOptionRestResponseBuild
             $restResource = $this->restResourceBuilder->createRestResource(
                 ProductOptionsRestApiConfig::RESOURCE_PRODUCT_OPTIONS,
                 $restProductOptionsAttributesTransfer->getSku(),
-                $restProductOptionsAttributesTransfer
+                $restProductOptionsAttributesTransfer,
             );
             $restResource->addLink(
                 RestLinkInterface::LINK_SELF,
-                $this->generateSelfLink($parentResourceType, $parentResourceId, $restProductOptionsAttributesTransfer->getSku())
+                $this->generateSelfLink($parentResourceType, $parentResourceId, $restProductOptionsAttributesTransfer->getSku()),
             );
             $restResources[] = $restResource;
         }
@@ -165,7 +165,7 @@ class ProductOptionRestResponseBuilder implements ProductOptionRestResponseBuild
             $parentResourceType,
             $parentResourceId,
             ProductOptionsRestApiConfig::RESOURCE_PRODUCT_OPTIONS,
-            $productOptionSku
+            $productOptionSku,
         );
     }
 

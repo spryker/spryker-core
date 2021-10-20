@@ -75,7 +75,7 @@ class PriceProductTableDataMapper implements PriceProductTableDataMapperInterfac
             if (!array_key_exists($rowKey, $priceProductTableViewTransfers)) {
                 $priceProductTableViewTransfers[$rowKey] = $this->mapPriceProductTransferToPriceProductTableViewTransfer(
                     $priceProductTransfer,
-                    new PriceProductTableViewTransfer()
+                    new PriceProductTableViewTransfer(),
                 );
             }
 
@@ -86,7 +86,7 @@ class PriceProductTableDataMapper implements PriceProductTableDataMapperInterfac
 
             $prices = array_merge(
                 $priceProductTableViewTransfer->getPrices(),
-                $this->preparePrices($priceProductTransfer, $priceTypeTransfers)
+                $this->preparePrices($priceProductTransfer, $priceTypeTransfers),
             );
 
             $priceProductTableViewTransfer
@@ -167,7 +167,7 @@ class PriceProductTableDataMapper implements PriceProductTableDataMapperInterfac
         return $this->createPriceProductTableRowKey(
             $priceProductTransfer->getMoneyValueOrFail()->getStoreOrFail()->getNameOrFail(),
             $priceProductTransfer->getMoneyValueOrFail()->getCurrencyOrFail()->getCodeOrFail(),
-            $priceProductTransfer->getVolumeQuantity() ?? 1
+            $priceProductTransfer->getVolumeQuantity() ?? 1,
         );
     }
 
@@ -208,7 +208,7 @@ class PriceProductTableDataMapper implements PriceProductTableDataMapperInterfac
             '%s[%s][%s]',
             $pryceTypeName,
             PriceProductTransfer::MONEY_VALUE,
-            MoneyValueTransfer::GROSS_AMOUNT
+            MoneyValueTransfer::GROSS_AMOUNT,
         );
     }
 
@@ -223,7 +223,7 @@ class PriceProductTableDataMapper implements PriceProductTableDataMapperInterfac
             '%s[%s][%s]',
             $pryceTypeName,
             PriceProductTransfer::MONEY_VALUE,
-            MoneyValueTransfer::NET_AMOUNT
+            MoneyValueTransfer::NET_AMOUNT,
         );
     }
 
@@ -254,7 +254,7 @@ class PriceProductTableDataMapper implements PriceProductTableDataMapperInterfac
     ): ?string {
         $existingStoreIds = $this->utilEncodingService->decodeJson(
             (string)$priceProductTableViewTransfer->getTypePriceProductStoreIds(),
-            true
+            true,
         );
         $existingStoreIds[] = $priceProductTransfer
             ->getMoneyValueOrFail()
@@ -276,7 +276,7 @@ class PriceProductTableDataMapper implements PriceProductTableDataMapperInterfac
     ): ?string {
         $existingDefaultIds = $this->utilEncodingService->decodeJson(
             (string)$priceProductTableViewTransfer->getPriceProductDefaultIds(),
-            true
+            true,
         );
 
         if ($existingDefaultIds === null) {
@@ -312,7 +312,7 @@ class PriceProductTableDataMapper implements PriceProductTableDataMapperInterfac
             $rowKey = $this->createPriceProductTableRowKey(
                 $priceProductTableViewTransfer->getStoreOrFail(),
                 $priceProductTableViewTransfer->getCurrencyOrFail(),
-                1
+                1,
             );
 
             if (!isset($priceProductTableViewTransfers[$rowKey])) {

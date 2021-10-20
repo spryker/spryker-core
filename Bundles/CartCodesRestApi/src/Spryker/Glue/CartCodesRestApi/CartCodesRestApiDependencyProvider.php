@@ -49,7 +49,7 @@ class CartCodesRestApiDependencyProvider extends AbstractBundleDependencyProvide
     {
         $container->set(static::RESOURCE_CARTS_REST_API, function (Container $container) {
             return new CartCodesRestApiToCartsRestApiResourceBridge(
-                $container->getLocator()->cartsRestApi()->resource()
+                $container->getLocator()->cartsRestApi()->resource(),
             );
         });
 

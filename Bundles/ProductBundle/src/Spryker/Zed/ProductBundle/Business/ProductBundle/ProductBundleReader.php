@@ -100,7 +100,7 @@ class ProductBundleReader implements ProductBundleReaderInterface
         $productConcreteTransfer->requireIdProductConcrete()->requireSku();
 
         $bundledProducts = $this->findBundledProductsByIdProductConcrete(
-            $productConcreteTransfer->getIdProductConcrete()
+            $productConcreteTransfer->getIdProductConcrete(),
         );
 
         if (count($bundledProducts) == 0) {

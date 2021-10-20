@@ -77,7 +77,7 @@ class RouterListenerEventDispatcherPlugin extends AbstractPlugin implements Even
     {
         $eventDispatcher->addSubscriber(new RouterListener(
             $this->getChainRouter($container),
-            $this->getRequestStack($container)
+            $this->getRequestStack($container),
         ));
 
         return $eventDispatcher;

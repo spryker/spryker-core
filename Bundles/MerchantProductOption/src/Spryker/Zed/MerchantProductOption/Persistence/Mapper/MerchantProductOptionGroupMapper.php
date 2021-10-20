@@ -41,8 +41,8 @@ class MerchantProductOptionGroupMapper
             $merchantProductOptionGroupCollectionTransfer->addMerchantProductOptionGroup(
                 $this->mapMerchantProductOptionGroupEntityToMerchantProductOptionGroupTransfer(
                     $merchantProductOptionGroupEntity,
-                    new MerchantProductOptionGroupTransfer()
-                )
+                    new MerchantProductOptionGroupTransfer(),
+                ),
             );
         }
 

@@ -49,7 +49,7 @@ class ShipmentMethodGiftCardFilter implements ShipmentMethodGiftCardFilterInterf
             if (
                 $this->shipmentMethodGiftCardAllowanceChecker->isShipmentMethodSuitable(
                     $shipmentMethodTransfer,
-                    $giftCardOnlyShipmentMethods
+                    $giftCardOnlyShipmentMethods,
                 )
             ) {
                 continue;
@@ -60,7 +60,7 @@ class ShipmentMethodGiftCardFilter implements ShipmentMethodGiftCardFilterInterf
 
         return $this->shipmentMethodCollectionRemover->remove(
             $shipmentMethodsTransferList,
-            $shipmentMethodsTransferForRemoveIndexes
+            $shipmentMethodsTransferForRemoveIndexes,
         );
     }
 }

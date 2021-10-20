@@ -97,7 +97,7 @@ class CatalogSearchResourceMapperTest extends Unit
 
         $this->restSearchAttributesTransfer = new RestCatalogSearchAttributesTransfer();
         $this->catalogSearchResourceMapper = new CatalogSearchResourceMapper(
-            new CatalogSearchRestApiToCurrencyClientBridge($this->currencyClientMock)
+            new CatalogSearchRestApiToCurrencyClientBridge($this->currencyClientMock),
         );
     }
 
@@ -109,7 +109,7 @@ class CatalogSearchResourceMapperTest extends Unit
         $this->restSearchAttributesTransfer = $this
             ->catalogSearchResourceMapper
             ->mapSearchResultToRestAttributesTransfer(
-                $this->mockRestSearchResponseTransfer()
+                $this->mockRestSearchResponseTransfer(),
             );
 
         $this->restSearchAttributesTransfer = $this->restSearchAttributesTransfer = $this
@@ -177,7 +177,7 @@ class CatalogSearchResourceMapperTest extends Unit
         $this->restSearchAttributesTransfer = $this
             ->catalogSearchResourceMapper
             ->mapSearchResultToRestAttributesTransfer(
-                $this->mockEmptyRestSearchResponseTransfer()
+                $this->mockEmptyRestSearchResponseTransfer(),
             );
 
         $this->assertEmpty($this->getProductsFromRestCatalogSearchAttributesTransfer());

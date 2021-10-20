@@ -89,7 +89,7 @@ class QuotePermissionGroupQuoteExpanderPluginTester extends Actor
         $this->haveQuoteCompanyUser(
             $companyUserTransfer,
             $quoteTransfer,
-            $quotePermissionGroupEntityTransfer
+            $quotePermissionGroupEntityTransfer,
         );
 
         return $quoteTransfer;

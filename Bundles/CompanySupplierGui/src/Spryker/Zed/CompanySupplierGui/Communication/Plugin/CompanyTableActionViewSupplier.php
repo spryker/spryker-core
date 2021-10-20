@@ -55,7 +55,7 @@ class CompanyTableActionViewSupplier extends AbstractPlugin implements CompanyTa
             $button->setUrl(sprintf(static::BUTTON_URL_FORMAT, $company[CompanyTable::COL_ID_COMPANY]));
             $button->setTitle(static::BUTTON_TITLE);
             $button->setDefaultOptions(
-                static::BUTTON_DEFAULT_OPTIONS
+                static::BUTTON_DEFAULT_OPTIONS,
             );
         }
 

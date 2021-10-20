@@ -42,7 +42,7 @@ class CompanyUserInvitationRepository extends AbstractRepository implements Comp
         if ($companyUserInvitationCriteriaFilterTransfer->getFilter() !== null) {
             $queryCompanyUserInvitation = $this->buildQueryFromCriteria(
                 $queryCompanyUserInvitation,
-                $companyUserInvitationCriteriaFilterTransfer->getFilter()
+                $companyUserInvitationCriteriaFilterTransfer->getFilter(),
             );
         }
 
@@ -54,7 +54,7 @@ class CompanyUserInvitationRepository extends AbstractRepository implements Comp
 
         $pager = $queryCompanyUserInvitation->paginate(
             $companyUserInvitationCriteriaFilterTransfer->getPagination()->requirePage()->getPage(),
-            $companyUserInvitationCriteriaFilterTransfer->getPagination()->requireMaxPerPage()->getMaxPerPage()
+            $companyUserInvitationCriteriaFilterTransfer->getPagination()->requireMaxPerPage()->getMaxPerPage(),
         );
 
         $companyUserInvitationCollectionTransfer = $this->getFactory()
@@ -62,7 +62,7 @@ class CompanyUserInvitationRepository extends AbstractRepository implements Comp
             ->mapCompanyUserInvitationCollection($pager->getResults());
 
         $companyUserInvitationCollectionTransfer->setPagination(
-            $this->hydratePaginationTransfer($companyUserInvitationCriteriaFilterTransfer->getPagination(), $pager)
+            $this->hydratePaginationTransfer($companyUserInvitationCriteriaFilterTransfer->getPagination(), $pager),
         );
 
         return $companyUserInvitationCollectionTransfer;
@@ -149,21 +149,21 @@ class CompanyUserInvitationRepository extends AbstractRepository implements Comp
         if ($companyUserInvitationCriteriaFilterTransfer->getFkCompany()) {
             $queryCompanyUserInvitation->useSpyCompanyUserQuery()->filterByFkCompany(
                 $companyUserInvitationCriteriaFilterTransfer->getFkCompany(),
-                Criteria::IN
+                Criteria::IN,
             )->endUse();
         }
 
         if ($companyUserInvitationCriteriaFilterTransfer->getCompanyUserInvitationStatusKeyIn()) {
             $queryCompanyUserInvitation->useSpyCompanyUserInvitationStatusQuery()->filterByStatusKey(
                 $companyUserInvitationCriteriaFilterTransfer->getCompanyUserInvitationStatusKeyIn(),
-                Criteria::IN
+                Criteria::IN,
             )->endUse();
         }
 
         if ($companyUserInvitationCriteriaFilterTransfer->getCompanyUserInvitationStatusKeyNotIn()) {
             $queryCompanyUserInvitation->useSpyCompanyUserInvitationStatusQuery()->filterByStatusKey(
                 $companyUserInvitationCriteriaFilterTransfer->getCompanyUserInvitationStatusKeyNotIn(),
-                Criteria::NOT_IN
+                Criteria::NOT_IN,
             )->endUse();
         }
 

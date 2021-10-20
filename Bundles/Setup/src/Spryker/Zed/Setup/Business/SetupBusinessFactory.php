@@ -45,7 +45,7 @@ class SetupBusinessFactory extends AbstractBusinessFactory
     public function createModelGeneratedDirectoryRemover()
     {
         return $this->createDirectoryRemover(
-            $this->getConfig()->getGeneratedDirectory()
+            $this->getConfig()->getGeneratedDirectory(),
         );
     }
 
@@ -157,7 +157,7 @@ class SetupBusinessFactory extends AbstractBusinessFactory
         return new GeneratedDirectory(
             $this->getConfig()->getGeneratedDirectory(),
             $this->getFileSystem(),
-            $this->getFinder()
+            $this->getFinder(),
         );
     }
 

@@ -139,7 +139,7 @@ class IndexUpdaterTest extends AbstractIndexTest
         if ($this->tester->supportsMappingTypes()) {
             return new MappingTypeAwareIndexUpdater(
                 $elasticaClient,
-                $mappingBuilder
+                $mappingBuilder,
             );
         }
 

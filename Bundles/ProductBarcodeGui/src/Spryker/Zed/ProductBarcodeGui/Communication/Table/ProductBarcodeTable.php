@@ -133,7 +133,7 @@ class ProductBarcodeTable extends AbstractTable
         $queryResults = $this->runQuery(
             $this->prepareQuery(),
             $config,
-            true
+            true,
         );
 
         $results = [];
@@ -187,7 +187,7 @@ class ProductBarcodeTable extends AbstractTable
         return sprintf(
             static::BARCODE_IMAGE_TEMPLATE,
             $barcodeResponseTransfer->getEncoding(),
-            $barcodeResponseTransfer->getCode()
+            $barcodeResponseTransfer->getCode(),
         );
     }
 }

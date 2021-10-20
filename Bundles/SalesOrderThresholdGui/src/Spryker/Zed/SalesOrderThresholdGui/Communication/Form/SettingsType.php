@@ -63,7 +63,7 @@ class SettingsType extends AbstractType
             [
                 'label' => 'Tax set',
                 'choices' => $options[static::OPTION_TAX_SETS],
-            ]
+            ],
         );
 
         return $this;

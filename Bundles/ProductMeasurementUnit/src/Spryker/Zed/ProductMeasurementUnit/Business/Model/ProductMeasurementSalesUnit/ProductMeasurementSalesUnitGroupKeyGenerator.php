@@ -30,7 +30,7 @@ class ProductMeasurementSalesUnitGroupKeyGenerator implements ProductMeasurement
         return sprintf(
             static::GROUP_KEY_FORMAT,
             $item->getGroupKey(),
-            $item->getQuantitySalesUnit()->getIdProductMeasurementSalesUnit()
+            $item->getQuantitySalesUnit()->getIdProductMeasurementSalesUnit(),
         );
     }
 }

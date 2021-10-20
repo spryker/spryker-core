@@ -53,7 +53,7 @@ class BarcodeGeneratorPluginResolver implements BarcodeGeneratorPluginResolverIn
     {
         if (!$barcodeGeneratorPlugins) {
             throw new BarcodeGeneratorPluginsNotProvided(
-                'BarcodeGeneratorPluginResolver cannot work without plugin list'
+                'BarcodeGeneratorPluginResolver cannot work without plugin list',
             );
         }
     }
@@ -84,8 +84,8 @@ class BarcodeGeneratorPluginResolver implements BarcodeGeneratorPluginResolverIn
                 sprintf(
                     'There is no plugin for barcode generation with class "%s".'
                     . ' Or it is not provided in BarcodeDependencyProvider::getBarcodeGeneratorPlugins()',
-                    $fullClassName
-                )
+                    $fullClassName,
+                ),
             );
         }
 

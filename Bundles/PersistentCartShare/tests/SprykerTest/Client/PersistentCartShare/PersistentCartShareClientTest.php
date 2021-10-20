@@ -52,7 +52,7 @@ class PersistentCartShareClientTest extends Unit
             PersistentCartShareDependencyProvider::PLUGINS_CART_SHARE_OPTION,
             [
                 $this->createShareOptionPluginMock(),
-            ]
+            ],
         );
 
         // Act

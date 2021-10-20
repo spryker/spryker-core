@@ -106,7 +106,7 @@ class PriceProductConcreteStorageWriter implements PriceProductConcreteStorageWr
                 $priceProductConcreteStorage = $this->getRelatedPriceProductConcreteStorageEntity(
                     $priceProductConcreteStorageMap,
                     $idProductConcrete,
-                    $storeName
+                    $storeName,
                 );
 
                 unset($priceProductConcreteStorageMap[$idProductConcrete][$storeName]);
@@ -116,7 +116,7 @@ class PriceProductConcreteStorageWriter implements PriceProductConcreteStorageWr
                         $idProductConcrete,
                         $storeName,
                         $priceGroup,
-                        $priceProductConcreteStorage
+                        $priceProductConcreteStorage,
                     );
 
                     continue;
@@ -217,7 +217,7 @@ class PriceProductConcreteStorageWriter implements PriceProductConcreteStorageWr
 
             foreach ($priceGroups[$idProductConcrete] as $storeName => $priceProductTransferCollection) {
                 $priceGroups[$idProductConcrete][$storeName] = $this->priceProductFacade->groupPriceProductCollection(
-                    $priceProductTransferCollection
+                    $priceProductTransferCollection,
                 );
             }
         }
@@ -233,7 +233,7 @@ class PriceProductConcreteStorageWriter implements PriceProductConcreteStorageWr
         return (new PriceProductCriteriaTransfer())
             ->setPriceDimension(
                 (new PriceProductDimensionTransfer())
-                    ->setType(PriceProductStorageConstants::PRICE_DIMENSION_DEFAULT)
+                    ->setType(PriceProductStorageConstants::PRICE_DIMENSION_DEFAULT),
             );
     }
 

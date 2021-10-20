@@ -61,7 +61,7 @@ class StorageRedisConfig extends AbstractBundleConfig
     {
         return $this->get(
             StorageRedisConstants::STORAGE_REDIS_HOST,
-            static::DEFAULT_STORAGE_REDIS_HOST
+            static::DEFAULT_STORAGE_REDIS_HOST,
         );
     }
 }

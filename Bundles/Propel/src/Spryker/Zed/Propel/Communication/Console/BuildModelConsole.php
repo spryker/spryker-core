@@ -53,7 +53,7 @@ class BuildModelConsole extends Console
         $exitCode = $this->getFactory()->createPropelCommandRunner()->runCommand(
             $command,
             $this->getDefinition(),
-            $output
+            $output,
         );
 
         if ($exitCode === static::CODE_SUCCESS) {

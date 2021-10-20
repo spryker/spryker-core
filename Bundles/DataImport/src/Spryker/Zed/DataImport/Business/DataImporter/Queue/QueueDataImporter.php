@@ -138,7 +138,7 @@ class QueueDataImporter extends DataImporterDataSetWriterAware implements QueueD
         $this->collectQueueReceiveMessage($queueReceiveMessageTransfer);
 
         $dataSet->exchangeArray(
-            $this->queueMessageHelper->getDecodedMessageBody($queueReceiveMessageTransfer)
+            $this->queueMessageHelper->getDecodedMessageBody($queueReceiveMessageTransfer),
         );
 
         foreach ($this->dataSetStepBroker as $dataSetStep) {
@@ -190,7 +190,7 @@ class QueueDataImporter extends DataImporterDataSetWriterAware implements QueueD
         return sprintf(
             'Failed to handle data import. Exception: "%s", "%s".',
             $exception->getMessage(),
-            $exception->getTraceAsString()
+            $exception->getTraceAsString(),
         );
     }
 
@@ -253,7 +253,7 @@ class QueueDataImporter extends DataImporterDataSetWriterAware implements QueueD
     protected function recalculateImportedDataSetCountAfterFailure(DataImporterReportTransfer $dataImporterReportTransfer): DataImporterReportTransfer
     {
         $dataImporterReportTransfer->setImportedDataSetCount(
-            $dataImporterReportTransfer->getImportedDataSetCount() - $this->queueReceiveMessageBuffer->count() + 1
+            $dataImporterReportTransfer->getImportedDataSetCount() - $this->queueReceiveMessageBuffer->count() + 1,
         );
 
         return $dataImporterReportTransfer;

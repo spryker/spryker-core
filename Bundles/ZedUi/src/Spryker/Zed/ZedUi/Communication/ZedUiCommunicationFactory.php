@@ -26,7 +26,7 @@ class ZedUiCommunicationFactory extends AbstractCommunicationFactory
     {
         return new NavigationComponentConfigFunctionProvider(
             $this->getUtilEncoding(),
-            $this->getTranslatorFacade()
+            $this->getTranslatorFacade(),
         );
     }
 
@@ -40,7 +40,7 @@ class ZedUiCommunicationFactory extends AbstractCommunicationFactory
         return new TwigFunction(
             $functionProvider->getFunctionName(),
             $functionProvider->getFunction(),
-            $functionProvider->getOptions()
+            $functionProvider->getOptions(),
         );
     }
 

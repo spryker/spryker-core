@@ -29,7 +29,7 @@ class Tokenizer implements TokenizerInterface
             self::STRING_TO_TOKENS_REGEXP,
             $queryString,
             null,
-            PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE
+            PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE,
         );
 
         $tokens = array_map('trim', $tokens);

@@ -56,7 +56,7 @@ class ProductNewQueryContainer extends AbstractQueryContainer implements Product
                 ->where(sprintf(
                     '%s IS NULL AND %s IS NULL',
                     SpyProductAbstractTableMap::COL_NEW_FROM,
-                    SpyProductAbstractTableMap::COL_NEW_TO
+                    SpyProductAbstractTableMap::COL_NEW_TO,
                 ))
             ->endUse();
     }
@@ -104,7 +104,7 @@ class ProductNewQueryContainer extends AbstractQueryContainer implements Product
             )',
             SpyProductAbstractTableMap::COL_NEW_FROM,
             SpyProductAbstractTableMap::COL_NEW_TO,
-            $isNegative ? 'NOT' : ''
+            $isNegative ? 'NOT' : '',
         );
 
         $criteria = new ModelCriteria(null, SpyProductAbstract::class);

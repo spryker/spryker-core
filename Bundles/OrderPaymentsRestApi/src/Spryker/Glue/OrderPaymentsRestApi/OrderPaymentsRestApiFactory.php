@@ -29,7 +29,7 @@ class OrderPaymentsRestApiFactory extends AbstractFactory
         return new OrderPaymentUpdater(
             $this->createOrderPaymentRestResponseBuilder(),
             $this->getClient(),
-            $this->createOrderPaymentMapper()
+            $this->createOrderPaymentMapper(),
         );
     }
 

@@ -83,7 +83,7 @@ class FormHelper extends Module
         $this->addDependencies();
 
         $this->getApplicationHelper()->addApplicationPlugin(
-            $this->getFormApplicationPluginStub()
+            $this->getFormApplicationPluginStub(),
         );
     }
 

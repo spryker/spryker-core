@@ -48,7 +48,7 @@ class ProductBundleStatusUpdater implements ProductBundleStatusUpdaterInterface
         }
 
         $productBundleCollectionTransfer = $this->productBundleRepository->getProductBundleCollectionByCriteriaFilter(
-            (new ProductBundleCriteriaFilterTransfer())->setIdBundledProduct($productConcreteTransfer->getIdProductConcrete())
+            (new ProductBundleCriteriaFilterTransfer())->setIdBundledProduct($productConcreteTransfer->getIdProductConcrete()),
         );
 
         $productBundleTransfers = $productBundleCollectionTransfer->getProductBundles();

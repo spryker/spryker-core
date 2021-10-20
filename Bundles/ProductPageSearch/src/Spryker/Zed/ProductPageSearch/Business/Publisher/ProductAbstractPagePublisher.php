@@ -137,7 +137,7 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
 
         $productAbstractIdsChunks = array_chunk(
             array_unique($productAbstractIds),
-            $this->productPageSearchConfig->getProductAbstractPagePublishChunkSize()
+            $this->productPageSearchConfig->getProductAbstractPagePublishChunkSize(),
         );
 
         foreach ($productAbstractIdsChunks as $productAbstractIdsChunk) {
@@ -204,7 +204,7 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
         if ($this->productPageSearchConfig->isProductAbstractAddToCartEnabled()) {
             $productAbstractLocalizedEntities = $this->hydrateProductAbstractLocalizedEntitiesWithProductAbstractAddToCartSku(
                 $productAbstractLocalizedEntities,
-                $productAbstractIds
+                $productAbstractIds,
             );
         }
 
@@ -220,7 +220,7 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
             $productAbstractPageSearchEntities,
             $pageDataExpanderPlugins,
             $productPageLoadTransfer,
-            $isRefresh
+            $isRefresh,
         );
     }
 
@@ -243,7 +243,7 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
         $pairedEntities = $this->pairProductAbstractLocalizedEntitiesWithProductAbstractPageSearchEntities(
             $productAbstractLocalizedEntities,
             $productAbstractPageSearchEntities,
-            $productPageLoadTransfer
+            $productPageLoadTransfer,
         );
 
         foreach ($pairedEntities as $pairedEntity) {
@@ -264,7 +264,7 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
                 $pairedEntity[static::STORE_NAME],
                 $pairedEntity[static::LOCALE_NAME],
                 $pageDataExpanderPlugins,
-                $isRefresh
+                $isRefresh,
             );
         }
     }
@@ -302,7 +302,7 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
         $productPageSearchTransfer = $this->getProductPageSearchTransfer(
             $productAbstractLocalizedEntity,
             $productAbstractPageSearchEntity,
-            $isRefresh
+            $isRefresh,
         );
 
         $productPageSearchTransfer->setStore($storeName);
@@ -461,7 +461,7 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
                 $productAbstractLocalizedEntity['SpyProductAbstract']['SpyProductAbstractStores'],
                 $productAbstractLocalizedEntity,
                 $mappedProductAbstractPageSearchEntities,
-                $pairs
+                $pairs,
             );
         }
 

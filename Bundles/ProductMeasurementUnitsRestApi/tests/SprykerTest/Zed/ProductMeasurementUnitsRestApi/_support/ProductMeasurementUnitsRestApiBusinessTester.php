@@ -58,7 +58,7 @@ class ProductMeasurementUnitsRestApiBusinessTester extends Actor
     public function buildCartItemRequestTransferWithSalesUnitData(): CartItemRequestTransfer
     {
         $productMeasurementSalesUnitTransfer = $this->createProductMeasurementSalesUnitTransfer(
-            static::ID_PRODUCT_MEASUREMENT_SALES_UNIT_ID
+            static::ID_PRODUCT_MEASUREMENT_SALES_UNIT_ID,
         );
 
         return (new CartItemRequestBuilder(
@@ -66,7 +66,7 @@ class ProductMeasurementUnitsRestApiBusinessTester extends Actor
                 'sku' => static::PRODUCT_CONCRETE_SKU,
                 'idProductMeasurementSalesUnit' => $productMeasurementSalesUnitTransfer->getIdProductMeasurementSalesUnit(),
                 'amount' => new Decimal(1000),
-            ]
+            ],
         ))->build();
     }
 
@@ -114,7 +114,7 @@ class ProductMeasurementUnitsRestApiBusinessTester extends Actor
             ->setName('SalesUnitName');
         $productMeasurementBaseUnit = (new ProductMeasurementBaseUnitTransfer())
             ->setProductMeasurementUnit(
-                (new ProductMeasurementUnitTransfer())->setName('BaseUnitName')
+                (new ProductMeasurementUnitTransfer())->setName('BaseUnitName'),
             );
 
         $quantitySalesUnit = new ProductMeasurementSalesUnitTransfer();

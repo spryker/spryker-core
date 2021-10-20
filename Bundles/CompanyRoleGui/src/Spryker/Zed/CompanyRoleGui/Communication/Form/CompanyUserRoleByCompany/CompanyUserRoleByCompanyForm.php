@@ -92,7 +92,7 @@ class CompanyUserRoleByCompanyForm extends AbstractType
 
         $callbackTransformer = new CallbackTransformer(
             $this->getInputDataCallbackRoleCollectionTransformer(),
-            $this->getOutputDataCallbackRoleCollectionTransformer()
+            $this->getOutputDataCallbackRoleCollectionTransformer(),
         );
 
         $builder->get(static::FIELD_COMPANY_ROLE_COLLECTION)

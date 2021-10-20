@@ -27,7 +27,7 @@ class SprykerStandaloneModulePathBuilder extends AbstractPathBuilder
             sprintf(
                 '%s%s/',
                 APPLICATION_VENDOR_DIR . '/spryker/',
-                $this->getModuleName($moduleTransfer)
+                $this->getModuleName($moduleTransfer),
             ),
         ];
 

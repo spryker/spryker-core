@@ -86,7 +86,7 @@ class ElasticsearchSearchHandler implements SearchHandlerInterface
             throw new SearchResponseException(
                 sprintf('Search failed with the following reason: %s. Query: %s', $e->getMessage(), $rawQuery),
                 $e->getCode(),
-                $e
+                $e,
             );
         }
 

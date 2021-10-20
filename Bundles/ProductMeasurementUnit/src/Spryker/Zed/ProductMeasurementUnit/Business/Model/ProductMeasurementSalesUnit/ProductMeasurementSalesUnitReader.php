@@ -168,7 +168,7 @@ class ProductMeasurementSalesUnitReader implements ProductMeasurementSalesUnitRe
         try {
             $exchangeRatio = $this->utilMeasurementUnitConversionService->getMeasurementUnitExchangeRatio(
                 $salesUnitMeasurementUnitCode,
-                $baseUnitMeasurementUnitCode
+                $baseUnitMeasurementUnitCode,
             );
         } catch (InvalidMeasurementUnitExchangeException $e) {
             $exchangeRatio = static::DEFAULT_EXCHANGE_RATIO;

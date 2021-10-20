@@ -81,7 +81,7 @@ class SalesFacadeExpandItemsTest extends Test
             (new OrderBuilder())->build()->fromArray([
                 OrderTransfer::ORDER_REFERENCE => $saveOrderTransfer->getOrderReference(),
                 OrderTransfer::CUSTOMER_REFERENCE => $quoteTransfer->getCustomerReference(),
-            ])
+            ]),
         );
 
         // Act
@@ -109,7 +109,7 @@ class SalesFacadeExpandItemsTest extends Test
             (new OrderBuilder())->build()->fromArray([
                 OrderTransfer::ORDER_REFERENCE => $saveOrderTransfer->getOrderReference(),
                 OrderTransfer::CUSTOMER_REFERENCE => $quoteTransfer->getCustomerReference(),
-            ])
+            ]),
         );
 
         // Act

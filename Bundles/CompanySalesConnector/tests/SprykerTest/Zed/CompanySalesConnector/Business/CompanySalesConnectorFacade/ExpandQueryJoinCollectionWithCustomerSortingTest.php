@@ -64,7 +64,7 @@ class ExpandQueryJoinCollectionWithCustomerSortingTest extends Unit
         // Act
         $queryJoinCollectionTransfer = $this->tester->getFacade()->expandQueryJoinCollectionWithCustomerSorting(
             [$filterFieldTransfer],
-            $queryJoinCollectionTransfer
+            $queryJoinCollectionTransfer,
         );
 
         // Assert
@@ -90,7 +90,7 @@ class ExpandQueryJoinCollectionWithCustomerSortingTest extends Unit
         // Act
         $queryJoinCollectionTransfer = $this->tester->getFacade()->expandQueryJoinCollectionWithCustomerSorting(
             [$filterFieldTransfer],
-            $queryJoinCollectionTransfer
+            $queryJoinCollectionTransfer,
         );
 
         // Assert
@@ -116,7 +116,7 @@ class ExpandQueryJoinCollectionWithCustomerSortingTest extends Unit
         // Act
         $queryJoinCollectionTransfer = $this->tester->getFacade()->expandQueryJoinCollectionWithCustomerSorting(
             [$filterFieldTransfer],
-            $queryJoinCollectionTransfer
+            $queryJoinCollectionTransfer,
         );
 
         // Assert

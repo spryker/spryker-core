@@ -72,7 +72,7 @@ class CompanyUserCompanyForm extends AbstractType
         $form->add(
             static::FIELD_FK_COMPANY,
             SelectType::class,
-            $this->getCompanyFieldParameters($companyChoices)
+            $this->getCompanyFieldParameters($companyChoices),
         );
     }
 
@@ -87,7 +87,7 @@ class CompanyUserCompanyForm extends AbstractType
         $builder->add(
             static::FIELD_FK_COMPANY,
             SelectType::class,
-            $this->getCompanyFieldParameters($options)
+            $this->getCompanyFieldParameters($options),
         );
 
         return $this;

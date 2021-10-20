@@ -41,13 +41,13 @@ class CartItemAddTripleStrategy implements CartOperationStrategyPluginInterface
     public function execute(ItemTransfer $itemTransfer, QuoteTransfer $quoteTransfer): QuoteTransfer
     {
         $itemTransfer->setQuantity(
-            $itemTransfer->getQuantity() * 3
+            $itemTransfer->getQuantity() * 3,
         );
 
         foreach ($quoteTransfer->getItems() as $currentItemTransfer) {
             if ($this->getItemIdentifier($currentItemTransfer) === $this->getItemIdentifier($itemTransfer)) {
                 $currentItemTransfer->setQuantity(
-                    $currentItemTransfer->getQuantity() + $itemTransfer->getQuantity()
+                    $currentItemTransfer->getQuantity() + $itemTransfer->getQuantity(),
                 );
 
                 return $quoteTransfer;

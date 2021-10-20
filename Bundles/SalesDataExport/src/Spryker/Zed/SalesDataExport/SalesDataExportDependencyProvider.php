@@ -127,7 +127,7 @@ class SalesDataExportDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container): SalesDataExportToUtilEncodingServiceInterface {
             return new SalesDataExportToUtilEncodingServiceBridge(
-                $container->getLocator()->utilEncoding()->service()
+                $container->getLocator()->utilEncoding()->service(),
             );
         });
 
@@ -143,7 +143,7 @@ class SalesDataExportDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::SERVICE_DATA_EXPORT, function (Container $container): SalesDataExportToDataExportServiceInterface {
             return new SalesDataExportToDataExportServiceBridge(
-                $container->getLocator()->dataExport()->service()
+                $container->getLocator()->dataExport()->service(),
             );
         });
 

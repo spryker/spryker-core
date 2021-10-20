@@ -41,7 +41,7 @@ class ProductViewProductOfferExpanderPlugin extends AbstractPlugin implements Pr
     ): ProductViewTransfer {
         return $this->getFactory()->createProductViewOfferExpander()->expandProductViewTransfer(
             $productViewTransfer,
-            $productStorageCriteriaTransfer
+            $productStorageCriteriaTransfer,
         );
     }
 }

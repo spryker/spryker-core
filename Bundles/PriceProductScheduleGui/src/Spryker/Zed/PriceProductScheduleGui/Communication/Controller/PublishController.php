@@ -31,7 +31,7 @@ class PublishController extends AbstractController
     {
         $priceProductScheduleListTransfer = (new PriceProductScheduleListTransfer())
             ->setIdPriceProductScheduleList(
-                $request->query->getInt(PriceProductScheduleListTransfer::ID_PRICE_PRODUCT_SCHEDULE_LIST)
+                $request->query->getInt(PriceProductScheduleListTransfer::ID_PRICE_PRODUCT_SCHEDULE_LIST),
             );
 
         $priceProductScheduleListResponseTransfer = $this->getFactory()

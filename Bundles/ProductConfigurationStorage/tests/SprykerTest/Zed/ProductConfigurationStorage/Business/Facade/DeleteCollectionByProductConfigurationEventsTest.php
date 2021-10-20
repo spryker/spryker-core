@@ -60,7 +60,7 @@ class DeleteCollectionByProductConfigurationEventsTest extends Unit
         // Arrange
         $productConcreteTransfer = $this->tester->haveProduct();
         $productConfigurationTransfer = $this->tester->haveProductConfiguration(
-            [ProductConfigurationTransfer::FK_PRODUCT => $productConcreteTransfer->getIdProductConcrete()]
+            [ProductConfigurationTransfer::FK_PRODUCT => $productConcreteTransfer->getIdProductConcrete()],
         );
 
         $this->tester->haveProductConfigurationStorage([
@@ -78,7 +78,7 @@ class DeleteCollectionByProductConfigurationEventsTest extends Unit
         $this->assertSame(
             0,
             $this->tester->countProductConfigurationStorageEntities(),
-            'Expects that product configuration collection will be removed from storage table.'
+            'Expects that product configuration collection will be removed from storage table.',
         );
     }
 
@@ -90,7 +90,7 @@ class DeleteCollectionByProductConfigurationEventsTest extends Unit
         // Arrange
         $productConcreteTransfer = $this->tester->haveProduct();
         $productConfigurationTransfer = $this->tester->haveProductConfiguration(
-            [ProductConfigurationTransfer::FK_PRODUCT => $productConcreteTransfer->getIdProductConcrete()]
+            [ProductConfigurationTransfer::FK_PRODUCT => $productConcreteTransfer->getIdProductConcrete()],
         );
 
         $this->tester->haveProductConfigurationStorage([
@@ -110,7 +110,7 @@ class DeleteCollectionByProductConfigurationEventsTest extends Unit
         $this->assertSame(
             1,
             $this->tester->countProductConfigurationStorageEntities(),
-            'Expects that product configuration collection wont be removed when no id specified.'
+            'Expects that product configuration collection wont be removed when no id specified.',
         );
     }
 
@@ -122,7 +122,7 @@ class DeleteCollectionByProductConfigurationEventsTest extends Unit
         // Arrange
         $productConcreteTransfer = $this->tester->haveProduct();
         $productConfigurationTransfer = $this->tester->haveProductConfiguration(
-            [ProductConfigurationTransfer::FK_PRODUCT => $productConcreteTransfer->getIdProductConcrete()]
+            [ProductConfigurationTransfer::FK_PRODUCT => $productConcreteTransfer->getIdProductConcrete()],
         );
 
         $this->tester->haveProductConfigurationStorage([
@@ -140,7 +140,7 @@ class DeleteCollectionByProductConfigurationEventsTest extends Unit
         $this->assertSame(
             1,
             $this->tester->countProductConfigurationStorageEntities(),
-            'Expects that product configuration collection wont be removed when fake id specified.'
+            'Expects that product configuration collection wont be removed when fake id specified.',
         );
     }
 }

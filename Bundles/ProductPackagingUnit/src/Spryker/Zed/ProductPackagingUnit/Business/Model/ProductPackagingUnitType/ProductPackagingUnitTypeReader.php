@@ -82,7 +82,7 @@ class ProductPackagingUnitTypeReader implements ProductPackagingUnitTypeReaderIn
 
         if ($productPackagingUnitTypeTransfer === null) {
             throw new ProductPackagingUnitTypeNotFoundException(
-                sprintf(static::ERROR_NO_PRODUCT_PACKAGING_UNIT_TYPE_BY_ID, $idProductPackagingUnitType)
+                sprintf(static::ERROR_NO_PRODUCT_PACKAGING_UNIT_TYPE_BY_ID, $idProductPackagingUnitType),
             );
         }
 

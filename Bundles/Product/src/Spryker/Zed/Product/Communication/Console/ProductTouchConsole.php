@@ -94,13 +94,13 @@ class ProductTouchConsole extends Console
         $this->addArgument(
             self::ARGUMENT_TOUCH_ACTION,
             InputArgument::REQUIRED,
-            self::ARGUMENT_TOUCH_ACTION_DESCRIPTION
+            self::ARGUMENT_TOUCH_ACTION_DESCRIPTION,
         );
 
         $this->addArgument(
             self::ARGUMENT_ID_ABSTRACT_PRODUCT,
             InputArgument::REQUIRED,
-            self::ARGUMENT_ID_ABSTRACT_PRODUCT_DESCRIPTION
+            self::ARGUMENT_ID_ABSTRACT_PRODUCT_DESCRIPTION,
         );
     }
 

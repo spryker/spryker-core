@@ -47,7 +47,7 @@ class PriceVolumeCollectionFormHandler
         $priceProductTransfer = $this->priceVolumeCollectionDataMapper
             ->mapArrayToPriceProductTransfer(
                 $data,
-                $priceProductTransfer
+                $priceProductTransfer,
             );
 
         if ($data[PriceVolumeCollectionFormType::FIELD_ID_PRODUCT_CONCRETE] && !$priceProductTransfer->getIdProduct()) {

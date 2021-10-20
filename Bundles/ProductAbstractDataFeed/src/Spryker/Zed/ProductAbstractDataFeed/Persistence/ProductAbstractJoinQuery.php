@@ -63,7 +63,7 @@ class ProductAbstractJoinQuery implements ProductAbstractJoinQueryInterface
             ->useSpyProductImageSetQuery(null, Criteria::LEFT_JOIN)
                 ->filterByFkLocale(
                     $localeTransferConditions[self::LOCALE_FILTER_VALUE],
-                    $localeTransferConditions[self::LOCALE_FILTER_CRITERIA]
+                    $localeTransferConditions[self::LOCALE_FILTER_CRITERIA],
                 )
                 ->useSpyProductImageSetToProductImageQuery(null, Criteria::LEFT_JOIN)
                     ->leftJoinSpyProductImage()
@@ -95,7 +95,7 @@ class ProductAbstractJoinQuery implements ProductAbstractJoinQueryInterface
                     ->useAttributeQuery(null, Criteria::LEFT_JOIN)
                         ->filterByFkLocale(
                             $localeTransferConditions[self::LOCALE_FILTER_VALUE],
-                            $localeTransferConditions[self::LOCALE_FILTER_CRITERIA]
+                            $localeTransferConditions[self::LOCALE_FILTER_CRITERIA],
                         )
                     ->endUse()
                 ->endUse()
@@ -149,7 +149,7 @@ class ProductAbstractJoinQuery implements ProductAbstractJoinQueryInterface
                 ->useSpyProductLocalizedAttributesQuery(null, Criteria::LEFT_JOIN)
                     ->filterByFkLocale(
                         $localeTransferConditions[self::LOCALE_FILTER_VALUE],
-                        $localeTransferConditions[self::LOCALE_FILTER_CRITERIA]
+                        $localeTransferConditions[self::LOCALE_FILTER_CRITERIA],
                     )
                 ->endUse()
                 ->useSpyProductImageSetQuery()
@@ -234,7 +234,7 @@ class ProductAbstractJoinQuery implements ProductAbstractJoinQueryInterface
             ->useSpyProductAbstractLocalizedAttributesQuery(null, Criteria::LEFT_JOIN)
                 ->filterByFkLocale(
                     $localeTransferConditions[self::LOCALE_FILTER_VALUE],
-                    $localeTransferConditions[self::LOCALE_FILTER_CRITERIA]
+                    $localeTransferConditions[self::LOCALE_FILTER_CRITERIA],
                 )
             ->endUse();
 

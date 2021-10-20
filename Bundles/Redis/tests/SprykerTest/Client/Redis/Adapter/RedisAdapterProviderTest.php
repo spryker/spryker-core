@@ -49,7 +49,7 @@ class RedisAdapterProviderTest extends Unit
         parent::setUp();
 
         $this->connectionProvider = new RedisAdapterProvider(
-            $this->createClientAdapterFactoryMock()
+            $this->createClientAdapterFactoryMock(),
         );
     }
 

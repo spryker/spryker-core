@@ -62,7 +62,7 @@ class VersionMigration implements VersionMigrationInterface
         foreach ($this->migrationHandlers as $migration) {
             $migration->migrate(
                 (new CmsVersionDataTransfer())->fromArray($originDataArray),
-                (new CmsVersionDataTransfer())->fromArray($targetDataArray)
+                (new CmsVersionDataTransfer())->fromArray($targetDataArray),
             );
         }
     }

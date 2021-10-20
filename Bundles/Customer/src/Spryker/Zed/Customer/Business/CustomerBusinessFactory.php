@@ -59,7 +59,7 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
             $this->getStore(),
             $this->createCustomerExpander(),
             $this->createCustomerPasswordPolicyValidator(),
-            $this->getPostCustomerRegistrationPlugins()
+            $this->getPostCustomerRegistrationPlugins(),
         );
 
         return $customer;
@@ -74,7 +74,7 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
             $this->getEntityManager(),
             $this->getRepository(),
             $this->createAddress(),
-            $this->createCustomerExpander()
+            $this->createCustomerExpander(),
         );
     }
 
@@ -141,7 +141,7 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
             $this->getCountryFacade(),
             $this->getLocaleFacade(),
             $this->createCustomerExpander(),
-            $this->getRepository()
+            $this->getRepository(),
         );
     }
 
@@ -176,7 +176,7 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
     {
         return new CustomerReferenceGenerator(
             $this->getSequenceNumberFacade(),
-            $this->getConfig()->getCustomerReferenceDefaults()
+            $this->getConfig()->getCustomerReferenceDefaults(),
         );
     }
 
@@ -214,7 +214,7 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
         return new CustomerOrderSaverWithMultiShippingAddress(
             $this->createCustomer(),
             $this->createAddress(),
-            $this->getCustomerService()
+            $this->getCustomerService(),
         );
     }
 
@@ -235,7 +235,7 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
             $this->getQueryContainer(),
             $this->createCustomer(),
             $this->createAddress(),
-            $this->getCustomerAnonymizerPlugins()
+            $this->getCustomerAnonymizerPlugins(),
         );
     }
 
@@ -269,7 +269,7 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
     public function createCustomerOrderHydrator()
     {
         return new CustomerOrderHydrator(
-            $this->createCustomer()
+            $this->createCustomer(),
         );
     }
 
@@ -280,7 +280,7 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
     {
         return new EmailValidator(
             $this->getQueryContainer(),
-            $this->getUtilValidateService()
+            $this->getUtilValidateService(),
         );
     }
 
@@ -314,7 +314,7 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
     public function createCustomerExpander()
     {
         return new CustomerExpander(
-            $this->getCustomerTransferExpanderPlugins()
+            $this->getCustomerTransferExpanderPlugins(),
         );
     }
 

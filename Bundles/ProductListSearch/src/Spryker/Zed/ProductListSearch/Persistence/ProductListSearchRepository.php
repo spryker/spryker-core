@@ -62,7 +62,7 @@ class ProductListSearchRepository extends AbstractRepository implements ProductL
     {
         return array_search(
             $listType,
-            SpyProductListTableMap::getValueSet(SpyProductListTableMap::COL_TYPE)
+            SpyProductListTableMap::getValueSet(SpyProductListTableMap::COL_TYPE),
         );
     }
 

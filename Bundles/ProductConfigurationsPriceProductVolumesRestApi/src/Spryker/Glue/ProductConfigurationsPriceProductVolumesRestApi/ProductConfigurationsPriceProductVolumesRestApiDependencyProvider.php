@@ -50,7 +50,7 @@ class ProductConfigurationsPriceProductVolumesRestApiDependencyProvider extends 
     {
         $container->set(static::SERVICE_PRODUCT_CONFIGURATION, function (Container $container) {
             return new ProductConfigurationsPriceProductVolumesRestApiToProductConfigurationServiceBridge(
-                $container->getLocator()->productConfiguration()->service()
+                $container->getLocator()->productConfiguration()->service(),
             );
         });
 
@@ -66,7 +66,7 @@ class ProductConfigurationsPriceProductVolumesRestApiDependencyProvider extends 
     {
         $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new ProductConfigurationsPriceProductVolumesRestApiToUtilEncodingServiceBridge(
-                $container->getLocator()->utilEncoding()->service()
+                $container->getLocator()->utilEncoding()->service(),
             );
         });
 

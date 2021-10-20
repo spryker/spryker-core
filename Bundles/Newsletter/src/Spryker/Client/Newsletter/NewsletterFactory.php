@@ -18,7 +18,7 @@ class NewsletterFactory extends AbstractFactory
     public function createZedNewsletterStub()
     {
         return new NewsletterStub(
-            $this->getProvidedDependency(NewsletterDependencyProvider::SERVICE_ZED)
+            $this->getProvidedDependency(NewsletterDependencyProvider::SERVICE_ZED),
         );
     }
 }

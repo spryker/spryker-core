@@ -55,7 +55,7 @@ class CartCodeAdder implements CartCodeAdderInterface
 
         if (!$quoteResponseTransfer->getIsSuccessful()) {
             return $this->createCartCodeResponseTransferWithErrorMessageTransfer(
-                CartCodesRestApiConfig::ERROR_IDENTIFIER_CART_NOT_FOUND
+                CartCodesRestApiConfig::ERROR_IDENTIFIER_CART_NOT_FOUND,
             );
         }
 
@@ -64,7 +64,7 @@ class CartCodeAdder implements CartCodeAdderInterface
 
         if (!($cartCodeResponseTransfer->getIsSuccessful() && $this->isSuccessMessageExists($cartCodeResponseTransfer))) {
             return $this->createCartCodeResponseTransferWithErrorMessageTransfer(
-                CartCodesRestApiConfig::ERROR_IDENTIFIER_CART_CODE_CANT_BE_ADDED
+                CartCodesRestApiConfig::ERROR_IDENTIFIER_CART_CODE_CANT_BE_ADDED,
             );
         }
 

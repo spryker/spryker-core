@@ -83,21 +83,21 @@ class GlobalController extends AbstractController
             $data[GlobalThresholdType::FIELD_HARD],
             SalesOrderThresholdGuiConfig::GROUP_HARD,
             $storeTransfer,
-            $currencyTransfer
+            $currencyTransfer,
         );
 
         $this->handleThresholdData(
             $data[GlobalThresholdType::FIELD_HARD_MAXIMUM],
             SalesOrderThresholdGuiConfig::GROUP_HARD_MAX,
             $storeTransfer,
-            $currencyTransfer
+            $currencyTransfer,
         );
 
         $this->handleThresholdData(
             $data[GlobalThresholdType::FIELD_SOFT],
             SalesOrderThresholdGuiConfig::GROUP_SOFT,
             $storeTransfer,
-            $currencyTransfer
+            $currencyTransfer,
         );
 
         $this->addSuccessMessage(static::MESSAGE_UPDATE_SUCCESSFUL);
@@ -122,7 +122,7 @@ class GlobalController extends AbstractController
         $salesOrderThresholdTransfer = $this->createSalesOrderThresholdTransfer(
             $thresholdData[AbstractGlobalThresholdType::FIELD_ID_THRESHOLD] ?? null,
             $storeTransfer,
-            $currencyTransfer
+            $currencyTransfer,
         );
 
         if ($this->canMapThresholdData($thresholdData, $strategyGroup)) {
@@ -150,7 +150,7 @@ class GlobalController extends AbstractController
         return $this->getFactory()
             ->createGlobalThresholdFormMapperResolver()
             ->hasGlobalThresholdFormMapperByStrategyGroup(
-                $strategyGroup
+                $strategyGroup,
             );
     }
 

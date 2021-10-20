@@ -47,7 +47,7 @@ class CmsContentWidgetProductSetConnectorFacadeTest extends Unit
         // TODO: use assertSame() once the actual return result is of int, and not string
         $this->assertEquals(
             $productSetTransfer->getIdProductSet(),
-            $mappedProductSets[$productSetTransfer->getProductSetKey()]
+            $mappedProductSets[$productSetTransfer->getProductSetKey()],
         );
     }
 

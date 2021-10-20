@@ -77,7 +77,7 @@ class QuoteValidator implements QuoteValidatorInterface
             return $this->addValidationError(
                 $quoteValidationResponseTransfer,
                 static::MESSAGE_CURRENCY_DATA_IS_INCORRECT,
-                [static::GLOSSARY_KEY_ISO_CODE => $currencyCode]
+                [static::GLOSSARY_KEY_ISO_CODE => $currencyCode],
             );
         }
 

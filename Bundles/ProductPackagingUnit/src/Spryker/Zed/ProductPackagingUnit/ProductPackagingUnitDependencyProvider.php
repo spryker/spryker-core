@@ -121,7 +121,7 @@ class ProductPackagingUnitDependencyProvider extends AbstractBundleDependencyPro
     {
         $container->set(static::FACADE_LOCALE, function (Container $container) {
             return new ProductPackagingUnitToLocaleFacadeBridge(
-                $container->getLocator()->locale()->facade()
+                $container->getLocator()->locale()->facade(),
             );
         });
 
@@ -137,7 +137,7 @@ class ProductPackagingUnitDependencyProvider extends AbstractBundleDependencyPro
     {
         $container->set(static::FACADE_GLOSSARY, function (Container $container) {
             return new ProductPackagingUnitToGlossaryFacadeBridge(
-                $container->getLocator()->glossary()->facade()
+                $container->getLocator()->glossary()->facade(),
             );
         });
 
@@ -153,7 +153,7 @@ class ProductPackagingUnitDependencyProvider extends AbstractBundleDependencyPro
     {
         $container->set(static::FACADE_PRODUCT_MEASUREMENT_UNIT, function (Container $container) {
             return new ProductPackagingUnitToProductMeasurementUnitFacadeBridge(
-                $container->getLocator()->productMeasurementUnit()->facade()
+                $container->getLocator()->productMeasurementUnit()->facade(),
             );
         });
 
@@ -169,7 +169,7 @@ class ProductPackagingUnitDependencyProvider extends AbstractBundleDependencyPro
     {
         $container->set(static::FACADE_AVAILABILITY, function (Container $container) {
             return new ProductPackagingUnitToAvailabilityFacadeBridge(
-                $container->getLocator()->availability()->facade()
+                $container->getLocator()->availability()->facade(),
             );
         });
 
@@ -185,7 +185,7 @@ class ProductPackagingUnitDependencyProvider extends AbstractBundleDependencyPro
     {
         $container->set(static::FACADE_OMS, function (Container $container) {
             return new ProductPackagingUnitToOmsFacadeBridge(
-                $container->getLocator()->oms()->facade()
+                $container->getLocator()->oms()->facade(),
             );
         });
 
@@ -201,7 +201,7 @@ class ProductPackagingUnitDependencyProvider extends AbstractBundleDependencyPro
     {
         $container->set(static::FACADE_STORE, function (Container $container) {
             return new ProductPackagingUnitToStoreFacadeBridge(
-                $container->getLocator()->store()->facade()
+                $container->getLocator()->store()->facade(),
             );
         });
 
@@ -217,7 +217,7 @@ class ProductPackagingUnitDependencyProvider extends AbstractBundleDependencyPro
     {
         $container->set(static::FACADE_PRODUCT, function (Container $container) {
             return new ProductPackagingUnitToProductFacadeBridge(
-                $container->getLocator()->product()->facade()
+                $container->getLocator()->product()->facade(),
             );
         });
 
@@ -233,7 +233,7 @@ class ProductPackagingUnitDependencyProvider extends AbstractBundleDependencyPro
     {
         $container->set(static::FACADE_SALES_QUANTITY, function (Container $container) {
             return new ProductPackagingUnitToSalesQuantityFacadeBridge(
-                $container->getLocator()->salesQuantity()->facade()
+                $container->getLocator()->salesQuantity()->facade(),
             );
         });
 

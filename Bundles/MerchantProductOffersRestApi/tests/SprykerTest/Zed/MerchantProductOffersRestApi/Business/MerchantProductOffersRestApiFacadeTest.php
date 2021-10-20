@@ -42,17 +42,17 @@ class MerchantProductOffersRestApiFacadeTest extends Unit
         // Act
         $changedPersistentCartChangeTransfer = $this->tester->getFacade()->mapCartItemRequestTransferToPersistentCartChangeTransfer(
             $cartItemRequestTransfer,
-            $persistentCartChangeTransfer
+            $persistentCartChangeTransfer,
         );
 
         // Assert
         $this->assertEquals(
             $cartItemRequestTransfer->getProductOfferReference(),
-            $changedPersistentCartChangeTransfer->getItems()->getIterator()->current()->getProductOfferReference()
+            $changedPersistentCartChangeTransfer->getItems()->getIterator()->current()->getProductOfferReference(),
         );
         $this->assertEquals(
             $cartItemRequestTransfer->getMerchantReference(),
-            $changedPersistentCartChangeTransfer->getItems()->getIterator()->current()->getMerchantReference()
+            $changedPersistentCartChangeTransfer->getItems()->getIterator()->current()->getMerchantReference(),
         );
     }
 
@@ -72,17 +72,17 @@ class MerchantProductOffersRestApiFacadeTest extends Unit
         // Act
         $changedPersistentCartChangeTransfer = $this->tester->getFacade()->mapCartItemRequestTransferToPersistentCartChangeTransfer(
             $cartItemRequestTransfer,
-            $persistentCartChangeTransfer
+            $persistentCartChangeTransfer,
         );
 
         // Assert
         $this->assertNotEquals(
             $cartItemRequestTransfer->getProductOfferReference(),
-            $changedPersistentCartChangeTransfer->getItems()->getIterator()->current()->getProductOfferReference()
+            $changedPersistentCartChangeTransfer->getItems()->getIterator()->current()->getProductOfferReference(),
         );
         $this->assertNotEquals(
             $cartItemRequestTransfer->getMerchantReference(),
-            $changedPersistentCartChangeTransfer->getItems()->getIterator()->current()->getMerchantReference()
+            $changedPersistentCartChangeTransfer->getItems()->getIterator()->current()->getMerchantReference(),
         );
     }
 
@@ -100,15 +100,15 @@ class MerchantProductOffersRestApiFacadeTest extends Unit
         // Act
         $changedPersistentCartChangeTransfer = $this->tester->getFacade()->mapCartItemRequestTransferToPersistentCartChangeTransfer(
             $cartItemRequestTransfer,
-            $persistentCartChangeTransfer
+            $persistentCartChangeTransfer,
         );
 
         // Assert
         $this->assertNull(
-            $changedPersistentCartChangeTransfer->getItems()->getIterator()->current()->getProductOfferReference()
+            $changedPersistentCartChangeTransfer->getItems()->getIterator()->current()->getProductOfferReference(),
         );
         $this->assertNull(
-            $changedPersistentCartChangeTransfer->getItems()->getIterator()->current()->getMerchantReference()
+            $changedPersistentCartChangeTransfer->getItems()->getIterator()->current()->getMerchantReference(),
         );
     }
 }

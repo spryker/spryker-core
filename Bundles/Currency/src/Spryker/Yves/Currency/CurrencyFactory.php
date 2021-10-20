@@ -22,7 +22,7 @@ class CurrencyFactory extends AbstractFactory
         return new CurrencyBuilder(
             $this->getInternationalization(),
             $this->getStore()->getDefaultCurrencyCode(),
-            $this->createCurrencyPersistence()->getCurrentCurrencyIsoCode()
+            $this->createCurrencyPersistence()->getCurrentCurrencyIsoCode(),
         );
     }
 
@@ -43,7 +43,7 @@ class CurrencyFactory extends AbstractFactory
             $this->getCurrencyPostChangePlugins(),
             $this->createCurrencyPersistence(),
             $this->getZedRequestClient(),
-            $this->getMessengerClient()
+            $this->getMessengerClient(),
         );
     }
 

@@ -61,11 +61,11 @@ class ProductLabelSearchFacadeTest extends Unit
         $productLabelTransfer = $this->tester->haveProductLabel();
         $this->tester->haveProductLabelToAbstractProductRelation(
             $productLabelTransfer->getIdProductLabel(),
-            $productTransfer1->getFkProductAbstract()
+            $productTransfer1->getFkProductAbstract(),
         );
         $this->tester->haveProductLabelToAbstractProductRelation(
             $productLabelTransfer->getIdProductLabel(),
-            $productTransfer2->getFkProductAbstract()
+            $productTransfer2->getFkProductAbstract(),
         );
 
         $eventTransfers = [
@@ -98,7 +98,7 @@ class ProductLabelSearchFacadeTest extends Unit
         $productLabelTransfer1 = $this->tester->haveProductLabel();
         $this->tester->haveProductLabelToAbstractProductRelation(
             $productLabelTransfer1->getIdProductLabel(),
-            $productTransfer->getFkProductAbstract()
+            $productTransfer->getFkProductAbstract(),
         );
 
         $productLabelTransfer2 = $this->tester->haveProductLabel();
@@ -189,14 +189,14 @@ class ProductLabelSearchFacadeTest extends Unit
         $productLabelTransfer1 = $this->tester->haveProductLabel();
         $this->tester->haveProductLabelToAbstractProductRelation(
             $productLabelTransfer1->getIdProductLabel(),
-            $productTransfer1->getFkProductAbstract()
+            $productTransfer1->getFkProductAbstract(),
         );
 
         $productTransfer2 = $this->tester->haveProduct();
         $productLabelTransfer2 = $this->tester->haveProductLabel();
         $this->tester->haveProductLabelToAbstractProductRelation(
             $productLabelTransfer2->getIdProductLabel(),
-            $productTransfer2->getFkProductAbstract()
+            $productTransfer2->getFkProductAbstract(),
         );
 
         $eventTransfers = [
@@ -270,11 +270,11 @@ class ProductLabelSearchFacadeTest extends Unit
         ]);
         $this->tester->haveProductLabelToAbstractProductRelation(
             $productLabelTransfer1->getIdProductLabel(),
-            $productTransfer1->getFkProductAbstract()
+            $productTransfer1->getFkProductAbstract(),
         );
         $this->tester->haveProductLabelToAbstractProductRelation(
             $productLabelTransfer2->getIdProductLabel(),
-            $productTransfer2->getFkProductAbstract()
+            $productTransfer2->getFkProductAbstract(),
         );
 
         $productLabelIdsMappedByIdProductAbstractAndStoreName = [
@@ -314,7 +314,7 @@ class ProductLabelSearchFacadeTest extends Unit
             $this->assertNotEmpty($payloadTransfer->getLabelIds());
             $this->assertEquals(
                 $productLabelIdsMappedByIdProductAbstractAndStoreName[$payloadTransfer->getIdProductAbstract()],
-                $payloadTransfer->getLabelIds()
+                $payloadTransfer->getLabelIds(),
             );
         }
     }
@@ -363,7 +363,7 @@ class ProductLabelSearchFacadeTest extends Unit
 
         $this->tester->setDependency(
             ProductLabelSearchDependencyProvider::FACADE_PRODUCT_PAGE_SEARCH,
-            $productPageSearchFacadeMock
+            $productPageSearchFacadeMock,
         );
 
         return $productPageSearchFacadeMock;

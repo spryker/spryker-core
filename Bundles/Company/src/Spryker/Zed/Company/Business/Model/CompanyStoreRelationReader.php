@@ -36,7 +36,7 @@ class CompanyStoreRelationReader implements CompanyStoreRelationReaderInterface
     {
         $storeRelationTransfer->requireIdEntity();
         $relatedStores = $this->companyRepository->getRelatedStoresByCompanyId(
-            $storeRelationTransfer->getIdEntity()
+            $storeRelationTransfer->getIdEntity(),
         );
 
         $idStores = $this->getIdStores($relatedStores);

@@ -47,11 +47,11 @@ class SalesOrderThresholdMapper implements SalesOrderThresholdMapperInterface
         $salesOrderThresholdTransfer->fromArray($salesOrderThresholdEntity->toArray(), true)
             ->setIdSalesOrderThreshold($salesOrderThresholdEntity->getIdSalesOrderThreshold())
             ->setSalesOrderThresholdValue(
-                $this->mapSalesOrderThresholdValueTransfer($salesOrderThresholdTransfer, $salesOrderThresholdEntity)
+                $this->mapSalesOrderThresholdValueTransfer($salesOrderThresholdTransfer, $salesOrderThresholdEntity),
             )->setCurrency(
-                (new CurrencyTransfer())->fromArray($salesOrderThresholdEntity->getCurrency()->toArray(), true)
+                (new CurrencyTransfer())->fromArray($salesOrderThresholdEntity->getCurrency()->toArray(), true),
             )->setStore(
-                (new StoreTransfer())->fromArray($salesOrderThresholdEntity->getStore()->toArray(), true)
+                (new StoreTransfer())->fromArray($salesOrderThresholdEntity->getStore()->toArray(), true),
             );
 
         if (!$salesOrderThresholdTransfer->getSalesOrderThresholdValue()->getSalesOrderThresholdType()) {
@@ -61,8 +61,8 @@ class SalesOrderThresholdMapper implements SalesOrderThresholdMapperInterface
         $salesOrderThresholdTransfer->getSalesOrderThresholdValue()->setSalesOrderThresholdType(
             $salesOrderThresholdTransfer->getSalesOrderThresholdValue()->getSalesOrderThresholdType()->fromArray(
                 $salesOrderThresholdEntity->getSalesOrderThresholdType()->toArray(),
-                true
-            )
+                true,
+            ),
         );
 
         return $salesOrderThresholdTransfer;

@@ -35,14 +35,14 @@ class ConfigurableBundleTranslator implements ConfigurableBundleTranslatorInterf
         string $localeName
     ): array {
         $glossaryStorageKeys = $this->getGlossaryStorageKeysFromConfigurableBundleTemplateStorageTransfers(
-            $configurableBundleTemplateStorageTransfers
+            $configurableBundleTemplateStorageTransfers,
         );
 
         $translations = $this->glossaryStorageClient->translateBulk($glossaryStorageKeys, $localeName);
 
         return $this->setTranslationsToConfigurableBundleTemplateStorageTransfers(
             $configurableBundleTemplateStorageTransfers,
-            $translations
+            $translations,
         );
     }
 
@@ -83,14 +83,14 @@ class ConfigurableBundleTranslator implements ConfigurableBundleTranslatorInterf
         foreach ($configurableBundleTemplateStorageTransfers as $configurableBundleTemplateStorageTransfer) {
             if (isset($translations[$configurableBundleTemplateStorageTransfer->getName()])) {
                 $configurableBundleTemplateStorageTransfer->setName(
-                    $translations[$configurableBundleTemplateStorageTransfer->getName()]
+                    $translations[$configurableBundleTemplateStorageTransfer->getName()],
                 );
             }
 
             foreach ($configurableBundleTemplateStorageTransfer->getSlots() as $configurableBundleTemplateSlotStorageTransfer) {
                 if (isset($translations[$configurableBundleTemplateSlotStorageTransfer->getName()])) {
                     $configurableBundleTemplateSlotStorageTransfer->setName(
-                        $translations[$configurableBundleTemplateSlotStorageTransfer->getName()]
+                        $translations[$configurableBundleTemplateSlotStorageTransfer->getName()],
                     );
                 }
             }
@@ -98,7 +98,7 @@ class ConfigurableBundleTranslator implements ConfigurableBundleTranslatorInterf
             foreach ($configurableBundleTemplateStorageTransfer->getImageSets() as $productImageSetStorageTransfer) {
                 if (isset($translations[$productImageSetStorageTransfer->getName()])) {
                     $productImageSetStorageTransfer->setName(
-                        $translations[$productImageSetStorageTransfer->getName()]
+                        $translations[$productImageSetStorageTransfer->getName()],
                     );
                 }
             }

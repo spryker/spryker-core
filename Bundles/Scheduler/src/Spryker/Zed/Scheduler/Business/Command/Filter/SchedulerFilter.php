@@ -50,7 +50,7 @@ class SchedulerFilter implements SchedulerFilterInterface
         return array_intersect_key(
             $this->schedulerAdapterPlugins,
             array_flip($filteredSchedulers),
-            array_flip($enabledSchedulers)
+            array_flip($enabledSchedulers),
         );
     }
 
@@ -67,7 +67,7 @@ class SchedulerFilter implements SchedulerFilterInterface
             if (!array_key_exists($idScheduler, $this->schedulerAdapterPlugins)) {
                 throw new SchedulerNotRegisteredException(sprintf(
                     'There is no adapter registered for `%s` defined in the configuration.',
-                    $idScheduler
+                    $idScheduler,
                 ));
             }
         }
@@ -88,7 +88,7 @@ class SchedulerFilter implements SchedulerFilterInterface
             if (!in_array($idScheduler, $enabledSchedulers, true)) {
                 throw new SchedulerNotEnabledException(sprintf(
                     'There is no enabled scheduler for `%s` defined in the request.',
-                    $idScheduler
+                    $idScheduler,
                 ));
             }
         }

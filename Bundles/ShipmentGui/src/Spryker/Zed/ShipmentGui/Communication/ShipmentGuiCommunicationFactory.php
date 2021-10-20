@@ -52,7 +52,7 @@ class ShipmentGuiCommunicationFactory extends AbstractCommunicationFactory
         return new ShipmentFormDataProvider(
             $this->getSalesFacade(),
             $this->getCustomerFacade(),
-            $this->getShipmentFacade()
+            $this->getShipmentFacade(),
         );
     }
 
@@ -82,7 +82,7 @@ class ShipmentGuiCommunicationFactory extends AbstractCommunicationFactory
         return $this->getFormFactory()->create(
             ShipmentCarrierFormType::class,
             $shipmentCarrierFormDataProvider->getData(),
-            $shipmentCarrierFormDataProvider->getOptions()
+            $shipmentCarrierFormDataProvider->getOptions(),
         );
     }
 
@@ -116,7 +116,7 @@ class ShipmentGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createViewShipmentMethodFormDataProvider(): ViewShipmentMethodFormDataProvider
     {
         return new ViewShipmentMethodFormDataProvider(
-            $this->getTaxFacade()
+            $this->getTaxFacade(),
         );
     }
 
@@ -180,7 +180,7 @@ class ShipmentGuiCommunicationFactory extends AbstractCommunicationFactory
     {
         return new ShipmentMethodFormDataProvider(
             $this->getShipmentFacade(),
-            $this->getTaxFacade()
+            $this->getTaxFacade(),
         );
     }
 

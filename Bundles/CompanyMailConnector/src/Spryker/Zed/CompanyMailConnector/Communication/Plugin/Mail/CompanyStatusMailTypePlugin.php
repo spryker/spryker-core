@@ -100,7 +100,7 @@ class CompanyStatusMailTypePlugin extends AbstractPlugin implements MailTypePlug
 
         $mailBuilder->addRecipient(
             $customerTransfer->getEmail(),
-            $customerTransfer->getFirstName() . ' ' . $customerTransfer->getLastName()
+            $customerTransfer->getFirstName() . ' ' . $customerTransfer->getLastName(),
         );
 
         return $this;

@@ -111,7 +111,7 @@ class ShoppingListStub implements ShoppingListStubInterface
         /** @var \Generated\Shared\Transfer\ShoppingListItemResponseTransfer $shoppingListItemResponseTransfer */
         $shoppingListItemResponseTransfer = $this->zedRequestClient->call(
             '/shopping-list/gateway/add-shopping-list-item',
-            $shoppingListItemTransfer
+            $shoppingListItemTransfer,
         );
 
         return $shoppingListItemResponseTransfer;
@@ -130,7 +130,7 @@ class ShoppingListStub implements ShoppingListStubInterface
         /** @var \Generated\Shared\Transfer\ShoppingListItemResponseTransfer $shoppingListItemResponseTransfer */
         $shoppingListItemResponseTransfer = $this->zedRequestClient->call(
             '/shopping-list/gateway/update-shopping-list-item-by-id',
-            $shoppingListItemTransfer
+            $shoppingListItemTransfer,
         );
 
         return $shoppingListItemResponseTransfer;
@@ -178,7 +178,7 @@ class ShoppingListStub implements ShoppingListStubInterface
         /** @var \Generated\Shared\Transfer\ShoppingListItemResponseTransfer $shoppingListItemResponseTransfer */
         $shoppingListItemResponseTransfer = $this->zedRequestClient->call(
             '/shopping-list/gateway/remove-item-by-id',
-            $shoppingListItemTransfer
+            $shoppingListItemTransfer,
         );
 
         return $shoppingListItemResponseTransfer;
@@ -211,7 +211,7 @@ class ShoppingListStub implements ShoppingListStubInterface
         /** @var \Generated\Shared\Transfer\ShoppingListOverviewResponseTransfer $shoppingListOverviewResponseTransfer */
         $shoppingListOverviewResponseTransfer = $this->zedRequestClient->call(
             '/shopping-list/gateway/get-shopping-list-overview',
-            $shoppingListOverviewRequestTransfer
+            $shoppingListOverviewRequestTransfer,
         );
 
         return $shoppingListOverviewResponseTransfer;
@@ -229,7 +229,7 @@ class ShoppingListStub implements ShoppingListStubInterface
         /** @var \Generated\Shared\Transfer\ShoppingListCollectionTransfer $shoppingListCollectionTransfer */
         $shoppingListCollectionTransfer = $this->zedRequestClient->call(
             '/shopping-list/gateway/get-customer-shopping-list-collection',
-            $customerTransfer
+            $customerTransfer,
         );
 
         return $shoppingListCollectionTransfer;
@@ -247,7 +247,7 @@ class ShoppingListStub implements ShoppingListStubInterface
         /** @var \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer */
         $shoppingListItemCollectionTransfer = $this->zedRequestClient->call(
             '/shopping-list/gateway/get-shopping-list-item-collection',
-            $shoppingListCollectionTransfer
+            $shoppingListCollectionTransfer,
         );
 
         return $shoppingListItemCollectionTransfer;
@@ -266,7 +266,7 @@ class ShoppingListStub implements ShoppingListStubInterface
         /** @var \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer */
         $shoppingListItemCollectionTransfer = $this->zedRequestClient->call(
             '/shopping-list/gateway/get-shopping-list-item-collection-transfer',
-            $shoppingListItemCollectionTransfer
+            $shoppingListItemCollectionTransfer,
         );
 
         return $shoppingListItemCollectionTransfer;
@@ -284,7 +284,7 @@ class ShoppingListStub implements ShoppingListStubInterface
         /** @var \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer */
         $shoppingListTransfer = $this->zedRequestClient->call(
             '/shopping-list/gateway/create-shopping-list-from-quote',
-            $shoppingListFromCartRequestTransfer
+            $shoppingListFromCartRequestTransfer,
         );
 
         return $shoppingListTransfer;
@@ -300,7 +300,7 @@ class ShoppingListStub implements ShoppingListStubInterface
         /** @var \Generated\Shared\Transfer\ShoppingListPermissionGroupCollectionTransfer $shoppingListPermissionGroupCollectionTransfer */
         $shoppingListPermissionGroupCollectionTransfer = $this->zedRequestClient->call(
             '/shopping-list/gateway/get-shopping-list-permission-group-collection',
-            new ShoppingListPermissionGroupCollectionTransfer()
+            new ShoppingListPermissionGroupCollectionTransfer(),
         );
 
         return $shoppingListPermissionGroupCollectionTransfer;
@@ -319,7 +319,7 @@ class ShoppingListStub implements ShoppingListStubInterface
         /** @var \Generated\Shared\Transfer\ShoppingListShareResponseTransfer $shoppingListShareResponseTransfer */
         $shoppingListShareResponseTransfer = $this->zedRequestClient->call(
             '/shopping-list/gateway/share-shopping-list-with-company-business-unit',
-            $shoppingListShareRequestTransfer
+            $shoppingListShareRequestTransfer,
         );
 
         return $shoppingListShareResponseTransfer;
@@ -337,7 +337,7 @@ class ShoppingListStub implements ShoppingListStubInterface
         /** @var \Generated\Shared\Transfer\ShoppingListShareResponseTransfer $shoppingListShareResponseTransfer */
         $shoppingListShareResponseTransfer = $this->zedRequestClient->call(
             '/shopping-list/gateway/share-shopping-list-with-company-user',
-            $shoppingListShareRequestTransfer
+            $shoppingListShareRequestTransfer,
         );
 
         return $shoppingListShareResponseTransfer;
@@ -355,7 +355,7 @@ class ShoppingListStub implements ShoppingListStubInterface
         /** @var \Generated\Shared\Transfer\ShoppingListShareResponseTransfer $shoppingListResponseTransfer */
         $shoppingListResponseTransfer = $this->zedRequestClient->call(
             '/shopping-list/gateway/update-shopping-list-shared-entities',
-            $shoppingListTransfer
+            $shoppingListTransfer,
         );
 
         return $shoppingListResponseTransfer;
@@ -389,7 +389,7 @@ class ShoppingListStub implements ShoppingListStubInterface
         /** @var \Generated\Shared\Transfer\ShoppingListShareResponseTransfer $shoppingListShareResponseTransfer */
         $shoppingListShareResponseTransfer = $this->zedRequestClient->call(
             '/shopping-list/gateway/dismiss-shopping-list-sharing',
-            $shoppingListDismissRequest
+            $shoppingListDismissRequest,
         );
 
         return $shoppingListShareResponseTransfer;
@@ -407,7 +407,7 @@ class ShoppingListStub implements ShoppingListStubInterface
         /** @var \Generated\Shared\Transfer\ShoppingListResponseTransfer $shoppingListResponseTransfer */
         $shoppingListResponseTransfer = $this->zedRequestClient->call(
             '/shopping-list/gateway/find-shopping-list-by-uuid',
-            $shoppingListTransfer
+            $shoppingListTransfer,
         );
 
         return $shoppingListResponseTransfer;

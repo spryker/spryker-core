@@ -56,7 +56,7 @@ class ProductListDeleteChecker implements ProductListDeleteCheckerInterface
 
         $productListResponseTransfer = $this->expandProductListResponseWithMessages(
             $productListResponseTransfer,
-            $merchantRelationshipTransfers
+            $merchantRelationshipTransfers,
         );
 
         return $productListResponseTransfer->setIsSuccessful(false);
@@ -77,7 +77,7 @@ class ProductListDeleteChecker implements ProductListDeleteCheckerInterface
                 (new MessageTransfer())->setValue(static::ERROR_MESSAGE_UNABLE_TO_DELETE_PRODUCT_LIST)
                     ->setParameters([
                         static::ERROR_MESSAGE_PARAM_MERCHANT_RELATION => $merchantRelationshipTransfer->getName(),
-                    ])
+                    ]),
             );
         }
 

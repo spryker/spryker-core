@@ -27,7 +27,7 @@ class DefaultPriceQueryExpander implements DefaultPriceQueryExpanderInterface
     ): ?QueryCriteriaTransfer {
         return (new QueryCriteriaTransfer())
             ->addJoin(
-                $this->createJoin()
+                $this->createJoin(),
             )
             ->setWithColumns([
                 SpyPriceProductDefaultTableMap::COL_ID_PRICE_PRODUCT_DEFAULT => PriceProductDimensionTransfer::ID_PRICE_PRODUCT_DEFAULT,

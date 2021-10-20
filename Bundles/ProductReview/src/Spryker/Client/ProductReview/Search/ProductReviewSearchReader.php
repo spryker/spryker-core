@@ -53,7 +53,7 @@ class ProductReviewSearchReader implements ProductReviewSearchReaderInterface
         return $this->searchClient->search(
             $this->searchQueryPlugin,
             $this->searchResultFormatterPlugins,
-            $productReviewSearchRequestTransfer->getRequestParams()
+            $productReviewSearchRequestTransfer->getRequestParams(),
         );
     }
 
@@ -64,7 +64,7 @@ class ProductReviewSearchReader implements ProductReviewSearchReaderInterface
     {
         return $this->searchClient->search(
             $this->searchQueryPlugin,
-            $this->searchResultFormatterPlugins
+            $this->searchResultFormatterPlugins,
         );
     }
 }

@@ -43,7 +43,7 @@ class ShoppingListsRestApiDependencyProvider extends AbstractBundleDependencyPro
     {
         $container->set(static::FACADE_SHOPPING_LIST, function (Container $container) {
             return new ShoppingListsRestApiToShoppingListFacadeBridge(
-                $container->getLocator()->shoppingList()->facade()
+                $container->getLocator()->shoppingList()->facade(),
             );
         });
 

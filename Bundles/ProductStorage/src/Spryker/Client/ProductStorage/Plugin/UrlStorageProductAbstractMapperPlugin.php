@@ -64,7 +64,7 @@ class UrlStorageProductAbstractMapperPlugin extends AbstractPlugin implements Ur
                 '%s.%s.resource.product_abstract.%s',
                 strtolower(Store::getInstance()->getStoreName()),
                 strtolower($locale),
-                $idProductAbstract
+                $idProductAbstract,
             );
 
             return $collectorDataKey;

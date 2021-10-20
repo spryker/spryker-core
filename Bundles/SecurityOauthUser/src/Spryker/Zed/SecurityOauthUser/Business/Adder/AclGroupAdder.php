@@ -43,7 +43,7 @@ class AclGroupAdder implements AclGroupAdderInterface
         if (!$groupTransfer) {
             throw new AclGroupNotFoundException(sprintf(
                 'The group with %s name was not found.',
-                $groupName
+                $groupName,
             ));
         }
 

@@ -123,12 +123,12 @@ class CompanyRole implements CompanyRoleInterface
             $companyRoleResponseTransfer = $this->createCompanyRoleWithAssignedPermissions(
                 $companyRoleTransfer,
                 $companyTransfer,
-                $availablePermissions
+                $availablePermissions,
             );
 
             $companyResponseTransfer = $this->addCompanyRoleMessagesToCompanyResponseTransfer(
                 $companyRoleResponseTransfer,
-                $companyResponseTransfer
+                $companyResponseTransfer,
             );
         }
 
@@ -168,7 +168,7 @@ class CompanyRole implements CompanyRoleInterface
 
         $preparedPermissionCollection = $this->findAssignedCompanyRolePermissions(
             $companyRoleTransfer->getPermissionCollection(),
-            $availablePermissions
+            $availablePermissions,
         );
 
         $companyRoleTransfer->setPermissionCollection($preparedPermissionCollection);
@@ -275,7 +275,7 @@ class CompanyRole implements CompanyRoleInterface
         $this->entityManager->deleteCompanyRoleById(
             $companyRoleResponseTransfer
                 ->getCompanyRoleTransfer()
-                ->getIdCompanyRole()
+                ->getIdCompanyRole(),
         );
 
         return $companyRoleResponseTransfer;
@@ -291,7 +291,7 @@ class CompanyRole implements CompanyRoleInterface
         $hasUsers = $this->repository->hasUsers(
             $companyRoleResponseTransfer
                 ->getCompanyRoleTransfer()
-                ->getIdCompanyRole()
+                ->getIdCompanyRole(),
         );
 
         if ($hasUsers) {
@@ -299,7 +299,7 @@ class CompanyRole implements CompanyRoleInterface
                 ->setIsSuccessful(false)
                 ->addMessage(
                     (new ResponseMessageTransfer())
-                        ->setText(static::ERROR_MESSAGE_HAS_RELATED_USERS)
+                        ->setText(static::ERROR_MESSAGE_HAS_RELATED_USERS),
                 );
 
             return $companyRoleResponseTransfer;

@@ -75,7 +75,7 @@ class ProductAbstractRelationReader implements ProductAbstractRelationReaderInte
         return [$this->mapRelationTransfer(
             $idProductLabel,
             $idsToAssign,
-            $idsToDeAssign
+            $idsToDeAssign,
         )];
     }
 
@@ -85,7 +85,7 @@ class ProductAbstractRelationReader implements ProductAbstractRelationReaderInte
     protected function findProductDiscontinuedProductLabel(): ?ProductLabelTransfer
     {
         return $this->productLabelFacade->findLabelByLabelName(
-            $this->config->getProductDiscontinueLabelName()
+            $this->config->getProductDiscontinueLabelName(),
         );
     }
 

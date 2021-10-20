@@ -110,7 +110,7 @@ class CompanyUserAccessTokenReader implements CompanyUserAccessTokenReaderInterf
             ->createRestResource(
                 CompanyUserAuthRestApiConfig::RESOURCE_COMPANY_USER_ACCESS_TOKENS,
                 null,
-                $restTokenAttributesTransfer
+                $restTokenAttributesTransfer,
             );
 
         return $this->restResourceBuilder->createRestResponse()

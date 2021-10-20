@@ -176,7 +176,7 @@ class ProductAbstractGuiTableConfigurationProvider implements ProductAbstractGui
             'inCategories',
             'Categories',
             true,
-            $this->categoryFilterOptionsProvider->getCategoryFilterOptionsTree()
+            $this->categoryFilterOptionsProvider->getCategoryFilterOptionsTree(),
         )
         ->addFilterSelect('isVisible', 'Visibility', false, [
             '1' => static::COLUMN_DATA_VISIBILITY_ONLINE,
@@ -199,8 +199,8 @@ class ProductAbstractGuiTableConfigurationProvider implements ProductAbstractGui
             static::TITLE_ROW_ACTION_UPDATE_PRODUCT,
             sprintf(
                 static::URL_ROW_ACTION_UPDATE_PRODUCT,
-                ProductAbstractTransfer::ID_PRODUCT_ABSTRACT
-            )
+                ProductAbstractTransfer::ID_PRODUCT_ABSTRACT,
+            ),
         )->setRowClickAction('update-product');
 
         return $guiTableConfigurationBuilder;

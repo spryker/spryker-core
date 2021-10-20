@@ -88,7 +88,7 @@ class MerchantRestResponseBuilder implements MerchantRestResponseBuilderInterfac
                 (new RestErrorMessageTransfer())
                     ->setStatus(Response::HTTP_NOT_FOUND)
                     ->setCode(MerchantsRestApiConfig::RESPONSE_CODE_MERCHANT_NOT_FOUND)
-                    ->setDetail(MerchantsRestApiConfig::RESPONSE_DETAIL_MERCHANT_NOT_FOUND)
+                    ->setDetail(MerchantsRestApiConfig::RESPONSE_DETAIL_MERCHANT_NOT_FOUND),
             );
     }
 
@@ -103,7 +103,7 @@ class MerchantRestResponseBuilder implements MerchantRestResponseBuilderInterfac
                 (new RestErrorMessageTransfer())
                     ->setStatus(Response::HTTP_BAD_REQUEST)
                     ->setCode(MerchantsRestApiConfig::RESPONSE_CODE_MERCHANT_IDENTIFIER_MISSING)
-                    ->setDetail(MerchantsRestApiConfig::RESPONSE_DETAIL_MERCHANT_IDENTIFIER_MISSING)
+                    ->setDetail(MerchantsRestApiConfig::RESPONSE_DETAIL_MERCHANT_IDENTIFIER_MISSING),
             );
     }
 
@@ -131,12 +131,12 @@ class MerchantRestResponseBuilder implements MerchantRestResponseBuilderInterfac
         $itemsPerPage = $merchantSearchCollectionTransfer->requireIpp()->getIpp();
         $restResponse = $this->restResourceBuilder->createRestResponse(
             $resultsNumber,
-            $itemsPerPage
+            $itemsPerPage,
         );
 
         foreach ($merchantStorageTransfers as $merchantStorageTransfer) {
             $restResponse->addResource(
-                $this->createMerchantsRestResource($merchantStorageTransfer, $localeName)
+                $this->createMerchantsRestResource($merchantStorageTransfer, $localeName),
             );
         }
 
@@ -156,13 +156,13 @@ class MerchantRestResponseBuilder implements MerchantRestResponseBuilderInterfac
         $restMerchantsAttributesTransfer = $this->merchantMapper->mapMerchantStorageTransferToRestMerchantsAttributesTransfer(
             $merchantStorageTransfer,
             new RestMerchantsAttributesTransfer(),
-            $localeName
+            $localeName,
         );
 
         return $this->restResourceBuilder->createRestResource(
             MerchantsRestApiConfig::RESOURCE_MERCHANTS,
             $merchantStorageTransfer->getMerchantReference(),
-            $restMerchantsAttributesTransfer
+            $restMerchantsAttributesTransfer,
         );
     }
 }

@@ -33,7 +33,7 @@ class CurrencyBusinessFactory extends AbstractBusinessFactory
         return new CurrencyBuilder(
             $this->getInternationalization(),
             $this->getStoreFacade()->getCurrentStore()->getDefaultCurrencyIsoCode(),
-            $this->getStoreFacade()->getCurrentStore()->getSelectedCurrencyIsoCode()
+            $this->getStoreFacade()->getCurrentStore()->getSelectedCurrencyIsoCode(),
         );
     }
 
@@ -45,7 +45,7 @@ class CurrencyBusinessFactory extends AbstractBusinessFactory
         return new CurrencyReader(
             $this->getQueryContainer(),
             $this->createCurrencyMapper(),
-            $this->getStoreFacade()
+            $this->getStoreFacade(),
         );
     }
 

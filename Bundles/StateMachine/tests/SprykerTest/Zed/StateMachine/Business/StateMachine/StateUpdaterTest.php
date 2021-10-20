@@ -46,7 +46,7 @@ class StateUpdaterTest extends StateMachineMocks
         $stateUpdater->updateStateMachineItemState(
             [$this->createStateMachineItems()[0]],
             $this->createProcesses(),
-            $this->createSourceStateBuffer()
+            $this->createSourceStateBuffer(),
         );
     }
 
@@ -66,13 +66,13 @@ class StateUpdaterTest extends StateMachineMocks
 
         $stateUpdater = $this->createStateUpdater(
             null,
-            $stateMachineHandlerResolverMock
+            $stateMachineHandlerResolverMock,
         );
 
         $stateUpdater->updateStateMachineItemState(
             $this->createStateMachineItems(),
             $this->createProcesses(),
-            $this->createSourceStateBuffer()
+            $this->createSourceStateBuffer(),
         );
     }
 
@@ -87,13 +87,13 @@ class StateUpdaterTest extends StateMachineMocks
         $timeoutMock->expects($this->once())->method('setNewTimeout');
 
         $stateUpdater = $this->createStateUpdater(
-            $timeoutMock
+            $timeoutMock,
         );
 
         $stateUpdater->updateStateMachineItemState(
             $this->createStateMachineItems(),
             $this->createProcesses(),
-            $this->createSourceStateBuffer()
+            $this->createSourceStateBuffer(),
         );
     }
 
@@ -104,19 +104,19 @@ class StateUpdaterTest extends StateMachineMocks
     {
         $persistenceMock = $this->createPersistenceMock();
         $persistenceMock->expects($this->once())->method('saveItemStateHistory')->with(
-            $this->isInstanceOf(StateMachineItemTransfer::class)
+            $this->isInstanceOf(StateMachineItemTransfer::class),
         );
 
         $stateUpdater = $this->createStateUpdater(
             null,
             null,
-            $persistenceMock
+            $persistenceMock,
         );
 
         $stateUpdater->updateStateMachineItemState(
             $this->createStateMachineItems(),
             $this->createProcesses(),
-            $this->createSourceStateBuffer()
+            $this->createSourceStateBuffer(),
         );
     }
 
@@ -216,7 +216,7 @@ class StateUpdaterTest extends StateMachineMocks
             $timeoutMock,
             $handlerResolverMock,
             $stateMachinePersistenceMock,
-            $queryContainerMock
+            $queryContainerMock,
         );
     }
 

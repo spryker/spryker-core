@@ -127,7 +127,7 @@ class ProductMeasurementUnitStorageReader implements ProductMeasurementUnitStora
                 continue;
             }
             $productConcreteMeasurementUnitStorageTransfers[] = $this->mapToProductMeasurementUnitStorage(
-                $productMeasurementUnitStorageData
+                $productMeasurementUnitStorageData,
             );
         }
 

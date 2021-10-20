@@ -117,8 +117,8 @@ class EntityTransferDefinitionLoader extends TransferDefinitionLoader
                 sprintf(
                     'Schema definition file `%s` doesn\'t contain any column definition for `%s` table, please add at least one column to it.',
                     $transferDefinitionFilePath,
-                    $definition[static::KEY_NAME]
-                )
+                    $definition[static::KEY_NAME],
+                ),
             );
         }
     }

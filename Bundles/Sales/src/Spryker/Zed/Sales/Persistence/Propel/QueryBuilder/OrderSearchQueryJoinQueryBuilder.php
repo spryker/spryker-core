@@ -38,7 +38,7 @@ class OrderSearchQueryJoinQueryBuilder implements OrderSearchQueryJoinQueryBuild
             $salesOrderQuery = $this->processQueryJoin(
                 $salesOrderQuery,
                 $queryJoinTransfer,
-                $whereConditionGroups
+                $whereConditionGroups,
             );
         }
 
@@ -66,7 +66,7 @@ class OrderSearchQueryJoinQueryBuilder implements OrderSearchQueryJoinQueryBuild
         if ($queryJoinTransfer->getWithColumns()) {
             $salesOrderQuery = $this->addSalesOrderQueryWithColumns(
                 $salesOrderQuery,
-                $queryJoinTransfer->getWithColumns()
+                $queryJoinTransfer->getWithColumns(),
             );
         }
 
@@ -74,14 +74,14 @@ class OrderSearchQueryJoinQueryBuilder implements OrderSearchQueryJoinQueryBuild
             $salesOrderQuery = $this->addSalesOrderQueryWhereConditionGroup(
                 $salesOrderQuery,
                 $queryJoinTransfer->getWhereConditions(),
-                $whereConditionGroups
+                $whereConditionGroups,
             );
         }
 
         if ($queryJoinTransfer->getOrderBy()) {
             $salesOrderQuery->orderBy(
                 $queryJoinTransfer->getOrderBy(),
-                $queryJoinTransfer->getOrderDirection() ?? Criteria::DESC
+                $queryJoinTransfer->getOrderDirection() ?? Criteria::DESC,
             );
         }
 
@@ -126,7 +126,7 @@ class OrderSearchQueryJoinQueryBuilder implements OrderSearchQueryJoinQueryBuild
             $salesOrderQuery->addJoin(
                 $left,
                 $right,
-                $queryJoinTransfer->getJoinType() ?? Criteria::LEFT_JOIN
+                $queryJoinTransfer->getJoinType() ?? Criteria::LEFT_JOIN,
             );
         }
 
@@ -145,13 +145,13 @@ class OrderSearchQueryJoinQueryBuilder implements OrderSearchQueryJoinQueryBuild
     ): SpySalesOrderQuery {
         $salesOrderQuery->join(
             $queryJoinTransfer->getRelation(),
-            $queryJoinTransfer->getJoinType() ?? Criteria::LEFT_JOIN
+            $queryJoinTransfer->getJoinType() ?? Criteria::LEFT_JOIN,
         );
 
         if ($queryJoinTransfer->getCondition()) {
             $salesOrderQuery->addJoinCondition(
                 $queryJoinTransfer->getRelation(),
-                $queryJoinTransfer->getCondition()
+                $queryJoinTransfer->getCondition(),
             );
         }
 
@@ -178,7 +178,7 @@ class OrderSearchQueryJoinQueryBuilder implements OrderSearchQueryJoinQueryBuild
             $salesOrderQuery->combine(
                 $conditions,
                 Criteria::LOGICAL_OR,
-                $conditionGroupName
+                $conditionGroupName,
             );
 
             $conditionGroups[] = $conditionGroupName;
@@ -209,7 +209,7 @@ class OrderSearchQueryJoinQueryBuilder implements OrderSearchQueryJoinQueryBuild
                 $salesOrderQuery->combine(
                     [$combineWithCondition, $conditionName],
                     $queryWhereConditionTransfer->getMergeOperator() ?? Criteria::LOGICAL_OR,
-                    $combineWithCondition
+                    $combineWithCondition,
                 );
 
                 continue;
@@ -242,7 +242,7 @@ class OrderSearchQueryJoinQueryBuilder implements OrderSearchQueryJoinQueryBuild
                 $conditionName,
                 new CustomCriterion(new Criteria(), sprintf('%s%s\'%%%s%%\'', $column, $comparison, $value)),
                 null,
-                Criteria::CUSTOM
+                Criteria::CUSTOM,
             );
         }
 
@@ -250,7 +250,7 @@ class OrderSearchQueryJoinQueryBuilder implements OrderSearchQueryJoinQueryBuild
             $conditionName,
             $column,
             $comparison === Criteria::LIKE ? $this->formatFilterValue($value) : $value,
-            $comparison
+            $comparison,
         );
     }
 

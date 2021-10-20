@@ -224,7 +224,7 @@ class CommentFacadeUpdateCommentTest extends Unit
         $this->assertFalse($commentThreadResponseTransfer->getIsSuccessful());
         $this->assertEquals(
             static::GLOSSARY_KEY_COMMENT_NOT_FOUND,
-            $commentThreadResponseTransfer->getMessages()[0]->getValue()
+            $commentThreadResponseTransfer->getMessages()[0]->getValue(),
         );
     }
 
@@ -250,7 +250,7 @@ class CommentFacadeUpdateCommentTest extends Unit
         $this->assertFalse($commentThreadResponseTransfer->getIsSuccessful());
         $this->assertEquals(
             static::GLOSSARY_KEY_COMMENT_ACCESS_DENIED,
-            $commentThreadResponseTransfer->getMessages()[0]->getValue()
+            $commentThreadResponseTransfer->getMessages()[0]->getValue(),
         );
     }
 
@@ -280,7 +280,7 @@ class CommentFacadeUpdateCommentTest extends Unit
         $this->assertFalse($commentThreadResponseTransfer->getIsSuccessful());
         $this->assertEquals(
             static::GLOSSARY_KEY_COMMENT_INVALID_MESSAGE_LENGTH,
-            $commentThreadResponseTransfer->getMessages()[0]->getValue()
+            $commentThreadResponseTransfer->getMessages()[0]->getValue(),
         );
     }
 
@@ -310,7 +310,7 @@ class CommentFacadeUpdateCommentTest extends Unit
         $this->assertFalse($commentThreadResponseTransfer->getIsSuccessful());
         $this->assertEquals(
             static::GLOSSARY_KEY_COMMENT_INVALID_MESSAGE_LENGTH,
-            $commentThreadResponseTransfer->getMessages()[0]->getValue()
+            $commentThreadResponseTransfer->getMessages()[0]->getValue(),
         );
     }
 }

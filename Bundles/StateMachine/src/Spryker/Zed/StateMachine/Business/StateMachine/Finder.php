@@ -107,7 +107,7 @@ class Finder implements FinderInterface
 
         $stateMachineProcessTransfer = $this->createStateMachineProcessTransfer(
             $stateMachineItemTransfer->getStateMachineName(),
-            $processName
+            $processName,
         );
 
         $process = $processBuilder->createProcess($stateMachineProcessTransfer);
@@ -170,7 +170,7 @@ class Finder implements FinderInterface
         $stateMachineItems = $this->getFlaggedStateMachineItems(
             $stateMachineProcessTransfer,
             array_keys($statesByFlag),
-            $sort
+            $sort,
         );
 
         $stateMachineItemsWithFlag = [];
@@ -178,7 +178,7 @@ class Finder implements FinderInterface
             $stateMachineItemTransfer = $this->createStateMachineHistoryItemTransfer(
                 $stateMachineProcessTransfer,
                 $stateMachineItemEntity,
-                $stateMachineProcessEntity
+                $stateMachineProcessEntity,
             );
 
             $stateMachineItemsWithFlag[] = $stateMachineItemTransfer;
@@ -279,7 +279,7 @@ class Finder implements FinderInterface
 
             $processes[$stateMachineItemTransfer->getProcessName()] = $this->findProcessByStateMachineAndProcessName(
                 $stateMachineItemTransfer->getStateMachineName(),
-                $stateMachineItemTransfer->getProcessName()
+                $stateMachineItemTransfer->getProcessName(),
             );
         }
 
@@ -338,8 +338,8 @@ class Finder implements FinderInterface
                 sprintf(
                     'Unknown process "%s" for state machine "%s".',
                     $processName,
-                    'SM'
-                )
+                    'SM',
+                ),
             );
         }
     }
@@ -390,7 +390,7 @@ class Finder implements FinderInterface
     {
         return $this->queryContainer->queryProcessByStateMachineAndProcessName(
             $stateMachineProcessTransfer->getStateMachineName(),
-            $stateMachineProcessTransfer->getProcessName()
+            $stateMachineProcessTransfer->getProcessName(),
         )->findOne();
     }
 
@@ -407,7 +407,7 @@ class Finder implements FinderInterface
             $stateMachineProcessTransfer->getStateMachineName(),
             $stateMachineProcessTransfer->getProcessName(),
             $statesByFlag,
-            $historySortDirection
+            $historySortDirection,
         )->find();
 
         return $itemStateCollection;

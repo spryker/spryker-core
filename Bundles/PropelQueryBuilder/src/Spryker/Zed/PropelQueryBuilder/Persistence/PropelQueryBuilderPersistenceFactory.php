@@ -30,7 +30,7 @@ class PropelQueryBuilderPersistenceFactory extends AbstractPersistenceFactory
     public function createRuleTransferMapper()
     {
         return new RuleTransferMapper(
-            $this->getUtilEncodingService()
+            $this->getUtilEncodingService(),
         );
     }
 
@@ -42,7 +42,7 @@ class PropelQueryBuilderPersistenceFactory extends AbstractPersistenceFactory
         return new QueryBuilder(
             $this->createQueryBuilderCriteriaMapper(),
             $this->createColumnQueryMapper(),
-            $this->createPaginationQueryMapper()
+            $this->createPaginationQueryMapper(),
         );
     }
 
@@ -69,7 +69,7 @@ class PropelQueryBuilderPersistenceFactory extends AbstractPersistenceFactory
     {
         return new CriteriaMapper(
             $this->createQueryBuilderOperatorBuilder(),
-            $this->createAttributeCriterionMapper()
+            $this->createAttributeCriterionMapper(),
         );
     }
 
@@ -87,7 +87,7 @@ class PropelQueryBuilderPersistenceFactory extends AbstractPersistenceFactory
     protected function createAttributeCriterionMapper()
     {
         return new JsonCriterionMapper(
-            $this->createJsonMapper()
+            $this->createJsonMapper(),
         );
     }
 

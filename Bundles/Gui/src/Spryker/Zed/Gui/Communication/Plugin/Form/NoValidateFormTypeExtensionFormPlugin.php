@@ -32,7 +32,7 @@ class NoValidateFormTypeExtensionFormPlugin extends AbstractPlugin implements Fo
     public function extend(FormFactoryBuilderInterface $formFactoryBuilder, ContainerInterface $container): FormFactoryBuilderInterface
     {
         $formFactoryBuilder->addTypeExtension(
-            $this->getFactory()->createNoValidateFormTypeExtension()
+            $this->getFactory()->createNoValidateFormTypeExtension(),
         );
 
         return $formFactoryBuilder;

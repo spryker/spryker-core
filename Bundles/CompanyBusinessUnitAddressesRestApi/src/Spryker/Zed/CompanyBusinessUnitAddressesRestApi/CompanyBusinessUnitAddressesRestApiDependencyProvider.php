@@ -43,7 +43,7 @@ class CompanyBusinessUnitAddressesRestApiDependencyProvider extends AbstractBund
     {
         $container->set(static::FACADE_COMPANY_UNIT_ADDRESS, function (Container $container) {
             return new CompanyBusinessUnitAddressesRestApiToCompanyUnitAddressFacadeBridge(
-                $container->getLocator()->companyUnitAddress()->facade()
+                $container->getLocator()->companyUnitAddress()->facade(),
             );
         });
 

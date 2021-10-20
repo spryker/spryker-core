@@ -304,7 +304,7 @@ class AttributeWriter implements AttributeWriterInterface
                 $attributeGlossaryKey,
                 $localeTransfer,
                 $keyTranslation,
-                true
+                true,
             );
 
             return;
@@ -314,7 +314,7 @@ class AttributeWriter implements AttributeWriterInterface
             $attributeGlossaryKey,
             $localeTransfer,
             $keyTranslation,
-            true
+            true,
         );
     }
 

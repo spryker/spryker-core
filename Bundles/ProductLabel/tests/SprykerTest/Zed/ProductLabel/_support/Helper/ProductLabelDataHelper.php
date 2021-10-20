@@ -68,7 +68,7 @@ class ProductLabelDataHelper extends Module
         $this->getDataCleanupHelper()->_addCleanup(function () use ($idProductLabel, $idProductAbstract): void {
             $this->getProductLabelFacade()->removeProductAbstractRelationsForLabel(
                 $idProductLabel,
-                [$idProductAbstract]
+                [$idProductAbstract],
             );
         });
     }

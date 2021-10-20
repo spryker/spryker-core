@@ -39,7 +39,7 @@ class CmsSlotStoreConnectorDependencyProvider extends AbstractDependencyProvider
     {
         $container->set(static::CLIENT_STORE, function (Container $container) {
             return new CmsSlotStoreConnectorToStoreClientBridge(
-                $container->getLocator()->store()->client()
+                $container->getLocator()->store()->client(),
             );
         });
 

@@ -48,7 +48,7 @@ class ShipmentsRestApiFactory extends AbstractFactory
         return new ShipmentByCheckoutDataExpander(
             $this->getShipmentService(),
             $this->createShipmentMapper(),
-            $this->getResourceBuilder()
+            $this->getResourceBuilder(),
         );
     }
 
@@ -60,7 +60,7 @@ class ShipmentsRestApiFactory extends AbstractFactory
         return new ShipmentMethodByCheckoutDataExpander(
             $this->createShipmentMethodRestResponseBuilder(),
             $this->createShipmentMethodMapper(),
-            $this->createShipmentMethodSorter()
+            $this->createShipmentMethodSorter(),
         );
     }
 
@@ -72,7 +72,7 @@ class ShipmentsRestApiFactory extends AbstractFactory
         return new ShipmentMethodByShipmentExpander(
             $this->createShipmentMethodRestResponseBuilder(),
             $this->createShipmentMethodMapper(),
-            $this->createShipmentMethodSorter()
+            $this->createShipmentMethodSorter(),
         );
     }
 
@@ -131,7 +131,7 @@ class ShipmentsRestApiFactory extends AbstractFactory
     {
         return new ShipmentsByOrderResourceRelationshipExpander(
             $this->createOrderShipmentRestResponseBuilder(),
-            $this->createShipmentServiceFactory()
+            $this->createShipmentServiceFactory(),
         );
     }
 
@@ -158,7 +158,7 @@ class ShipmentsRestApiFactory extends AbstractFactory
     {
         return new OrderShipmentRestResponseBuilder(
             $this->createOrderShipmentMapper(),
-            $this->getResourceBuilder()
+            $this->getResourceBuilder(),
         );
     }
 
@@ -184,7 +184,7 @@ class ShipmentsRestApiFactory extends AbstractFactory
     public function createQuoteRequestItemExpander(): QuoteRequestItemExpanderInterface
     {
         return new QuoteRequestItemExpander(
-            $this->getShipmentService()
+            $this->getShipmentService(),
         );
     }
 }

@@ -53,7 +53,7 @@ abstract class AbstractBulkTouchQuery
     {
         return rtrim(
             implode($separator, $data),
-            $separator
+            $separator,
         );
     }
 }

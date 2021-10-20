@@ -31,7 +31,7 @@ class QuantitySalesUnitGroupKeyItemExpanderPlugin extends AbstractPlugin impleme
     {
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
             $itemTransfer->setGroupKey(
-                $this->getFacade()->expandItemGroupKeyWithQuantitySalesUnit($itemTransfer)
+                $this->getFacade()->expandItemGroupKeyWithQuantitySalesUnit($itemTransfer),
             );
         }
 

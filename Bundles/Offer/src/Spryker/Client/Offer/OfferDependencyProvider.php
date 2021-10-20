@@ -46,7 +46,7 @@ class OfferDependencyProvider extends AbstractDependencyProvider
     {
         $container->set(static::CLIENT_ZED_REQUEST, function (Container $container) {
             return new OfferToZedRequestClientBridge(
-                $container->getLocator()->zedRequest()->client()
+                $container->getLocator()->zedRequest()->client(),
             );
         });
 
@@ -62,7 +62,7 @@ class OfferDependencyProvider extends AbstractDependencyProvider
     {
         $container->set(static::CLIENT_CUSTOMER, function (Container $container) {
             return new OfferToCustomerClientBridge(
-                $container->getLocator()->customer()->client()
+                $container->getLocator()->customer()->client(),
             );
         });
 

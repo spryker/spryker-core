@@ -31,7 +31,7 @@ class MonitoringRequestTransactionEventDispatcherPlugin extends AbstractPlugin i
     public function extend(EventDispatcherInterface $eventDispatcher, ContainerInterface $container): EventDispatcherInterface
     {
         $eventDispatcher->addSubscriber(
-            $this->getFactory()->createControllerListener()
+            $this->getFactory()->createControllerListener(),
         );
 
         return $eventDispatcher;

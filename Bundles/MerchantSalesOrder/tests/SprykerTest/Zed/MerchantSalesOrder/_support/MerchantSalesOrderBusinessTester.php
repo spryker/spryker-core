@@ -56,7 +56,7 @@ class MerchantSalesOrderBusinessTester extends Actor
         return sprintf(
             '%s--%s',
             $orderReference,
-            $merchantReference
+            $merchantReference,
         );
     }
 

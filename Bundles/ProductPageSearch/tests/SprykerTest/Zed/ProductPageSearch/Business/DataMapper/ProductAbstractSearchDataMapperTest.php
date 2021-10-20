@@ -51,7 +51,7 @@ class ProductAbstractSearchDataMapperTest extends Unit
             new PageMapBuilder(),
             $this->getSearchFacade(),
             $this->getProductSearchFacade(),
-            [$this->createProductAbstractPageMapExpanderPluginMock()]
+            [$this->createProductAbstractPageMapExpanderPluginMock()],
         );
         $localeTransfer = new LocaleTransfer();
         $localeTransfer->setLocaleName($localeName);

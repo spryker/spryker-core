@@ -54,14 +54,14 @@ class ResourceShareReader implements ResourceShareReaderInterface
 
         $resourceShareResponseTransfer = new ResourceShareResponseTransfer();
         $resourceShareTransfer = $this->resourceShareRepository->findResourceShareByUuid(
-            $resourceShareTransfer->getUuid()
+            $resourceShareTransfer->getUuid(),
         );
 
         if (!$resourceShareTransfer) {
             return $resourceShareResponseTransfer
                 ->setIsSuccessful(false)
                 ->addMessage(
-                    (new MessageTransfer())->setValue(static::GLOSSARY_KEY_RESOURCE_IS_NOT_FOUND_BY_PROVIDED_UUID)
+                    (new MessageTransfer())->setValue(static::GLOSSARY_KEY_RESOURCE_IS_NOT_FOUND_BY_PROVIDED_UUID),
                 );
         }
 

@@ -73,7 +73,7 @@ class CmsPageLocalizedAttributesMigration implements MigrationInterface
         foreach ($targetVersionDataTransfer->getCmsPage()->getPageAttributes() as $pageAttributesTransfer) {
             $cmsLocalizedAttributeEntity = $this->findOrCreatePageLocalizedAttribute(
                 $originVersionDataTransfer->getCmsPage()->getFkPage(),
-                $pageAttributesTransfer->getLocaleName()
+                $pageAttributesTransfer->getLocaleName(),
             );
 
             $cmsLocalizedAttributeEntity->setName($pageAttributesTransfer->getName());
@@ -92,7 +92,7 @@ class CmsPageLocalizedAttributesMigration implements MigrationInterface
         foreach ($targetVersionDataTransfer->getCmsPage()->getMetaAttributes() as $metaAttributesTransfer) {
             $cmsLocalizedAttributeEntity = $this->findOrCreatePageLocalizedAttribute(
                 $originVersionDataTransfer->getCmsPage()->getFkPage(),
-                $metaAttributesTransfer->getLocaleName()
+                $metaAttributesTransfer->getLocaleName(),
             );
 
             $cmsLocalizedAttributeEntity->setMetaTitle($metaAttributesTransfer->getMetaTitle());

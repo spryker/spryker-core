@@ -84,7 +84,7 @@ class BusinessHelper extends Module
             $omsStateEntity,
             $salesOrderEntity,
             $omsProcessEntity,
-            $itemTransfers
+            $itemTransfers,
         );
 
         $this->createSpySalesShipment($salesOrderEntity->getIdSalesOrder(), $salesExpenseEntity->getIdSalesExpense());
@@ -115,7 +115,7 @@ class BusinessHelper extends Module
             $omsStateEntity,
             $salesOrderEntity,
             $omsOrderProcessEntity,
-            $itemTransfers
+            $itemTransfers,
         );
     }
 
@@ -143,7 +143,7 @@ class BusinessHelper extends Module
                 $itemTransfer,
                 static::ORDER_ITEM_QTY,
                 static::ORDER_ITEM_GROSS_PRICE_1,
-                static::ORDER_ITEM_TAX_RATE
+                static::ORDER_ITEM_TAX_RATE,
             );
         }
 
@@ -171,7 +171,7 @@ class BusinessHelper extends Module
             (new ItemBuilder())->build(),
             static::ORDER_ITEM_QTY,
             static::ORDER_ITEM_GROSS_PRICE_1,
-            static::ORDER_ITEM_TAX_RATE
+            static::ORDER_ITEM_TAX_RATE,
         );
 
         $salesOrderItems[] = $this->createOrderItem(
@@ -181,7 +181,7 @@ class BusinessHelper extends Module
             (new ItemBuilder())->build(),
             static::ORDER_ITEM_QTY,
             static::ORDER_ITEM_GROSS_PRICE_2,
-            static::ORDER_ITEM_TAX_RATE
+            static::ORDER_ITEM_TAX_RATE,
         );
 
         return $salesOrderItems;

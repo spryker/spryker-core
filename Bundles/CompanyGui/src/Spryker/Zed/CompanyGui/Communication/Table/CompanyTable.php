@@ -173,7 +173,7 @@ class CompanyTable extends AbstractTable
 
         $buttons[] = $this->generateEditButton(
             sprintf(static::URL_COMPANY_EDIT, $item[static::COL_ID_COMPANY]),
-            'Edit'
+            'Edit',
         );
         $buttons[] = $this->generateStatusChangeButton($item);
         $buttons = array_merge($buttons, $this->generateCompanyStatusChangeButton($item));
@@ -187,7 +187,7 @@ class CompanyTable extends AbstractTable
                 $button->getUrl(),
                 $button->getTitle(),
                 $button->getDefaultOptions(),
-                $button->getCustomOptions()
+                $button->getCustomOptions(),
             );
         }
 
@@ -211,7 +211,7 @@ class CompanyTable extends AbstractTable
                 [
                     static::BUTTON_ICON => 'fa-trash',
                     static::BUTTON_CLASS => 'btn-danger safe-submit',
-                ]
+                ],
             );
         } else {
             return $this->generateFormButton(
@@ -219,7 +219,7 @@ class CompanyTable extends AbstractTable
                     static::REQUEST_ID_COMPANY => $item[SpyCompanyTableMap::COL_ID_COMPANY],
                 ]),
                 'Activate',
-                ActivateCompanyForm::class
+                ActivateCompanyForm::class,
             );
         }
     }
@@ -239,7 +239,7 @@ class CompanyTable extends AbstractTable
                         static::REQUEST_ID_COMPANY => $item[SpyCompanyTableMap::COL_ID_COMPANY],
                     ]),
                     'Approve',
-                    ApproveCompanyForm::class
+                    ApproveCompanyForm::class,
                 );
                 $buttons[] = $this->generateFormButton(
                     Url::generate(static::URL_COMPANY_DENY, [
@@ -250,7 +250,7 @@ class CompanyTable extends AbstractTable
                     [
                         static::BUTTON_ICON => 'fa-trash',
                         static::BUTTON_CLASS => 'btn-danger safe-submit',
-                    ]
+                    ],
                 );
 
                 break;
@@ -264,7 +264,7 @@ class CompanyTable extends AbstractTable
                     [
                         static::BUTTON_ICON => 'fa-trash',
                         static::BUTTON_CLASS => 'btn-danger safe-submit',
-                    ]
+                    ],
                 );
 
                 break;
@@ -274,7 +274,7 @@ class CompanyTable extends AbstractTable
                         static::REQUEST_ID_COMPANY => $item[SpyCompanyTableMap::COL_ID_COMPANY],
                     ]),
                     'Approve',
-                    ApproveCompanyForm::class
+                    ApproveCompanyForm::class,
                 );
 
                 break;

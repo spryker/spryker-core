@@ -55,7 +55,7 @@ class ProductViewMerchantProductExpander implements ProductViewMerchantProductEx
         }
 
         $merchantProductStorageTransfer = $this->merchantProductStorageReader->findOne(
-            $productViewTransfer->getIdProductAbstract()
+            $productViewTransfer->getIdProductAbstract(),
         );
 
         if (!$merchantProductStorageTransfer) {

@@ -42,11 +42,11 @@ class PricePageDataLoaderExpanderPlugin extends AbstractPlugin implements Produc
         $priceProductTransfers = $this->filterPricesByStore($productPayloadTransfer->getPrices(), $storeName);
 
         $productAbstractPageSearchTransfer->setPrices(
-            $this->groupPrices($priceProductTransfers)
+            $this->groupPrices($priceProductTransfers),
         );
 
         $productAbstractPageSearchTransfer->setPrice(
-            $this->resolveProductPrice($priceProductTransfers, $productAbstractSku, $storeName)
+            $this->resolveProductPrice($priceProductTransfers, $productAbstractSku, $storeName),
         );
     }
 

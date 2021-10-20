@@ -377,13 +377,13 @@ class ProductAttributeQueryContainer extends AbstractQueryContainer implements P
                 $criterionValue = $criteria->getNewCriterion(
                     SpyProductManagementAttributeValueTableMap::COL_VALUE,
                     '%' . mb_strtolower($value) . '%',
-                    Criteria::LIKE
+                    Criteria::LIKE,
                 );
 
                 $criterionTranslation = $criteria->getNewCriterion(
                     SpyProductManagementAttributeValueTranslationTableMap::COL_TRANSLATION,
                     '%' . mb_strtolower($value) . '%',
-                    Criteria::LIKE
+                    Criteria::LIKE,
                 );
 
                 $criterionValue->addOr($criterionTranslation);
@@ -394,7 +394,7 @@ class ProductAttributeQueryContainer extends AbstractQueryContainer implements P
         $productAttributeKeyCriterion = $this->createAttributeKeysInCriterion(
             $attributes,
             $criteria,
-            $defaultCriterion
+            $defaultCriterion,
         );
 
         $criteria->addAnd($productAttributeKeyCriterion);
@@ -435,7 +435,7 @@ class ProductAttributeQueryContainer extends AbstractQueryContainer implements P
         $productAttributeKeyCriterion = $criteria->getNewCriterion(
             SpyProductAttributeKeyTableMap::COL_KEY,
             $keys,
-            Criteria::IN
+            Criteria::IN,
         );
         $productAttributeKeyCriterion->addAnd($defaultCriterion);
 

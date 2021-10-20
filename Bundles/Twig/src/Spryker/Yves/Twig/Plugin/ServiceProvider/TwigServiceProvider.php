@@ -52,8 +52,8 @@ class TwigServiceProvider extends AbstractPlugin implements ServiceProviderInter
                         $twig->addRuntimeLoader($factoryLoader);
 
                         return $twig;
-                    }
-                )
+                    },
+                ),
             );
         }
     }

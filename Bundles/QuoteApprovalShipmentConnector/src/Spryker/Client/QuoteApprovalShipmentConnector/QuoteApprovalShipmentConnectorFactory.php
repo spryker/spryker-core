@@ -20,7 +20,7 @@ class QuoteApprovalShipmentConnectorFactory extends AbstractFactory
     public function createQuoteShipmentChecker(): QuoteShipmentCheckerInterface
     {
         return new QuoteShipmentChecker(
-            $this->getShipmentService()
+            $this->getShipmentService(),
         );
     }
 

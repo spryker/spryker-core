@@ -32,7 +32,7 @@ class CompanyCustomerFilterOrderSearchQueryExpanderPlugin extends AbstractPlugin
     {
         return $this->getFacade()->isFilterFieldSet(
             $filterFieldTransfers,
-            CompanySalesConnectorConfig::FILTER_FIELD_TYPE_COMPANY
+            CompanySalesConnectorConfig::FILTER_FIELD_TYPE_COMPANY,
         );
     }
 
@@ -53,7 +53,7 @@ class CompanyCustomerFilterOrderSearchQueryExpanderPlugin extends AbstractPlugin
     ): QueryJoinCollectionTransfer {
         return $this->getFacade()->expandQueryJoinCollectionWithCustomerFilter(
             $filterFieldTransfers,
-            $queryJoinCollectionTransfer
+            $queryJoinCollectionTransfer,
         );
     }
 }

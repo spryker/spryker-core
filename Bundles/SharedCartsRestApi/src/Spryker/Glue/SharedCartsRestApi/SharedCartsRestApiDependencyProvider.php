@@ -64,8 +64,8 @@ class SharedCartsRestApiDependencyProvider extends AbstractBundleDependencyProvi
         throw new MissingCompanyUserProviderPluginException(
             sprintf(
                 static::EXCEPTION_MESSAGE_MISSING_COMPANY_USER_PROVIDER_PLUGIN,
-                CompanyUserProviderPluginInterface::class
-            )
+                CompanyUserProviderPluginInterface::class,
+            ),
         );
     }
 }

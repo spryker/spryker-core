@@ -81,8 +81,8 @@ class UniqueRelationTypeForProductAbstractAndQuerySetValidator extends Constrain
             ->buildViolation(
                 sprintf(
                     'Selected product already has "%s" relation type for the given rule.',
-                    $value->getProductRelationType()->getKey()
-                )
+                    $value->getProductRelationType()->getKey(),
+                ),
             )
             ->atPath(ProductRelationTransfer::PRODUCT_RELATION_TYPE . '.' . ProductRelationTypeTransfer::KEY)
             ->addViolation();

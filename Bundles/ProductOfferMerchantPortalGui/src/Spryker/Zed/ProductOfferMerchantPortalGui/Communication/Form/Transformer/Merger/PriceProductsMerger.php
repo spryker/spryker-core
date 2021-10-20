@@ -42,7 +42,7 @@ class PriceProductsMerger implements PriceProductsMergerInterface
         foreach ($this->priceProductMergeStrategies as $priceProductMergeStrategy) {
             $mergedPriceProductTransfers = $priceProductMergeStrategy->merge(
                 $priceProductTransfers,
-                $newPriceProductTransfer
+                $newPriceProductTransfer,
             );
 
             if ($mergedPriceProductTransfers !== null) {
@@ -52,7 +52,7 @@ class PriceProductsMerger implements PriceProductsMergerInterface
 
         return $this->mergeWithDefaultStrategy(
             $priceProductTransfers,
-            $newPriceProductTransfer
+            $newPriceProductTransfer,
         );
     }
 

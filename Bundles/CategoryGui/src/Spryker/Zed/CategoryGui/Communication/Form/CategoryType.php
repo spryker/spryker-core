@@ -159,7 +159,7 @@ class CategoryType extends CommonCategoryType
         ]);
 
         $builder->get(static::FIELD_EXTRA_PARENTS)->addModelTransformer(
-            $this->getFactory()->createCategoryExtraParentsTransformer()
+            $this->getFactory()->createCategoryExtraParentsTransformer(),
         );
 
         return $this;
@@ -185,7 +185,7 @@ class CategoryType extends CommonCategoryType
         $builder->add(
             static::FIELD_STORE_RELATION,
             $this->getFactory()->getStoreRelationFormTypePlugin()->getType(),
-            $options
+            $options,
         );
 
         return $this;

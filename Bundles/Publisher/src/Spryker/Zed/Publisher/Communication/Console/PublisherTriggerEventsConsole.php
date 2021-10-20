@@ -58,7 +58,7 @@ class PublisherTriggerEventsConsole extends Console
             static::RESOURCE_OPTION_SHORTCUT,
             InputArgument::OPTIONAL,
             'The resource(s) should be published, if there is more than one, use comma to separate them.
-        If not, full data will be published.'
+        If not, full data will be published.',
         );
 
         $this->addOption(
@@ -66,7 +66,7 @@ class PublisherTriggerEventsConsole extends Console
             static::RESOURCE_IDS_OPTION_SHORTCUT,
             InputArgument::OPTIONAL,
             'Defines ids of entities which should be published, if there is more than one, use comma to separate them.
-        If not, all ids will be published.'
+        If not, all ids will be published.',
         );
 
         $this->setName(static::COMMAND_NAME)
@@ -109,13 +109,13 @@ class PublisherTriggerEventsConsole extends Console
     protected function getResourcesUsageText(): string
     {
         $availableResourceNames = $this->getFactory()->getEventBehaviorFacade()->getAvailableResourceNames(
-            $this->getFactory()->getPublisherTriggerPlugins()
+            $this->getFactory()->getPublisherTriggerPlugins(),
         );
 
         return sprintf(
             "-%s [\n\t%s\n]",
             static::RESOURCE_OPTION_SHORTCUT,
-            implode(",\n\t", $availableResourceNames)
+            implode(",\n\t", $availableResourceNames),
         );
     }
 }

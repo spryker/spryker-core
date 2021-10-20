@@ -57,7 +57,7 @@ class ShoppingListsResourceController extends AbstractController
         if ($idShoppingList !== null) {
             return $this->getFactory()->createShoppingListReader()->getCustomerShoppingList(
                 $idShoppingList,
-                $restRequest
+                $restRequest,
             );
         }
 

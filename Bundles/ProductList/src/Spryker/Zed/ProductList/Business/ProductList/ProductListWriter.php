@@ -222,7 +222,7 @@ class ProductListWriter implements ProductListWriterInterface
         $this->productListEntityManager->deleteProductList($productListTransfer);
 
         $productListResponseTransfer->addMessage(
-            (new MessageTransfer())->setValue(static::MESSAGE_PRODUCT_LIST_DELETE_SUCCESS)
+            (new MessageTransfer())->setValue(static::MESSAGE_PRODUCT_LIST_DELETE_SUCCESS),
         );
 
         return $productListResponseTransfer;
@@ -287,7 +287,7 @@ class ProductListWriter implements ProductListWriterInterface
     ): ProductListResponseTransfer {
         $messageTransfers = array_merge(
             $productListResponseTransfer->getMessages()->getArrayCopy(),
-            $resultProductListResponseTransfer->getMessages()->getArrayCopy()
+            $resultProductListResponseTransfer->getMessages()->getArrayCopy(),
         );
 
         return $productListResponseTransfer
@@ -306,11 +306,11 @@ class ProductListWriter implements ProductListWriterInterface
     ): ProductListResponseTransfer {
         $productListResponseTransfer = $this->mergeProductListResponseMessages(
             $productListResponseTransfer,
-            $resultProductListResponseTransfer
+            $resultProductListResponseTransfer,
         );
 
         return $productListResponseTransfer->setIsSuccessful(
-            $productListResponseTransfer->getIsSuccessful() && $resultProductListResponseTransfer->getIsSuccessful()
+            $productListResponseTransfer->getIsSuccessful() && $resultProductListResponseTransfer->getIsSuccessful(),
         );
     }
 }

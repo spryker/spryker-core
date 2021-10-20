@@ -83,7 +83,7 @@ class PriceProductDataImportBusinessFactory extends DataImportBusinessFactory
     {
         return new PreparePriceDataStep(
             $this->getPriceProductFacade(),
-            $this->getUtilEncodingService()
+            $this->getUtilEncodingService(),
         );
     }
 

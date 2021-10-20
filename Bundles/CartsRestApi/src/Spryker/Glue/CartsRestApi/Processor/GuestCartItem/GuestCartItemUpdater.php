@@ -68,7 +68,7 @@ class GuestCartItemUpdater implements GuestCartItemUpdaterInterface
 
         return $this->guestCartRestResponseBuilderInterface->createGuestCartRestResponse(
             $quoteResponseTransfer->getQuoteTransfer(),
-            $restRequest->getMetadata()->getLocale()
+            $restRequest->getMetadata()->getLocale(),
         );
     }
 

@@ -114,7 +114,7 @@ class ProductUrlGeneratorTest extends Unit
             [
                 $this->productAbstractTransfer,
                 $this->locales['en_US'],
-            ]
+            ],
         )
         ->willReturn(self::PRODUCT_NAME['de_DE'], self::PRODUCT_NAME['en_US']);
     }
@@ -175,10 +175,10 @@ class ProductUrlGeneratorTest extends Unit
 
         $productUrlExpected = (new ProductUrlTransfer())
         ->setAbstractSku(
-            $this->productAbstractTransfer->getSku()
+            $this->productAbstractTransfer->getSku(),
         )
         ->setUrls(
-            new ArrayObject([$expectedDEUrl, $expectedENUrl])
+            new ArrayObject([$expectedDEUrl, $expectedENUrl]),
         );
 
         $this->utilTextService

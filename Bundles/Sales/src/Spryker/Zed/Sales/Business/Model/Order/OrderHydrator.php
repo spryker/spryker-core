@@ -134,7 +134,7 @@ class OrderHydrator implements OrderHydratorInterface
             throw new InvalidSalesOrderException(sprintf(
                 'Order could not be found for ID %s and customer reference %s',
                 $orderTransfer->getIdSalesOrder(),
-                $orderTransfer->getCustomerReference()
+                $orderTransfer->getCustomerReference(),
             ));
         }
 
@@ -185,8 +185,8 @@ class OrderHydrator implements OrderHydratorInterface
             throw new InvalidSalesOrderException(
                 sprintf(
                     'Order could not be found for ID %s',
-                    $idSalesOrder
-                )
+                    $idSalesOrder,
+                ),
             );
         }
 
@@ -473,7 +473,7 @@ class OrderHydrator implements OrderHydratorInterface
         $lastStateHistory = $this->queryContainer
             ->queryOmsOrderItemStateHistoryByOrderItemIdAndOmsStateIdDesc(
                 $orderItemEntity->getIdSalesOrderItem(),
-                $orderItemEntity->getFkOmsOrderItemState()
+                $orderItemEntity->getFkOmsOrderItemState(),
             )->findOne();
 
         if ($lastStateHistory) {
@@ -593,7 +593,7 @@ class OrderHydrator implements OrderHydratorInterface
     protected function getCustomerByFkCustomer(OrderTransfer $orderTransfer): CustomerTransfer
     {
         $customerTransfer = $this->customerFacade->findCustomerById(
-            (new CustomerTransfer())->setIdCustomer($orderTransfer->getFkCustomer())
+            (new CustomerTransfer())->setIdCustomer($orderTransfer->getFkCustomer()),
         );
 
         if (!$customerTransfer) {

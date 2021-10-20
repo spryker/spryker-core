@@ -61,7 +61,7 @@ class ProductAlternativeGuiDependencyProvider extends AbstractBundleDependencyPr
     {
         $container->set(static::FACADE_PRODUCT, function (Container $container) {
             return new ProductAlternativeGuiToProductFacadeBridge(
-                $container->getLocator()->product()->facade()
+                $container->getLocator()->product()->facade(),
             );
         });
 
@@ -77,7 +77,7 @@ class ProductAlternativeGuiDependencyProvider extends AbstractBundleDependencyPr
     {
         $container->set(static::FACADE_PRODUCT_ALTERNATIVE, function (Container $container) {
             return new ProductAlternativeGuiToProductAlternativeFacadeBridge(
-                $container->getLocator()->productAlternative()->facade()
+                $container->getLocator()->productAlternative()->facade(),
             );
         });
 

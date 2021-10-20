@@ -48,7 +48,7 @@ class PriceProductOfferBusinessFactory extends AbstractBusinessFactory
         return new PriceProductOfferWriter(
             $this->getPriceProductFacade(),
             $this->getEntityManager(),
-            $this->getRepository()
+            $this->getRepository(),
         );
     }
 
@@ -58,7 +58,7 @@ class PriceProductOfferBusinessFactory extends AbstractBusinessFactory
     public function createPriceProductOfferDeleter(): PriceProductOfferDeleterInterface
     {
         return new PriceProductOfferDeleter(
-            $this->getEntityManager()
+            $this->getEntityManager(),
         );
     }
 
@@ -80,7 +80,7 @@ class PriceProductOfferBusinessFactory extends AbstractBusinessFactory
             $this->createPriceProductConstraintProvider(),
             $this->getValidationAdapter(),
             $this->getPriceProductOfferValidatorPlugins(),
-            $this->getTranslatorFacade()
+            $this->getTranslatorFacade(),
         );
     }
 
@@ -101,7 +101,7 @@ class PriceProductOfferBusinessFactory extends AbstractBusinessFactory
     public function createPriceProductOfferConstraintProvider(): PriceProductOfferConstraintProviderInterface
     {
         return new PriceProductOfferConstraintProvider(
-            $this->getPriceProductOfferValidatorConstraints()
+            $this->getPriceProductOfferValidatorConstraints(),
         );
     }
 
@@ -121,7 +121,7 @@ class PriceProductOfferBusinessFactory extends AbstractBusinessFactory
         return new PriceProductOfferReader(
             $this->getRepository(),
             $this->getPriceProductOfferExtractorPlugins(),
-            $this->getPriceProductOfferExpanderPlugins()
+            $this->getPriceProductOfferExpanderPlugins(),
         );
     }
 
@@ -132,7 +132,7 @@ class PriceProductOfferBusinessFactory extends AbstractBusinessFactory
     {
         return new PriceProductOfferWishlistExpander(
             $this->createPriceProductOfferReader(),
-            $this->getStoreFacade()
+            $this->getStoreFacade(),
         );
     }
 
@@ -158,7 +158,7 @@ class PriceProductOfferBusinessFactory extends AbstractBusinessFactory
     public function createValidCurrencyAssignedToStoreConstraint(): SymfonyConstraint
     {
         return new ValidCurrencyAssignedToStoreConstraint(
-            $this->getStoreFacade()
+            $this->getStoreFacade(),
         );
     }
 

@@ -168,7 +168,7 @@ class CmsRedirectForm extends AbstractType
                     Response::HTTP_PERMANENTLY_REDIRECT => Response::HTTP_PERMANENTLY_REDIRECT,
                 ],
                 'placeholder' => 'Please select',
-            ]
+            ],
         );
 
         return $this;

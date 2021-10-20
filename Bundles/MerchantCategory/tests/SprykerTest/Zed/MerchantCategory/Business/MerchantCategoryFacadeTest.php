@@ -50,7 +50,7 @@ class MerchantCategoryFacadeTest extends Unit
         $merchantCategoryResponseTransfer = $this->tester->getFacade()
             ->get(
                 (new MerchantCategoryCriteriaTransfer())
-                    ->setIdMerchant($merchantCategoryTransfer->getFkMerchant())
+                    ->setIdMerchant($merchantCategoryTransfer->getFkMerchant()),
             );
 
         // Assert
@@ -69,7 +69,7 @@ class MerchantCategoryFacadeTest extends Unit
         $merchantCategoryResponseTransfer = $this->tester->getFacade()
             ->get(
                 (new MerchantCategoryCriteriaTransfer())
-                    ->setIdMerchant($merchantTransfer->getIdMerchant())
+                    ->setIdMerchant($merchantTransfer->getIdMerchant()),
             );
 
         // Assert

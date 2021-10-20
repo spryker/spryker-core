@@ -58,7 +58,7 @@ class SecurityTokenUpdater implements SecurityTokenUpdaterInterface
     {
         return new MerchantUser(
             $merchantUserTransfer,
-            [SecurityMerchantPortalGuiConfig::ROLE_MERCHANT_USER]
+            [SecurityMerchantPortalGuiConfig::ROLE_MERCHANT_USER],
         );
     }
 
@@ -73,7 +73,7 @@ class SecurityTokenUpdater implements SecurityTokenUpdaterInterface
             $merchantUser,
             $merchantUser->getPassword(),
             static::SECURITY_FIREWALL_NAME,
-            [SecurityMerchantPortalGuiConfig::ROLE_MERCHANT_USER]
+            [SecurityMerchantPortalGuiConfig::ROLE_MERCHANT_USER],
         );
     }
 }

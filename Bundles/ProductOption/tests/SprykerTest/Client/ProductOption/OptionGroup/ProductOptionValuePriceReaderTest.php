@@ -79,7 +79,7 @@ class ProductOptionValuePriceReaderTest extends Unit
 
         $this->productOptionValuePriceReader = new ProductOptionValuePriceReader(
             $this->priceClientMock,
-            $this->currencyClientMock
+            $this->currencyClientMock,
         );
     }
 
@@ -99,8 +99,8 @@ class ProductOptionValuePriceReaderTest extends Unit
                                 static::CURRENT_PRICE_MODE => [ProductOptionConstants::AMOUNT => 300],
                                 static::OTHER_PRICE_MODE => [ProductOptionConstants::AMOUNT => 400],
                             ],
-                    ]
-                )
+                    ],
+                ),
         );
         $productOptionGroupTransfer->addValue(
             (new StorageProductOptionValueTransfer())
@@ -116,8 +116,8 @@ class ProductOptionValuePriceReaderTest extends Unit
                                 static::CURRENT_PRICE_MODE => [ProductOptionConstants::AMOUNT => 700],
                                 static::OTHER_PRICE_MODE => [ProductOptionConstants::AMOUNT => 800],
                             ],
-                    ]
-                )
+                    ],
+                ),
         );
         $expectedPrices = [500];
 
@@ -150,8 +150,8 @@ class ProductOptionValuePriceReaderTest extends Unit
                                 static::CURRENT_PRICE_MODE => [ProductOptionConstants::AMOUNT => 300],
                                 static::OTHER_PRICE_MODE => [ProductOptionConstants::AMOUNT => 400],
                             ],
-                    ]
-                )
+                    ],
+                ),
         );
         $productOptionGroupTransfer->addValue(
             (new StorageProductOptionValueTransfer())
@@ -167,8 +167,8 @@ class ProductOptionValuePriceReaderTest extends Unit
                                 static::CURRENT_PRICE_MODE => [ProductOptionConstants::AMOUNT => 700],
                                 static::OTHER_PRICE_MODE => [ProductOptionConstants::AMOUNT => 800],
                             ],
-                    ]
-                )
+                    ],
+                ),
         );
         $expectedPrices = [500];
 
@@ -201,8 +201,8 @@ class ProductOptionValuePriceReaderTest extends Unit
                                 static::CURRENT_PRICE_MODE => [ProductOptionConstants::AMOUNT => 300],
                                 static::OTHER_PRICE_MODE => [ProductOptionConstants::AMOUNT => 400],
                             ],
-                    ]
-                )
+                    ],
+                ),
         );
         $productOptionGroupTransfer->addValue(
             (new StorageProductOptionValueTransfer())
@@ -218,8 +218,8 @@ class ProductOptionValuePriceReaderTest extends Unit
                                 static::CURRENT_PRICE_MODE => [ProductOptionConstants::AMOUNT => 700],
                                 static::OTHER_PRICE_MODE => [ProductOptionConstants::AMOUNT => 800],
                             ],
-                    ]
-                )
+                    ],
+                ),
         );
         $expectedPrices = [100, 500];
 
@@ -275,7 +275,7 @@ class ProductOptionValuePriceReaderTest extends Unit
             function (StorageProductOptionValueTransfer $productOptionValueTransfer) {
                 return $productOptionValueTransfer->getPrice();
             },
-            (array)$productOptionGroupTransfer->getValues()
+            (array)$productOptionGroupTransfer->getValues(),
         );
 
         // reset keys

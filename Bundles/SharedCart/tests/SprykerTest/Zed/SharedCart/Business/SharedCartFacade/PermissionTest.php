@@ -103,12 +103,12 @@ class PermissionTest extends Unit
         $this->quoteCompanyUserEntityTransfer1 = $this->tester->haveQuoteCompanyUser(
             $this->otherCompanyUserTransfer,
             $quoteTransfer1,
-            $readOnlyPermissionGroup
+            $readOnlyPermissionGroup,
         );
         $this->quoteCompanyUserEntityTransfer2 = $this->tester->haveQuoteCompanyUser(
             $this->otherCompanyUserTransfer,
             $quoteTransfer2,
-            $fullAccessPermissionGroup
+            $fullAccessPermissionGroup,
         );
     }
 

@@ -69,7 +69,7 @@ class UniqueProductConcretePerSuperAttributeCollectionConstraintValidator extend
         foreach ($value[static::FIELD_SUPER_ATTRIBUTES] as $superAttributeFormData) {
             $productCriteriaTransfer->addAttribute(
                 $superAttributeFormData[static::FIELD_VALUE],
-                $superAttributeFormData[static::FIELD_ATTRIBUTE][static::FIELD_ATTRIBUTE_VALUE]
+                $superAttributeFormData[static::FIELD_ATTRIBUTE][static::FIELD_ATTRIBUTE_VALUE],
             );
         }
 

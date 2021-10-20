@@ -43,7 +43,7 @@ class ProductConfigurationStorageMapper implements ProductConfigurationStorageMa
 
             $productConfigurationStorageTransfers[] = $this->mapProductConfigurationStorageDataToProductConfigurationStorageTransfer(
                 $productConfigurationStorageData,
-                new ProductConfigurationStorageTransfer()
+                new ProductConfigurationStorageTransfer(),
             );
         }
 

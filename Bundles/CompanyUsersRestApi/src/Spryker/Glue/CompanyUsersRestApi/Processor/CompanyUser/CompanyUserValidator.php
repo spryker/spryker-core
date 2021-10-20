@@ -58,7 +58,7 @@ class CompanyUserValidator implements CompanyUserValidatorInterface
         return in_array(
             $restRequest->getResource()->getType(),
             $this->config->getCompanyUserResources(),
-            true
+            true,
         );
     }
 

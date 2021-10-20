@@ -38,7 +38,7 @@ class PriceProductOfferCreateGuiTableConfigurationProvider extends AbstractPrice
         $guiTableConfigurationBuilder = $this->setEditableConfiguration(
             $guiTableConfigurationBuilder,
             $priceTypeTransfers,
-            $initialData
+            $initialData,
         );
 
         return $guiTableConfigurationBuilder->createConfiguration();

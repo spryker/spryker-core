@@ -61,8 +61,8 @@ class Validator implements ValidatorInterface
                     throw new QueryBuilderException(
                         sprintf(
                             'Meta data provider with name "%s" is not provided for configuration in validator class. ',
-                            $type
-                        )
+                            $type,
+                        ),
                     );
             }
         } catch (ComparatorException $e) {

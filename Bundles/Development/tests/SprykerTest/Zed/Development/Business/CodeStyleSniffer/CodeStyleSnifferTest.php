@@ -141,7 +141,7 @@ class CodeStyleSnifferTest extends Unit
                 $expectedPathToRunCommandWith,
                 $this->callback(function ($subject) use ($codingStandard) {
                     return is_callable([$subject, 'getCodingStandard']) && $subject->getCodingStandard() === $codingStandard;
-                })
+                }),
             );
 
         return $codeStyleSnifferMock;

@@ -97,7 +97,7 @@ class ProductListExporter implements ProductListExporterInterface
             function ($item) {
                 return [$item];
             },
-            $productsSku
+            $productsSku,
         );
     }
 }

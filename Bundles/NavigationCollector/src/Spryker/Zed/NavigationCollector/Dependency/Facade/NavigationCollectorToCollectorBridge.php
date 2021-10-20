@@ -61,7 +61,7 @@ class NavigationCollectorToCollectorBridge implements NavigationCollectorToColle
             $dataReader,
             $dataWriter,
             $touchUpdater,
-            $output
+            $output,
         );
     }
 }

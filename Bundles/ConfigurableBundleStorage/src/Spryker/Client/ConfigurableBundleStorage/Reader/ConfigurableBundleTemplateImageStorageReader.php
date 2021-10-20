@@ -57,7 +57,7 @@ class ConfigurableBundleTemplateImageStorageReader implements ConfigurableBundle
         string $localeName
     ): ?ConfigurableBundleTemplateImageStorageTransfer {
         $configurableBundleTemplateImageStorageData = $this->storageClient->get(
-            $this->generateKey($idConfigurableBundleTemplate, $localeName)
+            $this->generateKey($idConfigurableBundleTemplate, $localeName),
         );
 
         if (!$configurableBundleTemplateImageStorageData) {
@@ -113,7 +113,7 @@ class ConfigurableBundleTemplateImageStorageReader implements ConfigurableBundle
 
         foreach ($configurableBundleTemplateImageStorageData as $configurableBundleTemplateImageStorageTransferData) {
             $configurableBundleTemplateImageStorageTransfers[] = $this->mapStorageDataToConfigurableBundleImageStorageTransfer(
-                $this->utilEncodingService->decodeJson($configurableBundleTemplateImageStorageTransferData, true) ?? []
+                $this->utilEncodingService->decodeJson($configurableBundleTemplateImageStorageTransferData, true) ?? [],
             );
         }
 

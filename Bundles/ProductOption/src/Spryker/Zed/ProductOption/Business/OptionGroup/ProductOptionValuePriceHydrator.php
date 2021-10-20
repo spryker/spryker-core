@@ -48,7 +48,7 @@ class ProductOptionValuePriceHydrator implements ProductOptionValuePriceHydrator
                     ->setIdEntity($priceEntity->getIdProductOptionValuePrice())
                     ->setNetAmount($priceEntity->getNetPrice())
                     ->setGrossAmount($priceEntity->getGrossPrice())
-                    ->setCurrency($this->getCurrencyTransferByIdCurrency($priceEntity->getFkCurrency()))
+                    ->setCurrency($this->getCurrencyTransferByIdCurrency($priceEntity->getFkCurrency())),
             );
         }
 

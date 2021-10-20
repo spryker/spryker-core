@@ -129,7 +129,7 @@ abstract class AbstractProductAbstractTable extends AbstractTable
             function (string $accumulator, SpyProductAbstractStore $productAbstractStoreEntity): string {
                 return $accumulator . ' ' . $this->generateLabel($productAbstractStoreEntity->getSpyStore()->getName(), 'label-info');
             },
-            ''
+            '',
         );
     }
 

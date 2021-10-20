@@ -88,7 +88,7 @@ class Reader implements ReaderInterface
                 $datasetRowColumnValueTransfers->append($this->getDatasetRowColumnValueTransfer(
                     $datasetColumnValueTransfers[$key],
                     $datasetRowValueTransfer,
-                    $value
+                    $value,
                 ));
             }
         }

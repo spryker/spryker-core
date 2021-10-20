@@ -35,7 +35,7 @@ class EventTriggerer implements EventTriggererInterface
     {
         $this->eventFacade->trigger(
             ConfigurableBundleEvents::CONFIGURABLE_BUNDLE_TEMPLATE_PUBLISH,
-            (new EventEntityTransfer())->setId($idConfigurableBundleTemplate)
+            (new EventEntityTransfer())->setId($idConfigurableBundleTemplate),
         );
     }
 }

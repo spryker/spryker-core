@@ -46,7 +46,7 @@ class CacheBusinessFactory extends AbstractBusinessFactory
         return new CacheClearer(
             $this->getConfig(),
             $this->getFileSystem(),
-            $this->getFinder()
+            $this->getFinder(),
         );
     }
 

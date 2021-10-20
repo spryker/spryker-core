@@ -189,7 +189,7 @@ class ProductAbstractSetUpdateTable extends AbstractTable
         return sprintf(
             '<input type="text" value="%2$d" id="product_position_%1$d" class="product_position" size="4" data-id="%1$s">',
             $productAbstractEntity->getIdProductAbstract(),
-            $productAbstractEntity->getVirtualColumn(static::COL_POSITION)
+            $productAbstractEntity->getVirtualColumn(static::COL_POSITION),
         );
     }
 
@@ -202,7 +202,7 @@ class ProductAbstractSetUpdateTable extends AbstractTable
     {
         return sprintf(
             '<input id="product_checkbox_%1$d" class="product_checkbox" type="checkbox" checked="checked" data-id="%1$s">',
-            $productAbstractEntity->getIdProductAbstract()
+            $productAbstractEntity->getIdProductAbstract(),
         );
     }
 }

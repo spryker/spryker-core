@@ -26,7 +26,7 @@ class ProductCustomerPermissionFactory extends AbstractFactory
         return new ProductCustomerPermissionStorage(
             $this->getStorageClient(),
             $this->createKeyBuilder(),
-            $this->getLocaleClient()
+            $this->getLocaleClient(),
         );
     }
 

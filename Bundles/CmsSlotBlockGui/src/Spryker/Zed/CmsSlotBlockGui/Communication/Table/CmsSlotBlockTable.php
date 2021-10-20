@@ -240,7 +240,7 @@ class CmsSlotBlockTable extends AbstractTable
         foreach ($stores as $store) {
             $storeNames[] = sprintf(
                 '<span class="label label-info">%s</span>',
-                $store->getName()
+                $store->getName(),
             );
         }
 
@@ -264,7 +264,7 @@ class CmsSlotBlockTable extends AbstractTable
                 'data-direction' => 'up',
                 'icon' => 'fa-arrow-up',
                 'onclick' => 'return false;',
-            ]
+            ],
         );
         $actionButtons[] = $this->generateButton(
             '#',
@@ -274,7 +274,7 @@ class CmsSlotBlockTable extends AbstractTable
                 'data-direction' => 'down',
                 'icon' => 'fa-arrow-down',
                 'onclick' => 'return false;',
-            ]
+            ],
         );
         $actionButtons[] = $this->generateButton(
             Url::generate(static::URL_CMS_BLOCK_VIEW, [
@@ -284,7 +284,7 @@ class CmsSlotBlockTable extends AbstractTable
             [
                 'class' => 'btn-view',
                 'target' => '_blank',
-            ]
+            ],
         );
         $actionButtons[] = $this->generateButton(
             '#',
@@ -293,7 +293,7 @@ class CmsSlotBlockTable extends AbstractTable
                 'class' => 'btn-danger js-slot-block-remove-button',
                 'icon' => 'fa-trash',
                 'onclick' => 'return false;',
-            ]
+            ],
         );
 
         return implode(' ', $actionButtons);

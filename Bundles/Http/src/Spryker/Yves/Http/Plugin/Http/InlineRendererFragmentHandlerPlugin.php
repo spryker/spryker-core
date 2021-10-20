@@ -61,7 +61,7 @@ class InlineRendererFragmentHandlerPlugin extends AbstractPlugin implements Frag
     {
         $inlineFragmentRenderer = new InlineFragmentRenderer(
             $this->getHttpKernel($container),
-            $this->getEventDispatcher($container)
+            $this->getEventDispatcher($container),
         );
         $inlineFragmentRenderer->setFragmentPath($this->getConfig()->getHttpFragmentPath());
 

@@ -44,7 +44,7 @@ class MerchantRelationshipProductListRepository extends AbstractRepository imple
         $merchantRelationshipProductListMapper = $this->getFactory()->createMerchantRelationshipProductListMapper();
         foreach ($productListEntities as $productListEntity) {
             $productListCollectionTransfer->addProductList(
-                $merchantRelationshipProductListMapper->mapProductList($productListEntity, new ProductListTransfer())
+                $merchantRelationshipProductListMapper->mapProductList($productListEntity, new ProductListTransfer()),
             );
         }
 
@@ -100,7 +100,7 @@ class MerchantRelationshipProductListRepository extends AbstractRepository imple
             ->createMerchantRelationshipProductListMapper()
             ->mapProductListCollection(
                 $productListEntities,
-                new ProductListCollectionTransfer()
+                new ProductListCollectionTransfer(),
             );
 
         return $productListCollectionTransfer;

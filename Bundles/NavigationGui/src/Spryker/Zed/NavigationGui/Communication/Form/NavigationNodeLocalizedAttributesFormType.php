@@ -179,7 +179,7 @@ class NavigationNodeLocalizedAttributesFormType extends AbstractType
             ],
         ])->addModelTransformer(new CallbackTransformer(
             [$this, 'transformCmsPageUrlField'],
-            [$this, 'reverseTransformCmsPageUrlField']
+            [$this, 'reverseTransformCmsPageUrlField'],
         ));
 
         return $this;
@@ -204,7 +204,7 @@ class NavigationNodeLocalizedAttributesFormType extends AbstractType
             ],
         ])->addModelTransformer(new CallbackTransformer(
             [$this, 'transformCategoryUrlField'],
-            [$this, 'reverseTransformCategoryUrlField']
+            [$this, 'reverseTransformCategoryUrlField'],
         ));
 
         return $this;

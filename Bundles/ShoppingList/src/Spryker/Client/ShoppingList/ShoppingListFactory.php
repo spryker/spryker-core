@@ -44,7 +44,7 @@ class ShoppingListFactory extends AbstractFactory
     {
         return new ProductStorage(
             $this->getProductClient(),
-            $this->getPriceProductClient()
+            $this->getPriceProductClient(),
         );
     }
 
@@ -66,7 +66,7 @@ class ShoppingListFactory extends AbstractFactory
             $this->createShoppingListStub(),
             $this->getMessengerClient(),
             $this->getShoppingListItemToItemMapperPlugins(),
-            $this->getQuoteItemToItemMapperPlugins()
+            $this->getQuoteItemToItemMapperPlugins(),
         );
     }
 
@@ -76,7 +76,7 @@ class ShoppingListFactory extends AbstractFactory
     public function createShoppingListAddItemExpander(): ShoppingListAddItemExpanderInterface
     {
         return new ShoppingListAddItemExpander(
-            $this->getAddItemShoppingListItemMapperPlugins()
+            $this->getAddItemShoppingListItemMapperPlugins(),
         );
     }
 

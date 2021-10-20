@@ -165,7 +165,7 @@ class SalesMerchantPortalGuiDependencyProvider extends AbstractBundleDependencyP
     {
         $container->set(static::FACADE_MERCHANT_USER, function (Container $container) {
             return new SalesMerchantPortalGuiToMerchantUserFacadeBridge(
-                $container->getLocator()->merchantUser()->facade()
+                $container->getLocator()->merchantUser()->facade(),
             );
         });
 
@@ -181,7 +181,7 @@ class SalesMerchantPortalGuiDependencyProvider extends AbstractBundleDependencyP
     {
         $container->set(static::FACADE_CURRENCY, function (Container $container) {
             return new SalesMerchantPortalGuiToCurrencyFacadeBridge(
-                $container->getLocator()->currency()->facade()
+                $container->getLocator()->currency()->facade(),
             );
         });
 
@@ -197,7 +197,7 @@ class SalesMerchantPortalGuiDependencyProvider extends AbstractBundleDependencyP
     {
         $container->set(static::FACADE_MONEY, function (Container $container) {
             return new SalesMerchantPortalGuiToMoneyFacadeBridge(
-                $container->getLocator()->money()->facade()
+                $container->getLocator()->money()->facade(),
             );
         });
 
@@ -213,7 +213,7 @@ class SalesMerchantPortalGuiDependencyProvider extends AbstractBundleDependencyP
     {
         $container->set(static::FACADE_STORE, function (Container $container) {
             return new SalesMerchantPortalGuiToStoreFacadeBridge(
-                $container->getLocator()->store()->facade()
+                $container->getLocator()->store()->facade(),
             );
         });
 
@@ -229,7 +229,7 @@ class SalesMerchantPortalGuiDependencyProvider extends AbstractBundleDependencyP
     {
         $container->set(static::FACADE_MERCHANT_OMS, function (Container $container) {
             return new SalesMerchantPortalGuiToMerchantOmsFacadeBridge(
-                $container->getLocator()->merchantOms()->facade()
+                $container->getLocator()->merchantOms()->facade(),
             );
         });
 
@@ -245,7 +245,7 @@ class SalesMerchantPortalGuiDependencyProvider extends AbstractBundleDependencyP
     {
         $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new SalesMerchantPortalGuiToUtilEncodingServiceBridge(
-                $container->getLocator()->utilEncoding()->service()
+                $container->getLocator()->utilEncoding()->service(),
             );
         });
 
@@ -261,7 +261,7 @@ class SalesMerchantPortalGuiDependencyProvider extends AbstractBundleDependencyP
     {
         $container->set(static::FACADE_MERCHANT_SALES_ORDER, function (Container $container) {
             return new SalesMerchantPortalGuiToMerchantSalesOrderFacadeBridge(
-                $container->getLocator()->merchantSalesOrder()->facade()
+                $container->getLocator()->merchantSalesOrder()->facade(),
             );
         });
 
@@ -277,7 +277,7 @@ class SalesMerchantPortalGuiDependencyProvider extends AbstractBundleDependencyP
     {
         $container->set(static::FACADE_SALES, function (Container $container) {
             return new SalesMerchantPortalGuiToSalesFacadeBridge(
-                $container->getLocator()->sales()->facade()
+                $container->getLocator()->sales()->facade(),
             );
         });
 
@@ -307,7 +307,7 @@ class SalesMerchantPortalGuiDependencyProvider extends AbstractBundleDependencyP
     {
         $container->set(static::FACADE_ROUTER, function (Container $container) {
             return new SalesMerchantPortalGuiToRouterFacadeBridge(
-                $container->getLocator()->router()->facade()
+                $container->getLocator()->router()->facade(),
             );
         });
 
@@ -323,7 +323,7 @@ class SalesMerchantPortalGuiDependencyProvider extends AbstractBundleDependencyP
     {
         $container->set(static::FACADE_TRANSLATOR, function (Container $container) {
             return new SalesMerchantPortalGuiToTranslatorFacadeBridge(
-                $container->getLocator()->translator()->facade()
+                $container->getLocator()->translator()->facade(),
             );
         });
 

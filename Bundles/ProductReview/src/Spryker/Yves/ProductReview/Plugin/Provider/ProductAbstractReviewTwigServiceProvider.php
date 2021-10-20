@@ -31,7 +31,7 @@ class ProductAbstractReviewTwigServiceProvider extends AbstractPlugin implements
                 $twig->addExtension($twigExtension);
 
                 return $twig;
-            })
+            }),
         );
     }
 

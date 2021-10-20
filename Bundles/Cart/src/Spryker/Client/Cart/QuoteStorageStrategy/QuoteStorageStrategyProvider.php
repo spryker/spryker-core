@@ -51,8 +51,8 @@ class QuoteStorageStrategyProvider implements QuoteStorageStrategyProviderInterf
             sprintf(
                 'There is no quote storage strategy with name: %s. ' .
                 'It should be added to \Spryker\Client\Cart\CartDependencyProvider::getQuoteStorageStrategyPlugins()',
-                $storageStrategyType
-            )
+                $storageStrategyType,
+            ),
         );
     }
 }

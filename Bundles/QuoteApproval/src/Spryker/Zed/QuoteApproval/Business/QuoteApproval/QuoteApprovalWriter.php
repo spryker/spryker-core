@@ -104,7 +104,7 @@ class QuoteApprovalWriter implements QuoteApprovalWriterInterface
 
         if (!$quoteApprovalResponseTransfer->getIsSuccessful()) {
             return $this->createNotSuccessfulQuoteApprovalResponseTransfer(
-                $quoteApprovalResponseTransfer->getMessages()
+                $quoteApprovalResponseTransfer->getMessages(),
             );
         }
 
@@ -112,11 +112,11 @@ class QuoteApprovalWriter implements QuoteApprovalWriterInterface
 
         $quoteApprovalTransfer = $this->updateQuoteApprovalWithStatus(
             $quoteApprovalResponseTransfer->getQuoteApproval(),
-            QuoteApprovalConfig::STATUS_DECLINED
+            QuoteApprovalConfig::STATUS_DECLINED,
         );
         $quoteTransfer = $this->replaceQuoteApprovalInQuote(
             $quoteApprovalResponseTransfer->getQuote(),
-            $quoteApprovalTransfer
+            $quoteApprovalTransfer,
         );
 
         return $this->createSuccessfulQuoteApprovalResponseTransfer($quoteApprovalTransfer)
@@ -135,17 +135,17 @@ class QuoteApprovalWriter implements QuoteApprovalWriterInterface
 
         if (!$quoteApprovalResponseTransfer->getIsSuccessful()) {
             return $this->createNotSuccessfulQuoteApprovalResponseTransfer(
-                $quoteApprovalResponseTransfer->getMessages()
+                $quoteApprovalResponseTransfer->getMessages(),
             );
         }
 
         $quoteApprovalTransfer = $this->updateQuoteApprovalWithStatus(
             $quoteApprovalResponseTransfer->getQuoteApproval(),
-            QuoteApprovalConfig::STATUS_APPROVED
+            QuoteApprovalConfig::STATUS_APPROVED,
         );
         $quoteTransfer = $this->replaceQuoteApprovalInQuote(
             $quoteApprovalResponseTransfer->getQuote(),
-            $quoteApprovalTransfer
+            $quoteApprovalTransfer,
         );
 
         return $this->createSuccessfulQuoteApprovalResponseTransfer($quoteApprovalTransfer)
@@ -193,7 +193,7 @@ class QuoteApprovalWriter implements QuoteApprovalWriterInterface
     {
         $this->quoteApprovalEntityManager->updateQuoteApprovalWithStatus(
             $quoteApprovalTransfer->getIdQuoteApproval(),
-            $status
+            $status,
         );
 
         return $quoteApprovalTransfer->setStatus($status);

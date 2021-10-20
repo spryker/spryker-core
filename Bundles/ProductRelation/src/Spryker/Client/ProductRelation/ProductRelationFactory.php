@@ -24,7 +24,7 @@ class ProductRelationFactory extends AbstractFactory
             $this->getStorage(),
             $this->createProductRelationKeyBuilder(),
             $localeName,
-            $this->getPriceProductClient()
+            $this->getPriceProductClient(),
         );
     }
 

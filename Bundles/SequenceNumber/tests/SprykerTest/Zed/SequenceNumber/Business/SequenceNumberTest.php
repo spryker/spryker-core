@@ -109,7 +109,7 @@ class SequenceNumberTest extends Unit
         $sequenceNumber = new SequenceNumber(
             $generator,
             $sequenceNumberSettings,
-            Propel::getConnection()
+            Propel::getConnection(),
         );
 
         $number = $sequenceNumber->generate();
@@ -123,7 +123,7 @@ class SequenceNumberTest extends Unit
         $sequenceNumberOther = new SequenceNumber(
             $generator,
             $sequenceNumberSettings,
-            Propel::getConnection()
+            Propel::getConnection(),
         );
 
         $number = $sequenceNumberOther->generate();
@@ -153,7 +153,7 @@ class SequenceNumberTest extends Unit
     {
         return new RandomNumberGenerator(
             $min,
-            $max
+            $max,
         );
     }
 }

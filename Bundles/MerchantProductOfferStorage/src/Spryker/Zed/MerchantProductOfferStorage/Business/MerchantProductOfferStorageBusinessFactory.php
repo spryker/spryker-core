@@ -40,7 +40,7 @@ class MerchantProductOfferStorageBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->createProductConcreteProductOffersStorageDeleter(),
             $this->getStoreFacade(),
-            $this->createProductOfferCriteriaTransferProvider()
+            $this->createProductOfferCriteriaTransferProvider(),
         );
     }
 
@@ -55,7 +55,7 @@ class MerchantProductOfferStorageBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->createProductOfferStorageDeleter(),
             $this->getStoreFacade(),
-            $this->createProductOfferCriteriaTransferProvider()
+            $this->createProductOfferCriteriaTransferProvider(),
         );
     }
 
@@ -66,7 +66,7 @@ class MerchantProductOfferStorageBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductConcreteOffersStorageDeleter(
             $this->getEventBehaviorFacade(),
-            $this->getEntityManager()
+            $this->getEntityManager(),
         );
     }
 
@@ -77,7 +77,7 @@ class MerchantProductOfferStorageBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductOfferStorageDeleter(
             $this->getEventBehaviorFacade(),
-            $this->getEntityManager()
+            $this->getEntityManager(),
         );
     }
 

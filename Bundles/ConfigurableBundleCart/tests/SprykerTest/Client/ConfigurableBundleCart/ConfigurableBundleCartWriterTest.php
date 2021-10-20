@@ -185,7 +185,7 @@ class ConfigurableBundleCartWriterTest extends Unit
         $this->assertFalse($quoteResponseTransfer->getIsSuccessful());
         $this->assertEquals(
             static::GLOSSARY_KEY_CONFIGURED_BUNDLE_NOT_FOUND,
-            $quoteResponseTransfer->getErrors()[0]->getMessage()
+            $quoteResponseTransfer->getErrors()[0]->getMessage(),
         );
     }
 
@@ -216,7 +216,7 @@ class ConfigurableBundleCartWriterTest extends Unit
         $this->assertFalse($quoteResponseTransfer->getIsSuccessful());
         $this->assertEquals(
             static::GLOSSARY_KEY_CONFIGURED_BUNDLE_CANNOT_BE_REMOVED,
-            $quoteResponseTransfer->getErrors()[0]->getMessage()
+            $quoteResponseTransfer->getErrors()[0]->getMessage(),
         );
     }
 
@@ -331,7 +331,7 @@ class ConfigurableBundleCartWriterTest extends Unit
         $this->assertFalse($quoteResponseTransfer->getIsSuccessful());
         $this->assertEquals(
             static::GLOSSARY_KEY_CONFIGURED_BUNDLE_NOT_FOUND,
-            $quoteResponseTransfer->getErrors()[0]->getMessage()
+            $quoteResponseTransfer->getErrors()[0]->getMessage(),
         );
     }
 
@@ -363,7 +363,7 @@ class ConfigurableBundleCartWriterTest extends Unit
         $this->assertFalse($quoteResponseTransfer->getIsSuccessful());
         $this->assertEquals(
             static::GLOSSARY_KEY_CONFIGURED_BUNDLE_CANNOT_BE_UPDATED,
-            $quoteResponseTransfer->getErrors()[0]->getMessage()
+            $quoteResponseTransfer->getErrors()[0]->getMessage(),
         );
     }
 
@@ -380,7 +380,7 @@ class ConfigurableBundleCartWriterTest extends Unit
                 ItemTransfer::CONFIGURED_BUNDLE_ITEM => $this->createConfiguredBundleItem(static::FAKE_CONFIGURABLE_BUNDLE_SLOT_UUID_1),
                 ItemTransfer::CONFIGURED_BUNDLE => $this->createConfiguredBundle(
                     static::FAKE_CONFIGURABLE_BUNDLE_UUID_1,
-                    static::FAKE_CONFIGURABLE_BUNDLE_GROUP_KEY_1
+                    static::FAKE_CONFIGURABLE_BUNDLE_GROUP_KEY_1,
                 ),
             ])
             ->withItem([
@@ -390,7 +390,7 @@ class ConfigurableBundleCartWriterTest extends Unit
                 ItemTransfer::CONFIGURED_BUNDLE_ITEM => $this->createConfiguredBundleItem(static::FAKE_CONFIGURABLE_BUNDLE_SLOT_UUID_2),
                 ItemTransfer::CONFIGURED_BUNDLE => $this->createConfiguredBundle(
                     static::FAKE_CONFIGURABLE_BUNDLE_UUID_1,
-                    static::FAKE_CONFIGURABLE_BUNDLE_GROUP_KEY_1
+                    static::FAKE_CONFIGURABLE_BUNDLE_GROUP_KEY_1,
                 ),
             ])
             ->withItem([
@@ -400,7 +400,7 @@ class ConfigurableBundleCartWriterTest extends Unit
                 ItemTransfer::CONFIGURED_BUNDLE_ITEM => $this->createConfiguredBundleItem(static::FAKE_CONFIGURABLE_BUNDLE_SLOT_UUID_3),
                 ItemTransfer::CONFIGURED_BUNDLE => $this->createConfiguredBundle(
                     static::FAKE_CONFIGURABLE_BUNDLE_UUID_2,
-                    static::FAKE_CONFIGURABLE_BUNDLE_GROUP_KEY_2
+                    static::FAKE_CONFIGURABLE_BUNDLE_GROUP_KEY_2,
                 ),
             ])
             ->withItem([
@@ -410,7 +410,7 @@ class ConfigurableBundleCartWriterTest extends Unit
                 ItemTransfer::CONFIGURED_BUNDLE_ITEM => $this->createConfiguredBundleItem(static::FAKE_CONFIGURABLE_BUNDLE_SLOT_UUID_4),
                 ItemTransfer::CONFIGURED_BUNDLE => $this->createConfiguredBundle(
                     static::FAKE_CONFIGURABLE_BUNDLE_UUID_2,
-                    static::FAKE_CONFIGURABLE_BUNDLE_GROUP_KEY_2
+                    static::FAKE_CONFIGURABLE_BUNDLE_GROUP_KEY_2,
                 ),
             ])
             ->withItem([
@@ -420,7 +420,7 @@ class ConfigurableBundleCartWriterTest extends Unit
                 ItemTransfer::CONFIGURED_BUNDLE_ITEM => $this->createConfiguredBundleItem(static::FAKE_CONFIGURABLE_BUNDLE_SLOT_UUID_5),
                 ItemTransfer::CONFIGURED_BUNDLE => $this->createConfiguredBundle(
                     static::FAKE_CONFIGURABLE_BUNDLE_UUID_2,
-                    static::FAKE_CONFIGURABLE_BUNDLE_GROUP_KEY_2
+                    static::FAKE_CONFIGURABLE_BUNDLE_GROUP_KEY_2,
                 ),
             ])
             ->build();

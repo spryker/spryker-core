@@ -23,7 +23,7 @@ class CustomerGroupDiscountConnectorBusinessFactory extends AbstractBusinessFact
     {
         return new CustomerGroupDecisionRule(
             $this->getDiscountFacade(),
-            $this->getCustomerGroupFacade()
+            $this->getCustomerGroupFacade(),
         );
     }
 

@@ -536,7 +536,7 @@ class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorag
         if ($quoteTransfer->getIdQuote() === $sessionQuoteTransfer->getIdQuote()) {
             $quoteTransfer = $sessionQuoteTransfer->fromArray(
                 $quoteTransfer->modifiedToArray(),
-                true
+                true,
             );
         }
 

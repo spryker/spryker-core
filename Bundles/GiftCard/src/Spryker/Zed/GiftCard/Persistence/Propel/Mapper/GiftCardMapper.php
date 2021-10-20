@@ -56,7 +56,7 @@ class GiftCardMapper
             $giftCardAbstractProductConfigurationForProductAbstractTransfers[] = $this
                 ->mapGiftCardProductAbstractConfigurationEntityToGiftCardAbstractProductConfigurationForProductAbstractTransfer(
                     $giftCardProductAbstractConfigurationEntity,
-                    new GiftCardAbstractProductConfigurationForProductAbstractTransfer()
+                    new GiftCardAbstractProductConfigurationForProductAbstractTransfer(),
                 );
         }
 
@@ -101,7 +101,7 @@ class GiftCardMapper
         foreach ($giftCardProductConfigurationEntities as $giftCardProductConfigurationEntity) {
             $giftCardProductConfigurationForProductTransfers[] = $this->mapGiftCardProductConfigurationEntityToGiftCardProductConfigurationForProductTransfer(
                 $giftCardProductConfigurationEntity,
-                new GiftCardProductConfigurationForProductTransfer()
+                new GiftCardProductConfigurationForProductTransfer(),
             );
         }
 

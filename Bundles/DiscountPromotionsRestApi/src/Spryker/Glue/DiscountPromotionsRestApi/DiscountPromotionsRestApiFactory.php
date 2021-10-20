@@ -36,7 +36,7 @@ class DiscountPromotionsRestApiFactory extends AbstractFactory
     {
         return new PromotionItemByQuoteResourceRelationshipExpander(
             $this->getResourceBuilder(),
-            $this->createPromotionItemMapper()
+            $this->createPromotionItemMapper(),
         );
     }
 

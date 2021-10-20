@@ -134,7 +134,7 @@ class Cronjobs
         foreach ($roles as $role) {
             if (!in_array($role, $this->allowedRoles)) {
                 throw new ErrorException(
-                    $role . ' is not in the list of allowed job roles! Cannot continue configuration of jenkins!'
+                    $role . ' is not in the list of allowed job roles! Cannot continue configuration of jenkins!',
                 );
             }
         }
@@ -502,7 +502,7 @@ cd %s
             $store,
             $destination,
             $cronjobsConfigPath,
-            $command
+            $command,
         );
     }
 

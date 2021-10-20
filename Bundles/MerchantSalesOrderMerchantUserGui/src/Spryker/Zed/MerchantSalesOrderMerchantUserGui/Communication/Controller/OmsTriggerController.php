@@ -109,7 +109,7 @@ class OmsTriggerController extends AbstractController
             ->triggerEventForMerchantOrderItems(
                 (new MerchantOmsTriggerRequestTransfer())
                     ->setMerchantOmsEventName($event)
-                    ->setMerchantOrderItems($merchantOrderTransfer->getMerchantOrderItems())
+                    ->setMerchantOrderItems($merchantOrderTransfer->getMerchantOrderItems()),
             );
 
         if (!$countTriggeredItems) {
@@ -157,7 +157,7 @@ class OmsTriggerController extends AbstractController
             ->triggerEventForMerchantOrderItem(
                 (new MerchantOmsTriggerRequestTransfer())
                     ->setMerchantOmsEventName($event)
-                    ->setMerchantOrderItemReference($merchantSalesOrderItemReference)
+                    ->setMerchantOrderItemReference($merchantSalesOrderItemReference),
             );
 
         if (!$merchantOmsTriggerResponseTransfer->getIsSuccessful()) {
@@ -184,7 +184,7 @@ class OmsTriggerController extends AbstractController
         return $this->getFactory()->getMerchantSalesOrderFacade()->findMerchantOrder(
             (new MerchantOrderCriteriaTransfer())
                 ->setIdMerchantOrder($idMerchantOrder)
-                ->setWithItems(true)
+                ->setWithItems(true),
         );
     }
 }

@@ -26,7 +26,7 @@ class PriceProductVolumeFactory extends AbstractFactory
     {
         return new VolumePriceExtractor(
             $this->getUtilEncodingService(),
-            $this->createPriceProductReader()
+            $this->createPriceProductReader(),
         );
     }
 
@@ -38,7 +38,7 @@ class PriceProductVolumeFactory extends AbstractFactory
         return new PriceProductReader(
             $this->getLocaleClient(),
             $this->getProductStorageClient(),
-            $this->getPriceProductStorageClient()
+            $this->getPriceProductStorageClient(),
         );
     }
 

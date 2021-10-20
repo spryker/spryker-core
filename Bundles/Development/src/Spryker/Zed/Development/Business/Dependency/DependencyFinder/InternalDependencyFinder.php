@@ -81,7 +81,7 @@ class InternalDependencyFinder extends AbstractFileDependencyFinder
                     $composerName,
                     $this->getType(),
                     $this->isOptional($filePath, $composerName),
-                    $this->isTestFile($filePath)
+                    $this->isTestFile($filePath),
                 );
             }
         }

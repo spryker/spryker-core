@@ -128,7 +128,7 @@ class ProductConcreteFormEdit extends ProductFormAdd
                     }
 
                     return explode(',', $bundledProductsToBeRemoved);
-                }
+                },
             ));
 
         return $this;
@@ -197,7 +197,7 @@ class ProductConcreteFormEdit extends ProductFormAdd
                         },
                     ]),
                 ],
-            ]
+            ],
         );
 
         $this->addDateTimeTransformer(static::FIELD_VALID_FROM, $builder);
@@ -246,7 +246,7 @@ class ProductConcreteFormEdit extends ProductFormAdd
                         },
                     ]),
                 ],
-            ]
+            ],
         );
 
         $this->addDateTimeTransformer(static::FIELD_VALID_TO, $builder);
@@ -339,7 +339,7 @@ class ProductConcreteFormEdit extends ProductFormAdd
             [
                 'compound' => true,
                 'label' => 'Super attributes',
-            ]
+            ],
         );
 
         foreach ($superAttributes as $attributeKey => $attributeValue) {
@@ -353,7 +353,7 @@ class ProductConcreteFormEdit extends ProductFormAdd
                         'attr' => [
                             'readonly' => true,
                         ],
-                    ]
+                    ],
                 );
         }
 
@@ -395,7 +395,7 @@ class ProductConcreteFormEdit extends ProductFormAdd
                     }
 
                     return $dateAsObject->format($timeFormat);
-                }
+                },
             ));
     }
 

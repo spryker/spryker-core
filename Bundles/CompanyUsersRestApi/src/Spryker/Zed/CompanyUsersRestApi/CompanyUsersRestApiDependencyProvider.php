@@ -97,7 +97,7 @@ class CompanyUsersRestApiDependencyProvider extends AbstractBundleDependencyProv
     {
         $container->set(static::FACADE_COMPANY_USER, function (Container $container) {
             return new CompanyUsersRestApiToCompanyUserFacadeBridge(
-                $container->getLocator()->companyUser()->facade()
+                $container->getLocator()->companyUser()->facade(),
             );
         });
 

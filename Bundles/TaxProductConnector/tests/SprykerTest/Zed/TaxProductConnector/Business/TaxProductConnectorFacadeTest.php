@@ -45,7 +45,7 @@ class TaxProductConnectorFacadeTest extends Unit
     {
         $this->tester->setDependency(
             ProductDependencyProvider::PRODUCT_ABSTRACT_PLUGINS_READ,
-            $this->getProductAbstractReadPlugins()
+            $this->getProductAbstractReadPlugins(),
         );
         $taxProductConnectorFacade = $this->createTaxProductConnectorFacade();
 
@@ -246,7 +246,7 @@ class TaxProductConnectorFacadeTest extends Unit
             (new TaxRateTransfer())
                 ->setName('test tax rate')
                 ->setFkCountry(60)
-                ->setRate(19.00)
+                ->setRate(19.00),
         );
 
         $taxSetTransfer = $taxFacade->createTaxSet($taxSetTransfer);

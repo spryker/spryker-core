@@ -53,7 +53,7 @@ class ContentNavigationValidator implements ContentNavigationValidatorInterface
         foreach ($this->contentNavigationConstraintsProvider->getConstraintsMap() as $parameter => $constraintCollection) {
             $violations = $validator->validate(
                 $properties[$parameter] ?? null,
-                $constraintCollection
+                $constraintCollection,
             );
             if (count($violations) !== 0) {
                 $contentParameterMessageTransfer = $this->createContentParameterMessageTransfer($parameter, $violations);
@@ -77,7 +77,7 @@ class ContentNavigationValidator implements ContentNavigationValidatorInterface
 
         foreach ($violations as $violation) {
             $contentParameterMessageTransfer->addMessage(
-                (new MessageTransfer())->setValue($violation->getMessage())
+                (new MessageTransfer())->setValue($violation->getMessage()),
             );
         }
 

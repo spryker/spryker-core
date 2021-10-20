@@ -123,7 +123,7 @@ class AvailabilityStorageReader implements AvailabilityStorageReaderInterface
     public function findAbstractProductAvailability(int $idProductAbstract): ?ProductAbstractAvailabilityTransfer
     {
         $availabilityStorageData = $this->storageClient->get(
-            $this->generateKey($idProductAbstract)
+            $this->generateKey($idProductAbstract),
         );
 
         if (!$availabilityStorageData) {
@@ -133,7 +133,7 @@ class AvailabilityStorageReader implements AvailabilityStorageReaderInterface
         return $this->availabilityStorageMapper
             ->mapAvailabilityStorageDataToProductAbstractAvailabilityTransfer(
                 $availabilityStorageData,
-                new ProductAbstractAvailabilityTransfer()
+                new ProductAbstractAvailabilityTransfer(),
             );
     }
 

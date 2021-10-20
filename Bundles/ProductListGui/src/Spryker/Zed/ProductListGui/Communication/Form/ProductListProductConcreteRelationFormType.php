@@ -83,7 +83,7 @@ class ProductListProductConcreteRelationFormType extends AbstractType
     {
         $builder->add(
             static::FIELD_ID_PRODUCT_LIST,
-            HiddenType::class
+            HiddenType::class,
         );
 
         return $this;

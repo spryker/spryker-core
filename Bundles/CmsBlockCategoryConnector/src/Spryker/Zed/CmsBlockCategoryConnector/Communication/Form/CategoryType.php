@@ -136,7 +136,7 @@ class CategoryType extends AbstractType
                         $ids = array_values($event->getData());
                         $event->setData($ids);
                         $event->getForm()->setData($ids);
-                    }
+                    },
                 );
             }
         }

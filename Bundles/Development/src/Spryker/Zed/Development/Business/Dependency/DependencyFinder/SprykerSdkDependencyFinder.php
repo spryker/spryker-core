@@ -81,7 +81,7 @@ class SprykerSdkDependencyFinder extends AbstractFileDependencyFinder
                     $dependentModule,
                     $this->getType(),
                     $this->isOptional($filePath, $dependentModule),
-                    $this->isTestFile($filePath)
+                    $this->isTestFile($filePath),
                 );
             }
         }

@@ -168,7 +168,7 @@ class ProductAbstractSetViewTable extends AbstractTable
             $productAbstractEntity->getVirtualColumn(static::COL_NAME),
             $productAbstractEntity->getSku(),
             $this->productAbstractTableHelper->getProductPrice($productAbstractEntity),
-            $this->productAbstractTableHelper->getAbstractProductStatusLabel($productAbstractEntity)
+            $this->productAbstractTableHelper->getAbstractProductStatusLabel($productAbstractEntity),
         );
 
         return $content;

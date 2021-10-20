@@ -37,7 +37,7 @@ class RestRequest
         if ($attributesTransfer !== null) {
             $request->attributes->set(
                 RestResourceInterface::RESOURCE_DATA,
-                ['attributes' => $attributesTransfer->toArray(true, true)]
+                ['attributes' => $attributesTransfer->toArray(true, true)],
             );
         }
 
@@ -64,7 +64,7 @@ class RestRequest
             $method,
             'DE',
             true,
-            $version
+            $version,
         );
 
         return $metadata;

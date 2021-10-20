@@ -60,7 +60,7 @@ class ContentNavigationGuiDependencyProvider extends AbstractBundleDependencyPro
     {
         $container->set(static::FACADE_CONTENT_NAVIGATION, function (Container $container): ContentNavigationGuiToContentNavigationFacadeInterface {
             return new ContentNavigationGuiToContentNavigationFacadeBridge(
-                $container->getLocator()->contentNavigation()->facade()
+                $container->getLocator()->contentNavigation()->facade(),
             );
         });
 
@@ -76,7 +76,7 @@ class ContentNavigationGuiDependencyProvider extends AbstractBundleDependencyPro
     {
         $container->set(static::FACADE_NAVIGATION, function (Container $container): ContentNavigationGuiToNavigationFacadeInterface {
             return new ContentNavigationGuiToNavigationFacadeBridge(
-                $container->getLocator()->navigation()->facade()
+                $container->getLocator()->navigation()->facade(),
             );
         });
 
@@ -92,7 +92,7 @@ class ContentNavigationGuiDependencyProvider extends AbstractBundleDependencyPro
     {
         $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container): ContentNavigationGuiToUtilEncodingServiceInterface {
             return new ContentNavigationGuiToUtilEncodingServiceBridge(
-                $container->getLocator()->utilEncoding()->service()
+                $container->getLocator()->utilEncoding()->service(),
             );
         });
 

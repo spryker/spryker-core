@@ -56,7 +56,7 @@ class QuoteItemReader implements QuoteItemReaderInterface
     {
         $quoteTransfer = $this->quoteItemMapper->mapCartItemsRequestTransferToQuoteTransfer(
             $cartItemRequestTransfer,
-            new QuoteTransfer()
+            new QuoteTransfer(),
         );
 
         $quoteResponseTransfer = $this->quoteReader->findQuoteByUuid($quoteTransfer);
@@ -66,7 +66,7 @@ class QuoteItemReader implements QuoteItemReaderInterface
 
         $isRequestedItemInQuote = $this->isCartItemInQuote(
             $cartItemRequestTransfer,
-            $quoteResponseTransfer->getQuoteTransfer()
+            $quoteResponseTransfer->getQuoteTransfer(),
         );
 
         if (!$isRequestedItemInQuote) {

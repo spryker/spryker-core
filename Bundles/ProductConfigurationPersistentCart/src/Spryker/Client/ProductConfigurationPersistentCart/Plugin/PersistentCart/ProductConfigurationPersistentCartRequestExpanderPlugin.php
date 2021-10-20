@@ -33,7 +33,7 @@ class ProductConfigurationPersistentCartRequestExpanderPlugin extends AbstractPl
     {
         return $this->getClient()->expandPersistentCartChangeWithProductConfigurationInstance(
             $persistentCartChangeTransfer,
-            $params
+            $params,
         );
     }
 }

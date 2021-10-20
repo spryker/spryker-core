@@ -87,7 +87,7 @@ class OrderInvoiceEmailSender implements OrderInvoiceEmailSenderInterface
 
         return (new OrderInvoiceSendResponseTransfer())
             ->setCount(
-                $orderInvoiceCollectionTransfer->getOrderInvoices()->count()
+                $orderInvoiceCollectionTransfer->getOrderInvoices()->count(),
             );
     }
 
@@ -109,7 +109,7 @@ class OrderInvoiceEmailSender implements OrderInvoiceEmailSenderInterface
         $orderInvoiceCriteriaTransfer->setFilter(
             (new FilterTransfer())
                 ->setLimit($orderInvoiceSendRequestTransfer->requireBatch()->getBatch())
-                ->setOffset(0)
+                ->setOffset(0),
         );
 
         return $this->orderInvoiceReader->getOrderInvoices($orderInvoiceCriteriaTransfer);

@@ -241,7 +241,7 @@ class ProductAbstractStorageReader implements ProductAbstractStorageReaderInterf
             $storageKeys[$identifier] = $this->getStorageKey(
                 sprintf('%s:%s', $mappingType, $identifier),
                 $localeName,
-                $storeName
+                $storeName,
             );
         }
 
@@ -602,7 +602,7 @@ class ProductAbstractStorageReader implements ProductAbstractStorageReaderInterf
                 $idProductAbstract,
                 $localeName,
                 $storeName,
-                $filteredProductData
+                $filteredProductData,
             );
         }
 

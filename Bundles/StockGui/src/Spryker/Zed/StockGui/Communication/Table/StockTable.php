@@ -193,7 +193,7 @@ class StockTable extends AbstractTable
             Url::generate('/stock-gui/view-warehouse', [
                 'id-stock' => $idStock,
             ]),
-            'View'
+            'View',
         );
     }
 
@@ -208,7 +208,7 @@ class StockTable extends AbstractTable
             Url::generate('/stock-gui/edit-warehouse', [
                 'id-stock' => $idStock,
             ]),
-            'Edit'
+            'Edit',
         );
     }
 }

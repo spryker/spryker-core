@@ -75,7 +75,7 @@ class AgentAccessTokenRestRequestValidator implements AgentAccessTokenRestReques
                     (new RestErrorMessageTransfer())
                         ->setDetail(AgentAuthRestApiConfig::RESPONSE_DETAIL_INVALID_ACCESS_TOKEN)
                         ->setStatus(Response::HTTP_UNAUTHORIZED)
-                        ->setCode(AgentAuthRestApiConfig::RESPONSE_CODE_INVALID_ACCESS_TOKEN)
+                        ->setCode(AgentAuthRestApiConfig::RESPONSE_CODE_INVALID_ACCESS_TOKEN),
                 );
         }
 

@@ -36,7 +36,7 @@ class DiscountPromotionBusinessFactory extends AbstractBusinessFactory
         return new DiscountPromotionCollectorStrategy(
             $this->getProductFacade(),
             $this->getQueryContainer(),
-            $this->createPromotionAvailabilityCalculator()
+            $this->createPromotionAvailabilityCalculator(),
         );
     }
 

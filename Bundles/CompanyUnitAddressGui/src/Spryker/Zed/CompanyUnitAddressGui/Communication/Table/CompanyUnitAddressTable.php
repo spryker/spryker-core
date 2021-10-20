@@ -215,7 +215,7 @@ class CompanyUnitAddressTable extends AbstractTable
             Url::generate(static::URL_COMPANY_UNIT_ADDRESS_EDIT, [
                 static::REQUEST_ID_COMPANY_UNIT_ADDRESS => $companyUnitAddressEntity->getIdCompanyUnitAddress(),
             ]),
-            'Edit Company Unit Address'
+            'Edit Company Unit Address',
         );
 
         return implode(' ', $buttons);

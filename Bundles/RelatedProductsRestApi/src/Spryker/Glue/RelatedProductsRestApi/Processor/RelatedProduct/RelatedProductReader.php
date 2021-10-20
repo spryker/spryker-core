@@ -81,7 +81,7 @@ class RelatedProductReader implements RelatedProductReaderInterface
             ->findProductAbstractStorageDataByMapping(
                 static::PRODUCT_ABSTRACT_MAPPING_TYPE,
                 $parentResource->getId(),
-                $restRequest->getMetadata()->getLocale()
+                $restRequest->getMetadata()->getLocale(),
             );
 
         if (!$abstractProductData) {

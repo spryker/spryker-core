@@ -27,7 +27,7 @@ class AvailabilityFactory extends AbstractFactory
         return new AvailabilityStorage(
             $this->getStorage(),
             $this->createKeyBuilder(),
-            $this->getLocaleClient()->getCurrentLocale()
+            $this->getLocaleClient()->getCurrentLocale(),
         );
     }
 

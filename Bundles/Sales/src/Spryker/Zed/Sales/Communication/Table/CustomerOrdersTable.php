@@ -71,7 +71,7 @@ class CustomerOrdersTable extends OrdersTable
             $sanitizeService,
             $utilDateTimeService,
             $customerFacade,
-            $salesTablePlugins
+            $salesTablePlugins,
         );
         $this->customerReference = $customerReference;
         $this->salesQueryContainer = $salesQueryContainer;

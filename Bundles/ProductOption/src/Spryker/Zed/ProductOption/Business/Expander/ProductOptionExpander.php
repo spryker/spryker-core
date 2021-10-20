@@ -47,7 +47,7 @@ class ProductOptionExpander implements ProductOptionExpanderInterface
             $this->expandOrderItemWithProductOptions(
                 $itemTransfer,
                 $mappedOrderItemsWithProductOptions[$itemTransfer->getIdSalesOrderItem()],
-                $mappedProductOptionValueTransfers
+                $mappedProductOptionValueTransfers,
             );
         }
 
@@ -165,7 +165,7 @@ class ProductOptionExpander implements ProductOptionExpanderInterface
     protected function deriveProductOptionUnitPriceAggregation(ItemTransfer $itemTransfer): ItemTransfer
     {
         $itemTransfer->setUnitProductOptionPriceAggregation(
-            (int)round($itemTransfer->getSumProductOptionPriceAggregation() / $itemTransfer->getQuantity())
+            (int)round($itemTransfer->getSumProductOptionPriceAggregation() / $itemTransfer->getQuantity()),
         );
 
         return $itemTransfer;

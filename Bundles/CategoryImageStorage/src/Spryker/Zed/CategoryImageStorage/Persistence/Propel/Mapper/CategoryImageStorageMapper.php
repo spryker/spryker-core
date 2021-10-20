@@ -25,7 +25,7 @@ class CategoryImageStorageMapper
         foreach ($categoryImageStorageEntityCollection as $categoryImageStorageEntity) {
             $synchronizationDataTransfers[] = $this->mapCategoryImageStorageEntityToSynchronizationDataTransfer(
                 $categoryImageStorageEntity,
-                new SynchronizationDataTransfer()
+                new SynchronizationDataTransfer(),
             );
         }
 

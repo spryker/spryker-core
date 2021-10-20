@@ -28,7 +28,7 @@ class CompanyBusinessUnitAddressesRestApiFactory extends AbstractFactory
     {
         return new CompanyBusinessUnitAddressCollectionByCompanyBusinessUnitTransferResourceRelationshipExpander(
             $this->createCompanyBusinessUnitAddressRestResponseBuilder(),
-            $this->createCompanyBusinessUnitAddressMapper()
+            $this->createCompanyBusinessUnitAddressMapper(),
         );
     }
 
@@ -39,7 +39,7 @@ class CompanyBusinessUnitAddressesRestApiFactory extends AbstractFactory
     {
         return new CompanyBusinessUnitAddressCollectionByCheckoutDataResourceRelationshipExpander(
             $this->createCompanyBusinessUnitAddressRestResponseBuilder(),
-            $this->createCompanyBusinessUnitAddressMapper()
+            $this->createCompanyBusinessUnitAddressMapper(),
         );
     }
 
@@ -51,7 +51,7 @@ class CompanyBusinessUnitAddressesRestApiFactory extends AbstractFactory
         return new CompanyBusinessUnitAddressReader(
             $this->getCompanyBusinessUnitAddressClient(),
             $this->createCompanyBusinessUnitAddressMapper(),
-            $this->createCompanyBusinessUnitAddressRestResponseBuilder()
+            $this->createCompanyBusinessUnitAddressRestResponseBuilder(),
         );
     }
 

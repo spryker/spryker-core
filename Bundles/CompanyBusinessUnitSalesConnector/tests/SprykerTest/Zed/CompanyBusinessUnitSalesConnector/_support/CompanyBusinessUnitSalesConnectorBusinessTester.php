@@ -49,7 +49,7 @@ class CompanyBusinessUnitSalesConnectorBusinessTester extends Actor
         ]);
 
         $permissionCollectionTransfer = (new PermissionCollectionTransfer())->addPermission(
-            $this->getLocator()->permission()->facade()->findPermissionByKey($permissionKey)
+            $this->getLocator()->permission()->facade()->findPermissionByKey($permissionKey),
         );
 
         $companyRoleTransfer = $this->haveCompanyRole([

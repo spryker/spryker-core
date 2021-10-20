@@ -88,7 +88,7 @@ class AddProductAlternativeForm extends AbstractType
                     'required' => false,
                     'choices' => $data[static::FIELD_PRODUCT_ALTERNATIVE],
                     'multiple' => true,
-                ]
+                ],
             );
         };
     }

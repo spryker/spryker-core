@@ -77,7 +77,7 @@ class AuthRestApiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::SERVICE_OAUTH, function (Container $container) {
             return new AuthRestApiToOauthServiceBridge(
-                $container->getLocator()->oauth()->service()
+                $container->getLocator()->oauth()->service(),
             );
         });
 
@@ -93,7 +93,7 @@ class AuthRestApiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new AuthRestApiToUtilEncodingServiceBridge(
-                $container->getLocator()->utilEncoding()->service()
+                $container->getLocator()->utilEncoding()->service(),
             );
         });
 

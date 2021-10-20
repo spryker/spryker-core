@@ -96,7 +96,7 @@ class ProductImageSetFormType extends AbstractType
     {
         $builder->add(ProductImageSetTransfer::LOCALE, HiddenType::class);
         $builder->get(ProductImageSetTransfer::LOCALE)->addModelTransformer(
-            $this->getFactory()->createLocaleTransformer()
+            $this->getFactory()->createLocaleTransformer(),
         );
 
         return $this;

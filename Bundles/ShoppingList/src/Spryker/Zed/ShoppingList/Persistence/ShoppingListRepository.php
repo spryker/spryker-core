@@ -148,13 +148,13 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
             $shoppingListItemQuery,
             (new FilterTransfer())
                 ->setOrderBy(SpyShoppingListItemTableMap::COL_ID_SHOPPING_LIST_ITEM)
-                ->setOrderDirection('ASC')
+                ->setOrderDirection('ASC'),
         )
             ->find();
 
         return (new ShoppingListOverviewResponseTransfer())
             ->setItemsCollection(
-                $this->getFactory()->createShoppingListItemMapper()->mapItemCollectionTransfer($shoppingListItemEntityTransferCollection)
+                $this->getFactory()->createShoppingListItemMapper()->mapItemCollectionTransfer($shoppingListItemEntityTransferCollection),
             );
     }
 

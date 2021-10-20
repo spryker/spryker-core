@@ -50,7 +50,7 @@ class VersionResolverTest extends Unit
             [],
             [
                 'HTTP_CONTENT-TYPE' => 'application/vnd.api+json; version=1.0',
-            ]
+            ],
         );
 
         $restVersionTransfer = $versionResolver->findVersion($request);
@@ -97,7 +97,7 @@ class VersionResolverTest extends Unit
             [],
             [
                 'HTTP_CONTENT-TYPE' => 'application/vnd.api+json; version=1.0',
-            ]
+            ],
         );
 
         $restVersionTransfer = $versionResolver->findVersion($request);

@@ -99,7 +99,7 @@ class SearchDependencyProvider extends AbstractDependencyProvider
     {
         throw new MissingSearchConfigPluginException(sprintf(
             'Missing instance of %s! You need to implement your own plugin and instantiate it in your own SearchDependencyProvider::createSearchConfigBuilder() to be able to search.',
-            SearchConfigBuilderInterface::class
+            SearchConfigBuilderInterface::class,
         ));
     }
 

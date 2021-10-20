@@ -47,7 +47,7 @@ class ConfigurableBundleTemplateSlotEditFormFileUploadHandler implements Configu
             $configurableBundleTemplateSlotEditForm = $this->executeConfigurableBundleTemplateSlotEditFormFileUploadHandlerPlugin(
                 $configurableBundleTemplateSlotEditFormFileUploadHandlerPlugin,
                 $configurableBundleTemplateSlotEditForm,
-                $configurableBundleTemplateSlotEditFormTransfer
+                $configurableBundleTemplateSlotEditFormTransfer,
             );
         }
 
@@ -68,7 +68,7 @@ class ConfigurableBundleTemplateSlotEditFormFileUploadHandler implements Configu
     ): ConfigurableBundleTemplateSlotEditFormTransfer {
         $uploadedFile = $this->getFormFieldByPath(
             $configurableBundleTemplateSlotEditForm,
-            $configurableBundleTemplateSlotEditFormFileUploadHandlerPlugin->getFieldPath()
+            $configurableBundleTemplateSlotEditFormFileUploadHandlerPlugin->getFieldPath(),
         )->getData();
 
         if (!$uploadedFile instanceof UploadedFile) {
@@ -77,7 +77,7 @@ class ConfigurableBundleTemplateSlotEditFormFileUploadHandler implements Configu
 
         return $configurableBundleTemplateSlotEditFormFileUploadHandlerPlugin->handleFileUpload(
             $uploadedFile,
-            $configurableBundleTemplateSlotEditFormTransfer
+            $configurableBundleTemplateSlotEditFormTransfer,
         );
     }
 

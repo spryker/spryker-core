@@ -31,12 +31,12 @@ class ProductCategoryMapper
         foreach ($productCategoryEntities as $productCategoryEntity) {
             $productCategoryTransfer = $this->mapProductCategoryEntityToProductCategoryTransfer(
                 $productCategoryEntity,
-                new ProductCategoryTransfer()
+                new ProductCategoryTransfer(),
             );
 
             $categoryTransfer = $this->mapCategoryEntityToCategoryTransfer(
                 $productCategoryEntity->getSpyCategory(),
-                new CategoryTransfer()
+                new CategoryTransfer(),
             );
 
             $productCategoryTransfer->setCategory($categoryTransfer);

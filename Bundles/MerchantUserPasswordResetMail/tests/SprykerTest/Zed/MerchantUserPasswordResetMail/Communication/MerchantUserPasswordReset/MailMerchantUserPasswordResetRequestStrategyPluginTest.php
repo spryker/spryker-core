@@ -64,7 +64,7 @@ class MailMerchantUserPasswordResetRequestStrategyPluginTest extends Unit
 
         $this->tester->setDependency(
             MerchantUserPasswordResetMailDependencyProvider::FACADE_MAIL,
-            new MerchantUserPasswordResetMailToMailFacadeBridge($mailFacade)
+            new MerchantUserPasswordResetMailToMailFacadeBridge($mailFacade),
         );
 
         return $mailFacade;

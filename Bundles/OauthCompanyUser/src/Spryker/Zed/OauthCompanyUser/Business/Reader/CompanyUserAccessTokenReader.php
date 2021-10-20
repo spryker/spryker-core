@@ -74,7 +74,7 @@ class CompanyUserAccessTokenReader implements CompanyUserAccessTokenReaderInterf
         $oauthAccessTokenValidationResponseTransfer = $this->oauthFacade->validateAccessToken(
             (new OauthAccessTokenValidationRequestTransfer())
                 ->setAccessToken($companyUserAccessTokenRequestTransfer->getAccessToken())
-                ->setType(static::TOKEN_TYPE)
+                ->setType(static::TOKEN_TYPE),
         );
 
         if (!$oauthAccessTokenValidationResponseTransfer->getIsValid()) {

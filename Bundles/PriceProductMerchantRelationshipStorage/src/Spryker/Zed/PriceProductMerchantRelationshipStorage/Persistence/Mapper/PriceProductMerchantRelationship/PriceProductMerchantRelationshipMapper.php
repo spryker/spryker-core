@@ -37,7 +37,7 @@ class PriceProductMerchantRelationshipMapper implements PriceProductMerchantRela
         foreach ($priceProductMerchantRelationshipEntities as $priceProductMerchantRelationshipEntity) {
             $priceProductMerchantRelationshipTransferCollection[] = $this->mapEntityToPriceProductMerchantRelationshipTransfer(
                 $priceProductMerchantRelationshipEntity,
-                new PriceProductMerchantRelationshipTransfer()
+                new PriceProductMerchantRelationshipTransfer(),
             );
         }
 

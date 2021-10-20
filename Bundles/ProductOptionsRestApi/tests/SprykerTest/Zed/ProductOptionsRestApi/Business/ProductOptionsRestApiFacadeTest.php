@@ -49,14 +49,14 @@ class ProductOptionsRestApiFacadeTest extends Unit
             ->getFacade()
             ->mapCartItemRequestTransferToPersistentCartChangeTransfer(
                 $cartItemRequestTransfer,
-                $persistentCartChangeTransfer
+                $persistentCartChangeTransfer,
             );
 
         // Assert
         $this->tester->assertNotEmpty(
             $persistentCartChangeTransfer->getItems()
                 ->offsetGet(0)
-                ->getProductOptions()
+                ->getProductOptions(),
         );
 
         $idProductOption = $persistentCartChangeTransfer->getItems()
@@ -66,7 +66,7 @@ class ProductOptionsRestApiFacadeTest extends Unit
             ->getIdProductOptionValue();
         $this->tester->assertEquals(
             $this->tester::ID_PRODUCT_OPTION_VALUE,
-            $idProductOption
+            $idProductOption,
         );
     }
 
@@ -84,14 +84,14 @@ class ProductOptionsRestApiFacadeTest extends Unit
             ->getFacade()
             ->mapCartItemRequestTransferToPersistentCartChangeTransfer(
                 $cartItemRequestTransfer,
-                $persistentCartChangeTransfer
+                $persistentCartChangeTransfer,
             );
 
         // Assert
         $this->tester->assertEmpty(
             $persistentCartChangeTransfer->getItems()
                 ->offsetGet(0)
-                ->getProductOptions()
+                ->getProductOptions(),
         );
     }
 
@@ -109,14 +109,14 @@ class ProductOptionsRestApiFacadeTest extends Unit
             ->getFacade()
             ->mapCartItemRequestTransferToPersistentCartChangeTransfer(
                 $cartItemRequestTransfer,
-                $persistentCartChangeTransfer
+                $persistentCartChangeTransfer,
             );
 
         // Assert
         $this->tester->assertEmpty(
             $persistentCartChangeTransfer->getItems()
                 ->offsetGet(0)
-                ->getProductOptions()
+                ->getProductOptions(),
         );
     }
 }

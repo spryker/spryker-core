@@ -60,7 +60,7 @@ class MerchantProductOptionOptionQueryCriteriaExpander implements MerchantProduc
 
         return $this->merchantProductOptionGuiRepository->expandQueryCriteriaTransferWithMerchantProductOptionRelation(
             $queryCriteriaTransfer,
-            (new MerchantProductOptionGroupCriteriaTransfer())->setIdMerchant($idMerchant)
+            (new MerchantProductOptionGroupCriteriaTransfer())->setIdMerchant($idMerchant),
         );
     }
 }

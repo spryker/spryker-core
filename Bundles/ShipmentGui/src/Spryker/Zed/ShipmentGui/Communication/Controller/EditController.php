@@ -97,7 +97,7 @@ class EditController extends AbstractController
         $form = $this->getFactory()
             ->createShipmentEditForm(
                 $dataProvider->getData($orderTransfer, $shipmentTransfer),
-                $dataProvider->getOptions($orderTransfer, $shipmentTransfer)
+                $dataProvider->getOptions($orderTransfer, $shipmentTransfer),
             )
             ->handleRequest($request);
 

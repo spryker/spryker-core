@@ -33,7 +33,7 @@ class ProductConfiguratorRequestDataLocaleExpander implements ProductConfigurato
     public function expand(ProductConfiguratorRequestDataTransfer $productConfiguratorRequestDataTransfer): ProductConfiguratorRequestDataTransfer
     {
         return $productConfiguratorRequestDataTransfer->setLocaleName(
-            $this->localeClient->getCurrentLocale()
+            $this->localeClient->getCurrentLocale(),
         );
     }
 }

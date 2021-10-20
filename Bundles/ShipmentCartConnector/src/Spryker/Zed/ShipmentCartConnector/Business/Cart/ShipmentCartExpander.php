@@ -85,7 +85,7 @@ class ShipmentCartExpander implements ShipmentCartExpanderInterface
 
             $availableShipmentMethodsByShipmentGroup = $this->findAvailableShipmentMethodsByShipment(
                 $availableShipmentMethods,
-                $shipmentGroupShipmentTransfer
+                $shipmentGroupShipmentTransfer,
             );
 
             if ($availableShipmentMethodsByShipmentGroup === null) {
@@ -95,7 +95,7 @@ class ShipmentCartExpander implements ShipmentCartExpanderInterface
             $shipmentGroupShipmentMethodTransfer = $shipmentGroupShipmentTransfer->getMethod();
             $availableShipmentMethodByShipmentGroup = $this->findAvailableShipmentMethodByIdShipmentMethod(
                 $availableShipmentMethodsByShipmentGroup,
-                $shipmentGroupShipmentMethodTransfer->getIdShipmentMethod()
+                $shipmentGroupShipmentMethodTransfer->getIdShipmentMethod(),
             );
 
             if ($availableShipmentMethodByShipmentGroup === null) {
@@ -106,7 +106,7 @@ class ShipmentCartExpander implements ShipmentCartExpanderInterface
             $availableShipmentMethodByShipmentGroup->setSourcePrice($shipmentGroupShipmentMethodTransfer->getSourcePrice());
 
             $shipmentGroupTransfer->getShipment()->setMethod(
-                (new ShipmentMethodTransfer())->fromArray($availableShipmentMethodByShipmentGroup->toArray())
+                (new ShipmentMethodTransfer())->fromArray($availableShipmentMethodByShipmentGroup->toArray()),
             );
 
             $quoteTransfer = $this->updateShipmentExpense($quoteTransfer, $shipmentGroupTransfer);
@@ -241,7 +241,7 @@ class ShipmentCartExpander implements ShipmentCartExpanderInterface
         $this->setExpensePrice(
             $expenseTransfer,
             $quoteTransfer->getCurrency(),
-            $quoteTransfer->getPriceMode()
+            $quoteTransfer->getPriceMode(),
         );
 
         return $quoteTransfer;

@@ -59,7 +59,7 @@ class ContentBannerReader implements ContentBannerReaderInterface
         $cmsPageStorageTransfers = $this->cmsStorageClient->getCmsPageStorageByUuids(
             $cmsPageUuids,
             $localeName,
-            $this->storeClient->getCurrentStore()->getName()
+            $this->storeClient->getCurrentStore()->getName(),
         );
 
         if (!$cmsPageStorageTransfers) {

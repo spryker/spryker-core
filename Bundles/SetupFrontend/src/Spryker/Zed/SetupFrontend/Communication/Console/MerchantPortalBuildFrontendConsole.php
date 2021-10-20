@@ -55,7 +55,7 @@ class MerchantPortalBuildFrontendConsole extends Console
             static::OPTION_ENVIRONMENT,
             static::OPTION_ENVIRONMENT_SHORT,
             InputOption::VALUE_REQUIRED,
-            static::OPTION_ENVIRONMENT_DESCRIPTION
+            static::OPTION_ENVIRONMENT_DESCRIPTION,
         );
 
         parent::configure();

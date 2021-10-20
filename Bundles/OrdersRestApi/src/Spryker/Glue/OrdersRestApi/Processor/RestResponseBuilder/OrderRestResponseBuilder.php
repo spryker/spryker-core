@@ -62,7 +62,7 @@ class OrderRestResponseBuilder implements OrderRestResponseBuilderInterface
         $restResource = $this->restResourceBuilder->createRestResource(
             OrdersRestApiConfig::RESOURCE_ORDERS,
             $orderTransfer->getOrderReference(),
-            $restOrderDetailsAttributesTransfer
+            $restOrderDetailsAttributesTransfer,
         );
 
         $restResource->setPayload($orderTransfer);
@@ -100,7 +100,7 @@ class OrderRestResponseBuilder implements OrderRestResponseBuilderInterface
             $restResource = $this->restResourceBuilder->createRestResource(
                 OrdersRestApiConfig::RESOURCE_ORDERS,
                 $orderTransfer->getOrderReference(),
-                $restOrdersAttributesTransfer
+                $restOrdersAttributesTransfer,
             );
             $restResponse = $restResponse->addResource($restResource);
         }
@@ -117,7 +117,7 @@ class OrderRestResponseBuilder implements OrderRestResponseBuilderInterface
 
         return $this->createErrorResponse(
             (new RestErrorMessageTransfer())
-                ->fromArray($restErrorPayload)
+                ->fromArray($restErrorPayload),
         );
     }
 
@@ -146,7 +146,7 @@ class OrderRestResponseBuilder implements OrderRestResponseBuilderInterface
 
         return $this->createErrorResponse(
             (new RestErrorMessageTransfer())
-                ->fromArray($restErrorPayload)
+                ->fromArray($restErrorPayload),
         );
     }
 
@@ -173,12 +173,12 @@ class OrderRestResponseBuilder implements OrderRestResponseBuilderInterface
         $orderItemResource = $this->restResourceBuilder->createRestResource(
             OrdersRestApiConfig::RESOURCE_ORDER_ITEMS,
             $itemTransfer->getUuid(),
-            $restOrderItemsAttributesTransfer
+            $restOrderItemsAttributesTransfer,
         );
 
         $orderItemResource->addLink(
             RestLinkInterface::LINK_SELF,
-            $this->createSelfLinkForOrderItem($itemTransfer->getOrderReference(), $itemTransfer->getUuid())
+            $this->createSelfLinkForOrderItem($itemTransfer->getOrderReference(), $itemTransfer->getUuid()),
         );
 
         return $orderItemResource;
@@ -197,7 +197,7 @@ class OrderRestResponseBuilder implements OrderRestResponseBuilderInterface
             OrdersRestApiConfig::RESOURCE_ORDERS,
             $idOrder,
             OrdersRestApiConfig::RESOURCE_ORDER_ITEMS,
-            $idOrderItem
+            $idOrderItem,
         );
     }
 

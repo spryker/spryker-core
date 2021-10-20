@@ -233,7 +233,7 @@ class ProductCategoryStorageDependencyProvider extends AbstractBundleDependencyP
     {
         $container->set(static::QUERY_CONTAINER_PRODUCT_CATEGORY, function (Container $container) {
             return new ProductCategoryStorageToProductCategoryQueryContainerBridge(
-                $container->getLocator()->productCategory()->queryContainer()
+                $container->getLocator()->productCategory()->queryContainer(),
             );
         });
 
@@ -249,7 +249,7 @@ class ProductCategoryStorageDependencyProvider extends AbstractBundleDependencyP
     {
         $container->set(static::QUERY_CONTAINER_CATEGORY, function (Container $container) {
             return new ProductCategoryStorageToCategoryQueryContainerBridge(
-                $container->getLocator()->category()->queryContainer()
+                $container->getLocator()->category()->queryContainer(),
             );
         });
 

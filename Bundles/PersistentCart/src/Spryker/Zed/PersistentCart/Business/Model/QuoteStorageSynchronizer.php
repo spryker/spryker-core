@@ -162,8 +162,8 @@ class QuoteStorageSynchronizer implements QuoteStorageSynchronizerInterface
             throw new QuoteSynchronizationNotAvailable(
                 sprintf(
                     'Synchronization available for "%s" storage strategy only',
-                    SharedQuoteConfig::STORAGE_STRATEGY_DATABASE
-                )
+                    SharedQuoteConfig::STORAGE_STRATEGY_DATABASE,
+                ),
             );
         }
     }

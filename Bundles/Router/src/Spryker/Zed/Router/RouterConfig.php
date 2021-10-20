@@ -63,7 +63,7 @@ class RouterConfig extends AbstractBundleConfig
         return sprintf(
             '%s/src/Generated/Router/Backoffice/codeBucket%s/',
             APPLICATION_ROOT_DIR,
-            APPLICATION_CODE_BUCKET
+            APPLICATION_CODE_BUCKET,
         );
     }
 
@@ -99,7 +99,7 @@ class RouterConfig extends AbstractBundleConfig
         return sprintf(
             '%s/src/Generated/Router/MerchantPortal/codeBucket%s/',
             APPLICATION_ROOT_DIR,
-            APPLICATION_CODE_BUCKET
+            APPLICATION_CODE_BUCKET,
         );
     }
 
@@ -148,7 +148,7 @@ class RouterConfig extends AbstractBundleConfig
         return sprintf(
             '%s/src/Generated/Router/BackendGateway/codeBucket%s/',
             APPLICATION_ROOT_DIR,
-            APPLICATION_CODE_BUCKET
+            APPLICATION_CODE_BUCKET,
         );
     }
 
@@ -232,7 +232,7 @@ class RouterConfig extends AbstractBundleConfig
                 '%s/%s/*/src/%s/Zed/*/Communication/Controller/',
                 $vendorDirectory,
                 $composerPackageNamespace,
-                $coreNamespace
+                $coreNamespace,
             );
         }
 

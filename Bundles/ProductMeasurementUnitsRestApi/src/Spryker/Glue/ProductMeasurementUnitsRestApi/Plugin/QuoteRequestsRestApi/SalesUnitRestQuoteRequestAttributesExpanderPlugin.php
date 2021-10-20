@@ -37,7 +37,7 @@ class SalesUnitRestQuoteRequestAttributesExpanderPlugin extends AbstractPlugin i
             ->expandRestQuoteRequestItemWithSalesUnit(
                 $restQuoteRequestsAttributesTransfers,
                 $quoteRequestTransfers,
-                $localeName
+                $localeName,
             );
     }
 }

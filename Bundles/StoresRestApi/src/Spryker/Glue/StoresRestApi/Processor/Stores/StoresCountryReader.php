@@ -53,7 +53,7 @@ class StoresCountryReader implements StoresCountryReaderInterface
 
         foreach ($countryCollectionTransfer->getCountries() as $countryTransfer) {
             $storeCountryAttributes[] = $this->storesCountryResourceMapper->mapCountryToStoresCountryRestAttributes(
-                $countryTransfer
+                $countryTransfer,
             );
         }
 

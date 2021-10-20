@@ -64,7 +64,7 @@ class GatewayServiceProviderPlugin extends AbstractPlugin implements ServiceProv
                 [
                     $this->getControllerListener(),
                     'onKernelController',
-                ]
+                ],
             );
 
             return $eventDispatcher;

@@ -28,7 +28,7 @@ class ProductLabelDictionaryStorageMapper
         foreach ($productLabelDictionaryStorageEntities as $productLabelDictionaryStorageEntity) {
             $productLabelDictionaryStorageTransfers[] = $this->mapProductLabelDictionaryStorageEntityToProductLabelDictionaryStorageTransfer(
                 $productLabelDictionaryStorageEntity,
-                new ProductLabelDictionaryStorageTransfer()
+                new ProductLabelDictionaryStorageTransfer(),
             );
         }
 
@@ -50,8 +50,8 @@ class ProductLabelDictionaryStorageMapper
         $productLabelDictionaryStorageTransfer->setItems(
             $this->mapProductLabelDictionaryItemsToProductLabelDictionaryCollection(
                 $productLabelDictionaryStorageEntity->getData()['items'],
-                new ArrayObject()
-            )
+                new ArrayObject(),
+            ),
         );
 
         return $productLabelDictionaryStorageTransfer;
@@ -88,8 +88,8 @@ class ProductLabelDictionaryStorageMapper
             $productLabelDictionaryCollection->append(
                 $this->mapProductLabelDictionaryItemToProductLabelDictionaryItemTransfer(
                     $productLabelDictionaryItem,
-                    new ProductLabelDictionaryItemTransfer()
-                )
+                    new ProductLabelDictionaryItemTransfer(),
+                ),
             );
         }
 

@@ -65,7 +65,7 @@ class MultiCartZedStub implements MultiCartZedStubInterface
         /** @var \Generated\Shared\Transfer\QuoteCollectionTransfer $quoteResponseTransfer */
         $quoteResponseTransfer = $this->zedRequestClient->call(
             '/multi-cart/gateway/get-quote-collection-by-criteria',
-            $quoteCriteriaFilterTransfer
+            $quoteCriteriaFilterTransfer,
         );
 
         return $quoteResponseTransfer;

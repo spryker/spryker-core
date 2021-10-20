@@ -49,7 +49,7 @@ class ProductCategoryFilterClient extends AbstractClient implements ProductCateg
             ->createFacetUpdaterByProductCategoryFilters()
             ->updateFromTransfer(
                 $facets,
-                $this->getProductCategoryFiltersTransferForCategoryByLocale($idCategory, $localeName)
+                $this->getProductCategoryFiltersTransferForCategoryByLocale($idCategory, $localeName),
             );
     }
 
@@ -82,7 +82,7 @@ class ProductCategoryFilterClient extends AbstractClient implements ProductCateg
     {
         $productCategoryFilterTransfer = new ProductCategoryFilterTransfer();
         $productCategoryFilterTransfer->fromArray(
-            $this->getProductCategoryFiltersFromStorage($idCategory, $localeName)
+            $this->getProductCategoryFiltersFromStorage($idCategory, $localeName),
         );
 
         return $productCategoryFilterTransfer;
@@ -97,7 +97,7 @@ class ProductCategoryFilterClient extends AbstractClient implements ProductCateg
     protected function getProductCategoryFiltersFromStorage($categoryId, $localeName)
     {
         $productCategoryFilters = $this->getFactory()->getStorageClient()->get(
-            $this->getFactory()->createProductCategoryFilterKeyBuilder()->generateKey($categoryId, $localeName)
+            $this->getFactory()->createProductCategoryFilterKeyBuilder()->generateKey($categoryId, $localeName),
         );
 
         if (!$productCategoryFilters) {

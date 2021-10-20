@@ -40,7 +40,7 @@ class ElasticsearchInMemoryLoggerTest extends Unit
         foreach ($callData as $singleCallData) {
             $elasticsearchInMemoryLogger->log(
                 $singleCallData['payload'],
-                $singleCallData['result']
+                $singleCallData['result'],
             );
         }
 
@@ -135,7 +135,7 @@ class ElasticsearchInMemoryLoggerTest extends Unit
             '%s://%s:%d',
             $protocol ?? SearchElasticsearchSharedTester::DEFAULT_ELASTICSEARCH_PROTOCOL,
             $host ?? SearchElasticsearchSharedTester::DEFAULT_ELASTICSEARCH_HOST,
-            $port ?? SearchElasticsearchSharedTester::DEFAULT_ELASTICSEARCH_PORT
+            $port ?? SearchElasticsearchSharedTester::DEFAULT_ELASTICSEARCH_PORT,
         );
     }
 }

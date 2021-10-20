@@ -89,7 +89,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
             $this->getQueryContainer(),
             $this->createOrderHydratorStrategyResolver(),
             $this->getSearchOrderExpanderPlugins(),
-            $this->getOmsFacade()
+            $this->getOmsFacade(),
         );
     }
 
@@ -102,7 +102,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
             $this->getQueryContainer(),
             $this->createOrderHydratorStrategyResolver(),
             $this->getSearchOrderExpanderPlugins(),
-            $this->getOmsFacade()
+            $this->getOmsFacade(),
         );
     }
 
@@ -115,7 +115,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->createOrderHydrator(),
             $this->getOmsFacade(),
-            $this->getSearchOrderExpanderPlugins()
+            $this->getSearchOrderExpanderPlugins(),
         );
     }
 
@@ -128,7 +128,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
             $this->getQueryContainer(),
             $this->createCustomerOrderOverviewHydrator(),
             $this->getOmsFacade(),
-            $this->getSearchOrderExpanderPlugins()
+            $this->getSearchOrderExpanderPlugins(),
         );
     }
 
@@ -157,7 +157,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
             $this->getOrderExpanderPreSavePlugins(),
             $this->createSalesOrderSaverPluginExecutor(),
             $this->createSalesOrderItemMapper(),
-            $this->getOrderPostSavePlugins()
+            $this->getOrderPostSavePlugins(),
         );
     }
 
@@ -176,7 +176,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
             $this->getOrderExpanderPreSavePlugins(),
             $this->createSalesOrderSaverPluginExecutor(),
             $this->createSalesOrderItemMapper(),
-            $this->getOrderPostSavePlugins()
+            $this->getOrderPostSavePlugins(),
         );
     }
 
@@ -193,7 +193,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
             $this->getLocaleFacade(),
             $this->getOrderExpanderPreSavePlugins(),
             $this->getOrderPostSavePlugins(),
-            $this->getEntityManager()
+            $this->getEntityManager(),
         );
     }
 
@@ -207,7 +207,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
             $this->getConfig(),
             $this->createSalesOrderSaverPluginExecutor(),
             $this->getEntityManager(),
-            $this->getOrderItemsPostSavePlugins()
+            $this->getOrderItemsPostSavePlugins(),
         );
     }
 
@@ -228,7 +228,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     {
         return new OrderReader(
             $this->getQueryContainer(),
-            $this->createOrderHydrator()
+            $this->createOrderHydrator(),
         );
     }
 
@@ -239,7 +239,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     {
         return new OrderReaderWithMultiShippingAddress(
             $this->getQueryContainer(),
-            $this->createOrderHydratorWithMultiShippingAddress()
+            $this->createOrderHydratorWithMultiShippingAddress(),
         );
     }
 
@@ -250,7 +250,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     {
         return new OrderRepositoryReader(
             $this->createOrderHydratorStrategyResolver(),
-            $this->getRepository()
+            $this->getRepository(),
         );
     }
 
@@ -284,7 +284,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
             $this->getCustomerFacade(),
             $this->getHydrateOrderPlugins(),
             $this->getOrderItemExpanderPlugins(),
-            $this->getCustomerOrderAccessCheckPlugins()
+            $this->getCustomerOrderAccessCheckPlugins(),
         );
     }
 
@@ -300,7 +300,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
             $this->getCustomerFacade(),
             $this->getHydrateOrderPlugins(),
             $this->getOrderItemExpanderPlugins(),
-            $this->getCustomerOrderAccessCheckPlugins()
+            $this->getCustomerOrderAccessCheckPlugins(),
         );
     }
 
@@ -311,7 +311,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     {
         return new SalesOrderReader(
             $this->getRepository(),
-            $this->getHydrateOrderPlugins()
+            $this->getHydrateOrderPlugins(),
         );
     }
 
@@ -324,7 +324,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
 
         return new OrderReferenceGenerator(
             $this->getSequenceNumberFacade(),
-            $sequenceNumberSettings
+            $sequenceNumberSettings,
         );
     }
 
@@ -363,7 +363,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
             $this->getCalculationFacade(),
             $this->createOrderItemTransformer(),
             $this->getItemTransformerStrategyPlugins(),
-            $this->getItemPreTransformerPlugins()
+            $this->getItemPreTransformerPlugins(),
         );
     }
 
@@ -381,7 +381,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     public function createSalesOrderSaverPluginExecutor()
     {
         return new SalesOrderSaverPluginExecutor(
-            $this->getOrderItemExpanderPreSavePlugins()
+            $this->getOrderItemExpanderPreSavePlugins(),
         );
     }
 
@@ -417,7 +417,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     public function createSalesOrderItemGrouper(): SalesOrderItemGrouperInterface
     {
         return new SalesOrderItemGrouper(
-            $this->getUniqueOrderItemsExpanderPlugins()
+            $this->getUniqueOrderItemsExpanderPlugins(),
         );
     }
 
@@ -437,7 +437,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
         return new OrderSearchReader(
             $this->getRepository(),
             $this->getSearchOrderExpanderPlugins(),
-            $this->getOrderSearchQueryExpanderPlugins()
+            $this->getOrderSearchQueryExpanderPlugins(),
         );
     }
 
@@ -580,7 +580,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     {
         return new OrderItemReader(
             $this->getRepository(),
-            $this->getOrderItemExpanderPlugins()
+            $this->getOrderItemExpanderPlugins(),
         );
     }
 
@@ -591,7 +591,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     {
         return new OrderWriter(
             $this->createOmsEventTriggerer(),
-            $this->createOrderReaderWithMultiShippingAddress()
+            $this->createOrderReaderWithMultiShippingAddress(),
         );
     }
 
@@ -609,7 +609,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     public function createDuplicateOrderChecker(): DuplicateOrderCheckerInterface
     {
         return new DuplicateOrderChecker(
-            $this->getRepository()
+            $this->getRepository(),
         );
     }
 

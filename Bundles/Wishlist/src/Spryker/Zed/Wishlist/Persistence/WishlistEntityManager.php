@@ -38,7 +38,7 @@ class WishlistEntityManager extends AbstractEntityManager implements WishlistEnt
             ->fromArray($wishlistItemTransfer->modifiedToArray(), true);
 
         $wishlistItemQuery->filterByArray(
-            $wishlistItemCriteriaTransfer->modifiedToArrayNotRecursiveCamelCased()
+            $wishlistItemCriteriaTransfer->modifiedToArrayNotRecursiveCamelCased(),
         );
 
         $existedWishlistItemEntity = $wishlistItemQuery->findOne();

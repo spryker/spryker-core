@@ -45,13 +45,13 @@ class ConstraintNotFoundException extends Exception
             'Glue',
             'RestRequestValidator',
             'RestRequestValidatorConfig',
-            'getAvailableConstraintNamespaces'
+            'getAvailableConstraintNamespaces',
         );
 
         $message = sprintf(
             static::EXCEPTION_MESSAGE_CLASS_NOT_FOUND,
             $constraintName,
-            $configNamespace
+            $configNamespace,
         );
 
         return $message;

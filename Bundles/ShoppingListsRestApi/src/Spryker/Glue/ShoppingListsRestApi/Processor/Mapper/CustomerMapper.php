@@ -23,7 +23,7 @@ class CustomerMapper implements CustomerMapperInterface
     {
         $companyUserTransfer = $this->mapRestUserTransferToCompanyUserTransfer(
             $restUserTransfer,
-            new CompanyUserTransfer()
+            new CompanyUserTransfer(),
         );
 
         return $customerTransfer->setCustomerReference($restUserTransfer->getNaturalIdentifier())

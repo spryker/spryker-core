@@ -27,7 +27,7 @@ class StorageCommunicationFactory extends AbstractCommunicationFactory
         return new StorageTable(
             $this->getStorageClient(),
             $this->getUtilSanitizeService(),
-            $this->getConfig()->getGuiDefaultPageLength()
+            $this->getConfig()->getGuiDefaultPageLength(),
         );
     }
 

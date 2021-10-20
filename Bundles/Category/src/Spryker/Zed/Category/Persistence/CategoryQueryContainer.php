@@ -92,20 +92,20 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
             ->addJoin(
                 SpyCategoryAttributeTableMap::COL_FK_CATEGORY,
                 SpyCategoryNodeTableMap::COL_FK_CATEGORY,
-                Criteria::INNER_JOIN
+                Criteria::INNER_JOIN,
             )
             ->addAnd(
                 SpyCategoryNodeTableMap::COL_IS_ROOT,
                 true,
-                Criteria::EQUAL
+                Criteria::EQUAL,
             )
             ->withColumn(
                 SpyLocaleTableMap::COL_LOCALE_NAME,
-                'locale_name'
+                'locale_name',
             )
             ->withColumn(
                 SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE,
-                'id_category_node'
+                'id_category_node',
             );
     }
 
@@ -124,10 +124,10 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
 
         return $query->where(
             SpyCategoryClosureTableTableMap::COL_FK_CATEGORY_NODE . ' = ?',
-            $idNode
+            $idNode,
         )->_or()->where(
             SpyCategoryClosureTableTableMap::COL_FK_CATEGORY_NODE_DESCENDANT . ' = ?',
-            $idNode
+            $idNode,
         );
     }
 
@@ -148,7 +148,7 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
         $joinCategoryNodeDescendant = new Join(
             'node.fk_category_node_descendant',
             'descendants.fk_category_node_descendant',
-            Criteria::JOIN
+            Criteria::JOIN,
         );
         $joinCategoryNodeDescendant
             ->setRightTableName('spy_category_closure_table')
@@ -159,7 +159,7 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
         $joinCategoryNodeAscendant = new Join(
             'descendants.fk_category_node',
             'ascendants.fk_category_node',
-            Criteria::LEFT_JOIN
+            Criteria::LEFT_JOIN,
         );
 
         $joinCategoryNodeAscendant
@@ -173,15 +173,15 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
 
         $query->addJoinCondition(
             'ascendantsJoin',
-            'ascendants.fk_category_node_descendant = node.fk_category_node'
+            'ascendants.fk_category_node_descendant = node.fk_category_node',
         );
 
         $query
             ->where(
-                'descendants.fk_category_node = ' . $idNode
+                'descendants.fk_category_node = ' . $idNode,
             )
             ->where(
-                'ascendants.fk_category_node IS NULL'
+                'ascendants.fk_category_node IS NULL',
             );
 
         return $query;
@@ -360,7 +360,7 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
             ->addAnd(
                 SpyCategoryAttributeTableMap::COL_FK_LOCALE,
                 $idLocale,
-                Criteria::EQUAL
+                Criteria::EQUAL,
             )
             ->withColumn(SpyCategoryTableMap::COL_ID_CATEGORY, 'id_category')
             ->withColumn(SpyCategoryAttributeTableMap::COL_NAME, 'name')

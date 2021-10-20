@@ -58,7 +58,7 @@ class ContentProductAbstractListWriterStep extends PublishAwareStep implements D
 
         $this->addPublishEvents(
             ContentEvents::CONTENT_PUBLISH,
-            $contentProductAbstractListEntity->getPrimaryKey()
+            $contentProductAbstractListEntity->getPrimaryKey(),
         );
     }
 

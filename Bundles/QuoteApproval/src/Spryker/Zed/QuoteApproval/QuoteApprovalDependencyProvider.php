@@ -91,7 +91,7 @@ class QuoteApprovalDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::FACADE_COMPANY_USER, function (Container $container) {
             return new QuoteApprovalToCompanyUserFacadeBridge(
-                $container->getLocator()->companyUser()->facade()
+                $container->getLocator()->companyUser()->facade(),
             );
         });
 
@@ -107,7 +107,7 @@ class QuoteApprovalDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::FACADE_COMPANY_ROLE, function (Container $container) {
             return new QuoteApprovalToCompanyRoleFacadeBridge(
-                $container->getLocator()->companyRole()->facade()
+                $container->getLocator()->companyRole()->facade(),
             );
         });
 
@@ -123,7 +123,7 @@ class QuoteApprovalDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::FACADE_SHARED_CART, function (Container $container) {
             return new QuoteApprovalToSharedCartFacadeBridge(
-                $container->getLocator()->sharedCart()->facade()
+                $container->getLocator()->sharedCart()->facade(),
             );
         });
 
@@ -139,7 +139,7 @@ class QuoteApprovalDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::FACADE_CUSTOMER, function (Container $container) {
             return new QuoteApprovalToCustomerFacadeBridge(
-                $container->getLocator()->customer()->facade()
+                $container->getLocator()->customer()->facade(),
             );
         });
 

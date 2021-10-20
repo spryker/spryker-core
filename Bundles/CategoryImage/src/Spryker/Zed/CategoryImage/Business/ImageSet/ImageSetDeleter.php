@@ -62,7 +62,7 @@ class ImageSetDeleter implements ImageSetDeleterInterface
         foreach ($categoryImageSets as $categoryImageSetTransfer) {
             $categoryImageSetTransfer->requireIdCategoryImageSet();
             $this->categoryImageEntityManager->deleteCategoryImageSetById(
-                $categoryImageSetTransfer->getIdCategoryImageSet()
+                $categoryImageSetTransfer->getIdCategoryImageSet(),
             );
         }
     }

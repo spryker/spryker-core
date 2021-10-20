@@ -66,7 +66,7 @@ class PaginatedCustomerOrderOverview implements CustomerOrderOverviewInterface
     {
         $ordersQuery = $this->queryContainer->queryCustomerOrders(
             $idCustomer,
-            $orderListTransfer->getFilter()
+            $orderListTransfer->getFilter(),
         );
 
         if (!$ordersQuery->getOrderByColumns()) {
@@ -117,7 +117,7 @@ class PaginatedCustomerOrderOverview implements CustomerOrderOverviewInterface
     protected function excludeOrder(SpySalesOrder $salesOrderEntity): bool
     {
         $excludeFromCustomer = $this->omsFacade->isOrderFlaggedExcludeFromCustomer(
-            $salesOrderEntity->getIdSalesOrder()
+            $salesOrderEntity->getIdSalesOrder(),
         );
 
         return $excludeFromCustomer;

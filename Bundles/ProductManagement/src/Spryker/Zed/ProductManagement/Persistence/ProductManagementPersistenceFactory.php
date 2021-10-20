@@ -63,7 +63,7 @@ class ProductManagementPersistenceFactory extends AbstractPersistenceFactory
     public function createProductAbstractQueryExpander(): ProductAbstractQueryExpanderInterface
     {
         return new ProductAbstractQueryExpander(
-            $this->getProductTableQueryCriteriaExpanderPluginInterfaces()
+            $this->getProductTableQueryCriteriaExpanderPluginInterfaces(),
         );
     }
 

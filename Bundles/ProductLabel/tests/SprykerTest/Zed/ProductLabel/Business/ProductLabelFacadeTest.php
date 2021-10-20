@@ -129,25 +129,25 @@ class ProductLabelFacadeTest extends Unit
         $this->assertCount(
             1,
             $activeProductLabelsByTheGivenCriteria,
-            'Product label not found.'
+            'Product label not found.',
         );
 
         $this->assertSame(
             $idProductLabel,
             $activeProductLabelsByTheGivenCriteria[0]->getIdProductLabel(),
-            'Wrong product label.'
+            'Wrong product label.',
         );
 
         $this->assertCount(
             2,
             $activeProductLabelsByTheGivenCriteria[0]->getStoreRelation()->getStores(),
-            'Stores relations number is incorrect.'
+            'Stores relations number is incorrect.',
         );
 
         $this->assertCount(
             $productLabelTransfer->getLocalizedAttributesCollection()->count(),
             $activeProductLabelsByTheGivenCriteria[0]->getLocalizedAttributesCollection(),
-            'Localized attributes number is incorrect.'
+            'Localized attributes number is incorrect.',
         );
     }
 
@@ -171,7 +171,7 @@ class ProductLabelFacadeTest extends Unit
 
         $productLabelTransfer = (new ProductLabelBuilder())->except(['idProductLabel'])->build();
         $productLabelTransfer->addLocalizedAttributes(
-            $this->generateLocalizedAttributesTransfer($localeTransfer->getIdLocale())
+            $this->generateLocalizedAttributesTransfer($localeTransfer->getIdLocale()),
         );
         $productLabelFacade = $this->getProductLabelFacade();
         $productLabelFacade->createLabel($productLabelTransfer);
@@ -248,7 +248,7 @@ class ProductLabelFacadeTest extends Unit
 
         $productLabelTransfer = (new ProductLabelBuilder())->except(['idProductLabel'])->build();
         $productLabelTransfer->addLocalizedAttributes(
-            $this->generateLocalizedAttributesTransfer($localeTransfer->getIdLocale())
+            $this->generateLocalizedAttributesTransfer($localeTransfer->getIdLocale()),
         );
         $productLabelFacade = $this->getProductLabelFacade();
         $productLabelFacade->createLabel($productLabelTransfer);
@@ -333,12 +333,12 @@ class ProductLabelFacadeTest extends Unit
         $this->assertCount(
             1,
             $productLabelStoreRelationAfterUpdate,
-            'Product label store relation data should be relevant'
+            'Product label store relation data should be relevant',
         );
         $this->assertSame(
             $storeTransferAT->getIdStore(),
             $productLabelStoreRelationAfterUpdate->offsetGet(0)->getFkStore(),
-            'Product label store relation'
+            'Product label store relation',
         );
     }
 
@@ -365,7 +365,7 @@ class ProductLabelFacadeTest extends Unit
         $this->tester->assertEquals(
             $storeTransferDE->getName(),
             $productLabelTransfer->getStoreRelation()->getStores()->offsetGet(0)->getName(),
-            'Given store is invalid for this relation'
+            'Given store is invalid for this relation',
         );
     }
 
@@ -393,7 +393,7 @@ class ProductLabelFacadeTest extends Unit
         $this->tester->assertEquals(
             $storeTransferDE->getName(),
             $productLabelTransfer->getStoreRelation()->getStores()->offsetGet(0)->getName(),
-            'Given store is invalid for this relation'
+            'Given store is invalid for this relation',
         );
     }
 
@@ -408,7 +408,7 @@ class ProductLabelFacadeTest extends Unit
 
         $this->tester->assertTouchActive(
             ProductLabelConstants::RESOURCE_TYPE_PRODUCT_LABEL_DICTIONARY,
-            ProductLabelConstants::RESOURCE_TYPE_PRODUCT_LABEL_DICTIONARY_IDENTIFIER
+            ProductLabelConstants::RESOURCE_TYPE_PRODUCT_LABEL_DICTIONARY_IDENTIFIER,
         );
     }
 
@@ -501,12 +501,12 @@ class ProductLabelFacadeTest extends Unit
 
         $this->tester->assertTouchActive(
             ProductLabelConstants::RESOURCE_TYPE_PRODUCT_ABSTRACT_PRODUCT_LABEL_RELATIONS,
-            $idProductAbstract
+            $idProductAbstract,
         );
 
         $this->tester->assertTouchActive(
             ProductConfig::RESOURCE_TYPE_PRODUCT_ABSTRACT,
-            $idProductAbstract
+            $idProductAbstract,
         );
     }
 
@@ -528,7 +528,7 @@ class ProductLabelFacadeTest extends Unit
         $this->tester->assertTouchActiveAfter(
             ProductLabelConstants::RESOURCE_TYPE_PRODUCT_LABEL_DICTIONARY,
             ProductLabelConstants::RESOURCE_TYPE_PRODUCT_LABEL_DICTIONARY_IDENTIFIER,
-            $referenceTime
+            $referenceTime,
         );
     }
 
@@ -550,7 +550,7 @@ class ProductLabelFacadeTest extends Unit
         $this->tester->assertTouchActiveAfter(
             ProductLabelConstants::RESOURCE_TYPE_PRODUCT_LABEL_DICTIONARY,
             ProductLabelConstants::RESOURCE_TYPE_PRODUCT_LABEL_DICTIONARY_IDENTIFIER,
-            $referenceTime
+            $referenceTime,
         );
     }
 
@@ -573,7 +573,7 @@ class ProductLabelFacadeTest extends Unit
         $this->tester->assertNoTouchAfter(
             ProductLabelConstants::RESOURCE_TYPE_PRODUCT_LABEL_DICTIONARY,
             ProductLabelConstants::RESOURCE_TYPE_PRODUCT_LABEL_DICTIONARY_IDENTIFIER,
-            $referenceTime
+            $referenceTime,
         );
     }
 
@@ -596,7 +596,7 @@ class ProductLabelFacadeTest extends Unit
         $this->tester->assertNoTouchAfter(
             ProductLabelConstants::RESOURCE_TYPE_PRODUCT_LABEL_DICTIONARY,
             ProductLabelConstants::RESOURCE_TYPE_PRODUCT_LABEL_DICTIONARY_IDENTIFIER,
-            $referenceTime
+            $referenceTime,
         );
     }
 
@@ -612,11 +612,11 @@ class ProductLabelFacadeTest extends Unit
         $productLabelTransfer = $this->tester->haveProductLabel();
         $this->tester->haveProductLabelToAbstractProductRelation(
             $productLabelTransfer->getIdProductLabel(),
-            $productTransfer2->getFkProductAbstract()
+            $productTransfer2->getFkProductAbstract(),
         );
         $this->tester->haveProductLabelToAbstractProductRelation(
             $productLabelTransfer->getIdProductLabel(),
-            $productTransfer3->getFkProductAbstract()
+            $productTransfer3->getFkProductAbstract(),
         );
 
         $productLabelRelationUpdaterPluginMock = $this->getMockBuilder(ProductLabelRelationUpdaterPluginInterface::class)
@@ -654,24 +654,24 @@ class ProductLabelFacadeTest extends Unit
 
         $this->tester->assertTouchActive(
             ProductLabelConstants::RESOURCE_TYPE_PRODUCT_ABSTRACT_PRODUCT_LABEL_RELATIONS,
-            $productTransfer1->getFkProductAbstract()
+            $productTransfer1->getFkProductAbstract(),
         );
         $this->tester->assertTouchActive(
             ProductConfig::RESOURCE_TYPE_PRODUCT_ABSTRACT,
-            $productTransfer1->getFkProductAbstract()
+            $productTransfer1->getFkProductAbstract(),
         );
 
         $this->tester->assertTouchDeleted(
             ProductLabelConstants::RESOURCE_TYPE_PRODUCT_ABSTRACT_PRODUCT_LABEL_RELATIONS,
-            $productTransfer2->getFkProductAbstract()
+            $productTransfer2->getFkProductAbstract(),
         );
         $this->tester->assertTouchDeleted(
             ProductLabelConstants::RESOURCE_TYPE_PRODUCT_ABSTRACT_PRODUCT_LABEL_RELATIONS,
-            $productTransfer3->getFkProductAbstract()
+            $productTransfer3->getFkProductAbstract(),
         );
         $this->tester->assertTouchActive(
             ProductConfig::RESOURCE_TYPE_PRODUCT_ABSTRACT,
-            $productTransfer1->getFkProductAbstract()
+            $productTransfer1->getFkProductAbstract(),
         );
     }
 
@@ -685,14 +685,14 @@ class ProductLabelFacadeTest extends Unit
         $productLabelTransfer1 = $this->tester->haveProductLabel();
         $this->tester->haveProductLabelToAbstractProductRelation(
             $productLabelTransfer1->getIdProductLabel(),
-            $productTransfer1->getFkProductAbstract()
+            $productTransfer1->getFkProductAbstract(),
         );
 
         $productTransfer2 = $this->tester->haveProduct();
         $productLabelTransfer2 = $this->tester->haveProductLabel();
         $this->tester->haveProductLabelToAbstractProductRelation(
             $productLabelTransfer2->getIdProductLabel(),
-            $productTransfer2->getFkProductAbstract()
+            $productTransfer2->getFkProductAbstract(),
         );
 
         $productAbstractIds = [
@@ -718,7 +718,7 @@ class ProductLabelFacadeTest extends Unit
         $productLabelTransfer = $this->tester->haveProductLabel();
         $this->tester->haveProductLabelToAbstractProductRelation(
             $productLabelTransfer->getIdProductLabel(),
-            $productTransfer->getFkProductAbstract()
+            $productTransfer->getFkProductAbstract(),
         );
 
         $productAbstractIds = [
@@ -743,14 +743,14 @@ class ProductLabelFacadeTest extends Unit
         $productLabelTransfer1 = $this->tester->haveProductLabel();
         $this->tester->haveProductLabelToAbstractProductRelation(
             $productLabelTransfer1->getIdProductLabel(),
-            $productTransfer1->getFkProductAbstract()
+            $productTransfer1->getFkProductAbstract(),
         );
 
         $productTransfer2 = $this->tester->haveProduct();
         $productLabelTransfer2 = $this->tester->haveProductLabel();
         $this->tester->haveProductLabelToAbstractProductRelation(
             $productLabelTransfer2->getIdProductLabel(),
-            $productTransfer2->getFkProductAbstract()
+            $productTransfer2->getFkProductAbstract(),
         );
 
         $filterTransfer = (new FilterTransfer())

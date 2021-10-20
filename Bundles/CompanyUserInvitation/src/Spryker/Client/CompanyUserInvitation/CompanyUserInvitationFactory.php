@@ -19,7 +19,7 @@ class CompanyUserInvitationFactory extends AbstractFactory
     public function createZedCompanyUserInvitationStub(): CompanyUserInvitationStubInterface
     {
         return new CompanyUserInvitationStub(
-            $this->getZedRequestClient()
+            $this->getZedRequestClient(),
         );
     }
 

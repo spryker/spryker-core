@@ -31,14 +31,14 @@ class MerchantSalesOrderEntityManager extends AbstractEntityManager implements M
 
         $merchantSalesOrderEntity = $merchantSalesOrderMapper->mapMerchantOrderTransferToMerchantSalesOrderEntity(
             $merchantOrderTransfer,
-            new SpyMerchantSalesOrder()
+            new SpyMerchantSalesOrder(),
         );
 
         $merchantSalesOrderEntity->save();
 
         return $merchantSalesOrderMapper->mapMerchantSalesOrderEntityToMerchantOrderTransfer(
             $merchantSalesOrderEntity,
-            $merchantOrderTransfer
+            $merchantOrderTransfer,
         );
     }
 
@@ -54,14 +54,14 @@ class MerchantSalesOrderEntityManager extends AbstractEntityManager implements M
         $merchantSalesOrderItemEntity = $merchantSalesOrderMapper
             ->mapMerchantOrderItemTransferToMerchantSalesOrderItemEntity(
                 $merchantOrderItemTransfer,
-                new SpyMerchantSalesOrderItem()
+                new SpyMerchantSalesOrderItem(),
             );
 
         $merchantSalesOrderItemEntity->save();
 
         return $merchantSalesOrderMapper->mapMerchantSalesOrderItemEntityToMerchantOrderItemTransfer(
             $merchantSalesOrderItemEntity,
-            $merchantOrderItemTransfer
+            $merchantOrderItemTransfer,
         );
     }
 
@@ -78,14 +78,14 @@ class MerchantSalesOrderEntityManager extends AbstractEntityManager implements M
         $merchantSalesOrderTotalsEntity = $merchantSalesOrderMapper->mapTotalsTransferToMerchantSalesOrderTotalsEntity(
             $idMerchantOrder,
             $totalsTransfer,
-            new SpyMerchantSalesOrderTotals()
+            new SpyMerchantSalesOrderTotals(),
         );
 
         $merchantSalesOrderTotalsEntity->save();
 
         return $merchantSalesOrderMapper->mapMerchantSalesOrderTotalsEntityToTotalsTransfer(
             $merchantSalesOrderTotalsEntity,
-            $totalsTransfer
+            $totalsTransfer,
         );
     }
 
@@ -108,14 +108,14 @@ class MerchantSalesOrderEntityManager extends AbstractEntityManager implements M
 
         $merchantSalesOrderItemEntity = $merchantSalesOrderMapper->mapMerchantOrderItemTransferToMerchantSalesOrderItemEntity(
             $merchantOrderItemTransfer,
-            $merchantSalesOrderItemEntity
+            $merchantSalesOrderItemEntity,
         );
 
         $merchantSalesOrderItemEntity->save();
 
         return $merchantSalesOrderMapper->mapMerchantSalesOrderItemEntityToMerchantOrderItemTransfer(
             $merchantSalesOrderItemEntity,
-            $merchantOrderItemTransfer
+            $merchantOrderItemTransfer,
         );
     }
 }

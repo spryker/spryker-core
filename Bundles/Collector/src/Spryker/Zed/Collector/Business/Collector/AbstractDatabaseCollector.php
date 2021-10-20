@@ -80,7 +80,7 @@ abstract class AbstractDatabaseCollector extends AbstractCollector implements Da
                 $locale,
                 $touchUpdater,
                 $batchResult,
-                $storeWriter
+                $storeWriter,
             );
         }
 
@@ -158,7 +158,7 @@ abstract class AbstractDatabaseCollector extends AbstractCollector implements Da
             $touchUpdaterSet,
             $locale->getIdLocale(),
             $this->getCurrentStore()->getIdStore(),
-            $this->touchQueryContainer->getConnection()
+            $this->touchQueryContainer->getConnection(),
         );
         $storeWriter->write($batch);
 
@@ -240,7 +240,7 @@ abstract class AbstractDatabaseCollector extends AbstractCollector implements Da
                 $keysToDelete = $this->getKeysToDeleteAndUpdateTouchUpdaterSet(
                     $entityCollection,
                     $touchUpdater->getTouchKeyColumnName(),
-                    $touchUpdaterSet
+                    $touchUpdaterSet,
                 );
 
                 if ($keysToDelete) {
@@ -277,7 +277,7 @@ abstract class AbstractDatabaseCollector extends AbstractCollector implements Da
     {
         $touchUpdater->deleteTouchKeyEntities(
             array_keys($keysToDelete),
-            $this->locale->getIdLocale()
+            $this->locale->getIdLocale(),
         );
     }
 

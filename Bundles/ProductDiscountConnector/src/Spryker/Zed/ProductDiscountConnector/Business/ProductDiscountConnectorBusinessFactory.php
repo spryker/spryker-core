@@ -27,7 +27,7 @@ class ProductDiscountConnectorBusinessFactory extends AbstractBusinessFactory
         return new ProductAttributeDecisionRule(
             $this->getProductFacade(),
             $this->getDiscountFacade(),
-            $this->getLocaleFacade()
+            $this->getLocaleFacade(),
         );
     }
 

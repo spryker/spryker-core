@@ -172,8 +172,8 @@ class Process implements ProcessInterface
         throw new StateMachineException(
             sprintf(
                 'State "%s" not found in any of state machine processes. Is state defined in xml definition file?',
-                $stateName
-            )
+                $stateName,
+            ),
         );
     }
 
@@ -322,7 +322,7 @@ class Process implements ProcessInterface
             $eventsBySource = $this->groupTransitionsBySourceName(
                 $transitions,
                 $eventsBySource,
-                $event
+                $event,
             );
         }
 

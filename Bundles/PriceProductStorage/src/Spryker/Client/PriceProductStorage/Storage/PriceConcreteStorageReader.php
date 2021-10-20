@@ -137,7 +137,7 @@ class PriceConcreteStorageReader implements PriceConcreteStorageReaderInterface
         foreach ($this->priceProductExtractorPlugins as $extractorPlugin) {
             $priceProductTransfers = array_merge(
                 $priceProductTransfers,
-                $extractorPlugin->extractProductPricesForProductConcrete($idProductConcrete, $priceProductTransfers)
+                $extractorPlugin->extractProductPricesForProductConcrete($idProductConcrete, $priceProductTransfers),
             );
         }
 

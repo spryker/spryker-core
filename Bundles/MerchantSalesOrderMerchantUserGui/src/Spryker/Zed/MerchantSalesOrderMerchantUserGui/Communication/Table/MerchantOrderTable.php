@@ -220,11 +220,11 @@ class MerchantOrderTable extends AbstractTable
             ])
             ->withColumn(
                 sprintf('GROUP_CONCAT(DISTINCT %s)', SpyStateMachineItemStateTableMap::COL_NAME),
-                static::COL_ORDER_STATE
+                static::COL_ORDER_STATE,
             )
             ->withColumn(
                 sprintf('COUNT(%s)', SpyMerchantSalesOrderItemTableMap::COL_ID_MERCHANT_SALES_ORDER_ITEM),
-                static::COL_ITEM_COUNT
+                static::COL_ITEM_COUNT,
             );
 
         return $this->merchantSalesOrderQuery;
@@ -280,9 +280,9 @@ class MerchantOrderTable extends AbstractTable
         $buttons[] = $this->generateViewButton(
             Url::generate(
                 static::ROUTE_REDIRECT,
-                [static::REQUEST_PARAM_ID_MERCHANT_SALES_ORDER => $item[SpyMerchantSalesOrderTableMap::COL_ID_MERCHANT_SALES_ORDER]]
+                [static::REQUEST_PARAM_ID_MERCHANT_SALES_ORDER => $item[SpyMerchantSalesOrderTableMap::COL_ID_MERCHANT_SALES_ORDER]],
             ),
-            'View'
+            'View',
         );
 
         return implode(' ', $buttons);
@@ -303,7 +303,7 @@ class MerchantOrderTable extends AbstractTable
             '%s%s %s',
             $salutation ? $salutation . ' ' : '',
             $item[SpySalesOrderTableMap::COL_FIRST_NAME],
-            $item[SpySalesOrderTableMap::COL_LAST_NAME]
+            $item[SpySalesOrderTableMap::COL_LAST_NAME],
         );
 
         $fullCustomerName = $this->sanitizeService->escapeHtml($fullCustomerName);
@@ -313,7 +313,7 @@ class MerchantOrderTable extends AbstractTable
         }
 
         $customerTransfer = $this->customerFacade->findByReference(
-            $item[SpySalesOrderTableMap::COL_CUSTOMER_REFERENCE]
+            $item[SpySalesOrderTableMap::COL_CUSTOMER_REFERENCE],
         );
 
         if (!$customerTransfer) {

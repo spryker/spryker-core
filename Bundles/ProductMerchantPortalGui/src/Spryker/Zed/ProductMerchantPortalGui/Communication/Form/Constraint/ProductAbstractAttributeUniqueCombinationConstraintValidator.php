@@ -71,11 +71,11 @@ class ProductAbstractAttributeUniqueCombinationConstraintValidator extends Const
 
             if ($productConcreteTransfer) {
                 $attributesGroupedByLocaleName = $this->getAttributesGroupedByLocaleName(
-                    $productConcreteTransfer->getLocalizedAttributes()
+                    $productConcreteTransfer->getLocalizedAttributes(),
                 );
                 $existingAttributes = $this->appendAttributesWithDefaultAttributes(
                     $attributesGroupedByLocaleName,
-                    $productConcreteTransfer->getAttributes()
+                    $productConcreteTransfer->getAttributes(),
                 );
             }
         }

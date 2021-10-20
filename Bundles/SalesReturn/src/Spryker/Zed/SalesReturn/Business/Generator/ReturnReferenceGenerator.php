@@ -59,7 +59,7 @@ class ReturnReferenceGenerator implements ReturnReferenceGeneratorInterface
         return sprintf(
             $this->salesReturnConfig->getReturnReferenceFormat(),
             $returnTransfer->getCustomerReference(),
-            $this->salesReturnRepository->countCustomerReturns($returnTransfer->getCustomerReference()) + 1
+            $this->salesReturnRepository->countCustomerReturns($returnTransfer->getCustomerReference()) + 1,
         );
     }
 
@@ -73,7 +73,7 @@ class ReturnReferenceGenerator implements ReturnReferenceGeneratorInterface
         return sprintf(
             $this->salesReturnConfig->getGuestReturnReferenceFormat(),
             $returnTransfer->getStore(),
-            $this->salesReturnRepository->countCustomerReturns() + 1
+            $this->salesReturnRepository->countCustomerReturns() + 1,
         );
     }
 }

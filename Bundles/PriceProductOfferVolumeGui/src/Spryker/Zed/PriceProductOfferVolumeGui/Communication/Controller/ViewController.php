@@ -48,7 +48,7 @@ class ViewController extends AbstractController
     public function indexAction(Request $request): array
     {
         $idProductOffer = $this->castId($request->get(
-            static::PARAM_ID_PRODUCT_OFFER
+            static::PARAM_ID_PRODUCT_OFFER,
         ));
         $storeName = $request->get(static::PARAM_STORE_NAME);
         $currencyCode = $request->get(static::PARAM_CURRENCY_CODE);
@@ -72,7 +72,7 @@ class ViewController extends AbstractController
             $response,
             $this->getFactory()
                 ->createPriceProductOfferVolumeReader()
-                ->getVolumePricesData($productOfferTransfer, $storeName, $currencyCode, $priceTypeName)
+                ->getVolumePricesData($productOfferTransfer, $storeName, $currencyCode, $priceTypeName),
         );
 
         return $this->viewResponse($response);

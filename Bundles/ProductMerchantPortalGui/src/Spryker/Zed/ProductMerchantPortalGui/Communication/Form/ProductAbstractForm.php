@@ -200,7 +200,7 @@ class ProductAbstractForm extends AbstractType
                     'placeholder' => static::PLACEHOLDER_STORES,
                 ],
                 'property_path' => 'storeRelation.idStores',
-            ]
+            ],
         );
 
         return $this;
@@ -277,7 +277,7 @@ class ProductAbstractForm extends AbstractType
                 'attr' => [
                     'placeholder' => static::PLACEHOLDER_CATEGORIES,
                 ],
-            ]
+            ],
         );
 
         return $this;

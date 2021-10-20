@@ -43,7 +43,7 @@ class ApiControllerEventDispatcherPluginTest extends Unit
         $eventDispatcher = $apiControllerEventDispatcherPlugin->extend($eventDispatcher, new Container());
 
         $event = $this->tester->getControllerEvent(
-            $this->tester->getNonApiRequest()
+            $this->tester->getNonApiRequest(),
         );
         $originalController = $event->getController();
 
@@ -62,7 +62,7 @@ class ApiControllerEventDispatcherPluginTest extends Unit
         $eventDispatcher = $apiControllerEventDispatcherPlugin->extend($eventDispatcher, new Container());
 
         $event = $this->tester->getControllerEvent(
-            $this->tester->getApiRequest()
+            $this->tester->getApiRequest(),
         );
         $originalController = $event->getController();
 
@@ -81,7 +81,7 @@ class ApiControllerEventDispatcherPluginTest extends Unit
         $eventDispatcher = $apiControllerEventDispatcherPlugin->extend($eventDispatcher, new Container());
 
         $event = $this->tester->getControllerEvent(
-            $this->tester->getApiRequest()
+            $this->tester->getApiRequest(),
         );
 
         $eventDispatcher->dispatch($event, KernelEvents::CONTROLLER);

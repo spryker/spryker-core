@@ -94,7 +94,7 @@ class VoucherForm extends AbstractType
             TextType::class,
             [
                 'required' => false,
-            ]
+            ],
         );
 
         return $this;
@@ -115,7 +115,7 @@ class VoucherForm extends AbstractType
                 'placeholder' => 'No additional random characters',
                 'required' => false,
                 'choices' => array_flip($this->createCodeLengthRangeList()),
-            ]
+            ],
         );
 
         return $this;
@@ -133,7 +133,7 @@ class VoucherForm extends AbstractType
             TextType::class,
             [
                 'label' => 'Max number of uses (0 = Infinite usage)',
-            ]
+            ],
         );
 
         return $this;

@@ -125,7 +125,7 @@ class ProductAbstractAttributeUniqueCombinationConstraintValidatorTest extends C
         $constraint = new ProductAbstractAttributeUniqueCombinationConstraint(
             $this->productAttributeFacade,
             $this->productFacade,
-            $this->translatorFacade
+            $this->translatorFacade,
         );
 
         $this->parentForm->expects($this->once())

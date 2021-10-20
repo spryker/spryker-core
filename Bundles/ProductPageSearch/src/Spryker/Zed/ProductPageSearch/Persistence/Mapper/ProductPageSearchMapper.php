@@ -26,7 +26,7 @@ class ProductPageSearchMapper implements ProductPageSearchMapperInterface
     ): ProductConcretePageSearchTransfer {
         return $productConcretePageSearchTransfer->fromArray(
             $productConcretePageSearchEntity->toArray(),
-            true
+            true,
         );
     }
 
@@ -41,7 +41,7 @@ class ProductPageSearchMapper implements ProductPageSearchMapperInterface
         SpyProductConcretePageSearch $productConcretePageSearchEntity
     ): SpyProductConcretePageSearch {
         $productConcretePageSearchEntity->fromArray(
-            $productConcretePageSearchTransfer->toArray()
+            $productConcretePageSearchTransfer->toArray(),
         );
 
         return $productConcretePageSearchEntity;
@@ -60,7 +60,7 @@ class ProductPageSearchMapper implements ProductPageSearchMapperInterface
         foreach ($productConcretePageSearchEntityCollection as $productConcretePageSearchEntity) {
             $synchronizationDataTransfers[] = $this->mapProductConcretePageSearchEntityToSynchronizationDataTransfer(
                 $productConcretePageSearchEntity,
-                new SynchronizationDataTransfer()
+                new SynchronizationDataTransfer(),
             );
         }
 

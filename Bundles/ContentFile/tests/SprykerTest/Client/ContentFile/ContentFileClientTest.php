@@ -80,8 +80,8 @@ class ContentFileClientTest extends Unit
         // Assert
         $this->expectExceptionObject(
             new InvalidFileListTermException(
-                sprintf(static::EXCEPTION_ERROR_MESSAGE, 'Banner')
-            )
+                sprintf(static::EXCEPTION_ERROR_MESSAGE, 'Banner'),
+            ),
         );
 
         // Act

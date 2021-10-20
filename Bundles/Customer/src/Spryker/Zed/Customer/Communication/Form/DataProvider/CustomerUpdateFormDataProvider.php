@@ -75,7 +75,7 @@ class CustomerUpdateFormDataProvider extends CustomerFormDataProvider
                     $address->getLastName(),
                     $address->getAddress1(),
                     $address->getZipCode(),
-                    $address->getCity()
+                    $address->getCity(),
                 );
             }
         }

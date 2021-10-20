@@ -88,7 +88,7 @@ class ProductConcreteSuperAttributeForm extends AbstractType
                 'attr' => [
                     'class' => 'super-attribute-dropdown-input',
                 ],
-            ]
+            ],
         );
 
         return $this;
@@ -116,7 +116,7 @@ class ProductConcreteSuperAttributeForm extends AbstractType
                 'attr' => [
                     'class' => 'super-attribute-checkbox-input',
                 ],
-            ]
+            ],
         );
 
         $builder->add(
@@ -127,7 +127,7 @@ class ProductConcreteSuperAttributeForm extends AbstractType
                 'attr' => [
                     'class' => 'hidden super-attribute-text-input',
                 ],
-            ]
+            ],
         );
 
         return $this;

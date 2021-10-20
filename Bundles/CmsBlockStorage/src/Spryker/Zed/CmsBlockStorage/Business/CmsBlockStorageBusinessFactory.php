@@ -30,7 +30,7 @@ class CmsBlockStorageBusinessFactory extends AbstractBusinessFactory
             $this->getUtilSanitize(),
             $this->getContentWidgetDataExpanderPlugins(),
             $this->getStoreFacade(),
-            $this->getConfig()->isSendingToQueue()
+            $this->getConfig()->isSendingToQueue(),
         );
     }
 

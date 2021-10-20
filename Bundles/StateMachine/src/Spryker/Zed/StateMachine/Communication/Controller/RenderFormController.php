@@ -105,7 +105,7 @@ class RenderFormController extends AbstractController
         $eventItemTriggerDataProvider = $this->getFactory()->createEventItemTriggerFormDataProvider();
         $form = $this->getFactory()
             ->createEventItemTriggerForm(
-                $eventItemTriggerDataProvider->getOptions($identifier, $redirect, $eventName, $stateMachineName, $processName)
+                $eventItemTriggerDataProvider->getOptions($identifier, $redirect, $eventName, $stateMachineName, $processName),
             );
 
         return $this->viewResponse([

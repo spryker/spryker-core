@@ -56,7 +56,7 @@ class ProductCategoryReader implements ProductCategoryReaderInterface
         return sprintf(
             '%s (%s)',
             $productAbstractTransfer->getLocalizedAttributes()[0]->getName(),
-            $productAbstractTransfer->getSku()
+            $productAbstractTransfer->getSku(),
         );
     }
 }

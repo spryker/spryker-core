@@ -181,7 +181,7 @@ class SlotController extends AbstractController
             ->getTables()['availableProductConcreteTable'];
 
         return $this->jsonResponse(
-            $availableProductConcreteTable->fetchData()
+            $availableProductConcreteTable->fetchData(),
         );
     }
 
@@ -195,7 +195,7 @@ class SlotController extends AbstractController
             ->getTables()['assignedProductConcreteTable'];
 
         return $this->jsonResponse(
-            $assignedProductConcreteTable->fetchData()
+            $assignedProductConcreteTable->fetchData(),
         );
     }
 
@@ -207,7 +207,7 @@ class SlotController extends AbstractController
     protected function executeCreateAction(Request $request)
     {
         $idConfigurableBundleTemplate = $this->castId(
-            $request->get(static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE)
+            $request->get(static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE),
         );
 
         $formDataProvider = $this->getFactory()->createConfigurableBundleTemplateSlotCreateFormDataProvider();
@@ -215,7 +215,7 @@ class SlotController extends AbstractController
         $form = $this->getFactory()
             ->getConfigurableBundleTemplateSlotCreateForm(
                 $formDataProvider->getData($idConfigurableBundleTemplate),
-                $formDataProvider->getOptions()
+                $formDataProvider->getOptions(),
             )->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -256,7 +256,7 @@ class SlotController extends AbstractController
     protected function executeEditAction(Request $request)
     {
         $idConfigurableBundleTemplateSlot = $this->castId(
-            $request->get(static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT)
+            $request->get(static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT),
         );
 
         $formDataProvider = $this->getFactory()->createConfigurableBundleTemplateSlotEditFormDataProvider();
@@ -273,7 +273,7 @@ class SlotController extends AbstractController
         $form = $this->getFactory()
             ->getConfigurableBundleTemplateSlotEditForm(
                 $configurableBundleTemplateSlotEditFormTransfer,
-                $formDataProvider->getOptions()
+                $formDataProvider->getOptions(),
             )->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -302,11 +302,11 @@ class SlotController extends AbstractController
 
         $request->query->set(
             static::URL_PARAM_ID_PRODUCT_LIST,
-            (string)$configurableBundleTemplateSlotEditFormTransfer->getConfigurableBundleTemplateSlot()->getProductList()->getIdProductList()
+            (string)$configurableBundleTemplateSlotEditFormTransfer->getConfigurableBundleTemplateSlot()->getProductList()->getIdProductList(),
         );
 
         $configurableBundleTemplateTransfer = $this->findConfigurableBundleTemplateById(
-            $configurableBundleTemplateSlotEditFormTransfer->getConfigurableBundleTemplateSlot()->getFkConfigurableBundleTemplate()
+            $configurableBundleTemplateSlotEditFormTransfer->getConfigurableBundleTemplateSlot()->getFkConfigurableBundleTemplate(),
         );
 
         $viewData = [
@@ -329,7 +329,7 @@ class SlotController extends AbstractController
     protected function executeDeleteAction(Request $request): RedirectResponse
     {
         $idConfigurableBundleTemplateSlot = $this->castId(
-            $request->query->get(static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT)
+            $request->query->get(static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT),
         );
 
         $configurableBundleTemplateSlotFilterTransfer = $this->createConfigurableBundleTemplateSlotFilter($idConfigurableBundleTemplateSlot);

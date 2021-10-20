@@ -28,7 +28,7 @@ class SalesPaymentBusinessFactory extends AbstractBusinessFactory
     {
         return new SalesOrderExpander(
             $this->getRepository(),
-            $this->getOrderPaymentExpanderPlugins()
+            $this->getOrderPaymentExpanderPlugins(),
         );
     }
 

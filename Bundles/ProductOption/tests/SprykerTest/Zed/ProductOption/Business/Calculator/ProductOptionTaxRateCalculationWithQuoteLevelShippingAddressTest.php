@@ -88,7 +88,7 @@ class ProductOptionTaxRateCalculationWithQuoteLevelShippingAddressTest extends U
                         ['netAmount' => 20000],
                     ],
                 ],
-            ]
+            ],
         );
     }
 
@@ -107,13 +107,13 @@ class ProductOptionTaxRateCalculationWithQuoteLevelShippingAddressTest extends U
         // Arrange
         $this->tester->setDependency(
             ProductOptionDependencyProvider::FACADE_TAX,
-            $this->createProductOptionToTaxFacadeBridgeMock('MOON', 66.00)
+            $this->createProductOptionToTaxFacadeBridgeMock('MOON', 66.00),
         );
 
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {
                 $productOptionTransfer->setIdProductOptionValue(
-                    $this->getProductOptionValueIdBySku($productOptionTransfer->getSku())
+                    $this->getProductOptionValueIdBySku($productOptionTransfer->getSku()),
                 );
             }
         }
@@ -132,8 +132,8 @@ class ProductOptionTaxRateCalculationWithQuoteLevelShippingAddressTest extends U
                         $expectedTaxRate,
                         $productOptionTransfer->getTaxRate(),
                         $iterator,
-                        $productOptionTransfer->getSku()
-                    )
+                        $productOptionTransfer->getSku(),
+                    ),
                 );
             }
         }
@@ -184,7 +184,7 @@ class ProductOptionTaxRateCalculationWithQuoteLevelShippingAddressTest extends U
     {
         $quoteTransfer = (new QuoteBuilder())
             ->withShippingAddress(
-                (new AddressBuilder(['iso2Code' => 'FR']))
+                (new AddressBuilder(['iso2Code' => 'FR'])),
             )
             ->build();
 
@@ -204,7 +204,7 @@ class ProductOptionTaxRateCalculationWithQuoteLevelShippingAddressTest extends U
     {
         $quoteTransfer = (new QuoteBuilder())
             ->withShippingAddress(
-                (new AddressBuilder(['iso2Code' => 'MOON']))
+                (new AddressBuilder(['iso2Code' => 'MOON'])),
             )
             ->build();
 
@@ -224,7 +224,7 @@ class ProductOptionTaxRateCalculationWithQuoteLevelShippingAddressTest extends U
     {
         $quoteTransfer = (new QuoteBuilder())
             ->withShippingAddress(
-                (new AddressBuilder(['iso2Code' => 'DE']))
+                (new AddressBuilder(['iso2Code' => 'DE'])),
             )
             ->build();
 
@@ -245,7 +245,7 @@ class ProductOptionTaxRateCalculationWithQuoteLevelShippingAddressTest extends U
     {
         $quoteTransfer = (new QuoteBuilder())
             ->withShippingAddress(
-                (new AddressBuilder(['iso2Code' => 'DE']))
+                (new AddressBuilder(['iso2Code' => 'DE'])),
             )
             ->build();
 

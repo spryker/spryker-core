@@ -121,7 +121,7 @@ class AbstractProductPricesReader implements AbstractProductPricesReaderInterfac
             ->findProductAbstractStorageDataByMapping(
                 static::PRODUCT_ABSTRACT_MAPPING_TYPE,
                 $sku,
-                $restRequest->getMetadata()->getLocale()
+                $restRequest->getMetadata()->getLocale(),
             );
         if (!$abstractProductData) {
             return null;
@@ -149,14 +149,14 @@ class AbstractProductPricesReader implements AbstractProductPricesReaderInterfac
         $restResource = $this->restResourceBuilder->createRestResource(
             ProductPricesRestApiConfig::RESOURCE_ABSTRACT_PRODUCT_PRICES,
             $sku,
-            $restProductPricesAttributesTransfer
+            $restProductPricesAttributesTransfer,
         );
 
         $restResourceSelfLink = sprintf(
             static::SELF_LINK_TEMPLATE,
             ProductsRestApiConfig::RESOURCE_ABSTRACT_PRODUCTS,
             $sku,
-            ProductPricesRestApiConfig::RESOURCE_ABSTRACT_PRODUCT_PRICES
+            ProductPricesRestApiConfig::RESOURCE_ABSTRACT_PRODUCT_PRICES,
         );
         $restResource->addLink(RestLinkInterface::LINK_SELF, $restResourceSelfLink);
 

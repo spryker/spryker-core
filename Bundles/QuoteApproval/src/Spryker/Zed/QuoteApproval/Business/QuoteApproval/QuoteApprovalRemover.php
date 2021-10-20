@@ -124,7 +124,7 @@ class QuoteApprovalRemover implements QuoteApprovalRemoverInterface
 
         $this->sharedCartFacade->deleteShareForQuote($quoteTransfer);
         $this->quoteApprovalEntityManager->deleteQuoteApprovalById(
-            $quoteApprovalRequestTransfer->getIdQuoteApproval()
+            $quoteApprovalRequestTransfer->getIdQuoteApproval(),
         );
     }
 
@@ -136,7 +136,7 @@ class QuoteApprovalRemover implements QuoteApprovalRemoverInterface
     protected function expandQuoteWithQuoteApprovals(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
         return $quoteTransfer->setQuoteApprovals(
-            new ArrayObject($this->quoteApprovalRepository->getQuoteApprovalsByIdQuote($quoteTransfer->getIdQuote()))
+            new ArrayObject($this->quoteApprovalRepository->getQuoteApprovalsByIdQuote($quoteTransfer->getIdQuote())),
         );
     }
 

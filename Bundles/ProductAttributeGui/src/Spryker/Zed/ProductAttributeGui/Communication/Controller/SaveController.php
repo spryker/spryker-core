@@ -64,7 +64,7 @@ class SaveController extends AbstractController
         }
 
         $idProductAbstract = $this->castId($request->get(
-            static::PARAM_ID_PRODUCT_ABSTRACT
+            static::PARAM_ID_PRODUCT_ABSTRACT,
         ));
 
         $json = $request->request->get(static::PARAM_JSON);
@@ -89,7 +89,7 @@ class SaveController extends AbstractController
         }
 
         $idProduct = $this->castId($request->get(
-            static::PARAM_ID_PRODUCT
+            static::PARAM_ID_PRODUCT,
         ));
 
         $json = $request->request->get(static::PARAM_JSON);

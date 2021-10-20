@@ -128,7 +128,7 @@ class ZedNavigationBusinessTester extends Unit
             if ($this->hasNestedNavigationItems($navigationItem)) {
                 $navigationItemCollectionTransfer = $this->mapNavigationItemsToNavigationItemCollectionTransfer(
                     $navigationItem[MenuFormatter::PAGES],
-                    $navigationItemCollectionTransfer
+                    $navigationItemCollectionTransfer,
                 );
 
                 continue;
@@ -143,7 +143,7 @@ class ZedNavigationBusinessTester extends Unit
             if ($navigationItemName !== '') {
                 $navigationItemCollectionTransfer->addNavigationItem(
                     $navigationItemName,
-                    $navigationItemTransfer
+                    $navigationItemTransfer,
                 );
             }
         }
@@ -177,7 +177,7 @@ class ZedNavigationBusinessTester extends Unit
                 '%s:%s:%s',
                 $navigationItem[MenuFormatter::BUNDLE],
                 $navigationItem[MenuFormatter::CONTROLLER],
-                $navigationItem[MenuFormatter::ACTION]
+                $navigationItem[MenuFormatter::ACTION],
             );
         }
 

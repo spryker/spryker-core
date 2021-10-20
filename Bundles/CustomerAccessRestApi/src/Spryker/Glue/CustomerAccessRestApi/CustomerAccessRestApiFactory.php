@@ -30,7 +30,7 @@ class CustomerAccessRestApiFactory extends AbstractFactory
     {
         return new CustomerAccessRequestFormatter(
             $this->getCustomerAccessStorageClient(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -42,7 +42,7 @@ class CustomerAccessRestApiFactory extends AbstractFactory
         return new CustomerAccessReader(
             $this->getConfig(),
             $this->getCustomerAccessStorageClient(),
-            $this->createCustomerAccessRestResponseBuilder()
+            $this->createCustomerAccessRestResponseBuilder(),
         );
     }
 
@@ -61,7 +61,7 @@ class CustomerAccessRestApiFactory extends AbstractFactory
     {
         return new CustomerAccessRestResponseBuilder(
             $this->getResourceBuilder(),
-            $this->createCustomerAccessMapper()
+            $this->createCustomerAccessMapper(),
         );
     }
 

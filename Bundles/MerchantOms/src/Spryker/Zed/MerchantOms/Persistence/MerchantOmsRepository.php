@@ -39,7 +39,7 @@ class MerchantOmsRepository extends AbstractRepository implements MerchantOmsRep
             ->find();
 
         return $this->getFactory()->createMerchantOmsMapper()->mapMerchantSalesOrderItemEntityCollectionToStateMachineItemTransfers(
-            $merchantSalesOrderItemEntities
+            $merchantSalesOrderItemEntities,
         );
     }
 
@@ -66,7 +66,7 @@ class MerchantOmsRepository extends AbstractRepository implements MerchantOmsRep
             ->createStateMachineItemMapper()
             ->mapStateMachineItemEntityToStateMachineItemTransfer(
                 $stateMachineItemState,
-                (new StateMachineItemTransfer())
+                (new StateMachineItemTransfer()),
             );
     }
 
@@ -93,7 +93,7 @@ class MerchantOmsRepository extends AbstractRepository implements MerchantOmsRep
                 ->createStateMachineItemMapper()
                 ->mapStateMachineItemStateHistoryEntityToStateMachineItemTransfer(
                     $stateMachineItemStateHistoryEntity,
-                    new StateMachineItemTransfer()
+                    new StateMachineItemTransfer(),
                 );
 
             $stateMachineItemTransfers[] = $stateMachineItemTransfer;

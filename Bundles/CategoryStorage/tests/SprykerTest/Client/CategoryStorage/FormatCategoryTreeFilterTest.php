@@ -101,17 +101,17 @@ class FormatCategoryTreeFilterTest extends Unit
         $this->assertSame(
             static::FIRST_CATEGORY_NODE_ID,
             $categoryNodeSearchResultTransfer->getNodeId(),
-            'The `nodeId` should be mapped correctly.'
+            'The `nodeId` should be mapped correctly.',
         );
         $this->assertSame(
             static::FIRST_CATEGORY_DOC_COUNT,
             $categoryNodeSearchResultTransfer->getDocCount(),
-            '`docCount` should be the same, taken from original buckets.'
+            '`docCount` should be the same, taken from original buckets.',
         );
         $this->assertSame(
             static::SECOND_CATEGORY_DOC_COUNT,
             $categoryNodeSearchResultTransfer->getChildren()->offsetGet(0)->getDocCount(),
-            '`docCount` should be the added for children objects too.'
+            '`docCount` should be the added for children objects too.',
         );
     }
 
@@ -139,7 +139,7 @@ class FormatCategoryTreeFilterTest extends Unit
         $this->assertSame(
             0,
             $categoryNodeSearchResultTransfers->offsetGet(0)->getDocCount(),
-            'Fallback for absent `docCount` should be zero.'
+            'Fallback for absent `docCount` should be zero.',
         );
     }
 
@@ -195,7 +195,7 @@ class FormatCategoryTreeFilterTest extends Unit
         $this->assertSame(
             0,
             $categoryNodeSearchResultTransfers->offsetGet(0)->getDocCount(),
-            'For empty `docCount` buckets - expects fallback zero.'
+            'For empty `docCount` buckets - expects fallback zero.',
         );
     }
 
@@ -229,7 +229,7 @@ class FormatCategoryTreeFilterTest extends Unit
         $this->assertSame(
             0,
             $categoryNodeSearchResultTransfers->offsetGet(0)->getDocCount(),
-            'For invalid keys and values in buckets - expects fallback zero.'
+            'For invalid keys and values in buckets - expects fallback zero.',
         );
     }
 

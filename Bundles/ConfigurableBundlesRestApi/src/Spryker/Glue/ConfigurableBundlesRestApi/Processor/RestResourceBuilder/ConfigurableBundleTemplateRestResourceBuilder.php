@@ -42,7 +42,7 @@ class ConfigurableBundleTemplateRestResourceBuilder implements ConfigurableBundl
         return $this->restResourceBuilder->createRestResource(
             ConfigurableBundlesRestApiConfig::RESOURCE_CONFIGURABLE_BUNDLE_TEMPLATES,
             $configurableBundleTemplateStorageTransfer->getUuid(),
-            $restConfigurableBundleTemplatesAttributesTransfer
+            $restConfigurableBundleTemplatesAttributesTransfer,
         )->setPayload($configurableBundleTemplateStorageTransfer);
     }
 }

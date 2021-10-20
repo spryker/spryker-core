@@ -23,7 +23,7 @@ class ReferencedSegmentConnectorEntityNotFoundException extends Exception
     {
         $message = sprintf(
             static::MESSAGE_TEMPLATE,
-            $entity
+            $entity,
         );
         parent::__construct($message);
     }

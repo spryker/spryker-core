@@ -164,7 +164,7 @@ class PropelConfig extends AbstractBundleConfig
     {
         return array_unique(array_merge(
             $this->getCorePropelSchemaPathPatterns(),
-            $this->getProjectPropelSchemaPathPatterns()
+            $this->getProjectPropelSchemaPathPatterns(),
         ));
     }
 

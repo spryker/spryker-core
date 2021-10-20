@@ -83,7 +83,7 @@ class MerchantCategoryDataImportPluginTest extends Unit
         $this->assertInstanceOf(DataImporterReportTransfer::class, $dataImporterReportTransfer);
         $this->assertTrue(
             SpyMerchantCategoryQuery::create()->find()->count() > 0,
-            'Expected at least one entry in the database table but database table is empty.'
+            'Expected at least one entry in the database table but database table is empty.',
         );
     }
 
@@ -98,7 +98,7 @@ class MerchantCategoryDataImportPluginTest extends Unit
         // Assert
         $this->assertSame(
             MerchantCategoryDataImportConfig::IMPORT_TYPE_MERCHANT_CATEGORY,
-            $merchantCategoryDataImportPlugin->getImportType()
+            $merchantCategoryDataImportPlugin->getImportType(),
         );
     }
 }

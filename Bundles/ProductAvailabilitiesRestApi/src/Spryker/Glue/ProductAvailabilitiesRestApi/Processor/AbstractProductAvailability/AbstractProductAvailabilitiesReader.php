@@ -94,7 +94,7 @@ class AbstractProductAvailabilitiesReader implements AbstractProductAvailabiliti
             ->findProductAbstractStorageDataByMapping(
                 static::PRODUCT_ABSTRACT_MAPPING_TYPE,
                 $productAbstractSku,
-                $restRequest->getMetadata()->getLocale()
+                $restRequest->getMetadata()->getLocale(),
             );
 
         if (!$productAbstractData) {

@@ -209,7 +209,7 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
                 static::class,
                 $property,
                 TransferInterface::class,
-                gettype($value)
+                gettype($value),
             ));
         }
     }
@@ -267,7 +267,7 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
             throw new RequiredTransferPropertyException(sprintf(
                 'Missing required property "%s" for transfer %s.',
                 $property,
-                static::class
+                static::class,
             ));
         }
     }
@@ -287,7 +287,7 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
             throw new RequiredTransferPropertyException(sprintf(
                 'Empty required collection property "%s" for transfer %s.',
                 $property,
-                static::class
+                static::class,
             ));
         }
     }
@@ -343,7 +343,7 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
         }
 
         throw new InvalidArgumentException(
-            sprintf('Missing property "%s" in "%s"', $property, static::class)
+            sprintf('Missing property "%s" in "%s"', $property, static::class),
         );
     }
 
@@ -399,10 +399,10 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
                 sprintf(
                     'Failed to unserialize %s. Updating or clearing your data source may solve this problem: %s',
                     static::class,
-                    $exception->getMessage()
+                    $exception->getMessage(),
                 ),
                 $exception->getCode(),
-                $exception
+                $exception,
             );
         }
     }
@@ -460,7 +460,7 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
     protected function throwNullValueException(string $propertyName): void
     {
         throw new NullValueException(
-            sprintf('Property "%s" of transfer `%s` is null.', $propertyName, static::class)
+            sprintf('Property "%s" of transfer `%s` is null.', $propertyName, static::class),
         );
     }
 }

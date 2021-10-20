@@ -51,15 +51,15 @@ class DiscountAmountAggregator implements CalculatorInterface
             $itemTransfer->setUnitDiscountAmountAggregation(
                 $this->calculateUnitDiscountAmountAggregation(
                     $itemTransfer->getCalculatedDiscounts(),
-                    $itemTransfer->getUnitPrice()
-                )
+                    $itemTransfer->getUnitPrice(),
+                ),
             );
 
             $itemTransfer->setSumDiscountAmountAggregation(
                 $this->calculateSumDiscountAmountAggregation(
                     $itemTransfer->getCalculatedDiscounts(),
-                    $itemTransfer->getSumPrice()
-                )
+                    $itemTransfer->getSumPrice(),
+                ),
             );
         }
     }
@@ -75,13 +75,13 @@ class DiscountAmountAggregator implements CalculatorInterface
             $expenseTransfer->setUnitDiscountAmountAggregation(
                 $this->calculateUnitDiscountAmountAggregation(
                     $expenseTransfer->getCalculatedDiscounts(),
-                    $expenseTransfer->getUnitPrice()
-                )
+                    $expenseTransfer->getUnitPrice(),
+                ),
             );
 
             $sumDiscountAmountAggregation = $this->calculateSumDiscountAmountAggregation(
                 $expenseTransfer->getCalculatedDiscounts(),
-                $expenseTransfer->getSumPrice()
+                $expenseTransfer->getSumPrice(),
             );
             $expenseTransfer->setSumDiscountAmountAggregation($sumDiscountAmountAggregation);
         }
@@ -98,15 +98,15 @@ class DiscountAmountAggregator implements CalculatorInterface
             $productOptionTransfer->setUnitDiscountAmountAggregation(
                 $this->calculateUnitDiscountAmountAggregation(
                     $productOptionTransfer->getCalculatedDiscounts(),
-                    $productOptionTransfer->getUnitPrice()
-                )
+                    $productOptionTransfer->getUnitPrice(),
+                ),
             );
 
             $productOptionTransfer->setSumDiscountAmountAggregation(
                 $this->calculateSumDiscountAmountAggregation(
                     $productOptionTransfer->getCalculatedDiscounts(),
-                    $productOptionTransfer->getSumPrice()
-                )
+                    $productOptionTransfer->getSumPrice(),
+                ),
             );
         }
     }
@@ -122,7 +122,7 @@ class DiscountAmountAggregator implements CalculatorInterface
     {
         if (!$calculatedDiscountTransfer->getSumAmount()) {
             $calculatedDiscountTransfer->setSumAmount(
-                $calculatedDiscountTransfer->getUnitAmount() * $calculatedDiscountTransfer->getQuantity()
+                $calculatedDiscountTransfer->getUnitAmount() * $calculatedDiscountTransfer->getQuantity(),
             );
         }
     }
@@ -217,7 +217,7 @@ class DiscountAmountAggregator implements CalculatorInterface
         foreach ($calculableObjectTransfer->getCartRuleDiscounts() as $discountTransfer) {
             if (isset($this->cartRuleDiscountTotals[$discountTransfer->getIdDiscount()])) {
                 $discountTransfer->setAmount(
-                    $this->cartRuleDiscountTotals[$discountTransfer->getIdDiscount()]
+                    $this->cartRuleDiscountTotals[$discountTransfer->getIdDiscount()],
                 );
             }
         }
@@ -225,7 +225,7 @@ class DiscountAmountAggregator implements CalculatorInterface
         foreach ($calculableObjectTransfer->getVoucherDiscounts() as $discountTransfer) {
             if (isset($this->voucherDiscountTotals[$discountTransfer->getIdDiscount()])) {
                 $discountTransfer->setAmount(
-                    $this->voucherDiscountTotals[$discountTransfer->getIdDiscount()]
+                    $this->voucherDiscountTotals[$discountTransfer->getIdDiscount()],
                 );
             }
         }

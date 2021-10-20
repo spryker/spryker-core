@@ -252,7 +252,7 @@ abstract class CommonCategoryType extends AbstractType
             [
                 'label' => false,
                 'required' => false,
-            ]
+            ],
         );
 
         return $this;

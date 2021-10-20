@@ -43,15 +43,15 @@ class NavigationItemFilter implements NavigationItemFilterInterface
         $navigationItemCollectionTransfer = new NavigationItemCollectionTransfer();
         $navigationItemCollectionTransfer = $this->mapNavigationItemsToNavigationItemCollectionTransfer(
             $navigationItems,
-            $navigationItemCollectionTransfer
+            $navigationItemCollectionTransfer,
         );
         $navigationItemCollectionTransfer = $this->applyNavigationItemCollectionFilterPlugins(
-            $navigationItemCollectionTransfer
+            $navigationItemCollectionTransfer,
         );
 
         return $this->filterNavigationItemsByNavigationItemCollectionTransfer(
             $navigationItems,
-            $navigationItemCollectionTransfer
+            $navigationItemCollectionTransfer,
         );
     }
 
@@ -65,7 +65,7 @@ class NavigationItemFilter implements NavigationItemFilterInterface
     ): NavigationItemCollectionTransfer {
         foreach ($this->navigationItemCollectionFilterPlugins as $navigationItemCollectionFilterPlugin) {
             $navigationItemCollectionTransfer = $navigationItemCollectionFilterPlugin->filter(
-                $navigationItemCollectionTransfer
+                $navigationItemCollectionTransfer,
             );
         }
 
@@ -92,7 +92,7 @@ class NavigationItemFilter implements NavigationItemFilterInterface
             if ($this->hasNestedNavigationItems($navigationItem)) {
                 $nestedNavigationItems = $this->filterNavigationItemsByNavigationItemCollectionTransfer(
                     $navigationItem[MenuFormatter::PAGES],
-                    $navigationItemCollectionTransfer
+                    $navigationItemCollectionTransfer,
                 );
 
                 if ($nestedNavigationItems) {
@@ -134,7 +134,7 @@ class NavigationItemFilter implements NavigationItemFilterInterface
             if ($this->hasNestedNavigationItems($navigationItem)) {
                 $navigationItemCollectionTransfer = $this->mapNavigationItemsToNavigationItemCollectionTransfer(
                     $navigationItem[MenuFormatter::PAGES],
-                    $navigationItemCollectionTransfer
+                    $navigationItemCollectionTransfer,
                 );
 
                 continue;
@@ -145,7 +145,7 @@ class NavigationItemFilter implements NavigationItemFilterInterface
                 ->setModule($navigationItem[MenuFormatter::BUNDLE] ?? null);
             $navigationItemCollectionTransfer->addNavigationItem(
                 $this->getNavigationItemKey($navigationItem),
-                $navigationItemTransfer
+                $navigationItemTransfer,
             );
         }
 
@@ -194,7 +194,7 @@ class NavigationItemFilter implements NavigationItemFilterInterface
                 '%s:%s:%s',
                 $navigationItem[MenuFormatter::BUNDLE],
                 $navigationItem[MenuFormatter::CONTROLLER],
-                $navigationItem[MenuFormatter::ACTION]
+                $navigationItem[MenuFormatter::ACTION],
             );
         }
 

@@ -28,14 +28,14 @@ class ProductRelationCollectorBusinessFactory extends AbstractBusinessFactory
             $this->getUtilDataReaderService(),
             $this->getProductImageQueryContainer(),
             $this->getPriceProductFacade(),
-            $this->getProductRelationQueryContainer()
+            $this->getProductRelationQueryContainer(),
         );
 
         $productRelationCollector->setTouchQueryContainer(
-            $this->getTouchQueryContainer()
+            $this->getTouchQueryContainer(),
         );
         $productRelationCollector->setQueryBuilder(
-            $this->createStorageProductRelationCollectorPropelQuery()
+            $this->createStorageProductRelationCollectorPropelQuery(),
         );
 
         return $productRelationCollector;
@@ -104,7 +104,7 @@ class ProductRelationCollectorBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductRelationCollectorRunner(
             $this->createStorageProductRelationCollector(),
-            $this->getCollectorFacade()
+            $this->getCollectorFacade(),
         );
     }
 }

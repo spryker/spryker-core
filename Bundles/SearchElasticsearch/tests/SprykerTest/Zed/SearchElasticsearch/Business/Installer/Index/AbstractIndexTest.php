@@ -59,7 +59,7 @@ abstract class AbstractIndexTest extends Unit
     {
         $clientMock = $this->createMock(Client::class);
         $clientMock->method('getIndex')->willReturn(
-            $indexMock ?? $this->createIndexMock()
+            $indexMock ?? $this->createIndexMock(),
         );
 
         return $clientMock;

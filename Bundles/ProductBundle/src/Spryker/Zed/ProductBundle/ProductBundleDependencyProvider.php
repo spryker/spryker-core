@@ -275,7 +275,7 @@ class ProductBundleDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::FACADE_STOCK, function (Container $container) {
             return new ProductBundleToStockFacadeBridge(
-                $container->getLocator()->stock()->facade()
+                $container->getLocator()->stock()->facade(),
             );
         });
 

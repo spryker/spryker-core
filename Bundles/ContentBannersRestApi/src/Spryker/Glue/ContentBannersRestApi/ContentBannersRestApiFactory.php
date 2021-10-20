@@ -23,7 +23,7 @@ class ContentBannersRestApiFactory extends AbstractFactory
     {
         return new ContentBannerReader(
             $this->getContentBannerClient(),
-            $this->createContentBannerRestResponseBuilder()
+            $this->createContentBannerRestResponseBuilder(),
         );
     }
 

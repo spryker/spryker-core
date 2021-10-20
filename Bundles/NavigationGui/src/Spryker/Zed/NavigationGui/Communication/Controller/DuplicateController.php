@@ -59,7 +59,7 @@ class DuplicateController extends AbstractController
             if ($navigationResponseTransfer->getIsSuccessful()) {
                 $this->addSuccessMessage(
                     'Navigation element %d was duplicated successfully.',
-                    ['%d' => $idNavigation]
+                    ['%d' => $idNavigation],
                 );
 
                 return $this->redirectResponse(static::REDIRECT_URL_DEFAULT);

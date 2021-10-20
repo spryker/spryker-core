@@ -41,7 +41,7 @@ class AclEntityRuleMapper
     ): AclEntityRuleTransfer {
         $aclEntityRuleTransfer = $aclEntityRuleTransfer->fromArray(
             $aclEntityRuleEntity->toArray(),
-            true
+            true,
         );
         $aclEntityRuleTransfer->setIdAclRole($aclEntityRuleEntity->getFkAclRole());
         $aclEntityRuleTransfer->setIdAclEntitySegment($aclEntityRuleEntity->getFkAclEntitySegment());
@@ -62,7 +62,7 @@ class AclEntityRuleMapper
         /** @var \Orm\Zed\AclEntity\Persistence\SpyAclEntityRule $aclEntityRuleEntity */
         foreach ($aclEntityRuleEntities as $aclEntityRuleEntity) {
             $aclEntityRuleCollectionTransfer->addAclEntityRule(
-                $this->mapAclEntityRuleEntityToAclEntityRuleTransfer($aclEntityRuleEntity, new AclEntityRuleTransfer())
+                $this->mapAclEntityRuleEntityToAclEntityRuleTransfer($aclEntityRuleEntity, new AclEntityRuleTransfer()),
             );
         }
 

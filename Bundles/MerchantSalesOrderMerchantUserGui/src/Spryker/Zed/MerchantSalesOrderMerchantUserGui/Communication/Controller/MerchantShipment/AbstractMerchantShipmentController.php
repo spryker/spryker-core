@@ -91,7 +91,7 @@ abstract class AbstractMerchantShipmentController extends AbstractController
 
         return $this->mapMerchantOrderItemsStateHistoryToMerchantOrderItems(
             $merchantOrderTransfer,
-            $merchantOrderItemsStateHistory
+            $merchantOrderItemsStateHistory,
         );
     }
 
@@ -204,7 +204,7 @@ abstract class AbstractMerchantShipmentController extends AbstractController
             function (MerchantOrderItemTransfer $merchantOrderItemTransfer) {
                 return $merchantOrderItemTransfer->getIdMerchantOrderItem();
             },
-            $merchantOrderItems->getArrayCopy()
+            $merchantOrderItems->getArrayCopy(),
         );
     }
 
@@ -226,7 +226,7 @@ abstract class AbstractMerchantShipmentController extends AbstractController
             }
 
             $merchantOrderItemTransfer->setStateHistory(
-                new ArrayObject($merchantOrderItemsStateHistory[$merchantOrderItemTransfer->getIdMerchantOrderItem()])
+                new ArrayObject($merchantOrderItemsStateHistory[$merchantOrderItemTransfer->getIdMerchantOrderItem()]),
             );
         }
 

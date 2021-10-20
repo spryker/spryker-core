@@ -122,7 +122,7 @@ class CategoryEntityManager extends AbstractEntityManager implements CategoryEnt
             $categoryClosureTableEntity = $this->createCategoryClosureTableEntity(
                 $categoryClosureTableEntity->getFkCategoryNode(),
                 $idCategoryNode,
-                $categoryClosureTableEntity->getDepth() + 1
+                $categoryClosureTableEntity->getDepth() + 1,
             );
 
             $categoryClosureTableEntity->save();
@@ -160,7 +160,7 @@ class CategoryEntityManager extends AbstractEntityManager implements CategoryEnt
         foreach ($categoryClosureTableEntities as $categoryClosureTableEntity) {
             $this->persistCategoryClosureTableParentEntries(
                 $parentCategoryClosureTableEntities,
-                $categoryClosureTableEntity
+                $categoryClosureTableEntity,
             );
         }
 
@@ -185,7 +185,7 @@ class CategoryEntityManager extends AbstractEntityManager implements CategoryEnt
             ->createCategoryLocalizedAttributeMapper()
             ->mapCategoryLocalizedAttributeTransferToCategoryAttributeEntity(
                 $categoryLocalizedAttributesTransfer,
-                $categoryAttributeEntity
+                $categoryAttributeEntity,
             );
 
         $categoryAttributeEntity->save();
@@ -340,7 +340,7 @@ class CategoryEntityManager extends AbstractEntityManager implements CategoryEnt
         $joinCategoryNodeDescendant = new Join(
             'node.fk_category_node_descendant',
             'descendants.fk_category_node_descendant',
-            Criteria::LEFT_JOIN
+            Criteria::LEFT_JOIN,
         );
         $joinCategoryNodeDescendant
             ->setRightTableName(SpyCategoryClosureTableTableMap::TABLE_NAME)
@@ -351,7 +351,7 @@ class CategoryEntityManager extends AbstractEntityManager implements CategoryEnt
         $joinCategoryNodeAscendant = new Join(
             'descendants.fk_category_node',
             'ascendants.fk_category_node',
-            Criteria::LEFT_JOIN
+            Criteria::LEFT_JOIN,
         );
         $joinCategoryNodeAscendant
             ->setRightTableName(SpyCategoryClosureTableTableMap::TABLE_NAME)
@@ -363,7 +363,7 @@ class CategoryEntityManager extends AbstractEntityManager implements CategoryEnt
             ->addJoinObject($joinCategoryNodeAscendant, 'ascendantsJoin')
             ->addJoinCondition(
                 'ascendantsJoin',
-                'ascendants.fk_category_node_descendant = node.fk_category_node'
+                'ascendants.fk_category_node_descendant = node.fk_category_node',
             )
             ->where(sprintf('descendants.fk_category_node = %d', $idCategoryNode))
             ->where('ascendants.fk_category_node IS NULL')
@@ -406,7 +406,7 @@ class CategoryEntityManager extends AbstractEntityManager implements CategoryEnt
             $categoryClosureTableEntity = $this->createCategoryClosureTableEntity(
                 $parentCategoryClosureTableEntity->getFkCategoryNode(),
                 $categoryClosureTableEntity->getFkCategoryNodeDescendant(),
-                $depth
+                $depth,
             );
 
             $categoryClosureTableEntity->save();
@@ -447,7 +447,7 @@ class CategoryEntityManager extends AbstractEntityManager implements CategoryEnt
             $categoryClosureTableEntity = $this->createCategoryClosureTableEntity(
                 $categoryClosureTableEntity->getFkCategoryNode(),
                 $idCategoryNode,
-                $categoryClosureTableEntity->getDepth() + 1
+                $categoryClosureTableEntity->getDepth() + 1,
             );
 
             $this->persist($categoryClosureTableEntity);
@@ -474,7 +474,7 @@ class CategoryEntityManager extends AbstractEntityManager implements CategoryEnt
             $categoryClosureTableEntity = $this->createCategoryClosureTableEntity(
                 $parentCategoryClosureTableEntity->getFkCategoryNode(),
                 $categoryClosureTableEntity->getFkCategoryNodeDescendant(),
-                $depth
+                $depth,
             );
 
             $this->persist($categoryClosureTableEntity);

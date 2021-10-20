@@ -41,7 +41,7 @@ class CmsSlotBlockStorageRepository extends AbstractRepository implements CmsSlo
 
         $cmsSlotBlockQuery = $this->addCmsSlotBlockQueryConditionsByCmsSlotBlockTransfers(
             $cmsSlotBlockQuery,
-            $cmsSlotBlockTransfers
+            $cmsSlotBlockTransfers,
         );
 
         $cmsSlotWithSlotTemplateCombinations = $cmsSlotBlockQuery
@@ -86,13 +86,13 @@ class CmsSlotBlockStorageRepository extends AbstractRepository implements CmsSlo
             if ($cmsSlotBlockTransfer->getIdSlotTemplate() && $cmsSlotBlockTransfer->getIdSlot()) {
                 $slotWithTemplateCriterion = $criteria->getNewCriterion(
                     SpyCmsSlotTableMap::COL_ID_CMS_SLOT,
-                    $cmsSlotBlockTransfer->getIdSlot()
+                    $cmsSlotBlockTransfer->getIdSlot(),
                 );
                 $slotWithTemplateCriterion->addAnd(
                     $criteria->getNewCriterion(
                         SpyCmsSlotTemplateTableMap::COL_ID_CMS_SLOT_TEMPLATE,
-                        $cmsSlotBlockTransfer->getIdSlotTemplate()
-                    )
+                        $cmsSlotBlockTransfer->getIdSlotTemplate(),
+                    ),
                 );
                 $cmsSlotBlockQuery->addOr($slotWithTemplateCriterion);
 
@@ -106,7 +106,7 @@ class CmsSlotBlockStorageRepository extends AbstractRepository implements CmsSlo
             $slotBlockCriterion = $criteria->getNewCriterion(
                 SpyCmsSlotBlockTableMap::COL_ID_CMS_SLOT_BLOCK,
                 $cmsSlotBlockIds,
-                Criteria::IN
+                Criteria::IN,
             );
             $cmsSlotBlockQuery->addOr($slotBlockCriterion);
         }
@@ -171,7 +171,7 @@ class CmsSlotBlockStorageRepository extends AbstractRepository implements CmsSlo
         foreach ($cmsSlotBlockEntities as $cmsSlotBlockEntity) {
             $cmsSlotBlockTransfer = $cmsSlotBlockStorageMapper->mapCmsSlotBlockEntityToCmsSlotBlockTransfer(
                 $cmsSlotBlockEntity,
-                new CmsSlotBlockTransfer()
+                new CmsSlotBlockTransfer(),
             );
             $cmsSlotBlockCollectionTransfer->addCmsSlotBlock($cmsSlotBlockTransfer);
         }

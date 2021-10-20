@@ -66,7 +66,7 @@ class MultiCartFactory extends AbstractFactory
     {
         return new CustomerLoginQuoteSync(
             $this->getPersistentCartClient(),
-            $this->getQuoteClient()
+            $this->getQuoteClient(),
         );
     }
 
@@ -80,7 +80,7 @@ class MultiCartFactory extends AbstractFactory
             $this->getPersistentCartClient(),
             $this->getQuoteClient(),
             $this->getCustomerClient(),
-            $this->getZedRequestClient()
+            $this->getZedRequestClient(),
         );
     }
 
@@ -94,7 +94,7 @@ class MultiCartFactory extends AbstractFactory
             $this->getQuoteClient(),
             $this->getCustomerClient(),
             $this->getDateTimeService(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -104,7 +104,7 @@ class MultiCartFactory extends AbstractFactory
     public function createCartReader(): CartReaderInterface
     {
         return new CartReader(
-            $this->createMultiCartZedStub()
+            $this->createMultiCartZedStub(),
         );
     }
 
@@ -170,7 +170,7 @@ class MultiCartFactory extends AbstractFactory
     public function createCartDeleteChecker(): CartDeleteCheckerInterface
     {
         return new CartDeleteChecker(
-            $this->createMultiCartStorage()
+            $this->createMultiCartStorage(),
         );
     }
 }

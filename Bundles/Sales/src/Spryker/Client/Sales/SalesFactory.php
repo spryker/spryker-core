@@ -21,7 +21,7 @@ class SalesFactory extends AbstractFactory
     public function createZedSalesStub()
     {
         return new SalesStub(
-            $this->getProvidedDependency(SalesDependencyProvider::SERVICE_ZED)
+            $this->getProvidedDependency(SalesDependencyProvider::SERVICE_ZED),
         );
     }
 }

@@ -45,13 +45,13 @@ class CustomerAccessRestResponseBuilder implements CustomerAccessRestResponseBui
         $restCustomerAccessAttributesTransfer = $this->customerAccessMapper
             ->mapCustomerAccessContentTypeResourceTypeToRestCustomerAccessAttributesTransfer(
                 $customerAccessContentTypeResourceTypes,
-                new RestCustomerAccessAttributesTransfer()
+                new RestCustomerAccessAttributesTransfer(),
             );
 
         $restResource = $this->restResourceBuilder->createRestResource(
             CustomerAccessRestApiConfig::RESOURCE_CUSTOMER_ACCESS,
             null,
-            $restCustomerAccessAttributesTransfer
+            $restCustomerAccessAttributesTransfer,
         );
 
         return $this->restResourceBuilder

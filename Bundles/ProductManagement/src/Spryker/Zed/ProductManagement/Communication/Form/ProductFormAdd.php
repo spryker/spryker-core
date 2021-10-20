@@ -341,14 +341,14 @@ class ProductFormAdd extends AbstractType
 
         $defaultName = self::getLocalizedPrefixName(
             self::FORM_ATTRIBUTE_ABSTRACT,
-            ProductManagementConstants::PRODUCT_MANAGEMENT_DEFAULT_LOCALE
+            ProductManagementConstants::PRODUCT_MANAGEMENT_DEFAULT_LOCALE,
         );
 
         $this->addAttributeAbstractForm(
             $builder,
             $defaultName,
             null,
-            $options[ProductManagementConstants::PRODUCT_MANAGEMENT_DEFAULT_LOCALE]
+            $options[ProductManagementConstants::PRODUCT_MANAGEMENT_DEFAULT_LOCALE],
         );
 
         return $this;
@@ -369,7 +369,7 @@ class ProductFormAdd extends AbstractType
 
         $defaultName = self::getLocalizedPrefixName(
             self::FORM_IMAGE_SET,
-            ProductManagementConstants::PRODUCT_MANAGEMENT_DEFAULT_LOCALE
+            ProductManagementConstants::PRODUCT_MANAGEMENT_DEFAULT_LOCALE,
         );
 
         $this->addImageSetForm($builder, $defaultName);
@@ -386,7 +386,7 @@ class ProductFormAdd extends AbstractType
     {
         $builder->add(
             static::FORM_STORE_RELATION,
-            $this->getFactory()->getStoreRelationFormTypePlugin()->getType()
+            $this->getFactory()->getStoreRelationFormTypePlugin()->getType(),
         );
 
         return $this;
@@ -427,7 +427,7 @@ class ProductFormAdd extends AbstractType
 
                             if ($skuCount > 0) {
                                 $context->addViolation(
-                                    sprintf('The SKU "%s" is already used', $sku)
+                                    sprintf('The SKU "%s" is already used', $sku),
                                 );
                             }
                         },
@@ -551,7 +551,7 @@ class ProductFormAdd extends AbstractType
                             if ($valueSet[AttributeAbstractForm::FIELD_NAME] && empty($valueSet[AttributeAbstractForm::FIELD_VALUE])) {
                                 $context->addViolation(sprintf(
                                     'Please enter value for product attribute "%s" or disable it',
-                                    $type
+                                    $type,
                                 ));
                             }
                         }
@@ -584,7 +584,7 @@ class ProductFormAdd extends AbstractType
                             if ($valueSet[AttributeSuperForm::FIELD_NAME] && empty($valueSet[AttributeSuperForm::FIELD_VALUE])) {
                                 $context->addViolation(sprintf(
                                     'Please enter value for variant attribute "%s" or disable it',
-                                    $type
+                                    $type,
                                 ));
                             }
                         }
@@ -608,7 +608,7 @@ class ProductFormAdd extends AbstractType
             PriceDimensionForm::class,
             [
                 'label' => false,
-            ]
+            ],
         );
 
         return $this;
@@ -635,7 +635,7 @@ class ProductFormAdd extends AbstractType
                         'groups' => [self::VALIDATION_GROUP_PRICE_SOURCE],
                     ]),
                 ],
-            ]
+            ],
         );
 
         return $this;
@@ -824,7 +824,7 @@ class ProductFormAdd extends AbstractType
                 }
 
                 return $value;
-            }
+            },
         );
     }
 

@@ -27,7 +27,7 @@ class ProductListTitleGenerator implements ProductListTitleGeneratorInterface
         return sprintf(
             '%s - %s',
             $configurableBundleTemplateSlotTransfer->getConfigurableBundleTemplate()->getTranslations()[0]->getName(),
-            $configurableBundleTemplateSlotTransfer->getTranslations()[0]->getName()
+            $configurableBundleTemplateSlotTransfer->getTranslations()[0]->getName(),
         );
     }
 }

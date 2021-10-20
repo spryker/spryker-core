@@ -72,7 +72,7 @@ class MerchantUserGuiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::FACADE_MERCHANT_USER, function (Container $container) {
             return new MerchantUserGuiToMerchantUserFacadeBridge(
-                $container->getLocator()->merchantUser()->facade()
+                $container->getLocator()->merchantUser()->facade(),
             );
         });
 
@@ -88,7 +88,7 @@ class MerchantUserGuiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::FACADE_ROUTER, function (Container $container) {
             return new MerchantUserGuiToRouterFacadeBridge(
-                $container->getLocator()->router()->facade()
+                $container->getLocator()->router()->facade(),
             );
         });
 

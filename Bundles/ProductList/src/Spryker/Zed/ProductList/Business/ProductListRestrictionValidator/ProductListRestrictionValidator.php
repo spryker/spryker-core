@@ -67,7 +67,7 @@ class ProductListRestrictionValidator implements ProductListRestrictionValidator
             ->filterRestrictedProductConcreteSkus(
                 $cartChangeSkus,
                 $customerBlacklistIds,
-                $customerWhitelistIds
+                $customerWhitelistIds,
             );
 
         if (empty($restrictedProductConcreteSkus)) {
@@ -78,7 +78,7 @@ class ProductListRestrictionValidator implements ProductListRestrictionValidator
             $this->validateItem(
                 $itemTransfer,
                 $cartPreCheckResponseTransfer,
-                $restrictedProductConcreteSkus
+                $restrictedProductConcreteSkus,
             );
         }
 
@@ -116,7 +116,7 @@ class ProductListRestrictionValidator implements ProductListRestrictionValidator
         $cartPreCheckResponseTransfer->addMessage(
             (new MessageTransfer())
                 ->setValue(static::MESSAGE_INFO_RESTRICTED_PRODUCT_REMOVED)
-                ->setParameters([static::MESSAGE_PARAM_SKU => $sku])
+                ->setParameters([static::MESSAGE_PARAM_SKU => $sku]),
         );
     }
 }

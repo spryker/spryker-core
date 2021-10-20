@@ -57,7 +57,7 @@ class ConfigurableBundleNameGenerator implements ConfigurableBundleNameGenerator
 
         return $this->generateName(
             $configurableBundleTemplateTransfer->getTranslations()[0]->getName(),
-            static::PREFIX_TEMPLATE_NAME
+            static::PREFIX_TEMPLATE_NAME,
         );
     }
 
@@ -72,7 +72,7 @@ class ConfigurableBundleNameGenerator implements ConfigurableBundleNameGenerator
 
         return $this->generateName(
             $configurableBundleTemplateSlotTransfer->getTranslations()[0]->getName(),
-            static::PREFIX_TEMPLATE_SLOT_NAME
+            static::PREFIX_TEMPLATE_SLOT_NAME,
         );
     }
 

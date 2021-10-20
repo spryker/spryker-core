@@ -55,13 +55,13 @@ class ProductReviewSearchQueryContainerTest extends Unit
             $localeTransfer->getIdLocale(),
             $customerTransfer->getCustomerReference(),
             $productAbstractTransfer->getIdProductAbstract(),
-            SpyProductReviewTableMap::COL_STATUS_APPROVED
+            SpyProductReviewTableMap::COL_STATUS_APPROVED,
         );
         $productReviewTransfer2 = $this->tester->haveApprovedCustomerReviewForAbstractProduct(
             $localeTransfer->getIdLocale(),
             $customerTransfer->getCustomerReference(),
             $productAbstractTransfer->getIdProductAbstract(),
-            SpyProductReviewTableMap::COL_STATUS_APPROVED
+            SpyProductReviewTableMap::COL_STATUS_APPROVED,
         );
         $productAbstractRatingAverage = new Decimal(($productReviewTransfer1->getRating() + $productReviewTransfer2->getRating()) / 2);
 

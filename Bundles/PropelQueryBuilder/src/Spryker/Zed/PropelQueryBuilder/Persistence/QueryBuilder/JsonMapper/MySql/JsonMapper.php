@@ -45,7 +45,7 @@ class JsonMapper implements JsonMapperInterface
             $ruleSetTransfer->getField(),
             $attributeName,
             $operator->getOperator(),
-            $operator->getValue($ruleSetTransfer)
+            $operator->getValue($ruleSetTransfer),
         );
     }
 

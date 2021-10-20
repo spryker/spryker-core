@@ -38,7 +38,7 @@ class StepHandlerPluginCollectionTest extends Unit
 
         $this->assertInstanceOf(
             StepHandlerPluginCollection::class,
-            $stepHandlerPluginCollection->add($this->getStepHandlerPlugin(), self::TEST_PLUGIN_NAME)
+            $stepHandlerPluginCollection->add($this->getStepHandlerPlugin(), self::TEST_PLUGIN_NAME),
         );
     }
 

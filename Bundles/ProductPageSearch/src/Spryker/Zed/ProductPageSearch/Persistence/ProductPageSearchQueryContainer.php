@@ -510,7 +510,7 @@ class ProductPageSearchQueryContainer extends AbstractQueryContainer implements 
                 SpyProductImageSetTableMap::COL_FK_PRODUCT_ABSTRACT,
                 SpyProductImageSetTableMap::COL_FK_LOCALE,
                 SpyProductAbstractLocalizedAttributesTableMap::COL_FK_LOCALE,
-                SpyProductImageSetTableMap::COL_FK_LOCALE
+                SpyProductImageSetTableMap::COL_FK_LOCALE,
             ))
             ->limit(static::PRODUCT_IMAGE_SET_LIMIT);
 

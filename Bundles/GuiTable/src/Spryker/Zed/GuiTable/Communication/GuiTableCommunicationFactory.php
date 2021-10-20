@@ -44,7 +44,7 @@ class GuiTableCommunicationFactory extends AbstractCommunicationFactory
         return new GuiTableConfigurationFunctionProvider(
             $this->getUtilEncodingService(),
             $this->createConfigurationDefaultValuesExpander(),
-            $this->createConfigurationTranslator()
+            $this->createConfigurationTranslator(),
         );
     }
 
@@ -88,7 +88,7 @@ class GuiTableCommunicationFactory extends AbstractCommunicationFactory
         return new DataRequestBuilder(
             $this->getUtilEncodingService(),
             $this->getConfig(),
-            $this->createDateRangeRequestFilterValueNormalizer()
+            $this->createDateRangeRequestFilterValueNormalizer(),
         );
     }
 
@@ -116,7 +116,7 @@ class GuiTableCommunicationFactory extends AbstractCommunicationFactory
         return new GuiTableDataRequestExecutor(
             $this->createDataRequestBuilder(),
             $this->createDataResponseFormatter(),
-            $this->createHttpJsonResponseBuilder()
+            $this->createHttpJsonResponseBuilder(),
         );
     }
 

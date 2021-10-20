@@ -39,7 +39,7 @@ class CmsPageStoreSearchListener extends AbstractPlugin implements EventBulkHand
 
         $cmsPageIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferForeignKeys(
             $eventEntityTransfers,
-            SpyCmsPageStoreTableMap::COL_FK_CMS_PAGE
+            SpyCmsPageStoreTableMap::COL_FK_CMS_PAGE,
         );
 
         $this->getFacade()->publish($cmsPageIds);

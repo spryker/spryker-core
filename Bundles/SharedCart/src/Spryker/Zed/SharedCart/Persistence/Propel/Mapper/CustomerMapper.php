@@ -25,7 +25,7 @@ class CustomerMapper
     ): CustomerCollectionTransfer {
         foreach ($customerEntityCollection as $customerEntity) {
             $customerCollectionTransfer->addCustomer(
-                (new CustomerTransfer())->fromArray($customerEntity->toArray(), true)
+                (new CustomerTransfer())->fromArray($customerEntity->toArray(), true),
             );
         }
 

@@ -55,7 +55,7 @@ class PriceProductSchedulePersistenceFactory extends AbstractPersistenceFactory 
     {
         return new PriceProductScheduleMapper(
             $this->createPriceProductScheduleListMapper(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -74,7 +74,7 @@ class PriceProductSchedulePersistenceFactory extends AbstractPersistenceFactory 
     {
         return new PriceProductScheduleDisableFinder(
             $this->createPriceProductScheduleQuery(),
-            $this->createPriceProductScheduleMapper()
+            $this->createPriceProductScheduleMapper(),
         );
     }
 
@@ -87,7 +87,7 @@ class PriceProductSchedulePersistenceFactory extends AbstractPersistenceFactory 
             $this->getPropelFacade(),
             $this,
             $this->getConfig(),
-            $this->createPriceProductScheduleMapper()
+            $this->createPriceProductScheduleMapper(),
         );
     }
 
@@ -98,7 +98,7 @@ class PriceProductSchedulePersistenceFactory extends AbstractPersistenceFactory 
     {
         return new PriceProductScheduleFinder(
             $this->createPriceProductScheduleQuery(),
-            $this->createPriceProductScheduleMapper()
+            $this->createPriceProductScheduleMapper(),
         );
     }
 
@@ -109,7 +109,7 @@ class PriceProductSchedulePersistenceFactory extends AbstractPersistenceFactory 
     {
         return new PriceProductScheduleListFinder(
             $this->createPriceProductScheduleListQuery(),
-            $this->createPriceProductScheduleListMapper()
+            $this->createPriceProductScheduleListMapper(),
         );
     }
 

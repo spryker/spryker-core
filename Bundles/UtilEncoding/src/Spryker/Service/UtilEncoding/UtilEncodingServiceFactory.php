@@ -35,7 +35,7 @@ class UtilEncodingServiceFactory extends AbstractServiceFactory
     public function createEncoder(): EncoderInterface
     {
         return new Encoder(
-            $this->getFormatEncoders()
+            $this->getFormatEncoders(),
         );
     }
 
@@ -45,7 +45,7 @@ class UtilEncodingServiceFactory extends AbstractServiceFactory
     public function createDecoder(): DecoderInterface
     {
         return new Decoder(
-            $this->getFormatDecoders()
+            $this->getFormatDecoders(),
         );
     }
 
@@ -76,7 +76,7 @@ class UtilEncodingServiceFactory extends AbstractServiceFactory
     public function createJsonFormatEncoder(): FormatEncoderInterface
     {
         return new JsonFormatEncoder(
-            $this->createJsonEncoder()
+            $this->createJsonEncoder(),
         );
     }
 
@@ -86,7 +86,7 @@ class UtilEncodingServiceFactory extends AbstractServiceFactory
     public function createJsonFormatDecoder(): FormatDecoderInterface
     {
         return new JsonFormatDecoder(
-            $this->createJsonEncoder()
+            $this->createJsonEncoder(),
         );
     }
 

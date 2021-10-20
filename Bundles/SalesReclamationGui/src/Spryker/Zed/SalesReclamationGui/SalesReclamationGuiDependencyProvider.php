@@ -93,7 +93,7 @@ class SalesReclamationGuiDependencyProvider extends AbstractBundleDependencyProv
     {
         $container->set(static::SERVICE_DATETIME, function (Container $container) {
             return new SalesReclamationGuiToUtilDateTimeServiceBridge(
-                $container->getLocator()->utilDateTime()->service()
+                $container->getLocator()->utilDateTime()->service(),
             );
         });
 

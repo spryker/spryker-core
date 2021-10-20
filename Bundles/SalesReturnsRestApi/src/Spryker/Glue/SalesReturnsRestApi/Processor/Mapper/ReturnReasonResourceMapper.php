@@ -29,7 +29,7 @@ class ReturnReasonResourceMapper implements ReturnReasonResourceMapperInterface
                 ->fromArray($returnReasonSearchTransfer->toArray(), true);
 
             $restReturnReasonsAttributesTransfer->setReason(
-                $returnReasonSearchTransfer->getName()
+                $returnReasonSearchTransfer->getName(),
             );
 
             $restReturnReasonsAttributesTransfers[] = $restReturnReasonsAttributesTransfer;

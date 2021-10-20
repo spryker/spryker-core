@@ -52,7 +52,7 @@ class StoresTransformer implements DataTransformerInterface
 
         foreach ($storeIds as $idStore) {
             $storeTransfers->append(
-                (new StoreTransfer())->setIdStore((int)$idStore)
+                (new StoreTransfer())->setIdStore((int)$idStore),
             );
         }
 

@@ -81,7 +81,7 @@ class ShoppingListShareDeleter implements ShoppingListShareDeleterInterface
             !$this->can(
                 'ReadShoppingListPermissionPlugin',
                 $shoppingListDismissRequest->getIdCompanyUser(),
-                $shoppingListDismissRequest->getIdShoppingList()
+                $shoppingListDismissRequest->getIdShoppingList(),
             )
         ) {
             return (new ShoppingListShareResponseTransfer())->setIsSuccess(false);
@@ -105,7 +105,7 @@ class ShoppingListShareDeleter implements ShoppingListShareDeleterInterface
         $shoppingListShareResponseTransfer = new ShoppingListShareResponseTransfer();
         $shoppingListShareResponseTransfer->setIsSuccess($this->deleteShoppingListCompanyUser($shoppingListDismissRequest));
         $shoppingListShareResponseTransfer->setIsSuccess(
-            $this->createShoppingListCompanyBusinessUnitBlacklist($shoppingListDismissRequest) || $shoppingListShareResponseTransfer->getIsSuccess()
+            $this->createShoppingListCompanyBusinessUnitBlacklist($shoppingListDismissRequest) || $shoppingListShareResponseTransfer->getIsSuccess(),
         );
 
         return $shoppingListShareResponseTransfer;
@@ -189,11 +189,11 @@ class ShoppingListShareDeleter implements ShoppingListShareDeleterInterface
     protected function findShoppingListBusinessUnit(int $idShoppingList, CompanyUserTransfer $companyUserTransfer): ?ShoppingListCompanyBusinessUnitTransfer
     {
         $shoppingListCompanyBusinessUnitCollectionTransfer = $this->shoppingListRepository->getShoppingListCompanyBusinessUnitsByShoppingListId(
-            (new ShoppingListTransfer())->setIdShoppingList($idShoppingList)
+            (new ShoppingListTransfer())->setIdShoppingList($idShoppingList),
         );
         $shoppingListCompanyBusinessUnitTransfer = $this->findShoppingListCompanyBusinessUnitByIdBusinessUnit(
             $shoppingListCompanyBusinessUnitCollectionTransfer,
-            $companyUserTransfer->getFkCompanyBusinessUnit()
+            $companyUserTransfer->getFkCompanyBusinessUnit(),
         );
 
         return $shoppingListCompanyBusinessUnitTransfer;

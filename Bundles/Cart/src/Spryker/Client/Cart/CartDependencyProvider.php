@@ -204,7 +204,7 @@ class CartDependencyProvider extends AbstractDependencyProvider
     {
         $container->set(static::SERVICE_UTIL_TEXT, function (Container $container) {
             return new CartToUtilTextServiceBridge(
-                $container->getLocator()->utilText()->service()
+                $container->getLocator()->utilText()->service(),
             );
         });
 

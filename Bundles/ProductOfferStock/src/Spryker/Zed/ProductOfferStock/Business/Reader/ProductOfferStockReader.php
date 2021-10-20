@@ -54,7 +54,7 @@ class ProductOfferStockReader implements ProductOfferStockReaderInterface
 
         $productOfferStockResultTransfer = $this->productOfferStockResultMapper
             ->mapProductOfferStockTransfersToProductOfferStockResultTransfer(
-                $productOfferStockTransfers
+                $productOfferStockTransfers,
             );
 
         return $productOfferStockResultTransfer;
@@ -80,8 +80,8 @@ class ProductOfferStockReader implements ProductOfferStockReaderInterface
             throw new ProductOfferNotFoundException(
                 sprintf(
                     'Product offer stock with product reference: %s, not found',
-                    $productOfferStockRequestTransfer->getProductOfferReference()
-                )
+                    $productOfferStockRequestTransfer->getProductOfferReference(),
+                ),
             );
         }
 

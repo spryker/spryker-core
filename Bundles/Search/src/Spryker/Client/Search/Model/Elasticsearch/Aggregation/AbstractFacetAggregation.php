@@ -111,7 +111,7 @@ abstract class AbstractFacetAggregation implements FacetAggregationInterface
         if ($facetConfigTransfer->getAggregationParams()) {
             $nestedFieldName = $this->addNestedFieldPrefix(
                 $nestedFieldName,
-                $facetConfigTransfer->getName()
+                $facetConfigTransfer->getName(),
             );
         }
 

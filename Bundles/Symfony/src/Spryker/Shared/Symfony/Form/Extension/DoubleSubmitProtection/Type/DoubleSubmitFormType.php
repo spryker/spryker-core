@@ -127,7 +127,7 @@ class DoubleSubmitFormType extends AbstractTypeExtension
             $fieldName,
             HiddenType::class,
             $token,
-            ['mapped' => false]
+            ['mapped' => false],
         );
 
         $view->children[$fieldName] = $tokenForm->createView($view);
@@ -144,7 +144,7 @@ class DoubleSubmitFormType extends AbstractTypeExtension
             [
                 static::OPTION_KEY_ERROR_MESSAGE => static::DEFAULT_ERROR_MESSAGE,
                 static::OPTION_KEY_TOKEN_FIELD_NAME => static::DEFAULT_TOKEN_FIELD_NAME,
-            ]
+            ],
         );
     }
 
@@ -185,7 +185,7 @@ class DoubleSubmitFormType extends AbstractTypeExtension
             $this->tokenGenerator,
             $this->storage,
             $this->translator,
-            $this->translationDomain
+            $this->translationDomain,
         );
     }
 }

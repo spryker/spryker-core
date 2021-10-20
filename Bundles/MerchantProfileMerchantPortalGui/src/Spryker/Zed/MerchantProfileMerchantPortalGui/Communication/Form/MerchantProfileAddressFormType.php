@@ -144,7 +144,7 @@ class MerchantProfileAddressFormType extends AbstractType
             ->addLongitudeField($builder);
 
         $builder->addModelTransformer(
-            new MerchantProfileAddressTransfersToMerchantProfileAddressTransferTransformer()
+            new MerchantProfileAddressTransfersToMerchantProfileAddressTransferTransformer(),
         );
     }
 

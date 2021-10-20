@@ -74,7 +74,7 @@ class MerchantProductOfferWishlistRestApiFacadeTest extends Unit
         // Act
         $this->tester->getFacade()->deleteWishlistItem(
             $wishlistItemRequestTransfer,
-            $wishlistItemTransfers
+            $wishlistItemTransfers,
         );
 
         $expectedWishlistItemCount = (new SpyWishlistItemQuery())
@@ -124,7 +124,7 @@ class MerchantProductOfferWishlistRestApiFacadeTest extends Unit
         // Act
         $this->tester->getFacade()->deleteWishlistItem(
             $wishlistItemRequestTransfer,
-            $wishlistItemTransfers
+            $wishlistItemTransfers,
         );
 
         $expectedWishlistItemCount = (new SpyWishlistItemQuery())
@@ -174,7 +174,7 @@ class MerchantProductOfferWishlistRestApiFacadeTest extends Unit
         // Act
         $this->tester->getFacade()->deleteWishlistItem(
             $wishlistItemRequestTransfer,
-            $wishlistItemTransfers
+            $wishlistItemTransfers,
         );
 
         $expectedWishlistItemCount = (new SpyWishlistItemQuery())
@@ -218,7 +218,7 @@ class MerchantProductOfferWishlistRestApiFacadeTest extends Unit
         // Act
         $this->tester->getFacade()->deleteWishlistItemWithoutProductOffer(
             $wishlistItemRequestTransfer,
-            $wishlistItemTransfers
+            $wishlistItemTransfers,
         );
 
         $expectedWishlistItemCount = (new SpyWishlistItemQuery())
@@ -261,7 +261,7 @@ class MerchantProductOfferWishlistRestApiFacadeTest extends Unit
         // Act
         $this->tester->getFacade()->deleteWishlistItemWithoutProductOffer(
             $wishlistItemRequestTransfer,
-            $wishlistItemTransfers
+            $wishlistItemTransfers,
         );
 
         $expectedWishlistItemCount = (new SpyWishlistItemQuery())

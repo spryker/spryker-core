@@ -38,7 +38,7 @@ class SalesPaymentReader implements SalesPaymentReaderInterface
         $salesPaymentEntity = $this->paymentQueryContainer->queryPaymentMethodPriceToPay(
             $paymentTransfer->getFkSalesOrder(),
             $paymentTransfer->getPaymentProvider(),
-            $paymentTransfer->getPaymentMethod()
+            $paymentTransfer->getPaymentMethod(),
         )->findOne();
 
         return $salesPaymentEntity->getAmount();

@@ -92,7 +92,7 @@ class ProductOfferStockReader implements ProductOfferStockReaderInterface
             $additionalTableData['headers'][] = $productOfferStockTableExpanderPlugin->getHeader();
             $additionalTableData['columns'][] = $productOfferStockTableExpanderPlugin->getColumnData(
                 $productOfferStockTransfer,
-                $storeTransfer
+                $storeTransfer,
             );
         }
 

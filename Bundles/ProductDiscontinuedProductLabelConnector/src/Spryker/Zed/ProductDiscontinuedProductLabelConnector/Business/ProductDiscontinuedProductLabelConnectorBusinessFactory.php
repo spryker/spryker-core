@@ -34,7 +34,7 @@ class ProductDiscontinuedProductLabelConnectorBusinessFactory extends AbstractBu
         return new ProductDiscontinuedProductLabelConnectorInstaller(
             $this->getConfig(),
             $this->getProductLabelFacade(),
-            $this->getLocaleFacade()
+            $this->getLocaleFacade(),
         );
     }
 
@@ -47,7 +47,7 @@ class ProductDiscontinuedProductLabelConnectorBusinessFactory extends AbstractBu
             $this->getProductFacade(),
             $this->getProductLabelFacade(),
             $this->getProductDiscontinuedFacade(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -59,7 +59,7 @@ class ProductDiscontinuedProductLabelConnectorBusinessFactory extends AbstractBu
         return new ProductAbstractRelationReader(
             $this->getProductLabelFacade(),
             $this->getConfig(),
-            $this->getRepository()
+            $this->getRepository(),
         );
     }
 

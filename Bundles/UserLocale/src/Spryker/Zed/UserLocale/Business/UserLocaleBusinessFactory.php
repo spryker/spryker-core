@@ -43,7 +43,7 @@ class UserLocaleBusinessFactory extends AbstractBusinessFactory
     public function createUserExpander(): UserExpanderInterface
     {
         return new UserExpander(
-            $this->getLocaleFacade()
+            $this->getLocaleFacade(),
         );
     }
 

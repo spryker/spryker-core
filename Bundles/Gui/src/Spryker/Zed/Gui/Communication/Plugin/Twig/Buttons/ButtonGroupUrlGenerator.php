@@ -60,7 +60,7 @@ class ButtonGroupUrlGenerator implements UrlGeneratorInterface
             $class,
             $optionParams,
             $icon,
-            $this->title
+            $this->title,
         );
 
         $html .= '<ul class="dropdown-menu">';

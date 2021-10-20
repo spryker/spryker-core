@@ -67,13 +67,13 @@ class OrderInvoiceSendConsole extends Console
         $this->addArgument(
             static::ARGUMENT_ORDER_IDS,
             InputArgument::OPTIONAL,
-            static::ARGUMENT_ORDER_IDS_DESCRIPTION
+            static::ARGUMENT_ORDER_IDS_DESCRIPTION,
         );
         $this->addOption(
             static::ARGUMENT_FORCE_EMAIL_SEND,
             null,
             null,
-            static::ARGUMENT_FORCE_EMAIL_SEND_DESCRIPTION
+            static::ARGUMENT_FORCE_EMAIL_SEND_DESCRIPTION,
         );
     }
 

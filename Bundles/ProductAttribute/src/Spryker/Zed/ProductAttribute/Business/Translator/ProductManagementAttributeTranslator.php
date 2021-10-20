@@ -68,13 +68,13 @@ class ProductManagementAttributeTranslator implements ProductManagementAttribute
         $glossaryKeyTransfers = $this->glossaryFacade->getGlossaryKeyTransfersByGlossaryKeys($glossaryKeys);
         $translationTransfers = $this->glossaryFacade->getTranslationsByGlossaryKeysAndLocaleTransfers(
             $glossaryKeys,
-            $localeTransfers
+            $localeTransfers,
         );
 
         $mappedTranslationTransfers = $this->translationMapper->mapTranslationsByKeyNameAndLocaleName(
             $translationTransfers,
             $localeTransfers,
-            $glossaryKeyTransfers
+            $glossaryKeyTransfers,
         );
 
         foreach ($productManagementAttributeTransfers as $productManagementAttributeTransfer) {
@@ -120,7 +120,7 @@ class ProductManagementAttributeTranslator implements ProductManagementAttribute
         $glossaryKeys = [];
         foreach ($productManagementAttributeTransfers as $productManagementAttributeTransfer) {
             $glossaryKeys[] = $this->glossaryKeyBuilder->buildGlossaryKey(
-                $productManagementAttributeTransfer->getKey()
+                $productManagementAttributeTransfer->getKey(),
             );
         }
 

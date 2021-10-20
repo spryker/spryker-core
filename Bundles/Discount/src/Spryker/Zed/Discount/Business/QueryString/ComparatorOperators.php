@@ -88,8 +88,8 @@ class ComparatorOperators implements ComparatorOperatorsInterface
         throw new ComparatorException(
             sprintf(
                 'Comparison operator "%s" not found.',
-                $clauseTransfer->getOperator()
-            )
+                $clauseTransfer->getOperator(),
+            ),
         );
     }
 
@@ -194,8 +194,8 @@ class ComparatorOperators implements ComparatorOperatorsInterface
             sprintf(
                 '"%s" operator does not accept any of "%s" types',
                 get_class($operator),
-                implode(',', $withTypes)
-            )
+                implode(',', $withTypes),
+            ),
         );
     }
 

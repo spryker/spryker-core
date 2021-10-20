@@ -274,7 +274,7 @@ class AvailabilityGuiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::SERVICE_AVAILABILITY, function (Container $container) {
             return new AvailabilityGuiToAvailabilityServiceBridge(
-                $container->getLocator()->availability()->service()
+                $container->getLocator()->availability()->service(),
             );
         });
 

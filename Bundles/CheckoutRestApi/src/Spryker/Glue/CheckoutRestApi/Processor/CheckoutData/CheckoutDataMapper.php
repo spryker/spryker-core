@@ -50,7 +50,7 @@ class CheckoutDataMapper implements CheckoutDataMapperInterface
         foreach ($this->checkoutDataResponseMappers as $checkoutDataResponseMapper) {
             $restCheckoutDataResponseAttributesTransfer = $checkoutDataResponseMapper->map(
                 $restCheckoutDataTransfer,
-                $restCheckoutDataResponseAttributesTransfer
+                $restCheckoutDataResponseAttributesTransfer,
             );
         }
 
@@ -58,7 +58,7 @@ class CheckoutDataMapper implements CheckoutDataMapperInterface
             $restCheckoutDataResponseAttributesTransfer = $checkoutDataResponseMapperPlugin->mapRestCheckoutDataResponseTransferToRestCheckoutDataResponseAttributesTransfer(
                 $restCheckoutDataTransfer,
                 $restCheckoutRequestAttributesTransfer,
-                $restCheckoutDataResponseAttributesTransfer
+                $restCheckoutDataResponseAttributesTransfer,
             );
         }
 

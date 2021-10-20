@@ -53,7 +53,7 @@ abstract class AbstractCompanyUserResourceRelationshipExpander implements Compan
             }
 
             $companyUserRestResource = $this->createCompanyUserRestResource(
-                $companyUserTransfer
+                $companyUserTransfer,
             );
 
             $resource->addRelationship($companyUserRestResource);
@@ -78,13 +78,13 @@ abstract class AbstractCompanyUserResourceRelationshipExpander implements Compan
         $restCompanyUserAttributesTransfer = $this->companyUserMapper
             ->mapCompanyUserTransferToRestCompanyUserAttributesTransfer(
                 $companyUserTransfer,
-                new RestCompanyUserAttributesTransfer()
+                new RestCompanyUserAttributesTransfer(),
             );
 
         return $this->companyUserResponseBuilder->createCompanyUsersRestResource(
             $companyUserTransfer->getUuid(),
             $restCompanyUserAttributesTransfer,
-            $companyUserTransfer
+            $companyUserTransfer,
         );
     }
 }

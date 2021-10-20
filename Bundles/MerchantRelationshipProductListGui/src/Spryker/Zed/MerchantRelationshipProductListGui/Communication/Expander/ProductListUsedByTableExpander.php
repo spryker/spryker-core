@@ -60,7 +60,7 @@ class ProductListUsedByTableExpander implements ProductListUsedByTableExpanderIn
 
         $productListUsedByTableTransfer = $this->expandProductListUsedByTableTransfer(
             $productListUsedByTableTransfer,
-            $merchantRelationshipTransfers
+            $merchantRelationshipTransfers,
         );
 
         return $productListUsedByTableTransfer;
@@ -100,8 +100,8 @@ class ProductListUsedByTableExpander implements ProductListUsedByTableExpanderIn
             $productListUsedByTableTransfer->addRow(
                 $this->productListUsedByTableMapper->mapMerchantRelationshipTransferToProductListUsedByTableRowTransfer(
                     $merchantRelationshipTransfer,
-                    new ProductListUsedByTableRowTransfer()
-                )
+                    new ProductListUsedByTableRowTransfer(),
+                ),
             );
         }
 

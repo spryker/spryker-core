@@ -35,7 +35,7 @@ class QuoteRequestsRestApiResource extends AbstractRestResource implements Quote
             ->createQuoteRequestRestResponseBuilder()
             ->createQuoteRequestRestResponse(
                 $quoteRequestResponseTransfer,
-                $localeName
+                $localeName,
             );
     }
 
@@ -57,7 +57,7 @@ class QuoteRequestsRestApiResource extends AbstractRestResource implements Quote
             ->createQuoteRequestRestResponseBuilder()
             ->createQuoteRequestCollectionRestResponse(
                 $quoteRequestCollectionTransfer,
-                $localeName
+                $localeName,
             );
     }
 }

@@ -140,7 +140,7 @@ class OmsFacadeReservationsTest extends Unit
                 ItemTransfer::UNIT_PRICE => 100,
                 ItemTransfer::SUM_PRICE => 100,
             ],
-            'Test01'
+            'Test01',
         );
 
         $saveOrderTransfer2 = $this->tester->haveOrder(
@@ -149,7 +149,7 @@ class OmsFacadeReservationsTest extends Unit
                 ItemTransfer::UNIT_PRICE => 100,
                 ItemTransfer::SUM_PRICE => 100,
             ],
-            'Test02'
+            'Test02',
         );
 
         $saveOrderTransfer3 = $this->tester->haveOrder(
@@ -158,7 +158,7 @@ class OmsFacadeReservationsTest extends Unit
                 ItemTransfer::UNIT_PRICE => 100,
                 ItemTransfer::SUM_PRICE => 100,
             ],
-            'Test03'
+            'Test03',
         );
 
         $expectedQuantity = new Decimal(0);
@@ -187,7 +187,7 @@ class OmsFacadeReservationsTest extends Unit
         $this->assertTrue(
             $this->getOmsFacade()
                 ->sumReservedProductQuantitiesForSku($testSku)
-                ->equals($expectedQuantity)
+                ->equals($expectedQuantity),
         );
     }
 
@@ -249,7 +249,7 @@ class OmsFacadeReservationsTest extends Unit
         $this->assertSame(
             $reservationQuantity->toInt(),
             $reserved->toInt(),
-            'Calculated reserved amount does not match expected value.'
+            'Calculated reserved amount does not match expected value.',
         );
     }
 
@@ -274,7 +274,7 @@ class OmsFacadeReservationsTest extends Unit
         $this->assertSame(
             $reservationQuantity1->add($reservationQuantity2)->toInt(),
             $reserved->toInt(),
-            'Calculated reserved amount does not match expected value.'
+            'Calculated reserved amount does not match expected value.',
         );
     }
 

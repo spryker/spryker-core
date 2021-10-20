@@ -56,7 +56,7 @@ class ProductCategoryStorageByProductCategoryEventsWriter implements ProductCate
     {
         $productAbstractIds = $this->eventBehaviorFacade->getEventTransferForeignKeys(
             $eventEntityTransfers,
-            SpyProductCategoryTableMap::COL_FK_PRODUCT_ABSTRACT
+            SpyProductCategoryTableMap::COL_FK_PRODUCT_ABSTRACT,
         );
 
         $this->productCategoryStorageWriter->writeCollection($productAbstractIds);

@@ -106,8 +106,8 @@ class UniqueProductRelationByProductAbstractAndRelationTypeAndStoresConstraintVa
             ->buildViolation(
                 sprintf(
                     'Other product relations of this type are already assigned to this stores: %s',
-                    implode(',', $storeData)
-                )
+                    implode(',', $storeData),
+                ),
             )
             ->addViolation();
     }

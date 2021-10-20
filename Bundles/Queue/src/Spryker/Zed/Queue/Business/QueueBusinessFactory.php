@@ -39,7 +39,7 @@ class QueueBusinessFactory extends AbstractBusinessFactory
         return new TaskManager(
             $this->getQueueClient(),
             $this->getConfig(),
-            $this->getProcessorMessagePlugins()
+            $this->getProcessorMessagePlugins(),
         );
     }
 
@@ -56,7 +56,7 @@ class QueueBusinessFactory extends AbstractBusinessFactory
             $this->createWorkerProgressbar($output),
             $this->getQueueClient(),
             $this->getQueueNames(),
-            $this->createQueueWorkerSignalDispatcher()
+            $this->createQueueWorkerSignalDispatcher(),
         );
     }
 
@@ -67,7 +67,7 @@ class QueueBusinessFactory extends AbstractBusinessFactory
     {
         return new ProcessManager(
             $this->getQueryContainer(),
-            $this->getServerUniqueId()
+            $this->getServerUniqueId(),
         );
     }
 
@@ -126,7 +126,7 @@ class QueueBusinessFactory extends AbstractBusinessFactory
             $this->getQueueClient(),
             $this->getConfig(),
             $this->getUtilEncodingService(),
-            $this->getProcessorMessagePlugins()
+            $this->getProcessorMessagePlugins(),
         );
     }
 
@@ -146,7 +146,7 @@ class QueueBusinessFactory extends AbstractBusinessFactory
         return new QueueWorkerSignalDispatcher(
             $this->createProcessManager(),
             $this->getConfig(),
-            $this->getQueueNames()
+            $this->getQueueNames(),
         );
     }
 }

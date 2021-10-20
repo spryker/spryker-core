@@ -42,7 +42,7 @@ class ContentBannerRestResponseBuilder implements ContentBannerRestResponseBuild
                 (new RestErrorMessageTransfer())
                     ->setCode(ContentBannersRestApiConfig::RESPONSE_CODE_CONTENT_KEY_IS_MISSING)
                     ->setStatus(Response::HTTP_BAD_REQUEST)
-                    ->setDetail(ContentBannersRestApiConfig::RESPONSE_DETAILS_CONTENT_KEY_IS_MISSING)
+                    ->setDetail(ContentBannersRestApiConfig::RESPONSE_DETAILS_CONTENT_KEY_IS_MISSING),
             );
     }
 
@@ -57,7 +57,7 @@ class ContentBannerRestResponseBuilder implements ContentBannerRestResponseBuild
                 (new RestErrorMessageTransfer())
                     ->setCode(ContentBannersRestApiConfig::RESPONSE_CODE_CONTENT_NOT_FOUND)
                     ->setStatus(Response::HTTP_NOT_FOUND)
-                    ->setDetail(ContentBannersRestApiConfig::RESPONSE_DETAILS_CONTENT_NOT_FOUND)
+                    ->setDetail(ContentBannersRestApiConfig::RESPONSE_DETAILS_CONTENT_NOT_FOUND),
             );
     }
 
@@ -72,7 +72,7 @@ class ContentBannerRestResponseBuilder implements ContentBannerRestResponseBuild
                 (new RestErrorMessageTransfer())
                     ->setCode(ContentBannersRestApiConfig::RESPONSE_CODE_CONTENT_TYPE_INVALID)
                     ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
-                    ->setDetail(ContentBannersRestApiConfig::RESPONSE_DETAILS_CONTENT_TYPE_INVALID)
+                    ->setDetail(ContentBannersRestApiConfig::RESPONSE_DETAILS_CONTENT_TYPE_INVALID),
             );
     }
 
@@ -108,7 +108,7 @@ class ContentBannerRestResponseBuilder implements ContentBannerRestResponseBuild
         foreach ($contentBannerTypeTransfers as $contentBannerKey => $contentBannerTypeTransfer) {
             $contentBannersRestResources[$contentBannerKey] = $this->createContentBannersRestResource(
                 $contentBannerTypeTransfer,
-                $contentBannerKey
+                $contentBannerKey,
             );
         }
 
@@ -131,7 +131,7 @@ class ContentBannerRestResponseBuilder implements ContentBannerRestResponseBuild
         return $this->restResourceBuilder->createRestResource(
             ContentBannersRestApiConfig::RESOURCE_CONTENT_BANNERS,
             $contentBannerKey,
-            $restContentBannerAttributesTransfer
+            $restContentBannerAttributesTransfer,
         );
     }
 }

@@ -263,8 +263,8 @@ class OpenApiSpecificationSchemaComponentBuilder implements SchemaComponentBuild
             $schema->addOneOf(
                 sprintf(
                     static::PATTERN_SCHEMA_REFERENCE,
-                    $schemaName
-                )
+                    $schemaName,
+                ),
             );
         }
 

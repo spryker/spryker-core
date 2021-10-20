@@ -84,7 +84,7 @@ class TaxProductStorageUnpublishListenerTest extends Unit
         // Act
         $this->taxProductStorageUnpublishListener->handleBulk(
             $eventTransfers,
-            ProductEvents::PRODUCT_ABSTRACT_UNPUBLISH
+            ProductEvents::PRODUCT_ABSTRACT_UNPUBLISH,
         );
         $taxProductStorageEntities = $this->taxProductStorageRepository
             ->getSynchronizationDataTransfersFromTaxProductStoragesByProductAbstractIds([

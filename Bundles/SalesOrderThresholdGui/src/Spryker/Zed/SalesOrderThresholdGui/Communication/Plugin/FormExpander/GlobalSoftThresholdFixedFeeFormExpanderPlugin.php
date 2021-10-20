@@ -114,7 +114,7 @@ class GlobalSoftThresholdFixedFeeFormExpanderPlugin extends AbstractPlugin imple
             ->setSalesOrderThresholdType(
                 (new SalesOrderThresholdTypeTransfer())
                     ->setKey($this->getThresholdKey())
-                    ->setThresholdGroup($this->getThresholdGroup())
+                    ->setThresholdGroup($this->getThresholdGroup()),
             );
 
         return $salesOrderThresholdValueTransfer;

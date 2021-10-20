@@ -97,7 +97,7 @@ class PriceProductConcreteGuiTableConfigurationProvider implements PriceProductC
             static::FORMAT_STRING_DATA_URL,
             static::DATA_URL,
             PriceProductTableViewTransfer::ID_PRODUCT_CONCRETE,
-            $idProductConcrete
+            $idProductConcrete,
         );
         $deletePriceUrl = sprintf(
             static::FORMAT_STRING_PRICES_URL,
@@ -107,7 +107,7 @@ class PriceProductConcreteGuiTableConfigurationProvider implements PriceProductC
             PriceProductTableViewTransfer::PRICE_PRODUCT_DEFAULT_IDS,
             PriceProductTableViewTransfer::PRICE_PRODUCT_DEFAULT_IDS,
             PriceProductTableViewTransfer::VOLUME_QUANTITY,
-            PriceProductTableViewTransfer::VOLUME_QUANTITY
+            PriceProductTableViewTransfer::VOLUME_QUANTITY,
         );
         $savePricesUrl = sprintf(
             static::FORMAT_STRING_PRICES_URL,
@@ -117,13 +117,13 @@ class PriceProductConcreteGuiTableConfigurationProvider implements PriceProductC
             PriceProductTableViewTransfer::ID_PRODUCT_CONCRETE,
             PriceProductTableViewTransfer::ID_PRODUCT_CONCRETE,
             PriceProductTableViewTransfer::VOLUME_QUANTITY,
-            PriceProductTableViewTransfer::VOLUME_QUANTITY
+            PriceProductTableViewTransfer::VOLUME_QUANTITY,
         );
         $formInputName = sprintf(
             '%s[%s][%s]',
             static::BLOCK_PREFIX_PRODUCT_CONCRETE_EDIT_FORM,
             static::BLOCK_PREFIX_PRODUCT_CONCRETE_FORM,
-            ProductConcreteTransfer::PRICES
+            ProductConcreteTransfer::PRICES,
         );
 
         $guiTableConfigurationBuilder->setDataSourceUrl($dataSourceUrl)

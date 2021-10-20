@@ -160,7 +160,7 @@ class PriceVolumeFormType extends AbstractType
             },
             function ($priceValue) {
                 return $priceValue !== null ? (int)$priceValue : null;
-            }
+            },
         );
     }
 }

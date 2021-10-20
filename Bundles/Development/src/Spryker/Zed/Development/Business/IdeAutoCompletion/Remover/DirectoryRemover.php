@@ -52,7 +52,7 @@ class DirectoryRemover implements DirectoryRemoverInterface
         }
 
         $this->fileSystem->remove(
-            $this->fileFinder->findFiles($targetDirectory)
+            $this->fileFinder->findFiles($targetDirectory),
         );
     }
 }

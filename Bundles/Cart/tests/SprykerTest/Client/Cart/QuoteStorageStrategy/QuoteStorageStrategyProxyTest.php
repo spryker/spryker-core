@@ -65,7 +65,7 @@ class QuoteStorageStrategyProxyTest extends Unit
         $this->quoteStorageStrategyProxy = new QuoteStorageStrategyProxy(
             $this->messengerClientMock,
             $this->quoteClientMock,
-            $this->quoteStorageStrategyMock
+            $this->quoteStorageStrategyMock,
         );
     }
 
@@ -101,7 +101,7 @@ class QuoteStorageStrategyProxyTest extends Unit
         $this->assertCallForwardedToSubject(
             'validateQuote',
             [],
-            QuoteResponseTransfer::class
+            QuoteResponseTransfer::class,
         );
     }
 
@@ -113,7 +113,7 @@ class QuoteStorageStrategyProxyTest extends Unit
         $this->assertCallForwardedToSubject(
             'getStorageStrategy',
             [],
-            'string'
+            'string',
         );
     }
 
@@ -127,7 +127,7 @@ class QuoteStorageStrategyProxyTest extends Unit
         $this->assertCallForwardedToSubject(
             'removeItem',
             ['sku'],
-            QuoteTransfer::class
+            QuoteTransfer::class,
         );
     }
 
@@ -141,7 +141,7 @@ class QuoteStorageStrategyProxyTest extends Unit
         $this->assertCallNotForwardedToSubject(
             'removeItem',
             ['sku'],
-            QuoteTransfer::class
+            QuoteTransfer::class,
         );
     }
 
@@ -155,7 +155,7 @@ class QuoteStorageStrategyProxyTest extends Unit
         $this->assertCallForwardedToSubject(
             'removeItems',
             [new ArrayObject()],
-            QuoteTransfer::class
+            QuoteTransfer::class,
         );
     }
 
@@ -169,7 +169,7 @@ class QuoteStorageStrategyProxyTest extends Unit
         $this->assertCallNotForwardedToSubject(
             'removeItems',
             [new ArrayObject()],
-            QuoteTransfer::class
+            QuoteTransfer::class,
         );
     }
 
@@ -183,7 +183,7 @@ class QuoteStorageStrategyProxyTest extends Unit
         $this->assertCallForwardedToSubject(
             'changeItemQuantity',
             ['sku', null, 1],
-            QuoteTransfer::class
+            QuoteTransfer::class,
         );
     }
 
@@ -197,7 +197,7 @@ class QuoteStorageStrategyProxyTest extends Unit
         $this->assertCallNotForwardedToSubject(
             'changeItemQuantity',
             ['sku', null, 1],
-            QuoteTransfer::class
+            QuoteTransfer::class,
         );
     }
 
@@ -211,7 +211,7 @@ class QuoteStorageStrategyProxyTest extends Unit
         $this->assertCallForwardedToSubject(
             'decreaseItemQuantity',
             ['sku', null, 1],
-            QuoteTransfer::class
+            QuoteTransfer::class,
         );
     }
 
@@ -225,7 +225,7 @@ class QuoteStorageStrategyProxyTest extends Unit
         $this->assertCallNotForwardedToSubject(
             'decreaseItemQuantity',
             ['sku', null, 1],
-            QuoteTransfer::class
+            QuoteTransfer::class,
         );
     }
 
@@ -239,7 +239,7 @@ class QuoteStorageStrategyProxyTest extends Unit
         $this->assertCallForwardedToSubject(
             'increaseItemQuantity',
             ['sku', null, 1],
-            QuoteTransfer::class
+            QuoteTransfer::class,
         );
     }
 
@@ -253,7 +253,7 @@ class QuoteStorageStrategyProxyTest extends Unit
         $this->assertCallNotForwardedToSubject(
             'increaseItemQuantity',
             ['sku', null, 1],
-            QuoteTransfer::class
+            QuoteTransfer::class,
         );
     }
 
@@ -267,7 +267,7 @@ class QuoteStorageStrategyProxyTest extends Unit
         $this->assertCallForwardedToSubject(
             'increaseItemQuantity',
             ['sku', null, 1],
-            QuoteTransfer::class
+            QuoteTransfer::class,
         );
     }
 
@@ -291,7 +291,7 @@ class QuoteStorageStrategyProxyTest extends Unit
         $this->assertCallForwardedToSubject(
             'setQuoteCurrency',
             [new CurrencyTransfer()],
-            QuoteResponseTransfer::class
+            QuoteResponseTransfer::class,
         );
     }
 
@@ -305,7 +305,7 @@ class QuoteStorageStrategyProxyTest extends Unit
         $this->assertCallNotForwardedToSubject(
             'setQuoteCurrency',
             [new CurrencyTransfer()],
-            QuoteResponseTransfer::class
+            QuoteResponseTransfer::class,
         );
     }
 
@@ -339,7 +339,7 @@ class QuoteStorageStrategyProxyTest extends Unit
     ): void {
         // Assign
         $this->quoteStorageStrategyMock->method($methodName)->willReturn(
-            class_exists($expectedResultType) ? new $expectedResultType() : $expectedResultType
+            class_exists($expectedResultType) ? new $expectedResultType() : $expectedResultType,
         );
 
         //Assert
@@ -362,7 +362,7 @@ class QuoteStorageStrategyProxyTest extends Unit
     ): void {
         // Assign
         $this->quoteStorageStrategyMock->method($methodName)->willReturn(
-            class_exists($expectedResultType) ? new $expectedResultType() : $expectedResultType
+            class_exists($expectedResultType) ? new $expectedResultType() : $expectedResultType,
         );
 
         //Assert

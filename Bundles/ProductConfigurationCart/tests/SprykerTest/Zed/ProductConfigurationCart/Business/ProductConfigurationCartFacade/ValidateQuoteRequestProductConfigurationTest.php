@@ -66,7 +66,7 @@ class ValidateQuoteRequestProductConfigurationTest extends Unit
         $this->assertFalse($quoteRequestResponseTransfer->getIsSuccessful());
         $this->assertSame(
             static::GLOSSARY_KEY_PRODUCT_CONFIGURATION_IN_QUOTE_REQUEST_IS_INCOMPLETE,
-            $quoteRequestResponseTransfer->getMessages()[0]->getValue()
+            $quoteRequestResponseTransfer->getMessages()[0]->getValue(),
         );
     }
 }

@@ -62,7 +62,7 @@ class OfferPluginExecutor implements OfferPluginExecutorInterface
         foreach ($this->doUpdatePlugins as $doUpdatePlugin) {
             $offerResponseTransfer = $this->mergeOfferResponses(
                 $offerResponseTransfer,
-                $doUpdatePlugin->updateOffer($offerTransfer)
+                $doUpdatePlugin->updateOffer($offerTransfer),
             );
         }
 

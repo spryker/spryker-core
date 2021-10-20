@@ -32,7 +32,7 @@ class ShoppingListPermissionCustomerExpanderPlugin extends AbstractPlugin implem
     {
         if ($customerTransfer->getCompanyUserTransfer()) {
             $companyUserPermissionCollection = $this->getFacade()->findCompanyUserPermissions(
-                $customerTransfer->getCompanyUserTransfer()->getIdCompanyUser()
+                $customerTransfer->getCompanyUserTransfer()->getIdCompanyUser(),
             );
 
             $customerTransfer = $this->addPermissionsToCustomerTransfer($customerTransfer, $companyUserPermissionCollection);

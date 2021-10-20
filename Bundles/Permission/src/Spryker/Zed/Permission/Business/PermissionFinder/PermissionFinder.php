@@ -105,7 +105,7 @@ class PermissionFinder implements PermissionFinderInterface
             }
 
             $permissionTransfer->setIsInfrastructural(
-                $permissionPlugin instanceof InfrastructuralPermissionPluginInterface
+                $permissionPlugin instanceof InfrastructuralPermissionPluginInterface,
             );
 
             $permissionCollectionTransfer->addPermission($permissionTransfer);
@@ -121,7 +121,7 @@ class PermissionFinder implements PermissionFinderInterface
     {
         $registeredPermissions = $this->getIndexedMergedRegisteredNonInfrastructuralPermissions();
         $permissionTransfers = $this->indexPermissionTransfers(
-            $this->permissionRepository->findAll()->getPermissions()->getArrayCopy()
+            $this->permissionRepository->findAll()->getPermissions()->getArrayCopy(),
         );
 
         $registeredPermissionTransfers = new ArrayObject();

@@ -74,7 +74,7 @@ class OrderCustomReferenceFacadeTest extends Unit
         $orderCustomReferenceResponseTransfer = $this->tester->getFacade()
             ->saveOrderCustomReferenceFromQuote(
                 $this->quoteTransfer,
-                $this->saveOrderTransfer
+                $this->saveOrderTransfer,
             );
 
         // Assert
@@ -90,14 +90,14 @@ class OrderCustomReferenceFacadeTest extends Unit
         $this->tester->getFacade()
             ->saveOrderCustomReferenceFromQuote(
                 $this->quoteTransfer,
-                $this->saveOrderTransfer
+                $this->saveOrderTransfer,
             );
 
         // Act
         $this->tester->getFacade()
             ->saveOrderCustomReferenceFromQuote(
                 (new QuoteTransfer()),
-                $this->saveOrderTransfer
+                $this->saveOrderTransfer,
             );
 
         $orderTransfer = $this->findOrder($this->saveOrderTransfer);
@@ -114,7 +114,7 @@ class OrderCustomReferenceFacadeTest extends Unit
         // Act
         $orderCustomReferenceResponseTransfer = $this->tester->getFacade()->updateOrderCustomReference(
             static::ORDER_CUSTOM_REFERENCE,
-            $this->orderTransfer->setIdSalesOrder(null)
+            $this->orderTransfer->setIdSalesOrder(null),
         );
 
         // Assert
@@ -129,7 +129,7 @@ class OrderCustomReferenceFacadeTest extends Unit
         // Act
         $orderCustomReferenceResponseTransfer = $this->tester->getFacade()->updateOrderCustomReference(
             static::ORDER_CUSTOM_REFERENCE,
-            $this->orderTransfer
+            $this->orderTransfer,
         );
 
         // Assert

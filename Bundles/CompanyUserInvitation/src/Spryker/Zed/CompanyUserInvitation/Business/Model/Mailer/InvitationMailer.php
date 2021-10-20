@@ -66,7 +66,7 @@ class InvitationMailer implements InvitationMailerInterface
             $this->config->getBaseUrl(),
             CompanyUserInvitationConfig1::ROUTE_INVITATION_ACCEPT,
             CompanyUserInvitationConfig1::INVITATION_HASH,
-            $companyUserInvitationTransfer->getHash()
+            $companyUserInvitationTransfer->getHash(),
         );
     }
 }

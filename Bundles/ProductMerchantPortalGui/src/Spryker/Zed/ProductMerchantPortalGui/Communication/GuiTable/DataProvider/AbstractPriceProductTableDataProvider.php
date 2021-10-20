@@ -106,14 +106,14 @@ abstract class AbstractPriceProductTableDataProvider extends AbstractGuiTableDat
         $priceProductTableViewCollectionTransfer = $this->priceProductTableDataMapper
             ->mapPriceProductTransfersToPriceProductTableViewCollectionTransfer(
                 $priceProductTransfers,
-                new PriceProductTableViewCollectionTransfer()
+                new PriceProductTableViewCollectionTransfer(),
             );
         $priceProductTableViewCollectionTransfer = $this->priceProductTableViewSorter
             ->sortPriceProductTableViews($priceProductTableViewCollectionTransfer, $criteriaTransfer);
 
         $paginationTransfer = $this->updatePaginationTransfer(
             $priceProductTableViewCollectionTransfer,
-            $criteriaTransfer
+            $criteriaTransfer,
         );
         $priceProductTableViewCollectionTransfer = $this->applyPagination($priceProductTableViewCollectionTransfer);
 
@@ -172,11 +172,11 @@ abstract class AbstractPriceProductTableDataProvider extends AbstractGuiTableDat
         $priceProductTableViewsOnCurrentPage = array_slice(
             $priceProductOfferTableViews,
             $positionStart,
-            $paginationTransfer->getMaxPerPage()
+            $paginationTransfer->getMaxPerPage(),
         );
 
         $priceProductTableViewCollectionTransfer->setPriceProductTableViews(
-            new ArrayObject($priceProductTableViewsOnCurrentPage)
+            new ArrayObject($priceProductTableViewsOnCurrentPage),
         );
 
         return $priceProductTableViewCollectionTransfer;

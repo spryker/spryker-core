@@ -23,7 +23,7 @@ class NetTotalCalculator implements CalculatorInterface
         $totalsTransfer = $calculableObjectTransfer->getTotals();
 
         $totalsTransfer->setNetTotal(
-            $totalsTransfer->getGrandTotal() - $totalsTransfer->getTaxTotal()->getAmount()
+            $totalsTransfer->getGrandTotal() - $totalsTransfer->getTaxTotal()->getAmount(),
         );
     }
 }

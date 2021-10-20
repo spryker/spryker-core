@@ -69,7 +69,7 @@ class RouterBusinessFactory extends AbstractBusinessFactory
             $this->createClosureLoader(),
             $this->createBackofficeRouterResource(),
             $this->getBackofficeRouterEnhancerPlugins(),
-            $this->getConfig()->getBackofficeRouterConfiguration()
+            $this->getConfig()->getBackofficeRouterConfiguration(),
         );
     }
 
@@ -82,7 +82,7 @@ class RouterBusinessFactory extends AbstractBusinessFactory
             $this->createClosureLoader(),
             $this->createMerchantPortalRouterResource(),
             $this->getMerchantPortalRouterEnhancerPlugins(),
-            $this->getConfig()->getMerchantPortalRouterConfiguration()
+            $this->getConfig()->getMerchantPortalRouterConfiguration(),
         );
     }
 
@@ -92,7 +92,7 @@ class RouterBusinessFactory extends AbstractBusinessFactory
     public function createBackofficeRouterResource(): ResourceInterface
     {
         return new BackofficeRouterResource(
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -134,7 +134,7 @@ class RouterBusinessFactory extends AbstractBusinessFactory
     public function createMerchantPortalRouterResource(): ResourceInterface
     {
         return new MerchantPortalRouterResource(
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -147,7 +147,7 @@ class RouterBusinessFactory extends AbstractBusinessFactory
             $this->createClosureLoader(),
             $this->createBackendGatewayRouterResource(),
             $this->getBackendGatewayRouterEnhancerPlugins(),
-            $this->getConfig()->getBackendGatewayRouterConfiguration()
+            $this->getConfig()->getBackendGatewayRouterConfiguration(),
         );
     }
 
@@ -157,7 +157,7 @@ class RouterBusinessFactory extends AbstractBusinessFactory
     public function createBackendGatewayRouterResource(): ResourceInterface
     {
         return new BackendGatewayRouterResource(
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -248,7 +248,7 @@ class RouterBusinessFactory extends AbstractBusinessFactory
             $this->createClosureLoader(),
             $this->createResource(),
             $this->getRouterEnhancerPlugins(),
-            $this->getConfig()->getRouterConfiguration()
+            $this->getConfig()->getRouterConfiguration(),
         );
     }
 
@@ -271,7 +271,7 @@ class RouterBusinessFactory extends AbstractBusinessFactory
             $this->createClosureLoader(),
             $this->createResource(),
             $this->getRouterEnhancerPlugins(),
-            $this->getConfig()->getDevelopmentRouterConfiguration()
+            $this->getConfig()->getDevelopmentRouterConfiguration(),
         );
     }
 
@@ -293,7 +293,7 @@ class RouterBusinessFactory extends AbstractBusinessFactory
     public function createResource(): ResourceInterface
     {
         return new RouterResource(
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 }

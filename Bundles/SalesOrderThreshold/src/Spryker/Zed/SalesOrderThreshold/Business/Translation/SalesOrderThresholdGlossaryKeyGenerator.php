@@ -32,7 +32,7 @@ class SalesOrderThresholdGlossaryKeyGenerator implements SalesOrderThresholdGlos
         $this->assertRequiredTransferAttributes($salesOrderThresholdTransfer);
 
         $salesOrderThresholdTransfer->getSalesOrderThresholdValue()->setMessageGlossaryKey(
-            $this->generateMessageGlossaryKey($salesOrderThresholdTransfer)
+            $this->generateMessageGlossaryKey($salesOrderThresholdTransfer),
         );
 
         return $salesOrderThresholdTransfer;
@@ -53,7 +53,7 @@ class SalesOrderThresholdGlossaryKeyGenerator implements SalesOrderThresholdGlos
                 $salesOrderThresholdTransfer->getStore()->getName(),
                 $salesOrderThresholdTransfer->getCurrency()->getCode(),
                 static::SALES_ORDER_THRESHOLD_GLOSSARY_MESSAGE,
-            ]
+            ],
         ));
     }
 

@@ -58,7 +58,7 @@ class PriceProductScheduleCsvReader implements PriceProductScheduleCsvReaderInte
             $priceProductScheduleImportTransfer = $this->priceProductScheduleImportMapper
                 ->mapPriceProductScheduleRowToPriceProductScheduleImportTransfer(
                     array_combine($headers, $rowData),
-                    new PriceProductScheduleImportTransfer()
+                    new PriceProductScheduleImportTransfer(),
                 );
             $priceProductScheduleImportTransfer->requireMetaData();
             $priceProductScheduleImportTransfer->getMetaData()->setIdentifier($rowNumber);

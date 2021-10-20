@@ -78,7 +78,7 @@ class QueueDumper implements QueueDumperInterface
         $data = $this->transformQueueReceiveMessageTransfersToArray($queueReceiveMessageTransfers);
 
         $queueDumpResponseTransfer->setMessage(
-            $this->utilEncodingService->encodeToFormat($data, $format)
+            $this->utilEncodingService->encodeToFormat($data, $format),
         );
 
         $this->postProcessMessages($queueReceiveMessageTransfers, $acknowledge);
@@ -153,8 +153,8 @@ class QueueDumper implements QueueDumperInterface
             throw new MissingQueuePluginException(
                 sprintf(
                     'There is no queue registered with this queue: %s. Please check the queue name and try again.',
-                    $queueName
-                )
+                    $queueName,
+                ),
             );
         }
     }

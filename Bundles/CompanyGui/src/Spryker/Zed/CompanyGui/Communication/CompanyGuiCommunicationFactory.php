@@ -39,7 +39,7 @@ class CompanyGuiCommunicationFactory extends AbstractCommunicationFactory
     {
         return new CompanyTable(
             $this->getPropelCompanyQuery(),
-            $this->createCompanyPluginExecutor()
+            $this->createCompanyPluginExecutor(),
         );
     }
 
@@ -52,7 +52,7 @@ class CompanyGuiCommunicationFactory extends AbstractCommunicationFactory
             $this->getCompanyTableConfigExpanderPlugins(),
             $this->getCompanyTableHeaderExpanderPlugins(),
             $this->getCompanyTableDataExpanderPlugins(),
-            $this->getCompanyTableActionExpanderPlugins()
+            $this->getCompanyTableActionExpanderPlugins(),
         );
     }
 
@@ -73,7 +73,7 @@ class CompanyGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createCompanyFormDataProvider(): CompanyFormDataProvider
     {
         return new CompanyFormDataProvider(
-            $this->getCompanyFacade()
+            $this->getCompanyFacade(),
         );
     }
 

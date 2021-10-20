@@ -61,7 +61,7 @@ abstract class AbstractSubForm extends AbstractSubFormType implements SubFormInt
                     $this->createNotBlankConstraint(),
                     $this->createBirthdayConstraint(),
                 ],
-            ]
+            ],
         );
 
         return $this;

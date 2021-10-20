@@ -106,7 +106,7 @@ class MerchantOrderTableDataMapper
             $orderTransfer = (new OrderTransfer())
                 ->fromArray($merchantOrderTableRowDataArray, true)
                 ->setSalutation(
-                    SpySalesOrderTableMap::getValueSet(SpySalesOrderTableMap::COL_SALUTATION)[$merchantOrderTableRowDataArray[OrderTransfer::SALUTATION]]
+                    SpySalesOrderTableMap::getValueSet(SpySalesOrderTableMap::COL_SALUTATION)[$merchantOrderTableRowDataArray[OrderTransfer::SALUTATION]],
                 );
             $totalsTransfer = (new TotalsTransfer())->setGrandTotal($merchantOrderTableRowDataArray[TotalsTransfer::GRAND_TOTAL]);
 

@@ -59,7 +59,7 @@ class MyAccountController extends AbstractController
         $merchantAccountForm = $this->getFactory()
             ->createMerchantAccountForm(
                 $merchantAccountFormDataProvider->getData(),
-                $merchantAccountFormDataProvider->getOptions()
+                $merchantAccountFormDataProvider->getOptions(),
             )
             ->handleRequest($request);
 
@@ -128,7 +128,7 @@ class MyAccountController extends AbstractController
         if ($this->getIsFkLocaleChanged($merchantAccountForm)) {
             $localeFacade = $this->getFactory()->getLocaleFacade();
             $localeTransfer = $localeFacade->getLocaleById(
-                $merchantUserTransfer->getUserOrFail()->getFkLocaleOrFail()
+                $merchantUserTransfer->getUserOrFail()->getFkLocaleOrFail(),
             );
 
             $localeFacade->setCurrentLocale($localeTransfer);

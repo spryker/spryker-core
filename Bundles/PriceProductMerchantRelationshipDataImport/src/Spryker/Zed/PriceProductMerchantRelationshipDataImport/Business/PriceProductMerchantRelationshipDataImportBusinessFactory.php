@@ -28,7 +28,7 @@ class PriceProductMerchantRelationshipDataImportBusinessFactory extends DataImpo
     public function createPriceProductMerchantRelationshipDataImport()
     {
         $dataImporter = $this->getCsvDataImporterFromConfig(
-            $this->getConfig()->getPriceProductMerchantRelationshipDataImporterConfiguration()
+            $this->getConfig()->getPriceProductMerchantRelationshipDataImporterConfiguration(),
         );
 
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();

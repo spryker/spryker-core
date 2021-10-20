@@ -206,7 +206,7 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::QUERY_CONTAINER_SALES, function (Container $container) {
             return new PersistenceOmsToSalesBridge(
-                $container->getLocator()->sales()->queryContainer()
+                $container->getLocator()->sales()->queryContainer(),
             );
         });
 

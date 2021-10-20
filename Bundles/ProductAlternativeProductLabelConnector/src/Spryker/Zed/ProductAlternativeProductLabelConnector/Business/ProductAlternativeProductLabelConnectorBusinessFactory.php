@@ -33,7 +33,7 @@ class ProductAlternativeProductLabelConnectorBusinessFactory extends AbstractBus
         return new ProductAlternativeProductLabelConnectorInstaller(
             $this->getConfig(),
             $this->getProductLabelFacade(),
-            $this->getLocaleFacade()
+            $this->getLocaleFacade(),
         );
     }
 
@@ -46,7 +46,7 @@ class ProductAlternativeProductLabelConnectorBusinessFactory extends AbstractBus
             $this->getProductFacade(),
             $this->getProductLabelFacade(),
             $this->getProductAlternativeFacade(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -59,7 +59,7 @@ class ProductAlternativeProductLabelConnectorBusinessFactory extends AbstractBus
             $this->getProductFacade(),
             $this->getProductLabelFacade(),
             $this->getProductAlternativeFacade(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 

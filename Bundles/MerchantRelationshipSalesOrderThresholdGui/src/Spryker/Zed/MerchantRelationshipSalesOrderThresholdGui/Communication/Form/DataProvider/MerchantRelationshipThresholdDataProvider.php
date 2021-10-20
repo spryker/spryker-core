@@ -124,7 +124,7 @@ class MerchantRelationshipThresholdDataProvider
 
         $data[MerchantRelationshipThresholdType::FIELD_STORE_CURRENCY] = $this->formatStoreCurrencyRowValue(
             $storeTransfer,
-            $currencyTransfer
+            $currencyTransfer,
         );
 
         return $data;
@@ -144,7 +144,7 @@ class MerchantRelationshipThresholdDataProvider
             foreach ($storeWithCurrencyTransfer->getCurrencies() as $currencyTransfer) {
                 $storeCurrencyList[$this->formatStoreCurrencyRowLabel(
                     $storeTransfer,
-                    $currencyTransfer
+                    $currencyTransfer,
                 )] = $this->formatStoreCurrencyRowValue($storeTransfer, $currencyTransfer);
             }
         }
@@ -164,7 +164,7 @@ class MerchantRelationshipThresholdDataProvider
             static::FORMAT_STORE_CURRENCY_ROW_LABEL,
             $storeTransfer->getName(),
             $currencyTransfer->getName(),
-            $currencyTransfer->getCode()
+            $currencyTransfer->getCode(),
         );
     }
 
@@ -227,7 +227,7 @@ class MerchantRelationshipThresholdDataProvider
             static::FORMAT_STORE_CURRENCY_ROW_VALUE,
             $storeTransfer->getName(),
             MerchantRelationshipSalesOrderThresholdGuiConfig::STORE_CURRENCY_DELIMITER,
-            $currencyTransfer->getCode()
+            $currencyTransfer->getCode(),
         );
     }
 
@@ -247,7 +247,7 @@ class MerchantRelationshipThresholdDataProvider
             ->getMerchantRelationshipSalesOrderThresholds(
                 $storeTransfer,
                 $currencyTransfer,
-                [$idMerchantRelationship]
+                [$idMerchantRelationship],
             );
     }
 }

@@ -45,7 +45,7 @@ class CustomerAccessGuiCommunicationFactory extends AbstractCommunicationFactory
         return $this->getFormFactory()->create(
             CustomerAccessForm::class,
             $customerAccessTransfer,
-            $options
+            $options,
         );
     }
 }

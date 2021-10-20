@@ -141,7 +141,7 @@ class EditController extends AbstractController
         $offerKey = $request->query->get(CreateController::PARAM_KEY_INITIAL_OFFER);
 
         return (new OfferTransfer())->fromArray(
-            $this->retrieveFormDataFromSession($offerKey)
+            $this->retrieveFormDataFromSession($offerKey),
         );
     }
 
@@ -166,7 +166,7 @@ class EditController extends AbstractController
 
         $redirectUrl = Url::generate(
             '/customer/add',
-            [CreateController::PARAM_KEY_REDIRECT_URL => $redirectBackUrl]
+            [CreateController::PARAM_KEY_REDIRECT_URL => $redirectBackUrl],
         )->build();
 
         return $this->redirectResponse($redirectUrl);
@@ -191,7 +191,7 @@ class EditController extends AbstractController
             [
                 static::PARAM_ID_OFFER => $offerTransfer->getIdOffer(),
                 CreateController::PARAM_KEY_INITIAL_OFFER => $offerKey,
-            ]
+            ],
         )->build();
 
         return $redirectUrl;

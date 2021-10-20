@@ -57,7 +57,7 @@ class MerchantAddressReader implements MerchantAddressReaderInterface
         $merchantReference = $merchantResource->getId();
 
         $merchantStorageTransfer = $this->merchantStorageClient->findOne(
-            (new MerchantStorageCriteriaTransfer())->addMerchantReference($merchantReference)
+            (new MerchantStorageCriteriaTransfer())->addMerchantReference($merchantReference),
         );
 
         if (!$merchantStorageTransfer) {
@@ -72,7 +72,7 @@ class MerchantAddressReader implements MerchantAddressReaderInterface
 
         return $this->merchantsAddressRestResponseBuilder->createMerchantAddressesRestResponse(
             $merchantStorageProfileAddressTransfers,
-            $merchantReference
+            $merchantReference,
         );
     }
 
@@ -84,7 +84,7 @@ class MerchantAddressReader implements MerchantAddressReaderInterface
     public function getMerchantAddressResources(array $merchantReferences): array
     {
         $merchantStorageTransfers = $this->merchantStorageClient->get(
-            (new MerchantStorageCriteriaTransfer())->setMerchantReferences($merchantReferences)
+            (new MerchantStorageCriteriaTransfer())->setMerchantReferences($merchantReferences),
         );
 
         $merchantStorageTransfers = $this->indexMerchantStorageTransfersByMerchantReference($merchantStorageTransfers);

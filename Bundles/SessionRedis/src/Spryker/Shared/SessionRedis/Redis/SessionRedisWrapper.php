@@ -171,7 +171,7 @@ class SessionRedisWrapper implements SessionRedisWrapperInterface
     {
         $this->redisClient->setupConnection(
             $this->connectionKey,
-            $configurationTransfer
+            $configurationTransfer,
         );
     }
 }

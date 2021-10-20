@@ -28,12 +28,12 @@ class ProductAbstractLocalizedAttributesMapper
         foreach ($productAbstractLocalizedAttributesEntities as $productAbstractLocalizedAttributesEntity) {
             $productAbstractLocalizedAttributesTransfer = $this->mapProductAbstractLocalizedAttributesEntityToTransfer(
                 $productAbstractLocalizedAttributesEntity,
-                new ProductAbstractLocalizedAttributesTransfer()
+                new ProductAbstractLocalizedAttributesTransfer(),
             );
 
             $localeTransfer = $this->mapLocaleEntityToLocaleTransfer(
                 $productAbstractLocalizedAttributesEntity->getLocale(),
-                new LocaleTransfer()
+                new LocaleTransfer(),
             );
 
             $productAbstractLocalizedAttributesTransfer->setLocale($localeTransfer);

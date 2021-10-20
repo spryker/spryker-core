@@ -72,7 +72,7 @@ class VoucherType extends AbstractType
 
         $builder->get(static::FIELD_AMOUNT)
             ->addModelTransformer(
-                $this->createMoneyModelTransformer()
+                $this->createMoneyModelTransformer(),
             );
 
         return $this;
@@ -91,7 +91,7 @@ class VoucherType extends AbstractType
             },
             function ($value) {
                 return $value * 100;
-            }
+            },
         );
     }
 }

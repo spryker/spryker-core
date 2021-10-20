@@ -200,7 +200,7 @@ trait Helper
             $this->output,
             $question,
             $options,
-            $default
+            $default,
         );
 
         return $options[$selected];

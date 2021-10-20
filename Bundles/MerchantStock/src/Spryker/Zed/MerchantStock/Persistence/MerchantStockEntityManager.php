@@ -29,14 +29,14 @@ class MerchantStockEntityManager extends AbstractEntityManager implements Mercha
         $merchantStockMapper = $this->getFactory()->createMerchantStockMapper();
         $merchantStockEntity = $merchantStockMapper->mapMerchantStockTransferToMerchantStockEntity(
             $merchantStockTransfer,
-            new SpyMerchantStock()
+            new SpyMerchantStock(),
         );
 
         $merchantStockEntity->save();
 
         return $merchantStockMapper->mapMerchantStockEntityToMerchantStockTransfer(
             $merchantStockEntity,
-            $merchantStockTransfer
+            $merchantStockTransfer,
         );
     }
 }

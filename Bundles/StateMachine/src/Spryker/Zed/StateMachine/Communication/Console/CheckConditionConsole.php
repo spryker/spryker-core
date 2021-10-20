@@ -52,14 +52,14 @@ class CheckConditionConsole extends Console
         $this->addArgument(
             static::ARGUMENT_STATE_MACHINE_NAME,
             InputArgument::OPTIONAL,
-            'Name of state machine to execute condition check'
+            'Name of state machine to execute condition check',
         );
 
         $this->addOption(
             static::OPTION_STATE_MACHINE_NAME,
             's',
             InputOption::VALUE_REQUIRED,
-            '(deprecated) Name of state machine to execute condition check'
+            '(deprecated) Name of state machine to execute condition check',
         );
 
         parent::configure();

@@ -70,7 +70,7 @@ class QuoteCartNoteSetter implements QuoteCartNoteSetterInterface
         $itemTransferCollection = $this->findQuoteItems(
             $quoteTransfer,
             $quoteItemCartNoteRequestTransfer->getSku(),
-            $quoteItemCartNoteRequestTransfer->getGroupKey()
+            $quoteItemCartNoteRequestTransfer->getGroupKey(),
         );
         if (!count($itemTransferCollection)) {
             $quoteResponseTransfer = new QuoteResponseTransfer();

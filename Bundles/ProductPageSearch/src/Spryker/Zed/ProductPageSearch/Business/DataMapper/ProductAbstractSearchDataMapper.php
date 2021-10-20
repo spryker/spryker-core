@@ -93,7 +93,7 @@ class ProductAbstractSearchDataMapper extends AbstractProductSearchDataMapper
             return $this->searchFacade->transformPageMapToDocumentByMapperName(
                 $data,
                 $localeTransfer,
-                ProductPageSearchConfig::PRODUCT_ABSTRACT_RESOURCE_NAME
+                ProductPageSearchConfig::PRODUCT_ABSTRACT_RESOURCE_NAME,
             );
         }
 

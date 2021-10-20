@@ -82,7 +82,7 @@ class PriceProductDataProvider implements PriceProductDataProviderInterface
 
         $priceProductTransfers = $this->priceProductOfferMapper->mapRequestDataToPriceProductTransfers(
             $requestData,
-            $priceProductTransfers
+            $priceProductTransfers,
         );
 
         return $priceProductTransfers;
@@ -144,14 +144,14 @@ class PriceProductDataProvider implements PriceProductDataProviderInterface
             ->setIdProduct($offerPriceProductTransfer->getIdProduct())
             ->setPriceDimension(
                 (new PriceProductDimensionTransfer())
-                    ->setIdProductOffer($priceProductDimensionTransfer->getIdProductOffer())
+                    ->setIdProductOffer($priceProductDimensionTransfer->getIdProductOffer()),
             )
             ->setMoneyValue(
                 (new MoneyValueTransfer())
                     ->setCurrency($moneyValueTransfer->getCurrency())
                     ->setFkStore($moneyValueTransfer->getFkStore())
                     ->setStore($moneyValueTransfer->getStore())
-                    ->setFkCurrency($moneyValueTransfer->getFkCurrency())
+                    ->setFkCurrency($moneyValueTransfer->getFkCurrency()),
             );
 
         return $this->setPriceTypeToPriceProduct($priceTypeName, $priceProductTransfer);

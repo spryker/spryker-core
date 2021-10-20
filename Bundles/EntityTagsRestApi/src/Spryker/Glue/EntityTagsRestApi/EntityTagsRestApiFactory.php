@@ -40,7 +40,7 @@ class EntityTagsRestApiFactory extends AbstractFactory
     {
         return new EntityTagResolver(
             $this->createEntityTagChecker(),
-            $this->getEntityTagClient()
+            $this->getEntityTagClient(),
         );
     }
 
@@ -52,7 +52,7 @@ class EntityTagsRestApiFactory extends AbstractFactory
         return new EntityTagResponseHeaderFormatter(
             $this->createEntityTagChecker(),
             $this->createEntityTagResolver(),
-            $this->getEntityTagClient()
+            $this->getEntityTagClient(),
         );
     }
 
@@ -64,7 +64,7 @@ class EntityTagsRestApiFactory extends AbstractFactory
         return new EntityTagRequestValidator(
             $this->createEntityTagChecker(),
             $this->getEntityTagClient(),
-            $this->createEntityTagRestResponseBuilder()
+            $this->createEntityTagRestResponseBuilder(),
         );
     }
 

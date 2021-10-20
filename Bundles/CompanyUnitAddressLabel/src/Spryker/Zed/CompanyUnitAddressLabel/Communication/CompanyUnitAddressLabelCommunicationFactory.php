@@ -26,7 +26,7 @@ class CompanyUnitAddressLabelCommunicationFactory extends AbstractCommunicationF
     public function createCompanyUnitAddressLabelChoiceFormDataProvider()
     {
         return new CompanyUnitAddressLabelFormDataProvider(
-            $this->getRepository()
+            $this->getRepository(),
         );
     }
 

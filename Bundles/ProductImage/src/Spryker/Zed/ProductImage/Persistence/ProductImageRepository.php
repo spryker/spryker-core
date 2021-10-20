@@ -98,7 +98,7 @@ class ProductImageRepository extends AbstractRepository implements ProductImageR
         foreach ($productImageSetToProductImageEntities as $productImageSetToProductImageEntity) {
             $productImageTransfer = $mapper->mapProductImageEntityToProductImageTransfer(
                 $productImageSetToProductImageEntity->getSpyProductImage(),
-                new ProductImageTransfer()
+                new ProductImageTransfer(),
             );
             $indexedProductImages[$productImageSetToProductImageEntity->getFkProductImageSet()][] = $productImageTransfer;
         }

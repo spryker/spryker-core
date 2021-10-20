@@ -33,7 +33,7 @@ class QuoteRequestDataImportConfig extends DataImportConfig
 
         return $this->buildImporterConfiguration(
             $moduleDataImportDirectory . 'quote_request.csv',
-            static::IMPORT_TYPE_QUOTE_REQUEST
+            static::IMPORT_TYPE_QUOTE_REQUEST,
         );
     }
 
@@ -48,7 +48,7 @@ class QuoteRequestDataImportConfig extends DataImportConfig
 
         return $this->buildImporterConfiguration(
             $moduleDataImportDirectory . 'quote_request_version.csv',
-            static::IMPORT_TYPE_QUOTE_REQUEST_VERSION
+            static::IMPORT_TYPE_QUOTE_REQUEST_VERSION,
         );
     }
 
@@ -62,7 +62,7 @@ class QuoteRequestDataImportConfig extends DataImportConfig
             . DIRECTORY_SEPARATOR . '..'
             . DIRECTORY_SEPARATOR . '..'
             . DIRECTORY_SEPARATOR . '..'
-            . DIRECTORY_SEPARATOR . '..'
+            . DIRECTORY_SEPARATOR . '..',
         );
 
         return $moduleRoot . DIRECTORY_SEPARATOR;

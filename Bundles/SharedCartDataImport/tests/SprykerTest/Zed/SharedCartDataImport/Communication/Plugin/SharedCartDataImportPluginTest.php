@@ -80,7 +80,7 @@ class SharedCartDataImportPluginTest extends Unit
             QuoteDependencyProvider::PLUGINS_QUOTE_DELETE_BEFORE,
             [
             new RemoveSharedQuoteBeforeQuoteDeletePlugin(),
-            ]
+            ],
         );
 
         $this->tester->getLocator()->permission()->facade()->syncPermissionPlugins();

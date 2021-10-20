@@ -50,7 +50,7 @@ class ContentProductAbstractListRestResponseBuilder implements ContentProductAbs
                 (new RestErrorMessageTransfer())
                     ->setCode(ContentProductAbstractListsRestApiConfig::RESPONSE_CODE_CONTENT_KEY_IS_MISSING)
                     ->setStatus(Response::HTTP_BAD_REQUEST)
-                    ->setDetail(ContentProductAbstractListsRestApiConfig::RESPONSE_DETAILS_CONTENT_KEY_IS_MISSING)
+                    ->setDetail(ContentProductAbstractListsRestApiConfig::RESPONSE_DETAILS_CONTENT_KEY_IS_MISSING),
             );
     }
 
@@ -65,7 +65,7 @@ class ContentProductAbstractListRestResponseBuilder implements ContentProductAbs
                 (new RestErrorMessageTransfer())
                     ->setCode(ContentProductAbstractListsRestApiConfig::RESPONSE_CODE_CONTENT_NOT_FOUND)
                     ->setStatus(Response::HTTP_NOT_FOUND)
-                    ->setDetail(ContentProductAbstractListsRestApiConfig::RESPONSE_DETAILS_CONTENT_NOT_FOUND)
+                    ->setDetail(ContentProductAbstractListsRestApiConfig::RESPONSE_DETAILS_CONTENT_NOT_FOUND),
             );
     }
 
@@ -80,7 +80,7 @@ class ContentProductAbstractListRestResponseBuilder implements ContentProductAbs
                 (new RestErrorMessageTransfer())
                     ->setCode(ContentProductAbstractListsRestApiConfig::RESPONSE_CODE_CONTENT_TYPE_INVALID)
                     ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
-                    ->setDetail(ContentProductAbstractListsRestApiConfig::RESPONSE_DETAILS_CONTENT_TYPE_INVALID)
+                    ->setDetail(ContentProductAbstractListsRestApiConfig::RESPONSE_DETAILS_CONTENT_TYPE_INVALID),
             );
     }
 
@@ -115,7 +115,7 @@ class ContentProductAbstractListRestResponseBuilder implements ContentProductAbs
         foreach ($contentProductAbstractListTypeTransfers as $contentProductAbstractListKey => $contentProductAbstractListTypeTransfer) {
             $contentProductAbstractListsRestResource = $this->restResourceBuilder->createRestResource(
                 ContentProductAbstractListsRestApiConfig::RESOURCE_CONTENT_PRODUCT_ABSTRACT_LISTS,
-                $contentProductAbstractListKey
+                $contentProductAbstractListKey,
             );
 
             $contentProductAbstractListsRestResources[$contentProductAbstractListKey] = $contentProductAbstractListsRestResource;

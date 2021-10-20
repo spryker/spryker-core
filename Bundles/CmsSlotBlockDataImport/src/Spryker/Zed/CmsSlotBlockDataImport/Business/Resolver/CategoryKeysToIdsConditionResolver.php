@@ -68,8 +68,8 @@ class CategoryKeysToIdsConditionResolver implements ConditionResolverInterface
             throw new EntityNotFoundException(
                 sprintf(
                     'Could not find Category IDs by Keys "%s".',
-                    implode(',', $categoryKeys)
-                )
+                    implode(',', $categoryKeys),
+                ),
             );
         }
 

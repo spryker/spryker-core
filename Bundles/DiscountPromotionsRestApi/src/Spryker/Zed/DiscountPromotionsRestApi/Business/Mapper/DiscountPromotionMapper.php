@@ -41,7 +41,7 @@ class DiscountPromotionMapper implements DiscountPromotionMapperInterface
         }
 
         $discountPromotionTransfer = $this->discountPromotionFacade->findDiscountPromotionByUuid(
-            $cartItemRequestTransfer->getDiscountPromotionUuid()
+            $cartItemRequestTransfer->getDiscountPromotionUuid(),
         );
 
         if ($discountPromotionTransfer === null) {

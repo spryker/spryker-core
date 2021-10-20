@@ -45,7 +45,7 @@ class CategoryNodePageSearchByCategoryTemplateEventsWriter implements CategoryNo
         $categoryTemplateIds = $this->eventBehaviorFacade->getEventTransferIds($eventEntityTransfers);
 
         $this->categoryNodePageSearchWriter->writeCategoryNodeStorageCollectionByCategoryNodeCriteria(
-            (new CategoryNodeCriteriaTransfer())->setCategoryTemplateIds($categoryTemplateIds)
+            (new CategoryNodeCriteriaTransfer())->setCategoryTemplateIds($categoryTemplateIds),
         );
     }
 }

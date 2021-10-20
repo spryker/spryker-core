@@ -463,7 +463,7 @@ class StorageClient extends AbstractClient implements StorageClientInterface
     {
         if (!$this->getService() instanceof StorageScanPluginInterface) {
             throw new InvalidStorageScanPluginInterfaceException(
-                'In order to use the method `scanKeys` you need a service that implements the plugin interface `StorageScanPluginInterface`'
+                'In order to use the method `scanKeys` you need a service that implements the plugin interface `StorageScanPluginInterface`',
             );
         }
 

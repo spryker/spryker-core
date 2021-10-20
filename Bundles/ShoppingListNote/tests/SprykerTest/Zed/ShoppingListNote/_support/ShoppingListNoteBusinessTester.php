@@ -45,7 +45,7 @@ class ShoppingListNoteBusinessTester extends Actor
                 CompanyTransfer::STATUS => 'approved',
                 CompanyTransfer::IS_ACTIVE => true,
                 CompanyTransfer::INITIAL_USER_TRANSFER => new CompanyUserTransfer(),
-            ]
+            ],
         );
     }
 
@@ -62,7 +62,7 @@ class ShoppingListNoteBusinessTester extends Actor
                 CompanyBusinessUnitTransfer::EMAIL => 'test@spryker.com',
                 CompanyBusinessUnitTransfer::PHONE => '1234567890',
                 CompanyBusinessUnitTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
-            ]
+            ],
         );
     }
 

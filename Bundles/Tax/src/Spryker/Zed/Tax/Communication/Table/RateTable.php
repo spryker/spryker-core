@@ -146,7 +146,7 @@ class RateTable extends AbstractTable
             '/tax/rate/edit',
             [
                 self::URL_PARAM_ID_TAX_RATE => $taxRateEntity->getIdTaxRate(),
-            ]
+            ],
         );
 
         return $this->generateEditButton($editTaxRateUrl, 'Edit');
@@ -163,7 +163,7 @@ class RateTable extends AbstractTable
             '/tax/rate/view',
             [
                 self::URL_PARAM_ID_TAX_RATE => $taxRateEntity->getIdTaxRate(),
-            ]
+            ],
         );
 
         return $this->generateViewButton($viewTaxRateUrl, 'View');
@@ -180,7 +180,7 @@ class RateTable extends AbstractTable
             '/tax/delete-rate',
             [
                 self::URL_PARAM_ID_TAX_RATE => $taxRateEntity->getIdTaxRate(),
-            ]
+            ],
         );
 
         return $this->generateRemoveButton($deleteTaxRateUrl, 'Delete');

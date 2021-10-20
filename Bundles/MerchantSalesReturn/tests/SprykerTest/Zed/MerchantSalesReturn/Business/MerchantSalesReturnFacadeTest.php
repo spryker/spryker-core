@@ -73,7 +73,7 @@ class MerchantSalesReturnFacadeTest extends Unit
 
         $merchantOrderTransfer = $this->tester->createMerchantOrderWithRelatedData(
             $saveOrderTransfer,
-            $merchantTransfer
+            $merchantTransfer,
         );
 
         $returnTransfer = new ReturnTransfer();
@@ -92,7 +92,7 @@ class MerchantSalesReturnFacadeTest extends Unit
         // Assert
         $this->assertSame(
             $merchantOrderTransfer->getMerchantReference(),
-            $actualReturnTransfer->getMerchantReference()
+            $actualReturnTransfer->getMerchantReference(),
         );
     }
 
@@ -187,7 +187,7 @@ class MerchantSalesReturnFacadeTest extends Unit
 
         $merchantOrderTransfer = $this->tester->createMerchantOrderWithRelatedData(
             $saveOrderTransfer,
-            $merchantTransfer
+            $merchantTransfer,
         );
 
         $returnItemTransfers = [];
@@ -218,8 +218,8 @@ class MerchantSalesReturnFacadeTest extends Unit
             ->addReturnItem(
                 (new ReturnItemTransfer())
                     ->setOrderItem(
-                        (new ItemTransfer())->setUuid(static::NOT_EXISTING_ORDER_ITEM_UUID)
-                    )
+                        (new ItemTransfer())->setUuid(static::NOT_EXISTING_ORDER_ITEM_UUID),
+                    ),
             );
 
         // Act

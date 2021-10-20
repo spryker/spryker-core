@@ -38,7 +38,7 @@ class ReturnReasonWriterStep extends PublishAwareStep implements DataImportStepI
 
         $this->addPublishEvents(
             static::EVENT_RETURN_REASON_PUBLISH_WRITE,
-            $salesReturnReasonEntity->getIdSalesReturnReason()
+            $salesReturnReasonEntity->getIdSalesReturnReason(),
         );
     }
 

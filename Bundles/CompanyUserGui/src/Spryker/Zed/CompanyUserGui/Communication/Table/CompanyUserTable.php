@@ -166,13 +166,13 @@ class CompanyUserTable extends AbstractTable
     {
         $companyUserDataItems = $this->runQuery(
             $this->prepareQuery($this->companyUserQuery),
-            $config
+            $config,
         );
 
         $companyUserDataTableRows = [];
         foreach ($companyUserDataItems as $companyUserDataItem) {
             $companyUserDataTableRow = $this->companyUserTableExpanderPluginExecutor->executePrepareDataExpanderPlugins(
-                $this->mapCompanyUserDataItemToCompanyUserTableDataRow($companyUserDataItem)
+                $this->mapCompanyUserDataItemToCompanyUserTableDataRow($companyUserDataItem),
             );
 
             $companyUserDataTableRows[] = $companyUserDataTableRow;
@@ -213,7 +213,7 @@ class CompanyUserTable extends AbstractTable
             ->endUse()
             ->withColumn(
                 'CONCAT(' . SpyCustomerTableMap::COL_FIRST_NAME . ', \' \', ' . SpyCustomerTableMap::COL_LAST_NAME . ')',
-                static::COL_COMPANY_USER_NAME
+                static::COL_COMPANY_USER_NAME,
             )
             ->joinCompany()
             ->withColumn(SpyCompanyTableMap::COL_NAME, static::COL_COMPANY_NAME);
@@ -262,7 +262,7 @@ class CompanyUserTable extends AbstractTable
             Url::generate(CompanyUserGuiConfig::URL_EDIT_COMPANY_USER, [
                 CompanyUserGuiConfig::PARAM_ID_COMPANY_USER => $companyUserDataItem[SpyCompanyUserTableMap::COL_ID_COMPANY_USER],
             ]),
-            'Edit'
+            'Edit',
         );
     }
 
@@ -283,7 +283,7 @@ class CompanyUserTable extends AbstractTable
                 [
                     static::BUTTON_CLASS => 'btn-danger safe-submit',
                     static::BUTTON_ICON => 'fa-trash',
-                ]
+                ],
             );
         }
 
@@ -292,7 +292,7 @@ class CompanyUserTable extends AbstractTable
                 CompanyUserGuiConfig::PARAM_ID_COMPANY_USER => $companyUserDataItem[SpyCompanyUserTableMap::COL_ID_COMPANY_USER],
             ]),
             'Enable',
-            EnableCompanyUserForm::class
+            EnableCompanyUserForm::class,
         );
     }
 
@@ -313,7 +313,7 @@ class CompanyUserTable extends AbstractTable
             Url::generate($deleteUrl, [
                 CompanyUserGuiConfig::PARAM_ID_COMPANY_USER => $companyUserDataItem[SpyCompanyUserTableMap::COL_ID_COMPANY_USER],
             ]),
-            'Delete'
+            'Delete',
         );
     }
 
@@ -332,7 +332,7 @@ class CompanyUserTable extends AbstractTable
                 $buttonTransfer->getUrl(),
                 $buttonTransfer->getTitle(),
                 $buttonTransfer->getDefaultOptions(),
-                $buttonTransfer->getCustomOptions()
+                $buttonTransfer->getCustomOptions(),
             );
         }
 

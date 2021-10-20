@@ -31,7 +31,7 @@ class AddDirectoryController extends AbstractController
                 $this->getFactory()->getFileManagerFacade()->saveDirectory($form->getData());
 
                 $this->addSuccessMessage(
-                    'The file directory was added successfully.'
+                    'The file directory was added successfully.',
                 );
                 $redirectUrl = Url::generate('/file-manager-gui/directories-tree')->build();
 

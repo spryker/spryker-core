@@ -34,7 +34,7 @@ class DiscontinuedProductConcreteEditFormExpanderPlugin extends AbstractPlugin i
 
         $formType->buildForm(
             $builder,
-            []
+            [],
         );
     }
 }

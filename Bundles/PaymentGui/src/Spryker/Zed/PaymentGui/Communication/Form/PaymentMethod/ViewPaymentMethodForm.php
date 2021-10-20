@@ -64,7 +64,7 @@ class ViewPaymentMethodForm extends AbstractType
                 'label' => false,
                 'required' => false,
                 'disabled' => $options[ViewPaymentMethodFormDataProvider::OPTION_STORE_RELATION_DISABLED],
-            ]
+            ],
         );
 
         return $this;

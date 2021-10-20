@@ -233,8 +233,8 @@ class SynchronizationFacadeTest extends Unit
                     function ($key, $value): void {
                         $this->assertSame('testKey', $key);
                         $this->assertSame(['data' => 'testValue'], $value);
-                    }
-                )
+                    },
+                ),
             );
 
             return $storageMock;
@@ -266,8 +266,8 @@ class SynchronizationFacadeTest extends Unit
                 $this->returnCallback(
                     function ($key): void {
                         $this->assertSame('testKey', $key);
-                    }
-                )
+                    },
+                ),
             );
 
             return $storageMock;
@@ -297,13 +297,13 @@ class SynchronizationFacadeTest extends Unit
                     function ($data): void {
                         $this->assertSame('testKey', key($data));
                         $this->assertSame(['data' => 'testValue'], current($data));
-                    }
-                )
+                    },
+                ),
             );
             $searchMock->expects($this->once())->method('read')->will($this->returnCallback(
                 function ($key): void {
                     throw new NotFoundException();
-                }
+                },
             ));
 
             return $searchMock;
@@ -334,14 +334,14 @@ class SynchronizationFacadeTest extends Unit
                 $this->returnCallback(
                     function ($data): void {
                         $this->assertSame('testKey', key($data));
-                    }
-                )
+                    },
+                ),
             );
 
             $searchMock->expects($this->once())->method('read')->will($this->returnCallback(
                 function ($key): void {
                     throw new NotFoundException();
-                }
+                },
             ));
 
             return $searchMock;
@@ -522,7 +522,7 @@ class SynchronizationFacadeTest extends Unit
     protected function createUtilEncodingServiceBridge(): SynchronizationToUtilEncodingServiceBridge
     {
         return new SynchronizationToUtilEncodingServiceBridge(
-            new UtilEncodingService()
+            new UtilEncodingService(),
         );
     }
 

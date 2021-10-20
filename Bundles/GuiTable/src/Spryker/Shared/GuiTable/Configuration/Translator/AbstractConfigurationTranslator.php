@@ -254,7 +254,7 @@ abstract class AbstractConfigurationTranslator implements ConfigurationTranslato
         }
 
         $guiTableTitleConfigurationTransfer->setTitle($this->translate(
-            $guiTableTitleConfigurationTransfer->getTitleOrFail()
+            $guiTableTitleConfigurationTransfer->getTitleOrFail(),
         ));
         $guiTableConfigurationTransfer->setTitle($guiTableTitleConfigurationTransfer);
 
@@ -288,7 +288,7 @@ abstract class AbstractConfigurationTranslator implements ConfigurationTranslato
 
             if ($title) {
                 $guiTableEditableAddButtonTransfer->setTitle(
-                    $this->translate($title)
+                    $this->translate($title),
                 );
 
                 $guiTableEditableCreateConfigurationTransfer->setAddButton($guiTableEditableAddButtonTransfer);
@@ -302,7 +302,7 @@ abstract class AbstractConfigurationTranslator implements ConfigurationTranslato
 
             if ($title) {
                 $guiTableEditableCancelButtonTransfer->setTitle(
-                    $this->translate($title)
+                    $this->translate($title),
                 );
 
                 $guiTableEditableCreateConfigurationTransfer->setCancelButton($guiTableEditableCancelButtonTransfer);
@@ -341,7 +341,7 @@ abstract class AbstractConfigurationTranslator implements ConfigurationTranslato
 
             if ($title) {
                 $guiTableEditableSaveButtonTransfer->setTitle(
-                    $this->translate($title)
+                    $this->translate($title),
                 );
 
                 $guiTableEditableUpdateConfigurationTransfer->setSaveButton($guiTableEditableSaveButtonTransfer);
@@ -355,7 +355,7 @@ abstract class AbstractConfigurationTranslator implements ConfigurationTranslato
 
             if ($title) {
                 $guiTableEditableCancelButtonTransfer->setTitle(
-                    $this->translate($title)
+                    $this->translate($title),
                 );
 
                 $guiTableEditableUpdateConfigurationTransfer->setCancelButton($guiTableEditableCancelButtonTransfer);

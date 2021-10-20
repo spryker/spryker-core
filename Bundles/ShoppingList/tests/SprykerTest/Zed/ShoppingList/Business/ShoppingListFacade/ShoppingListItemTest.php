@@ -252,7 +252,7 @@ class ShoppingListItemTest extends Unit
         $this->tester->getFacade()->addItem($shoppingListItemTransfer);
 
         $shoppingListItemResponseTransfer = $this->tester->getFacade()->getShoppingListItemCollection(
-            (new ShoppingListCollectionTransfer())->addShoppingList($shoppingListTransfer)
+            (new ShoppingListCollectionTransfer())->addShoppingList($shoppingListTransfer),
         );
 
         // Assert
@@ -285,7 +285,7 @@ class ShoppingListItemTest extends Unit
         $this->tester->getFacade()->addItem($shoppingListItemTransfer);
 
         $shoppingListItemResponseTransfer = $this->tester->getFacade()->getShoppingListItemCollection(
-            (new ShoppingListCollectionTransfer())->addShoppingList($shoppingListTransfer)
+            (new ShoppingListCollectionTransfer())->addShoppingList($shoppingListTransfer),
         );
 
         // Assert
@@ -516,7 +516,7 @@ class ShoppingListItemTest extends Unit
 
         $shoppingListItemCollectionTransfer = $shoppingListFacade->getShoppingListItemCollection(
             (new ShoppingListCollectionTransfer())
-                ->addShoppingList($shoppingListTransfer)
+                ->addShoppingList($shoppingListTransfer),
         );
 
         // Assert
@@ -550,7 +550,7 @@ class ShoppingListItemTest extends Unit
         $shoppingListItemResponseTransfer = $shoppingListFacade->removeItemById($requestShoppingListItemTransfer);
         $shoppingListItemCollectionTransfer = $shoppingListFacade->getShoppingListItemCollection(
             (new ShoppingListCollectionTransfer())
-                ->addShoppingList($shoppingListTransfer)
+                ->addShoppingList($shoppingListTransfer),
         );
 
         // Assert
@@ -586,7 +586,7 @@ class ShoppingListItemTest extends Unit
         $shoppingListFacade->addShoppingListItem($shoppingListItemTransfer);
 
         $shoppingListItemResponseTransfer = $shoppingListFacade->getShoppingListItemCollection(
-            (new ShoppingListCollectionTransfer())->addShoppingList($shoppingListTransfer)
+            (new ShoppingListCollectionTransfer())->addShoppingList($shoppingListTransfer),
         );
 
         // Assert
@@ -621,7 +621,7 @@ class ShoppingListItemTest extends Unit
         $shoppingListFacade->addShoppingListItem($shoppingListItemTransfer);
 
         $shoppingListItemResponseTransfer = $shoppingListFacade->getShoppingListItemCollection(
-            (new ShoppingListCollectionTransfer())->addShoppingList($shoppingListTransfer)
+            (new ShoppingListCollectionTransfer())->addShoppingList($shoppingListTransfer),
         );
 
         // Assert
@@ -644,14 +644,14 @@ class ShoppingListItemTest extends Unit
                 ShoppingListItemTransfer::QUANTITY => 1,
                 ShoppingListItemTransfer::SKU => $this->product->getSku(),
                 ShoppingListItemTransfer::FK_SHOPPING_LIST => $shoppingListTransfer->getIdShoppingList(),
-            ])
+            ]),
         );
         $shoppingListTransfer->addItem(
             $this->tester->buildShoppingListItem([
                 ShoppingListItemTransfer::QUANTITY => 1,
                 ShoppingListItemTransfer::SKU => $this->productTwo->getSku(),
                 ShoppingListItemTransfer::FK_SHOPPING_LIST => $shoppingListTransfer->getIdShoppingList(),
-            ])
+            ]),
         );
 
         // Act
@@ -682,13 +682,13 @@ class ShoppingListItemTest extends Unit
             $this->tester->buildShoppingListItem([
                 ShoppingListItemTransfer::QUANTITY => 1,
                 ShoppingListItemTransfer::SKU => $this->product->getSku(),
-            ])
+            ]),
         );
         $shoppingListTransfer->addItem(
             $this->tester->buildShoppingListItem([
                 ShoppingListItemTransfer::QUANTITY => 1,
                 ShoppingListItemTransfer::SKU => uniqid('', true),
-            ])
+            ]),
         );
 
         // Act
@@ -720,13 +720,13 @@ class ShoppingListItemTest extends Unit
             $this->tester->buildShoppingListItem([
                 ShoppingListItemTransfer::QUANTITY => 1,
                 ShoppingListItemTransfer::SKU => $this->product->getSku(),
-            ])
+            ]),
         );
         $shoppingListTransfer->addItem(
             $this->tester->buildShoppingListItem([
                 ShoppingListItemTransfer::QUANTITY => 1,
                 ShoppingListItemTransfer::SKU => uniqid('', true),
-            ])
+            ]),
         );
 
         // Act

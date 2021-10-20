@@ -108,7 +108,7 @@ class AttributesDataProvider implements AttributesDataProviderInterface
             $superAttributesData[] = $this->getSuperAttributesDataItem(
                 $productConcreteTransfer,
                 $superAttributeKeys,
-                $localeTransfer
+                $localeTransfer,
             );
         }
 
@@ -147,7 +147,7 @@ class AttributesDataProvider implements AttributesDataProviderInterface
 
         $localizedAttributesTransfer = $this->localizedAttributesExtractor->extractLocalizedAttributes(
             $productConcreteTransfer->getLocalizedAttributes(),
-            $localeTransfer
+            $localeTransfer,
         );
 
         return [

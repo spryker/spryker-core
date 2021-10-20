@@ -55,7 +55,7 @@ class ProductConfigurationsRestApiDependencyProvider extends AbstractBundleDepen
     {
         $container->set(static::CLIENT_PRODUCT_CONFIGURATION_STORAGE, function (Container $container) {
             return new ProductConfigurationsRestApiToProductConfigurationStorageClientBridge(
-                $container->getLocator()->productConfigurationStorage()->client()
+                $container->getLocator()->productConfigurationStorage()->client(),
             );
         });
 

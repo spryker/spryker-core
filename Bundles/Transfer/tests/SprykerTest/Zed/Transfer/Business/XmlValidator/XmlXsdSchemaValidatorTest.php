@@ -61,7 +61,7 @@ class XmlXsdSchemaValidatorTest extends Unit
         $this->assertCount(1, $xmlValidator->getErrors());
         $this->assertStringContainsString(
             "The attribute '{www.w3.org/2001/XMLSchema-instance}schemaLocation' is not allowed.",
-            $xmlValidator->getErrors()[0]
+            $xmlValidator->getErrors()[0],
         );
         $this->assertStringContainsString('exception.transfer.xml', $xmlValidator->getErrors()[0]);
     }

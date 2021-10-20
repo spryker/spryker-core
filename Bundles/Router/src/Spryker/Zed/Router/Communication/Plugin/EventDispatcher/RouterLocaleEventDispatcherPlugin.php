@@ -97,7 +97,7 @@ class RouterLocaleEventDispatcherPlugin extends AbstractPlugin implements EventD
                 $request = $event->getRequest();
                 $this->setRouterContext($request, $this->getUrlMatcher($container));
             },
-            static::EVENT_PRIORITY_KERNEL_REQUEST
+            static::EVENT_PRIORITY_KERNEL_REQUEST,
         );
 
         return $eventDispatcher;
@@ -120,7 +120,7 @@ class RouterLocaleEventDispatcherPlugin extends AbstractPlugin implements EventD
                     $this->setRouterContext($parentRequest, $this->getUrlMatcher($container));
                 }
             },
-            static::EVENT_PRIORITY_KERNEL_FINISH_REQUEST
+            static::EVENT_PRIORITY_KERNEL_FINISH_REQUEST,
         );
 
         return $eventDispatcher;

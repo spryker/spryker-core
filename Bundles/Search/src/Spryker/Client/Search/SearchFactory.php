@@ -58,7 +58,7 @@ class SearchFactory extends AbstractFactory
     {
         return new SearchDelegator(
             $this->getClientAdapterPlugins(),
-            $this->createSearchContextExpander()
+            $this->createSearchContextExpander(),
         );
     }
 
@@ -68,7 +68,7 @@ class SearchFactory extends AbstractFactory
     public function createConnectionDelegator(): ConnectionDelegatorInterface
     {
         return new ConnectionDelegator(
-            $this->getClientAdapterPlugins()
+            $this->getClientAdapterPlugins(),
         );
     }
 
@@ -88,7 +88,7 @@ class SearchFactory extends AbstractFactory
     public function createSearchContextExpander(): SearchContextExpanderInterface
     {
         return new SearchContextExpander(
-            $this->getSearchContextExpanderPlugins()
+            $this->getSearchContextExpanderPlugins(),
         );
     }
 
@@ -178,7 +178,7 @@ class SearchFactory extends AbstractFactory
 
         // Supports only ElasticSearch before 7.0. For ElasticSearch 7+ use {@link \Spryker\Client\SearchElasticsearch\Plugin\ElasticsearchSearchAdapterPlugin}.
         return new ElasticsearchSearchHandler(
-            $this->createIndexClientProvider()
+            $this->createIndexClientProvider(),
         );
     }
 
@@ -202,7 +202,7 @@ class SearchFactory extends AbstractFactory
         return new FacetAggregationFactory(
             $this->createPageIndexMap(),
             $this->createAggregationBuilder(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -376,7 +376,7 @@ class SearchFactory extends AbstractFactory
         return new Writer(
             $this->createCachedElasticsearchClient(),
             $this->getConfig()->getSearchIndexName(),
-            $this->getConfig()->getSearchDocumentType()
+            $this->getConfig()->getSearchDocumentType(),
         );
     }
 
@@ -394,7 +394,7 @@ class SearchFactory extends AbstractFactory
         return new Reader(
             $this->createCachedElasticsearchClient(),
             $this->getConfig()->getSearchIndexName(),
-            $this->getConfig()->getSearchDocumentType()
+            $this->getConfig()->getSearchDocumentType(),
         );
     }
 

@@ -62,7 +62,7 @@ class QueueMessageHelperTest extends Unit
         parent::setUp();
 
         $this->queueMessageHelper = new QueueMessageHelper(
-            $this->getUtilEncodingService()
+            $this->getUtilEncodingService(),
         );
     }
 
@@ -109,7 +109,7 @@ class QueueMessageHelperTest extends Unit
     protected function getUtilEncodingService(): DataImportToUtilEncodingServiceInterface
     {
         return new DataImportToUtilEncodingServiceBridge(
-            $this->tester->getLocator()->utilEncoding()->service()
+            $this->tester->getLocator()->utilEncoding()->service(),
         );
     }
 

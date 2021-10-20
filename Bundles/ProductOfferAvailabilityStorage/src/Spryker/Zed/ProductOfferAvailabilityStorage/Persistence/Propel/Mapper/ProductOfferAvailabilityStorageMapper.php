@@ -29,7 +29,7 @@ class ProductOfferAvailabilityStorageMapper implements ProductOfferAvailabilityS
             ->setStore(
                 (new StoreTransfer())
                     ->setIdStore($productOfferAvailabilityRequestData[static::COL_ALIAS_ID_STORE])
-                    ->setName($productOfferAvailabilityRequestData[static::COL_ALIAS_STORE_NAME])
+                    ->setName($productOfferAvailabilityRequestData[static::COL_ALIAS_STORE_NAME]),
             );
     }
 }

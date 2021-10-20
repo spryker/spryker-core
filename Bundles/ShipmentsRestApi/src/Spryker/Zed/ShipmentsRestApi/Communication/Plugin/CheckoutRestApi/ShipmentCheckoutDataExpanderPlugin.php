@@ -36,7 +36,7 @@ class ShipmentCheckoutDataExpanderPlugin extends AbstractPlugin implements Check
     ): RestCheckoutDataTransfer {
         return $this->getFacade()->expandCheckoutDataWithAvailableShipmentMethods(
             $restCheckoutDataTransfer,
-            $restCheckoutRequestAttributesTransfer
+            $restCheckoutRequestAttributesTransfer,
         );
     }
 }

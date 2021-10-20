@@ -40,7 +40,7 @@ class ProductConfigurationFacadeTest extends Unit
         $productConfigurationTransfer = $this->tester->haveProductConfiguration(
             [
                 ProductConfigurationTransfer::FK_PRODUCT => $productTransfer->getIdProductConcrete(),
-            ]
+            ],
         );
 
         $productConfigurationCriteriaTransfer = (new ProductConfigurationFilterTransfer())
@@ -57,12 +57,12 @@ class ProductConfigurationFacadeTest extends Unit
         //Assert
         $this->assertNotEmpty(
             $productConfigurationCollectionTransfer->getProductConfigurations(),
-            'Expects not empty product configuration collection.'
+            'Expects not empty product configuration collection.',
         );
         $this->assertSame(
             $productTransfer->getIdProductConcrete(),
             $createdProductConfigurationTransfer->getFkProduct(),
-            'Expects correct product identified inside product configuration.'
+            'Expects correct product identified inside product configuration.',
         );
     }
 
@@ -82,7 +82,7 @@ class ProductConfigurationFacadeTest extends Unit
         //Assert
         $this->assertEmpty(
             $productConfigurationCollectionTransfer->getProductConfigurations(),
-            'Expects empty collection when wrong product identifier passed to the criteria.'
+            'Expects empty collection when wrong product identifier passed to the criteria.',
         );
     }
 }

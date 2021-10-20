@@ -31,7 +31,7 @@ class IndexGeneratorBusinessFactory extends AbstractBusinessFactory
     {
         return new PostgresIndexGenerator(
             $this->getConfig(),
-            $this->createForeignKeysProvider()
+            $this->createForeignKeysProvider(),
         );
     }
 
@@ -41,7 +41,7 @@ class IndexGeneratorBusinessFactory extends AbstractBusinessFactory
     public function createPostgresIndexRemover(): PostgresIndexRemoverInterface
     {
         return new PostgresIndexRemover(
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -52,7 +52,7 @@ class IndexGeneratorBusinessFactory extends AbstractBusinessFactory
     {
         return new ForeignKeysProvider(
             $this->createFinder(),
-            $this->getConfig()->getExcludedTables()
+            $this->getConfig()->getExcludedTables(),
         );
     }
 
@@ -62,7 +62,7 @@ class IndexGeneratorBusinessFactory extends AbstractBusinessFactory
     protected function createFinder(): MergedSchemaFinderInterface
     {
         return new MergedSchemaFinder(
-            $this->getPropelFacade()
+            $this->getPropelFacade(),
         );
     }
 

@@ -43,7 +43,7 @@ class ProductLabelDictionaryItemMapper implements ProductLabelDictionaryItemMapp
                     $productLabelTransfer,
                     $storeName,
                     $storeLocales,
-                    $productLabelDictionaryItemTransfers
+                    $productLabelDictionaryItemTransfers,
                 );
             }
         }
@@ -90,7 +90,7 @@ class ProductLabelDictionaryItemMapper implements ProductLabelDictionaryItemMapp
             $localizedProductLabelName = $this->getLocalizedProductLabelName(
                 $productLabelTransfer,
                 $mappedProductLabelLocalizedAttributesTransfer,
-                $localeName
+                $localeName,
             );
 
             $productLabelDictionaryItemTransfer = (new ProductLabelDictionaryItemTransfer())

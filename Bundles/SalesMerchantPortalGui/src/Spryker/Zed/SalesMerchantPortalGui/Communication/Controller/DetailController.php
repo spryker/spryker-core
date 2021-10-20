@@ -49,7 +49,7 @@ class DetailController extends AbstractSalesMerchantPortalGuiController
                     ->setIdMerchantOrder($idMerchantOrder)
                     ->setWithOrder(true)
                     ->setWithItems(true)
-                    ->setWithUniqueProductsCount(true)
+                    ->setWithUniqueProductsCount(true),
             );
 
         if (!$merchantOrderTransfer || !$this->isMerchantOrderBelongsCurrentMerchant($merchantOrderTransfer)) {
@@ -87,7 +87,7 @@ class DetailController extends AbstractSalesMerchantPortalGuiController
             ->findMerchantOrder(
                 (new MerchantOrderCriteriaTransfer())
                     ->setIdMerchantOrder($idMerchantOrder)
-                    ->setWithItems(true)
+                    ->setWithItems(true),
             );
 
         if (!$merchantOrderTransfer || !$this->isMerchantOrderBelongsCurrentMerchant($merchantOrderTransfer)) {
@@ -96,7 +96,7 @@ class DetailController extends AbstractSalesMerchantPortalGuiController
 
         $salesOrderItemIds = $this->getSalesOrderItemIds($merchantOrderTransfer);
         $itemCollectionTransfer = $this->getFactory()->getSalesFacade()->getOrderItems(
-            (new OrderItemFilterTransfer())->setSalesOrderItemIds($salesOrderItemIds)
+            (new OrderItemFilterTransfer())->setSalesOrderItemIds($salesOrderItemIds),
         );
 
         $responseData = [
@@ -127,7 +127,7 @@ class DetailController extends AbstractSalesMerchantPortalGuiController
             ->getMerchantOrdersCount(
                 (new MerchantOrderCriteriaTransfer())
                     ->setCustomerReference($customerReference)
-                    ->setMerchantReference($merchantOrderTransfer->getMerchantReference())
+                    ->setMerchantReference($merchantOrderTransfer->getMerchantReference()),
             );
 
         return $customerMerchantOrderNumber;

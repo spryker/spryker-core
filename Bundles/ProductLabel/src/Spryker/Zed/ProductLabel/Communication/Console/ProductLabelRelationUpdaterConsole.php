@@ -39,7 +39,7 @@ class ProductLabelRelationUpdaterConsole extends Console
             static::OPTION_NO_TOUCH,
             null,
             InputOption::VALUE_NONE,
-            'Disable the touch operations.'
+            'Disable the touch operations.',
         );
         $this->setDescription('Updates Product Label relations based on the registered plugins.');
 

@@ -65,7 +65,7 @@ class EntityTagResponseHeaderFormatter implements EntityTagResponseHeaderFormatt
         if (
             !$this->entityTagChecker->isMethodApplicableForAddingEntityTagHeader(
                 $restRequest->getHttpRequest()->getMethod(),
-                $resource->getType()
+                $resource->getType(),
             )
         ) {
             return $httpResponse;
@@ -73,13 +73,13 @@ class EntityTagResponseHeaderFormatter implements EntityTagResponseHeaderFormatt
 
         $entityTag = $this->getResourceHash(
             $resource,
-            $restRequest->getHttpRequest()->getMethod()
+            $restRequest->getHttpRequest()->getMethod(),
         );
 
         if ($entityTag) {
             $httpResponse->headers->set(
                 RequestConstantsInterface::HEADER_E_TAG,
-                $this->formatEntityTag($entityTag)
+                $this->formatEntityTag($entityTag),
             );
         }
 
@@ -101,7 +101,7 @@ class EntityTagResponseHeaderFormatter implements EntityTagResponseHeaderFormatt
         return $this->entityTagClient->write(
             $restResource->getType(),
             $restResource->getId(),
-            $restResource->getAttributes()->toArray()
+            $restResource->getAttributes()->toArray(),
         );
     }
 

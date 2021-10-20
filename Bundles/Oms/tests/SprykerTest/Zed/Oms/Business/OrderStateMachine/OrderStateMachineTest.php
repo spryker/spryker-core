@@ -71,7 +71,7 @@ class OrderStateMachineTest extends Unit
             [self::CONDITION_NAME => $this->getConditionMock()],
             [],
             $this->getReservationMock(),
-            new OmsConfig()
+            new OmsConfig(),
         );
         $reflection = new ReflectionClass(OrderStateMachine::class);
         $reflectionProperty = $reflection->getProperty('conditions');
@@ -99,7 +99,7 @@ class OrderStateMachineTest extends Unit
             $conditionCollection,
             [],
             $this->getReservationMock(),
-            new OmsConfig()
+            new OmsConfig(),
         );
         $reflection = new ReflectionClass(OrderStateMachine::class);
         $reflectionProperty = $reflection->getProperty('conditions');
@@ -124,7 +124,7 @@ class OrderStateMachineTest extends Unit
             [],
             [self::COMMAND_NAME => $this->getCommandMock()],
             $this->getReservationMock(),
-            new OmsConfig()
+            new OmsConfig(),
         );
         $reflection = new ReflectionClass(OrderStateMachine::class);
         $reflectionProperty = $reflection->getProperty('commands');
@@ -152,7 +152,7 @@ class OrderStateMachineTest extends Unit
             [],
             $commandCollection,
             $this->getReservationMock(),
-            new OmsConfig()
+            new OmsConfig(),
         );
         $reflection = new ReflectionClass(OrderStateMachine::class);
         $reflectionProperty = $reflection->getProperty('commands');
@@ -232,7 +232,7 @@ class OrderStateMachineTest extends Unit
         $this->assertSame(
             $expectedAffectedOrderItemsCount,
             $affectedOrderItems,
-            sprintf('Expected "%s" sales order items but "%s" are processed.', $expectedAffectedOrderItemsCount, $affectedOrderItems)
+            sprintf('Expected "%s" sales order items but "%s" are processed.', $expectedAffectedOrderItemsCount, $affectedOrderItems),
         );
     }
 
@@ -318,7 +318,7 @@ class OrderStateMachineTest extends Unit
         $this->assertSame(
             $expectedAffectedOrderItemsCount,
             $affectedOrderItems,
-            sprintf('Expected "%s" sales order items but "%s" are processed.', $expectedAffectedOrderItemsCount, $affectedOrderItems)
+            sprintf('Expected "%s" sales order items but "%s" are processed.', $expectedAffectedOrderItemsCount, $affectedOrderItems),
         );
 
         $this->assertOrderItemsTransitionedIntoNewState($itemsWithExpectedSourceState, 'paid');
@@ -343,8 +343,8 @@ class OrderStateMachineTest extends Unit
                     'Expected order item "%s" to be in state "%s" but state is "%s"',
                     $salesOrderItem->getIdSalesOrderItem(),
                     $expectedOrderItemStateAfterTransition,
-                    $orderItemStateName
-                )
+                    $orderItemStateName,
+                ),
             );
         }
     }

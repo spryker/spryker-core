@@ -64,7 +64,7 @@ class ExpandOrdersWithMetadataTest extends Unit
         foreach ($expandedOrderTransfers as $index => $orderTransfer) {
             $this->assertSame(
                 $orderTransfer->getItems()->count(),
-                $orderTransfers[$index]->getItems()->count()
+                $orderTransfers[$index]->getItems()->count(),
             );
 
             $this->assertOrderItemsMetadata($orderTransfer->getItems());

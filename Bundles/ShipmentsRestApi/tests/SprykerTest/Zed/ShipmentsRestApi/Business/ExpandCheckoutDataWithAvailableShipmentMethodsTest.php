@@ -56,7 +56,7 @@ class ExpandCheckoutDataWithAvailableShipmentMethodsTest extends Unit
         // Act
         $restCheckoutDataTransfer = $this->tester->getFacade()->expandCheckoutDataWithAvailableShipmentMethods(
             $restCheckoutDataTransfer,
-            new RestCheckoutRequestAttributesTransfer()
+            new RestCheckoutRequestAttributesTransfer(),
         );
 
         // Assert
@@ -75,7 +75,7 @@ class ExpandCheckoutDataWithAvailableShipmentMethodsTest extends Unit
         // Act
         $restCheckoutDataTransfer = $this->tester->getFacade()->expandCheckoutDataWithAvailableShipmentMethods(
             $restCheckoutDataTransfer,
-            new RestCheckoutRequestAttributesTransfer()
+            new RestCheckoutRequestAttributesTransfer(),
         );
 
         // Assert
@@ -103,7 +103,7 @@ class ExpandCheckoutDataWithAvailableShipmentMethodsTest extends Unit
         $restCheckoutDataTransfer = $this->tester->getFacadeMock($shipmentsRestApiBusinessFactoryMock)
             ->expandCheckoutDataWithAvailableShipmentMethods(
                 $restCheckoutDataTransfer,
-                new RestCheckoutRequestAttributesTransfer()
+                new RestCheckoutRequestAttributesTransfer(),
             );
 
         // Assert
@@ -122,7 +122,7 @@ class ExpandCheckoutDataWithAvailableShipmentMethodsTest extends Unit
                 [],
                 [],
                 static::DEFAULT_PRICE_LIST,
-                [$quoteTransfer->getStore()->getIdStore()]
+                [$quoteTransfer->getStore()->getIdStore()],
             );
 
             $itemTransfer->setShipment((new ShipmentTransfer())->setMethod($shipmentMethodTransfer));

@@ -248,7 +248,7 @@ class MailBuilderTest extends Unit
         $glossaryFacadeMock = $this->getGlossaryFacadeMock();
         $mailBuilder = new MailBuilder(
             $glossaryFacadeMock,
-            $this->getConfigMock()
+            $this->getConfigMock(),
         );
 
         return $mailBuilder;
@@ -262,7 +262,7 @@ class MailBuilderTest extends Unit
         $glossaryFacadeMock = $this->getGlossaryFacadeMock();
         $mailBuilder = new MailBuilder(
             $glossaryFacadeMock,
-            $this->getConfigMock()
+            $this->getConfigMock(),
         );
 
         $localeTransfer = new LocaleTransfer();

@@ -64,7 +64,7 @@ class EntityTagDependencyProvider extends AbstractDependencyProvider
     {
         $container->set(static::CLIENT_STORAGE, function (Container $container) {
             return new EntityTagToStorageClientBridge(
-                $container->getLocator()->storage()->client()
+                $container->getLocator()->storage()->client(),
             );
         });
 
@@ -80,7 +80,7 @@ class EntityTagDependencyProvider extends AbstractDependencyProvider
     {
         $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new EntityTagToUtilEncodingServiceBridge(
-                $container->getLocator()->utilEncoding()->service()
+                $container->getLocator()->utilEncoding()->service(),
             );
         });
 
@@ -96,7 +96,7 @@ class EntityTagDependencyProvider extends AbstractDependencyProvider
     {
         $container->set(static::SERVICE_UTIL_TEXT, function (Container $container) {
             return new EntityTagToUtilTextServiceBridge(
-                $container->getLocator()->utilText()->service()
+                $container->getLocator()->utilText()->service(),
             );
         });
 
@@ -112,7 +112,7 @@ class EntityTagDependencyProvider extends AbstractDependencyProvider
     {
         $container->set(static::SERVICE_SYNCHRONIZATION, function (Container $container) {
             return new EntityTagToSynchronizationServiceBridge(
-                $container->getLocator()->synchronization()->service()
+                $container->getLocator()->synchronization()->service(),
             );
         });
 

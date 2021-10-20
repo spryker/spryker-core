@@ -50,7 +50,7 @@ class NodeController extends AbstractController
         $navigationNodeForm = $this->getFactory()
             ->getNavigationNodeForm(
                 $navigationNodeFormDataProvider->getData(),
-                $navigationNodeFormDataProvider->getOptions()
+                $navigationNodeFormDataProvider->getOptions(),
             )
             ->handleRequest($request);
 
@@ -110,7 +110,7 @@ class NodeController extends AbstractController
         $navigationNodeForm = $this->getFactory()
             ->getNavigationNodeForm(
                 $navigationNodeFormDataProvider->getData($idNavigationNode),
-                $navigationNodeFormDataProvider->getOptions()
+                $navigationNodeFormDataProvider->getOptions(),
             )
             ->handleRequest($request);
 

@@ -174,7 +174,7 @@ class ProductConcreteFormAdd extends ProductConcreteFormEdit
             [
                 static::OPTION_SUPER_ATTRIBUTES => $options[static::OPTION_SUPER_ATTRIBUTES],
                 static::OPTION_ID_PRODUCT_ABSTRACT => $options[static::OPTION_ID_PRODUCT_ABSTRACT],
-            ]
+            ],
         );
 
         return $this;
@@ -199,7 +199,7 @@ class ProductConcreteFormAdd extends ProductConcreteFormEdit
         $productConcreteTransfer = new ProductConcreteTransfer();
         if (isset($formData[static::FORM_PRODUCT_CONCRETE_SUPER_ATTRIBUTES])) {
             $productConcreteTransfer->setAttributes(
-                $this->getNonEmptyTransformedSubmittedSuperAttributes($formData[static::FORM_PRODUCT_CONCRETE_SUPER_ATTRIBUTES])
+                $this->getNonEmptyTransformedSubmittedSuperAttributes($formData[static::FORM_PRODUCT_CONCRETE_SUPER_ATTRIBUTES]),
             );
         }
 
@@ -217,7 +217,7 @@ class ProductConcreteFormAdd extends ProductConcreteFormEdit
             $this->getFactory()->createProductConcreteSuperAttributeFilterHelper()->getTransformedSubmittedSuperAttributes($submittedAttributes),
             function ($submittedAttribute) {
                 return $submittedAttribute !== null && $submittedAttribute !== '';
-            }
+            },
         );
     }
 

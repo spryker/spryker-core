@@ -37,7 +37,7 @@ class MerchantProductOfferCartItemMapperPlugin extends AbstractPlugin implements
         return $this->getFacade()
             ->mapCartItemRequestTransferToPersistentCartChangeTransfer(
                 $cartItemRequestTransfer,
-                $persistentCartChangeTransfer
+                $persistentCartChangeTransfer,
             );
     }
 }

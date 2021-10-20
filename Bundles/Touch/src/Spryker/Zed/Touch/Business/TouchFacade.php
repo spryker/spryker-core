@@ -35,7 +35,7 @@ class TouchFacade extends AbstractFacade implements TouchFacadeInterface
             $itemType,
             SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE,
             $idItem,
-            $keyChange
+            $keyChange,
         );
     }
 
@@ -56,7 +56,7 @@ class TouchFacade extends AbstractFacade implements TouchFacadeInterface
         return $touchRecordModel->saveTouchRecord(
             $itemType,
             SpyTouchTableMap::COL_ITEM_EVENT_INACTIVE,
-            $idItem
+            $idItem,
         );
     }
 
@@ -77,7 +77,7 @@ class TouchFacade extends AbstractFacade implements TouchFacadeInterface
         return $touchRecordModel->saveTouchRecord(
             $itemType,
             SpyTouchTableMap::COL_ITEM_EVENT_DELETED,
-            $idItem
+            $idItem,
         );
     }
 

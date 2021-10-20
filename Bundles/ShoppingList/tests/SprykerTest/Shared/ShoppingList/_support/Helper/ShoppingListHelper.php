@@ -68,7 +68,7 @@ class ShoppingListHelper extends Module
     public function haveShoppingListItem(array $seed = []): ShoppingListItemTransfer
     {
         return $this->getLocator()->shoppingList()->facade()->addShoppingListItem(
-            $this->buildShoppingListItem($seed)
+            $this->buildShoppingListItem($seed),
         )->getShoppingListItem();
     }
 

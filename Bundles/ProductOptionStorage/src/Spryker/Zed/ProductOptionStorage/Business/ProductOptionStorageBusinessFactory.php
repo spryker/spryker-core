@@ -28,7 +28,7 @@ class ProductOptionStorageBusinessFactory extends AbstractBusinessFactory
             $this->getStoreFacade(),
             $this->getQueryContainer(),
             $this->getConfig()->isSendingToQueue(),
-            $this->getProductOptionCollectionFilterPlugins()
+            $this->getProductOptionCollectionFilterPlugins(),
         );
     }
 

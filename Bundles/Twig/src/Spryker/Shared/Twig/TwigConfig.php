@@ -74,7 +74,7 @@ class TwigConfig extends AbstractSharedConfig
         return sprintf(
             '%s/src/Generated/%s/Twig/codeBucket/.pathCache',
             APPLICATION_ROOT_DIR,
-            ucfirst(strtolower($application))
+            ucfirst(strtolower($application)),
         );
     }
 
@@ -93,9 +93,9 @@ class TwigConfig extends AbstractSharedConfig
                 sprintf(
                     '%s/src/Generated/%s/Twig/codeBucket',
                     APPLICATION_ROOT_DIR,
-                    ucfirst(strtolower(APPLICATION))
+                    ucfirst(strtolower(APPLICATION)),
                 ),
-                FilesystemCache::FORCE_BYTECODE_INVALIDATION
+                FilesystemCache::FORCE_BYTECODE_INVALIDATION,
             ),
         ];
     }

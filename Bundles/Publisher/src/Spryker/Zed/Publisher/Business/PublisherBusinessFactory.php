@@ -24,7 +24,7 @@ class PublisherBusinessFactory extends AbstractBusinessFactory
     {
         return new PublisherEventCollator(
             $this->getPublisherPlugins(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 

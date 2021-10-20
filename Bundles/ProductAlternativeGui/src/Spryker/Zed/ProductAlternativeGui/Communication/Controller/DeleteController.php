@@ -49,7 +49,7 @@ class DeleteController extends AbstractController
         $productAlternativeResponseTransfer = $this->getFactory()
             ->getProductAlternativeFacade()
             ->deleteProductAlternativeByIdProductAlternative(
-                $idProductAlternative
+                $idProductAlternative,
             );
 
         $this->handleProductAlternativeDeletion($productAlternativeResponseTransfer);
@@ -66,7 +66,7 @@ class DeleteController extends AbstractController
     {
         if ($productAlternativeResponseTransfer->getIsSuccessful()) {
             $this->addSuccessMessage(
-                static::MESSAGE_DELETE_PRODUCT_ALTERNATIVE_SUCCESS
+                static::MESSAGE_DELETE_PRODUCT_ALTERNATIVE_SUCCESS,
             );
 
             return;

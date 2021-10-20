@@ -42,13 +42,13 @@ class ItemComparator implements ItemComparatorInterface
         foreach ($fields as $fieldName) {
             if (!$itemTransfer->offsetExists($fieldName)) {
                 throw new TransferPropertyNotFoundException(
-                    sprintf('The property "%s" can\'t be found in ItemTransfer.', $fieldName)
+                    sprintf('The property "%s" can\'t be found in ItemTransfer.', $fieldName),
                 );
             }
 
             if (!$cartItemRequestTransfer->offsetExists($fieldName)) {
                 throw new TransferPropertyNotFoundException(
-                    sprintf('The property "%s" can\'t be found in CartItemRequestTransfer.', $fieldName)
+                    sprintf('The property "%s" can\'t be found in CartItemRequestTransfer.', $fieldName),
                 );
             }
 

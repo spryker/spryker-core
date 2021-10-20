@@ -46,7 +46,7 @@ class SalesProductConfigurationFacadeTest extends Unit
     {
         //Arrange
         $productConfigurationInstance = (new ProductConfigurationInstanceTransfer())->setConfiguratorKey(
-            static::PRODUCT_CONFIGURATION_TEST_KEY
+            static::PRODUCT_CONFIGURATION_TEST_KEY,
         );
 
         $orderId = $this->tester->createOrder();
@@ -70,7 +70,7 @@ class SalesProductConfigurationFacadeTest extends Unit
         $this->assertSame(
             $itemTransfer->getIdSalesOrderItem(),
             $productConfigurationEntity->getFkSalesOrderItem(),
-            'Expects that sales order configuration will be saved successfully.'
+            'Expects that sales order configuration will be saved successfully.',
         );
     }
 
@@ -95,7 +95,7 @@ class SalesProductConfigurationFacadeTest extends Unit
         //Assert
         $this->assertNull(
             $result,
-            'Expects that sales order configuration saving will be skipped when no product configuration.'
+            'Expects that sales order configuration saving will be skipped when no product configuration.',
         );
     }
 
@@ -106,7 +106,7 @@ class SalesProductConfigurationFacadeTest extends Unit
     {
         //Arrange
         $productConfigurationInstance = (new ProductConfigurationInstanceTransfer())->setConfiguratorKey(
-            static::PRODUCT_CONFIGURATION_TEST_KEY
+            static::PRODUCT_CONFIGURATION_TEST_KEY,
         );
 
         $itemTransfer = (new ItemBuilder([
@@ -169,7 +169,7 @@ class SalesProductConfigurationFacadeTest extends Unit
         $this->assertSame(
             static::PRODUCT_CONFIGURATION_TEST_KEY,
             $salesProductConfigurationKey,
-            'Expects that order items will be successfully expanded with product configuration.'
+            'Expects that order items will be successfully expanded with product configuration.',
         );
     }
 }

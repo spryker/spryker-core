@@ -57,7 +57,7 @@ class WriteCollectionByMerchantEventsTest extends Unit
 
         $this->assertSame(
             count($merchantIds),
-            $merchantSearchCount
+            $merchantSearchCount,
         );
     }
 

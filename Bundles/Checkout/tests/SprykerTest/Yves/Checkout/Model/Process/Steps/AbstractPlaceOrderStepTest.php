@@ -133,7 +133,7 @@ class AbstractPlaceOrderStepTest extends Unit
     public function testPostConditionReturnFalseWhenNoOrderReferenceGiven(): void
     {
         $abstractPlaceOrderStepMock = $this->getAbstractPlaceOrderStep(
-            $this->getCheckoutClientMock()
+            $this->getCheckoutClientMock(),
         );
 
         $this->assertFalse($abstractPlaceOrderStepMock->postCondition(new QuoteTransfer()));

@@ -170,7 +170,7 @@ class CmsBlockCategoryConnectorFacade extends AbstractFacade implements CmsBlock
             $dataReader,
             $dataWriter,
             $touchUpdater,
-            $output
+            $output,
         );
     }
 

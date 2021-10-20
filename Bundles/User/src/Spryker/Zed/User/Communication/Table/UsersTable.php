@@ -180,7 +180,7 @@ class UsersTable extends AbstractTable
             Url::generate(self::UPDATE_USER_URL, [
                 self::PARAM_ID_USER => $user[SpyUserTableMap::COL_ID_USER],
             ]),
-            'Edit'
+            'Edit',
         );
 
         $urls[] = $this->createStatusButton($user);
@@ -226,7 +226,7 @@ class UsersTable extends AbstractTable
                     static::PARAM_ID_USER => $user[SpyUserTableMap::COL_ID_USER],
                 ]),
                 'Activate',
-                ActivateUserForm::class
+                ActivateUserForm::class,
             );
         }
 
@@ -238,7 +238,7 @@ class UsersTable extends AbstractTable
             DeactivateUserForm::class,
             [
                 static::BUTTON_CLASS => 'btn-outline btn-danger',
-            ]
+            ],
         );
     }
 
@@ -257,7 +257,7 @@ class UsersTable extends AbstractTable
                 $buttonTransfer->getUrlOrFail(),
                 $buttonTransfer->getTitleOrFail(),
                 $buttonTransfer->getDefaultOptions(),
-                $buttonTransfer->getCustomOptions()
+                $buttonTransfer->getCustomOptions(),
             );
         }
 

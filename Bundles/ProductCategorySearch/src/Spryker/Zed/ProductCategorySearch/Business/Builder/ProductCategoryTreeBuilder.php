@@ -69,7 +69,7 @@ class ProductCategoryTreeBuilder implements ProductCategoryTreeBuilderInterface
             $categoryTree = $this->buildProductCategoryTreeByIdCategoryNodeForStoreAndLocale(
                 $categoryTree,
                 $idCategoryNode,
-                $formattedCategoriesByLocaleAndStoreAndNodeIds[$storeTransfer->getName()][$localeTransfer->getIdLocale()][$idCategoryNode] ?? []
+                $formattedCategoriesByLocaleAndStoreAndNodeIds[$storeTransfer->getName()][$localeTransfer->getIdLocale()][$idCategoryNode] ?? [],
             );
         }
 

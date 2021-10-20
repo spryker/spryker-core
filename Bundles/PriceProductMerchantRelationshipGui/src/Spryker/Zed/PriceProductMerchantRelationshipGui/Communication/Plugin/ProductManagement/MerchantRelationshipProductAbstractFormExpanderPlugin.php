@@ -45,7 +45,7 @@ class MerchantRelationshipProductAbstractFormExpanderPlugin extends AbstractPlug
         $builder->get(static::FORM_PRICE_DIMENSION)->add(
             PriceProductMerchantRelationshipGuiConfig::PRICE_DIMENSION_MERCHANT_RELATIONSHIP,
             MerchantRelationshipPriceDimensionForm::class,
-            $options
+            $options,
         );
 
         return $builder;

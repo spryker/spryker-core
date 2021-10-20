@@ -104,7 +104,7 @@ class MerchantOrderItemTableExpander implements MerchantOrderItemTableExpanderIn
         }
 
         $productOfferCollectionTransfer = $this->productOfferFacade->get(
-            (new ProductOfferCriteriaTransfer())->setProductOfferReferences($productOfferReferences)
+            (new ProductOfferCriteriaTransfer())->setProductOfferReferences($productOfferReferences),
         );
         $merchantSkus = $this->getMerchantSkusIndexedByProductOfferReferences($productOfferCollectionTransfer);
 

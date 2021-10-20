@@ -61,7 +61,7 @@ class RoleWriter implements RoleWriterInterface
 
         if ($existedRoleTransfer) {
             throw new RoleExistsException(
-                $this->createRoleExceptionMessage($existedRoleTransfer)
+                $this->createRoleExceptionMessage($existedRoleTransfer),
             );
         }
 

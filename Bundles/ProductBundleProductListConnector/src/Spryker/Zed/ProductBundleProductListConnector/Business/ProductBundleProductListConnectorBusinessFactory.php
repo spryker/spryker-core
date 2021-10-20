@@ -40,7 +40,7 @@ class ProductBundleProductListConnectorBusinessFactory extends AbstractBusinessF
     {
         return new BlacklistProductListTypeExpander(
             $this->getFacadeProductBundle(),
-            $this->getFacadeProduct()
+            $this->getFacadeProduct(),
         );
     }
 
@@ -51,7 +51,7 @@ class ProductBundleProductListConnectorBusinessFactory extends AbstractBusinessF
     {
         return new WhitelistProductListTypeExpander(
             $this->getFacadeProductBundle(),
-            $this->getFacadeProduct()
+            $this->getFacadeProduct(),
         );
     }
 

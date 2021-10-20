@@ -37,7 +37,7 @@ class DateDataValidator extends AbstractImportDataValidator
 
         return $this->createPriceProductScheduleListImportErrorTransfer(
             $priceProductScheduleImportTransfer,
-            static::ERROR_MESSAGE_ACTIVE_FROM_AND_ACTIVE_TO
+            static::ERROR_MESSAGE_ACTIVE_FROM_AND_ACTIVE_TO,
         );
     }
 

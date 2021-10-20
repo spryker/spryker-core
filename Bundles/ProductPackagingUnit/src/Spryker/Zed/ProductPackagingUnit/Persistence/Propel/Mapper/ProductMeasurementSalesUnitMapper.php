@@ -27,7 +27,7 @@ class ProductMeasurementSalesUnitMapper
         foreach ($salesOrderItemEntities as $salesOrderItemEntity) {
             $productMeasurementSalesUnitTransfer = $this->mapSalesOrderItemEntityToProductMeasurementSalesUnitTransfer(
                 $salesOrderItemEntity,
-                new ProductMeasurementSalesUnitTransfer()
+                new ProductMeasurementSalesUnitTransfer(),
             );
 
             $mappedProductMeasurementSalesUnitTransfers[$salesOrderItemEntity->getIdSalesOrderItem()] = $productMeasurementSalesUnitTransfer;
@@ -55,7 +55,7 @@ class ProductMeasurementSalesUnitMapper
 
         $productMeasurementUnitTransfer = $this->createProductMeasurementUnitTransfer(
             $salesOrderItemEntity->getAmountMeasurementUnitName(),
-            $salesOrderItemEntity->getAmountMeasurementUnitCode()
+            $salesOrderItemEntity->getAmountMeasurementUnitCode(),
         );
         $productMeasurementSalesUnitTransfer->setProductMeasurementUnit($productMeasurementUnitTransfer);
 

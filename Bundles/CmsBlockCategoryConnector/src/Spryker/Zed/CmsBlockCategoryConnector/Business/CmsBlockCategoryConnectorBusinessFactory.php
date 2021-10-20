@@ -32,7 +32,7 @@ class CmsBlockCategoryConnectorBusinessFactory extends AbstractBusinessFactory
         return new CmsBlockCategoryWriter(
             $this->getQueryContainer(),
             $this->getTouchFacade(),
-            $this->getCategoryQueryContainer()
+            $this->getCategoryQueryContainer(),
         );
     }
 
@@ -42,7 +42,7 @@ class CmsBlockCategoryConnectorBusinessFactory extends AbstractBusinessFactory
     public function createCmsBlockCategoryPositionReader()
     {
         return new CmsBlockCategoryPositionReader(
-            $this->getQueryContainer()
+            $this->getQueryContainer(),
         );
     }
 
@@ -52,7 +52,7 @@ class CmsBlockCategoryConnectorBusinessFactory extends AbstractBusinessFactory
     public function createCmsBlockCategoryReader()
     {
         return new CmsBlockCategoryReader(
-            $this->getQueryContainer()
+            $this->getQueryContainer(),
         );
     }
 
@@ -62,7 +62,7 @@ class CmsBlockCategoryConnectorBusinessFactory extends AbstractBusinessFactory
     public function createStorageCmsBlockCategoryConnectorCollector()
     {
         $cmsBlockCategoryCollector = new CmsBlockCategoryCollector(
-            $this->getUtilDataReaderService()
+            $this->getUtilDataReaderService(),
         );
 
         $cmsBlockCategoryCollector->setTouchQueryContainer($this->getTouchQueryContainer());
@@ -78,7 +78,7 @@ class CmsBlockCategoryConnectorBusinessFactory extends AbstractBusinessFactory
     {
         return new CmsBlockCategoryPositionSync(
             $this->getQueryContainer(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -137,7 +137,7 @@ class CmsBlockCategoryConnectorBusinessFactory extends AbstractBusinessFactory
     {
         return new CmsBlockCategoryCollectorRunner(
             $this->createStorageCmsBlockCategoryConnectorCollector(),
-            $this->getCollectorFacade()
+            $this->getCollectorFacade(),
         );
     }
 }

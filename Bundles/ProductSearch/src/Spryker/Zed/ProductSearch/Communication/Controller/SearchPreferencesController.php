@@ -48,7 +48,7 @@ class SearchPreferencesController extends AbstractController
         $table = $this->getFactory()->createSearchPreferencesTable();
 
         return $this->jsonResponse(
-            $table->fetchData()
+            $table->fetchData(),
         );
     }
 
@@ -66,7 +66,7 @@ class SearchPreferencesController extends AbstractController
         $form = $this->getFactory()
             ->createSearchPreferencesForm(
                 $dataProvider->getData(),
-                $dataProvider->getOptions()
+                $dataProvider->getOptions(),
             )
             ->handleRequest($request);
 
@@ -110,7 +110,7 @@ class SearchPreferencesController extends AbstractController
         $form = $this->getFactory()
             ->createSearchPreferencesForm(
                 $searchPreferencesFormData,
-                $dataProvider->getOptions($idAttributeKey)
+                $dataProvider->getOptions($idAttributeKey),
             )
             ->handleRequest($request);
 

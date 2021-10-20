@@ -124,7 +124,7 @@ class SchedulerJenkinsDependencyProvider extends AbstractBundleDependencyProvide
     {
         $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new SchedulerJenkinsToUtilEncodingServiceBridge(
-                $container->getLocator()->utilEncoding()->service()
+                $container->getLocator()->utilEncoding()->service(),
             );
         });
 

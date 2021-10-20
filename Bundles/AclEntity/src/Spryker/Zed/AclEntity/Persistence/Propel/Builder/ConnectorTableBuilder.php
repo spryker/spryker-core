@@ -125,7 +125,7 @@ class ConnectorTableBuilder implements ConnectorTableBuilderInterface
     protected function buildIdColumn(string $connectorTableName): Column
     {
         $idColumn = new Column(
-            $this->aclEntityService->generateSegmentConnectorTableIdColumnName($connectorTableName)
+            $this->aclEntityService->generateSegmentConnectorTableIdColumnName($connectorTableName),
         );
         $idColumn->setPrimaryKey(true);
         $idColumn->setNotNull();
@@ -144,7 +144,7 @@ class ConnectorTableBuilder implements ConnectorTableBuilderInterface
     protected function addTargetTableForeignKey(Table $table): Table
     {
         $columnName = $this->aclEntityService->generateSegmentConnectorReferenceColumnName(
-            $this->baseTable->getName()
+            $this->baseTable->getName(),
         );
 
         $column = $this->addTargetTableColumn($columnName);
@@ -188,7 +188,7 @@ class ConnectorTableBuilder implements ConnectorTableBuilderInterface
     protected function addUniqueForeignKeysConstraint(Table $table): Table
     {
         $fkTargetEntityColumnName = $this->aclEntityService->generateSegmentConnectorReferenceColumnName(
-            $this->baseTable->getName()
+            $this->baseTable->getName(),
         );
 
         /** @var \Propel\Generator\Model\Column $fkTargetEntityColumn */
@@ -223,7 +223,7 @@ class ConnectorTableBuilder implements ConnectorTableBuilderInterface
         $column->setType($primaryKeyColumn->getType());
         $column->setNotNull();
         $column->getDomain()->setSqlType(
-            $primaryKeyColumn->getType()
+            $primaryKeyColumn->getType(),
         );
 
         return $column;
@@ -299,7 +299,7 @@ class ConnectorTableBuilder implements ConnectorTableBuilderInterface
         $idMethodParameter = new IdMethodParameter();
         $idMethodParameter->setValue(sprintf(
             static::ID_METHOD_PARAMETER_VALUE_TEMPLATE,
-            $connectorTableName
+            $connectorTableName,
         ));
         $table->addIdMethodParameter($idMethodParameter);
 

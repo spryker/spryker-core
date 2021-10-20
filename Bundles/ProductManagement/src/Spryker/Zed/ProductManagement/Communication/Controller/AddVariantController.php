@@ -49,7 +49,7 @@ class AddVariantController extends AbstractController
     public function indexAction(Request $request)
     {
         $idProductAbstract = $this->castId($request->get(
-            self::PARAM_ID_PRODUCT_ABSTRACT
+            self::PARAM_ID_PRODUCT_ABSTRACT,
         ));
 
         $productAbstractTransfer = $this->getFactory()
@@ -71,7 +71,7 @@ class AddVariantController extends AbstractController
             ->getFactory()
             ->getProductVariantFormAdd(
                 $dataProvider->getData($priceDimension),
-                $dataProvider->getOptions($productAbstractTransfer, ProductManagementConfig::PRODUCT_TYPE_REGULAR)
+                $dataProvider->getOptions($productAbstractTransfer, ProductManagementConfig::PRODUCT_TYPE_REGULAR),
             )
             ->handleRequest($request);
 
@@ -127,7 +127,7 @@ class AddVariantController extends AbstractController
             ->createBundledProductTable($idProductConcrete);
 
         return $this->jsonResponse(
-            $bundledProductTable->fetchData()
+            $bundledProductTable->fetchData(),
         );
     }
 
@@ -145,7 +145,7 @@ class AddVariantController extends AbstractController
         $params[static::PARAM_TYPE] = $type;
 
         return $this->redirectResponse(
-            urldecode(Url::generate('/product-management/edit/variant', $params)->build())
+            urldecode(Url::generate('/product-management/edit/variant', $params)->build()),
         );
     }
 }

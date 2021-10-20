@@ -59,7 +59,7 @@ class ProductOptionGroupSaverTest extends MockProvider
         $productOptionGroupSaverMock = $this->createProductOptionGroupSaver(
             null,
             null,
-            $translationSaverMock
+            $translationSaverMock,
         );
 
         $optionGroupEntityMock = $this->createProductOptionGroupEntityMock();

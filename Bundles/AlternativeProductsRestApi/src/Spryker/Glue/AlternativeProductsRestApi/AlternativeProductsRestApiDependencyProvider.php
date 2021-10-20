@@ -58,7 +58,7 @@ class AlternativeProductsRestApiDependencyProvider extends AbstractBundleDepende
     {
         $container->set(static::CLIENT_PRODUCT_ALTERNATIVE_STORAGE, function (Container $container) {
             return new AlternativeProductsRestApiToProductAlternativeStorageClientBridge(
-                $container->getLocator()->productAlternativeStorage()->client()
+                $container->getLocator()->productAlternativeStorage()->client(),
             );
         });
 
@@ -74,7 +74,7 @@ class AlternativeProductsRestApiDependencyProvider extends AbstractBundleDepende
     {
         $container->set(static::RESOURCE_PRODUCTS_REST_API, function (Container $container) {
             return new AlternativeProductsRestApiToProductsRestApiResourceBridge(
-                $container->getLocator()->productsRestApi()->resource()
+                $container->getLocator()->productsRestApi()->resource(),
             );
         });
 
@@ -90,7 +90,7 @@ class AlternativeProductsRestApiDependencyProvider extends AbstractBundleDepende
     {
         $container->set(static::CLIENT_PRODUCT_STORAGE, function (Container $container) {
             return new AlternativeProductsRestApiToProductStorageClientBridge(
-                $container->getLocator()->productStorage()->client()
+                $container->getLocator()->productStorage()->client(),
             );
         });
 

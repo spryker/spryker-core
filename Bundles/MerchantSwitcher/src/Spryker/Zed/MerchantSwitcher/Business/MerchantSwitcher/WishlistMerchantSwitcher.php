@@ -53,7 +53,7 @@ class WishlistMerchantSwitcher implements WishlistMerchantSwitcherInterface
         foreach ($wishlistTransfer->getWishlistItems() as $wishlistItemTransfer) {
             $productOfferTransfer = $this->findProductOfferBySku(
                 $productOfferTransfers,
-                $wishlistItemTransfer->getSku()
+                $wishlistItemTransfer->getSku(),
             );
 
             if ($productOfferTransfer) {

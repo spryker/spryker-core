@@ -65,7 +65,7 @@ class DrawerTest extends Unit
             [self::CONDITION_NAME => $this->getConditionMock()],
             $this->getGraphMock(),
             $this->getOmsToUtilTextServiceMock(),
-            $this->getTimeoutProcessorCollectionMock()
+            $this->getTimeoutProcessorCollectionMock(),
         );
         $reflection = new ReflectionClass(Drawer::class);
         $reflectionProperty = $reflection->getProperty('conditions');
@@ -89,7 +89,7 @@ class DrawerTest extends Unit
             $conditionCollection,
             $this->getGraphMock(),
             $this->getOmsToUtilTextServiceMock(),
-            $this->getTimeoutProcessorCollectionMock()
+            $this->getTimeoutProcessorCollectionMock(),
         );
         $reflection = new ReflectionClass(Drawer::class);
         $reflectionProperty = $reflection->getProperty('conditions');
@@ -110,7 +110,7 @@ class DrawerTest extends Unit
             [],
             $this->getGraphMock(),
             $this->getOmsToUtilTextServiceMock(),
-            $this->getTimeoutProcessorCollectionMock()
+            $this->getTimeoutProcessorCollectionMock(),
         );
         $reflection = new ReflectionClass(Drawer::class);
         $reflectionProperty = $reflection->getProperty('commands');
@@ -134,7 +134,7 @@ class DrawerTest extends Unit
             [],
             $this->getGraphMock(),
             $this->getOmsToUtilTextServiceMock(),
-            $this->getTimeoutProcessorCollectionMock()
+            $this->getTimeoutProcessorCollectionMock(),
         );
         $reflection = new ReflectionClass(Drawer::class);
         $reflectionProperty = $reflection->getProperty('commands');
@@ -158,7 +158,7 @@ class DrawerTest extends Unit
             [],
             $this->getGraphMock(),
             $this->getOmsToUtilTextServiceMock(),
-            $timeoutProcessorCollection
+            $timeoutProcessorCollection,
         );
         $reflection = new ReflectionClass(Drawer::class);
         $reflectionProperty = $reflection->getProperty('timeoutProcessorCollection');

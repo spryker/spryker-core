@@ -72,10 +72,10 @@ class TriggerLocker implements LockerInterface
             throw new LockException(
                 sprintf(
                     'State machine trigger is locked. Propel exception: %s',
-                    $exception->getMessage()
+                    $exception->getMessage(),
                 ),
                 $exception->getCode(),
-                $exception
+                $exception,
             );
         }
 
@@ -140,10 +140,10 @@ class TriggerLocker implements LockerInterface
             throw new LockException(
                 sprintf(
                     'State machine trigger is locked. Propel exception: %s',
-                    $exception->getMessage()
+                    $exception->getMessage(),
                 ),
                 $exception->getCode(),
-                $exception
+                $exception,
             );
         }
 
@@ -156,7 +156,7 @@ class TriggerLocker implements LockerInterface
     protected function createExpirationDate()
     {
         $dateInterval = DateInterval::createFromDateString(
-            $this->omsConfig->getStateMachineLockerTimeoutInterval()
+            $this->omsConfig->getStateMachineLockerTimeoutInterval(),
         );
         $expirationDate = new DateTime();
         $expirationDate->add($dateInterval);

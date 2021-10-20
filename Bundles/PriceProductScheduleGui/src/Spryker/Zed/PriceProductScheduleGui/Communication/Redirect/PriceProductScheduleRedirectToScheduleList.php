@@ -28,7 +28,7 @@ class PriceProductScheduleRedirectToScheduleList implements PriceProductSchedule
 
         $redirectUrl = sprintf(
             static::REDIRECT_URL_SCHEDULE_LIST_PATTERN,
-            $priceProductScheduleRedirectTransfer->getIdPriceProductScheduleList()
+            $priceProductScheduleRedirectTransfer->getIdPriceProductScheduleList(),
         );
 
         return $priceProductScheduleRedirectTransfer->setRedirectUrl($redirectUrl);

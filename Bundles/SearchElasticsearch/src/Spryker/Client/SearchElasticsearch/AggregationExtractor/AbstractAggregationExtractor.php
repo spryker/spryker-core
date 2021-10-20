@@ -33,7 +33,7 @@ abstract class AbstractAggregationExtractor implements AggregationExtractorInter
         if ($facetConfigTransfer->getAggregationParams()) {
             $nestedFieldName = $this->addNestedFieldPrefix(
                 $nestedFieldName,
-                $facetConfigTransfer->getName()
+                $facetConfigTransfer->getName(),
             );
         }
 

@@ -90,7 +90,7 @@ class MerchantSalesOrderReader implements MerchantSalesOrderReaderInterface
             $idMerchantOrder = $merchantOrderTransfer->getIdMerchantOrder();
 
             $merchantOrderTransfer->setUniqueProductsCount(
-                $this->merchantSalesOrderRepository->getUniqueProductsCount($idMerchantOrder)
+                $this->merchantSalesOrderRepository->getUniqueProductsCount($idMerchantOrder),
             );
         }
 
@@ -248,7 +248,7 @@ class MerchantSalesOrderReader implements MerchantSalesOrderReaderInterface
 
         return $this->mapMerchantCollectionToMerchantOrderTransfers(
             $merchantCollectionTransfer,
-            $merchantOrderCollectionTransfer
+            $merchantOrderCollectionTransfer,
         );
     }
 

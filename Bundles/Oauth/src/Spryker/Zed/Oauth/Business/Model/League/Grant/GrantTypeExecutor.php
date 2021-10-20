@@ -55,7 +55,7 @@ class GrantTypeExecutor implements GrantTypeExecutorInterface
 
             $this->authorizationServer->enableGrantType(
                 $grant,
-                new DateInterval($this->oauthConfig->getAccessTokenTTL())
+                new DateInterval($this->oauthConfig->getAccessTokenTTL()),
             );
 
             $response = $this->authorizationServer->respondToAccessTokenRequest($accessTokenRequest, new Response());

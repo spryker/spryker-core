@@ -35,7 +35,7 @@ class ProductConfigurationVolumePriceProductConfigurationPriceMapperPlugin exten
             ->createRestProductConfigurationPriceProductVolumeMapper()
             ->mapRestProductConfigurationPriceAttributesToProductConfigurationInstance(
                 $restProductConfigurationPriceAttributesTransfers,
-                $productConfigurationInstanceTransfer
+                $productConfigurationInstanceTransfer,
             );
     }
 }

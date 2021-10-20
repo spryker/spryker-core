@@ -52,7 +52,7 @@ class CartChangeSalesUnitExpander implements CartChangeSalesUnitExpanderInterfac
         $storeTransfer = $this->storeFacade->getCurrentStore();
         $indexedProductMeasurementSalesUnitIds = $this->productMeasurementUnitRepository->findIndexedStoreAwareDefaultProductMeasurementSalesUnitIds(
             $productConcreteSkus,
-            $storeTransfer->getIdStore()
+            $storeTransfer->getIdStore(),
         );
 
         if ($indexedProductMeasurementSalesUnitIds) {

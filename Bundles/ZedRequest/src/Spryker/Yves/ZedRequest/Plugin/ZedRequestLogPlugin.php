@@ -40,7 +40,7 @@ class ZedRequestLogPlugin implements MiddlewareInterface
                 $this->getLogger()->info(sprintf(
                     'Transfer request [%s] %s',
                     $request->getMethod(),
-                    $request->getRequestTarget()
+                    $request->getRequestTarget(),
                 ), ['guzzle-body' => $request->getBody()->getContents()]);
             }
 

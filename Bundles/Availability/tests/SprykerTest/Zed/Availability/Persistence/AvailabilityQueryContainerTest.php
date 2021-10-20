@@ -123,7 +123,7 @@ class AvailabilityQueryContainerTest extends Unit
         $queryResult = $this->availabilityQueryContainer->queryAvailabilityAbstractWithStockByIdLocale(
             $this->localeTransfer->getIdLocale(),
             $this->storeTransfer->getIdStore(),
-            [static::STOCK_NAME_1, static::STOCK_NAME_2]
+            [static::STOCK_NAME_1, static::STOCK_NAME_2],
         )->find()->getData();
 
         //Assert
@@ -143,7 +143,7 @@ class AvailabilityQueryContainerTest extends Unit
             $this->storeTransfer,
             $this->localeTransfer,
             $this->stockTransfers,
-            $productQuantity
+            $productQuantity,
         );
 
         //Act
@@ -151,7 +151,7 @@ class AvailabilityQueryContainerTest extends Unit
             $productConcreteTransfer->getFkProductAbstract(),
             $this->localeTransfer->getIdLocale(),
             $this->storeTransfer->getIdStore(),
-            [static::STOCK_NAME_1, static::STOCK_NAME_2]
+            [static::STOCK_NAME_1, static::STOCK_NAME_2],
         )->find()->getData();
 
         $this->assertCount(1, $queryResult);
@@ -172,7 +172,7 @@ class AvailabilityQueryContainerTest extends Unit
             $storeTransfer,
             $this->localeTransfer,
             $this->stockTransfers,
-            $productQuantity
+            $productQuantity,
         );
 
         // Act

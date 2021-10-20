@@ -98,7 +98,7 @@ class EventItemTriggerForm extends AbstractType
     protected function setAction(FormBuilderInterface $builder, array $options)
     {
         $builder->setAction(
-            $this->generateCreateActionUrl($options)
+            $this->generateCreateActionUrl($options),
         );
 
         return $this;

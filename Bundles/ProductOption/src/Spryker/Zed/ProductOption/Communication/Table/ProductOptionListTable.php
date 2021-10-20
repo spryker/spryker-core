@@ -299,10 +299,10 @@ class ProductOptionListTable extends AbstractTable
         ];
         foreach ($priceCollection as $productOptionValuePrices) {
             $formattedPrices[static::PRICE_NET] .= $this->wrapInlineCellItem(
-                implode(' ', $productOptionValuePrices[static::PRICE_NET])
+                implode(' ', $productOptionValuePrices[static::PRICE_NET]),
             );
             $formattedPrices[static::PRICE_GROSS] .= $this->wrapInlineCellItem(
-                implode(' ', $productOptionValuePrices[static::PRICE_GROSS])
+                implode(' ', $productOptionValuePrices[static::PRICE_GROSS]),
             );
         }
 
@@ -389,7 +389,7 @@ class ProductOptionListTable extends AbstractTable
             '/product-option/view/index',
             [
                 static::URL_PARAM_ID_PRODUCT_OPTION_GROUP => $productOptionGroupEntity->getIdProductOptionGroup(),
-            ]
+            ],
         );
 
         return $this->generateViewButton($viewProductOptionUrl, 'View');
@@ -406,7 +406,7 @@ class ProductOptionListTable extends AbstractTable
             '/product-option/edit/index',
             [
                 static::URL_PARAM_ID_PRODUCT_OPTION_GROUP => $productOptionGroupEntity->getIdProductOptionGroup(),
-            ]
+            ],
         );
 
         return $this->generateEditButton($editProductOptionUrl, 'Edit');
@@ -427,7 +427,7 @@ class ProductOptionListTable extends AbstractTable
                 static::URL_PARAM_ID_PRODUCT_OPTION_GROUP => $productOptionGroupEntity->getIdProductOptionGroup(),
                 static::URL_PARAM_ACTIVE => $productOptionGroupEntity->getActive() ? 0 : 1,
                 static::URL_PARAM_REDIRECT_URL => $redirectUrl,
-            ]
+            ],
         );
 
         return $this->generateStatusButton($editProductOptionUrl, $productOptionGroupEntity->getActive());
@@ -448,14 +448,14 @@ class ProductOptionListTable extends AbstractTable
                 ToggleActiveProductOptionForm::class,
                 [
                     static::BUTTON_CLASS => 'btn-danger safe-submit',
-                ]
+                ],
             );
         }
 
         return $this->generateFormButton(
             $viewDiscountUrl,
             'Activate',
-            ToggleActiveProductOptionForm::class
+            ToggleActiveProductOptionForm::class,
         );
     }
 }

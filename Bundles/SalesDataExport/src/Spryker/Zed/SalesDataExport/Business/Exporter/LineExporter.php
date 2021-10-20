@@ -110,11 +110,11 @@ class LineExporter implements ExporterInterface
         DataExportConfigurationTransfer $dataExportConfigurationTransfer
     ): DataExportConfigurationTransfer {
         $salesDataExportDataExportConfigurationsTransfer = $this->dataExportService->parseConfiguration(
-            $this->salesDataExportConfig->getModuleDataExportConfigurationsFilePath()
+            $this->salesDataExportConfig->getModuleDataExportConfigurationsFilePath(),
         );
         $dataExportConfigurationTransfer = $this->dataExportService->resolveDataExportActionConfiguration(
             $dataExportConfigurationTransfer,
-            $salesDataExportDataExportConfigurationsTransfer
+            $salesDataExportDataExportConfigurationsTransfer,
         );
 
         return $dataExportConfigurationTransfer;

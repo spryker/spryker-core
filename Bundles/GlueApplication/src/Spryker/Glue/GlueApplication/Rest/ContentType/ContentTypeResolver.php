@@ -47,7 +47,7 @@ class ContentTypeResolver implements ContentTypeResolverInterface
     {
         $contentType = sprintf(
             static::RESPONSE_CONTENT_TYPE,
-            $restRequest->getMetadata()->getContentTypeFormat()
+            $restRequest->getMetadata()->getContentTypeFormat(),
         );
 
         $version = $restRequest->getMetadata()->getVersion();

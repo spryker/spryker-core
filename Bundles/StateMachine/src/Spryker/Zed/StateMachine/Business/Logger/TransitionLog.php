@@ -153,7 +153,7 @@ class TransitionLog implements TransitionLogInterface
         $stateMachineTransitionLogEntity = $this->createStateMachineTransitionLogEntity();
         $stateMachineTransitionLogEntity->setIdentifier($stateMachineItemTransfer->getIdentifier());
         $stateMachineTransitionLogEntity->setFkStateMachineProcess(
-            $stateMachineItemTransfer->getIdStateMachineProcess()
+            $stateMachineItemTransfer->getIdStateMachineProcess(),
         );
         $stateMachineTransitionLogEntity->setHostname($this->utilNetworkService->getHostName());
 

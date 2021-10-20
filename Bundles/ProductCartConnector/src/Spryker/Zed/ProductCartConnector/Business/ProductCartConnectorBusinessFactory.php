@@ -31,7 +31,7 @@ class ProductCartConnectorBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductExpander(
             $this->getLocaleFacade(),
-            $this->getProductFacade()
+            $this->getProductFacade(),
         );
     }
 
@@ -41,7 +41,7 @@ class ProductCartConnectorBusinessFactory extends AbstractBusinessFactory
     public function createProductValidator()
     {
         return new ProductValidator(
-            $this->getProductFacade()
+            $this->getProductFacade(),
         );
     }
 
@@ -53,7 +53,7 @@ class ProductCartConnectorBusinessFactory extends AbstractBusinessFactory
         return new InactiveItemsFilter(
             $this->getProductFacade(),
             $this->getStoreFacade(),
-            $this->getMessengerFacade()
+            $this->getMessengerFacade(),
         );
     }
 
@@ -96,7 +96,7 @@ class ProductCartConnectorBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductUrlExpander(
             $this->getLocaleFacade(),
-            $this->getProductFacade()
+            $this->getProductFacade(),
         );
     }
 }

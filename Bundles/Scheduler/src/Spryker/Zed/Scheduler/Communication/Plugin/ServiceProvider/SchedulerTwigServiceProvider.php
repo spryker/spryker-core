@@ -34,7 +34,7 @@ class SchedulerTwigServiceProvider extends AbstractPlugin implements ServiceProv
                 $twig->addExtension(new SchedulerTwigPlugin());
 
                 return $twig;
-            })
+            }),
         );
     }
 

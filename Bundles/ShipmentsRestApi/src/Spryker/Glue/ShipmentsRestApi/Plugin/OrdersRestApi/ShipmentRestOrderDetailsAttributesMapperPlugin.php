@@ -37,7 +37,7 @@ class ShipmentRestOrderDetailsAttributesMapperPlugin extends AbstractPlugin impl
             ->createOrderShipmentMapper()
             ->mapOrderTransferToRestOrderDetailsAttributesTransfer(
                 $orderTransfer,
-                $restOrderDetailsAttributesTransfer
+                $restOrderDetailsAttributesTransfer,
             );
     }
 }

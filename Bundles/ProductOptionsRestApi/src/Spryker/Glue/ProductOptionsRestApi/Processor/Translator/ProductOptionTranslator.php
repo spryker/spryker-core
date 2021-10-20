@@ -37,14 +37,14 @@ class ProductOptionTranslator implements ProductOptionTranslatorInterface
         string $localeName
     ): array {
         $glossaryStorageKeys = $this->getGlossaryStorageKeysFromProductAbstractOptionStorageTransfers(
-            $productAbstractOptionStorageTransfers
+            $productAbstractOptionStorageTransfers,
         );
         $translations = $this->glossaryStorageClient->translateBulk($glossaryStorageKeys, $localeName);
 
         foreach ($productAbstractOptionStorageTransfers as $productAbstractOptionStorageTransfer) {
             $this->setTranslationsToProductAbstractOptionStorageTransfer(
                 $productAbstractOptionStorageTransfer,
-                $translations
+                $translations,
             );
         }
 

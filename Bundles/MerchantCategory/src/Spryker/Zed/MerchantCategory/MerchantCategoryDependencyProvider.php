@@ -63,7 +63,7 @@ class MerchantCategoryDependencyProvider extends AbstractBundleDependencyProvide
     {
         $container->set(static::FACADE_EVENT_BEHAVIOR, function (Container $container) {
             return new MerchantCategoryToEventBehaviorFacadeBridge(
-                $container->getLocator()->eventBehavior()->facade()
+                $container->getLocator()->eventBehavior()->facade(),
             );
         });
 

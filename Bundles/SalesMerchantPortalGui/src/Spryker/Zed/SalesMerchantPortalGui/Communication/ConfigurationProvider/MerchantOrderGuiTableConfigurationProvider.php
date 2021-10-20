@@ -162,8 +162,8 @@ class MerchantOrderGuiTableConfigurationProvider implements MerchantOrderGuiTabl
             'Details',
             sprintf(
                 '/sales-merchant-portal-gui/detail?merchant-order-id=${row.%s}',
-                MerchantOrderTransfer::ID_MERCHANT_ORDER
-            )
+                MerchantOrderTransfer::ID_MERCHANT_ORDER,
+            ),
         )->setRowClickAction(static::ROW_ACTION_ID_MERCHANT_ORDER_DETAIL);
 
         return $guiTableConfigurationBuilder;

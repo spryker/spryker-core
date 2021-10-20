@@ -57,10 +57,10 @@ class AddressReader implements AddressReaderInterface
         $addressesTransfer = new AddressesTransfer();
         foreach ($customerTransfer->getAddresses()->getAddresses() as $addressKey => $addressTransfer) {
             $addressTransfer->setIsDefaultShipping(
-                $addressTransfer->getIdCustomerAddress() === (int)$customerTransfer->getDefaultShippingAddress()
+                $addressTransfer->getIdCustomerAddress() === (int)$customerTransfer->getDefaultShippingAddress(),
             );
             $addressTransfer->setIsDefaultBilling(
-                $addressTransfer->getIdCustomerAddress() === (int)$customerTransfer->getDefaultBillingAddress()
+                $addressTransfer->getIdCustomerAddress() === (int)$customerTransfer->getDefaultBillingAddress(),
             );
 
             $addressesTransfer->addAddress($addressTransfer);

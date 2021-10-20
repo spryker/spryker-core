@@ -174,7 +174,7 @@ class PriceProductVolumeFacadeTest extends Unit
         // Assert
         $this->assertSame(
             static::VALID_GROSS_NET_PRICE_CONSTRAINT_MESSAGE,
-            $validationResponseTransfer->getValidationErrors()[0]->getMessage()
+            $validationResponseTransfer->getValidationErrors()[0]->getMessage(),
         );
     }
 
@@ -196,7 +196,7 @@ class PriceProductVolumeFacadeTest extends Unit
         // Assert
         $this->assertSame(
             static::VALID_VOLUME_QUANTITY_CONSTRAINT_MESSAGE,
-            $validationResponseTransfer->getValidationErrors()[0]->getMessage()
+            $validationResponseTransfer->getValidationErrors()[0]->getMessage(),
         );
     }
 
@@ -221,7 +221,7 @@ class PriceProductVolumeFacadeTest extends Unit
         // Assert
         $this->assertSame(
             static::VALID_DEFAULT_PRICE_TYPE_CONSTRAINT_MESSAGE,
-            $validationResponseTransfer->getValidationErrors()[0]->getMessage()
+            $validationResponseTransfer->getValidationErrors()[0]->getMessage(),
         );
     }
 
@@ -245,7 +245,7 @@ class PriceProductVolumeFacadeTest extends Unit
         // Assert
         $this->assertSame(
             static::VALID_UNIQUE_VOLUME_PRICE_CONSTRAINT_MESSAGE,
-            $validationResponseTransfer->getValidationErrors()[0]->getMessage()
+            $validationResponseTransfer->getValidationErrors()[0]->getMessage(),
         );
     }
 
@@ -272,7 +272,7 @@ class PriceProductVolumeFacadeTest extends Unit
         // Assert
         $this->assertSame(
             static::VALID_VOLUME_PRICE_HAS_BASE_PRICE_CONSTRAINT_MESSAGE,
-            $validationResponseTransfer->getValidationErrors()[0]->getMessage()
+            $validationResponseTransfer->getValidationErrors()[0]->getMessage(),
         );
     }
 
@@ -308,7 +308,7 @@ class PriceProductVolumeFacadeTest extends Unit
 
         $moneyValueTransfer = $this->createMoneyValueTransfer(
             $grossPrice,
-            $netPrice
+            $netPrice,
         );
 
         $priceProductTransfer->setMoneyValue($moneyValueTransfer);

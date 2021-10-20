@@ -52,7 +52,7 @@ class UrlStorageRedirectMapperPlugin extends AbstractPlugin implements UrlStorag
                 '%s.%s.resource.redirect.%s',
                 strtolower(Store::getInstance()->getStoreName()),
                 strtolower(Store::getInstance()->getCurrentLocale()),
-                $idRedirectUrl
+                $idRedirectUrl,
             );
 
             return $collectorDataKey;

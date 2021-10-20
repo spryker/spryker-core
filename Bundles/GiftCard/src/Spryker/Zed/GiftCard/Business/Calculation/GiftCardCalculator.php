@@ -171,7 +171,7 @@ class GiftCardCalculator implements GiftCardCalculatorInterface
 
             if ($giftCardPaymentTransfer) {
                 $giftCardPaymentTransfer->setAmount(
-                    $giftCardTransfer->getActualValue()
+                    $giftCardTransfer->getActualValue(),
                 );
 
                 continue;

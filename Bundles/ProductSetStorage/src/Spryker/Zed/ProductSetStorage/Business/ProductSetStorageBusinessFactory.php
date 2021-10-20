@@ -23,7 +23,7 @@ class ProductSetStorageBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductSetStorageWriter(
             $this->getQueryContainer(),
-            $this->getConfig()->isSendingToQueue()
+            $this->getConfig()->isSendingToQueue(),
         );
     }
 }

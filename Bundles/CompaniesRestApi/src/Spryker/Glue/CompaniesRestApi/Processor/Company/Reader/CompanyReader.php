@@ -74,7 +74,7 @@ class CompanyReader implements CompanyReaderInterface
         }
 
         $companyTransfer = $this->companyClient->getCompanyById(
-            (new CompanyTransfer())->setIdCompany($restRequest->getRestUser()->getIdCompany())
+            (new CompanyTransfer())->setIdCompany($restRequest->getRestUser()->getIdCompany()),
         );
 
         if (!$companyTransfer->getUuid()) {
@@ -92,7 +92,7 @@ class CompanyReader implements CompanyReaderInterface
     protected function getCurrentUserCompanyByUuid(RestRequestInterface $restRequest): RestResponseInterface
     {
         $companyResponseTransfer = $this->companyClient->findCompanyByUuid(
-            (new CompanyTransfer())->setUuid($restRequest->getResource()->getId())
+            (new CompanyTransfer())->setUuid($restRequest->getResource()->getId()),
         );
 
         if (
@@ -125,13 +125,13 @@ class CompanyReader implements CompanyReaderInterface
         $restCompanyAttributesTransfer = $this->companyMapperInterface
             ->mapCompanyTransferToRestCompanyAttributesTransfer(
                 $companyTransfer,
-                new RestCompanyAttributesTransfer()
+                new RestCompanyAttributesTransfer(),
             );
 
         return $this->companyRestResponseBuilder
             ->createCompanyRestResponse(
                 $companyTransfer->getUuid(),
-                $restCompanyAttributesTransfer
+                $restCompanyAttributesTransfer,
             );
     }
 

@@ -36,7 +36,7 @@ class DetailsTable extends AbstractTable
         $config->setHeader(
             [
                 'header1' => 'First header',
-            ]
+            ],
         );
 
         $config->setSortable(['header1']);

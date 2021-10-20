@@ -229,7 +229,7 @@ class CacheKeyGeneratorTest extends Unit
     {
         $this->storageConfigMock = $this->createMock(StorageConfig::class);
         $this->storageConfigMock->method('getAllowedGetParametersList')->willReturn(
-            $this->allowedQueryStringParameters
+            $this->allowedQueryStringParameters,
         );
     }
 

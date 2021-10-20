@@ -22,7 +22,7 @@ class SearchFactory extends AbstractFactory
     public function createSearchHealthChecker(): HealthCheckInterface
     {
         return new SearchHealthCheck(
-            $this->getSearchClient()
+            $this->getSearchClient(),
         );
     }
 

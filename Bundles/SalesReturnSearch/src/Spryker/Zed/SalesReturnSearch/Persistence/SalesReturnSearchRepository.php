@@ -32,7 +32,7 @@ class SalesReturnSearchRepository extends AbstractRepository implements SalesRet
 
         $returnReasonSearchEntityCollection = $this->getReturnReasonSearchEntityCollection(
             new FilterTransfer(),
-            $returnReasonIds
+            $returnReasonIds,
         );
 
         if (!$returnReasonSearchEntityCollection->count()) {
@@ -62,7 +62,7 @@ class SalesReturnSearchRepository extends AbstractRepository implements SalesRet
 
         $returnReasonSearchEntityCollection = $this->getReturnReasonSearchEntityCollection(
             $filterTransfer,
-            $returnReasonIds
+            $returnReasonIds,
         );
 
         foreach ($returnReasonSearchEntityCollection as $returnReasonSearchEntity) {

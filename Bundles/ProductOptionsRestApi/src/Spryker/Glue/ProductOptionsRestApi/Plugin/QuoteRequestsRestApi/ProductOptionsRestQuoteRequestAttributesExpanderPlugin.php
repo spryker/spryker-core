@@ -38,7 +38,7 @@ class ProductOptionsRestQuoteRequestAttributesExpanderPlugin extends AbstractPlu
             ->expandRestQuoteRequestItemWithProductOptions(
                 $restQuoteRequestsAttributesTransfers,
                 $quoteRequestTransfers,
-                $localeName
+                $localeName,
             );
     }
 }

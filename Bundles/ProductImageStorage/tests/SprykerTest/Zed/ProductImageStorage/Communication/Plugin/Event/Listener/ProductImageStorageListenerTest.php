@@ -345,7 +345,7 @@ class ProductImageStorageListenerTest extends Unit
         $productAbstractImageSetProductImageStorageListener->setFacade($this->getProductImageStorageFacade());
 
         $productImageSetToProductImage = $this->tester->findProductImageSetToProductImage(
-            $this->productImageSetTransfer->getIdProductImageSet()
+            $this->productImageSetTransfer->getIdProductImageSet(),
         );
 
         $eventTransfers = [];
@@ -374,7 +374,7 @@ class ProductImageStorageListenerTest extends Unit
         $productAbstractImageSetProductImageStoragePublishListener->setFacade($this->getProductImageStorageFacade());
 
         $productImageSetToProductImage = $this->tester->findProductImageSetToProductImage(
-            $this->productImageSetTransfer->getIdProductImageSet()
+            $this->productImageSetTransfer->getIdProductImageSet(),
         );
 
         $eventTransfers = [];
@@ -400,7 +400,7 @@ class ProductImageStorageListenerTest extends Unit
         $productAbstractImageSetProductImageStorageUnpublishListener->setFacade($this->getProductImageStorageFacade());
 
         $productImageSetToProductImage = $this->tester->findProductImageSetToProductImage(
-            $this->productImageSetTransfer->getIdProductImageSet()
+            $this->productImageSetTransfer->getIdProductImageSet(),
         );
 
         $eventTransfers = [];
@@ -478,7 +478,7 @@ class ProductImageStorageListenerTest extends Unit
         ];
 
         SpyProductLocalizedAttributesQuery::create()->findOneByFkProduct(
-            $this->productConcreteTransfer->getIdProductConcrete()
+            $this->productConcreteTransfer->getIdProductConcrete(),
         )->delete();
 
         // Act
@@ -623,7 +623,7 @@ class ProductImageStorageListenerTest extends Unit
         ];
 
         SpyProductLocalizedAttributesQuery::create()->findOneByFkProduct(
-            $this->productConcreteTransfer->getIdProductConcrete()
+            $this->productConcreteTransfer->getIdProductConcrete(),
         )->delete();
 
         // Act
@@ -646,7 +646,7 @@ class ProductImageStorageListenerTest extends Unit
         $productConcreteImageSetProductImageStorageListener->setFacade($this->getProductImageStorageFacade());
 
         $productImageSetToProductImage = $this->tester->findProductImageSetToProductImage(
-            $this->productImageSetTransfer->getIdProductImageSet()
+            $this->productImageSetTransfer->getIdProductImageSet(),
         );
 
         $eventTransfers = [];
@@ -675,7 +675,7 @@ class ProductImageStorageListenerTest extends Unit
         $productConcreteImageSetProductImageStoragePublishListener->setFacade($this->getProductImageStorageFacade());
 
         $productImageSetToProductImage = $this->tester->findProductImageSetToProductImage(
-            $this->productImageSetTransfer->getIdProductImageSet()
+            $this->productImageSetTransfer->getIdProductImageSet(),
         );
 
         $eventTransfers = [];
@@ -701,7 +701,7 @@ class ProductImageStorageListenerTest extends Unit
         $productConcreteImageSetProductImageStorageUnpublishListener->setFacade($this->getProductImageStorageFacade());
 
         $productImageSetToProductImage = $this->tester->findProductImageSetToProductImage(
-            $this->productImageSetTransfer->getIdProductImageSet()
+            $this->productImageSetTransfer->getIdProductImageSet(),
         );
 
         $eventTransfers = [];
@@ -881,7 +881,7 @@ class ProductImageStorageListenerTest extends Unit
     protected function getProductAbstractImages(): array
     {
         $productImageStorage = SpyProductAbstractImageStorageQuery::create()->findOneByFkProductAbstract(
-            $this->productAbstractTransfer->getIdProductAbstract()
+            $this->productAbstractTransfer->getIdProductAbstract(),
         );
         $productImages = $productImageStorage->getData()['image_sets'][0]['images'];
 
@@ -894,7 +894,7 @@ class ProductImageStorageListenerTest extends Unit
     protected function getProductConcreteImages(): array
     {
         $productImageStorage = SpyProductConcreteImageStorageQuery::create()->findOneByFkProduct(
-            $this->productConcreteTransfer->getIdProductConcrete()
+            $this->productConcreteTransfer->getIdProductConcrete(),
         );
         $productImages = $productImageStorage->getData()['image_sets'][0]['images'];
 
@@ -958,7 +958,7 @@ class ProductImageStorageListenerTest extends Unit
                 ->findOneByFkProductImage($productImage['id_product_image'])
                 ->getIdProductImageSetToProductImage();
             $this->assertTrue(
-                $idProductImageSetToProductImage > $idProductImageSetToProductImagePrevious
+                $idProductImageSetToProductImage > $idProductImageSetToProductImagePrevious,
             );
             $idProductImageSetToProductImagePrevious = $idProductImageSetToProductImage;
         }

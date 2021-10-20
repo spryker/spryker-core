@@ -47,13 +47,13 @@ class MerchantSearchResultFormatterPlugin extends AbstractElasticsearchResultFor
 
         foreach ($searchResult->getResults() as $document) {
             $merchantSearchCollection->addMerchant(
-                $this->getMappedMerchantSearchTransfer($document->getSource()[MerchantIndexMap::SEARCH_RESULT_DATA])
+                $this->getMappedMerchantSearchTransfer($document->getSource()[MerchantIndexMap::SEARCH_RESULT_DATA]),
             );
         }
 
         $merchantSearchCollection->setNbResults($searchResult->getTotalHits())
             ->setIpp(
-                $searchResult->getQuery()->getParam(static::ITEMS_PER_PAGE)
+                $searchResult->getQuery()->getParam(static::ITEMS_PER_PAGE),
             );
 
         return $merchantSearchCollection;

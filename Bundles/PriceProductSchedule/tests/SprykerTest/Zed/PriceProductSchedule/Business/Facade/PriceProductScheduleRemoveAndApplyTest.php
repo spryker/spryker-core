@@ -129,7 +129,7 @@ class PriceProductScheduleRemoveAndApplyTest extends Unit
         $priceProductScheduleFacade = $this->tester->getFacade();
         $priceProductScheduleFacade->setFactory(
             (new PriceProductScheduleBusinessFactory())
-                ->setConfig($this->getConfigMock($defaultPriceTypeTransfer->getName(), $fallbackPriceTypeTransfer->getName()))
+                ->setConfig($this->getConfigMock($defaultPriceTypeTransfer->getName(), $fallbackPriceTypeTransfer->getName())),
         );
 
         // Act
@@ -207,7 +207,7 @@ class PriceProductScheduleRemoveAndApplyTest extends Unit
         $priceProductScheduleFacade = $this->tester->getFacade();
         $priceProductScheduleFacade->setFactory(
             (new PriceProductScheduleBusinessFactory())
-                ->setConfig($this->getConfigMock($defaultPriceTypeTransfer->getName(), $fallbackPriceTypeTransfer->getName()))
+                ->setConfig($this->getConfigMock($defaultPriceTypeTransfer->getName(), $fallbackPriceTypeTransfer->getName())),
         );
 
         // Act
@@ -303,7 +303,7 @@ class PriceProductScheduleRemoveAndApplyTest extends Unit
         $priceProductScheduleFacade = $this->tester->getFacade();
         $priceProductScheduleFacade->setFactory(
             (new PriceProductScheduleBusinessFactory())
-                ->setConfig($this->getConfigMock($defaultPriceTypeTransfer->getName(), $fallbackPriceTypeTransfer->getName()))
+                ->setConfig($this->getConfigMock($defaultPriceTypeTransfer->getName(), $fallbackPriceTypeTransfer->getName())),
         );
 
         // Act
@@ -401,7 +401,7 @@ class PriceProductScheduleRemoveAndApplyTest extends Unit
         $priceProductScheduleFacade = $this->tester->getFacade();
         $priceProductScheduleFacade->setFactory(
             (new PriceProductScheduleBusinessFactory())
-                ->setConfig($this->getConfigMock($defaultPriceTypeTransfer->getName(), $fallbackPriceTypeTransfer->getName()))
+                ->setConfig($this->getConfigMock($defaultPriceTypeTransfer->getName(), $fallbackPriceTypeTransfer->getName())),
         );
 
         // Act

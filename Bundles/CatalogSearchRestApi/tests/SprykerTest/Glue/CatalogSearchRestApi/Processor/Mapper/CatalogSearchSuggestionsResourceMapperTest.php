@@ -110,7 +110,7 @@ class CatalogSearchSuggestionsResourceMapperTest extends Unit
             ->getData();
 
         $restCatalogSearchSuggestionsAttributes = $mapper->mapSuggestionsToRestAttributesTransfer(
-            $searchSuggestionsResponseDataMock
+            $searchSuggestionsResponseDataMock,
         );
 
         foreach ($this->getProductsFromRestCatalogSearchAttributesTransfer($restCatalogSearchSuggestionsAttributes) as $product) {

@@ -86,7 +86,7 @@ class ProductOptionValuePriceReader implements ProductOptionValuePriceReaderInte
     {
         $priceMap = $this->getCurrencyFilteredPriceMap(
             $productOptionValueEntity->getProductOptionValuePrices(),
-            $this->getCurrency($currencyCode)->getIdCurrency()
+            $this->getCurrency($currencyCode)->getIdCurrency(),
         );
 
         $currentIdStore = $this->storeFacade->getCurrentStore()->getIdStore();
@@ -111,7 +111,7 @@ class ProductOptionValuePriceReader implements ProductOptionValuePriceReaderInte
     {
         $priceMap = $this->getCurrencyFilteredPriceMap(
             $productOptionValueEntity->getProductOptionValuePrices(),
-            $this->getCurrency($currencyCode)->getIdCurrency()
+            $this->getCurrency($currencyCode)->getIdCurrency(),
         );
 
         $currentIdStore = $this->storeFacade->getCurrentStore()->getIdStore();

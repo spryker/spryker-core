@@ -83,7 +83,7 @@ class MerchantProfileForm extends AbstractType
                 'label' => false,
                 'data' => $builder->getForm()->getData(),
                 'data_class' => MerchantTransfer::class,
-            ]
+            ],
         );
 
         return $this;
@@ -103,7 +103,7 @@ class MerchantProfileForm extends AbstractType
                 'label' => false,
                 'data' => $builder->getForm()->getData(),
                 'data_class' => MerchantTransfer::class,
-            ]
+            ],
         );
 
         return $this;

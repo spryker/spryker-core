@@ -51,7 +51,7 @@ class MerchantProductWishlistDependencyProvider extends AbstractBundleDependency
     {
         $container->set(static::FACADE_PRODUCT, function (Container $container) {
             return new MerchantProductWishlistToProductFacadeBridge(
-                $container->getLocator()->product()->facade()
+                $container->getLocator()->product()->facade(),
             );
         });
 
@@ -67,7 +67,7 @@ class MerchantProductWishlistDependencyProvider extends AbstractBundleDependency
     {
         $container->set(static::FACADE_MERCHANT_PRODUCT, function (Container $container) {
             return new MerchantProductWishlistToMerchantProductFacadeBridge(
-                $container->getLocator()->merchantProduct()->facade()
+                $container->getLocator()->merchantProduct()->facade(),
             );
         });
 

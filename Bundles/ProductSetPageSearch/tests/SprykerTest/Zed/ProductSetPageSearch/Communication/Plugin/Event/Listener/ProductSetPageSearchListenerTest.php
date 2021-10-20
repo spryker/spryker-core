@@ -158,12 +158,12 @@ class ProductSetPageSearchListenerTest extends Unit
         $this->assertSame(
             0,
             SpyProductSetPageSearchQuery::create()->filterByFkProductSet($productSetDeletedId)->count(),
-            static::MESSAGE_PRODUCT_SET_NOT_DELETED
+            static::MESSAGE_PRODUCT_SET_NOT_DELETED,
         );
         $this->assertGreaterThan(
             SpyProductSetPageSearchQuery::create()->count(),
             $productSetBeforeUnpublish,
-            static::MESSAGE_UNNECESSARY_PRODUCT_SET_DELETED
+            static::MESSAGE_UNNECESSARY_PRODUCT_SET_DELETED,
         );
     }
 
@@ -251,7 +251,7 @@ class ProductSetPageSearchListenerTest extends Unit
     public function testProductSetPageProductImageSearchListenerStoreData(): void
     {
         $this->markTestSkipped(
-            'These tests need to be re-written in CC-940'
+            'These tests need to be re-written in CC-940',
         );
         $productSetPageQueryContainer = new ProductSetPageSearchQueryContainer();
         $productSetIds = $productSetPageQueryContainer->queryProductSetIdsByProductImageIds([209])->find()->getData();
@@ -279,7 +279,7 @@ class ProductSetPageSearchListenerTest extends Unit
     public function testProductSetPageProductImageSetImageSearchListenerStoreData(): void
     {
         $this->markTestSkipped(
-            'These tests need to be re-written in CC-940'
+            'These tests need to be re-written in CC-940',
         );
         $productSetPageQueryContainer = new ProductSetPageSearchQueryContainer();
         $productSetIds = $productSetPageQueryContainer->queryProductSetIdsByProductImageSetToProductImageIds([1021])->find()->getData();

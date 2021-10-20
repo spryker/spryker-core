@@ -149,7 +149,7 @@ class VolumeQuantityFieldMapperStrategy extends AbstractFieldMapperStrategy
         return $this->priceProductVolumeService->replaceVolumePrice(
             $priceProductTransfer,
             (new PriceProductTransfer())->setVolumeQuantity($volumeQuantity),
-            $newVolumePriceProductTransfer
+            $newVolumePriceProductTransfer,
         );
     }
 

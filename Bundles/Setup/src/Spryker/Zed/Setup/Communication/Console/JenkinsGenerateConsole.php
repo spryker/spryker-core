@@ -42,7 +42,7 @@ class JenkinsGenerateConsole extends Console
             'r',
             InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY,
             'Job roles to include on this host',
-            []
+            [],
         );
 
         parent::configure();
@@ -57,7 +57,7 @@ class JenkinsGenerateConsole extends Console
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $result = $this->getFacade()->generateCronjobs(
-            $input->getOption('role')
+            $input->getOption('role'),
         );
 
         $output->writeln($result);

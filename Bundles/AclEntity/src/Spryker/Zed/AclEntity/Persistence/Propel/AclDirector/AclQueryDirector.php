@@ -109,10 +109,10 @@ class AclQueryDirector implements AclQueryDirectorInterface
     public function applyAclRuleOnSelectQuery(ModelCriteria $query): ModelCriteria
     {
         $aclEntityRuleCollectionTransfer = $this->aclEntityRepository->getAclEntityRulesByRoles(
-            $this->getRolesTransfer()
+            $this->getRolesTransfer(),
         );
         $aclEntityMetadataTransfer = $this->aclEntityMetadataReader->findAclEntityMetadataTransferForEntityClass(
-            $query->getModelName()
+            $query->getModelName(),
         );
 
         $query = $this->applyAclRuleOnSelectQueryRelations($query, $aclEntityRuleCollectionTransfer);
@@ -134,12 +134,12 @@ class AclQueryDirector implements AclQueryDirectorInterface
     public function applyAclRuleOnUpdateQuery(ModelCriteria $query): ModelCriteria
     {
         $aclEntityRuleCollectionTransfer = $this->aclEntityRepository->getAclEntityRulesByRoles(
-            $this->getRolesTransfer()
+            $this->getRolesTransfer(),
         );
         $aclQueryDirectorStrategy = $this->aclDirectorStrategyResolver->resolveByQuery(
             $query,
             $aclEntityRuleCollectionTransfer,
-            AclEntityConstants::OPERATION_MASK_UPDATE
+            AclEntityConstants::OPERATION_MASK_UPDATE,
         );
 
         return $aclQueryDirectorStrategy->applyAclRuleOnUpdateQuery($query);
@@ -166,22 +166,22 @@ class AclQueryDirector implements AclQueryDirectorInterface
         }
 
         $aclEntityMetadataTransfer = $this->aclEntityMetadataReader->findAclEntityMetadataTransferForEntityClass(
-            $query->getModelName()
+            $query->getModelName(),
         );
 
         if ($aclEntityMetadataTransfer && $aclEntityMetadataTransfer->getIsSubEntity()) {
             throw new FunctionalityNotSupportedException(
-                FunctionalityNotSupportedException::SUB_ENTITY_NOT_SUPPORTED_MESSAGE
+                FunctionalityNotSupportedException::SUB_ENTITY_NOT_SUPPORTED_MESSAGE,
             );
         }
 
         $aclEntityRuleCollectionTransfer = $this->aclEntityRepository->getAclEntityRulesByRoles(
-            $this->getRolesTransfer()
+            $this->getRolesTransfer(),
         );
         $aclQueryDirectorStrategy = $this->aclDirectorStrategyResolver->resolveByQuery(
             $query,
             $aclEntityRuleCollectionTransfer,
-            AclEntityConstants::OPERATION_MASK_DELETE
+            AclEntityConstants::OPERATION_MASK_DELETE,
         );
 
         return $aclQueryDirectorStrategy->applyAclRuleOnDeleteQuery($query);
@@ -195,10 +195,10 @@ class AclQueryDirector implements AclQueryDirectorInterface
     public function inspectCreate(ActiveRecordInterface $entity): void
     {
         $aclEntityRuleCollectionTransfer = $this->aclEntityRepository->getAclEntityRulesByRoles(
-            $this->getRolesTransfer()
+            $this->getRolesTransfer(),
         );
         $aclEntityMetadataTransfer = $this->aclEntityMetadataReader->findAclEntityMetadataTransferForEntityClass(
-            get_class($entity)
+            get_class($entity),
         );
 
         $this->inspectEntityRelations($entity);
@@ -220,10 +220,10 @@ class AclQueryDirector implements AclQueryDirectorInterface
     public function inspectUpdate(ActiveRecordInterface $entity): void
     {
         $aclEntityRuleCollectionTransfer = $this->aclEntityRepository->getAclEntityRulesByRoles(
-            $this->getRolesTransfer()
+            $this->getRolesTransfer(),
         );
         $aclEntityMetadataTransfer = $this->aclEntityMetadataReader->findAclEntityMetadataTransferForEntityClass(
-            get_class($entity)
+            get_class($entity),
         );
 
         $this->inspectEntityRelations($entity);
@@ -245,10 +245,10 @@ class AclQueryDirector implements AclQueryDirectorInterface
     public function inspectDelete(ActiveRecordInterface $entity): void
     {
         $aclEntityRuleCollectionTransfer = $this->aclEntityRepository->getAclEntityRulesByRoles(
-            $this->getRolesTransfer()
+            $this->getRolesTransfer(),
         );
         $aclEntityMetadataTransfer = $this->aclEntityMetadataReader->findAclEntityMetadataTransferForEntityClass(
-            get_class($entity)
+            get_class($entity),
         );
         if ($aclEntityMetadataTransfer && $aclEntityMetadataTransfer->getIsSubEntity()) {
             $this->inspectSubEntityDelete($entity, $aclEntityRuleCollectionTransfer, $aclEntityMetadataTransfer);
@@ -274,7 +274,7 @@ class AclQueryDirector implements AclQueryDirectorInterface
         $aclDirectorStrategy = $this->aclDirectorStrategyResolver->resolveByEntity(
             $entity,
             $aclEntityRuleCollectionTransfer,
-            AclEntityConstants::OPERATION_MASK_CREATE
+            AclEntityConstants::OPERATION_MASK_CREATE,
         );
 
         if (!$aclDirectorStrategy->isCreatable($entity)) {
@@ -282,8 +282,8 @@ class AclQueryDirector implements AclQueryDirectorInterface
                 sprintf(
                     OperationNotAuthorizedException::MESSAGE_TEMPLATE,
                     AclEntityConstants::OPERATION_CREATE,
-                    get_class($entity)
-                )
+                    get_class($entity),
+                ),
             );
         }
     }
@@ -310,7 +310,7 @@ class AclQueryDirector implements AclQueryDirectorInterface
         $aclQueryDirectorStrategy = $this->aclDirectorStrategyResolver->resolveByEntity(
             $rootEntity,
             $aclEntityRuleCollectionTransfer,
-            AclEntityConstants::OPERATION_MASK_CREATE
+            AclEntityConstants::OPERATION_MASK_CREATE,
         );
 
         if (!$aclQueryDirectorStrategy->isCreatable($rootEntity)) {
@@ -318,8 +318,8 @@ class AclQueryDirector implements AclQueryDirectorInterface
                 sprintf(
                     OperationNotAuthorizedException::MESSAGE_TEMPLATE,
                     AclEntityConstants::OPERATION_CREATE,
-                    get_class($subEntity)
-                )
+                    get_class($subEntity),
+                ),
             );
         }
     }
@@ -339,7 +339,7 @@ class AclQueryDirector implements AclQueryDirectorInterface
         $aclDirectorStrategy = $this->aclDirectorStrategyResolver->resolveByEntity(
             $entity,
             $aclEntityRuleCollectionTransfer,
-            AclEntityConstants::OPERATION_MASK_UPDATE
+            AclEntityConstants::OPERATION_MASK_UPDATE,
         );
 
         if (!$aclDirectorStrategy->isUpdatable($entity)) {
@@ -347,8 +347,8 @@ class AclQueryDirector implements AclQueryDirectorInterface
                 sprintf(
                     OperationNotAuthorizedException::MESSAGE_TEMPLATE,
                     AclEntityConstants::OPERATION_UPDATE,
-                    get_class($entity)
-                )
+                    get_class($entity),
+                ),
             );
         }
     }
@@ -369,13 +369,13 @@ class AclQueryDirector implements AclQueryDirectorInterface
     ): void {
         $rootEntities = $this->relationResolver->getRootRelationsByAclEntityMetadata(
             $subEntity,
-            $aclEntityMetadataTransfer
+            $aclEntityMetadataTransfer,
         );
         foreach ($rootEntities as $rootEntity) {
             $aclQueryDirectorStrategy = $this->aclDirectorStrategyResolver->resolveByEntity(
                 $rootEntity,
                 $aclEntityRuleCollectionTransfer,
-                AclEntityConstants::OPERATION_MASK_UPDATE
+                AclEntityConstants::OPERATION_MASK_UPDATE,
             );
             if ($aclQueryDirectorStrategy->isUpdatable($rootEntity)) {
                 return;
@@ -386,8 +386,8 @@ class AclQueryDirector implements AclQueryDirectorInterface
             sprintf(
                 OperationNotAuthorizedException::MESSAGE_TEMPLATE,
                 AclEntityConstants::OPERATION_UPDATE,
-                get_class($subEntity)
-            )
+                get_class($subEntity),
+            ),
         );
     }
 
@@ -406,7 +406,7 @@ class AclQueryDirector implements AclQueryDirectorInterface
         $aclDirectorStrategy = $this->aclDirectorStrategyResolver->resolveByEntity(
             $entity,
             $aclEntityRuleCollectionTransfer,
-            AclEntityConstants::OPERATION_MASK_DELETE
+            AclEntityConstants::OPERATION_MASK_DELETE,
         );
 
         if (!$aclDirectorStrategy->isDeletable($entity)) {
@@ -414,8 +414,8 @@ class AclQueryDirector implements AclQueryDirectorInterface
                 sprintf(
                     OperationNotAuthorizedException::MESSAGE_TEMPLATE,
                     AclEntityConstants::OPERATION_DELETE,
-                    get_class($entity)
-                )
+                    get_class($entity),
+                ),
             );
         }
     }
@@ -439,7 +439,7 @@ class AclQueryDirector implements AclQueryDirectorInterface
             $aclQueryDirectorStrategy = $this->aclDirectorStrategyResolver->resolveByEntity(
                 $rootEntity,
                 $aclEntityRuleCollectionTransfer,
-                AclEntityConstants::OPERATION_MASK_DELETE
+                AclEntityConstants::OPERATION_MASK_DELETE,
             );
             if ($aclQueryDirectorStrategy->isDeletable($rootEntity)) {
                 return;
@@ -450,8 +450,8 @@ class AclQueryDirector implements AclQueryDirectorInterface
             sprintf(
                 OperationNotAuthorizedException::MESSAGE_TEMPLATE,
                 AclEntityConstants::OPERATION_DELETE,
-                get_class($subEntity)
-            )
+                get_class($subEntity),
+            ),
         );
     }
 
@@ -472,7 +472,7 @@ class AclQueryDirector implements AclQueryDirectorInterface
         $aclQueryDirectorStrategy = $this->aclDirectorStrategyResolver->resolveByQuery(
             $query,
             $aclEntityRuleCollectionTransfer,
-            AclEntityConstants::OPERATION_MASK_READ
+            AclEntityConstants::OPERATION_MASK_READ,
         );
 
         return $aclQueryDirectorStrategy->applyAclRuleOnSelectQuery($query);
@@ -496,14 +496,14 @@ class AclQueryDirector implements AclQueryDirectorInterface
     ): ModelCriteria {
         $query = $this->relationResolver->joinSubEntityRootRelation($query, $aclEntityMetadataTransfer);
         $rootAclEntityMetadata = $this->aclEntityMetadataReader->getRootAclEntityMetadataTransferForEntitySubClass(
-            $query->getModelName()
+            $query->getModelName(),
         );
 
         $rootEntityQuery = PropelQuery::from($rootAclEntityMetadata->getEntityNameOrFail());
         $aclQueryDirectorStrategy = $this->aclDirectorStrategyResolver->resolveByQuery(
             $rootEntityQuery,
             $aclEntityRuleCollectionTransfer,
-            AclEntityConstants::OPERATION_MASK_READ
+            AclEntityConstants::OPERATION_MASK_READ,
         );
 
         return $this->queryMerger->mergeQueries($query, $aclQueryDirectorStrategy->applyAclRuleOnSelectQuery($rootEntityQuery));
@@ -566,7 +566,7 @@ class AclQueryDirector implements AclQueryDirectorInterface
             $strategy = $this->aclDirectorStrategyResolver->resolveByQuery(
                 $withQuery,
                 $aclEntityRuleCollectionTransfer,
-                AclEntityConstants::OPERATION_MASK_READ
+                AclEntityConstants::OPERATION_MASK_READ,
             );
 
             if (!$strategy->isReadableQuery($withQuery)) {

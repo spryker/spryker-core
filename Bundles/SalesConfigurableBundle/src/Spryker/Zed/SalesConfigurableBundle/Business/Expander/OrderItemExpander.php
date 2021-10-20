@@ -75,7 +75,7 @@ class OrderItemExpander implements OrderItemExpanderInterface
         $salesOrderConfiguredBundleTransfers = $this->salesConfigurableBundleRepository
             ->getSalesOrderConfiguredBundleCollectionByFilter(
                 (new SalesOrderConfiguredBundleFilterTransfer())
-                    ->setSalesOrderItemIds($salesOrderItemIds)
+                    ->setSalesOrderItemIds($salesOrderItemIds),
             )
             ->getSalesOrderConfiguredBundles();
         $salesOrderConfiguredBundleTransfers = $this->translateConfigurableBundleTemplateNames($salesOrderConfiguredBundleTransfers);
@@ -113,9 +113,9 @@ class OrderItemExpander implements OrderItemExpanderInterface
                 (new SalesOrderConfiguredBundleTranslationTransfer())
                     ->setName(
                         $this->glossaryFacade->translate(
-                            $salesOrderConfiguredBundleTransfer->getName()
-                        )
-                    )
+                            $salesOrderConfiguredBundleTransfer->getName(),
+                        ),
+                    ),
             );
         }
 

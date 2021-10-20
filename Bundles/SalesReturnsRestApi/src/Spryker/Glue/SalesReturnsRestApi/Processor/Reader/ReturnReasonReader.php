@@ -64,7 +64,7 @@ class ReturnReasonReader implements ReturnReasonReaderInterface
     {
         $returnReasonSearchRequestTransfer = $this->createReturnReasonSearchRequest($restRequest);
         $searchResults = $this->salesReturnSearchClient->searchReturnReasons(
-            $returnReasonSearchRequestTransfer
+            $returnReasonSearchRequestTransfer,
         );
 
         /** @var \Generated\Shared\Transfer\ReturnReasonSearchCollectionTransfer $returnReasonSearchCollectionTransfer */
@@ -73,7 +73,7 @@ class ReturnReasonReader implements ReturnReasonReaderInterface
         return $this->restReturnReasonResponseBuilder->createReturnReasonListRestResponse(
             $returnReasonSearchRequestTransfer,
             $returnReasonSearchCollectionTransfer,
-            $restRequest->getMetadata()->getLocale()
+            $restRequest->getMetadata()->getLocale(),
         );
     }
 

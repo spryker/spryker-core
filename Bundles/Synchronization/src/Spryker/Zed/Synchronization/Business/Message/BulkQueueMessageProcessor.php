@@ -81,7 +81,7 @@ class BulkQueueMessageProcessor implements QueueMessageProcessorInterface
 
         return array_merge(
             $this->runBulkWrite($writeMessagesByQueue),
-            $this->runBulkDelete($deleteMessagesByQueue)
+            $this->runBulkDelete($deleteMessagesByQueue),
         );
     }
 

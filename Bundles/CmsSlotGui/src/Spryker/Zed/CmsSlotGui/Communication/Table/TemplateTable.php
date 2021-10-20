@@ -151,7 +151,7 @@ class TemplateTable extends AbstractTable
         $this->cmsSlotTemplateQuery
             ->withColumn(
                 'COUNT(' . SpyCmsSlotToCmsSlotTemplateTableMap::COL_ID_CMS_SLOT_TO_CMS_SLOT_TEMPLATE . ')',
-                static::COL_SLOTS_NUMBER
+                static::COL_SLOTS_NUMBER,
             );
     }
 }

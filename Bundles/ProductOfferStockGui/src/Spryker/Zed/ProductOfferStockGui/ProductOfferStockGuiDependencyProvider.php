@@ -50,7 +50,7 @@ class ProductOfferStockGuiDependencyProvider extends AbstractBundleDependencyPro
     {
         $container->set(static::FACADE_PRODUCT_OFFER_STOCK, function (Container $container) {
             return new ProductOfferStockGuiToProductOfferStockFacadeBridge(
-                $container->getLocator()->productOfferStock()->facade()
+                $container->getLocator()->productOfferStock()->facade(),
             );
         });
 

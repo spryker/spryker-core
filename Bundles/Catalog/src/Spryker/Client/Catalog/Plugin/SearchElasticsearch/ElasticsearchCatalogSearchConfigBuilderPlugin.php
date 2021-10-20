@@ -73,7 +73,7 @@ class ElasticsearchCatalogSearchConfigBuilderPlugin extends AbstractPlugin imple
     protected function buildPaginationConfig(SearchConfigurationTransfer $searchConfigurationTransfer): SearchConfigurationTransfer
     {
         $searchConfigurationTransfer->setPaginationConfig(
-            $this->getFactory()->getConfig()->getCatalogSearchPaginationConfigTransfer()
+            $this->getFactory()->getConfig()->getCatalogSearchPaginationConfigTransfer(),
         );
 
         return $searchConfigurationTransfer;

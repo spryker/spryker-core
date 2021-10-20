@@ -33,9 +33,9 @@ class AclEntityMetadataConfigWithWrongParentEntityExpanderPluginMock implements 
                         ->setIsSubEntity(true)
                         ->setParent(
                             (new AclEntityParentMetadataTransfer())
-                                ->setEntityName('test')
-                        )
-                )
+                                ->setEntityName('test'),
+                        ),
+                ),
         );
     }
 }

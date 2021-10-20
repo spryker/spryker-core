@@ -135,7 +135,7 @@ class ProductRelationUpdater implements ProductRelationUpdaterInterface
     protected function removeRelatedProducts(int $idProductRelation): void
     {
         $this->productRelationEntityManager->removeRelatedProductsByIdProductRelation(
-            $idProductRelation
+            $idProductRelation,
         );
     }
 
@@ -148,7 +148,7 @@ class ProductRelationUpdater implements ProductRelationUpdaterInterface
         ProductRelationTransfer $productRelationTransfer
     ): ?ProductRelationTransfer {
         $productRelationTypeTransfer = $this->productRelationEntityManager->saveProductRelationType(
-            $productRelationTransfer->getProductRelationType()
+            $productRelationTransfer->getProductRelationType(),
         );
         $productRelationTransfer->setProductRelationType($productRelationTypeTransfer);
 
@@ -195,7 +195,7 @@ class ProductRelationUpdater implements ProductRelationUpdaterInterface
     {
         $this->touchFacade->touchActive(
             ProductRelationConstants::RESOURCE_TYPE_PRODUCT_RELATION,
-            $idProductAbstract
+            $idProductAbstract,
         );
     }
 }

@@ -101,7 +101,7 @@ class MerchantRelationshipHardThresholdFormExpanderPlugin extends AbstractPlugin
         $salesOrderThresholdValueTransfer->setSalesOrderThresholdType(
             (new SalesOrderThresholdTypeTransfer())
                 ->setKey($this->getThresholdKey())
-                ->setThresholdGroup($this->getThresholdGroup())
+                ->setThresholdGroup($this->getThresholdGroup()),
         );
 
         return $salesOrderThresholdValueTransfer;

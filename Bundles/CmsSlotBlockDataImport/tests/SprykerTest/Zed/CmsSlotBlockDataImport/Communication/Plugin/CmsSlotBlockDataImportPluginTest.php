@@ -169,7 +169,7 @@ class CmsSlotBlockDataImportPluginTest extends Unit
 
         $cmsSlotBlockTransferFromDb = $this->tester->findCmsSlotBlock(
             $cmsSlotTemplateTransfer->getIdCmsSlotTemplate(),
-            $cmsSlotTransfer->getIdCmsSlot()
+            $cmsSlotTransfer->getIdCmsSlot(),
         );
 
         //Assert
@@ -199,7 +199,7 @@ class CmsSlotBlockDataImportPluginTest extends Unit
 
         $cmsSlotBlockTransferFromDb = $this->tester->findCmsSlotBlock(
             $cmsSlotTemplateTransfer->getIdCmsSlotTemplate(),
-            $cmsSlotTransfer->getIdCmsSlot()
+            $cmsSlotTransfer->getIdCmsSlot(),
         );
 
         //Assert

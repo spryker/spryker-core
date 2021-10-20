@@ -161,7 +161,7 @@ class ShippingAddressSaveTest extends Test
         $mockedSalesConfig = $this->getMockBuilder(SalesConfig::class)->disableOriginalConstructor()->getMock();
         $mockedSalesConfig->method('determineProcessForOrderItem')->willReturn('DummyPayment01');
         $mockedSalesConfig->method('getOrderReferenceDefaults')->willReturn(
-            $this->createSequenceNumberSettingsTransfer()
+            $this->createSequenceNumberSettingsTransfer(),
         );
 
         $salesBusinessFactory->setConfig($mockedSalesConfig);

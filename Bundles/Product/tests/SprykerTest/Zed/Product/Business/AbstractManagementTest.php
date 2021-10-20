@@ -46,7 +46,7 @@ class AbstractManagementTest extends FacadeTestAbstract
 
         foreach ($this->productAbstractTransfer->getLocalizedAttributes() as $localizedAttribute) {
             $localizedAttribute->setName(
-                self::UPDATED_PRODUCT_ABSTRACT_NAME[$localizedAttribute->getLocale()->getLocaleName()]
+                self::UPDATED_PRODUCT_ABSTRACT_NAME[$localizedAttribute->getLocale()->getLocaleName()],
             );
         }
 
@@ -62,7 +62,7 @@ class AbstractManagementTest extends FacadeTestAbstract
     public function testHasProductAbstractShouldReturnFalse(): void
     {
         $this->assertFalse(
-            $this->productFacade->hasProductAbstract('sku that does not exist')
+            $this->productFacade->hasProductAbstract('sku that does not exist'),
         );
     }
 
@@ -74,7 +74,7 @@ class AbstractManagementTest extends FacadeTestAbstract
         $this->createNewProductAbstractAndAssertNoTouchExists();
 
         $this->assertTrue(
-            $this->productFacade->hasProductAbstract(self::ABSTRACT_SKU)
+            $this->productFacade->hasProductAbstract(self::ABSTRACT_SKU),
         );
     }
 
@@ -88,7 +88,7 @@ class AbstractManagementTest extends FacadeTestAbstract
 
         $this->assertEquals(
             $expectedId,
-            $idProductAbstract
+            $idProductAbstract,
         );
     }
 
@@ -158,12 +158,12 @@ class AbstractManagementTest extends FacadeTestAbstract
     {
         $nameEN = $this->productFacade->getLocalizedProductAbstractName(
             $this->productAbstractTransfer,
-            $this->locales['en_US']
+            $this->locales['en_US'],
         );
 
         $nameDE = $this->productFacade->getLocalizedProductAbstractName(
             $this->productAbstractTransfer,
-            $this->locales['de_DE']
+            $this->locales['de_DE'],
         );
 
         $this->assertSame(static::PRODUCT_ABSTRACT_NAME['en_US'], $nameEN);

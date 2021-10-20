@@ -61,7 +61,7 @@ class PriceProductAbstractStorageWriterTest extends Unit
                 ->queryPriceAbstractStorageByPriceAbstractIds([
                     $productAbstractTransfer->getIdProductAbstract(),
                     $productAbstractTransfer2->getIdProductAbstract(),
-                ])->find()
+                ])->find(),
         );
     }
 
@@ -74,7 +74,7 @@ class PriceProductAbstractStorageWriterTest extends Unit
             new PriceProductStorageToPriceProductFacadeBridge(new PriceProductFacade()),
             new PriceProductStorageToStoreFacadeBridge(new StoreFacade()),
             new PriceProductStorageQueryContainer(),
-            false
+            false,
         );
     }
 

@@ -36,7 +36,7 @@ class ProductSearchProductConcreteReadPlugin extends AbstractPlugin implements P
             $isSearchable = $this->getFacade()
                 ->isProductConcreteSearchable(
                     $productConcreteTransfer->getIdProductConcrete(),
-                    $localizedAttributesTransfer->getLocale()
+                    $localizedAttributesTransfer->getLocale(),
                 );
 
             $localizedAttributesTransfer->setIsSearchable($isSearchable);

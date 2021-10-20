@@ -28,7 +28,7 @@ trait LastConnectionConsumerTrait
         if ($connection === null) {
             throw new ModuleException(
                 $this,
-                'Connection have not be performed yet. Use `$I->sendXXX()` methods to send HTTP request'
+                'Connection have not be performed yet. Use `$I->sendXXX()` methods to send HTTP request',
             );
         }
 

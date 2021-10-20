@@ -136,13 +136,13 @@ class MerchantRelationshipTable extends AbstractTable
         $urlParams = [MerchantRelationshipTableConstants::REQUEST_ID_MERCHANT_RELATIONSHIP => $item[MerchantRelationshipTableConstants::COL_ID_MERCHANT_RELATIONSHIP]];
         $buttons[] = $this->generateEditButton(
             Url::generate(MerchantRelationshipTableConstants::URL_MERCHANT_RELATIONSHIP_EDIT, $urlParams),
-            'Edit'
+            'Edit',
         );
         $buttons[] = $this->generateRemoveButton(
             Url::generate(MerchantRelationshipTableConstants::URL_MERCHANT_RELATIONSHIP_DELETE, $urlParams),
             'Delete',
             [],
-            DeleteMerchantRelationshipForm::class
+            DeleteMerchantRelationshipForm::class,
         );
 
         return implode(' ', $buttons);
@@ -182,7 +182,7 @@ class MerchantRelationshipTable extends AbstractTable
         return sprintf(
             '%d - %s',
             $item[MerchantRelationshipTableConstants::COL_MERCHANT_ID],
-            $item[MerchantRelationshipTableConstants::COL_MERCHANT_NAME]
+            $item[MerchantRelationshipTableConstants::COL_MERCHANT_NAME],
         );
     }
 }

@@ -46,7 +46,7 @@ abstract class AbstractDeletePriceProductController extends AbstractController
     ): ValidationResponseTransfer {
         $priceProductTransfersToRemove = $this->filterPriceProductTransfersByPriceProductDefaultIds(
             $priceProductTransfers,
-            $priceProductDefaultIds
+            $priceProductDefaultIds,
         );
 
         return $this->getFactory()
@@ -92,8 +92,8 @@ abstract class AbstractDeletePriceProductController extends AbstractController
             'intval',
             $this->getFactory()->getUtilEncodingService()->decodeJson(
                 $request->get(PriceProductTableViewTransfer::PRICE_PRODUCT_DEFAULT_IDS),
-                true
-            ) ?: []
+                true,
+            ) ?: [],
         );
     }
 

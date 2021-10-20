@@ -146,7 +146,7 @@ class MethodPriceReader implements MethodPriceReaderInterface
         $shipmentMethodPriceTransfer = $this->shipmentRepository->findShipmentMethodPrice(
             $shipmentMethodTransfer->getIdShipmentMethod(),
             $storeTransfer->getIdStore(),
-            $this->getIdCurrencyByIsoCode($currencyCode)
+            $this->getIdCurrencyByIsoCode($currencyCode),
         );
 
         if ($shipmentMethodPriceTransfer === null) {

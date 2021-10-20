@@ -66,7 +66,7 @@ class ProductOfferReader implements ProductOfferReaderInterface
 
         return $this->productOfferRestResponseBuilder->createProductOfferRestResponse(
             $productOfferStorageTransfer,
-            $defaultMerchantProductOfferReference
+            $defaultMerchantProductOfferReference,
         );
     }
 

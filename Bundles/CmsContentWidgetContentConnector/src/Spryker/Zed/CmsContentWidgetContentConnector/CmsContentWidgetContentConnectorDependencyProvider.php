@@ -44,7 +44,7 @@ class CmsContentWidgetContentConnectorDependencyProvider extends AbstractBundleD
     {
         $container->set(static::FACADE_CONTENT, function (Container $container) {
             return new CmsContentWidgetContentConnectorToContentFacadeBridge(
-                $container->getLocator()->content()->facade()
+                $container->getLocator()->content()->facade(),
             );
         });
 

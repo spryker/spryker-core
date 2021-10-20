@@ -76,7 +76,7 @@ class CompanyBusinessUnitReader implements CompanyBusinessUnitReaderInterface
         }
 
         $companyBusinessUnitCollection = $this->companyBusinessUnitClient->getCompanyBusinessUnitCollection(
-            (new CompanyBusinessUnitCriteriaFilterTransfer())->setIdCompanyUser($restRequest->getRestUser()->getIdCompanyUser())
+            (new CompanyBusinessUnitCriteriaFilterTransfer())->setIdCompanyUser($restRequest->getRestUser()->getIdCompanyUser()),
         );
 
         if (!$companyBusinessUnitCollection->getCompanyBusinessUnits()->count()) {
@@ -94,7 +94,7 @@ class CompanyBusinessUnitReader implements CompanyBusinessUnitReaderInterface
     protected function getCurrentUserCompanyBusinessUnitByUuid(RestRequestInterface $restRequest): RestResponseInterface
     {
         $companyBusinessUnitResponseTransfer = $this->companyBusinessUnitClient->findCompanyBusinessUnitByUuid(
-            (new CompanyBusinessUnitTransfer())->setUuid($restRequest->getResource()->getId())
+            (new CompanyBusinessUnitTransfer())->setUuid($restRequest->getResource()->getId()),
         );
 
         if (
@@ -106,13 +106,13 @@ class CompanyBusinessUnitReader implements CompanyBusinessUnitReaderInterface
 
         $restCompanyBusinessUnitAttributesTransfer = $this->companyBusinessUnitMapper->mapCompanyBusinessUnitTransferToRestCompanyBusinessUnitAttributesTransfer(
             $companyBusinessUnitResponseTransfer->getCompanyBusinessUnitTransfer(),
-            new RestCompanyBusinessUnitAttributesTransfer()
+            new RestCompanyBusinessUnitAttributesTransfer(),
         );
 
         return $this->companyBusinessUnitRestResponseBuilder->createCompanyBusinessUnitRestResponse(
             $companyBusinessUnitResponseTransfer->getCompanyBusinessUnitTransfer()->getUuid(),
             $restCompanyBusinessUnitAttributesTransfer,
-            $companyBusinessUnitResponseTransfer->getCompanyBusinessUnitTransfer()
+            $companyBusinessUnitResponseTransfer->getCompanyBusinessUnitTransfer(),
         );
     }
 
@@ -139,12 +139,12 @@ class CompanyBusinessUnitReader implements CompanyBusinessUnitReaderInterface
         foreach ($companyBusinessUnitCollectionTransfer->getCompanyBusinessUnits() as $companyBusinessUnitTransfer) {
             $restCompanyBusinessUnitAttributesTransfer = $this->companyBusinessUnitMapper->mapCompanyBusinessUnitTransferToRestCompanyBusinessUnitAttributesTransfer(
                 $companyBusinessUnitTransfer,
-                new RestCompanyBusinessUnitAttributesTransfer()
+                new RestCompanyBusinessUnitAttributesTransfer(),
             );
             $companyBusinessUnitRestResources[] = $this->companyBusinessUnitRestResponseBuilder->createCompanyBusinessUnitRestResource(
                 $companyBusinessUnitTransfer->getUuid(),
                 $restCompanyBusinessUnitAttributesTransfer,
-                $companyBusinessUnitTransfer
+                $companyBusinessUnitTransfer,
             );
         }
 

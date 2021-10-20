@@ -47,11 +47,11 @@ class ExpandQuoteShipmentWithMerchantReferenceTest extends Unit
         // Assert
         $this->assertSame(
             $quoteTransfer->getItems()->offsetGet(0)->getMerchantReference(),
-            $expandedQuoteTransfer->getItems()->offsetGet(0)->getShipment()->getMerchantReference()
+            $expandedQuoteTransfer->getItems()->offsetGet(0)->getShipment()->getMerchantReference(),
         );
         $this->assertSame(
             $quoteTransfer->getItems()->offsetGet(1)->getMerchantReference(),
-            $expandedQuoteTransfer->getItems()->offsetGet(1)->getShipment()->getMerchantReference()
+            $expandedQuoteTransfer->getItems()->offsetGet(1)->getShipment()->getMerchantReference(),
         );
     }
 
@@ -74,7 +74,7 @@ class ExpandQuoteShipmentWithMerchantReferenceTest extends Unit
         $this->assertNull($expandedQuoteTransfer->getItems()->offsetGet(0)->getShipment());
         $this->assertSame(
             $quoteTransfer->getItems()->offsetGet(1)->getMerchantReference(),
-            $expandedQuoteTransfer->getItems()->offsetGet(1)->getShipment()->getMerchantReference()
+            $expandedQuoteTransfer->getItems()->offsetGet(1)->getShipment()->getMerchantReference(),
         );
     }
 }

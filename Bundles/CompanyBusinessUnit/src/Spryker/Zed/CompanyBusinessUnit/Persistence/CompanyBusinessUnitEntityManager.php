@@ -28,7 +28,7 @@ class CompanyBusinessUnitEntityManager extends AbstractEntityManager implements 
     ): CompanyBusinessUnitTransfer {
         $entityTransfer = $this->getMapper()->mapBusinessUnitTransferToEntityTransfer(
             $companyBusinessUnitTransfer,
-            new SpyCompanyBusinessUnitEntityTransfer()
+            new SpyCompanyBusinessUnitEntityTransfer(),
         );
         $entityTransfer = $this->save($entityTransfer);
 
@@ -41,7 +41,7 @@ class CompanyBusinessUnitEntityManager extends AbstractEntityManager implements 
 
         return $this->getMapper()->mapEntityTransferToBusinessUnitTransfer(
             $entityTransfer,
-            $companyBusinessUnitTransfer
+            $companyBusinessUnitTransfer,
         );
     }
 

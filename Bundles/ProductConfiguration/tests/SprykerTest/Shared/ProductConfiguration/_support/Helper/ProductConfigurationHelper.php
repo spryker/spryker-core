@@ -49,7 +49,7 @@ class ProductConfigurationHelper extends Module
     protected function removeProductConfiguration(ProductConfigurationTransfer $productConfigurationTransfer): void
     {
         $this->getProductConfigurationQuery()->filterByIdProductConfiguration(
-            $productConfigurationTransfer->getIdProductConfiguration()
+            $productConfigurationTransfer->getIdProductConfiguration(),
         )->delete();
     }
 

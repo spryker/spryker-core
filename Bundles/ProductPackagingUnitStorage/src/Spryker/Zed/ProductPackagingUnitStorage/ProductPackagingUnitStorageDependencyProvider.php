@@ -117,7 +117,7 @@ class ProductPackagingUnitStorageDependencyProvider extends AbstractBundleDepend
     {
         $container->set(static::FACADE_PRODUCT_PACKAGING_UNIT, function (Container $container) {
             return new ProductPackagingUnitStorageToProductPackagingUnitFacadeBridge(
-                $container->getLocator()->productPackagingUnit()->facade()
+                $container->getLocator()->productPackagingUnit()->facade(),
             );
         });
 
@@ -133,7 +133,7 @@ class ProductPackagingUnitStorageDependencyProvider extends AbstractBundleDepend
     {
         $container->set(static::FACADE_EVENT_BEHAVIOR, function (Container $container) {
             return new ProductPackagingUnitStorageToEventBehaviorFacadeBridge(
-                $container->getLocator()->eventBehavior()->facade()
+                $container->getLocator()->eventBehavior()->facade(),
             );
         });
 

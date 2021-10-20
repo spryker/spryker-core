@@ -82,13 +82,13 @@ class CompanyRoleResourceRelationshipExpander implements CompanyRoleResourceRela
             $restCompanyRoleAttributesTransfer = $this->companyRoleMapper
                 ->mapCompanyRoleTransferToRestCompanyRoleAttributesTransfer(
                     $companyRoleTransfer,
-                    new RestCompanyRoleAttributesTransfer()
+                    new RestCompanyRoleAttributesTransfer(),
                 );
 
             $companyRoleResource = $this->restResourceBuilder->createRestResource(
                 CompanyRolesRestApiConfig::RESOURCE_COMPANY_ROLES,
                 $companyRoleTransfer->getUuid(),
-                $restCompanyRoleAttributesTransfer
+                $restCompanyRoleAttributesTransfer,
             );
 
             $resource->addRelationship($companyRoleResource);

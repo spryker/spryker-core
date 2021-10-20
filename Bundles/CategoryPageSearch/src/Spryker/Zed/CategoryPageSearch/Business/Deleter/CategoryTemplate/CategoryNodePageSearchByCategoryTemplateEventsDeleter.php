@@ -45,7 +45,7 @@ class CategoryNodePageSearchByCategoryTemplateEventsDeleter implements CategoryN
         $categoryTemplateIds = $this->eventBehaviorFacade->getEventTransferIds($eventEntityTransfers);
 
         $this->categoryNodePageSearchDeleter->deleteCategoryNodeStorageCollectionByCategoryNodeCriteria(
-            (new CategoryNodeCriteriaTransfer())->setCategoryTemplateIds($categoryTemplateIds)
+            (new CategoryNodeCriteriaTransfer())->setCategoryTemplateIds($categoryTemplateIds),
         );
     }
 }

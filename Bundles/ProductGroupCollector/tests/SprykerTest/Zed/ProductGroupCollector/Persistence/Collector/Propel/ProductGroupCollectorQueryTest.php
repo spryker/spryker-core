@@ -82,14 +82,14 @@ class ProductGroupCollectorQueryTest extends Unit
         $this->assertNotNull($resultProductGroupData1);
         $this->assertEquals(
             implode(',', $productGroupTransfer1->getIdProductAbstracts()),
-            $resultProductGroupData1[ProductGroupCollectorQuery::FIELD_ID_PRODUCT_ABSTRACTS]
+            $resultProductGroupData1[ProductGroupCollectorQuery::FIELD_ID_PRODUCT_ABSTRACTS],
         );
 
         $resultProductGroupData2 = $this->findResultProductGroupData($result, $productGroupTransfer2->getIdProductGroup());
         $this->assertNotNull($resultProductGroupData2);
         $this->assertEquals(
             implode(',', $productGroupTransfer2->getIdProductAbstracts()),
-            $resultProductGroupData2[ProductGroupCollectorQuery::FIELD_ID_PRODUCT_ABSTRACTS]
+            $resultProductGroupData2[ProductGroupCollectorQuery::FIELD_ID_PRODUCT_ABSTRACTS],
         );
     }
 

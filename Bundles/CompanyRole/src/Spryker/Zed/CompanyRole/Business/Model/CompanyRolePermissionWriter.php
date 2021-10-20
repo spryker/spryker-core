@@ -50,12 +50,12 @@ class CompanyRolePermissionWriter implements CompanyRolePermissionWriterInterfac
 
         $this->addPermissions(
             $savePermissions,
-            $companyRoleTransfer->getIdCompanyRole()
+            $companyRoleTransfer->getIdCompanyRole(),
         );
 
         $this->removePermissions(
             array_keys($deletePermissions),
-            $companyRoleTransfer->getIdCompanyRole()
+            $companyRoleTransfer->getIdCompanyRole(),
         );
     }
 

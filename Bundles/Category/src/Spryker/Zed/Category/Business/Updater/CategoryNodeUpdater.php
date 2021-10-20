@@ -134,7 +134,7 @@ class CategoryNodeUpdater implements CategoryNodeUpdaterInterface
     {
         $nodeTransfer = $categoryTransfer->getCategoryNodeOrFail();
         $currentCategoryNodeTransfer = $this->categoryRepository->findCategoryNodeByIdCategoryNode(
-            $nodeTransfer->getIdCategoryNodeOrFail()
+            $nodeTransfer->getIdCategoryNodeOrFail(),
         );
 
         if (!$currentCategoryNodeTransfer) {
@@ -143,7 +143,7 @@ class CategoryNodeUpdater implements CategoryNodeUpdaterInterface
 
         $idFormerParentCategoryNode = $this->findPossibleFormerParentCategoryNodeId(
             $currentCategoryNodeTransfer,
-            $categoryTransfer
+            $categoryTransfer,
         );
         if ($idFormerParentCategoryNode) {
             $nodeTransfer->setFkParentCategoryNode($categoryTransfer->getParentCategoryNodeOrFail()->getIdCategoryNodeOrFail());

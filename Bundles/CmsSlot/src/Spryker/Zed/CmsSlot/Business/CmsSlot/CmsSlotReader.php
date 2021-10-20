@@ -41,8 +41,8 @@ class CmsSlotReader implements CmsSlotReaderInterface
             throw new MissingCmsSlotException(
                 sprintf(
                     'CMS Slot with id "%d" not found.',
-                    $idCmsSlot
-                )
+                    $idCmsSlot,
+                ),
             );
         }
 

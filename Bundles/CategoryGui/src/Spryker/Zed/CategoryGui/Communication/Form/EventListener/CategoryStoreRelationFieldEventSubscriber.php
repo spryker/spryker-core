@@ -70,7 +70,7 @@ class CategoryStoreRelationFieldEventSubscriber implements EventSubscriberInterf
         $form->add(
             CategoryType::FIELD_STORE_RELATION,
             $this->storeRelationFormTypePlugin->getType(),
-            $options
+            $options,
         );
     }
 

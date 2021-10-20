@@ -52,7 +52,7 @@ class CompanySupplierGuiCommunicationFactory extends AbstractCommunicationFactor
     public function createCompanySupplierFormDataProvider(): CompanySupplierFormDataProvider
     {
         return new CompanySupplierFormDataProvider(
-            $this->getCompanySupplierFacade()
+            $this->getCompanySupplierFacade(),
         );
     }
 
@@ -68,7 +68,7 @@ class CompanySupplierGuiCommunicationFactory extends AbstractCommunicationFactor
             $this->getProductQuery(),
             $this->getMoneyFacade(),
             $this->getStoreFacade(),
-            $this->getCurrencyFacade()
+            $this->getCurrencyFacade(),
         );
     }
 
@@ -102,7 +102,7 @@ class CompanySupplierGuiCommunicationFactory extends AbstractCommunicationFactor
     public function createCompanyTypeChoiceFormDataProvider(): CompanyTypeChoiceFormDataProvider
     {
         return new CompanyTypeChoiceFormDataProvider(
-            $this->getCompanySupplierFacade()
+            $this->getCompanySupplierFacade(),
         );
     }
 

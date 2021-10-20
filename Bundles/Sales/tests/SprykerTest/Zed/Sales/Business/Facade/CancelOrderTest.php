@@ -91,7 +91,7 @@ class CancelOrderTest extends Test
         // Arrange
         $this->tester->setDependency(
             SalesDependencyProvider::HYDRATE_ORDER_PLUGINS,
-            [$this->getOrderExpanderPluginMock()]
+            [$this->getOrderExpanderPluginMock()],
         );
 
         $orderTransfer = $this->tester->createOrderByStateMachineProcessName(static::DEFAULT_OMS_PROCESS_NAME_WITH_CANCELLABLE_FLAGS);
@@ -109,7 +109,7 @@ class CancelOrderTest extends Test
         $this->assertTrue($orderCancelResponseTransfer->getIsSuccessful());
         $this->assertSame(
             static::CANCELLED_STATE_NAME,
-            $orderCancelResponseTransfer->getOrder()->getItems()->getIterator()->current()->getState()->getName()
+            $orderCancelResponseTransfer->getOrder()->getItems()->getIterator()->current()->getState()->getName(),
         );
     }
 
@@ -121,7 +121,7 @@ class CancelOrderTest extends Test
         // Arrange
         $this->tester->setDependency(
             SalesDependencyProvider::HYDRATE_ORDER_PLUGINS,
-            [$this->getOrderExpanderPluginMock()]
+            [$this->getOrderExpanderPluginMock()],
         );
 
         $orderTransfer = $this->tester->createOrderByStateMachineProcessName(static::DEFAULT_OMS_PROCESS_NAME_WITH_CANCELLABLE_FLAGS);
@@ -139,7 +139,7 @@ class CancelOrderTest extends Test
         $this->assertFalse($orderCancelResponseTransfer->getIsSuccessful());
         $this->assertSame(
             static::GLOSSARY_KEY_CUSTOMER_ORDER_NOT_FOUND,
-            $orderCancelResponseTransfer->getMessages()[0]->getValue()
+            $orderCancelResponseTransfer->getMessages()[0]->getValue(),
         );
     }
 
@@ -164,7 +164,7 @@ class CancelOrderTest extends Test
         $this->assertFalse($orderCancelResponseTransfer->getIsSuccessful());
         $this->assertSame(
             static::GLOSSARY_KEY_CUSTOMER_ORDER_NOT_FOUND,
-            $orderCancelResponseTransfer->getMessages()[0]->getValue()
+            $orderCancelResponseTransfer->getMessages()[0]->getValue(),
         );
     }
 
@@ -189,7 +189,7 @@ class CancelOrderTest extends Test
         $this->assertFalse($orderCancelResponseTransfer->getIsSuccessful());
         $this->assertSame(
             static::GLOSSARY_KEY_CUSTOMER_ORDER_NOT_FOUND,
-            $orderCancelResponseTransfer->getMessages()[0]->getValue()
+            $orderCancelResponseTransfer->getMessages()[0]->getValue(),
         );
     }
 
@@ -232,7 +232,7 @@ class CancelOrderTest extends Test
         $this->assertFalse($orderCancelResponseTransfer->getIsSuccessful());
         $this->assertSame(
             static::GLOSSARY_KEY_ORDER_CANNOT_BE_CANCELLED,
-            $orderCancelResponseTransfer->getMessages()[0]->getValue()
+            $orderCancelResponseTransfer->getMessages()[0]->getValue(),
         );
     }
 

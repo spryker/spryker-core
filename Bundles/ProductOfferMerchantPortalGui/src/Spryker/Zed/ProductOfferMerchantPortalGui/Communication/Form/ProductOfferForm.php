@@ -202,7 +202,7 @@ class ProductOfferForm extends AbstractType
                         'max' => static::FIELD_MERCHANT_SKU_MAX_LENGTH,
                     ]),
                 ],
-            ]
+            ],
         );
 
         return $this;
@@ -236,7 +236,7 @@ class ProductOfferForm extends AbstractType
                         'minMessage' => (new NotBlank())->message,
                     ]),
                 ],
-            ]
+            ],
         );
 
         $builder->get(static::FIELD_STORES)
@@ -260,7 +260,7 @@ class ProductOfferForm extends AbstractType
             [
                 'required' => false,
                 'label' => static::LABEL_IS_ACTIVE,
-            ]
+            ],
         );
 
         return $this;

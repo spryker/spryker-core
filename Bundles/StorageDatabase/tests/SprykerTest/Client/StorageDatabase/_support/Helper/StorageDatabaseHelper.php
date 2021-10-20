@@ -78,7 +78,7 @@ class StorageDatabaseHelper extends Module
             static::FIXTURE_TABLE_NAME,
             static::COLUMN_DATA,
             $this->getEscapedFieldName(static::COLUMN_KEY),
-            static::COLUMN_ALIAS_KEYS
+            static::COLUMN_ALIAS_KEYS,
         );
         $statement = $this->getConnection()->prepare($query);
 
@@ -103,7 +103,7 @@ class StorageDatabaseHelper extends Module
             static::FIXTURE_TABLE_NAME,
             static::COLUMN_DATA,
             $this->getEscapedFieldName(static::COLUMN_KEY),
-            static::COLUMN_ALIAS_KEYS
+            static::COLUMN_ALIAS_KEYS,
         );
 
         $this->getConnection()->exec($query);
@@ -128,7 +128,7 @@ class StorageDatabaseHelper extends Module
             static::$pdoConnection = new PDO(
                 $this->getDatabaseSourceName(),
                 Config::get(PropelConstants::ZED_DB_USERNAME),
-                Config::get(PropelConstants::ZED_DB_PASSWORD)
+                Config::get(PropelConstants::ZED_DB_PASSWORD),
             );
         }
 
@@ -145,7 +145,7 @@ class StorageDatabaseHelper extends Module
             Config::get(PropelConstants::ZED_DB_ENGINE),
             Config::get(PropelConstants::ZED_DB_HOST),
             Config::get(PropelConstants::ZED_DB_PORT),
-            Config::get(PropelConstants::ZED_DB_DATABASE)
+            Config::get(PropelConstants::ZED_DB_DATABASE),
         );
     }
 

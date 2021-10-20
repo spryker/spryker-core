@@ -33,7 +33,7 @@ class CmsStorageFactory extends AbstractFactory
         return new CmsPageStorageReader(
             $this->getStorageClient(),
             $this->getSynchronizationService(),
-            $this->getUtilEncodingService()
+            $this->getUtilEncodingService(),
         );
     }
 

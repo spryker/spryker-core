@@ -227,7 +227,7 @@ class MerchantSalesOrderMerchantUserGuiDependencyProvider extends AbstractBundle
     {
         $container->set(static::FACADE_MERCHANT_OMS, function (Container $container) {
             return new MerchantSalesOrderMerchantUserGuiToMerchantOmsFacadeBridge(
-                $container->getLocator()->merchantOms()->facade()
+                $container->getLocator()->merchantOms()->facade(),
             );
         });
 
@@ -257,7 +257,7 @@ class MerchantSalesOrderMerchantUserGuiDependencyProvider extends AbstractBundle
     {
         $container->set(static::FACADE_SHIPMENT, function (Container $container) {
             return new MerchantSalesOrderMerchantUserGuiToShipmentFacadeBridge(
-                $container->getLocator()->shipment()->facade()
+                $container->getLocator()->shipment()->facade(),
             );
         });
 
@@ -290,8 +290,8 @@ class MerchantSalesOrderMerchantUserGuiDependencyProvider extends AbstractBundle
                 'Missing instance of %s! You need to configure ShipmentFormType ' .
                 'in your own MerchantSalesOrderMerchantUserGuiDependencyProvider::getShipmentFormTypePlugin() ' .
                 'to be able to manage merchant order shipments.',
-                FormTypeInterface::class
-            )
+                FormTypeInterface::class,
+            ),
         );
     }
 
@@ -321,8 +321,8 @@ class MerchantSalesOrderMerchantUserGuiDependencyProvider extends AbstractBundle
                 'Missing instance of %s! You need to configure ItemFormType ' .
                 'in your own MerchantSalesOrderMerchantUserGuiDependencyProvider::getItemFormTypePlugin() ' .
                 'to be able to manage merchant order shipments.',
-                FormTypeInterface::class
-            )
+                FormTypeInterface::class,
+            ),
         );
     }
 
@@ -335,7 +335,7 @@ class MerchantSalesOrderMerchantUserGuiDependencyProvider extends AbstractBundle
     {
         $container->set(static::FACADE_MERCHANT_SHIPMENT, function (Container $container) {
             return new MerchantSalesOrderMerchantUserGuiToMerchantShipmentFacadeBridge(
-                $container->getLocator()->merchantShipment()->facade()
+                $container->getLocator()->merchantShipment()->facade(),
             );
         });
 

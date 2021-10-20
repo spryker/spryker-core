@@ -106,7 +106,7 @@ class MerchantSearchBusinessTester extends Actor
             function (MerchantTransfer $merchantTransfer) {
                 return $merchantTransfer->getIdMerchant();
             },
-            $merchantTransfers
+            $merchantTransfers,
         );
     }
 
@@ -170,7 +170,7 @@ class MerchantSearchBusinessTester extends Actor
                 return [
                     $container->getLocator()->rabbitMq()->client()->createQueueAdapter(),
                 ];
-            }
+            },
         );
     }
 

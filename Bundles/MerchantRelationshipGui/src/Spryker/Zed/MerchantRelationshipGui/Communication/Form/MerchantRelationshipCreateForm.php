@@ -262,8 +262,8 @@ class MerchantRelationshipCreateForm extends AbstractType
         $builder->get(static::FIELD_ASSIGNED_COMPANY_BUSINESS_UNIT)->addModelTransformer(
             new CallbackTransformer(
                 $this->getAssignedBusinessUnitTransformer(),
-                $this->getAssignedBusinessUnitReverseTransformer()
-            )
+                $this->getAssignedBusinessUnitReverseTransformer(),
+            ),
         );
     }
 
@@ -299,7 +299,7 @@ class MerchantRelationshipCreateForm extends AbstractType
             foreach ($data as $id) {
                 $companyBusinessUnitCollectionTransfer->addCompanyBusinessUnit(
                     (new CompanyBusinessUnitTransfer())
-                        ->setIdCompanyBusinessUnit($id)
+                        ->setIdCompanyBusinessUnit($id),
                 );
             }
 

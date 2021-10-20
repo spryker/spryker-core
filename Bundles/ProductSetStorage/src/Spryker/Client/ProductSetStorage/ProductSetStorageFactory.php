@@ -21,7 +21,7 @@ class ProductSetStorageFactory extends AbstractFactory
         return new ProductSetStorageReader(
             $this->getStorageClient(),
             $this->getSynchronizationService(),
-            $this->createProductSetStorageMapper()
+            $this->createProductSetStorageMapper(),
         );
     }
 

@@ -30,7 +30,7 @@ class ShipmentDataImportBusinessFactory extends DataImportBusinessFactory
     {
         /** @var \Spryker\Zed\DataImport\Business\Model\DataImporter $dataImporter */
         $dataImporter = $this->getCsvDataImporterFromConfig(
-            $this->getConfig()->getShipmentMethodStoreDataImporterConfiguration()
+            $this->getConfig()->getShipmentMethodStoreDataImporterConfiguration(),
         );
 
         /** @var \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerTransactionAware $dataSetStepBroker */

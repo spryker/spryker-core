@@ -74,7 +74,7 @@ class ProductConcreteRestrictionReader implements ProductConcreteRestrictionRead
 
         $isProductRestrictedInBlackList = $this->isProductConcreteRestrictedInBlacklist(
             $productListProductConcreteStorageTransfer,
-            $customerBlacklistIds
+            $customerBlacklistIds,
         );
         if ($isProductRestrictedInBlackList) {
             return true;
@@ -82,7 +82,7 @@ class ProductConcreteRestrictionReader implements ProductConcreteRestrictionRead
 
         $isProductRestrictedInWhiteList = $this->isProductConcreteRestrictedInWhitelist(
             $productListProductConcreteStorageTransfer,
-            $customerWhitelistIds
+            $customerWhitelistIds,
         );
         if ($isProductRestrictedInWhiteList) {
             return true;

@@ -132,7 +132,7 @@ class MerchantSalesOrderMapper
             }
             if ($merchantSalesOrderRow[SpySalesOrderAddressTableMap::COL_SALUTATION] !== null) {
                 $orderAddressSalutationValueSet = SpySalesOrderAddressTableMap::getValueSet(
-                    SpySalesOrderAddressTableMap::COL_SALUTATION
+                    SpySalesOrderAddressTableMap::COL_SALUTATION,
                 );
                 $mappedMerchantSalesOrderRow[static::KEY_BILLING_ADDRESS_SALUTATION] = $orderAddressSalutationValueSet[$merchantSalesOrderRow[SpySalesOrderAddressTableMap::COL_SALUTATION]];
             }

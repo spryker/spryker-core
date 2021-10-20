@@ -62,7 +62,7 @@ class RequestMetaDataExtractor implements RequestMetaDataExtractorInterface
             $request->getMethod(),
             $this->getLocale($request),
             $request->attributes->get(RequestConstantsInterface::ATTRIBUTE_IS_PROTECTED, false),
-            $this->createVersion($request)
+            $this->createVersion($request),
         );
     }
 
@@ -132,7 +132,7 @@ class RequestMetaDataExtractor implements RequestMetaDataExtractorInterface
 
         return new Version(
             $versionTransfer->getMajor(),
-            $versionTransfer->getMinor()
+            $versionTransfer->getMinor(),
         );
     }
 }

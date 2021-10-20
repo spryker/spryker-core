@@ -105,13 +105,13 @@ class PriceProductScheduleEnableFinder implements PriceProductScheduleEnableFind
         $currentDatabaseEngineName = $this->propelFacade->getCurrentDatabaseEngine();
         $priceProductScheduleFilteredByMinResultSubQuery = $this->createPriceProductScheduleFilteredByMinResultSubQuery(
             $storeTransfer,
-            $currentDatabaseEngineName
+            $currentDatabaseEngineName,
         );
 
         return $this->findPriceProductSchedulesToEnableByStoreResult(
             $priceProductScheduleFilteredByMinResultSubQuery,
             $storeTransfer,
-            $currentDatabaseEngineName
+            $currentDatabaseEngineName,
         );
     }
 
@@ -128,14 +128,14 @@ class PriceProductScheduleEnableFinder implements PriceProductScheduleEnableFind
         $currentDatabaseEngineName = $this->propelFacade->getCurrentDatabaseEngine();
         $priceProductScheduleFilteredByMinResultSubQuery = $this->createPriceProductScheduleFilteredByMinResultSubQuery(
             $storeTransfer,
-            $currentDatabaseEngineName
+            $currentDatabaseEngineName,
         );
 
         return $this->findPriceProductSchedulesToEnableByStoreAndIdProductAbstractResult(
             $priceProductScheduleFilteredByMinResultSubQuery,
             $storeTransfer,
             $currentDatabaseEngineName,
-            $idProductAbstract
+            $idProductAbstract,
         );
     }
 
@@ -152,14 +152,14 @@ class PriceProductScheduleEnableFinder implements PriceProductScheduleEnableFind
         $currentDatabaseEngineName = $this->propelFacade->getCurrentDatabaseEngine();
         $priceProductScheduleFilteredByMinResultSubQuery = $this->createPriceProductScheduleFilteredByMinResultSubQuery(
             $storeTransfer,
-            $currentDatabaseEngineName
+            $currentDatabaseEngineName,
         );
 
         return $this->findPriceProductSchedulesToEnableByStoreAndIdProductConcreteResult(
             $priceProductScheduleFilteredByMinResultSubQuery,
             $storeTransfer,
             $currentDatabaseEngineName,
-            $idProductConcrete
+            $idProductConcrete,
         );
     }
 
@@ -175,7 +175,7 @@ class PriceProductScheduleEnableFinder implements PriceProductScheduleEnableFind
     ): SpyPriceProductScheduleQuery {
         $priceProductScheduleConcatenatedSubQuery = $this->createPriceProductScheduleConcatenatedSubQuery(
             $storeTransfer,
-            $currentDatabaseEngineName
+            $currentDatabaseEngineName,
         );
 
         return $this->factory->createPriceProductScheduleQuery()
@@ -207,8 +207,8 @@ class PriceProductScheduleEnableFinder implements PriceProductScheduleEnableFind
                     SpyPriceProductScheduleTableMap::COL_FK_PRICE_TYPE,
                     SpyPriceProductScheduleTableMap::COL_FK_CURRENCY,
                     SpyPriceProductScheduleTableMap::COL_FK_PRODUCT,
-                    SpyPriceProductScheduleTableMap::COL_FK_PRODUCT_ABSTRACT
-                )
+                    SpyPriceProductScheduleTableMap::COL_FK_PRODUCT_ABSTRACT,
+                ),
             )
             ->addAsColumn(
                 static::COL_RESULT,
@@ -218,8 +218,8 @@ class PriceProductScheduleEnableFinder implements PriceProductScheduleEnableFind
                     SpyPriceProductScheduleTableMap::COL_ACTIVE_TO,
                     SpyPriceProductScheduleTableMap::COL_NET_PRICE,
                     SpyPriceProductScheduleTableMap::COL_GROSS_PRICE,
-                    SpyPriceProductScheduleTableMap::COL_ID_PRICE_PRODUCT_SCHEDULE
-                )
+                    SpyPriceProductScheduleTableMap::COL_ID_PRICE_PRODUCT_SCHEDULE,
+                ),
             )
             ->usePriceProductScheduleListQuery()
             ->filterByIsActive(true)
@@ -240,7 +240,7 @@ class PriceProductScheduleEnableFinder implements PriceProductScheduleEnableFind
     {
         if (isset(static::EXPRESSION_CONCATENATED_RESULT_MAP[$databaseEngineName]) === false) {
             throw new NotSupportedDbEngineException(
-                sprintf(static::MESSAGE_NOT_SUPPORTED_DB_ENGINE, $databaseEngineName)
+                sprintf(static::MESSAGE_NOT_SUPPORTED_DB_ENGINE, $databaseEngineName),
             );
         }
 
@@ -294,9 +294,9 @@ class PriceProductScheduleEnableFinder implements PriceProductScheduleEnableFind
                 SpyPriceProductScheduleTableMap::COL_FK_PRICE_TYPE,
                 SpyPriceProductScheduleTableMap::COL_FK_CURRENCY,
                 SpyPriceProductScheduleTableMap::COL_FK_PRODUCT,
-                SpyPriceProductScheduleTableMap::COL_FK_PRODUCT_ABSTRACT
+                SpyPriceProductScheduleTableMap::COL_FK_PRODUCT_ABSTRACT,
             ),
-            static::ALIAS_FILTERED . '.' . static::COL_PRODUCT_ID
+            static::ALIAS_FILTERED . '.' . static::COL_PRODUCT_ID,
         );
     }
 
@@ -317,9 +317,9 @@ class PriceProductScheduleEnableFinder implements PriceProductScheduleEnableFind
                 SpyPriceProductScheduleTableMap::COL_ACTIVE_TO,
                 SpyPriceProductScheduleTableMap::COL_NET_PRICE,
                 SpyPriceProductScheduleTableMap::COL_GROSS_PRICE,
-                SpyPriceProductScheduleTableMap::COL_ID_PRICE_PRODUCT_SCHEDULE
+                SpyPriceProductScheduleTableMap::COL_ID_PRICE_PRODUCT_SCHEDULE,
             ),
-            static::ALIAS_FILTERED . '.' . static::COL_RESULT
+            static::ALIAS_FILTERED . '.' . static::COL_RESULT,
         );
     }
 

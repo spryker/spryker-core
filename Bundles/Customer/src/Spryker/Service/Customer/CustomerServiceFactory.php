@@ -24,7 +24,7 @@ class CustomerServiceFactory extends AbstractServiceFactory
     {
         return new CustomerAddressKeyGenerator(
             $this->getConfig(),
-            $this->getCustomerToUtilEncodingService()
+            $this->getCustomerToUtilEncodingService(),
         );
     }
 

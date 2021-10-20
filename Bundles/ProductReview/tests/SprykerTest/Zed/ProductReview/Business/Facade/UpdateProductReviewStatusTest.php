@@ -145,7 +145,7 @@ class UpdateProductReviewStatusTest extends Unit
         $this->assertSame(
             $this->tester->removeProductReviewDateFields($actualProductReviewTransfer->toArray()),
             $this->tester->removeProductReviewDateFields($expectedProductReviewTransfer->toArray()),
-            'Updated product review should have been returned.'
+            'Updated product review should have been returned.',
         );
     }
 

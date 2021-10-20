@@ -114,7 +114,7 @@ class MerchantRelationshipSoftThresholdFixedFeeFormExpanderPlugin extends Abstra
             ->setSalesOrderThresholdType(
                 (new SalesOrderThresholdTypeTransfer())
                     ->setKey($this->getThresholdKey())
-                    ->setThresholdGroup($this->getThresholdGroup())
+                    ->setThresholdGroup($this->getThresholdGroup()),
             );
 
         return $salesOrderThresholdValueTransfer;

@@ -137,7 +137,7 @@ class ProductLabelFormType extends AbstractType
                 'constraints' => [
                     new NotBlank(),
                 ],
-            ]
+            ],
         );
 
         return $this;
@@ -156,7 +156,7 @@ class ProductLabelFormType extends AbstractType
             [
                 'label' => 'Is Exclusive',
                 'required' => false,
-            ]
+            ],
         );
 
         return $this;
@@ -175,7 +175,7 @@ class ProductLabelFormType extends AbstractType
             [
                 'label' => 'Is Active',
                 'required' => false,
-            ]
+            ],
         );
 
         return $this;
@@ -198,7 +198,7 @@ class ProductLabelFormType extends AbstractType
               'attr' => [
                   'readonly' => true,
               ],
-            ]
+            ],
         );
 
         return $this;
@@ -221,7 +221,7 @@ class ProductLabelFormType extends AbstractType
                     new NotBlank(),
                     new GreaterThanOrEqual(['value' => 1]),
                 ],
-            ]
+            ],
         );
 
         return $this;
@@ -240,7 +240,7 @@ class ProductLabelFormType extends AbstractType
             [
                 'label' => false,
                 'required' => false,
-            ]
+            ],
         );
 
         return $this;
@@ -263,7 +263,7 @@ class ProductLabelFormType extends AbstractType
                 'attr' => [
                     'class' => 'js-valid-from-date-picker safe-datetime',
                 ],
-            ]
+            ],
         );
 
         $this->addDateTimeTransformer(static::FIELD_VALID_FROM_DATE, $builder);
@@ -288,7 +288,7 @@ class ProductLabelFormType extends AbstractType
                 'attr' => [
                     'class' => 'js-valid-to-date-picker safe-datetime',
                 ],
-            ]
+            ],
         );
 
         $this->addDateTimeTransformer(static::FIELD_VALID_TO_DATE, $builder);
@@ -320,7 +320,7 @@ class ProductLabelFormType extends AbstractType
                     }
 
                     return $dateAsObject->format(static::VALIDITY_DATE_FORMAT);
-                }
+                },
             ));
     }
 
@@ -337,7 +337,7 @@ class ProductLabelFormType extends AbstractType
             [
                 'label' => 'Front-end Reference',
                 'required' => false,
-            ]
+            ],
         );
 
         return $this;
@@ -356,7 +356,7 @@ class ProductLabelFormType extends AbstractType
             [
                 'entry_type' => ProductLabelLocalizedAttributesFormType::class,
                 'property_path' => 'localizedAttributesCollection',
-            ]
+            ],
         );
 
         return $this;

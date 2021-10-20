@@ -37,7 +37,7 @@ class MerchantOmsDataImportCommunicationTester extends Actor
     {
         $this->assertTrue(
             $this->getStateMachineProcessPropelQuery()->exists(),
-            'Expected at least one entry in the database table but database table is empty.'
+            'Expected at least one entry in the database table but database table is empty.',
         );
     }
 

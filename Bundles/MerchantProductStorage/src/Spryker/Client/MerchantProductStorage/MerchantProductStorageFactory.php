@@ -27,7 +27,7 @@ class MerchantProductStorageFactory extends AbstractFactory
         return new MerchantProductStorageReader(
             $this->getProductStorageClient(),
             $this->getLocaleClient(),
-            $this->createMerchantProductStorageMapper()
+            $this->createMerchantProductStorageMapper(),
         );
     }
 

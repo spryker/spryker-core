@@ -60,7 +60,7 @@ class CustomerAccessStorageFacadeTest extends Unit
                         ContentTypeAccessTransfer::CONTENT_TYPE => 'price',
                     ],
                 ],
-            ]
+            ],
         );
         $this->tester->getFacade()->publish();
         $customerAccessEntity = $this->getUnauthenticatedCustomerAccessEntity();

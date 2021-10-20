@@ -65,7 +65,7 @@ class ProductLabelMapper
         foreach ($productLabelEntities as $productLabelEntity) {
             $productLabelTransfers[] = $this->mapProductLabelEntityToProductLabelTransfer(
                 $productLabelEntity,
-                new ProductLabelTransfer()
+                new ProductLabelTransfer(),
             );
         }
 
@@ -85,10 +85,10 @@ class ProductLabelMapper
         $productLabelTransfer->fromArray($productLabelEntity->toArray(), true);
 
         $productLabelTransfer->setValidFrom(
-            $productLabelEntity->getValidFrom(static::VALIDITY_DATE_FORMAT)
+            $productLabelEntity->getValidFrom(static::VALIDITY_DATE_FORMAT),
         );
         $productLabelTransfer->setValidTo(
-            $productLabelEntity->getValidTo(static::VALIDITY_DATE_FORMAT)
+            $productLabelEntity->getValidTo(static::VALIDITY_DATE_FORMAT),
         );
 
         $storeRelationTransfer = new StoreRelationTransfer();
@@ -97,7 +97,7 @@ class ProductLabelMapper
         if ($productLabelEntity->getProductLabelStores()->count()) {
             $storeRelationTransfer = $this->productLabelStoreRelationMapper->mapProductLabelStoreEntitiesToStoreRelationTransfer(
                 $productLabelEntity->getProductLabelStores(),
-                $storeRelationTransfer
+                $storeRelationTransfer,
             );
         }
         $productLabelTransfer->setStoreRelation($storeRelationTransfer);
@@ -107,19 +107,19 @@ class ProductLabelMapper
         $productLabelLocalizedAttributesTransfers = $this->productLabelLocalizedAttributesMapper
             ->mapProductLabelLocalizedAttributesEntitiesToProductLabelLocalizedAttributesTransfers(
                 $productLabelEntity->getSpyProductLabelLocalizedAttributess(),
-                $productLabelTransfer->getLocalizedAttributesCollection()
+                $productLabelTransfer->getLocalizedAttributesCollection(),
             );
         $productLabelTransfer->setLocalizedAttributesCollection(
-            new ArrayObject($productLabelLocalizedAttributesTransfers)
+            new ArrayObject($productLabelLocalizedAttributesTransfers),
         );
 
         $productLabelProductAbstractTransfers = $this->productLabelProductAbstractMapper
             ->mapProductLabelProductAbstractEntitiesToProductLabelProductTransfers(
                 $productLabelEntity->getSpyProductLabelProductAbstracts(),
-                []
+                [],
             );
         $productLabelTransfer->setProductLabelProductAbstracts(
-            new ArrayObject($productLabelProductAbstractTransfers)
+            new ArrayObject($productLabelProductAbstractTransfers),
         );
 
         return $productLabelTransfer;

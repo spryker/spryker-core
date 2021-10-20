@@ -114,13 +114,13 @@ class ProductOptionOrderSaver implements ProductOptionOrderSaverInterface
             $this->hydrateSalesOrderItemOptionEntity(
                 $salesOrderItemOptionEntity,
                 $productOptionTransfer,
-                $itemTransfer
+                $itemTransfer,
             );
 
             $salesOrderItemOptionEntity->save();
 
             $productOptionTransfer->setIdSalesOrderItemOption(
-                $salesOrderItemOptionEntity->getIdSalesOrderItemOption()
+                $salesOrderItemOptionEntity->getIdSalesOrderItemOption(),
             );
         }
     }
@@ -134,13 +134,13 @@ class ProductOptionOrderSaver implements ProductOptionOrderSaverInterface
     {
         if ($this->glossaryFacade->hasTranslation($expandedProductOptionTransfer->getValue())) {
             $expandedProductOptionTransfer->setValue(
-                $this->glossaryFacade->translate($expandedProductOptionTransfer->getValue())
+                $this->glossaryFacade->translate($expandedProductOptionTransfer->getValue()),
             );
         }
 
         if ($this->glossaryFacade->hasTranslation($expandedProductOptionTransfer->getGroupName())) {
             $expandedProductOptionTransfer->setGroupName(
-                $this->glossaryFacade->translate($expandedProductOptionTransfer->getGroupName())
+                $this->glossaryFacade->translate($expandedProductOptionTransfer->getGroupName()),
             );
         }
     }

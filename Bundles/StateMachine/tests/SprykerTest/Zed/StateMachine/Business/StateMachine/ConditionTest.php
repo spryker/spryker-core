@@ -39,7 +39,7 @@ class ConditionTest extends StateMachineMocks
             $stateMachineHandlerResolverMock,
             $this->createFinderMock(),
             $this->createPersistenceMock(),
-            $this->createStateUpdaterMock()
+            $this->createStateUpdaterMock(),
         );
 
         $transitions = [];
@@ -59,7 +59,7 @@ class ConditionTest extends StateMachineMocks
             $transitions,
             new StateMachineItemTransfer(),
             new State(),
-            $this->createTransitionLogMock()
+            $this->createTransitionLogMock(),
         );
 
         $this->assertSame($targetState->getName(), $processedTargetState->getName());
@@ -77,7 +77,7 @@ class ConditionTest extends StateMachineMocks
             $stateMachineHandlerResolverMock,
             $this->createFinderMock(),
             $this->createPersistenceMock(),
-            $this->createStateUpdaterMock()
+            $this->createStateUpdaterMock(),
         );
 
         $transitions = [];
@@ -100,7 +100,7 @@ class ConditionTest extends StateMachineMocks
             $transitions,
             new StateMachineItemTransfer(),
             $sourceState,
-            $this->createTransitionLogMock()
+            $this->createTransitionLogMock(),
         );
 
         $this->assertSame($sourceState->getName(), $processedTargetState->getName());

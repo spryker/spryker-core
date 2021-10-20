@@ -146,7 +146,7 @@ class ShoppingListWriter implements ShoppingListWriterInterface
         return $this->getTransactionHandler()->handleTransaction(
             function () use ($shoppingListTransfer) {
                 return $this->executeRemoveShoppingListTransaction($shoppingListTransfer);
-            }
+            },
         );
     }
 
@@ -174,7 +174,7 @@ class ShoppingListWriter implements ShoppingListWriterInterface
         return $this->getTransactionHandler()->handleTransaction(
             function () use ($shoppingListTransfer) {
                 return $this->executeSaveShoppingListTransaction($shoppingListTransfer);
-            }
+            },
         );
     }
 
@@ -251,7 +251,7 @@ class ShoppingListWriter implements ShoppingListWriterInterface
         return $this->can(
             'WriteShoppingListPermissionPlugin',
             $shoppingListTransfer->getIdCompanyUser(),
-            $shoppingListTransfer->getIdShoppingList()
+            $shoppingListTransfer->getIdShoppingList(),
         );
     }
 

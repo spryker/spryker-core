@@ -91,7 +91,7 @@ class MvcRouter implements RouterInterface
         $bundleControllerAction = new BundleControllerAction(
             $request->attributes->get('module'),
             $request->attributes->get('controller'),
-            $request->attributes->get('action')
+            $request->attributes->get('action'),
         );
         $controllerResolver = new ControllerResolver();
 
@@ -105,7 +105,7 @@ class MvcRouter implements RouterInterface
             $this->app,
             $bundleControllerAction,
             $controllerResolver,
-            $routeNameResolver
+            $routeNameResolver,
         );
 
         return [

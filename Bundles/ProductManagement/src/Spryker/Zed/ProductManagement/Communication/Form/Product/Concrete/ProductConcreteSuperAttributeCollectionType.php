@@ -83,7 +83,7 @@ class ProductConcreteSuperAttributeCollectionType extends AbstractType
                 'label' => static::FORM_PRODUCT_CONCRETE_SUPER_ATTRIBUTES_LABEL,
                 'label_attr' => ['class' => static::FORM_PRODUCT_CONCRETE_SUPER_ATTRIBUTES_LABEL_CLASS],
                 'constraints' => $this->prepareProductConcreteSuperAttributeFormConstraints($builder, $options),
-            ]
+            ],
         );
 
         return $this;
@@ -106,7 +106,7 @@ class ProductConcreteSuperAttributeCollectionType extends AbstractType
             new ProductAttributeUniqueCombination(
                 $this->getFactory()->getProductFacade(),
                 (int)$options[static::OPTION_ID_PRODUCT_ABSTRACT],
-                $this->getFactory()->createProductConcreteSuperAttributeFilterHelper()
+                $this->getFactory()->createProductConcreteSuperAttributeFilterHelper(),
             ),
         ];
     }
@@ -139,10 +139,10 @@ class ProductConcreteSuperAttributeCollectionType extends AbstractType
                                     'checkbox' => ProductConcreteSuperAttributeForm::FIELD_CHECKBOX,
                                     'input' => ProductConcreteSuperAttributeForm::FIELD_INPUT,
                                     'type' => ProductAttributeType::TYPE_NUMBER,
-                                ]
+                                ],
                             ),
                         ],
-                    ]
+                    ],
                 );
         }
 

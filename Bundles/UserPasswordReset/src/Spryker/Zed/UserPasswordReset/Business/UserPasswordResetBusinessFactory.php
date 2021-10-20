@@ -32,7 +32,7 @@ class UserPasswordResetBusinessFactory extends AbstractBusinessFactory
             $this->getEntityManager(),
             $this->getRepository(),
             $this->getConfig(),
-            $this->getUserPasswordResetRequestStrategyPlugins()
+            $this->getUserPasswordResetRequestStrategyPlugins(),
         );
     }
 

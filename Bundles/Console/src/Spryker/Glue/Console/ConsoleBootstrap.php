@@ -218,7 +218,7 @@ class ConsoleBootstrap extends Application
             '<fg=yellow>Code bucket</fg=yellow>: <info>%s</info> | <fg=yellow>Store</fg=yellow>: <info>%s</info> | <fg=yellow>Environment</fg=yellow>: <info>%s</info>',
             APPLICATION_CODE_BUCKET !== '' ? APPLICATION_CODE_BUCKET : 'N/A',
             defined('APPLICATION_STORE') ? APPLICATION_STORE : 'N/A',
-            APPLICATION_ENV
+            APPLICATION_ENV,
         );
     }
 

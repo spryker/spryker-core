@@ -114,7 +114,7 @@ class OmsTriggerController extends AbstractController
             ->triggerEventForMerchantOrderItems(
                 (new MerchantOmsTriggerRequestTransfer())
                     ->setMerchantOmsEventName($event)
-                    ->setMerchantOrderItems(new ArrayObject($merchantOrderItemTransfers))
+                    ->setMerchantOrderItems(new ArrayObject($merchantOrderItemTransfers)),
             );
 
         if (!$countTriggeredItems) {
@@ -162,7 +162,7 @@ class OmsTriggerController extends AbstractController
             ->triggerEventForMerchantOrderItem(
                 (new MerchantOmsTriggerRequestTransfer())
                     ->setMerchantOmsEventName($event)
-                    ->setMerchantOrderItemReference($merchantSalesOrderItemReference)
+                    ->setMerchantOrderItemReference($merchantSalesOrderItemReference),
             );
 
         if (!$merchantOmsTriggerResponseTransfer->getIsSuccessful()) {

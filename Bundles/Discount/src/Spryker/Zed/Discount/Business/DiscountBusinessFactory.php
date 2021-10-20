@@ -86,7 +86,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
             $this->createDecisionRuleBuilder(),
             $this->createVoucherValidator(),
             $this->createDiscountEntityMapper(),
-            $this->getStoreFacade()
+            $this->getStoreFacade(),
         );
 
         $discount->setDiscountApplicableFilterPlugins($this->getDiscountApplicableFilterPlugins());
@@ -101,7 +101,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     {
         return new VoucherValidator(
             $this->getQueryContainer(),
-            $this->getMessengerFacade()
+            $this->getMessengerFacade(),
         );
     }
 
@@ -160,7 +160,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     {
         return new Distributor(
             $this->createDiscountableItemTransformer(),
-            $this->getDiscountableItemTransformerStrategyPlugins()
+            $this->getDiscountableItemTransformerStrategyPlugins(),
         );
     }
 
@@ -171,7 +171,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     {
         return new VoucherEngine(
             $this->getConfig(),
-            $this->getQueryContainer()
+            $this->getQueryContainer(),
         );
     }
 
@@ -206,7 +206,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     {
         return new DiscountOrderSaver(
             $this->getQueryContainer(),
-            $this->createVoucherCode()
+            $this->createVoucherCode(),
         );
     }
 
@@ -264,7 +264,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     public function createComparatorOperators()
     {
         return new ComparatorOperators(
-            $this->createComparatorProvider()->createComparators()
+            $this->createComparatorProvider()->createComparators(),
         );
     }
 
@@ -302,7 +302,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
             $this->createDecisionRuleProvider(),
             $this->createComparatorOperators(),
             $this->createClauseValidator(MetaProviderFactory::TYPE_DECISION_RULE),
-            $this->createMetaDataProviderByType(MetaProviderFactory::TYPE_DECISION_RULE)
+            $this->createMetaDataProviderByType(MetaProviderFactory::TYPE_DECISION_RULE),
         );
     }
 
@@ -316,7 +316,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
             $this->createCollectorProvider(),
             $this->createComparatorOperators(),
             $this->createClauseValidator(MetaProviderFactory::TYPE_COLLECTOR),
-            $this->createMetaDataProviderByType(MetaProviderFactory::TYPE_COLLECTOR)
+            $this->createMetaDataProviderByType(MetaProviderFactory::TYPE_COLLECTOR),
         );
     }
 
@@ -329,7 +329,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     {
         return new ClauseValidator(
             $this->createComparatorOperators(),
-            $this->createMetaDataProviderByType($type)
+            $this->createMetaDataProviderByType($type),
         );
     }
 
@@ -364,7 +364,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     {
         return new Validator(
             $this->createDecisionRuleBuilder(),
-            $this->createCollectorBuilder()
+            $this->createCollectorBuilder(),
         );
     }
 
@@ -377,7 +377,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
             $this->getQueryContainer(),
             $this->createDiscountEntityMapper(),
             $this->createDiscountStoreRelationMapper(),
-            $this->getConfigurationExpanderPlugins()
+            $this->getConfigurationExpanderPlugins(),
         );
 
         return $discountConfiguratorHydrate;
@@ -393,7 +393,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
             $this->getQueryContainer(),
             $this->createDiscountStoreRelationWriter(),
             $this->getDiscountPostCreatePlugins(),
-            $this->getDiscountPostUpdatePlugins()
+            $this->getDiscountPostUpdatePlugins(),
         );
 
         return $discountPersist;
@@ -533,7 +533,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
             $this->createDistributor(),
             $this->getCalculatorPlugins(),
             $this->getCollectedDiscountGroupingPlugins(),
-            $this->createDiscountableItemFilter()
+            $this->createDiscountableItemFilter(),
         );
 
         $calculator->setCollectorStrategyResolver($this->createCollectorResolver());
@@ -660,7 +660,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     {
         return new DiscountStoreRelationWriter(
             $this->getQueryContainer(),
-            $this->createDiscountStoreRelationReader()
+            $this->createDiscountStoreRelationReader(),
         );
     }
 
@@ -671,7 +671,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     {
         return new DiscountStoreRelationReader(
             $this->getQueryContainer(),
-            $this->createDiscountStoreRelationMapper()
+            $this->createDiscountStoreRelationMapper(),
         );
     }
 
@@ -697,7 +697,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     public function createQuoteVoucherDiscountMaxUsageValidator(): QuoteDiscountMaxUsageValidator
     {
         return new QuoteDiscountMaxUsageValidator(
-            $this->getRepository()
+            $this->getRepository(),
         );
     }
 }

@@ -94,14 +94,14 @@ class PriceProductScheduleImportTest extends Unit
         // Assert
         $this->assertTrue(
             $priceProductScheduleImportResponse->getIsSuccess(),
-            'Scheduled prices should be imported successfully.'
+            'Scheduled prices should be imported successfully.',
         );
 
         $priceProductScheduleEntitiesCount = $this->tester->getPriceProductScheduleQuery()->count();
         $this->assertSame(
             $count,
             $priceProductScheduleEntitiesCount,
-            'Count of imported items must be equal to db rows'
+            'Count of imported items must be equal to db rows',
         );
     }
 
@@ -130,19 +130,19 @@ class PriceProductScheduleImportTest extends Unit
         // Assert
         $this->assertFalse(
             $priceProductScheduleImportResponse->getIsSuccess(),
-            'Scheduled prices should not be imported.'
+            'Scheduled prices should not be imported.',
         );
 
         $this->assertNotEmpty(
             $priceProductScheduleImportResponse->getErrors(),
-            'Errors should be in response'
+            'Errors should be in response',
         );
 
         $priceProductScheduleEntitiesCount = $this->tester->getPriceProductScheduleQuery()->count();
         $this->assertSame(
             1,
             $priceProductScheduleEntitiesCount,
-            'No rows should be saved into the db except the base one'
+            'No rows should be saved into the db except the base one',
         );
     }
 
@@ -200,7 +200,7 @@ class PriceProductScheduleImportTest extends Unit
         return (new PriceProductScheduledListImportRequestTransfer())
             ->setPriceProductScheduleList(
                 (new PriceProductScheduleListBuilder())
-                    ->build([PriceProductScheduleListTransfer::NAME => $priceProductScheduleListTransfer->getName()])
+                    ->build([PriceProductScheduleListTransfer::NAME => $priceProductScheduleListTransfer->getName()]),
             );
     }
 

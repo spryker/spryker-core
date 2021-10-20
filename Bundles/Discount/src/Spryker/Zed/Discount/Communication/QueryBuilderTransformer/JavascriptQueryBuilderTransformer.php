@@ -79,7 +79,7 @@ class JavascriptQueryBuilderTransformer implements JavascriptQueryBuilderTransfo
         $comparators = $this->discountFacade
             ->getQueryStringFieldExpressionsForField(
                 $type,
-                $ruleField
+                $ruleField,
             );
 
         foreach ($comparators as $key => $comparator) {

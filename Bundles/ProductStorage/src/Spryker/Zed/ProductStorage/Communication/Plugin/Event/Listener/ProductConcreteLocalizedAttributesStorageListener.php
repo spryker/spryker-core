@@ -36,7 +36,7 @@ class ProductConcreteLocalizedAttributesStorageListener extends AbstractPlugin i
         $this->preventTransaction();
         $productIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferForeignKeys(
             $eventEntityTransfers,
-            SpyProductLocalizedAttributesTableMap::COL_FK_PRODUCT
+            SpyProductLocalizedAttributesTableMap::COL_FK_PRODUCT,
         );
 
         $this->getFacade()->publishConcreteProducts($productIds);

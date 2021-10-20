@@ -52,8 +52,8 @@ class CheckCmsSlotTemplateDataStep extends AbstractCheckDataStep implements Data
                 sprintf(
                     "Failed to import cms slot template with path [%s]: \n%s",
                     $cmsSlotTemplateTransfer->getPath(),
-                    implode("\n", $errorMessages)
-                )
+                    implode("\n", $errorMessages),
+                ),
             );
         }
     }

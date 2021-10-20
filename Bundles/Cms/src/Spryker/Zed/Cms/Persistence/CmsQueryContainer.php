@@ -257,7 +257,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
             ->addJoin(
                 SpyCmsPageTableMap::COL_ID_CMS_PAGE,
                 SpyUrlTableMap::COL_FK_RESOURCE_PAGE,
-                Criteria::LEFT_JOIN
+                Criteria::LEFT_JOIN,
             )
             ->withColumn(sprintf('GROUP_CONCAT(DISTINCT %s)', SpyUrlTableMap::COL_URL), static::CMS_URLS)
             ->innerJoinCmsTemplate()
@@ -283,12 +283,12 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
             ->addJoin(
                 SpyCmsPageTableMap::COL_ID_CMS_PAGE,
                 SpyUrlTableMap::COL_FK_RESOURCE_PAGE,
-                Criteria::LEFT_JOIN
+                Criteria::LEFT_JOIN,
             )
             ->addJoin(
                 SpyUrlTableMap::COL_FK_LOCALE,
                 SpyLocaleTableMap::COL_ID_LOCALE,
-                Criteria::INNER_JOIN
+                Criteria::INNER_JOIN,
             )
             ->addAnd(SpyLocaleTableMap::COL_LOCALE_NAME, $localName, Criteria::EQUAL)
             ->withColumn(SpyUrlTableMap::COL_URL, static::URL);
@@ -309,7 +309,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
             ->addJoin(
                 SpyCmsPageTableMap::COL_ID_CMS_PAGE,
                 SpyCmsVersionTableMap::COL_FK_CMS_PAGE,
-                Criteria::LEFT_JOIN
+                Criteria::LEFT_JOIN,
             )
             ->withColumn(sprintf('COUNT(DISTINCT %s)', SpyCmsVersionTableMap::COL_VERSION), static::CMS_VERSION_COUNT);
     }
@@ -329,7 +329,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
             ->addJoin(
                 SpyCmsPageTableMap::COL_ID_CMS_PAGE,
                 SpyUrlTableMap::COL_FK_RESOURCE_PAGE,
-                Criteria::LEFT_JOIN
+                Criteria::LEFT_JOIN,
             )
             ->withColumn(sprintf('GROUP_CONCAT(DISTINCT %s)', SpyUrlTableMap::COL_URL), static::CMS_URLS)
             ->withColumn(SpyCmsTemplateTableMap::COL_TEMPLATE_NAME, static::TEMPLATE_NAME)
@@ -337,7 +337,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
             ->addJoin(
                 SpyCmsPageTableMap::COL_ID_CMS_PAGE,
                 SpyCmsVersionTableMap::COL_FK_CMS_PAGE,
-                Criteria::LEFT_JOIN
+                Criteria::LEFT_JOIN,
             )
             ->withColumn(sprintf('COUNT(DISTINCT %s)', SpyCmsVersionTableMap::COL_VERSION), static::CMS_VERSION_COUNT)
             ->groupByIdCmsPage();

@@ -92,7 +92,7 @@ class DocumentationGeneratorRestApiBusinessFactory extends AbstractBusinessFacto
     {
         return new DocumentationGenerator(
             $this->createResourcePluginAnalyzer(),
-            $this->createYamlOpenApiSpecificationWriter()
+            $this->createYamlOpenApiSpecificationWriter(),
         );
     }
 
@@ -105,7 +105,7 @@ class DocumentationGeneratorRestApiBusinessFactory extends AbstractBusinessFacto
             $this->createResourceTransferAnalyzer(),
             $this->createOpenApiSpecificationSchemaBuilder(),
             $this->createSchemaRenderer(),
-            $this->createResourceRelationshipProcessor()
+            $this->createResourceRelationshipProcessor(),
         );
     }
 
@@ -149,7 +149,7 @@ class DocumentationGeneratorRestApiBusinessFactory extends AbstractBusinessFacto
         return new YamlOpenApiDocumentationWriter(
             $this->getConfig(),
             $this->getYamlDumper(),
-            $this->getFilesystem()
+            $this->getFilesystem(),
         );
     }
 
@@ -160,7 +160,7 @@ class DocumentationGeneratorRestApiBusinessFactory extends AbstractBusinessFacto
     {
         return new GlueAnnotationAnalyzer(
             $this->createGlueControllerFinder(),
-            $this->getUtilEncodingService()
+            $this->getUtilEncodingService(),
         );
     }
 
@@ -170,7 +170,7 @@ class DocumentationGeneratorRestApiBusinessFactory extends AbstractBusinessFacto
     public function createResourceRelationshipsPluginAnnotationAnalyzer(): ResourceRelationshipsPluginAnnotationAnalyzerInterface
     {
         return new ResourceRelationshipsPluginAnnotationAnalyzer(
-            $this->getUtilEncodingService()
+            $this->getUtilEncodingService(),
         );
     }
 
@@ -184,7 +184,7 @@ class DocumentationGeneratorRestApiBusinessFactory extends AbstractBusinessFacto
             $this->getResourceRoutesPluginProviderPlugins(),
             $this->createGlueAnnotationAnalyzer(),
             $this->getTextInflector(),
-            $this->createResourceSchemaNameStorageProcessor()
+            $this->createResourceSchemaNameStorageProcessor(),
         );
     }
 
@@ -194,7 +194,7 @@ class DocumentationGeneratorRestApiBusinessFactory extends AbstractBusinessFacto
     public function createResourceRelationshipsPluginAnalyzer(): ResourceRelationshipsPluginAnalyzerInterface
     {
         return new ResourceRelationshipsPluginAnalyzer(
-            $this->getResourceRelationshipCollectionProviderPlugin()
+            $this->getResourceRelationshipCollectionProviderPlugin(),
         );
     }
 
@@ -216,7 +216,7 @@ class DocumentationGeneratorRestApiBusinessFactory extends AbstractBusinessFacto
             $this->createOpenApiSpecificationSchemaGenerator(),
             $this->createOpenApiSpecificationSecuritySchemeGenerator(),
             $this->createOpenApiSpecificationParameterSchemeGenerator(),
-            $this->createOpenApiTagGenerator()
+            $this->createOpenApiTagGenerator(),
         );
     }
 
@@ -229,7 +229,7 @@ class DocumentationGeneratorRestApiBusinessFactory extends AbstractBusinessFacto
             $this->createPathMethodSpecificationComponent(),
             $this->createPathResponseSpecificationComponent(),
             $this->createPathRequestSpecificationComponent(),
-            $this->createPathParameterSpecificationComponent()
+            $this->createPathParameterSpecificationComponent(),
         );
     }
 
@@ -241,7 +241,7 @@ class DocumentationGeneratorRestApiBusinessFactory extends AbstractBusinessFacto
         return new SchemaRenderer(
             $this->createSchemaSpecificationComponent(),
             $this->createSchemaPropertySpecificationComponent(),
-            $this->createSchemaItemsSpecificationComponent()
+            $this->createSchemaItemsSpecificationComponent(),
         );
     }
 
@@ -341,7 +341,7 @@ class DocumentationGeneratorRestApiBusinessFactory extends AbstractBusinessFacto
         return new GlueControllerFinder(
             $this->getFinder(),
             $this->getTextInflector(),
-            $this->getConfig()->getAnnotationSourceDirectories()
+            $this->getConfig()->getAnnotationSourceDirectories(),
         );
     }
 
@@ -354,7 +354,7 @@ class DocumentationGeneratorRestApiBusinessFactory extends AbstractBusinessFacto
             $this->createResourceRelationshipsPluginAnalyzer(),
             $this->createResourceTransferAnalyzer(),
             $this->createOpenApiSpecificationSchemaBuilder(),
-            $this->createResourceRelationshipsPluginAnnotationAnalyzer()
+            $this->createResourceRelationshipsPluginAnnotationAnalyzer(),
         );
     }
 
@@ -381,7 +381,7 @@ class DocumentationGeneratorRestApiBusinessFactory extends AbstractBusinessFacto
     {
         return new OpenApiSpecificationSchemaComponentBuilder(
             $this->createResourceTransferAnalyzer(),
-            $this->createResourceSchemaNameStorage()
+            $this->createResourceSchemaNameStorage(),
         );
     }
 
@@ -395,7 +395,7 @@ class DocumentationGeneratorRestApiBusinessFactory extends AbstractBusinessFacto
             $this->createResourceTransferAnalyzer(),
             $this->createResourceRelationshipsPluginAnalyzer(),
             $this->createGlueAnnotationAnalyzer(),
-            $this->createResourceRelationshipsPluginAnnotationAnalyzer()
+            $this->createResourceRelationshipsPluginAnnotationAnalyzer(),
         );
     }
 

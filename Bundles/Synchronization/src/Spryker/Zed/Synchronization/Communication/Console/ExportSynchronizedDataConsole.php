@@ -94,7 +94,7 @@ class ExportSynchronizedDataConsole extends Console
 
         return sprintf(
             "[\n\t%s\n]",
-            implode(",\n\t", $availableResourceNames)
+            implode(",\n\t", $availableResourceNames),
         );
     }
 }

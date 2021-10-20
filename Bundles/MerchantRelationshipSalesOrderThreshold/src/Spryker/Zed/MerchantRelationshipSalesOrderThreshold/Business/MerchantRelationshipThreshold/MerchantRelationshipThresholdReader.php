@@ -64,7 +64,7 @@ class MerchantRelationshipThresholdReader implements MerchantRelationshipThresho
             ->getMerchantRelationshipSalesOrderThresholds(
                 $quoteTransfer->getStore(),
                 $quoteTransfer->getCurrency(),
-                $cartMerchantRelationshipIds
+                $cartMerchantRelationshipIds,
             );
 
         return $this->getSalesOrderThresholdTransfers($merchantRelationshipSalesOrderThresholdTransfers, $itemMerchantRelationshipSubTotals);
@@ -98,7 +98,7 @@ class MerchantRelationshipThresholdReader implements MerchantRelationshipThresho
             ->getMerchantRelationshipSalesOrderThresholds(
                 $storeTransfer,
                 $currencyTransfer,
-                $merchantRelationshipIds
+                $merchantRelationshipIds,
             );
 
         foreach ($merchantRelationshipSalesOrderThresholdTransfers as $merchantRelationshipSalesOrderThresholdTransfer) {
@@ -201,7 +201,7 @@ class MerchantRelationshipThresholdReader implements MerchantRelationshipThresho
         foreach ($merchantRelationshipSalesOrderThresholdTransfers as $merchantRelationshipSalesOrderThresholdTransfer) {
             $salesOrderThresholdTransfer = $merchantRelationshipSalesOrderThresholdTransfer->getSalesOrderThresholdValue();
             $salesOrderThresholdTransfer->setValue(
-                $itemMerchantRelationshipSubTotals[$merchantRelationshipSalesOrderThresholdTransfer->getMerchantRelationship()->getIdMerchantRelationship()]
+                $itemMerchantRelationshipSubTotals[$merchantRelationshipSalesOrderThresholdTransfer->getMerchantRelationship()->getIdMerchantRelationship()],
             );
             $salesOrderThresholdTransfers[] = $salesOrderThresholdTransfer;
         }

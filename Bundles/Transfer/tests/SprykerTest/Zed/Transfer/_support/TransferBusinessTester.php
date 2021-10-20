@@ -60,7 +60,7 @@ class TransferBusinessTester extends Actor
 
         return new TransferDefinitionFinder(
             $this->getModuleConfig(),
-            $this->getFactory()->getUtilGlobService()
+            $this->getFactory()->getUtilGlobService(),
         );
     }
 
@@ -82,7 +82,7 @@ class TransferBusinessTester extends Actor
         return new EntityTransferDefinitionFinder(
             $this->getModuleConfig(),
             $this->getFactory()->getUtilGlobService(),
-            $propelFacadeBridge
+            $propelFacadeBridge,
         );
     }
 
@@ -99,7 +99,7 @@ class TransferBusinessTester extends Actor
 
         return new DataBuilderDefinitionFinder(
             $this->getModuleConfig(),
-            $this->getFactory()->getUtilGlobService()
+            $this->getFactory()->getUtilGlobService(),
         );
     }
 

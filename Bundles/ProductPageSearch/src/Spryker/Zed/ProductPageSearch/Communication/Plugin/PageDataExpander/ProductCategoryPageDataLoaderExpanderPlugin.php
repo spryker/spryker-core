@@ -74,7 +74,7 @@ class ProductCategoryPageDataLoaderExpanderPlugin extends AbstractPlugin impleme
         foreach ($productAbstractPageSearchTransfer->getCategoryNodeIds() as $idCategoryNode) {
             $allParentCategoryNodesIds = array_merge(
                 $allParentCategoryNodesIds,
-                $this->getAllParents($idCategoryNode, $localeTransfer)
+                $this->getAllParents($idCategoryNode, $localeTransfer),
             );
         }
 
@@ -85,14 +85,14 @@ class ProductCategoryPageDataLoaderExpanderPlugin extends AbstractPlugin impleme
             $allParentCategoryNodesIds,
             $productAbstractPageSearchTransfer->getCategoryNodeIds(),
             $localeTransfer,
-            $productAbstractPageSearchTransfer
+            $productAbstractPageSearchTransfer,
         );
 
         $this->setSorting(
             $allParentCategoryNodesIds,
             $localeTransfer,
             $productAbstractPageSearchTransfer,
-            $productCategoryEntities
+            $productCategoryEntities,
         );
     }
 
@@ -241,7 +241,7 @@ class ProductCategoryPageDataLoaderExpanderPlugin extends AbstractPlugin impleme
         $sortedCategories = [];
         foreach ($filteredProductCategoriesByDirectParents as $productCategoryEntity) {
             $idCategoryNode = $productCategoryEntity->getVirtualColumn(
-                ProductCategoryQueryContainer::VIRTUAL_COLUMN_ID_CATEGORY_NODE
+                ProductCategoryQueryContainer::VIRTUAL_COLUMN_ID_CATEGORY_NODE,
             );
 
             $productOrder = (int)$productCategoryEntity->getProductOrder() ?: $maxProductOrder;

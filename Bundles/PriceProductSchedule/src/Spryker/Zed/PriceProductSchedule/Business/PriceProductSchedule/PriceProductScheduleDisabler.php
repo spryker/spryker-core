@@ -172,7 +172,7 @@ class PriceProductScheduleDisabler implements PriceProductScheduleDisablerInterf
 
             $this->productPriceUpdater->updateCurrentPriceProduct(
                 $fallbackPriceProduct,
-                $priceProductTransfer->getPriceType()
+                $priceProductTransfer->getPriceType(),
             );
 
             return;

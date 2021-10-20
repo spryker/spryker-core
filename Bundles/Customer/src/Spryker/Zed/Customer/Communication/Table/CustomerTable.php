@@ -268,7 +268,7 @@ class CustomerTable extends AbstractTable
                 $button->getUrl(),
                 $button->getTitle(),
                 $button->getDefaultOptions(),
-                $button->getCustomOptions()
+                $button->getCustomOptions(),
             );
         }
 

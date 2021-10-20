@@ -267,7 +267,7 @@ class ProductMerchantPortalGuiDependencyProvider extends AbstractBundleDependenc
     {
         $container->set(static::FACADE_LOCALE, function (Container $container) {
             return new ProductMerchantPortalGuiToLocaleFacadeBridge(
-                $container->getLocator()->locale()->facade()
+                $container->getLocator()->locale()->facade(),
             );
         });
 
@@ -283,7 +283,7 @@ class ProductMerchantPortalGuiDependencyProvider extends AbstractBundleDependenc
     {
         $container->set(static::FACADE_MERCHANT_USER, function (Container $container) {
             return new ProductMerchantPortalGuiToMerchantUserFacadeBridge(
-                $container->getLocator()->merchantUser()->facade()
+                $container->getLocator()->merchantUser()->facade(),
             );
         });
 
@@ -299,7 +299,7 @@ class ProductMerchantPortalGuiDependencyProvider extends AbstractBundleDependenc
     {
         $container->set(static::FACADE_TRANSLATOR, function (Container $container) {
             return new ProductMerchantPortalGuiToTranslatorFacadeBridge(
-                $container->getLocator()->translator()->facade()
+                $container->getLocator()->translator()->facade(),
             );
         });
 
@@ -315,7 +315,7 @@ class ProductMerchantPortalGuiDependencyProvider extends AbstractBundleDependenc
     {
         $container->set(static::FACADE_STORE, function (Container $container) {
             return new ProductMerchantPortalGuiToStoreFacadeBridge(
-                $container->getLocator()->store()->facade()
+                $container->getLocator()->store()->facade(),
             );
         });
 
@@ -331,7 +331,7 @@ class ProductMerchantPortalGuiDependencyProvider extends AbstractBundleDependenc
     {
         $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new ProductMerchantPortalGuiToUtilEncodingServiceBridge(
-                $container->getLocator()->utilEncoding()->service()
+                $container->getLocator()->utilEncoding()->service(),
             );
         });
 
@@ -347,7 +347,7 @@ class ProductMerchantPortalGuiDependencyProvider extends AbstractBundleDependenc
     {
         $container->set(static::SERVICE_PRICE_PRODUCT_VOLUME, function (Container $container) {
             return new ProductMerchantPortalGuiToPriceProductVolumeServiceBridge(
-                $container->getLocator()->priceProductVolume()->service()
+                $container->getLocator()->priceProductVolume()->service(),
             );
         });
 
@@ -363,7 +363,7 @@ class ProductMerchantPortalGuiDependencyProvider extends AbstractBundleDependenc
     {
         $container->set(static::FACADE_CATEGORY, function (Container $container) {
             return new ProductMerchantPortalGuiToCategoryFacadeBridge(
-                $container->getLocator()->category()->facade()
+                $container->getLocator()->category()->facade(),
             );
         });
 
@@ -379,7 +379,7 @@ class ProductMerchantPortalGuiDependencyProvider extends AbstractBundleDependenc
     {
         $container->set(static::FACADE_MERCHANT_PRODUCT, function (Container $container) {
             return new ProductMerchantPortalGuiToMerchantProductFacadeBridge(
-                $container->getLocator()->merchantProduct()->facade()
+                $container->getLocator()->merchantProduct()->facade(),
             );
         });
 
@@ -395,7 +395,7 @@ class ProductMerchantPortalGuiDependencyProvider extends AbstractBundleDependenc
     {
         $container->set(static::FACADE_PRODUCT_CATEGORY, function (Container $container) {
             return new ProductMerchantPortalGuiToProductCategoryFacadeBridge(
-                $container->getLocator()->productCategory()->facade()
+                $container->getLocator()->productCategory()->facade(),
             );
         });
 
@@ -411,7 +411,7 @@ class ProductMerchantPortalGuiDependencyProvider extends AbstractBundleDependenc
     {
         $container->set(static::FACADE_PRICE_PRODUCT, function (Container $container) {
             return new ProductMerchantPortalGuiToPriceProductFacadeBridge(
-                $container->getLocator()->priceProduct()->facade()
+                $container->getLocator()->priceProduct()->facade(),
             );
         });
 
@@ -427,7 +427,7 @@ class ProductMerchantPortalGuiDependencyProvider extends AbstractBundleDependenc
     {
         $container->set(static::FACADE_PRICE_PRODUCT_VOLUME, function (Container $container) {
             return new ProductMerchantPortalGuiToPriceProductVolumeFacadeBridge(
-                $container->getLocator()->priceProductVolume()->facade()
+                $container->getLocator()->priceProductVolume()->facade(),
             );
         });
 
@@ -499,7 +499,7 @@ class ProductMerchantPortalGuiDependencyProvider extends AbstractBundleDependenc
     {
         $container->set(static::FACADE_PRODUCT_ATTRIBUTE, function (Container $container) {
             return new ProductMerchantPortalGuiToProductAttributeFacadeBridge(
-                $container->getLocator()->productAttribute()->facade()
+                $container->getLocator()->productAttribute()->facade(),
             );
         });
 
@@ -529,7 +529,7 @@ class ProductMerchantPortalGuiDependencyProvider extends AbstractBundleDependenc
     {
         $container->set(static::FACADE_MERCHANT_STOCK, function (Container $container) {
             return new ProductMerchantPortalGuiToMerchantStockFacadeBridge(
-                $container->getLocator()->merchantStock()->facade()
+                $container->getLocator()->merchantStock()->facade(),
             );
         });
 

@@ -65,7 +65,7 @@ class MimeTypeForm extends AbstractType
     {
         $builder->add(
             static::FIELD_ID_MIME_TYPE,
-            HiddenType::class
+            HiddenType::class,
         );
 
         $builder->add(
@@ -76,7 +76,7 @@ class MimeTypeForm extends AbstractType
                 'constraints' => [
                     new NotBlank(),
                 ],
-            ]
+            ],
         );
 
         $builder->add(
@@ -84,7 +84,7 @@ class MimeTypeForm extends AbstractType
             TextareaType::class,
             [
                 'required' => false,
-            ]
+            ],
         );
 
         $builder->add(
@@ -92,7 +92,7 @@ class MimeTypeForm extends AbstractType
             CheckboxType::class,
             [
                 'required' => false,
-            ]
+            ],
         );
     }
 }

@@ -35,7 +35,7 @@ class PriceProductScheduleWriterStep implements DataImportStepInterface
                 static::EXCEPTION_MESSAGE,
                 PriceProductScheduleDataSetInterface::KEY_ABSTRACT_SKU,
                 PriceProductScheduleDataSetInterface::KEY_CONCRETE_SKU,
-                implode(', ', array_keys($dataSet->getArrayCopy()))
+                implode(', ', array_keys($dataSet->getArrayCopy())),
             ));
         }
 

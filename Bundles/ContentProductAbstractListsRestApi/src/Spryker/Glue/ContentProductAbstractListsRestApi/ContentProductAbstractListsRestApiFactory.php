@@ -29,7 +29,7 @@ class ContentProductAbstractListsRestApiFactory extends AbstractFactory
     {
         return new ContentProductAbstractListReader(
             $this->getContentProductClient(),
-            $this->createContentProductAbstractListRestResponseBuilder()
+            $this->createContentProductAbstractListRestResponseBuilder(),
         );
     }
 
@@ -42,7 +42,7 @@ class ContentProductAbstractListsRestApiFactory extends AbstractFactory
             $this->getContentProductClient(),
             $this->createContentProductAbstractListRestResponseBuilder(),
             $this->getStoreClient(),
-            $this->getProductRestApiResource()
+            $this->getProductRestApiResource(),
         );
     }
 
@@ -53,7 +53,7 @@ class ContentProductAbstractListsRestApiFactory extends AbstractFactory
     {
         return new ContentProductAbstractListRestResponseBuilder(
             $this->getResourceBuilder(),
-            $this->getProductRestApiResource()
+            $this->getProductRestApiResource(),
         );
     }
 
@@ -63,7 +63,7 @@ class ContentProductAbstractListsRestApiFactory extends AbstractFactory
     public function createProductAbstractByContentProductAbstractListExpander(): ProductAbstractByContentProductAbstractListExpanderInterface
     {
         return new ProductAbstractByContentProductAbstractListExpander(
-            $this->createProductAbstractReader()
+            $this->createProductAbstractReader(),
         );
     }
 

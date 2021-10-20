@@ -171,7 +171,7 @@ class Writer implements WriterInterface
         /** @var string $skuProductAbstract */
         $skuProductAbstract = $priceProductTransfer->requireSkuProductAbstract()->getSkuProductAbstract();
         $priceProductTransfer->setIdProductAbstract(
-            $this->productFacade->findProductAbstractIdBySku($skuProductAbstract)
+            $this->productFacade->findProductAbstractIdBySku($skuProductAbstract),
         );
     }
 
@@ -241,7 +241,7 @@ class Writer implements WriterInterface
     {
         if ($priceProductTransfer->getPriceTypeName() === null) {
             $priceProductTransfer->setPriceTypeName(
-                $this->priceConfig->getPriceTypeDefaultName()
+                $this->priceConfig->getPriceTypeDefaultName(),
             );
         }
 
@@ -265,8 +265,8 @@ class Writer implements WriterInterface
             throw new MissingPriceException(
                 sprintf(
                     'There are no prices for product with id "%s"',
-                    $idPriceProduct
-                )
+                    $idPriceProduct,
+                ),
             );
         }
 
@@ -289,7 +289,7 @@ class Writer implements WriterInterface
         $priceEntities = $this->queryContainer
             ->queryPriceEntityForProductAbstract(
                 $skuProductAbstract,
-                $priceProductCriteriaTransfer
+                $priceProductCriteriaTransfer,
             )->findOne();
 
         return ($priceEntities !== null);
@@ -310,7 +310,7 @@ class Writer implements WriterInterface
         $priceEntities = $this->queryContainer
             ->queryPriceEntityForProductConcrete(
                 $skuProduct,
-                $priceProductCriteriaTransfer
+                $priceProductCriteriaTransfer,
             );
 
         return ($priceEntities->count() > 0);

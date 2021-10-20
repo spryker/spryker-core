@@ -46,7 +46,7 @@ class StorageFactory extends AbstractFactory
     public function createService()
     {
         return new Service(
-            $this->createClient()
+            $this->createClient(),
         );
     }
 
@@ -135,7 +135,7 @@ class StorageFactory extends AbstractFactory
     {
         return new StorageCacheStrategyFactory(
             $this->getStorageClient(),
-            $this->getStorageClientConfig()
+            $this->getStorageClientConfig(),
         );
     }
 
@@ -159,7 +159,7 @@ class StorageFactory extends AbstractFactory
         return new CacheKeyGenerator(
             $this->getStoreClient(),
             $this->getLocaleClient(),
-            $this->getStorageClientConfig()
+            $this->getStorageClientConfig(),
         );
     }
 

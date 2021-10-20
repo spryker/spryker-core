@@ -37,7 +37,7 @@ class ProductMeasurementUnitsRestApiToProductStorageClientBridge implements Prod
         return $this->productStorageClient->getProductConcreteIdsByMapping(
             $mappingType,
             $identifiers,
-            $localeName
+            $localeName,
         );
     }
 }

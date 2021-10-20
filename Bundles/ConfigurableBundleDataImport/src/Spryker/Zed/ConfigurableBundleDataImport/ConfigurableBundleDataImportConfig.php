@@ -38,7 +38,7 @@ class ConfigurableBundleDataImportConfig extends DataImportConfig
 
         return $this->buildImporterConfiguration(
             $moduleDataImportDirectory . 'configurable_bundle_template.csv',
-            static::IMPORT_TYPE_CONFIGURABLE_BUNDLE_TEMPLATE
+            static::IMPORT_TYPE_CONFIGURABLE_BUNDLE_TEMPLATE,
         );
     }
 
@@ -53,7 +53,7 @@ class ConfigurableBundleDataImportConfig extends DataImportConfig
 
         return $this->buildImporterConfiguration(
             $moduleDataImportDirectory . 'configurable_bundle_template_slot.csv',
-            static::IMPORT_TYPE_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT
+            static::IMPORT_TYPE_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT,
         );
     }
 
@@ -68,7 +68,7 @@ class ConfigurableBundleDataImportConfig extends DataImportConfig
 
         return $this->buildImporterConfiguration(
             $moduleDataImportDirectory . 'configurable_bundle_template_image.csv',
-            static::IMPORT_TYPE_CONFIGURABLE_BUNDLE_TEMPLATE_IMAGE
+            static::IMPORT_TYPE_CONFIGURABLE_BUNDLE_TEMPLATE_IMAGE,
         );
     }
 
@@ -82,7 +82,7 @@ class ConfigurableBundleDataImportConfig extends DataImportConfig
             . DIRECTORY_SEPARATOR . '..'
             . DIRECTORY_SEPARATOR . '..'
             . DIRECTORY_SEPARATOR . '..'
-            . DIRECTORY_SEPARATOR . '..'
+            . DIRECTORY_SEPARATOR . '..',
         );
 
         return $moduleRoot . DIRECTORY_SEPARATOR;

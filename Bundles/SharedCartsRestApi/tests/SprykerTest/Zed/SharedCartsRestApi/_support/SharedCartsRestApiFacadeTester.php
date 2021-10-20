@@ -73,7 +73,7 @@ class SharedCartsRestApiFacadeTester extends Actor
                 CompanyUserTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
                 CompanyUserTransfer::FK_COMPANY_BUSINESS_UNIT => $companyBusinessUnit->getIdCompanyBusinessUnit(),
                 CompanyUserTransfer::FK_CUSTOMER => $customerTransfer->getIdCustomer(),
-            ]
+            ],
         );
     }
 
@@ -88,7 +88,7 @@ class SharedCartsRestApiFacadeTester extends Actor
                 CompanyTransfer::STATUS => 'approved',
                 CompanyTransfer::IS_ACTIVE => true,
                 CompanyTransfer::INITIAL_USER_TRANSFER => new CompanyUserTransfer(),
-            ]
+            ],
         );
     }
 
@@ -105,7 +105,7 @@ class SharedCartsRestApiFacadeTester extends Actor
                 CompanyBusinessUnitTransfer::EMAIL => 'test@spryker.com',
                 CompanyBusinessUnitTransfer::PHONE => '1234567890',
                 CompanyBusinessUnitTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
-            ]
+            ],
         );
     }
 
@@ -160,7 +160,7 @@ class SharedCartsRestApiFacadeTester extends Actor
         $this->haveQuoteCompanyUser(
             $companyUserTransfer,
             $quoteTransfer,
-            $quotePermissionGroupEntityTransfer
+            $quotePermissionGroupEntityTransfer,
         );
 
         return $quoteTransfer;

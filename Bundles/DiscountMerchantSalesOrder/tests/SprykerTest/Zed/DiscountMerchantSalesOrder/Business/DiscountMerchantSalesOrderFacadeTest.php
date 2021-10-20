@@ -56,7 +56,7 @@ class DiscountMerchantSalesOrderFacadeTest extends Unit
         // Assert
         $this->assertSame(
             $merchantOrderTransferExpected->getOrder()->getCalculatedDiscounts(),
-            $merchantOrderTransfer->getOrder()->getCalculatedDiscounts()
+            $merchantOrderTransfer->getOrder()->getCalculatedDiscounts(),
         );
     }
 }

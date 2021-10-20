@@ -102,7 +102,7 @@ class ConfigurableBundleTemplateImageStoragePublisher implements ConfigurableBun
             $localizedConfigurableBundleTemplateImageStorageEntityMap = $this->saveConfigurableBundleTemplateImages(
                 $configurableBundleTemplateTransfer,
                 $localizedConfigurableBundleTemplateImageStorageEntityMap,
-                $localeTransfers
+                $localeTransfers,
             );
         }
 
@@ -129,14 +129,14 @@ class ConfigurableBundleTemplateImageStoragePublisher implements ConfigurableBun
 
             $productImageSetTransfers = $this->productImageFacade->resolveProductImageSetsForLocale(
                 $configurableBundleTemplateTransfer->getProductImageSets(),
-                $localeName
+                $localeName,
             );
 
             $this->saveConfigurableBundleTemplateImageStorageEntity(
                 $localeName,
                 $productImageSetTransfers->getArrayCopy(),
                 $configurableBundleTemplateTransfer,
-                $configurableBundleTemplateImageStorageEntity
+                $configurableBundleTemplateImageStorageEntity,
             );
 
             if (!$configurableBundleTemplateImageStorageEntity->isNew()) {

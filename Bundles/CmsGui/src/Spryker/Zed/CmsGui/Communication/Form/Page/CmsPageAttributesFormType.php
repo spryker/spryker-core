@@ -68,7 +68,7 @@ class CmsPageAttributesFormType extends AbstractType
 
         $builder->addEventListener(
             FormEvents::PRE_SET_DATA,
-            [$this, 'updateUrlPrefix']
+            [$this, 'updateUrlPrefix'],
         );
     }
 
@@ -89,7 +89,7 @@ class CmsPageAttributesFormType extends AbstractType
             $url = preg_replace(
                 '#^' . $cmsPageAttributesTransfer->getUrlPrefix() . '#i',
                 '',
-                $cmsPageAttributesTransfer->getUrl()
+                $cmsPageAttributesTransfer->getUrl(),
             );
         }
 

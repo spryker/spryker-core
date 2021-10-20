@@ -50,7 +50,7 @@ class StockDataHelper extends Module
         $this->debug(sprintf(
             'Inserted StockProduct: %d of Concrete Product SKU: %s',
             $idStockProduct,
-            $stockProductTransfer->getSku()
+            $stockProductTransfer->getSku(),
         ));
 
         $this->getDataCleanupHelper()->_addCleanup(function () use ($idStockProduct) {
@@ -96,14 +96,14 @@ class StockDataHelper extends Module
             foreach ($stockTransfer->getStoreRelation()->getIdStores() as $idStore) {
                 $this->haveStockStoreRelation(
                     $stockTransfer,
-                    (new StoreTransfer())->setIdStore($idStore)
+                    (new StoreTransfer())->setIdStore($idStore),
                 );
             }
         }
 
         $this->debug(sprintf(
             'Inserted Stock: %d',
-            $stockTransfer->getIdStock()
+            $stockTransfer->getIdStock(),
         ));
 
         $this->getDataCleanupHelper()->_addCleanup(function () use ($stockEntity) {
@@ -133,7 +133,7 @@ class StockDataHelper extends Module
 
         $this->debug(sprintf(
             'Inserted Stock Store Relation: %d',
-            $stockStoreEntity->getIdStockStore()
+            $stockStoreEntity->getIdStockStore(),
         ));
 
         $this->getDataCleanupHelper()->_addCleanup(function () use ($stockStoreEntity) {
@@ -171,7 +171,7 @@ class StockDataHelper extends Module
         $this->debug(sprintf(
             'Inserted StockProduct: %d of Concrete Product SKU: %s',
             $idStockProduct,
-            $stockProductTransfer->getSku()
+            $stockProductTransfer->getSku(),
         ));
 
         $this->getDataCleanupHelper()->_addCleanup(function () use ($idStockProduct) {

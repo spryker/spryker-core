@@ -83,7 +83,7 @@ class RedisClientTester extends Actor
 
         return new RedisInMemoryLogger(
             $this->getUtilEncodingService(),
-            $configurationTransfer
+            $configurationTransfer,
         );
     }
 
@@ -105,7 +105,7 @@ class RedisClientTester extends Actor
     {
         if (!$this->redisToUtilEncodingServiceBridge) {
             $this->redisToUtilEncodingServiceBridge = new RedisToUtilEncodingServiceBridge(
-                $this->getLocator()->utilEncoding()->service()
+                $this->getLocator()->utilEncoding()->service(),
             );
         }
 

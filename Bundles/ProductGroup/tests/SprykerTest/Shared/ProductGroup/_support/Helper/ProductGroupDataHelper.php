@@ -36,7 +36,7 @@ class ProductGroupDataHelper extends Module
 
         $this->debug(sprintf(
             'Inserted Product Group: %d',
-            $productGroupTransfer->getIdProductGroup()
+            $productGroupTransfer->getIdProductGroup(),
         ));
 
         $this->getDataCleanupHelper()->_addCleanup(function () use ($productGroupTransfer): void {

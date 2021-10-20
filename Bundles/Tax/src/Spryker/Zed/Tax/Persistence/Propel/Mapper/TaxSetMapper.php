@@ -41,7 +41,7 @@ class TaxSetMapper implements TaxSetMapperInterface
         foreach ($taxSetEntity->getSpyTaxRates() as $taxRateEntity) {
             $taxRateTransfer = $this->taxRateMapper->mapTaxRateEntityToTaxRateTransfer(
                 $taxRateEntity,
-                new TaxRateTransfer()
+                new TaxRateTransfer(),
             );
 
             $taxSetTransfer->addTaxRate($taxRateTransfer);

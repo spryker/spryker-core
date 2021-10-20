@@ -40,7 +40,7 @@ class CategoryNodeStorageMapper
         foreach ($categoryNodeStorageEntities as $categoryNodeStorageEntity) {
             $categoryNodeStorageTransfers[] = $this->mapCategoryNodeStorageEntityToCategoryNodeStorageTransfer(
                 $categoryNodeStorageEntity,
-                new CategoryNodeStorageTransfer()
+                new CategoryNodeStorageTransfer(),
             );
         }
 
@@ -58,7 +58,7 @@ class CategoryNodeStorageMapper
         SpyCategoryNodeStorage $categoryNodeStorageEntity
     ): SpyCategoryNodeStorage {
         return $categoryNodeStorageEntity->setData(
-            $this->utilSanitizeService->arrayFilterRecursive($categoryNodeStorageTransfer->toArray())
+            $this->utilSanitizeService->arrayFilterRecursive($categoryNodeStorageTransfer->toArray()),
         );
     }
 

@@ -181,7 +181,7 @@ class ShipmentMethodTable extends AbstractTable
             Url::generate(static::URL_SHIPMENT_METHOD_VIEW, [
                 static::PARAM_ID_SHIPMENT_METHOD => $shipmentMethodEntity->getIdShipmentMethod(),
             ]),
-            static::BUTTON_VIEW
+            static::BUTTON_VIEW,
         );
     }
 
@@ -196,7 +196,7 @@ class ShipmentMethodTable extends AbstractTable
             Url::generate(static::URL_SHIPMENT_METHOD_EDIT, [
                 static::PARAM_ID_SHIPMENT_METHOD => $shipmentMethodEntity->getIdShipmentMethod(),
             ]),
-            static::BUTTON_EDIT
+            static::BUTTON_EDIT,
         );
     }
 
@@ -211,7 +211,7 @@ class ShipmentMethodTable extends AbstractTable
             Url::generate(static::URL_SHIPMENT_METHOD_DELETE, [
                 static::PARAM_ID_SHIPMENT_METHOD => $shipmentMethodEntity->getIdShipmentMethod(),
             ]),
-            static::BUTTON_DELETE
+            static::BUTTON_DELETE,
         );
     }
 

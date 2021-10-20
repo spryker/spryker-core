@@ -53,7 +53,7 @@ class ProductPageDataTransferExpander implements ProductPageDataTransferExpander
 
         $payloadTransfers = $this->expandPayloadTransfersWithProductLabelIds(
             $productPageLoadTransfer->getPayloadTransfers(),
-            $productLabelIdsMappedByIdProductAbstract
+            $productLabelIdsMappedByIdProductAbstract,
         );
 
         return $productPageLoadTransfer->setPayloadTransfers($payloadTransfers);
@@ -75,7 +75,7 @@ class ProductPageDataTransferExpander implements ProductPageDataTransferExpander
             }
 
             $payloadTransfer->setLabelIds(
-                $productLabelIdsMappedByIdProductAbstract[$payloadTransfer->getIdProductAbstract()]
+                $productLabelIdsMappedByIdProductAbstract[$payloadTransfer->getIdProductAbstract()],
             );
         }
 

@@ -48,7 +48,7 @@ class ShoppingListCollectionOutdateChecker implements ShoppingListCollectionOutd
             return false;
         }
         $shoppingListCustomerStorageTransfer = $this->getShoppingListCustomerStorageByCustomerReference(
-            $customerTransfer->getCustomerReference()
+            $customerTransfer->getCustomerReference(),
         );
         if (!$shoppingListCustomerStorageTransfer) {
             return false;

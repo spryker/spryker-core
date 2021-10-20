@@ -120,7 +120,7 @@ class MerchantSalesReturnBusinessTester extends Actor
         return sprintf(
             '%s--%s',
             $saveOrderTransfer->getOrderReference(),
-            $merchantTransfer->getMerchantReference()
+            $merchantTransfer->getMerchantReference(),
         );
     }
 

@@ -36,7 +36,7 @@ class UrlFactory extends AbstractFactory
     {
         return new UrlMatcher(
             $this->createUrlKeyBuilder(),
-            $this->getStorageClient()
+            $this->getStorageClient(),
         );
     }
 }

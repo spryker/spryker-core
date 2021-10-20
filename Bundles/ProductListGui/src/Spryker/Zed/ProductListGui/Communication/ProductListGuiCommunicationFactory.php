@@ -61,7 +61,7 @@ class ProductListGuiCommunicationFactory extends AbstractCommunicationFactory
     {
         return new ProductListTable(
             $this->getProductListPropelQuery(),
-            $this->createProductListTablePluginExecutor()
+            $this->createProductListTablePluginExecutor(),
         );
     }
 
@@ -91,7 +91,7 @@ class ProductListGuiCommunicationFactory extends AbstractCommunicationFactory
             $this->getProductListTableConfigExpanderPlugins(),
             $this->getProductListTableQueryCriteriaExpanderPlugins(),
             $this->getProductListTableDataExpanderPlugins(),
-            $this->getProductListTableHeaderExpanderPlugins()
+            $this->getProductListTableHeaderExpanderPlugins(),
         );
     }
 
@@ -150,7 +150,7 @@ class ProductListGuiCommunicationFactory extends AbstractCommunicationFactory
             ->create(
                 ProductListAggregateFormType::class,
                 $productListAggregateFormTransfer,
-                $options
+                $options,
             );
     }
 
@@ -170,7 +170,7 @@ class ProductListGuiCommunicationFactory extends AbstractCommunicationFactory
         return new ProductListCategoryRelationFormDataProvider(
             $this->getProductListFacade(),
             $this->getCategoryFacade(),
-            $this->getLocaleFacade()
+            $this->getLocaleFacade(),
         );
     }
 
@@ -181,7 +181,7 @@ class ProductListGuiCommunicationFactory extends AbstractCommunicationFactory
     {
         return new ProductListAggregateFormDataProvider(
             $this->createProductListFormDataProvider(),
-            $this->createProductListAggregateFormDataProviderExpander()
+            $this->createProductListAggregateFormDataProviderExpander(),
         );
     }
 
@@ -248,7 +248,7 @@ class ProductListGuiCommunicationFactory extends AbstractCommunicationFactory
     {
         return new ProductListExporter(
             $this->getUtilCsvService(),
-            $this->getProductFacade()
+            $this->getProductFacade(),
         );
     }
 
@@ -259,7 +259,7 @@ class ProductListGuiCommunicationFactory extends AbstractCommunicationFactory
     {
         return new ProductListImporter(
             $this->getUtilCsvService(),
-            $this->getProductFacade()
+            $this->getProductFacade(),
         );
     }
 

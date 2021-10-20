@@ -68,7 +68,7 @@ class CategoryUrlStorageListener extends AbstractPlugin implements EventBulkHand
             [
                 SpyUrlTableMap::COL_URL,
                 SpyUrlTableMap::COL_FK_RESOURCE_CATEGORYNODE,
-            ]
+            ],
         );
 
         return $this->getFactory()->getEventBehaviorFacade()->getEventTransferForeignKeys($validEventTransfers, SpyUrlTableMap::COL_FK_RESOURCE_CATEGORYNODE);

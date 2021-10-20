@@ -48,7 +48,7 @@ class ProductOptionGroupExpander implements ProductOptionGroupExpanderInterface
             ->setIdProductOptionGroup($productOptionGroupTransfer->getIdProductOptionGroup());
 
         $merchantProductOptionGroupTransfer = $this->merchantProductOptionRepository->findGroup(
-            $merchantProductOptionGroupCriteriaTransfer
+            $merchantProductOptionGroupCriteriaTransfer,
         );
 
         if (!$merchantProductOptionGroupTransfer) {

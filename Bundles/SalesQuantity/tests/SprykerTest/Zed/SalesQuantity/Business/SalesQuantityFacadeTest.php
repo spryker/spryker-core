@@ -78,7 +78,7 @@ class SalesQuantityFacadeTest extends Unit
 
         $this->facade->setFactory(
             (new SalesQuantityBusinessFactory())
-                ->setConfig($this->configMock)
+                ->setConfig($this->configMock),
         );
     }
 

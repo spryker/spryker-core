@@ -26,7 +26,7 @@ class CmsPagesContentBannersResourceRelationshipFactory extends AbstractFactory
         return new ContentBannerReader(
             $this->getCmsStorageClient(),
             $this->getStoreClient(),
-            $this->getContentBannerRestApiResource()
+            $this->getContentBannerRestApiResource(),
         );
     }
 
@@ -36,7 +36,7 @@ class CmsPagesContentBannersResourceRelationshipFactory extends AbstractFactory
     public function createContentBannerByCmsPageUuidResourceRelationshipExpander(): ContentBannerByCmsPageUuidResourceRelationshipExpanderInterface
     {
         return new ContentBannerByCmsPageUuidResourceRelationshipExpander(
-            $this->createContentBannerReader()
+            $this->createContentBannerReader(),
         );
     }
 

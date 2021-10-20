@@ -44,7 +44,7 @@ class OrderRepositoryReader implements OrderRepositoryReaderInterface
     {
         $idSalesOrder = $this->salesRepository->findCustomerOrderIdByOrderReference(
             $orderTransfer->requireCustomerReference()->getCustomerReference(),
-            $orderTransfer->requireOrderReference()->getOrderReference()
+            $orderTransfer->requireOrderReference()->getOrderReference(),
         );
 
         if ($idSalesOrder === null) {

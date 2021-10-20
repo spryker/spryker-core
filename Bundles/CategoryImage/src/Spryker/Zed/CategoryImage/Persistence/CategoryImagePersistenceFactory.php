@@ -28,7 +28,7 @@ class CategoryImagePersistenceFactory extends AbstractPersistenceFactory
     public function createCategoryImageMapper(): CategoryImageMapperInterface
     {
         return new CategoryImageMapper(
-            $this->getProvidedDependency(CategoryImageDependencyProvider::FACADE_LOCALE)
+            $this->getProvidedDependency(CategoryImageDependencyProvider::FACADE_LOCALE),
         );
     }
 

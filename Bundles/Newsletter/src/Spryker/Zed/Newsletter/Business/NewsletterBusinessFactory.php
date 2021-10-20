@@ -34,7 +34,7 @@ class NewsletterBusinessFactory extends AbstractBusinessFactory
             $this->createSubscriberManager(),
             $this->getQueryContainer(),
             $this->getMailFacade(),
-            $this->getUtilValidateService()
+            $this->getUtilValidateService(),
         );
     }
 
@@ -44,7 +44,7 @@ class NewsletterBusinessFactory extends AbstractBusinessFactory
     protected function createSubscriptionManager()
     {
         return new SubscriptionManager(
-            $this->getQueryContainer()
+            $this->getQueryContainer(),
         );
     }
 
@@ -55,7 +55,7 @@ class NewsletterBusinessFactory extends AbstractBusinessFactory
     {
         return new SubscriberManager(
             $this->getQueryContainer(),
-            $this->createSubscriberKeyGenerator()
+            $this->createSubscriberKeyGenerator(),
         );
     }
 
@@ -66,7 +66,7 @@ class NewsletterBusinessFactory extends AbstractBusinessFactory
     {
         return new SingleOptInHandler(
             $this->getQueryContainer(),
-            $this->createSubscriberKeyGenerator()
+            $this->createSubscriberKeyGenerator(),
         );
     }
 
@@ -77,7 +77,7 @@ class NewsletterBusinessFactory extends AbstractBusinessFactory
     {
         $subscriberOptInHandler = new DoubleOptInHandler(
             $this->getQueryContainer(),
-            $this->createSubscriberKeyGenerator()
+            $this->createSubscriberKeyGenerator(),
         );
 
         return $subscriberOptInHandler;
@@ -90,7 +90,7 @@ class NewsletterBusinessFactory extends AbstractBusinessFactory
     {
         return new SubscriptionAnonymizer(
             $this->getQueryContainer(),
-            $this->createSubscriptionRequestHandler()
+            $this->createSubscriptionRequestHandler(),
         );
     }
 
@@ -109,7 +109,7 @@ class NewsletterBusinessFactory extends AbstractBusinessFactory
     {
         return new NewsletterTypeInstaller(
             $this->getQueryContainer(),
-            $this->getConfig()->getNewsletterTypes()
+            $this->getConfig()->getNewsletterTypes(),
         );
     }
 

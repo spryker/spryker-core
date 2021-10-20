@@ -61,7 +61,7 @@ class OrderPaymentUpdater implements OrderPaymentUpdaterInterface
         $updateOrderPaymentRequestTransfer = $this->orderPaymentMapper
             ->mapRestOrderPaymentsAttributesTransferToUpdateOrderPaymentRequestTransfer(
                 $restOrderPaymentsAttributesTransfer,
-                new UpdateOrderPaymentRequestTransfer()
+                new UpdateOrderPaymentRequestTransfer(),
             );
 
         $updateOrderPaymentResponseTransfer = $this->orderPaymentsRestApiClient
@@ -70,14 +70,14 @@ class OrderPaymentUpdater implements OrderPaymentUpdaterInterface
             return $this->orderPaymentRestResponseBuilder->buildErrorRestResponse(
                 OrderPaymentsRestApiConfig::RESPONSE_CODE_ORDER_PAYMENT_IS_NOT_UPDATED,
                 Response::HTTP_UNPROCESSABLE_ENTITY,
-                OrderPaymentsRestApiConfig::RESPONSE_MESSAGE_ORDER_PAYMENT_IS_NOT_UPDATED
+                OrderPaymentsRestApiConfig::RESPONSE_MESSAGE_ORDER_PAYMENT_IS_NOT_UPDATED,
             );
         }
 
         $restOrderPaymentsAttributesTransfer = $this->orderPaymentMapper
             ->mapUpdateOrderPaymentResponseTransferToRestOrderPaymentsAttributesTransfer(
                 $updateOrderPaymentResponseTransfer,
-                $restOrderPaymentsAttributesTransfer
+                $restOrderPaymentsAttributesTransfer,
             );
 
         return $this->orderPaymentRestResponseBuilder

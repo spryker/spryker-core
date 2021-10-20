@@ -89,7 +89,7 @@ class PublishAndSynchronizeTest extends Unit
         $this->tester->assertEntityCanBeManuallyPublished(
             ProductMeasurementUnitEvents::PRODUCT_MEASUREMENT_UNIT_PUBLISH,
             [$this->productMeasurementUnitTransfer->getIdProductMeasurementUnitOrFail()],
-            PublisherConfig::PUBLISH_QUEUE
+            PublisherConfig::PUBLISH_QUEUE,
         );
         $this->tester->assertEntityIsSynchronizedToStorage(ProductMeasurementUnitStorageConfig::PRODUCT_MEASUREMENT_UNIT_SYNC_STORAGE_QUEUE);
 
@@ -103,7 +103,7 @@ class PublishAndSynchronizeTest extends Unit
     {
         // Act
         $productMeasurementUnitEntity = SpyProductMeasurementUnitQuery::create()->findOneByCode(
-            $this->productMeasurementUnitTransfer->getCodeOrFail()
+            $this->productMeasurementUnitTransfer->getCodeOrFail(),
         );
 
         $productMeasurementUnitEntity->setName('foo');
@@ -113,7 +113,7 @@ class PublishAndSynchronizeTest extends Unit
         $this->tester->assertEntityCanBeManuallyPublished(
             ProductMeasurementUnitEvents::PRODUCT_MEASUREMENT_UNIT_PUBLISH,
             [$this->productMeasurementUnitTransfer->getIdProductMeasurementUnitOrFail()],
-            PublisherConfig::PUBLISH_QUEUE
+            PublisherConfig::PUBLISH_QUEUE,
         );
         $this->tester->assertEntityIsUpdatedInStorage(ProductMeasurementUnitStorageConfig::PRODUCT_MEASUREMENT_UNIT_SYNC_STORAGE_QUEUE);
 

@@ -43,7 +43,7 @@ class CategoryNodePageSearchMapper implements CategoryNodePageSearchMapperInterf
         $data = $this->categoryNodePageSearchDataMapperInterface->mapNodeTransferToCategoryNodePageSearchDataForStoreAndLocale(
             $nodeTransfer,
             $storeName,
-            $localeName
+            $localeName,
         );
 
         return $categoryNodePageSearchTransfer

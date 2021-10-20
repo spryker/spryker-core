@@ -75,7 +75,7 @@ class ShipmentByCheckoutDataExpander implements ShipmentByCheckoutDataExpanderIn
                 $this->addShipmentsResourceRelationships(
                     $resource,
                     $shipmentGroupTransfer,
-                    $mappedShipmentMethodsByHash[$shipmentGroupTransfer->getHash()] ?? null
+                    $mappedShipmentMethodsByHash[$shipmentGroupTransfer->getHash()] ?? null,
                 );
             }
         }
@@ -114,13 +114,13 @@ class ShipmentByCheckoutDataExpander implements ShipmentByCheckoutDataExpanderIn
         $restShipmentsAttributesTransfer = $this->shipmentMapper
             ->mapShipmentGroupTransferToRestShipmentsAttributesTransfers(
                 $shipmentGroupTransfer,
-                new RestShipmentsAttributesTransfer()
+                new RestShipmentsAttributesTransfer(),
             );
 
         $shipmentsRestResource = $this->restResourceBuilder->createRestResource(
             ShipmentsRestApiConfig::RESOURCE_SHIPMENTS,
             $shipmentGroupTransfer->getHash(),
-            $restShipmentsAttributesTransfer
+            $restShipmentsAttributesTransfer,
         )->setPayload($shipmentGroupTransfer);
 
         $resource->addRelationship($shipmentsRestResource);

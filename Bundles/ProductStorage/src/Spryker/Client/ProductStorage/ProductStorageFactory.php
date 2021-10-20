@@ -81,7 +81,7 @@ class ProductStorageFactory extends AbstractFactory
             $this->getLocaleClient(),
             $this->getUtilEncodingService(),
             $this->getProductConcreteRestrictionPlugins(),
-            $this->getProductConcreteRestrictionFilterPlugins()
+            $this->getProductConcreteRestrictionFilterPlugins(),
         );
     }
 
@@ -92,7 +92,7 @@ class ProductStorageFactory extends AbstractFactory
     {
         return new ProductConcreteViewTransferFinder(
             $this->createProductConcreteStorageReader(),
-            $this->createProductStorageDataMapper()
+            $this->createProductStorageDataMapper(),
         );
     }
 
@@ -107,7 +107,7 @@ class ProductStorageFactory extends AbstractFactory
             $this->getStoreClient(),
             $this->createProductAbstractAttributeMapRestrictionFilter(),
             $this->getProductAbstractRestrictionPlugins(),
-            $this->getProductAbstractRestrictionFilterPlugins()
+            $this->getProductAbstractRestrictionFilterPlugins(),
         );
     }
 
@@ -119,7 +119,7 @@ class ProductStorageFactory extends AbstractFactory
         return new ProductAbstractViewTransferFinder(
             $this->createProductAbstractStorageReader(),
             $this->createProductStorageDataMapper(),
-            $this->getStoreClient()
+            $this->getStoreClient(),
         );
     }
 
@@ -130,7 +130,7 @@ class ProductStorageFactory extends AbstractFactory
     {
         return new ProductStorageDataMapper(
             $this->getStorageProductExpanderPlugins(),
-            $this->createProductAbstractAttributeMapRestrictionFilter()
+            $this->createProductAbstractAttributeMapRestrictionFilter(),
         );
     }
 
@@ -141,7 +141,7 @@ class ProductStorageFactory extends AbstractFactory
     {
         return new ProductAbstractStorageDataMapper(
             $this->getStorageProductExpanderPlugins(),
-            $this->createProductAbstractAttributeMapRestrictionFilter()
+            $this->createProductAbstractAttributeMapRestrictionFilter(),
         );
     }
 
@@ -152,7 +152,7 @@ class ProductStorageFactory extends AbstractFactory
     {
         return new ProductVariantExpander(
             $this->createProductConcreteStorageReader(),
-            $this->createProductAttributeFilter()
+            $this->createProductAttributeFilter(),
         );
     }
 
@@ -162,7 +162,7 @@ class ProductStorageFactory extends AbstractFactory
     public function createProductAttributeFilter(): ProductAttributeFilterInterface
     {
         return new ProductAttributeFilter(
-            $this->getUtilSanitizeService()
+            $this->getUtilSanitizeService(),
         );
     }
 
@@ -172,7 +172,7 @@ class ProductStorageFactory extends AbstractFactory
     public function createProductAbstractAttributeMapRestrictionFilter(): ProductAbstractAttributeMapRestrictionFilterInterface
     {
         return new ProductAbstractAttributeMapRestrictionFilter(
-            $this->createProductConcreteStorageReader()
+            $this->createProductConcreteStorageReader(),
         );
     }
 

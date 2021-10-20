@@ -119,7 +119,7 @@ class ProductConcreteMeasurementUnitStorageWriter implements ProductConcreteMeas
     {
         foreach ($productConcreteMeasurementUnitStorageEntityTransfers as $productConcreteMeasurementUnitStorageEntityTransfer) {
             $this->productMeasurementUnitStorageEntityManager->deleteProductConcreteMeasurementUnitStorage(
-                $productConcreteMeasurementUnitStorageEntityTransfer->getIdProductConcreteMeasurementUnitStorage()
+                $productConcreteMeasurementUnitStorageEntityTransfer->getIdProductConcreteMeasurementUnitStorage(),
             );
         }
     }

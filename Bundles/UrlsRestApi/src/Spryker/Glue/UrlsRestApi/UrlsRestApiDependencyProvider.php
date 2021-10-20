@@ -49,7 +49,7 @@ class UrlsRestApiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::CLIENT_URL_STORAGE, function (Container $container) {
             return new UrlsRestApiToUrlStorageClientBridge(
-                $container->getLocator()->urlStorage()->client()
+                $container->getLocator()->urlStorage()->client(),
             );
         });
 

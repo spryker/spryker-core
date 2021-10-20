@@ -178,7 +178,7 @@ class ProductAbstractSelectedTable extends AbstractProductAbstractTable
                 'data-id' => $idProductAbstract,
                 'icon' => 'fa-trash',
                 'onclick' => 'return false;',
-            ]
+            ],
         );
         $actionButtons[] = $this->generateButton(
             '#',
@@ -189,7 +189,7 @@ class ProductAbstractSelectedTable extends AbstractProductAbstractTable
                 'data-direction' => 'up',
                 'icon' => 'fa-arrow-up',
                 'onclick' => 'return false;',
-            ]
+            ],
         );
         $actionButtons[] = $this->generateButton(
             '#',
@@ -200,7 +200,7 @@ class ProductAbstractSelectedTable extends AbstractProductAbstractTable
                 'data-direction' => 'down',
                 'icon' => 'fa-arrow-down',
                 'onclick' => 'return false;',
-            ]
+            ],
         );
 
         return implode(' ', $actionButtons);

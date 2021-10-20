@@ -44,7 +44,7 @@ class OrderItemSplitController extends AbstractController
         if ($orderItemForm->isSubmitted() && $orderItemForm->isValid()) {
             $itemSplitResponseTransfer = $this->getFacade()->splitSalesOrderItem(
                 $formData[OrderItemSplitForm::FIELD_ID_ORDER_ITEM],
-                $formData[OrderItemSplitForm::FIELD_QUANTITY]
+                $formData[OrderItemSplitForm::FIELD_QUANTITY],
             );
 
             if (!$itemSplitResponseTransfer->getSuccess()) {

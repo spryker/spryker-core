@@ -158,7 +158,7 @@ class ModuleBuilder
     protected function getTemplateContent($templateName)
     {
         return file_get_contents(
-            __DIR__ . DIRECTORY_SEPARATOR . 'Templates' . DIRECTORY_SEPARATOR . $templateName . '.tpl'
+            __DIR__ . DIRECTORY_SEPARATOR . 'Templates' . DIRECTORY_SEPARATOR . $templateName . '.tpl',
         );
     }
 
@@ -190,7 +190,7 @@ class ModuleBuilder
         $templateContent = str_replace(
             $from,
             $to,
-            $templateContent
+            $templateContent,
         );
 
         return $templateContent;

@@ -94,7 +94,7 @@ class EmptyJsonAttributesConstraintValidator extends AbstractConstraintValidator
 
         return $this->getFactory()->getUtilEncodingService()->decodeJson(
             $formData[static::FIELD_EXISTING_ATTRIBUTES],
-            true
+            true,
         );
     }
 }

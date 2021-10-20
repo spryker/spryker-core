@@ -84,7 +84,7 @@ class CompanyUnitAddressFormDataProvider
             $result[$companyTransfer->getIdCompany()] = sprintf(
                 '%s (ID: %d)',
                 $companyTransfer->getName(),
-                $companyTransfer->getIdCompany()
+                $companyTransfer->getIdCompany(),
             );
         }
 

@@ -40,7 +40,7 @@ class CompanyBusinessUnitAddressReader implements CompanyBusinessUnitAddressRead
         QuoteTransfer $quoteTransfer
     ): AddressTransfer {
         $companyUnitAddressResponseTransfer = $this->companyUnitAddressFacade->findCompanyBusinessUnitAddressByUuid(
-            (new CompanyUnitAddressTransfer())->setUuid($restAddressTransfer->getIdCompanyBusinessUnitAddress())
+            (new CompanyUnitAddressTransfer())->setUuid($restAddressTransfer->getIdCompanyBusinessUnitAddress()),
         );
 
         if (!$this->isCompanyBusinessUnitAddressApplicable($quoteTransfer, $companyUnitAddressResponseTransfer)) {
@@ -77,7 +77,7 @@ class CompanyBusinessUnitAddressReader implements CompanyBusinessUnitAddressRead
 
         return $this->isCurrentCompanyUserInCompany(
             $quoteTransfer,
-            $companyUnitAddressResponseTransfer->getCompanyUnitAddressTransfer()
+            $companyUnitAddressResponseTransfer->getCompanyUnitAddressTransfer(),
         );
     }
 

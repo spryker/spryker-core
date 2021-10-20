@@ -261,7 +261,7 @@ class GlossaryStorageReader implements GlossaryStorageReaderInterface
     {
         return array_intersect_key(
             static::$translationsCache[$localeName] ?? [],
-            array_flip($keyNames)
+            array_flip($keyNames),
         );
     }
 

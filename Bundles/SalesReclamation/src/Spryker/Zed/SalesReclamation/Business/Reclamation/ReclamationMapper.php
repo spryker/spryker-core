@@ -71,7 +71,7 @@ class ReclamationMapper implements ReclamationMapperInterface
             '%s%s %s',
             $salutation ? $salutation . ' ' : '',
             $orderTransfer->getFirstName(),
-            $orderTransfer->getLastName()
+            $orderTransfer->getLastName(),
         );
     }
 }

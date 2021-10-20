@@ -44,7 +44,7 @@ class DeleteController extends ProductListAbstractController
 
         $redirectUrl = $request->query->get(
             static::URL_PARAM_REDIRECT_URL,
-            $defaultRedirectUrl
+            $defaultRedirectUrl,
         );
 
         $deleteForm = $this->getFactory()->createDeleteProductListForm()->handleRequest($request);

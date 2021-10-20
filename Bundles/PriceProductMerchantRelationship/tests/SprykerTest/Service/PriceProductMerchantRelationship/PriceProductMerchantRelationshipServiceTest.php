@@ -48,7 +48,7 @@ class PriceProductMerchantRelationshipServiceTest extends Unit
         // Act
         $priceProductTransfers = $this->tester->getService()->filterPriceProductsByMerchantRelationship(
             [$priceProductTransferMerchant1, $priceProductTransferMerchant2],
-            $priceProductFilterTransfer
+            $priceProductFilterTransfer,
         );
 
         // Assert
@@ -76,7 +76,7 @@ class PriceProductMerchantRelationshipServiceTest extends Unit
         // Act
         $priceProductTransfers = $this->tester->getService()->filterPriceProductsByMerchantRelationship(
             [$priceProductTransferMerchant1, $priceProductTransferMerchant2],
-            $priceProductFilterTransfer
+            $priceProductFilterTransfer,
         );
 
         // Assert
@@ -103,7 +103,7 @@ class PriceProductMerchantRelationshipServiceTest extends Unit
         // Act
         $priceProductTransfers = $this->tester->getService()->filterPriceProductsByMerchantRelationship(
             [$priceProductTransferMerchant1, $priceProductTransferMerchant2],
-            $priceProductFilterTransfer
+            $priceProductFilterTransfer,
         );
 
         // Assert

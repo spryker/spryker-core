@@ -38,7 +38,7 @@ class ProductCategoryConcreteStorageListener extends AbstractPlugin implements E
 
         $productAbstractIds = $this->getFacade()->getProductAbstractIdsByCategoryIds($categoryIds);
         $this->getFacade()->publishProductConcrete(
-            $this->getFacade()->findProductConcreteIdsByProductAbstractIds($productAbstractIds)
+            $this->getFacade()->findProductConcreteIdsByProductAbstractIds($productAbstractIds),
         );
     }
 }

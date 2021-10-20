@@ -177,7 +177,7 @@ class ContentFileListViewTable extends AbstractTable
                 'data-id' => $idFile,
                 'icon' => 'fa-plus',
                 'onclick' => 'return false;',
-            ]
+            ],
         );
     }
 }

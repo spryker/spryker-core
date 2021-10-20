@@ -86,8 +86,8 @@ class ProductBundleRepository extends AbstractRepository implements ProductBundl
         $bundledProductIds = array_filter(
             array_merge(
                 $productBundleCriteriaFilterTransfer->getBundledProductIds(),
-                [$productBundleCriteriaFilterTransfer->getIdBundledProduct()]
-            )
+                [$productBundleCriteriaFilterTransfer->getIdBundledProduct()],
+            ),
         );
         if ($bundledProductIds) {
             $productBundleQuery->filterByFkBundledProduct_In($bundledProductIds);
@@ -114,7 +114,7 @@ class ProductBundleRepository extends AbstractRepository implements ProductBundl
         if ($productBundleCriteriaFilterTransfer->getFilter()) {
             $productBundleQuery = $this->buildQueryFromCriteria(
                 $productBundleQuery,
-                $productBundleCriteriaFilterTransfer->getFilter()
+                $productBundleCriteriaFilterTransfer->getFilter(),
             );
 
             $productBundleQuery->setFormatter(ModelCriteria::FORMAT_OBJECT);

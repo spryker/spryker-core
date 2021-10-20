@@ -26,7 +26,7 @@ class GiftCardMailConnectorBusinessFactory extends AbstractBusinessFactory
             $this->getMailFacade(),
             $this->getCustomerFacade(),
             $this->getGiftCardFacade(),
-            $this->getSalesFacade()
+            $this->getSalesFacade(),
         );
     }
 
@@ -37,7 +37,7 @@ class GiftCardMailConnectorBusinessFactory extends AbstractBusinessFactory
     {
         return new GiftCardUsageMailer(
             $this->getMailFacade(),
-            $this->getGiftCardFacade()
+            $this->getGiftCardFacade(),
         );
     }
 

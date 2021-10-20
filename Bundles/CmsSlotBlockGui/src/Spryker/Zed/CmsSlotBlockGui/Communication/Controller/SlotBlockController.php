@@ -63,7 +63,7 @@ class SlotBlockController extends AbstractController
         $idCmsSlot = $this->castId($request->query->get(static::PARAM_ID_CMS_SLOT));
 
         return $this->jsonResponse(
-            $this->getFactory()->createSlotBlockTable($idCmsSlotTemplate, $idCmsSlot)->fetchData()
+            $this->getFactory()->createSlotBlockTable($idCmsSlotTemplate, $idCmsSlot)->fetchData(),
         );
     }
 

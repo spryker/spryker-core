@@ -24,7 +24,7 @@ class ProductImageStorageFactory extends AbstractFactory
     {
         return new ProductViewImageExpander(
             $this->createProductAbstractImageStorageReader(),
-            $this->createProductConcreteImageInheritanceResolver()
+            $this->createProductConcreteImageInheritanceResolver(),
         );
     }
 
@@ -59,7 +59,7 @@ class ProductImageStorageFactory extends AbstractFactory
     {
         return new ProductConcreteImageInheritanceResolver(
             $this->createProductConcreteImageStorageReader(),
-            $this->createProductAbstractImageStorageReader()
+            $this->createProductAbstractImageStorageReader(),
         );
     }
 

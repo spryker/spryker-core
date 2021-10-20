@@ -842,7 +842,7 @@ class OrderStateMachine implements OrderStateMachineInterface
             ->querySalesOrderItemsByProcessIdStateIdsAndQueryCriteria(
                 $omsProcessEntity->getIdOmsOrderProcess(),
                 $omsOrderItemEntityCollection->getPrimaryKeys(),
-                $omsCheckConditionsQueryCriteriaTransfer
+                $omsCheckConditionsQueryCriteriaTransfer,
             )
             ->find()
             ->getData();
@@ -888,7 +888,7 @@ class OrderStateMachine implements OrderStateMachineInterface
                     $sourceStateBuffer,
                     $timeoutModel,
                     $log,
-                    $currentTime
+                    $currentTime,
                 );
             });
         }

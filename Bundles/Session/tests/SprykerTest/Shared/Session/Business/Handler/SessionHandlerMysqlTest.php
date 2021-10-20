@@ -68,7 +68,7 @@ class SessionHandlerMysqlTest extends Unit
             . ';port=' . Config::get(PropelConstants::ZED_DB_PORT)
             . ';dbname=' . Config::get(PropelConstants::ZED_DB_DATABASE),
             Config::get(PropelConstants::ZED_DB_USERNAME),
-            Config::get(PropelConstants::ZED_DB_PASSWORD)
+            Config::get(PropelConstants::ZED_DB_PASSWORD),
         );
 
         $this->shouldDropSessionTable = !$this->isSessionTableExists();
@@ -216,7 +216,7 @@ class SessionHandlerMysqlTest extends Unit
     {
         $searchSessionTableQuery = sprintf(
             "SELECT * FROM information_schema.tables WHERE table_schema = '%s' AND table_name = 'session' LIMIT 1;",
-            Config::get(PropelConstants::ZED_DB_DATABASE)
+            Config::get(PropelConstants::ZED_DB_DATABASE),
         );
         $statement = $this->connection->query($searchSessionTableQuery);
         $statement->execute();

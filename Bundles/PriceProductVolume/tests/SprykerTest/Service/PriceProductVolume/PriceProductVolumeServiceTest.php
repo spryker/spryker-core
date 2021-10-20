@@ -73,13 +73,13 @@ class PriceProductVolumeServiceTest extends Unit
             '{"volume_prices":[{"quantity":1,"net_price":110,"gross_price":120},{"quantity":%d,"net_price":%d,"gross_price":%d},{"quantity":100,"net_price":80,"gross_price":100}]}',
             $quantity,
             $netAmount,
-            $grossAmount
+            $grossAmount,
         );
 
         // Act
         $basePriceProductTransfer = $this->priceProductVolumeService->addVolumePrice(
             $basePriceProductTransfer,
-            $newVolumePriceProductTransfer
+            $newVolumePriceProductTransfer,
         );
 
         // Assert
@@ -99,7 +99,7 @@ class PriceProductVolumeServiceTest extends Unit
         // Act
         $basePriceProductTransfer = $this->priceProductVolumeService->deleteVolumePrice(
             $basePriceProductTransfer,
-            $volumePriceProductTransferToDelete
+            $volumePriceProductTransferToDelete,
         );
 
         // Assert
@@ -122,14 +122,14 @@ class PriceProductVolumeServiceTest extends Unit
             '{"volume_prices":[{"quantity":%d,"net_price":%d,"gross_price":%d},{"quantity":100,"net_price":80,"gross_price":100}]}',
             $quantity,
             $netAmount,
-            $grossAmount
+            $grossAmount,
         );
 
         // Act
         $basePriceProductTransfer = $this->priceProductVolumeService->replaceVolumePrice(
             $basePriceProductTransfer,
             $volumePriceProductTransferToReplace,
-            $newVolumePriceProductTransfer
+            $newVolumePriceProductTransfer,
         );
 
         // Assert
@@ -152,14 +152,14 @@ class PriceProductVolumeServiceTest extends Unit
             '{"volume_prices":[{"quantity":1,"net_price":110,"gross_price":120},{"quantity":%d,"net_price":%d,"gross_price":%d},{"quantity":100,"net_price":80,"gross_price":100}]}',
             $quantity,
             $netAmount,
-            $grossAmount
+            $grossAmount,
         );
 
         // Act
         $basePriceProductTransfer = $this->priceProductVolumeService->replaceVolumePrice(
             $basePriceProductTransfer,
             $volumePriceProductTransferToReplace,
-            $newVolumePriceProductTransfer
+            $newVolumePriceProductTransfer,
         );
 
         // Assert

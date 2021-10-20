@@ -44,7 +44,7 @@ class DiscountPromotionFormType extends AbstractDiscountExtensionSubFormType
                 'constraints' => [
                     new NotBlank(['groups' => DiscountPromotionConfig::DISCOUNT_COLLECTOR_STRATEGY]),
                 ],
-            ]
+            ],
         );
 
         return $this;
@@ -68,7 +68,7 @@ class DiscountPromotionFormType extends AbstractDiscountExtensionSubFormType
                         'pattern' => '/[0-9]+/',
                     ]),
                 ],
-            ]
+            ],
         );
 
         return $this;

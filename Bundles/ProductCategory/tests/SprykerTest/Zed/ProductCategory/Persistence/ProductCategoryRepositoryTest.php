@@ -77,7 +77,7 @@ class ProductCategoryRepositoryTest extends Unit
         $productAbstract = $this->tester->createProductAbstractEntityWithCategories(
             static::PRODUCT_ABSTRACT_SKU,
             $categoriesData,
-            $localeEntity
+            $localeEntity,
         );
 
         $productCategoryQueryContainer = new ProductCategoryRepository();
@@ -85,7 +85,7 @@ class ProductCategoryRepositoryTest extends Unit
         // Act
         $productCategoryTransferCollection = $productCategoryQueryContainer->getCategoryTransferCollectionByIdProductAbstract(
             $productAbstract->getIdProductAbstract(),
-            $localeEntity->getIdLocale()
+            $localeEntity->getIdLocale(),
         );
 
         // Assert

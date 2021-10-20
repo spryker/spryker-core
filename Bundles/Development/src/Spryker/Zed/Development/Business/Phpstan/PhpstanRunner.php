@@ -198,7 +198,7 @@ class PhpstanRunner implements PhpstanRunnerInterface
             static::PHPSTAN_MEMORY_LIMIT,
             $configFilePath,
             $path,
-            $level
+            $level,
         );
 
         if ($input->getOption(static::OPTION_DRY_RUN)) {
@@ -391,7 +391,7 @@ class PhpstanRunner implements PhpstanRunnerInterface
         if ($moduleConfigFile && $vendorConfigFile) {
             return $this->phpstanConfigFileManager->merge(
                 [$moduleConfigFile, $vendorConfigFile],
-                $this->getConfigFilenameForMerge($moduleConfigFile)
+                $this->getConfigFilenameForMerge($moduleConfigFile),
             );
         }
 
@@ -419,9 +419,9 @@ class PhpstanRunner implements PhpstanRunnerInterface
                 array_slice(
                     explode('/', $moduleConfigFile->getPath()),
                     -3,
-                    3
-                )
-            )
+                    3,
+                ),
+            ),
         );
 
         return $filenameFromPath . '_';

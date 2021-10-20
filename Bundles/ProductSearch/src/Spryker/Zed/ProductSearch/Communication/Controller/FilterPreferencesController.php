@@ -63,7 +63,7 @@ class FilterPreferencesController extends AbstractController
         $table = $this->getFactory()->createFilterPreferencesTable();
 
         return $this->jsonResponse(
-            $table->fetchData()
+            $table->fetchData(),
         );
     }
 
@@ -81,7 +81,7 @@ class FilterPreferencesController extends AbstractController
         $form = $this->getFactory()
             ->createFilterPreferencesForm(
                 $dataProvider->getData(),
-                $dataProvider->getOptions()
+                $dataProvider->getOptions(),
             )
             ->handleRequest($request);
 
@@ -98,7 +98,7 @@ class FilterPreferencesController extends AbstractController
             return $this->redirectResponse(sprintf(
                 '/product-search/filter-preferences/view?%s=%d',
                 static::PARAM_ID,
-                $productSearchAttributeTransfer->getIdProductSearchAttribute()
+                $productSearchAttributeTransfer->getIdProductSearchAttribute(),
             ));
         }
 
@@ -132,7 +132,7 @@ class FilterPreferencesController extends AbstractController
         $form = $this->getFactory()
             ->createFilterPreferencesForm(
                 $filterPreferencesFormData,
-                $dataProvider->getOptions($idProductSearchAttribute)
+                $dataProvider->getOptions($idProductSearchAttribute),
             )
             ->handleRequest($request);
 
@@ -149,7 +149,7 @@ class FilterPreferencesController extends AbstractController
             return $this->redirectResponse(sprintf(
                 '/product-search/filter-preferences/view?%s=%d',
                 static::PARAM_ID,
-                $productSearchAttributeTransfer->getIdProductSearchAttribute()
+                $productSearchAttributeTransfer->getIdProductSearchAttribute(),
             ));
         }
 

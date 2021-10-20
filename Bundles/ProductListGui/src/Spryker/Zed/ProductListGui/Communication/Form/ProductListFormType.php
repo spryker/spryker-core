@@ -97,7 +97,7 @@ class ProductListFormType extends AbstractType
                     new NotBlank(),
                     new Length(['max' => 255]),
                 ],
-            ]
+            ],
         );
 
         return $this;

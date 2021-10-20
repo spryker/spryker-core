@@ -72,7 +72,7 @@ class ProductAbstractListFormPlugin extends AbstractPlugin implements ContentPlu
         if ($params) {
             $contentProductAbstractListTermTransfer->fromArray($params);
             $contentProductAbstractListTermTransfer->setIdProductAbstracts(
-                array_values($contentProductAbstractListTermTransfer->getIdProductAbstracts())
+                array_values($contentProductAbstractListTermTransfer->getIdProductAbstracts()),
             );
         }
 

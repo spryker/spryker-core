@@ -27,7 +27,7 @@ class MerchantProductOptionBusinessFactory extends AbstractBusinessFactory
     public function createMerchantProductOptionValidator(): MerchantProductOptionValidatorInterface
     {
         return new MerchantProductOptionValidator(
-            $this->getRepository()
+            $this->getRepository(),
         );
     }
 
@@ -38,7 +38,7 @@ class MerchantProductOptionBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductOptionGroupExpander(
             $this->getRepository(),
-            $this->getMerchantFacade()
+            $this->getMerchantFacade(),
         );
     }
 

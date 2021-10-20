@@ -27,7 +27,7 @@ class ProductFactory extends AbstractFactory
         return new ProductAbstractStorage(
             $this->getStorage(),
             $this->createKeyBuilder(),
-            $locale
+            $locale,
         );
     }
 
@@ -41,7 +41,7 @@ class ProductFactory extends AbstractFactory
         return new AttributeMapStorage(
             $this->getStorage(),
             $this->createAttributeMapKeyBuilder(),
-            $locale
+            $locale,
         );
     }
 
@@ -56,7 +56,7 @@ class ProductFactory extends AbstractFactory
             $this->getStorage(),
             $this->createProductConcreteKeyBuilder(),
             $this->getUtilEncodingService(),
-            $locale
+            $locale,
         );
     }
 

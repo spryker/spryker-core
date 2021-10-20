@@ -30,7 +30,7 @@ class QuoteRequestMapper
         foreach ($quoteRequestEntities as $quoteRequestEntity) {
             $quoteRequestTransfer = $this->mapQuoteRequestEntityToQuoteRequestTransfer(
                 $quoteRequestEntity,
-                new QuoteRequestTransfer()
+                new QuoteRequestTransfer(),
             );
             $quoteRequestCollectionTransfer->addQuoteRequest($quoteRequestTransfer);
         }

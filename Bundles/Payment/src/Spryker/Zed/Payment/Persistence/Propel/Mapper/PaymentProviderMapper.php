@@ -56,11 +56,11 @@ class PaymentProviderMapper
         foreach ($paymentProviderEntityCollection as $paymentProviderEntity) {
             $paymentProviderTransfer = $this->mapPaymentProviderEntityToPaymentProviderTransfer(
                 $paymentProviderEntity,
-                new PaymentProviderTransfer()
+                new PaymentProviderTransfer(),
             );
             $paymentProviderTransfer = $this->addPaymentMethodsToPaymentProvider(
                 $paymentProviderEntity,
-                $paymentProviderTransfer
+                $paymentProviderTransfer,
             );
             $paymentProviderCollectionTransfer->addPaymentProvider($paymentProviderTransfer);
         }

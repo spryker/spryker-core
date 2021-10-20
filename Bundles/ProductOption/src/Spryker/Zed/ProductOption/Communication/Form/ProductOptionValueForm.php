@@ -153,7 +153,7 @@ class ProductOptionValueForm extends AbstractType
             $this->getFactory()->getMoneyCollectionFormTypePlugin()->getType(),
             [
                     static::OPTION_AMOUNT_PER_STORE => true,
-            ]
+            ],
         );
 
         return $this;

@@ -64,7 +64,7 @@ class ValidateItemsShipmentTest extends Unit
             ->withQuote($quoteTransfer->toArray())
             ->build()
             ->addShipment(
-                (new RestShipmentsTransfer())->setItems([$quoteTransfer->getItems()->offsetGet(0)->getGroupKey()])
+                (new RestShipmentsTransfer())->setItems([$quoteTransfer->getItems()->offsetGet(0)->getGroupKey()]),
             );
 
         // Act
@@ -85,7 +85,7 @@ class ValidateItemsShipmentTest extends Unit
             ->withQuote($quoteTransfer->toArray())
             ->build()
             ->addShipment(
-                (new RestShipmentsTransfer())->setItems([$quoteTransfer->getBundleItems()->offsetGet(0)->getGroupKey()])
+                (new RestShipmentsTransfer())->setItems([$quoteTransfer->getBundleItems()->offsetGet(0)->getGroupKey()]),
             );
 
         // Act
@@ -109,7 +109,7 @@ class ValidateItemsShipmentTest extends Unit
             ->withQuote($quoteTransfer->toArray())
             ->build()
             ->addShipment(
-                (new RestShipmentsTransfer())->setItems(['group-key-2'])
+                (new RestShipmentsTransfer())->setItems(['group-key-2']),
             );
 
         // Act
@@ -120,7 +120,7 @@ class ValidateItemsShipmentTest extends Unit
         $this->assertCount(1, $checkoutResponseTransfer->getErrors());
         $this->assertEquals(
             static::GLOSSARY_KEY_ITEM_NO_SHIPMENT_SELECTED,
-            $checkoutResponseTransfer->getErrors()->offsetGet(0)->getMessage()
+            $checkoutResponseTransfer->getErrors()->offsetGet(0)->getMessage(),
         );
     }
 
@@ -138,7 +138,7 @@ class ValidateItemsShipmentTest extends Unit
             ->withQuote($quoteTransfer->toArray())
             ->build()
             ->addShipment(
-                (new RestShipmentsTransfer())->setItems(['group-key-1'])
+                (new RestShipmentsTransfer())->setItems(['group-key-1']),
             );
 
         // Act
@@ -149,7 +149,7 @@ class ValidateItemsShipmentTest extends Unit
         $this->assertCount(1, $checkoutResponseTransfer->getErrors());
         $this->assertEquals(
             static::GLOSSARY_KEY_ITEM_NO_SHIPMENT_SELECTED,
-            $checkoutResponseTransfer->getErrors()->offsetGet(0)->getMessage()
+            $checkoutResponseTransfer->getErrors()->offsetGet(0)->getMessage(),
         );
     }
 

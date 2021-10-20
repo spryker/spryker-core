@@ -52,7 +52,7 @@ class BreadcrumbNavigationMergeStrategy implements NavigationMergeStrategyInterf
 
             $rootNavigationElement = $this->mergeNavigationPages(
                 $rootNavigationElement,
-                $coreNavigationDefinitionData
+                $coreNavigationDefinitionData,
             );
         }
 
@@ -71,7 +71,7 @@ class BreadcrumbNavigationMergeStrategy implements NavigationMergeStrategyInterf
             $foundNavigationElement = $this->getNavigationInNavigationData(
                 $coreNavigationDefinitionData,
                 $childNavigationElement,
-                $navigationName
+                $navigationName,
             );
 
             $childNavigationElement = $this->mergeNavigationElementPages($foundNavigationElement, $childNavigationElement);
@@ -100,7 +100,7 @@ class BreadcrumbNavigationMergeStrategy implements NavigationMergeStrategyInterf
 
         $rootNavigationElement[static::PAGES] = array_merge_recursive(
             $navigationElement[static::PAGES],
-            $rootNavigationElement[static::PAGES]
+            $rootNavigationElement[static::PAGES],
         );
 
         return $rootNavigationElement;
@@ -118,7 +118,7 @@ class BreadcrumbNavigationMergeStrategy implements NavigationMergeStrategyInterf
         $iterator = new RecursiveArrayIterator($navigationDefinitionData);
         $navigationRecursiveIterator = new RecursiveIteratorIterator(
             $iterator,
-            RecursiveIteratorIterator::SELF_FIRST
+            RecursiveIteratorIterator::SELF_FIRST,
         );
 
         foreach ($navigationRecursiveIterator as $key => $navigationElement) {

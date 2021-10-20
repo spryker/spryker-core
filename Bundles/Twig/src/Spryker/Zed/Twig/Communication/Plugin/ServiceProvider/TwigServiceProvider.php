@@ -57,7 +57,7 @@ class TwigServiceProvider extends AbstractPlugin implements ServiceProviderInter
                 [
                     $app['twig.loader.zed'],
                     $app['twig.loader.filesystem'],
-                ]
+                ],
             );
         });
 
@@ -86,8 +86,8 @@ class TwigServiceProvider extends AbstractPlugin implements ServiceProviderInter
                     }
 
                     return $twig;
-                }
-            )
+                },
+            ),
         );
     }
 

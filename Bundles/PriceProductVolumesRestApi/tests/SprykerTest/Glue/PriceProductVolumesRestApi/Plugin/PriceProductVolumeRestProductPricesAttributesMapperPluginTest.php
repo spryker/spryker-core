@@ -60,7 +60,7 @@ class PriceProductVolumeRestProductPricesAttributesMapperPluginTest extends Unit
         // Act
         $restProductPriceAttributesTransfer = $priceProductVolumeRestProductPricesAttributesMapperPlugin->map(
             $currentProductPriceTransfer,
-            $restProductPriceAttributesTransfer
+            $restProductPriceAttributesTransfer,
         );
 
         // Assert
@@ -86,7 +86,7 @@ class PriceProductVolumeRestProductPricesAttributesMapperPluginTest extends Unit
         // Act
         $returnedRestProductPriceAttributesTransfer = $priceProductVolumeRestProductPricesAttributesMapperPlugin->map(
             $currentProductPriceTransfer,
-            $restProductPriceAttributesTransfer
+            $restProductPriceAttributesTransfer,
         );
 
         // Assert
@@ -137,12 +137,12 @@ class PriceProductVolumeRestProductPricesAttributesMapperPluginTest extends Unit
         // Act
         $returnedRestProductPriceAttributesTransferWithDefaultPriceType = $priceProductVolumeRestProductPricesAttributesMapperPlugin->map(
             $currentProductPriceTransfer,
-            $restProductPriceAttributesTransferWithDefaultPriceType
+            $restProductPriceAttributesTransferWithDefaultPriceType,
         );
 
         $returnedRestProductPriceAttributesTransferWithOriginalPriceType = $priceProductVolumeRestProductPricesAttributesMapperPlugin->map(
             $currentProductPriceTransfer,
-            $restProductPriceAttributesTransferWithOriginalPriceType
+            $restProductPriceAttributesTransferWithOriginalPriceType,
         );
 
         // Assert

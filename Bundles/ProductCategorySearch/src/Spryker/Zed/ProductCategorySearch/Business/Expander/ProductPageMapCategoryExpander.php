@@ -73,13 +73,13 @@ class ProductPageMapCategoryExpander implements ProductPageMapCategoryExpanderIn
             $pageMapTransfer,
             $allParentCategories,
             $directParentCategories,
-            $productData
+            $productData,
         );
 
         $this->setSorting(
             $pageMapBuilder,
             $pageMapTransfer,
-            $productData
+            $productData,
         );
 
         return $pageMapTransfer;
@@ -174,14 +174,14 @@ class ProductPageMapCategoryExpander implements ProductPageMapCategoryExpanderIn
             $pageMapBuilder->addIntegerSort(
                 $pageMapTransfer,
                 $this->buildSortFieldName($idCategoryNode),
-                $sortedCategory[static::KEY_PRODUCT_ORDER]
+                $sortedCategory[static::KEY_PRODUCT_ORDER],
             );
 
             $this->setSortingForCategoryParents(
                 $pageMapBuilder,
                 $pageMapTransfer,
                 $sortedCategory[static::KEY_PRODUCT_ORDER],
-                $parentCategoryMap[$idCategoryNode]
+                $parentCategoryMap[$idCategoryNode],
             );
         }
     }
@@ -262,7 +262,7 @@ class ProductPageMapCategoryExpander implements ProductPageMapCategoryExpanderIn
             $pageMapBuilder->addIntegerSort(
                 $pageMapTransfer,
                 $this->buildSortFieldName($idParentCategoryNode),
-                $productOrder
+                $productOrder,
             );
         }
     }
@@ -277,7 +277,7 @@ class ProductPageMapCategoryExpander implements ProductPageMapCategoryExpanderIn
         return sprintf(
             '%s:%d',
             PageIndexMap::CATEGORY,
-            $idCategoryNode
+            $idCategoryNode,
         );
     }
 }

@@ -52,7 +52,7 @@ class SalesOrderThresholdRepository extends AbstractRepository implements SalesO
         return $this->getFactory()->createSalesOrderThresholdMapper()
             ->mapSalesOrderThresholdTypeEntityToTransfer(
                 $salesOrderThresholdTypeEntity,
-                $salesOrderThresholdTypeTransfer
+                $salesOrderThresholdTypeTransfer,
             );
     }
 
@@ -82,7 +82,7 @@ class SalesOrderThresholdRepository extends AbstractRepository implements SalesO
         foreach ($salesOrderThresholdEntities as $globalSalesOrderThresholdEntity) {
             $salesOrderThresholdTransfer = $salesOrderThresholdMapper->mapSalesOrderThresholdEntityToTransfer(
                 $globalSalesOrderThresholdEntity,
-                new SalesOrderThresholdTransfer()
+                new SalesOrderThresholdTransfer(),
             );
 
             $salesOrderThresholdTransfers[] = $salesOrderThresholdTransfer;
@@ -102,7 +102,7 @@ class SalesOrderThresholdRepository extends AbstractRepository implements SalesO
         $salesOrderThresholdEntity = $this->getFactory()
             ->createSalesOrderThresholdQuery()
             ->findOneByIdSalesOrderThreshold(
-                $salesOrderThresholdTransfer->getIdSalesOrderThreshold()
+                $salesOrderThresholdTransfer->getIdSalesOrderThreshold(),
             );
 
         if (!$salesOrderThresholdEntity) {
@@ -113,7 +113,7 @@ class SalesOrderThresholdRepository extends AbstractRepository implements SalesO
             ->createSalesOrderThresholdMapper()
             ->mapSalesOrderThresholdEntityToTransfer(
                 $salesOrderThresholdEntity,
-                new SalesOrderThresholdTransfer()
+                new SalesOrderThresholdTransfer(),
             );
     }
 

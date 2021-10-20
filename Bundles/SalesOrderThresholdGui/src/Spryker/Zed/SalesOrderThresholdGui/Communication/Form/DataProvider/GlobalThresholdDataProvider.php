@@ -120,7 +120,7 @@ class GlobalThresholdDataProvider
 
         $data[GlobalThresholdType::FIELD_STORE_CURRENCY] = $this->formatStoreCurrencyRowValue(
             $storeTransfer,
-            $currencyTransfer
+            $currencyTransfer,
         );
 
         return $data;
@@ -140,7 +140,7 @@ class GlobalThresholdDataProvider
             foreach ($storeWithCurrencyTransfer->getCurrencies() as $currencyTransfer) {
                 $storeCurrencyList[$this->formatStoreCurrencyRowLabel(
                     $storeTransfer,
-                    $currencyTransfer
+                    $currencyTransfer,
                 )] = $this->formatStoreCurrencyRowValue($storeTransfer, $currencyTransfer);
             }
         }
@@ -160,7 +160,7 @@ class GlobalThresholdDataProvider
             static::FORMAT_STORE_CURRENCY_ROW_LABEL,
             $storeTransfer->getName(),
             $currencyTransfer->getName(),
-            $currencyTransfer->getCode()
+            $currencyTransfer->getCode(),
         );
     }
 
@@ -223,7 +223,7 @@ class GlobalThresholdDataProvider
             static::FORMAT_STORE_CURRENCY_ROW_VALUE,
             $storeTransfer->getName(),
             SalesOrderThresholdGuiConfig::STORE_CURRENCY_DELIMITER,
-            $currencyTransfer->getCode()
+            $currencyTransfer->getCode(),
         );
     }
 
@@ -238,7 +238,7 @@ class GlobalThresholdDataProvider
         return $this->salesOrderThresholdFacade
             ->getSalesOrderThresholds(
                 $storeTransfer,
-                $currencyTransfer
+                $currencyTransfer,
             );
     }
 }

@@ -67,7 +67,7 @@ class CustomerAccessEntityManager extends AbstractEntityManager implements Custo
             $updatedContentTypeAccessCollection->append(
                 $this->getFactory()
                     ->createCustomerAccessMapper()
-                    ->mapCustomerAccessEntityToContentTypeAccessTransfer($customerAccessEntity, new ContentTypeAccessTransfer())
+                    ->mapCustomerAccessEntityToContentTypeAccessTransfer($customerAccessEntity, new ContentTypeAccessTransfer()),
             );
         }
         $customerAccessTransfer->setContentTypeAccess($updatedContentTypeAccessCollection);

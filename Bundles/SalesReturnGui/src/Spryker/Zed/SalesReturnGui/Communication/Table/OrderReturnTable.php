@@ -148,7 +148,7 @@ class OrderReturnTable extends AbstractTable
 
         $returnResults = $this->runQuery(
             $this->prepareQuery(),
-            $config
+            $config,
         );
 
         foreach ($returnResults as $return) {
@@ -208,7 +208,7 @@ class OrderReturnTable extends AbstractTable
     {
         $moneyTransfer = $this->moneyFacade->fromInteger(
             (int)$return[static::COL_REMUNERATION_TOTAL],
-            $return[static::COL_CURRENCY]
+            $return[static::COL_CURRENCY],
         );
 
         return $this->moneyFacade->formatWithSymbol($moneyTransfer);
@@ -225,7 +225,7 @@ class OrderReturnTable extends AbstractTable
 
         $buttons[] = $this->generateViewButton(
             Url::generate(static::URL_RETURN_DETAIL, [static::PARAM_ID_RETURN => $return[SpySalesReturnTableMap::COL_ID_SALES_RETURN]]),
-            static::BUTTON_VIEW
+            static::BUTTON_VIEW,
         );
 
         return implode(' ', $buttons);

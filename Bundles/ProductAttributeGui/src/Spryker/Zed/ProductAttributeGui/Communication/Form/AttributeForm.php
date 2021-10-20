@@ -246,7 +246,7 @@ class AttributeForm extends AbstractType
             FormEvents::PRE_SUBMIT,
             function (FormEvent $event) use ($options) {
                 $this->addValuesFieldChoices($event, $options);
-            }
+            },
         );
 
         return $this;

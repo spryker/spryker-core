@@ -78,7 +78,7 @@ class View implements ViewInterface, WidgetContainerInterface
         if (!isset($this->widgets[$name])) {
             throw new MissingWidgetPluginException(sprintf(
                 'Missing "%s" widget plugin. You need to register the widgets in the constructor of the View in order to use them.',
-                $name
+                $name,
             ));
         }
 
@@ -143,7 +143,7 @@ class View implements ViewInterface, WidgetContainerInterface
             throw new InvalidWidgetPluginException(sprintf(
                 'Invalid widget plugin %s. This class needs to implement %s.',
                 $widgetClassName,
-                WidgetPluginInterface::class
+                WidgetPluginInterface::class,
             ));
         }
     }

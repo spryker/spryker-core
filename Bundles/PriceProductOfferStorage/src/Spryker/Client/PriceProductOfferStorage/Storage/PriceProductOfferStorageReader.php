@@ -122,7 +122,7 @@ class PriceProductOfferStorageReader implements PriceProductOfferStorageReaderIn
         foreach ($this->priceProductOfferStoragePriceExtractorPlugins as $priceProductOfferStoragePriceExtractorPlugin) {
             $priceProductTransfers = array_merge(
                 $priceProductTransfers,
-                $priceProductOfferStoragePriceExtractorPlugin->extractProductPrices($priceProductTransfers)
+                $priceProductOfferStoragePriceExtractorPlugin->extractProductPrices($priceProductTransfers),
             );
         }
 

@@ -33,7 +33,7 @@ abstract class AbstractClassResolver extends SharedAbstractClassResolver
         return str_replace(
             array_keys($searchAndReplace),
             array_values($searchAndReplace),
-            $this->getClassPattern()
+            $this->getClassPattern(),
         );
     }
 }

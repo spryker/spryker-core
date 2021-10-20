@@ -60,7 +60,7 @@ class MerchantProductOfferTableExpander implements MerchantProductOfferTableExpa
 
         return $this->merchantProductOfferGuiRepository->expandQueryCriteriaTransfer(
             $queryCriteriaTransfer,
-            (new MerchantProductOfferCriteriaTransfer())->setIdMerchant($idMerchant)
+            (new MerchantProductOfferCriteriaTransfer())->setIdMerchant($idMerchant),
         );
     }
 
@@ -75,7 +75,7 @@ class MerchantProductOfferTableExpander implements MerchantProductOfferTableExpa
         $header = $this->insertAfterHeader(
             $header,
             SpyProductOfferTableMap::COL_PRODUCT_OFFER_REFERENCE,
-            [MerchantTransfer::NAME => static::COL_MERCHANT_NAME]
+            [MerchantTransfer::NAME => static::COL_MERCHANT_NAME],
         );
         $config->setHeader($header);
 
@@ -104,7 +104,7 @@ class MerchantProductOfferTableExpander implements MerchantProductOfferTableExpa
         return $this->insertAfterHeader(
             $rowData,
             SpyProductOfferTableMap::COL_PRODUCT_OFFER_REFERENCE,
-            [MerchantTransfer::NAME => $productOfferData[MerchantTransfer::NAME]]
+            [MerchantTransfer::NAME => $productOfferData[MerchantTransfer::NAME]],
         );
     }
 

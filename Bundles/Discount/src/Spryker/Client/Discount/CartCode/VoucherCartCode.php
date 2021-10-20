@@ -165,7 +165,7 @@ class VoucherCartCode implements VoucherCartCodeInterface
             $quoteTransfer->getUsedNotAppliedVoucherCodes(),
             function ($usedNotAppliedVoucherCode) use ($code) {
                 return $usedNotAppliedVoucherCode != $code;
-            }
+            },
         );
 
         $quoteTransfer->setUsedNotAppliedVoucherCodes($usedNotAppliedVoucherCodeResultList);

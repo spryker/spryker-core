@@ -74,7 +74,7 @@ class ProductFacadeTest extends Unit
     {
         $sku = $this->productFacade->generateProductConcreteSku(
             $this->createProductAbstractTransfer(),
-            $this->createProductConcreteTransfer()
+            $this->createProductConcreteTransfer(),
         );
 
         $this->assertSame($this->getExpectedProductConcreteSku(), $sku);
@@ -225,7 +225,7 @@ class ProductFacadeTest extends Unit
         $productConcreteTransfer = $this->productFacade->findProductConcreteById($productConcreteIds[0]);
         $productCriteriaTransferWithExistingStore = new ProductCriteriaTransfer();
         $productCriteriaTransferWithExistingStore->setIdStore(
-            $this->tester->getStoreFacade()->getCurrentStore()->getIdStore()
+            $this->tester->getStoreFacade()->getCurrentStore()->getIdStore(),
         );
         $productCriteriaTransferWithExistingStore->setIsActive(true);
         $productCriteriaTransferWithExistingStore->setSkus([$productConcreteTransfer->getSku()]);
@@ -255,11 +255,11 @@ class ProductFacadeTest extends Unit
             ->addProduct(
                 (new ProductConcreteTransfer())
                     ->setSku(static::SKU_1)
-                    ->setFkProductAbstract($productAbstractTransfer->getIdProductAbstractOrFail())
+                    ->setFkProductAbstract($productAbstractTransfer->getIdProductAbstractOrFail()),
             )->addProduct(
                 (new ProductConcreteTransfer())
                     ->setSku(static::SKU_2)
-                    ->setFkProductAbstract($productAbstractTransfer->getIdProductAbstractOrFail())
+                    ->setFkProductAbstract($productAbstractTransfer->getIdProductAbstractOrFail()),
             );
 
         // Act
@@ -285,10 +285,10 @@ class ProductFacadeTest extends Unit
                     ->setSku(static::SKU_1)
                     ->setFkProductAbstract($productAbstractTransfer->getIdProductAbstractOrFail())
                     ->addLocalizedAttributes(
-                        (new LocalizedAttributesTransfer())->setLocale($localeTransfer1)->setName(static::LOCALIZED_ATTRIBUTE_NAME)
+                        (new LocalizedAttributesTransfer())->setLocale($localeTransfer1)->setName(static::LOCALIZED_ATTRIBUTE_NAME),
                     )->addLocalizedAttributes(
-                        (new LocalizedAttributesTransfer())->setLocale($localeTransfer2)->setName(static::LOCALIZED_ATTRIBUTE_NAME)
-                    )
+                        (new LocalizedAttributesTransfer())->setLocale($localeTransfer2)->setName(static::LOCALIZED_ATTRIBUTE_NAME),
+                    ),
             );
 
         // Act
@@ -297,7 +297,7 @@ class ProductFacadeTest extends Unit
         // Assert
         $this->assertEquals(
             $expectedLocalizedAttributesNumber,
-            $this->tester->countProductLocalizedAttributesByProductBySkus([static::SKU_1])
+            $this->tester->countProductLocalizedAttributesByProductBySkus([static::SKU_1]),
         );
     }
 
@@ -312,7 +312,7 @@ class ProductFacadeTest extends Unit
             ->addProduct(
                 (new ProductConcreteTransfer())
                     ->setSku($productConcreteTransfer->getSku())
-                    ->setFkProductAbstract($productConcreteTransfer->getFkProductAbstractOrFail())
+                    ->setFkProductAbstract($productConcreteTransfer->getFkProductAbstractOrFail()),
             );
 
         // Assert

@@ -273,7 +273,7 @@ class NavigationNodeFormType extends AbstractType
             },
             function ($value) {
                 return $value;
-            }
+            },
         );
     }
 

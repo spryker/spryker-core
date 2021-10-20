@@ -88,7 +88,7 @@ class MerchantFormDataProvider
 
         foreach ($availableLocaleTransfers as $localeTransfer) {
             $urlCollection->append(
-                $this->setUrlPrefixToUrlTransfer($merchantUrlCollection, $localeTransfer)
+                $this->setUrlPrefixToUrlTransfer($merchantUrlCollection, $localeTransfer),
             );
         }
         $merchantTransfer->setUrlCollection($urlCollection);
@@ -114,7 +114,7 @@ class MerchantFormDataProvider
         }
         $urlTransfer->setFkLocale($localeTransfer->getIdLocale());
         $urlTransfer->setUrlPrefix(
-            $this->getLocalizedUrlPrefix($localeTransfer)
+            $this->getLocalizedUrlPrefix($localeTransfer),
         );
 
         return $urlTransfer;

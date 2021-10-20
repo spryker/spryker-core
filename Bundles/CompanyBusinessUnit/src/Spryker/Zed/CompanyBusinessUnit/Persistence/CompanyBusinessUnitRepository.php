@@ -57,8 +57,8 @@ class CompanyBusinessUnitRepository extends AbstractRepository implements Compan
             throw new CompanyBusinessUnitNotFoundException(
                 sprintf(
                     'Company business unit with ID `%d` not found.',
-                    $idCompanyBusinessUnit
-                )
+                    $idCompanyBusinessUnit,
+                ),
             );
         }
 
@@ -101,7 +101,7 @@ class CompanyBusinessUnitRepository extends AbstractRepository implements Compan
                 ->createCompanyBusinessUnitMapper()
                 ->mapEntityTransferToBusinessUnitTransfer(
                     $businessUnitEntity,
-                    new CompanyBusinessUnitTransfer()
+                    new CompanyBusinessUnitTransfer(),
                 );
 
             $collectionTransfer->addCompanyBusinessUnit($businessUnitTransfer);
@@ -207,7 +207,7 @@ class CompanyBusinessUnitRepository extends AbstractRepository implements Compan
             ->createCompanyBusinessUnitMapper()
             ->mapCompanyBusinessUnitEntityToCompanyBusinessUnitTransfer(
                 $companyBusinessUnitEntity,
-                new CompanyBusinessUnitTransfer()
+                new CompanyBusinessUnitTransfer(),
             );
     }
 

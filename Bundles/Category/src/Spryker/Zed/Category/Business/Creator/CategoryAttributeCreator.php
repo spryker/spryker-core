@@ -50,7 +50,7 @@ class CategoryAttributeCreator implements CategoryAttributeCreatorInterface
         foreach ($categoryTransfer->getLocalizedAttributes() as $localizedAttributesTransfer) {
             $this->categoryEntityManager->saveCategoryAttribute(
                 $categoryTransfer->getIdCategoryOrFail(),
-                $localizedAttributesTransfer
+                $localizedAttributesTransfer,
             );
         }
     }

@@ -143,7 +143,7 @@ class LabelDictionary implements LabelDictionaryInterface
                 '%s.%s.resource.product_label_dictionary.%s',
                 strtolower($storeName),
                 strtolower($localeName),
-                $productLabelConstantsClassName::RESOURCE_TYPE_PRODUCT_LABEL_DICTIONARY_IDENTIFIER
+                $productLabelConstantsClassName::RESOURCE_TYPE_PRODUCT_LABEL_DICTIONARY_IDENTIFIER,
             );
             $collectorData = $this->storageClient->get($collectorStorageKey);
             $formatted = [

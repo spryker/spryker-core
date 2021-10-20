@@ -70,7 +70,7 @@ trait WidgetContainerAwareTrait
             'Invalid widget %s. This class needs to implement %s (or the deprecated %s).',
             $widgetClassName,
             WidgetInterface::class,
-            WidgetPluginInterface::class
+            WidgetPluginInterface::class,
         ));
     }
 
@@ -89,7 +89,7 @@ trait WidgetContainerAwareTrait
             throw new UniqueWidgetNameException(sprintf(
                 'Name "%s" of widget %s must be unique in its scope of registered widgets.',
                 $widgetName,
-                $widgetClassName
+                $widgetClassName,
             ));
         }
 

@@ -74,7 +74,7 @@ class EditController extends AbstractController
             ->getFactory()
             ->getProductLabelAggregateForm(
                 $aggregateFormDataProvider->getData($productLabelTransfer->getIdProductLabel()),
-                $aggregateFormDataProvider->getOptions()
+                $aggregateFormDataProvider->getOptions(),
             );
 
         return $aggregateForm;
@@ -149,7 +149,7 @@ class EditController extends AbstractController
             ->getProductLabelFacade()
             ->addAbstractProductRelationsForLabel(
                 $relationsTransfer->getIdProductLabel(),
-                $relationsTransfer->getIdsProductAbstractToAssign()
+                $relationsTransfer->getIdsProductAbstractToAssign(),
             );
     }
 
@@ -169,7 +169,7 @@ class EditController extends AbstractController
             ->getProductLabelFacade()
             ->removeAbstractProductRelationsForLabel(
                 $relationsTransfer->getIdProductLabel(),
-                $relationsTransfer->getIdsProductAbstractToDeAssign()
+                $relationsTransfer->getIdsProductAbstractToDeAssign(),
             );
     }
 

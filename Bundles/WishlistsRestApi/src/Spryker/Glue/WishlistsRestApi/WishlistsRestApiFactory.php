@@ -43,7 +43,7 @@ class WishlistsRestApiFactory extends AbstractFactory
     {
         return new WishlistReader(
             $this->getWishlistClient(),
-            $this->createWishlistRestResponseBuilder()
+            $this->createWishlistRestResponseBuilder(),
         );
     }
 
@@ -55,7 +55,7 @@ class WishlistsRestApiFactory extends AbstractFactory
         return new WishlistCreator(
             $this->getWishlistClient(),
             $this->createWishlistMapper(),
-            $this->createWishlistRestResponseBuilder()
+            $this->createWishlistRestResponseBuilder(),
         );
     }
 
@@ -66,7 +66,7 @@ class WishlistsRestApiFactory extends AbstractFactory
     {
         return new WishlistDeleter(
             $this->getClient(),
-            $this->createWishlistRestResponseBuilder()
+            $this->createWishlistRestResponseBuilder(),
         );
     }
 
@@ -78,7 +78,7 @@ class WishlistsRestApiFactory extends AbstractFactory
         return new WishlistUpdater(
             $this->createWishlistMapper(),
             $this->getClient(),
-            $this->createWishlistRestResponseBuilder()
+            $this->createWishlistRestResponseBuilder(),
         );
     }
 
@@ -89,7 +89,7 @@ class WishlistsRestApiFactory extends AbstractFactory
     {
         return new WishlistItemAdder(
             $this->getClient(),
-            $this->createWishlistRestResponseBuilder()
+            $this->createWishlistRestResponseBuilder(),
         );
     }
 
@@ -100,7 +100,7 @@ class WishlistsRestApiFactory extends AbstractFactory
     {
         return new WishlistItemDeleter(
             $this->getClient(),
-            $this->createWishlistRestResponseBuilder()
+            $this->createWishlistRestResponseBuilder(),
         );
     }
 
@@ -113,7 +113,7 @@ class WishlistsRestApiFactory extends AbstractFactory
             $this->getConfig(),
             $this->getResourceBuilder(),
             $this->createWishlistMapper(),
-            $this->createWishlistItemMapper()
+            $this->createWishlistItemMapper(),
         );
     }
 
@@ -131,7 +131,7 @@ class WishlistsRestApiFactory extends AbstractFactory
     public function createWishlistItemMapper(): WishlistItemMapperInterface
     {
         return new WishlistItemMapper(
-            $this->getRestWishlistItemsAttributesMapperPlugins()
+            $this->getRestWishlistItemsAttributesMapperPlugins(),
         );
     }
 

@@ -110,7 +110,7 @@ class GlossaryTranslationStorageWriter implements GlossaryTranslationStorageWrit
         [$glossaryStorageInactiveEntityTransfer, $glossaryTranslationEntityTransfers] = $this
             ->filterInactiveAndEmptyLocalizedStorageEntityTransfers(
                 $glossaryTranslationEntityTransfers,
-                $mappedGlossaryStorageEntityTransfers
+                $mappedGlossaryStorageEntityTransfers,
             );
 
         /** @var \Generated\Shared\Transfer\SpyGlossaryStorageEntityTransfer $glossaryStorageInactiveEntity */

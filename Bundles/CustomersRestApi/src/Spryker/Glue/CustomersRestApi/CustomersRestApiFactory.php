@@ -65,7 +65,7 @@ class CustomersRestApiFactory extends AbstractFactory
             $this->getCustomerClient(),
             $this->createCustomerResourceMapper(),
             $this->createRestApiError(),
-            $this->createRestApiValidator()
+            $this->createRestApiValidator(),
         );
     }
 
@@ -81,7 +81,7 @@ class CustomersRestApiFactory extends AbstractFactory
             $this->createCustomerResourceMapper(),
             $this->createRestApiError(),
             $this->createRestApiValidator(),
-            $this->getCustomerPostCreatePlugins()
+            $this->getCustomerPostCreatePlugins(),
         );
     }
 
@@ -95,7 +95,7 @@ class CustomersRestApiFactory extends AbstractFactory
             $this->createAddressResourceMapper(),
             $this->createRestApiError(),
             $this->createRestApiValidator(),
-            $this->createAddressRestResponseBuilder()
+            $this->createAddressRestResponseBuilder(),
         );
     }
 
@@ -107,7 +107,7 @@ class CustomersRestApiFactory extends AbstractFactory
         return new CustomerForgottenPasswordProcessor(
             $this->getCustomerClient(),
             $this->getResourceBuilder(),
-            $this->createCustomerForgottenPasswordResourceMapper()
+            $this->createCustomerForgottenPasswordResourceMapper(),
         );
     }
 
@@ -120,7 +120,7 @@ class CustomersRestApiFactory extends AbstractFactory
             $this->getCustomerClient(),
             $this->getResourceBuilder(),
             $this->createCustomerRestorePasswordResourceMapper(),
-            $this->createRestApiError()
+            $this->createRestApiError(),
         );
     }
 
@@ -132,7 +132,7 @@ class CustomersRestApiFactory extends AbstractFactory
         return new CustomerAddressReader(
             $this->getCustomerClient(),
             $this->createAddressResourceMapper(),
-            $this->createAddressRestResponseBuilder()
+            $this->createAddressRestResponseBuilder(),
         );
     }
 
@@ -147,7 +147,7 @@ class CustomersRestApiFactory extends AbstractFactory
             $this->createAddressResourceMapper(),
             $this->createRestApiError(),
             $this->createRestApiValidator(),
-            $this->createAddressRestResponseBuilder()
+            $this->createAddressRestResponseBuilder(),
         );
     }
 
@@ -158,7 +158,7 @@ class CustomersRestApiFactory extends AbstractFactory
     {
         return new CustomerByCompanyUserResourceRelationshipExpander(
             $this->createCustomerRestResponseBuilder(),
-            $this->createCustomerResourceMapper()
+            $this->createCustomerResourceMapper(),
         );
     }
 
@@ -169,7 +169,7 @@ class CustomersRestApiFactory extends AbstractFactory
     {
         return new CustomerByQuoteRequestResourceRelationshipExpander(
             $this->createCustomerRestResponseBuilder(),
-            $this->createCustomerResourceMapper()
+            $this->createCustomerResourceMapper(),
         );
     }
 
@@ -180,7 +180,7 @@ class CustomersRestApiFactory extends AbstractFactory
     {
         return new AddressByCheckoutDataResourceRelationshipExpander(
             $this->createAddressRestResponseBuilder(),
-            $this->createAddressResourceMapper()
+            $this->createAddressResourceMapper(),
         );
     }
 
@@ -239,7 +239,7 @@ class CustomersRestApiFactory extends AbstractFactory
     {
         return new SessionCreator(
             $this->getCustomerClient(),
-            $this->getCustomerExpanderPlugins()
+            $this->getCustomerExpanderPlugins(),
         );
     }
 
@@ -300,7 +300,7 @@ class CustomersRestApiFactory extends AbstractFactory
     {
         return new CustomerActivator(
             $this->getCustomerClient(),
-            $this->createCustomerRestResponseBuilder()
+            $this->createCustomerRestResponseBuilder(),
         );
     }
 }

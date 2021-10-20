@@ -44,7 +44,7 @@ class ProductConcretePageSearchExpander implements ProductConcretePageSearchExpa
         $productImageSetTransfers = $this->productImageFacade->getProductImagesSetCollectionByProductId($productConcretePageSearchTransfer->getFkProduct());
         $productImageSetTransfers = $this->productImageFacade->resolveProductImageSetsForLocale(
             new ArrayObject($productImageSetTransfers),
-            $productConcretePageSearchTransfer->getLocale()
+            $productConcretePageSearchTransfer->getLocale(),
         );
 
         foreach ($productImageSetTransfers as $productImageSetTransfer) {

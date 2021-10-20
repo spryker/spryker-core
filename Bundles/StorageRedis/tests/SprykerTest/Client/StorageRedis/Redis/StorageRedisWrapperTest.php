@@ -84,7 +84,7 @@ class StorageRedisWrapperTest extends Unit
 
         $this->storageRedisWrapper = new StorageRedisWrapper(
             $this->redisClientMock,
-            $storageRedisConfigMock
+            $storageRedisConfigMock,
         );
     }
 
@@ -116,7 +116,7 @@ class StorageRedisWrapperTest extends Unit
         $this->assertIsArray($result);
         $this->assertEquals(
             json_decode(static::JSON_DATA, true),
-            $result
+            $result,
         );
     }
 
@@ -137,7 +137,7 @@ class StorageRedisWrapperTest extends Unit
         $this->assertSame(1, $accessStats['count']['read']);
         $this->assertSame(
             $this->addPrefixToKey(static::PLAIN_TEXT_KEY),
-            array_pop($accessStats['keys']['read'])
+            array_pop($accessStats['keys']['read']),
         );
     }
 
@@ -181,7 +181,7 @@ class StorageRedisWrapperTest extends Unit
             ->method('info')
             ->with(
                 $this->equalTo(static::CONNECTION_KEY),
-                $this->equalTo($section)
+                $this->equalTo($section),
             );
 
         $this->storageRedisWrapper->getStats($section);
@@ -198,8 +198,8 @@ class StorageRedisWrapperTest extends Unit
             ->with(
                 $this->equalTo(static::CONNECTION_KEY),
                 $this->equalTo(
-                    $this->addPrefixToKey('*')
-                )
+                    $this->addPrefixToKey('*'),
+                ),
             );
 
         $this->storageRedisWrapper->getAllKeys();
@@ -227,9 +227,9 @@ class StorageRedisWrapperTest extends Unit
             ->with(
                 $this->equalTo(static::CONNECTION_KEY),
                 $this->equalTo(
-                    $this->addPrefixToKey(static::PLAIN_TEXT_KEY)
+                    $this->addPrefixToKey(static::PLAIN_TEXT_KEY),
                 ),
-                static::PLAIN_TEXT_DATA
+                static::PLAIN_TEXT_DATA,
             )
             ->willReturn(true);
 
@@ -248,10 +248,10 @@ class StorageRedisWrapperTest extends Unit
             ->with(
                 $this->equalTo(static::CONNECTION_KEY),
                 $this->equalTo(
-                    $this->addPrefixToKey(static::PLAIN_TEXT_KEY)
+                    $this->addPrefixToKey(static::PLAIN_TEXT_KEY),
                 ),
                 $this->equalTo($ttl),
-                static::PLAIN_TEXT_DATA
+                static::PLAIN_TEXT_DATA,
             )
             ->willReturn(true);
 
@@ -287,7 +287,7 @@ class StorageRedisWrapperTest extends Unit
         $this->assertSame(1, $accessStats['count']['write']);
         $this->assertSame(
             $this->addPrefixToKey(static::PLAIN_TEXT_KEY),
-            array_pop($accessStats['keys']['write'])
+            array_pop($accessStats['keys']['write']),
         );
     }
 
@@ -327,13 +327,13 @@ class StorageRedisWrapperTest extends Unit
                 static::CONNECTION_KEY,
                 $this->callback(function ($data) {
                     return $this->dummyStorage === $data;
-                })
+                }),
             )
             ->willReturn(true);
 
         $items = array_combine(
             [static::PLAIN_TEXT_KEY, static::JSON_KEY],
-            [static::PLAIN_TEXT_DATA, static::JSON_DATA]
+            [static::PLAIN_TEXT_DATA, static::JSON_DATA],
         );
 
         $this->storageRedisWrapper->setMulti($items);
@@ -357,7 +357,7 @@ class StorageRedisWrapperTest extends Unit
         $this->expectException(StorageRedisException::class);
         $items = array_combine(
             [static::PLAIN_TEXT_KEY, static::JSON_KEY],
-            [static::PLAIN_TEXT_DATA, static::JSON_DATA]
+            [static::PLAIN_TEXT_DATA, static::JSON_DATA],
         );
 
         $this->redisClientMock->method('mset')->willReturn(false);
@@ -377,7 +377,7 @@ class StorageRedisWrapperTest extends Unit
                 $this->equalTo(static::CONNECTION_KEY),
                 $this->equalTo([
                     $this->addPrefixToKey(static::PLAIN_TEXT_KEY),
-                ])
+                ]),
             );
         $keyToDelete = static::PLAIN_TEXT_KEY;
 
@@ -396,7 +396,7 @@ class StorageRedisWrapperTest extends Unit
                 $this->equalTo(static::CONNECTION_KEY),
                 $this->callback(function ($keys) {
                     return $keys === array_keys($this->dummyStorage);
-                })
+                }),
             );
         $keysToDelete = [static::PLAIN_TEXT_KEY, static::JSON_KEY];
 

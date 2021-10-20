@@ -97,12 +97,12 @@ class ProductOptionPresentationTester extends Actor
 
         $this->fillField(
             '#product_option_general_groupNameTranslations_0_name',
-            'Option value translation in first language'
+            'Option value translation in first language',
         );
 
         $this->fillField(
             '#product_option_general_groupNameTranslations_1_name',
-            'Option value translation in second language'
+            'Option value translation in second language',
         );
     }
 
@@ -183,7 +183,7 @@ class ProductOptionPresentationTester extends Actor
                     ->setFkCurrency(93)
                     ->setGrossAmount(1000)
                     ->setNetAmount(2000),
-            ]
+            ],
         ));
         $productOptionValueTransfer->setSku('testing_sky_' . rand(1, 999));
         $productOptionGroupTransfer->addProductOptionValue($productOptionValueTransfer);
@@ -199,7 +199,7 @@ class ProductOptionPresentationTester extends Actor
                     ->setFkCurrency(93)
                     ->setGrossAmount(3000)
                     ->setNetAmount(4000),
-            ]
+            ],
         ));
         $productOptionValueTransfer->setSku('testing_sky_second' . rand(1, 999));
         $productOptionGroupTransfer->addProductOptionValue($productOptionValueTransfer);
@@ -240,7 +240,7 @@ class ProductOptionPresentationTester extends Actor
         foreach ($this->locales as $locale) {
             $productOptionTranslationTransfer = $this->createTranslation(
                 $productOptionValueTransfer->getValue(),
-                $locale
+                $locale,
             );
             $productOptionGroupTransfer->addProductOptionValueTranslation($productOptionTranslationTransfer);
         }

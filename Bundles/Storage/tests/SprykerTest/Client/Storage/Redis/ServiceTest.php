@@ -138,7 +138,7 @@ class ServiceTest extends Unit
             ->getMock();
 
         $this->redisService = new Service(
-            $this->clientMock
+            $this->clientMock,
         );
     }
 
@@ -249,7 +249,7 @@ class ServiceTest extends Unit
         $this->testMultiKeyStrategy(
             StorageConstants::STORAGE_CACHE_STRATEGY_REPLACE,
             $this->fixtures['multi'],
-            $this->expected['multi']
+            $this->expected['multi'],
         );
     }
 
@@ -265,7 +265,7 @@ class ServiceTest extends Unit
         $this->testMultiKeyStrategy(
             StorageConstants::STORAGE_CACHE_STRATEGY_INCREMENTAL,
             $this->fixtures['multi'],
-            $this->expected['multi']
+            $this->expected['multi'],
         );
     }
 
@@ -281,7 +281,7 @@ class ServiceTest extends Unit
         $this->testSingleKeyStrategy(
             StorageConstants::STORAGE_CACHE_STRATEGY_INCREMENTAL,
             'test.replace.key',
-            'test.replace.value'
+            'test.replace.value',
         );
     }
 
@@ -297,7 +297,7 @@ class ServiceTest extends Unit
         $this->testSingleKeyStrategy(
             StorageConstants::STORAGE_CACHE_STRATEGY_INCREMENTAL,
             'test.incremental.key',
-            'test.incremental.value'
+            'test.incremental.value',
         );
     }
 

@@ -41,7 +41,7 @@ class PriceProductOfferVolumeDependencyProvider extends AbstractBundleDependency
     {
         $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new PriceProductOfferVolumeToUtilEncodingServiceServiceBridge(
-                $container->getLocator()->utilEncoding()->service()
+                $container->getLocator()->utilEncoding()->service(),
             );
         });
 

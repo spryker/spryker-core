@@ -52,12 +52,12 @@ class PermissionSynchronizer implements PermissionSynchronizerInterface
         $permissionCollectionTransfer = new PermissionCollectionTransfer();
         $permissionCollectionTransfer = $this->addPermissionCollection(
             $permissionCollectionTransfer,
-            $this->permissionClient->getRegisteredPermissions()
+            $this->permissionClient->getRegisteredPermissions(),
         );
 
         $permissionCollectionTransfer = $this->addPermissionCollection(
             $permissionCollectionTransfer,
-            $this->permissionFinder->getRegisteredPermissions()
+            $this->permissionFinder->getRegisteredPermissions(),
         );
 
         $this->permissionEntityManager->upsertPermissionCollection($permissionCollectionTransfer);

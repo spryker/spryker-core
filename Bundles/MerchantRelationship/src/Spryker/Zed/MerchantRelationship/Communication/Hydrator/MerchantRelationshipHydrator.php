@@ -36,7 +36,7 @@ class MerchantRelationshipHydrator implements MerchantRelationshipHydratorInterf
     {
         if ($companyUserTransfer->getCompanyBusinessUnit()) {
             $merchantRelationships = $this->merchantRelationshipRepository->getAssignedMerchantRelationshipsByIdCompanyBusinessUnit(
-                $companyUserTransfer->getFkCompanyBusinessUnit()
+                $companyUserTransfer->getFkCompanyBusinessUnit(),
             );
 
             $companyUserTransfer->getCompanyBusinessUnit()

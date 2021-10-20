@@ -66,7 +66,7 @@ class PivotTableRelationResolverStrategy extends AbstractRelationResolverStrateg
             ->addJoinCondition(
                 $this->convertFullToShortClassName($pivotEntity),
                 $pivotTableMap->getColumn($referenceColumn)->getFullyQualifiedName() . '=?',
-                $entity->getPrimaryKey()
+                $entity->getPrimaryKey(),
             )
             ->find();
     }
@@ -120,7 +120,7 @@ class PivotTableRelationResolverStrategy extends AbstractRelationResolverStrateg
         $relation = sprintf(
             static::RELATION_TEMPLATE,
             $this->convertFullToShortClassName($aclEntityMetadataTransfer->getEntityNameOrFail()),
-            $this->getPivotTableRelationName($aclEntityMetadataTransfer)
+            $this->getPivotTableRelationName($aclEntityMetadataTransfer),
         );
 
         return $query->join($relation);
@@ -143,7 +143,7 @@ class PivotTableRelationResolverStrategy extends AbstractRelationResolverStrateg
         $relationName = sprintf(
             static::RELATION_TEMPLATE,
             $this->getPivotTableRelationName($aclEntityMetadataTransfer),
-            $this->getTargetTableRelationName($aclEntityMetadataTransfer)
+            $this->getTargetTableRelationName($aclEntityMetadataTransfer),
         );
 
         return $query->join($relationName);
@@ -170,7 +170,7 @@ class PivotTableRelationResolverStrategy extends AbstractRelationResolverStrateg
     protected function getPivotTableJoiner(AclEntityMetadataTransfer $aclEntityMetadataTransfer): string
     {
         $pivotEntityClass = $this->convertFullToShortClassName(
-            $aclEntityMetadataTransfer->getParentOrFail()->getConnectionOrFail()->getPivotEntityNameOrFail()
+            $aclEntityMetadataTransfer->getParentOrFail()->getConnectionOrFail()->getPivotEntityNameOrFail(),
         );
 
         return sprintf(static::PIVOT_TABLE_JOINER_TEMPLATE, $pivotEntityClass);
@@ -184,7 +184,7 @@ class PivotTableRelationResolverStrategy extends AbstractRelationResolverStrateg
     protected function getReferenceTableJoiner(AclEntityMetadataTransfer $aclEntityMetadataTransfer): string
     {
         $referenceEntityClass = $this->convertFullToShortClassName(
-            $aclEntityMetadataTransfer->getParentOrFail()->getEntityNameOrFail()
+            $aclEntityMetadataTransfer->getParentOrFail()->getEntityNameOrFail(),
         );
 
         return sprintf(static::REFERENCE_TABLE_JOINER_TEMPLATE, $referenceEntityClass);
@@ -230,7 +230,7 @@ class PivotTableRelationResolverStrategy extends AbstractRelationResolverStrateg
         $relationName = $this->convertFullToShortClassName($targetTableEntity);
 
         $pivotQuery = PropelQuery::from(
-            $aclEntityMetadataTransfer->getParentOrFail()->getConnectionOrFail()->getPivotEntityNameOrFail()
+            $aclEntityMetadataTransfer->getParentOrFail()->getConnectionOrFail()->getPivotEntityNameOrFail(),
         );
         $pivotTableMap = $pivotQuery->getTableMap();
         if ($pivotTableMap->hasRelation($relationName)) {

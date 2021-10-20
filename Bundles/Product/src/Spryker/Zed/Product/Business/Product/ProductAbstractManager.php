@@ -194,7 +194,7 @@ class ProductAbstractManager extends AbstractProductAbstractManagerSubject imple
         $productAbstractTransfer = $this->productTransferMapper->convertProductAbstract($productAbstractEntity);
         $productAbstractTransfer = $this->loadLocalizedAttributes($productAbstractTransfer);
         $productAbstractTransfer->setStoreRelation(
-            $this->getStoreRelation($idProductAbstract)
+            $this->getStoreRelation($idProductAbstract),
         );
 
         $productAbstractTransfer = $this->notifyReadObservers($productAbstractTransfer);
@@ -211,7 +211,7 @@ class ProductAbstractManager extends AbstractProductAbstractManagerSubject imple
     {
         return $this->productAbstractStoreRelationReader->getStoreRelation(
             (new StoreRelationTransfer())
-                ->setIdEntity($idProductAbstract)
+                ->setIdEntity($idProductAbstract),
         );
     }
 
@@ -232,8 +232,8 @@ class ProductAbstractManager extends AbstractProductAbstractManagerSubject imple
             throw new MissingProductException(
                 sprintf(
                     'Tried to retrieve a product concrete with sku %s, but it does not exist.',
-                    $sku
-                )
+                    $sku,
+                ),
             );
         }
 
@@ -248,7 +248,7 @@ class ProductAbstractManager extends AbstractProductAbstractManagerSubject imple
     protected function executeCreateProductAbstractTransaction(ProductAbstractTransfer $productAbstractTransfer): int
     {
         $productAbstractTransfer->setSku(
-            $this->skuGenerator->generateProductAbstractSku($productAbstractTransfer)
+            $this->skuGenerator->generateProductAbstractSku($productAbstractTransfer),
         );
 
         $this->productAbstractAssertion->assertSkuIsUnique($productAbstractTransfer->getSku());
@@ -301,7 +301,7 @@ class ProductAbstractManager extends AbstractProductAbstractManagerSubject imple
     protected function persistEntity(ProductAbstractTransfer $productAbstractTransfer)
     {
         $jsonAttributes = $this->attributeEncoder->encodeAttributes(
-            $productAbstractTransfer->getAttributes()
+            $productAbstractTransfer->getAttributes(),
         );
 
         $productAbstractEntity = $this->productQueryContainer

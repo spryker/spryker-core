@@ -43,7 +43,7 @@ class PaymentProviderCheckoutDataResponseMapper implements CheckoutDataResponseM
         if ($this->config->isPaymentProvidersMappedToAttributes()) {
             $restCheckoutDataResponseAttributesTransfer = $this->mapPaymentProviders(
                 $restCheckoutDataTransfer,
-                $restCheckoutDataResponseAttributesTransfer
+                $restCheckoutDataResponseAttributesTransfer,
             );
         }
 
@@ -71,7 +71,7 @@ class PaymentProviderCheckoutDataResponseMapper implements CheckoutDataResponseM
             foreach ($paymentProviderTransfer->getPaymentMethods() as $paymentMethodTransfer) {
                 $paymentSelection = $this->findPaymentSelectionByPaymentProviderAndMethodNames(
                     $paymentProviderTransfer->getPaymentProviderKey(),
-                    $paymentMethodTransfer->getName()
+                    $paymentMethodTransfer->getName(),
                 );
 
                 if (!$paymentSelection || !in_array($paymentMethodTransfer->getMethodName(), $availablePaymentMethodsList)) {
@@ -81,7 +81,7 @@ class PaymentProviderCheckoutDataResponseMapper implements CheckoutDataResponseM
                 $restPaymentMethodTransfer = (new RestPaymentMethodTransfer())
                     ->setPaymentMethodName($paymentMethodTransfer->getName())
                     ->setRequiredRequestData(
-                        $this->config->getRequiredRequestDataForPaymentMethod($paymentMethodTransfer->getMethodName())
+                        $this->config->getRequiredRequestDataForPaymentMethod($paymentMethodTransfer->getMethodName()),
                     );
 
                 $restPaymentProviderTransfer->addPaymentMethod($restPaymentMethodTransfer);
@@ -126,7 +126,7 @@ class PaymentProviderCheckoutDataResponseMapper implements CheckoutDataResponseM
             throw new PaymentMethodNotConfiguredException(sprintf(
                 'Payment method "%s" for payment provider "%s" is not configured in CheckoutRestApiConfig::getPaymentProviderMethodToStateMachineMapping()',
                 $paymentMethodName,
-                $paymentProviderName
+                $paymentProviderName,
             ));
         }
 

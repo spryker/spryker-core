@@ -41,7 +41,7 @@ class RequestMetadataExtractorTest extends Unit
             ->willReturn(
                 (new RestVersionTransfer())
                     ->setMajor(1)
-                    ->setMinor(1)
+                    ->setMinor(1),
             );
 
         $contentTypeResolverMock = $this->createContentTypeResolverMock();
@@ -61,7 +61,7 @@ class RequestMetadataExtractorTest extends Unit
         $requestMetadataExtractor = $this->createMetadataExtractor(
             $versionResolverMock,
             $contentTypeResolverMock,
-            $languageNegotiationMock
+            $languageNegotiationMock,
         );
 
         $request = Request::create(
@@ -73,7 +73,7 @@ class RequestMetadataExtractorTest extends Unit
             [
                 'HTTP_CONTENT-TYPE' => 'application/vnd.api+json; version=1.0',
                 'HTTP_ACCEPT' => 'application/vnd.api+json; version=1.0',
-            ]
+            ],
         );
 
         $metadata = $requestMetadataExtractor->extract($request);

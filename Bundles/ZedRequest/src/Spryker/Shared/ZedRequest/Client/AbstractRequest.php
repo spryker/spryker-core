@@ -62,7 +62,7 @@ abstract class AbstractRequest extends AbstractObject implements EmbeddedTransfe
     {
         if (isset($this->values['metaTransfers'][$name])) {
             $transfer = $this->createTransferObject(
-                $this->values['metaTransfers'][$name]['className']
+                $this->values['metaTransfers'][$name]['className'],
             );
             $transfer->fromArray($this->values['metaTransfers'][$name]['data']);
 
@@ -155,7 +155,7 @@ abstract class AbstractRequest extends AbstractObject implements EmbeddedTransfe
     {
         if (!empty($this->values['transferClassName'])) {
             $transfer = $this->createTransferObject(
-                $this->values['transferClassName']
+                $this->values['transferClassName'],
             );
 
             if (!empty($this->values['transfer'])) {

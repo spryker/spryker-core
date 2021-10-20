@@ -38,7 +38,7 @@ class GlobalSalesOrderThresholdDataSourceStrategyPlugin extends AbstractPlugin i
         $salesOrderThresholdTransfers = $this->getFacade()
             ->getSalesOrderThresholds(
                 $quoteTransfer->getStore(),
-                $quoteTransfer->getCurrency()
+                $quoteTransfer->getCurrency(),
             );
 
         return array_map(function (SalesOrderThresholdTransfer $salesOrderThresholdTransfer) use ($quoteTransfer) {

@@ -113,7 +113,7 @@ class ProductOfferAvailabilityStorageDependencyProvider extends AbstractBundleDe
     {
         $container->set(static::FACADE_EVENT_BEHAVIOR, function (Container $container) {
             return new ProductOfferAvailabilityStorageToEventBehaviorFacadeBridge(
-                $container->getLocator()->eventBehavior()->facade()
+                $container->getLocator()->eventBehavior()->facade(),
             );
         });
 
@@ -129,7 +129,7 @@ class ProductOfferAvailabilityStorageDependencyProvider extends AbstractBundleDe
     {
         $container->set(static::FACADE_PRODUCT_OFFER, function (Container $container) {
             return new ProductOfferAvailabilityStorageToProductOfferFacadeBridge(
-                $container->getLocator()->productOffer()->facade()
+                $container->getLocator()->productOffer()->facade(),
             );
         });
 
@@ -145,7 +145,7 @@ class ProductOfferAvailabilityStorageDependencyProvider extends AbstractBundleDe
     {
         $container->set(static::SERVICE_SYNCHRONIZATION, function (Container $container) {
             return new ProductOfferAvailabilityStorageToSynchronizationServiceBridge(
-                $container->getLocator()->synchronization()->service()
+                $container->getLocator()->synchronization()->service(),
             );
         });
 
@@ -161,7 +161,7 @@ class ProductOfferAvailabilityStorageDependencyProvider extends AbstractBundleDe
     {
         $container->set(static::FACADE_PRODUCT_OFFER_AVAILABILITY_FACADE, function (Container $container) {
             return new ProductOfferAvailabilityStorageToProductOfferAvailabilityFacadeBridge(
-                $container->getLocator()->productOfferAvailability()->facade()
+                $container->getLocator()->productOfferAvailability()->facade(),
             );
         });
 

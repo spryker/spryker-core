@@ -30,7 +30,7 @@ class CmsContentWidgetProductSetConnectorDependencyProvider extends AbstractBund
     {
         $container->set(static::QUERY_CONTAINER_PRODUCT_SET, function (Container $container) {
             return new CmsContentWidgetProductSetConnectorProductSetQueryContainerBridge(
-                $container->getLocator()->productSet()->queryContainer()
+                $container->getLocator()->productSet()->queryContainer(),
             );
         });
 

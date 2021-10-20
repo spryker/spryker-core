@@ -105,7 +105,7 @@ class CmsPageReader implements CmsPageReaderInterface
         $cmsPageStorageTransfers = $this->cmsStorageClient->getCmsPageStorageByIds(
             $this->getCmsPageIds($searchResult[static::SEARCH_RESULT_CMS_PAGES]),
             $restRequest->getMetadata()->getLocale(),
-            $this->storeClient->getCurrentStore()->getName()
+            $this->storeClient->getCurrentStore()->getName(),
         );
 
         return $this->cmsPageRestResponseBuilder->createCmsPageCollectionRestResponse($cmsPageStorageTransfers, $totalPagesFound);
@@ -123,7 +123,7 @@ class CmsPageReader implements CmsPageReaderInterface
         $cmsPageStorageTransfers = $this->cmsStorageClient->getCmsPageStorageByUuids(
             [$cmsPageUuid],
             $restRequest->getMetadata()->getLocale(),
-            $this->storeClient->getCurrentStore()->getName()
+            $this->storeClient->getCurrentStore()->getName(),
         );
 
         $desiredCmsPageStorageTransfer = reset($cmsPageStorageTransfers);

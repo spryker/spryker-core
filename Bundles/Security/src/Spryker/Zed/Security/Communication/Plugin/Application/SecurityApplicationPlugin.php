@@ -399,7 +399,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
             return new AuthorizationChecker(
                 $container->get(static::SERVICE_SECURITY_TOKEN_STORAGE),
                 $container->get(static::SERVICE_SECURITY_AUTHENTICATION_MANAGER),
-                $container->get(static::SERVICE_SECURITY_ACCESS_MANAGER)
+                $container->get(static::SERVICE_SECURITY_ACCESS_MANAGER),
             );
         });
 
@@ -668,7 +668,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
             $firewallMap->add(
                 $requestMatcher,
                 $this->mapListeners($container, $config['listeners'], $firewallName),
-                $config['protected'] ? $container->get('security.exception_listener.' . $firewallName) : null
+                $config['protected'] ? $container->get('security.exception_listener.' . $firewallName) : null,
             );
         }
 
@@ -716,7 +716,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
             return new ChannelListener(
                 $container->get(static::SERVICE_SECURITY_ACCESS_MAP),
                 $this->getFactory()->createRetryAuthenticationEntryPoint(),
-                $this->getLogger($container)
+                $this->getLogger($container),
             );
         });
 
@@ -798,7 +798,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
                 $container->get(static::SERVICE_SECURITY_TOKEN_STORAGE),
                 $container->get(static::SERVICE_SECURITY_ACCESS_MANAGER),
                 $container->get(static::SERVICE_SECURITY_ACCESS_MAP),
-                $container->get(static::SERVICE_SECURITY_AUTHENTICATION_MANAGER)
+                $container->get(static::SERVICE_SECURITY_AUTHENTICATION_MANAGER),
             );
         });
 
@@ -943,7 +943,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
                     $userProviders,
                     $providerKey,
                     $this->getLogger($container),
-                    $container->get(static::SERVICE_DISPATCHER)
+                    $container->get(static::SERVICE_DISPATCHER),
                 );
             };
         }));
@@ -958,7 +958,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
                     $container->get($entryPoint),
                     null,
                     $accessDeniedHandler,
-                    $this->getLogger($container)
+                    $this->getLogger($container),
                 );
             };
         }));
@@ -991,7 +991,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
             return static function () use ($name, $options, $container) {
                 $handler = new DefaultAuthenticationSuccessHandler(
                     $container->get(static::SERVICE_SECURITY_HTTP_UTILS),
-                    $options
+                    $options,
                 );
                 $handler->setProviderKey($name);
 
@@ -1015,7 +1015,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
                     $container->get(static::SERVICE_KERNEL),
                     $container->get(static::SERVICE_SECURITY_HTTP_UTILS),
                     $options,
-                    $this->getLogger($container)
+                    $this->getLogger($container),
                 );
             };
         }));
@@ -1034,7 +1034,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
             return static function () use ($options, $container) {
                 return new DefaultLogoutSuccessHandler(
                     $container->get(static::SERVICE_SECURITY_HTTP_UTILS),
-                    $options['target_url'] ?? '/'
+                    $options['target_url'] ?? '/',
                 );
             };
         }));
@@ -1082,7 +1082,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
                     $container->get(static::SERVICE_SECURITY_AUTHENTICATION_MANAGER),
                     $providerKey,
                     $authenticators,
-                    $this->getLogger($container)
+                    $this->getLogger($container),
                 );
             };
         }));
@@ -1114,7 +1114,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
                     $options,
                     $this->getLogger($container),
                     $container->get(static::SERVICE_DISPATCHER),
-                    $this->getCsrfTokenManager($container, $options)
+                    $this->getCsrfTokenManager($container, $options),
                 );
             };
         }));
@@ -1205,7 +1205,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
                     $container->get(static::SERVICE_SECURITY_AUTHENTICATION_MANAGER),
                     $providerKey,
                     $container->get('security.entry_point.' . $providerKey . '.http'),
-                    $this->getLogger($container)
+                    $this->getLogger($container),
                 );
             };
         }));
@@ -1225,7 +1225,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
                 return new AnonymousAuthenticationListener(
                     $container->get(static::SERVICE_SECURITY_TOKEN_STORAGE),
                     $providerKey,
-                    $this->getLogger($container)
+                    $this->getLogger($container),
                 );
             };
         }));
@@ -1255,7 +1255,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
                         $requestMatcher = new RequestMatcher(
                             $config['pattern'],
                             $config['hosts'] ?? null,
-                            $config['methods'] ?? null
+                            $config['methods'] ?? null,
                         );
                     }
 
@@ -1263,7 +1263,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
                         $httpUtils,
                         $requestMatcher,
                         $options['target_url'] ?? '/',
-                        $options['priority'] ?? 64
+                        $options['priority'] ?? 64,
                     ));
                     $this->getDispatcher($container)->addSubscriber(new SessionLogoutListener());
                 }
@@ -1273,7 +1273,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
                     $container->get(static::SERVICE_SECURITY_HTTP_UTILS),
                     ($logoutEventClassExist) ? $eventDispatcher : $this->getLogoutHandler($container, $name, $options),
                     $options,
-                    $this->getCsrfTokenManager($container, $options)
+                    $this->getCsrfTokenManager($container, $options),
                 );
 
                 if (!$logoutEventClassExist) {
@@ -1348,7 +1348,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
 
         if ($invalidateSession === true && $options['stateless'] === false) {
             $listener->addHandler(
-                $this->getFactory()->createSessionLogoutHandler()
+                $this->getFactory()->createSessionLogoutHandler(),
             );
         }
 
@@ -1374,7 +1374,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
                     $options['parameter'] ?? '_switch_user',
                     $options['role'] ?? 'ROLE_ALLOWED_TO_SWITCH',
                     $container->get(static::SERVICE_DISPATCHER),
-                    $options['stateless'] ?? true
+                    $options['stateless'] ?? true,
                 );
             };
         }));
@@ -1409,7 +1409,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
                     $container->get(static::SERVICE_KERNEL),
                     $container->get(static::SERVICE_SECURITY_HTTP_UTILS),
                     $options['login_path'] ?? '/login',
-                    $options['use_forward'] ?? false
+                    $options['use_forward'] ?? false,
                 );
             };
         }));
@@ -1453,7 +1453,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
 
             throw new LogicException(sprintf(
                 'Because you have multiple guard configurators, you need to set the "guard.entry_point" key to one of your configurators (%s)',
-                implode(', ', $authenticatorIds)
+                implode(', ', $authenticatorIds),
             ));
         }));
 
@@ -1488,7 +1488,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
                     $container->get(static::SERVICE_SECURITY_USER_CHECKER),
                     $name,
                     $container->get(static::SERVICE_SECURITY_ENCODER_FACTORY),
-                    $this->getConfig()->hideUserNotFoundException()
+                    $this->getConfig()->hideUserNotFoundException(),
                 );
             };
         }));
@@ -1514,7 +1514,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
                     $authenticators,
                     $container->get('security.user_provider.' . $name),
                     $name,
-                    $container->get(static::SERVICE_SECURITY_USER_CHECKER)
+                    $container->get(static::SERVICE_SECURITY_USER_CHECKER),
                 );
             };
         }));

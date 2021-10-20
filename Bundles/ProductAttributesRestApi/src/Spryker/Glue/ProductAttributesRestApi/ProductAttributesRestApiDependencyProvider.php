@@ -44,7 +44,7 @@ class ProductAttributesRestApiDependencyProvider extends AbstractBundleDependenc
     {
         $container->set(static::CLIENT_PRODUCT_ATTRIBUTE, function (Container $container) {
             return new ProductAttributesRestApiToProductAttributeClientBridge(
-                $container->getLocator()->productAttribute()->client()
+                $container->getLocator()->productAttribute()->client(),
             );
         });
 

@@ -35,11 +35,11 @@ class PriceModeSwitcherServiceProvider extends AbstractPlugin implements Service
         $app['twig'] = $app->share(
             $app->extend('twig', function (Environment $twig) {
                 $twig->addFunction(
-                    $this->getPriceModeSwitcher($twig)
+                    $this->getPriceModeSwitcher($twig),
                 );
 
                 return $twig;
-            })
+            }),
         );
     }
 
@@ -67,7 +67,7 @@ class PriceModeSwitcherServiceProvider extends AbstractPlugin implements Service
                 [
                     'price_modes' => $this->getPriceModes(),
                     'current_price_mode' => $this->getCurrentPriceMode(),
-                ]
+                ],
             );
         }, $options);
     }

@@ -99,7 +99,7 @@ class PriceFieldMapperStrategy extends AbstractFieldMapperStrategy
             $priceProductTransferToReplace->setVolumeQuantity($volumeQuantity);
             $priceProductTransferToReplace = $this->priceProductVolumeService->extractVolumePrice(
                 $priceProductTransfer,
-                $priceProductTransferToReplace
+                $priceProductTransferToReplace,
             );
 
             if (!$priceProductTransferToReplace) {
@@ -110,7 +110,7 @@ class PriceFieldMapperStrategy extends AbstractFieldMapperStrategy
             $this->mapDataToMoneyValueTransfer($data, $priceProductTransferToReplace->getMoneyValueOrFail());
             $this->priceProductVolumeService->deleteVolumePrice(
                 $priceProductTransfer,
-                (new PriceProductTransfer())->setVolumeQuantity((int)$volumeQuantity)
+                (new PriceProductTransfer())->setVolumeQuantity((int)$volumeQuantity),
             );
 
             $this->priceProductVolumeService->addVolumePrice($priceProductTransfer, $priceProductTransferToReplace);
@@ -154,7 +154,7 @@ class PriceFieldMapperStrategy extends AbstractFieldMapperStrategy
         $pattern = sprintf(
             '/(\[%sAmount]|\[%sAmount])$/',
             static::SUFFIX_PRICE_TYPE_GROSS,
-            static::SUFFIX_PRICE_TYPE_NET
+            static::SUFFIX_PRICE_TYPE_NET,
         );
 
         preg_match($pattern, $fieldName, $matches);

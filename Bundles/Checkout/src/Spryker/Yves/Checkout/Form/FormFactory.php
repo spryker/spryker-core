@@ -63,7 +63,7 @@ class FormFactory extends AbstractFactory
         return new SubFormFilter(
             $this->getPaymentMethodSubFormPluginCollection(),
             $this->getMethodFormFilters(),
-            $this->createDataContainer()
+            $this->createDataContainer(),
         );
     }
 
@@ -93,7 +93,7 @@ class FormFactory extends AbstractFactory
     {
         return new SubFormDataProviders(
             $this->createPaymentSubFormFilter()
-                ->getSubForms()
+                ->getSubForms(),
         );
     }
 

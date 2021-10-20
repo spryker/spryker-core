@@ -46,7 +46,7 @@ class QuoteItemToItemMapper implements QuoteItemToItemMapperInterface
         $quoteItemProductOptions = array_map($mappingFunction, $itemTransfer->getProductOptions()->getArrayCopy());
         $itemProductOptions = array_map(
             $mappingFunction,
-            $itemTransfer->getProductOptions()->getArrayCopy()
+            $itemTransfer->getProductOptions()->getArrayCopy(),
         );
 
         return empty(array_diff($quoteItemProductOptions, $itemProductOptions));

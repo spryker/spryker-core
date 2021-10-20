@@ -58,7 +58,7 @@ class PercentageTest extends Unit
                 self::ITEM_GROSS_PRICE_1000,
                 self::ITEM_GROSS_PRICE_1000,
                 self::ITEM_GROSS_PRICE_1000,
-            ]
+            ],
         );
 
         $calculator = new PercentageType();
@@ -78,7 +78,7 @@ class PercentageTest extends Unit
                 self::ITEM_GROSS_PRICE_1000,
                 self::ITEM_GROSS_PRICE_1000,
                 self::ITEM_GROSS_PRICE_1000,
-            ]
+            ],
         );
 
         $calculator = new PercentageType();
@@ -98,7 +98,7 @@ class PercentageTest extends Unit
                 self::ITEM_GROSS_PRICE_1000,
                 self::ITEM_GROSS_PRICE_1000,
                 self::ITEM_GROSS_PRICE_1000,
-            ]
+            ],
         );
 
         $calculator = new PercentageType();
@@ -117,7 +117,7 @@ class PercentageTest extends Unit
                 -1 * self::ITEM_GROSS_PRICE_1000,
                 -1 * self::ITEM_GROSS_PRICE_1000,
                 -1 * self::ITEM_GROSS_PRICE_1000,
-            ]
+            ],
         );
 
         $calculator = new PercentageType();
@@ -135,7 +135,7 @@ class PercentageTest extends Unit
         $items = $this->getDiscountableItems(
             [
                  self::ITEM_GROSS_PRICE_1000,
-            ]
+            ],
         );
 
         $items[0]->setQuantity(0);

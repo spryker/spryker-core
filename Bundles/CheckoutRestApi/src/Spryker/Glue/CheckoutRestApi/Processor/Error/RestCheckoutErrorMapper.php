@@ -49,7 +49,7 @@ class RestCheckoutErrorMapper implements RestCheckoutErrorMapperInterface
         return $this->mergeErrorDataWithErrorConfiguration(
             $restCheckoutErrorTransfer,
             $restErrorMessageTransfer,
-            $restCheckoutErrorTransfer->toArray()
+            $restCheckoutErrorTransfer->toArray(),
         );
     }
 
@@ -68,7 +68,7 @@ class RestCheckoutErrorMapper implements RestCheckoutErrorMapperInterface
         return $this->mergeErrorDataWithErrorConfiguration(
             $restCheckoutErrorTransfer,
             $restErrorMessageTransfer,
-            $this->translateCheckoutErrorMessage($restCheckoutErrorTransfer, $localeCode)->toArray()
+            $this->translateCheckoutErrorMessage($restCheckoutErrorTransfer, $localeCode)->toArray(),
         );
     }
 
@@ -120,7 +120,7 @@ class RestCheckoutErrorMapper implements RestCheckoutErrorMapperInterface
         $restCheckoutErrorDetail = $this->glossaryStorageClient->translate(
             $restCheckoutErrorTransfer->getDetail(),
             $localeName,
-            $restCheckoutErrorTransfer->getParameters()
+            $restCheckoutErrorTransfer->getParameters(),
         );
 
         if (!$restCheckoutErrorDetail) {

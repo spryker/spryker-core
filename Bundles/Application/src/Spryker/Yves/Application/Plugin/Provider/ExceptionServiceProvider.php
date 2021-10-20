@@ -38,7 +38,7 @@ class ExceptionServiceProvider extends AbstractPlugin implements ServiceProvider
                 $dispatcher->addSubscriber($this->getListener());
 
                 return $dispatcher;
-            })
+            }),
         );
     }
 

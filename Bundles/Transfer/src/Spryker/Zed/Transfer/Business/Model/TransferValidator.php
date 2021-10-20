@@ -149,7 +149,7 @@ class TransferValidator implements TransferValidatorInterface
                 $this->messenger->warning(sprintf(
                     '%s.%s is an invalid transfer name',
                     $module,
-                    $transfer['name']
+                    $transfer['name'],
                 ));
             }
 
@@ -168,7 +168,7 @@ class TransferValidator implements TransferValidatorInterface
                         $module,
                         $transfer['name'],
                         $property['name'],
-                        $type
+                        $type,
                     ));
 
                     continue;
@@ -181,7 +181,7 @@ class TransferValidator implements TransferValidatorInterface
                         $module,
                         $transfer['name'],
                         $property['name'],
-                        $type
+                        $type,
                     ));
 
                     continue;
@@ -193,7 +193,7 @@ class TransferValidator implements TransferValidatorInterface
                         '%s.%s.%s is a collection but does not have a singular name defined.',
                         $module,
                         $transfer['name'],
-                        $property['name']
+                        $property['name'],
                     ));
 
                     continue;
@@ -205,7 +205,7 @@ class TransferValidator implements TransferValidatorInterface
                         '%s.%s.%s is an invalid property name',
                         $module,
                         $transfer['name'],
-                        $property['name']
+                        $property['name'],
                     ));
 
                     continue;
@@ -217,7 +217,7 @@ class TransferValidator implements TransferValidatorInterface
                         $module,
                         $transfer['name'],
                         $property['name'],
-                        $property['singular']
+                        $property['singular'],
                     ));
 
                     continue;
@@ -232,7 +232,7 @@ class TransferValidator implements TransferValidatorInterface
                 $this->messenger->warning(sprintf(
                     '%s.%s: has same singular name used for different properties',
                     $module,
-                    $transfer['name']
+                    $transfer['name'],
                 ));
 
                 continue;
@@ -436,7 +436,7 @@ class TransferValidator implements TransferValidatorInterface
     {
         $this->xmlValidator->validate(
             $fileInfo->getPathname(),
-            $this->transferConfig->getXsdSchemaFilePath()
+            $this->transferConfig->getXsdSchemaFilePath(),
         );
 
         if ($this->xmlValidator->isValid()) {

@@ -56,7 +56,7 @@ class CustomerRestResponseBuilder implements CustomerRestResponseBuilderInterfac
         $customerRestResource = $this->restResourceBuilder->createRestResource(
             CustomersRestApiConfig::RESOURCE_CUSTOMERS,
             $customerUuid,
-            $restCustomersResponseAttributesTransfer
+            $restCustomersResponseAttributesTransfer,
         );
 
         if ($customerTransfer) {

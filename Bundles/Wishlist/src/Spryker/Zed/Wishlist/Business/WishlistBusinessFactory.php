@@ -35,7 +35,7 @@ class WishlistBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->getWishlistReloadItemsPlugins(),
             $this->getWishlistItemValidatorPlugins(),
-            $this->getWishlistItemExpanderPlugins()
+            $this->getWishlistItemExpanderPlugins(),
         );
     }
 
@@ -50,7 +50,7 @@ class WishlistBusinessFactory extends AbstractBusinessFactory
             $this->getEntityManager(),
             $this->getProductFacade(),
             $this->getAddItemPreCheckPlugins(),
-            $this->getWishlistPreAddItemPlugins()
+            $this->getWishlistPreAddItemPlugins(),
         );
     }
 
@@ -60,7 +60,7 @@ class WishlistBusinessFactory extends AbstractBusinessFactory
     protected function createTransferMapper()
     {
         return new WishlistTransferMapper(
-            $this->getItemExpanderPlugins()
+            $this->getItemExpanderPlugins(),
         );
     }
 
@@ -70,7 +70,7 @@ class WishlistBusinessFactory extends AbstractBusinessFactory
     public function createDeleter(): WishlistDeleterInterface
     {
         return new WishlistDeleter(
-            $this->getEntityManager()
+            $this->getEntityManager(),
         );
     }
 

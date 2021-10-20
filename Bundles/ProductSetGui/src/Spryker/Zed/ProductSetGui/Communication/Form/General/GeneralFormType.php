@@ -175,7 +175,7 @@ class GeneralFormType extends AbstractType
                 },
                 function ($weight) {
                     return (int)$weight;
-                }
+                },
             ));
 
         return $this;

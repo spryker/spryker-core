@@ -205,7 +205,7 @@ class CompanyUserInvitationFacadeWithoutUserPermissionTest extends Test
 
         $this->assertEquals(
             $companyUserInvitationTransfer->getIdCompanyUserInvitation(),
-            $queryResultCompanyUserInvitationTransfer->getIdCompanyUserInvitation()
+            $queryResultCompanyUserInvitationTransfer->getIdCompanyUserInvitation(),
         );
     }
 

@@ -54,7 +54,7 @@ class CompanyBusinessUnitAddressesRestApiBusinessFactory extends AbstractBusines
     public function createCompanyBusinessUnitAddressValidator(): CompanyBusinessUnitAddressValidatorInterface
     {
         return new CompanyBusinessUnitAddressValidator(
-            $this->getCompanyUnitAddressFacade()
+            $this->getCompanyUnitAddressFacade(),
         );
     }
 

@@ -55,29 +55,29 @@ class ConvertGuestQuoteToCustomerQuoteTest extends Unit
         $oauthResponseTransfer = $this->tester->buildOauthResponseTransfer($customerReference);
 
         $customerQuoteCollectionTransferBeforeAct = $this->cartsRestApiFacade->getQuoteCollection(
-            $this->tester->buildQuoteCriteriaFilterTransfer($customerReference)
+            $this->tester->buildQuoteCriteriaFilterTransfer($customerReference),
         );
 
         // Act
         $this->cartsRestApiFacade->convertGuestQuoteToCustomerQuote($oauthResponseTransfer);
         $customerQuoteCollectionTransferAfterAct = $this->cartsRestApiFacade->getQuoteCollection(
-            $this->tester->buildQuoteCriteriaFilterTransfer($customerReference)
+            $this->tester->buildQuoteCriteriaFilterTransfer($customerReference),
         );
         $guestQuoteCollectionTransfer = $this->cartsRestApiFacade
             ->getQuoteCollection($this->tester->prepareQuoteCriteriaFilterTransferForGuest());
         $findQuoteResponseTransfer = $this->cartsRestApiFacade->findQuoteByUuid(
-            $this->tester->buildQuoteTransfer($customerTransfer)->setUuid($quoteTransfer->getUuid())
+            $this->tester->buildQuoteTransfer($customerTransfer)->setUuid($quoteTransfer->getUuid()),
         );
 
         // Assert
         $this->assertTrue($findQuoteResponseTransfer->getIsSuccessful());
         $this->assertGreaterThan(
             $customerQuoteCollectionTransferBeforeAct->getQuotes()->count(),
-            $customerQuoteCollectionTransferAfterAct->getQuotes()->count()
+            $customerQuoteCollectionTransferAfterAct->getQuotes()->count(),
         );
         $this->assertNotEquals(
             $findQuoteResponseTransfer->getQuoteTransfer()->getCustomerReference(),
-            $createQuoteResponseTransfer->getQuoteTransfer()->getCustomerReference()
+            $createQuoteResponseTransfer->getQuoteTransfer()->getCustomerReference(),
         );
         $this->assertEmpty($findQuoteResponseTransfer->getErrors());
         $this->assertEmpty($guestQuoteCollectionTransfer->getQuotes());
@@ -101,14 +101,14 @@ class ConvertGuestQuoteToCustomerQuoteTest extends Unit
             ->getQuoteCollection($this->tester->prepareQuoteCriteriaFilterTransferForGuest());
 
         $findQuoteResponseTransfer = $this->cartsRestApiFacade->findQuoteByUuid(
-            $this->tester->buildQuoteTransfer($customerTransfer)->setUuid($quoteTransfer->getUuid())
+            $this->tester->buildQuoteTransfer($customerTransfer)->setUuid($quoteTransfer->getUuid()),
         );
 
         // Assert
         $this->assertFalse($findQuoteResponseTransfer->getIsSuccessful());
         $this->assertEquals(
             $findQuoteResponseTransfer->getQuoteTransfer()->getCustomerReference(),
-            $createQuoteResponseTransfer->getQuoteTransfer()->getCustomerReference()
+            $createQuoteResponseTransfer->getQuoteTransfer()->getCustomerReference(),
         );
         $this->assertNotEmpty($findQuoteResponseTransfer->getErrors());
         $this->assertNotEmpty($guestQuoteCollectionTransfer->getQuotes());
@@ -132,14 +132,14 @@ class ConvertGuestQuoteToCustomerQuoteTest extends Unit
             ->getQuoteCollection($this->tester->prepareQuoteCriteriaFilterTransferForGuest());
 
         $findQuoteResponseTransfer = $this->cartsRestApiFacade->findQuoteByUuid(
-            $this->tester->buildQuoteTransfer($customerTransfer)->setUuid($quoteTransfer->getUuid())
+            $this->tester->buildQuoteTransfer($customerTransfer)->setUuid($quoteTransfer->getUuid()),
         );
 
         // Assert
         $this->assertFalse($findQuoteResponseTransfer->getIsSuccessful());
         $this->assertEquals(
             $findQuoteResponseTransfer->getQuoteTransfer()->getCustomerReference(),
-            $createQuoteResponseTransfer->getQuoteTransfer()->getCustomerReference()
+            $createQuoteResponseTransfer->getQuoteTransfer()->getCustomerReference(),
         );
         $this->assertNotEmpty($findQuoteResponseTransfer->getErrors());
         $this->assertNotEmpty($guestQuoteCollectionTransfer->getQuotes());
@@ -162,14 +162,14 @@ class ConvertGuestQuoteToCustomerQuoteTest extends Unit
         $guestQuoteCollectionTransfer = $this->cartsRestApiFacade
             ->getQuoteCollection($this->tester->prepareQuoteCriteriaFilterTransferForGuest());
         $findQuoteResponseTransfer = $this->cartsRestApiFacade->findQuoteByUuid(
-            $this->tester->buildQuoteTransfer($customerTransfer)->setUuid($quoteTransfer->getUuid())
+            $this->tester->buildQuoteTransfer($customerTransfer)->setUuid($quoteTransfer->getUuid()),
         );
 
         // Assert
         $this->assertFalse($findQuoteResponseTransfer->getIsSuccessful());
         $this->assertEquals(
             $findQuoteResponseTransfer->getQuoteTransfer()->getCustomerReference(),
-            $quoteTransfer->getCustomerReference()
+            $quoteTransfer->getCustomerReference(),
         );
         $this->assertNotEmpty($findQuoteResponseTransfer->getErrors());
         $this->assertNotEmpty($guestQuoteCollectionTransfer->getQuotes());

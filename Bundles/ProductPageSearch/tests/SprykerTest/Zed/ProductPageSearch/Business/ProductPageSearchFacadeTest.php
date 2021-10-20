@@ -132,7 +132,7 @@ class ProductPageSearchFacadeTest extends Unit
         // Assert
         $this->assertContains(
             $productImageSetTransfer->getProductImages()->offsetGet(0)->toArray(false, true),
-            $expandedProductConcretePageSearchTransfer->getImages()
+            $expandedProductConcretePageSearchTransfer->getImages(),
         );
     }
 
@@ -243,7 +243,7 @@ class ProductPageSearchFacadeTest extends Unit
                 $pageMapTransfer,
                 $pageMapBuilder,
                 $productData,
-                $localeTransfer
+                $localeTransfer,
             );
 
         // Assert

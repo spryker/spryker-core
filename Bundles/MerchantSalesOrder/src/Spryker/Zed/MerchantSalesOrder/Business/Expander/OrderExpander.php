@@ -39,7 +39,7 @@ class OrderExpander implements OrderExpanderInterface
             ->setIdOrder($orderTransfer->getIdSalesOrder());
 
         $merchantOrderCollectionTransfer = $this->merchantSalesOrderReader->getMerchantOrderCollection(
-            $merchantOrderCriteriaTransfer
+            $merchantOrderCriteriaTransfer,
         );
 
         $orderTransfer = $this->expandOrderItemsWithMerchantOrderReference($orderTransfer, $merchantOrderCollectionTransfer);

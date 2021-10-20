@@ -43,7 +43,7 @@ class ProductSetUrlReader implements ProductSetUrlReaderInterface
             throw new ProductSetUrlNotFoundException(sprintf(
                 'Product Set URL not found for #%d and locale #%d.',
                 $idProductSet,
-                $idLocale
+                $idLocale,
             ));
         }
 

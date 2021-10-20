@@ -184,7 +184,7 @@ class AddressTable extends AbstractTable
                     CustomerConstants::PARAM_ID_CUSTOMER_ADDRESS => $idCustomerAddress,
                     CustomerConstants::PARAM_ID_CUSTOMER => $this->idCustomer,
                 ]),
-                'Edit'
+                'Edit',
             );
         }
 

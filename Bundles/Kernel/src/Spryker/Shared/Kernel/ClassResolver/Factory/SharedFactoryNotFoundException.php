@@ -33,7 +33,7 @@ class SharedFactoryNotFoundException extends Exception
         $message = 'Spryker Kernel Exception' . PHP_EOL;
         $message .= sprintf(
             'Can not resolve %1$sSharedFactory for your module "%1$s"',
-            $callerClassInfo->getModule()
+            $callerClassInfo->getModule(),
         ) . PHP_EOL;
 
         $message .= 'You can fix this by adding the missing shared Factory to your module.';
@@ -41,7 +41,7 @@ class SharedFactoryNotFoundException extends Exception
         $message .= sprintf(
             'E.g. %s\\Shared\\%2$s\\%2$sSharedFactory',
             Config::getInstance()->get(KernelConstants::PROJECT_NAMESPACE),
-            $callerClassInfo->getModule()
+            $callerClassInfo->getModule(),
         ) . PHP_EOL;
 
         $message .= new Backtrace();

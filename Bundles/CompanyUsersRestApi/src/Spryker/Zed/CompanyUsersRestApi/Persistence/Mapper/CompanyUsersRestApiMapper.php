@@ -30,7 +30,7 @@ class CompanyUsersRestApiMapper
         foreach ($companyUserCollection as $companyUserEntity) {
             $companyUserTransfer = $this->mapCompanyUserEntityToCompanyUserTransfer(
                 $companyUserEntity,
-                new CompanyUserTransfer()
+                new CompanyUserTransfer(),
             );
 
             $companyUserCollectionTransfer->addCompanyUser($companyUserTransfer);
@@ -57,7 +57,7 @@ class CompanyUsersRestApiMapper
 
             $companyRoleCollectionTransfer = $this->mapCompanyRoleEntitiesToCompanyRoleCollectionTransfer(
                 $indexedCompanyRoles[$companyUserTransfer->getIdCompanyUser()],
-                new CompanyRoleCollectionTransfer()
+                new CompanyRoleCollectionTransfer(),
             );
 
             $companyUserTransfer->setCompanyRoleCollection($companyRoleCollectionTransfer);
@@ -80,7 +80,7 @@ class CompanyUsersRestApiMapper
             TableMap::TYPE_PHPNAME,
             true,
             [],
-            true
+            true,
         );
 
         return $companyUserTransfer->fromArray($companyUserData, true);
@@ -98,7 +98,7 @@ class CompanyUsersRestApiMapper
     ): CompanyRoleCollectionTransfer {
         foreach ($companyRoleEntities as $companyRoleEntity) {
             $companyRoleCollectionTransfer->addRole(
-                (new CompanyRoleTransfer())->fromArray($companyRoleEntity->toArray(), true)
+                (new CompanyRoleTransfer())->fromArray($companyRoleEntity->toArray(), true),
             );
         }
 

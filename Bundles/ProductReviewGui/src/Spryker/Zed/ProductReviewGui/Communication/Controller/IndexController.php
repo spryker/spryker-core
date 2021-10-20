@@ -39,7 +39,7 @@ class IndexController extends AbstractController
             ->createProductReviewTable($this->getCurrentLocale());
 
         return $this->jsonResponse(
-            $productTable->fetchData()
+            $productTable->fetchData(),
         );
     }
 

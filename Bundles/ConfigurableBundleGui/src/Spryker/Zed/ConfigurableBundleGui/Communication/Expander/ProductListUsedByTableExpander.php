@@ -68,7 +68,7 @@ class ProductListUsedByTableExpander implements ProductListUsedByTableExpanderIn
 
         $productListUsedByTableTransfer = $this->expandProductListUsedByTableTransfer(
             $productListUsedByTableTransfer,
-            $configurableBundleTemplateSlotTransfers
+            $configurableBundleTemplateSlotTransfers,
         );
 
         return $productListUsedByTableTransfer;
@@ -88,8 +88,8 @@ class ProductListUsedByTableExpander implements ProductListUsedByTableExpanderIn
             $productListUsedByTableTransfer->addRow(
                 $this->productListUsedByTableMapper->mapConfigurableBundleTemplateSlotTransferToProductListUsedByTableRowTransfer(
                     $configurableBundleTemplateSlotTransfer,
-                    new ProductListUsedByTableRowTransfer()
-                )
+                    new ProductListUsedByTableRowTransfer(),
+                ),
             );
         }
 

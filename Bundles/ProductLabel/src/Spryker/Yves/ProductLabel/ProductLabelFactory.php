@@ -24,7 +24,7 @@ class ProductLabelFactory extends AbstractFactory
     {
         return new ProductLabelTwigExtension(
             $this->getClient(),
-            $localeName
+            $localeName,
         );
     }
 }

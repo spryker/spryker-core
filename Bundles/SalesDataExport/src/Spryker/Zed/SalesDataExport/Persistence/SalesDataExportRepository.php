@@ -167,7 +167,7 @@ class SalesDataExportRepository extends AbstractRepository implements SalesDataE
 
         $salesOrderItemQuery = $this->applyFilterCriteriaToSalesOrderItemQuery(
             $dataExportConfigurationTransfer->getFilterCriteria(),
-            $salesOrderItemQuery
+            $salesOrderItemQuery,
         );
 
         $salesOrderItemQuery->select($selectedColumns);
@@ -215,7 +215,7 @@ class SalesDataExportRepository extends AbstractRepository implements SalesDataE
 
         $salesExpenseQuery = $this->applyFilterCriteriaToSalesExpenseQuery(
             $dataExportConfigurationTransfer->getFilterCriteria(),
-            $salesExpenseQuery
+            $salesExpenseQuery,
         );
 
         $salesExpenseQuery->select($selectedColumns);

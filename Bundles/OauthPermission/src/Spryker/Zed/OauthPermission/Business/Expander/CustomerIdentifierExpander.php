@@ -52,7 +52,7 @@ class CustomerIdentifierExpander implements CustomerIdentifierExpanderInterface
         }
 
         $companyUserTransfer = $this->companyUserFacade->findActiveCompanyUserByUuid(
-            (new CompanyUserTransfer())->setUuid($customerIdentifierTransfer->getIdCompanyUser())
+            (new CompanyUserTransfer())->setUuid($customerIdentifierTransfer->getIdCompanyUser()),
         );
 
         if (!$companyUserTransfer) {
@@ -60,7 +60,7 @@ class CustomerIdentifierExpander implements CustomerIdentifierExpanderInterface
         }
 
         $customerIdentifierTransfer->setPermissions(
-            $this->permissionFacade->getPermissionsByIdentifier((string)$companyUserTransfer->getIdCompanyUser())
+            $this->permissionFacade->getPermissionsByIdentifier((string)$companyUserTransfer->getIdCompanyUser()),
         );
 
         return $customerIdentifierTransfer;

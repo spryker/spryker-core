@@ -173,7 +173,7 @@ class PriceManagerTest extends Unit
             $priceFacadeMock,
             $this->createCurrencyFacadeBridgeMock(),
             [],
-            $this->createItemComparator()
+            $this->createItemComparator(),
         );
     }
 

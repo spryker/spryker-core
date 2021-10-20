@@ -89,7 +89,7 @@ class EditCompanyController extends AbstractController
         $form = $this->getFactory()
             ->getCompanyForm(
                 $dataProvider->getData($idCompany),
-                $dataProvider->getOptions($idCompany)
+                $dataProvider->getOptions($idCompany),
             )
             ->handleRequest($request);
 

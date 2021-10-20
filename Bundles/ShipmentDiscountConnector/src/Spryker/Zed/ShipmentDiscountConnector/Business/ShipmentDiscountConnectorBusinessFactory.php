@@ -37,7 +37,7 @@ class ShipmentDiscountConnectorBusinessFactory extends AbstractBusinessFactory
     public function createShipmentDiscountReader()
     {
         return new ShipmentDiscountReader(
-            $this->getShipmentFacade()
+            $this->getShipmentFacade(),
         );
     }
 
@@ -50,7 +50,7 @@ class ShipmentDiscountConnectorBusinessFactory extends AbstractBusinessFactory
     {
         return new ShipmentDiscountCollector(
             $this->createCarrierDiscountDecisionRule(),
-            $this->getShipmentService()
+            $this->getShipmentService(),
         );
     }
 
@@ -61,7 +61,7 @@ class ShipmentDiscountConnectorBusinessFactory extends AbstractBusinessFactory
     {
         return new ShipmentDiscountCollectorWithMultiShipment(
             $this->createCarrierDiscountDecisionRuleWithMultiShipment(),
-            $this->getShipmentService()
+            $this->getShipmentService(),
         );
     }
 
@@ -74,7 +74,7 @@ class ShipmentDiscountConnectorBusinessFactory extends AbstractBusinessFactory
     {
         return new CarrierDiscountDecisionRule(
             $this->getDiscountFacade(),
-            $this->getShipmentFacade()
+            $this->getShipmentFacade(),
         );
     }
 
@@ -85,7 +85,7 @@ class ShipmentDiscountConnectorBusinessFactory extends AbstractBusinessFactory
     {
         return new CarrierDiscountDecisionRuleWithMultiShipment(
             $this->getDiscountFacade(),
-            $this->getShipmentFacade()
+            $this->getShipmentFacade(),
         );
     }
 
@@ -98,7 +98,7 @@ class ShipmentDiscountConnectorBusinessFactory extends AbstractBusinessFactory
     {
         return new ShipmentDiscountCollector(
             $this->createMethodDiscountDecisionRule(),
-            $this->getShipmentService()
+            $this->getShipmentService(),
         );
     }
 
@@ -109,7 +109,7 @@ class ShipmentDiscountConnectorBusinessFactory extends AbstractBusinessFactory
     {
         return new ShipmentDiscountCollectorWithMultiShipment(
             $this->createMethodDiscountDecisionRuleWithMultiShipment(),
-            $this->getShipmentService()
+            $this->getShipmentService(),
         );
     }
 
@@ -121,7 +121,7 @@ class ShipmentDiscountConnectorBusinessFactory extends AbstractBusinessFactory
     public function createMethodDiscountDecisionRule()
     {
         return new MethodDiscountDecisionRule(
-            $this->getDiscountFacade()
+            $this->getDiscountFacade(),
         );
     }
 
@@ -131,7 +131,7 @@ class ShipmentDiscountConnectorBusinessFactory extends AbstractBusinessFactory
     public function createMethodDiscountDecisionRuleWithMultiShipment(): ShipmentDiscountDecisionRuleInterface
     {
         return new MethodDiscountDecisionRuleWithMultiShipment(
-            $this->getDiscountFacade()
+            $this->getDiscountFacade(),
         );
     }
 
@@ -144,7 +144,7 @@ class ShipmentDiscountConnectorBusinessFactory extends AbstractBusinessFactory
     {
         return new ShipmentDiscountCollector(
             $this->createShipmentPriceDiscountDecisionRule(),
-            $this->getShipmentService()
+            $this->getShipmentService(),
         );
     }
 
@@ -155,7 +155,7 @@ class ShipmentDiscountConnectorBusinessFactory extends AbstractBusinessFactory
     {
         return new ShipmentDiscountCollectorWithMultiShipment(
             $this->createShipmentPriceDiscountDecisionRuleWithMultiShipment(),
-            $this->getShipmentService()
+            $this->getShipmentService(),
         );
     }
 
@@ -168,7 +168,7 @@ class ShipmentDiscountConnectorBusinessFactory extends AbstractBusinessFactory
     {
         return new ShipmentPriceDiscountDecisionRule(
             $this->getDiscountFacade(),
-            $this->getMoneyFacade()
+            $this->getMoneyFacade(),
         );
     }
 
@@ -180,7 +180,7 @@ class ShipmentDiscountConnectorBusinessFactory extends AbstractBusinessFactory
         return new ShipmentPriceDiscountDecisionRuleWithMultiShipment(
             $this->getDiscountFacade(),
             $this->getMoneyFacade(),
-            $this->getShipmentService()
+            $this->getShipmentService(),
         );
     }
 

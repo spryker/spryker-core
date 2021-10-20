@@ -57,12 +57,12 @@ class CmsSlotBlockStorageWriter implements CmsSlotBlockStorageWriterInterface
         foreach ($cmsSlotBlockStorageTransfers as $cmsSlotBlockStorageTransfer) {
             $cmsSlotBlockCollectionTransfer = $this->cmsSlotBlockStorageRepository
                 ->getCmsSlotBlockCollectionByCmsSlotBlockStorageTransfer(
-                    $cmsSlotBlockStorageTransfer
+                    $cmsSlotBlockStorageTransfer,
                 );
 
             if ($cmsSlotBlockCollectionTransfer->getCmsSlotBlocks()->count() === 0) {
                 $this->cmsSlotBlockStorageEntityManager->deleteCmsSlotBlockStorage(
-                    $cmsSlotBlockStorageTransfer
+                    $cmsSlotBlockStorageTransfer,
                 );
 
                 continue;
@@ -70,7 +70,7 @@ class CmsSlotBlockStorageWriter implements CmsSlotBlockStorageWriterInterface
 
             $cmsSlotBlockStorageTransfer->setData($cmsSlotBlockCollectionTransfer)
                 ->setSlotTemplateKey(
-                    $this->getCmsSlotBlockStorageKey($cmsSlotBlockStorageTransfer)
+                    $this->getCmsSlotBlockStorageKey($cmsSlotBlockStorageTransfer),
                 );
 
             $this->cmsSlotBlockStorageEntityManager->saveCmsSlotBlockStorage($cmsSlotBlockStorageTransfer);
@@ -87,7 +87,7 @@ class CmsSlotBlockStorageWriter implements CmsSlotBlockStorageWriterInterface
     ): string {
         return $this->cmsSlotBlockStorageService->generateSlotTemplateKey(
             $cmsSlotBlockStorageTransfer->getTemplatePath(),
-            $cmsSlotBlockStorageTransfer->getSlotKey()
+            $cmsSlotBlockStorageTransfer->getSlotKey(),
         );
     }
 }

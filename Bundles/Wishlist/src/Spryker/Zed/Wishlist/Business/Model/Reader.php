@@ -108,7 +108,7 @@ class Reader implements ReaderInterface
 
         $wishlistEntity = $this->getWishlistEntityByCustomerIdAndWishlistName(
             $wishlistTransfer->getFkCustomer(),
-            $wishlistTransfer->getName()
+            $wishlistTransfer->getName(),
         );
 
         return $this->transferMapper->convertWishlist($wishlistEntity);
@@ -128,7 +128,7 @@ class Reader implements ReaderInterface
         $wishlistPaginationTransfer = $this->buildWishlistPaginationTransfer($wishlistOverviewRequestTransfer);
         $wishlistOverviewResponseTransfer = $this->buildWishlistOverviewResponseTransfer(
             $wishlistOverviewRequestTransfer->getWishlist(),
-            $wishlistPaginationTransfer
+            $wishlistPaginationTransfer,
         );
 
         $wishlistEntity = $this->findWishlistEntity($wishlistOverviewRequestTransfer->getWishlist());
@@ -157,8 +157,8 @@ class Reader implements ReaderInterface
         $wishlistOverviewMetaTransfer->setWishlistItemMetaCollection(
             $this->transferMapper->mapWishlistItemTransfersToWishlistItemMetaTransfers(
                 $wishlistTransfer->getWishlistItems(),
-                $wishlistOverviewMetaTransfer->getWishlistItemMetaCollection()
-            )
+                $wishlistOverviewMetaTransfer->getWishlistItemMetaCollection(),
+            ),
         );
 
         $wishlistOverviewResponseTransfer
@@ -285,7 +285,7 @@ class Reader implements ReaderInterface
             ->getItemsPerPage();
 
         $itemsQuery = $this->queryContainer->queryItemsByWishlistId(
-            $wishlistOverviewRequestTransfer->getWishlist()->getIdWishlist()
+            $wishlistOverviewRequestTransfer->getWishlist()->getIdWishlist(),
         );
 
         return $itemsQuery->paginate($page, $maxPerPage);
@@ -413,7 +413,7 @@ class Reader implements ReaderInterface
         if (!$wishlistEntity) {
             throw new MissingWishlistException(sprintf(
                 'Wishlist with id %s not found',
-                $idWishlist
+                $idWishlist,
             ));
         }
 
@@ -439,7 +439,7 @@ class Reader implements ReaderInterface
             throw new MissingWishlistException(sprintf(
                 'Wishlist: %s for customer with id: %s not found',
                 $name,
-                $idCustomer
+                $idCustomer,
             ));
         }
 

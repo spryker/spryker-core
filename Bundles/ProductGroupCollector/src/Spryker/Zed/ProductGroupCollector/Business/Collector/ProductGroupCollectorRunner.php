@@ -67,7 +67,7 @@ class ProductGroupCollectorRunner implements ProductGroupCollectorRunnerInterfac
             $dataReader,
             $dataWriter,
             $touchUpdater,
-            $output
+            $output,
         );
     }
 }

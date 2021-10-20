@@ -48,7 +48,7 @@ class ContentProductAbstractListReader implements ContentProductAbstractListRead
     {
         $contentProductAbstractListTypeTransfers = $this->contentProductClient->executeProductAbstractListTypeByKeys(
             $contentProductAbstractListKeys,
-            $localeName
+            $localeName,
         );
 
         if (!$contentProductAbstractListTypeTransfers) {
@@ -72,7 +72,7 @@ class ContentProductAbstractListReader implements ContentProductAbstractListRead
 
         $contentProductAbstractListsResources = $this->getContentProductAbstractListsResources(
             [$restRequest->getResource()->getId()],
-            $restRequest->getMetadata()->getLocale()
+            $restRequest->getMetadata()->getLocale(),
         );
 
         if (!isset($contentProductAbstractListsResources[$restRequest->getResource()->getId()])) {

@@ -59,7 +59,7 @@ class ConfigurableBundleTranslationExpander implements ConfigurableBundleTransla
 
         $configurableBundleTemplateTranslationTransfers = $this->getConfigurableBundleTemplateTranslations(
             $this->getTranslations($configurableBundleTemplateTransfer->getName(), $localeTransfers),
-            $localeTransfers
+            $localeTransfers,
         );
 
         return $configurableBundleTemplateTransfer->setTranslations($configurableBundleTemplateTranslationTransfers);
@@ -83,7 +83,7 @@ class ConfigurableBundleTranslationExpander implements ConfigurableBundleTransla
 
         $configurableBundleTemplateSlotTranslationTransfers = $this->getConfigurableBundleTemplateSlotTranslations(
             $this->getTranslations($configurableBundleTemplateSlotTransfer->getName(), $localeTransfers),
-            $localeTransfers
+            $localeTransfers,
         );
 
         return $configurableBundleTemplateSlotTransfer->setTranslations($configurableBundleTemplateSlotTranslationTransfers);
@@ -128,7 +128,7 @@ class ConfigurableBundleTranslationExpander implements ConfigurableBundleTransla
     {
         $translationTransfers = $this->glossaryFacade->getTranslationsByGlossaryKeyAndLocales(
             $translationKey,
-            $this->localeFacade->getLocaleCollection()
+            $this->localeFacade->getLocaleCollection(),
         );
 
         if ($translationTransfers) {

@@ -59,7 +59,7 @@ class ReturnMapper
 
         foreach ($salesReturnEntities as $salesReturnEntity) {
             $returnCollectionTransfer->addReturn(
-                (new ReturnTransfer())->fromArray($salesReturnEntity->toArray(), true)
+                (new ReturnTransfer())->fromArray($salesReturnEntity->toArray(), true),
             );
         }
 

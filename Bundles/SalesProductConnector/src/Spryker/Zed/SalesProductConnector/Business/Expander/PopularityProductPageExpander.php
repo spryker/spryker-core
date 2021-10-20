@@ -50,12 +50,12 @@ class PopularityProductPageExpander implements PopularityProductPageExpanderInte
         $popularityByIdProductAbstractAndInterval = $this->salesProductConnectorRepository
             ->getRawProductPopularityByProductAbstractIdsAndInterval(
                 $productAbstractIds,
-                $interval
+                $interval,
             );
 
         $payloadTransfers = $this->updatePayloadTransfers(
             $productPageLoadTransfer->getPayloadTransfers(),
-            $popularityByIdProductAbstractAndInterval
+            $popularityByIdProductAbstractAndInterval,
         );
 
         $productPageLoadTransfer->setPayloadTransfers($payloadTransfers);

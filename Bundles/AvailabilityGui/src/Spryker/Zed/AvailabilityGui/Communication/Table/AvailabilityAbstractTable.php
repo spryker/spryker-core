@@ -116,7 +116,7 @@ class AvailabilityAbstractTable extends AbstractTable
     {
         $url = Url::generate(
             '/availability-abstract-table',
-            $this->getRequest()->query->all()
+            $this->getRequest()->query->all(),
         );
 
         $config->setUrl($url);
@@ -173,7 +173,7 @@ class AvailabilityAbstractTable extends AbstractTable
             ->getProductAbstractEntitiesWithStockByProductAbstractIds(
                 $productAbstractIds,
                 $this->idLocale,
-                $this->idStore
+                $this->idStore,
             );
 
         foreach ($productAbstractEntities as $productAbstractEntity) {
@@ -281,7 +281,7 @@ class AvailabilityAbstractTable extends AbstractTable
             [
                 static::URL_PARAM_ID_PRODUCT_ABSTRACT => $productAbstractEntity->getIdProductAbstract(),
                 static::URL_PARAM_ID_STORE => $this->idStore,
-            ]
+            ],
         );
 
         return $this->generateViewButton($viewTaxSetUrl, 'View');
@@ -318,7 +318,7 @@ class AvailabilityAbstractTable extends AbstractTable
 
         return $this->availabilityHelper->calculateReservation(
             $reservationQuantity,
-            $this->storeFacade->getStoreById($this->idStore)
+            $this->storeFacade->getStoreById($this->idStore),
         );
     }
 

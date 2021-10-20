@@ -31,7 +31,7 @@ class CompanyRoleChoiceType extends ChoiceType
 
         $callbackTransformer = new CallbackTransformer(
             [$this, 'roleCollectionInputDataTransformer'],
-            [$this, 'getOutputDataCallbackRoleCollectionTransformer']
+            [$this, 'getOutputDataCallbackRoleCollectionTransformer'],
         );
 
         $builder->addModelTransformer($callbackTransformer);

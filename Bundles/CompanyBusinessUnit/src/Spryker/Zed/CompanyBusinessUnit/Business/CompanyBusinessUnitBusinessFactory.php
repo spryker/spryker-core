@@ -38,7 +38,7 @@ class CompanyBusinessUnitBusinessFactory extends AbstractBusinessFactory
         return new CompanyBusinessUnitWriter(
             $this->getRepository(),
             $this->getEntityManager(),
-            $this->createCompanyBusinessUnitPluginExecutor()
+            $this->createCompanyBusinessUnitPluginExecutor(),
         );
     }
 
@@ -50,7 +50,7 @@ class CompanyBusinessUnitBusinessFactory extends AbstractBusinessFactory
         return new CompanyBusinessUnitCreator(
             $this->getEntityManager(),
             $this->getConfig(),
-            $this->createCompanyBusinessUnitPluginExecutor()
+            $this->createCompanyBusinessUnitPluginExecutor(),
         );
     }
 
@@ -60,7 +60,7 @@ class CompanyBusinessUnitBusinessFactory extends AbstractBusinessFactory
     public function createCompanyBusinessUnitAssigner()
     {
         return new CompanyBusinessUnitAssigner(
-            $this->getRepository()
+            $this->getRepository(),
         );
     }
 
@@ -72,7 +72,7 @@ class CompanyBusinessUnitBusinessFactory extends AbstractBusinessFactory
         return new CompanyBusinessUnitPluginExecutor(
             $this->getCompanyBusinessUnitExpanderPlugins(),
             $this->getCompanyBusinessUnitPostSavePlugins(),
-            $this->getCompanyBusinessUnitPreDeletePlugins()
+            $this->getCompanyBusinessUnitPreDeletePlugins(),
         );
     }
 
@@ -83,7 +83,7 @@ class CompanyBusinessUnitBusinessFactory extends AbstractBusinessFactory
     {
         return new CompanyBusinessUnitReader(
             $this->getRepository(),
-            $this->createCompanyBusinessUnitPluginExecutor()
+            $this->createCompanyBusinessUnitPluginExecutor(),
         );
     }
 
@@ -109,7 +109,7 @@ class CompanyBusinessUnitBusinessFactory extends AbstractBusinessFactory
     public function createCompanyBusinessUnitTreeBuilder(): CompanyBusinessUnitTreeBuilderInterface
     {
         return new CompanyBusinessUnitTreeBuilder(
-            $this->getRepository()
+            $this->getRepository(),
         );
     }
 
@@ -127,7 +127,7 @@ class CompanyBusinessUnitBusinessFactory extends AbstractBusinessFactory
     public function createCompanyUserValidator(): CompanyUserValidatorInterface
     {
         return new CompanyUserValidator(
-            $this->getRepository()
+            $this->getRepository(),
         );
     }
 }

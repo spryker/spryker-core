@@ -34,7 +34,7 @@ class CompanyUserCheckoutRequestExpanderPlugin extends AbstractPlugin implements
     ): RestCheckoutRequestAttributesTransfer {
         return $this->getFactory()->createCheckoutRequestExpander()->expand(
             $restRequest,
-            $restCheckoutRequestAttributesTransfer
+            $restCheckoutRequestAttributesTransfer,
         );
     }
 }

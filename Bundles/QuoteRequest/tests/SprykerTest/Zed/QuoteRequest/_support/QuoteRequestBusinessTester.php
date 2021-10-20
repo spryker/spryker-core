@@ -83,7 +83,7 @@ class QuoteRequestBusinessTester extends Actor
                 CompanyUserTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
                 CompanyUserTransfer::FK_COMPANY_BUSINESS_UNIT => $companyBusinessUnit->getIdCompanyBusinessUnit(),
                 CompanyUserTransfer::FK_CUSTOMER => $customerTransfer->getIdCustomer(),
-            ]
+            ],
         );
     }
 
@@ -98,7 +98,7 @@ class QuoteRequestBusinessTester extends Actor
                 CompanyTransfer::STATUS => 'approved',
                 CompanyTransfer::IS_ACTIVE => true,
                 CompanyTransfer::INITIAL_USER_TRANSFER => new CompanyUserTransfer(),
-            ]
+            ],
         );
     }
 
@@ -115,7 +115,7 @@ class QuoteRequestBusinessTester extends Actor
                 CompanyBusinessUnitTransfer::EMAIL => 'test@spryker.com',
                 CompanyBusinessUnitTransfer::PHONE => '1234567890',
                 CompanyBusinessUnitTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
-            ]
+            ],
         );
     }
 

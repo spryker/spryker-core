@@ -82,7 +82,7 @@ class ConfigurableBundleTemplateTableQueryTest extends Unit
         $configurableBundleQuery = SpyConfigurableBundleTemplateQuery::create();
         $tableMock = new ConfigurableBundleTemplateTableMock(
             $configurableBundleQuery,
-            $this->getConfigurableBundleGuiToLocaleFacadeMock()
+            $this->getConfigurableBundleGuiToLocaleFacadeMock(),
         );
 
         // Act
@@ -92,7 +92,7 @@ class ConfigurableBundleTemplateTableQueryTest extends Unit
         $configurableBundleTemplateIdColName = str_replace(
             sprintf('%s.', SpyConfigurableBundleTemplateTableMap::TABLE_NAME),
             '',
-            SpyConfigurableBundleTemplateTableMap::COL_ID_CONFIGURABLE_BUNDLE_TEMPLATE
+            SpyConfigurableBundleTemplateTableMap::COL_ID_CONFIGURABLE_BUNDLE_TEMPLATE,
         );
         $resultConfigurableBundleTemplateIds = array_column($result, $configurableBundleTemplateIdColName);
         $this->assertNotEmpty($result);

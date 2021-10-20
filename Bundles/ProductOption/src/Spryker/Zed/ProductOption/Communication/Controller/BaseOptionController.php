@@ -50,11 +50,11 @@ class BaseOptionController extends AbstractController
 
         $productOptionsTable = $this->getFactory()->createProductOptionTable(
             $idProductOptionGroup,
-            $tableContext
+            $tableContext,
         );
 
         return $this->jsonResponse(
-            $productOptionsTable->fetchData()
+            $productOptionsTable->fetchData(),
         );
     }
 
@@ -70,7 +70,7 @@ class BaseOptionController extends AbstractController
         $productTable = $this->getFactory()->createProductTable($idProductOptionGroup);
 
         return $this->jsonResponse(
-            $productTable->fetchData()
+            $productTable->fetchData(),
         );
     }
 }

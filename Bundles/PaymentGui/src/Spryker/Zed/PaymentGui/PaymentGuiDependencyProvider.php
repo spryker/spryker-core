@@ -68,7 +68,7 @@ class PaymentGuiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::FACADE_PAYMENT, function (Container $container) {
             return new PaymentGuiToPaymentFacadeBridge(
-                $container->getLocator()->payment()->facade()
+                $container->getLocator()->payment()->facade(),
             );
         });
 
@@ -101,8 +101,8 @@ class PaymentGuiDependencyProvider extends AbstractBundleDependencyProvider
                 'Missing instance of %s! You need to configure StoreRelationFormType ' .
                 'in your own PaymentGuiDependencyProvider::getStoreRelationFormTypePlugin() ' .
                 'to be able to manage shipment methods.',
-                FormTypeInterface::class
-            )
+                FormTypeInterface::class,
+            ),
         );
     }
 }

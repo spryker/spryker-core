@@ -54,7 +54,7 @@ class EmptyProductOfferRestWishlistItemsAttributesDeleteStrategyPlugin extends A
         $this->getFacade()
             ->deleteWishlistItemWithoutProductOffer(
                 $wishlistItemRequestTransfer,
-                $wishlistItemTransfers
+                $wishlistItemTransfers,
             );
     }
 }

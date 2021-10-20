@@ -102,7 +102,7 @@ class CustomerRegistrationMailTypePlugin extends AbstractPlugin implements MailT
 
         $mailBuilder->addRecipient(
             $customerTransfer->getEmail(),
-            $customerTransfer->getFirstName() . ' ' . $customerTransfer->getLastName()
+            $customerTransfer->getFirstName() . ' ' . $customerTransfer->getLastName(),
         );
 
         return $this;

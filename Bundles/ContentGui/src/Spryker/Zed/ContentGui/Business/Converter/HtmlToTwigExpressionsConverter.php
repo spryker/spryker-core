@@ -62,7 +62,7 @@ class HtmlToTwigExpressionsConverter implements HtmlToTwigExpressionsConverterIn
 
         $this->domDocument->loadHTML(
             $this->getHtmlForDomDocumentLoading($html),
-            LIBXML_NOWARNING | LIBXML_NOERROR | LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD
+            LIBXML_NOWARNING | LIBXML_NOERROR | LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD,
         );
         $replaceableNodes = $this->getReplaceableNodes();
 

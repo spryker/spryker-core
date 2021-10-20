@@ -104,17 +104,17 @@ class MerchantSalesOrderDataExportRepository extends AbstractRepository implemen
 
         $dataExportBatchTransfer = $this->getDataExportBatchTransfer(
             $filterCriteria[static::FILTER_CRITERIA_PARAM_OFFSET],
-            $selectedFields
+            $selectedFields,
         );
 
         $merchantSalesOrderQuery = $this->buildMerchantSalesOrderBaseQuery(
             $filterCriteria[static::FILTER_CRITERIA_PARAM_OFFSET],
-            $filterCriteria[static::FILTER_CRITERIA_PARAM_LIMIT]
+            $filterCriteria[static::FILTER_CRITERIA_PARAM_LIMIT],
         );
 
         $merchantSalesOrderQuery = $this->applyFilterCriteriaToMerchantSalesOrderQuery(
             $dataExportConfigurationTransfer->getFilterCriteria(),
-            $merchantSalesOrderQuery
+            $merchantSalesOrderQuery,
         );
 
         foreach ($selectedColumns as $selectedField => $selectedColumn) {
@@ -167,17 +167,17 @@ class MerchantSalesOrderDataExportRepository extends AbstractRepository implemen
 
         $dataExportBatchTransfer = $this->getDataExportBatchTransfer(
             $filterCriteria[static::FILTER_CRITERIA_PARAM_OFFSET],
-            $selectedFields
+            $selectedFields,
         );
 
         $merchantSalesOrderItemQuery = $this->buildMerchantSalesOrderItemBaseQuery(
             $filterCriteria[static::FILTER_CRITERIA_PARAM_OFFSET],
-            $filterCriteria[static::FILTER_CRITERIA_PARAM_LIMIT]
+            $filterCriteria[static::FILTER_CRITERIA_PARAM_LIMIT],
         );
 
         $merchantSalesOrderItemQuery = $this->applyFilterCriteriaToMerchantSalesOrderItemQuery(
             $dataExportConfigurationTransfer->getFilterCriteria(),
-            $merchantSalesOrderItemQuery
+            $merchantSalesOrderItemQuery,
         );
 
         foreach ($selectedColumns as $selectedField => $selectedColumn) {
@@ -219,17 +219,17 @@ class MerchantSalesOrderDataExportRepository extends AbstractRepository implemen
 
         $dataExportBatchTransfer = $this->getDataExportBatchTransfer(
             $filterCriteria[static::FILTER_CRITERIA_PARAM_OFFSET],
-            $selectedFields
+            $selectedFields,
         );
 
         $merchantSalesOrderQuery = $this->buildMerchantSalesOrderWithExpenseBaseQuery(
             $filterCriteria[static::FILTER_CRITERIA_PARAM_OFFSET],
-            $filterCriteria[static::FILTER_CRITERIA_PARAM_LIMIT]
+            $filterCriteria[static::FILTER_CRITERIA_PARAM_LIMIT],
         );
 
         $merchantSalesOrderQuery = $this->applyFilterCriteriaToMerchantSalesOrderQuery(
             $dataExportConfigurationTransfer->getFilterCriteria(),
-            $merchantSalesOrderQuery
+            $merchantSalesOrderQuery,
         );
 
         foreach ($selectedColumns as $selectedField => $selectedColumn) {
@@ -352,7 +352,7 @@ class MerchantSalesOrderDataExportRepository extends AbstractRepository implemen
             ->addJoin(
                 SpyMerchantSalesOrderTableMap::COL_MERCHANT_REFERENCE,
                 SpyMerchantTableMap::COL_MERCHANT_REFERENCE,
-                Criteria::LEFT_JOIN
+                Criteria::LEFT_JOIN,
             )
             ->leftJoinMerchantSalesOrderTotal()
             ->useOrderQuery()
@@ -393,7 +393,7 @@ class MerchantSalesOrderDataExportRepository extends AbstractRepository implemen
                 ->addJoin(
                     SpyMerchantSalesOrderTableMap::COL_MERCHANT_REFERENCE,
                     SpyMerchantTableMap::COL_MERCHANT_REFERENCE,
-                    Criteria::INNER_JOIN
+                    Criteria::INNER_JOIN,
                 )
                 ->orderByMerchantReference()
                 ->useOrderQuery()
@@ -436,7 +436,7 @@ class MerchantSalesOrderDataExportRepository extends AbstractRepository implemen
             ->addJoin(
                 SpyMerchantSalesOrderTableMap::COL_MERCHANT_REFERENCE,
                 SpyMerchantTableMap::COL_MERCHANT_REFERENCE,
-                Criteria::LEFT_JOIN
+                Criteria::LEFT_JOIN,
             )
             ->useOrderQuery()
                 ->orderByStore()

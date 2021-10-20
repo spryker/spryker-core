@@ -94,10 +94,10 @@ class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
         $productAbstractIds = $this->productStorageClient->getBulkProductAbstractIdsByMapping(
             static::PRODUCT_ABSTRACT_MAPPING_TYPE,
             $productAbstractSkus,
-            $localeName
+            $localeName,
         );
         $productAbstractOptionStorageTransfers = $this->productOptionStorageClient->getBulkProductOptions(
-            $productAbstractIds
+            $productAbstractIds,
         );
         if ($productAbstractOptionStorageTransfers) {
             $productAbstractOptionStorageTransfers = $this->productOptionTranslator
@@ -109,7 +109,7 @@ class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
                 $productAbstractOptionStorageTransfers,
                 $productAbstractIds,
                 ProductOptionsRestApiConfig::RESOURCE_ABSTRACT_PRODUCTS,
-                $sorts
+                $sorts,
             );
     }
 
@@ -127,7 +127,7 @@ class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
     ): array {
         $productAbstractIds = $this->getProductAbstractIdsByProductConcreteSkus($productConcreteSkus, $localeName);
         $productAbstractOptionStorageTransfers = $this->productOptionStorageClient->getBulkProductOptions(
-            array_unique($productAbstractIds)
+            array_unique($productAbstractIds),
         );
 
         if ($productAbstractOptionStorageTransfers) {
@@ -140,7 +140,7 @@ class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
                 $productAbstractOptionStorageTransfers,
                 $productAbstractIds,
                 ProductOptionsRestApiConfig::RESOURCE_CONCRETE_PRODUCTS,
-                $sorts
+                $sorts,
             );
     }
 
@@ -175,7 +175,7 @@ class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
     {
         $productConcreteStorageDataItem = $this->productStorageClient->findProductConcreteStorageDataByMappingForCurrentLocale(
             static::PRODUCT_CONCRETE_MAPPING_TYPE,
-            $productConcreteSku
+            $productConcreteSku,
         );
 
         return $productConcreteStorageDataItem[static::KEY_ID_PRODUCT_ABSTRACT] ?? null;
@@ -212,7 +212,7 @@ class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
         $productConcreteStorageDataItems = $this->productStorageClient->getBulkProductConcreteStorageDataByMapping(
             static::PRODUCT_CONCRETE_MAPPING_TYPE,
             $productConcreteSkus,
-            $localeName
+            $localeName,
         );
         foreach ($productConcreteStorageDataItems as $productConcreteStorageDataItem) {
             $productAbstractIdsByProductConcreteSkus[$productConcreteStorageDataItem[static::KEY_PRODUCT_CONCRETE_SKU]] =

@@ -55,7 +55,7 @@ class WishlistItemAdder implements WishlistItemAdderInterface
 
         $wishlistItemTransfer = $this->createWishlistItemTransfer(
             $wishlistTransfer,
-            $wishlistItemRequestTransfer
+            $wishlistItemRequestTransfer,
         );
 
         $wishlistItemTransfer = $this->wishlistFacade->addItem($wishlistItemTransfer);

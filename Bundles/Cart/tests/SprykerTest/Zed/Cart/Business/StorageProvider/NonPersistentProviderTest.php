@@ -86,7 +86,7 @@ class NonPersistentProviderTest extends Unit
         $this->assertSame($itemId, $changedItem->getId());
         $this->assertSame(
             $existingQuantity + $newQuantity,
-            $changedItem->getQuantity()
+            $changedItem->getQuantity(),
         );
     }
 

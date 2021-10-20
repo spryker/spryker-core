@@ -135,7 +135,7 @@ class MerchantRelationshipFormDataProvider
                 $choices[$companyBusinessUnitTransfer->getIdCompanyBusinessUnit()] = sprintf(
                     '%s (ID: %d)',
                     $companyBusinessUnitTransfer->getName(),
-                    $companyBusinessUnitTransfer->getIdCompanyBusinessUnit()
+                    $companyBusinessUnitTransfer->getIdCompanyBusinessUnit(),
                 );
             }
         }
@@ -154,7 +154,7 @@ class MerchantRelationshipFormDataProvider
             $choices[$companyTransfer->getIdCompany()] = sprintf(
                 '%s (ID: %d)',
                 $companyTransfer->getName(),
-                $companyTransfer->getIdCompany()
+                $companyTransfer->getIdCompany(),
             );
         }
 
@@ -173,7 +173,7 @@ class MerchantRelationshipFormDataProvider
             $choices[$idMerchant] = sprintf(
                 '%d - %s',
                 $idMerchant,
-                $merchant->getName()
+                $merchant->getName(),
             );
         }
 

@@ -94,7 +94,7 @@ class ProductAlternativeDependencyProvider extends AbstractBundleDependencyProvi
     {
         $container->set(static::FACADE_LOCALE, function (Container $container) {
             return new ProductAlternativeToLocaleFacadeBridge(
-                $container->getLocator()->locale()->facade()
+                $container->getLocator()->locale()->facade(),
             );
         });
 
@@ -110,7 +110,7 @@ class ProductAlternativeDependencyProvider extends AbstractBundleDependencyProvi
     {
         $container->set(static::FACADE_PRODUCT, function (Container $container) {
             return new ProductAlternativeToProductFacadeBridge(
-                $container->getLocator()->product()->facade()
+                $container->getLocator()->product()->facade(),
             );
         });
 

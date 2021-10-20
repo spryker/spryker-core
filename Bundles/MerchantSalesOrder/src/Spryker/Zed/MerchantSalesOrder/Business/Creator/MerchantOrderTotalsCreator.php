@@ -73,7 +73,7 @@ class MerchantOrderTotalsCreator implements MerchantOrderTotalsCreatorInterface
 
         $calculationOrderTransfer = $this->expandOrderWithMerchantOrderItems(
             $calculationOrderTransfer,
-            $merchantOrderTransfer
+            $merchantOrderTransfer,
         );
 
         $calculationOrderTransfer = $this->calculationFacade->recalculateOrder($calculationOrderTransfer);

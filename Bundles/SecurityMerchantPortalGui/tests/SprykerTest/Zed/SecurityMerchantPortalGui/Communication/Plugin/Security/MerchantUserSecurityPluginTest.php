@@ -117,7 +117,7 @@ class MerchantUserSecurityPluginTest extends Unit
                     'password' => 'foo',
                     '_token' => $csrfToken->getValue(),
                 ],
-            ]
+            ],
         );
 
         // Assert
@@ -161,7 +161,7 @@ class MerchantUserSecurityPluginTest extends Unit
                     'username' => $userTransfer->getUsername(),
                     'password' => 'bar',
                 ],
-            ]
+            ],
         );
 
         // Assert
@@ -210,7 +210,7 @@ class MerchantUserSecurityPluginTest extends Unit
                     'username' => $userTransfer->getUsername(),
                     'password' => 'foo',
                 ],
-            ]
+            ],
         );
 
         // Assert
@@ -253,7 +253,7 @@ class MerchantUserSecurityPluginTest extends Unit
                     'username' => $userTransfer->getUsername(),
                     'password' => 'foo',
                 ],
-            ]
+            ],
         );
 
         // Assert

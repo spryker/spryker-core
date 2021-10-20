@@ -158,7 +158,7 @@ class CategoryNodePageSearchWriter implements CategoryNodePageSearchWriterInterf
                 $this->categoryPageSearchEntityManager->deleteCategoryNodePageSearchByIdCategoryNodeForLocaleAndStore(
                     $nodeTransfer->getIdCategoryNodeOrFail(),
                     $localeName,
-                    $storeName
+                    $storeName,
                 );
 
                 continue;
@@ -184,7 +184,7 @@ class CategoryNodePageSearchWriter implements CategoryNodePageSearchWriterInterf
             $nodeTransfer,
             new CategoryNodePageSearchTransfer(),
             $storeName,
-            $localeName
+            $localeName,
         );
 
         $this->categoryPageSearchEntityManager->saveCategoryNodePageSearch($categoryNodePageSearchTransfer);

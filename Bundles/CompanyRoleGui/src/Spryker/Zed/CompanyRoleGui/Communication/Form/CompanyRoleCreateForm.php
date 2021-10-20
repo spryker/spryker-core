@@ -209,7 +209,7 @@ class CompanyRoleCreateForm extends AbstractType
 
         $callbackTransformer = new CallbackTransformer(
             $this->getInputDataCallbackPermissionCollectionTransformer(),
-            $this->getOutputDataCallbackPermissionCollectionTransformer()
+            $this->getOutputDataCallbackPermissionCollectionTransformer(),
         );
 
         $builder->get(static::FIELD_PERMISSION_COLLECTION)

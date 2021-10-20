@@ -50,7 +50,7 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
             $discountConfiguratorTransfer ?: $this->createDiscountFormDataProvider()->getData($idDiscount),
             [
                 'data_class' => DiscountConfiguratorTransfer::class,
-            ]
+            ],
         );
     }
 
@@ -66,7 +66,7 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
             $discountVoucherTransfer,
             [
                 'data_class' => DiscountVoucherTransfer::class,
-            ]
+            ],
         );
     }
 
@@ -135,7 +135,7 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
             $this->getQueryContainer(),
             $idPool,
             $idDiscount,
-            $batchValue
+            $batchValue,
         );
     }
 

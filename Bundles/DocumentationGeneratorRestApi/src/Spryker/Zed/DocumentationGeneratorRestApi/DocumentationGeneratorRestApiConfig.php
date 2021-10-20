@@ -160,7 +160,7 @@ class DocumentationGeneratorRestApiConfig extends AbstractBundleConfig
     {
         return array_merge(
             $this->getCoreAnnotationSourceDirectoryPatterns(),
-            $this->getProjectAnnotationSourceDirectoryPatterns()
+            $this->getProjectAnnotationSourceDirectoryPatterns(),
         );
     }
 

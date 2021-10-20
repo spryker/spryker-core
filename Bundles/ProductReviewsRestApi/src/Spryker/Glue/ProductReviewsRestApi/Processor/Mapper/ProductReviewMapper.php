@@ -24,7 +24,7 @@ class ProductReviewMapper implements ProductReviewMapperInterface
     ): RestProductReviewsAttributesTransfer {
         return $restProductReviewsAttributesTransfer->fromArray(
             $productReviewTransfer->toArray(),
-            true
+            true,
         );
     }
 }

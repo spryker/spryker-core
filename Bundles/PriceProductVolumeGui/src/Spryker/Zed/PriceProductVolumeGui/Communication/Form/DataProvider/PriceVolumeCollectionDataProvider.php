@@ -174,14 +174,14 @@ class PriceVolumeCollectionDataProvider
 
             if (empty($priceProductTransfers)) {
                 throw new PriceProductNotFoundException(
-                    sprintf(static::MESSAGE_PRICE_PRODUCT_ABSTRACT_NOT_FOUND_ERROR, $idProductAbstract)
+                    sprintf(static::MESSAGE_PRICE_PRODUCT_ABSTRACT_NOT_FOUND_ERROR, $idProductAbstract),
                 );
             }
         }
 
         if (empty($priceProductTransfers)) {
             throw new PriceProductNotFoundException(
-                sprintf(static::MESSAGE_PRICE_PRODUCT_CONCRETE_NOT_FOUND_ERROR, $idProductConcrete)
+                sprintf(static::MESSAGE_PRICE_PRODUCT_CONCRETE_NOT_FOUND_ERROR, $idProductConcrete),
             );
         }
 

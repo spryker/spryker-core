@@ -56,7 +56,7 @@ class ValidUniqueStoreCurrencyGrossNetConstraintValidator extends AbstractConstr
             /** @var \ArrayObject<\Generated\Shared\Transfer\PriceProductTransfer> $persistedPriceProductTransfers */
             $persistedPriceProductTransfers = $this->getProductOfferPrices(
                 $priceProductTransfer,
-                $constraint
+                $constraint,
             );
 
             if (
@@ -89,7 +89,7 @@ class ValidUniqueStoreCurrencyGrossNetConstraintValidator extends AbstractConstr
             ->addIdCurrency($moneyValueTransfer->getFkCurrencyOrFail())
             ->addIdStore($moneyValueTransfer->getFkStoreOrFail())
             ->addIdPriceType(
-                $priceProductTransfer->getPriceTypeOrFail()->getIdPriceTypeOrFail()
+                $priceProductTransfer->getPriceTypeOrFail()->getIdPriceTypeOrFail(),
             );
 
         return $constraint->getPriceProductOfferRepository()
@@ -107,7 +107,7 @@ class ValidUniqueStoreCurrencyGrossNetConstraintValidator extends AbstractConstr
             '[%s][%s][%d]',
             PriceProductOfferTransfer::PRODUCT_OFFER,
             ProductOfferTransfer::PRICES,
-            $priceProductIndex
+            $priceProductIndex,
         );
     }
 }

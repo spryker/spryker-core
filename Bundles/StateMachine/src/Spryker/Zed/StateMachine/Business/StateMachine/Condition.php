@@ -93,7 +93,7 @@ class Condition implements ConditionInterface
                 $isValidCondition = $this->checkCondition(
                     $stateMachineItemTransfer,
                     $transactionLogger,
-                    $transition->getCondition()
+                    $transition->getCondition(),
                 );
 
                 if ($isValidCondition) {
@@ -123,7 +123,7 @@ class Condition implements ConditionInterface
     ) {
         $conditionPlugin = $this->getConditionPlugin(
             $conditionName,
-            $stateMachineItemTransfer->getStateMachineName()
+            $stateMachineItemTransfer->getStateMachineName(),
         );
 
         try {
@@ -187,13 +187,13 @@ class Condition implements ConditionInterface
         $this->stateUpdater->updateStateMachineItemState(
             $stateMachineItems,
             $processes,
-            $sourceStates
+            $sourceStates,
         );
 
         $itemsWithOnEnterEvent = $this->finder->filterItemsWithOnEnterEvent(
             $stateMachineItems,
             $processes,
-            $sourceStates
+            $sourceStates,
         );
 
         return $itemsWithOnEnterEvent;
@@ -214,7 +214,7 @@ class Condition implements ConditionInterface
         $stateMachineItemStateIds = $this->stateMachinePersistence->getStateMachineItemIdsByStatesProcessAndStateMachineName(
             $process->getName(),
             $stateMachineName,
-            array_keys($stateToTransitionsMap)
+            array_keys($stateToTransitionsMap),
         );
 
         $stateMachineItems = $this->stateMachineHandlerResolver
@@ -245,7 +245,7 @@ class Condition implements ConditionInterface
 
             $process = $this->finder->findProcessByStateMachineAndProcessName(
                 $stateMachineName,
-                $stateMachineItemTransfer->getProcessName()
+                $stateMachineItemTransfer->getProcessName(),
             );
 
             $sourceState = $process->getStateFromAllProcesses($stateName);
@@ -260,7 +260,7 @@ class Condition implements ConditionInterface
                     $transitions,
                     $stateMachineItemTransfer,
                     $sourceState,
-                    $this->transitionLog
+                    $this->transitionLog,
                 );
             }
 
@@ -323,8 +323,8 @@ class Condition implements ConditionInterface
                 sprintf(
                     'Condition plugin "%s" not registered in "%s" class. Please add it to getConditionPlugins() method.',
                     $conditionString,
-                    get_class($this->stateMachineHandlerResolver)
-                )
+                    get_class($this->stateMachineHandlerResolver),
+                ),
             );
         }
     }

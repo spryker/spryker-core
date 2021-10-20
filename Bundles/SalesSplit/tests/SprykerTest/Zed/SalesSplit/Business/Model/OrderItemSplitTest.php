@@ -66,11 +66,11 @@ class OrderItemSplitTest extends Unit
 
         $oldSalesOrderItemArray = $this->filterOutNotCopiedFields(
             $oldSalesOrderItemArray,
-            $this->notCopiedOrderItemFields
+            $this->notCopiedOrderItemFields,
         );
         $copyOfItemSalesOrderItemArray = $this->filterOutNotCopiedFields(
             $copyOfItemSalesOrderItemArray,
-            $this->notCopiedOrderItemFields
+            $this->notCopiedOrderItemFields,
         );
 
         $this->assertEquals($oldSalesOrderItemArray, $copyOfItemSalesOrderItemArray);

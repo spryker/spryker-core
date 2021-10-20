@@ -296,17 +296,17 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
                     (new Join(
                         SpyGlossaryKeyTableMap::COL_ID_GLOSSARY_KEY,
                         SpyGlossaryTranslationTableMap::COL_FK_GLOSSARY_KEY,
-                        Criteria::LEFT_JOIN
+                        Criteria::LEFT_JOIN,
                     ))->setRightTableAlias('translation_' . $idLocale . '_'),
-                    'translation_' . $idLocale . 'join'
+                    'translation_' . $idLocale . 'join',
                 )
                 ->addJoinCondition(
                     'translation_' . $idLocale . 'join',
-                    'translation_' . $idLocale . '_.fk_locale = ' . $idLocale
+                    'translation_' . $idLocale . '_.fk_locale = ' . $idLocale,
                 );
 
             $translationQuery->withColumn(
-                'translation_' . $idLocale . '_.value'
+                'translation_' . $idLocale . '_.value',
             );
         }
         $translationQuery->groupByIdGlossaryKey();

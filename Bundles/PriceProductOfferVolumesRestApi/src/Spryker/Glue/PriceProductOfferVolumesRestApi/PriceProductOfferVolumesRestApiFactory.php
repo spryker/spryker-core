@@ -20,7 +20,7 @@ class PriceProductOfferVolumesRestApiFactory extends AbstractFactory
     public function createRestProductOfferPricesAttributesMapper(): RestProductOfferPricesAttributesMapperInterface
     {
         return new RestProductOfferPricesAttributesMapper(
-            $this->getUtilEncodingService()
+            $this->getUtilEncodingService(),
         );
     }
 

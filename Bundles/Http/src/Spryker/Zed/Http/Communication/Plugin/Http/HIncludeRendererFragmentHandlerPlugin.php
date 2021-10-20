@@ -60,7 +60,7 @@ class HIncludeRendererFragmentHandlerPlugin extends AbstractPlugin implements Fr
             $container->get(static::SERVICE_TWIG),
             $this->getFactory()->createUriSigner(),
             $this->getConfig()->getHIncludeRendererGlobalTemplate(),
-            $container->get(static::SERVICE_CHARSET)
+            $container->get(static::SERVICE_CHARSET),
         );
         $renderer->setFragmentPath($this->getConfig()->getHttpFragmentPath());
 

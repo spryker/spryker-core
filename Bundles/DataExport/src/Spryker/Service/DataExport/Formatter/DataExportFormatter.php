@@ -101,7 +101,7 @@ class DataExportFormatter implements DataExportFormatterInterface
     protected function createFormatterNotFoundResponse(DataExportConfigurationTransfer $dataExportConfigurationTransfer): DataExportFormatResponseTransfer
     {
         $messageTransfer = (new MessageTransfer())->setValue(
-            sprintf(static::MESSAGE_FORMATTER_PLUGIN_NOT_FOUND, $dataExportConfigurationTransfer->getFormatOrFail()->getType())
+            sprintf(static::MESSAGE_FORMATTER_PLUGIN_NOT_FOUND, $dataExportConfigurationTransfer->getFormatOrFail()->getType()),
         );
 
         return (new DataExportFormatResponseTransfer())

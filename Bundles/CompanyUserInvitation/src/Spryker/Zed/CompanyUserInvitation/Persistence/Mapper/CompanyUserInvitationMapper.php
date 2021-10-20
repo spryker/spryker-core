@@ -46,15 +46,15 @@ class CompanyUserInvitationMapper implements CompanyUserInvitationMapperInterfac
         $companyUserInvitationTransfer->fromArray($spyCompanyUserInvitation->toArray(), true);
 
         $companyUserInvitationTransfer->setCompanyUserInvitationStatusKey(
-            $spyCompanyUserInvitation->getSpyCompanyUserInvitationStatus()->getStatusKey()
+            $spyCompanyUserInvitation->getSpyCompanyUserInvitationStatus()->getStatusKey(),
         );
 
         $companyUserInvitationTransfer->setCompanyId(
-            $spyCompanyUserInvitation->getSpyCompanyBusinessUnit()->getFkCompany()
+            $spyCompanyUserInvitation->getSpyCompanyBusinessUnit()->getFkCompany(),
         );
 
         $companyUserInvitationTransfer->setCompanyBusinessUnitName(
-            $spyCompanyUserInvitation->getSpyCompanyBusinessUnit()->getName()
+            $spyCompanyUserInvitation->getSpyCompanyBusinessUnit()->getName(),
         );
 
         return $companyUserInvitationTransfer;

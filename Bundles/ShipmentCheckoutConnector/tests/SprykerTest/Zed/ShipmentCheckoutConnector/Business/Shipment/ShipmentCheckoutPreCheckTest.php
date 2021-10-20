@@ -88,11 +88,11 @@ class ShipmentCheckoutPreCheckTest extends Test
         $quoteTransfer = (new QuoteBuilder())
             ->withItem(
                 (new ItemBuilder())
-                ->withShipment(new ShipmentBuilder())
+                ->withShipment(new ShipmentBuilder()),
             )
             ->withAnotherItem(
                 (new ItemBuilder())
-                ->withAnotherShipment(new ShipmentBuilder())
+                ->withAnotherShipment(new ShipmentBuilder()),
             )
             ->build();
 
@@ -120,11 +120,11 @@ class ShipmentCheckoutPreCheckTest extends Test
         $quoteTransfer = (new QuoteBuilder())
             ->withItem(
                 (new ItemBuilder())
-                    ->withShipment(new ShipmentBuilder())
+                    ->withShipment(new ShipmentBuilder()),
             )
             ->withAnotherItem(
                 (new ItemBuilder())
-                    ->withShipment(new ShipmentBuilder())
+                    ->withShipment(new ShipmentBuilder()),
             )
             ->build();
 
@@ -152,11 +152,11 @@ class ShipmentCheckoutPreCheckTest extends Test
         $quoteTransfer = (new QuoteBuilder())
             ->withItem(
                 (new ItemBuilder())
-                    ->withShipment(new ShipmentBuilder())
+                    ->withShipment(new ShipmentBuilder()),
             )
             ->withAnotherItem(
                 (new ItemBuilder())
-                    ->withAnotherShipment(new ShipmentBuilder())
+                    ->withAnotherShipment(new ShipmentBuilder()),
             )
             ->build();
 

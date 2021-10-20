@@ -30,13 +30,13 @@ class ProductConfigurationRepository extends AbstractRepository implements Produ
 
         $productConfigurationQuery = $this->setProductConfigurationFilters(
             $productConfigurationQuery,
-            $productConfigurationFilterTransfer
+            $productConfigurationFilterTransfer,
         );
 
         return $this->getFactory()->createProductConfigurationMapper()
             ->mapProductConfigurationEntityCollectionToProductConfigurationTransferCollection(
                 new ProductConfigurationCollectionTransfer(),
-                $productConfigurationQuery->find()
+                $productConfigurationQuery->find(),
             );
     }
 
@@ -60,7 +60,7 @@ class ProductConfigurationRepository extends AbstractRepository implements Produ
             /** @var \Orm\Zed\ProductConfiguration\Persistence\SpyProductConfigurationQuery $productConfigurationQuery */
             $productConfigurationQuery = $this->buildQueryFromCriteria(
                 $productConfigurationQuery,
-                $productConfigurationFilterTransfer->getFilter()
+                $productConfigurationFilterTransfer->getFilter(),
             );
 
             $productConfigurationQuery->setFormatter(ModelCriteria::FORMAT_OBJECT);

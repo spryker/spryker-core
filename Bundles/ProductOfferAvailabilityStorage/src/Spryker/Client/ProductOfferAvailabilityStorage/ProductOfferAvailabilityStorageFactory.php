@@ -25,7 +25,7 @@ class ProductOfferAvailabilityStorageFactory extends AbstractFactory
         return new ProductOfferAvailabilityStorageReader(
             $this->getStorageClient(),
             $this->getSynchronizationService(),
-            $this->getUtilEncodingService()
+            $this->getUtilEncodingService(),
         );
     }
 

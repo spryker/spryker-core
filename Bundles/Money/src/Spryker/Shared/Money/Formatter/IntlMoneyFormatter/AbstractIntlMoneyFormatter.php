@@ -91,7 +91,7 @@ abstract class AbstractIntlMoneyFormatter implements MoneyFormatterInterface
         if (!isset(static::$formatters[static::class][$localeName])) {
             static::$formatters[static::class][$localeName] = new InnerFormatter(
                 $this->getNumberFormatter($localeName),
-                $this->getIsoCurrencies()
+                $this->getIsoCurrencies(),
             );
         }
 

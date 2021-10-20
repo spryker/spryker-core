@@ -55,7 +55,7 @@ class BrowserHelper extends Module
                         element.setAttribute('novalidate','novalidate')
                     }
                 );
-EOF
+EOF,
         );
     }
 

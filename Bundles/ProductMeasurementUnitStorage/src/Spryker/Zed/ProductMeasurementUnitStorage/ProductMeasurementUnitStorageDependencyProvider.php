@@ -81,7 +81,7 @@ class ProductMeasurementUnitStorageDependencyProvider extends AbstractBundleDepe
     {
         $container->set(static::FACADE_EVENT_BEHAVIOR, function (Container $container) {
             return new ProductMeasurementUnitStorageToEventBehaviorFacadeBridge(
-                $container->getLocator()->eventBehavior()->facade()
+                $container->getLocator()->eventBehavior()->facade(),
             );
         });
 
@@ -97,7 +97,7 @@ class ProductMeasurementUnitStorageDependencyProvider extends AbstractBundleDepe
     {
         $container->set(static::FACADE_PRODUCT_MEASUREMENT_UNIT, function (Container $container) {
             return new ProductMeasurementUnitStorageToProductMeasurementUnitFacadeBridge(
-                $container->getLocator()->productMeasurementUnit()->facade()
+                $container->getLocator()->productMeasurementUnit()->facade(),
             );
         });
 

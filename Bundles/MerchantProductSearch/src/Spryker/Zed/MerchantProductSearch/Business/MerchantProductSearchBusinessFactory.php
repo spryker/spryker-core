@@ -28,7 +28,7 @@ class MerchantProductSearchBusinessFactory extends AbstractBusinessFactory
         return new MerchantProductSearchWriter(
             $this->getEventBehaviorFacade(),
             $this->getProductPageSearchFacade(),
-            $this->getRepository()
+            $this->getRepository(),
         );
     }
 

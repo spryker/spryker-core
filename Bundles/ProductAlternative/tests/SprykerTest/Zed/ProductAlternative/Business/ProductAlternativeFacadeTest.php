@@ -169,7 +169,7 @@ class ProductAlternativeFacadeTest extends Unit
         // Act
         $productAbstractIds = array_map(
             'intval',
-            $this->tester->getFacade()->findProductAbstractIdsWhichConcreteHasAlternative()
+            $this->tester->getFacade()->findProductAbstractIdsWhichConcreteHasAlternative(),
         );
 
         // Assert

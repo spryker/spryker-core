@@ -33,7 +33,7 @@ class UserUpdateFormDataProvider extends UserFormDataProvider
 
         return array_combine(
             $userStatuses,
-            $userStatuses
+            $userStatuses,
         );
     }
 }

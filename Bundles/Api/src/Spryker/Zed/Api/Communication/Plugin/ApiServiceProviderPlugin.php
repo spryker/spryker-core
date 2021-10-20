@@ -65,7 +65,7 @@ class ApiServiceProviderPlugin extends AbstractPlugin implements ServiceProvider
                 [
                     $this->getControllerListener(),
                     'onKernelController',
-                ]
+                ],
             );
 
             return $dispatcher;

@@ -38,7 +38,7 @@ class ProductBundleReturnCreateFormHandler implements ProductBundleReturnCreateF
 
             $returnCreateRequestTransfer = $this->addBundleItemsToRequest(
                 $returnBundleItemFormData,
-                $returnCreateRequestTransfer
+                $returnCreateRequestTransfer,
             );
         }
 

@@ -125,7 +125,7 @@ EOF;
         } catch (ParseException $exception) {
             throw new ModuleException('OpenApi3', sprintf(
                 'OpenApi Schema validation has not passed: %s',
-                $exception->getMessage()
+                $exception->getMessage(),
             ));
         }
     }
@@ -194,7 +194,7 @@ EOF;
 
         throw new AssertionFailedError(sprintf(
             'No valid response code is found in the method definition for "%d"',
-            $responseCode
+            $responseCode,
         ));
     }
 
@@ -214,7 +214,7 @@ EOF;
 
         throw new AssertionFailedError(sprintf(
             'No valid response schema is found in the response definition for "%s"',
-            $contentType
+            $contentType,
         ));
     }
 }

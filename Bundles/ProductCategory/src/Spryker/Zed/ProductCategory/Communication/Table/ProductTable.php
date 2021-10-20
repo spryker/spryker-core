@@ -122,7 +122,7 @@ class ProductTable extends AbstractTable
             $htmlCheckbox = sprintf(
                 "<input id='all_products_checkbox_%d' class='all-products-checkbox' type='checkbox' data-info='%s'>",
                 $product[SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT],
-                $this->utilEncodingService->encodeJson($info)
+                $this->utilEncodingService->encodeJson($info),
             );
 
             $results[] = [

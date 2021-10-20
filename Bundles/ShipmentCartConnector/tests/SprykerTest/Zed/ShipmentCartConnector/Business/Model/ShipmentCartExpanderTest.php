@@ -90,13 +90,13 @@ class ShipmentCartExpanderTest extends Test
         // Assert
         $this->assertNull(
             $actualCartChangeTransfer->getQuote()->getShipment(),
-            'Quote shipment should not have been set.'
+            'Quote shipment should not have been set.',
         );
 
         $this->assertSame(
             $expectedPrice,
             $actualCartChangeTransfer->getQuote()->getExpenses()[0]->getUnitNetPrice(),
-            sprintf('Shipment price should not have been changed for shipment expense.')
+            sprintf('Shipment price should not have been changed for shipment expense.'),
         );
     }
 
@@ -132,13 +132,13 @@ class ShipmentCartExpanderTest extends Test
         $this->assertSame(
             $cartChangeTransfer->getQuote()->getShipment()->getMethod()->getPrices(),
             $actualCartChangeTransfer->getQuote()->getShipment()->getMethod()->getPrices(),
-            'Shipment price should not have been changed.'
+            'Shipment price should not have been changed.',
         );
 
         $this->assertSame(
             $expectedPrice,
             $actualCartChangeTransfer->getQuote()->getExpenses()[0]->getUnitNetPrice(),
-            sprintf('Shipment price should not have been changed for shipment expense.')
+            sprintf('Shipment price should not have been changed for shipment expense.'),
         );
     }
 
@@ -168,8 +168,8 @@ class ShipmentCartExpanderTest extends Test
                             ExpenseTransfer::TYPE => ShipmentCartConnectorConfig::SHIPMENT_EXPENSE_TYPE,
                             ExpenseTransfer::UNIT_PRICE => $netPriceAmountEur1,
                             ExpenseTransfer::UNIT_NET_PRICE => $netPriceAmountEur1,
-                        ]))
-                    )
+                        ])),
+                    ),
             )
             ->build();
 
@@ -194,13 +194,13 @@ class ShipmentCartExpanderTest extends Test
                     ->withPrice(
                         (new MoneyValueBuilder([MoneyValueTransfer::NET_AMOUNT => $netPriceAmountEur1]))
                             ->withCurrency([CurrencyTransfer::CODE => static::CURRENCY_CODE_EUR])
-                            ->withStore([StoreTransfer::NAME => static::DEFAULT_STORE_NAME])
+                            ->withStore([StoreTransfer::NAME => static::DEFAULT_STORE_NAME]),
                     )
                     ->withAnotherPrice(
                         (new MoneyValueBuilder([MoneyValueTransfer::NET_AMOUNT => $netPriceAmountUsd1]))
                             ->withCurrency([CurrencyTransfer::CODE => static::CURRENCY_CODE_USD])
-                            ->withStore([StoreTransfer::NAME => static::DEFAULT_STORE_NAME])
-                    )
+                            ->withStore([StoreTransfer::NAME => static::DEFAULT_STORE_NAME]),
+                    ),
             )->build();
 
         $cartChangeTransfer = (new CartChangeBuilder())
@@ -213,8 +213,8 @@ class ShipmentCartExpanderTest extends Test
                             ExpenseTransfer::TYPE => ShipmentCartConnectorConfig::SHIPMENT_EXPENSE_TYPE,
                             ExpenseTransfer::UNIT_PRICE => $netPriceAmountEur1,
                             ExpenseTransfer::UNIT_NET_PRICE => $netPriceAmountEur1,
-                        ]))
-                    )
+                        ])),
+                    ),
             )
             ->build();
 
@@ -249,7 +249,7 @@ class ShipmentCartExpanderTest extends Test
             $this->assertSame(
                 $expectedPrices[$shipmentMethodTransfer->getName()][$cartChangeTransfer->getQuote()->getCurrency()->getCode()],
                 $expenseTransfer->getUnitNetPrice(),
-                sprintf('Shipment price should have been changed for shipment expense #%s.', $i)
+                sprintf('Shipment price should have been changed for shipment expense #%s.', $i),
             );
         }
     }
@@ -280,13 +280,13 @@ class ShipmentCartExpanderTest extends Test
                     ->withPrice(
                         (new MoneyValueBuilder([MoneyValueTransfer::NET_AMOUNT => $netPriceAmountEur1]))
                             ->withCurrency([CurrencyTransfer::CODE => static::CURRENCY_CODE_EUR])
-                            ->withStore([StoreTransfer::NAME => static::DEFAULT_STORE_NAME])
+                            ->withStore([StoreTransfer::NAME => static::DEFAULT_STORE_NAME]),
                     )
                     ->withAnotherPrice(
                         (new MoneyValueBuilder([MoneyValueTransfer::NET_AMOUNT => $netPriceAmountUsd1]))
                             ->withCurrency([CurrencyTransfer::CODE => static::CURRENCY_CODE_USD])
-                            ->withStore([StoreTransfer::NAME => static::DEFAULT_STORE_NAME])
-                    )
+                            ->withStore([StoreTransfer::NAME => static::DEFAULT_STORE_NAME]),
+                    ),
             )->build();
         $shipmentTransfer2 = (new ShipmentBuilder())
             ->withAnotherMethod(
@@ -294,13 +294,13 @@ class ShipmentCartExpanderTest extends Test
                     ->withAnotherPrice(
                         (new MoneyValueBuilder([MoneyValueTransfer::NET_AMOUNT => $netPriceAmountEur2]))
                             ->withCurrency([CurrencyTransfer::CODE => static::CURRENCY_CODE_EUR])
-                            ->withStore([StoreTransfer::NAME => static::DEFAULT_STORE_NAME])
+                            ->withStore([StoreTransfer::NAME => static::DEFAULT_STORE_NAME]),
                     )
                     ->withAnotherPrice(
                         (new MoneyValueBuilder([MoneyValueTransfer::NET_AMOUNT => $netPriceAmountUsd2]))
                             ->withCurrency([CurrencyTransfer::CODE => static::CURRENCY_CODE_USD])
-                            ->withStore([StoreTransfer::NAME => static::DEFAULT_STORE_NAME])
-                    )
+                            ->withStore([StoreTransfer::NAME => static::DEFAULT_STORE_NAME]),
+                    ),
             )->build();
 
         $cartChangeTransfer = (new CartChangeBuilder())
@@ -316,15 +316,15 @@ class ShipmentCartExpanderTest extends Test
                         ExpenseTransfer::TYPE => ShipmentCartConnectorConfig::SHIPMENT_EXPENSE_TYPE,
                         ExpenseTransfer::UNIT_PRICE => $netPriceAmountEur1,
                         ExpenseTransfer::UNIT_NET_PRICE => $netPriceAmountEur1,
-                    ]))
+                    ])),
                 )
                 ->withAnotherExpense(
                     (new ExpenseBuilder([
                         ExpenseTransfer::TYPE => ShipmentCartConnectorConfig::SHIPMENT_EXPENSE_TYPE,
                         ExpenseTransfer::UNIT_PRICE => $netPriceAmountEur2,
                         ExpenseTransfer::UNIT_NET_PRICE => $netPriceAmountEur2,
-                    ]))
-                )
+                    ])),
+                ),
             )
             ->build();
 
@@ -373,7 +373,7 @@ class ShipmentCartExpanderTest extends Test
                 ->haveShipmentMethod(
                     $shipmentData,
                     [],
-                    $this->prepareShipmentMethodPriceListBuilderOptions($expenseTransfer->getShipment()->getMethod())
+                    $this->prepareShipmentMethodPriceListBuilderOptions($expenseTransfer->getShipment()->getMethod()),
                 );
             $expenseTransfer->getShipment()->getMethod()->setIdShipmentMethod($shipmentTransfer->getIdShipmentMethod());
         }

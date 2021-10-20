@@ -29,7 +29,7 @@ class QueryContainerMethodBuilder extends AbstractBundleMethodBuilder
         return sprintf(
             '%s%s/Persistence/',
             $bundleTransfer->getDirectory(),
-            $bundleTransfer->getName()
+            $bundleTransfer->getName(),
         );
     }
 }

@@ -397,7 +397,7 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
     {
         $container->set(static::SERVICE_PRICE_PRODUCT, function (Container $container): ProductPageSearchToPriceProductServiceInterface {
             return new ProductPageSearchToPriceProductServiceBridge(
-                $container->getLocator()->priceProduct()->service()
+                $container->getLocator()->priceProduct()->service(),
             );
         });
 

@@ -42,7 +42,7 @@ class CreateGlossaryController extends AbstractController
 
         if (!$cmsGlossaryTransfer) {
             throw new NotFoundHttpException(
-                sprintf('Cms page with id "%d" not found!', $idCmsPage)
+                sprintf('Cms page with id "%d" not found!', $idCmsPage),
             );
         }
 
@@ -146,7 +146,7 @@ class CreateGlossaryController extends AbstractController
 
         $redirectUrl = Url::generate(
             '/cms-gui/create-glossary/index',
-            [static::URL_PARAM_ID_CMS_PAGE => $idCmsPage]
+            [static::URL_PARAM_ID_CMS_PAGE => $idCmsPage],
         )->build();
 
         return $this->redirectResponse($redirectUrl);

@@ -60,7 +60,7 @@ class SharedCartCreator implements SharedCartCreatorInterface
                 ->requireIdQuotePermissionGroup();
 
         $quoteResponseTransfer = $this->quoteFacade->findQuoteByUuid(
-            (new QuoteTransfer())->setUuid($shareCartRequestTransfer->getQuoteUuid())
+            (new QuoteTransfer())->setUuid($shareCartRequestTransfer->getQuoteUuid()),
         );
 
         if (!$quoteResponseTransfer->getIsSuccessful()) {
@@ -69,7 +69,7 @@ class SharedCartCreator implements SharedCartCreatorInterface
 
         $quotePermissionGroupResponseTransfer = $this->sharedCartFacade->findQuotePermissionGroupById(
             (new QuotePermissionGroupTransfer())
-                ->setIdQuotePermissionGroup($shareDetailTransfer->getQuotePermissionGroup()->getIdQuotePermissionGroup())
+                ->setIdQuotePermissionGroup($shareDetailTransfer->getQuotePermissionGroup()->getIdQuotePermissionGroup()),
         );
 
         if (!$quotePermissionGroupResponseTransfer->getIsSuccessful()) {
@@ -85,11 +85,11 @@ class SharedCartCreator implements SharedCartCreatorInterface
 
         $quoteCompanyUserTransfer = $this->createQuoteCompanyUserTransfer(
             $quoteTransfer->getIdQuote(),
-            $shareDetailTransfer
+            $shareDetailTransfer,
         );
 
         $shareDetailCollectionTransfer = $this->sharedCartFacade->getShareDetailCollectionByShareDetailCriteria(
-            $this->createShareDetailCriteriaFilterTransfer($quoteTransfer, $quoteCompanyUserTransfer)
+            $this->createShareDetailCriteriaFilterTransfer($quoteTransfer, $quoteCompanyUserTransfer),
         );
 
         if ($shareDetailCollectionTransfer->getShareDetails()->count()) {

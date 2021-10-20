@@ -44,7 +44,7 @@ class ProductOfferReservationGuiDependencyProvider extends AbstractBundleDepende
     {
         $container->set(static::FACADE_OMS_PRODUCT_OFFER_RESERVATION, function (Container $container) {
             return new ProductOfferReservationGuiToOmsProductOfferReservationFacadeBridge(
-                $container->getLocator()->omsProductOfferReservation()->facade()
+                $container->getLocator()->omsProductOfferReservation()->facade(),
             );
         });
 

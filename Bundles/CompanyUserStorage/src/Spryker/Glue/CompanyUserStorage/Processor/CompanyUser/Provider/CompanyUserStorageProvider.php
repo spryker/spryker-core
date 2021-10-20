@@ -49,7 +49,7 @@ class CompanyUserStorageProvider implements CompanyUserStorageProviderInterface
     {
         $companyUserStorageTransfer = $this->companyUserStorageClient->findCompanyUserByMapping(
             static::MAPPING_TYPE_UUID,
-            $companyUserTransfer->getUuid()
+            $companyUserTransfer->getUuid(),
         );
 
         if (!$companyUserStorageTransfer) {
@@ -58,7 +58,7 @@ class CompanyUserStorageProvider implements CompanyUserStorageProviderInterface
 
         return $this->companyUserStorageMapper->mapCompanyUserStorageTransferToCompanyUserTransfer(
             $companyUserStorageTransfer,
-            $companyUserTransfer
+            $companyUserTransfer,
         );
     }
 }

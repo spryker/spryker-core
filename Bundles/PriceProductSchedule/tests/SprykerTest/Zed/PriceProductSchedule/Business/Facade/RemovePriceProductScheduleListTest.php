@@ -154,7 +154,7 @@ class RemovePriceProductScheduleListTest extends Unit
         $this->assertCount(
             0,
             $priceProductScheduleListCollection,
-            'Count of scheduled price lists does not match expected value'
+            'Count of scheduled price lists does not match expected value',
         );
     }
 
@@ -261,7 +261,7 @@ class RemovePriceProductScheduleListTest extends Unit
         $this->assertCount(
             0,
             $priceProductScheduleListCollection,
-            'Count of scheduled price lists does not match expected value'
+            'Count of scheduled price lists does not match expected value',
         );
     }
 
@@ -368,7 +368,7 @@ class RemovePriceProductScheduleListTest extends Unit
         $this->assertCount(
             0,
             $priceProductScheduleListCollection,
-            'Count of scheduled price lists does not match expected value'
+            'Count of scheduled price lists does not match expected value',
         );
     }
 
@@ -473,7 +473,7 @@ class RemovePriceProductScheduleListTest extends Unit
         $this->assertCount(
             0,
             $priceProductScheduleListCollection,
-            'Count of scheduled price lists does not match expected value'
+            'Count of scheduled price lists does not match expected value',
         );
     }
 
@@ -580,7 +580,7 @@ class RemovePriceProductScheduleListTest extends Unit
         $this->assertCount(
             0,
             $priceProductScheduleListCollection,
-            'Count of scheduled price lists does not match expected value'
+            'Count of scheduled price lists does not match expected value',
         );
     }
 
@@ -650,10 +650,10 @@ class RemovePriceProductScheduleListTest extends Unit
             ])
             ->getMock();
         $storeFacade = new PriceProductScheduleToStoreFacadeBridge(
-            $this->tester->getLocator()->store()->facade()
+            $this->tester->getLocator()->store()->facade(),
         );
         $priceProductFacade = new PriceProductScheduleToPriceProductFacadeBridge(
-            $this->tester->getLocator()->priceProduct()->facade()
+            $this->tester->getLocator()->priceProduct()->facade(),
         );
         $priceProductScheduleConfig = new PriceProductScheduleConfig();
         $priceProductScheduleBusinessFactory->method('getStoreFacade')

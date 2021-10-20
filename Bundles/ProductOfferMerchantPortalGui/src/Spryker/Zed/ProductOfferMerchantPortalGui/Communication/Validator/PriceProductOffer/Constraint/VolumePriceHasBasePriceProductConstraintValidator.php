@@ -49,7 +49,7 @@ class VolumePriceHasBasePriceProductConstraintValidator extends AbstractConstrai
             $this->validatePriceProductOffer(
                 $priceProductOfferTransfer,
                 $volumePriceHasBasePriceProductConstraint,
-                $priceProductOfferIndex
+                $priceProductOfferIndex,
             );
         }
     }
@@ -75,7 +75,7 @@ class VolumePriceHasBasePriceProductConstraintValidator extends AbstractConstrai
                 $priceProductTransfer,
                 $volumePriceHasBasePriceProductConstraint,
                 $priceProductOfferIndex,
-                $priceProductIndex
+                $priceProductIndex,
             );
         }
     }
@@ -117,7 +117,7 @@ class VolumePriceHasBasePriceProductConstraintValidator extends AbstractConstrai
             $violationPath = $this->createViolationPath(
                 $priceProductOfferIndex,
                 $priceProductIndex,
-                $volumePriceIndex
+                $volumePriceIndex,
             );
 
             $this->context
@@ -169,7 +169,7 @@ class VolumePriceHasBasePriceProductConstraintValidator extends AbstractConstrai
             PriceProductTransfer::MONEY_VALUE,
             MoneyValueTransfer::PRICE_DATA,
             static::VOLUME_PRICE_TYPE,
-            $volumePriceIndex
+            $volumePriceIndex,
         );
     }
 }

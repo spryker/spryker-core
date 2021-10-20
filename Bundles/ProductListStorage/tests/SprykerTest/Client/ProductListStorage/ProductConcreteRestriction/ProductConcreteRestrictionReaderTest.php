@@ -126,12 +126,12 @@ class ProductConcreteRestrictionReaderTest extends Unit
         $customerClientMock = $this->createCustomerClientMock($customerData['whitelist'], $customerData['blacklist']);
         $productListProductConcreteStorageReader = $this->createProductListProductConcreteStorageReader(
             $productData['whitelist'],
-            $productData['blacklist']
+            $productData['blacklist'],
         );
 
         $productConcreteRestrictionReader = new ProductConcreteRestrictionReader(
             $customerClientMock,
-            $productListProductConcreteStorageReader
+            $productListProductConcreteStorageReader,
         );
 
         $actualResult = $productConcreteRestrictionReader->isProductConcreteRestricted(self::CONCRETE_PRODUCT_ID);

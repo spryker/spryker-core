@@ -60,7 +60,7 @@ class CartValidator implements CartValidatorInterface
                     (new MessageTransfer())
                         ->setType(static::MESSAGE_TYPE_ERROR)
                         ->setValue(static::GLOSSARY_KEY_ERROR_INVALID_PROMOTIONAL_ITEM)
-                        ->setParameters([static::GLOSSARY_KEY_PARAM_SKU => $promotionItemTransfer->getSku()])
+                        ->setParameters([static::GLOSSARY_KEY_PARAM_SKU => $promotionItemTransfer->getSku()]),
                 );
         }
 

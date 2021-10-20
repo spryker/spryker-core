@@ -24,7 +24,7 @@ class ApiQueryBuilderPersistenceFactory extends AbstractPersistenceFactory
     {
         return new ApiRequestMapper(
             $this->getPropelQueryBuilderQueryContainer(),
-            $this->getQueryContainer()
+            $this->getQueryContainer(),
         );
     }
 

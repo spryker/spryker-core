@@ -25,7 +25,7 @@ class CustomerMapper implements CustomerMapperInterface
         $customerTransfer = (new CustomerTransfer())
             ->fromArray(
                 $customer,
-                true
+                true,
             );
 
         return $customerTransfer;

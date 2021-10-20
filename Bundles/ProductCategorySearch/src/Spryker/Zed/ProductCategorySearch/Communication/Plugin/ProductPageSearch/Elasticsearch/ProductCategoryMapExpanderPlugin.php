@@ -46,7 +46,7 @@ class ProductCategoryMapExpanderPlugin extends AbstractPlugin implements Product
             $pageMapTransfer,
             $pageMapBuilder,
             $productData,
-            $localeTransfer
+            $localeTransfer,
         );
     }
 }

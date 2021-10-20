@@ -176,7 +176,7 @@ class QuoteStorageStrategyProxy implements QuoteStorageStrategyProxyInterface
 
         if (!$this->quoteStorageStrategy instanceof CartOperationQuoteStorageStrategyPluginInterface) {
             throw new QuoteStorageStrategyPluginNotFound(
-                'Quote storage strategy should implement CartOperationQuoteStorageStrategyPluginInterface in order to use `addToCart` functionality.'
+                'Quote storage strategy should implement CartOperationQuoteStorageStrategyPluginInterface in order to use `addToCart` functionality.',
             );
         }
 
@@ -200,7 +200,7 @@ class QuoteStorageStrategyProxy implements QuoteStorageStrategyProxyInterface
 
         if (!$this->quoteStorageStrategy instanceof CartOperationQuoteStorageStrategyPluginInterface) {
             throw new QuoteStorageStrategyPluginNotFound(
-                'Quote storage strategy should implement CartOperationQuoteStorageStrategyPluginInterface in order to use `removeFromCart` functionality.'
+                'Quote storage strategy should implement CartOperationQuoteStorageStrategyPluginInterface in order to use `removeFromCart` functionality.',
             );
         }
 
@@ -224,7 +224,7 @@ class QuoteStorageStrategyProxy implements QuoteStorageStrategyProxyInterface
 
         if (!$this->quoteStorageStrategy instanceof CartOperationQuoteStorageStrategyPluginInterface) {
             throw new QuoteStorageStrategyPluginNotFound(
-                'Quote storage strategy should implement CartOperationQuoteStorageStrategyPluginInterface in order to use `updateQuantity` functionality.'
+                'Quote storage strategy should implement CartOperationQuoteStorageStrategyPluginInterface in order to use `updateQuantity` functionality.',
             );
         }
 
@@ -252,7 +252,7 @@ class QuoteStorageStrategyProxy implements QuoteStorageStrategyProxyInterface
 
         if (!$this->quoteStorageStrategy instanceof ReplaceableQuoteItemStorageStrategyPluginInterface) {
             throw new QuoteStorageStrategyPluginNotFound(
-                'Quote storage strategy should implement ReplaceableQuoteItemStorageStrategyPluginInterface in order to use `replaceItem` functionality.'
+                'Quote storage strategy should implement ReplaceableQuoteItemStorageStrategyPluginInterface in order to use `replaceItem` functionality.',
             );
         }
 
@@ -342,7 +342,7 @@ class QuoteStorageStrategyProxy implements QuoteStorageStrategyProxyInterface
     {
         if (!$this->quoteStorageStrategy instanceof QuoteResetLockQuoteStorageStrategyPluginInterface) {
             throw new QuoteStorageStrategyPluginNotFound(
-                'Quote storage strategy should implement QuoteResetLockQuoteStorageStrategyPluginInterface in order to use `resetQuoteLock` functionality.'
+                'Quote storage strategy should implement QuoteResetLockQuoteStorageStrategyPluginInterface in order to use `resetQuoteLock` functionality.',
             );
         }
 

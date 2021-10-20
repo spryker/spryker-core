@@ -96,8 +96,8 @@ class ProductOfferVolumePriceExtractor implements ProductOfferVolumePriceExtract
                 sprintf(
                     '%s-%s',
                     $priceProductTransfer->getGroupKey(),
-                    $volumePriceData[PriceProductOfferVolumeConfig::VOLUME_PRICE_QUANTITY]
-                )
+                    $volumePriceData[PriceProductOfferVolumeConfig::VOLUME_PRICE_QUANTITY],
+                ),
             )
             ->setIsMergeable(false);
 
@@ -109,7 +109,7 @@ class ProductOfferVolumePriceExtractor implements ProductOfferVolumePriceExtract
             ->setPriceData(
                 $this->utilEncodingService->encodeJson([
                     PriceProductOfferVolumeConfig::VOLUME_PRICE_QUANTITY => $volumePriceData[PriceProductOfferVolumeConfig::VOLUME_PRICE_QUANTITY],
-                ])
+                ]),
             );
 
         return $priceProductTransfer->setMoneyValue($moneyValueTransfer);

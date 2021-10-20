@@ -59,7 +59,7 @@ class MerchantRelationshipPriceQueryExpander implements MerchantRelationshipPric
                 (new QueryJoinTransfer())
                     ->setLeft([static::COL_ID_PRICE_PRODUCT_STORE])
                     ->setRight([SpyPriceProductMerchantRelationshipTableMap::COL_FK_PRICE_PRODUCT_STORE])
-                    ->setJoinType(Criteria::LEFT_JOIN)
+                    ->setJoinType(Criteria::LEFT_JOIN),
             );
     }
 
@@ -113,7 +113,7 @@ class MerchantRelationshipPriceQueryExpander implements MerchantRelationshipPric
                     ->setRelation('PriceProductMerchantRelationship')
                     ->setCondition(SpyPriceProductMerchantRelationshipTableMap::COL_FK_MERCHANT_RELATIONSHIP
                         . ' IN (' . implode(',', $merchantRelationshipIds) . ')')
-                    ->setJoinType(Criteria::LEFT_JOIN)
+                    ->setJoinType(Criteria::LEFT_JOIN),
             );
     }
 }

@@ -39,7 +39,7 @@ class QuoteRequestFactory extends AbstractFactory
             $this->getPersistentCartClient(),
             $this->getQuoteClient(),
             $this->getCartClient(),
-            $this->createQuoteRequestStatus()
+            $this->createQuoteRequestStatus(),
         );
     }
 
@@ -49,7 +49,7 @@ class QuoteRequestFactory extends AbstractFactory
     public function createQuoteValidator(): QuoteValidatorInterface
     {
         return new QuoteValidator(
-            $this->getQuoteRequestQuoteCheckPlugins()
+            $this->getQuoteRequestQuoteCheckPlugins(),
         );
     }
 
@@ -60,7 +60,7 @@ class QuoteRequestFactory extends AbstractFactory
     {
         return new QuoteRequestCreator(
             $this->createQuoteRequestStub(),
-            $this->createQuoteValidator()
+            $this->createQuoteValidator(),
         );
     }
 

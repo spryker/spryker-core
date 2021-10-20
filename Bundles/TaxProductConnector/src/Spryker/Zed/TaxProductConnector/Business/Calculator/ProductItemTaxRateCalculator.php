@@ -88,7 +88,7 @@ class ProductItemTaxRateCalculator implements CalculatorInterface
         $foundResults = $this->taxQueryContainer
             ->queryTaxSetByIdProductAbstractAndCountryIso2Codes(
                 $this->getIdProductAbstruct($itemTransfers),
-                $this->getCountryIso2Codes($itemTransfers)
+                $this->getCountryIso2Codes($itemTransfers),
             )
             ->find();
 
@@ -98,7 +98,7 @@ class ProductItemTaxRateCalculator implements CalculatorInterface
             $taxRate = $this->getEffectiveTaxRate(
                 $taxRatesByIdProductAbstractAndCountry,
                 $itemTransfer->getIdProductAbstract(),
-                $this->getShippingCountryIso2CodeByItem($itemTransfer)
+                $this->getShippingCountryIso2CodeByItem($itemTransfer),
             );
             $itemTransfer->setTaxRate($taxRate);
         }

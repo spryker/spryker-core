@@ -94,7 +94,7 @@ class UtilDataReaderServiceFactory extends AbstractServiceFactory
         return new YamlBatchIterator(
             $this->getYamlReader(),
             $fileName,
-            $chunkSize
+            $chunkSize,
         );
     }
 

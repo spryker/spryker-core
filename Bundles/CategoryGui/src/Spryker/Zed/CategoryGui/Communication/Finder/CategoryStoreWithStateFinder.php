@@ -55,7 +55,7 @@ class CategoryStoreWithStateFinder implements CategoryStoreWithStateFinderInterf
         $storeTransfers = $this->storeFacade->getStoresAvailableForCurrentPersistence();
 
         $categoryTransfer = $this->categoryFacade->findCategory(
-            (new CategoryCriteriaTransfer())->setIdCategoryNode($idCategoryNode)
+            (new CategoryCriteriaTransfer())->setIdCategoryNode($idCategoryNode),
         );
 
         if ($categoryTransfer === null || $categoryTransfer->getStoreRelation() === null) {

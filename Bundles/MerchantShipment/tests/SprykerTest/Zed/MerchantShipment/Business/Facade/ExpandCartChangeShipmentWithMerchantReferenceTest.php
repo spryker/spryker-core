@@ -58,11 +58,11 @@ class ExpandCartChangeShipmentWithMerchantReferenceTest extends Unit
         // Assert
         $this->assertSame(
             $cartChangeTransfer->getItems()->offsetGet(0)->getMerchantReference(),
-            $expandedCartChangeTransfer->getItems()->offsetGet(0)->getShipment()->getMerchantReference()
+            $expandedCartChangeTransfer->getItems()->offsetGet(0)->getShipment()->getMerchantReference(),
         );
         $this->assertSame(
             $cartChangeTransfer->getItems()->offsetGet(1)->getMerchantReference(),
-            $expandedCartChangeTransfer->getItems()->offsetGet(1)->getShipment()->getMerchantReference()
+            $expandedCartChangeTransfer->getItems()->offsetGet(1)->getShipment()->getMerchantReference(),
         );
     }
 
@@ -85,7 +85,7 @@ class ExpandCartChangeShipmentWithMerchantReferenceTest extends Unit
         $this->assertNull($expandedCartChangeTransfer->getItems()->offsetGet(0)->getShipment());
         $this->assertSame(
             $cartChangeTransfer->getItems()->offsetGet(1)->getMerchantReference(),
-            $expandedCartChangeTransfer->getItems()->offsetGet(1)->getShipment()->getMerchantReference()
+            $expandedCartChangeTransfer->getItems()->offsetGet(1)->getShipment()->getMerchantReference(),
         );
     }
 }

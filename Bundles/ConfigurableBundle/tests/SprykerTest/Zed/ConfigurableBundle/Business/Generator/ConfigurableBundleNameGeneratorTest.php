@@ -100,7 +100,7 @@ class ConfigurableBundleNameGeneratorTest extends Unit
 
         $configurableBundleTemplateTranslationTransfers = array_merge(
             [$firstConfigurableBundleTemplateTranslationTransfer],
-            $configurableBundleTemplateTranslationTransfers
+            $configurableBundleTemplateTranslationTransfers,
         );
 
         return (new ConfigurableBundleTemplateTransfer())

@@ -85,7 +85,7 @@ class ProductOfferTableQueryTest extends Unit
             $this->getProductOfferGuiToLocaleFacadeMock(),
             $this->getProductOfferGuiToProductOfferFacadeMock(),
             $productOfferGuiRepository,
-            []
+            [],
         );
 
         // Act

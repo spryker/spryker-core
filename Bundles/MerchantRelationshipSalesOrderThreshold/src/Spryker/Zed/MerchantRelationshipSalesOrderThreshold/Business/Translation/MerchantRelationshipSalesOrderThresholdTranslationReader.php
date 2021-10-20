@@ -51,7 +51,7 @@ class MerchantRelationshipSalesOrderThresholdTranslationReader implements Mercha
         foreach ($storeTransfer->getAvailableLocaleIsoCodes() as $localeIsoCode) {
             $this->initOrUpdateLocalizedMessages(
                 $merchantRelationshipSalesOrderThresholdTransfer,
-                $localeIsoCode
+                $localeIsoCode,
             );
         }
 
@@ -70,7 +70,7 @@ class MerchantRelationshipSalesOrderThresholdTranslationReader implements Mercha
     ): MerchantRelationshipSalesOrderThresholdTransfer {
         $translationValue = $this->findTranslationValue(
             $merchantRelationshipSalesOrderThresholdTransfer->getSalesOrderThresholdValue()->getMessageGlossaryKey(),
-            $this->createLocaleTransfer($localeIsoCode)
+            $this->createLocaleTransfer($localeIsoCode),
         );
 
         foreach ($merchantRelationshipSalesOrderThresholdTransfer->getLocalizedMessages() as $salesOrderThresholdLocalizedMessageTransfer) {
@@ -84,7 +84,7 @@ class MerchantRelationshipSalesOrderThresholdTranslationReader implements Mercha
         $merchantRelationshipSalesOrderThresholdTransfer->addLocalizedMessage(
             (new SalesOrderThresholdLocalizedMessageTransfer())
                 ->setLocaleCode($localeIsoCode)
-                ->setMessage($translationValue)
+                ->setMessage($translationValue),
         );
 
         return $merchantRelationshipSalesOrderThresholdTransfer;

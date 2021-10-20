@@ -52,7 +52,7 @@ class ContentBannerReader implements ContentBannerReaderInterface
         try {
             $contentBannerTypeTransfer = $this->contentBannerClient->executeBannerTypeByKey(
                 $contentBannerKey,
-                $restRequest->getMetadata()->getLocale()
+                $restRequest->getMetadata()->getLocale(),
             );
         } catch (MissingBannerTermException $bannerTermException) {
             return $this->contentBannerRestResponseBuilder->createContentTypeInvalidErrorResponse();
@@ -77,7 +77,7 @@ class ContentBannerReader implements ContentBannerReaderInterface
     {
         $contentBannerTypeTransfers = $this->contentBannerClient->executeBannerTypeByKeys(
             $contentBannerKeys,
-            $localeName
+            $localeName,
         );
 
         if (!$contentBannerTypeTransfers) {

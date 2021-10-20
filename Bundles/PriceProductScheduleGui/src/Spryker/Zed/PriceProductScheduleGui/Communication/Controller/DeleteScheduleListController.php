@@ -51,7 +51,7 @@ class DeleteScheduleListController extends AbstractController
     public function indexAction(Request $request)
     {
         $idPriceProductScheduleList = $this->castId(
-            $request->query->get(static::PARAM_ID_PRICE_PRODUCT_SCHEDULE_LIST)
+            $request->query->get(static::PARAM_ID_PRICE_PRODUCT_SCHEDULE_LIST),
         );
         $priceProductScheduleListResponseTransfer = $this->getFactory()
             ->getPriceProductScheduleFacade()

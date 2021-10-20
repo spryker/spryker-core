@@ -35,7 +35,7 @@ class AbstractPriceProductOfferController extends AbstractController
             ->getZedUiFactory()
             ->createZedUiFormResponseBuilder()
             ->addSuccessNotification(
-                $this->getFactory()->getTranslatorFacade()->trans(static::RESPONSE_NOTIFICATION_MESSAGE_SUCCESS)
+                $this->getFactory()->getTranslatorFacade()->trans(static::RESPONSE_NOTIFICATION_MESSAGE_SUCCESS),
             )
             ->addActionRefreshTable()
             ->createResponse();
@@ -51,7 +51,7 @@ class AbstractPriceProductOfferController extends AbstractController
     protected function createErrorJsonResponse(?string $message = null): JsonResponse
     {
         $message = $this->getFactory()->getTranslatorFacade()->trans(
-            $message ?? static::RESPONSE_NOTIFICATION_MESSAGE_ERROR
+            $message ?? static::RESPONSE_NOTIFICATION_MESSAGE_ERROR,
         );
 
         $zedUiFormResponseTransfer = $this->getFactory()

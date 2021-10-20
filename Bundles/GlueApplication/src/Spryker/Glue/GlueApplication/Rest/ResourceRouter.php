@@ -84,7 +84,7 @@ class ResourceRouter implements ResourceRouterInterface
         $route = $this->resourceRouteLoader->load(
             $resourceType[RequestConstantsInterface::ATTRIBUTE_TYPE],
             $resources,
-            $httpRequest
+            $httpRequest,
         );
 
         if (!$this->isValidRoute($route, $resources, $httpRequest)) {
@@ -109,7 +109,7 @@ class ResourceRouter implements ResourceRouterInterface
             $this->application,
             new BundleControllerAction($module, $controller, $action),
             new ControllerResolver(),
-            $routerResolver
+            $routerResolver,
         );
 
         return [
@@ -188,7 +188,7 @@ class ResourceRouter implements ResourceRouterInterface
         $routeParams = $this->createRoute(
             $route[RequestConstantsInterface::ATTRIBUTE_MODULE],
             $route[RequestConstantsInterface::ATTRIBUTE_CONTROLLER],
-            $route[RequestConstantsInterface::ATTRIBUTE_CONFIGURATION]['action']
+            $route[RequestConstantsInterface::ATTRIBUTE_CONFIGURATION]['action'],
         );
 
         $routeParams = array_merge(
@@ -199,7 +199,7 @@ class ResourceRouter implements ResourceRouterInterface
                 RequestConstantsInterface::ATTRIBUTE_RESOURCE_FQCN => $route[RequestConstantsInterface::ATTRIBUTE_RESOURCE_FQCN],
                 RequestConstantsInterface::ATTRIBUTE_CONTEXT => $route[RequestConstantsInterface::ATTRIBUTE_CONFIGURATION]['context'],
                 RequestConstantsInterface::ATTRIBUTE_IS_PROTECTED => $route[RequestConstantsInterface::ATTRIBUTE_CONFIGURATION]['is_protected'],
-            ]
+            ],
         );
 
         foreach ($this->routerParameterExpanderPlugins as $routerParameterExpanderPlugin) {

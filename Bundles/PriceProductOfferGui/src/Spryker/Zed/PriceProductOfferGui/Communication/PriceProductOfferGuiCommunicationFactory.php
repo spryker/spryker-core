@@ -28,7 +28,7 @@ class PriceProductOfferGuiCommunicationFactory extends AbstractCommunicationFact
         return new PriceProductOfferReader(
             $this->getPriceProductFacade(),
             $this->getPriceFacade(),
-            $this->getUtilEncodingService()
+            $this->getUtilEncodingService(),
         );
     }
 

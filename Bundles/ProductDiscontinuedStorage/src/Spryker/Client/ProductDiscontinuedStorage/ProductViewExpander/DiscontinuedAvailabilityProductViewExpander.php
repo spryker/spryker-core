@@ -37,7 +37,7 @@ class DiscontinuedAvailabilityProductViewExpander implements DiscontinuedAvailab
             ->findProductDiscontinuedStorage($productViewTransfer->getSku(), $localeName);
 
         return $productViewTransfer->setAvailable(
-            $productViewTransfer->getAvailable() && !$productDiscontinuedTransfer
+            $productViewTransfer->getAvailable() && !$productDiscontinuedTransfer,
         );
     }
 }

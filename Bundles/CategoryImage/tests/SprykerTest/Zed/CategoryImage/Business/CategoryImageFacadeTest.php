@@ -44,7 +44,7 @@ class CategoryImageFacadeTest extends Test
     {
         // Assign
         $categoryImageSetTransferCollection = $this->buildCategoryImageSetTransferCollection(
-            rand(1, static::MAX_CATEGORY_IMAGE_SET_COUNT)
+            rand(1, static::MAX_CATEGORY_IMAGE_SET_COUNT),
         );
         $categoryTransfer = $this->tester->haveCategory();
         $categoryTransfer->setImageSets(new ArrayObject($categoryImageSetTransferCollection));
@@ -53,14 +53,14 @@ class CategoryImageFacadeTest extends Test
 
         // Act
         $dbCategoryImageSetCollection = $this->getFacade()->getCategoryImageSetsByIdCategory(
-            $categoryTransfer->getIdCategory()
+            $categoryTransfer->getIdCategory(),
         );
 
         // Assert
         $this->assertSame(count($categoryImageSetTransferCollection), count($dbCategoryImageSetCollection));
         $this->assertEmpty(array_diff(
             $this->getIdCategoryImageSetCollection($dbCategoryImageSetCollection),
-            $this->getIdCategoryImageSetCollection($categoryImageSetTransferCollection)
+            $this->getIdCategoryImageSetCollection($categoryImageSetTransferCollection),
         ));
     }
 
@@ -77,7 +77,7 @@ class CategoryImageFacadeTest extends Test
         // Act
         $this->getFacade()->createCategoryImageSetsForCategory($categoryTransfer);
         $dbCategoryImageSetCollection = $this->getFacade()->getCategoryImageSetsByIdCategory(
-            $categoryTransfer->getIdCategory()
+            $categoryTransfer->getIdCategory(),
         );
 
         // Assert
@@ -85,7 +85,7 @@ class CategoryImageFacadeTest extends Test
         $this->assertSame(static::DEFAULT_CATEGORY_IMAGE_SET_COUNT, count($dbCategoryImageSetCollection));
         $this->assertEquals(
             reset($categoryImageSetCollection)->getIdCategoryImageSet(),
-            reset($dbCategoryImageSetCollection)->getIdCategoryImageSet()
+            reset($dbCategoryImageSetCollection)->getIdCategoryImageSet(),
         );
     }
 
@@ -106,7 +106,7 @@ class CategoryImageFacadeTest extends Test
         $this->getFacade()->updateCategoryImageSetsForCategory($categoryTransfer);
 
         $dbCategoryImageSetCollection = $this->getFacade()->getCategoryImageSetsByIdCategory(
-            $categoryTransfer->getIdCategory()
+            $categoryTransfer->getIdCategory(),
         );
         $dbCategoryImageSet = $dbCategoryImageSetCollection[0];
 
@@ -130,25 +130,25 @@ class CategoryImageFacadeTest extends Test
 
         // Act
         $dbCategoryImageSetCollection = $this->getFacade()->getCategoryImageSetsByIdCategory(
-            $categoryTransfer->getIdCategory()
+            $categoryTransfer->getIdCategory(),
         );
         $randomImageSetKeyToBeDeleted = array_rand($categoryImageSetCollection);
         $idCategoryImageSetToBeDeleted = $categoryImageSetCollection[$randomImageSetKeyToBeDeleted]->getIdCategoryImageSet();
         $this->assertTrue(in_array(
             $idCategoryImageSetToBeDeleted,
-            $this->getIdCategoryImageSetCollection($dbCategoryImageSetCollection)
+            $this->getIdCategoryImageSetCollection($dbCategoryImageSetCollection),
         ));
         unset($categoryImageSetCollection[$randomImageSetKeyToBeDeleted]);
         $categoryTransfer->setImageSets(new ArrayObject($categoryImageSetCollection));
         $this->getFacade()->updateCategoryImageSetsForCategory($categoryTransfer);
         $dbCategoryImageSetCollection = $this->getFacade()->getCategoryImageSetsByIdCategory(
-            $categoryTransfer->getIdCategory()
+            $categoryTransfer->getIdCategory(),
         );
 
         // Assert
         $this->assertFalse(in_array(
             $idCategoryImageSetToBeDeleted,
-            $this->getIdCategoryImageSetCollection($dbCategoryImageSetCollection)
+            $this->getIdCategoryImageSetCollection($dbCategoryImageSetCollection),
         ));
     }
 
@@ -168,7 +168,7 @@ class CategoryImageFacadeTest extends Test
 
         // Assert
         $dbCategoryImageSetCollection = $this->getFacade()->getCategoryImageSetsByIdCategory(
-            $categoryTransfer->getIdCategory()
+            $categoryTransfer->getIdCategory(),
         );
         $this->assertEmpty($dbCategoryImageSetCollection);
     }
@@ -181,7 +181,7 @@ class CategoryImageFacadeTest extends Test
         // Assign
         $categoryTransfer = $this->tester->haveCategory();
         $categoryImageSetCollection = $this->buildCategoryImageSetTransferCollection(
-            rand(1, static::MAX_CATEGORY_IMAGE_SET_COUNT)
+            rand(1, static::MAX_CATEGORY_IMAGE_SET_COUNT),
         );
         $categoryTransfer->setImageSets(new ArrayObject($categoryImageSetCollection));
         $this->getFacade()->createCategoryImageSetsForCategory($categoryTransfer);
@@ -195,7 +195,7 @@ class CategoryImageFacadeTest extends Test
         $this->assertSame(count($categoryImageSetCollection), count($dbCategoryImageSetCollection));
         $this->assertEmpty(array_diff(
             $this->getIdCategoryImageSetCollection($dbCategoryImageSetCollection),
-            $this->getIdCategoryImageSetCollection($categoryImageSetCollection)
+            $this->getIdCategoryImageSetCollection($categoryImageSetCollection),
         ));
     }
 
@@ -212,7 +212,7 @@ class CategoryImageFacadeTest extends Test
 
         // Act
         $categoryImageCollection = $this->getFacade()->getCategoryImageSetsByIdCategory(
-            $categoryTransfer->getIdCategory()
+            $categoryTransfer->getIdCategory(),
         )[0]->getCategoryImages();
 
         $sortOrder = 0;
@@ -235,13 +235,13 @@ class CategoryImageFacadeTest extends Test
 
         // Act
         $categoryImageCollection = $this->getFacade()->getCategoryImageSetsByIdCategory(
-            $categoryTransfer->getIdCategory()
+            $categoryTransfer->getIdCategory(),
         )[0]->getCategoryImages();
 
         $idCategoryImageSetToCategoryImage = 0;
         foreach ($categoryImageCollection as $categoryImageTransfer) {
             $this->assertTrue(
-                $categoryImageTransfer->getIdCategoryImageSetToCategoryImage() > $idCategoryImageSetToCategoryImage
+                $categoryImageTransfer->getIdCategoryImageSetToCategoryImage() > $idCategoryImageSetToCategoryImage,
             );
             $idCategoryImageSetToCategoryImage = $categoryImageTransfer->getIdCategoryImageSetToCategoryImage();
         }

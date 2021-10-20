@@ -55,7 +55,7 @@ class PropelSchemaXmlNameValidatorTest extends Unit
     protected function executeXmlValidation(array $dirPattern): bool
     {
         $propelSchemaValidator = new PropelSchemaXmlNameValidator(
-            $this->getPropelSchemaFinder($dirPattern)
+            $this->getPropelSchemaFinder($dirPattern),
         );
         $schemaValidationTransfer = $propelSchemaValidator->validate();
 

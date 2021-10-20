@@ -27,7 +27,7 @@ class ContentProductFactory extends AbstractFactory
     {
         return new ContentProductAbstractListTypeMapper(
             $this->getContentStorageClient(),
-            $this->getContentProductTermExecutorMap()
+            $this->getContentProductTermExecutorMap(),
         );
     }
 

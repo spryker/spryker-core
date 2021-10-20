@@ -90,7 +90,7 @@ class MerchantOpeningHoursStorageDependencyProvider extends AbstractBundleDepend
     {
         $container->set(static::FACADE_EVENT_BEHAVIOR, function (Container $container) {
             return new MerchantOpeningHoursStorageToEventBehaviorFacadeBridge(
-                $container->getLocator()->eventBehavior()->facade()
+                $container->getLocator()->eventBehavior()->facade(),
             );
         });
 
@@ -106,7 +106,7 @@ class MerchantOpeningHoursStorageDependencyProvider extends AbstractBundleDepend
     {
         $container->set(static::FACADE_MERCHANT, function (Container $container) {
             return new MerchantOpeningHoursStorageToMerchantFacadeBridge(
-                $container->getLocator()->merchant()->facade()
+                $container->getLocator()->merchant()->facade(),
             );
         });
 

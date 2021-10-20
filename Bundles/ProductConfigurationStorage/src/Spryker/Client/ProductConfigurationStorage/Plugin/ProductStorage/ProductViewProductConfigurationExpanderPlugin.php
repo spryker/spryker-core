@@ -39,7 +39,7 @@ class ProductViewProductConfigurationExpanderPlugin extends AbstractPlugin imple
             $productViewTransfer,
             $productData,
             $localeName,
-            $productStorageCriteriaTransfer
+            $productStorageCriteriaTransfer,
         );
     }
 }

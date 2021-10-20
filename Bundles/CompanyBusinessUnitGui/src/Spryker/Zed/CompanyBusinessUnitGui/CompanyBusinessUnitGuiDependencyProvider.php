@@ -98,7 +98,7 @@ class CompanyBusinessUnitGuiDependencyProvider extends AbstractBundleDependencyP
     {
         $container->set(static::FACADE_COMPANY_BUSINESS_UNIT, function (Container $container) {
             return new CompanyBusinessUnitGuiToCompanyBusinessUnitFacadeBridge(
-                $container->getLocator()->companyBusinessUnit()->facade()
+                $container->getLocator()->companyBusinessUnit()->facade(),
             );
         });
 
@@ -114,7 +114,7 @@ class CompanyBusinessUnitGuiDependencyProvider extends AbstractBundleDependencyP
     {
         $container->set(static::FACADE_COMPANY, function (Container $container) {
             return new CompanyBusinessUnitGuiToCompanyFacadeBridge(
-                $container->getLocator()->company()->facade()
+                $container->getLocator()->company()->facade(),
             );
         });
 

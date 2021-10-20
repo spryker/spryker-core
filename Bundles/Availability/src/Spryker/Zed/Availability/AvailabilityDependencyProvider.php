@@ -134,7 +134,7 @@ class AvailabilityDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::FACADE_EVENT, function (Container $container) {
             return new AvailabilityToEventFacadeBridge(
-                $container->getLocator()->event()->facade()
+                $container->getLocator()->event()->facade(),
             );
         });
 

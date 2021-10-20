@@ -34,7 +34,7 @@ class OauthAgentConnectorBusinessFactory extends AbstractBusinessFactory
         return new AgentOauthUserProvider(
             $this->getAgentFacade(),
             $this->getUtilEncodingService(),
-            $this->createPasswordEncoderAdapter()
+            $this->createPasswordEncoderAdapter(),
         );
     }
 
@@ -53,7 +53,7 @@ class OauthAgentConnectorBusinessFactory extends AbstractBusinessFactory
     {
         return new AgentOauthScopeInstaller(
             $this->getOauthFacade(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 

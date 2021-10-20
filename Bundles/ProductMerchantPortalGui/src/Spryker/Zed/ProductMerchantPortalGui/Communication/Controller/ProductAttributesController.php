@@ -158,7 +158,7 @@ class ProductAttributesController extends AbstractController
         }
 
         $idProductConcrete = $this->castId(
-            $request->get(static::PARAM_ID_PRODUCT_CONCRETE)
+            $request->get(static::PARAM_ID_PRODUCT_CONCRETE),
         );
 
         $productConcreteTransfer = $this->getFactory()
@@ -228,7 +228,7 @@ class ProductAttributesController extends AbstractController
         }
 
         $idProductConcrete = $this->castId(
-            $request->get(static::PARAM_ID_PRODUCT_CONCRETE)
+            $request->get(static::PARAM_ID_PRODUCT_CONCRETE),
         );
 
         $productConcreteTransfer = $this->getFactory()
@@ -245,7 +245,7 @@ class ProductAttributesController extends AbstractController
             ->extractSuperAttributes(
                 $productConcreteTransfer->getAttributes(),
                 $productConcreteTransfer->getLocalizedAttributes(),
-                $localeTransfer
+                $localeTransfer,
             );
 
         if (isset($superAttributeNames[$attributeName])) {
@@ -296,7 +296,7 @@ class ProductAttributesController extends AbstractController
     public function concreteTableDataAction(Request $request): Response
     {
         $idProductConcrete = $this->castId(
-            $request->get(static::PARAM_ID_PRODUCT_CONCRETE)
+            $request->get(static::PARAM_ID_PRODUCT_CONCRETE),
         );
 
         $productConcreteTransfer = $this->getFactory()
@@ -377,7 +377,7 @@ class ProductAttributesController extends AbstractController
                 $productAttributes = $this->updateAttribute(
                     $productAttributes,
                     $attributeName,
-                    $attributeValue
+                    $attributeValue,
                 );
             }
         }
@@ -406,7 +406,7 @@ class ProductAttributesController extends AbstractController
             $localizedAttributes = $this->updateAttribute(
                 $localizedAttributesTransfer->getAttributes(),
                 $attributeName,
-                $attributeValue
+                $attributeValue,
             );
 
             $localizedAttributesTransfer->setAttributes($localizedAttributes);

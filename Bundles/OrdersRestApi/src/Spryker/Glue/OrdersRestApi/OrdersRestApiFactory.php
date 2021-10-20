@@ -37,7 +37,7 @@ class OrdersRestApiFactory extends AbstractFactory
         return new OrderReader(
             $this->getSalesClient(),
             $this->createOrderRestResponseBuilder(),
-            $this->createOrdersRestApiValidator()
+            $this->createOrdersRestApiValidator(),
         );
     }
 
@@ -49,7 +49,7 @@ class OrdersRestApiFactory extends AbstractFactory
         return new OrderMapper(
             $this->createOrderShipmentMapper(),
             $this->getRestOrderItemsAttributesMapperPlugins(),
-            $this->getRestOrderDetailsAttributesMapperPlugins()
+            $this->getRestOrderDetailsAttributesMapperPlugins(),
         );
     }
 
@@ -68,7 +68,7 @@ class OrdersRestApiFactory extends AbstractFactory
     {
         return new OrderRestResponseBuilder(
             $this->getResourceBuilder(),
-            $this->createOrderMapper()
+            $this->createOrderMapper(),
         );
     }
 
@@ -79,7 +79,7 @@ class OrdersRestApiFactory extends AbstractFactory
     {
         return new OrderItemExpander(
             $this->getSalesClient(),
-            $this->createOrderRestResponseBuilder()
+            $this->createOrderRestResponseBuilder(),
         );
     }
 

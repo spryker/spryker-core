@@ -46,7 +46,7 @@ class AclEntityMetadataConfigReader implements AclEntityMetadataConfigReaderInte
         $aclEntityMetadataConfigTransfer->setAclEntityMetadataCollection(new AclEntityMetadataCollectionTransfer());
         foreach ($this->aclEntityMetadataCollectionExpandPlugins as $aclEntityMetadataCollectionExpanderPlugin) {
             $aclEntityMetadataConfigTransfer = $aclEntityMetadataCollectionExpanderPlugin->expand(
-                $aclEntityMetadataConfigTransfer
+                $aclEntityMetadataConfigTransfer,
             );
         }
         if ($runValidation) {

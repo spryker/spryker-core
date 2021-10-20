@@ -58,7 +58,7 @@ class OrderItemMapper implements OrderItemMapperInterface
         }
 
         return $restSalesOrderConfiguredBundleTransfer->setName(
-            $itemTransfer->getSalesOrderConfiguredBundle()->getTranslations()->offsetGet(0)->getName()
+            $itemTransfer->getSalesOrderConfiguredBundle()->getTranslations()->offsetGet(0)->getName(),
         );
     }
 }

@@ -129,7 +129,7 @@ class GroupTable extends AbstractTable
     {
         return $this->generateEditButton(
             Url::generate('/acl/group/edit', [self::EDIT_PARAMETER => $group[SpyAclGroupTableMap::COL_ID_ACL_GROUP]]),
-            'Edit'
+            'Edit',
         );
     }
 }

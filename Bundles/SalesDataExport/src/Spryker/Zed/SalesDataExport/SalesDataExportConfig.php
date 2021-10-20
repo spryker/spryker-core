@@ -35,7 +35,7 @@ class SalesDataExportConfig extends AbstractBundleConfig
     protected function getModuleDataExportConfigurationPath(): string
     {
         $moduleRoot = realpath(
-            dirname(__DIR__, static::MODULE_ROOT_DIRECTORY_LEVEL)
+            dirname(__DIR__, static::MODULE_ROOT_DIRECTORY_LEVEL),
         );
 
         return $moduleRoot . DIRECTORY_SEPARATOR . 'data' . DIRECTORY_SEPARATOR . 'export' . DIRECTORY_SEPARATOR . 'config' . DIRECTORY_SEPARATOR;

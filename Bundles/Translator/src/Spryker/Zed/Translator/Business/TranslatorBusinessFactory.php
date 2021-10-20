@@ -62,7 +62,7 @@ class TranslatorBusinessFactory extends AbstractBusinessFactory
         return new CsvResourceFileLoader(
             $this->createCsvFileLoader(),
             $this->createTranslationFileFinder(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -75,7 +75,7 @@ class TranslatorBusinessFactory extends AbstractBusinessFactory
             $this->createCsvFileLoader(),
             $this->createTranslationFileFinder(),
             $this->getConfig(),
-            $this->getStore()->getLocales()
+            $this->getStore()->getLocales(),
         );
     }
 
@@ -121,7 +121,7 @@ class TranslatorBusinessFactory extends AbstractBusinessFactory
         $translator = new Translator(
             $this->createTranslationBuilder(),
             $localeName,
-            $this->getConfig()
+            $this->getConfig(),
         );
 
         return $translator;
@@ -133,7 +133,7 @@ class TranslatorBusinessFactory extends AbstractBusinessFactory
     public function createTranslationBuilder(): TranslatorBuilderInterface
     {
         return new TranslatorBuilder(
-            $this->getTranslationResourceFileLoaderCollection()
+            $this->getTranslationResourceFileLoaderCollection(),
         );
     }
 
@@ -153,7 +153,7 @@ class TranslatorBusinessFactory extends AbstractBusinessFactory
     public function createTranslationCacheCleaner(): CacheCleanerInterface
     {
         return new CacheCleaner(
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -163,7 +163,7 @@ class TranslatorBusinessFactory extends AbstractBusinessFactory
     public function createTranslationCacheGenerator(): CacheGeneratorInterface
     {
         return new CacheGenerator(
-            $this->createTranslatorCollection()
+            $this->createTranslatorCollection(),
         );
     }
 
@@ -184,7 +184,7 @@ class TranslatorBusinessFactory extends AbstractBusinessFactory
     {
         return new TranslatorPreparator(
             $this->getApplication(),
-            $this->createTranslator()
+            $this->createTranslator(),
         );
     }
 

@@ -122,7 +122,7 @@ class CmsRedirectTable extends AbstractTable
             [
                 RedirectController::REQUEST_ID_URL_REDIRECT => $urlEntity->getSpyUrlRedirect()->getIdUrlRedirect(),
             ],
-            DeleteCmsRedirectForm::class
+            DeleteCmsRedirectForm::class,
         );
 
         return implode(' ', $buttons);

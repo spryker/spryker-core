@@ -87,7 +87,7 @@ class CompanyUnitAddressRepository extends AbstractRepository implements Company
                 ->createCompanyUnitAddressMapper()
                 ->mapEntityTransferToCompanyUnitAddressTransfer(
                     $companyUnitAddressEntityTransfer,
-                    new CompanyUnitAddressTransfer()
+                    new CompanyUnitAddressTransfer(),
                 );
 
             $collectionTransfer->addCompanyUnitAddress($unitAddressTransfer);
@@ -132,7 +132,7 @@ class CompanyUnitAddressRepository extends AbstractRepository implements Company
                 ->createCompanyUnitAddressMapper()
                 ->mapEntityTransferToCompanyUnitAddressTransfer(
                     $companyUnitAddressEntityTransfer,
-                    new CompanyUnitAddressTransfer()
+                    new CompanyUnitAddressTransfer(),
                 );
 
             $companyUnitAddressCollectionTransfer->addCompanyUnitAddress($companyUnitAddressTransfer);
@@ -156,7 +156,7 @@ class CompanyUnitAddressRepository extends AbstractRepository implements Company
         $companyUnitAddressToCompanyBusinessUnitQuery = $this->getFactory()
             ->createCompanyUnitAddressToCompanyBusinessUnitQuery()
             ->filterByFkCompanyUnitAddress_In(
-                $companyUnitAddressIds
+                $companyUnitAddressIds,
             )
             ->leftJoinWithCompanyBusinessUnit();
 
@@ -230,7 +230,7 @@ class CompanyUnitAddressRepository extends AbstractRepository implements Company
             ->createCompanyUnitAddressMapper()
             ->mapCompanyUnitAddressEntityToCompanyUnitAddressTransfer(
                 $companyUnitAddressEntity,
-                new CompanyUnitAddressTransfer()
+                new CompanyUnitAddressTransfer(),
             );
     }
 

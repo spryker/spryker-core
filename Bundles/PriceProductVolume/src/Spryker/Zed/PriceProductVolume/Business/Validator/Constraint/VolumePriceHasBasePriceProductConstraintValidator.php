@@ -71,7 +71,7 @@ class VolumePriceHasBasePriceProductConstraintValidator extends ConstraintValida
                 $this->context
                     ->buildViolation($constraint->getMessage())
                     ->atPath(
-                        $this->createViolationPath($priceProductIndex, $volumePriceIndex)
+                        $this->createViolationPath($priceProductIndex, $volumePriceIndex),
                     )
                     ->addViolation();
             }
@@ -94,7 +94,7 @@ class VolumePriceHasBasePriceProductConstraintValidator extends ConstraintValida
             PriceProductTransfer::MONEY_VALUE,
             MoneyValueTransfer::PRICE_DATA,
             PriceProductVolumeConfig::VOLUME_PRICE_TYPE,
-            $volumePriceIndex
+            $volumePriceIndex,
         );
     }
 }

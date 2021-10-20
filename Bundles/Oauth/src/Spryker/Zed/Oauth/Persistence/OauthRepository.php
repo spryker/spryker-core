@@ -67,7 +67,7 @@ class OauthRepository extends AbstractRepository implements OauthRepositoryInter
             $oauthScopeTransfer = new OauthScopeTransfer();
             $oauthScopeTransfers[] = $oauthScopeTransfer->fromArray(
                 $spyOauthScopeEntity->toArray(),
-                true
+                true,
             );
         }
 

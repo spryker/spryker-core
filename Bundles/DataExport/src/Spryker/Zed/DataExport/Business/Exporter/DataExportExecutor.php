@@ -81,7 +81,7 @@ class DataExportExecutor
         $dataExportDefaultsConfigurationsTransfer = $this->getDataExportDefaultsConfiguration();
         $dataExportDefaultsConfigurationTransfer = $this->dataExportService->mergeDataExportConfigurationTransfers(
             $dataExportConfigurationsTransfer->getDefaults() ?? new DataExportConfigurationTransfer(),
-            $dataExportDefaultsConfigurationsTransfer->getDefaultsOrFail()
+            $dataExportDefaultsConfigurationsTransfer->getDefaultsOrFail(),
         );
 
         $dataExportGenerator = $this->createDataExportGenerator($dataExportConfigurationsTransfer, $dataExportDefaultsConfigurationTransfer);
@@ -112,7 +112,7 @@ class DataExportExecutor
 
                 $dataExportConfigurationTransfer = $this->dataExportService->mergeDataExportConfigurationTransfers(
                     $dataExportConfigurationTransfer,
-                    clone $dataExportDefaultsConfigurationTransfer
+                    clone $dataExportDefaultsConfigurationTransfer,
                 );
                 $dataExportConfigurationTransfer = $this->addDataExportConfigurationActionHooks($dataExportConfigurationTransfer);
 
@@ -130,7 +130,7 @@ class DataExportExecutor
     protected function getDataExportDefaultsConfiguration(): DataExportConfigurationsTransfer
     {
         return $this->dataExportService->parseConfiguration(
-            $this->dataExportConfig->getExportConfigurationDefaultsPath()
+            $this->dataExportConfig->getExportConfigurationDefaultsPath(),
         );
     }
 
@@ -150,7 +150,7 @@ class DataExportExecutor
 
         throw new DataExporterNotFoundException(sprintf(
             'Data exporter not found for %s data entity',
-            $dataExportConfigurationTransfer->getDataEntity()
+            $dataExportConfigurationTransfer->getDataEntity(),
         ));
     }
 
@@ -164,7 +164,7 @@ class DataExportExecutor
         $dataExportConfigurationTransfer->addHook(static::HOOK_KEY_DATA_ENTITY, $dataExportConfigurationTransfer->getDataEntity());
         $dataExportConfigurationTransfer->addHook(
             static::HOOK_KEY_EXTENSION,
-            $this->dataExportService->getFormatExtension($dataExportConfigurationTransfer)
+            $this->dataExportService->getFormatExtension($dataExportConfigurationTransfer),
         );
 
         return $dataExportConfigurationTransfer;

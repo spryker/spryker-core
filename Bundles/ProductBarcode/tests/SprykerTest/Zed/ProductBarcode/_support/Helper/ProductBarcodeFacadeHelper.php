@@ -39,7 +39,7 @@ class ProductBarcodeFacadeHelper extends Module
             ->getFacade()
             ->generateBarcode(
                 $productConcreteTransfer,
-                $generatorPlugin
+                $generatorPlugin,
             );
     }
 }

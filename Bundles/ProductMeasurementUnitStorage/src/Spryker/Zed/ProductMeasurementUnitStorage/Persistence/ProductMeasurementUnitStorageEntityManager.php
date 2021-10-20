@@ -71,7 +71,7 @@ class ProductMeasurementUnitStorageEntityManager extends AbstractEntityManager i
             ->createProductConcreteMeasurementUnitStorageMapper()
             ->hydrateSpyProductMeasurementUnitStorageEntity(
                 $spyProductConcreteMeasurementUnitStorageEntity,
-                $productConcreteMeasurementUnitStorageEntityTransfer
+                $productConcreteMeasurementUnitStorageEntityTransfer,
             )
             ->save();
     }

@@ -88,7 +88,7 @@ class CmsBusinessFactory extends AbstractBusinessFactory
             $this->createTemplateManager(),
             $this->getGlossaryFacade(),
             $this->getTouchFacade(),
-            $this->getUrlFacade()
+            $this->getUrlFacade(),
         );
     }
 
@@ -100,7 +100,7 @@ class CmsBusinessFactory extends AbstractBusinessFactory
         return new TemplateManager(
             $this->getQueryContainer(),
             $this->getConfig(),
-            $this->createFinder()
+            $this->createFinder(),
         );
     }
 
@@ -113,7 +113,7 @@ class CmsBusinessFactory extends AbstractBusinessFactory
             $this->getGlossaryFacade(),
             $this->getQueryContainer(),
             $this->createTemplateManager(),
-            $this->createPageManager()
+            $this->createPageManager(),
         );
     }
 
@@ -166,7 +166,7 @@ class CmsBusinessFactory extends AbstractBusinessFactory
             $this->getQueryContainer(),
             $this->getTouchFacade(),
             $this->getCmsPageBeforeDeletePlugins(),
-            $this->createCmsPageMapper()
+            $this->createCmsPageMapper(),
         );
     }
 
@@ -182,7 +182,7 @@ class CmsBusinessFactory extends AbstractBusinessFactory
             $this->createCmsUrlBuilder(),
             $this->createCmsGlossarySaver(),
             $this->createTemplateManager(),
-            $this->createCmsPageStoreRelationWriter()
+            $this->createCmsPageStoreRelationWriter(),
         );
     }
 
@@ -210,7 +210,7 @@ class CmsBusinessFactory extends AbstractBusinessFactory
         return new CmsGlossarySaver(
             $this->getQueryContainer(),
             $this->getGlossaryFacade(),
-            $this->createCmsGlossaryKeyGenerator()
+            $this->createCmsGlossaryKeyGenerator(),
         );
     }
 
@@ -222,7 +222,7 @@ class CmsBusinessFactory extends AbstractBusinessFactory
         return new VersionFinder(
             $this->getQueryContainer(),
             $this->createVersionDataMapper(),
-            $this->getCmsVersionTransferExpanderPlugins()
+            $this->getCmsVersionTransferExpanderPlugins(),
         );
     }
 
@@ -236,7 +236,7 @@ class CmsBusinessFactory extends AbstractBusinessFactory
             $this->createVersionDataMapper(),
             $this->createVersionFinder(),
             $this->getTouchFacade(),
-            $this->getCmsVersionPostSavePlugins()
+            $this->getCmsVersionPostSavePlugins(),
         );
     }
 
@@ -246,7 +246,7 @@ class CmsBusinessFactory extends AbstractBusinessFactory
     public function createVersionGenerator(): VersionGeneratorInterface
     {
         return new VersionGenerator(
-            $this->getQueryContainer()
+            $this->getQueryContainer(),
         );
     }
 
@@ -261,7 +261,7 @@ class CmsBusinessFactory extends AbstractBusinessFactory
                 $this->createCmsTemplateMigration(),
                 $this->createCmsPageLocalizedAttributeMigration(),
                 $this->createCmsGlossaryKeyMappingMigration(),
-            ]
+            ],
         );
     }
 
@@ -272,7 +272,7 @@ class CmsBusinessFactory extends AbstractBusinessFactory
     {
         return new CmsTemplateMigration(
             $this->createTemplateManager(),
-            $this->getQueryContainer()
+            $this->getQueryContainer(),
         );
     }
 
@@ -283,7 +283,7 @@ class CmsBusinessFactory extends AbstractBusinessFactory
     {
         return new CmsPageLocalizedAttributesMigration(
             $this->getLocaleFacade(),
-            $this->getQueryContainer()
+            $this->getQueryContainer(),
         );
     }
 
@@ -295,7 +295,7 @@ class CmsBusinessFactory extends AbstractBusinessFactory
         return new CmsGlossaryKeyMappingMigration(
             $this->createCmsGlossarySaver(),
             $this->getLocaleFacade(),
-            $this->getQueryContainer()
+            $this->getQueryContainer(),
         );
     }
 
@@ -308,7 +308,7 @@ class CmsBusinessFactory extends AbstractBusinessFactory
             $this->createVersionPublisher(),
             $this->createVersionGenerator(),
             $this->createVersionMigration(),
-            $this->getQueryContainer()
+            $this->getQueryContainer(),
         );
     }
 
@@ -319,7 +319,7 @@ class CmsBusinessFactory extends AbstractBusinessFactory
     {
         return new VersionDataMapper(
             $this->getUtilEncodingService(),
-            $this->createCmsPageStoreRelationReader()
+            $this->createCmsPageStoreRelationReader(),
         );
     }
 
@@ -364,7 +364,7 @@ class CmsBusinessFactory extends AbstractBusinessFactory
             $this->getQueryContainer(),
             $this->getTouchFacade(),
             $this->getCmsPagePostActivatorPlugins(),
-            $this->createTemplateReader()
+            $this->createTemplateReader(),
         );
     }
 
@@ -415,7 +415,7 @@ class CmsBusinessFactory extends AbstractBusinessFactory
     {
         return new CmsPageMapper(
             $this->createCmsUrlBuilder(),
-            $this->createCmsPageStoreRelationReader()
+            $this->createCmsPageStoreRelationReader(),
         );
     }
 
@@ -426,7 +426,7 @@ class CmsBusinessFactory extends AbstractBusinessFactory
     {
         return new CmsPageStoreRelationReader(
             $this->getQueryContainer(),
-            $this->getRepository()
+            $this->getRepository(),
         );
     }
 
@@ -437,7 +437,7 @@ class CmsBusinessFactory extends AbstractBusinessFactory
     {
         return new CmsPageStoreRelationWriter(
             $this->getEntityManager(),
-            $this->createCmsPageStoreRelationReader()
+            $this->createCmsPageStoreRelationReader(),
         );
     }
 

@@ -51,13 +51,13 @@ class TimeoutTest extends StateMachineMocks
             ->with(
                 $this->isInstanceOf(StateMachineItemTransfer::class),
                 $this->isInstanceOf(DateTime::class),
-                $this->isType('string')
+                $this->isType('string'),
             );
 
         $timeout = $this->createTimeout($stateMachinePersistenceMock);
         $timeout->setNewTimeout(
             $this->createProcess(),
-            $this->createStateMachineItemTransfer()
+            $this->createStateMachineItemTransfer(),
         );
     }
 
@@ -76,7 +76,7 @@ class TimeoutTest extends StateMachineMocks
         $timeout->dropOldTimeout(
             $this->createProcess(),
             static::STATE_WITH_TIMEOUT,
-            $this->createStateMachineItemTransfer()
+            $this->createStateMachineItemTransfer(),
         );
     }
 

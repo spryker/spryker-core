@@ -52,7 +52,7 @@ class ViewShipmentMethodController extends AbstractController
         $dataProvider = $this->getFactory()->createViewShipmentMethodFormDataProvider();
         $form = $this->getFactory()->createViewShipmentMethodForm(
             $dataProvider->getData($shipmentMethodTransfer),
-            $dataProvider->getOptions()
+            $dataProvider->getOptions(),
         );
 
         return $this->viewResponse([

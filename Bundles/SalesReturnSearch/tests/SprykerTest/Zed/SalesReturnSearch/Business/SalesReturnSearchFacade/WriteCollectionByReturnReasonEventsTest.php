@@ -65,7 +65,7 @@ class WriteCollectionByReturnReasonEventsTest extends Unit
         // Assert
         $this->assertSame(
             count($returnReasonTransfers) * count($localeTransfers),
-            $salesReturnSearchEntities->count()
+            $salesReturnSearchEntities->count(),
         );
     }
 

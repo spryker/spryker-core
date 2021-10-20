@@ -142,7 +142,7 @@ class ProductConcreteBulkForm extends AbstractType
                 }
 
                 return $value;
-            }
+            },
         );
     }
 }

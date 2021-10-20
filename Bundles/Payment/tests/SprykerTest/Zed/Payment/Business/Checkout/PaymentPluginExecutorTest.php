@@ -110,9 +110,9 @@ class PaymentPluginExecutorTest extends Unit
             $this->createCheckoutPlugins(
                 $preCheckPluginMock,
                 $orderSavePluginMock,
-                $postCheckPluginMock
+                $postCheckPluginMock,
             ),
-            $salesSaverMock
+            $salesSaverMock,
         );
 
         return $paymentPluginExecutor;

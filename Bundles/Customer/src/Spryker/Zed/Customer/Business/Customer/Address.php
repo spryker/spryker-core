@@ -137,10 +137,10 @@ class Address implements AddressInterface
 
         if ($addressTransfer !== null) {
             $addressTransfer->setIsDefaultBilling(
-                $this->isDefaultAddress($addressTransfer->getIdCustomerAddress(), $customerEntity->getDefaultBillingAddress())
+                $this->isDefaultAddress($addressTransfer->getIdCustomerAddress(), $customerEntity->getDefaultBillingAddress()),
             );
             $addressTransfer->setIsDefaultShipping(
-                $this->isDefaultAddress($addressTransfer->getIdCustomerAddress(), $customerEntity->getDefaultShippingAddress())
+                $this->isDefaultAddress($addressTransfer->getIdCustomerAddress(), $customerEntity->getDefaultShippingAddress()),
             );
         }
     }
@@ -221,7 +221,7 @@ class Address implements AddressInterface
             throw new AddressNotFoundException(sprintf(
                 'Address not found for ID `%s` and customer email `%s`.',
                 $addressTransfer->getIdCustomerAddress(),
-                $customer->getEmail()
+                $customer->getEmail(),
             ));
         }
 
@@ -249,7 +249,7 @@ class Address implements AddressInterface
             throw new AddressNotFoundException(sprintf(
                 'Address not found for ID `%s` and customer email `%s`.',
                 $addressTransfer->getIdCustomerAddress(),
-                $customer->getEmail()
+                $customer->getEmail(),
             ));
         }
 
@@ -333,7 +333,7 @@ class Address implements AddressInterface
             throw new CustomerNotFoundException(sprintf(
                 'Customer not found for email `%s` or ID `%s`.',
                 $addressTransfer->getEmail(),
-                $addressTransfer->getFkCustomer()
+                $addressTransfer->getFkCustomer(),
             ));
         }
 
@@ -392,7 +392,7 @@ class Address implements AddressInterface
             throw new CustomerNotFoundException(sprintf(
                 'Customer not found for email `%s` or ID `%s`.',
                 $customerTransfer->getEmail(),
-                $customerTransfer->getIdCustomer()
+                $customerTransfer->getIdCustomer(),
             ));
         }
 
@@ -460,7 +460,7 @@ class Address implements AddressInterface
         $entity = $this->queryContainer
             ->queryAddressForCustomer(
                 $addressTransfer->getIdCustomerAddress(),
-                $customer->getEmail()
+                $customer->getEmail(),
             )
             ->findOne();
 
@@ -468,7 +468,7 @@ class Address implements AddressInterface
             throw new AddressNotFoundException(sprintf(
                 'Address not found for ID `%s` and customer email `%s`.',
                 $addressTransfer->getIdCustomerAddress(),
-                $customer->getEmail()
+                $customer->getEmail(),
             ));
         }
 
@@ -635,7 +635,7 @@ class Address implements AddressInterface
             throw new AddressNotFoundException(sprintf(
                 'Address not found for ID `%s` and customer email `%s`.',
                 $addressTransfer->getIdCustomerAddress(),
-                $customer->getEmail()
+                $customer->getEmail(),
             ));
         }
 

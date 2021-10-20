@@ -43,10 +43,10 @@ class ProductPageAttribute implements ProductPageAttributeInterface
         $decodedAbstractLocalizedAttributesData = $this->productFacade->decodeProductAttributes($abstractLocalizedAttributesData);
 
         $decodedConcreteAttributesDataCollection = $this->joinAttributeCollectionValues(
-            $this->productFacade->decodeProductAttributes(sprintf('[%s]', $concreteAttributesData))
+            $this->productFacade->decodeProductAttributes(sprintf('[%s]', $concreteAttributesData)),
         );
         $decodedConcreteLocalizedAttributesDataCollection = $this->joinAttributeCollectionValues(
-            $this->productFacade->decodeProductAttributes(sprintf('[%s]', $concreteLocalizedAttributesData))
+            $this->productFacade->decodeProductAttributes(sprintf('[%s]', $concreteLocalizedAttributesData)),
         );
 
         $rawProductAttributesTransfer = new RawProductAttributesTransfer();

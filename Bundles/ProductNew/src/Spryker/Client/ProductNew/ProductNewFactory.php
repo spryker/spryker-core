@@ -23,7 +23,7 @@ class ProductNewFactory extends AbstractFactory
         return $this->getSearchClient()->expandQuery(
             $newProductsQueryPlugin,
             $this->getNewProductsSearchQueryExpanderPlugins(),
-            $requestParameters
+            $requestParameters,
         );
     }
 

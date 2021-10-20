@@ -55,7 +55,7 @@ class ProductCategoryStorageByCategoryUrlEventsWriter implements ProductCategory
     {
         $categoryNodeIds = $this->eventBehaviorFacade->getEventTransferForeignKeys(
             $eventEntityTransfers,
-            SpyUrlTableMap::COL_FK_RESOURCE_CATEGORYNODE
+            SpyUrlTableMap::COL_FK_RESOURCE_CATEGORYNODE,
         );
 
         if ($categoryNodeIds === []) {
@@ -65,7 +65,7 @@ class ProductCategoryStorageByCategoryUrlEventsWriter implements ProductCategory
         $categoryNodeIds = array_map('intval', $categoryNodeIds);
 
         $categoryNodeCollection = $this->categoryFacade->getCategoryNodes(
-            (new CategoryNodeCriteriaTransfer())->setCategoryNodeIds($categoryNodeIds)
+            (new CategoryNodeCriteriaTransfer())->setCategoryNodeIds($categoryNodeIds),
         );
 
         $categoryIds = $this->extractCategoryIdsFromNodeCollection($categoryNodeCollection);
@@ -85,7 +85,7 @@ class ProductCategoryStorageByCategoryUrlEventsWriter implements ProductCategory
             [
                 SpyUrlTableMap::COL_URL,
                 SpyUrlTableMap::COL_FK_RESOURCE_CATEGORYNODE,
-            ]
+            ],
         );
 
         $this->writeCollectionByCategoryUrlEvents($modifiedColumnsEventTransfer);

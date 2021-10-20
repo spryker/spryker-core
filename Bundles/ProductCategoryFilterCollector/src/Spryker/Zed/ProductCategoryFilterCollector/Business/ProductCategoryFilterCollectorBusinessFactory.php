@@ -71,7 +71,7 @@ class ProductCategoryFilterCollectorBusinessFactory extends AbstractBusinessFact
     {
         return new ProductCategoryFilterCollectorRunner(
             $this->createProductCategoryFilterCollector(),
-            $this->getCollectorFacade()
+            $this->getCollectorFacade(),
         );
     }
 }

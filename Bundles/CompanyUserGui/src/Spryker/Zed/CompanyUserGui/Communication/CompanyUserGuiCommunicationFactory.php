@@ -64,7 +64,7 @@ class CompanyUserGuiCommunicationFactory extends AbstractCommunicationFactory
     {
         return new CompanyUserFormDataProvider(
             $this->getCompanyUserFacade(),
-            $this->getCompanyFacade()
+            $this->getCompanyFacade(),
         );
     }
 
@@ -100,7 +100,7 @@ class CompanyUserGuiCommunicationFactory extends AbstractCommunicationFactory
         return new CustomerCompanyAttachFormDataProvider(
             $this->getCompanyUserFacade(),
             $this->getCompanyFacade(),
-            $this->getCustomerFacade()
+            $this->getCustomerFacade(),
         );
     }
 
@@ -135,7 +135,7 @@ class CompanyUserGuiCommunicationFactory extends AbstractCommunicationFactory
     {
         return new CompanyUserTableExpanderPluginExecutor(
             $this->getCompanyUserTableConfigExpanderPlugins(),
-            $this->getCompanyUserTablePrepareDataExpanderPlugins()
+            $this->getCompanyUserTablePrepareDataExpanderPlugins(),
         );
     }
 
@@ -167,7 +167,7 @@ class CompanyUserGuiCommunicationFactory extends AbstractCommunicationFactory
             $this->getCompanyUserPropelQuery(),
             $this->createCompanyUserTableExpanderPluginExecutor(),
             $this->getCompanyUserTableActionExpanderPlugins(),
-            $this->getCompanyUserTableDeleteActionPlugin()
+            $this->getCompanyUserTableDeleteActionPlugin(),
         );
     }
 

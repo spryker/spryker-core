@@ -77,17 +77,17 @@ class CmsSlotBlockProductCategoryConditionsStep implements DataImportStepInterfa
         $conditionsArray = $dataSet[CmsSlotBlockDataSetInterface::COL_CONDITIONS_ARRAY] ?? [];
 
         $conditionsArray[static::KEY_CONDITION_PRODUCT_CATEGORY] = $this->allConditionsResolver->getConditions(
-            $dataSet[CmsSlotBlockDataSetInterface::COL_CONDITIONS_PRODUCT_CATEGORY_ALL]
+            $dataSet[CmsSlotBlockDataSetInterface::COL_CONDITIONS_PRODUCT_CATEGORY_ALL],
         );
 
         $conditionsArray[static::KEY_CONDITION_PRODUCT_CATEGORY] = $this->productAbstractSkusToIdsConditionsResolver->getConditions(
             $dataSet[CmsSlotBlockDataSetInterface::COL_CONDITIONS_PRODUCT_CATEGORY_SKUS],
-            $conditionsArray[static::KEY_CONDITION_PRODUCT_CATEGORY]
+            $conditionsArray[static::KEY_CONDITION_PRODUCT_CATEGORY],
         );
 
         $conditionsArray[static::KEY_CONDITION_PRODUCT_CATEGORY] = $this->categoryKeysToIdsConditionsResolver->getConditions(
             $dataSet[CmsSlotBlockDataSetInterface::COL_CONDITIONS_PRODUCT_CATEGORY_KEYS],
-            $conditionsArray[static::KEY_CONDITION_PRODUCT_CATEGORY]
+            $conditionsArray[static::KEY_CONDITION_PRODUCT_CATEGORY],
         );
 
         if (!array_filter($conditionsArray[static::KEY_CONDITION_PRODUCT_CATEGORY])) {

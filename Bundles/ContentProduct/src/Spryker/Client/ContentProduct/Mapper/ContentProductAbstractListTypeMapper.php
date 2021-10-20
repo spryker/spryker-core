@@ -53,7 +53,7 @@ class ContentProductAbstractListTypeMapper implements ContentProductAbstractList
 
         if (!isset($this->contentProductTermExecutors[$term])) {
             throw new InvalidProductAbstractListTermException(
-                sprintf('There is no matching Term for ProductAbstractListType when provided with term %s.', $term)
+                sprintf('There is no matching Term for ProductAbstractListType when provided with term %s.', $term),
             );
         }
 
@@ -74,7 +74,7 @@ class ContentProductAbstractListTypeMapper implements ContentProductAbstractList
     {
         $contentTypeContextTransfers = $this->contentStorageClient->getContentTypeContextByKeys(
             $contentKeys,
-            $localeName
+            $localeName,
         );
 
         if (!$contentTypeContextTransfers) {

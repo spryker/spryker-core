@@ -50,7 +50,7 @@ class CustomerExpander implements CustomerExpanderInterface
             $customerTransfer->setCustomerProductListCollection(new CustomerProductListCollectionTransfer());
 
             $productListCollectionTransfer = $this->productListReader->getProductListCollectionByIdCompanyBusinessUnit(
-                $customerTransfer->getCompanyUserTransfer()->getCompanyBusinessUnit()
+                $customerTransfer->getCompanyUserTransfer()->getCompanyBusinessUnit(),
             );
 
             $this->addProductListsToCustomerTransfer($customerTransfer, $productListCollectionTransfer);

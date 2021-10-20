@@ -117,7 +117,7 @@ class ProductImageStorageDependencyProvider extends AbstractBundleDependencyProv
     {
         $container->set(static::QUERY_CONTAINER_PRODUCT_IMAGE, function (Container $container) {
             return new ProductImageStorageToProductImageQueryContainerBridge(
-                $container->getLocator()->productImage()->queryContainer()
+                $container->getLocator()->productImage()->queryContainer(),
             );
         });
 

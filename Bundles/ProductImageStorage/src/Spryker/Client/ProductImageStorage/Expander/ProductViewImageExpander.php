@@ -71,7 +71,7 @@ class ProductViewImageExpander implements ProductViewImageExpanderInterface
                 ->resolveProductImageSetStorageTransfers(
                     $productViewTransfer->getIdProductConcrete(),
                     $productViewTransfer->getIdProductAbstract(),
-                    $locale
+                    $locale,
                 );
 
             if (!$productConcreteImageSets) {

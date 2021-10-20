@@ -35,7 +35,7 @@ class PriceProductMerchantRelationshipConcreteDeleteListener extends AbstractPlu
             ->getEventBehaviorFacade()
             ->getEventTransferForeignKeys(
                 $eventEntityTransfers,
-                PriceProductMerchantRelationshipStorageConfig::COL_FK_PRODUCT
+                PriceProductMerchantRelationshipStorageConfig::COL_FK_PRODUCT,
             );
 
         if (empty($productIds)) {

@@ -46,7 +46,7 @@ class UpdateShipmentMethodController extends AbstractController
     public function indexAction(Request $request)
     {
         $idShipmentMethod = $this->castId(
-            $request->query->getInt(static::PARAMETER_ID_SHIPMENT_METHOD)
+            $request->query->getInt(static::PARAMETER_ID_SHIPMENT_METHOD),
         );
 
         $shipmentMethodTransfer = $this->getFactory()
@@ -64,7 +64,7 @@ class UpdateShipmentMethodController extends AbstractController
         $shipmentMethodForm = $this->getFactory()
             ->createShipmentMethodForm(
                 $dataProvider->getData($shipmentMethodTransfer),
-                $dataProvider->getOptions(true)
+                $dataProvider->getOptions(true),
             );
         $shipmentMethodForm->handleRequest($request);
 

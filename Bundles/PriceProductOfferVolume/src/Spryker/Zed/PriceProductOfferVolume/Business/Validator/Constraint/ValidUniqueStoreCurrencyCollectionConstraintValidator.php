@@ -57,7 +57,7 @@ class ValidUniqueStoreCurrencyCollectionConstraintValidator extends ConstraintVa
                     $this->context
                         ->buildViolation($constraint->getMessage())
                         ->atPath(
-                            $this->createViolationPath($priceProductOfferIndex, $priceProductIndex)
+                            $this->createViolationPath($priceProductOfferIndex, $priceProductIndex),
                         )
                         ->addViolation();
                 }
@@ -82,7 +82,7 @@ class ValidUniqueStoreCurrencyCollectionConstraintValidator extends ConstraintVa
             $priceProductOfferIndex,
             PriceProductOfferTransfer::PRODUCT_OFFER,
             ProductOfferTransfer::PRICES,
-            $priceProductIndex
+            $priceProductIndex,
         );
     }
 
@@ -100,7 +100,7 @@ class ValidUniqueStoreCurrencyCollectionConstraintValidator extends ConstraintVa
             '%s-%s-%s',
             $moneyValueTransfer->getFkCurrencyOrFail(),
             $moneyValueTransfer->getFkStoreOrFail(),
-            $priceProductTransfer->getPriceTypeOrFail()->getIdPriceTypeOrFail()
+            $priceProductTransfer->getPriceTypeOrFail()->getIdPriceTypeOrFail(),
         );
     }
 }

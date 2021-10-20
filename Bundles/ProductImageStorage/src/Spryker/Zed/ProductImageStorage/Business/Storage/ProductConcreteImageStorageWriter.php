@@ -87,13 +87,13 @@ class ProductConcreteImageStorageWriter implements ProductConcreteImageStorageWr
 
         $this->deleteProductConcreteImageStorageEntities(
             $productConcreteImageStorageEntities,
-            $productConcreteLocalizedEntities
+            $productConcreteLocalizedEntities,
         );
 
         $this->storeData(
             $productConcreteLocalizedEntities,
             $productConcreteImageStorageEntities,
-            $productConcreteImageSetsBulk
+            $productConcreteImageSetsBulk,
         );
     }
 
@@ -112,7 +112,7 @@ class ProductConcreteImageStorageWriter implements ProductConcreteImageStorageWr
                 $productConcreteLocalizedEntity = $this->findProductConcreteLocalizedEntityByProductIdAndLocale(
                     $productConcreteImageStorageEntity->getFkProduct(),
                     $productConcreteImageStorageEntity->getLocale(),
-                    $productConcreteLocalizedEntities
+                    $productConcreteLocalizedEntities,
                 );
 
                 if ($productConcreteLocalizedEntity) {
@@ -263,16 +263,16 @@ class ProductConcreteImageStorageWriter implements ProductConcreteImageStorageWr
         $productLocalizedAttributeIds = $this->repository->getProductLocalizedAttributesWithProductByIdProductIn($productIds);
         $productFks = array_column($productLocalizedAttributeIds, SpyProductLocalizedAttributesTableMap::COL_FK_PRODUCT);
         $productImageSetsBulk = $this->indexImageSetsByProductIdAndLocale(
-            $this->repository->getProductImageSetsByFkProductIn($productFks)
+            $this->repository->getProductImageSetsByFkProductIn($productFks),
         );
         $productDefaultImageSetsBulk = $this->indexImageSetsByProductId(
-            $this->repository->getDefaultConcreteProductImageSetsByFkProductIn($productFks)
+            $this->repository->getDefaultConcreteProductImageSetsByFkProductIn($productFks),
         );
 
         $imageSets = $this->getImageSetsForLocalizedAttributes(
             $productLocalizedAttributeIds,
             $productImageSetsBulk,
-            $productDefaultImageSetsBulk
+            $productDefaultImageSetsBulk,
         );
 
         return $imageSets;

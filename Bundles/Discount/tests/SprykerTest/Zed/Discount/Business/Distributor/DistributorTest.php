@@ -116,7 +116,7 @@ class DistributorTest extends Unit
                 self::ITEM_GROSS_PRICE_1000,
                 self::ITEM_GROSS_PRICE_1000,
                 self::ITEM_GROSS_PRICE_1000,
-            ]
+            ],
         );
 
         $discountTransfer = new DiscountTransfer();
@@ -145,7 +145,7 @@ class DistributorTest extends Unit
                 self::ITEM_GROSS_PRICE_1000,
                 self::ITEM_GROSS_PRICE_1000,
                 self::ITEM_GROSS_PRICE_1000,
-            ]
+            ],
         );
 
         $discountTransfer = new DiscountTransfer();
@@ -174,7 +174,7 @@ class DistributorTest extends Unit
                 self::ITEM_GROSS_PRICE_1000,
                 self::ITEM_GROSS_PRICE_1000,
                 self::ITEM_GROSS_PRICE_1000,
-            ]
+            ],
         );
 
         $discountTransfer = new DiscountTransfer();
@@ -212,7 +212,7 @@ class DistributorTest extends Unit
                 self::ITEM_GROSS_PRICE_1000,
                 self::ITEM_GROSS_PRICE_2000,
                 self::ITEM_GROSS_PRICE_4000,
-            ]
+            ],
         );
 
         $discountTransfer = new DiscountTransfer();
@@ -250,7 +250,7 @@ class DistributorTest extends Unit
                 self::ITEM_GROSS_PRICE_1000,
                 self::ITEM_GROSS_PRICE_2000,
                 self::ITEM_GROSS_PRICE_4000,
-            ]
+            ],
         );
 
         $discountTransfer = new DiscountTransfer();
@@ -277,7 +277,7 @@ class DistributorTest extends Unit
                 self::ITEM_GROSS_PRICE_ZERO,
                 self::ITEM_GROSS_PRICE_ZERO,
                 self::ITEM_GROSS_PRICE_ZERO,
-            ]
+            ],
         );
 
         $discountTransfer = new DiscountTransfer();
@@ -558,7 +558,7 @@ class DistributorTest extends Unit
     {
         return new Distributor(
             $this->createDiscountableItemTransformer(),
-            $this->createDiscountableItemTransformerStrategyPlugins()
+            $this->createDiscountableItemTransformerStrategyPlugins(),
         );
     }
 

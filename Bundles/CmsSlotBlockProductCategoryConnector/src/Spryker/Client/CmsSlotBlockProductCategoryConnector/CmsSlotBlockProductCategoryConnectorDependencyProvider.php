@@ -46,7 +46,7 @@ class CmsSlotBlockProductCategoryConnectorDependencyProvider extends AbstractDep
     {
         $container->set(static::CLIENT_LOCALE, function (Container $container) {
             return new CmsSlotBlockProductCategoryConnectorToLocaleClientBridge(
-                $container->getLocator()->locale()->client()
+                $container->getLocator()->locale()->client(),
             );
         });
 
@@ -62,7 +62,7 @@ class CmsSlotBlockProductCategoryConnectorDependencyProvider extends AbstractDep
     {
         $container->set(static::CLIENT_PRODUCT_CATEGORY_STORAGE, function (Container $container) {
             return new CmsSlotBlockProductCategoryConnectorToProductCategoryStorageClientBridge(
-                $container->getLocator()->productCategoryStorage()->client()
+                $container->getLocator()->productCategoryStorage()->client(),
             );
         });
 

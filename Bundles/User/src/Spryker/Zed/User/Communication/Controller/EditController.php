@@ -116,7 +116,7 @@ class EditController extends AbstractController
         $userForm = $this->getFactory()
             ->createUserForm(
                 [],
-                $dataProvider->getOptions()
+                $dataProvider->getOptions(),
             )
             ->handleRequest($request);
 
@@ -174,7 +174,7 @@ class EditController extends AbstractController
         $userForm = $this->getFactory()
             ->createUpdateUserForm(
                 $providerData,
-                $dataProvider->getOptions()
+                $dataProvider->getOptions(),
             )
             ->handleRequest($request);
 
@@ -298,7 +298,7 @@ class EditController extends AbstractController
         }
 
         $userTransfer = $this->getFacade()->findUser(
-            (new UserCriteriaTransfer())->setIdUser($idUser)
+            (new UserCriteriaTransfer())->setIdUser($idUser),
         );
 
         if (!$userTransfer) {
@@ -379,7 +379,7 @@ class EditController extends AbstractController
         if ($resetPasswordForm->isSubmitted() && $resetPasswordForm->isValid()) {
             $formData = $resetPasswordForm->getData();
             $currentUserTransfer->setPassword(
-                $formData[ResetPasswordForm::FIELD_PASSWORD]
+                $formData[ResetPasswordForm::FIELD_PASSWORD],
             );
 
             try {
@@ -429,7 +429,7 @@ class EditController extends AbstractController
         foreach ($userGroups->getGroups() as $groupTransfer) {
             $groupPlugin->removeUserFromGroup(
                 $idUser,
-                $groupTransfer->getIdAclGroupOrFail()
+                $groupTransfer->getIdAclGroupOrFail(),
             );
         }
     }

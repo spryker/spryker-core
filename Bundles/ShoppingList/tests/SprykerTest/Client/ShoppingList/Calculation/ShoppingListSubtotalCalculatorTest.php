@@ -49,11 +49,11 @@ class ShoppingListSubtotalCalculatorTest extends Unit
         $shoppingListItemProductViews = [
             (new ProductViewTransfer())
                 ->setCurrentProductPrice(
-                    $this->createCurrentProductPriceTransferWithSumPrice(1)
+                    $this->createCurrentProductPriceTransferWithSumPrice(1),
                 ),
             (new ProductViewTransfer())
                 ->setCurrentProductPrice(
-                    $this->createCurrentProductPriceTransferWithSumPrice(2)
+                    $this->createCurrentProductPriceTransferWithSumPrice(2),
                 ),
         ];
 

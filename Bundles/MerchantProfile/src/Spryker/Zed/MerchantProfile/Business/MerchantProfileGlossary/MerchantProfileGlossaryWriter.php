@@ -62,7 +62,7 @@ class MerchantProfileGlossaryWriter implements MerchantProfileGlossaryWriterInte
         foreach ($localeTransfers as $localeTransfer) {
             $this->saveMerchantProfileGlossaryLocalizedAttributes(
                 $localeTransfer,
-                $merchantProfileTransfer
+                $merchantProfileTransfer,
             );
         }
 
@@ -87,7 +87,7 @@ class MerchantProfileGlossaryWriter implements MerchantProfileGlossaryWriterInte
                 $merchantProfileTransfer = $this->saveMerchantProfileGlossaryAttributesByProvidedLocale(
                     $localeTransfer,
                     $merchantProfileLocalizedGlossaryAttributesTransfer->getMerchantProfileGlossaryAttributeValuesOrFail(),
-                    $merchantProfileTransfer
+                    $merchantProfileTransfer,
                 );
             }
         }
@@ -115,7 +115,7 @@ class MerchantProfileGlossaryWriter implements MerchantProfileGlossaryWriterInte
             $merchantProfileGlossaryKey = $this->getMerchantProfileGlossaryAttributeKey(
                 $merchantProfileData,
                 $merchantProfileGlossaryAttributeFieldName,
-                $merchantProfileTransfer->getFkMerchantOrFail()
+                $merchantProfileTransfer->getFkMerchantOrFail(),
             );
 
             if (empty($glossaryAttributeValue)) {

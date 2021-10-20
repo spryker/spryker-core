@@ -39,7 +39,7 @@ class ZedRequestFactory extends AbstractFactory
     {
         return new Messenger(
             $this->getCashedClient(),
-            $this->getMessengerClient()
+            $this->getMessengerClient(),
         );
     }
 
@@ -73,7 +73,7 @@ class ZedRequestFactory extends AbstractFactory
     public function createZedClient(): AbstractZedClientInterface
     {
         return new ZedClient(
-            $this->createHttpClient()
+            $this->createHttpClient(),
         );
     }
 
@@ -84,7 +84,7 @@ class ZedRequestFactory extends AbstractFactory
     {
         return new LoggableZedClient(
             $this->createZedClient(),
-            $this->createZedRequestLogger()
+            $this->createZedRequestLogger(),
         );
     }
 
@@ -95,7 +95,7 @@ class ZedRequestFactory extends AbstractFactory
     {
         return new ZedRequestInMemoryLogger(
             $this->getUtilEncodingService(),
-            $this->getConfig()->getZedRequestBaseUrl()
+            $this->getConfig()->getZedRequestBaseUrl(),
         );
     }
 
@@ -108,7 +108,7 @@ class ZedRequestFactory extends AbstractFactory
             $this->getConfig(),
             $this->getHeaderExpanderPlugins(),
             $this->getUtilNetworkService(),
-            $this->getUtilTextService()
+            $this->getUtilTextService(),
         );
     }
 

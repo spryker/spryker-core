@@ -35,7 +35,7 @@ class ProductConcreteProductAbstractLocalizedAttributesStorageListener extends A
         $this->preventTransaction();
         $productAbstractIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferForeignKeys(
             $eventEntityTransfers,
-            SpyProductAbstractLocalizedAttributesTableMap::COL_FK_PRODUCT_ABSTRACT
+            SpyProductAbstractLocalizedAttributesTableMap::COL_FK_PRODUCT_ABSTRACT,
         );
         if (empty($productAbstractIds)) {
             return;

@@ -95,13 +95,13 @@ class AclEntityFacadeTest extends Unit
         parent::_tearDown();
 
         $this->tester->deleteRoles(
-            (new AclRoleCriteriaTransfer())->setName(static::ACL_ROLE_TEST_NAME)
+            (new AclRoleCriteriaTransfer())->setName(static::ACL_ROLE_TEST_NAME),
         );
         $this->tester->deleteAclEntityRules(
-            (new AclEntityRuleCriteriaTransfer())->addIdAclRole($this->roleTransfer->getIdAclRole())
+            (new AclEntityRuleCriteriaTransfer())->addIdAclRole($this->roleTransfer->getIdAclRole()),
         );
         $this->tester->deleteAclEntitySegments(
-            (new AclEntitySegmentCriteriaTransfer())->addReference(static::TEST_MERCHANT_REFERENCE)
+            (new AclEntitySegmentCriteriaTransfer())->addReference(static::TEST_MERCHANT_REFERENCE),
         );
     }
 
@@ -132,7 +132,7 @@ class AclEntityFacadeTest extends Unit
                 AclEntityRuleTransfer::ENTITY => SpyMerchant::class,
                 AclEntityRuleTransfer::ID_ACL_ROLE => $this->roleTransfer->getIdAclRoleOrFail(),
                 AclEntityRuleTransfer::PERMISSION_MASK => AclEntityConstants::OPERATION_MASK_CREATE,
-            ]
+            ],
         );
         $rolesTransfer = (new RolesTransfer())
             ->addRole($this->roleTransfer);
@@ -225,7 +225,7 @@ class AclEntityFacadeTest extends Unit
                 AclEntityRuleTransfer::ENTITY => SpyMerchant::class,
                 AclEntityRuleTransfer::ID_ACL_ROLE => $this->roleTransfer->getIdAclRoleOrFail(),
                 AclEntityRuleTransfer::PERMISSION_MASK => AclEntityConstants::OPERATION_MASK_CREATE,
-            ]
+            ],
         );
 
         $newAclEntityRuleTransfer = (new AclEntityRuleTransfer())

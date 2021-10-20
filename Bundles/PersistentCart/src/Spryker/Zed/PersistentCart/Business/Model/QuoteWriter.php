@@ -91,7 +91,7 @@ class QuoteWriter implements QuoteWriterInterface
     {
         $quoteResponseTransfer = $this->quoteResolver->resolveCustomerQuote(
             $quoteUpdateRequestTransfer->getIdQuote(),
-            $quoteUpdateRequestTransfer->getCustomer()
+            $quoteUpdateRequestTransfer->getCustomer(),
         );
         if (!$quoteResponseTransfer->getIsSuccessful()) {
             return $this->quoteResponseExpander->expand($quoteResponseTransfer);
@@ -111,7 +111,7 @@ class QuoteWriter implements QuoteWriterInterface
     {
         $quoteResponseTransfer = $this->quoteResolver->resolveCustomerQuote(
             $quoteUpdateRequestTransfer->getIdQuote(),
-            $quoteUpdateRequestTransfer->getCustomer()
+            $quoteUpdateRequestTransfer->getCustomer(),
         );
 
         if (!$quoteResponseTransfer->getIsSuccessful()) {
@@ -141,7 +141,7 @@ class QuoteWriter implements QuoteWriterInterface
     {
         $quoteResponseTransfer = $this->quoteFacade->findQuoteByCustomerAndStore(
             $quoteTransfer->getCustomer(),
-            $quoteTransfer->getStore()
+            $quoteTransfer->getStore(),
         );
 
         if (!$quoteResponseTransfer->getIsSuccessful()) {

@@ -202,20 +202,20 @@ class DatasetTable extends AbstractTable
             Url::generate(static::DATASET_DOWNLOAD_URL, [
                 static::REQUEST_ID_DATASET => $item[static::COL_ID_DATASET],
             ]),
-            'Download'
+            'Download',
         );
         $buttons[] = $this->generateEditButton(
             Url::generate(static::DATASET_EDIT_URL, [
                 static::REQUEST_ID_DATASET => $item[static::COL_ID_DATASET],
             ]),
-            'Edit'
+            'Edit',
         );
         $buttons[] = $this->generateStateChangeButton($item);
         $buttons[] = $this->generateRemoveButton(
             Url::generate(static::DATASET_DELETE_URL, [
                 static::REQUEST_ID_DATASET => $item[static::COL_ID_DATASET],
             ]),
-            'Delete'
+            'Delete',
         );
 
         return $buttons;
@@ -233,7 +233,7 @@ class DatasetTable extends AbstractTable
                 Url::generate(static::DATASET_DEACTIVATE_URL, [
                     static::REQUEST_ID_DATASET => $item[static::COL_ID_DATASET],
                 ]),
-                'Deactivate'
+                'Deactivate',
             );
         }
 
@@ -241,7 +241,7 @@ class DatasetTable extends AbstractTable
             Url::generate(static::DATASET_ACTIVATE_URL, [
                 static::REQUEST_ID_DATASET => $item[static::COL_ID_DATASET],
             ]),
-            'Activate'
+            'Activate',
         );
     }
 

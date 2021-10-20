@@ -123,7 +123,7 @@ class ProductOfferStorageWriter implements ProductOfferStorageWriterInterface
         }
 
         $this->productOfferStorageDeleter->deleteCollectionByProductOfferReferences(
-            array_diff($productOfferReferences, $sellableProductOfferReferences)
+            array_diff($productOfferReferences, $sellableProductOfferReferences),
         );
     }
 

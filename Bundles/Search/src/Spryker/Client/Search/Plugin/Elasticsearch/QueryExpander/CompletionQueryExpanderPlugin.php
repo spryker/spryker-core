@@ -68,7 +68,7 @@ class CompletionQueryExpanderPlugin extends AbstractPlugin implements QueryExpan
             throw new InvalidSearchQueryException(sprintf(
                 'The base search query must implement %s in order to use %s.',
                 SearchStringGetterInterface::class,
-                static::class
+                static::class,
             ));
         }
 

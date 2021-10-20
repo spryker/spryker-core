@@ -50,14 +50,14 @@ class DataEntityValidatorStep implements DataImportStepInterface
         $entityClass = $dataSet[AclEntitySegmentConnectorDataSetInterface::DATA_ENTITY];
         if (!class_exists($entityClass)) {
             throw new DataImportException(
-                sprintf(static::REFERENCED_ENTITY_CLASS_WAS_NOT_FOUND_TEMPLATE, $entityClass)
+                sprintf(static::REFERENCED_ENTITY_CLASS_WAS_NOT_FOUND_TEMPLATE, $entityClass),
             );
         }
 
         $segmentConnectorClass = $this->aclEntityService->generateSegmentConnectorClassName($entityClass);
         if (!class_exists($segmentConnectorClass)) {
             throw new DataImportException(
-                sprintf(static::REFERENCED_SEGMENT_CONNECTOR_CLASS_WAS_NOT_FOUND_TEMPLATE, $segmentConnectorClass)
+                sprintf(static::REFERENCED_SEGMENT_CONNECTOR_CLASS_WAS_NOT_FOUND_TEMPLATE, $segmentConnectorClass),
             );
         }
     }

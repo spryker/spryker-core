@@ -33,7 +33,7 @@ abstract class AbstractSpyCategory extends BaseSpyCategory
         $criteria->addAnd(
             SpyCategoryAttributeTableMap::COL_FK_LOCALE,
             $idLocale,
-            Criteria::EQUAL
+            Criteria::EQUAL,
         );
 
         return $this->getAttributes($criteria);

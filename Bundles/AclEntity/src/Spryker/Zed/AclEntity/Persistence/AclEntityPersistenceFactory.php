@@ -69,7 +69,7 @@ class AclEntityPersistenceFactory extends AbstractPersistenceFactory
             $this->createRelationResolver($aclEntityMetadataCollectionTransfer),
             $this->getUserFacade(),
             $this->getAclFacade(),
-            $this->createAclEntityQueryMerger()
+            $this->createAclEntityQueryMerger(),
         );
     }
 
@@ -110,7 +110,7 @@ class AclEntityPersistenceFactory extends AbstractPersistenceFactory
         return new AclDirectorStrategyResolver(
             $strategyContainer,
             $this->createAclEntityRuleCollectionTransferFilter(),
-            $this->createAclEntityRuleCollectionTransferSorter()
+            $this->createAclEntityRuleCollectionTransferSorter(),
         );
     }
 
@@ -172,7 +172,7 @@ class AclEntityPersistenceFactory extends AbstractPersistenceFactory
         return new SegmentScopeAclQueryDirectorStrategy(
             $aclEntityRuleCollectionTransfer,
             $this->getAclEntityService(),
-            $this->createAclEntityRuleCollectionTransferFilter()
+            $this->createAclEntityRuleCollectionTransferFilter(),
         );
     }
 
@@ -203,7 +203,7 @@ class AclEntityPersistenceFactory extends AbstractPersistenceFactory
             $this->createAclEntityRuleCollectionTransferFilter(),
             $this->createAclEntityRuleCollectionTransferSorter(),
             $this->createAclEntityQueryMerger(),
-            $strategyContainer
+            $strategyContainer,
         );
     }
 
@@ -228,7 +228,7 @@ class AclEntityPersistenceFactory extends AbstractPersistenceFactory
     ): AclEntityMetadataReaderInterface {
         return new AclEntityMetadataReader(
             $aclEntityMetadataCollectionTransfer,
-            $this->getConfig()->getDefaultGlobalOperationMask()
+            $this->getConfig()->getDefaultGlobalOperationMask(),
         );
     }
 
@@ -252,7 +252,7 @@ class AclEntityPersistenceFactory extends AbstractPersistenceFactory
 
         return new RelationResolver(
             $strategyContainer,
-            $this->createAclEntityMetadataReader($aclEntityMetadataCollectionTransfer)
+            $this->createAclEntityMetadataReader($aclEntityMetadataCollectionTransfer),
         );
     }
 

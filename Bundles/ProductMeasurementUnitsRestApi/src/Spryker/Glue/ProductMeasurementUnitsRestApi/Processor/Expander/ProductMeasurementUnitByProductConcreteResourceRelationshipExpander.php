@@ -71,7 +71,7 @@ class ProductMeasurementUnitByProductConcreteResourceRelationshipExpander implem
         $productConcreteIds = $this->productStorageClient->getProductConcreteIdsByMapping(
             static::PRODUCT_CONCRETE_MAPPING_TYPE,
             $productConcreteSkus,
-            $localeName
+            $localeName,
         );
 
         $productMeasurementUnitTransfers = $this->productMeasurementUnitStorageClient
@@ -85,7 +85,7 @@ class ProductMeasurementUnitByProductConcreteResourceRelationshipExpander implem
             }
 
             $restProductMeasurementUnitsResource = $this->productMeasurementUnitRestResponseBuilder->createProductMeasurementUnitRestResource(
-                $productMeasurementUnitTransfersWithTranslatedNames[$idProductConcrete]
+                $productMeasurementUnitTransfersWithTranslatedNames[$idProductConcrete],
             );
 
             $resource->addRelationship($restProductMeasurementUnitsResource);

@@ -75,7 +75,7 @@ class PriceProductValidator implements PriceProductValidatorInterface
     ): ValidationResponseTransfer {
         $constraintViolationList = $this->validator->validate(
             $priceProductTransfers,
-            $this->priceProductConstraintProvider->getConstraints()
+            $this->priceProductConstraintProvider->getConstraints(),
         );
 
         if (!$constraintViolationList->count()) {

@@ -31,7 +31,7 @@ class ProductBundleMapper
         foreach ($productBundleEntities as $productBundleEntity) {
             $productForBundleTransfers[] = (new ProductForBundleTransfer())->fromArray(
                 $productBundleEntity->getSpyProductRelatedByFkBundledProduct()->toArray(),
-                true
+                true,
             )
                 ->setIdProductConcrete($productBundleEntity->getFkBundledProduct())
                 ->setIdProductBundle($productBundleEntity->getFkProduct())
@@ -76,7 +76,7 @@ class ProductBundleMapper
             $productBundleCollectionTransfer->addProductBundle(
                 (new ProductBundleTransfer())
                     ->setIdProductConcreteBundle($fkProduct)
-                    ->setBundledProducts(new ArrayObject($productForBundleTransfers))
+                    ->setBundledProducts(new ArrayObject($productForBundleTransfers)),
             );
         }
 

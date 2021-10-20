@@ -186,7 +186,7 @@ abstract class AbstractQueryExpanderPluginTest extends Unit
                     ->setName('foo')
                     ->setParameterName('foo-param')
                     ->setFieldName(PageIndexMap::STRING_FACET)
-                    ->setType(SearchElasticsearchConfig::FACET_TYPE_ENUMERATION)
+                    ->setType(SearchElasticsearchConfig::FACET_TYPE_ENUMERATION),
             );
 
         return $searchConfigMock;
@@ -204,21 +204,21 @@ abstract class AbstractQueryExpanderPluginTest extends Unit
                     ->setName('foo')
                     ->setParameterName('foo-param')
                     ->setFieldName(PageIndexMap::STRING_FACET)
-                    ->setType(SearchElasticsearchConfig::FACET_TYPE_ENUMERATION)
+                    ->setType(SearchElasticsearchConfig::FACET_TYPE_ENUMERATION),
             )
             ->addFacet(
                 (new FacetConfigTransfer())
                     ->setName('bar')
                     ->setParameterName('bar-param')
                     ->setFieldName(PageIndexMap::STRING_FACET)
-                    ->setType(SearchElasticsearchConfig::FACET_TYPE_ENUMERATION)
+                    ->setType(SearchElasticsearchConfig::FACET_TYPE_ENUMERATION),
             )
             ->addFacet(
                 (new FacetConfigTransfer())
                     ->setName('baz')
                     ->setParameterName('baz-param')
                     ->setFieldName(PageIndexMap::STRING_FACET)
-                    ->setType(SearchElasticsearchConfig::FACET_TYPE_ENUMERATION)
+                    ->setType(SearchElasticsearchConfig::FACET_TYPE_ENUMERATION),
             );
 
         return $searchConfigMock;
@@ -236,7 +236,7 @@ abstract class AbstractQueryExpanderPluginTest extends Unit
                     ->setName('foo')
                     ->setParameterName('foo-param')
                     ->setFieldName(PageIndexMap::INTEGER_FACET)
-                    ->setType(SearchElasticsearchConfig::FACET_TYPE_ENUMERATION)
+                    ->setType(SearchElasticsearchConfig::FACET_TYPE_ENUMERATION),
             );
 
         return $searchConfigMock;
@@ -254,21 +254,21 @@ abstract class AbstractQueryExpanderPluginTest extends Unit
                     ->setName('foo')
                     ->setParameterName('foo-param')
                     ->setFieldName(PageIndexMap::INTEGER_FACET)
-                    ->setType(SearchElasticsearchConfig::FACET_TYPE_ENUMERATION)
+                    ->setType(SearchElasticsearchConfig::FACET_TYPE_ENUMERATION),
             )
             ->addFacet(
                 (new FacetConfigTransfer())
                     ->setName('bar')
                     ->setParameterName('bar-param')
                     ->setFieldName(PageIndexMap::INTEGER_FACET)
-                    ->setType(SearchElasticsearchConfig::FACET_TYPE_ENUMERATION)
+                    ->setType(SearchElasticsearchConfig::FACET_TYPE_ENUMERATION),
             )
             ->addFacet(
                 (new FacetConfigTransfer())
                     ->setName('baz')
                     ->setParameterName('baz-param')
                     ->setFieldName(PageIndexMap::INTEGER_FACET)
-                    ->setType(SearchElasticsearchConfig::FACET_TYPE_RANGE)
+                    ->setType(SearchElasticsearchConfig::FACET_TYPE_RANGE),
             );
 
         return $searchConfigMock;
@@ -286,7 +286,7 @@ abstract class AbstractQueryExpanderPluginTest extends Unit
                     ->setName('foo')
                     ->setParameterName('foo-param')
                     ->setFieldName(PageIndexMap::CATEGORY_ALL_PARENTS)
-                    ->setType(SearchElasticsearchConfig::FACET_TYPE_CATEGORY)
+                    ->setType(SearchElasticsearchConfig::FACET_TYPE_CATEGORY),
             );
 
         return $searchConfigMock;
@@ -304,21 +304,21 @@ abstract class AbstractQueryExpanderPluginTest extends Unit
                     ->setName('foo')
                     ->setParameterName('foo-param')
                     ->setFieldName(PageIndexMap::CATEGORY_ALL_PARENTS)
-                    ->setType(SearchElasticsearchConfig::FACET_TYPE_CATEGORY)
+                    ->setType(SearchElasticsearchConfig::FACET_TYPE_CATEGORY),
             )
             ->addFacet(
                 (new FacetConfigTransfer())
                     ->setName('bar')
                     ->setParameterName('bar-param')
                     ->setFieldName(PageIndexMap::CATEGORY_ALL_PARENTS)
-                    ->setType(SearchElasticsearchConfig::FACET_TYPE_CATEGORY)
+                    ->setType(SearchElasticsearchConfig::FACET_TYPE_CATEGORY),
             )
             ->addFacet(
                 (new FacetConfigTransfer())
                     ->setName('baz')
                     ->setParameterName('baz-param')
                     ->setFieldName(PageIndexMap::CATEGORY_ALL_PARENTS)
-                    ->setType(SearchElasticsearchConfig::FACET_TYPE_CATEGORY)
+                    ->setType(SearchElasticsearchConfig::FACET_TYPE_CATEGORY),
             );
 
         return $searchConfigMock;
@@ -336,21 +336,21 @@ abstract class AbstractQueryExpanderPluginTest extends Unit
                     ->setName('foo')
                     ->setParameterName('foo-param')
                     ->setFieldName(PageIndexMap::STRING_FACET)
-                    ->setType(SearchElasticsearchConfig::FACET_TYPE_ENUMERATION)
+                    ->setType(SearchElasticsearchConfig::FACET_TYPE_ENUMERATION),
             )
             ->addFacet(
                 (new FacetConfigTransfer())
                     ->setName('bar')
                     ->setParameterName('bar-param')
                     ->setFieldName(PageIndexMap::INTEGER_FACET)
-                    ->setType(SearchElasticsearchConfig::FACET_TYPE_ENUMERATION)
+                    ->setType(SearchElasticsearchConfig::FACET_TYPE_ENUMERATION),
             )
             ->addFacet(
                 (new FacetConfigTransfer())
                     ->setName('baz')
                     ->setParameterName('baz-param')
                     ->setFieldName(PageIndexMap::CATEGORY_ALL_PARENTS)
-                    ->setType(SearchElasticsearchConfig::FACET_TYPE_CATEGORY)
+                    ->setType(SearchElasticsearchConfig::FACET_TYPE_CATEGORY),
             );
 
         return $searchConfigMock;

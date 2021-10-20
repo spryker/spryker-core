@@ -75,7 +75,7 @@ class ProductLabelLocalizedAttributesFormType extends AbstractType
             HiddenType::class,
             [
                 'property_path' => 'fkLocale',
-            ]
+            ],
         );
 
         return $this;
@@ -106,7 +106,7 @@ class ProductLabelLocalizedAttributesFormType extends AbstractType
             [
                 'label' => 'Name',
                 'required' => false,
-            ]
+            ],
         );
     }
 

@@ -55,7 +55,7 @@ class GrantTypeBuilder implements GrantBuilderInterface
                 throw new InvalidBuilderException(sprintf(
                     'Provided builder %s must implement %s',
                     $builderFullyQualifiedClassName,
-                    GrantTypeBuilderInterface::class
+                    GrantTypeBuilderInterface::class,
                 ));
             }
 
@@ -70,7 +70,7 @@ class GrantTypeBuilder implements GrantBuilderInterface
             throw new InvalidGrantException(sprintf(
                 'Grant implementing %s is required in order to use %s.',
                 GrantTypeInterface::class,
-                static::class
+                static::class,
             ));
         }
         if (!class_exists($fullyQualifiedClassName) || !is_subclass_of($fullyQualifiedClassName, GrantTypeInterface::class)) {
@@ -78,7 +78,7 @@ class GrantTypeBuilder implements GrantBuilderInterface
                 'Provided grant %s must implement %s in order to use %s.',
                 $fullyQualifiedClassName,
                 GrantTypeInterface::class,
-                static::class
+                static::class,
             ));
         }
 

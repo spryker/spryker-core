@@ -39,7 +39,7 @@ class CmsSlotLocaleConnectorDependencyProvider extends AbstractDependencyProvide
     {
         $container->set(static::CLIENT_LOCALE, function (Container $container) {
             return new CmsSlotLocaleConnectorToLocaleClientBridge(
-                $container->getLocator()->locale()->client()
+                $container->getLocator()->locale()->client(),
             );
         });
 

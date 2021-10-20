@@ -56,7 +56,7 @@ class CompanyBusinessUnitFacadeTest extends Test
         // Assert
         $this->assertNotNull(
             $this->tester->getFacade()
-                ->findCompanyBusinessUnitById($companyBusinessUnitTransferCreated->getIdCompanyBusinessUnit())
+                ->findCompanyBusinessUnitById($companyBusinessUnitTransferCreated->getIdCompanyBusinessUnit()),
         );
     }
 
@@ -195,7 +195,7 @@ class CompanyBusinessUnitFacadeTest extends Test
         // Assert
         $this->assertNull(
             $this->tester->getFacade()
-                ->findCompanyBusinessUnitById($companyBusinessUnitTransfer->getIdCompanyBusinessUnit())
+                ->findCompanyBusinessUnitById($companyBusinessUnitTransfer->getIdCompanyBusinessUnit()),
         );
     }
 
@@ -218,7 +218,7 @@ class CompanyBusinessUnitFacadeTest extends Test
         // Assert
         $this->assertSame(
             $companyBusinessUnitTransfer->getIdCompanyBusinessUnit(),
-            $companyUserResponseTransfer->getCompanyUser()->getFkCompanyBusinessUnit()
+            $companyUserResponseTransfer->getCompanyUser()->getFkCompanyBusinessUnit(),
         );
     }
 
@@ -244,7 +244,7 @@ class CompanyBusinessUnitFacadeTest extends Test
         // Assert
         $this->assertSame(
             $loadedChildBusinessUnitTransfer->getParentCompanyBusinessUnit()->getIdCompanyBusinessUnit(),
-            $companyBusinessUnitTransfer->getIdCompanyBusinessUnit()
+            $companyBusinessUnitTransfer->getIdCompanyBusinessUnit(),
         );
     }
 
@@ -270,11 +270,11 @@ class CompanyBusinessUnitFacadeTest extends Test
         // Assert
         $this->assertSame(
             $loadedChildBusinessUnitTransfer->getIdCompanyBusinessUnit(),
-            $businessUnitTransfer->getIdCompanyBusinessUnit()
+            $businessUnitTransfer->getIdCompanyBusinessUnit(),
         );
         $this->assertSame(
             $loadedChildBusinessUnitTransfer->getFkCompany(),
-            $businessUnitTransfer->getFkCompany()
+            $businessUnitTransfer->getFkCompany(),
         );
     }
 
@@ -302,7 +302,7 @@ class CompanyBusinessUnitFacadeTest extends Test
         // Assert
         $this->assertSame(
             $loadedChildBusinessUnitTransfer->getParentCompanyBusinessUnit()->getIdCompanyBusinessUnit(),
-            $companyBusinessUnitTransferParent->getIdCompanyBusinessUnit()
+            $companyBusinessUnitTransferParent->getIdCompanyBusinessUnit(),
         );
     }
 
@@ -333,11 +333,11 @@ class CompanyBusinessUnitFacadeTest extends Test
         // Assert
         $this->assertSame(
             $companyBusinessUnitTransferChildLoaded->getParentCompanyBusinessUnit()->getIdCompanyBusinessUnit(),
-            $companyBusinessUnitTransferChildLoaded->getFkParentCompanyBusinessUnit()
+            $companyBusinessUnitTransferChildLoaded->getFkParentCompanyBusinessUnit(),
         );
         $this->assertSame(
             $companyBusinessUnitTransferChildLoaded->getFkParentCompanyBusinessUnit(),
-            $companyBusinessUnitTransferParent->getIdCompanyBusinessUnit()
+            $companyBusinessUnitTransferParent->getIdCompanyBusinessUnit(),
         );
     }
 
@@ -365,7 +365,7 @@ class CompanyBusinessUnitFacadeTest extends Test
 
         // Assert
         $this->assertNull(
-            $loadedChildBusinessUnitTransfer->getFkParentCompanyBusinessUnit()
+            $loadedChildBusinessUnitTransfer->getFkParentCompanyBusinessUnit(),
         );
     }
 

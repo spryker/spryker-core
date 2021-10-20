@@ -145,7 +145,7 @@ class CreditCardSubForm extends AbstractSubForm
                 'constraints' => [
                     $this->createNotBlankConstraint(),
                 ],
-            ]
+            ],
         );
 
         return $this;
@@ -167,7 +167,7 @@ class CreditCardSubForm extends AbstractSubForm
                 'constraints' => [
                     $this->createNotBlankConstraint(),
                 ],
-            ]
+            ],
         );
 
         return $this;
@@ -189,7 +189,7 @@ class CreditCardSubForm extends AbstractSubForm
                 'constraints' => [
                     $this->createNotBlankConstraint(),
                 ],
-            ]
+            ],
         );
 
         return $this;
@@ -213,7 +213,7 @@ class CreditCardSubForm extends AbstractSubForm
                 'constraints' => [
                     $this->createNotBlankConstraint(),
                 ],
-            ]
+            ],
         );
 
         return $this;
@@ -240,7 +240,7 @@ class CreditCardSubForm extends AbstractSubForm
                 'constraints' => [
                     $this->createNotBlankConstraint(),
                 ],
-            ]
+            ],
         );
 
         return $this;
@@ -262,7 +262,7 @@ class CreditCardSubForm extends AbstractSubForm
                 'constraints' => [
                     $this->createNotBlankConstraint(),
                 ],
-            ]
+            ],
         );
 
         return $this;

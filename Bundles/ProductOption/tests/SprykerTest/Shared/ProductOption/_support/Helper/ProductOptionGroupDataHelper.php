@@ -54,7 +54,7 @@ class ProductOptionGroupDataHelper extends Module
         $productOptionGroupTransfer = (new ProductOptionGroupBuilder($override))->build();
 
         $productOptionGroupTransfer->setIdProductOptionGroup(
-            $this->saveGroup($productOptionGroupTransfer)
+            $this->saveGroup($productOptionGroupTransfer),
         );
 
         return $productOptionGroupTransfer;
@@ -100,7 +100,7 @@ class ProductOptionGroupDataHelper extends Module
     {
         $productOptionGroupTransfer = (new ProductOptionGroupBuilder($overrideGroup))->build();
         $productOptionGroupTransfer->addGroupNameTranslation(
-            $this->createProductOptionTranslationTransfer($productOptionGroupTransfer->getName())
+            $this->createProductOptionTranslationTransfer($productOptionGroupTransfer->getName()),
         );
 
         $idProductOptionGroup = $this->getProductOptionFacade()->saveProductOptionGroup($productOptionGroupTransfer);
@@ -114,7 +114,7 @@ class ProductOptionGroupDataHelper extends Module
             $productOptionValueTransfer = $this->createProductOptionValueTransfer($overrideValue, $overridePrices);
             $productOptionGroupTransfer->addProductOptionValue($productOptionValueTransfer);
             $productOptionGroupTransfer->addProductOptionValueTranslation(
-                $this->createProductOptionTranslationTransfer($productOptionValueTransfer->getValue())
+                $this->createProductOptionTranslationTransfer($productOptionValueTransfer->getValue()),
             );
         }
 
@@ -145,7 +145,7 @@ class ProductOptionGroupDataHelper extends Module
                 (new MoneyValueBuilder($overridePrice))
                     ->build()
                     ->setFkCurrency($this->getIdCurrency($currencyCode))
-                    ->setFkStore($this->getIdStore($storeName))
+                    ->setFkStore($this->getIdStore($storeName)),
             );
         }
 

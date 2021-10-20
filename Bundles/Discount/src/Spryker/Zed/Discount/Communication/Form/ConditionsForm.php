@@ -72,7 +72,7 @@ class ConditionsForm extends AbstractType
                     '/discount/query-string/rule-fields',
                     [
                         'type' => MetaProviderFactory::TYPE_DECISION_RULE,
-                    ]
+                    ],
                 )->build(),
             ],
         ]);

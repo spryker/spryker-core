@@ -212,7 +212,7 @@ class TemplateController extends AbstractController
     public function slotTableAction(Request $request): JsonResponse
     {
         $idConfigurableBundleTemplate = $this->castId(
-            $request->get(static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE)
+            $request->get(static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE),
         );
 
         $table = $this->getFactory()->createConfigurableBundleTemplateSlotTable($idConfigurableBundleTemplate);
@@ -228,7 +228,7 @@ class TemplateController extends AbstractController
     public function slotProductsTableAction(Request $request): JsonResponse
     {
         $idConfigurableBundleTemplateSlot = $this->castId(
-            $request->get(static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT)
+            $request->get(static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT),
         );
 
         $table = $this->getFactory()->createConfigurableBundleTemplateSlotProductsTable($idConfigurableBundleTemplateSlot);
@@ -259,7 +259,7 @@ class TemplateController extends AbstractController
         $form = $this->getFactory()
             ->getConfigurableBundleTemplateForm(
                 $formDataProvider->getData(),
-                $formDataProvider->getOptions()
+                $formDataProvider->getOptions(),
             )->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -299,7 +299,7 @@ class TemplateController extends AbstractController
     protected function executeEditAction(Request $request)
     {
         $idConfigurableBundleTemplate = $this->castId(
-            $request->get(static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE)
+            $request->get(static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE),
         );
 
         $formDataProvider = $this->getFactory()->createConfigurableBundleTemplateFormDataProvider();
@@ -322,7 +322,7 @@ class TemplateController extends AbstractController
         $form = $this->getFactory()
             ->getConfigurableBundleTemplateForm(
                 $configurableBundleTemplateTransfer,
-                $formDataProvider->getOptions()
+                $formDataProvider->getOptions(),
             )->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -369,7 +369,7 @@ class TemplateController extends AbstractController
         }
 
         $idConfigurableBundleTemplate = $this->castId(
-            $request->query->get(static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE)
+            $request->query->get(static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE),
         );
 
         $configurableBundleTemplateFilterTransfer = $this->createConfigurableBundleTemplateFilter($idConfigurableBundleTemplate);
@@ -426,7 +426,7 @@ class TemplateController extends AbstractController
         }
 
         $idConfigurableBundleTemplate = $this->castId(
-            $request->query->get(static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE)
+            $request->query->get(static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE),
         );
 
         $configurableBundleTemplateFilterTransfer = $this->createConfigurableBundleTemplateFilter($idConfigurableBundleTemplate);
@@ -482,7 +482,7 @@ class TemplateController extends AbstractController
             return $this->redirectResponse(static::ROUTE_TEMPLATES_LIST);
         }
         $idConfigurableBundleTemplate = $this->castId(
-            $request->query->get(static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE)
+            $request->query->get(static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE),
         );
 
         $configurableBundleTemplateFilterTransfer = (new ConfigurableBundleTemplateFilterTransfer())
@@ -524,7 +524,7 @@ class TemplateController extends AbstractController
     protected function executeConfirmDeleteAction(Request $request)
     {
         $idConfigurableBundleTemplate = $this->castId(
-            $request->query->get(static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE)
+            $request->query->get(static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE),
         );
 
         $configurableBundleTemplateFilterTransfer = $this->createConfigurableBundleTemplateFilter($idConfigurableBundleTemplate);

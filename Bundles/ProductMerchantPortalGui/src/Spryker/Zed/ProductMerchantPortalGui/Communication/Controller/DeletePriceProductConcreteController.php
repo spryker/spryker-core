@@ -36,7 +36,7 @@ class DeletePriceProductConcreteController extends AbstractDeletePriceProductCon
         $productConcreteTransfer = $this->getFactory()->getMerchantProductFacade()->findProductConcrete(
             (new MerchantProductCriteriaTransfer())
                 ->setIdMerchant($idMerchant)
-                ->addIdProductConcrete($idProductConcrete)
+                ->addIdProductConcrete($idProductConcrete),
         );
 
         if (!$productConcreteTransfer) {
@@ -46,7 +46,7 @@ class DeletePriceProductConcreteController extends AbstractDeletePriceProductCon
         $validationResponseTransfer = $this->deletePrices(
             $productConcreteTransfer->getPrices(),
             $this->getDefaultPriceProductIds($request),
-            $volumeQuantity
+            $volumeQuantity,
         );
 
         if (!$validationResponseTransfer->getIsSuccess()) {

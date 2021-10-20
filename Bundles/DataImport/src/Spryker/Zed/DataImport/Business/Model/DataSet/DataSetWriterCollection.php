@@ -67,7 +67,7 @@ class DataSetWriterCollection implements DataSetWriterInterface
     protected function mapDataSetToDataSetItemTransfer(DataSetInterface $dataSet): DataSetItemTransfer
     {
         return (new DataSetItemTransfer())->setPayload(
-            $dataSet->getArrayCopy()
+            $dataSet->getArrayCopy(),
         );
     }
 

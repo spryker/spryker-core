@@ -89,11 +89,11 @@ class CompanyUserStorageUnpublishListenerTest extends Unit
         //Act
         $this->companyUserStoragePublishListener->handleBulk(
             $eventTransfers,
-            CompanyUserEvents::COMPANY_USER_PUBLISH
+            CompanyUserEvents::COMPANY_USER_PUBLISH,
         );
         $this->companyUserStorageUnpublishListener->handleBulk(
             $eventTransfers,
-            CompanyUserEvents::COMPANY_USER_UNPUBLISH
+            CompanyUserEvents::COMPANY_USER_UNPUBLISH,
         );
         $companyUserStorageEntities = $this->companyUserStorageRepository->findCompanyUserStorageEntities([
             $this->companyUserTransfer->getIdCompanyUser(),

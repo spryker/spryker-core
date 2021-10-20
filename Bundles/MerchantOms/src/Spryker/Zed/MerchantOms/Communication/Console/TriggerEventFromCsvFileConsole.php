@@ -104,19 +104,19 @@ class TriggerEventFromCsvFileConsole extends Console
             ->addArgument(
                 static::ARGUMENT_FILE_PATH,
                 InputArgument::REQUIRED,
-                'Path to the file. It can be absolute or relative to application root directory.'
+                'Path to the file. It can be absolute or relative to application root directory.',
             )
             ->addOption(
                 static::OPTION_IGNORE_ERRORS,
                 null,
                 InputOption::VALUE_NONE,
-                'Suppress errors if an input file row was not processed.'
+                'Suppress errors if an input file row was not processed.',
             )
             ->addOption(
                 static::OPTION_START_FROM,
                 null,
                 InputOption::VALUE_REQUIRED,
-                'Start file processing from the defined row number.'
+                'Start file processing from the defined row number.',
             );
 
         parent::configure();
@@ -178,14 +178,14 @@ class TriggerEventFromCsvFileConsole extends Console
                 $this->logOutput(
                     $rowNumber,
                     $merchantOmsTriggerRequestTransfer,
-                    $isSuccessfulMerchantOmsTriggerResponse
+                    $isSuccessfulMerchantOmsTriggerResponse,
                 );
             } catch (Throwable $exception) {
                 $this->logOutput(
                     $rowNumber,
                     $merchantOmsTriggerRequestTransfer,
                     false,
-                    $exception->getMessage()
+                    $exception->getMessage(),
                 );
             }
         }

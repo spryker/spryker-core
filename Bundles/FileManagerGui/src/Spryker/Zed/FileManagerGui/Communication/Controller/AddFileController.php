@@ -38,7 +38,7 @@ class AddFileController extends AbstractUploadFileController
         $redirectUrl = Url::generate(
             $request->get(static::FILE_DIRECTORY_ID) ?
                 '/file-manager-gui/directories-tree' :
-                '/file-manager-gui'
+                '/file-manager-gui',
         )->build();
 
         if ($form->isSubmitted()) {
@@ -107,7 +107,7 @@ class AddFileController extends AbstractUploadFileController
 
         if ($fileTransfer->getUseRealName()) {
             $fileTransfer->setFileName(
-                $fileUploadTransfer->getClientOriginalName()
+                $fileUploadTransfer->getClientOriginalName(),
             );
         }
 

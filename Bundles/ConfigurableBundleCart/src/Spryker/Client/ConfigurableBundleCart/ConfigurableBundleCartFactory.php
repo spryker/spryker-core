@@ -32,7 +32,7 @@ class ConfigurableBundleCartFactory extends AbstractFactory
         return new CartWriter(
             $this->getCartClient(),
             $this->createQuoteItemReader(),
-            $this->createQuoteItemUpdater()
+            $this->createQuoteItemUpdater(),
         );
     }
 
@@ -42,7 +42,7 @@ class ConfigurableBundleCartFactory extends AbstractFactory
     public function createQuoteItemUpdater(): QuoteItemUpdaterInterface
     {
         return new QuoteItemUpdater(
-            $this->createQuoteItemReader()
+            $this->createQuoteItemReader(),
         );
     }
 
@@ -61,7 +61,7 @@ class ConfigurableBundleCartFactory extends AbstractFactory
     {
         return new ConfiguredBundleCartAdder(
             $this->getCartClient(),
-            $this->getConfigurableBundleCartService()
+            $this->getConfigurableBundleCartService(),
         );
     }
 

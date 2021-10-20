@@ -62,8 +62,8 @@ class ProductAlternativeMapper implements ProductAlternativeMapperInterface
             $productConcreteIds,
             $this->findConcreteProductIdsByAbstractProductIds(
                 $productReplacementForStorage->getProductAbstractIds(),
-                $localeName
-            )
+                $localeName,
+            ),
         );
         foreach ($productConcreteIds as $idProduct) {
             $concreteProductViewTransfer = $this->findConcreteProductViewTransfer($idProduct, $localeName);
@@ -220,7 +220,7 @@ class ProductAlternativeMapper implements ProductAlternativeMapperInterface
         foreach ($productAbstractStorageDataCollection as $productAbstractStorageData) {
             $productConcreteIds = array_merge(
                 $productConcreteIds,
-                $productAbstractStorageData[ProductAlternativeStorageConfig::RESOURCE_TYPE_ATTRIBUTE_MAP][static::PRODUCT_CONCRETE_IDS] ?? []
+                $productAbstractStorageData[ProductAlternativeStorageConfig::RESOURCE_TYPE_ATTRIBUTE_MAP][static::PRODUCT_CONCRETE_IDS] ?? [],
             );
         }
 

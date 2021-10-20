@@ -70,7 +70,7 @@ class EditMerchantController extends AbstractController
         $merchantForm = $this->getFactory()
             ->getMerchantUpdateForm(
                 $merchantTransfer,
-                $dataProvider->getOptions($idMerchant)
+                $dataProvider->getOptions($idMerchant),
             )
             ->handleRequest($request);
 
@@ -160,7 +160,7 @@ class EditMerchantController extends AbstractController
 
         $merchantTransfer = $merchantFacade->findOne(
             (new MerchantCriteriaTransfer())
-                ->setIdMerchant($idMerchant)
+                ->setIdMerchant($idMerchant),
         );
 
         if (!$merchantTransfer) {

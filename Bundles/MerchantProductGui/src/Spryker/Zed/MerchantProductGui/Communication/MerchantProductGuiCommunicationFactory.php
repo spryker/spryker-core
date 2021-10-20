@@ -29,7 +29,7 @@ class MerchantProductGuiCommunicationFactory extends AbstractCommunicationFactor
     {
         return new MerchantProductQueryCriteriaExpander(
             $this->getRepository(),
-            $this->getRequest()
+            $this->getRequest(),
         );
     }
 

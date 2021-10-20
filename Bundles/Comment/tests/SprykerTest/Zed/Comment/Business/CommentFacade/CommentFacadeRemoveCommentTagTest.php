@@ -186,7 +186,7 @@ class CommentFacadeRemoveCommentTagTest extends Unit
         $this->assertFalse($commentThreadResponseTransfer->getIsSuccessful());
         $this->assertEquals(
             static::GLOSSARY_KEY_COMMENT_TAG_NOT_AVAILABLE,
-            $commentThreadResponseTransfer->getMessages()[0]->getValue()
+            $commentThreadResponseTransfer->getMessages()[0]->getValue(),
         );
     }
 
@@ -213,7 +213,7 @@ class CommentFacadeRemoveCommentTagTest extends Unit
         $this->assertFalse($commentThreadResponseTransfer->getIsSuccessful());
         $this->assertEquals(
             static::GLOSSARY_KEY_COMMENT_NOT_FOUND,
-            $commentThreadResponseTransfer->getMessages()[0]->getValue()
+            $commentThreadResponseTransfer->getMessages()[0]->getValue(),
         );
     }
 

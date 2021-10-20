@@ -37,7 +37,7 @@ class IndexController extends AbstractController
         $table = $this->getFactory()->createCountryTable();
 
         return $this->jsonResponse(
-            $table->fetchData()
+            $table->fetchData(),
         );
     }
 }

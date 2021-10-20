@@ -41,7 +41,7 @@ class TargetEntityValidatorStep implements DataImportStepInterface
         $entityCount = $query
             ->filterBy(
                 $query->getTableMap()->getColumn($columnName)->getPhpName(),
-                $dataSet[AclEntitySegmentConnectorDataSetInterface::ENTITY_REFERENCE]
+                $dataSet[AclEntitySegmentConnectorDataSetInterface::ENTITY_REFERENCE],
             )
             ->count();
 
@@ -51,8 +51,8 @@ class TargetEntityValidatorStep implements DataImportStepInterface
                     static::ENTITY_NOT_FOUND_TEMPLATE,
                     $dataSet[AclEntitySegmentConnectorDataSetInterface::DATA_ENTITY],
                     $dataSet[AclEntitySegmentConnectorDataSetInterface::REFERENCE_FIELD],
-                    $dataSet[AclEntitySegmentConnectorDataSetInterface::ENTITY_REFERENCE]
-                )
+                    $dataSet[AclEntitySegmentConnectorDataSetInterface::ENTITY_REFERENCE],
+                ),
             );
         }
 
@@ -62,8 +62,8 @@ class TargetEntityValidatorStep implements DataImportStepInterface
                     static::MULTIPLE_ENTITIES_FOUND_TEMPLATE,
                     $dataSet[AclEntitySegmentConnectorDataSetInterface::DATA_ENTITY],
                     $dataSet[AclEntitySegmentConnectorDataSetInterface::REFERENCE_FIELD],
-                    $dataSet[AclEntitySegmentConnectorDataSetInterface::ENTITY_REFERENCE]
-                )
+                    $dataSet[AclEntitySegmentConnectorDataSetInterface::ENTITY_REFERENCE],
+                ),
             );
         }
     }

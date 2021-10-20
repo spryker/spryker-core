@@ -39,8 +39,8 @@ class MailMerchantUserPasswordResetRequestStrategyPlugin extends AbstractPlugin 
             ->getMerchantUserFacade()
             ->findMerchantUser(
                 (new MerchantUserCriteriaTransfer())->setIdUser(
-                    $userTransfer->getIdUser()
-                )
+                    $userTransfer->getIdUser(),
+                ),
             );
     }
 
@@ -61,7 +61,7 @@ class MailMerchantUserPasswordResetRequestStrategyPlugin extends AbstractPlugin 
             ->handleMail(
                 (new MailTransfer())
                     ->fromArray($userPasswordResetRequestTransfer->toArray(), true)
-                    ->setType(MerchantUserPasswordResetMailTypePlugin::MAIL_TYPE)
+                    ->setType(MerchantUserPasswordResetMailTypePlugin::MAIL_TYPE),
             );
     }
 }

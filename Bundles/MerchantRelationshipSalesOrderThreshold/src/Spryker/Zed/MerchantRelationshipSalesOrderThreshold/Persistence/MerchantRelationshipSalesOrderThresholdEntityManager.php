@@ -53,7 +53,7 @@ class MerchantRelationshipSalesOrderThresholdEntityManager extends AbstractEntit
         $messageGlossaryKey = $merchantRelationshipSalesOrderThresholdEntity->getMessageGlossaryKey();
         if ($messageGlossaryKey === null) {
             $merchantRelationshipSalesOrderThresholdEntity->setMessageGlossaryKey(
-                $merchantRelationshipSalesOrderThresholdTransfer->getSalesOrderThresholdValue()->getMessageGlossaryKey()
+                $merchantRelationshipSalesOrderThresholdTransfer->getSalesOrderThresholdValue()->getMessageGlossaryKey(),
             );
         }
 
@@ -61,16 +61,16 @@ class MerchantRelationshipSalesOrderThresholdEntityManager extends AbstractEntit
             ->setThreshold($salesOrderThresholdValueTransfer->getThreshold())
             ->setFee($salesOrderThresholdValueTransfer->getFee())
             ->setFkMerchantRelationship(
-                $merchantRelationshipTransfer->getIdMerchantRelationship()
+                $merchantRelationshipTransfer->getIdMerchantRelationship(),
             )->setFkSalesOrderThresholdType(
-                $salesOrderThresholdTypeTransfer->getIdSalesOrderThresholdType()
+                $salesOrderThresholdTypeTransfer->getIdSalesOrderThresholdType(),
             )->save();
 
         return $this->getFactory()
             ->createMerchantRelationshipSalesOrderThresholdMapper()
             ->mapMerchantRelationshipSalesOrderThresholdEntityToTransfer(
                 $merchantRelationshipSalesOrderThresholdEntity,
-                $merchantRelationshipSalesOrderThresholdTransfer
+                $merchantRelationshipSalesOrderThresholdTransfer,
             );
     }
 
@@ -85,7 +85,7 @@ class MerchantRelationshipSalesOrderThresholdEntityManager extends AbstractEntit
         $merchantRelationshipSalesOrderThresholdEntity = $this->getFactory()
             ->createMerchantRelationshipSalesOrderThresholdQuery()
             ->findOneByIdMerchantRelationshipSalesOrderThreshold(
-                $merchantRelationshipSalesOrderThresholdTransfer->getIdMerchantRelationshipSalesOrderThreshold()
+                $merchantRelationshipSalesOrderThresholdTransfer->getIdMerchantRelationshipSalesOrderThreshold(),
             );
 
         if ($merchantRelationshipSalesOrderThresholdEntity) {

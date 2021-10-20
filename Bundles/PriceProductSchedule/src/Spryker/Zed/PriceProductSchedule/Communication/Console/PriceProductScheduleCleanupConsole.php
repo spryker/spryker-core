@@ -44,7 +44,7 @@ class PriceProductScheduleCleanupConsole extends Console
         $this->addArgument(
             static::DAYS_RETAINED,
             InputArgument::REQUIRED,
-            'Delete scheduled prices that has been applied earlier than count of days'
+            'Delete scheduled prices that has been applied earlier than count of days',
         );
     }
 

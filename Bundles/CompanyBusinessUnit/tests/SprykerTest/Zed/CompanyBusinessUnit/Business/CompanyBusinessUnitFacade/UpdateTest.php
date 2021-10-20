@@ -79,11 +79,11 @@ class UpdateTest extends Test
         $this->assertTrue($companyBusinessUnitResponseTransfer->getIsSuccessfulOrFail());
         $this->assertSame(
             static::FINAL_NAME,
-            $companyBusinessUnitResponseTransfer->getCompanyBusinessUnitTransferOrFail()->getNameOrFail()
+            $companyBusinessUnitResponseTransfer->getCompanyBusinessUnitTransferOrFail()->getNameOrFail(),
         );
         $this->assertSame(
             $regionalCompanyBusinessUnitTransfer->getIdCompanyBusinessUnitOrFail(),
-            $companyBusinessUnitResponseTransfer->getCompanyBusinessUnitTransferOrFail()->getFkParentCompanyBusinessUnit()
+            $companyBusinessUnitResponseTransfer->getCompanyBusinessUnitTransferOrFail()->getFkParentCompanyBusinessUnit(),
         );
     }
 
@@ -121,7 +121,7 @@ class UpdateTest extends Test
         $this->assertFalse($companyBusinessUnitResponseTransfer->getIsSuccessfulOrFail());
         $this->assertSame(
             static::ERROR_MESSAGE_HIERARCHY_CYCLE_IN_BUSINESS_UNIT_UPDATE,
-            $companyBusinessUnitResponseTransfer->getMessages()[0]->getText()
+            $companyBusinessUnitResponseTransfer->getMessages()[0]->getText(),
         );
     }
 }

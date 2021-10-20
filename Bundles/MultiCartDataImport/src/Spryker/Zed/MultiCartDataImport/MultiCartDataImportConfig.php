@@ -33,7 +33,7 @@ class MultiCartDataImportConfig extends DataImportConfig
 
         return $this->buildImporterConfiguration(
             $moduleDataImportDirectory . static::FILE_NAME,
-            static::IMPORT_TYPE_MULTI_CART
+            static::IMPORT_TYPE_MULTI_CART,
         );
     }
 
@@ -47,7 +47,7 @@ class MultiCartDataImportConfig extends DataImportConfig
             . DIRECTORY_SEPARATOR . '..'
             . DIRECTORY_SEPARATOR . '..'
             . DIRECTORY_SEPARATOR . '..'
-            . DIRECTORY_SEPARATOR . '..'
+            . DIRECTORY_SEPARATOR . '..',
         );
 
         return $moduleRoot . DIRECTORY_SEPARATOR;

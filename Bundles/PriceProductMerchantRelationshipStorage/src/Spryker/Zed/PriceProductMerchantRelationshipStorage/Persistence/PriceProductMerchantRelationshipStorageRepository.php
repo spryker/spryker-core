@@ -45,7 +45,7 @@ class PriceProductMerchantRelationshipStorageRepository extends AbstractReposito
         return $this->getFactory()
             ->createCompanyBusinessUnitPriceProductMapper()
             ->mapPriceProductMerchantRelationshipArrayToTransfers(
-                $priceProductMerchantRelationships
+                $priceProductMerchantRelationships,
             );
     }
 
@@ -66,7 +66,7 @@ class PriceProductMerchantRelationshipStorageRepository extends AbstractReposito
         return $this->getFactory()
             ->createCompanyBusinessUnitPriceProductMapper()
             ->mapPriceProductMerchantRelationshipArrayToTransfers(
-                $priceProductMerchantRelationships
+                $priceProductMerchantRelationships,
             );
     }
 
@@ -88,7 +88,7 @@ class PriceProductMerchantRelationshipStorageRepository extends AbstractReposito
         return $this->getFactory()
             ->createCompanyBusinessUnitPriceProductMapper()
             ->mapPriceProductMerchantRelationshipArrayToTransfers(
-                $priceProductMerchantRelationships
+                $priceProductMerchantRelationships,
             );
     }
 
@@ -109,7 +109,7 @@ class PriceProductMerchantRelationshipStorageRepository extends AbstractReposito
         return $this->getFactory()
             ->createCompanyBusinessUnitPriceProductMapper()
             ->mapPriceProductMerchantRelationshipArrayToTransfers(
-                $priceProductMerchantRelationships
+                $priceProductMerchantRelationships,
             );
     }
 
@@ -131,7 +131,7 @@ class PriceProductMerchantRelationshipStorageRepository extends AbstractReposito
         return $this->getFactory()
             ->createCompanyBusinessUnitPriceProductMapper()
             ->mapPriceProductMerchantRelationshipArrayToTransfers(
-                $priceProductMerchantRelationships
+                $priceProductMerchantRelationships,
             );
     }
 
@@ -152,7 +152,7 @@ class PriceProductMerchantRelationshipStorageRepository extends AbstractReposito
         return $this->getFactory()
             ->createCompanyBusinessUnitPriceProductMapper()
             ->mapPriceProductMerchantRelationshipArrayToTransfers(
-                $priceProductMerchantRelationships
+                $priceProductMerchantRelationships,
             );
     }
 
@@ -424,7 +424,7 @@ class PriceProductMerchantRelationshipStorageRepository extends AbstractReposito
         return $this->getFactory()
             ->createPriceProductMerchantRelationshipMapper()
             ->mapEntitiesToPriceProductMerchantRelationshipTransferCollection(
-                $priceProductMerchantRelationshipEntityTransfers->getData()
+                $priceProductMerchantRelationshipEntityTransfers->getData(),
             );
     }
 
@@ -445,7 +445,7 @@ class PriceProductMerchantRelationshipStorageRepository extends AbstractReposito
         return $this->getFactory()
             ->createPriceProductMerchantRelationshipMapper()
             ->mapEntitiesToPriceProductMerchantRelationshipTransferCollection(
-                $priceProductMerchantRelationshipEntityTransfers->getData()
+                $priceProductMerchantRelationshipEntityTransfers->getData(),
             );
     }
 }

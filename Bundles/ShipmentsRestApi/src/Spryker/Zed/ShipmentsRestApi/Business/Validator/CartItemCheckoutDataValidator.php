@@ -66,7 +66,7 @@ class CartItemCheckoutDataValidator implements CartItemCheckoutDataValidatorInte
             $checkoutResponseTransfer = $this->getErrorResponse(
                 $checkoutResponseTransfer,
                 static::GLOSSARY_KEY_ITEM_NO_SHIPMENT_SELECTED,
-                [static::GLOSSARY_PARAMETER_ID => $itemTransfer->getGroupKey()]
+                [static::GLOSSARY_PARAMETER_ID => $itemTransfer->getGroupKey()],
             );
         }
 
@@ -93,7 +93,7 @@ class CartItemCheckoutDataValidator implements CartItemCheckoutDataValidatorInte
             $checkoutResponseTransfer = $this->getErrorResponse(
                 $checkoutResponseTransfer,
                 static::GLOSSARY_KEY_ITEM_NO_SHIPMENT_SELECTED,
-                [static::GLOSSARY_PARAMETER_ID => $itemTransfer->getGroupKey()]
+                [static::GLOSSARY_PARAMETER_ID => $itemTransfer->getGroupKey()],
             );
         }
 
@@ -133,7 +133,7 @@ class CartItemCheckoutDataValidator implements CartItemCheckoutDataValidatorInte
             ->addError(
                 (new CheckoutErrorTransfer())
                     ->setMessage($message)
-                    ->setParameters($parameters)
+                    ->setParameters($parameters),
             );
     }
 }

@@ -94,7 +94,7 @@ class ProductLabelReader implements ProductLabelReaderInterface
         $labelTransfers = $this->productLabelStorageClient->findLabels(
             [$restRequest->getResource()->getId()],
             $restRequest->getMetadata()->getLocale(),
-            APPLICATION_STORE
+            APPLICATION_STORE,
         );
 
         if (!count($labelTransfers)) {
@@ -105,13 +105,13 @@ class ProductLabelReader implements ProductLabelReaderInterface
             ->productLabelMapper
             ->mapProductLabelDictionaryItemTransferToRestProductLabelsAttributesTransfer(
                 reset($labelTransfers),
-                new RestProductLabelsAttributesTransfer()
+                new RestProductLabelsAttributesTransfer(),
             );
 
         $restResource = $this->restResourceBuilder->createRestResource(
             ProductLabelsRestApiConfig::RESOURCE_PRODUCT_LABELS,
             $restRequest->getResource()->getId(),
-            $restProductLabelAttributesTransfer
+            $restProductLabelAttributesTransfer,
         );
 
         return $restResponse->addResource($restResource);
@@ -128,7 +128,7 @@ class ProductLabelReader implements ProductLabelReaderInterface
         $abstractProductData = $this->productStorageClient->findProductAbstractStorageDataByMapping(
             static::PRODUCT_ABSTRACT_MAPPING_TYPE,
             $sku,
-            $localeName
+            $localeName,
         );
         if (!$abstractProductData) {
             return [];
@@ -137,7 +137,7 @@ class ProductLabelReader implements ProductLabelReaderInterface
         $productLabels = $this->productLabelStorageClient->findLabelsByIdProductAbstract(
             $abstractProductData[static::KEY_ID_PRODUCT_ABSTRACT],
             $localeName,
-            APPLICATION_STORE
+            APPLICATION_STORE,
         );
 
         return $this->prepareRestResourceCollection($productLabels);
@@ -155,7 +155,7 @@ class ProductLabelReader implements ProductLabelReaderInterface
         $productLabels = $this->productLabelStorageClient->getProductLabelsByProductAbstractIds(
             array_unique($productAbstractIdsByProductConcreteSku),
             $localeName,
-            APPLICATION_STORE
+            APPLICATION_STORE,
         );
         $restResourceCollectionsByProductConcreteSku = [];
 
@@ -181,7 +181,7 @@ class ProductLabelReader implements ProductLabelReaderInterface
         $productConcreteDataCollection = $this->productStorageClient->getBulkProductConcreteStorageDataByMapping(
             static::PRODUCT_CONCRETE_MAPPING_TYPE,
             $productConcreteSkus,
-            $localeName
+            $localeName,
         );
         $productAbstractIds = [];
 
@@ -207,13 +207,13 @@ class ProductLabelReader implements ProductLabelReaderInterface
                 ->productLabelMapper
                 ->mapProductLabelDictionaryItemTransferToRestProductLabelsAttributesTransfer(
                     $productLabel,
-                    new RestProductLabelsAttributesTransfer()
+                    new RestProductLabelsAttributesTransfer(),
                 );
 
             $productLabelResources[] = $this->restResourceBuilder->createRestResource(
                 ProductLabelsRestApiConfig::RESOURCE_PRODUCT_LABELS,
                 (string)$productLabel->getIdProductLabel(),
-                $restProductLabelAttributesTransfer
+                $restProductLabelAttributesTransfer,
             );
         }
 

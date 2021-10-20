@@ -39,7 +39,7 @@ class ContentGuiCommunicationFactory extends AbstractCommunicationFactory
     {
         return new ContentTable(
             $this->getPropelContentQuery(),
-            $this->getContentPlugins()
+            $this->getContentPlugins(),
         );
     }
 
@@ -59,7 +59,7 @@ class ContentGuiCommunicationFactory extends AbstractCommunicationFactory
         return new ContentFormDataProvider(
             $this->createContentResolver(),
             $this->getContentFacade(),
-            $this->getLocaleFacade()
+            $this->getLocaleFacade(),
         );
     }
 
@@ -82,7 +82,7 @@ class ContentGuiCommunicationFactory extends AbstractCommunicationFactory
         return new ContentByTypeTable(
             $contentType,
             $this->getPropelContentQuery(),
-            $contentKey
+            $contentKey,
         );
     }
 

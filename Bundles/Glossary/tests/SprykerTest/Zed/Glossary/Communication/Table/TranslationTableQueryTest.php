@@ -88,7 +88,7 @@ class TranslationTableQueryTest extends Unit
         $translationTableMock = new TranslationTableMock(
             SpyGlossaryKeyQuery::create(),
             SpyGlossaryTranslationQuery::create(),
-            $localeNames
+            $localeNames,
         );
 
         // Act

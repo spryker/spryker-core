@@ -85,7 +85,7 @@ class PriceProductMerchantRelationshipStorageDependencyProvider extends Abstract
     {
         $container->set(static::FACADE_EVENT_BEHAVIOR, function (Container $container) {
             return new PriceProductMerchantRelationshipStorageToEventBehaviorFacadeBridge(
-                $container->getLocator()->eventBehavior()->facade()
+                $container->getLocator()->eventBehavior()->facade(),
             );
         });
 
@@ -101,7 +101,7 @@ class PriceProductMerchantRelationshipStorageDependencyProvider extends Abstract
     {
         $container->set(static::FACADE_MERCHANT_RELATIONSHIP, function (Container $container) {
             return new PriceProductMerchantRelationshipStorageToMerchantRelationshipFacadeBridge(
-                $container->getLocator()->merchantRelationship()->facade()
+                $container->getLocator()->merchantRelationship()->facade(),
             );
         });
 

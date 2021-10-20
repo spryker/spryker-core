@@ -102,7 +102,7 @@ class CompanyBusinessUnitForm extends AbstractType
             ->addParentNameField(
                 $builder,
                 $options[static::OPTION_PARENT_CHOICES_VALUES],
-                $options[static::OPTION_PARENT_CHOICES_ATTRIBUTES]
+                $options[static::OPTION_PARENT_CHOICES_ATTRIBUTES],
             )
             ->addNameField($builder)
             ->addIbanField($builder)

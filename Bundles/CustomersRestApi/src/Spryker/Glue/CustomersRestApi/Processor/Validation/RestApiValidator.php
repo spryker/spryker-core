@@ -117,7 +117,7 @@ class RestApiValidator implements RestApiValidatorInterface
             return $this->apiErrors->addPasswordsDoNotMatchError(
                 $restResponse,
                 RestCustomerPasswordAttributesTransfer::NEW_PASSWORD,
-                RestCustomerPasswordAttributesTransfer::CONFIRM_PASSWORD
+                RestCustomerPasswordAttributesTransfer::CONFIRM_PASSWORD,
             );
         }
 

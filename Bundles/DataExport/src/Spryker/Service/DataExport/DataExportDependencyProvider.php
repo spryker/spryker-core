@@ -64,7 +64,7 @@ class DataExportDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::SERVICE_UTIL_DATA_READER, function (Container $container): DataExportToUtilDataReaderServiceInterface {
             return new DataExportToUtilDataReaderServiceBridge(
-                $container->getLocator()->utilDataReader()->service()
+                $container->getLocator()->utilDataReader()->service(),
             );
         });
 

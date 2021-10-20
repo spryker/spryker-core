@@ -100,7 +100,7 @@ class DiscountFacadeTest extends Unit
         $isSatisfied = $discountFacade->isQuoteGrandTotalSatisfiedBy(
             $quoteTransfer,
             new ItemTransfer(),
-            $clauseTransfer
+            $clauseTransfer,
         );
 
         $this->assertTrue($isSatisfied);
@@ -132,7 +132,7 @@ class DiscountFacadeTest extends Unit
         $isSatisfied = $discountFacade->isTotalQuantitySatisfiedBy(
             $quoteTransfer,
             $itemTransfer,
-            $clauseTransfer
+            $clauseTransfer,
         );
 
         $this->assertTrue($isSatisfied);
@@ -160,7 +160,7 @@ class DiscountFacadeTest extends Unit
         $isSatisfied = $discountFacade->isSubTotalSatisfiedBy(
             $quoteTransfer,
             new ItemTransfer(),
-            $clauseTransfer
+            $clauseTransfer,
         );
 
         $this->assertTrue($isSatisfied);
@@ -223,7 +223,7 @@ class DiscountFacadeTest extends Unit
 
         $discountFacade = $this->createDiscountFacadeForDiscountRuleWithValueOptionsPlugin(
             DiscountDependencyProvider::COLLECTOR_PLUGINS,
-            $discountRulePluginMock
+            $discountRulePluginMock,
         );
 
         $fields = $discountFacade->getQueryStringValueOptions(MetaProviderFactory::TYPE_COLLECTOR);
@@ -242,7 +242,7 @@ class DiscountFacadeTest extends Unit
 
         $discountFacade = $this->createDiscountFacadeForDiscountRuleWithValueOptionsPlugin(
             DiscountDependencyProvider::DECISION_RULE_PLUGINS,
-            $discountRulePluginMock
+            $discountRulePluginMock,
         );
 
         $fields = $discountFacade->getQueryStringValueOptions(MetaProviderFactory::TYPE_DECISION_RULE);
@@ -440,7 +440,7 @@ class DiscountFacadeTest extends Unit
         ]);
         $this->updateVoucherCodesWithNumberOfUses($discountVoucherTransfer2, $maxNumberOfUses);
         $quoteTransfer->addVoucherDiscount(
-            (new DiscountTransfer())->setVoucherCode($discountVoucherTransfer2->getCode())
+            (new DiscountTransfer())->setVoucherCode($discountVoucherTransfer2->getCode()),
         );
 
         // Act
@@ -580,7 +580,7 @@ class DiscountFacadeTest extends Unit
         $discountConfiguratorTransfer = $discountFacade->getHydratedDiscountConfiguratorByIdDiscount($idDiscount);
         $this->assertEquals(
             $discountConfiguratorTransfer->getDiscountGeneral()->getStoreRelation()->getIdStores(),
-            $idStores
+            $idStores,
         );
     }
 
@@ -615,7 +615,7 @@ class DiscountFacadeTest extends Unit
         $discountConfiguratorTransfer = $discountFacade->getHydratedDiscountConfiguratorByIdDiscount($idDiscount);
         $this->assertEquals(
             $discountConfiguratorTransfer->getDiscountGeneral()->getStoreRelation()->getIdStores(),
-            $expectedIdStores
+            $expectedIdStores,
         );
     }
 
@@ -699,7 +699,7 @@ class DiscountFacadeTest extends Unit
         $discountConfiguratorTransfer->getDiscountGeneral()->setIdDiscount($idDiscount);
 
         $hydratedDiscountConfiguratorTransfer = $discountFacade->getHydratedDiscountConfiguratorByIdDiscount(
-            $idDiscount
+            $idDiscount,
         );
 
         $discountDate = $discountConfiguratorTransfer->getDiscountGeneral()->getValidFrom()->format('Y-m-d');
@@ -952,7 +952,7 @@ class DiscountFacadeTest extends Unit
         $this->assertCount(1, $quoteTransfer->getVoucherDiscounts());
         $this->assertSame(
             $this->tester::VOUCHER_CODE,
-            $resultQuoteTransfer->getVoucherDiscounts()[0]->getVoucherCode()
+            $resultQuoteTransfer->getVoucherDiscounts()[0]->getVoucherCode(),
         );
     }
 

@@ -73,7 +73,7 @@ class ProductFormEdit extends ProductFormAdd
 
                             if ($skuCount > 0) {
                                 $context->addViolation(
-                                    sprintf('The SKU "%s" is already used', $sku)
+                                    sprintf('The SKU "%s" is already used', $sku),
                                 );
                             }
                         },

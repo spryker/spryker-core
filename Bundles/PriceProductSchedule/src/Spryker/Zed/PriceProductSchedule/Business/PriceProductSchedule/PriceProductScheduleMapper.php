@@ -28,7 +28,7 @@ class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
     ): PriceProductScheduleTransfer {
         $priceProductTransfer = $this->mapPriceProductScheduleImportTransferToPriceProductTransfer(
             $priceProductScheduleImportTransfer,
-            $this->createPriceProductTransfer()
+            $this->createPriceProductTransfer(),
         );
 
         return $priceProductScheduleTransfer
@@ -48,7 +48,7 @@ class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
     ): PriceProductTransfer {
         $moneyValueTransfer = $this->mapMoneyValueTransferFromPriceProductScheduleImportTransfer(
             $priceProductScheduleImportTransfer,
-            $this->createMoneyValueTransfer()
+            $this->createMoneyValueTransfer(),
         );
 
         return $priceProductTransfer

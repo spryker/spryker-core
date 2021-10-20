@@ -175,7 +175,7 @@ class RouterHelper extends Module
         $this->getEventDispatcherHelper()->addEventDispatcherPlugin(new RouterListenerEventDispatcherPlugin());
 
         $this->getApplicationHelper()->addApplicationPlugin(
-            $this->getRouterApplicationPluginStub()
+            $this->getRouterApplicationPluginStub(),
         );
     }
 

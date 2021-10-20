@@ -25,7 +25,7 @@ class ProductCategoryFilterStorageBusinessFactory extends AbstractBusinessFactor
         return new ProductCategoryFilterStorageWriter(
             $this->getQueryContainer(),
             $this->getUtilEncoding(),
-            $this->getConfig()->isSendingToQueue()
+            $this->getConfig()->isSendingToQueue(),
         );
     }
 

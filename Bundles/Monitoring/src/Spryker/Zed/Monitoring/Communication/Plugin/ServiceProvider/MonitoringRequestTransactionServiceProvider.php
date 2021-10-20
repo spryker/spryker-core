@@ -49,7 +49,7 @@ class MonitoringRequestTransactionServiceProvider extends AbstractPlugin impleme
     protected function addControllerListener(Application $app): void
     {
         $this->getDispatcher($app)->addSubscriber(
-            $this->getFactory()->createControllerListener()
+            $this->getFactory()->createControllerListener(),
         );
     }
 
@@ -61,7 +61,7 @@ class MonitoringRequestTransactionServiceProvider extends AbstractPlugin impleme
     protected function addGatewayControllerListener(Application $app): void
     {
         $this->getDispatcher($app)->addSubscriber(
-            $this->getFactory()->createGatewayControllerListener()
+            $this->getFactory()->createGatewayControllerListener(),
         );
     }
 

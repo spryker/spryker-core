@@ -97,7 +97,7 @@ class ExpandOrderProductBundlesWithProductOptionsTest extends Unit
         // Assert
         $this->assertSame(
             static::FAKE_PRODUCT_OPTION_SKU_1,
-            $orderTransfer->getBundleItems()->offsetGet(1)->getProductOptions()->offsetGet(0)->getSku()
+            $orderTransfer->getBundleItems()->offsetGet(1)->getProductOptions()->offsetGet(0)->getSku(),
         );
     }
 

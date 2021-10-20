@@ -34,7 +34,7 @@ class QueryBuilder implements QueryBuilderInterface
     {
         $className = $this->getFullyQualifiedClassName(
             $uuidGeneratorConfigurationTransfer->getModule(),
-            $uuidGeneratorConfigurationTransfer->getTable()
+            $uuidGeneratorConfigurationTransfer->getTable(),
         );
 
         if (!class_exists($className)) {

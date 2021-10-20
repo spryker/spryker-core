@@ -32,7 +32,7 @@ class DateTimeFormatterServiceProvider implements ServiceProviderInterface
                 $twig->addExtension(new DateTimeFormatterTwigExtension($utilDateTimeService));
 
                 return $twig;
-            })
+            }),
         );
     }
 

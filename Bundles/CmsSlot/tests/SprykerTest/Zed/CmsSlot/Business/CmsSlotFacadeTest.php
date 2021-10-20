@@ -258,7 +258,7 @@ class CmsSlotFacadeTest extends Unit
 
         // Act
         $cmsSlotTransfers = $this->tester->getFacade()->getCmsSlotsByCriteria(
-            (new CmsSlotCriteriaTransfer())->setFilter($filterTransfer)
+            (new CmsSlotCriteriaTransfer())->setFilter($filterTransfer),
         );
 
         // Assert
@@ -277,7 +277,7 @@ class CmsSlotFacadeTest extends Unit
 
         // Act
         $cmsSlotTransferFromDb = $this->tester->getFacade()->getCmsSlotsByCriteria(
-            (new CmsSlotCriteriaTransfer())->setCmsSlotIds([$cmsSlotTransfer->getIdCmsSlot()])
+            (new CmsSlotCriteriaTransfer())->setCmsSlotIds([$cmsSlotTransfer->getIdCmsSlot()]),
         )[0];
 
         // Assert
@@ -294,7 +294,7 @@ class CmsSlotFacadeTest extends Unit
 
         //Act
         $foundCmsSlotTemplateTransfer = $this->tester->getFacade()->getCmsSlotTemplateById(
-            $cmsSlotTemplateTransfer->getIdCmsSlotTemplate()
+            $cmsSlotTemplateTransfer->getIdCmsSlotTemplate(),
         );
 
         // Assert
@@ -314,9 +314,9 @@ class CmsSlotFacadeTest extends Unit
             new MissingCmsSlotTemplateException(
                 sprintf(
                     static::EXCEPTION_ERROR_MESSAGE_MISSING_CMS_SLOT_TEMPLATE,
-                    0
-                )
-            )
+                    0,
+                ),
+            ),
         );
 
         //Act
@@ -351,9 +351,9 @@ class CmsSlotFacadeTest extends Unit
             new MissingCmsSlotException(
                 sprintf(
                     static::EXCEPTION_ERROR_MESSAGE_MISSING_CMS_SLOT,
-                    0
-                )
-            )
+                    0,
+                ),
+            ),
         );
 
         // Act

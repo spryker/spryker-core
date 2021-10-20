@@ -63,7 +63,7 @@ class QuoteRequestsRestApiFacadeTest extends Unit
         $this->assertSame(SharedQuoteRequestConfig::STATUS_DRAFT, $storedQuoteRequestTransfer->getStatus());
         $this->assertEquals(
             $quoteRequestTransfer->getLatestVersion()->getQuote(),
-            $storedQuoteRequestTransfer->getLatestVersion()->getQuote()
+            $storedQuoteRequestTransfer->getLatestVersion()->getQuote(),
         );
     }
 }

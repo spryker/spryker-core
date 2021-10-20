@@ -61,7 +61,7 @@ class CategoryKeyUniqueConstraint extends Constraint
             static::ERROR_MESSAGE,
             [
                 static::PARAMETER_CATEGORY_KEY => $categoryKey,
-            ]
+            ],
         );
     }
 }

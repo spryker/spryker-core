@@ -47,7 +47,7 @@ class TimeoutProcessorCollection implements TimeoutProcessorCollectionInterface,
     {
         if (!$this->has($name)) {
             throw new TimeoutProcessorPluginNotFoundException(
-                sprintf('Could not find timeout processor plugin "%s". You need to add the needed plugin within your DependencyInjector.', $name)
+                sprintf('Could not find timeout processor plugin "%s". You need to add the needed plugin within your DependencyInjector.', $name),
             );
         }
 

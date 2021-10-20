@@ -148,7 +148,7 @@ class TouchAssertionHelper extends Module
         $this->assertGreaterThanOrEqual(
             $dateTime->getTimestamp(),
             $touchEntity->getTouched()->getTimestamp(),
-            $message
+            $message,
         );
     }
 
@@ -170,7 +170,7 @@ class TouchAssertionHelper extends Module
         $this->assertLessThanOrEqual(
             $dateTime->getTimestamp(),
             $touchEntity->getTouched()->getTimestamp(),
-            $message
+            $message,
         );
     }
 

@@ -38,7 +38,7 @@ class AvailabilityEntityManager extends AbstractEntityManager implements Availab
         $availabilityEntity = $this->prepareAvailabilityEntityForSave(
             $productConcreteAvailabilityTransfer,
             $storeTransfer,
-            $abstractSku
+            $abstractSku,
         );
 
         $isAvailabilityChanged = $this->isAvailabilityChanged($availabilityEntity);
@@ -139,7 +139,7 @@ class AvailabilityEntityManager extends AbstractEntityManager implements Availab
 
         if ($availabilityAbstractEntity === null) {
             throw new AvailabilityAbstractNotFoundException(
-                'You cannot update concrete availability without updating abstract availability first'
+                'You cannot update concrete availability without updating abstract availability first',
             );
         }
 

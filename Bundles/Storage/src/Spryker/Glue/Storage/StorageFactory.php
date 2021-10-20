@@ -22,7 +22,7 @@ class StorageFactory extends AbstractFactory
     public function createKeyValueStoreHealthChecker(): HealthCheckInterface
     {
         return new KeyValueStoreHealthCheck(
-            $this->getStorageClient()
+            $this->getStorageClient(),
         );
     }
 

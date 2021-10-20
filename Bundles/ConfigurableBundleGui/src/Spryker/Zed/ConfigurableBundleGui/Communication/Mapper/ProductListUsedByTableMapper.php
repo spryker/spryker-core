@@ -59,10 +59,10 @@ class ProductListUsedByTableMapper implements ProductListUsedByTableMapperInterf
 
         $productListUsedByTableRowTransfer->setTitle(static::ENTITY_TITLE);
         $productListUsedByTableRowTransfer->setName(
-            $this->createComposedEntityName($configurableBundleTemplateSlotTransfer)
+            $this->createComposedEntityName($configurableBundleTemplateSlotTransfer),
         );
         $productListUsedByTableRowTransfer->setActionButtons(
-            $this->createActionButtons($configurableBundleTemplateSlotTransfer)
+            $this->createActionButtons($configurableBundleTemplateSlotTransfer),
         );
 
         return $productListUsedByTableRowTransfer;
@@ -83,7 +83,7 @@ class ProductListUsedByTableMapper implements ProductListUsedByTableMapperInterf
         return sprintf(
             '%s - %s',
             $configurableBundleTemplateName,
-            $configurableBundleTemplateSlotName
+            $configurableBundleTemplateSlotName,
         );
     }
 

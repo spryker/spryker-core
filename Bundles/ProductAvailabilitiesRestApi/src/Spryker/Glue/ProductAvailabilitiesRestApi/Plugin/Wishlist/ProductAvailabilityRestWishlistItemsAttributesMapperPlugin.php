@@ -36,7 +36,7 @@ class ProductAvailabilityRestWishlistItemsAttributesMapperPlugin extends Abstrac
             ->createRestWishlistItemsMapper()
             ->mapWishlistItemTransferToRestWishlistItemsAttributesTransfer(
                 $wishlistItemTransfer,
-                $restWishlistItemsAttributesTransfer
+                $restWishlistItemsAttributesTransfer,
             );
     }
 }

@@ -85,7 +85,7 @@ class CompanyUnitAddressGuiDependencyProvider extends AbstractBundleDependencyPr
     {
         $container->set(static::FACADE_COMPANY_UNIT_ADDRESS, function (Container $container) {
             return new CompanyUnitAddressGuiToCompanyUnitAddressFacadeBridge(
-                $container->getLocator()->companyUnitAddress()->facade()
+                $container->getLocator()->companyUnitAddress()->facade(),
             );
         });
 
@@ -115,7 +115,7 @@ class CompanyUnitAddressGuiDependencyProvider extends AbstractBundleDependencyPr
     {
         $container->set(static::FACADE_COMPANY, function (Container $container) {
             return new CompanyUnitAddressGuiToCompanyFacadeBridge(
-                $container->getLocator()->company()->facade()
+                $container->getLocator()->company()->facade(),
             );
         });
 
@@ -131,7 +131,7 @@ class CompanyUnitAddressGuiDependencyProvider extends AbstractBundleDependencyPr
     {
         $container->set(static::FACADE_COUNTRY, function (Container $container) {
             return new CompanyUnitAddressGuiToCountryFacadeBridge(
-                $container->getLocator()->country()->facade()
+                $container->getLocator()->country()->facade(),
             );
         });
 

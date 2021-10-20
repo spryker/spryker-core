@@ -251,8 +251,8 @@ class ProductOptionDependencyProvider extends AbstractBundleDependencyProvider
                 'Missing instance of %s! You need to configure MoneyCollectionFormType ' .
                 'in your own ProductOptionDependencyProvider::createMoneyCollectionFormTypePlugin() ' .
                 'to be able to manage shipment prices.',
-                FormTypeInterface::class
-            )
+                FormTypeInterface::class,
+            ),
         );
     }
 

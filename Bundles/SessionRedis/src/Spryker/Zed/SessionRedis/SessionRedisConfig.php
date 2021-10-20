@@ -76,13 +76,13 @@ class SessionRedisConfig extends AbstractBundleConfig
     {
         return (new RedisConfigurationTransfer())
             ->setDataSourceNames(
-                $this->getZedDataSourceNames()
+                $this->getZedDataSourceNames(),
             )
             ->setConnectionCredentials(
-                $this->getZedConnectionCredentials()
+                $this->getZedConnectionCredentials(),
             )
             ->setClientOptions(
-                $this->getZedConnectionOptions()
+                $this->getZedConnectionOptions(),
             );
     }
 
@@ -95,13 +95,13 @@ class SessionRedisConfig extends AbstractBundleConfig
     {
         return (new RedisConfigurationTransfer())
             ->setDataSourceNames(
-                $this->getYvesDataSourceNames()
+                $this->getYvesDataSourceNames(),
             )
             ->setConnectionCredentials(
-                $this->getYvesConnectionCredentials()
+                $this->getYvesConnectionCredentials(),
             )
             ->setClientOptions(
-                $this->getYvesConnectionOptions()
+                $this->getYvesConnectionOptions(),
             );
     }
 

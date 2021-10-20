@@ -78,7 +78,7 @@ class ReturnTableQueryTest extends Unit
         $returnTableMock = new ReturnTableMock(
             $this->getUtilDateTimeServiceMock(),
             $this->getSalesReturnGuiConfigMock(),
-            SpySalesReturnQuery::create()
+            SpySalesReturnQuery::create(),
         );
 
         // Act

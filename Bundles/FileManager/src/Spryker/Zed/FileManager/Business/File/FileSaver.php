@@ -146,7 +146,7 @@ class FileSaver implements FileSaverInterface
     protected function prepareFileTransfer(FileTransfer $fileTransfer)
     {
         $fileTransfer->setFileName(
-            $this->sanitizeFileName($fileTransfer->getFileName())
+            $this->sanitizeFileName($fileTransfer->getFileName()),
         );
     }
 
@@ -168,7 +168,7 @@ class FileSaver implements FileSaverInterface
         $fileInfoTransfer->setVersionName($nextVersionName);
         $fileInfoTransfer->setStorageName($this->config->getStorageName());
         $fileInfoTransfer->setStorageFileName(
-            $this->buildFilename($fileInfoTransfer, $fileTransfer->getFkFileDirectory())
+            $this->buildFilename($fileInfoTransfer, $fileTransfer->getFkFileDirectory()),
         );
     }
 
@@ -202,7 +202,7 @@ class FileSaver implements FileSaverInterface
             $fileTransfer = $fileManagerDataTransfer->getFile() ?? new FileTransfer();
             $fileTransfer->setFileContent($fileManagerDataTransfer->getContent());
             $fileTransfer->setFileName(
-                $fileManagerDataTransfer->getFileInfoOrFail()->getStorageFileName()
+                $fileManagerDataTransfer->getFileInfoOrFail()->getStorageFileName(),
             );
             $this->fileContent->save($fileTransfer);
         }

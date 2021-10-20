@@ -25,7 +25,7 @@ class ShoppingListSessionFactory extends AbstractFactory
     public function createShoppingListSessionStorage(): ShoppingListSessionStorageInterface
     {
         return new ShoppingListSessionSessionStorage(
-            $this->getSessionClient()
+            $this->getSessionClient(),
         );
     }
 
@@ -37,7 +37,7 @@ class ShoppingListSessionFactory extends AbstractFactory
         return new ShoppingListSessionReader(
             $this->createShoppingListSessionStorage(),
             $this->getShoppingListClient(),
-            $this->createShoppingListCollectionOutdatedPluginsExecutor()
+            $this->createShoppingListCollectionOutdatedPluginsExecutor(),
         );
     }
 
@@ -47,7 +47,7 @@ class ShoppingListSessionFactory extends AbstractFactory
     public function createShoppingListCollectionOutdatedPluginsExecutor(): ShoppingListSessionPluginsExecutorInterface
     {
         return new ShoppingListSessionPluginsExecutor(
-            $this->getShoppingListCollectionOutdatedPlugins()
+            $this->getShoppingListCollectionOutdatedPlugins(),
         );
     }
 

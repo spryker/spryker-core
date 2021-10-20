@@ -52,7 +52,7 @@ class ValidUniqueStoreCurrencyCollectionConstraintValidator extends AbstractCons
                 '%s-%s-%s',
                 $moneyValueTransfer->getFkCurrencyOrFail(),
                 $moneyValueTransfer->getFkStoreOrFail(),
-                $priceProductTransfer->getPriceTypeOrFail()->getIdPriceTypeOrFail()
+                $priceProductTransfer->getPriceTypeOrFail()->getIdPriceTypeOrFail(),
             );
             if (in_array($key, $existingKeys, true)) {
                 $this->context->buildViolation($constraint->getMessage())

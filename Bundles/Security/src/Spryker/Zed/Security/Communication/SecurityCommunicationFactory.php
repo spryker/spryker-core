@@ -96,7 +96,7 @@ class SecurityCommunicationFactory extends AbstractCommunicationFactory
     {
         return new RetryAuthenticationEntryPoint(
             $this->getConfig()->getHttpPort(),
-            $this->getConfig()->getHttpsPort()
+            $this->getConfig()->getHttpsPort(),
         );
     }
 

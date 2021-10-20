@@ -95,11 +95,11 @@ class ProductAlternativeReplacementStorageListenerTest extends Unit
         // Act
         $this->productAlternativeReplacementStorageListener->handleBulk(
             $eventTransfers,
-            ProductAlternativeEvents::PRODUCT_ALTERNATIVE_PUBLISH
+            ProductAlternativeEvents::PRODUCT_ALTERNATIVE_PUBLISH,
         );
         $productReplacementStorageEntity = $this->productAlternativeStorageRepository
             ->findProductReplacementStorageEntitiesBySku(
-                $this->alternativeProductConcrete->getSku()
+                $this->alternativeProductConcrete->getSku(),
             );
 
         // Assert
@@ -124,17 +124,17 @@ class ProductAlternativeReplacementStorageListenerTest extends Unit
         // Act
         $this->productAlternativeReplacementStorageListener->handleBulk(
             $eventTransfers,
-            ProductAlternativeEvents::PRODUCT_ALTERNATIVE_PUBLISH
+            ProductAlternativeEvents::PRODUCT_ALTERNATIVE_PUBLISH,
         );
         $this->tester->getProductAlternativeFacade()
             ->deleteProductAlternativeByIdProductAlternative($productAlternativeTransfer->getIdProductAlternative());
         $this->productAlternativeReplacementStorageListener->handleBulk(
             $eventTransfers,
-            ProductAlternativeEvents::PRODUCT_ALTERNATIVE_UNPUBLISH
+            ProductAlternativeEvents::PRODUCT_ALTERNATIVE_UNPUBLISH,
         );
         $productReplacementStorageEntity = $this->productAlternativeStorageRepository
             ->findProductReplacementStorageEntitiesBySku(
-                $this->alternativeProductConcrete->getSku()
+                $this->alternativeProductConcrete->getSku(),
             );
 
         // Assert
@@ -156,11 +156,11 @@ class ProductAlternativeReplacementStorageListenerTest extends Unit
         // Act
         $this->productAlternativeReplacementStorageListener->handleBulk(
             $eventTransfers,
-            ProductAlternativeEvents::PRODUCT_ALTERNATIVE_PUBLISH
+            ProductAlternativeEvents::PRODUCT_ALTERNATIVE_PUBLISH,
         );
         $productReplacementStorageEntity = $this->productAlternativeStorageRepository
             ->findProductReplacementStorageEntitiesBySku(
-                $this->alternativeProductAbstract->getSku()
+                $this->alternativeProductAbstract->getSku(),
             );
 
         // Assert
@@ -185,17 +185,17 @@ class ProductAlternativeReplacementStorageListenerTest extends Unit
         // Act
         $this->productAlternativeReplacementStorageListener->handleBulk(
             $eventTransfers,
-            ProductAlternativeEvents::PRODUCT_ALTERNATIVE_PUBLISH
+            ProductAlternativeEvents::PRODUCT_ALTERNATIVE_PUBLISH,
         );
         $this->tester->getProductAlternativeFacade()
             ->deleteProductAlternativeByIdProductAlternative($productAlternativeTransfer->getIdProductAlternative());
         $this->productAlternativeReplacementStorageListener->handleBulk(
             $eventTransfers,
-            ProductAlternativeEvents::PRODUCT_ALTERNATIVE_UNPUBLISH
+            ProductAlternativeEvents::PRODUCT_ALTERNATIVE_UNPUBLISH,
         );
         $productReplacementStorageEntity = $this->productAlternativeStorageRepository
             ->findProductReplacementStorageEntitiesBySku(
-                $this->alternativeProductAbstract->getSku()
+                $this->alternativeProductAbstract->getSku(),
             );
 
         // Assert

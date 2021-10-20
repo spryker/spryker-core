@@ -124,21 +124,21 @@ class AttributeMapTest extends Unit
         $productConcreteDataList = [$productConcreteData1, $productConcreteData2];
         $productStorageQueryContainerMock = $this->createProductStorageQueryContainerMock(
             $productConcreteDataList,
-            static::FAKE_SUPER_ATTRIBUTES
+            static::FAKE_SUPER_ATTRIBUTES,
         );
 
         $productConcrete1AttributePermutations = $this->generateProductAttributePermutations(
             json_decode($productConcreteData1[static::KEY_ATTRIBUTES], true),
-            $productConcreteData1[static::KEY_ID_PRODUCT]
+            $productConcreteData1[static::KEY_ID_PRODUCT],
         );
         $productConcrete2AttributePermutations = $this->generateProductAttributePermutations(
             json_decode($productConcreteData2[static::KEY_ATTRIBUTES], true),
-            $productConcreteData2[static::KEY_ID_PRODUCT]
+            $productConcreteData2[static::KEY_ID_PRODUCT],
         );
 
         $productFacadeMock = $this->createProductFacadeMock(
             [static::FAKE_PRODUCT_ATTRIBUTES_1, static::FAKE_PRODUCT_ATTRIBUTES_2],
-            [$productConcrete1AttributePermutations, $productConcrete2AttributePermutations]
+            [$productConcrete1AttributePermutations, $productConcrete2AttributePermutations],
         );
 
         $productStorageConfigMock = $this->createProductStorageConfigMock($isProductAttributesWithSingleValueIncluded);
@@ -147,7 +147,7 @@ class AttributeMapTest extends Unit
             $productFacadeMock,
             $productStorageQueryContainerMock,
             $productStorageConfigMock,
-            new SingleValueSuperAttributeFilter()
+            new SingleValueSuperAttributeFilter(),
         );
 
         // Act

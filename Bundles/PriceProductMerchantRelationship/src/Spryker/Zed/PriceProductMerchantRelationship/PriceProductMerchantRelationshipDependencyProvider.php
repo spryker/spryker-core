@@ -51,7 +51,7 @@ class PriceProductMerchantRelationshipDependencyProvider extends AbstractBundleD
     {
         $container->set(static::FACADE_PRICE_PRODUCT, function (Container $container) {
             return new PriceProductMerchantRelationshipToPriceProductFacadeBridge(
-                $container->getLocator()->priceProduct()->facade()
+                $container->getLocator()->priceProduct()->facade(),
             );
         });
 
@@ -67,7 +67,7 @@ class PriceProductMerchantRelationshipDependencyProvider extends AbstractBundleD
     {
         $container->set(static::FACADE_MERCHANT_RELATIONSHIP, function (Container $container) {
             return new PriceProductMerchantRelationshipToMerchantRelationshipFacadeBridge(
-                $container->getLocator()->merchantRelationship()->facade()
+                $container->getLocator()->merchantRelationship()->facade(),
             );
         });
 

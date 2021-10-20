@@ -29,7 +29,7 @@ class SalesProductConfigurationEntityManager extends AbstractEntityManager imple
             ->createSalesOrderItemConfigurationMapper()
             ->mapSalesOrderItemConfigurationTransferToSalesOrderItemConfigurationEntity(
                 $salesOrderItemConfigurationTransfer,
-                new SpySalesOrderItemConfiguration()
+                new SpySalesOrderItemConfiguration(),
             );
 
         $salesOrderItemConfigurationEntity->save();

@@ -41,7 +41,7 @@ class SalesOrderThresholdEntityManager extends AbstractEntityManager implements 
             ->createSalesOrderThresholdMapper()
             ->mapSalesOrderThresholdTypeEntityToTransfer(
                 $salesOrderThresholdTypeEntity,
-                $salesOrderThresholdTypeTransfer
+                $salesOrderThresholdTypeTransfer,
             );
 
         return $salesOrderThresholdTypeTransfer;
@@ -79,7 +79,7 @@ class SalesOrderThresholdEntityManager extends AbstractEntityManager implements 
         $messageGlossaryKey = $salesOrderThresholdEntity->getMessageGlossaryKey();
         if ($messageGlossaryKey === null) {
             $salesOrderThresholdEntity->setMessageGlossaryKey(
-                $salesOrderThresholdTransfer->getSalesOrderThresholdValue()->getMessageGlossaryKey()
+                $salesOrderThresholdTransfer->getSalesOrderThresholdValue()->getMessageGlossaryKey(),
             );
         }
 
@@ -87,14 +87,14 @@ class SalesOrderThresholdEntityManager extends AbstractEntityManager implements 
             ->setThreshold($salesOrderThresholdTransfer->getSalesOrderThresholdValue()->getThreshold())
             ->setFee($salesOrderThresholdTransfer->getSalesOrderThresholdValue()->getFee())
             ->setFkSalesOrderThresholdType(
-                $salesOrderThresholdTypeTransfer->getIdSalesOrderThresholdType()
+                $salesOrderThresholdTypeTransfer->getIdSalesOrderThresholdType(),
             )->save();
 
         return $this->getFactory()
             ->createSalesOrderThresholdMapper()
             ->mapSalesOrderThresholdEntityToTransfer(
                 $salesOrderThresholdEntity,
-                $salesOrderThresholdTransfer
+                $salesOrderThresholdTransfer,
             );
     }
 
@@ -109,7 +109,7 @@ class SalesOrderThresholdEntityManager extends AbstractEntityManager implements 
         $salesOrderThresholdEntity = $this->getFactory()
             ->createSalesOrderThresholdQuery()
             ->findOneByIdSalesOrderThreshold(
-                $salesOrderThresholdTransfer->getIdSalesOrderThreshold()
+                $salesOrderThresholdTransfer->getIdSalesOrderThreshold(),
             );
 
         if ($salesOrderThresholdEntity) {

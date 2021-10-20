@@ -43,7 +43,7 @@ class CartPermissionGroupsRestApiDependencyProvider extends AbstractBundleDepend
     {
         $container->set(static::CLIENT_SHARED_CART, function (Container $container) {
             return new CartPermissionGroupsRestApiToSharedCartClientBridge(
-                $container->getLocator()->sharedCart()->client()
+                $container->getLocator()->sharedCart()->client(),
             );
         });
 

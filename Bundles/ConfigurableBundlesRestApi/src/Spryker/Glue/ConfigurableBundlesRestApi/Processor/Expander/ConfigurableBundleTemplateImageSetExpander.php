@@ -46,7 +46,7 @@ class ConfigurableBundleTemplateImageSetExpander implements ConfigurableBundleRe
                 $configurableBundleTemplateSlotRestResource = $this->configurableBundleTemplateImageSetRestResourceBuilder
                     ->buildConfigurableBundleTemplateImageSetRestResource(
                         $productImageSetStorageTransfer,
-                        $resource->getId()
+                        $resource->getId(),
                     );
 
                 $resource->addRelationship($configurableBundleTemplateSlotRestResource);

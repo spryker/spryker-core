@@ -26,7 +26,7 @@ class CmsBlockCollectorBusinessFactory extends AbstractBusinessFactory
     {
         $cmsBlockCollector = new CmsBlockCollector(
             $this->getUtilDataReaderService(),
-            $this->getCollectorDataExpanderPlugins()
+            $this->getCollectorDataExpanderPlugins(),
         );
 
         $cmsBlockCollector->setTouchQueryContainer($this->getTouchQueryContainer());
@@ -82,7 +82,7 @@ class CmsBlockCollectorBusinessFactory extends AbstractBusinessFactory
     {
         return new CmsBlockCollectorRunner(
             $this->createStorageCmsBlockCollector(),
-            $this->getCollectorFacade()
+            $this->getCollectorFacade(),
         );
     }
 }

@@ -90,7 +90,7 @@ class CmsBlockConfig extends AbstractBundleConfig
             $this->get(CmsBlockConstants::PROJECT_NAMESPACE),
             $twigLayer,
             $themeName,
-            $templateRelativePath
+            $templateRelativePath,
         );
     }
 
@@ -125,7 +125,7 @@ class CmsBlockConfig extends AbstractBundleConfig
                 '%s/%s/Shared/CmsBlock/Theme/%s',
                 APPLICATION_SOURCE_DIR,
                 $this->get(CmsBlockConstants::PROJECT_NAMESPACE),
-                static::THEME_NAME_DEFAULT
+                static::THEME_NAME_DEFAULT,
             ),
         ];
     }

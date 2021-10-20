@@ -128,7 +128,7 @@ class ShipmentCheckoutConnectorFacadeTest extends Unit
         $shipmentMethodTransfer = (new ShipmentMethodBuilder(
             [
                 ShipmentMethodTransfer::ID_SHIPMENT_METHOD => $idShipmentMethod,
-            ]
+            ],
         ))
             ->build();
 
@@ -172,7 +172,7 @@ class ShipmentCheckoutConnectorFacadeTest extends Unit
         $shipmentMethodTransfer = (new ShipmentMethodBuilder(
             [
                 ShipmentMethodTransfer::ID_SHIPMENT_METHOD => $idShipmentMethod,
-            ]
+            ],
         ))
             ->build();
 

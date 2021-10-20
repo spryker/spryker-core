@@ -38,7 +38,7 @@ class CartItemExpander implements CartItemExpanderInterface
         RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
     ): CartItemRequestTransfer {
         $productOptionIds = $this->productOptionStorageReader->getProductOptionIdsByProductConcreteSku(
-            $restCartItemsAttributesTransfer->getSku()
+            $restCartItemsAttributesTransfer->getSku(),
         );
         foreach ($restCartItemsAttributesTransfer->getProductOptions() as $restCartItemsProductOptionTransfer) {
             if (!isset($productOptionIds[$restCartItemsProductOptionTransfer->getSku()])) {
@@ -47,7 +47,7 @@ class CartItemExpander implements CartItemExpanderInterface
 
             $cartItemRequestTransfer->addProductOption(
                 (new ProductOptionTransfer())
-                    ->setIdProductOptionValue($productOptionIds[$restCartItemsProductOptionTransfer->getSku()])
+                    ->setIdProductOptionValue($productOptionIds[$restCartItemsProductOptionTransfer->getSku()]),
             );
         }
 

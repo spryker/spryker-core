@@ -95,7 +95,7 @@ class GiftCardReplacer implements GiftCardReplacerInterface
     protected function createReplacementGiftCard(GiftCardTransfer $giftCardTransferBase, $value)
     {
         $giftCardCode = $this->giftCardCodeGenerator->generateGiftCardCode(
-            $giftCardTransferBase->getReplacementPattern()
+            $giftCardTransferBase->getReplacementPattern(),
         );
 
         $giftCardName = $this->generateGiftCardName($giftCardTransferBase);

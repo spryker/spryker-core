@@ -53,7 +53,7 @@ class ProductLabelCollectorFacadeTest extends Unit
             $productLabelCollectorFacade,
             static::METHOD_FOR_RELATION_COLLECTION,
             ProductLabelConstants::RESOURCE_TYPE_PRODUCT_ABSTRACT_PRODUCT_LABEL_RELATIONS,
-            new DateTime('-10 Seconds')
+            new DateTime('-10 Seconds'),
         );
 
         $storageKey = key($data[0]);
@@ -68,7 +68,7 @@ class ProductLabelCollectorFacadeTest extends Unit
             $productLabelCollectorFacade,
             static::METHOD_FOR_RELATION_COLLECTION,
             ProductLabelConstants::RESOURCE_TYPE_PRODUCT_ABSTRACT_PRODUCT_LABEL_RELATIONS,
-            new DateTime('-10 Second')
+            new DateTime('-10 Second'),
         );
 
         $this->assertCount(0, $data[0][$storageKey]);

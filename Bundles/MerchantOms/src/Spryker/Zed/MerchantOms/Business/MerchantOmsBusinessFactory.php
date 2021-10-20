@@ -37,7 +37,7 @@ class MerchantOmsBusinessFactory extends AbstractBusinessFactory
         return new StateMachineProcessReader(
             $this->getConfig(),
             $this->getMerchantFacade(),
-            $this->getStateMachineFacade()
+            $this->getStateMachineFacade(),
         );
     }
 
@@ -49,7 +49,7 @@ class MerchantOmsBusinessFactory extends AbstractBusinessFactory
         return new MerchantOmsEventTrigger(
             $this->getStateMachineFacade(),
             $this->createStateMachineProcessReader(),
-            $this->getMerchantSalesOrderFacade()
+            $this->getMerchantSalesOrderFacade(),
         );
     }
 
@@ -60,7 +60,7 @@ class MerchantOmsBusinessFactory extends AbstractBusinessFactory
     {
         return new MerchantOrderItemsExpander(
             $this->getRepository(),
-            $this->getStateMachineFacade()
+            $this->getStateMachineFacade(),
         );
     }
 
@@ -71,7 +71,7 @@ class MerchantOmsBusinessFactory extends AbstractBusinessFactory
     {
         return new MerchantOrderExpander(
             $this->getStateMachineFacade(),
-            $this->getRepository()
+            $this->getRepository(),
         );
     }
 

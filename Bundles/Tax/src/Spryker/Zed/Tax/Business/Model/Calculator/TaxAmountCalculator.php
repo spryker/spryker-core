@@ -82,7 +82,7 @@ class TaxAmountCalculator implements CalculatorInterface
                 $taxableAmount,
                 $itemTransfer->getTaxRate(),
                 $priceMode,
-                static::ROUNDING_ERROR_BUCKET_IDENTIFIER
+                static::ROUNDING_ERROR_BUCKET_IDENTIFIER,
             );
 
             $itemTransfer->setSumTaxAmount($sumTaxAmount);
@@ -91,7 +91,7 @@ class TaxAmountCalculator implements CalculatorInterface
 
         if ($lastItemTransfer && !$haveExpenses) {
             $lastItemTransfer->setSumTaxAmount(
-                (int)round($lastItemTransfer->getSumTaxAmount() + $this->accruedTaxCalculator->getRoundingErrorDelta(static::ROUNDING_ERROR_BUCKET_IDENTIFIER))
+                (int)round($lastItemTransfer->getSumTaxAmount() + $this->accruedTaxCalculator->getRoundingErrorDelta(static::ROUNDING_ERROR_BUCKET_IDENTIFIER)),
             );
         }
     }
@@ -121,7 +121,7 @@ class TaxAmountCalculator implements CalculatorInterface
                     $taxableAmount,
                     $productOptionTransfer->getTaxRate(),
                     $priceMode,
-                    static::ROUNDING_ERROR_BUCKET_IDENTIFIER
+                    static::ROUNDING_ERROR_BUCKET_IDENTIFIER,
                 );
 
                 $productOptionTransfer->setSumTaxAmount($sumTaxAmount);
@@ -154,7 +154,7 @@ class TaxAmountCalculator implements CalculatorInterface
                 $taxableAmount,
                 $expenseTransfer->getTaxRate(),
                 $priceMode,
-                static::ROUNDING_ERROR_BUCKET_IDENTIFIER
+                static::ROUNDING_ERROR_BUCKET_IDENTIFIER,
             );
 
             $expenseTransfer->setSumTaxAmount($sumTaxAmount);
@@ -163,7 +163,7 @@ class TaxAmountCalculator implements CalculatorInterface
 
         if ($lastExpenseTransfer) {
             $lastExpenseTransfer->setSumTaxAmount(
-                (int)round($lastExpenseTransfer->getSumTaxAmount() + $this->accruedTaxCalculator->getRoundingErrorDelta(static::ROUNDING_ERROR_BUCKET_IDENTIFIER))
+                (int)round($lastExpenseTransfer->getSumTaxAmount() + $this->accruedTaxCalculator->getRoundingErrorDelta(static::ROUNDING_ERROR_BUCKET_IDENTIFIER)),
             );
         }
     }
@@ -194,7 +194,7 @@ class TaxAmountCalculator implements CalculatorInterface
                 $taxableAmount,
                 $itemTransfer->getTaxRate(),
                 $priceMode,
-                static::ROUNDING_ERROR_BUCKET_IDENTIFIER
+                static::ROUNDING_ERROR_BUCKET_IDENTIFIER,
             );
 
             $itemTransfer->setUnitTaxAmount($sumTaxAmount);
@@ -203,7 +203,7 @@ class TaxAmountCalculator implements CalculatorInterface
 
         if ($lastItemTransfer && !$haveExpenses) {
             $lastItemTransfer->setUnitTaxAmount(
-                (int)round($lastItemTransfer->getUnitTaxAmount() + $this->accruedTaxCalculator->getRoundingErrorDelta(static::ROUNDING_ERROR_BUCKET_IDENTIFIER))
+                (int)round($lastItemTransfer->getUnitTaxAmount() + $this->accruedTaxCalculator->getRoundingErrorDelta(static::ROUNDING_ERROR_BUCKET_IDENTIFIER)),
             );
         }
     }
@@ -233,7 +233,7 @@ class TaxAmountCalculator implements CalculatorInterface
                     $taxableAmount,
                     $productOptionTransfer->getTaxRate(),
                     $priceMode,
-                    static::ROUNDING_ERROR_BUCKET_IDENTIFIER
+                    static::ROUNDING_ERROR_BUCKET_IDENTIFIER,
                 );
 
                 $productOptionTransfer->setUnitTaxAmount($sumTaxAmount);
@@ -266,7 +266,7 @@ class TaxAmountCalculator implements CalculatorInterface
                 $taxableAmount,
                 $expenseTransfer->getTaxRate(),
                 $priceMode,
-                static::ROUNDING_ERROR_BUCKET_IDENTIFIER
+                static::ROUNDING_ERROR_BUCKET_IDENTIFIER,
             );
 
             $expenseTransfer->setUnitTaxAmount($sumTaxAmount);
@@ -275,7 +275,7 @@ class TaxAmountCalculator implements CalculatorInterface
 
         if ($lastExpenseTransfer) {
             $lastExpenseTransfer->setUnitTaxAmount(
-                (int)round($lastExpenseTransfer->getUnitTaxAmount() + $this->accruedTaxCalculator->getRoundingErrorDelta(static::ROUNDING_ERROR_BUCKET_IDENTIFIER))
+                (int)round($lastExpenseTransfer->getUnitTaxAmount() + $this->accruedTaxCalculator->getRoundingErrorDelta(static::ROUNDING_ERROR_BUCKET_IDENTIFIER)),
             );
         }
     }

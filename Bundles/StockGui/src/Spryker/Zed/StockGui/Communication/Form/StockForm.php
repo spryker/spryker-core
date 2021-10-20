@@ -151,7 +151,7 @@ class StockForm extends AbstractType
             [
                 'label' => 'Available in the following store(s)',
                 'required' => false,
-            ]
+            ],
         );
 
         return $this;

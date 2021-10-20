@@ -75,7 +75,7 @@ class PriceProductMerchantRelationshipBusinessTester extends Actor
             ->build();
 
         $priceProductTransfer->fromArray(
-            $this->getPriceProductFacade()->findProductAbstractPrice(1)->modifiedToArray()
+            $this->getPriceProductFacade()->findProductAbstractPrice(1)->modifiedToArray(),
         );
 
         $merchantRelationshipTransfer = $this->createMerchantRelationship('key');

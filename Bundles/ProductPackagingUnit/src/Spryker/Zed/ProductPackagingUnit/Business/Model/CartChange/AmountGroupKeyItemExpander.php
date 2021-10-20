@@ -35,7 +35,7 @@ class AmountGroupKeyItemExpander implements AmountGroupKeyItemExpanderInterface
     {
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
             $itemTransfer->setGroupKey(
-                $this->productPackagingUnitGroupKeyGenerator->getItemWithGroupKey($itemTransfer)
+                $this->productPackagingUnitGroupKeyGenerator->getItemWithGroupKey($itemTransfer),
             );
         }
 

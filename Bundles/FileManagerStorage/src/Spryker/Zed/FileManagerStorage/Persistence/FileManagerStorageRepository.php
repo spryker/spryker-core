@@ -39,7 +39,7 @@ class FileManagerStorageRepository extends AbstractRepository implements FileMan
 
         foreach ($fileEntityCollection as $fileEntity) {
             $fileEntityTransferCollection->append(
-                $mapper->mapFileEntityToTransfer($fileEntity, new FileTransfer())
+                $mapper->mapFileEntityToTransfer($fileEntity, new FileTransfer()),
             );
         }
 
@@ -61,7 +61,7 @@ class FileManagerStorageRepository extends AbstractRepository implements FileMan
             ->filterByFkFile_In($fileStorageIds)
             ->withColumn(
                 'CONCAT(' . SpyFileStorageTableMap::COL_FK_FILE . ", '_', " . SpyFileStorageTableMap::COL_LOCALE . ')',
-                $storageCompositeKey
+                $storageCompositeKey,
             );
 
         $fileStorageEntityCollection = $query->find()->toKeyIndex($storageCompositeKey);
@@ -95,7 +95,7 @@ class FileManagerStorageRepository extends AbstractRepository implements FileMan
         return $this->getFactory()
             ->createFileManagerStorageMapper()
             ->mapFileStorageEntityCollectionToTransferCollection(
-                $fileStorageQuery->find()
+                $fileStorageQuery->find(),
             );
     }
 }

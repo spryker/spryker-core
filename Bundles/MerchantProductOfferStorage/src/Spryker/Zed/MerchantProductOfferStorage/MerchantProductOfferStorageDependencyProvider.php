@@ -85,7 +85,7 @@ class MerchantProductOfferStorageDependencyProvider extends AbstractBundleDepend
     {
         $container->set(static::FACADE_EVENT_BEHAVIOR, function (Container $container) {
             return new MerchantProductOfferStorageToEventBehaviorFacadeBridge(
-                $container->getLocator()->eventBehavior()->facade()
+                $container->getLocator()->eventBehavior()->facade(),
             );
         });
 
@@ -101,7 +101,7 @@ class MerchantProductOfferStorageDependencyProvider extends AbstractBundleDepend
     {
         $container->set(static::FACADE_STORE, function (Container $container) {
             return new MerchantProductOfferStorageToStoreFacadeBridge(
-                $container->getLocator()->store()->facade()
+                $container->getLocator()->store()->facade(),
             );
         });
 

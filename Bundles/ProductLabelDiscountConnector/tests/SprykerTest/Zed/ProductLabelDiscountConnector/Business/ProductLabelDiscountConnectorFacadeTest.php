@@ -70,7 +70,7 @@ class ProductLabelDiscountConnectorFacadeTest extends Unit
 
         $this->tester->haveProductLabelToAbstractProductRelation(
             $productLabelTransfer->getIdProductLabel(),
-            $productConcreteTransfer->getFkProductAbstract()
+            $productConcreteTransfer->getFkProductAbstract(),
         );
 
         $quoteTransfer = $this->tester->createQuoteTransfer([$productConcreteTransfer]);
@@ -80,7 +80,7 @@ class ProductLabelDiscountConnectorFacadeTest extends Unit
         $isSatisfied = $this->tester->getFacade()->isProductLabelSatisfiedBy(
             $quoteTransfer,
             $quoteTransfer->getItems()[0],
-            $clauseTransfer
+            $clauseTransfer,
         );
 
         // Assert
@@ -107,7 +107,7 @@ class ProductLabelDiscountConnectorFacadeTest extends Unit
         $isSatisfied = $this->tester->getFacade()->isProductLabelSatisfiedBy(
             $quoteTransfer,
             $quoteTransfer->getItems()[0],
-            $clauseTransfer
+            $clauseTransfer,
         );
 
         // Assert
@@ -131,12 +131,12 @@ class ProductLabelDiscountConnectorFacadeTest extends Unit
 
         $this->tester->haveProductLabelToAbstractProductRelation(
             $productLabelTransfer->getIdProductLabel(),
-            $productConcreteTransfer1->getFkProductAbstract()
+            $productConcreteTransfer1->getFkProductAbstract(),
         );
 
         $this->tester->haveProductLabelToAbstractProductRelation(
             $productLabelTransfer->getIdProductLabel(),
-            $productConcreteTransfer2->getFkProductAbstract()
+            $productConcreteTransfer2->getFkProductAbstract(),
         );
 
         $quoteTransfer = $this->tester->createQuoteTransfer([
@@ -181,15 +181,15 @@ class ProductLabelDiscountConnectorFacadeTest extends Unit
 
         $this->tester->haveProductLabelToAbstractProductRelation(
             $productLabelTransfer1->getIdProductLabel(),
-            $productConcreteTransfer->getFkProductAbstract()
+            $productConcreteTransfer->getFkProductAbstract(),
         );
         $this->tester->haveProductLabelToAbstractProductRelation(
             $productLabelTransfer2->getIdProductLabel(),
-            $productConcreteTransfer->getFkProductAbstract()
+            $productConcreteTransfer->getFkProductAbstract(),
         );
         $this->tester->haveProductLabelToAbstractProductRelation(
             $productLabelTransfer3->getIdProductLabel(),
-            $productConcreteTransfer->getFkProductAbstract()
+            $productConcreteTransfer->getFkProductAbstract(),
         );
 
         $quoteTransfer = $this->tester->createQuoteTransfer([$productConcreteTransfer]);

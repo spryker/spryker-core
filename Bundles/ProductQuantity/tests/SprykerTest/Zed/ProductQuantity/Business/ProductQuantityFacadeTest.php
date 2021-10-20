@@ -362,12 +362,12 @@ class ProductQuantityFacadeTest extends Unit
         $cartChangeTransfer->getQuote()->addItem($this->tester->createItemTransferWithNormalizableQuantity(
             $productTransfer->getSku(),
             $productTransfer->getSku(),
-            60
+            60,
         ));
         $cartChangeTransfer->addItem($this->tester->createItemTransferWithNormalizableQuantity(
             $productTransfer->getSku(),
             $productTransfer->getSku(),
-            8
+            8,
         ));
 
         //Act
@@ -377,7 +377,7 @@ class ProductQuantityFacadeTest extends Unit
         $this->assertSame(
             $expectedQuantity,
             $cartChangeTransfer->getItems()[0]->getQuantity(),
-            'Item quantity does not match expected value.'
+            'Item quantity does not match expected value.',
         );
     }
 

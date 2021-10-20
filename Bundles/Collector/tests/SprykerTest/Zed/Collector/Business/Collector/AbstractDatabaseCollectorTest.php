@@ -176,7 +176,7 @@ class AbstractDatabaseCollectorTest extends Unit
             $this->readerMock,
             $this->writerMock,
             $this->localeTransfer,
-            $this->output
+            $this->output,
         );
     }
 
@@ -232,7 +232,7 @@ class AbstractDatabaseCollectorTest extends Unit
             $this->readerMock,
             $this->writerMock,
             $this->localeTransfer,
-            $this->output
+            $this->output,
         );
     }
 }

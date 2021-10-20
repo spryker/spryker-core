@@ -34,7 +34,7 @@ class ProductDiscontinuedDataImportConfig extends DataImportConfig
 
         return $this->buildImporterConfiguration(
             $moduleDataImportDirectory . 'product_discontinued.csv',
-            static::IMPORT_TYPE_PRODUCT_DISCONTINUED
+            static::IMPORT_TYPE_PRODUCT_DISCONTINUED,
         );
     }
 
@@ -48,7 +48,7 @@ class ProductDiscontinuedDataImportConfig extends DataImportConfig
             . DIRECTORY_SEPARATOR . '..'
             . DIRECTORY_SEPARATOR . '..'
             . DIRECTORY_SEPARATOR . '..'
-            . DIRECTORY_SEPARATOR . '..'
+            . DIRECTORY_SEPARATOR . '..',
         );
 
         return $moduleRoot . DIRECTORY_SEPARATOR;

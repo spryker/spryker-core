@@ -34,7 +34,7 @@ class OfferEntityManager extends AbstractEntityManager implements OfferEntityMan
         $offerEntityTransfer = $this->save($offerEntityTransfer);
 
         $offerTransfer->setIdOffer(
-            $offerEntityTransfer->getIdOffer()
+            $offerEntityTransfer->getIdOffer(),
         );
 
         return $offerTransfer;

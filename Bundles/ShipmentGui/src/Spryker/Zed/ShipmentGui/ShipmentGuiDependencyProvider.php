@@ -98,7 +98,7 @@ class ShipmentGuiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::FACADE_TAX, function (Container $container) {
             return new ShipmentGuiToTaxFacadeBridge(
-                $container->getLocator()->tax()->facade()
+                $container->getLocator()->tax()->facade(),
             );
         });
 
@@ -131,8 +131,8 @@ class ShipmentGuiDependencyProvider extends AbstractBundleDependencyProvider
                 'Missing instance of %s! You need to configure StoreRelationFormType ' .
                 'in your own ShipmentGuiDependencyProvider::getStoreRelationFormTypePlugin() ' .
                 'to be able to manage shipment methods.',
-                FormTypeInterface::class
-            )
+                FormTypeInterface::class,
+            ),
         );
     }
 
@@ -164,8 +164,8 @@ class ShipmentGuiDependencyProvider extends AbstractBundleDependencyProvider
                 'Missing instance of %s! You need to configure MoneyCollectionFormType ' .
                 'in your own ShipmentGuiDependencyProvider::getMoneyCollectionFormTypePlugin() ' .
                 'to be able to manage shipment prices.',
-                FormTypeInterface::class
-            )
+                FormTypeInterface::class,
+            ),
         );
     }
 

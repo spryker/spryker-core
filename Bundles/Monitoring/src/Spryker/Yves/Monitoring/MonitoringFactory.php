@@ -27,7 +27,7 @@ class MonitoringFactory extends AbstractFactory
         return new ControllerListener(
             $this->getMonitoringService(),
             $this->getUtilNetworkService(),
-            $this->getConfig()->getIgnorableTransactionRouteNames()
+            $this->getConfig()->getIgnorableTransactionRouteNames(),
         );
     }
 

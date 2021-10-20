@@ -36,7 +36,7 @@ class FinishImpersonationSessionTest extends Unit
         // Arrange
         $this->tester->setDependency(
             AgentDependencyProvider::PLUGINS_IMPERSONATION_SESSION_FINISHER,
-            [$this->getImpersonationSessionFinisherPluginMock()]
+            [$this->getImpersonationSessionFinisherPluginMock()],
         );
 
         // Act
@@ -53,7 +53,7 @@ class FinishImpersonationSessionTest extends Unit
         // Arrange
         $this->tester->setDependency(
             AgentDependencyProvider::CLIENT_CUSTOMER,
-            $this->getCustomerClientMock()
+            $this->getCustomerClientMock(),
         );
 
         // Act

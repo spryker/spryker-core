@@ -53,7 +53,7 @@ class MerchantRelationshipProductListOwnerTypeFormExpanderPlugin extends Abstrac
 
         $merchantRelationshipChoiceFormType->buildForm(
             $builder,
-            $merchantRelationshipChoiceFormDataProvider->getOptions()
+            $merchantRelationshipChoiceFormDataProvider->getOptions(),
         );
     }
 }

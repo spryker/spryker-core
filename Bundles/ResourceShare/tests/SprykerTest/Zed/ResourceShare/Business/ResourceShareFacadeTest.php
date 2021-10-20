@@ -110,7 +110,7 @@ class ResourceShareFacadeTest extends Test
 
         // Act
         $resourceShareResponseTransfer = $this->getFacade()->generateResourceShare(
-            (new ResourceShareRequestTransfer())->setResourceShare($resourceShareTransfer)
+            (new ResourceShareRequestTransfer())->setResourceShare($resourceShareTransfer),
         );
 
         // Assert
@@ -129,14 +129,14 @@ class ResourceShareFacadeTest extends Test
 
         // Act
         $resourceShareResponseTransfer = $this->getFacade()->generateResourceShare(
-            (new ResourceShareRequestTransfer())->setResourceShare($resourceShareTransfer)
+            (new ResourceShareRequestTransfer())->setResourceShare($resourceShareTransfer),
         );
 
         // Assert
         $this->assertFalse($resourceShareResponseTransfer->getIsSuccessful());
         $this->assertTrue($this->hasResourceShareResponseTransferErrorMessage(
             $resourceShareResponseTransfer,
-            static::GLOSSARY_KEY_RESOURCE_TYPE_IS_NOT_DEFINED
+            static::GLOSSARY_KEY_RESOURCE_TYPE_IS_NOT_DEFINED,
         ));
     }
 
@@ -151,7 +151,7 @@ class ResourceShareFacadeTest extends Test
 
         // Act
         $resourceShareResponseTransfer = $this->getFacade()->generateResourceShare(
-            (new ResourceShareRequestTransfer())->setResourceShare($resourceShareTransfer)
+            (new ResourceShareRequestTransfer())->setResourceShare($resourceShareTransfer),
         );
 
         // Assert
@@ -170,14 +170,14 @@ class ResourceShareFacadeTest extends Test
 
         // Act
         $resourceShareResponseTransfer = $this->getFacade()->generateResourceShare(
-            (new ResourceShareRequestTransfer())->setResourceShare($resourceShareTransfer)
+            (new ResourceShareRequestTransfer())->setResourceShare($resourceShareTransfer),
         );
 
         // Assert
         $this->assertFalse($resourceShareResponseTransfer->getIsSuccessful());
         $this->assertTrue($this->hasResourceShareResponseTransferErrorMessage(
             $resourceShareResponseTransfer,
-            static::GLOSSARY_KEY_CUSTOMER_REFERENCE_IS_NOT_DEFINED
+            static::GLOSSARY_KEY_CUSTOMER_REFERENCE_IS_NOT_DEFINED,
         ));
     }
 
@@ -195,7 +195,7 @@ class ResourceShareFacadeTest extends Test
 
         // Act
         $resourceShareResponseTransfer = $this->getFacade()->generateResourceShare(
-            (new ResourceShareRequestTransfer())->setResourceShare($resourceShareTransfer)
+            (new ResourceShareRequestTransfer())->setResourceShare($resourceShareTransfer),
         );
 
         // Assert
@@ -211,19 +211,19 @@ class ResourceShareFacadeTest extends Test
         // Arrange
         $resourceShareTransfer = (new ResourceShareBuilder())->build();
         $resourceShareTransfer->setExpiryDate(
-            (new DateTime('Today last year'))->format('Y-m-d')
+            (new DateTime('Today last year'))->format('Y-m-d'),
         );
 
         // Act
         $resourceShareResponseTransfer = $this->getFacade()->generateResourceShare(
-            (new ResourceShareRequestTransfer())->setResourceShare($resourceShareTransfer)
+            (new ResourceShareRequestTransfer())->setResourceShare($resourceShareTransfer),
         );
 
         // Assert
         $this->assertFalse($resourceShareResponseTransfer->getIsSuccessful());
         $this->assertTrue($this->hasResourceShareResponseTransferErrorMessage(
             $resourceShareResponseTransfer,
-            static::GLOSSARY_KEY_RESOURCE_SHARE_IS_EXPIRED
+            static::GLOSSARY_KEY_RESOURCE_SHARE_IS_EXPIRED,
         ));
     }
 
@@ -238,14 +238,14 @@ class ResourceShareFacadeTest extends Test
 
         // Act
         $resourceShareResponseTransfer = $this->getFacade()->getResourceShareByUuid(
-            (new ResourceShareRequestTransfer())->setResourceShare($resourceShareTransfer)
+            (new ResourceShareRequestTransfer())->setResourceShare($resourceShareTransfer),
         );
 
         // Assert
         $this->assertFalse($resourceShareResponseTransfer->getIsSuccessful());
         $this->assertTrue($this->hasResourceShareResponseTransferErrorMessage(
             $resourceShareResponseTransfer,
-            static::GLOSSARY_KEY_RESOURCE_IS_NOT_FOUND_BY_PROVIDED_UUID
+            static::GLOSSARY_KEY_RESOURCE_IS_NOT_FOUND_BY_PROVIDED_UUID,
         ));
     }
 
@@ -259,14 +259,14 @@ class ResourceShareFacadeTest extends Test
 
         // Act
         $resourceShareResponseTransfer = $this->getFacade()->getResourceShareByUuid(
-            (new ResourceShareRequestTransfer())->setResourceShare($resourceShareTransfer)
+            (new ResourceShareRequestTransfer())->setResourceShare($resourceShareTransfer),
         );
 
         // Assert
         $this->assertTrue($resourceShareResponseTransfer->getIsSuccessful());
         $this->assertSame(
             $resourceShareTransfer->getIdResourceShare(),
-            $resourceShareResponseTransfer->getResourceShare()->getIdResourceShare()
+            $resourceShareResponseTransfer->getResourceShare()->getIdResourceShare(),
         );
     }
 
@@ -280,14 +280,14 @@ class ResourceShareFacadeTest extends Test
 
         // Act
         $resourceShareResponseTransfer = $this->getFacade()->getResourceShareByUuid(
-            (new ResourceShareRequestTransfer())->setResourceShare($resourceShareTransfer)
+            (new ResourceShareRequestTransfer())->setResourceShare($resourceShareTransfer),
         );
 
         // Assert
         $this->assertFalse($resourceShareResponseTransfer->getIsSuccessful());
         $this->assertTrue($this->hasResourceShareResponseTransferErrorMessage(
             $resourceShareResponseTransfer,
-            static::GLOSSARY_KEY_RESOURCE_SHARE_IS_EXPIRED
+            static::GLOSSARY_KEY_RESOURCE_SHARE_IS_EXPIRED,
         ));
     }
 

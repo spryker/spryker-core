@@ -152,7 +152,7 @@ class ProductBusinessTester extends Actor
     {
         return sprintf(
             '/%s/product-' . $idProductAbstract,
-            $localeName
+            $localeName,
         );
     }
 
@@ -193,12 +193,12 @@ class ProductBusinessTester extends Actor
     {
         $productAbstractTransfer = new ProductAbstractTransfer();
         $productAbstractTransfer->setStoreRelation(
-            $this->createStoreRelationTransfer($productAbstractTransfer)
+            $this->createStoreRelationTransfer($productAbstractTransfer),
         );
         $productAbstractTransfer->setSku('abstract_sku' . $sku);
         $productAbstractTransfer->setIsActive(true);
         $productAbstractTransfer->setLocalizedAttributes(
-            new ArrayObject([$this->createLocalizedAttributeTransfer()])
+            new ArrayObject([$this->createLocalizedAttributeTransfer()]),
         );
 
         return $productAbstractTransfer;
@@ -217,7 +217,7 @@ class ProductBusinessTester extends Actor
         $storeRelationTransfer->setIdEntity($productAbstractTransfer->getIdProductAbstract());
         $storeRelationTransfer->setIdStores([$storeTransfer->getIdStore()]);
         $storeRelationTransfer->setStores(
-            new ArrayObject([$storeTransfer])
+            new ArrayObject([$storeTransfer]),
         );
 
         return $storeRelationTransfer;

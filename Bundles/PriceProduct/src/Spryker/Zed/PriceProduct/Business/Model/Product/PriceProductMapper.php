@@ -143,7 +143,7 @@ class PriceProductMapper implements PriceProductMapperInterface
         $productPriceCollection = [];
         foreach ($priceProductStoreEntities as $priceProductStoreEntity) {
             $productPriceCollection[] = $this->mapPriceProductStoreEntityToTransfer(
-                $priceProductStoreEntity
+                $priceProductStoreEntity,
             );
         }
 
@@ -168,7 +168,7 @@ class PriceProductMapper implements PriceProductMapperInterface
         $moneyValueTransfer = $this->mapMoneyValueTransfer($priceProductStoreEntity);
 
         $priceProductDimensionTransfer = $this->getPriceProductDimensionTransfer(
-            $priceProductStoreEntity
+            $priceProductStoreEntity,
         );
 
         return (new PriceProductTransfer())
@@ -194,7 +194,7 @@ class PriceProductMapper implements PriceProductMapperInterface
         $priceProductDimensionTransfer = (new PriceProductDimensionTransfer())
             ->fromArray(
                 $priceProductStoreEntity->getVirtualColumns(),
-                true
+                true,
             );
 
         return $priceProductDimensionTransfer;

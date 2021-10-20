@@ -60,7 +60,7 @@ class SessionStorageHandlerPool implements SessionStorageHandlerPoolInterface
         $message = sprintf(
             'The requested session handler "%s" could not be found in the session handler pool. Check if you named it correctly and if the handler is added to the %s.',
             $sessionHandlerName,
-            SessionStorageHandlerPoolInterface::class
+            SessionStorageHandlerPoolInterface::class,
         );
 
         throw new SessionHandlerNotFoundInSessionHandlerPoolException($message);

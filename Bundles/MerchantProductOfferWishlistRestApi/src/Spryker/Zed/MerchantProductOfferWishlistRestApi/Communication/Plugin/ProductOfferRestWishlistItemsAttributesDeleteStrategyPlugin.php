@@ -38,7 +38,7 @@ class ProductOfferRestWishlistItemsAttributesDeleteStrategyPlugin extends Abstra
             ->createMerchantProductOfferWishlistRestApiReader()
             ->findWishlistItemInWishlistItemCollectionByRequest(
                 $wishlistItemRequestTransfer,
-                $wishlistItemTransfers
+                $wishlistItemTransfers,
             );
     }
 
@@ -59,7 +59,7 @@ class ProductOfferRestWishlistItemsAttributesDeleteStrategyPlugin extends Abstra
         $this->getFacade()
             ->deleteWishlistItem(
                 $wishlistItemRequestTransfer,
-                $wishlistItemTransfers
+                $wishlistItemTransfers,
             );
     }
 }

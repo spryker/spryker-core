@@ -45,8 +45,8 @@ class ProductReviewEntityReader implements ProductReviewEntityReaderInterface
             throw new MissingProductReviewException(
                 sprintf(
                     'Product review with id %d could not be found',
-                    $productReviewTransfer->getIdProductReview()
-                )
+                    $productReviewTransfer->getIdProductReview(),
+                ),
             );
         }
 

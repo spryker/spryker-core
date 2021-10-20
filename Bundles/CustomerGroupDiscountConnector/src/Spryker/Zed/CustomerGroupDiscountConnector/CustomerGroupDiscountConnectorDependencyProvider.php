@@ -36,13 +36,13 @@ class CustomerGroupDiscountConnectorDependencyProvider extends AbstractBundleDep
     {
         $container->set(static::FACADE_DISCOUNT, function (Container $container) {
             return new CustomerGroupDiscountConnectorToDiscountFacadeBridge(
-                $container->getLocator()->discount()->facade()
+                $container->getLocator()->discount()->facade(),
             );
         });
 
         $container->set(static::FACADE_CUSTOMER_GROUP, function (Container $container) {
             return new CustomerGroupDiscountConnectorToCustomerGroupFacadeBridge(
-                $container->getLocator()->customerGroup()->facade()
+                $container->getLocator()->customerGroup()->facade(),
             );
         });
 

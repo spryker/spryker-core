@@ -52,7 +52,7 @@ class CreatePostgreSqlDatabase implements CreateDatabaseInterface
     protected function existsDatabase()
     {
         return $this->runProcess(
-            $this->getExistsCommand()
+            $this->getExistsCommand(),
         );
     }
 
@@ -62,7 +62,7 @@ class CreatePostgreSqlDatabase implements CreateDatabaseInterface
     protected function createDatabase()
     {
         $this->runProcess(
-            $this->getCreateCommand()
+            $this->getCreateCommand(),
         );
     }
 
@@ -77,7 +77,7 @@ class CreatePostgreSqlDatabase implements CreateDatabaseInterface
             Config::get(PropelConstants::ZED_DB_PORT),
             $this->getConfigValue(PropelConstants::ZED_DB_USERNAME),
             $this->getConfigValue(PropelConstants::ZED_DB_DATABASE),
-            $this->getConfigValue(PropelConstants::ZED_DB_DATABASE)
+            $this->getConfigValue(PropelConstants::ZED_DB_DATABASE),
         );
     }
 
@@ -104,7 +104,7 @@ class CreatePostgreSqlDatabase implements CreateDatabaseInterface
             Config::get(PropelConstants::ZED_DB_PORT),
             $this->getConfigValue(PropelConstants::ZED_DB_USERNAME),
             $this->getConfigValue(PropelConstants::ZED_DB_DATABASE),
-            'postgres'
+            'postgres',
         );
     }
 
@@ -115,7 +115,7 @@ class CreatePostgreSqlDatabase implements CreateDatabaseInterface
     {
         return sprintf(
             'sudo createdb %s -E UTF8 -T template0',
-            $this->getConfigValue(PropelConstants::ZED_DB_DATABASE)
+            $this->getConfigValue(PropelConstants::ZED_DB_DATABASE),
         );
     }
 
@@ -184,7 +184,7 @@ class CreatePostgreSqlDatabase implements CreateDatabaseInterface
         if (preg_match(static::SHELL_CHARACTERS_PATTERN, $value)) {
             throw new UnSupportedCharactersInConfigurationValueException(sprintf(
                 'Configuration value for key "%s" contains unsupported characters (\'$\',\'`\') that is forbidden by security reason.',
-                $key
+                $key,
             ));
         }
 

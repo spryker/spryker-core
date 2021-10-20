@@ -35,7 +35,7 @@ class SessionRedisCommunicationFactory extends AbstractCommunicationFactory
     public function createSessionRedisHandler(): SessionHandlerInterface
     {
         return $this->createSessionHandlerFactory()->createSessionRedisHandler(
-            $this->createZedSessionRedisWrapper()
+            $this->createZedSessionRedisWrapper(),
         );
     }
 
@@ -45,7 +45,7 @@ class SessionRedisCommunicationFactory extends AbstractCommunicationFactory
     public function createSessionHandlerRedisLocking(): SessionHandlerInterface
     {
         return $this->createSessionHandlerFactory()->createSessionHandlerRedisLocking(
-            $this->createZedSessionRedisWrapper()
+            $this->createZedSessionRedisWrapper(),
         );
     }
 
@@ -58,7 +58,7 @@ class SessionRedisCommunicationFactory extends AbstractCommunicationFactory
 
         return new SessionLockReleaser(
             $this->createSessionHandlerFactory()->createSessionSpinLockLocker($redisClient),
-            $this->createRedisSessionLockReader($redisClient)
+            $this->createRedisSessionLockReader($redisClient),
         );
     }
 
@@ -71,7 +71,7 @@ class SessionRedisCommunicationFactory extends AbstractCommunicationFactory
 
         return new SessionLockReleaser(
             $this->createSessionHandlerFactory()->createSessionSpinLockLocker($redisClient),
-            $this->createRedisSessionLockReader($redisClient)
+            $this->createRedisSessionLockReader($redisClient),
         );
     }
 
@@ -84,7 +84,7 @@ class SessionRedisCommunicationFactory extends AbstractCommunicationFactory
     {
         return new SessionLockReader(
             $redisClient,
-            $this->createSessionHandlerFactory()->createSessionKeyBuilder()
+            $this->createSessionHandlerFactory()->createSessionKeyBuilder(),
         );
     }
 
@@ -96,7 +96,7 @@ class SessionRedisCommunicationFactory extends AbstractCommunicationFactory
         return new SessionRedisWrapper(
             $this->getRedisClient(),
             $this->getConfig()->getZedRedisConnectionKey(),
-            $this->getConfig()->getZedRedisConnectionConfiguration()
+            $this->getConfig()->getZedRedisConnectionConfiguration(),
         );
     }
 
@@ -108,7 +108,7 @@ class SessionRedisCommunicationFactory extends AbstractCommunicationFactory
         return new SessionRedisWrapper(
             $this->getRedisClient(),
             $this->getConfig()->getYvesRedisConnectionKey(),
-            $this->getConfig()->getYvesRedisConnectionConfiguration()
+            $this->getConfig()->getYvesRedisConnectionConfiguration(),
         );
     }
 
@@ -122,7 +122,7 @@ class SessionRedisCommunicationFactory extends AbstractCommunicationFactory
             $this->createSessionRedisLifeTimeCalculator(),
             $this->getConfig()->getLockingTimeoutMilliseconds(),
             $this->getConfig()->getLockingRetryDelayMicroseconds(),
-            $this->getConfig()->getLockingLockTtlMilliseconds()
+            $this->getConfig()->getLockingLockTtlMilliseconds(),
         );
     }
 
@@ -134,7 +134,7 @@ class SessionRedisCommunicationFactory extends AbstractCommunicationFactory
         return new SessionRedisLifeTimeCalculator(
             $this->getRequestStack(),
             $this->getSessionRedisLifeTimeCalculatorPlugins(),
-            $this->getConfig()->getZedSessionLifeTime()
+            $this->getConfig()->getZedSessionLifeTime(),
         );
     }
 

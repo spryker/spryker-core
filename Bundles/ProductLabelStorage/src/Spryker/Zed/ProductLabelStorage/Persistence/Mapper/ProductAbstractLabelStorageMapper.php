@@ -26,7 +26,7 @@ class ProductAbstractLabelStorageMapper
         foreach ($productAbstractLabelStorageEntities as $productAbstractLabelStorageEntity) {
             $productAbstractLabelStorageTransfers[] = $this->mapProductAbstractLabelStorageEntityToProductAbstractLabelStorageTransfer(
                 $productAbstractLabelStorageEntity,
-                new ProductAbstractLabelStorageTransfer()
+                new ProductAbstractLabelStorageTransfer(),
             );
         }
 

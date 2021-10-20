@@ -87,7 +87,7 @@ class CategoryNodeStorageWriter implements CategoryNodeStorageWriterInterface
         $categoryNodeStorageTransferTreesIndexedByLocaleAndStore = $this->categoryStorageNodeTreeBuilder
             ->buildCategoryNodeStorageTransferTreesForLocaleAndStore(
                 $categoryNodeIds,
-                $nodeTransfers
+                $nodeTransfers,
             );
 
         $this->storeData($categoryNodeStorageTransferTreesIndexedByLocaleAndStore);
@@ -104,13 +104,13 @@ class CategoryNodeStorageWriter implements CategoryNodeStorageWriterInterface
         $parentCategoryNodeIds = $this->eventBehaviorFacade
             ->getEventTransferForeignKeys(
                 $eventEntityTransfers,
-                SpyCategoryNodeTableMap::COL_FK_PARENT_CATEGORY_NODE
+                SpyCategoryNodeTableMap::COL_FK_PARENT_CATEGORY_NODE,
             );
 
         $originalParentCategoryNodeIds = $this->eventBehaviorFacade
             ->getEventTransfersOriginalValues(
                 $eventEntityTransfers,
-                SpyCategoryNodeTableMap::COL_FK_PARENT_CATEGORY_NODE
+                SpyCategoryNodeTableMap::COL_FK_PARENT_CATEGORY_NODE,
             );
 
         $categoryNodeIds = array_unique(array_merge($parentCategoryNodeIds, $originalParentCategoryNodeIds));
@@ -155,7 +155,7 @@ class CategoryNodeStorageWriter implements CategoryNodeStorageWriterInterface
                 $this->storeCategoryNodeStorageTransferTreesForStoreAndLocale(
                     $categoryNodeStorageTransferTrees,
                     $storeName,
-                    $localeName
+                    $localeName,
                 );
             }
         }
@@ -177,7 +177,7 @@ class CategoryNodeStorageWriter implements CategoryNodeStorageWriterInterface
             $this->categoryStorageEntityManager->saveCategoryNodeStorageForStoreAndLocale(
                 $categoryNodeStorageTransfer,
                 $storeName,
-                $localeName
+                $localeName,
             );
         }
     }

@@ -206,7 +206,7 @@ class AttributeProcessor implements AttributeProcessorInterface
 
         return array_combine(
             array_keys($mergedAttributes),
-            array_fill(0, count($mergedAttributes), null)
+            array_fill(0, count($mergedAttributes), null),
         );
     }
 }

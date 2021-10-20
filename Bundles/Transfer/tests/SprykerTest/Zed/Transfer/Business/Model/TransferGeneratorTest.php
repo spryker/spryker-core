@@ -57,7 +57,7 @@ class TransferGeneratorTest extends Unit
         $this->assertFileExists($this->getTargetDirectory() . 'CatFaceTransfer.php');
         $this->assertSame(
             file_get_contents(codecept_data_dir('test_files/expected.transfer.php')),
-            file_get_contents($this->getTargetDirectory() . 'CatFaceTransfer.php')
+            file_get_contents($this->getTargetDirectory() . 'CatFaceTransfer.php'),
         );
     }
 
@@ -84,7 +84,7 @@ class TransferGeneratorTest extends Unit
         $this->assertFileExists($this->getTargetDirectory() . 'CatFaceTransfer.php');
         $this->assertSame(
             file_get_contents(codecept_data_dir('test_files/expected.transfer.php')),
-            file_get_contents($this->getTargetDirectory() . 'CatFaceTransfer.php')
+            file_get_contents($this->getTargetDirectory() . 'CatFaceTransfer.php'),
         );
     }
 
@@ -109,7 +109,7 @@ class TransferGeneratorTest extends Unit
         $this->assertFileExists($this->getTargetDirectory() . 'FooBarTransfer.php');
         $this->assertSame(
             file_get_contents(codecept_data_dir('test_files/expected.merged.transfer.php')),
-            file_get_contents($this->getTargetDirectory() . 'FooBarTransfer.php')
+            file_get_contents($this->getTargetDirectory() . 'FooBarTransfer.php'),
         );
 
         $this->assertFileExists($this->getTargetDirectory() . 'AnEmptyOneTransfer.php');
@@ -135,7 +135,7 @@ class TransferGeneratorTest extends Unit
         $this->assertFileExists($this->getTargetDirectory() . 'DeprecatedFooBarTransfer.php');
         $this->assertSame(
             file_get_contents(codecept_data_dir('test_files/expected.deprecated.transfer.php')),
-            file_get_contents($this->getTargetDirectory() . 'DeprecatedFooBarTransfer.php')
+            file_get_contents($this->getTargetDirectory() . 'DeprecatedFooBarTransfer.php'),
         );
     }
 
@@ -161,7 +161,7 @@ class TransferGeneratorTest extends Unit
 
         $this->assertSame(
             file_get_contents(codecept_data_dir('test_files/expected.merged.deprecated.transfer.php')),
-            file_get_contents($this->getTargetDirectory() . 'MergedDeprecatedFooBarTransfer.php')
+            file_get_contents($this->getTargetDirectory() . 'MergedDeprecatedFooBarTransfer.php'),
         );
     }
 
@@ -195,7 +195,7 @@ class TransferGeneratorTest extends Unit
         $this->assertFileExists($this->getTargetDirectory() . 'CatFaceTransfer.php');
         $this->assertSame(
             file_get_contents(codecept_data_dir('test_files/expected.shimmed.transfer.php')),
-            file_get_contents($this->getTargetDirectory() . 'CatFaceTransfer.php')
+            file_get_contents($this->getTargetDirectory() . 'CatFaceTransfer.php'),
         );
     }
 
@@ -220,7 +220,7 @@ class TransferGeneratorTest extends Unit
         $this->assertFileExists($this->getTargetDirectory() . 'CatFaceTransfer.php');
         $this->assertSame(
             file_get_contents(codecept_data_dir('test_files/expected.typecheck.transfer.php')),
-            file_get_contents($this->getTargetDirectory() . 'CatFaceTransfer.php')
+            file_get_contents($this->getTargetDirectory() . 'CatFaceTransfer.php'),
         );
     }
 
@@ -243,12 +243,12 @@ class TransferGeneratorTest extends Unit
         $this->assertTransferClassContent(
             'expected.partially_strict.transfer.php',
             'PartiallyStrictTransfer.php',
-            'Partially strict transfer has incorrect content'
+            'Partially strict transfer has incorrect content',
         );
         $this->assertTransferClassContent(
             'expected.fully_strict.transfer.php',
             'FullyStrictTransfer.php',
-            'Fully strict transfer has incorrect content'
+            'Fully strict transfer has incorrect content',
         );
     }
 
@@ -270,7 +270,7 @@ class TransferGeneratorTest extends Unit
         $this->assertSame(
             file_get_contents(codecept_data_dir('test_files/' . $expectedTransferFileName)),
             file_get_contents($generatedTransferFilePath),
-            $message
+            $message,
         );
     }
 
@@ -316,7 +316,7 @@ class TransferGeneratorTest extends Unit
         $definitionBuilder = new TransferDefinitionBuilder(
             $loader,
             new TransferDefinitionMerger(),
-            new ClassDefinition($config ?: new TransferConfig())
+            new ClassDefinition($config ?: new TransferConfig()),
         );
 
         return $definitionBuilder;

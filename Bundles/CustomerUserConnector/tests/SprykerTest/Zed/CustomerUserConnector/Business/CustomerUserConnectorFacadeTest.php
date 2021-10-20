@@ -105,7 +105,7 @@ class CustomerUserConnectorFacadeTest extends Unit
             function (CustomerTransfer $customer) {
                 return $customer->getIdCustomer();
             },
-            $customers
+            $customers,
         );
 
         return $idCustomers;

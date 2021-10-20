@@ -214,20 +214,20 @@ class PriceProductServiceTest extends Unit
                     ->setNetAmount(100)
                     ->setCurrency(
                         (new CurrencyTransfer())
-                            ->setIdCurrency(static::TEST_ID_CURRENCY)
-                    )
+                            ->setIdCurrency(static::TEST_ID_CURRENCY),
+                    ),
             )
             ->setPriceTypeName(static::PRICE_TYPE_DEFAULT)
             ->setPriceDimension(
                 (new PriceProductDimensionTransfer())
-                    ->setType(static::TEST_DIMENSION)
+                    ->setType(static::TEST_DIMENSION),
             );
 
         $priceWithoutNetAmount = (new PriceProductTransfer())->fromArray($priceWithNetAmount->toArray());
         $priceWithoutNetAmount->setMoneyValue(
             (new MoneyValueTransfer())
                 ->fromArray($priceWithNetAmount->getMoneyValue()->toArray())
-                ->setNetAmount(null)
+                ->setNetAmount(null),
         );
 
         $priceProductTransfers = [
@@ -259,20 +259,20 @@ class PriceProductServiceTest extends Unit
                     ->setGrossAmount(100)
                     ->setCurrency(
                         (new CurrencyTransfer())
-                            ->setIdCurrency(static::TEST_ID_CURRENCY)
-                    )
+                            ->setIdCurrency(static::TEST_ID_CURRENCY),
+                    ),
             )
             ->setPriceTypeName(static::PRICE_TYPE_DEFAULT)
             ->setPriceDimension(
                 (new PriceProductDimensionTransfer())
-                    ->setType(static::TEST_DIMENSION)
+                    ->setType(static::TEST_DIMENSION),
             );
 
         $priceProductTransferGrossSecond = (new PriceProductTransfer())->fromArray($priceProductTransferGrossFirst->toArray());
         $priceProductTransferGrossSecond->setMoneyValue(
             (new MoneyValueTransfer())
                 ->fromArray($priceProductTransferGrossFirst->getMoneyValue()->toArray())
-                ->setGrossAmount(200)
+                ->setGrossAmount(200),
         );
 
         $priceProductTransfers = [
@@ -304,13 +304,13 @@ class PriceProductServiceTest extends Unit
                     ->setNetAmount(100)
                     ->setCurrency(
                         (new CurrencyTransfer())
-                            ->setIdCurrency(static::TEST_ID_CURRENCY)
-                    )
+                            ->setIdCurrency(static::TEST_ID_CURRENCY),
+                    ),
             )
             ->setPriceTypeName(static::PRICE_TYPE_DEFAULT)
             ->setPriceDimension(
                 (new PriceProductDimensionTransfer())
-                    ->setType(static::TEST_DIMENSION)
+                    ->setType(static::TEST_DIMENSION),
             );
 
         $priceProductTransfers = [
@@ -351,14 +351,14 @@ class PriceProductServiceTest extends Unit
         // Act
         $resultPriceProductTransfer = $this->getPriceProductService()->resolveProductPriceByPriceProductFilter(
             $priceProductTransfers,
-            $priceProductFilterTransfer
+            $priceProductFilterTransfer,
         );
 
         // Assert
         $this->assertExpectedProductPrice(
             $resultPriceProductTransfer,
             $expectedProductPrice,
-            $priceMode
+            $priceMode,
         );
     }
 
@@ -505,7 +505,7 @@ class PriceProductServiceTest extends Unit
         foreach ($priceProductTransfers as $priceProductTransfer) {
             $priceProductTransfer->setIsMergeable(true)
                 ->setGroupKey(
-                    $this->getPriceProductService()->buildPriceProductGroupKey($priceProductTransfer)
+                    $this->getPriceProductService()->buildPriceProductGroupKey($priceProductTransfer),
                 );
         }
 

@@ -29,7 +29,7 @@ class MerchantProductOfferWishlistRestApiReader implements MerchantProductOfferW
             $uuid = sprintf(
                 '%s_%s',
                 $wishlistItemTransfer->getSku(),
-                $wishlistItemTransfer->getProductOfferReference()
+                $wishlistItemTransfer->getProductOfferReference(),
             );
 
             if ($wishlistItemRequestTransfer->getUuid() === $uuid) {

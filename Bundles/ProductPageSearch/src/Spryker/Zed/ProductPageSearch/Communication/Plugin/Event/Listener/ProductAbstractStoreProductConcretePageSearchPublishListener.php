@@ -29,7 +29,7 @@ class ProductAbstractStoreProductConcretePageSearchPublishListener extends Abstr
 
         $productAbstractIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferForeignKeys(
             $eventEntityTransfers,
-            SpyProductAbstractStoreTableMap::COL_FK_PRODUCT_ABSTRACT
+            SpyProductAbstractStoreTableMap::COL_FK_PRODUCT_ABSTRACT,
         );
 
         $this->getFacade()->publishProductConcretePageSearchesByProductAbstractIds($productAbstractIds);

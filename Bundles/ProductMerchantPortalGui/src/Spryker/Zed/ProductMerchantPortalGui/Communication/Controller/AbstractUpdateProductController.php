@@ -50,7 +50,7 @@ abstract class AbstractUpdateProductController extends AbstractController
 
         $requestTableData = $this->getFactory()->getUtilEncodingService()->decodeJson(
             $requestTableData[$tableViewName],
-            true
+            true,
         );
 
         if (!$requestTableData) {

@@ -83,7 +83,7 @@ class CartItemProductConfigurationRestRequestValidatorPluginTest extends Unit
         // Act
         $restErrorCollectionTransfer = $this->cartItemProductConfigurationRestRequestValidatorPlugin->validate(
             $httpRequest,
-            $restRequest
+            $restRequest,
         );
 
         // Assert
@@ -104,7 +104,7 @@ class CartItemProductConfigurationRestRequestValidatorPluginTest extends Unit
         // Act
         $restErrorCollectionTransfer = $this->cartItemProductConfigurationRestRequestValidatorPlugin->validate(
             $httpRequest,
-            $restRequest
+            $restRequest,
         );
 
         // Assert
@@ -122,7 +122,7 @@ class CartItemProductConfigurationRestRequestValidatorPluginTest extends Unit
         ]))->build();
         $this->tester->setDependency(
             ProductConfigurationsRestApiDependencyProvider::CLIENT_PRODUCT_CONFIGURATION_STORAGE,
-            $this->createProductConfigurationStorageClientMock($productConfigurationInstanceTransfer)
+            $this->createProductConfigurationStorageClientMock($productConfigurationInstanceTransfer),
         );
 
         $restCartItemsAttributesTransfer = (new RestCartItemsAttributesBuilder([RestCartItemsAttributesTransfer::SKU => static::PRODUCT_CONCRETE_SKU]))
@@ -138,7 +138,7 @@ class CartItemProductConfigurationRestRequestValidatorPluginTest extends Unit
         // Act
         $restErrorCollectionTransfer = $this->cartItemProductConfigurationRestRequestValidatorPlugin->validate(
             $httpRequest,
-            $restRequest
+            $restRequest,
         );
 
         // Assert
@@ -153,7 +153,7 @@ class CartItemProductConfigurationRestRequestValidatorPluginTest extends Unit
         // Arrange
         $this->tester->setDependency(
             ProductConfigurationsRestApiDependencyProvider::CLIENT_PRODUCT_CONFIGURATION_STORAGE,
-            $this->createProductConfigurationStorageClientMock()
+            $this->createProductConfigurationStorageClientMock(),
         );
 
         $restCartItemsAttributesTransfer = (new RestCartItemsAttributesBuilder([RestCartItemsAttributesTransfer::SKU => static::PRODUCT_CONCRETE_SKU]))
@@ -169,7 +169,7 @@ class CartItemProductConfigurationRestRequestValidatorPluginTest extends Unit
         // Act
         $restErrorCollectionTransfer = $this->cartItemProductConfigurationRestRequestValidatorPlugin->validate(
             $httpRequest,
-            $restRequest
+            $restRequest,
         );
 
         // Assert
@@ -177,11 +177,11 @@ class CartItemProductConfigurationRestRequestValidatorPluginTest extends Unit
         $this->assertCount(1, $restErrorCollectionTransfer->getRestErrors());
         $this->assertEquals(
             ProductConfigurationsRestApiConfig::RESPONSE_CODE_DEFAULT_PRODUCT_CONFIGURATION_INSTANCE_IS_MISSING,
-            $restErrorCollectionTransfer->getRestErrors()->offsetGet(0)->getCode()
+            $restErrorCollectionTransfer->getRestErrors()->offsetGet(0)->getCode(),
         );
         $this->assertEquals(
             Response::HTTP_UNPROCESSABLE_ENTITY,
-            $restErrorCollectionTransfer->getRestErrors()->offsetGet(0)->getStatus()
+            $restErrorCollectionTransfer->getRestErrors()->offsetGet(0)->getStatus(),
         );
     }
 
@@ -196,7 +196,7 @@ class CartItemProductConfigurationRestRequestValidatorPluginTest extends Unit
         ]))->build();
         $this->tester->setDependency(
             ProductConfigurationsRestApiDependencyProvider::CLIENT_PRODUCT_CONFIGURATION_STORAGE,
-            $this->createProductConfigurationStorageClientMock($productConfigurationInstanceTransfer)
+            $this->createProductConfigurationStorageClientMock($productConfigurationInstanceTransfer),
         );
 
         $restCartItemsAttributesTransfer = (new RestCartItemsAttributesBuilder([RestCartItemsAttributesTransfer::SKU => static::PRODUCT_CONCRETE_SKU]))
@@ -212,7 +212,7 @@ class CartItemProductConfigurationRestRequestValidatorPluginTest extends Unit
         // Act
         $restErrorCollectionTransfer = $this->cartItemProductConfigurationRestRequestValidatorPlugin->validate(
             $httpRequest,
-            $restRequest
+            $restRequest,
         );
 
         // Assert
@@ -220,11 +220,11 @@ class CartItemProductConfigurationRestRequestValidatorPluginTest extends Unit
         $this->assertCount(1, $restErrorCollectionTransfer->getRestErrors());
         $this->assertEquals(
             ProductConfigurationsRestApiConfig::RESPONSE_CODE_DEFAULT_PRODUCT_CONFIGURATION_INSTANCE_IS_MISSING,
-            $restErrorCollectionTransfer->getRestErrors()->offsetGet(0)->getCode()
+            $restErrorCollectionTransfer->getRestErrors()->offsetGet(0)->getCode(),
         );
         $this->assertEquals(
             Response::HTTP_UNPROCESSABLE_ENTITY,
-            $restErrorCollectionTransfer->getRestErrors()->offsetGet(0)->getStatus()
+            $restErrorCollectionTransfer->getRestErrors()->offsetGet(0)->getStatus(),
         );
     }
 

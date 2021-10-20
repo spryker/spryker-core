@@ -203,13 +203,13 @@ class ProductConcreteAttributeGuiTableConfigurationProvider implements ProductCo
                 $localeTransfer->getLocaleNameOrFail(),
                 $localeTransfer->getLocaleNameOrFail(),
                 true,
-                true
+                true,
             );
             $guiTableConfigurationBuilder->addEditableColumnDynamic(
                 $localeTransfer->getLocaleNameOrFail(),
                 $localeTransfer->getLocaleNameOrFail(),
                 static::COL_KEY_ATTRIBUTE_NAME,
-                static::PRODUCT_ATTRIBUTES_DATA_URL
+                static::PRODUCT_ATTRIBUTES_DATA_URL,
             );
         }
 
@@ -217,7 +217,7 @@ class ProductConcreteAttributeGuiTableConfigurationProvider implements ProductCo
             static::FORMAT_STRING_DATA_URL,
             static::PRODUCT_ATTRIBUTES_TABLE_DATA_URL,
             static::COL_KEY_ID_PRODUCT_CONCRETE,
-            $idProductConcrete
+            $idProductConcrete,
         );
 
         $guiTableConfigurationBuilder->setDataSourceUrl($dataSourceUrl)
@@ -245,7 +245,7 @@ class ProductConcreteAttributeGuiTableConfigurationProvider implements ProductCo
         array $attributesInitialData
     ): GuiTableConfigurationBuilderInterface {
         $allAttributes = $this->productAttributeFacade->getProductManagementAttributes(
-            new ProductManagementAttributeFilterTransfer()
+            new ProductManagementAttributeFilterTransfer(),
         );
 
         $options = $this->getNonSuperAttributeKeysIndexedByKeys($allAttributes);
@@ -255,12 +255,12 @@ class ProductConcreteAttributeGuiTableConfigurationProvider implements ProductCo
             static::TITLE_COLUMN_ATTRIBUTE_NAME,
             false,
             $options,
-            static::PLACEHOLDER_SELECT_ATTRIBUTE
+            static::PLACEHOLDER_SELECT_ATTRIBUTE,
         )->addEditableColumnDynamic(
             static::COL_KEY_ATTRIBUTE_DEFAULT,
             static::TITLE_COLUMN_ATTRIBUTE_DEFAULT,
             static::COL_KEY_ATTRIBUTE_NAME,
-            static::PRODUCT_ATTRIBUTES_DATA_URL
+            static::PRODUCT_ATTRIBUTES_DATA_URL,
         );
 
         $guiTableConfigurationBuilder->enableInlineDataEditing($this->getAttributeActionUrl(static::PRODUCT_ATTRIBUTE_SAVE_DATA_URL), 'POST');
@@ -269,7 +269,7 @@ class ProductConcreteAttributeGuiTableConfigurationProvider implements ProductCo
             '%s[%s][%s]',
             static::BLOCK_PREFIX_PRODUCT_CONCRETE_EDIT_FORM,
             static::BLOCK_PREFIX_PRODUCT_CONCRETE_FORM,
-            ProductAbstractTransfer::ATTRIBUTES
+            ProductAbstractTransfer::ATTRIBUTES,
         );
 
         $guiTableConfigurationBuilder->enableAddingNewRows($formInputName, $attributesInitialData, [GuiTableEditableButtonTransfer::TITLE => 'Add']);
@@ -287,7 +287,7 @@ class ProductConcreteAttributeGuiTableConfigurationProvider implements ProductCo
         $guiTableConfigurationBuilder->addRowActionHttp(
             static::ID_ROW_ACTION_DELETE,
             static::TITLE_ROW_ACTION_DELETE,
-            $this->getAttributeActionUrl(static::PRODUCT_ATTRIBUTE_DELETE_URL)
+            $this->getAttributeActionUrl(static::PRODUCT_ATTRIBUTE_DELETE_URL),
         );
 
         return $guiTableConfigurationBuilder;
@@ -323,7 +323,7 @@ class ProductConcreteAttributeGuiTableConfigurationProvider implements ProductCo
             static::PARAM_ATTRIBUTE_NAME,
             static::COL_KEY_ATTRIBUTE_NAME,
             static::PARAM_ID_PRODUCT_CONCRETE,
-            static::COL_KEY_ID_PRODUCT_CONCRETE
+            static::COL_KEY_ID_PRODUCT_CONCRETE,
         );
     }
 

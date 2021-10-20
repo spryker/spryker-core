@@ -46,8 +46,8 @@ class SessionMessageTray implements MessageTrayInterface
             MessageTrayInterface::FLASH_MESSAGES_SUCCESS,
             $this->messageTranslator->translate(
                 $message->getValue(),
-                $message->getParameters()
-            )
+                $message->getParameters(),
+            ),
         );
     }
 
@@ -62,8 +62,8 @@ class SessionMessageTray implements MessageTrayInterface
             MessageTrayInterface::FLASH_MESSAGES_INFO,
             $this->messageTranslator->translate(
                 $message->getValue(),
-                $message->getParameters()
-            )
+                $message->getParameters(),
+            ),
         );
     }
 
@@ -78,8 +78,8 @@ class SessionMessageTray implements MessageTrayInterface
             MessageTrayInterface::FLASH_MESSAGES_ERROR,
             $this->messageTranslator->translate(
                 $message->getValue(),
-                $message->getParameters()
-            )
+                $message->getParameters(),
+            ),
         );
     }
 

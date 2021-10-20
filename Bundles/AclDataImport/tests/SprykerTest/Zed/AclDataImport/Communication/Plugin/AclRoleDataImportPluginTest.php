@@ -62,8 +62,8 @@ class AclRoleDataImportPluginTest extends Unit
         // Arrange
         $this->tester->deleteRoles(
             (new AclRoleCriteriaTransfer())->setNames(
-                [static::ACL_ROLE_NAME_1, static::ACL_ROLE_NAME_2, static::ACL_ROLE_NAME_3]
-            )
+                [static::ACL_ROLE_NAME_1, static::ACL_ROLE_NAME_2, static::ACL_ROLE_NAME_3],
+            ),
         );
         $dataImporterReaderConfigurationTransfer = new DataImporterReaderConfigurationTransfer();
         $dataImporterReaderConfigurationTransfer->setFileName(codecept_data_dir() . 'import/acl_role.csv');

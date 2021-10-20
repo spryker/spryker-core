@@ -100,7 +100,7 @@ class DataExportServiceTest extends Unit
         //Act
         $dataExportConfigurationTransfer = $this->tester->getService()->mergeDataExportConfigurationTransfers(
             $primaryDataExportConfigurationTransfer,
-            $secondaryDataExportConfigurationTransfer
+            $secondaryDataExportConfigurationTransfer,
         );
 
         //Assert
@@ -121,7 +121,7 @@ class DataExportServiceTest extends Unit
         //Act
         $dataExportConfigurationTransfer = $this->tester->getService()->mergeDataExportConfigurationTransfers(
             $primaryDataExportConfigurationTransfer,
-            $secondaryDataExportConfigurationTransfer
+            $secondaryDataExportConfigurationTransfer,
         );
 
         //Assert
@@ -161,7 +161,7 @@ class DataExportServiceTest extends Unit
         //Act
         $dataExportWriteResponseTransfer = $this->tester->getService()->write(
             $batch,
-            $dataExportConfigurationTransfer
+            $dataExportConfigurationTransfer,
         );
 
         //Assert
@@ -221,7 +221,7 @@ class DataExportServiceTest extends Unit
         //Act
         $dataExportConfigurationTransfer = $this->tester->getService()->resolveDataExportActionConfiguration(
             $originalDataExportConfigurationTransfer,
-            $additionalDataExportConfigurationsTransfer
+            $additionalDataExportConfigurationsTransfer,
         );
 
         //Assert

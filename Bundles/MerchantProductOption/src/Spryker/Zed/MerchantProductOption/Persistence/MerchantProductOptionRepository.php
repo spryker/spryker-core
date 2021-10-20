@@ -33,7 +33,7 @@ class MerchantProductOptionRepository extends AbstractRepository implements Merc
 
         $merchantProductOptionGroupQuery = $this->applyCriteria(
             $merchantProductOptionGroupCriteriaTransfer,
-            $merchantProductOptionGroupQuery
+            $merchantProductOptionGroupQuery,
         );
 
         $merchantProductOptionGroupEntities = $merchantProductOptionGroupQuery->find();
@@ -42,7 +42,7 @@ class MerchantProductOptionRepository extends AbstractRepository implements Merc
             ->createMerchantProductOptionGroupMapper()
             ->mapMerchantProductOptionGroupEntitiesToMerchantProductOptionGroupCollectionTransfer(
                 $merchantProductOptionGroupEntities,
-                new MerchantProductOptionGroupCollectionTransfer()
+                new MerchantProductOptionGroupCollectionTransfer(),
             );
     }
 
@@ -59,7 +59,7 @@ class MerchantProductOptionRepository extends AbstractRepository implements Merc
 
         $merchantProductOptionGroupQuery = $this->applyCriteria(
             $merchantProductOptionGroupCriteriaTransfer,
-            $merchantProductOptionGroupQuery
+            $merchantProductOptionGroupQuery,
         );
 
         $merchantProductOptionGroupEntity = $merchantProductOptionGroupQuery->findOne();
@@ -72,7 +72,7 @@ class MerchantProductOptionRepository extends AbstractRepository implements Merc
             ->createMerchantProductOptionGroupMapper()
             ->mapMerchantProductOptionGroupEntityToMerchantProductOptionGroupTransfer(
                 $merchantProductOptionGroupEntity,
-                new MerchantProductOptionGroupTransfer()
+                new MerchantProductOptionGroupTransfer(),
             );
     }
 
@@ -90,7 +90,7 @@ class MerchantProductOptionRepository extends AbstractRepository implements Merc
             ->select([SpyMerchantProductOptionGroupTableMap::COL_FK_PRODUCT_OPTION_GROUP])
             ->filterByApprovalStatus(
                 MerchantProductOptionConfig::STATUS_APPROVED,
-                Criteria::NOT_EQUAL
+                Criteria::NOT_EQUAL,
             )
             ->find()
             ->getData();
@@ -112,13 +112,13 @@ class MerchantProductOptionRepository extends AbstractRepository implements Merc
     ): SpyMerchantProductOptionGroupQuery {
         if ($merchantProductOptionGroupCriteriaTransfer->getIdProductOptionGroup()) {
             $merchantProductOptionGroupQuery->filterByFkProductOptionGroup(
-                $merchantProductOptionGroupCriteriaTransfer->getIdProductOptionGroup()
+                $merchantProductOptionGroupCriteriaTransfer->getIdProductOptionGroup(),
             );
         }
 
         if ($merchantProductOptionGroupCriteriaTransfer->getProductOptionGroupIds()) {
             $merchantProductOptionGroupQuery->filterByFkProductOptionGroup_In(
-                $merchantProductOptionGroupCriteriaTransfer->getProductOptionGroupIds()
+                $merchantProductOptionGroupCriteriaTransfer->getProductOptionGroupIds(),
             );
         }
 

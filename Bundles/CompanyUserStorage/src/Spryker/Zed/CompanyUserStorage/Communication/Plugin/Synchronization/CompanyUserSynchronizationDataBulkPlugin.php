@@ -60,7 +60,7 @@ class CompanyUserSynchronizationDataBulkPlugin extends AbstractPlugin implements
         return $this->getFacade()
             ->getSynchronizationDataTransfersByFilterAndCompanyUserIds(
                 $this->createFilterTransfer($offset, $limit),
-                $ids
+                $ids,
             );
     }
 

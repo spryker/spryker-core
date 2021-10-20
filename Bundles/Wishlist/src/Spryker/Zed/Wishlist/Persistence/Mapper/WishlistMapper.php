@@ -28,7 +28,7 @@ class WishlistMapper implements WishlistMapperInterface
     ): WishlistCollectionTransfer {
         foreach ($wishlistEntities as $wishlistEntity) {
             $wishlistCollectionTransfer->addWishlist(
-                $this->mapWishlistEntityToWishlistTransfer($wishlistEntity, new WishlistTransfer())
+                $this->mapWishlistEntityToWishlistTransfer($wishlistEntity, new WishlistTransfer()),
             );
         }
 
@@ -69,7 +69,7 @@ class WishlistMapper implements WishlistMapperInterface
         foreach ($wishlistEntity->getSpyWishlistItems() as $wishlistItemEntity) {
             $wishlistItemTransfer = $this->mapWishlistItemEntityToWishlistItemTransfer(
                 $wishlistItemEntity,
-                new WishlistItemTransfer()
+                new WishlistItemTransfer(),
             );
 
             $wishlistItemTransfer

@@ -26,7 +26,7 @@ class CompanyBusinessUnitNameGenerator implements CompanyBusinessUnitNameGenerat
         return sprintf(
             static::NAME_PATTERN,
             $companyBusinessUnitTransfer->getName(),
-            $companyBusinessUnitTransfer->getIdCompanyBusinessUnit()
+            $companyBusinessUnitTransfer->getIdCompanyBusinessUnit(),
         );
     }
 }

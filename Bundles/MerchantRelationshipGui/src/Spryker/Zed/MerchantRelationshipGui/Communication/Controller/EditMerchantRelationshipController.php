@@ -55,7 +55,7 @@ class EditMerchantRelationshipController extends AbstractController
         $merchantRelationshipForm = $this->getFactory()
             ->getMerchantRelationshipEditForm(
                 $merchantRelationshipTransfer,
-                $dataProvider->getOptions(true, $idCompany)
+                $dataProvider->getOptions(true, $idCompany),
             )
             ->handleRequest($request);
         if ($merchantRelationshipForm->isSubmitted() && $merchantRelationshipForm->isValid()) {

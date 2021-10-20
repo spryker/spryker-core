@@ -41,7 +41,7 @@ class ContentNavigationDependencyProvider extends AbstractDependencyProvider
     {
         $container->set(static::CLIENT_CONTENT_STORAGE, function (Container $container): ContentNavigationToContentStorageClientInterface {
             return new ContentNavigationToContentStorageClientBridge(
-                $container->getLocator()->contentStorage()->client()
+                $container->getLocator()->contentStorage()->client(),
             );
         });
 

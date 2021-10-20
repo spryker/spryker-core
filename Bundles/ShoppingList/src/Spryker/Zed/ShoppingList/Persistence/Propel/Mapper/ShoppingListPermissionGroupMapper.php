@@ -24,7 +24,7 @@ class ShoppingListPermissionGroupMapper implements ShoppingListPermissionGroupMa
     ): ShoppingListPermissionGroupCollectionTransfer {
         foreach ($shoppingListPermissionGroupEntityTransferCollection as $shoppingListPermissionGroupEntityTransfer) {
             $shoppingListPermissionGroupCollectionTransfer->addPermissionGroup(
-                (new ShoppingListPermissionGroupTransfer())->fromArray($shoppingListPermissionGroupEntityTransfer->modifiedToArray(), true)
+                (new ShoppingListPermissionGroupTransfer())->fromArray($shoppingListPermissionGroupEntityTransfer->modifiedToArray(), true),
             );
         }
 

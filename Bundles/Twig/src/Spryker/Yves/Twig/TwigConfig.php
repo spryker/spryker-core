@@ -161,7 +161,7 @@ class TwigConfig extends AbstractBundleConfig
     {
         return array_replace(
             $this->getSharedConfig()->getDefaultTwigOptions(),
-            $this->get(TwigConstants::YVES_TWIG_OPTIONS, [])
+            $this->get(TwigConstants::YVES_TWIG_OPTIONS, []),
         );
     }
 

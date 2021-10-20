@@ -41,7 +41,7 @@ class OrderHydrator extends OrderHydratorWithoutMultiShipping
             throw new InvalidSalesOrderException(sprintf(
                 'Order could not be found for ID %s and customer reference %s',
                 $orderTransfer->getIdSalesOrder(),
-                $orderTransfer->getCustomerReference()
+                $orderTransfer->getCustomerReference(),
             ));
         }
 
@@ -67,8 +67,8 @@ class OrderHydrator extends OrderHydratorWithoutMultiShipping
             throw new InvalidSalesOrderException(
                 sprintf(
                     'Order could not be found for ID %s',
-                    $idSalesOrder
-                )
+                    $idSalesOrder,
+                ),
             );
         }
 
@@ -84,7 +84,7 @@ class OrderHydrator extends OrderHydratorWithoutMultiShipping
     protected function hydrateBillingAddressToOrderTransfer(SpySalesOrder $orderEntity, OrderTransfer $orderTransfer): void
     {
         $orderTransfer->setBillingAddress(
-            $this->createAddressTransfer($orderEntity->getBillingAddress())
+            $this->createAddressTransfer($orderEntity->getBillingAddress()),
         );
     }
 

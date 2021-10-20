@@ -102,7 +102,7 @@ class TwigExpressionsToHtmlConverter implements TwigExpressionsToHtmlConverterIn
             $twigExpressionPattern = preg_replace(
                 "/\('%KEY%', '%TEMPLATE%'\)/",
                 "\('([\w-]+)', '([\w-]+)'\)",
-                $contentEditorPlugin->getTwigFunctionTemplate()
+                $contentEditorPlugin->getTwigFunctionTemplate(),
             );
 
             preg_match_all('/' . $twigExpressionPattern . '/', $html, $twigExpressionMatches);
@@ -114,7 +114,7 @@ class TwigExpressionsToHtmlConverter implements TwigExpressionsToHtmlConverterIn
             $twigExpressionTransfers = $this->mapTwigExpressionsToTransfers(
                 $twigExpressionMatches,
                 $contentEditorPlugin->getTemplates(),
-                $twigExpressionTransfers
+                $twigExpressionTransfers,
             );
         }
 
@@ -189,7 +189,7 @@ class TwigExpressionsToHtmlConverter implements TwigExpressionsToHtmlConverterIn
         foreach ($contentWidgetTemplateTransfers as $contentWidgetTemplateTransfer) {
             if ($contentWidgetTemplateTransfer->getIdentifier() === $templateIdentifier) {
                 return $contentWidgetTemplateTransfer->setName(
-                    $this->translatorFacade->trans($contentWidgetTemplateTransfer->getName())
+                    $this->translatorFacade->trans($contentWidgetTemplateTransfer->getName()),
                 );
             }
         }

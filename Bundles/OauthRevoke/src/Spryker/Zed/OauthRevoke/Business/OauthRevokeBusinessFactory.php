@@ -31,7 +31,7 @@ class OauthRevokeBusinessFactory extends AbstractBusinessFactory
     {
         return new OauthRefreshTokenCreator(
             $this->getEntityManager(),
-            $this->createOauthRefreshTokenMapper()
+            $this->createOauthRefreshTokenMapper(),
         );
     }
 
@@ -42,7 +42,7 @@ class OauthRevokeBusinessFactory extends AbstractBusinessFactory
     {
         return new OauthRefreshTokenMapper(
             $this->getUtilEncodingService(),
-            $this->getOauthUserIdentifierFilterPlugins()
+            $this->getOauthUserIdentifierFilterPlugins(),
         );
     }
 
@@ -53,7 +53,7 @@ class OauthRevokeBusinessFactory extends AbstractBusinessFactory
     {
         return new OauthRefreshTokenRevoker(
             $this->getEntityManager(),
-            $this->getRepository()
+            $this->getRepository(),
         );
     }
 

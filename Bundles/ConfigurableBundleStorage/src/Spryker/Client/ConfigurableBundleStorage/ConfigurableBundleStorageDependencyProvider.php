@@ -75,7 +75,7 @@ class ConfigurableBundleStorageDependencyProvider extends AbstractDependencyProv
     {
         $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new ConfigurableBundleStorageToUtilEncodingServiceBridge(
-                $container->getLocator()->utilEncoding()->service()
+                $container->getLocator()->utilEncoding()->service(),
             );
         });
 
@@ -105,7 +105,7 @@ class ConfigurableBundleStorageDependencyProvider extends AbstractDependencyProv
     {
         $container->set(static::CLIENT_PRODUCT_STORAGE, function (Container $container) {
             return new ConfigurableBundleStorageToProductStorageClientBridge(
-                $container->getLocator()->productStorage()->client()
+                $container->getLocator()->productStorage()->client(),
             );
         });
 

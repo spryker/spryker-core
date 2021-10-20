@@ -61,7 +61,7 @@ class CmsBlockCategoryConnectorToCollectorBridge implements CmsBlockCategoryConn
             $dataReader,
             $dataWriter,
             $touchUpdater,
-            $output
+            $output,
         );
     }
 }

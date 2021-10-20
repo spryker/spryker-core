@@ -43,7 +43,7 @@ class ConfigurableBundleNoteFacadeTest extends Test
             ->setConfiguredBundle(
                 (new ConfiguredBundleTransfer())
                     ->setGroupKey(ConfigurableBundleNoteBusinessTester::FAKE_CONFIGURABLE_BUNDLE_GROUP_KEY)
-                    ->setNote(ConfigurableBundleNoteBusinessTester::FAKE_CONFIGURABLE_BUNDLE_NOTE)
+                    ->setNote(ConfigurableBundleNoteBusinessTester::FAKE_CONFIGURABLE_BUNDLE_NOTE),
             );
 
         //Act
@@ -57,7 +57,7 @@ class ConfigurableBundleNoteFacadeTest extends Test
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             $this->assertSame(
                 ConfigurableBundleNoteBusinessTester::FAKE_CONFIGURABLE_BUNDLE_NOTE,
-                $itemTransfer->getConfiguredBundle()->getNote()
+                $itemTransfer->getConfiguredBundle()->getNote(),
             );
         }
     }
@@ -73,7 +73,7 @@ class ConfigurableBundleNoteFacadeTest extends Test
             ->setConfiguredBundle(
                 (new ConfiguredBundleTransfer())
                     ->setGroupKey('not-existing-configurable-bundle-group-key')
-                    ->setNote(ConfigurableBundleNoteBusinessTester::FAKE_CONFIGURABLE_BUNDLE_NOTE)
+                    ->setNote(ConfigurableBundleNoteBusinessTester::FAKE_CONFIGURABLE_BUNDLE_NOTE),
             );
 
         //Act
@@ -94,7 +94,7 @@ class ConfigurableBundleNoteFacadeTest extends Test
             ->setConfiguredBundle(
                 (new ConfiguredBundleTransfer())
                     ->setGroupKey(ConfigurableBundleNoteBusinessTester::FAKE_CONFIGURABLE_BUNDLE_GROUP_KEY)
-                    ->setNote(ConfigurableBundleNoteBusinessTester::FAKE_CONFIGURABLE_BUNDLE_NOTE)
+                    ->setNote(ConfigurableBundleNoteBusinessTester::FAKE_CONFIGURABLE_BUNDLE_NOTE),
             );
 
         //Act

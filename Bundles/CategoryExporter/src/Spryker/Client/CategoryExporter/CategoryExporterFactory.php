@@ -22,7 +22,7 @@ class CategoryExporterFactory extends AbstractFactory
     {
         return new Navigation(
             $this->getStorageClient(),
-            $this->createNavigationKeyBuilder()
+            $this->createNavigationKeyBuilder(),
         );
     }
 
@@ -41,7 +41,7 @@ class CategoryExporterFactory extends AbstractFactory
     {
         return new CategoryTreeBuilder(
             $this->getStorageClient(),
-            $this->createResourceKeyBuilder()
+            $this->createResourceKeyBuilder(),
         );
     }
 

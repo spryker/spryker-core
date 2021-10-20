@@ -96,7 +96,7 @@ class MerchantOmsFacadeTest extends Unit
 
         $this->tester->setDependency(
             MerchantOmsDependencyProvider::FACADE_STATE_MACHINE,
-            new MerchantOmsToStateMachineFacadeBridge($stateMachineFacadeMock)
+            new MerchantOmsToStateMachineFacadeBridge($stateMachineFacadeMock),
         );
     }
 
@@ -433,7 +433,7 @@ class MerchantOmsFacadeTest extends Unit
             function (MerchantOrderItemTransfer $merchantOrderItemTransfer) {
                 return $merchantOrderItemTransfer->getIdMerchantOrderItem();
             },
-            $merchantOrderTransfer->getMerchantOrderItems()->getArrayCopy()
+            $merchantOrderTransfer->getMerchantOrderItems()->getArrayCopy(),
         );
 
         // Act

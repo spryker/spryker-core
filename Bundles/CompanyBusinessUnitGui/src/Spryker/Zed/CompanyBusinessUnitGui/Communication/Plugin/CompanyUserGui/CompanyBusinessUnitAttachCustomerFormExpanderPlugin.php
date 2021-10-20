@@ -38,7 +38,7 @@ class CompanyBusinessUnitAttachCustomerFormExpanderPlugin extends AbstractPlugin
 
         $formType->buildForm(
             $builder,
-            $dataProvider->getOptions()
+            $dataProvider->getOptions(),
         );
 
         return $builder;

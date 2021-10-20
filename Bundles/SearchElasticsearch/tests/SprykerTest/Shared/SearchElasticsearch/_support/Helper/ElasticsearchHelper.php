@@ -248,7 +248,7 @@ class ElasticsearchHelper extends Module
         $snapshot = new Snapshot($this->getClient());
         $settings = array_merge(
             $settings,
-            ['location' => $this->getVirtualRepositoryLocation()]
+            ['location' => $this->getVirtualRepositoryLocation()],
         );
         $snapshot->registerRepository($repositoryName, $type, $settings);
     }

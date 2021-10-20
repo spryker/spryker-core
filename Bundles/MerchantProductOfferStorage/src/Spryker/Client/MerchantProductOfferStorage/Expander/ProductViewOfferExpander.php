@@ -58,7 +58,7 @@ class ProductViewOfferExpander implements ProductViewOfferExpanderInterface
 
         $productOfferStorageCriteriaTransfer = (new ProductOfferStorageCriteriaTransfer())->fromArray(
             $productStorageCriteriaTransfer->modifiedToArray(),
-            true
+            true,
         );
         $productOfferStorageCriteriaTransfer->fromArray($productViewTransfer->toArray(), true);
 
@@ -69,7 +69,7 @@ class ProductViewOfferExpander implements ProductViewOfferExpanderInterface
         $productOfferStorageCriteriaTransfer->addProductConcreteSku($productViewTransfer->getSku());
 
         return $productViewTransfer->setProductOfferReference(
-            $this->productConcreteDefaultProductOfferReader->findProductOfferReference($productOfferStorageCriteriaTransfer)
+            $this->productConcreteDefaultProductOfferReader->findProductOfferReference($productOfferStorageCriteriaTransfer),
         );
     }
 

@@ -178,7 +178,7 @@ class InvitationValidator implements InvitationValidatorInterface
             ->setIdCompany($companyUserTransfer->getFkCompany());
 
         $companyBusinessUnitCollectionTransfer = $this->companyBusinessUnitFacade->getCompanyBusinessUnitCollection(
-            $companyBusinessUnitCriteriaFilter
+            $companyBusinessUnitCriteriaFilter,
         );
 
         foreach ($companyBusinessUnitCollectionTransfer->getCompanyBusinessUnits() as $companyBusinessUnitTransfer) {
@@ -194,7 +194,7 @@ class InvitationValidator implements InvitationValidatorInterface
         $companyUserInvitationCriteriaFilterTransfer = (new CompanyUserInvitationCriteriaFilterTransfer());
 
         $companyUserInvitationCollection = $this->repository->getCompanyUserInvitationCollection(
-            $companyUserInvitationCriteriaFilterTransfer
+            $companyUserInvitationCriteriaFilterTransfer,
         );
 
         foreach ($companyUserInvitationCollection->getCompanyUserInvitations() as $companyUserInvitationTransfer) {

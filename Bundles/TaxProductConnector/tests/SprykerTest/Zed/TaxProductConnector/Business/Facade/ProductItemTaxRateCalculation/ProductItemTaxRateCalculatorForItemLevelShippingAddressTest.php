@@ -56,12 +56,12 @@ class ProductItemTaxRateCalculatorForItemLevelShippingAddressTest extends Test
 
         $this->tester->setDependency(
             TaxProductConnectorDependencyProvider::FACADE_TAX,
-            $this->createTaxProductConnectorToTaxFacadeBridgeMock('MOON', 66.00)
+            $this->createTaxProductConnectorToTaxFacadeBridgeMock('MOON', 66.00),
         );
 
         $this->tester->setDependency(
             ProductDependencyProvider::PRODUCT_ABSTRACT_PLUGINS_AFTER_CREATE,
-            [new TaxSetProductAbstractAfterCreatePlugin()]
+            [new TaxSetProductAbstractAfterCreatePlugin()],
         );
 
         $this->taxSetTransferList = [];
@@ -85,7 +85,7 @@ class ProductItemTaxRateCalculatorForItemLevelShippingAddressTest extends Test
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             $taxSetTransfer = $this->tester->findTaxSetByAddressIso2CodeInTaxSetTransferList(
                 $itemTransfer->getShipment()->getShippingAddress()->getIso2Code(),
-                $this->taxSetTransferList
+                $this->taxSetTransferList,
             );
             $productAbstractTransfer = $this->tester->createProductWithTaxSetInDb($taxSetTransfer);
             $itemTransfer->setIdProductAbstract($productAbstractTransfer->getIdProductAbstract());
@@ -103,7 +103,7 @@ class ProductItemTaxRateCalculatorForItemLevelShippingAddressTest extends Test
                 $expectedTaxRate,
                 $actualTaxRate,
                 static::FLOAT_COMPARISION_DELTA,
-                sprintf('Tax rate should be %.2f, %.2f given at iteration #%d.', $expectedTaxRate, $actualTaxRate, $i)
+                sprintf('Tax rate should be %.2f, %.2f given at iteration #%d.', $expectedTaxRate, $actualTaxRate, $i),
             );
         }
     }
@@ -143,7 +143,7 @@ class ProductItemTaxRateCalculatorForItemLevelShippingAddressTest extends Test
         $addressBuilder1 = (new AddressBuilder([AddressTransfer::ISO2_CODE => $iso2Code]));
 
         return (new ItemBuilder())->withShipment(
-            (new ShipmentBuilder())->withShippingAddress($addressBuilder1)
+            (new ShipmentBuilder())->withShippingAddress($addressBuilder1),
         )->build();
     }
 

@@ -90,7 +90,7 @@ class ProductLabelGuiCommunicationFactory extends AbstractCommunicationFactory
     {
         return new ProductLabelAggregateFormDataProvider(
             $this->createProductLabelFormDataProvider(),
-            $this->createRelatedProductFormDataProvider()
+            $this->createRelatedProductFormDataProvider(),
         );
     }
 
@@ -101,7 +101,7 @@ class ProductLabelGuiCommunicationFactory extends AbstractCommunicationFactory
     {
         return new ProductLabelFormDataProvider(
             $this->getLocaleFacade(),
-            $this->getProductLabelFacade()
+            $this->getProductLabelFacade(),
         );
     }
 
@@ -156,7 +156,7 @@ class ProductLabelGuiCommunicationFactory extends AbstractCommunicationFactory
             $this->createRelatedProductTableQueryBuilder(),
             $this->getMoneyFacade(),
             $idProductLabel,
-            $this->getPriceProductFacade()
+            $this->getPriceProductFacade(),
         );
     }
 
@@ -171,7 +171,7 @@ class ProductLabelGuiCommunicationFactory extends AbstractCommunicationFactory
             $this->createRelatedProductTableQueryBuilder(),
             $this->getMoneyFacade(),
             $idProductLabel,
-            $this->getPriceProductFacade()
+            $this->getPriceProductFacade(),
         );
     }
 
@@ -186,7 +186,7 @@ class ProductLabelGuiCommunicationFactory extends AbstractCommunicationFactory
             $this->createRelatedProductTableQueryBuilder(),
             $this->getMoneyFacade(),
             $idProductLabel,
-            $this->getPriceProductFacade()
+            $this->getPriceProductFacade(),
         );
     }
 
@@ -207,7 +207,7 @@ class ProductLabelGuiCommunicationFactory extends AbstractCommunicationFactory
             $this->getProductQueryContainer(),
             $this->getQueryContainer(),
             $this->getLocaleFacade(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 

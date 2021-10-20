@@ -62,7 +62,7 @@ class MonitoringDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::SERVICE_NETWORK, function (Container $container) {
             $monitoringToUtilNetworkServiceBridge = new MonitoringToUtilNetworkServiceBridge(
-                $container->getLocator()->utilNetwork()->service()
+                $container->getLocator()->utilNetwork()->service(),
             );
 
             return $monitoringToUtilNetworkServiceBridge;

@@ -45,7 +45,7 @@ class AclEntityRuleCollectionTransferTransferSorter implements AclEntityRuleColl
                 }
 
                 return ($aclEntityRule1Priority > $aclEntityRule2Priority) ? -1 : 1;
-            }
+            },
         );
 
         return $aclEntityRuleCollectionTransfer;

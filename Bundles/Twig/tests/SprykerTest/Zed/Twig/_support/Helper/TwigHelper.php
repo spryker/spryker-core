@@ -131,7 +131,7 @@ class TwigHelper extends Module
         $this->getEventDispatcherHelper()->addEventDispatcherPlugin(new TwigEventDispatcherPlugin());
 
         $this->getApplicationHelper()->addApplicationPlugin(
-            $this->getTwigApplicationPluginStub()
+            $this->getTwigApplicationPluginStub(),
         );
 
         $this->addDependencies();

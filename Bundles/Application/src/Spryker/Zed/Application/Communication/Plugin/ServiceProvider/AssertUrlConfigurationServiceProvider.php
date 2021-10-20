@@ -67,7 +67,7 @@ class AssertUrlConfigurationServiceProvider extends AbstractPlugin implements Se
             'Incorrect HOST_ZED config, expected `%s`, got `%s`. Set the URLs in your Shared/config_default_%s.php or env specific config files.',
             $hostName,
             $configuredHostName,
-            Store::getInstance()->getStoreName()
+            Store::getInstance()->getStoreName(),
         ));
     }
 }

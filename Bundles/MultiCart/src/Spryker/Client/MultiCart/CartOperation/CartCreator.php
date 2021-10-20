@@ -72,7 +72,7 @@ class CartCreator implements CartCreatorInterface
     {
         $quoteTransfer->setIdQuote(null);
         $quoteTransfer->setCustomer(
-            $this->customerClient->getCustomer()
+            $this->customerClient->getCustomer(),
         );
         $quoteTransfer->setIsDefault(true);
         $quoteResponseTransfer = $this->persistentCartClient->createQuote($quoteTransfer);
@@ -90,11 +90,11 @@ class CartCreator implements CartCreatorInterface
         $duplicateQuoteTransfer = (new QuoteTransfer())
             ->fromArray($this->filterDisallowedQuoteData($quoteTransfer), true)
             ->setName(
-                sprintf($this->multiCartConfig->getDuplicatedQuoteName(), $quoteTransfer->getName(), $this->dateTimeService->formatDateTime(date('Y-m-d H:i:s')))
+                sprintf($this->multiCartConfig->getDuplicatedQuoteName(), $quoteTransfer->getName(), $this->dateTimeService->formatDateTime(date('Y-m-d H:i:s'))),
             )
             ->setIsDefault(true)
             ->setCustomer(
-                $this->customerClient->getCustomer()
+                $this->customerClient->getCustomer(),
             );
 
         return $this->persistentCartClient->createQuote($duplicateQuoteTransfer);

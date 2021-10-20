@@ -91,8 +91,8 @@ class OrderItemSplit implements OrderItemSplitInterface
             ->setSuccessMessage(
                 sprintf(
                     Messages::SPLIT_SUCCESS_MESSAGE,
-                    $salesOrderItemEntity->getIdSalesOrderItem()
-                )
+                    $salesOrderItemEntity->getIdSalesOrderItem(),
+                ),
             );
     }
 

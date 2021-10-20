@@ -31,7 +31,7 @@ class PriceProductScheduleDataImportBusinessFactory extends DataImportBusinessFa
     {
         /** @var \Spryker\Zed\DataImport\Business\Model\DataImporter $dataImporter */
         $dataImporter = $this->getCsvDataImporterFromConfig(
-            $this->getConfig()->getPriceProductScheduleDataImporterConfiguration()
+            $this->getConfig()->getPriceProductScheduleDataImporterConfiguration(),
         );
 
         /** @var \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerTransactionAware $dataSetStepBroker */

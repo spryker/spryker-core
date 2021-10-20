@@ -429,7 +429,7 @@ class ClassDefinition implements ClassDefinitionInterface
             return sprintf(
                 '%s|\%s',
                 static::SUPPORTED_VALUE_OBJECTS[$property['type']][static::EXTRA_TYPE_HINTS],
-                $this->getValueObjectFullyQualifiedClassName($property)
+                $this->getValueObjectFullyQualifiedClassName($property),
             );
         }
 
@@ -837,7 +837,7 @@ class ClassDefinition implements ClassDefinitionInterface
         if ($this->propertyHasTypeShim($property)) {
             $method['typeShimNotice'] = $this->buildTypeShimNotice(
                 $property['type'],
-                $this->getPropertyTypeShim($property)
+                $this->getPropertyTypeShim($property),
             );
         }
 
@@ -881,13 +881,13 @@ class ClassDefinition implements ClassDefinitionInterface
         if ($this->propertyHasTypeShim($property)) {
             $method['typeShimNotice'] = $this->buildTypeShimNotice(
                 $property['type'],
-                $this->getPropertyTypeShim($property)
+                $this->getPropertyTypeShim($property),
             );
         }
 
         if ($this->isValueObject($property)) {
             $method['valueObject'] = $this->getShortClassName(
-                $this->getValueObjectFullyQualifiedClassName($property)
+                $this->getValueObjectFullyQualifiedClassName($property),
             );
         }
 
@@ -920,7 +920,7 @@ class ClassDefinition implements ClassDefinitionInterface
         if ($this->propertyHasTypeShim($property)) {
             $method['typeShimNotice'] = $this->buildAddTypeShimNotice(
                 $property['type'],
-                $this->getPropertyTypeShim($property)
+                $this->getPropertyTypeShim($property),
             );
         }
 
@@ -1028,7 +1028,7 @@ class ClassDefinition implements ClassDefinitionInterface
             throw new InvalidNameException(sprintf(
                 'Transfer property "%s" needs to be alpha-numeric and camel-case formatted in "%s"!',
                 $propertyName,
-                $this->name
+                $this->name,
             ));
         }
     }
@@ -1057,7 +1057,7 @@ class ClassDefinition implements ClassDefinitionInterface
     {
         if (!preg_match('(true|false|1|0)', $property['associative'])) {
             throw new InvalidAssociativeValueException(
-                'Transfer property "associative" has invalid value. The value has to be "true" or "false".'
+                'Transfer property "associative" has invalid value. The value has to be "true" or "false".',
             );
         }
     }
@@ -1074,7 +1074,7 @@ class ClassDefinition implements ClassDefinitionInterface
         if (!$this->isArray($property) && !$this->isCollection($property)) {
             throw new InvalidAssociativeTypeException(sprintf(
                 'Transfer property "associative" cannot be defined to type: "%s"!',
-                $property['type']
+                $property['type'],
             ));
         }
     }
@@ -1121,7 +1121,7 @@ class ClassDefinition implements ClassDefinitionInterface
         if (preg_match('/Transfer$/', $name)) {
             throw new InvalidNameException(sprintf(
                 'Transfer names must not be suffixed with the word "Transfer", it will be auto-appended on generation: `%s`. Please remove the suffix.',
-                $name
+                $name,
             ));
         }
     }
@@ -1243,7 +1243,7 @@ class ClassDefinition implements ClassDefinitionInterface
     {
         return $this->buildType(
             $this->getPropertyType($property),
-            $this->getPropertyTypeShim($property)
+            $this->getPropertyTypeShim($property),
         );
     }
 
@@ -1256,7 +1256,7 @@ class ClassDefinition implements ClassDefinitionInterface
     {
         return $this->buildType(
             $this->getSetVar($property),
-            $this->getPropertyTypeShim($property)
+            $this->getPropertyTypeShim($property),
         );
     }
 
@@ -1269,7 +1269,7 @@ class ClassDefinition implements ClassDefinitionInterface
     {
         return $this->buildType(
             $this->getReturnType($property),
-            $this->getPropertyTypeShim($property)
+            $this->getPropertyTypeShim($property),
         );
     }
 
@@ -1413,7 +1413,7 @@ class ClassDefinition implements ClassDefinitionInterface
 
         if ($this->isValueObject($property)) {
             $type = $this->getShortClassName(
-                $this->getValueObjectFullyQualifiedClassName($property)
+                $this->getValueObjectFullyQualifiedClassName($property),
             );
         }
 
@@ -1516,8 +1516,8 @@ class ClassDefinition implements ClassDefinitionInterface
                 sprintf(
                     'No singular form for the property %s.%s is found. Please add "singular" attribute to this property\'s definition.',
                     $this->name,
-                    $property['name']
-                )
+                    $property['name'],
+                ),
             );
         }
 
@@ -1526,8 +1526,8 @@ class ClassDefinition implements ClassDefinitionInterface
                 sprintf(
                     'Values of the "name" and "singular" attributes of the property %s.%s must not match.',
                     $this->name,
-                    $property['name']
-                )
+                    $property['name'],
+                ),
             );
         }
     }

@@ -49,23 +49,23 @@ class ProductMapper implements ProductMapperInterface
     ): ProductConcreteTransfer {
         $productConcreteTransfer->fromArray(
             $productConcreteEntity->toArray(),
-            true
+            true,
         );
 
         $productConcreteTransfer->setIdProductConcrete($productConcreteEntity->getIdProduct());
         $productConcreteTransfer->setAbstractSku(
-            $productConcreteEntity->getSpyProductAbstract()->getSku()
+            $productConcreteEntity->getSpyProductAbstract()->getSku(),
         );
 
         foreach ($productConcreteEntity->getSpyProductLocalizedAttributess() as $productLocalizedAttributesEntity) {
             $productConcreteTransfer->addLocalizedAttributes(
-                $this->mapProductLocalizedAttributesEntityToTransfer($productLocalizedAttributesEntity, new LocalizedAttributesTransfer())
+                $this->mapProductLocalizedAttributesEntityToTransfer($productLocalizedAttributesEntity, new LocalizedAttributesTransfer()),
             );
         }
 
         foreach ($productConcreteEntity->getSpyProductAbstract()->getSpyProductAbstractStores() as $productAbstractStoreEntity) {
             $productConcreteTransfer->addStores(
-                $this->mapStoreEntityToTransfer($productAbstractStoreEntity->getSpyStore(), new StoreTransfer())
+                $this->mapStoreEntityToTransfer($productAbstractStoreEntity->getSpyStore(), new StoreTransfer()),
             );
         }
 
@@ -101,11 +101,11 @@ class ProductMapper implements ProductMapperInterface
     ): LocalizedAttributesTransfer {
         $localizedAttributesTransfer->fromArray(
             $productLocalizedAttributesEntity->toArray(),
-            true
+            true,
         );
 
         $localizedAttributesTransfer->setLocale(
-            $this->mapLocaleEntityToTransfer($productLocalizedAttributesEntity->getLocale(), new LocaleTransfer())
+            $this->mapLocaleEntityToTransfer($productLocalizedAttributesEntity->getLocale(), new LocaleTransfer()),
         );
 
         return $localizedAttributesTransfer;
@@ -121,7 +121,7 @@ class ProductMapper implements ProductMapperInterface
     {
         return $localeTransfer->fromArray(
             $localeEntity->toArray(),
-            true
+            true,
         );
     }
 
@@ -135,7 +135,7 @@ class ProductMapper implements ProductMapperInterface
     {
         return $storeTransfer->fromArray(
             $storeEntity->toArray(),
-            true
+            true,
         );
     }
 
@@ -163,7 +163,7 @@ class ProductMapper implements ProductMapperInterface
 
         foreach ($productEntity->getSpyProductLocalizedAttributess() as $productLocalizedAttributesEntity) {
             $productConcreteTransfer->addLocalizedAttributes(
-                $this->mapProductLocalizedAttributesEntityToTransfer($productLocalizedAttributesEntity, new LocalizedAttributesTransfer())
+                $this->mapProductLocalizedAttributesEntityToTransfer($productLocalizedAttributesEntity, new LocalizedAttributesTransfer()),
             );
         }
 
@@ -236,7 +236,7 @@ class ProductMapper implements ProductMapperInterface
         foreach ($productConcreteCollectionTransfer->getProducts() as $productConcreteTransfer) {
             if (isset($productEntitiesIndexedBySku[$productConcreteTransfer->getSku()])) {
                 $productConcreteTransfer->setIdProductConcrete(
-                    $productEntitiesIndexedBySku[$productConcreteTransfer->getSku()]->getPrimaryKey()
+                    $productEntitiesIndexedBySku[$productConcreteTransfer->getSku()]->getPrimaryKey(),
                 );
             }
         }

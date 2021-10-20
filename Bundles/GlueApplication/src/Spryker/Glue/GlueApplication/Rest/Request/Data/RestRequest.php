@@ -262,7 +262,7 @@ class RestRequest implements RestRequestInterface
             $this->user = new User(
                 (string)$this->restUser->getSurrogateIdentifier(),
                 (string)$this->restUser->getNaturalIdentifier(),
-                $this->restUser->getScopes()
+                $this->restUser->getScopes(),
             );
         }
 

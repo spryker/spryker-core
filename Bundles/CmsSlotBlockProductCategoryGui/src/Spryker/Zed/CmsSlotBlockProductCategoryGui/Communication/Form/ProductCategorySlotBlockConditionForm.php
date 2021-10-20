@@ -192,7 +192,7 @@ class ProductCategorySlotBlockConditionForm extends AbstractType
             $this->replaceProductIdsField(
                 $event->getForm()->getParent(),
                 $assignedProductAbstractIds,
-                $event->getForm()->getConfig()->getOptions()
+                $event->getForm()->getConfig()->getOptions(),
             );
         });
     }

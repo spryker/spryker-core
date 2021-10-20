@@ -51,7 +51,7 @@ class ReorderProductSetsFormType extends AbstractType
                 },
                 function ($productSetIds = '{}') {
                     return $this->getFactory()->getUtilEncodingService()->decodeJson($productSetIds, true);
-                }
+                },
             ));
 
         return $this;

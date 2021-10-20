@@ -120,8 +120,8 @@ class QuoteShareTest extends Unit
         $quoteTransfer->addShareDetail(
             $this->tester->createShareCartDetail(
                 $companyUserTransfer->getIdCompanyUser(),
-                $this->findQuotePermissionGroup(static::READ_ONLY)
-            )
+                $this->findQuotePermissionGroup(static::READ_ONLY),
+            ),
         );
         $this->tester->getLocator()->quote()->facade()->updateQuote($quoteTransfer);
 
@@ -147,8 +147,8 @@ class QuoteShareTest extends Unit
         $quoteTransfer->addShareDetail(
             $this->tester->createShareCartDetail(
                 $companyUserTransfer->getIdCompanyUser(),
-                $this->findQuotePermissionGroup(static::READ_ONLY)
-            )
+                $this->findQuotePermissionGroup(static::READ_ONLY),
+            ),
         );
         $this->tester->getLocator()->quote()->facade()->updateQuote($quoteTransfer);
 
@@ -185,12 +185,12 @@ class QuoteShareTest extends Unit
         ]);
         $spyQuotePermissionGroupEntityTransfer = $this->tester->haveQuotePermissionGroup(
             static::READ_ONLY,
-            [ReadSharedCartPermissionPlugin::KEY]
+            [ReadSharedCartPermissionPlugin::KEY],
         );
         $this->tester->haveQuoteCompanyUser(
             $companyUserTransfer,
             $quoteTransfer,
-            $spyQuotePermissionGroupEntityTransfer
+            $spyQuotePermissionGroupEntityTransfer,
         );
 
         // Act
@@ -198,7 +198,7 @@ class QuoteShareTest extends Unit
             (new QuoteCollectionTransfer()),
             (new QuoteCriteriaFilterTransfer())
                 ->setIdCompanyUser($companyUserTransfer->getIdCompanyUser())
-                ->setIdStore($storeTransfer->getIdStore())
+                ->setIdStore($storeTransfer->getIdStore()),
         );
 
         // Assert
@@ -208,7 +208,7 @@ class QuoteShareTest extends Unit
         $this->assertNotNull($quoteTransfer->getQuotePermissionGroup());
         $this->assertEquals(
             $spyQuotePermissionGroupEntityTransfer->getIdQuotePermissionGroup(),
-            $quoteTransfer->getQuotePermissionGroup()->getIdQuotePermissionGroup()
+            $quoteTransfer->getQuotePermissionGroup()->getIdQuotePermissionGroup(),
         );
         $this->assertEquals($spyQuotePermissionGroupEntityTransfer->getName(), $quoteTransfer->getQuotePermissionGroup()->getName());
     }

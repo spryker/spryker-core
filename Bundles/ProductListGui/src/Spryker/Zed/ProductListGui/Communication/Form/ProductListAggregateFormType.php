@@ -74,7 +74,7 @@ class ProductListAggregateFormType extends AbstractType
     {
         $builder->add(
             ProductListAggregateFormTransfer::PRODUCT_LIST,
-            ProductListFormType::class
+            ProductListFormType::class,
         );
 
         return $this;

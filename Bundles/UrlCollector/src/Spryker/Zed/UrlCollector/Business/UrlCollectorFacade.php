@@ -52,7 +52,7 @@ class UrlCollectorFacade extends AbstractFacade implements UrlCollectorFacadeInt
             $dataReader,
             $dataWriter,
             $touchUpdater,
-            $output
+            $output,
         );
     }
 }

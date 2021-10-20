@@ -53,7 +53,7 @@ class ProductCustomerPermissionSaver implements ProductCustomerPermissionSaverIn
 
         $this->touchFacade->touchActive(
             ProductCustomerPermissionConfig::RESOURCE_TYPE_PRODUCT_CUSTOMER_PERMISSION,
-            $productCustomerPermissionEntity->getIdProductCustomerPermission()
+            $productCustomerPermissionEntity->getIdProductCustomerPermission(),
         );
     }
 

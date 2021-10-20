@@ -113,7 +113,7 @@ class CatalogSearchSuggestionsResourceMapper implements CatalogSearchSuggestions
     ): RestCatalogSearchSuggestionsAttributesTransfer {
         return $this->mapSearchSuggestionProductsToRestCatalogSearchSuggestionsAttributesTransfer(
             $restSearchResponse,
-            $restSearchSuggestionsAttributesTransfer
+            $restSearchSuggestionsAttributesTransfer,
         );
     }
 
@@ -134,7 +134,7 @@ class CatalogSearchSuggestionsResourceMapper implements CatalogSearchSuggestions
 
         foreach ($categoriesSuggestions as $categoriesSuggestion) {
             $restSearchSuggestionsAttributesTransfer->addCategory(
-                (new RestCatalogSearchSuggestionCategoriesTransfer())->fromArray($categoriesSuggestion, true)
+                (new RestCatalogSearchSuggestionCategoriesTransfer())->fromArray($categoriesSuggestion, true),
             );
         }
 
@@ -158,7 +158,7 @@ class CatalogSearchSuggestionsResourceMapper implements CatalogSearchSuggestions
 
         foreach ($cmsPagesSuggestions as $cmsPagesSuggestion) {
             $restSearchSuggestionsAttributesTransfer->addCmsPage(
-                (new RestCatalogSearchSuggestionCmsPagesTransfer())->fromArray($cmsPagesSuggestion, true)
+                (new RestCatalogSearchSuggestionCmsPagesTransfer())->fromArray($cmsPagesSuggestion, true),
             );
         }
 
@@ -182,7 +182,7 @@ class CatalogSearchSuggestionsResourceMapper implements CatalogSearchSuggestions
 
         $result = $this->mapArrayValuesByKeys(
             $restSearchResponse[static::SEARCH_RESPONSE_SUGGESTION_BY_TYPE_KEY][$suggestionName],
-            $suggestionKeysRequired
+            $suggestionKeysRequired,
         );
 
         return $result;
@@ -209,7 +209,7 @@ class CatalogSearchSuggestionsResourceMapper implements CatalogSearchSuggestions
             $restCatalogSearchSuggestionAbstractProducts = new RestCatalogSearchSuggestionAbstractProductsTransfer();
             $restCatalogSearchSuggestionAbstractProducts->fromArray(
                 $restSearchResponseSuggestProduct,
-                true
+                true,
             );
 
             $restSearchSuggestionsAttributesTransfer->addAbstractProduct($restCatalogSearchSuggestionAbstractProducts);

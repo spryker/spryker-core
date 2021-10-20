@@ -96,7 +96,7 @@ class ConfiguredBundleWriter implements ConfiguredBundleWriterInterface
 
         return $this->cartsRestApiResource->createCartRestResponse(
             $quoteResponseTransfer->getQuoteTransfer(),
-            $restRequest
+            $restRequest,
         );
     }
 
@@ -133,7 +133,7 @@ class ConfiguredBundleWriter implements ConfiguredBundleWriterInterface
 
         return $this->cartsRestApiResource->createCartRestResponse(
             $quoteResponseTransfer->getQuoteTransfer(),
-            $restRequest
+            $restRequest,
         );
     }
 

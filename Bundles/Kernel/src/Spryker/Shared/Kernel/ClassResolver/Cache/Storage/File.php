@@ -47,7 +47,7 @@ class File implements StorageInterface
             file_put_contents(
                 $cacheFilePath,
                 '<?php return ' . $string . ';',
-                $flag
+                $flag,
             );
 
             if (function_exists('opcache_invalidate')) {

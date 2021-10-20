@@ -58,7 +58,7 @@ class ShoppingListUpdater implements ShoppingListUpdaterInterface
     ): RestResponseInterface {
         $shoppingListTransfer = $this->shoppingListRestRequestReader->readShoppingListTransferFromRequest(
             $restRequest,
-            $restShoppingListRequestAttributesTransfer
+            $restShoppingListRequestAttributesTransfer,
         );
 
         $shoppingListResponseTransfer = $this->shoppingListsRestApiClient->updateShoppingList($shoppingListTransfer);
@@ -66,12 +66,12 @@ class ShoppingListUpdater implements ShoppingListUpdaterInterface
         if ($shoppingListResponseTransfer->getIsSuccess() === false) {
             return $this->shoppingListRestResponseBuilder->buildErrorRestResponse(
                 $restRequest,
-                $shoppingListResponseTransfer->getErrors()
+                $shoppingListResponseTransfer->getErrors(),
             );
         }
 
         return $this->shoppingListRestResponseBuilder->buildShoppingListRestResponse(
-            $shoppingListResponseTransfer->getShoppingList()
+            $shoppingListResponseTransfer->getShoppingList(),
         );
     }
 }

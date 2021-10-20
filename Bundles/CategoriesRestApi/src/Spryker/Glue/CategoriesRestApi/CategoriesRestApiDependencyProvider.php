@@ -51,7 +51,7 @@ class CategoriesRestApiDependencyProvider extends AbstractBundleDependencyProvid
     {
         $container->set(static::CLIENT_CATEGORY_STORAGE, function (Container $container) {
             return new CategoriesRestApiToCategoryStorageClientBridge(
-                $container->getLocator()->categoryStorage()->client()
+                $container->getLocator()->categoryStorage()->client(),
             );
         });
 
@@ -67,7 +67,7 @@ class CategoriesRestApiDependencyProvider extends AbstractBundleDependencyProvid
     {
         $container->set(static::CLIENT_STORE, function (Container $container) {
             return new CategoriesRestApiToStoreClientBridge(
-                $container->getLocator()->store()->client()
+                $container->getLocator()->store()->client(),
             );
         });
 

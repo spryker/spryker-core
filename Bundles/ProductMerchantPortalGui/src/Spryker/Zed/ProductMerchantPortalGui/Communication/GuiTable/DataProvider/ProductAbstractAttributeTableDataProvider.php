@@ -107,7 +107,7 @@ class ProductAbstractAttributeTableDataProvider extends AbstractGuiTableDataProv
         $attributes = $this->sortAttributesArray(
             $attributes,
             $criteriaTransfer->getOrderBy() ?? static::ATTRIBUTES_DEFAULT_SORT_FIELD,
-            $criteriaTransfer->getOrderDirection() ?? static::ATTRIBUTES_DEFAULT_SORT_DIRECTION_ASC
+            $criteriaTransfer->getOrderDirection() ?? static::ATTRIBUTES_DEFAULT_SORT_DIRECTION_ASC,
         );
 
         return $this->getGuiTableDataResponseTransfer($attributes);
@@ -159,9 +159,9 @@ class ProductAbstractAttributeTableDataProvider extends AbstractGuiTableDataProv
 
                 return $direction ? strcasecmp($comparableValue, $comparatorValue) : strcasecmp(
                     $comparatorValue,
-                    $comparableValue
+                    $comparableValue,
                 );
-            }
+            },
         );
 
         return $attributes;

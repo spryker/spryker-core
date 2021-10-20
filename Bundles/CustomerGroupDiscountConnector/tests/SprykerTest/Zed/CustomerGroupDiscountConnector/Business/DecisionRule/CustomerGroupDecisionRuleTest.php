@@ -49,7 +49,7 @@ class CustomerGroupDecisionRuleTest extends Unit
         $customerGroupDecisionRule = $this->createCustomerGroupDecisionRule();
 
         $this->assertFalse(
-            $customerGroupDecisionRule->isSatisfiedBy($this->createQuoteTransfer(), $this->createItemTransfer(), $this->createClauseTransfer())
+            $customerGroupDecisionRule->isSatisfiedBy($this->createQuoteTransfer(), $this->createItemTransfer(), $this->createClauseTransfer()),
         );
     }
 
@@ -67,7 +67,7 @@ class CustomerGroupDecisionRuleTest extends Unit
         $quoteTransfer->setCustomer($customerTransfer);
 
         $this->assertFalse(
-            $customerGroupDecisionRule->isSatisfiedBy($quoteTransfer, $this->createItemTransfer(), $this->createClauseTransfer())
+            $customerGroupDecisionRule->isSatisfiedBy($quoteTransfer, $this->createItemTransfer(), $this->createClauseTransfer()),
         );
     }
 

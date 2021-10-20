@@ -40,8 +40,8 @@ class OpenSslEncryptor implements OpenSslEncryptorInterface
                 $encryptionMethod ?? $this->utilEncryptionConfig->getDefaultOpenSslEncryptionMethod(),
                 $encryptionKey,
                 0,
-                $initVector
-            )
+                $initVector,
+            ),
         );
     }
 }

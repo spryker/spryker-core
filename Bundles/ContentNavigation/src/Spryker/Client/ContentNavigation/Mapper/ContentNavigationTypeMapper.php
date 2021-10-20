@@ -53,7 +53,7 @@ class ContentNavigationTypeMapper implements ContentNavigationTypeMapperInterfac
 
         if (!isset($this->contentNavigationTermExecutors[$term])) {
             throw new MissingNavigationTermException(
-                sprintf('There is no matching Term for NavigationType when provided with term %s.', $term)
+                sprintf('There is no matching Term for NavigationType when provided with term %s.', $term),
             );
         }
 

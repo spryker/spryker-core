@@ -47,7 +47,7 @@ class InitializeDatabaseConsoleTest extends Test
         $moduleName = $this->tester->invokeMethod(
             $initializeDatabaseConsoleCommand,
             'getPluginNameFromClass',
-            [$example]
+            [$example],
         );
 
         // Assert

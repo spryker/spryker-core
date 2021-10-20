@@ -43,7 +43,7 @@ class WidgetCollection implements WidgetContainerInterface
         if (!isset($this->widgets[$name])) {
             throw new MissingWidgetException(sprintf(
                 'Missing "%s" widget. You need to register the widgets in the constructor of the WidgetCollection in order to use them.',
-                $name
+                $name,
             ));
         }
 

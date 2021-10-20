@@ -206,7 +206,7 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
         foreach ($identifiers as $identifier) {
             $storageKeys[$identifier] = $this->getStorageKey(
                 sprintf('%s:%s', $mappingType, $identifier),
-                $localeName
+                $localeName,
             );
         }
 
@@ -378,7 +378,7 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
         return $this->findProductConcreteStorageDataByMapping(
             $mappingType,
             $identifier,
-            $this->localeClient->getCurrentLocale()
+            $this->localeClient->getCurrentLocale(),
         );
     }
 

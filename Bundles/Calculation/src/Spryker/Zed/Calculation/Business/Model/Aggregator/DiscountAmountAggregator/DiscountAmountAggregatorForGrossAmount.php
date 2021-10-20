@@ -47,11 +47,11 @@ class DiscountAmountAggregatorForGrossAmount implements CalculatorInterface
 
         $this->calculateDiscountAmountAggregationForItems(
             $calculableObjectTransfer->getItems(),
-            $calculableObjectTransfer->getPriceMode()
+            $calculableObjectTransfer->getPriceMode(),
         );
         $this->calculateDiscountAmountAggregationForExpenses(
             $calculableObjectTransfer->getExpenses(),
-            $calculableObjectTransfer->getPriceMode()
+            $calculableObjectTransfer->getPriceMode(),
         );
 
         $this->updateDiscountTotals($calculableObjectTransfer);
@@ -73,15 +73,15 @@ class DiscountAmountAggregatorForGrossAmount implements CalculatorInterface
                     $itemTransfer->getCalculatedDiscounts(),
                     $itemTransfer->getUnitPrice(),
                     $priceMode,
-                    $itemTransfer->getTaxRate()
-                )
+                    $itemTransfer->getTaxRate(),
+                ),
             );
 
             $itemTransfer->setSumDiscountAmountAggregation(
                 $this->calculateSumDiscountAmountAggregation(
                     $itemTransfer->getCalculatedDiscounts(),
-                    $itemTransfer->getSumPrice()
-                )
+                    $itemTransfer->getSumPrice(),
+                ),
             );
         }
     }
@@ -99,13 +99,13 @@ class DiscountAmountAggregatorForGrossAmount implements CalculatorInterface
                 $expenseTransfer->getCalculatedDiscounts(),
                 $expenseTransfer->getUnitPrice(),
                 $priceMode,
-                $expenseTransfer->getTaxRate()
+                $expenseTransfer->getTaxRate(),
             );
             $expenseTransfer->setUnitDiscountAmountAggregation($unitDiscountAmountAggregation);
 
             $sumDiscountAmountAggregation = $this->calculateSumDiscountAmountAggregation(
                 $expenseTransfer->getCalculatedDiscounts(),
-                $expenseTransfer->getSumPrice()
+                $expenseTransfer->getSumPrice(),
             );
             $expenseTransfer->setSumDiscountAmountAggregation($sumDiscountAmountAggregation);
         }
@@ -119,7 +119,7 @@ class DiscountAmountAggregatorForGrossAmount implements CalculatorInterface
     protected function setCalculatedDiscountsSumGrossAmount(CalculatedDiscountTransfer $calculatedDiscountTransfer)
     {
         $calculatedDiscountTransfer->setSumGrossAmount(
-            $calculatedDiscountTransfer->getUnitGrossAmount() * $calculatedDiscountTransfer->getQuantity()
+            $calculatedDiscountTransfer->getUnitGrossAmount() * $calculatedDiscountTransfer->getQuantity(),
         );
 
         $this->setCalculatedDiscounts($calculatedDiscountTransfer);
@@ -139,15 +139,15 @@ class DiscountAmountAggregatorForGrossAmount implements CalculatorInterface
                     $productOptionTransfer->getCalculatedDiscounts(),
                     $productOptionTransfer->getUnitPrice(),
                     $priceMode,
-                    $productOptionTransfer->getTaxRate()
-                )
+                    $productOptionTransfer->getTaxRate(),
+                ),
             );
 
             $productOptionTransfer->setSumDiscountAmountAggregation(
                 $this->calculateSumDiscountAmountAggregation(
                     $productOptionTransfer->getCalculatedDiscounts(),
-                    $productOptionTransfer->getSumPrice()
-                )
+                    $productOptionTransfer->getSumPrice(),
+                ),
             );
         }
     }
@@ -267,7 +267,7 @@ class DiscountAmountAggregatorForGrossAmount implements CalculatorInterface
         foreach ($calculableObjectTransfer->getCartRuleDiscounts() as $discountTransfer) {
             if (isset($this->cartRuleDiscountTotals[$discountTransfer->getIdDiscount()])) {
                 $discountTransfer->setAmount(
-                    $this->cartRuleDiscountTotals[$discountTransfer->getIdDiscount()]
+                    $this->cartRuleDiscountTotals[$discountTransfer->getIdDiscount()],
                 );
             }
         }
@@ -275,7 +275,7 @@ class DiscountAmountAggregatorForGrossAmount implements CalculatorInterface
         foreach ($calculableObjectTransfer->getVoucherDiscounts() as $discountTransfer) {
             if (isset($this->voucherDiscountTotals[$discountTransfer->getIdDiscount()])) {
                 $discountTransfer->setAmount(
-                    $this->voucherDiscountTotals[$discountTransfer->getIdDiscount()]
+                    $this->voucherDiscountTotals[$discountTransfer->getIdDiscount()],
                 );
             }
         }

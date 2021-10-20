@@ -41,14 +41,14 @@ class PreparePriceDataStep implements DataImportStepInterface
         if (!$this->isPriceValid($dataSet[PriceProductScheduleDataSetInterface::KEY_PRICE_NET])) {
             throw new InvalidDataException(sprintf(
                 static::WRONG_PRICE_EXCEPTION_MESSAGE,
-                $dataSet[PriceProductScheduleDataSetInterface::KEY_PRICE_NET]
+                $dataSet[PriceProductScheduleDataSetInterface::KEY_PRICE_NET],
             ));
         }
 
         if (!$this->isPriceValid($dataSet[PriceProductScheduleDataSetInterface::KEY_PRICE_GROSS])) {
             throw new InvalidDataException(sprintf(
                 static::WRONG_PRICE_EXCEPTION_MESSAGE,
-                $dataSet[PriceProductScheduleDataSetInterface::KEY_PRICE_GROSS]
+                $dataSet[PriceProductScheduleDataSetInterface::KEY_PRICE_GROSS],
             ));
         }
     }

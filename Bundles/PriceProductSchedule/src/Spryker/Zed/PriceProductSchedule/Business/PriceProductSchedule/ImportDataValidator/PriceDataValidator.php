@@ -31,7 +31,7 @@ class PriceDataValidator extends AbstractImportDataValidator
         ) {
             return $this->createPriceProductScheduleListImportErrorTransfer(
                 $priceProductScheduleImportTransfer,
-                static::ERROR_MESSAGE_GROSS_AND_NET_VALUE
+                static::ERROR_MESSAGE_GROSS_AND_NET_VALUE,
             );
         }
 

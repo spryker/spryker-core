@@ -54,7 +54,7 @@ class ProductSetPageUrlSearchListener extends AbstractPlugin implements EventBul
             [
                 SpyUrlTableMap::COL_URL,
                 SpyUrlTableMap::COL_FK_RESOURCE_PRODUCT_SET,
-            ]
+            ],
         );
 
         return $this->getFactory()->getEventBehaviorFacade()->getEventTransferForeignKeys($validEventTransfers, SpyUrlTableMap::COL_FK_RESOURCE_PRODUCT_SET);

@@ -608,8 +608,8 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
                 'Missing instance of %s! You need to configure StoreRelationFormType ' .
                 'in your own DiscountDependencyProvider::getStoreRelationFormTypePlugin() ' .
                 'to be able to manage discounts.',
-                FormTypeInterface::class
-            )
+                FormTypeInterface::class,
+            ),
         );
     }
 }

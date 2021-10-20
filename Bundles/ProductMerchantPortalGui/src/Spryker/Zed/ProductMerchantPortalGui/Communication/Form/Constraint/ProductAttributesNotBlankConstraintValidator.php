@@ -73,11 +73,11 @@ class ProductAttributesNotBlankConstraintValidator extends ConstraintValidator
 
             if ($productConcrete) {
                 $localizedAttributesGroupedByLocaleName = $this->getLocalizedAttributesGroupedByLocaleName(
-                    $productConcrete->requireLocalizedAttributes()->getLocalizedAttributes()
+                    $productConcrete->requireLocalizedAttributes()->getLocalizedAttributes(),
                 );
                 $existingAttributes = $this->appendDefaultAttributes(
                     $localizedAttributesGroupedByLocaleName,
-                    $productConcrete->requireAttributes()->getAttributes()
+                    $productConcrete->requireAttributes()->getAttributes(),
                 );
             }
         }

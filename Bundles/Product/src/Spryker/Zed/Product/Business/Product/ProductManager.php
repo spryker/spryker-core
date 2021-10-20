@@ -106,7 +106,7 @@ class ProductManager implements ProductManagerInterface
 
             $productConcreteEntity = $this->productConcreteManager->findProductEntityByAbstractAndConcrete(
                 $productAbstractTransfer,
-                $productConcreteTransfer
+                $productConcreteTransfer,
             );
 
             if ($productConcreteEntity) {

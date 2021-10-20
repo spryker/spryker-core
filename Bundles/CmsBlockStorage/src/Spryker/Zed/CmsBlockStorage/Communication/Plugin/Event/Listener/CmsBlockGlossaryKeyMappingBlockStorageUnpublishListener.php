@@ -47,7 +47,7 @@ class CmsBlockGlossaryKeyMappingBlockStorageUnpublishListener extends AbstractPl
             ->getEventBehaviorFacade()
             ->getEventTransferForeignKeys(
                 $eventTransfers,
-                SpyCmsBlockGlossaryKeyMappingTableMap::COL_FK_CMS_BLOCK
+                SpyCmsBlockGlossaryKeyMappingTableMap::COL_FK_CMS_BLOCK,
             );
     }
 }

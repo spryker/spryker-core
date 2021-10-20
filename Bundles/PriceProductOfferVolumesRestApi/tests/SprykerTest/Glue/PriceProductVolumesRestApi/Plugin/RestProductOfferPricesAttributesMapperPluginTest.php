@@ -52,13 +52,13 @@ class RestProductOfferPricesAttributesMapperPluginTest extends Unit
             (new RestProductOfferPriceAttributesBuilder([
                 RestProductOfferPriceAttributesTransfer::PRICE_TYPE_NAME => 'DEFAULT',
                 RestProductOfferPriceAttributesTransfer::GROSS_AMOUNT => 12345,
-            ]))->build()
+            ]))->build(),
         );
         $restProductOfferPricesAttributesTransfer->addPrice(
             (new RestProductOfferPriceAttributesBuilder([
                 RestProductOfferPriceAttributesTransfer::PRICE_TYPE_NAME => 'ORIGINAL',
                 RestProductOfferPriceAttributesTransfer::GROSS_AMOUNT => 54321,
-            ]))->build()
+            ]))->build(),
         );
 
         $restProductOfferPricesAttributesMapperPlugin = new RestProductOfferPricesAttributesMapperPlugin();
@@ -66,7 +66,7 @@ class RestProductOfferPricesAttributesMapperPluginTest extends Unit
         // Act
         $restProductOfferPricesAttributesTransfer = $restProductOfferPricesAttributesMapperPlugin->map(
             $currentProductPriceTransfer,
-            $restProductOfferPricesAttributesTransfer
+            $restProductOfferPricesAttributesTransfer,
         );
 
         // Assert
@@ -105,7 +105,7 @@ class RestProductOfferPricesAttributesMapperPluginTest extends Unit
             (new RestProductOfferPriceAttributesBuilder([
                 RestProductOfferPriceAttributesTransfer::PRICE_TYPE_NAME => 'DEFAULT',
                 RestProductOfferPriceAttributesTransfer::GROSS_AMOUNT => 12345,
-            ]))->build()
+            ]))->build(),
         );
 
         $restProductOfferPricesAttributesMapperPlugin = new RestProductOfferPricesAttributesMapperPlugin();
@@ -113,7 +113,7 @@ class RestProductOfferPricesAttributesMapperPluginTest extends Unit
         // Act
         $restProductOfferPricesAttributesTransfer = $restProductOfferPricesAttributesMapperPlugin->map(
             $currentProductPriceTransfer,
-            $restProductOfferPricesAttributesTransfer
+            $restProductOfferPricesAttributesTransfer,
         );
 
         // Assert
@@ -168,13 +168,13 @@ class RestProductOfferPricesAttributesMapperPluginTest extends Unit
             (new RestProductOfferPriceAttributesBuilder([
                 RestProductOfferPriceAttributesTransfer::PRICE_TYPE_NAME => 'DEFAULT',
                 RestProductOfferPriceAttributesTransfer::GROSS_AMOUNT => 12345,
-            ]))->build()
+            ]))->build(),
         );
         $restProductOfferPricesAttributesTransfer->addPrice(
             (new RestProductOfferPriceAttributesBuilder([
                 RestProductOfferPriceAttributesTransfer::PRICE_TYPE_NAME => 'ORIGINAL',
                 RestProductOfferPriceAttributesTransfer::GROSS_AMOUNT => 54321,
-            ]))->build()
+            ]))->build(),
         );
 
         $restProductOfferPricesAttributesMapperPlugin = new RestProductOfferPricesAttributesMapperPlugin();
@@ -182,7 +182,7 @@ class RestProductOfferPricesAttributesMapperPluginTest extends Unit
         // Act
         $restProductOfferPricesAttributesTransfer = $restProductOfferPricesAttributesMapperPlugin->map(
             $currentProductPriceTransfer,
-            $restProductOfferPricesAttributesTransfer
+            $restProductOfferPricesAttributesTransfer,
         );
 
         // Assert

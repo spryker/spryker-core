@@ -368,7 +368,7 @@ class Container implements ContainerInterface, ArrayAccess
                 'The alias "%s" is already in use for the "%s" service and can\'t be reused for the service "%s".',
                 $alias,
                 static::$aliases[$alias],
-                $id
+                $id,
             ));
         }
 
@@ -517,7 +517,7 @@ class Container implements ContainerInterface, ArrayAccess
             unset(
                 $this->services[$id],
                 $this->frozenServices[$id],
-                $this->serviceIdentifier[$id]
+                $this->serviceIdentifier[$id],
             );
         }
     }
@@ -533,7 +533,7 @@ class Container implements ContainerInterface, ArrayAccess
             unset(
                 static::$globalServices[$id],
                 static::$globalFrozenServices[$id],
-                static::$globalServiceIdentifier[$id]
+                static::$globalServiceIdentifier[$id],
             );
         }
     }

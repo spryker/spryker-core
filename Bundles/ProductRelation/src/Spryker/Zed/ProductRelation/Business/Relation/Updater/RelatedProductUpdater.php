@@ -49,7 +49,7 @@ class RelatedProductUpdater implements RelatedProductUpdaterInterface
 
             $this->productRelationEntityManager->saveRelatedProducts(
                 $productAbstractIds,
-                $productRelationTransfer->getIdProductRelation()
+                $productRelationTransfer->getIdProductRelation(),
             );
         }
     }

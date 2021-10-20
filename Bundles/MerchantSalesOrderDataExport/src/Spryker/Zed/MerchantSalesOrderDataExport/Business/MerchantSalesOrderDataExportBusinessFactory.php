@@ -31,7 +31,7 @@ class MerchantSalesOrderDataExportBusinessFactory extends AbstractBusinessFactor
         return new MerchantSalesOrderDataExporter(
             $this->getDataExportService(),
             $this->getConfig(),
-            $this->createMerchantOrderDataReader()
+            $this->createMerchantOrderDataReader(),
         );
     }
 
@@ -43,7 +43,7 @@ class MerchantSalesOrderDataExportBusinessFactory extends AbstractBusinessFactor
         return new MerchantSalesOrderDataExporter(
             $this->getDataExportService(),
             $this->getConfig(),
-            $this->createMerchantOrderItemDataReader()
+            $this->createMerchantOrderItemDataReader(),
         );
     }
 
@@ -55,7 +55,7 @@ class MerchantSalesOrderDataExportBusinessFactory extends AbstractBusinessFactor
         return new MerchantSalesOrderDataExporter(
             $this->getDataExportService(),
             $this->getConfig(),
-            $this->createMerchantOrderExpenseDataReader()
+            $this->createMerchantOrderExpenseDataReader(),
         );
     }
 

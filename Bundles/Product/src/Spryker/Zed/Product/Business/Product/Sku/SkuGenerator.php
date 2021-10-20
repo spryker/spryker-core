@@ -119,7 +119,7 @@ class SkuGenerator implements SkuGeneratorInterface
             '%s%s%s',
             $abstractSku,
             static::SKU_ABSTRACT_SEPARATOR,
-            $concreteSku
+            $concreteSku,
         ));
         $formattedSku = substr($formattedSku, 0, static::SKU_MAX_LENGTH);
         $formattedSku = rtrim($formattedSku, implode('', [

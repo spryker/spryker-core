@@ -50,7 +50,7 @@ class ProductImageSetsRestApiToProductImageStorageClientBridge implements Produc
         return $this->productImageStorageClient->resolveProductImageSetStorageTransfers(
             $idProductConcrete,
             $idProductAbstract,
-            $locale
+            $locale,
         );
     }
 }

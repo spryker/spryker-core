@@ -76,7 +76,7 @@ class AvailabilityNotificationReader implements AvailabilityNotificationReaderIn
             $availabilityNotificationCriteriaTransfer->setPagination(
                 (new PaginationTransfer())
                     ->setMaxPerPage($restRequest->getPage()->getLimit())
-                    ->setPage(($restRequest->getPage()->getOffset() / $restRequest->getPage()->getLimit()) + 1)
+                    ->setPage(($restRequest->getPage()->getOffset() / $restRequest->getPage()->getLimit()) + 1),
             );
         }
 

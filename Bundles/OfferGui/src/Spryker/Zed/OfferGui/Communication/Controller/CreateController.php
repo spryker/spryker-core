@@ -100,7 +100,7 @@ class CreateController extends AbstractController
 
             $redirectUrl = Url::generate(
                 '/customer/add',
-                [static::PARAM_KEY_REDIRECT_URL => urlencode($redirectBackUrl)]
+                [static::PARAM_KEY_REDIRECT_URL => urlencode($redirectBackUrl)],
             )->build();
 
             return $this->redirectResponse($redirectUrl);
@@ -151,7 +151,7 @@ class CreateController extends AbstractController
 
         $redirectUrl = Url::generate(
             '/offer-gui/create',
-            [static::PARAM_KEY_INITIAL_OFFER => $offerKey]
+            [static::PARAM_KEY_INITIAL_OFFER => $offerKey],
         )->build();
 
         return $redirectUrl;
@@ -221,7 +221,7 @@ class CreateController extends AbstractController
 
         $redirectUrl = Url::generate(
             static::REDIRECT_URL_OFFER_VIEW,
-            [EditController::PARAM_ID_OFFER => $offerResponseTransfer->getOffer()->getIdOffer()]
+            [EditController::PARAM_ID_OFFER => $offerResponseTransfer->getOffer()->getIdOffer()],
         )->build();
 
         return $this->redirectResponse($redirectUrl);
@@ -247,7 +247,7 @@ class CreateController extends AbstractController
         }
 
         return (new OfferTransfer())->fromArray(
-            $data
+            $data,
         );
     }
 

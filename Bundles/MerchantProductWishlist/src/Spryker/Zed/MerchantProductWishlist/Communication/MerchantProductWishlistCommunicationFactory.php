@@ -26,7 +26,7 @@ class MerchantProductWishlistCommunicationFactory extends AbstractCommunicationF
     {
         return new MerchantProductWishlistItemExpander(
             $this->getProductFacade(),
-            $this->getMerchantProductFacade()
+            $this->getMerchantProductFacade(),
         );
     }
 

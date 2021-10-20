@@ -81,7 +81,7 @@ class ShoppingListItemValidator implements ShoppingListItemValidatorInterface
         ShoppingListItemResponseTransfer $shoppingListItemResponseTransfer
     ): ShoppingListItemResponseTransfer {
         $shoppingListTransfer = $this->shoppingListRepository->findShoppingListById(
-            (new ShoppingListTransfer())->setIdShoppingList($shoppingListItemTransfer->getFkShoppingList())
+            (new ShoppingListTransfer())->setIdShoppingList($shoppingListItemTransfer->getFkShoppingList()),
         );
 
         if (!$shoppingListTransfer) {
@@ -104,7 +104,7 @@ class ShoppingListItemValidator implements ShoppingListItemValidatorInterface
 
         return $this->permissionValidator->validatePermissionForPerformingOperation(
             $shoppingListTransfer,
-            $shoppingListItemResponseTransfer
+            $shoppingListItemResponseTransfer,
         );
     }
 

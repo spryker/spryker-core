@@ -107,14 +107,14 @@ class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
     public function getBulkProductOptions(array $productAbstractIds): array
     {
         $productOptionStorageDataItems = $this->getProductOptionStorageDataItems(
-            $this->generateStorageKeys($productAbstractIds)
+            $this->generateStorageKeys($productAbstractIds),
         );
         $productAbstractOptionStorageTransfers =
             $this->productOptionMapper->mapProductAbstractOptionStorageDataItemsToProductAbstractOptionStorageTransfers(
-                $productOptionStorageDataItems
+                $productOptionStorageDataItems,
             );
         $productAbstractOptionStorageTransfers = $this->indexProductAbstractOptionStorageTransfersByIdProductAbstract(
-            $productAbstractOptionStorageTransfers
+            $productAbstractOptionStorageTransfers,
         );
 
         if (!$this->can('SeePricePermissionPlugin')) {
@@ -122,7 +122,7 @@ class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
         }
 
         return $this->valuePriceReader->resolveProductAbstractOptionStorageTransfersProductOptionValuePrices(
-            $productAbstractOptionStorageTransfers
+            $productAbstractOptionStorageTransfers,
         );
     }
 
@@ -144,7 +144,7 @@ class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
         $productAbstractOptionStorageTransfer =
             $this->productOptionMapper->mapProductAbstractOptionStorageDataItemToProductAbstractOptionStorageTransfer(
                 $productAbstractOptionStorageData,
-                new ProductAbstractOptionStorageTransfer()
+                new ProductAbstractOptionStorageTransfer(),
             );
 
         if (!$this->can('SeePricePermissionPlugin')) {
@@ -152,7 +152,7 @@ class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
         }
 
         return $this->valuePriceReader->resolveProductAbstractOptionStorageTransferProductOptionValuePrices(
-            $productAbstractOptionStorageTransfer
+            $productAbstractOptionStorageTransfer,
         );
     }
 

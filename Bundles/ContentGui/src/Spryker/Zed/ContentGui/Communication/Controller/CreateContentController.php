@@ -52,7 +52,7 @@ class CreateContentController extends AbstractController
         $contentForm = $this->getFactory()
             ->getContentForm(
                 $dataProvider->getData($termKey),
-                $dataProvider->getOptions($termKey)
+                $dataProvider->getOptions($termKey),
             )
             ->handleRequest($request);
 
@@ -67,8 +67,8 @@ class CreateContentController extends AbstractController
             return $this->redirectResponse(
                 $request->query->get(
                     static::PARAM_REDIRECT_URL,
-                    static::URL_REDIRECT_CONTENT_LIST_PAGE
-                )
+                    static::URL_REDIRECT_CONTENT_LIST_PAGE,
+                ),
             );
         }
 

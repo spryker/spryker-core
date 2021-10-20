@@ -50,7 +50,7 @@ class ProductOfferAvailabilitiesRestApiDependencyProvider extends AbstractBundle
     {
         $container->set(static::CLIENT_PRODUCT_OFFER_AVAILABILITY_STORAGE, function (Container $container) {
             return new ProductOfferAvailabilitiesRestApiToProductOfferAvailabilityStorageClientBridge(
-                $container->getLocator()->productOfferAvailabilityStorage()->client()
+                $container->getLocator()->productOfferAvailabilityStorage()->client(),
             );
         });
 
@@ -66,7 +66,7 @@ class ProductOfferAvailabilitiesRestApiDependencyProvider extends AbstractBundle
     {
         $container->set(static::CLIENT_STORE, function (Container $container) {
             return new ProductOfferAvailabilitiesRestApiToStoreClientBridge(
-                $container->getLocator()->store()->client()
+                $container->getLocator()->store()->client(),
             );
         });
 

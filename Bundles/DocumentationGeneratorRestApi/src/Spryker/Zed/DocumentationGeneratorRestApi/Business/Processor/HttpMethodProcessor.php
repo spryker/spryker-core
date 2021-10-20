@@ -181,8 +181,8 @@ class HttpMethodProcessor implements HttpMethodProcessorInterface
             $annotationTransfer,
             $this->getOperationId(
                 static::PATTERN_OPERATION_ID_GET_RESOURCE,
-                $this->getFullResource($plugin)
-            )
+                $this->getFullResource($plugin),
+            ),
         );
 
         $this->addGetResourceById($plugin, $pathDataTransfer, $idResource, $annotationTransfer);
@@ -213,8 +213,8 @@ class HttpMethodProcessor implements HttpMethodProcessorInterface
             $annotationTransfer,
             $this->getOperationId(
                 static::PATTERN_OPERATION_ID_GET_COLLECTION,
-                $this->getFullResource($plugin)
-            )
+                $this->getFullResource($plugin),
+            ),
         );
 
         $this->tagGenerator->addTag($pathDataTransfer);
@@ -247,13 +247,13 @@ class HttpMethodProcessor implements HttpMethodProcessorInterface
             $annotationTransfer,
             $this->getOperationId(
                 static::PATTERN_OPERATION_ID_POST_RESOURCE,
-                $this->getFullResource($plugin)
-            )
+                $this->getFullResource($plugin),
+            ),
         );
 
         if (!$pathDataTransfer->getSummary()) {
             $pathDataTransfer->setSummary(
-                $this->getDefaultMethodSummary(static::PATTERN_SUMMARY_POST_RESOURCE, $plugin->getResourceType())
+                $this->getDefaultMethodSummary(static::PATTERN_SUMMARY_POST_RESOURCE, $plugin->getResourceType()),
             );
         }
 
@@ -287,13 +287,13 @@ class HttpMethodProcessor implements HttpMethodProcessorInterface
             $annotationTransfer,
             $this->getOperationId(
                 static::PATTERN_OPERATION_ID_PATCH_RESOURCE,
-                $this->getFullResource($plugin)
-            )
+                $this->getFullResource($plugin),
+            ),
         );
 
         if (!$pathDataTransfer->getSummary()) {
             $pathDataTransfer->setSummary(
-                $this->getDefaultMethodSummary(static::PATTERN_SUMMARY_PATCH_RESOURCE, $plugin->getResourceType())
+                $this->getDefaultMethodSummary(static::PATTERN_SUMMARY_PATCH_RESOURCE, $plugin->getResourceType()),
             );
         }
 
@@ -325,13 +325,13 @@ class HttpMethodProcessor implements HttpMethodProcessorInterface
             $annotationTransfer,
             $this->getOperationId(
                 static::PATTERN_OPERATION_ID_DELETE_RESOURCE,
-                $this->getFullResource($plugin)
-            )
+                $this->getFullResource($plugin),
+            ),
         );
 
         if (!$pathDataTransfer->getSummary()) {
             $pathDataTransfer->setSummary(
-                $this->getDefaultMethodSummary(static::PATTERN_SUMMARY_DELETE_RESOURCE, $plugin->getResourceType())
+                $this->getDefaultMethodSummary(static::PATTERN_SUMMARY_DELETE_RESOURCE, $plugin->getResourceType()),
             );
         }
 
@@ -356,7 +356,7 @@ class HttpMethodProcessor implements HttpMethodProcessorInterface
 
         if (!$pathMethodDataTransfer->getSummary()) {
             $pathMethodDataTransfer->setSummary(
-                $this->getDefaultMethodSummary(static::PATTERN_SUMMARY_GET_COLLECTION, $pathMethodDataTransfer->getResource())
+                $this->getDefaultMethodSummary(static::PATTERN_SUMMARY_GET_COLLECTION, $pathMethodDataTransfer->getResource()),
             );
         }
 
@@ -383,7 +383,7 @@ class HttpMethodProcessor implements HttpMethodProcessorInterface
 
         if (!$pathMethodDataTransfer->getSummary()) {
             $pathMethodDataTransfer->setSummary(
-                $this->getDefaultMethodSummary(static::PATTERN_SUMMARY_GET_RESOURCE, $pathMethodDataTransfer->getResource())
+                $this->getDefaultMethodSummary(static::PATTERN_SUMMARY_GET_RESOURCE, $pathMethodDataTransfer->getResource()),
             );
         }
 
@@ -469,7 +469,7 @@ class HttpMethodProcessor implements HttpMethodProcessorInterface
         }
 
         return $this->createPathSchemaDataTransfer(
-            $this->schemaGenerator->addResponseResourceSchemaForPlugin($plugin, $annotationTransfer)
+            $this->schemaGenerator->addResponseResourceSchemaForPlugin($plugin, $annotationTransfer),
         );
     }
 
@@ -492,7 +492,7 @@ class HttpMethodProcessor implements HttpMethodProcessorInterface
         }
 
         return $this->createPathSchemaDataTransfer(
-            $this->schemaGenerator->addResponseCollectionSchemaForPlugin($plugin, $annotationTransfer)
+            $this->schemaGenerator->addResponseCollectionSchemaForPlugin($plugin, $annotationTransfer),
         );
     }
 

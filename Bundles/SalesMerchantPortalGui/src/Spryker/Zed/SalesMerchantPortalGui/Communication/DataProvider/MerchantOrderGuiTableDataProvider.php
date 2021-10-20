@@ -131,7 +131,7 @@ class MerchantOrderGuiTableDataProvider extends AbstractGuiTableDataProvider
             '%s %s %s',
             $orderTransfer->getSalutation(),
             $orderTransfer->getFirstName(),
-            $orderTransfer->getLastName()
+            $orderTransfer->getLastName(),
         );
     }
 

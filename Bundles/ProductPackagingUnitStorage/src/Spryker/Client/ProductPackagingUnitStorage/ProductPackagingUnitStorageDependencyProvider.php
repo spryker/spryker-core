@@ -69,7 +69,7 @@ class ProductPackagingUnitStorageDependencyProvider extends AbstractDependencyPr
     {
         $container->set(static::CLIENT_PRODUCT_MEASUREMENT_UNIT_STORAGE, function (Container $container) {
             return new ProductPackagingUnitStorageToProductMeasurementUnitStorageClientBridge(
-                $container->getLocator()->productMeasurementUnitStorage()->client()
+                $container->getLocator()->productMeasurementUnitStorage()->client(),
             );
         });
 

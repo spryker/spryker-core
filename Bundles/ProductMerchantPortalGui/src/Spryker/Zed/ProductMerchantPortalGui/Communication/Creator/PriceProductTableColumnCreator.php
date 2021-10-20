@@ -26,7 +26,7 @@ class PriceProductTableColumnCreator implements PriceProductTableColumnCreatorIn
             '%s[%s][%s]',
             mb_strtolower($priceTypeName),
             PriceProductTransfer::MONEY_VALUE,
-            $moneyValueType
+            $moneyValueType,
         );
     }
 

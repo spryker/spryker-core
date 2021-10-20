@@ -122,7 +122,7 @@ class OfferDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::FACADE_SALES, function (Container $container) {
             return new OfferToSalesFacadeBridge(
-                $container->getLocator()->sales()->facade()
+                $container->getLocator()->sales()->facade(),
             );
         });
 

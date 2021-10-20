@@ -66,12 +66,12 @@ class XmlBatchIterator implements CountableIteratorInterface
                 $xml = simplexml_load_string(
                     file_get_contents($this->xmlFilename),
                     'SimpleXMLElement',
-                    LIBXML_NOCDATA
+                    LIBXML_NOCDATA,
                 );
 
                 $this->batchData = json_decode(
                     json_encode($xml),
-                    true
+                    true,
                 );
 
                 $this->batchData = $this->batchData[$this->rootNodeName];

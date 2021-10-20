@@ -145,7 +145,7 @@ class ProductOfferAvailabilityStorageRepository extends AbstractRepository imple
                 ->createProductOfferAvailabilityStorageMapper()
                 ->mapProductOfferAvailabilityRequestDataToRequestTransfer(
                     $productOfferAvailabilityRequestData,
-                    new ProductOfferAvailabilityRequestTransfer()
+                    new ProductOfferAvailabilityRequestTransfer(),
                 );
         }
 

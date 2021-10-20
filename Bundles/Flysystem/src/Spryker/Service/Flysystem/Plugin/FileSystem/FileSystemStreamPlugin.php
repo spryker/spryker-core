@@ -25,7 +25,7 @@ class FileSystemStreamPlugin extends AbstractPlugin implements FileSystemStreamP
     {
         return $this->getService()->readStream(
             $fileSystemStreamTransfer->getFileSystemNameOrFail(),
-            $fileSystemStreamTransfer->getPathOrFail()
+            $fileSystemStreamTransfer->getPathOrFail(),
         );
     }
 
@@ -41,7 +41,7 @@ class FileSystemStreamPlugin extends AbstractPlugin implements FileSystemStreamP
             $fileSystemStreamTransfer->getFileSystemNameOrFail(),
             $fileSystemStreamTransfer->getPathOrFail(),
             $stream,
-            $fileSystemStreamTransfer->getConfig()
+            $fileSystemStreamTransfer->getConfig(),
         );
     }
 }

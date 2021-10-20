@@ -92,7 +92,7 @@ class RestRequestValidatorFacadeTest extends Unit
                 'getFilesystemAdapter',
                 'getYamlAdapter',
                 'getStore',
-            ]
+            ],
         );
 
         $mockFactory = $this->addMockConfig($mockFactory);
@@ -118,27 +118,27 @@ class RestRequestValidatorFacadeTest extends Unit
                 'getProjectPathPattern',
                 'getCorePathPattern',
                 'getCacheFilePathPattern',
-            ]
+            ],
         );
         $mockConfig
             ->method('getStorePathPattern')
             ->willReturn(
-                $this->getFixtureDirectory('Project%s')
+                $this->getFixtureDirectory('Project%s'),
             );
         $mockConfig
             ->method('getProjectPathPattern')
             ->willReturn(
-                $this->getFixtureDirectory('Project')
+                $this->getFixtureDirectory('Project'),
             );
         $mockConfig
             ->method('getCorePathPattern')
             ->willReturn(
-                $this->getFixtureDirectory('Vendor')
+                $this->getFixtureDirectory('Vendor'),
             );
         $mockConfig
             ->method('getCacheFilePathPattern')
             ->willReturn(
-                $this->getFixtureDirectory('Result') . '%s' . DIRECTORY_SEPARATOR . 'validation.cache'
+                $this->getFixtureDirectory('Result') . '%s' . DIRECTORY_SEPARATOR . 'validation.cache',
             );
 
         $mockFactory
@@ -159,7 +159,7 @@ class RestRequestValidatorFacadeTest extends Unit
             RestRequestValidatorToStoreBridge::class,
             [
                 'getAllowedStores',
-            ]
+            ],
         );
 
         $mockStore
@@ -168,7 +168,7 @@ class RestRequestValidatorFacadeTest extends Unit
                 [
                     static::STORE_DE,
                     static::STORE_AT,
-                ]
+                ],
             );
 
         $mockFactory
@@ -208,7 +208,7 @@ class RestRequestValidatorFacadeTest extends Unit
         $mockFactory
             ->method('getFinderAdapter')
             ->willReturn(
-                new RestRequestValidatorToFinderAdapter()
+                new RestRequestValidatorToFinderAdapter(),
             );
 
         return $mockFactory;
@@ -224,7 +224,7 @@ class RestRequestValidatorFacadeTest extends Unit
         $mockFactory
             ->method('getFilesystemAdapter')
             ->willReturn(
-                new RestRequestValidatorToFilesystemAdapter()
+                new RestRequestValidatorToFilesystemAdapter(),
             );
 
         return $mockFactory;
@@ -240,7 +240,7 @@ class RestRequestValidatorFacadeTest extends Unit
         $mockFactory
             ->method('getYamlAdapter')
             ->willReturn(
-                new RestRequestValidatorToYamlAdapter()
+                new RestRequestValidatorToYamlAdapter(),
             );
 
         return $mockFactory;
@@ -254,7 +254,7 @@ class RestRequestValidatorFacadeTest extends Unit
     protected function getExpectedResult(StoreTransfer $store): array
     {
         return (new RestRequestValidatorToYamlAdapter())->parseFile(
-            $this->getFixtureDirectory('Merged') . $store->getName() . DIRECTORY_SEPARATOR . 'result.validation.yaml'
+            $this->getFixtureDirectory('Merged') . $store->getName() . DIRECTORY_SEPARATOR . 'result.validation.yaml',
         );
     }
 
@@ -266,7 +266,7 @@ class RestRequestValidatorFacadeTest extends Unit
     protected function getActualResult(StoreTransfer $store): array
     {
         return (new RestRequestValidatorToYamlAdapter())->parseFile(
-            $this->getFixtureDirectory('Result') . $store->getName() . DIRECTORY_SEPARATOR . 'validation.cache'
+            $this->getFixtureDirectory('Result') . $store->getName() . DIRECTORY_SEPARATOR . 'validation.cache',
         );
     }
 

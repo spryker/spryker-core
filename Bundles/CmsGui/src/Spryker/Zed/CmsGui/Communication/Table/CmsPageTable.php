@@ -160,7 +160,7 @@ class CmsPageTable extends AbstractTable
             [
                 'icon' => 'fa-upload',
                 'class' => 'safe-submit btn-create',
-            ]
+            ],
         );
     }
 
@@ -234,7 +234,7 @@ class CmsPageTable extends AbstractTable
             'In Zed',
             Url::generate('/cms-gui/view-page/index', [
                 CmsPageTableConstants::LIST_PAGE_URL_PARAM_ID_CMS_PAGE => $item[CmsPageTableConstants::COL_ID_CMS_PAGE],
-            ])
+            ]),
         );
     }
 
@@ -268,7 +268,7 @@ class CmsPageTable extends AbstractTable
             false,
             [
                 'target' => '_blank',
-            ]
+            ],
         );
     }
 
@@ -284,7 +284,7 @@ class CmsPageTable extends AbstractTable
             Url::generate('/cms-gui/version-page/history', [
                 CmsPageTableConstants::VERSION_PAGE_URL_PARAM_ID_CMS_PAGE => $item[CmsPageTableConstants::COL_ID_CMS_PAGE],
             ]),
-            true
+            true,
         );
     }
 
@@ -309,7 +309,7 @@ class CmsPageTable extends AbstractTable
                     CmsPageTableConstants::EDIT_PAGE_URL_PARAM_ID_CMS_PAGE => $item[CmsPageTableConstants::COL_ID_CMS_PAGE],
                 ]),
                 static::BUTTON_LABEL_EDIT,
-                $buttonOptions
+                $buttonOptions,
             );
         }
 
@@ -319,7 +319,7 @@ class CmsPageTable extends AbstractTable
                 $this->createEditGlossaryButtonItem($item),
             ],
             static::BUTTON_LABEL_EDIT,
-            $buttonOptions
+            $buttonOptions,
         );
     }
 
@@ -334,7 +334,7 @@ class CmsPageTable extends AbstractTable
             'Page',
             Url::generate('/cms-gui/edit-page/index', [
                 CmsPageTableConstants::EDIT_PAGE_URL_PARAM_ID_CMS_PAGE => $item[CmsPageTableConstants::COL_ID_CMS_PAGE],
-            ])
+            ]),
         );
     }
 
@@ -349,7 +349,7 @@ class CmsPageTable extends AbstractTable
             'Placeholders',
             Url::generate('/cms-gui/create-glossary/index', [
                 CmsPageTableConstants::CREATE_GLOSSARY_URL_PARAM_ID_CMS_PAGE => $item[CmsPageTableConstants::COL_ID_CMS_PAGE],
-            ])
+            ]),
         );
     }
 
@@ -396,7 +396,7 @@ class CmsPageTable extends AbstractTable
                 ToggleActiveCmsPageForm::class,
                 [
                     static::BUTTON_CLASS => 'btn-danger safe-submit',
-                ]
+                ],
             );
         }
 
@@ -406,7 +406,7 @@ class CmsPageTable extends AbstractTable
                 CmsPageTableConstants::EDIT_PAGE_URL_PARAM_REDIRECT_URL => '/cms-gui/list-page/index',
             ]),
             'Activate',
-            ToggleActiveCmsPageForm::class
+            ToggleActiveCmsPageForm::class,
         );
     }
 
@@ -610,7 +610,7 @@ class CmsPageTable extends AbstractTable
         foreach ($storeRelationTransfer->getStores() as $storeTransfer) {
             $storeNames[] = sprintf(
                 '<span class="label label-info">%s</span>',
-                $storeTransfer->getName()
+                $storeTransfer->getName(),
             );
         }
 

@@ -81,7 +81,7 @@ class CompanyRoleDependencyProvider extends AbstractDependencyProvider
     {
         $container->set(static::CLIENT_PERMISSION, function (Container $container) {
             return new CompanyRoleToPermissionClientBridge(
-                $container->getLocator()->permission()->client()
+                $container->getLocator()->permission()->client(),
             );
         });
 

@@ -80,7 +80,7 @@ class EventDispatcher implements EventDispatcherInterface
                     $transfer,
                     $eventListener->getListenerName(),
                     $eventListener->getQueuePoolName(),
-                    $eventListener->getEventQueueName()
+                    $eventListener->getEventQueueName(),
                 );
             } else {
                 $this->eventProducer($eventName, $transfer, $eventListener);
@@ -110,7 +110,7 @@ class EventDispatcher implements EventDispatcherInterface
                     $transfers,
                     $eventListener->getListenerName(),
                     $eventListener->getQueuePoolName(),
-                    $eventListener->getEventQueueName()
+                    $eventListener->getEventQueueName(),
                 );
             } else {
                 $this->eventBulkProducer($eventName, $transfers, $eventListener);
@@ -210,14 +210,14 @@ class EventDispatcher implements EventDispatcherInterface
         if (count($foundListeners) === 0) {
             throw new EventListenerNotFoundException(sprintf(
                 'Please use Qualified name or Fully qualified name. There is no listener like %s.',
-                $listenerName
+                $listenerName,
             ));
         }
 
         if (count($foundListeners) > 1) {
             throw new EventListenerAmbiguousException(sprintf(
                 "Please use Qualified name or Fully qualified name. Found listeners: \n%s",
-                implode(PHP_EOL, array_keys($foundListeners))
+                implode(PHP_EOL, array_keys($foundListeners)),
             ));
         }
 
@@ -334,8 +334,8 @@ class EventDispatcher implements EventDispatcherInterface
                 $eventName,
                 $eventListener->getListenerName(),
                 get_class($transfer),
-                $this->utilEncodingService->encodeJson($transfer->toArray())
-            )
+                $this->utilEncodingService->encodeJson($transfer->toArray()),
+            ),
         );
     }
 

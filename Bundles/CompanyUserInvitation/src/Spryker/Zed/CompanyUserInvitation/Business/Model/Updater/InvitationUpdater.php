@@ -68,7 +68,7 @@ class InvitationUpdater implements InvitationUpdaterInterface
         }
 
         $companyUserInvitationTransfer->setFkCompanyUserInvitationStatus(
-            $this->getIdCompanyUserInvitationStatus($companyUserInvitationUpdateStatusRequestTransfer->getStatusKey())
+            $this->getIdCompanyUserInvitationStatus($companyUserInvitationUpdateStatusRequestTransfer->getStatusKey()),
         );
 
         if ($companyUserInvitationUpdateStatusRequestTransfer->getStatusKey() === CompanyUserInvitationConfig::INVITATION_STATUS_DELETED) {
@@ -118,7 +118,7 @@ class InvitationUpdater implements InvitationUpdaterInterface
             '%s@%s.%s',
             strtolower(md5((string)random_int(0, PHP_INT_MAX))),
             strtolower(md5((string)random_int(0, PHP_INT_MAX))),
-            strtolower(md5((string)random_int(0, PHP_INT_MAX)))
+            strtolower(md5((string)random_int(0, PHP_INT_MAX))),
         );
     }
 }

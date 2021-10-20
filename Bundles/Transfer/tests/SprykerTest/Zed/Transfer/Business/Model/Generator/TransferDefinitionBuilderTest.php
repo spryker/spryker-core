@@ -82,7 +82,7 @@ class TransferDefinitionBuilderTest extends Unit
         $definitionBuilder = new TransferDefinitionBuilder(
             $loader,
             new TransferDefinitionMerger(),
-            new ClassDefinition($config ?: new TransferConfig())
+            new ClassDefinition($config ?: new TransferConfig()),
         );
 
         return $definitionBuilder;

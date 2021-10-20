@@ -80,7 +80,7 @@ class AttributeController extends AbstractController
             ->createAttributeTable();
 
         return $this->jsonResponse(
-            $attributeTable->fetchData()
+            $attributeTable->fetchData(),
         );
     }
 
@@ -120,7 +120,7 @@ class AttributeController extends AbstractController
 
             return $this->redirectResponse(sprintf(
                 '/product-attribute-gui/attribute/translate?id=%d',
-                $attributeTransfer->getIdProductManagementAttribute()
+                $attributeTransfer->getIdProductManagementAttribute(),
             ));
         }
 
@@ -128,7 +128,7 @@ class AttributeController extends AbstractController
 
         return $this->redirectResponse(sprintf(
             '/product-attribute-gui/attribute/translate?id=%d',
-            $attributeTransfer->getIdProductManagementAttribute()
+            $attributeTransfer->getIdProductManagementAttribute(),
         ));
     }
 
@@ -171,7 +171,7 @@ class AttributeController extends AbstractController
 
         return $this->redirectResponse(sprintf(
             '/product-attribute-gui/attribute/view?id=%d',
-            $idProductManagementAttribute
+            $idProductManagementAttribute,
         ));
     }
 
@@ -228,7 +228,7 @@ class AttributeController extends AbstractController
 
         return $this->redirectResponse(sprintf(
             '/product-attribute-gui/attribute/translate?id=%d',
-            $attributeTransfer->getIdProductManagementAttribute()
+            $attributeTransfer->getIdProductManagementAttribute(),
         ));
     }
 

@@ -32,7 +32,7 @@ class FileListController extends AbstractController
         $fileIds = (array)$request->query->get(static::PARAM_FILE_IDS);
 
         return $this->jsonResponse(
-            $this->getFactory()->createContentFileListSelectedTable($fileIds)->fetchData()
+            $this->getFactory()->createContentFileListSelectedTable($fileIds)->fetchData(),
         );
     }
 
@@ -44,7 +44,7 @@ class FileListController extends AbstractController
     public function fileListViewTableAction(Request $request): JsonResponse
     {
         return $this->jsonResponse(
-            $this->getFactory()->createContentFileListViewTable()->fetchData()
+            $this->getFactory()->createContentFileListViewTable()->fetchData(),
         );
     }
 }

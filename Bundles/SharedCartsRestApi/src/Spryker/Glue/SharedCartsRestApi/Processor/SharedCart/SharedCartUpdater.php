@@ -56,18 +56,18 @@ class SharedCartUpdater implements SharedCartUpdaterInterface
         $shareCartRequestTransfer = $this->createShareCartRequestTransfer(
             $sharedCartUuid,
             $restRequest->getRestUser()->getNaturalIdentifier(),
-            $restSharedCartsAttributesTransfer->getIdCartPermissionGroup()
+            $restSharedCartsAttributesTransfer->getIdCartPermissionGroup(),
         );
 
         $shareCartResponseTransfer = $this->sharedCartsRestApiClient->update($shareCartRequestTransfer);
         if (!$shareCartResponseTransfer->getIsSuccessful()) {
             return $this->sharedCartRestResponseBuilder->createErrorResponseFromErrorIdentifier(
-                $shareCartResponseTransfer->getErrorIdentifier()
+                $shareCartResponseTransfer->getErrorIdentifier(),
             );
         }
 
         return $this->sharedCartRestResponseBuilder->createSharedCartRestResponse(
-            $shareCartResponseTransfer->getShareDetails()->offsetGet(0)
+            $shareCartResponseTransfer->getShareDetails()->offsetGet(0),
         );
     }
 

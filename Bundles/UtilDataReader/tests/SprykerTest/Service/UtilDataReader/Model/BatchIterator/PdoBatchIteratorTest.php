@@ -100,7 +100,7 @@ class PdoBatchIteratorTest extends Unit
 
         return new PdoBatchIterator(
             $criteriaBuilderMock,
-            $this->queryContainer
+            $this->queryContainer,
         );
     }
 
@@ -114,7 +114,7 @@ class PdoBatchIteratorTest extends Unit
         $addRowQuery = sprintf(
             'INSERT INTO %s (%s) VALUES (?)',
             static::TESTING_TABLE_NAME,
-            static::TESTING_COLUMN_NAME
+            static::TESTING_COLUMN_NAME,
         );
         for ($i = 0; $i < $numberOfRows; $i++) {
             $statement = $this->queryContainer->getConnection()->prepare($addRowQuery);

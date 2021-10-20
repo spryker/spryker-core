@@ -73,7 +73,7 @@ class ProductNewFacadeTest extends Unit
         $this->assertSame(
             $productAbstractTransfer->getIdProductAbstract(),
             $productLabelProductAbstractRelationTransfers[0]->getIdsProductAbstractToAssign()[0],
-            'Product abstract to be assigned does not match expected ID.'
+            'Product abstract to be assigned does not match expected ID.',
         );
     }
 
@@ -123,7 +123,7 @@ class ProductNewFacadeTest extends Unit
         ]);
         $this->tester->haveProductLabelToAbstractProductRelation(
             $productLabelTransfer->getIdProductLabel(),
-            $productAbstractTransfer->getIdProductAbstract()
+            $productAbstractTransfer->getIdProductAbstract(),
         );
 
         // Act
@@ -153,7 +153,7 @@ class ProductNewFacadeTest extends Unit
         ]);
         $this->tester->haveProductLabelToAbstractProductRelation(
             $productLabelTransfer->getIdProductLabel(),
-            $productAbstractTransfer->getIdProductAbstract()
+            $productAbstractTransfer->getIdProductAbstract(),
         );
 
         // Act
@@ -166,7 +166,7 @@ class ProductNewFacadeTest extends Unit
         $this->assertSame(
             $productAbstractTransfer->getIdProductAbstract(),
             $productLabelProductAbstractRelationTransfers[0]->getIdsProductAbstractToDeassign()[0],
-            'Product abstract to be deassigned does not match expected ID.'
+            'Product abstract to be deassigned does not match expected ID.',
         );
     }
 
@@ -190,7 +190,7 @@ class ProductNewFacadeTest extends Unit
         ]);
         $this->tester->haveProductLabelToAbstractProductRelation(
             $productLabelTransfer->getIdProductLabel(),
-            $productAbstractTransfer->getIdProductAbstract()
+            $productAbstractTransfer->getIdProductAbstract(),
         );
 
         // Act

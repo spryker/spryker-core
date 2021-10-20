@@ -98,7 +98,7 @@ class CheckCartAvailability implements CheckCartAvailabilityInterface
             $sellableItemRequestTransfer->setQuantity($this->calculateTotalItemQuantity($itemsInCart, $itemTransfer));
             $sellableItemRequestTransfer->setProductAvailabilityCriteria(
                 (new ProductAvailabilityCriteriaTransfer())
-                    ->fromArray($itemTransfer->toArray(), true)
+                    ->fromArray($itemTransfer->toArray(), true),
             );
             $itemsInCart->append($itemTransfer);
             $sellableItemRequestTransfer->setSku($itemTransfer->getSku());
@@ -138,7 +138,7 @@ class CheckCartAvailability implements CheckCartAvailabilityInterface
                 $cartPreCheckResponseTransfer->setIsSuccess(false);
                 $messages[] = $this->createItemIsNotAvailableMessageTransfer(
                     $sellableItemResponseTransfer->getAvailableQuantity(),
-                    $sellableItemResponseTransfer->getSku()
+                    $sellableItemResponseTransfer->getSku(),
                 );
             }
         }
@@ -177,7 +177,7 @@ class CheckCartAvailability implements CheckCartAvailabilityInterface
                 $itemTransfer->getSku(),
                 new Decimal($currentItemQuantity),
                 $storeTransfer,
-                $productAvailabilityCriteriaTransfer
+                $productAvailabilityCriteriaTransfer,
             );
 
             if (!$isSellable) {
@@ -206,7 +206,7 @@ class CheckCartAvailability implements CheckCartAvailabilityInterface
             if ($cartItemQuantityCounterStrategyPlugin->isApplicable($itemsInCart, $itemTransfer)) {
                 $cartItemQuantityTransfer = $cartItemQuantityCounterStrategyPlugin->countCartItemQuantity(
                     $itemsInCart,
-                    $itemTransfer
+                    $itemTransfer,
                 );
 
                 return $cartItemQuantityTransfer->getQuantity();
@@ -215,7 +215,7 @@ class CheckCartAvailability implements CheckCartAvailabilityInterface
 
         return $this->calculateCurrentCartQuantityForGivenSku(
             $itemsInCart,
-            $itemTransfer->getSku()
+            $itemTransfer->getSku(),
         );
     }
 

@@ -39,7 +39,7 @@ class ProductAvailabilitiesRestApiFactory extends AbstractFactory
         return new AbstractProductAvailabilitiesReader(
             $this->getProductStorageClient(),
             $this->getAvailabilityStorageClient(),
-            $this->createProductAbstractAvailabilityRestResponseBuilder()
+            $this->createProductAbstractAvailabilityRestResponseBuilder(),
         );
     }
 
@@ -51,7 +51,7 @@ class ProductAvailabilitiesRestApiFactory extends AbstractFactory
         return new ConcreteProductAvailabilitiesReader(
             $this->getAvailabilityStorageClient(),
             $this->getProductStorageClient(),
-            $this->createProductConcreteAvailabilityRestResponseBuilder()
+            $this->createProductConcreteAvailabilityRestResponseBuilder(),
         );
     }
 
@@ -86,7 +86,7 @@ class ProductAvailabilitiesRestApiFactory extends AbstractFactory
     {
         return new ProductConcreteAvailabilityRestResponseBuilder(
             $this->getResourceBuilder(),
-            $this->createConcreteProductsAvailabilitiesResourceMapper()
+            $this->createConcreteProductsAvailabilitiesResourceMapper(),
         );
     }
 
@@ -97,7 +97,7 @@ class ProductAvailabilitiesRestApiFactory extends AbstractFactory
     {
         return new ProductAbstractAvailabilityRestResponseBuilder(
             $this->getResourceBuilder(),
-            $this->createAbstractProductsAvailabilitiesResourceMapper()
+            $this->createAbstractProductsAvailabilitiesResourceMapper(),
         );
     }
 

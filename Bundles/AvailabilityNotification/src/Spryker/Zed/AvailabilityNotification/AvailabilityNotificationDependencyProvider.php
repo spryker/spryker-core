@@ -96,7 +96,7 @@ class AvailabilityNotificationDependencyProvider extends AbstractBundleDependenc
     {
         $container->set(static::FACADE_PRODUCT, function (Container $container) {
             return new AvailabilityNotificationToProductFacadeBridge(
-                $container->getLocator()->product()->facade()
+                $container->getLocator()->product()->facade(),
             );
         });
 

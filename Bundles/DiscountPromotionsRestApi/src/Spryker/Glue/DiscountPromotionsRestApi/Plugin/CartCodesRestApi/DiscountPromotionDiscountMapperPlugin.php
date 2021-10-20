@@ -35,7 +35,7 @@ class DiscountPromotionDiscountMapperPlugin extends AbstractController implement
     ): RestDiscountsAttributesTransfer {
         return $this->getFactory()->createPromotionItemMapper()->mapDiscountPromotionToRestDiscountsAttributesTransfer(
             $discountTransfer,
-            $restDiscountsAttributesTransfer
+            $restDiscountsAttributesTransfer,
         );
     }
 }

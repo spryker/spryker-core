@@ -109,7 +109,7 @@ class FilterPreferencesDataProvider
         $options = [
             FilterPreferencesForm::OPTION_FILTER_TYPE_CHOICES => array_combine(
                 $availableProductSearchFilterConfigKeys,
-                $availableProductSearchFilterConfigKeys
+                $availableProductSearchFilterConfigKeys,
             ),
             FilterPreferencesForm::OPTION_IS_UPDATE => ($idProductSearchAttribute > 0),
         ];

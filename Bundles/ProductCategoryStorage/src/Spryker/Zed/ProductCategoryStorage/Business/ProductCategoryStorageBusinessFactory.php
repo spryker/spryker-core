@@ -53,7 +53,7 @@ class ProductCategoryStorageBusinessFactory extends AbstractBusinessFactory
             $this->getEntityManager(),
             $this->getStoreFacade(),
             $this->createProductAbstractReader(),
-            $this->createProductCategoryStorageReader()
+            $this->createProductCategoryStorageReader(),
         );
     }
 
@@ -65,7 +65,7 @@ class ProductCategoryStorageBusinessFactory extends AbstractBusinessFactory
         return new ProductCategoryStorageDeleter(
             $this->getEventBehaviorFacade(),
             $this->getEntityManager(),
-            $this->createProductAbstractReader()
+            $this->createProductAbstractReader(),
         );
     }
 
@@ -76,7 +76,7 @@ class ProductCategoryStorageBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductAbstractReader(
             $this->getCategoryFacade(),
-            $this->getRepository()
+            $this->getRepository(),
         );
     }
 
@@ -86,7 +86,7 @@ class ProductCategoryStorageBusinessFactory extends AbstractBusinessFactory
     public function createProductCategoryStorageReader(): ProductCategoryStorageReaderInterface
     {
         return new ProductCategoryStorageReader(
-            $this->createCategoryTreeBuilder()
+            $this->createCategoryTreeBuilder(),
         );
     }
 
@@ -96,7 +96,7 @@ class ProductCategoryStorageBusinessFactory extends AbstractBusinessFactory
     public function createCategoryTreeBuilder(): CategoryTreeBuilderInterface
     {
         return new CategoryTreeBuilder(
-            $this->getRepository()
+            $this->getRepository(),
         );
     }
 
@@ -131,7 +131,7 @@ class ProductCategoryStorageBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductCategoryStorageByCategoryEventsWriter(
             $this->getEventBehaviorFacade(),
-            $this->createProductCategoryStorageWriter()
+            $this->createProductCategoryStorageWriter(),
         );
     }
 
@@ -143,7 +143,7 @@ class ProductCategoryStorageBusinessFactory extends AbstractBusinessFactory
         return new ProductCategoryStorageByCategoryStoreEventsWriter(
             $this->getEventBehaviorFacade(),
             $this->createProductAbstractReader(),
-            $this->createProductCategoryStorageWriter()
+            $this->createProductCategoryStorageWriter(),
         );
     }
 
@@ -154,7 +154,7 @@ class ProductCategoryStorageBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductCategoryStorageByCategoryAttributeEventsWriter(
             $this->getEventBehaviorFacade(),
-            $this->createProductCategoryStorageWriter()
+            $this->createProductCategoryStorageWriter(),
         );
     }
 
@@ -165,7 +165,7 @@ class ProductCategoryStorageBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductCategoryStorageByCategoryNodeEventsWriter(
             $this->getEventBehaviorFacade(),
-            $this->createProductCategoryStorageWriter()
+            $this->createProductCategoryStorageWriter(),
         );
     }
 
@@ -177,7 +177,7 @@ class ProductCategoryStorageBusinessFactory extends AbstractBusinessFactory
         return new ProductCategoryStorageByCategoryUrlEventsWriter(
             $this->getEventBehaviorFacade(),
             $this->getCategoryFacade(),
-            $this->createProductCategoryStorageWriter()
+            $this->createProductCategoryStorageWriter(),
         );
     }
 
@@ -188,7 +188,7 @@ class ProductCategoryStorageBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductCategoryStorageByProductCategoryEventsWriter(
             $this->getEventBehaviorFacade(),
-            $this->createProductCategoryStorageWriter()
+            $this->createProductCategoryStorageWriter(),
         );
     }
 }

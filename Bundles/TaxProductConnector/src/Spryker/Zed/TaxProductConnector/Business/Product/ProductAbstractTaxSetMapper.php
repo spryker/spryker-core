@@ -45,8 +45,8 @@ class ProductAbstractTaxSetMapper
             throw new TaxSetNotFoundException(
                 sprintf(
                     'Tax set for product abstract with id "%d" not found.',
-                    $productAbstractTransfer->getIdProductAbstract()
-                )
+                    $productAbstractTransfer->getIdProductAbstract(),
+                ),
             );
         }
 

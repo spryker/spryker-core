@@ -107,7 +107,7 @@ class BundleFinder implements BundleFinderInterface
 
         $mergedMethodTransferCollection = $this->mergeMethods(
             $existingBundleTransfer->getMethods(),
-            $bundleTransfer->getMethods()
+            $bundleTransfer->getMethods(),
         );
         $bundleTransfer->setMethods($mergedMethodTransferCollection);
 

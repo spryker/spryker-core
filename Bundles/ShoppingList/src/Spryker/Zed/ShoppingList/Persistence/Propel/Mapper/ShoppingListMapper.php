@@ -69,7 +69,7 @@ class ShoppingListMapper implements ShoppingListMapperInterface
 
         return $this->mapShoppingListItemCollectionTransferToShoppingListTransfer(
             $this->shoppingListItemMapper->mapItemCollectionTransfer($shoppingListEntityTransfer->getSpyShoppingListItems()->getArrayCopy()),
-            $shoppingListTransfer
+            $shoppingListTransfer,
         );
     }
 
@@ -203,7 +203,7 @@ class ShoppingListMapper implements ShoppingListMapperInterface
             return trim(sprintf(
                 '%s %s',
                 $virtualPropertiesCollection[static::FIELD_FIRST_NAME] ?? '',
-                $virtualPropertiesCollection[static::FIELD_LAST_NAME] ?? ''
+                $virtualPropertiesCollection[static::FIELD_LAST_NAME] ?? '',
             ));
         }
 

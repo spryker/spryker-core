@@ -324,13 +324,13 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
 
         $productMeasurementBaseUnitTransfer = $this->tester->haveProductMeasurementBaseUnit(
             $itemProductConcreteTransfer->getFkProductAbstract(),
-            $productMeasurementUnitTransfer->getIdProductMeasurementUnit()
+            $productMeasurementUnitTransfer->getIdProductMeasurementUnit(),
         );
 
         $productMeasurementSalesUnitEntityTransfer = $this->tester->haveProductMeasurementSalesUnit(
             $boxProductConcreteTransfer->getIdProductConcrete(),
             $productMeasurementUnitTransfer->getIdProductMeasurementUnit(),
-            $productMeasurementBaseUnitTransfer->getIdProductMeasurementBaseUnit()
+            $productMeasurementBaseUnitTransfer->getIdProductMeasurementBaseUnit(),
         );
 
         $productMeasurementSalesUnitTransfer = (new ProductMeasurementSalesUnitTransfer())
@@ -344,7 +344,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
                     ->setQuantity(static::ITEM_QUANTITY)
                     ->setAmount(static::PACKAGE_AMOUNT)
                     ->setAmountLeadProduct($itemProductConcreteTransfer)
-                    ->setAmountSalesUnit($productMeasurementSalesUnitTransfer)
+                    ->setAmountSalesUnit($productMeasurementSalesUnitTransfer),
             );
 
         // Act
@@ -471,7 +471,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
         $cartChange = (new CartChangeTransfer())
             ->setQuote(
                 (new QuoteTransfer())
-                    ->setPriceMode(static::PRICE_MODE_GROSS)
+                    ->setPriceMode(static::PRICE_MODE_GROSS),
             )
             ->addItem(
                 (new ItemTransfer())
@@ -479,7 +479,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
                     ->setQuantity(1)
                     ->setAmount(6)
                     ->setProductPackagingUnit($productPackagingUnitTransfer)
-                    ->setUnitGrossPrice($unitGrossPrice)
+                    ->setUnitGrossPrice($unitGrossPrice),
             );
 
         // Act
@@ -668,7 +668,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
                 SpyProductPackagingUnitEntityTransfer::AMOUNT_MAX => $maxRestriction,
                 SpyProductPackagingUnitEntityTransfer::AMOUNT_INTERVAL => $intervalRestriction,
                 SpyProductPackagingUnitEntityTransfer::IS_AMOUNT_VARIABLE => $isAmountVariable,
-            ]
+            ],
         );
 
         $code = 'MYCODE' . random_int(1, 100);
@@ -678,13 +678,13 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
 
         $productMeasurementBaseUnitTransfer = $this->tester->haveProductMeasurementBaseUnit(
             $itemProductConcreteTransfer->getFkProductAbstract(),
-            $productMeasurementUnitTransfer->getIdProductMeasurementUnit()
+            $productMeasurementUnitTransfer->getIdProductMeasurementUnit(),
         );
 
         $productMeasurementSalesUnitEntityTransfer = $this->tester->haveProductMeasurementSalesUnit(
             $boxProductConcreteTransfer->getIdProductConcrete(),
             $productMeasurementUnitTransfer->getIdProductMeasurementUnit(),
-            $productMeasurementBaseUnitTransfer->getIdProductMeasurementBaseUnit()
+            $productMeasurementBaseUnitTransfer->getIdProductMeasurementBaseUnit(),
         );
 
         $productMeasurementSalesUnitTransfer = (new ProductMeasurementSalesUnitTransfer())
@@ -694,7 +694,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
             $boxProductConcreteTransfer,
             $productMeasurementSalesUnitTransfer,
             $itemAmount,
-            $itemQuantity
+            $itemQuantity,
         );
 
         // Act
@@ -738,14 +738,14 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
         ]);
         $productMeasurementBaseUnitTransfer = $this->tester->haveProductMeasurementBaseUnit(
             $productTransfer->getFkProductAbstract(),
-            $productMeasurementUnitTransfer->getIdProductMeasurementUnit()
+            $productMeasurementUnitTransfer->getIdProductMeasurementUnit(),
         );
         $productMeasurementBaseUnitTransfer->setProductMeasurementUnit($productMeasurementUnitTransfer);
 
         $productMeasurementSalesUnitTransfer = $this->tester->haveProductMeasurementSalesUnit(
             $productTransfer->getIdProductConcrete(),
             $productMeasurementUnitTransfer->getIdProductMeasurementUnit(),
-            $productMeasurementBaseUnitTransfer->getIdProductMeasurementBaseUnit()
+            $productMeasurementBaseUnitTransfer->getIdProductMeasurementBaseUnit(),
         );
 
         $productMeasurementSalesUnitTransfer->setProductMeasurementUnit($productMeasurementUnitTransfer);
@@ -759,7 +759,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
         // Act
         $salesOrderItemEntity = $this->getFacade()->expandSalesOrderItemWithAmountSalesUnit(
             $itemTransfer,
-            new SpySalesOrderItemEntityTransfer()
+            new SpySalesOrderItemEntityTransfer(),
         );
 
         // Assert
@@ -780,7 +780,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
         // Act
         $salesOrderItemEntity = $this->getFacade()->expandSalesOrderItemWithAmountAndAmountSku(
             $itemTransfer,
-            new SpySalesOrderItemEntityTransfer()
+            new SpySalesOrderItemEntityTransfer(),
         );
 
         // Assert
@@ -971,7 +971,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
                     ->setId($boxProductConcreteTransfer->getIdProductConcrete())
                     ->setSku($boxProductConcreteTransfer->getSku())
                     ->setQuantity(static::ITEM_QUANTITY)
-                    ->setAmount(static::PACKAGE_AMOUNT)
+                    ->setAmount(static::PACKAGE_AMOUNT),
             );
 
         // Act
@@ -1090,7 +1090,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
         // Act
         $this->getFacade()->removeItemFromQuote(
             $this->tester->createProductPackagingUnitItemTransfer($itemSku, 1, new Decimal(1.4)),
-            $quoteTransfer
+            $quoteTransfer,
         );
 
         // Assert
@@ -1103,7 +1103,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
         // Act
         $this->getFacade()->removeItemFromQuote(
             $this->tester->createProductPackagingUnitItemTransfer($itemSku, 1, new Decimal(1.7)),
-            $quoteTransfer
+            $quoteTransfer,
         );
 
         // Assert
@@ -1129,7 +1129,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
         $salesAggregationTransfers = $this->getFacade()->aggregateProductPackagingUnitReservation(
             $leadProductConcreteTransfer->getSku(),
             $stateCollectionTransfer,
-            $storeTransfer
+            $storeTransfer,
         );
 
         // Assert
@@ -1139,7 +1139,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
         // SUM(amount)
         $this->assertSame(
             $result->toString(),
-            $amount->multiply($itemsCount)->toString()
+            $amount->multiply($itemsCount)->toString(),
         );
     }
 
@@ -1162,7 +1162,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
         $salesAggregationTransfers = $this->getFacade()->aggregateProductPackagingUnitReservation(
             $leadProductConcreteTransfer->getSku(),
             $stateCollectionTransfer,
-            $storeTransfer
+            $storeTransfer,
         );
 
         // Assert
@@ -1172,7 +1172,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
         // SUM(amount)
         $this->assertSame(
             $result->toString(),
-            $amount->multiply($itemsCount)->trim()->toString()
+            $amount->multiply($itemsCount)->trim()->toString(),
         );
     }
 
@@ -1192,7 +1192,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
         $salesAggregationTransfers = $this->getFacade()->aggregateProductPackagingUnitReservation(
             $sku,
             $stateCollectionTransfer,
-            $storeTransfer
+            $storeTransfer,
         );
 
         // Assert
@@ -1202,7 +1202,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
         // SUM(quantity)
         $this->assertSame(
             $result->toInt(),
-            $quantity * $itemsCount
+            $quantity * $itemsCount,
         );
     }
 
@@ -1228,7 +1228,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
         $salesAggregationTransfers = $this->getFacade()->aggregateProductPackagingUnitReservation(
             $leadProductConcreteTransfer->getSku(),
             $stateCollectionTransfer,
-            $storeTransfer
+            $storeTransfer,
         );
 
         // Assert
@@ -1238,7 +1238,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
         // SUM(amount in PU) + SUM(quantity)
         $this->assertSame(
             $result->toString(),
-            $amountForPackagingUnit->multiply($itemsCountInPackagingUnit)->add($quantity * $itemsCount)->toString()
+            $amountForPackagingUnit->multiply($itemsCountInPackagingUnit)->add($quantity * $itemsCount)->toString(),
         );
     }
 
@@ -1283,7 +1283,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
         $cartChangeTransfer = $this->tester->addProductPackagingUnitToCartChangeTransfer(
             $this->tester->createEmptyCartChangeTransfer(),
             $boxProductConcreteTransfer->getSku(),
-            $spyProductPackagingUnitEntityTransfer->getIdProductPackagingUnit()
+            $spyProductPackagingUnitEntityTransfer->getIdProductPackagingUnit(),
         );
 
         // Act

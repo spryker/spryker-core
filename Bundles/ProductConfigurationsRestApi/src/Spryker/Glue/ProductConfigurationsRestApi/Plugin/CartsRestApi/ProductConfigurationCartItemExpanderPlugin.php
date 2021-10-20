@@ -38,7 +38,7 @@ class ProductConfigurationCartItemExpanderPlugin extends AbstractPlugin implemen
             ->createProductConfigurationCartItemExpander()
             ->expandWithProductConfigurationInstance(
                 $cartItemRequestTransfer,
-                $restCartItemsAttributesTransfer
+                $restCartItemsAttributesTransfer,
             );
     }
 }

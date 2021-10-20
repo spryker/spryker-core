@@ -57,7 +57,7 @@ class RedisAdapterProvider implements RedisAdapterProviderInterface
     {
         if (!isset(static::$clientPool[$connectionKey])) {
             throw new RedisAdapterNotInitializedException(
-                sprintf('Redis client adapter for key %s is not initialized. Call `Spryker\Client\Redis\RedisClient::setupConnection()` first.', $connectionKey)
+                sprintf('Redis client adapter for key %s is not initialized. Call `Spryker\Client\Redis\RedisClient::setupConnection()` first.', $connectionKey),
             );
         }
 

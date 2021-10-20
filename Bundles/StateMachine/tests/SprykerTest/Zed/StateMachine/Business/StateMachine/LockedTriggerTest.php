@@ -81,7 +81,7 @@ class LockedTriggerTest extends StateMachineMocks
 
         return new LockedTrigger(
             $triggerMock,
-            $itemLockMock
+            $itemLockMock,
         );
     }
 }

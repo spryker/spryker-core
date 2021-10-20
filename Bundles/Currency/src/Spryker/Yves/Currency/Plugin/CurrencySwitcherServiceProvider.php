@@ -39,11 +39,11 @@ class CurrencySwitcherServiceProvider extends AbstractPlugin implements ServiceP
         $app['twig'] = $app->share(
             $app->extend('twig', function (Environment $twig) {
                 $twig->addFunction(
-                    $this->getCurrencySwitcher($twig)
+                    $this->getCurrencySwitcher($twig),
                 );
 
                 return $twig;
-            })
+            }),
         );
     }
 
@@ -78,7 +78,7 @@ class CurrencySwitcherServiceProvider extends AbstractPlugin implements ServiceP
                 [
                     'currencies' => $this->getCurrencies(),
                     'currentCurrency' => $this->getCurrentCurrency(),
-                ]
+                ],
             );
         }, $options);
     }

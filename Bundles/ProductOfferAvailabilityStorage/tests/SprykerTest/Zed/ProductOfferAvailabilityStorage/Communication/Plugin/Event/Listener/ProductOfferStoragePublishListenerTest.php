@@ -93,7 +93,7 @@ class ProductOfferStoragePublishListenerTest extends Unit
         // Assert
         $productOfferAvailability = $this->tester->getProductOfferAvailability(
             $storeTransfer->getName(),
-            $productOfferTransfer->getProductOfferReference()
+            $productOfferTransfer->getProductOfferReference(),
         );
 
         $this->assertSame($expectedAvailability, $productOfferAvailability->toInt());

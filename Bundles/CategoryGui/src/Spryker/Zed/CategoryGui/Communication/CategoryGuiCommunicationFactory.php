@@ -66,7 +66,7 @@ class CategoryGuiCommunicationFactory extends AbstractCommunicationFactory
     {
         return new CategoryTable(
             $this->getLocaleFacade(),
-            $this->getRepository()
+            $this->getRepository(),
         );
     }
 
@@ -82,7 +82,7 @@ class CategoryGuiCommunicationFactory extends AbstractCommunicationFactory
         return $this->getFormFactory()->create(
             CategoryType::class,
             $categoryCreateDataFormProvider->getData($idParentNode),
-            $categoryCreateDataFormProvider->getOptions()
+            $categoryCreateDataFormProvider->getOptions(),
         );
     }
 
@@ -94,7 +94,7 @@ class CategoryGuiCommunicationFactory extends AbstractCommunicationFactory
         return new CategoryCreateDataProvider(
             $this->getRepository(),
             $this->createCategoryFinder(),
-            $this->createCategoryExpander()
+            $this->createCategoryExpander(),
         );
     }
 
@@ -110,7 +110,7 @@ class CategoryGuiCommunicationFactory extends AbstractCommunicationFactory
         return $this->getFormFactory()->create(
             CategoryType::class,
             $categoryTransfer,
-            $categoryCreateDataFormProvider->getOptions($categoryTransfer->getIdCategoryOrFail())
+            $categoryCreateDataFormProvider->getOptions($categoryTransfer->getIdCategoryOrFail()),
         );
     }
 
@@ -121,7 +121,7 @@ class CategoryGuiCommunicationFactory extends AbstractCommunicationFactory
     {
         return new CategoryEditDataProvider(
             $this->getRepository(),
-            $this->createCategoryFinder()
+            $this->createCategoryFinder(),
         );
     }
 
@@ -137,7 +137,7 @@ class CategoryGuiCommunicationFactory extends AbstractCommunicationFactory
         return $this->getFormFactory()->create(
             RootCategoryType::class,
             $categoryTransfer,
-            $rootCategoryCreateDataFormProvider->getOptions()
+            $rootCategoryCreateDataFormProvider->getOptions(),
         );
     }
 
@@ -148,7 +148,7 @@ class CategoryGuiCommunicationFactory extends AbstractCommunicationFactory
     {
         return new RootCategoryEditDataProvider(
             $this->getRepository(),
-            $this->createCategoryFinder()
+            $this->createCategoryFinder(),
         );
     }
 
@@ -163,7 +163,7 @@ class CategoryGuiCommunicationFactory extends AbstractCommunicationFactory
 
         return $this->getFormFactory()->create(
             DeleteType::class,
-            $categoryDeleteFormDataProvider->getData($idCategory)
+            $categoryDeleteFormDataProvider->getData($idCategory),
         );
     }
 
@@ -181,7 +181,7 @@ class CategoryGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createCategoryCreator(): CategoryCreatorInterface
     {
         return new CategoryCreator(
-            $this->getCategoryFacade()
+            $this->getCategoryFacade(),
         );
     }
 
@@ -191,7 +191,7 @@ class CategoryGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createCategoryUpdater(): CategoryUpdaterInterface
     {
         return new CategoryUpdater(
-            $this->getCategoryFacade()
+            $this->getCategoryFacade(),
         );
     }
 
@@ -201,7 +201,7 @@ class CategoryGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createCategoryDeleter(): CategoryDeleterInterface
     {
         return new CategoryDeleter(
-            $this->getCategoryFacade()
+            $this->getCategoryFacade(),
         );
     }
 
@@ -212,7 +212,7 @@ class CategoryGuiCommunicationFactory extends AbstractCommunicationFactory
     {
         return new CategoryNodeOrderUpdater(
             $this->getCategoryFacade(),
-            $this->getUtilEncodingService()
+            $this->getUtilEncodingService(),
         );
     }
 
@@ -234,7 +234,7 @@ class CategoryGuiCommunicationFactory extends AbstractCommunicationFactory
         return $this->getFormFactory()->create(
             RootCategoryType::class,
             $rootCategoryCreateDataFormProvider->getData(),
-            $rootCategoryCreateDataFormProvider->getOptions()
+            $rootCategoryCreateDataFormProvider->getOptions(),
         );
     }
 
@@ -245,7 +245,7 @@ class CategoryGuiCommunicationFactory extends AbstractCommunicationFactory
     {
         return new RootCategoryCreateDataProvider(
             $this->getRepository(),
-            $this->createCategoryExpander()
+            $this->createCategoryExpander(),
         );
     }
 
@@ -257,7 +257,7 @@ class CategoryGuiCommunicationFactory extends AbstractCommunicationFactory
         return new CategoryStoreWithStateFinder(
             $this->getCategoryFacade(),
             $this->getStoreFacade(),
-            $this->createCategoryStoreWithStateMapper()
+            $this->createCategoryStoreWithStateMapper(),
         );
     }
 
@@ -268,7 +268,7 @@ class CategoryGuiCommunicationFactory extends AbstractCommunicationFactory
     {
         return new CategoryStoreRelationFieldEventSubscriber(
             $this->createCategoryStoreWithStateFinder(),
-            $this->getStoreRelationFormTypePlugin()
+            $this->getStoreRelationFormTypePlugin(),
         );
     }
 
@@ -318,7 +318,7 @@ class CategoryGuiCommunicationFactory extends AbstractCommunicationFactory
         return new CategoryFinder(
             $this->getCategoryFacade(),
             $this->getLocaleFacade(),
-            $this->createCategoryExpander()
+            $this->createCategoryExpander(),
         );
     }
 

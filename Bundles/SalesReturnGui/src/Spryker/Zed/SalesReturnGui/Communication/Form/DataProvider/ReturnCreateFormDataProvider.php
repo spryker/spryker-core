@@ -167,7 +167,7 @@ class ReturnCreateFormDataProvider
 
             $translatedMessage = $this->glossaryFacade->translate(
                 $returnPolicyMessage->getValue(),
-                $returnPolicyMessage->getParameters()
+                $returnPolicyMessage->getParameters(),
             );
 
             $returnPolicyMessage->setMessage($translatedMessage);

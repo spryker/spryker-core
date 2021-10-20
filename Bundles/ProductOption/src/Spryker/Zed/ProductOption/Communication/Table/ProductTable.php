@@ -70,7 +70,7 @@ class ProductTable extends AbstractTable
         $this->defaultUrl = sprintf(
             'product-table?%s=%d',
             'id-product-option-group',
-            $this->idProductOptionGroup
+            $this->idProductOptionGroup,
         );
         $this->setTableIdentifier(self::TABLE_IDENTIFIER);
         $this->localeTransfer = $localeTransfer;
@@ -112,7 +112,7 @@ class ProductTable extends AbstractTable
             ->queryProductsAbstractBySearchTermForAssignment(
                 static::EMPTY_SEARCH_TERM,
                 $this->idProductOptionGroup,
-                $this->localeTransfer
+                $this->localeTransfer,
             )
             ->setModelAlias('spy_product_abstract');
 
@@ -129,7 +129,7 @@ class ProductTable extends AbstractTable
             $checkboxHtml = sprintf(
                 "<input id='all_products_checkbox_%d' class='all-products-checkbox' type='checkbox' data-info='%s'>",
                 $product[SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT],
-                (string)$this->utilEncodingService->encodeJson($info)
+                (string)$this->utilEncodingService->encodeJson($info),
             );
 
             $results[] = [

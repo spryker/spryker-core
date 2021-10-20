@@ -92,7 +92,7 @@ class UrlReader implements UrlReaderInterface
 
         return $this->urlRepository->hasUrlCaseInsensitive(
             $urlTransfer,
-            $ignoreUrlRedirects
+            $ignoreUrlRedirects,
         );
     }
 
@@ -119,7 +119,7 @@ class UrlReader implements UrlReaderInterface
 
         return $this->urlRepository->hasUrlCaseInsensitive(
             $urlTransfer,
-            false
+            false,
         );
     }
 
@@ -140,7 +140,7 @@ class UrlReader implements UrlReaderInterface
             'The provided UrlTransfer does not have any data to find URL entity: %s. Set "%s" or "%s" for the UrlTransfer.',
             json_encode($urlTransfer->toArray()),
             UrlTransfer::URL,
-            UrlTransfer::ID_URL
+            UrlTransfer::ID_URL,
         ));
     }
 
@@ -163,7 +163,7 @@ class UrlReader implements UrlReaderInterface
                 'The provided UrlTransfer does not have any data to find URL entity: %s. Set "%s" or "%s" for the UrlTransfer.',
                 json_encode($urlTransfer->toArray()),
                 UrlTransfer::URL,
-                UrlTransfer::ID_URL
+                UrlTransfer::ID_URL,
             ));
         }
 

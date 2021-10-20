@@ -48,7 +48,7 @@ class MergeNavigationStrategyResolver implements MergeNavigationStrategyResolver
 
         throw new MergeStrategyNotFoundException(sprintf(
             'Merge strategy with name "%s" not found',
-            $this->zedNavigationConfig->getMergeStrategy()
+            $this->zedNavigationConfig->getMergeStrategy(),
         ));
     }
 }

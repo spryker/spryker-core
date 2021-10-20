@@ -256,9 +256,9 @@ class MerchantUserTable extends AbstractTable
                 [
                     EditMerchantUserController::PARAM_MERCHANT_USER_ID =>
                         $item[SpyMerchantUserTableMap::COL_ID_MERCHANT_USER],
-                ]
+                ],
             ),
-            'Edit'
+            'Edit',
         );
 
         $buttons[] = $this->buildAvailableStatusButton($router, $item);
@@ -270,9 +270,9 @@ class MerchantUserTable extends AbstractTable
                     [
                         DeleteMerchantUserController::PARAM_MERCHANT_USER_ID =>
                             $item[SpyMerchantUserTableMap::COL_ID_MERCHANT_USER],
-                    ]
+                    ],
                 ),
-                'Delete'
+                'Delete',
             );
         }
 
@@ -294,7 +294,7 @@ class MerchantUserTable extends AbstractTable
 
         return $this->generateLabel(
             static::STATUS_LABEL_MAPPING[$currentStatus]['title'],
-            static::STATUS_LABEL_MAPPING[$currentStatus]['class']
+            static::STATUS_LABEL_MAPPING[$currentStatus]['class'],
         );
     }
 
@@ -317,13 +317,13 @@ class MerchantUserTable extends AbstractTable
                     MerchantUserStatusController::PARAM_MERCHANT_USER_ID =>
                         $item[SpyMerchantUserTableMap::COL_ID_MERCHANT_USER],
                     'status' => $availableStatus,
-                ]
+                ],
             ),
             static::STATUS_CHANGE_ACTION_MAPPING[$availableStatus]['title'],
             [
                 'icon' => 'fa fa-key',
                 'class' => static::STATUS_CHANGE_ACTION_MAPPING[$availableStatus]['class'],
-            ]
+            ],
         );
     }
 }

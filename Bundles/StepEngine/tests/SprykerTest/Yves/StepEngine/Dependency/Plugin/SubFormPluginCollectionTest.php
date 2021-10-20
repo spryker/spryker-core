@@ -33,7 +33,7 @@ class SubFormPluginCollectionTest extends Unit
 
         $this->assertInstanceOf(
             SubFormPluginCollection::class,
-            $subFormPluginCollection->add($this->getSubFormPlugin())
+            $subFormPluginCollection->add($this->getSubFormPlugin()),
         );
     }
 

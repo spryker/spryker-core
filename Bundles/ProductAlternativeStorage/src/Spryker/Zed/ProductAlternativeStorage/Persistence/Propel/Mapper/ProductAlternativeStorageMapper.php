@@ -26,7 +26,7 @@ class ProductAlternativeStorageMapper
         foreach ($productAlternativeStorageEntityCollection as $productAlternativeStorageEntity) {
             $synchronizationDataTransfers[] = $this->mapProductAlternativeStorageEntityToSynchronizationDataTransfer(
                 $productAlternativeStorageEntity,
-                new SynchronizationDataTransfer()
+                new SynchronizationDataTransfer(),
             );
         }
 

@@ -37,7 +37,7 @@ class IndexController extends AbstractController
         $table = $this->getFactory()->createOrdersTable();
 
         return $this->jsonResponse(
-            $table->fetchData()
+            $table->fetchData(),
         );
     }
 }

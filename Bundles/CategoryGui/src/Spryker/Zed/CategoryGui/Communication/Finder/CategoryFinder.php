@@ -102,7 +102,7 @@ class CategoryFinder implements CategoryFinderInterface
 
         return $this->findCategoryByIdCategoryAndLocale(
             $parentCategoryNode->getFkCategoryOrFail(),
-            $localeTransfer
+            $localeTransfer,
         );
     }
 

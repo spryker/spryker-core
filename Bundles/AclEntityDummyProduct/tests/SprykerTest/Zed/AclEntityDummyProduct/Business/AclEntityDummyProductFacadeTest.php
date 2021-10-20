@@ -62,7 +62,7 @@ class AclEntityDummyProductFacadeTest extends Unit
         $this->assertNotEmpty($aclEntityMetadataCollection->getCollection()[SpyProduct::class]->getParent());
         $this->assertEquals(
             SpyProductAbstract::class,
-            $aclEntityMetadataCollection->getCollection()[SpyProduct::class]->getParent()->getEntityName()
+            $aclEntityMetadataCollection->getCollection()[SpyProduct::class]->getParent()->getEntityName(),
         );
         $this->assertEmpty($aclEntityMetadataCollection->getCollection()[SpyStore::class]->getParent());
     }
@@ -90,15 +90,15 @@ class AclEntityDummyProductFacadeTest extends Unit
         $this->assertArrayHasKey(SpyProductImage::class, $aclEntityMetadataCollection->getCollection());
         $this->assertEquals(
             SpyProductImageSet::class,
-            $aclEntityMetadataCollection->getCollection()[SpyProductImage::class]->getParent()->getEntityName()
+            $aclEntityMetadataCollection->getCollection()[SpyProductImage::class]->getParent()->getEntityName(),
         );
         $this->assertEquals(
             SpyProductImageSetToProductImage::class,
-            $aclEntityMetadataCollection->getCollection()[SpyProductImage::class]->getParent()->getConnection()->getPivotEntityName()
+            $aclEntityMetadataCollection->getCollection()[SpyProductImage::class]->getParent()->getConnection()->getPivotEntityName(),
         );
         $this->assertArrayHasKey(
             SpyProductLocalizedAttributes::class,
-            $aclEntityMetadataCollection->getCollection()
+            $aclEntityMetadataCollection->getCollection(),
         );
     }
 }

@@ -67,7 +67,7 @@ class SessionRedisDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::CLIENT_REDIS, function (Container $container) {
             return new SessionRedisToRedisClientBridge(
-                $container->getLocator()->redis()->client()
+                $container->getLocator()->redis()->client(),
             );
         });
 
@@ -83,7 +83,7 @@ class SessionRedisDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::SERVICE_MONITORING, function () use ($container) {
             return new SessionRedisToMonitoringServiceBridge(
-                $container->getLocator()->monitoring()->service()
+                $container->getLocator()->monitoring()->service(),
             );
         });
 

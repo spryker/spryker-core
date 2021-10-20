@@ -26,7 +26,7 @@ class ListController extends IndexController
         ];
 
         return $this->viewResponse(
-            $this->expandViewData($viewData)
+            $this->expandViewData($viewData),
         );
     }
 
@@ -38,7 +38,7 @@ class ListController extends IndexController
         $productOptionListTable = $this->getFactory()->createProductOptionListTable();
 
         return $this->jsonResponse(
-            $productOptionListTable->fetchData()
+            $productOptionListTable->fetchData(),
         );
     }
 

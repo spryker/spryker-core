@@ -66,7 +66,7 @@ class ProductLabelTwigExtension extends TwigExtension
             [
                 'is_safe' => ['html'],
                 'needs_environment' => true,
-            ]
+            ],
         );
     }
 
@@ -81,7 +81,7 @@ class ProductLabelTwigExtension extends TwigExtension
             [
                 'is_safe' => ['html'],
                 'needs_environment' => true,
-            ]
+            ],
         );
     }
 

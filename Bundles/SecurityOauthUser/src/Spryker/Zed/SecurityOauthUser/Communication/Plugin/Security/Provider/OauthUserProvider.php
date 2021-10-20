@@ -111,7 +111,7 @@ class OauthUserProvider extends AbstractPlugin implements UserProviderInterface
     protected function resolveOauthUserByName(string $username): ?UserTransfer
     {
         $userTransfer = $this->getFacade()->resolveOauthUser(
-            (new UserCriteriaTransfer())->setEmail($username)
+            (new UserCriteriaTransfer())->setEmail($username),
         );
 
         if (!$userTransfer) {
@@ -119,7 +119,7 @@ class OauthUserProvider extends AbstractPlugin implements UserProviderInterface
         }
 
         $oauthUserRestrictionResponseTransfer = $this->getFacade()->isOauthUserRestricted(
-            (new OauthUserRestrictionRequestTransfer())->setUser($userTransfer)
+            (new OauthUserRestrictionRequestTransfer())->setUser($userTransfer),
         );
 
         if ($oauthUserRestrictionResponseTransfer->getIsRestricted()) {

@@ -70,8 +70,8 @@ class CollectorProvider implements SpecificationProviderInterface
             sprintf(
                 'Could not find collector plugin for "%s" field. Have you registered it in "%s::getCollectorPlugins" plugins stack?',
                 $clauseTransfer->getField(),
-                DiscountDependencyProvider::class
-            )
+                DiscountDependencyProvider::class,
+            ),
         );
     }
 }

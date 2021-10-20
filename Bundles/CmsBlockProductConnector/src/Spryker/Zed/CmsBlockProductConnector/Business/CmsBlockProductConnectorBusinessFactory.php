@@ -30,7 +30,7 @@ class CmsBlockProductConnectorBusinessFactory extends AbstractBusinessFactory
     {
         return new CmsBlockProductAbstractWriter(
             $this->getQueryContainer(),
-            $this->getTouchFacade()
+            $this->getTouchFacade(),
         );
     }
 
@@ -40,7 +40,7 @@ class CmsBlockProductConnectorBusinessFactory extends AbstractBusinessFactory
     public function createCmsBlockProductAbstractReader()
     {
         return new CmsBlockProductAbstractReader(
-            $this->getQueryContainer()
+            $this->getQueryContainer(),
         );
     }
 
@@ -50,7 +50,7 @@ class CmsBlockProductConnectorBusinessFactory extends AbstractBusinessFactory
     public function createStorageCmsBlockProductConnectorCollector()
     {
         $collector = new CmsBlockProductCollector(
-            $this->getDataReaderService()
+            $this->getDataReaderService(),
         );
 
         $collector->setTouchQueryContainer($this->getTouchQueryContainer());
@@ -106,7 +106,7 @@ class CmsBlockProductConnectorBusinessFactory extends AbstractBusinessFactory
     {
         return new CmsBlockProductRunner(
             $this->createStorageCmsBlockProductConnectorCollector(),
-            $this->getCollectorFacade()
+            $this->getCollectorFacade(),
         );
     }
 }

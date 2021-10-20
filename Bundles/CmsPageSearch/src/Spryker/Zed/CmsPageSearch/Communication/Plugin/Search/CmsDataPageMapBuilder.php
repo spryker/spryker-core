@@ -125,13 +125,13 @@ class CmsDataPageMapBuilder implements NamedPageMapInterface
     {
         if ($cmsPageData[static::COL_VALID_FROM]) {
             $pageMapTransfer->setActiveFrom(
-                (new DateTime($cmsPageData[static::COL_VALID_FROM]))->format('Y-m-d')
+                (new DateTime($cmsPageData[static::COL_VALID_FROM]))->format('Y-m-d'),
             );
         }
 
         if ($cmsPageData[static::COL_VALID_TO]) {
             $pageMapTransfer->setActiveTo(
-                (new DateTime($cmsPageData[static::COL_VALID_TO]))->format('Y-m-d')
+                (new DateTime($cmsPageData[static::COL_VALID_TO]))->format('Y-m-d'),
             );
         }
     }

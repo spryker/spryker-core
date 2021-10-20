@@ -129,7 +129,7 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
     public function saveAndTouchAvailability(string $concreteSku, Decimal $quantity, StoreTransfer $storeTransfer): int
     {
         $wasProductConcreteAvailable = $this->isProductConcreteAvailable(
-            $this->availabilityRepository->findProductConcreteAvailabilityBySkuAndStore($concreteSku, $storeTransfer)
+            $this->availabilityRepository->findProductConcreteAvailabilityBySkuAndStore($concreteSku, $storeTransfer),
         );
 
         /** @var string $abstractSku */
@@ -146,7 +146,7 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
         $isAvailabilityChanged = $this->availabilityEntityManager->saveProductConcreteAvailability(
             $productConcreteAvailabilityTransfer,
             $storeTransfer,
-            $abstractSku
+            $abstractSku,
         );
 
         if ($isAvailabilityChanged) {
@@ -198,7 +198,7 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
         $abstractSku = $this->getAbstractSkuFromProductConcrete($concreteSku);
 
         $wasProductConcreteAvailable = $this->isProductConcreteAvailable(
-            $this->availabilityRepository->findProductConcreteAvailabilityBySkuAndStore($concreteSku, $storeTransfer)
+            $this->availabilityRepository->findProductConcreteAvailabilityBySkuAndStore($concreteSku, $storeTransfer),
         );
 
         $productConcreteAvailabilityTransfer = $this->availabilityCalculator
@@ -209,7 +209,7 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
         $isAvailabilityChanged = $this->availabilityEntityManager->saveProductConcreteAvailability(
             $productConcreteAvailabilityTransfer,
             $storeTransfer,
-            $abstractSku
+            $abstractSku,
         );
 
         /** @var string $sku */
@@ -236,7 +236,7 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
 
         $this->availabilityEntityManager->saveProductAbstractAvailability(
             $productAbstractAvailabilityTransfer,
-            $storeTransfer
+            $storeTransfer,
         );
 
         return $productAbstractAvailabilityTransfer;
@@ -286,7 +286,7 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
 
         if ($abstractSku === null) {
             throw new ProductNotFoundException(
-                sprintf(static::PRODUCT_SKU_NOT_FOUND_EXCEPTION_MESSAGE_FORMAT, $concreteSku)
+                sprintf(static::PRODUCT_SKU_NOT_FOUND_EXCEPTION_MESSAGE_FORMAT, $concreteSku),
             );
         }
 
@@ -306,7 +306,7 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
 
         if ($concreteSku === null) {
             throw new ProductNotFoundException(
-                sprintf(static::PRODUCT_ID_NOT_FOUND_EXCEPTION_MESSAGE_FORMAT, $idProductConcrete)
+                sprintf(static::PRODUCT_ID_NOT_FOUND_EXCEPTION_MESSAGE_FORMAT, $idProductConcrete),
             );
         }
 
@@ -327,7 +327,7 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
 
         $this->eventFacade->trigger(
             AvailabilityEvents::AVAILABILITY_NOTIFICATION,
-            $availabilityNotificationDataTransfer
+            $availabilityNotificationDataTransfer,
         );
     }
 }

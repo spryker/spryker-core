@@ -105,7 +105,7 @@ class ChangePasswordForm extends AbstractType
                 'attr' => [
                     'placeholder' => static::LABEL_CURRENT_PASSWORD,
                 ],
-            ]
+            ],
         );
 
         return $this;

@@ -99,7 +99,7 @@ class ProductConfigurationVolumePriceRestProductConfigurationPriceMapperPluginTe
         // Act
         $restProductConfigurationPriceAttributesTransfers = $productConfigurationVolumePriceRestProductConfigurationPriceMapperPlugin->map(
             $productConfigurationInstanceTransfer,
-            [$restProductConfigurationPriceAttributesTransfer]
+            [$restProductConfigurationPriceAttributesTransfer],
         );
 
         // Assert

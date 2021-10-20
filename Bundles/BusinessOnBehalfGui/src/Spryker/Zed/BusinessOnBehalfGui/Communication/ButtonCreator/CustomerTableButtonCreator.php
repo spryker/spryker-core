@@ -52,7 +52,7 @@ class CustomerTableButtonCreator extends AbstractButtonCreator implements Custom
     public function addAttachCustomerToCompanyButton(int $idCustomer, array $buttonTransfers): array
     {
         $activeCompanyUsersCount = $this->companyUserFacade->countActiveCompanyUsersByIdCustomer(
-            (new CustomerTransfer())->setIdCustomer($idCustomer)
+            (new CustomerTransfer())->setIdCustomer($idCustomer),
         );
 
         if ($activeCompanyUsersCount === 0) {

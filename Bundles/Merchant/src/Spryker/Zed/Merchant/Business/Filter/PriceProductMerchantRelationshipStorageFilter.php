@@ -45,7 +45,7 @@ class PriceProductMerchantRelationshipStorageFilter implements PriceProductMerch
         $priceProductMerchantRelationshipStorageTransfers = array_map(function (PriceProductMerchantRelationshipStorageTransfer $priceProductMerchantRelationshipStorageTransfer) use ($activeMerchantIds) {
             return $this->getPriceProductMerchantRelationshipStorageTransferWithFilteredUngroupedPricesByMerchantActive(
                 $priceProductMerchantRelationshipStorageTransfer,
-                $activeMerchantIds
+                $activeMerchantIds,
             );
         }, $priceProductMerchantRelationshipStorageTransfers);
 

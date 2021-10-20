@@ -139,7 +139,7 @@ class ProductAbstractViewTable extends AbstractProductAbstractTable
                 'data-id' => $idProductAbstract,
                 'icon' => 'fa-plus',
                 'onclick' => 'return false;',
-            ]
+            ],
         );
     }
 }

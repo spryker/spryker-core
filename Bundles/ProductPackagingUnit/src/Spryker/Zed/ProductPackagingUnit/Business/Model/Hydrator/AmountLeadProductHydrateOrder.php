@@ -54,7 +54,7 @@ class AmountLeadProductHydrateOrder implements AmountLeadProductHydrateOrderInte
         foreach ($spySalesOrderItemEntityTransfers as $spySalesOrderItemEntityTransfer) {
             $itemTransfer = $this->findItemTransferAmountSalesUnitsBelongTo(
                 $orderTransfer,
-                $spySalesOrderItemEntityTransfer->getIdSalesOrderItem()
+                $spySalesOrderItemEntityTransfer->getIdSalesOrderItem(),
             );
 
             if (!$itemTransfer) {

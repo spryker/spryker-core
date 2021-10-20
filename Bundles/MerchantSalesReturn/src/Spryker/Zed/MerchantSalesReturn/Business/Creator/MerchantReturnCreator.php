@@ -40,7 +40,7 @@ class MerchantReturnCreator implements MerchantReturnCreatorInterface
         $firstReturnItem = $returnItemTransfers->offsetGet(0);
 
         return $returnTransfer->setMerchantReference(
-            $firstReturnItem->getOrderItemOrFail()->getMerchantReference()
+            $firstReturnItem->getOrderItemOrFail()->getMerchantReference(),
         );
     }
 }

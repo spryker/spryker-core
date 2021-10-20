@@ -58,7 +58,7 @@ class ContentProductSetWriterStep extends PublishAwareStep implements DataImport
 
         $this->addPublishEvents(
             ContentEvents::CONTENT_PUBLISH,
-            $contentProductSetEntity->getPrimaryKey()
+            $contentProductSetEntity->getPrimaryKey(),
         );
     }
 

@@ -29,7 +29,7 @@ class ProductAlternativeStorageFactory extends AbstractFactory
     {
         return new ProductAlternativeStorageReader(
             $this->getStorageClient(),
-            $this->getSynchronizationService()
+            $this->getSynchronizationService(),
         );
     }
 
@@ -40,7 +40,7 @@ class ProductAlternativeStorageFactory extends AbstractFactory
     {
         return new ProductReplacementStorageReader(
             $this->getStorageClient(),
-            $this->getSynchronizationService()
+            $this->getSynchronizationService(),
         );
     }
 
@@ -50,7 +50,7 @@ class ProductAlternativeStorageFactory extends AbstractFactory
     public function createAlternativeProductApplicableCheck(): AlternativeProductApplicableCheckInterface
     {
         return new AlternativeProductApplicableCheck(
-            $this->getAlternativeProductApplicableCheckPlugins()
+            $this->getAlternativeProductApplicableCheckPlugins(),
         );
     }
 
@@ -61,7 +61,7 @@ class ProductAlternativeStorageFactory extends AbstractFactory
     {
         return new ProductAlternativeMapper(
             $this->createProductAlternativeStorageReader(),
-            $this->getProductStorageClient()
+            $this->getProductStorageClient(),
         );
     }
 

@@ -47,7 +47,7 @@ class SalesProductConnectorBusinessTester extends Actor
     {
         $quoteTransfer = $this->buildFakeQuote(
             $this->haveCustomer(),
-            $this->haveStore([StoreTransfer::NAME => 'DE'])
+            $this->haveStore([StoreTransfer::NAME => 'DE']),
         );
 
         $saveOrderTransfer = $this->haveOrderFromQuote($quoteTransfer, $stateMachineProcessName, [new ItemMetadataSaverPlugin()]);
@@ -95,7 +95,7 @@ class SalesProductConnectorBusinessTester extends Actor
             ->addItem(
                 (new ItemBuilder())->build()
                     ->setSku($productConcreteTransfer->getSku())
-                    ->setImages($productImageSetTransfer->getProductImages())
+                    ->setImages($productImageSetTransfer->getProductImages()),
             );
 
         return $quoteTransfer;

@@ -91,7 +91,7 @@ class ZedNavigationCollector implements ZedNavigationCollectorInterface
         return $navigationMergeStrategy->mergeNavigation(
             $navigationDefinition,
             $rootDefinition,
-            $coreNavigationDefinition
+            $coreNavigationDefinition,
         );
     }
 }

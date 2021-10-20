@@ -65,7 +65,7 @@ class OmsTriggerFormFactory implements OmsTriggerFormFactoryInterface
         return $this->formFactory->create(
             OmsTriggerForm::class,
             null,
-            $this->createOrderItemsOmsTriggerFormDataProvider()->getOptions($redirectUrl, $event, $salesOrderItemIds)
+            $this->createOrderItemsOmsTriggerFormDataProvider()->getOptions($redirectUrl, $event, $salesOrderItemIds),
         );
     }
 

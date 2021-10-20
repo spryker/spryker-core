@@ -27,11 +27,11 @@ class ProductAbstractStoreProductConcretePageSearchUnpublishListener extends Abs
     {
         $foreignKeysPerAbstractProducts = $this->getFactory()->getEventBehaviorFacade()->getGroupedEventTransferForeignKeysByForeignKey(
             $eventEntityTransfers,
-            SpyProductAbstractStoreTableMap::COL_FK_PRODUCT_ABSTRACT
+            SpyProductAbstractStoreTableMap::COL_FK_PRODUCT_ABSTRACT,
         );
         $productAbstractStoreMap = $this->filterGroupedForeignKeysByKey(
             $foreignKeysPerAbstractProducts,
-            SpyProductAbstractStoreTableMap::COL_FK_STORE
+            SpyProductAbstractStoreTableMap::COL_FK_STORE,
         );
         $productAbstractStoreMap = $this->convertStoresPerAbstractProductsToStoreNames($productAbstractStoreMap);
 

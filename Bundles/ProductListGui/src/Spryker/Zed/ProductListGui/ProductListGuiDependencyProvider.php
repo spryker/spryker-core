@@ -201,7 +201,7 @@ class ProductListGuiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::SERVICE_UTIL_CSV, function (Container $container) {
             return new ProductListGuiToUtilCsvServiceBridge(
-                $container->getLocator()->utilCsv()->service()
+                $container->getLocator()->utilCsv()->service(),
             );
         });
 

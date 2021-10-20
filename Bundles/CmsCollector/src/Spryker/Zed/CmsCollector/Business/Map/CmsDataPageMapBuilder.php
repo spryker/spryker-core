@@ -103,13 +103,13 @@ class CmsDataPageMapBuilder implements PageMapInterface
     {
         if ($cmsPageData[AbstractCmsVersionPageCollector::COL_VALID_FROM]) {
             $pageMapTransfer->setActiveFrom(
-                (new DateTime($cmsPageData[AbstractCmsVersionPageCollector::COL_VALID_FROM]))->format('Y-m-d')
+                (new DateTime($cmsPageData[AbstractCmsVersionPageCollector::COL_VALID_FROM]))->format('Y-m-d'),
             );
         }
 
         if ($cmsPageData[AbstractCmsVersionPageCollector::COL_VALID_TO]) {
             $pageMapTransfer->setActiveTo(
-                (new DateTime($cmsPageData[AbstractCmsVersionPageCollector::COL_VALID_TO]))->format('Y-m-d')
+                (new DateTime($cmsPageData[AbstractCmsVersionPageCollector::COL_VALID_TO]))->format('Y-m-d'),
             );
         }
     }

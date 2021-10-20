@@ -36,7 +36,7 @@ class ShoppingListProductOptionConnectorBusinessFactory extends AbstractBusiness
     {
         return new ShoppingListProductOptionReader(
             $this->getProductOptionFacade(),
-            $this->getRepository()
+            $this->getRepository(),
         );
     }
 
@@ -46,7 +46,7 @@ class ShoppingListProductOptionConnectorBusinessFactory extends AbstractBusiness
     public function createShoppingListProductOptionWriter(): ShoppingListProductOptionWriterInterface
     {
         return new ShoppingListProductOptionWriter(
-            $this->getEntityManager()
+            $this->getEntityManager(),
         );
     }
 
@@ -57,7 +57,7 @@ class ShoppingListProductOptionConnectorBusinessFactory extends AbstractBusiness
     {
         return new ShoppingListItemExpander(
             $this->createShoppingListItemProductOptionReader(),
-            $this->getProductOptionFacade()
+            $this->getProductOptionFacade(),
         );
     }
 
@@ -83,7 +83,7 @@ class ShoppingListProductOptionConnectorBusinessFactory extends AbstractBusiness
     public function createProductOptionValuesRemover(): ProductOptionValuesRemoverInterface
     {
         return new ProductOptionValuesRemover(
-            $this->getEntityManager()
+            $this->getEntityManager(),
         );
     }
 }

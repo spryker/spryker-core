@@ -143,7 +143,7 @@ class DatasetTest extends Unit
     public function testGetFilenameByDatasetNameReturnsValidTransfer(): void
     {
         $datasetFilenameTransfer = $this->tester->getLocator()->dataset()->facade()->getFilenameByDatasetName(
-            (new DatasetFilenameTransfer())->setFilename('some name')
+            (new DatasetFilenameTransfer())->setFilename('some name'),
         );
 
         $this->assertInstanceOf(DatasetFilenameTransfer::class, $datasetFilenameTransfer);

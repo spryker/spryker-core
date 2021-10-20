@@ -65,7 +65,7 @@ class EditPageController extends AbstractController
         $this->getFactory()
             ->getCmsFacade()
             ->syncTemplate(
-                $this->getCmsFolderPath()
+                $this->getCmsFolderPath(),
             );
 
         $idCmsPage = $this->castId($request->query->get(static::URL_PARAM_ID_CMS_PAGE));
@@ -232,7 +232,7 @@ class EditPageController extends AbstractController
     {
         return Url::generate(
             '/cms-gui/edit-page/index',
-            [static::URL_PARAM_ID_CMS_PAGE => $idCmsPage]
+            [static::URL_PARAM_ID_CMS_PAGE => $idCmsPage],
         )->build();
     }
 

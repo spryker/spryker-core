@@ -30,7 +30,7 @@ class MerchantOpeningHoursStorageBusinessFactory extends AbstractBusinessFactory
             $this->getEntityManager(),
             $this->getRepository(),
             $this->getEventBehaviorFacade(),
-            $this->getMerchantFacade()
+            $this->getMerchantFacade(),
         );
     }
 

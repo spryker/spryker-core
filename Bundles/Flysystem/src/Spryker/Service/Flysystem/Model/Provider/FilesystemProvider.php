@@ -36,7 +36,7 @@ class FilesystemProvider implements FilesystemProviderInterface
     {
         if (!array_key_exists($name, $this->filesystemCollection)) {
             throw new FilesystemNotFoundException(
-                sprintf('Flysystem "%s" was not found', $name)
+                sprintf('Flysystem "%s" was not found', $name),
             );
         }
 

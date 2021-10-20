@@ -38,7 +38,7 @@ class CmsSlotBlockEntityManager extends AbstractEntityManager implements CmsSlot
 
             $cmsSlotBlockEntity = $cmsSlotBlockMapper->mapCmsSlotBlockTransferToEntity(
                 $cmsSlotBlockTransfer,
-                new SpyCmsSlotBlock()
+                new SpyCmsSlotBlock(),
             );
 
             $cmsSlotBlockEntityCollection->append($cmsSlotBlockEntity);
@@ -48,7 +48,7 @@ class CmsSlotBlockEntityManager extends AbstractEntityManager implements CmsSlot
 
         return $cmsSlotBlockMapper->mapCmsSlotBlockEntityCollectionToTransferCollection(
             $cmsSlotBlockEntityCollection,
-            new CmsSlotBlockCollectionTransfer()
+            new CmsSlotBlockCollectionTransfer(),
         );
     }
 

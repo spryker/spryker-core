@@ -31,7 +31,7 @@ class ContentProductSetGuiCommunicationFactory extends AbstractCommunicationFact
         return new ProductSetViewTable(
             $this->getProductSetQuery(),
             $this->getLocaleFacade()->getCurrentLocale(),
-            $identifierPostfix
+            $identifierPostfix,
         );
     }
 
@@ -47,7 +47,7 @@ class ContentProductSetGuiCommunicationFactory extends AbstractCommunicationFact
             $this->getProductSetQuery(),
             $this->getLocaleFacade()->getCurrentLocale(),
             $identifierPostfix,
-            $idProductSet
+            $idProductSet,
         );
     }
 

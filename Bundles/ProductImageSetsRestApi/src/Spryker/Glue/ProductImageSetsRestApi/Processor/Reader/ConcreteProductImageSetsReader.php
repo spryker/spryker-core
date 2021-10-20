@@ -83,7 +83,7 @@ class ConcreteProductImageSetsReader implements ConcreteProductImageSetsReaderIn
         $parentResource = $restRequest->findParentResourceByType(ProductsRestApiConfig::RESOURCE_CONCRETE_PRODUCTS);
         if (!$parentResource) {
             return $restResponse->addError(
-                $this->createConcreteProductNotFoundError()
+                $this->createConcreteProductNotFoundError(),
             );
         }
 
@@ -92,7 +92,7 @@ class ConcreteProductImageSetsReader implements ConcreteProductImageSetsReaderIn
 
         if ($restResource === null) {
             return $restResponse->addError(
-                $this->createConcreteProductImageSetsNotFoundError()
+                $this->createConcreteProductImageSetsNotFoundError(),
             );
         }
 
@@ -111,7 +111,7 @@ class ConcreteProductImageSetsReader implements ConcreteProductImageSetsReaderIn
             ->findProductConcreteStorageDataByMapping(
                 static::PRODUCT_CONCRETE_MAPPING_TYPE,
                 $sku,
-                $restRequest->getMetadata()->getLocale()
+                $restRequest->getMetadata()->getLocale(),
             );
 
         if (!$concreteProductStorageData) {
@@ -120,14 +120,14 @@ class ConcreteProductImageSetsReader implements ConcreteProductImageSetsReaderIn
 
         $concreteProductStorageTransfer = (new ProductConcreteStorageTransfer())->fromArray(
             $concreteProductStorageData,
-            true
+            true,
         );
 
         $productImageConcreteStorageTransfers = $this->productImageStorageClient
             ->resolveProductImageSetStorageTransfers(
                 $concreteProductStorageTransfer->getIdProductConcrete(),
                 $concreteProductStorageTransfer->getIdProductAbstract(),
-                $restRequest->getMetadata()->getLocale()
+                $restRequest->getMetadata()->getLocale(),
             );
 
         if (!$productImageConcreteStorageTransfers) {
@@ -151,14 +151,14 @@ class ConcreteProductImageSetsReader implements ConcreteProductImageSetsReaderIn
         $restResource = $this->restResourceBuilder->createRestResource(
             ProductImageSetsRestApiConfig::RESOURCE_CONCRETE_PRODUCT_IMAGE_SETS,
             $sku,
-            $restProductImageSetsAttributesTransfer
+            $restProductImageSetsAttributesTransfer,
         );
 
         $restResourceSelfLink = sprintf(
             static::SELF_LINK_FORMAT,
             ProductsRestApiConfig::RESOURCE_CONCRETE_PRODUCTS,
             $sku,
-            ProductImageSetsRestApiConfig::RESOURCE_CONCRETE_PRODUCT_IMAGE_SETS
+            ProductImageSetsRestApiConfig::RESOURCE_CONCRETE_PRODUCT_IMAGE_SETS,
         );
         $restResource->addLink(RestLinkInterface::LINK_SELF, $restResourceSelfLink);
 

@@ -28,7 +28,7 @@ class ProductAbstractReviewStorageCollectorQuery extends AbstractPropelCollector
             ->addJoin(
                 [SpyTouchTableMap::COL_ITEM_ID, SpyProductReviewTableMap::COL_STATUS],
                 [SpyProductReviewTableMap::COL_FK_PRODUCT_ABSTRACT, $this->getApprovedReviewStatus()],
-                Criteria::INNER_JOIN
+                Criteria::INNER_JOIN,
             )
             ->addGroupByColumn(SpyProductReviewTableMap::COL_FK_PRODUCT_ABSTRACT);
 

@@ -45,8 +45,8 @@ class CmsBlockStoreRelationMapper implements CmsBlockStoreRelationMapperInterfac
                 (new StoreTransfer())
                     ->fromArray(
                         $cmsBlockStoreEntity->getSpyStore()->toArray(),
-                        true
-                    )
+                        true,
+                    ),
             );
         }
 

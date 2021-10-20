@@ -161,7 +161,7 @@ class SessionEventDispatcherPlugin extends AbstractPlugin implements EventDispat
             $params['secure'],
             $params['httponly'],
             false,
-            $params['samesite'] ?? Cookie::SAMESITE_LAX
+            $params['samesite'] ?? Cookie::SAMESITE_LAX,
         );
     }
 

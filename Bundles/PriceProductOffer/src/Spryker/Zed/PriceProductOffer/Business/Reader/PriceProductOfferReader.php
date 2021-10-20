@@ -59,7 +59,7 @@ class PriceProductOfferReader implements PriceProductOfferReaderInterface
             foreach ($this->priceProductOfferExtractorPlugins as $priceProductOfferExtractorPlugin) {
                 $priceProductTransfers = array_merge(
                     $priceProductTransfers,
-                    $priceProductOfferExtractorPlugin->extract($priceProductTransfers)
+                    $priceProductOfferExtractorPlugin->extract($priceProductTransfers),
                 );
             }
         }

@@ -61,7 +61,7 @@ class CategoryLocalizedAttributeNameUniqueConstraint extends Constraint
             static::ERROR_MESSAGE,
             [
                 static::PARAMETER_CATEGORY_NAME => $categoryName,
-            ]
+            ],
         );
     }
 }

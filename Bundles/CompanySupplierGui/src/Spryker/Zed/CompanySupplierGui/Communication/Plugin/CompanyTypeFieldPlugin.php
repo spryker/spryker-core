@@ -35,7 +35,7 @@ class CompanyTypeFieldPlugin extends AbstractPlugin implements CompanyFormExpand
 
         $formType->buildForm(
             $builder,
-            $dataProvider->getOptions()
+            $dataProvider->getOptions(),
         );
     }
 }

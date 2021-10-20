@@ -99,7 +99,7 @@ class AbstractProductPriceProductScheduleApplier implements AbstractProductPrice
         return $this->priceProductScheduleRepository
             ->findPriceProductSchedulesToEnableByStoreAndIdProductAbstract(
                 $storeTransfer,
-                $priceProductScheduleTransfer->getPriceProduct()->getIdProductAbstract()
+                $priceProductScheduleTransfer->getPriceProduct()->getIdProductAbstract(),
             );
     }
 }

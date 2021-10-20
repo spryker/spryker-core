@@ -39,7 +39,7 @@ class ConfigurableBundleNoteZedStub implements ConfigurableBundleNoteZedStubInte
         /** @var \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer */
         $quoteResponseTransfer = $this->zedRequestClient->call(
             '/configurable-bundle-note/gateway/set-configured-bundle-note',
-            $configuredBundleNoteRequestTransfer
+            $configuredBundleNoteRequestTransfer,
         );
 
         return $quoteResponseTransfer;

@@ -47,7 +47,7 @@ class MerchantProductWriter implements MerchantProductWriterInterface
         $merchantProductTransfer->requireIdMerchant()->requireIdProductAbstract();
 
         $existingMerchantProduct = $this->merchantProductRepository->findMerchantProduct(
-            (new MerchantProductCriteriaTransfer())->setIdProductAbstract($merchantProductTransfer->getIdProductAbstract())
+            (new MerchantProductCriteriaTransfer())->setIdProductAbstract($merchantProductTransfer->getIdProductAbstract()),
         );
 
         if ($existingMerchantProduct) {

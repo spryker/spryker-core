@@ -75,7 +75,7 @@ class ShoppingListReader implements ShoppingListReaderInterface
     {
         $customerTransfer = $this->customerMapper->mapRestUserTransferToCustomerTransfer(
             $restRequest->getRestUser(),
-            new CustomerTransfer()
+            new CustomerTransfer(),
         );
         $shoppingListCollectionResponseTransfer = $this->shoppingListsRestApiClient->getCustomerShoppingListCollection($customerTransfer);
         $restShoppingListCollectionResponseTransfer = (new RestShoppingListCollectionResponseTransfer())
@@ -83,12 +83,12 @@ class ShoppingListReader implements ShoppingListReaderInterface
         if (count($restShoppingListCollectionResponseTransfer->getErrorIdentifiers()) > 0) {
             return $this->shoppingListRestResponseBuilder->buildErrorRestResponse(
                 $restRequest,
-                $restShoppingListCollectionResponseTransfer->getErrorIdentifiers()
+                $restShoppingListCollectionResponseTransfer->getErrorIdentifiers(),
             );
         }
 
         return $this->shoppingListRestResponseBuilder->buildShoppingListCollectionRestResponse(
-            $restShoppingListCollectionResponseTransfer
+            $restShoppingListCollectionResponseTransfer,
         );
     }
 
@@ -101,7 +101,7 @@ class ShoppingListReader implements ShoppingListReaderInterface
     public function getCustomerShoppingList(string $uuidShoppingList, RestRequestInterface $restRequest): RestResponseInterface
     {
         $shoppingListTransfer = $this->shoppingListRestRequestReader->readShoppingListTransferFromRequest(
-            $restRequest
+            $restRequest,
         );
 
         $shoppingListResponseTransfer = $this->shoppingListClient->findShoppingListByUuid($shoppingListTransfer);
@@ -113,7 +113,7 @@ class ShoppingListReader implements ShoppingListReaderInterface
         }
 
         return $this->shoppingListRestResponseBuilder->buildShoppingListRestResponse(
-            $shoppingListResponseTransfer->getShoppingList()
+            $shoppingListResponseTransfer->getShoppingList(),
         );
     }
 }

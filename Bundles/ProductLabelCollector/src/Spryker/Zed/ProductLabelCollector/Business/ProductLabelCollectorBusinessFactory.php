@@ -36,7 +36,7 @@ class ProductLabelCollectorBusinessFactory extends AbstractBusinessFactory
     {
         $collector = new LabelDictionaryCollector(
             $this->getDataReaderService(),
-            $this->getProductLabelFacade()
+            $this->getProductLabelFacade(),
         );
 
         $collector->setTouchQueryContainer($this->getTouchQueryContainer());
@@ -105,7 +105,7 @@ class ProductLabelCollectorBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductLabelCollectorRunner(
             $this->createAbstractProductRelationStorageCollector(),
-            $this->getCollectorFacade()
+            $this->getCollectorFacade(),
         );
     }
 
@@ -116,7 +116,7 @@ class ProductLabelCollectorBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductLabelCollectorRunner(
             $this->createLabelDictionaryStorageCollector(),
-            $this->getCollectorFacade()
+            $this->getCollectorFacade(),
         );
     }
 }

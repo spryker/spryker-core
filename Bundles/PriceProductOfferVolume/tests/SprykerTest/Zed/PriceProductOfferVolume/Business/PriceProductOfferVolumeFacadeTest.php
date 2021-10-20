@@ -170,7 +170,7 @@ class PriceProductOfferVolumeFacadeTest extends Unit
         // Assert
         $this->assertSame(
             static::VALID_GROSS_NET_PRICE_CONSTRAINT_MESSAGE,
-            $validationResponseTransfer->getValidationErrors()[0]->getMessage()
+            $validationResponseTransfer->getValidationErrors()[0]->getMessage(),
         );
     }
 
@@ -199,7 +199,7 @@ class PriceProductOfferVolumeFacadeTest extends Unit
         // Assert
         $this->assertSame(
             static::UNIQUE_STORE_CURRENCY_VOLUME_QUANTITY_CONSTRAINT_MESSAGE,
-            $validationResponseTransfer->getValidationErrors()[0]->getMessage()
+            $validationResponseTransfer->getValidationErrors()[0]->getMessage(),
         );
     }
 
@@ -226,7 +226,7 @@ class PriceProductOfferVolumeFacadeTest extends Unit
         // Assert
         $this->assertSame(
             static::VOLUME_QUANTITY_CONSTRAINT_MESSAGE,
-            $validationResponseTransfer->getValidationErrors()[0]->getMessage()
+            $validationResponseTransfer->getValidationErrors()[0]->getMessage(),
         );
     }
 }

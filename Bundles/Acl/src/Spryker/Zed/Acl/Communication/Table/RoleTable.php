@@ -118,7 +118,7 @@ class RoleTable extends AbstractTable
 
         $buttons[] = $this->generateEditButton(
             Url::generate(static::UPDATE_ROLE_URL, [static::PARAM_ID_ROLE => $rule[SpyAclRoleTableMap::COL_ID_ACL_ROLE]]),
-            'Edit'
+            'Edit',
         );
 
         if ($rule[SpyAclRoleTableMap::COL_NAME] !== AclConstants::ROOT_ROLE) {

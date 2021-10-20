@@ -236,7 +236,7 @@ class UrlCollector extends AbstractStoragePropelCollector
 
         return $this->escapeKey(implode(
             $this->keySeparator,
-            $keyParts
+            $keyParts,
         ));
     }
 
@@ -304,7 +304,7 @@ class UrlCollector extends AbstractStoragePropelCollector
             $storeReader,
             $storeWriter,
             $locale,
-            $output
+            $output,
         );
     }
 
@@ -356,7 +356,7 @@ class UrlCollector extends AbstractStoragePropelCollector
             $urlTouchKey = $this->collectKey(
                 $collectedItemData[CollectorConfig::COLLECTOR_RESOURCE_ID],
                 $localeName,
-                $collectedItemData
+                $collectedItemData,
             );
 
             $url = $collectedItemData[UrlConfig::RESOURCE_TYPE_URL];

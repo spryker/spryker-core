@@ -57,7 +57,7 @@ class PriceProductOfferVolumeExpander implements PriceProductOfferVolumeExpander
 
         $priceData = $this->utilEncodingService->decodeJson(
             $priceProductTransfer->getMoneyValueOrFail()->getPriceData(),
-            true
+            true,
         );
         if (!is_array($priceData)) {
             $priceData = [];

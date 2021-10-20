@@ -60,7 +60,7 @@ class ConfigurableBundleTemplateSynchronizationDataBulkPlugin extends AbstractPl
     {
         return $this->getRepository()->getFilteredConfigurableBundleTemplateStorageDataTransfers(
             $this->createFilterTransfer($offset, $limit),
-            $ids
+            $ids,
         );
     }
 

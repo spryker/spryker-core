@@ -48,7 +48,7 @@ class CacheClearer implements CacheClearerInterface
     {
         return $this->clear(
             $this->config->getCachePath(),
-            $this->config->getAllowedStores()
+            $this->config->getAllowedStores(),
         );
     }
 
@@ -94,7 +94,7 @@ class CacheClearer implements CacheClearerInterface
     {
         return $this->clear(
             $this->config->getAutoloaderCachePath(),
-            $this->config->getAllowedStores()
+            $this->config->getAllowedStores(),
         );
     }
 

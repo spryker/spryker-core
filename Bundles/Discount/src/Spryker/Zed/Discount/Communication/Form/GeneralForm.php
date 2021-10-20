@@ -101,7 +101,7 @@ class GeneralForm extends AbstractType
             $this->getStoreRelationFormTypePlugin()->getType(),
             [
                 'label' => false,
-            ]
+            ],
         );
 
         return $this;
@@ -176,7 +176,7 @@ class GeneralForm extends AbstractType
             TextareaType::class,
             [
                 'required' => false,
-            ]
+            ],
         );
 
         return $this;

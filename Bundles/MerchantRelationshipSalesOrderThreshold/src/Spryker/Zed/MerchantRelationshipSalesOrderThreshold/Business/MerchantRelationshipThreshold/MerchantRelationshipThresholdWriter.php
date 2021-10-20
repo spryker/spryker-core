@@ -137,7 +137,7 @@ class MerchantRelationshipThresholdWriter implements MerchantRelationshipThresho
             ->getSalesOrderThresholdTypeByKey(
                 $merchantRelationshipSalesOrderThresholdTransfer
                     ->getSalesOrderThresholdValue()
-                    ->getSalesOrderThresholdType()
+                    ->getSalesOrderThresholdType(),
             );
 
         $merchantRelationshipSalesOrderThresholdTransfer

@@ -176,7 +176,7 @@ class MerchantRelationshipSalesOrderThresholdGuiDependencyProvider extends Abstr
     {
         $container->set(static::FACADE_MERCHANT_RELATIONSHIP_SALES_ORDER_THRESHOLD, function (Container $container) {
             return new MerchantRelationshipSalesOrderThresholdGuiToMerchantRelationshipSalesOrderThresholdFacadeBridge(
-                $container->getLocator()->merchantRelationshipSalesOrderThreshold()->facade()
+                $container->getLocator()->merchantRelationshipSalesOrderThreshold()->facade(),
             );
         });
 
@@ -192,7 +192,7 @@ class MerchantRelationshipSalesOrderThresholdGuiDependencyProvider extends Abstr
     {
         $container->set(static::FACADE_MERCHANT_RELATIONSHIP, function (Container $container) {
             return new MerchantRelationshipSalesOrderThresholdGuiToMerchantRelationshipFacadeBridge(
-                $container->getLocator()->merchantRelationship()->facade()
+                $container->getLocator()->merchantRelationship()->facade(),
             );
         });
 
@@ -208,7 +208,7 @@ class MerchantRelationshipSalesOrderThresholdGuiDependencyProvider extends Abstr
     {
         $container->set(static::FACADE_COMPANY, function (Container $container) {
             return new MerchantRelationshipSalesOrderThresholdGuiToCompanyFacadeBridge(
-                $container->getLocator()->company()->facade()
+                $container->getLocator()->company()->facade(),
             );
         });
 

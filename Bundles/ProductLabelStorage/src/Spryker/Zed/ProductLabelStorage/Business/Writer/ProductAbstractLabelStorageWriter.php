@@ -114,7 +114,7 @@ class ProductAbstractLabelStorageWriter implements ProductAbstractLabelStorageWr
     ): void {
         $productAbstractIds = $this->eventBehaviorFacade->getEventTransferForeignKeys(
             $eventTransfers,
-            static::COL_PRODUCT_LABEL_PRODUCT_ABSTRACT_FK_PRODUCT_ABSTRACT
+            static::COL_PRODUCT_LABEL_PRODUCT_ABSTRACT_FK_PRODUCT_ABSTRACT,
         );
 
         $this->writeCollection($productAbstractIds);
@@ -131,14 +131,14 @@ class ProductAbstractLabelStorageWriter implements ProductAbstractLabelStorageWr
         $productAbstractLabelStorageTransfers = $this->productLabelStorageRepository
             ->getProductAbstractLabelStorageTransfersByProductAbstractIds($uniqueProductAbstractIds);
         $indexedProductAbstractLabelStorageTransfers = $this->indexProductAbstractLabelTransfersByProductAbstractIds(
-            $productAbstractLabelStorageTransfers
+            $productAbstractLabelStorageTransfers,
         );
         $groupedProductLabelIds = $this->getGroupedProductLabelIdsByProductAbstractIds($productAbstractIds);
 
         $this->storeData(
             $uniqueProductAbstractIds,
             $indexedProductAbstractLabelStorageTransfers,
-            $groupedProductLabelIds
+            $groupedProductLabelIds,
         );
     }
 
@@ -176,7 +176,7 @@ class ProductAbstractLabelStorageWriter implements ProductAbstractLabelStorageWr
     ): void {
         if (empty($productLabelIds[$productAbstractId])) {
             $this->productLabelStorageEntityManager->deleteProductAbstractLabelStorageByProductAbstractId(
-                $productAbstractId
+                $productAbstractId,
             );
 
             return;
@@ -203,7 +203,7 @@ class ProductAbstractLabelStorageWriter implements ProductAbstractLabelStorageWr
             ->getProductLabelProductAbstractsByProductAbstractIds($productAbstractIds);
 
         return $this->getProductLabelIdsGroupedByProductAbstractIdsFromProductLabelProductAbstractTransfers(
-            $productLabelProductAbstractTransfers
+            $productLabelProductAbstractTransfers,
         );
     }
 

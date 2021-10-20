@@ -40,7 +40,7 @@ class CompanyUserGuiButtonCreator implements CompanyUserGuiButtonCreatorInterfac
             static::BUTTON_ATTACH_CUSTOMER_TO_COMPANY_URL,
             [
                 CompanyUserGuiConfig::PARAM_ID_CUSTOMER => $idCustomer,
-            ]
+            ],
         );
 
         $buttons[] = (new ButtonTransfer())

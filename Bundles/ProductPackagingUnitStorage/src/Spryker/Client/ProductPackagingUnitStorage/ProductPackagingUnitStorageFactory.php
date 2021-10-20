@@ -35,7 +35,7 @@ class ProductPackagingUnitStorageFactory extends AbstractFactory
     {
         return new ItemTransferExpander(
             $this->createProductPackagingUnitStorageReader(),
-            $this->getProductMeasurementUnitStorageClient()
+            $this->getProductMeasurementUnitStorageClient(),
         );
     }
 

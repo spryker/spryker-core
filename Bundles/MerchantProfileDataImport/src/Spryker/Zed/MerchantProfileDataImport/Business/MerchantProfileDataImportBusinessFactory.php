@@ -28,7 +28,7 @@ class MerchantProfileDataImportBusinessFactory extends DataImportBusinessFactory
     public function getMerchantProfileDataImporter(): DataImporterInterface
     {
         $dataImporter = $this->getCsvDataImporterFromConfig(
-            $this->getConfig()->getMerchantProfileDataImporterConfiguration()
+            $this->getConfig()->getMerchantProfileDataImporterConfiguration(),
         );
 
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();
@@ -57,7 +57,7 @@ class MerchantProfileDataImportBusinessFactory extends DataImportBusinessFactory
     public function getMerchantProfileAddressDataImport()
     {
         $dataImporter = $this->getCsvDataImporterFromConfig(
-            $this->getConfig()->getMerchantProfileAddressDataImporterConfiguration()
+            $this->getConfig()->getMerchantProfileAddressDataImporterConfiguration(),
         );
 
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();

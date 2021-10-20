@@ -29,7 +29,7 @@ class MerchantUserMapper
             ->setIdMerchant($merchantUserEntity->getFkMerchant())
             ->setIdUser($merchantUserEntity->getFkUser())
             ->setMerchant(
-                $this->mapMerchantEntityToMerchantTransfer($merchantUserEntity->getSpyMerchant(), new MerchantTransfer())
+                $this->mapMerchantEntityToMerchantTransfer($merchantUserEntity->getSpyMerchant(), new MerchantTransfer()),
             );
     }
 
@@ -76,7 +76,7 @@ class MerchantUserMapper
         foreach ($merchantUserEntities as $merchantUserEntity) {
             $merchantUserTransfers[] = $this->mapMerchantUserEntityToMerchantUserTransfer(
                 $merchantUserEntity,
-                new MerchantUserTransfer()
+                new MerchantUserTransfer(),
             );
         }
 

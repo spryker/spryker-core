@@ -28,7 +28,7 @@ class ProductOptionMapper
         $productAbstractOptionGroupStatusTransfers = [];
         foreach ($productAbstractOptionGroupStatuses as $productAbstractOptionGroupStatus) {
             $productAbstractOptionGroupStatusTransfers[] = $this->mapProductAbstractOptionGroupStatusToTransfer(
-                $productAbstractOptionGroupStatus
+                $productAbstractOptionGroupStatus,
             );
         }
 
@@ -50,7 +50,7 @@ class ProductOptionMapper
                 ->fromArray($salesOrderItemEntity->toArray(), true)
                 ->setSumProductOptionPriceAggregation($salesOrderItemEntity->getProductOptionPriceAggregation())
                 ->setProductOptions(
-                    new ArrayObject($this->mapSalesOrderItemEntityToProductOptionTransfers($salesOrderItemEntity))
+                    new ArrayObject($this->mapSalesOrderItemEntityToProductOptionTransfers($salesOrderItemEntity)),
                 );
         }
 

@@ -144,21 +144,21 @@ class ShoppingListProductOptionConnectorFacadeTest extends Unit
             [
                 ProductOptionValueTransfer::SKU => 'PO_Group_0_Value_1',
                 ProductOptionGroupTransfer::ACTIVE => true,
-            ]
+            ],
         );
         // set createProductOptionGroupValue to Active ProductOptionGroup
         $this->productOptionValueTransferActive2 = $this->tester->createProductOptionGroupValueTransfer(
             [
                 ProductOptionValueTransfer::SKU => 'PO_Group_2_Value_1',
                 ProductOptionGroupTransfer::ACTIVE => true,
-            ]
+            ],
         );
         // set createProductOptionGroupValue to Inactive ProductOptionGroup
         $this->productOptionValueTransferInactive = $this->tester->createProductOptionGroupValueTransfer(
             [
                 ProductOptionValueTransfer::SKU => 'PO_Group_3',
                 ProductOptionGroupTransfer::ACTIVE => false,
-            ]
+            ],
         );
 
         // Assign Product Abstract to createProductOptionGroupValue with Active ProductOptionGroup
@@ -181,16 +181,16 @@ class ShoppingListProductOptionConnectorFacadeTest extends Unit
         $shoppingListItemTransfer = $this->getAssignedShoppingListItemCopy()
             ->addProductOption(
                 (new ProductOptionTransfer())->setIdProductOptionValue(
-                    $this->productOptionValueTransferActive->getIdProductOptionValue()
-                )
+                    $this->productOptionValueTransferActive->getIdProductOptionValue(),
+                ),
             )->addProductOption(
                 (new ProductOptionTransfer())->setIdProductOptionValue(
-                    $this->productOptionValueTransferActive2->getIdProductOptionValue()
-                )
+                    $this->productOptionValueTransferActive2->getIdProductOptionValue(),
+                ),
             )->addProductOption(
                 (new ProductOptionTransfer())->setIdProductOptionValue(
-                    $this->productOptionValueTransferInactive->getIdProductOptionValue()
-                )
+                    $this->productOptionValueTransferInactive->getIdProductOptionValue(),
+                ),
             );
 
         $this->tester->getFacade()->saveShoppingListItemProductOptions($shoppingListItemTransfer);
@@ -203,7 +203,7 @@ class ShoppingListProductOptionConnectorFacadeTest extends Unit
         // Act
         $actualResult = $this->tester->getFacade()
             ->expandShoppingListItemWithProductOptions(
-                $this->getAssignedShoppingListItemCopy()
+                $this->getAssignedShoppingListItemCopy(),
             );
 
         // Assert
@@ -223,17 +223,17 @@ class ShoppingListProductOptionConnectorFacadeTest extends Unit
             ->setIdShoppingListItem($this->shoppingListItemTransferUnassigned->getIdShoppingListItem())
             ->addProductOption(
                 (new ProductOptionTransfer())->setIdProductOptionValue(
-                    $this->productOptionValueTransferActive->getIdProductOptionValue()
-                )
+                    $this->productOptionValueTransferActive->getIdProductOptionValue(),
+                ),
             )
             ->addProductOption(
                 (new ProductOptionTransfer())->setIdProductOptionValue(
-                    $this->productOptionValueTransferActive2->getIdProductOptionValue()
-                )
+                    $this->productOptionValueTransferActive2->getIdProductOptionValue(),
+                ),
             )->addProductOption(
                 (new ProductOptionTransfer())->setIdProductOptionValue(
-                    $this->productOptionValueTransferInactive->getIdProductOptionValue()
-                )
+                    $this->productOptionValueTransferInactive->getIdProductOptionValue(),
+                ),
             );
 
         $this->tester->getFacade()->saveShoppingListItemProductOptions($shoppingListItemTransfer);
@@ -243,7 +243,7 @@ class ShoppingListProductOptionConnectorFacadeTest extends Unit
         // Act
         $actualResult = $this->tester->getFacade()
             ->expandShoppingListItemWithProductOptions(
-                $this->getUnassignedShoppingListItemCopy()
+                $this->getUnassignedShoppingListItemCopy(),
             );
 
         // Assert
@@ -267,7 +267,7 @@ class ShoppingListProductOptionConnectorFacadeTest extends Unit
         // Act
         $actualResult = $this->tester->getFacade()
             ->expandShoppingListItemWithProductOptions(
-                $this->getAssignedShoppingListItemCopy()
+                $this->getAssignedShoppingListItemCopy(),
             );
 
         // Assert
@@ -283,8 +283,8 @@ class ShoppingListProductOptionConnectorFacadeTest extends Unit
         $shoppingListItemTransfer = $this->getAssignedShoppingListItemCopy()
             ->addProductOption(
                 (new ProductOptionTransfer())->setIdProductOptionValue(
-                    $this->productOptionValueTransferActive->getIdProductOptionValue()
-                )
+                    $this->productOptionValueTransferActive->getIdProductOptionValue(),
+                ),
             );
 
         // Act
@@ -294,12 +294,12 @@ class ShoppingListProductOptionConnectorFacadeTest extends Unit
         $shoppingListItemTransfer = $this->getAssignedShoppingListItemCopy()
             ->addProductOption(
                 (new ProductOptionTransfer())->setIdProductOptionValue(
-                    $this->productOptionValueTransferActive2->getIdProductOptionValue()
-                )
+                    $this->productOptionValueTransferActive2->getIdProductOptionValue(),
+                ),
             )->addProductOption(
                 (new ProductOptionTransfer())->setIdProductOptionValue(
-                    $this->productOptionValueTransferInactive->getIdProductOptionValue()
-                )
+                    $this->productOptionValueTransferInactive->getIdProductOptionValue(),
+                ),
             );
 
         // Act
@@ -307,7 +307,7 @@ class ShoppingListProductOptionConnectorFacadeTest extends Unit
 
         $actualResult = $this->tester->getFacade()
             ->expandShoppingListItemWithProductOptions(
-                $this->getAssignedShoppingListItemCopy()
+                $this->getAssignedShoppingListItemCopy(),
             );
 
         $expectedResult = [
@@ -330,13 +330,13 @@ class ShoppingListProductOptionConnectorFacadeTest extends Unit
         $shoppingListItemTransfer = $this->getAssignedShoppingListItemCopy()
             ->addProductOption(
                 (new ProductOptionTransfer())->setIdProductOptionValue(
-                    $this->productOptionValueTransferActive->getIdProductOptionValue()
-                )
+                    $this->productOptionValueTransferActive->getIdProductOptionValue(),
+                ),
             )
             ->addProductOption(
                 (new ProductOptionTransfer())->setIdProductOptionValue(
-                    $this->productOptionValueTransferActive2->getIdProductOptionValue()
-                )
+                    $this->productOptionValueTransferActive2->getIdProductOptionValue(),
+                ),
             );
 
         // Act
@@ -345,12 +345,12 @@ class ShoppingListProductOptionConnectorFacadeTest extends Unit
         $this->tester->getFacade()
             ->deleteShoppingListItemProductOptionsByRemovedProductOptionValues(
                 (new ProductOptionGroupTransfer())
-                    ->addProductOptionValuesToBeRemoved($this->productOptionValueTransferActive2->getIdProductOptionValue())
+                    ->addProductOptionValuesToBeRemoved($this->productOptionValueTransferActive2->getIdProductOptionValue()),
             );
 
         $actualResult = $this->tester->getFacade()
             ->expandShoppingListItemWithProductOptions(
-                $this->getAssignedShoppingListItemCopy()
+                $this->getAssignedShoppingListItemCopy(),
             );
 
         $expectedResult = [
@@ -450,7 +450,7 @@ class ShoppingListProductOptionConnectorFacadeTest extends Unit
         // Act
         $actualResult = $this->tester->getFacade()
             ->expandShoppingListItemWithProductOptions(
-                $this->getAssignedShoppingListItemCopy()
+                $this->getAssignedShoppingListItemCopy(),
             );
 
         $expectedProductOptionValueIds = [
@@ -479,7 +479,7 @@ class ShoppingListProductOptionConnectorFacadeTest extends Unit
         // Action
         $actualResult = $this->tester->getFacade()->mapCartItemProductOptionsToShoppingListItemProductOptions(
             $itemTransfer,
-            $shoppingListItemTransfer
+            $shoppingListItemTransfer,
         );
 
         // Assert
@@ -504,12 +504,12 @@ class ShoppingListProductOptionConnectorFacadeTest extends Unit
 
         $this->tester->getFacade()
             ->removeShoppingListItemProductOptions(
-                $this->shoppingListItemTransferAssigned->getIdShoppingListItem()
+                $this->shoppingListItemTransferAssigned->getIdShoppingListItem(),
             );
 
         $actualResult = $this->tester->getFacade()
             ->expandShoppingListItemWithProductOptions(
-                $this->getAssignedShoppingListItemCopy()
+                $this->getAssignedShoppingListItemCopy(),
             );
 
         $this->assertEmpty($actualResult->getProductOptions());
@@ -524,8 +524,8 @@ class ShoppingListProductOptionConnectorFacadeTest extends Unit
         $shoppingListItemTransfer = $this->getUnassignedShoppingListItemCopy()
             ->addProductOption(
                 (new ProductOptionTransfer())->setIdProductOptionValue(
-                    $this->productOptionValueTransferActive->getIdProductOptionValue()
-                )
+                    $this->productOptionValueTransferActive->getIdProductOptionValue(),
+                ),
             );
 
         // Act
@@ -533,7 +533,7 @@ class ShoppingListProductOptionConnectorFacadeTest extends Unit
 
         $actualResult = $this->tester->getFacade()
             ->expandShoppingListItemWithProductOptions(
-                $this->getUnassignedShoppingListItemCopy()
+                $this->getUnassignedShoppingListItemCopy(),
             );
 
         // Assert
@@ -544,7 +544,7 @@ class ShoppingListProductOptionConnectorFacadeTest extends Unit
         //Act
         $actualResult = $this->tester->getFacade()
             ->expandShoppingListItemWithProductOptions(
-                $this->getUnassignedShoppingListItemCopy()
+                $this->getUnassignedShoppingListItemCopy(),
             );
 
         // Assert
@@ -568,8 +568,8 @@ class ShoppingListProductOptionConnectorFacadeTest extends Unit
         $shoppingListItemTransfer = $this->getAssignedShoppingListItemCopy()
             ->addProductOption(
                 (new ProductOptionTransfer())->setIdProductOptionValue(
-                    $this->productOptionValueTransferInactive->getIdProductOptionValue()
-                )
+                    $this->productOptionValueTransferInactive->getIdProductOptionValue(),
+                ),
             );
 
         // Act
@@ -577,7 +577,7 @@ class ShoppingListProductOptionConnectorFacadeTest extends Unit
 
         $actualResult = $this->tester->getFacade()
             ->expandShoppingListItemWithProductOptions(
-                $this->getAssignedShoppingListItemCopy()
+                $this->getAssignedShoppingListItemCopy(),
             );
 
         // Assert
@@ -588,7 +588,7 @@ class ShoppingListProductOptionConnectorFacadeTest extends Unit
         //Act
         $actualResult = $this->tester->getFacade()
             ->expandShoppingListItemWithProductOptions(
-                $this->getAssignedShoppingListItemCopy()
+                $this->getAssignedShoppingListItemCopy(),
             );
 
         // Assert
@@ -612,12 +612,12 @@ class ShoppingListProductOptionConnectorFacadeTest extends Unit
         $shoppingListItemTransfer = $this->getAssignedShoppingListItemCopy()
             ->addProductOption(
                 (new ProductOptionTransfer())->setIdProductOptionValue(
-                    $this->productOptionValueTransferActive->getIdProductOptionValue()
-                )
+                    $this->productOptionValueTransferActive->getIdProductOptionValue(),
+                ),
             )->addProductOption(
                 (new ProductOptionTransfer())->setIdProductOptionValue(
-                    $this->productOptionValueTransferActive2->getIdProductOptionValue()
-                )
+                    $this->productOptionValueTransferActive2->getIdProductOptionValue(),
+                ),
             );
         $shoppingListItemCollectionTransfer = $this->createShoppingListItemCollectionTransfer([$shoppingListItemTransfer]);
 
@@ -647,16 +647,16 @@ class ShoppingListProductOptionConnectorFacadeTest extends Unit
         $shoppingListItemTransfer = $this->getAssignedShoppingListItemCopy()
             ->addProductOption(
                 (new ProductOptionTransfer())->setIdProductOptionValue(
-                    $this->productOptionValueTransferActive->getIdProductOptionValue()
-                )
+                    $this->productOptionValueTransferActive->getIdProductOptionValue(),
+                ),
             )->addProductOption(
                 (new ProductOptionTransfer())->setIdProductOptionValue(
-                    $this->productOptionValueTransferActive2->getIdProductOptionValue()
-                )
+                    $this->productOptionValueTransferActive2->getIdProductOptionValue(),
+                ),
             )->addProductOption(
                 (new ProductOptionTransfer())->setIdProductOptionValue(
-                    $this->productOptionValueTransferInactive->getIdProductOptionValue()
-                )
+                    $this->productOptionValueTransferInactive->getIdProductOptionValue(),
+                ),
             );
         $shoppingListItemCollectionTransfer = $this->createShoppingListItemCollectionTransfer([$shoppingListItemTransfer]);
 
@@ -665,7 +665,7 @@ class ShoppingListProductOptionConnectorFacadeTest extends Unit
 
         $actualResult = $this->tester->getFacade()
             ->expandShoppingListItemCollectionWithProductOptions(
-                $shoppingListItemCollectionTransfer
+                $shoppingListItemCollectionTransfer,
             );
 
         // Assert

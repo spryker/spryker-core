@@ -84,7 +84,7 @@ class ProductOptionListTableTest extends Unit
             $productOptionQueryContainer,
             $this->getProductOptionToCurrencyFacadeMock(),
             $this->getProductOptionToMoneyFacadeMock(),
-            $productOptionRepository
+            $productOptionRepository,
         );
     }
 

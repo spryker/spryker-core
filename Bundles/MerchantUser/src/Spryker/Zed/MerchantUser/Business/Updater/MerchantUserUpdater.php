@@ -132,7 +132,7 @@ class MerchantUserUpdater implements MerchantUserUpdaterInterface
                 (new UserPasswordResetRequestTransfer())
                     ->setEmail($email)
                     ->setResetPasswordBaseUrl($this->merchantUserConfig->getMerchantPortalBaseUrl())
-                    ->setResetPasswordPath(static::RESET_RASSWORD_PATH)
+                    ->setResetPasswordPath(static::RESET_RASSWORD_PATH),
             );
         }
     }

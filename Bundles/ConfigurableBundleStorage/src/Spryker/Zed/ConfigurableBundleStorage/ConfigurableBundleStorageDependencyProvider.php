@@ -77,7 +77,7 @@ class ConfigurableBundleStorageDependencyProvider extends AbstractBundleDependen
     {
         $container->set(static::FACADE_EVENT_BEHAVIOR, function (Container $container) {
             return new ConfigurableBundleStorageToEventBehaviorFacadeBridge(
-                $container->getLocator()->eventBehavior()->facade()
+                $container->getLocator()->eventBehavior()->facade(),
             );
         });
 
@@ -93,7 +93,7 @@ class ConfigurableBundleStorageDependencyProvider extends AbstractBundleDependen
     {
         $container->set(static::FACADE_CONFIGURABLE_BUNDLE, function (Container $container) {
             return new ConfigurableBundleStorageToConfigurableBundleFacadeBridge(
-                $container->getLocator()->configurableBundle()->facade()
+                $container->getLocator()->configurableBundle()->facade(),
             );
         });
 
@@ -109,7 +109,7 @@ class ConfigurableBundleStorageDependencyProvider extends AbstractBundleDependen
     {
         $container->set(static::FACADE_LOCALE, function (Container $container) {
             return new ConfigurableBundleStorageToLocaleFacadeBridge(
-                $container->getLocator()->locale()->facade()
+                $container->getLocator()->locale()->facade(),
             );
         });
 
@@ -125,7 +125,7 @@ class ConfigurableBundleStorageDependencyProvider extends AbstractBundleDependen
     {
         $container->set(static::FACADE_PRODUCT_IMAGE, function (Container $container) {
             return new ConfigurableBundleStorageToProductImageFacadeBridge(
-                $container->getLocator()->productImage()->facade()
+                $container->getLocator()->productImage()->facade(),
             );
         });
 

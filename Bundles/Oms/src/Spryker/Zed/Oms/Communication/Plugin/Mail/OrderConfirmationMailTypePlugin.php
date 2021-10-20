@@ -102,7 +102,7 @@ class OrderConfirmationMailTypePlugin extends AbstractPlugin implements MailType
 
         $mailBuilder->addRecipient(
             $orderTransfer->getEmail(),
-            $orderTransfer->getFirstName() . ' ' . $orderTransfer->getLastName()
+            $orderTransfer->getFirstName() . ' ' . $orderTransfer->getLastName(),
         );
 
         return $this;

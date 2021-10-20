@@ -209,7 +209,7 @@ class ComposerJsonUpdater implements ComposerJsonUpdaterInterface
 
         throw new InvalidComposerJsonException(sprintf(
             'Unable to locate organization name from %s.',
-            $composerJsonFile->getRealPath()
+            $composerJsonFile->getRealPath(),
         ));
     }
 }

@@ -36,7 +36,7 @@ class SynchronizationBusinessFactory extends AbstractBusinessFactory
         return new SynchronizationStorage(
             $this->getStorageClient(),
             $this->getUtilEncodingService(),
-            $this->createOutdatedValidator()
+            $this->createOutdatedValidator(),
         );
     }
 
@@ -47,7 +47,7 @@ class SynchronizationBusinessFactory extends AbstractBusinessFactory
     {
         return new SynchronizationSearch(
             $this->getSearchClient(),
-            $this->createOutdatedValidator()
+            $this->createOutdatedValidator(),
         );
     }
 
@@ -60,7 +60,7 @@ class SynchronizationBusinessFactory extends AbstractBusinessFactory
             $this->getQueueClient(),
             $this->createQueueMessageCreator(),
             $this->getUtilEncodingService(),
-            $this->getConfig()->getSyncExportChunkSize()
+            $this->getConfig()->getSyncExportChunkSize(),
         );
     }
 
@@ -73,7 +73,7 @@ class SynchronizationBusinessFactory extends AbstractBusinessFactory
             $this->getQueueClient(),
             $this->createQueueMessageCreator(),
             $this->getSynchronizationDataQueryExpanderStrategyPlugin(),
-            $this->getConfig()->getSyncExportChunkSize()
+            $this->getConfig()->getSyncExportChunkSize(),
         );
     }
 
@@ -93,7 +93,7 @@ class SynchronizationBusinessFactory extends AbstractBusinessFactory
         return new ExporterPluginResolver(
             $this->getSynchronizationDataPlugins(),
             $this->createQueryContainerExporter(),
-            $this->createRepositoryExporter()
+            $this->createRepositoryExporter(),
         );
     }
 
@@ -104,7 +104,7 @@ class SynchronizationBusinessFactory extends AbstractBusinessFactory
     {
         return new BulkQueueMessageProcessor(
             $this->createSearchManager(),
-            $this->createQueueMessageHelper()
+            $this->createQueueMessageHelper(),
         );
     }
 
@@ -115,7 +115,7 @@ class SynchronizationBusinessFactory extends AbstractBusinessFactory
     {
         return new BulkQueueMessageProcessor(
             $this->createStorageManager(),
-            $this->createQueueMessageHelper()
+            $this->createQueueMessageHelper(),
         );
     }
 
@@ -125,7 +125,7 @@ class SynchronizationBusinessFactory extends AbstractBusinessFactory
     public function createQueueMessageHelper(): QueueMessageHelperInterface
     {
         return new QueueMessageHelper(
-            $this->getUtilEncodingService()
+            $this->getUtilEncodingService(),
         );
     }
 
@@ -135,7 +135,7 @@ class SynchronizationBusinessFactory extends AbstractBusinessFactory
     protected function createOutdatedValidator()
     {
         return new OutdatedValidator(
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -145,7 +145,7 @@ class SynchronizationBusinessFactory extends AbstractBusinessFactory
     protected function createQueueMessageCreator()
     {
         return new QueueMessageCreator(
-            $this->getUtilEncodingService()
+            $this->getUtilEncodingService(),
         );
     }
 

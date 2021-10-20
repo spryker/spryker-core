@@ -114,19 +114,19 @@ class ImportOrderItemsStatusConsole extends Console
             ->addArgument(
                 static::ARGUMENT_FILE_PATH,
                 InputArgument::REQUIRED,
-                'Path to the file. It can be absolute or relative to application root directory.'
+                'Path to the file. It can be absolute or relative to application root directory.',
             )
             ->addOption(
                 static::OPTION_IGNORE_ERRORS,
                 null,
                 InputOption::VALUE_NONE,
-                'Suppress errors if an input file row was not processed.'
+                'Suppress errors if an input file row was not processed.',
             )
             ->addOption(
                 static::OPTION_START_FROM,
                 null,
                 InputOption::VALUE_REQUIRED,
-                'Start file processing from the defined row number.'
+                'Start file processing from the defined row number.',
             );
 
         parent::configure();
@@ -186,12 +186,12 @@ class ImportOrderItemsStatusConsole extends Console
                 if (!in_array($rowData[static::TABLE_HEADER_COLUMN_ORDER_ITEM_EVENT_OMS], $manualEvents)) {
                     throw new Exception(sprintf(
                         'Item can\'t be triggered. Available events for item: %s',
-                        implode(', ', $manualEvents)
+                        implode(', ', $manualEvents),
                     ));
                 }
                 $result = $this->getFactory()->getOmsFacade()->triggerEventForOneOrderItem(
                     $rowData[static::TABLE_HEADER_COLUMN_ORDER_ITEM_EVENT_OMS],
-                    $salesOrderItemTransfer->getIdSalesOrderItem()
+                    $salesOrderItemTransfer->getIdSalesOrderItem(),
                 );
 
                 if ($result === null) {
@@ -202,14 +202,14 @@ class ImportOrderItemsStatusConsole extends Console
                 $this->logOutput(
                     $rowNumber,
                     $rowData,
-                    ($result !== null)
+                    ($result !== null),
                 );
             } catch (Throwable $exception) {
                 $this->logOutput(
                     $rowNumber,
                     $rowData,
                     false,
-                    $exception->getMessage()
+                    $exception->getMessage(),
                 );
             }
         }

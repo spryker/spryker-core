@@ -68,7 +68,7 @@ class ConsoleLogPlugin implements EventSubscriberInterface
         $this->getLogger()->error(sprintf(
             'CLI command "%s" exception, message "%s"',
             $this->getConsoleErrorCommandName($event),
-            $exception->getMessage()
+            $exception->getMessage(),
         ), ['exception' => $exception]);
     }
 

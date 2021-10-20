@@ -26,7 +26,7 @@ class QuoteCompanyUserMapper
         $quoteCompanyUserTransfer->fromArray($spyQuoteCompanyUser->toArray(), true);
         $quoteCompanyUserTransfer->setQuote((new QuoteTransfer())->fromArray(
             $spyQuoteCompanyUser->getSpyQuote()->toArray(),
-            true
+            true,
         ));
 
         return $quoteCompanyUserTransfer;

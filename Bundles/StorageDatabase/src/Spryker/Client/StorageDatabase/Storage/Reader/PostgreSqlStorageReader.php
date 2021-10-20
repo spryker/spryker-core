@@ -129,7 +129,7 @@ class PostgreSqlStorageReader extends AbstractStorageReader
         return sprintf(
             static::SELECT_STATEMENT_PATTERN,
             $keyPlaceholder,
-            $tableName
+            $tableName,
         );
     }
 

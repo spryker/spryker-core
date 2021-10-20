@@ -73,7 +73,7 @@ class MerchantProductCartValidator implements MerchantProductCartValidatorInterf
                     ->setParameters([
                         static::GLOSSARY_PARAM_MERCHANT_REFERENCE => $itemTransfer->getMerchantReference(),
                         static::GLOSSARY_PARAM_CONCRETE_SKU => $itemTransfer->getSku(),
-                    ])
+                    ]),
             );
         }
 

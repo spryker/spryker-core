@@ -95,7 +95,7 @@ class CustomerShareCartQuoteResponseExpander implements QuoteResponseExpanderInt
         foreach ($sharedQuoteCollectionTransfer->getQuotes() as $quoteTransfer) {
             if ($quoteTransfer->getIdQuote() === $currentQuoteTransfer->getIdQuote()) {
                 $quoteResponseTransfer->setQuoteTransfer(
-                    $currentQuoteTransfer->fromArray($quoteTransfer->modifiedToArray(), true)
+                    $currentQuoteTransfer->fromArray($quoteTransfer->modifiedToArray(), true),
                 );
             }
         }

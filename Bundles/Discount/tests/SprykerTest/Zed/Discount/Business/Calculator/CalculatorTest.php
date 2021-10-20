@@ -111,7 +111,7 @@ class CalculatorTest extends Unit
             DiscountDependencyProvider::PLUGIN_CALCULATOR_PERCENTAGE,
             50,
             true,
-            true
+            true,
         );
 
         $calculator = $this->getCalculator();
@@ -120,7 +120,7 @@ class CalculatorTest extends Unit
 
         $result = $calculator->calculate(
             $discountCollection,
-            $quoteTransfer
+            $quoteTransfer,
         );
 
         $this->assertSame(1, count($result));
@@ -185,7 +185,7 @@ class CalculatorTest extends Unit
             $messengerFacade,
             $distributor,
             $calculatorPlugins,
-            []
+            [],
         );
     }
 
@@ -199,7 +199,7 @@ class CalculatorTest extends Unit
             $this->createCollectorSpecificationProvider(),
             $this->createComparatorOperators(),
             $this->createClauseValidator(),
-            $this->createMetaDataProvider()
+            $this->createMetaDataProvider(),
         );
     }
 
@@ -220,7 +220,7 @@ class CalculatorTest extends Unit
     {
         return new ClauseValidator(
             $this->createComparatorOperators(),
-            $this->createMetaDataProvider()
+            $this->createMetaDataProvider(),
         );
     }
 
@@ -232,7 +232,7 @@ class CalculatorTest extends Unit
         return new MetaDataProvider(
             $this->createDecisionRulePlugins(),
             $this->createComparatorOperators(),
-            $this->createLogicalOperators()
+            $this->createLogicalOperators(),
         );
     }
 
@@ -275,7 +275,7 @@ class CalculatorTest extends Unit
     {
         return new Distributor(
             $this->createDiscountableItemTransformer(),
-            $this->createDiscountableItemTransformerStrategyPlugins()
+            $this->createDiscountableItemTransformerStrategyPlugins(),
         );
     }
 
@@ -544,7 +544,7 @@ class CalculatorTest extends Unit
             $specificationBuilderMock,
             $this->createMessengerFacadeBridgeMock(),
             $this->createDistributorMock(),
-            $calculatorMock
+            $calculatorMock,
         );
 
         $collectedDiscounts = $calculator->calculate([$discountTransfer], $quoteTransfer);
@@ -611,7 +611,7 @@ class CalculatorTest extends Unit
             $messengerFacadeMock,
             $distributorMock,
             $calculatorPlugins,
-            $this->getCollectedDiscountGroupingPlugins()
+            $this->getCollectedDiscountGroupingPlugins(),
         );
     }
 

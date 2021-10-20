@@ -99,7 +99,7 @@ class Discount implements DiscountInterface
     {
         $activeDiscounts = $this->retrieveActiveCartAndVoucherDiscounts(
             $this->getVoucherCodes($quoteTransfer),
-            $this->getIdStore($quoteTransfer->getStore())
+            $this->getIdStore($quoteTransfer->getStore()),
         );
 
         [$applicableDiscounts, $nonApplicableDiscounts] = $this->splitDiscountsByApplicability($activeDiscounts, $quoteTransfer);
@@ -270,7 +270,7 @@ class Discount implements DiscountInterface
 
         $discountApplicableItems = $this->filterDiscountApplicableItems(
             $quoteTransfer,
-            $discountEntity->getIdDiscount()
+            $discountEntity->getIdDiscount(),
         );
 
         if (count($discountApplicableItems) === 0) {

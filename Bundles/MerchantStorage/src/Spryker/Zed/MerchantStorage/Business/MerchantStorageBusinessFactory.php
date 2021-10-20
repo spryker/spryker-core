@@ -32,7 +32,7 @@ class MerchantStorageBusinessFactory extends AbstractBusinessFactory
             $this->getMerchantFacade(),
             $this->getStoreFacade(),
             $this->getEntityManager(),
-            $this->getRepository()
+            $this->getRepository(),
         );
     }
 

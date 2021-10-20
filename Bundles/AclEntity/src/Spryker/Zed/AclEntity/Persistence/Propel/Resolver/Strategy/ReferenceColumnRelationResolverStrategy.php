@@ -53,7 +53,7 @@ class ReferenceColumnRelationResolverStrategy extends AbstractRelationResolverSt
         $query = $this->getQueryByEntityClass($relationEntityClass);
         $referencedColumn = $this->getColumnPhpName(
             $relationEntityClass,
-            $aclEntityMetadataTransfer->getParentOrFail()->getConnectionOrFail()->getReferencedColumnOrFail()
+            $aclEntityMetadataTransfer->getParentOrFail()->getConnectionOrFail()->getReferencedColumnOrFail(),
         );
         $referenceColumn = $aclEntityMetadataTransfer->getParentOrFail()->getConnectionOrFail()->getReferenceOrFail();
 
@@ -90,26 +90,26 @@ class ReferenceColumnRelationResolverStrategy extends AbstractRelationResolverSt
     ): ModelCriteria {
         $tableMap = $this->getTableMapByEntityClass($aclEntityMetadataTransfer->getEntityNameOrFail());
         $referencedTableMap = $this->getTableMapByEntityClass(
-            $aclEntityMetadataTransfer->getParentOrFail()->getEntityNameOrFail()
+            $aclEntityMetadataTransfer->getParentOrFail()->getEntityNameOrFail(),
         );
         $join = new ModelJoin(
             sprintf(
                 static::JOIN_COLUMN_TEMPLATE,
                 $tableMap->getName(),
-                $aclEntityMetadataTransfer->getParentOrFail()->getConnectionOrFail()->getReferenceOrFail()
+                $aclEntityMetadataTransfer->getParentOrFail()->getConnectionOrFail()->getReferenceOrFail(),
             ),
             sprintf(
                 static::JOIN_COLUMN_TEMPLATE,
                 $referencedTableMap->getName(),
-                $aclEntityMetadataTransfer->getParentOrFail()->getConnectionOrFail()->getReferencedColumnOrFail()
-            )
+                $aclEntityMetadataTransfer->getParentOrFail()->getConnectionOrFail()->getReferencedColumnOrFail(),
+            ),
         );
         $joinTableMap = PropelQuery::from($aclEntityMetadataTransfer->getParentOrFail()->getEntityNameOrFail())
             ->getTableMap();
         $join->setTableMap($joinTableMap);
         $query->addJoinObject(
             $join,
-            $this->convertFullToShortClassName($aclEntityMetadataTransfer->getParentOrFail()->getEntityNameOrFail())
+            $this->convertFullToShortClassName($aclEntityMetadataTransfer->getParentOrFail()->getEntityNameOrFail()),
         );
 
         return $query;

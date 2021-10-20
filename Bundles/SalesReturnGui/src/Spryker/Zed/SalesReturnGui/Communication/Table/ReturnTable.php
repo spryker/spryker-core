@@ -155,7 +155,7 @@ class ReturnTable extends AbstractTable
         $salesReturnEntityCollection = $this->runQuery(
             $this->prepareQuery(),
             $config,
-            true
+            true,
         );
 
         if (!$salesReturnEntityCollection->count()) {
@@ -184,11 +184,11 @@ class ReturnTable extends AbstractTable
             ->endUse()
             ->withColumn(
                 sprintf('COUNT(%s)', SpySalesReturnItemTableMap::COL_ID_SALES_RETURN_ITEM),
-                static::COL_RETURNED_PRODUCTS
+                static::COL_RETURNED_PRODUCTS,
             )
             ->withColumn(
                 sprintf('GROUP_CONCAT(DISTINCT %s)', SpySalesOrderTableMap::COL_ORDER_REFERENCE),
-                static::COL_ORDER_REFERENCE
+                static::COL_ORDER_REFERENCE,
             );
 
         return $salesReturnQuery;
@@ -248,7 +248,7 @@ class ReturnTable extends AbstractTable
                     ->joinState()
                     ->withColumn(
                         sprintf('DISTINCT %s', SpyOmsOrderItemStateTableMap::COL_NAME),
-                        static::COL_STATE
+                        static::COL_STATE,
                     )
                 ->endUse()
             ->endUse()
@@ -278,7 +278,7 @@ class ReturnTable extends AbstractTable
             Url::generate(static::ROUTE_DETAIL, [
                 static::PARAM_ID_RETURN => $salesReturnEntity->getIdSalesReturn(),
             ]),
-            'View'
+            'View',
         );
 
         $buttons[] = $this->generateViewButton(
@@ -289,7 +289,7 @@ class ReturnTable extends AbstractTable
             [
                 'icon' => '',
                 'class' => 'btn-create',
-            ]
+            ],
         );
 
         return implode(' ', $buttons);

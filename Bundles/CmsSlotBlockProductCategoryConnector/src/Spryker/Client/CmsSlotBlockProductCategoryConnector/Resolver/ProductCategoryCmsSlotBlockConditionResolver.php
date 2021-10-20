@@ -61,7 +61,7 @@ class ProductCategoryCmsSlotBlockConditionResolver implements ProductCategoryCms
                 in_array($cmsSlotParamsTransfer->getIdProductAbstract(), $cmsSlotBlockConditionTransfer->getProductIds())
                 || $this->getIsProductInCategoryIds(
                     $cmsSlotParamsTransfer->getIdProductAbstract(),
-                    $cmsSlotBlockConditionTransfer->getCategoryIds()
+                    $cmsSlotBlockConditionTransfer->getCategoryIds(),
                 )
             );
     }

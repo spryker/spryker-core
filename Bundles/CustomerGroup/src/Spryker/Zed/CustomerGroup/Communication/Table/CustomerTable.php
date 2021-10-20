@@ -142,7 +142,7 @@ class CustomerTable extends AbstractTable
         $buttons = [];
         $buttons[] = $this->generateViewButton(
             sprintf('/customer/view?id-customer=%d', $customerGroupToCustomerEntity->getFkCustomer()),
-            'View'
+            'View',
         );
 
         return implode(' ', $buttons);

@@ -58,12 +58,12 @@ class ExpandCartChangeWithProductConfigurationInstanceTest extends Unit
 
         $this->assertNotNull(
             $itemTransfer->getProductConfigurationInstance(),
-            'Expects that item will be expanded with product configuration instance.'
+            'Expects that item will be expanded with product configuration instance.',
         );
         $this->assertEquals(
             $productConfigurationInstanceTransfer,
             $itemTransfer->getProductConfigurationInstance(),
-            'Expects that item will be expanded with the same product configuration instance.'
+            'Expects that item will be expanded with the same product configuration instance.',
         );
     }
 
@@ -83,7 +83,7 @@ class ExpandCartChangeWithProductConfigurationInstanceTest extends Unit
         // Assert
         $this->assertEmpty(
             $cartChangeTransfer->getItems(),
-            'Expects no items in cart change transfer when call expander with empty cart change transfer.'
+            'Expects no items in cart change transfer when call expander with empty cart change transfer.',
         );
     }
 
@@ -107,7 +107,7 @@ class ExpandCartChangeWithProductConfigurationInstanceTest extends Unit
         // Assert
         $this->assertNull(
             $cartChangeTransfer->getItems()->offsetGet(0)->getProductConfigurationInstance(),
-            'Expects item without product configuration when no product configuration.'
+            'Expects item without product configuration when no product configuration.',
         );
     }
 }

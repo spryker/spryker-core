@@ -118,7 +118,7 @@ class MoneyDependencyProvider extends AbstractDependencyProvider
     {
         $numberFormatter = new NumberFormatter(
             $this->getStore()->getCurrentLocale(),
-            NumberFormatter::CURRENCY
+            NumberFormatter::CURRENCY,
         );
 
         return $numberFormatter;

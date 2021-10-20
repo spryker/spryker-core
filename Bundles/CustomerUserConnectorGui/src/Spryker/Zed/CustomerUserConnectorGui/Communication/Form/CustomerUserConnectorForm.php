@@ -46,7 +46,7 @@ class CustomerUserConnectorForm extends AbstractType
     {
         $builder->add(
             static::FIELD_ID_USER,
-            HiddenType::class
+            HiddenType::class,
         );
 
         return $this;
@@ -61,7 +61,7 @@ class CustomerUserConnectorForm extends AbstractType
     {
         $builder->add(
             static::FIELD_IDS_CUSTOMER_TO_ASSIGN_CSV,
-            HiddenType::class
+            HiddenType::class,
         );
 
         $this->addIdsCsvModelTransformer(static::FIELD_IDS_CUSTOMER_TO_ASSIGN_CSV, $builder);
@@ -78,7 +78,7 @@ class CustomerUserConnectorForm extends AbstractType
     {
         $builder->add(
             static::FIELD_IDS_CUSTOMER_TO_DE_ASSIGN_CSV,
-            HiddenType::class
+            HiddenType::class,
         );
 
         $this->addIdsCsvModelTransformer(static::FIELD_IDS_CUSTOMER_TO_DE_ASSIGN_CSV, $builder);
@@ -110,7 +110,7 @@ class CustomerUserConnectorForm extends AbstractType
                     }
 
                     return explode(',', $idsCustomerAsCsv);
-                }
+                },
             ));
     }
 

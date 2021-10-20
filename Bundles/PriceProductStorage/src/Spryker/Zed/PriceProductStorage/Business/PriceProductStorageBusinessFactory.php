@@ -27,7 +27,7 @@ class PriceProductStorageBusinessFactory extends AbstractBusinessFactory
             $this->getPriceProductFacade(),
             $this->getStoreFacade(),
             $this->getQueryContainer(),
-            $this->getConfig()->isSendingToQueue()
+            $this->getConfig()->isSendingToQueue(),
         );
     }
 
@@ -40,7 +40,7 @@ class PriceProductStorageBusinessFactory extends AbstractBusinessFactory
             $this->getPriceProductFacade(),
             $this->getStoreFacade(),
             $this->getQueryContainer(),
-            $this->getConfig()->isSendingToQueue()
+            $this->getConfig()->isSendingToQueue(),
         );
     }
 

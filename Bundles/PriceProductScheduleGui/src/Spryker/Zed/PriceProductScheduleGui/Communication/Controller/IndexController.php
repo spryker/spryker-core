@@ -44,7 +44,7 @@ class IndexController extends AbstractController
             ->createPriceProductScheduleAbstractTable($idProductAbstract, $idPriceType);
 
         return $this->jsonResponse(
-            $priceProductScheduleTable->fetchData()
+            $priceProductScheduleTable->fetchData(),
         );
     }
 
@@ -62,11 +62,11 @@ class IndexController extends AbstractController
             ->createPriceProductScheduleConcreteTable(
                 $idProductConcrete,
                 $idProductAbstract,
-                $idPriceType
+                $idPriceType,
             );
 
         return $this->jsonResponse(
-            $priceProductScheduleTable->fetchData()
+            $priceProductScheduleTable->fetchData(),
         );
     }
 }

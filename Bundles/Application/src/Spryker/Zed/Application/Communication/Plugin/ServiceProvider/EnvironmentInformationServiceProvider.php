@@ -37,11 +37,11 @@ class EnvironmentInformationServiceProvider extends AbstractPlugin implements Se
                 $twig->addFunction(new TwigFunction(
                     $functionProvider->getFunctionName(),
                     $functionProvider->getFunctionName(),
-                    $functionProvider->getOptions()
+                    $functionProvider->getOptions(),
                 ));
 
                 return $twig;
-            })
+            }),
         );
     }
 

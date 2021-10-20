@@ -56,22 +56,22 @@ class RestProductAttributeResponseBuilder implements RestProductAttributeRespons
             ->restResourceBuilder
             ->createRestResponse(
                 $productManagementAttributeCollectionTransfer->getPagination()->getNbResults(),
-                $productManagementAttributeFilterTransfer->getFilter()->getLimit() ?? 0
+                $productManagementAttributeFilterTransfer->getFilter()->getLimit() ?? 0,
             );
 
         foreach ($productManagementAttributeCollectionTransfer->getProductManagementAttributes() as $productManagementAttributeTransfer) {
             $restProductManagementAttributeAttributesTransfer = $this->productAttributeMapper
                 ->mapProductManagementAttributeToRestProductManagementAttributes(
                     $productManagementAttributeTransfer,
-                    new RestProductManagementAttributeAttributesTransfer()
+                    new RestProductManagementAttributeAttributesTransfer(),
                 );
 
             $restResponse->addResource(
                 $this->restResourceBuilder->createRestResource(
                     ProductAttributesRestApiConfig::RESOURCE_PRODUCT_MANAGEMENT_ATTRIBUTES,
                     $restProductManagementAttributeAttributesTransfer->getKey(),
-                    $restProductManagementAttributeAttributesTransfer
-                )
+                    $restProductManagementAttributeAttributesTransfer,
+                ),
             );
         }
 
@@ -88,7 +88,7 @@ class RestProductAttributeResponseBuilder implements RestProductAttributeRespons
         $restProductManagementAttributeAttributesTransfer = $this->productAttributeMapper
             ->mapProductManagementAttributeToRestProductManagementAttributes(
                 $productManagementAttributeTransfer,
-                new RestProductManagementAttributeAttributesTransfer()
+                new RestProductManagementAttributeAttributesTransfer(),
             );
 
         $restResponse = $this->restResourceBuilder->createRestResponse();
@@ -97,8 +97,8 @@ class RestProductAttributeResponseBuilder implements RestProductAttributeRespons
             $this->restResourceBuilder->createRestResource(
                 ProductAttributesRestApiConfig::RESOURCE_PRODUCT_MANAGEMENT_ATTRIBUTES,
                 $restProductManagementAttributeAttributesTransfer->getKey(),
-                $restProductManagementAttributeAttributesTransfer
-            )
+                $restProductManagementAttributeAttributesTransfer,
+            ),
         );
 
         return $restResponse;

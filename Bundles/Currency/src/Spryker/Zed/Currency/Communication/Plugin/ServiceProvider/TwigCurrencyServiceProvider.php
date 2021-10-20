@@ -49,7 +49,7 @@ class TwigCurrencyServiceProvider extends AbstractPlugin implements ServiceProvi
                 $twig->addFunction($this->getCurrencySymbolFunction());
 
                 return $twig;
-            })
+            }),
         );
     }
 

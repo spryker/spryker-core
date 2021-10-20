@@ -24,7 +24,7 @@ class AvailabilityGuiPersistenceFactory extends AbstractPersistenceFactory
     public function createProductAbstractAvailabilityQueryExpander(): ProductAbstractAvailabilityQueryExpanderInterface
     {
         return new ProductAbstractAvailabilityQueryExpander(
-            $this->getAvailabilityAbstractTableQueryCriteriaExpanderPlugins()
+            $this->getAvailabilityAbstractTableQueryCriteriaExpanderPlugins(),
         );
     }
 

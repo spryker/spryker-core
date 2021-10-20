@@ -90,7 +90,7 @@ class SequenceNumber implements SequenceNumberInterface
             });
         } catch (Exception $e) {
             throw new InvalidSequenceNumberException(
-                'Could not generate sequence number. Make sure your settings are complete. Error: ' . $e->getMessage()
+                'Could not generate sequence number. Make sure your settings are complete. Error: ' . $e->getMessage(),
             );
         }
 
@@ -158,7 +158,7 @@ class SequenceNumber implements SequenceNumberInterface
         if ($idCurrent > $this->limitList[$this->sequenceNumberSettings->getName()]) {
             throw new Exception(sprintf(
                 'The sequence limit is reached for %s',
-                $this->sequenceNumberSettings->getName()
+                $this->sequenceNumberSettings->getName(),
             ));
         }
     }

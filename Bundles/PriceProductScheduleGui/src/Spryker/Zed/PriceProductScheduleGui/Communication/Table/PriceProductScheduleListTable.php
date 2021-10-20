@@ -320,7 +320,7 @@ class PriceProductScheduleListTable extends AbstractTable
             $userFullName = sprintf(
                 static::TEMPLATE_FULL_NAME,
                 $userEntity->getFirstName(),
-                $userEntity->getLastName()
+                $userEntity->getLastName(),
             );
         }
 
@@ -339,15 +339,15 @@ class PriceProductScheduleListTable extends AbstractTable
             ->usePriceProductScheduleQuery()
                 ->withColumn(
                     sprintf(static::EXPRESSION_COUNT, SpyPriceProductScheduleTableMap::COL_ID_PRICE_PRODUCT_SCHEDULE),
-                    static::COL_NUMBER_OF_PRICES
+                    static::COL_NUMBER_OF_PRICES,
                 )
                 ->withColumn(
                     sprintf(
                         static::EXPRESSION_DISTINCT_COUNT_ADDITION,
                         SpyPriceProductScheduleTableMap::COL_FK_PRODUCT,
-                        SpyPriceProductScheduleTableMap::COL_FK_PRODUCT_ABSTRACT
+                        SpyPriceProductScheduleTableMap::COL_FK_PRODUCT_ABSTRACT,
                     ),
-                    static::COL_NUMBER_OF_PRODUCTS
+                    static::COL_NUMBER_OF_PRODUCTS,
                 )
             ->endUse()
             ->groupBy(SpyPriceProductScheduleListTableMap::COL_ID_PRICE_PRODUCT_SCHEDULE_LIST);
@@ -383,7 +383,7 @@ class PriceProductScheduleListTable extends AbstractTable
                 Url::generate(static::URL_PRICE_PRODUCT_SCHEDULE_LIST_VIEW, [
                     static::PARAM_ID_PRICE_PRODUCT_SCHEDULE_LIST => $priceProductScheduleListEntity->getIdPriceProductScheduleList(),
                 ]),
-                static::BUTTON_VIEW
+                static::BUTTON_VIEW,
             );
         }
 
@@ -391,7 +391,7 @@ class PriceProductScheduleListTable extends AbstractTable
             Url::generate(static::URL_PRICE_PRODUCT_SCHEDULE_LIST_DRY_RUN_IMPORT, [
                 static::PARAM_ID_PRICE_PRODUCT_SCHEDULE_LIST => $priceProductScheduleListEntity->getIdPriceProductScheduleList(),
             ]),
-            static::BUTTON_VIEW
+            static::BUTTON_VIEW,
         );
     }
 
@@ -408,7 +408,7 @@ class PriceProductScheduleListTable extends AbstractTable
                 Url::generate(static::URL_PRICE_PRODUCT_SCHEDULE_LIST_EDIT, [
                     static::PARAM_ID_PRICE_PRODUCT_SCHEDULE_LIST => $priceProductScheduleListEntity->getIdPriceProductScheduleList(),
                 ]),
-                static::BUTTON_EDIT
+                static::BUTTON_EDIT,
             );
         }
 
@@ -416,7 +416,7 @@ class PriceProductScheduleListTable extends AbstractTable
             Url::generate(static::URL_PRICE_PRODUCT_SCHEDULE_LIST_DRY_RUN_IMPORT, [
                 static::PARAM_ID_PRICE_PRODUCT_SCHEDULE_LIST => $priceProductScheduleListEntity->getIdPriceProductScheduleList(),
             ]),
-            static::BUTTON_EDIT
+            static::BUTTON_EDIT,
         );
     }
 
@@ -432,7 +432,7 @@ class PriceProductScheduleListTable extends AbstractTable
             Url::generate(static::URL_PRICE_PRODUCT_SCHEDULE_LIST_DOWNLOAD, [
                 static::PARAM_ID_PRICE_PRODUCT_SCHEDULE_LIST => $priceProductScheduleListEntity->getIdPriceProductScheduleList(),
             ]),
-            static::BUTTON_DOWNLOAD
+            static::BUTTON_DOWNLOAD,
         );
     }
 
@@ -448,7 +448,7 @@ class PriceProductScheduleListTable extends AbstractTable
             Url::generate(static::URL_PRICE_PRODUCT_SCHEDULE_LIST_DELETE, [
                 static::PARAM_ID_PRICE_PRODUCT_SCHEDULE_LIST => $priceProductScheduleListEntity->getIdPriceProductScheduleList(),
             ]),
-            static::BUTTON_DELETE
+            static::BUTTON_DELETE,
         );
     }
 }

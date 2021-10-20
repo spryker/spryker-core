@@ -80,21 +80,21 @@ class MapShipmentsToQuoteTest extends Unit
 
         $this->assertSame(
             $restCheckoutRequestAttributesTransfer->getShipments()->offsetGet(0)->getRequestedDeliveryDate(),
-            $quoteTransfer->getItems()->offsetGet(0)->getShipment()->getRequestedDeliveryDate()
+            $quoteTransfer->getItems()->offsetGet(0)->getShipment()->getRequestedDeliveryDate(),
         );
 
         $this->assertSame(
             $restCheckoutRequestAttributesTransfer->getShipments()->offsetGet(0)->getShippingAddress()->getAddress1(),
-            $quoteTransfer->getItems()->offsetGet(0)->getShipment()->getShippingAddress()->getAddress1()
+            $quoteTransfer->getItems()->offsetGet(0)->getShipment()->getShippingAddress()->getAddress1(),
         );
 
         $this->assertSame(
             $restCheckoutRequestAttributesTransfer->getShipments()->offsetGet(0)->getIdShipmentMethod(),
-            $quoteTransfer->getItems()->offsetGet(0)->getShipment()->getMethod()->getIdShipmentMethod()
+            $quoteTransfer->getItems()->offsetGet(0)->getShipment()->getMethod()->getIdShipmentMethod(),
         );
         $this->assertSame(
             (string)$restCheckoutRequestAttributesTransfer->getShipments()->offsetGet(0)->getIdShipmentMethod(),
-            $quoteTransfer->getItems()->offsetGet(0)->getShipment()->getShipmentSelection()
+            $quoteTransfer->getItems()->offsetGet(0)->getShipment()->getShipmentSelection(),
         );
     }
 
@@ -165,7 +165,7 @@ class MapShipmentsToQuoteTest extends Unit
             ->offsetGet(0)
             ->setShipment(
                 (new ShipmentTransfer())
-                    ->setShippingAddress((new AddressTransfer())->setAddress1(static::FAKE_ADDRESS_1))
+                    ->setShippingAddress((new AddressTransfer())->setAddress1(static::FAKE_ADDRESS_1)),
             );
 
         // Act
@@ -175,7 +175,7 @@ class MapShipmentsToQuoteTest extends Unit
         // Assert
         $this->assertSame(
             $restCheckoutRequestAttributesTransfer->getShipments()->offsetGet(0)->getShippingAddress()->getAddress1(),
-            $quoteTransfer->getItems()->offsetGet(0)->getShipment()->getShippingAddress()->getAddress1()
+            $quoteTransfer->getItems()->offsetGet(0)->getShipment()->getShippingAddress()->getAddress1(),
         );
     }
 
@@ -193,7 +193,7 @@ class MapShipmentsToQuoteTest extends Unit
                 [],
                 [],
                 static::DEFAULT_PRICE_LIST,
-                [$quoteTransfer->getStore()->getIdStore()]
+                [$quoteTransfer->getStore()->getIdStore()],
             );
 
             $restShipmentsTransfer = (new RestShipmentsBuilder())->build()

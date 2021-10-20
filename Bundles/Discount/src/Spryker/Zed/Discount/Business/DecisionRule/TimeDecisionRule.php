@@ -46,11 +46,11 @@ class TimeDecisionRule implements DecisionRuleInterface
         ClauseTransfer $clauseTransfer
     ) {
         $currentTime = $this->convertToSeconds(
-            $this->getCurrentTime()
+            $this->getCurrentTime(),
         );
 
         $compareWithTime = $this->convertToSeconds(
-            $clauseTransfer->getValue()
+            $clauseTransfer->getValue(),
         );
 
         $clauseTransfer->setValue($compareWithTime);

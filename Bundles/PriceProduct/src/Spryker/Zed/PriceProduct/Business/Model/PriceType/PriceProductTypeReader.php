@@ -105,7 +105,7 @@ class PriceProductTypeReader implements PriceProductTypeReaderInterface
     {
         if (!$this->hasPriceType($priceTypeName)) {
             throw new UnknownPriceProductTypeException(
-                sprintf('Unknown price type "%s" given.', $priceTypeName)
+                sprintf('Unknown price type "%s" given.', $priceTypeName),
             );
         }
 

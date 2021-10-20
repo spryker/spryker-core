@@ -38,7 +38,7 @@ class SaveSessionServiceProvider extends AbstractPlugin implements ServiceProvid
     public function boot(Application $app)
     {
         $this->getDispatcher($app)->addSubscriber(
-            $this->getFactory()->createSaveSessionEventSubscriber()
+            $this->getFactory()->createSaveSessionEventSubscriber(),
         );
     }
 

@@ -200,7 +200,7 @@ class AbstractTouchUpdaterTest extends Unit
             [
                 'collector_touch_id' => 'touch_id',
                 'touchKeyColumnName_value' => 'new value',
-            ]
+            ],
         );
 
         $touchUpdaterSet->add(
@@ -209,7 +209,7 @@ class AbstractTouchUpdaterTest extends Unit
             [
                 'collector_touch_id' => 'touch_id2',
                 'touchKeyColumnName_value' => 'new value2',
-            ]
+            ],
         );
 
         return $touchUpdaterSet;

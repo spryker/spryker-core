@@ -38,7 +38,7 @@ class MerchantRelationshipExpander implements MerchantRelationshipExpanderInterf
         return sprintf(
             static::FORMAT_NAME,
             $merchantRelationshipTransfer->getIdMerchantRelationship(),
-            $merchantRelationshipTransfer->getOwnerCompanyBusinessUnit()->getName()
+            $merchantRelationshipTransfer->getOwnerCompanyBusinessUnit()->getName(),
         );
     }
 }

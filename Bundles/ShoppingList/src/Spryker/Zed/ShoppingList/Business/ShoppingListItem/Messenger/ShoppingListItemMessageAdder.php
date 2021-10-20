@@ -50,7 +50,7 @@ class ShoppingListItemMessageAdder implements ShoppingListItemMessageAdderInterf
         $this->messengerFacade->addSuccessMessage(
             (new MessageTransfer())
                 ->setValue(static::GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEM_ADD_SUCCESS)
-                ->setParameters([static::GLOSSARY_PARAM_SKU => $sku])
+                ->setParameters([static::GLOSSARY_PARAM_SKU => $sku]),
         );
     }
 
@@ -64,7 +64,7 @@ class ShoppingListItemMessageAdder implements ShoppingListItemMessageAdderInterf
         $this->messengerFacade->addErrorMessage(
             (new MessageTransfer())
                 ->setValue(static::GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEM_ADD_FAILED)
-                ->setParameters([static::GLOSSARY_PARAM_SKU => $sku])
+                ->setParameters([static::GLOSSARY_PARAM_SKU => $sku]),
         );
     }
 }

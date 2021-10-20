@@ -175,7 +175,7 @@ class CategoryWriterStep extends PublishAwareStep implements DataImportStepInter
             if (!$categoryNodeEntity->getIsRoot()) {
                 $parentUrl = $this->categoryReader->getParentUrl(
                     $dataSet[static::KEY_PARENT_CATEGORY_KEY],
-                    $idLocale
+                    $idLocale,
                 );
 
                 $urlPathParts = explode('/', ltrim($parentUrl, '/'));

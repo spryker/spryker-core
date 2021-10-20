@@ -89,7 +89,7 @@ class CategoryDeleter implements CategoryDeleterInterface
 
         $this->eventFacade->trigger(
             CategoryEvents::CATEGORY_AFTER_PUBLISH_DELETE,
-            (new EventEntityTransfer())->setId($categoryTransfer->getIdCategory())
+            (new EventEntityTransfer())->setId($categoryTransfer->getIdCategory()),
         );
     }
 }

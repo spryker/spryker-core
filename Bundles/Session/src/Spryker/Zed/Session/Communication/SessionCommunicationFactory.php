@@ -35,7 +35,7 @@ class SessionCommunicationFactory extends AbstractCommunicationFactory
         return new SessionStorage(
             $this->createSessionStorageOptions(),
             $this->createSessionStorageHandlerPool(),
-            $this->getConfig()->getConfiguredSessionHandlerNameZed()
+            $this->getConfig()->getConfiguredSessionHandlerNameZed(),
         );
     }
 
@@ -53,7 +53,7 @@ class SessionCommunicationFactory extends AbstractCommunicationFactory
     protected function createSessionStorageHandlerPool()
     {
         $sessionHandlerPool = new SessionStorageHandlerPool(
-            $this->getSessionHandlerPlugins()
+            $this->getSessionHandlerPlugins(),
         );
 
         // This check was added because of BC and will be removed in the next major release.
@@ -76,7 +76,7 @@ class SessionCommunicationFactory extends AbstractCommunicationFactory
     {
         return $this->createSessionHandlerFactory()->createSessionHandlerRedis(
             $this->getConfig()->getSessionHandlerRedisConnectionParametersZed(),
-            $this->getConfig()->getSessionHandlerRedisConnectionOptionsZed()
+            $this->getConfig()->getSessionHandlerRedisConnectionOptionsZed(),
         );
     }
 
@@ -89,7 +89,7 @@ class SessionCommunicationFactory extends AbstractCommunicationFactory
     {
         return $this->createSessionHandlerFactory()->createRedisLockingSessionHandler(
             $this->getConfig()->getSessionHandlerRedisConnectionParametersZed(),
-            $this->getConfig()->getSessionHandlerRedisConnectionOptionsZed()
+            $this->getConfig()->getSessionHandlerRedisConnectionOptionsZed(),
         );
     }
 
@@ -101,7 +101,7 @@ class SessionCommunicationFactory extends AbstractCommunicationFactory
     protected function createSessionHandlerFile()
     {
         return $this->createSessionHandlerFactory()->createSessionHandlerFile(
-            $this->getConfig()->getSessionHandlerFileSavePath()
+            $this->getConfig()->getSessionHandlerFileSavePath(),
         );
     }
 
@@ -114,7 +114,7 @@ class SessionCommunicationFactory extends AbstractCommunicationFactory
     {
         return new SessionHandlerFactory(
             $this->getConfig()->getSessionLifeTime(),
-            $this->getMonitoringService()
+            $this->getMonitoringService(),
         );
     }
 

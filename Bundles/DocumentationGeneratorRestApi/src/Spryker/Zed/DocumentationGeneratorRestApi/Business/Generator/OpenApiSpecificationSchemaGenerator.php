@@ -329,7 +329,7 @@ class OpenApiSpecificationSchemaGenerator implements SchemaGeneratorInterface
             }
             $oneOfs = array_merge(
                 $this->schemas[$key][SchemaComponentTransfer::ITEMS][SchemaItemsComponentTransfer::ONE_OF],
-                $item[SchemaComponentTransfer::ITEMS][SchemaItemsComponentTransfer::ONE_OF]
+                $item[SchemaComponentTransfer::ITEMS][SchemaItemsComponentTransfer::ONE_OF],
             );
             $this->schemas[$key][SchemaComponentTransfer::ITEMS][SchemaItemsComponentTransfer::ONE_OF] = array_unique($oneOfs, SORT_REGULAR);
         }
@@ -431,13 +431,13 @@ class OpenApiSpecificationSchemaGenerator implements SchemaGeneratorInterface
         $this->addSchemaData(
             $this
                 ->resourceRelationshipProcessor
-                ->getIncludeBaseSchemaForPlugin($plugin, $transferClassName, $responseSchemaName)
+                ->getIncludeBaseSchemaForPlugin($plugin, $transferClassName, $responseSchemaName),
         );
 
         $this->addIncludeSchemaData(
             $this
                 ->resourceRelationshipProcessor
-                ->getIncludeDataSchemaForPlugin($plugin, $transferClassName, $resourceRelationships)
+                ->getIncludeDataSchemaForPlugin($plugin, $transferClassName, $resourceRelationships),
         );
     }
 
@@ -452,7 +452,7 @@ class OpenApiSpecificationSchemaGenerator implements SchemaGeneratorInterface
     {
         if (!$this->resourceTransferAnalyzer->isTransferValid($transferClassName)) {
             throw new InvalidTransferClassException(
-                sprintf('Invalid transfer %s', $transferClassName)
+                sprintf('Invalid transfer %s', $transferClassName),
             );
         }
     }

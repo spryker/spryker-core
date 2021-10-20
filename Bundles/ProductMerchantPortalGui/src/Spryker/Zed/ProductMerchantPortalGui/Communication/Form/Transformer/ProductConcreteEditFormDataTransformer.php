@@ -58,7 +58,7 @@ class ProductConcreteEditFormDataTransformer implements DataTransformerInterface
         foreach ($productConcreteTransfer->getLocalizedAttributes() as $localizedAttributesTransfer) {
             $idLocale = $localizedAttributesTransfer->getLocaleOrFail()->getIdLocaleOrFail();
             $localizedAttributesTransfer->setIsSearchable(
-                in_array($idLocale, $productConcreteEditFormData[static::FIELD_SEARCHABILITY])
+                in_array($idLocale, $productConcreteEditFormData[static::FIELD_SEARCHABILITY]),
             );
         }
 

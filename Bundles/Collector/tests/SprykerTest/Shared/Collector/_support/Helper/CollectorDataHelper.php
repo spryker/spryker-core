@@ -57,7 +57,7 @@ class CollectorDataHelper extends Module
 
                     return $data;
                 },
-            ]
+            ],
         );
 
         $facade->$facadeCollectorMethod(
@@ -67,7 +67,7 @@ class CollectorDataHelper extends Module
             $this->getDataReaderMock(),
             $writerMock,
             $this->getTouchUpdaterMock(),
-            $this->createNullOutput()
+            $this->createNullOutput(),
         );
 
         return $collectedData;
@@ -118,7 +118,7 @@ class CollectorDataHelper extends Module
             ->createBasicExportableQuery(
                 $resourceType,
                 $localeTransfer,
-                $lastTouchedAt
+                $lastTouchedAt,
             )
             ->withColumn(SpyTouchTableMap::COL_ID_TOUCH, CollectorConfig::COLLECTOR_TOUCH_ID)
             ->withColumn(SpyTouchTableMap::COL_ITEM_ID, CollectorConfig::COLLECTOR_RESOURCE_ID)

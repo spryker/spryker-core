@@ -53,7 +53,7 @@ class ProductAlternativeMapper implements ProductAlternativeMapperInterface
 
         foreach ($productAlternativeEntities as $productAlternativeEntity) {
             $productAlternativeCollectionTransfer->addProductAlternative(
-                $this->mapProductAlternativeTransfer($productAlternativeEntity)
+                $this->mapProductAlternativeTransfer($productAlternativeEntity),
             );
         }
 

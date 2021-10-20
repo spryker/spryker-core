@@ -37,7 +37,7 @@ class ZedRequestSharedTester extends Actor
     public function createZedRequestInMemoryLogger(): ZedRequestLoggerInterface
     {
         return new ZedRequestInMemoryLogger(
-            $this->getUtilEncodingService()
+            $this->getUtilEncodingService(),
         );
     }
 
@@ -47,7 +47,7 @@ class ZedRequestSharedTester extends Actor
     public function getUtilEncodingService(): ZedRequestToUtilEncodingServiceInterface
     {
         return new ZedRequestToUtilEncodingServiceBridge(
-            $this->getLocator()->utilEncoding()->service()
+            $this->getLocator()->utilEncoding()->service(),
         );
     }
 }

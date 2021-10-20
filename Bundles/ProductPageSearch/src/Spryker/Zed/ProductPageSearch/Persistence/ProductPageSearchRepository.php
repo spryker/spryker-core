@@ -42,7 +42,7 @@ class ProductPageSearchRepository extends AbstractRepository implements ProductP
             ->find();
 
         return $this->mapProductConcretePageSearchEntities(
-            $productConcretePageSearchEntities
+            $productConcretePageSearchEntities,
         );
     }
 
@@ -76,7 +76,7 @@ class ProductPageSearchRepository extends AbstractRepository implements ProductP
         $productConcretePageSearchEntities = $this->getProductConcretePageSearchEntitiesByAbstractProductsAndStores($productAbstractStoreMap);
 
         return $this->mapProductConcretePageSearchEntities(
-            $productConcretePageSearchEntities
+            $productConcretePageSearchEntities,
         );
     }
 
@@ -164,7 +164,7 @@ class ProductPageSearchRepository extends AbstractRepository implements ProductP
         foreach ($productConcretePageSearchEntities as $productConcretePageSearchEntity) {
             $productConcretePageSearchTransfers[] = $mapper->mapProductConcretePageSearchEntityToTransfer(
                 $productConcretePageSearchEntity,
-                new ProductConcretePageSearchTransfer()
+                new ProductConcretePageSearchTransfer(),
             );
         }
 
@@ -186,12 +186,12 @@ class ProductPageSearchRepository extends AbstractRepository implements ProductP
             ->addJoin(
                 SpyProductConcretePageSearchTableMap::COL_FK_PRODUCT,
                 SpyProductTableMap::COL_ID_PRODUCT,
-                Criteria::INNER_JOIN
+                Criteria::INNER_JOIN,
             );
 
         $storesAndProductsConditions = $this->buildStoresAndProductsConditions(
             $productConcretePageSearchQuery,
-            $productAbstractStoreMap
+            $productAbstractStoreMap,
         );
 
         return $productConcretePageSearchQuery->where($storesAndProductsConditions, Criteria::LOGICAL_OR)
@@ -222,20 +222,20 @@ class ProductPageSearchRepository extends AbstractRepository implements ProductP
                     (string)$conditionIndex,
                     SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT . ' = ?',
                     $abstractId,
-                    PDO::PARAM_INT
+                    PDO::PARAM_INT,
                 );
                 $conditionIndex++;
                 $productConcretePageSearchQuery->condition(
                     (string)$conditionIndex,
                     SpyProductConcretePageSearchTableMap::COL_STORE . ' = ?',
                     $store,
-                    PDO::PARAM_STR
+                    PDO::PARAM_STR,
                 );
                 $conditionIndex++;
                 $productConcretePageSearchQuery->combine(
                     [(string)($conditionIndex - 2), (string)($conditionIndex - 1)],
                     Criteria::LOGICAL_AND,
-                    (string)$conditionIndex
+                    (string)$conditionIndex,
                 );
                 $storesAndProductsConditions[] = $conditionIndex;
                 $conditionIndex++;

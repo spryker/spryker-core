@@ -103,7 +103,7 @@ class IndexController extends AbstractController
         $processEntity = $orderItem->getProcess();
 
         return new Response(
-            $this->getFacade()->drawProcess($processEntity->getName(), $orderItem->getState()->getName(), $format, $fontSize)
+            $this->getFacade()->drawProcess($processEntity->getName(), $orderItem->getState()->getName(), $format, $fontSize),
         );
     }
 

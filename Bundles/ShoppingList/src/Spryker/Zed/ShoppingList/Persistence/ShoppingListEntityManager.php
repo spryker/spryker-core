@@ -332,7 +332,7 @@ class ShoppingListEntityManager extends AbstractEntityManager implements Shoppin
             ->createShoppingListCompanyBusinessUnitMapper()
             ->mapCompanyBusinessUnitTransferToCompanyBusinessUnitEntity(
                 $shoppingListCompanyBusinessUnitTransfer,
-                new SpyShoppingListCompanyBusinessUnit()
+                new SpyShoppingListCompanyBusinessUnit(),
             );
 
         $shoppingListCompanyBusinessUnitEntity->save();
@@ -352,7 +352,7 @@ class ShoppingListEntityManager extends AbstractEntityManager implements Shoppin
             ->createShoppingListCompanyBusinessUnitMapper()
             ->mapCompanyBusinessUnitTransferToCompanyBusinessUnitEntity(
                 $shoppingListCompanyBusinessUnitTransfer,
-                $shoppingListCompanyBusinessUnitEntity
+                $shoppingListCompanyBusinessUnitEntity,
             );
 
         $shoppingListCompanyBusinessUnitEntity->save();
@@ -370,7 +370,7 @@ class ShoppingListEntityManager extends AbstractEntityManager implements Shoppin
             ->createShoppingListCompanyUserMapper()
             ->mapCompanyUserTransferToCompanyUserEntity(
                 $shoppingListCompanyUserTransfer,
-                new SpyShoppingListCompanyUser()
+                new SpyShoppingListCompanyUser(),
             );
 
         $shoppingListCompanyUserEntity->save();
@@ -390,7 +390,7 @@ class ShoppingListEntityManager extends AbstractEntityManager implements Shoppin
             ->createShoppingListCompanyUserMapper()
             ->mapCompanyUserTransferToCompanyUserEntity(
                 $shoppingListCompanyUserTransfer,
-                $shoppingListCompanyUserEntity
+                $shoppingListCompanyUserEntity,
             );
 
         $shoppingListCompanyUserEntity->save();
@@ -489,7 +489,7 @@ class ShoppingListEntityManager extends AbstractEntityManager implements Shoppin
         foreach ($shoppingListItemEntityCollection as $shoppingListItemEntity) {
             $shoppingListItemTransfer = $shoppingListItemMapper->mapSpyShoppingListItemEntityToShoppingListItemTransfer(
                 $shoppingListItemEntity,
-                new ShoppingListItemTransfer()
+                new ShoppingListItemTransfer(),
             );
             $savedShoppingListItemCollectionTransfer->addItem($shoppingListItemTransfer);
         }

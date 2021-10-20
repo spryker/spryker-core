@@ -91,7 +91,7 @@ class IndexInstaller implements SearchInstallerInterface
         if (!$index->exists()) {
             $this->messenger->info(sprintf(
                 'Creating elasticsearch index: "%s"',
-                $indexDefinitionTransfer->getIndexName()
+                $indexDefinitionTransfer->getIndexName(),
             ));
 
             $this->importMappingsToNewIndex($indexDefinitionTransfer, $index);
@@ -113,7 +113,7 @@ class IndexInstaller implements SearchInstallerInterface
         $this->messenger->info(sprintf(
             'Send mapping type "%s" (index: "%s")',
             $mappingName,
-            $index->getName()
+            $index->getName(),
         ));
 
         $mapping = $this->createMappingByName($mappingData, $mappingName, $index);
@@ -177,7 +177,7 @@ class IndexInstaller implements SearchInstallerInterface
 
         $this->messenger->info(sprintf(
             'Send all mappings. (index: "%s")',
-            $index->getName()
+            $index->getName(),
         ));
 
         $index->request('', Request::PUT, $data);

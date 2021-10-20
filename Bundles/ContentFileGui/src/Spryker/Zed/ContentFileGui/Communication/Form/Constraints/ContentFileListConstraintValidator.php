@@ -30,7 +30,7 @@ class ContentFileListConstraintValidator extends ConstraintValidator
             throw new InvalidArgumentException(sprintf(
                 'Expected constraint instance of %s, got %s instead.',
                 ContentFileListConstraint::class,
-                get_class($constraint)
+                get_class($constraint),
             ));
         }
 

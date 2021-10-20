@@ -162,7 +162,7 @@ class ProductConcreteStorageWriter implements ProductConcreteStorageWriterInterf
     {
         $pairedEntities = $this->pairProductConcreteLocalizedEntitiesWithProductConcreteStorageEntities(
             $productConcreteLocalizedEntities,
-            $productConcreteStorageEntities
+            $productConcreteStorageEntities,
         );
 
         foreach ($pairedEntities as $pair) {
@@ -178,7 +178,7 @@ class ProductConcreteStorageWriter implements ProductConcreteStorageWriterInterf
             $this->storeProductConcreteStorageEntity(
                 $productConcreteLocalizedEntity,
                 $productConcreteStorageEntity,
-                $pair[static::LOCALE_NAME]
+                $pair[static::LOCALE_NAME],
             );
         }
     }
@@ -206,7 +206,7 @@ class ProductConcreteStorageWriter implements ProductConcreteStorageWriterInterf
                 $productConcreteLocalizedEntity['Locale']['locale_name'],
                 $productConcreteLocalizedEntity,
                 $mappedProductConcreteStorageEntities,
-                $pairs
+                $pairs,
             );
         }
 

@@ -30,7 +30,7 @@ class ClassInfoTest extends Unit
         $classInfo = new ClassInfo();
         $this->assertInstanceOf(
             ClassInfo::class,
-            $classInfo->setClass($classInfo)
+            $classInfo->setClass($classInfo),
         );
     }
 

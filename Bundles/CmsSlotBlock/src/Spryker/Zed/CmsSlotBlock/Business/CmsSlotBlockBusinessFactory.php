@@ -36,7 +36,7 @@ class CmsSlotBlockBusinessFactory extends AbstractBusinessFactory
             $this->getEntityManager(),
             $this->getRepository(),
             $this->getEventFacade(),
-            $this->createCmsSlotBlockValidator()
+            $this->createCmsSlotBlockValidator(),
         );
     }
 

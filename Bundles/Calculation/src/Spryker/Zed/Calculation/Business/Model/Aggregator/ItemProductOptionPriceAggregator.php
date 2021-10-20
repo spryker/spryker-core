@@ -63,11 +63,11 @@ class ItemProductOptionPriceAggregator implements CalculatorInterface
     {
         foreach ($items as $itemTransfer) {
             $itemTransfer->setSumProductOptionPriceAggregation(
-                $this->aggregateSumProductOptionPrice($itemTransfer)
+                $this->aggregateSumProductOptionPrice($itemTransfer),
             );
 
             $itemTransfer->setUnitProductOptionPriceAggregation(
-                $this->aggregateUnitProductOptionPrice($itemTransfer)
+                $this->aggregateUnitProductOptionPrice($itemTransfer),
             );
         }
     }

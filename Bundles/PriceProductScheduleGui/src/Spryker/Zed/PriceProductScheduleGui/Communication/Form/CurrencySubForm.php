@@ -85,7 +85,7 @@ class CurrencySubForm extends AbstractType
         return array_flip(
             $this->getFactory()
                 ->createPriceProductScheduleFormDataProvider()
-                ->getOptions(null, $idStore)[PriceProductScheduleFormDataProvider::OPTION_CURRENCY_CHOICES]
+                ->getOptions(null, $idStore)[PriceProductScheduleFormDataProvider::OPTION_CURRENCY_CHOICES],
         );
     }
 

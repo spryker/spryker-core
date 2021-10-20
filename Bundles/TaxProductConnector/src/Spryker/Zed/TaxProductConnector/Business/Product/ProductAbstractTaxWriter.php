@@ -45,8 +45,8 @@ class ProductAbstractTaxWriter
             throw new ProductAbstractNotFoundException(
                 sprintf(
                     'Could not assign tax set, product abstract with id "%d" not found.',
-                    $productConcreteTransfer->getIdProductAbstract()
-                )
+                    $productConcreteTransfer->getIdProductAbstract(),
+                ),
             );
         }
 

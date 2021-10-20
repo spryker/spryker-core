@@ -150,10 +150,10 @@ class PropelSchemaMergerTest extends Unit
     {
         return new PropelSchemaMerger(
             new PropelToUtilTextServiceBridge(
-                $this->tester->getLocator()->utilText()->service()
+                $this->tester->getLocator()->utilText()->service(),
             ),
             new PropelSchemaElementFilter([]),
-            new PropelConfig()
+            new PropelConfig(),
         );
     }
 }

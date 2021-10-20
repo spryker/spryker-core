@@ -46,7 +46,7 @@ class CsrfFormPlugin extends AbstractPlugin implements FormPluginInterface
     public function extend(FormFactoryBuilderInterface $formFactoryBuilder, ContainerInterface $container): FormFactoryBuilderInterface
     {
         $formFactoryBuilder->addExtension(
-            $this->createCsrfExtension($container)
+            $this->createCsrfExtension($container),
         );
 
         return $formFactoryBuilder;
@@ -61,7 +61,7 @@ class CsrfFormPlugin extends AbstractPlugin implements FormPluginInterface
     {
         return new CsrfExtension(
             $container->get(static::SERVICE_CSRF_PROVIDER),
-            $this->getTranslator($container)
+            $this->getTranslator($container),
         );
     }
 

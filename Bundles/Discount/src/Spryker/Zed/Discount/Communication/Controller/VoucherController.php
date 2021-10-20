@@ -75,14 +75,14 @@ class VoucherController extends AbstractController
         if ($affectedRows > 0) {
             $this->addSuccessMessage(
                 'Successfully deleted "%d" vouchers.',
-                ['%d' => $affectedRows]
+                ['%d' => $affectedRows],
             );
         } else {
             $this->addErrorMessage('No voucher codes were deleted.');
         }
 
         return new RedirectResponse(
-            $this->createEditDiscountRedirectUrl($idDiscount)
+            $this->createEditDiscountRedirectUrl($idDiscount),
         );
     }
 
@@ -100,7 +100,7 @@ class VoucherController extends AbstractController
             $this->addErrorMessage('CSRF token is not valid.');
 
             return new RedirectResponse(
-                $this->createVoucherCodeDeleteRedirectUrl($request)
+                $this->createVoucherCodeDeleteRedirectUrl($request),
             );
         }
 
@@ -118,7 +118,7 @@ class VoucherController extends AbstractController
         }
 
         return new RedirectResponse(
-            $this->createVoucherCodeDeleteRedirectUrl($request)
+            $this->createVoucherCodeDeleteRedirectUrl($request),
         );
     }
 
@@ -179,7 +179,7 @@ class VoucherController extends AbstractController
             ],
             [
                 Url::FRAGMENT => DiscountsTable::URL_FRAGMENT_TAB_CONTENT_VOUCHER,
-            ]
+            ],
         )->build();
 
         return $redirectUrl;
@@ -199,7 +199,7 @@ class VoucherController extends AbstractController
             ],
             [
                 Url::FRAGMENT => DiscountsTable::URL_FRAGMENT_TAB_CONTENT_VOUCHER,
-            ]
+            ],
         )->build();
 
         return $redirectUrl;

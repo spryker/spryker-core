@@ -104,7 +104,7 @@ class ProductAbstractFormDataProvider implements ProductAbstractFormDataProvider
     public function findProductAbstract(int $idProductAbstract, int $idMerchant): ?ProductAbstractTransfer
     {
         $merchantProductTransfer = $this->merchantProductFacade->findMerchantProduct(
-            (new MerchantProductCriteriaTransfer())->addIdMerchant($idMerchant)->setIdProductAbstract($idProductAbstract)
+            (new MerchantProductCriteriaTransfer())->addIdMerchant($idMerchant)->setIdProductAbstract($idProductAbstract),
         );
 
         if (!$merchantProductTransfer) {
@@ -202,7 +202,7 @@ class ProductAbstractFormDataProvider implements ProductAbstractFormDataProvider
     ): ProductAbstractTransfer {
         $categoryCollectionTransfer = $this->productCategoryFacade->getCategoryTransferCollectionByIdProductAbstract(
             $productAbstractTransfer->getIdProductAbstractOrFail(),
-            $this->localeFacade->getCurrentLocale()
+            $this->localeFacade->getCurrentLocale(),
         );
         $productAbstractTransfer->setCategoryIds($this->getCategoryIds($categoryCollectionTransfer));
 

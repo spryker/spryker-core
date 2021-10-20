@@ -77,7 +77,7 @@ class ProductReviewCreator implements ProductReviewCreatorInterface
         $productAbstractData = $this->productStorageClient->findProductAbstractStorageDataByMapping(
             static::PRODUCT_ABSTRACT_MAPPING_TYPE,
             $parentResource->getId(),
-            $restRequest->getMetadata()->getLocale()
+            $restRequest->getMetadata()->getLocale(),
         );
 
         if (!$productAbstractData) {
@@ -88,8 +88,8 @@ class ProductReviewCreator implements ProductReviewCreatorInterface
             $this->createProductReviewRequestTransfer(
                 $restProductReviewsAttributesTransfer,
                 $productAbstractData[static::KEY_ID_PRODUCT_ABSTRACT],
-                $restRequest
-            )
+                $restRequest,
+            ),
         );
 
         if (!$productReviewResponseTransfer->getIsSuccess()) {

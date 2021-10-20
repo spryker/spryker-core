@@ -60,7 +60,7 @@ class ContentProductAbstractListReader implements ContentProductAbstractListRead
         $cmsPageStorageTransfers = $this->cmsStorageClient->getCmsPageStorageByUuids(
             $cmsPageUuids,
             $localeName,
-            $storeName
+            $storeName,
         );
 
         if (!$cmsPageStorageTransfers) {
@@ -83,7 +83,7 @@ class ContentProductAbstractListReader implements ContentProductAbstractListRead
 
         return $this->groupContentProductAbstractListsByCmsPageUuid(
             $contentProductAbstractListResources,
-            $groupedContentProductAbstractListKeys
+            $groupedContentProductAbstractListKeys,
         );
     }
 

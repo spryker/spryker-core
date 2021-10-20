@@ -58,7 +58,7 @@ class ResourceShareActivator implements ResourceShareActivatorInterface
 
         $resourceShareResponseTransfer = $this->executeZedCallResourceShareActivators(
             $resourceShareRequestTransfer->setResourceShare($resourceShareResponseTransfer->getResourceShare()),
-            $resourceShareResponseTransfer->getMessages()
+            $resourceShareResponseTransfer->getMessages(),
         );
         if (!$resourceShareResponseTransfer->getIsSuccessful()) {
             return $resourceShareResponseTransfer;
@@ -66,7 +66,7 @@ class ResourceShareActivator implements ResourceShareActivatorInterface
 
         return $this->executeAfterZedClientActivators(
             $resourceShareRequestTransfer->setResourceShare($resourceShareResponseTransfer->getResourceShare()),
-            $resourceShareResponseTransfer->getMessages()
+            $resourceShareResponseTransfer->getMessages(),
         );
     }
 
@@ -79,7 +79,7 @@ class ResourceShareActivator implements ResourceShareActivatorInterface
     {
         $resourceShareResponseTransfer = $this->executeResourceShareActivatorStrategyPlugins(
             $this->beforeZedResourceShareActivatorStrategyPlugins,
-            $resourceShareRequestTransfer
+            $resourceShareRequestTransfer,
         );
 
         return $resourceShareResponseTransfer;
@@ -99,8 +99,8 @@ class ResourceShareActivator implements ResourceShareActivatorInterface
         $resourceShareResponseTransfer->setMessages(
             $this->mergeResponseMessages(
                 $messageTransfers,
-                $resourceShareResponseTransfer->getMessages()
-            )
+                $resourceShareResponseTransfer->getMessages(),
+            ),
         );
 
         return $resourceShareResponseTransfer;
@@ -118,14 +118,14 @@ class ResourceShareActivator implements ResourceShareActivatorInterface
     ): ResourceShareResponseTransfer {
         $resourceShareResponseTransfer = $this->executeResourceShareActivatorStrategyPlugins(
             $this->afterZedResourceShareActivatorStrategyPlugins,
-            $resourceShareRequestTransfer
+            $resourceShareRequestTransfer,
         );
 
         $resourceShareResponseTransfer->setMessages(
             $this->mergeResponseMessages(
                 $messageTransfers,
-                $resourceShareResponseTransfer->getMessages()
-            )
+                $resourceShareResponseTransfer->getMessages(),
+            ),
         );
 
         return $resourceShareResponseTransfer;

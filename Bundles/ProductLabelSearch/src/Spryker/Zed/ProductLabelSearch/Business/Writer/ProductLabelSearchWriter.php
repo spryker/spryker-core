@@ -78,7 +78,7 @@ class ProductLabelSearchWriter implements ProductLabelSearchWriterInterface
     {
         $productAbstractIds = $this->eventBehaviorFacade->getEventTransferForeignKeys(
             $eventTransfers,
-            static::COL_PRODUCT_LABEL_PRODUCT_ABSTRACT_FK_PRODUCT_ABSTRACT
+            static::COL_PRODUCT_LABEL_PRODUCT_ABSTRACT_FK_PRODUCT_ABSTRACT,
         );
 
         $this->writeCollection($productAbstractIds);
@@ -93,7 +93,7 @@ class ProductLabelSearchWriter implements ProductLabelSearchWriterInterface
     {
         $productLabelIds = $this->eventBehaviorFacade->getEventTransferForeignKeys(
             $eventTransfers,
-            static::COL_PRODUCT_LABEL_STORE_FK_PRODUCT_LABEL
+            static::COL_PRODUCT_LABEL_STORE_FK_PRODUCT_LABEL,
         );
         $productAbstractIds = $this->productLabelSearchRepository
             ->getProductAbstractIdsByProductLabelIds($productLabelIds);
@@ -114,7 +114,7 @@ class ProductLabelSearchWriter implements ProductLabelSearchWriterInterface
 
         $this->productPageSearchFacade->refresh(
             $productAbstractIds,
-            [ProductLabelSearchConfig::PLUGIN_PRODUCT_LABEL_DATA]
+            [ProductLabelSearchConfig::PLUGIN_PRODUCT_LABEL_DATA],
         );
     }
 }

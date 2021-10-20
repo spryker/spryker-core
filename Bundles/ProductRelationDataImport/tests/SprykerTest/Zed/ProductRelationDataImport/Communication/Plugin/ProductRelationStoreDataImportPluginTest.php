@@ -70,8 +70,8 @@ class ProductRelationStoreDataImportPluginTest extends Unit
             sprintf(
                 'Imported number of product relation stores is %s expected %s.',
                 $dataImporterReportTransfer->getImportedDataSetCount(),
-                static::EXPECTED_IMPORT_COUNT
-            )
+                static::EXPECTED_IMPORT_COUNT,
+            ),
         );
     }
 }

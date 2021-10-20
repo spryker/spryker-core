@@ -65,7 +65,7 @@ class UpSellingProductsRestApiDependencyProvider extends AbstractBundleDependenc
     {
         $container->set(static::CLIENT_PRODUCT_RELATION_STORAGE, function (Container $container) {
             return new UpSellingProductsRestApiToProductRelationStorageClientBridge(
-                $container->getLocator()->productRelationStorage()->client()
+                $container->getLocator()->productRelationStorage()->client(),
             );
         });
 
@@ -81,7 +81,7 @@ class UpSellingProductsRestApiDependencyProvider extends AbstractBundleDependenc
     {
         $container->set(static::CLIENT_PRODUCT_STORAGE, function (Container $container) {
             return new UpSellingProductsRestApiToProductStorageClientBridge(
-                $container->getLocator()->productStorage()->client()
+                $container->getLocator()->productStorage()->client(),
             );
         });
 
@@ -97,7 +97,7 @@ class UpSellingProductsRestApiDependencyProvider extends AbstractBundleDependenc
     {
         $container->set(static::CLIENT_CARTS_REST_API, function (Container $container) {
             return new UpSellingProductsRestApiToCartsRestApiClientBridge(
-                $container->getLocator()->cartsRestApi()->client()
+                $container->getLocator()->cartsRestApi()->client(),
             );
         });
 
@@ -113,7 +113,7 @@ class UpSellingProductsRestApiDependencyProvider extends AbstractBundleDependenc
     {
         $container->set(static::RESOURCE_PRODUCTS_REST_API, function (Container $container) {
             return new UpSellingProductsRestApiToProductsRestApiResourceBridge(
-                $container->getLocator()->productsRestApi()->resource()
+                $container->getLocator()->productsRestApi()->resource(),
             );
         });
 

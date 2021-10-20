@@ -64,10 +64,10 @@ class QuoteApprovalBusinessTester extends Actor
         $quoteTransfer = (new QuoteTransfer())
             ->setCustomer($customerTransfer)
             ->setStore(
-                (new StoreTransfer())->setName('DE')
+                (new StoreTransfer())->setName('DE'),
             )
             ->setCurrency(
-                (new CurrencyTransfer())->setCode('EUR')
+                (new CurrencyTransfer())->setCode('EUR'),
             );
 
         return $quoteTransfer;

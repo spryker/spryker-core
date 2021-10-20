@@ -65,7 +65,7 @@ class MerchantsRestApiDependencyProvider extends AbstractBundleDependencyProvide
     {
         $container->set(static::CLIENT_MERCHANT_STORAGE, function (Container $container) {
             return new MerchantsRestApiToMerchantStorageClientBridge(
-                $container->getLocator()->merchantStorage()->client()
+                $container->getLocator()->merchantStorage()->client(),
             );
         });
 
@@ -81,7 +81,7 @@ class MerchantsRestApiDependencyProvider extends AbstractBundleDependencyProvide
     {
         $container->set(static::CLIENT_MERCHANT_SEARCH, function (Container $container) {
             return new MerchantsRestApiToMerchantSearchClientBridge(
-                $container->getLocator()->merchantSearch()->client()
+                $container->getLocator()->merchantSearch()->client(),
             );
         });
 
@@ -97,7 +97,7 @@ class MerchantsRestApiDependencyProvider extends AbstractBundleDependencyProvide
     {
         $container->set(static::CLIENT_GLOSSARY_STORAGE, function (Container $container) {
             return new MerchantsRestApiToGlossaryStorageClientBridge(
-                $container->getLocator()->glossaryStorage()->client()
+                $container->getLocator()->glossaryStorage()->client(),
             );
         });
 

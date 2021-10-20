@@ -95,7 +95,7 @@ class CategoryCreator implements CategoryCreatorInterface
 
         $this->eventFacade->trigger(
             CategoryEvents::CATEGORY_AFTER_PUBLISH_CREATE,
-            (new EventEntityTransfer())->setId($categoryTransfer->getIdCategory())
+            (new EventEntityTransfer())->setId($categoryTransfer->getIdCategory()),
         );
     }
 

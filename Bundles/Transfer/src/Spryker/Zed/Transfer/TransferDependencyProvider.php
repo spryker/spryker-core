@@ -69,7 +69,7 @@ class TransferDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::FACADE_PROPEL, function (Container $container) {
             return new TransferToPropelFacadeBridge(
-                $container->getLocator()->propel()->facade()
+                $container->getLocator()->propel()->facade(),
             );
         });
 
@@ -85,7 +85,7 @@ class TransferDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::SERVICE_UTIL_GLOB, function (Container $container) {
             return new TransferToUtilGlobServiceBridge(
-                $container->getLocator()->utilGlob()->service()
+                $container->getLocator()->utilGlob()->service(),
             );
         });
 

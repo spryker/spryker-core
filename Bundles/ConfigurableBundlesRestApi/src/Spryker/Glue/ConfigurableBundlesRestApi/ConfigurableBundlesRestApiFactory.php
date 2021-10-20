@@ -43,7 +43,7 @@ class ConfigurableBundlesRestApiFactory extends AbstractFactory
         return new ConfigurableBundleTemplateReader(
             $this->getConfigurableBundleStorageClient(),
             $this->getConfigurableBundlePageSearchClient(),
-            $this->createConfigurableBundleTemplateRestResponseBuilder()
+            $this->createConfigurableBundleTemplateRestResponseBuilder(),
         );
     }
 
@@ -53,7 +53,7 @@ class ConfigurableBundlesRestApiFactory extends AbstractFactory
     public function createConfigurableBundleTemplateSlotExpander(): ConfigurableBundleRestResourceExpanderInterface
     {
         return new ConfigurableBundleTemplateSlotExpander(
-            $this->createConfigurableBundleTemplateSlotRestResourceBuilder()
+            $this->createConfigurableBundleTemplateSlotRestResourceBuilder(),
         );
     }
 
@@ -63,7 +63,7 @@ class ConfigurableBundlesRestApiFactory extends AbstractFactory
     public function createConfigurableBundleTemplateImageSetExpander(): ConfigurableBundleRestResourceExpanderInterface
     {
         return new ConfigurableBundleTemplateImageSetExpander(
-            $this->createConfigurableBundleTemplateImageSetRestResourceBuilder()
+            $this->createConfigurableBundleTemplateImageSetRestResourceBuilder(),
         );
     }
 
@@ -75,7 +75,7 @@ class ConfigurableBundlesRestApiFactory extends AbstractFactory
         return new ConfigurableBundleTemplateRestResponseBuilder(
             $this->getResourceBuilder(),
             $this->createConfigurableBundleTemplateRestResourceBuilder(),
-            $this->createConfigurableBundleTranslator()
+            $this->createConfigurableBundleTranslator(),
         );
     }
 
@@ -85,7 +85,7 @@ class ConfigurableBundlesRestApiFactory extends AbstractFactory
     public function createConfigurableBundleTemplateRestResourceBuilder(): ConfigurableBundleTemplateRestResourceBuilderInterface
     {
         return new ConfigurableBundleTemplateRestResourceBuilder(
-            $this->getResourceBuilder()
+            $this->getResourceBuilder(),
         );
     }
 
@@ -95,7 +95,7 @@ class ConfigurableBundlesRestApiFactory extends AbstractFactory
     public function createConfigurableBundleTemplateSlotRestResourceBuilder(): ConfigurableBundleTemplateSlotRestResourceBuilderInterface
     {
         return new ConfigurableBundleTemplateSlotRestResourceBuilder(
-            $this->getResourceBuilder()
+            $this->getResourceBuilder(),
         );
     }
 
@@ -106,7 +106,7 @@ class ConfigurableBundlesRestApiFactory extends AbstractFactory
     {
         return new ConfigurableBundleTemplateImageSetRestResourceBuilder(
             $this->getResourceBuilder(),
-            $this->createConfigurableBundleMapper()
+            $this->createConfigurableBundleMapper(),
         );
     }
 
@@ -140,7 +140,7 @@ class ConfigurableBundlesRestApiFactory extends AbstractFactory
     public function createRestQuoteRequestItemExpander(): QuoteRequestItemExpanderInterface
     {
         return new QuoteRequestItemExpander(
-            $this->getGlossaryStorageClient()
+            $this->getGlossaryStorageClient(),
         );
     }
 

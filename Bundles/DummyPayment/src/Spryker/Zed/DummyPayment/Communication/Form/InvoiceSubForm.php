@@ -90,7 +90,7 @@ class InvoiceSubForm extends AbstractType
                     $this->createNotBlankConstraint(),
                     $this->createBirthdayConstraint(),
                 ],
-            ]
+            ],
         );
 
         return $this;

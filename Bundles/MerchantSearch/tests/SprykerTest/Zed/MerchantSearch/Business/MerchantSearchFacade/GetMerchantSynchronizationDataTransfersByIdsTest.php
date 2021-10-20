@@ -75,13 +75,13 @@ class GetMerchantSynchronizationDataTransfersByIdsTest extends Unit
         $synchronizationDataTransfers = $this->tester->getFacade()
             ->getSynchronizationDataTransfersByMerchantIds(
                 new FilterTransfer(),
-                $merchantIds
+                $merchantIds,
             );
 
         // Assert
         $this->assertCount(
             static::MERCHANT_COUNT,
-            $synchronizationDataTransfers
+            $synchronizationDataTransfers,
         );
     }
 
@@ -97,7 +97,7 @@ class GetMerchantSynchronizationDataTransfersByIdsTest extends Unit
         // Act
         $synchronizationDataTransfers = $this->tester->getFacade()
             ->getSynchronizationDataTransfersByMerchantIds(
-                (new FilterTransfer())->setOffset(0)->setLimit(1)->setOrderBy(static::COL_FK_MERCHANT)
+                (new FilterTransfer())->setOffset(0)->setLimit(1)->setOrderBy(static::COL_FK_MERCHANT),
             );
         $synchronizationData = $synchronizationDataTransfers[0]->getData();
 
@@ -119,7 +119,7 @@ class GetMerchantSynchronizationDataTransfersByIdsTest extends Unit
         $synchronizationDataTransfers = $this->tester->getFacade()
             ->getSynchronizationDataTransfersByMerchantIds(
                 (new FilterTransfer())->setOffset(0)->setLimit(1),
-                [$merchantIds[0]]
+                [$merchantIds[0]],
             );
 
         // Assert

@@ -136,7 +136,7 @@ class RedisInMemoryLogger implements RedisLoggerInterface
                 $connectionCredentialsTransfer->getScheme() ?? static::DSN_STRING_TEMPLATE_UNKNOWN,
                 $connectionCredentialsTransfer->getHost() ?? static::DSN_STRING_TEMPLATE_UNKNOWN,
                 $connectionCredentialsTransfer->getPort() ?? static::DSN_STRING_TEMPLATE_UNKNOWN,
-                $connectionCredentialsTransfer->getDatabase() ?? static::DSN_STRING_TEMPLATE_UNKNOWN
+                $connectionCredentialsTransfer->getDatabase() ?? static::DSN_STRING_TEMPLATE_UNKNOWN,
             );
         }
 

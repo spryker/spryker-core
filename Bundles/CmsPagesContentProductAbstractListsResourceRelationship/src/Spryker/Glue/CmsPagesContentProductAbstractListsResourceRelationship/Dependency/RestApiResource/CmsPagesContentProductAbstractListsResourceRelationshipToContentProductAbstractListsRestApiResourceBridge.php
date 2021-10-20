@@ -36,7 +36,7 @@ class CmsPagesContentProductAbstractListsResourceRelationshipToContentProductAbs
     ): array {
         return $this->contentProductAbstractListsRestApiResource->getContentProductAbstractListsByKeys(
             $contentProductAbstractListKeys,
-            $localeName
+            $localeName,
         );
     }
 }

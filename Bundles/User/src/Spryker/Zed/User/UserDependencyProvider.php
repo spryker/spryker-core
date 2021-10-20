@@ -156,7 +156,7 @@ class UserDependencyProvider extends AbstractBundleDependencyProvider
         $container->set(static::PLUGINS_USER_TABLE_ACTION_EXPANDER, function () {
             return array_merge(
                 $this->getUserTableActionExpanderPlugins(),
-                $this->getUsersTableExtenderPlugins()
+                $this->getUsersTableExtenderPlugins(),
             );
         });
 

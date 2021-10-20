@@ -66,8 +66,8 @@ class AclEntityRulePermissionMaskToBinaryStep implements DataImportStepInterface
                     sprintf(
                         static::INVALID_PERMISSION_TEMPLATE,
                         $permission,
-                        implode(', ', array_keys($this->permissionMaskBinaryMap))
-                    )
+                        implode(', ', array_keys($this->permissionMaskBinaryMap)),
+                    ),
                 );
             }
             $binaryPermissionMask |= $this->permissionMaskBinaryMap[strtoupper($permission)];

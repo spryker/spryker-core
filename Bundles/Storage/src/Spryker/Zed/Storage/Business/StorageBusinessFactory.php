@@ -26,7 +26,7 @@ class StorageBusinessFactory extends AbstractBusinessFactory
     public function createStorage()
     {
         return new Storage(
-            $this->getStorageClient()
+            $this->getStorageClient(),
         );
     }
 
@@ -60,7 +60,7 @@ class StorageBusinessFactory extends AbstractBusinessFactory
     public function createKeyValueStoreHealthChecker(): HealthCheckInterface
     {
         return new KeyValueStoreHealthCheck(
-            $this->getStorageClient()
+            $this->getStorageClient(),
         );
     }
 }

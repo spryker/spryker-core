@@ -26,7 +26,7 @@ class ProductSearchConfigStorageBusinessFactory extends AbstractBusinessFactory
             $this->getQueryContainer(),
             $this->getProductSearchFacade(),
             $this->getProductSearchConfig(),
-            $this->getConfig()->isSendingToQueue()
+            $this->getConfig()->isSendingToQueue(),
         );
     }
 

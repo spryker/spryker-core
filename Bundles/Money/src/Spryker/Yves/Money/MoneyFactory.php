@@ -30,7 +30,7 @@ class MoneyFactory extends AbstractFactory
         return new MoneyBuilder(
             $this->createMoneyToTransferMapper(),
             $this->createDecimalToIntegerConverter(),
-            $this->getCurrencyPlugin()->getCurrent()->getCode()
+            $this->getCurrencyPlugin()->getCurrent()->getCode(),
         );
     }
 
@@ -40,7 +40,7 @@ class MoneyFactory extends AbstractFactory
     public function createMoneyFormatter()
     {
         return new MoneyFormatter(
-            $this->createFormatterCollection()
+            $this->createFormatterCollection(),
         );
     }
 
@@ -52,12 +52,12 @@ class MoneyFactory extends AbstractFactory
         $moneyFormatterCollection = new MoneyFormatterCollection();
         $moneyFormatterCollection->addFormatter(
             $this->createIntlFormatterCurrency(),
-            MoneyFormatterCollection::FORMATTER_WITH_SYMBOL
+            MoneyFormatterCollection::FORMATTER_WITH_SYMBOL,
         );
 
         $moneyFormatterCollection->addFormatter(
             $this->createIntlFormatterDecimal(),
-            MoneyFormatterCollection::FORMATTER_WITHOUT_SYMBOL
+            MoneyFormatterCollection::FORMATTER_WITHOUT_SYMBOL,
         );
 
         return $moneyFormatterCollection;
@@ -70,7 +70,7 @@ class MoneyFactory extends AbstractFactory
     {
         return new Parser(
             $this->getMoneyParser(),
-            $this->createMoneyToTransferMapper()
+            $this->createMoneyToTransferMapper(),
         );
     }
 
@@ -96,7 +96,7 @@ class MoneyFactory extends AbstractFactory
     protected function createMoneyToTransferMapper()
     {
         return new MoneyToTransferMapper(
-            $this->getCurrencyPlugin()
+            $this->getCurrencyPlugin(),
         );
     }
 
@@ -122,7 +122,7 @@ class MoneyFactory extends AbstractFactory
     protected function createIntlFormatterCurrency()
     {
         return new IntlMoneyFormatterWithCurrency(
-            $this->createTransferToMoneyMapper()
+            $this->createTransferToMoneyMapper(),
         );
     }
 
@@ -132,7 +132,7 @@ class MoneyFactory extends AbstractFactory
     protected function createIntlFormatterDecimal()
     {
         return new IntlMoneyFormatterWithoutCurrency(
-            $this->createTransferToMoneyMapper()
+            $this->createTransferToMoneyMapper(),
         );
     }
 

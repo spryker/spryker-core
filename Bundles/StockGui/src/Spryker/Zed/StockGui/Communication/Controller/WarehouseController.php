@@ -35,7 +35,7 @@ class WarehouseController extends AbstractController
         $stockTable = $this->getFactory()->createStockTable();
 
         return $this->jsonResponse(
-            $stockTable->fetchData()
+            $stockTable->fetchData(),
         );
     }
 }

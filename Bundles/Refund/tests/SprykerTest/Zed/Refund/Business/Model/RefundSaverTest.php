@@ -146,7 +146,7 @@ class RefundSaverTest extends Unit
             null,
             $this->getSalesQueryContainerMock(),
             $salesFacadeMock,
-            $calculationFacadeMock
+            $calculationFacadeMock,
         );
 
         $refundSaverMock->saveRefund(new RefundTransfer());

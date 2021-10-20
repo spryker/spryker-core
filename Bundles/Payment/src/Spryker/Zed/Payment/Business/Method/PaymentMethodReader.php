@@ -78,7 +78,7 @@ class PaymentMethodReader implements PaymentMethodReaderInterface
 
         return $this->collectPaymentMethodsByStateMachineMapping(
             $paymentMethodsFromPersistence,
-            $this->getIdStoreFromQuote($quoteTransfer)
+            $this->getIdStoreFromQuote($quoteTransfer),
         );
     }
 
@@ -99,14 +99,14 @@ class PaymentMethodReader implements PaymentMethodReaderInterface
         $paymentMethodsTransfer = $this->collectPaymentMethodsFromPersistence(
             $paymentMethodsTransfer,
             $paymentMethodsFromPersistence,
-            $idStore
+            $idStore,
         );
 
         $infrastructuralMethodNames = array_diff($paymentStateMachineMappings, $persistentMethodNames);
 
         return $this->collectInfrastructuralPaymentMethods(
             $infrastructuralMethodNames,
-            $paymentMethodsTransfer
+            $paymentMethodsTransfer,
         );
     }
 

@@ -45,7 +45,7 @@ class OrderSourceListType extends AbstractType
     {
         $this->addOrderSourceField(
             $builder,
-            $options[static::OPTION_ORDER_SOURCE_ARRAY]
+            $options[static::OPTION_ORDER_SOURCE_ARRAY],
         );
     }
 

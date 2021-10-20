@@ -58,7 +58,7 @@ class CmsPagesRestApiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::CLIENT_CMS_STORAGE, function (Container $container) {
             return new CmsPagesRestApiToCmsStorageClientBridge(
-                $container->getLocator()->cmsStorage()->client()
+                $container->getLocator()->cmsStorage()->client(),
             );
         });
 
@@ -74,7 +74,7 @@ class CmsPagesRestApiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::CLIENT_CMS_PAGE_SEARCH, function (Container $container) {
             return new CmsPagesRestApiToCmsPageSearchClientBridge(
-                $container->getLocator()->cmsPageSearch()->client()
+                $container->getLocator()->cmsPageSearch()->client(),
             );
         });
 
@@ -90,7 +90,7 @@ class CmsPagesRestApiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::CLIENT_STORE, function (Container $container) {
             return new CmsPagesRestApiToStoreClientBridge(
-                $container->getLocator()->store()->client()
+                $container->getLocator()->store()->client(),
             );
         });
 

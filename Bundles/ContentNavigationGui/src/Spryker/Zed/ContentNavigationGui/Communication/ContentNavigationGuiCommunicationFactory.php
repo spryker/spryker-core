@@ -33,7 +33,7 @@ class ContentNavigationGuiCommunicationFactory extends AbstractCommunicationFact
     {
         return new ContentNavigationConstraint(
             $this->getContentNavigationFacade(),
-            $this->getUtilEncodeService()
+            $this->getUtilEncodeService(),
         );
     }
 

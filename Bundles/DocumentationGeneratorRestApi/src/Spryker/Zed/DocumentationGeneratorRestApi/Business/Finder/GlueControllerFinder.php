@@ -98,7 +98,7 @@ class GlueControllerFinder implements GlueControllerFinderInterface
         return sprintf(
             static::PATTERN_CONTROLLER_NAMESPACE,
             $moduleNamespace,
-            $controllerClass
+            $controllerClass,
         );
     }
 

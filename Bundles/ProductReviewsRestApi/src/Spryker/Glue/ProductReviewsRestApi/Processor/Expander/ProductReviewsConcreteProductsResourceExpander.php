@@ -56,7 +56,7 @@ class ProductReviewsConcreteProductsResourceExpander implements ProductReviewsCo
     ): ConcreteProductsRestAttributesTransfer {
         $productConcreteData = $this->productStorageClient->findProductConcreteStorageData(
             $idProductConcrete,
-            $restRequest->getMetadata()->getLocale()
+            $restRequest->getMetadata()->getLocale(),
         );
 
         $productReviewStorageTransfer = $this->productReviewStorageClient

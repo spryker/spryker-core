@@ -102,7 +102,7 @@ class StoreRelationDropdownType extends AbstractType
             FormEvents::PRE_SET_DATA,
             function (FormEvent $event) {
                 $this->setInitialData($event);
-            }
+            },
         );
     }
 
@@ -201,7 +201,7 @@ class StoreRelationDropdownType extends AbstractType
                         'disabled' => $this->getIsStoreDisabled($idStore, $options),
                     ];
                 },
-            ]
+            ],
         );
 
         return $this;
@@ -227,12 +227,12 @@ class StoreRelationDropdownType extends AbstractType
                 'attr' => [
                     static::OPTION_EXTENDED => $options[static::OPTION_EXTENDED],
                 ],
-            ]
+            ],
         );
 
         $builder->add(static::FIELD_ID_STORES, HiddenType::class);
         $builder->get(static::FIELD_ID_STORES)->addModelTransformer(
-            $this->getFactory()->createIdStoresDataTransformer()
+            $this->getFactory()->createIdStoresDataTransformer(),
         );
 
         return $this;

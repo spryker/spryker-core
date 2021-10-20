@@ -73,7 +73,7 @@ class ReplaceItemQuantityTest extends Unit
 
         // Act
         $this->createQuoteItemReplacerMock($quoteTransfer)->replaceItemInQuote(
-            (new ProductConfiguratorResponseProcessorResponseTransfer())->setProductConfiguratorResponse($productConfiguratorResponseTransfer)
+            (new ProductConfiguratorResponseProcessorResponseTransfer())->setProductConfiguratorResponse($productConfiguratorResponseTransfer),
         );
 
         // Assert
@@ -99,7 +99,7 @@ class ReplaceItemQuantityTest extends Unit
 
         // Act
         $this->createQuoteItemReplacerMock($quoteTransfer)->replaceItemInQuote(
-            (new ProductConfiguratorResponseProcessorResponseTransfer())->setProductConfiguratorResponse($productConfiguratorResponseTransfer)
+            (new ProductConfiguratorResponseProcessorResponseTransfer())->setProductConfiguratorResponse($productConfiguratorResponseTransfer),
         );
 
         // Assert

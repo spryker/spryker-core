@@ -61,13 +61,13 @@ class CmsBlockType extends AbstractType
         $this->addWarningParagraphs(
             $builder,
             $options[static::OPTION_WRONG_TEMPLATE_CATEGORY_LIST],
-            $options[static::OPTION_CATEGORY_ARRAY]
+            $options[static::OPTION_CATEGORY_ARRAY],
         );
         $this->addCategoryFields(
             $builder,
             $options[static::OPTION_CMS_BLOCK_POSITION_LIST],
             $options[static::OPTION_CATEGORY_ARRAY],
-            $options[static::OPTION_WRONG_TEMPLATE_CATEGORY_LIST]
+            $options[static::OPTION_WRONG_TEMPLATE_CATEGORY_LIST],
         );
     }
 

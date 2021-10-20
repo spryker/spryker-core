@@ -74,7 +74,7 @@ class CategoryNodeStorage implements CategoryNodeStorageInterface
         $cachedCategoryNodeStorageData = $this->getCategoryNodeDataCacheByIdCategoryNodesAndLocaleName(
             $categoryNodeIds,
             $localeName,
-            $storeName
+            $storeName,
         );
         $categoryNodeIds = array_diff($categoryNodeIds, array_keys($cachedCategoryNodeStorageData));
 
@@ -89,7 +89,7 @@ class CategoryNodeStorage implements CategoryNodeStorageInterface
             $categoryNodeStorageTransfers[] = $this->mapCategoryNodeStorageDataToCategoryNodeStorageTransfer(
                 $categoryNode,
                 $localeName,
-                $storeName
+                $storeName,
             );
         }
 
@@ -121,7 +121,7 @@ class CategoryNodeStorage implements CategoryNodeStorageInterface
             $categoryNodeStorageTransfer->getNodeIdOrFail(),
             $localeName,
             $storeName,
-            $categoryNodeStorageTransfer
+            $categoryNodeStorageTransfer,
         );
 
         return $categoryNodeStorageTransfer;
@@ -174,7 +174,7 @@ class CategoryNodeStorage implements CategoryNodeStorageInterface
             '%s.%s.resource.categorynode.%s',
             strtolower(Store::getInstance()->getStoreName()),
             strtolower($localeName),
-            $idCategoryNode
+            $idCategoryNode,
         );
 
         $collectorData = $this->storageClient->get($categoryNodeKey);
@@ -313,7 +313,7 @@ class CategoryNodeStorage implements CategoryNodeStorageInterface
                 $cachedCategoryNodeData[$idCategoryNode] = $this->getCategoryNodeDataCacheByIdCategoryNodeAndLocaleNameAndStoreName(
                     $idCategoryNode,
                     $localeName,
-                    $storeName
+                    $storeName,
                 );
             }
         }

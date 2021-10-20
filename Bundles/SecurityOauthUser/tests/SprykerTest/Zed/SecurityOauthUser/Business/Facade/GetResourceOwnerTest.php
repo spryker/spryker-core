@@ -66,11 +66,11 @@ class GetResourceOwnerTest extends Unit
         //Assert
         $this->assertTrue(
             $resourceOwnerResponseTransfer->getIsSuccessful(),
-            'Expected that `IsSuccessful` flag equals to true.'
+            'Expected that `IsSuccessful` flag equals to true.',
         );
         $this->assertNotNull(
             $resourceOwnerResponseTransfer->getResourceOwner(),
-            'Expected that resource owner must be provided.'
+            'Expected that resource owner must be provided.',
         );
     }
 
@@ -91,11 +91,11 @@ class GetResourceOwnerTest extends Unit
         // Assert
         $this->assertFalse(
             $resourceOwnerResponseTransfer->getIsSuccessful(),
-            'Expected that `IsSuccessful` flag equals to false.'
+            'Expected that `IsSuccessful` flag equals to false.',
         );
         $this->assertNull(
             $resourceOwnerResponseTransfer->getResourceOwner(),
-            'Expected that resource owner must not be provided.'
+            'Expected that resource owner must not be provided.',
         );
     }
 

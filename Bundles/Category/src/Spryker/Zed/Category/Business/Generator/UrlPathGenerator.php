@@ -121,7 +121,7 @@ class UrlPathGenerator implements UrlPathGeneratorInterface
                 $idCategoryNode,
                 $categoryUrlPathPart,
                 $indexedCategoryUrlPathParts,
-                $categoryUrlPathParts
+                $categoryUrlPathParts,
             );
         }
 
@@ -154,7 +154,7 @@ class UrlPathGenerator implements UrlPathGeneratorInterface
             $idCategoryNode,
             $parentCategoryUrlPathPart,
             $indexedCategoryUrlPathParts,
-            $categoryUrlPathParts
+            $categoryUrlPathParts,
         );
     }
 

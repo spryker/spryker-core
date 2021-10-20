@@ -24,7 +24,7 @@ class ContentMapper implements ContentMapperInterface
         $contentTransfer = new ContentTransfer();
         $contentTransfer->fromArray(
             $contentEntity->toArray(),
-            true
+            true,
         );
 
         foreach ($contentEntity->getSpyContentLocalizeds() as $contentLocalizedEntity) {

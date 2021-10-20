@@ -45,7 +45,7 @@ class ProductBundleCartActiveCheckTest extends Unit
     {
         $productBundleCartActiveCheck = $this->createProductBundleCartActiveCheck(static::PRODUCT_SKU_INACTIVE);
         $cartPreCheckResponseTransfer = $productBundleCartActiveCheck->checkActiveItems(
-            $this->createCartChangeTransferWithProduct(static::PRODUCT_SKU_INACTIVE)
+            $this->createCartChangeTransferWithProduct(static::PRODUCT_SKU_INACTIVE),
         );
 
         $this->assertFalse($cartPreCheckResponseTransfer->getIsSuccess());
@@ -59,7 +59,7 @@ class ProductBundleCartActiveCheckTest extends Unit
     {
         $productBundleCartActiveCheck = $this->createProductBundleCartActiveCheck(static::PRODUCT_SKU_ACTIVE);
         $cartPreCheckResponseTransfer = $productBundleCartActiveCheck->checkActiveItems(
-            $this->createCartChangeTransferWithProduct(static::PRODUCT_SKU_ACTIVE)
+            $this->createCartChangeTransferWithProduct(static::PRODUCT_SKU_ACTIVE),
         );
 
         $this->assertTrue($cartPreCheckResponseTransfer->getIsSuccess());
@@ -88,7 +88,7 @@ class ProductBundleCartActiveCheckTest extends Unit
     protected function createProductBundleCartActiveCheck(string $sku): ProductBundleCartActiveCheckInterface
     {
         return new ProductBundleCartActiveCheck(
-            $this->createProductBundleReaderMock($sku)
+            $this->createProductBundleReaderMock($sku),
         );
     }
 

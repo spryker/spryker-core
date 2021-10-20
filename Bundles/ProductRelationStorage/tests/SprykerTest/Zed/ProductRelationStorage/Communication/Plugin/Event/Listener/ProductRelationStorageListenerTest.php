@@ -127,7 +127,7 @@ class ProductRelationStorageListenerTest extends Unit
             $this->productAbstractTransferRelated->getIdProductAbstract(),
             'test',
             'up-selling',
-            $storeRelationDeTransfer
+            $storeRelationDeTransfer,
         );
     }
 

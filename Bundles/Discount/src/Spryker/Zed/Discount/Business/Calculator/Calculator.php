@@ -109,7 +109,7 @@ class Calculator implements CalculatorInterface
         $this->addDiscountsAppliedMessage(
             $collectedDiscountTransfers,
             $quoteTransfer->getCartRuleDiscounts(),
-            $quoteTransfer->getVoucherDiscounts()
+            $quoteTransfer->getVoucherDiscounts(),
         );
 
         return $collectedDiscountTransfers;
@@ -256,7 +256,7 @@ class Calculator implements CalculatorInterface
 
             $collectorComposite = $this->collectorBuilder
                 ->buildFromQueryString(
-                    $collectorQueryString
+                    $collectorQueryString,
                 );
 
             return $collectorComposite->collect($quoteTransfer);
@@ -281,8 +281,8 @@ class Calculator implements CalculatorInterface
                 sprintf(
                     'Calculator plugin with name "%s" not found. Did you forget to register it in "%s"::getAvailableCalculatorPlugins',
                     $discountTransfer->getCalculatorPlugin(),
-                    DiscountDependencyProvider::class
-                )
+                    DiscountDependencyProvider::class,
+                ),
             );
         }
 
@@ -343,7 +343,7 @@ class Calculator implements CalculatorInterface
     ): void {
         $discountIds = array_merge(
             $this->getDiscountIds($oldCartRuleDiscountTransferCollection),
-            $this->getDiscountIds($oldVoucherDiscountTransferCollection)
+            $this->getDiscountIds($oldVoucherDiscountTransferCollection),
         );
         foreach ($collectedDiscountTransferCollection as $collectedDiscountTransfer) {
             if (

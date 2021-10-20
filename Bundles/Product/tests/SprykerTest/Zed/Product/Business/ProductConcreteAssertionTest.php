@@ -85,7 +85,7 @@ class ProductConcreteAssertionTest extends Unit
         $this->expectException(ProductConcreteExistsException::class);
         $this->expectExceptionMessage(sprintf(
             'Product concrete with sku %s already exists',
-            self::SKU
+            self::SKU,
         ));
 
         $query = $this->getMockBuilder(SpyProductQuery::class)
@@ -145,7 +145,7 @@ class ProductConcreteAssertionTest extends Unit
         $this->expectException(ProductConcreteExistsException::class);
         $this->expectExceptionMessage(sprintf(
             'Product concrete with sku %s already exists',
-            self::SKU
+            self::SKU,
         ));
 
         $query = $this->getMockBuilder(SpyProductQuery::class)
@@ -210,7 +210,7 @@ class ProductConcreteAssertionTest extends Unit
         $this->expectException(MissingProductException::class);
         $this->expectExceptionMessage(sprintf(
             'Product concrete with id "%s" does not exist.',
-            self::ID_PRODUCT_CONCRETE
+            self::ID_PRODUCT_CONCRETE,
         ));
 
         $query = $this->getMockBuilder(SpyProductQuery::class)

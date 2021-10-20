@@ -63,7 +63,7 @@ class SharedCartMessenger implements SharedCartMessengerInterface
 
         $isSharedQuoteDefault = $this->sharedCartRepository->isSharedQuoteDefault(
             $quoteTransfer->getIdQuote(),
-            $quoteTransfer->getCustomer()->getCompanyUserTransfer()->getIdCompanyUser()
+            $quoteTransfer->getCustomer()->getCompanyUserTransfer()->getIdCompanyUser(),
         );
 
         if ($isSharedQuoteDefault) {

@@ -52,19 +52,19 @@ class VoucherRestResponseBuilder implements VoucherRestResponseBuilderInterface
             $restDiscountsAttributesTransfer = $this->discountMapper
                 ->mapDiscountDataToRestDiscountsAttributesTransfer(
                     $discountTransfer,
-                    new RestDiscountsAttributesTransfer()
+                    new RestDiscountsAttributesTransfer(),
                 );
 
             $voucherCode = $discountTransfer->getVoucherCode();
             $voucherResource = $this->restResourceBuilder->createRestResource(
                 CartCodesRestApiConfig::RESOURCE_VOUCHERS,
                 $voucherCode,
-                $restDiscountsAttributesTransfer
+                $restDiscountsAttributesTransfer,
             );
 
             $voucherResource->addLink(
                 RestLinkInterface::LINK_SELF,
-                $this->getDiscountsResourceSelfLink($parentResourceType, $parentResourceId, $voucherCode)
+                $this->getDiscountsResourceSelfLink($parentResourceType, $parentResourceId, $voucherCode),
             );
 
             $voucherResources[] = $voucherResource;
@@ -90,7 +90,7 @@ class VoucherRestResponseBuilder implements VoucherRestResponseBuilderInterface
             $parentResourceType,
             $parentResourceId,
             CartCodesRestApiConfig::RESOURCE_CART_CODES,
-            $voucherCode
+            $voucherCode,
         );
     }
 }

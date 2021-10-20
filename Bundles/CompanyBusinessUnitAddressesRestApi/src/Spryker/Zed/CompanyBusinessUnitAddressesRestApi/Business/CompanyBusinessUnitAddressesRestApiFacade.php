@@ -39,7 +39,7 @@ class CompanyBusinessUnitAddressesRestApiFacade extends AbstractFacade implement
             ->createCheckoutDataExpander()
             ->expandCheckoutDataWithCompanyBusinessUnitAddresses(
                 $restCheckoutDataTransfer,
-                $restCheckoutRequestAttributesTransfer
+                $restCheckoutRequestAttributesTransfer,
             );
     }
 

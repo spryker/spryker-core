@@ -70,7 +70,7 @@ class MerchantSynchronizationDataPlugin extends AbstractPlugin implements Synchr
             ->getFilteredMerchantStorageEntityTransfers(
                 (new MerchantStorageCriteriaTransfer())
                     ->setFilter($this->createFilterTransfer($offset, $limit))
-                    ->setMerchantIds($ids)
+                    ->setMerchantIds($ids),
             );
 
         return $this->mapMerchantStorageEntitiesToSynchronizationDataTransfers($merchantStorageEntities);

@@ -73,7 +73,7 @@ class IndexTable extends AbstractTable
                 static::COL_INDEX => sprintf(
                     '<a href="list-documents?index=%s">%s</a>',
                     $indexName,
-                    $indexName
+                    $indexName,
                 ),
             ];
         }

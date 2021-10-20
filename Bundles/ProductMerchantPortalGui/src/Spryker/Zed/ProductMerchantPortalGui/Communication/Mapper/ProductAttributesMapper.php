@@ -53,7 +53,7 @@ class ProductAttributesMapper implements ProductAttributesMapperInterface
 
         if (isset($attributesInitialData[GuiTableEditableInitialDataTransfer::ERRORS])) {
             $attributesInitialData[GuiTableEditableInitialDataTransfer::ERRORS] = $this->fillNotExistingNumericArrayElements(
-                $attributesInitialData[GuiTableEditableInitialDataTransfer::ERRORS]
+                $attributesInitialData[GuiTableEditableInitialDataTransfer::ERRORS],
             );
         }
 
@@ -139,7 +139,7 @@ class ProductAttributesMapper implements ProductAttributesMapperInterface
         foreach ($destinationLocalizedAttributesTransfers as $destinationLocalizedAttributeTransfer) {
             $sourceLocalizedAttributeTransfer = $this->productAttributeDataProvider->findLocalizedAttribute(
                 $sourceLocalizedAttributesTransfers,
-                $destinationLocalizedAttributeTransfer->getLocaleOrFail()->getIdLocaleOrFail()
+                $destinationLocalizedAttributeTransfer->getLocaleOrFail()->getIdLocaleOrFail(),
             );
 
             if ($sourceLocalizedAttributeTransfer) {
@@ -166,7 +166,7 @@ class ProductAttributesMapper implements ProductAttributesMapperInterface
         foreach ($destinationLocalizedAttributesTransfers as $destinationLocalizedAttribute) {
             $sourceLocalizedAttributesTransfer = $this->productAttributeDataProvider->findLocalizedAttribute(
                 $sourceLocalizedAttributesTransfers,
-                $destinationLocalizedAttribute->getLocaleOrFail()->getIdLocaleOrFail()
+                $destinationLocalizedAttribute->getLocaleOrFail()->getIdLocaleOrFail(),
             );
 
             if ($sourceLocalizedAttributesTransfer) {

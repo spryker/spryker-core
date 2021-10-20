@@ -50,7 +50,7 @@ class ProductSearchAttributeTest extends AbstractProductSearchFacadeTest
         $productSearchAttributeEntity = $this->createProductSearchAttributeEntity(
             'updateProductSearchAttribute',
             (new ProductSearchAttributeTransfer())
-                ->setFilterType('foo')
+                ->setFilterType('foo'),
         );
 
         $productSearchAttributeTransfer = new ProductSearchAttributeTransfer();
@@ -73,7 +73,7 @@ class ProductSearchAttributeTest extends AbstractProductSearchFacadeTest
         $productSearchAttributeEntity = $this->createProductSearchAttributeEntity(
             'deleteProductSearchAttribute',
             (new ProductSearchAttributeTransfer())
-                ->setFilterType('foo')
+                ->setFilterType('foo'),
         );
 
         $productSearchAttributeTransfer = new ProductSearchAttributeTransfer();
@@ -96,7 +96,7 @@ class ProductSearchAttributeTest extends AbstractProductSearchFacadeTest
         $productSearchAttributeEntity = $this->createProductSearchAttributeEntity(
             'getProductSearchAttribute',
             (new ProductSearchAttributeTransfer())
-                ->setFilterType('foo')
+                ->setFilterType('foo'),
         );
 
         $productSearchAttributeTransfer = $this->productSearchFacade
@@ -115,17 +115,17 @@ class ProductSearchAttributeTest extends AbstractProductSearchFacadeTest
         $this->createProductSearchAttributeEntity(
             'getProductSearchAttributeList-1',
             (new ProductSearchAttributeTransfer())
-                ->setFilterType('foo')
+                ->setFilterType('foo'),
         );
         $this->createProductSearchAttributeEntity(
             'getProductSearchAttributeList-2',
             (new ProductSearchAttributeTransfer())
-                ->setFilterType('foo')
+                ->setFilterType('foo'),
         );
         $this->createProductSearchAttributeEntity(
             'getProductSearchAttributeList-3',
             (new ProductSearchAttributeTransfer())
-                ->setFilterType('foo')
+                ->setFilterType('foo'),
         );
 
         $productSearchAttributeList = $this->productSearchFacade
@@ -143,19 +143,19 @@ class ProductSearchAttributeTest extends AbstractProductSearchFacadeTest
             'getProductSearchAttributeList-1',
             (new ProductSearchAttributeTransfer())
                 ->setFilterType('foo')
-                ->setPosition(1)
+                ->setPosition(1),
         );
         $entity2 = $this->createProductSearchAttributeEntity(
             'getProductSearchAttributeList-2',
             (new ProductSearchAttributeTransfer())
                 ->setFilterType('foo')
-                ->setPosition(2)
+                ->setPosition(2),
         );
         $entity3 = $this->createProductSearchAttributeEntity(
             'getProductSearchAttributeList-3',
             (new ProductSearchAttributeTransfer())
                 ->setFilterType('foo')
-                ->setPosition(3)
+                ->setPosition(3),
         );
 
         $productSearchAttributeList = [
@@ -179,7 +179,7 @@ class ProductSearchAttributeTest extends AbstractProductSearchFacadeTest
         $this->assertEquals(
             [2, 3, 1],
             [$entity1->getPosition(), $entity2->getPosition(), $entity3->getPosition()],
-            'Product search attribute reorder failed!'
+            'Product search attribute reorder failed!',
         );
     }
 
@@ -225,7 +225,7 @@ class ProductSearchAttributeTest extends AbstractProductSearchFacadeTest
         $productSearchAttributeEntity = $this->createProductSearchAttributeEntity(
             'touchProductAbstractByAsynchronousAttributes',
             (new ProductSearchAttributeTransfer())
-                ->setFilterType('foo')
+                ->setFilterType('foo'),
         );
         $this->assertFalse($productSearchAttributeEntity->getSynced(), 'Product search attribute is marked as synced too early!');
 
@@ -263,7 +263,7 @@ class ProductSearchAttributeTest extends AbstractProductSearchFacadeTest
             'touchProductAbstractByAsynchronousAttributes',
             (new ProductSearchAttributeTransfer())
                 ->setFilterType('foo'),
-            true
+            true,
         );
         $this->assertTrue($productSearchAttributeEntity->getSynced(), 'Product search attribute is not marked as synced!');
 
@@ -306,7 +306,7 @@ class ProductSearchAttributeTest extends AbstractProductSearchFacadeTest
             'touchProductAbstractByAsynchronousAttributes',
             (new ProductSearchAttributeTransfer())
                 ->setFilterType('foo'),
-            true
+            true,
         );
         $this->assertTrue($productSearchAttributeEntity->getSynced(), 'Product search attribute is not marked as synced!');
 

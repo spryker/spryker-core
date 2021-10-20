@@ -106,7 +106,7 @@ class DataExportConsole extends Console
                     '<fg=white>File name: %s, DataEntity: %s, Count: %d</fg=white>',
                     $dataExportResultTransfer->getFileName(),
                     $dataExportResultTransfer->getDataEntity(),
-                    $dataExportResultTransfer->getExportCount()
+                    $dataExportResultTransfer->getExportCount(),
                 ));
             }
         }

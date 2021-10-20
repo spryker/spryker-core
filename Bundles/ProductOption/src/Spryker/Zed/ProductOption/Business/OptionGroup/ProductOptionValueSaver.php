@@ -130,7 +130,7 @@ class ProductOptionValueSaver implements ProductOptionValueSaverInterface
             strpos($productOptionValueTransfer->getValue(), ProductOptionConfig::PRODUCT_OPTION_TRANSLATION_PREFIX) === false
         ) {
             $productOptionValueTransfer->setValue(
-                ProductOptionConfig::PRODUCT_OPTION_TRANSLATION_PREFIX . $productOptionValueTransfer->getValue()
+                ProductOptionConfig::PRODUCT_OPTION_TRANSLATION_PREFIX . $productOptionValueTransfer->getValue(),
             );
         }
 

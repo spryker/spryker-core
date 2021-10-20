@@ -75,12 +75,12 @@ class AvailabilityDataHelper extends Module
         $this->getAvailabilityFacade()->saveProductAvailabilityForStore(
             $sku,
             $quantity === null ? new Decimal(static::DEFAULT_QUANTITY) : new Decimal($quantity),
-            $storeTransfer
+            $storeTransfer,
         );
 
         $productConcreteAvailabilityTransfer = $this->getAvailabilityFacade()->findOrCreateProductConcreteAvailabilityBySkuForStore(
             $sku,
-            $storeTransfer
+            $storeTransfer,
         );
 
         $this->getDataCleanupHelper()->_addCleanup(function () use ($productConcreteAvailabilityTransfer) {

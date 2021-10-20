@@ -76,7 +76,7 @@ class ProductMoneyCollectionType extends AbstractCollectionType
             FormEvents::PRE_SET_DATA,
             function (FormEvent $event) {
                 $this->setInitialMoneyValueData($event);
-            }
+            },
         );
 
         parent::buildForm($builder, array_replace_recursive($defaultOptions, $options));
@@ -108,7 +108,7 @@ class ProductMoneyCollectionType extends AbstractCollectionType
         /** @var \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $data */
         $data = $event->getData();
         $event->setData(
-            $moneyCollectionInitialDataProvider->mergeMissingMoneyValues($data)
+            $moneyCollectionInitialDataProvider->mergeMissingMoneyValues($data),
         );
     }
 
@@ -208,7 +208,7 @@ class ProductMoneyCollectionType extends AbstractCollectionType
         if (!empty($priceData) && isset($priceData->volume_prices)) {
             $volumePrices[$storeName][$currencyIsoCode][$priceTypeName] = $this->buildVolumePriceData(
                 static::PRICE_PRODUCT_VOLUME_EDIT_URL,
-                sprintf('Edit Volume Price: %s', $priceTypeName)
+                sprintf('Edit Volume Price: %s', $priceTypeName),
             );
 
             return $volumePrices;
@@ -216,7 +216,7 @@ class ProductMoneyCollectionType extends AbstractCollectionType
 
         $volumePrices[$storeName][$currencyIsoCode][$priceTypeName] = $this->buildVolumePriceData(
             static::PRICE_PRODUCT_VOLUME_ADD_URL,
-            sprintf('Add Volume Price: %s', $priceTypeName)
+            sprintf('Add Volume Price: %s', $priceTypeName),
         );
 
         return $volumePrices;

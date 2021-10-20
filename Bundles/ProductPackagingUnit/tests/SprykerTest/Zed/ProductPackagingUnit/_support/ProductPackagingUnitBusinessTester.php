@@ -67,7 +67,7 @@ class ProductPackagingUnitBusinessTester extends Actor
                 ->setAmountSalesUnit(
                     (new ProductMeasurementSalesUnitTransfer())
                         ->setConversion($conversion)
-                        ->setPrecision($precision)
+                        ->setPrecision($precision),
                 ));
     }
 
@@ -79,7 +79,7 @@ class ProductPackagingUnitBusinessTester extends Actor
         return (new CartChangeTransfer())
             ->setQuote(
                 (new QuoteTransfer())
-                    ->setItems(new ArrayObject([]))
+                    ->setItems(new ArrayObject([])),
             )
             ->setItems(new ArrayObject([]));
     }
@@ -106,7 +106,7 @@ class ProductPackagingUnitBusinessTester extends Actor
                     ->setQuantity($itemQuantity)
                     ->setAmount($itemAmount)
                     ->setAmountSalesUnit($productMeasurementSalesUnitTransfer)
-                    ->setGroupKey(uniqid())
+                    ->setGroupKey(uniqid()),
             );
 
         return $cartChangeTransfer;
@@ -124,7 +124,7 @@ class ProductPackagingUnitBusinessTester extends Actor
         $cartChangeTransfer->addItem(
             (new ItemTransfer())
                 ->setSku($sku)
-                ->setAmount($amount)
+                ->setAmount($amount),
         );
 
         return $cartChangeTransfer;
@@ -142,7 +142,7 @@ class ProductPackagingUnitBusinessTester extends Actor
             (new ItemTransfer())
                 ->setSku($sku)
                 ->setAmount($amount)
-                ->setProductPackagingUnit(new ProductPackagingUnitTransfer())
+                ->setProductPackagingUnit(new ProductPackagingUnitTransfer()),
         );
     }
 
@@ -161,7 +161,7 @@ class ProductPackagingUnitBusinessTester extends Actor
         $cartChangeTransfer->addItem(
             (new ItemTransfer())
                 ->setSku($sku)
-                ->setProductPackagingUnit((new ProductPackagingUnitTransfer())->setIdProductPackagingUnit($idProductPackagingUnit))
+                ->setProductPackagingUnit((new ProductPackagingUnitTransfer())->setIdProductPackagingUnit($idProductPackagingUnit)),
         );
 
         return $cartChangeTransfer;
@@ -185,7 +185,7 @@ class ProductPackagingUnitBusinessTester extends Actor
                     ->setAmountSalesUnit(null)
                     ->setAmount($dummyAmount)
                     ->setQuantity($dummyQuantity)
-                    ->setGroupKey($dummyGroupKey)
+                    ->setGroupKey($dummyGroupKey),
             );
     }
 
@@ -209,7 +209,7 @@ class ProductPackagingUnitBusinessTester extends Actor
                     ->setAmountSalesUnit((new ProductMeasurementSalesUnitTransfer())->setIdProductMeasurementSalesUnit($dummySalesUnitId))
                     ->setAmount($dummyAmount)
                     ->setQuantity($dummyQuantity)
-                    ->setGroupKey($dummyGroupKey)
+                    ->setGroupKey($dummyGroupKey),
             );
     }
 
@@ -265,7 +265,7 @@ class ProductPackagingUnitBusinessTester extends Actor
             $quantity,
             $packagingUnitProductConcreteTransfer->getSku(),
             $amount,
-            $leadProductConcreteTransfer->getSku()
+            $leadProductConcreteTransfer->getSku(),
         );
 
         return [
@@ -317,7 +317,7 @@ class ProductPackagingUnitBusinessTester extends Actor
                 $stateName,
                 (new OmsStateTransfer())
                     ->setName($stateName)
-                    ->addProcess($processName, (new OmsProcessTransfer())->setName($processName))
+                    ->addProcess($processName, (new OmsProcessTransfer())->setName($processName)),
             );
         }
 
@@ -384,22 +384,22 @@ class ProductPackagingUnitBusinessTester extends Actor
                 SpyProductPackagingUnitEntityTransfer::AMOUNT_MAX => null,
                 SpyProductPackagingUnitEntityTransfer::AMOUNT_INTERVAL => 1,
                 SpyProductPackagingUnitEntityTransfer::IS_AMOUNT_VARIABLE => true,
-            ]
+            ],
         );
 
         $productMeasurementUnitTransfer = (new ProductMeasurementUnitTransfer())->fromArray(
             $this->haveProductMeasurementUnit([
                 SpyProductMeasurementUnitEntityTransfer::CODE => 'MYCODE' . random_int(1, 100),
             ])->toArray(),
-            true
+            true,
         );
 
         $productMeasurementBaseUnitTransfer = (new ProductMeasurementBaseUnitTransfer())->fromArray(
             $this->haveProductMeasurementBaseUnit(
                 $productConcreteTransfer->getFkProductAbstract(),
-                $productMeasurementUnitTransfer->getIdProductMeasurementUnit()
+                $productMeasurementUnitTransfer->getIdProductMeasurementUnit(),
             )->toArray(),
-            true
+            true,
         )
             ->setProductMeasurementUnit($productMeasurementUnitTransfer);
 
@@ -407,9 +407,9 @@ class ProductPackagingUnitBusinessTester extends Actor
             $this->haveProductMeasurementSalesUnit(
                 $boxProductConcreteTransfer->getIdProductConcrete(),
                 $productMeasurementUnitTransfer->getIdProductMeasurementUnit(),
-                $productMeasurementBaseUnitTransfer->getIdProductMeasurementBaseUnit()
+                $productMeasurementBaseUnitTransfer->getIdProductMeasurementBaseUnit(),
             )->toArray(),
-            true
+            true,
         );
 
         $productMeasurementSalesUnitTransfer

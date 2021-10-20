@@ -66,7 +66,7 @@ class ProductPackagingUnitAmountRestrictionValidator implements ProductPackaging
         $cartPreCheckResponseTransfer = $this->validateItemsAmounts($cartChangeTransfer, $cartPreCheckResponseTransfer);
 
         return $cartPreCheckResponseTransfer->setIsSuccess(
-            $cartPreCheckResponseTransfer->getMessages()->count() === 0
+            $cartPreCheckResponseTransfer->getMessages()->count() === 0,
         );
     }
 
@@ -157,7 +157,7 @@ class ProductPackagingUnitAmountRestrictionValidator implements ProductPackaging
 
             if (isset($quoteAmountMapByGroupKey[$productGroupKey])) {
                 $cartAmountMap[$productGroupKey] = $cartAmountMap[$productGroupKey]->add(
-                    $quoteAmountMapByGroupKey[$productGroupKey]
+                    $quoteAmountMapByGroupKey[$productGroupKey],
                 );
             }
         }

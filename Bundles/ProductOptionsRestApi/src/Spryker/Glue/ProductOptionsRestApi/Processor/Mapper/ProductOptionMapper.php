@@ -35,7 +35,7 @@ class ProductOptionMapper implements ProductOptionMapperInterface
             foreach ($productOptionGroupStorageTransfer->getProductOptionValues() as $productOptionValueStorageTransfer) {
                 $restProductOptionsAttributesTransfers[] = $this->createRestProductOptionsAttributesTransfer(
                     $productOptionGroupStorageTransfer,
-                    $productOptionValueStorageTransfer
+                    $productOptionValueStorageTransfer,
                 );
             }
         }
@@ -73,7 +73,7 @@ class ProductOptionMapper implements ProductOptionMapperInterface
         foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {
             $restItemProductOptionsTransfers[] = $this->mapProductOptionTransferToRestItemProductOptionsTransfer(
                 $productOptionTransfer,
-                new RestItemProductOptionsTransfer()
+                new RestItemProductOptionsTransfer(),
             );
         }
 
@@ -113,8 +113,8 @@ class ProductOptionMapper implements ProductOptionMapperInterface
             $restOrderItemsAttributesTransfers->append(
                 $this->mapProductOptionTransferToRestOrderItemProductOptionTransfer(
                     $productOptionTransfer,
-                    new RestOrderItemProductOptionsTransfer()
-                )
+                    new RestOrderItemProductOptionsTransfer(),
+                ),
             );
         }
 

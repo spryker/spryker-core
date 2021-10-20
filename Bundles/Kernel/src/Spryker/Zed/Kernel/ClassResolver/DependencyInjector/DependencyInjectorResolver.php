@@ -77,7 +77,7 @@ class DependencyInjectorResolver extends AbstractClassResolver
             self::KEY_NAMESPACE,
             self::KEY_FROM_BUNDLE,
             static::KEY_CODE_BUCKET,
-            self::KEY_BUNDLE
+            self::KEY_BUNDLE,
         );
     }
 
@@ -99,7 +99,7 @@ class DependencyInjectorResolver extends AbstractClassResolver
         $className = str_replace(
             array_keys($searchAndReplace),
             array_values($searchAndReplace),
-            $this->getClassPattern()
+            $this->getClassPattern(),
         );
 
         return $className;

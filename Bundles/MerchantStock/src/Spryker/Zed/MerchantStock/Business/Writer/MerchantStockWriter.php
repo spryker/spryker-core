@@ -82,7 +82,7 @@ class MerchantStockWriter implements MerchantStockWriterInterface
             $merchantTransfer->getNameOrFail(),
             $merchantTransfer->getMerchantReferenceOrFail(),
             'Warehouse',
-            $merchantTransfer->getStocks()->count() + 1
+            $merchantTransfer->getStocks()->count() + 1,
         );
     }
 }

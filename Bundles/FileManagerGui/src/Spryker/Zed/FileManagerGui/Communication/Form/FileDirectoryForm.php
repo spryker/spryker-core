@@ -84,7 +84,7 @@ class FileDirectoryForm extends AbstractType
                 'constraints' => [
                     new NotBlank(),
                 ],
-            ]
+            ],
         );
 
         return $this;
@@ -124,7 +124,7 @@ class FileDirectoryForm extends AbstractType
             },
             function ($value) {
                 return $value;
-            }
+            },
         );
     }
 

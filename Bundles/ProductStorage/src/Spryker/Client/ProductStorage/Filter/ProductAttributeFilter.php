@@ -73,7 +73,7 @@ class ProductAttributeFilter implements ProductAttributeFilterInterface
             $availableAttributes = $this->filterAvailableAttributes(
                 $productSuperAttributes,
                 $selectedAttributes,
-                $availableAttributes
+                $availableAttributes,
             );
         }
 

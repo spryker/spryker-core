@@ -100,7 +100,7 @@ class ProductOfferPriceReader implements ProductOfferPriceReaderInterface
 
         $productOfferPriceRestResources = $this->getProductOfferPriceRestResources(
             [$productOfferRestResource->getId()],
-            $restRequest->getMetadata()->getLocale()
+            $restRequest->getMetadata()->getLocale(),
         );
 
         $productOfferPriceRestResource = $productOfferPriceRestResources[$productOfferRestResource->getId()] ?? null;
@@ -148,7 +148,7 @@ class ProductOfferPriceReader implements ProductOfferPriceReaderInterface
 
                 $currentProductPriceTransfer = $this->priceProductClient->resolveProductPriceTransferByPriceProductFilter(
                     $priceProductTransfers,
-                    $priceProductFilterTransfer
+                    $priceProductFilterTransfer,
                 );
 
                 $productOfferPriceRestResources[$productOfferReference] = $this->productOfferPriceRestResponseBuilder

@@ -47,7 +47,7 @@ class RateController extends AbstractController
                 ->queryTaxRateWithCountryAndRate(
                     $taxRateTransfer->getName(),
                     $taxRateTransfer->getFkCountry(),
-                    $taxRateTransfer->getRate()
+                    $taxRateTransfer->getRate(),
                 )->count();
 
             if ($rowCount > 0) {
@@ -97,7 +97,7 @@ class RateController extends AbstractController
                 ->queryTaxRateWithCountryAndRate(
                     $taxRateTransfer->getName(),
                     $taxRateTransfer->getFkCountry(),
-                    $taxRateTransfer->getRate()
+                    $taxRateTransfer->getRate(),
                 )->filterByIdTaxRate($idTaxRate, Criteria::NOT_EQUAL)
                 ->count();
 
@@ -176,7 +176,7 @@ class RateController extends AbstractController
         $table = $this->getFactory()->createTaxRateTable();
 
         return $this->jsonResponse(
-            $table->fetchData()
+            $table->fetchData(),
         );
     }
 }

@@ -37,7 +37,7 @@ class ProductMeasurementUnitWriterStep extends PublishAwareStep implements DataI
 
         $this->addPublishEvents(
             static::PRODUCT_MEASUREMENT_UNIT_PUBLISH,
-            $productMeasurementUnitEntity->getIdProductMeasurementUnit()
+            $productMeasurementUnitEntity->getIdProductMeasurementUnit(),
         );
     }
 

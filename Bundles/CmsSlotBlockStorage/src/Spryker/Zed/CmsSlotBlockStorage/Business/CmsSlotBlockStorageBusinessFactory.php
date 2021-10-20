@@ -29,7 +29,7 @@ class CmsSlotBlockStorageBusinessFactory extends AbstractBusinessFactory
         return new CmsSlotBlockStorageWriter(
             $this->getRepository(),
             $this->getEntityManager(),
-            $this->getCmsSlotBlockStorageService()
+            $this->getCmsSlotBlockStorageService(),
         );
     }
 

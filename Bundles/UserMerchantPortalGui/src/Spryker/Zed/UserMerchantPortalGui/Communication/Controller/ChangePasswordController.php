@@ -38,7 +38,7 @@ class ChangePasswordController extends AbstractController
                 '@UserMerchantPortalGui/Partials/change-password-form-overlay.twig',
                 [
                     'changePasswordForm' => $changePasswordForm->createView(),
-                ]
+                ],
             )->getContent(),
         ];
 
@@ -52,7 +52,7 @@ class ChangePasswordController extends AbstractController
             $this->getFactory()
                 ->createMerchantUserUpdater()
                 ->updateCurrentMerchantUserPassword(
-                    $formData[ChangePasswordForm::FIELD_NEW_PASSWORD]
+                    $formData[ChangePasswordForm::FIELD_NEW_PASSWORD],
                 );
 
             $zedUiFormResponseTransfer = $this->getFactory()
@@ -61,7 +61,7 @@ class ChangePasswordController extends AbstractController
                 ->addSuccessNotification(
                     $this->getFactory()
                         ->getTranslatorFacade()
-                        ->trans(static::RESPONSE_NOTIFICATION_MESSAGE_SUCCESS)
+                        ->trans(static::RESPONSE_NOTIFICATION_MESSAGE_SUCCESS),
                 )
                 ->addActionCloseDrawer()
                 ->createResponse();

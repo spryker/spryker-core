@@ -162,7 +162,7 @@ class FileManagerStorageWriter implements FileManagerStorageWriterInterface
         $fileStorageTransfer->setLocale($localeTransfer->getLocaleName());
         $fileStorageTransfer->setFkFile($fileTransfer->getIdFile());
         $fileStorageTransfer->setData(
-            $this->mapToFileStorageDataTransfer($fileTransfer, $localeTransfer)
+            $this->mapToFileStorageDataTransfer($fileTransfer, $localeTransfer),
         );
 
         $this->entityManager->saveFileStorage($fileStorageTransfer);

@@ -91,7 +91,7 @@ class TypeAwareIndexAdapter implements IndexAdapterInterface
     protected function getType(): Type
     {
         return $this->elasticaIndex->getType(
-            $this->searchCollectorConfigurationTransfer->getTypeName()
+            $this->searchCollectorConfigurationTransfer->getTypeName(),
         );
     }
 }

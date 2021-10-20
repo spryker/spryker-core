@@ -108,7 +108,7 @@ class PriceProductScheduleFindTest extends Unit
         // Assert
         $this->assertNotNull(
             $foundPriceProductScheduleTransfer,
-            'Record is not found in database'
+            'Record is not found in database',
         );
     }
 
@@ -161,7 +161,7 @@ class PriceProductScheduleFindTest extends Unit
         // Assert
         $this->assertNotNull(
             $foundPriceProductScheduleTransfer,
-            'Record is not found in database'
+            'Record is not found in database',
         );
     }
 }

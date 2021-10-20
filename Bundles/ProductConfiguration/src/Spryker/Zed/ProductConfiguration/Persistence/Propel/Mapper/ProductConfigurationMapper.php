@@ -28,8 +28,8 @@ class ProductConfigurationMapper
             $productConfigurationCollectionTransfer->addProductConfiguration(
                 $this->mapProductConfigurationEntityToProductConfigurationTransfer(
                     new ProductConfigurationTransfer(),
-                    $productConfigurationEntity
-                )
+                    $productConfigurationEntity,
+                ),
             );
         }
 
@@ -47,7 +47,7 @@ class ProductConfigurationMapper
         SpyProductConfiguration $productConfigurationEntity
     ): ProductConfigurationTransfer {
             $productConfigurationTransfer->setSku(
-                $productConfigurationEntity->getSpyProduct()->getSku()
+                $productConfigurationEntity->getSpyProduct()->getSku(),
             );
 
         return $productConfigurationTransfer->fromArray($productConfigurationEntity->toArray(), true);

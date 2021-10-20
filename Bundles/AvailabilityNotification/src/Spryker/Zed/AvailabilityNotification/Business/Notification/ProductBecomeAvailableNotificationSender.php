@@ -77,7 +77,7 @@ class ProductBecomeAvailableNotificationSender implements ProductBecomeAvailable
             ->getAvailabilityNotifications(
                 (new AvailabilityNotificationCriteriaTransfer())
                 ->addStoreName($availabilityNotificationDataTransfer->getStore()->getName())
-                ->addSku($availabilityNotificationDataTransfer->getSku())
+                ->addSku($availabilityNotificationDataTransfer->getSku()),
             )
             ->getAvailabilityNotificationSubscriptions();
 

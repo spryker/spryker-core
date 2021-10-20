@@ -308,7 +308,7 @@ class ProductQuantityRestrictionValidator implements ProductQuantityRestrictionV
         $responseTransfer->addMessage(
             (new MessageTransfer())
                 ->setValue($message)
-                ->setParameters(['%sku%' => $sku, '%restrictionValue%' => $restrictionValue, '%actualValue%' => $actualValue])
+                ->setParameters(['%sku%' => $sku, '%restrictionValue%' => $restrictionValue, '%actualValue%' => $actualValue]),
         );
     }
 }

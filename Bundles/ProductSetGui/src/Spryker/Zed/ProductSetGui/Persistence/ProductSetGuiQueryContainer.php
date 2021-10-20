@@ -88,12 +88,12 @@ class ProductSetGuiQueryContainer extends AbstractQueryContainer implements Prod
         $query->addJoin(
             [SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT, $idProductSet],
             [SpyProductAbstractSetTableMap::COL_FK_PRODUCT_ABSTRACT, SpyProductAbstractSetTableMap::COL_FK_PRODUCT_SET],
-            Criteria::LEFT_JOIN
+            Criteria::LEFT_JOIN,
         )
             ->addAnd(
                 SpyProductAbstractSetTableMap::COL_FK_PRODUCT_SET,
                 null,
-                Criteria::ISNULL
+                Criteria::ISNULL,
             );
 
         return $query;

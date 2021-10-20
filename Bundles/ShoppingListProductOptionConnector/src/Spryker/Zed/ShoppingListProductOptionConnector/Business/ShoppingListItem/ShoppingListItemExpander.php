@@ -73,7 +73,7 @@ class ShoppingListItemExpander implements ShoppingListItemExpanderInterface
 
         $indexedByIdsUniqueProductOptionTransfers = $this->indexUniqueProductOptionTransfersByIds(
             $uniqueProductOptionIds,
-            $shoppingListItemCollectionTransfer
+            $shoppingListItemCollectionTransfer,
         );
 
         $groupedProductOptionIdsByShoppingListItemIds = $this
@@ -85,8 +85,8 @@ class ShoppingListItemExpander implements ShoppingListItemExpanderInterface
                 $this->mapShoppingListItemTransferWithProductOptions(
                     $shoppingListItemTransfer,
                     $groupedProductOptionIdsByShoppingListItemIds,
-                    $indexedByIdsUniqueProductOptionTransfers
-                )
+                    $indexedByIdsUniqueProductOptionTransfers,
+                ),
             );
         }
 
@@ -156,7 +156,7 @@ class ShoppingListItemExpander implements ShoppingListItemExpanderInterface
     ): array {
         $productOptionCriteriaTransfer = $this->expandProductOptionCriteriaTransferWithCurrencyParameters(
             new ProductOptionCriteriaTransfer(),
-            $shoppingListItemCollectionTransfer
+            $shoppingListItemCollectionTransfer,
         );
 
         $productOptionCriteriaTransfer

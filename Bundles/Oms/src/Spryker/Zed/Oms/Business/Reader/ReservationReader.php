@@ -88,7 +88,7 @@ class ReservationReader implements ReservationReaderInterface
         $idStore = $this->getIdStore($storeTransfer);
         $reservationQuantity = $this->omsRepository->findProductReservationQuantity($sku, $idStore);
         $reservationQuantity = $reservationQuantity->add(
-            $this->getReservationsFromOtherStores($sku, $storeTransfer)
+            $this->getReservationsFromOtherStores($sku, $storeTransfer),
         );
 
         return $reservationQuantity;
@@ -124,7 +124,7 @@ class ReservationReader implements ReservationReaderInterface
             }
 
             $reservationQuantity = $reservationQuantity->add(
-                $reservationResponseTransfer->getReservationQuantity()
+                $reservationResponseTransfer->getReservationQuantity(),
             );
         }
 
@@ -169,7 +169,7 @@ class ReservationReader implements ReservationReaderInterface
 
         $reservationQuantity = $this->getOmsReservedProductQuantityForSku(
             $reservationRequestTransfer->requireSku()->getSku(),
-            $reservationRequestTransfer->requireStore()->getStore()
+            $reservationRequestTransfer->requireStore()->getStore(),
         );
 
         return (new ReservationResponseTransfer())->setReservationQuantity($reservationQuantity);
@@ -189,7 +189,7 @@ class ReservationReader implements ReservationReaderInterface
 
         return $this->calculateReservationQuantity(
             $reservedStates,
-            $salesOrderItemStateAggregationTransfers
+            $salesOrderItemStateAggregationTransfers,
         );
     }
 
@@ -208,7 +208,7 @@ class ReservationReader implements ReservationReaderInterface
 
         return $this->calculateReservationQuantity(
             $reservedStates,
-            $salesAggregationTransfers
+            $salesAggregationTransfers,
         );
     }
 
@@ -245,7 +245,7 @@ class ReservationReader implements ReservationReaderInterface
         return $this->aggregateSalesOrderItemReservations(
             $reservationRequestTransfer->getReservedStates(),
             $reservationRequestTransfer->getSku(),
-            $reservationRequestTransfer->getStore()
+            $reservationRequestTransfer->getStore(),
         );
     }
 
@@ -287,7 +287,7 @@ class ReservationReader implements ReservationReaderInterface
             $salesAggregationTransfers = $reservationAggregationPlugin->aggregateReservations(
                 $sku,
                 $reservedStates,
-                $storeTransfer
+                $storeTransfer,
             );
 
             if ($salesAggregationTransfers !== []) {
@@ -298,7 +298,7 @@ class ReservationReader implements ReservationReaderInterface
         return $this->omsRepository->getSalesOrderAggregationBySkuAndStatesNames(
             array_keys($reservedStates->getStates()->getArrayCopy()),
             $sku,
-            $storeTransfer
+            $storeTransfer,
         );
     }
 

@@ -84,7 +84,7 @@ class ProductPricesRestApiDependencyProvider extends AbstractBundleDependencyPro
     {
         $container->set(static::CLIENT_PRICE_PRODUCT_STORAGE, function (Container $container) {
             return new ProductPricesRestApiToPriceProductStorageClientBridge(
-                $container->getLocator()->priceProductStorage()->client()
+                $container->getLocator()->priceProductStorage()->client(),
             );
         });
 
@@ -100,7 +100,7 @@ class ProductPricesRestApiDependencyProvider extends AbstractBundleDependencyPro
     {
         $container->set(static::CLIENT_PRODUCT_STORAGE, function (Container $container) {
             return new ProductPricesRestApiToProductStorageClientBridge(
-                $container->getLocator()->productStorage()->client()
+                $container->getLocator()->productStorage()->client(),
             );
         });
 
@@ -116,7 +116,7 @@ class ProductPricesRestApiDependencyProvider extends AbstractBundleDependencyPro
     {
         $container->set(static::CLIENT_PRICE_PRODUCT, function (Container $container) {
             return new ProductPricesRestApiToPriceProductClientBridge(
-                $container->getLocator()->priceProduct()->client()
+                $container->getLocator()->priceProduct()->client(),
             );
         });
 
@@ -132,7 +132,7 @@ class ProductPricesRestApiDependencyProvider extends AbstractBundleDependencyPro
     {
         $container->set(static::CLIENT_PRICE, function (Container $container) {
             return new ProductPricesRestApiToPriceClientBridge(
-                $container->getLocator()->price()->client()
+                $container->getLocator()->price()->client(),
             );
         });
 
@@ -148,7 +148,7 @@ class ProductPricesRestApiDependencyProvider extends AbstractBundleDependencyPro
     {
         $container->set(static::CLIENT_CURRENCY, function (Container $container) {
             return new ProductPricesRestApiToCurrencyClientBridge(
-                $container->getLocator()->currency()->client()
+                $container->getLocator()->currency()->client(),
             );
         });
 

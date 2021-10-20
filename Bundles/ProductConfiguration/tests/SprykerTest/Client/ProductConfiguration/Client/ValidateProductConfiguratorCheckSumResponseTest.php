@@ -74,7 +74,7 @@ class ValidateProductConfiguratorCheckSumResponseTest extends Unit
         // Assert
         $this->assertTrue(
             $productConfiguratorResponseProcessorResponseTransferValidated->getIsSuccessful(),
-            'Expects valid processor response after checksum validators.'
+            'Expects valid processor response after checksum validators.',
         );
     }
 
@@ -90,7 +90,7 @@ class ValidateProductConfiguratorCheckSumResponseTest extends Unit
             ->getMock();
 
         $validatorMock->method('validateProductConfiguratorCheckSumResponse')->willReturn(
-            (new ProductConfiguratorResponseProcessorResponseTransfer())->setIsSuccessful(false)
+            (new ProductConfiguratorResponseProcessorResponseTransfer())->setIsSuccessful(false),
         );
 
         $this->productConfigurationFactoryMock->method('createProductConfiguratorCheckSumResponseValidators')
@@ -108,7 +108,7 @@ class ValidateProductConfiguratorCheckSumResponseTest extends Unit
         // Assert
         $this->assertFalse(
             $productConfiguratorResponseProcessorResponseTransferValidated->getIsSuccessful(),
-            'Expects not valid processor response after checksum validator fail.'
+            'Expects not valid processor response after checksum validator fail.',
         );
     }
 
@@ -124,7 +124,7 @@ class ValidateProductConfiguratorCheckSumResponseTest extends Unit
             ->getMock();
 
         $validatorMockOne->method('validateProductConfiguratorCheckSumResponse')->willReturn(
-            (new ProductConfiguratorResponseProcessorResponseTransfer())->setIsSuccessful(false)
+            (new ProductConfiguratorResponseProcessorResponseTransfer())->setIsSuccessful(false),
         );
 
         $validatorMockTwo = $this->getMockBuilder(ProductConfiguratorResponseValidatorInterface::class)
@@ -150,7 +150,7 @@ class ValidateProductConfiguratorCheckSumResponseTest extends Unit
         // Assert
         $this->assertFalse(
             $productConfiguratorResponseProcessorResponseTransferValidated->getIsSuccessful(),
-            'Expects that return not valid processor response after first checksum validator fail.'
+            'Expects that return not valid processor response after first checksum validator fail.',
         );
     }
 

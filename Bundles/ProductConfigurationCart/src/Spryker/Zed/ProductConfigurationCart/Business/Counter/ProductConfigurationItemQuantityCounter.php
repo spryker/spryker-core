@@ -63,7 +63,7 @@ class ProductConfigurationItemQuantityCounter implements ProductConfigurationIte
                 $currentItemQuantity = $this->changeItemQuantityAccordingToOperation(
                     $currentItemQuantity,
                     $cartChangeItemTransfer->getQuantity(),
-                    $cartChangeTransfer->getOperation()
+                    $cartChangeTransfer->getOperation(),
                 );
             }
         }

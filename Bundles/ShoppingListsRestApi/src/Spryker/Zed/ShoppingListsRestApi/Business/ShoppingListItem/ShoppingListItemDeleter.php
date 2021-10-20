@@ -53,7 +53,7 @@ class ShoppingListItemDeleter implements ShoppingListItemDeleterInterface
         ShoppingListItemRequestTransfer $shoppingListItemRequestTransfer
     ): ShoppingListItemResponseTransfer {
         $shoppingListItemResponseTransfer = $this->shoppingListItemReader->findShoppingListItem(
-            $shoppingListItemRequestTransfer
+            $shoppingListItemRequestTransfer,
         );
 
         if ($shoppingListItemResponseTransfer->getIsSuccess() === false) {
@@ -61,12 +61,12 @@ class ShoppingListItemDeleter implements ShoppingListItemDeleterInterface
         }
 
         $shoppingListItemResponseTransfer = $this->shoppingListFacade->removeItemById(
-            $shoppingListItemResponseTransfer->getShoppingListItem()
+            $shoppingListItemResponseTransfer->getShoppingListItem(),
         );
 
         if ($shoppingListItemResponseTransfer->getIsSuccess() === false) {
             return $this->shoppingListItemMapper->mapShoppingListResponseErrorsToRestCodes(
-                $shoppingListItemResponseTransfer
+                $shoppingListItemResponseTransfer,
             );
         }
 

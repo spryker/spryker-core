@@ -49,7 +49,7 @@ class CategoryImageStorageWriter implements CategoryImageStorageWriterInterface
     public function publish(array $categoryIds): void
     {
         $imageSets = $this->getImageSetsIndexedByCategoryIdAndLocale(
-            $this->repository->getCategoryImageSetsByFkCategoryIn($categoryIds)
+            $this->repository->getCategoryImageSetsByFkCategoryIn($categoryIds),
         );
 
         $spyCategoryImageStorageEntities = $this->findCategoryImageStorageTransfersByCategoryIds($categoryIds);
@@ -66,7 +66,7 @@ class CategoryImageStorageWriter implements CategoryImageStorageWriterInterface
         $spyCategoryImageStorageEntities = $this->repository->getCategoryImageStorageByFkCategoryIn($categoryIds);
         foreach ($spyCategoryImageStorageEntities as $spyCategoryImageStorageEntity) {
             $this->entityManager->deleteCategoryImageStorage(
-                $spyCategoryImageStorageEntity->getIdCategoryImageStorage()
+                $spyCategoryImageStorageEntity->getIdCategoryImageStorage(),
             );
         }
     }
@@ -101,7 +101,7 @@ class CategoryImageStorageWriter implements CategoryImageStorageWriterInterface
                 $categoryImageStorageEntityTransfer = $this->getStorageEntityTransfer(
                     $spyCategoryImageStorageEntities,
                     $idCategory,
-                    $localeName
+                    $localeName,
                 );
                 unset($spyCategoryImageStorageEntities[$idCategory][$localeName]);
                 $this->storeDataSet($categoryImageStorageEntityTransfer, $localizedImageSets);
@@ -145,7 +145,7 @@ class CategoryImageStorageWriter implements CategoryImageStorageWriterInterface
         $categoryStorageTransfer = new CategoryImageSetCollectionStorageTransfer();
         $categoryStorageTransfer->setIdCategory($spyCategoryImageStorage->getFkCategory());
         $categoryStorageTransfer->setImageSets(new ArrayObject(
-            $this->mapSpyCategoryImageSetEntityTransferCollection($imageSets)
+            $this->mapSpyCategoryImageSetEntityTransferCollection($imageSets),
         ));
 
         $spyCategoryImageStorage->setData(json_encode($categoryStorageTransfer->toArray()));
@@ -177,10 +177,10 @@ class CategoryImageStorageWriter implements CategoryImageStorageWriterInterface
     {
         $categoryImageSetStorageTransfer = new CategoryImageSetStorageTransfer();
         $categoryImageSetStorageTransfer->setName(
-            $spyCategoryImageSetTransfer->getName()
+            $spyCategoryImageSetTransfer->getName(),
         );
         $categoryImageSetStorageTransfer->setImages(
-            new ArrayObject($this->mapSpyCategoryImageEntityTransferCollection($spyCategoryImageSetTransfer))
+            new ArrayObject($this->mapSpyCategoryImageEntityTransferCollection($spyCategoryImageSetTransfer)),
         );
 
         return $categoryImageSetStorageTransfer;
@@ -240,7 +240,7 @@ class CategoryImageStorageWriter implements CategoryImageStorageWriterInterface
             foreach ($localizedImageStorageEntities as $imageStorageEntityTransfer) {
                 $this->entityManager->deleteCategoryImageStorage(
                     $imageStorageEntityTransfer->requireIdCategoryImageStorage()
-                        ->getIdCategoryImageStorage()
+                        ->getIdCategoryImageStorage(),
                 );
             }
         }

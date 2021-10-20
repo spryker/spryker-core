@@ -27,7 +27,7 @@ class ProductOfferValidityDataImportBusinessFactory extends DataImportBusinessFa
     {
         /** @var \Spryker\Zed\DataImport\Business\Model\DataImporter $dataImporter */
         $dataImporter = $this->getCsvDataImporterFromConfig(
-            $this->getConfig()->getProductOfferValidityDataImporterConfiguration()
+            $this->getConfig()->getProductOfferValidityDataImporterConfiguration(),
         );
 
         /** @var \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerTransactionAware $dataSetStepBroker */

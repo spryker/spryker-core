@@ -108,14 +108,14 @@ class PersistentCartShareFacadeTest extends Test
         // Act
         $quoteResponseTransfer = $this->getFacade()
             ->getPreviewQuoteResourceShare(
-                (new ResourceShareRequestTransfer())->setResourceShare($resourceShareTransfer)
+                (new ResourceShareRequestTransfer())->setResourceShare($resourceShareTransfer),
             );
 
         // Assert
         $this->assertFalse($quoteResponseTransfer->getIsSuccessful());
         $this->assertTrue($this->hasErrorMessage(
             $quoteResponseTransfer,
-            static::GLOSSARY_KEY_RESOURCE_IS_NOT_FOUND_BY_PROVIDED_UUID
+            static::GLOSSARY_KEY_RESOURCE_IS_NOT_FOUND_BY_PROVIDED_UUID,
         ));
     }
 
@@ -130,14 +130,14 @@ class PersistentCartShareFacadeTest extends Test
         // Act
         $quoteResponseTransfer = $this->getFacade()
             ->getPreviewQuoteResourceShare(
-                (new ResourceShareRequestTransfer())->setResourceShare($resourceShareTransferForRequest)
+                (new ResourceShareRequestTransfer())->setResourceShare($resourceShareTransferForRequest),
             );
 
         // Assert
         $this->assertFalse($quoteResponseTransfer->getIsSuccessful());
         $this->assertTrue($this->hasErrorMessage(
             $quoteResponseTransfer,
-            static::GLOSSARY_KEY_RESOURCE_SHARE_IS_EXPIRED
+            static::GLOSSARY_KEY_RESOURCE_SHARE_IS_EXPIRED,
         ));
     }
 
@@ -154,14 +154,14 @@ class PersistentCartShareFacadeTest extends Test
         // Act
         $quoteResponseTransfer = $this->getFacade()
             ->getPreviewQuoteResourceShare(
-                (new ResourceShareRequestTransfer())->setResourceShare($resourceShareTransferForRequest)
+                (new ResourceShareRequestTransfer())->setResourceShare($resourceShareTransferForRequest),
             );
 
         // Assert
         $this->assertFalse($quoteResponseTransfer->getIsSuccessful());
         $this->assertTrue($this->hasErrorMessage(
             $quoteResponseTransfer,
-            static::GLOSSARY_KEY_ERROR_QUOTE_NOT_AVAILABLE
+            static::GLOSSARY_KEY_ERROR_QUOTE_NOT_AVAILABLE,
         ));
     }
 
@@ -178,14 +178,14 @@ class PersistentCartShareFacadeTest extends Test
         // Act
         $quoteResponseTransfer = $this->getFacade()
             ->getPreviewQuoteResourceShare(
-                (new ResourceShareRequestTransfer())->setResourceShare($resourceShareTransfer)
+                (new ResourceShareRequestTransfer())->setResourceShare($resourceShareTransfer),
             );
 
         // Assert
         $this->assertFalse($quoteResponseTransfer->getIsSuccessful());
         $this->assertTrue($this->hasErrorMessage(
             $quoteResponseTransfer,
-            static::GLOSSARY_KEY_RESOURCE_IS_NOT_AVAILABLE
+            static::GLOSSARY_KEY_RESOURCE_IS_NOT_AVAILABLE,
         ));
     }
 
@@ -215,7 +215,7 @@ class PersistentCartShareFacadeTest extends Test
         ];
 
         $resourceShareTransfer = $this->tester->haveResourceShare(
-            array_merge($resourceShareDefaults, $resourceShareSeedData)
+            array_merge($resourceShareDefaults, $resourceShareSeedData),
         );
 
         return $resourceShareTransfer;

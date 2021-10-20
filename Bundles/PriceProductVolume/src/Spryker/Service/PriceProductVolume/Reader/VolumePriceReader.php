@@ -56,7 +56,7 @@ class VolumePriceReader implements VolumePriceReaderInterface
             if ($this->isSameQuantity($volumePriceDataElement, $volumePriceProductTransfer)) {
                 $volumeMoneyValueTransfer = $this->getVolumeMoneyValueTransfer(
                     $volumePriceDataElement,
-                    $moneyValueTransfer
+                    $moneyValueTransfer,
                 );
 
                 $volumePriceProductTransfer->setMoneyValue($volumeMoneyValueTransfer);
@@ -77,7 +77,7 @@ class VolumePriceReader implements VolumePriceReaderInterface
     {
         $priceData = $this->utilEncodingService->decodeJson(
             $priceProductTransfer->getMoneyValueOrFail()->getPriceData(),
-            true
+            true,
         );
 
         if (!is_array($priceData)) {

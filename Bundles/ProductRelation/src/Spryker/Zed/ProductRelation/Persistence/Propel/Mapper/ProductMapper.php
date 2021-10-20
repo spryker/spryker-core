@@ -30,8 +30,8 @@ class ProductMapper
             $productRelationTransfer->addRelatedProduct(
                 $this->mapProductRelationProductAbstractEntityToProductRelationRelatedProductTransfer(
                     $productRelationRelatedProductEntity,
-                    new ProductRelationRelatedProductTransfer()
-                )
+                    new ProductRelationRelatedProductTransfer(),
+                ),
             );
         }
 
@@ -64,7 +64,7 @@ class ProductMapper
         foreach ($productAbstractEntities as $productAbstractEntity) {
             $productAbstractTransfers[] = $this->mapProductAbstractEntityToProductAbstractTransfer(
                 $productAbstractEntity,
-                new ProductAbstractTransfer()
+                new ProductAbstractTransfer(),
             );
         }
 

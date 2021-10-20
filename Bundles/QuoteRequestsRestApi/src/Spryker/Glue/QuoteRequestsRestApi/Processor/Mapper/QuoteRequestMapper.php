@@ -48,7 +48,7 @@ class QuoteRequestMapper implements QuoteRequestMapperInterface
         foreach ($quoteRequestTransfers as $quoteRequestTransfer) {
             $restQuoteRequestsAttributesTransfer = $this->mapQuoteRequestTransferToRestQuoteRequestsAttributesTransfer(
                 $quoteRequestTransfer,
-                new RestQuoteRequestsAttributesTransfer()
+                new RestQuoteRequestsAttributesTransfer(),
             );
             $restQuoteRequestsAttributesTransfers[] = $restQuoteRequestsAttributesTransfer;
         }
@@ -117,14 +117,14 @@ class QuoteRequestMapper implements QuoteRequestMapperInterface
             ->setMetadata($quoteRequestVersionTransfer->getMetadata())
             ->setCart($this->mapQuoteTransferToRestQuoteRequestsCartTransfer(
                 $quoteTransfer,
-                new RestQuoteRequestsCartTransfer()
+                new RestQuoteRequestsCartTransfer(),
             ));
 
         $restQuoteRequestsAttributesTransfer->fromArray($quoteRequestTransfer->toArray(), true)
             ->setShownVersion($restQuoteRequestVersionTransfer);
 
         $restQuoteRequestsAttributesTransfer->setVersions(
-            $this->getQuoteRequestVersions($quoteRequestTransfer)
+            $this->getQuoteRequestVersions($quoteRequestTransfer),
         );
 
         return $restQuoteRequestsAttributesTransfer;
@@ -163,7 +163,7 @@ class QuoteRequestMapper implements QuoteRequestMapperInterface
             $restQuoteRequestsAttributesTransfers = $restQuoteRequestAttributesExpanderPlugin->expand(
                 $restQuoteRequestsAttributesTransfers,
                 $quoteRequestTransfers,
-                $localeName
+                $localeName,
             );
         }
 
@@ -194,7 +194,7 @@ class QuoteRequestMapper implements QuoteRequestMapperInterface
 
         $restQuoteRequestsCartTransfer = $this->mapTotalsTransferToRestQuoteRequestsTotalsTransfer(
             $quoteTransfer,
-            $restQuoteRequestsCartTransfer
+            $restQuoteRequestsCartTransfer,
         );
 
         return $restQuoteRequestsCartTransfer;

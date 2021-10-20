@@ -90,8 +90,8 @@ class ZedUiFormResponseBuilder implements ZedUiFormResponseBuilderInterface
                 $this->createResponseAction(
                     static::RESPONSE_ACTION_TYPE_NOTIFICATION,
                     null,
-                    $this->notifications
-                )
+                    $this->notifications,
+                ),
             );
         }
 
@@ -118,7 +118,7 @@ class ZedUiFormResponseBuilder implements ZedUiFormResponseBuilderInterface
             $title,
             static::RESPONSE_NOTIFICATION_TYPE_INFO,
             $closable,
-            $description
+            $description,
         );
     }
 
@@ -142,7 +142,7 @@ class ZedUiFormResponseBuilder implements ZedUiFormResponseBuilderInterface
             $title,
             static::RESPONSE_NOTIFICATION_TYPE_SUCCESS,
             $closable,
-            $description
+            $description,
         );
     }
 
@@ -166,7 +166,7 @@ class ZedUiFormResponseBuilder implements ZedUiFormResponseBuilderInterface
             $title,
             static::RESPONSE_NOTIFICATION_TYPE_WARNING,
             $closable,
-            $description
+            $description,
         );
     }
 
@@ -190,7 +190,7 @@ class ZedUiFormResponseBuilder implements ZedUiFormResponseBuilderInterface
             $title,
             static::RESPONSE_NOTIFICATION_TYPE_ERROR,
             $closable,
-            $description
+            $description,
         );
     }
 
@@ -250,7 +250,7 @@ class ZedUiFormResponseBuilder implements ZedUiFormResponseBuilderInterface
     public function addActionRefreshTable(?string $tableId = null): ZedUiFormResponseBuilderInterface
     {
         $zedUiFormResponseActionTransfer = $this->createResponseAction(
-            static::RESPONSE_ACTION_TYPE_REFRESH_TABLE
+            static::RESPONSE_ACTION_TYPE_REFRESH_TABLE,
         );
         $zedUiFormResponseActionTransfer->setTableId($tableId);
 

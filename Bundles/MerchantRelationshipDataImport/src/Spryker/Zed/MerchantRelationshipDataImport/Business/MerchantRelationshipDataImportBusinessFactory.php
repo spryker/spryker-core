@@ -25,7 +25,7 @@ class MerchantRelationshipDataImportBusinessFactory extends DataImportBusinessFa
     public function createMerchantRelationshipDataImport()
     {
         $dataImporter = $this->getCsvDataImporterFromConfig(
-            $this->getConfig()->getMerchantRelationshipDataImporterConfiguration()
+            $this->getConfig()->getMerchantRelationshipDataImporterConfiguration(),
         );
 
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();

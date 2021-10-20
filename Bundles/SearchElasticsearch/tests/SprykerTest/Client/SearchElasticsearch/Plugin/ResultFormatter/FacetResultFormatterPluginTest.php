@@ -441,14 +441,14 @@ class FacetResultFormatterPluginTest extends AbstractResultFormatterPluginTest
                     ->setParameterName('foo-param')
                     ->setFieldName(PageIndexMap::STRING_FACET)
                     ->setType(SharedSearchElasticsearchConfig::FACET_TYPE_ENUMERATION)
-                    ->setIsMultiValued(true)
+                    ->setIsMultiValued(true),
             )
             ->addFacet(
                 (new FacetConfigTransfer())
                     ->setName('bar')
                     ->setParameterName('bar-param')
                     ->setFieldName(PageIndexMap::STRING_FACET)
-                    ->setType(SharedSearchElasticsearchConfig::FACET_TYPE_ENUMERATION)
+                    ->setType(SharedSearchElasticsearchConfig::FACET_TYPE_ENUMERATION),
             );
 
         $aggregationResult = [

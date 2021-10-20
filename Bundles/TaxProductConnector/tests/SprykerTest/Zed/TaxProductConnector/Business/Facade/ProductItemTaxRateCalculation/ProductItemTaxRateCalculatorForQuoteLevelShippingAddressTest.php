@@ -54,12 +54,12 @@ class ProductItemTaxRateCalculatorForQuoteLevelShippingAddressTest extends Test
 
         $this->tester->setDependency(
             TaxProductConnectorDependencyProvider::FACADE_TAX,
-            $this->createTaxProductConnectorToTaxFacadeBridgeMock('FOO', 66.00)
+            $this->createTaxProductConnectorToTaxFacadeBridgeMock('FOO', 66.00),
         );
 
         $this->tester->setDependency(
             ProductDependencyProvider::PRODUCT_ABSTRACT_PLUGINS_AFTER_CREATE,
-            [new TaxSetProductAbstractAfterCreatePlugin()]
+            [new TaxSetProductAbstractAfterCreatePlugin()],
         );
 
         $this->taxSetTransferList = [];
@@ -82,7 +82,7 @@ class ProductItemTaxRateCalculatorForQuoteLevelShippingAddressTest extends Test
         // Arrange
         $taxSetTransfer = $this->tester->findTaxSetByAddressIso2CodeInTaxSetTransferList(
             $quoteTransfer->getShippingAddress()->getIso2Code(),
-            $this->taxSetTransferList
+            $this->taxSetTransferList,
         );
 
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
@@ -102,7 +102,7 @@ class ProductItemTaxRateCalculatorForQuoteLevelShippingAddressTest extends Test
                 $expectedTaxRate,
                 $actualTaxRate,
                 static::FLOAT_COMPARISION_DELTA,
-                sprintf('Tax rate should be %.2f, %.2f given at iteration #%d.', $expectedTaxRate, $actualTaxRate, $i)
+                sprintf('Tax rate should be %.2f, %.2f given at iteration #%d.', $expectedTaxRate, $actualTaxRate, $i),
             );
         }
     }

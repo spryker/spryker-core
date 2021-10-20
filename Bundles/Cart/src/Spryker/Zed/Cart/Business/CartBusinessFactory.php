@@ -52,7 +52,7 @@ class CartBusinessFactory extends AbstractBusinessFactory
             $this->getTerminationPlugins(),
             $this->getCartRemovalPreCheckPlugins(),
             $this->getPostReloadItemsPlugins(),
-            $this->getCartBeforePreCheckNormalizerPlugins()
+            $this->getCartBeforePreCheckNormalizerPlugins(),
         );
 
         $operation->setPreReloadLoadPlugins($this->getPreReloadItemsPlugins());
@@ -69,7 +69,7 @@ class CartBusinessFactory extends AbstractBusinessFactory
             $this->createCartOperation(),
             $this->createQuoteChangeObserver(),
             $this->getMessengerFacade(),
-            $this->getQuoteFacade()
+            $this->getQuoteFacade(),
         );
     }
 
@@ -89,7 +89,7 @@ class CartBusinessFactory extends AbstractBusinessFactory
         return new QuoteLocker(
             $this->getQuoteFacade(),
             $this->createCartOperation(),
-            $this->getQuoteLockPreResetPlugins()
+            $this->getQuoteLockPreResetPlugins(),
         );
     }
 
@@ -100,7 +100,7 @@ class CartBusinessFactory extends AbstractBusinessFactory
     {
         return new NonPersistentProvider(
             $this->getCartAddItemStrategyPlugins(),
-            $this->getCartRemoveItemStrategyPlugins()
+            $this->getCartRemoveItemStrategyPlugins(),
         );
     }
 

@@ -71,7 +71,7 @@ class CmsBlockProductRunner implements CmsBlockProductRunnerInterface
             $dataReader,
             $dataWriter,
             $touchUpdater,
-            $output
+            $output,
         );
     }
 }

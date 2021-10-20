@@ -175,18 +175,18 @@ class PriceProductClientTest extends Unit
 
         $this->assertSame(
             $currentProductPriceTransfer->getPriceData(),
-            $volumePriceDataDefaultDefaultJson
+            $volumePriceDataDefaultDefaultJson,
         );
 
         $priceDataByPriceType = $currentProductPriceTransfer->getPriceDataByPriceType();
         $this->assertSame(
             $priceDataByPriceType[static::PRICE_TYPE_DEFAULT],
-            $volumePriceDataDefaultDefaultJson
+            $volumePriceDataDefaultDefaultJson,
         );
 
         $this->assertSame(
             $priceDataByPriceType[static::PRICE_TYPE_ORIGINAL],
-            $volumePriceDataOriginJson
+            $volumePriceDataOriginJson,
         );
     }
 

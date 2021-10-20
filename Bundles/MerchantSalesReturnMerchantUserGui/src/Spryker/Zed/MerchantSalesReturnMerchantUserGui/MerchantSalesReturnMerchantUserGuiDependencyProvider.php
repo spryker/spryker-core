@@ -223,7 +223,7 @@ class MerchantSalesReturnMerchantUserGuiDependencyProvider extends AbstractBundl
     {
         $container->set(static::FACADE_MERCHANT_OMS, function (Container $container) {
             return new MerchantSalesReturnMerchantUserGuiToMerchantOmsFacadeBridge(
-                $container->getLocator()->merchantOms()->facade()
+                $container->getLocator()->merchantOms()->facade(),
             );
         });
 
@@ -239,7 +239,7 @@ class MerchantSalesReturnMerchantUserGuiDependencyProvider extends AbstractBundl
     {
         $container->set(static::FACADE_GLOSSARY, function (Container $container) {
             return new MerchantSalesReturnMerchantUserGuiToGlossaryFacadeBridge(
-                $container->getLocator()->glossary()->facade()
+                $container->getLocator()->glossary()->facade(),
             );
         });
 

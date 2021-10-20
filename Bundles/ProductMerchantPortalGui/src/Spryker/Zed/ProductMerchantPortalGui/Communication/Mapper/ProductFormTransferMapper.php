@@ -100,7 +100,7 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
                 $productConcreteTransfer,
                 $defaultStoreDefaultLocaleTransfer,
                 $localeTransfers,
-                $productConcreteFormData
+                $productConcreteFormData,
             );
             $productConcreteTransfer = $this->addAttributesToProductConcrete($productConcreteTransfer, $productConcreteFormData);
 
@@ -129,7 +129,7 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
             $localizedAttributesTransfer->setName(
                 $localeTransfer->getIdLocaleOrFail() === $defaultStoreDefaultLocaleTransfer->getIdLocaleOrFail()
                     ? $productConcreteFormData[static::PRODUCT_CONCRETE_SUPER_ATTRIBUTE_FORM_FIELD_NAME]
-                    : ''
+                    : '',
             );
 
             $productConcreteTransfer->addLocalizedAttributes($localizedAttributesTransfer);

@@ -137,7 +137,7 @@ class QuoteStatusChecker implements QuoteStatusCheckerInterface
     {
         $checkoutResponseTransfer->setIsSuccess(false)
             ->addError(
-                (new CheckoutErrorTransfer())->setMessage($message)
+                (new CheckoutErrorTransfer())->setMessage($message),
             );
 
         return $checkoutResponseTransfer;

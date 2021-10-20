@@ -186,7 +186,7 @@ class DataImportConfig extends AbstractBundleConfig
         $dataImportQueueReaderConfigurationTransfer
             ->setQueueName($queueName)
             ->setChunkSize(
-                $this->getQueueReaderChunkSize()
+                $this->getQueueReaderChunkSize(),
             )
             ->setQueueConsumerOptions($queueConsumerOptions);
 

@@ -169,8 +169,8 @@ class ProductGuiTableConfigurationProvider implements GuiTableConfigurationProvi
             'Create Offer',
             sprintf(
                 '/product-offer-merchant-portal-gui/create-product-offer?product-id=${row.%s}',
-                ProductConcreteTransfer::ID_PRODUCT_CONCRETE
-            )
+                ProductConcreteTransfer::ID_PRODUCT_CONCRETE,
+            ),
         )->setRowClickAction('create-offer');
 
         return $guiTableConfigurationBuilder;

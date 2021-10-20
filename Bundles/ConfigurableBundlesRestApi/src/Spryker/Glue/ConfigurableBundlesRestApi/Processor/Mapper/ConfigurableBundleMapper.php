@@ -25,7 +25,7 @@ class ConfigurableBundleMapper implements ConfigurableBundleMapperInterface
     ): RestConfigurableBundleTemplateImageSetsAttributesTransfer {
         $restConfigurableBundleTemplateImageSetsAttributesTransfer->fromArray(
             $productImageSetStorageTransfer->toArray(),
-            true
+            true,
         );
 
         foreach ($productImageSetStorageTransfer->getImages() as $productImageStorageTransfer) {

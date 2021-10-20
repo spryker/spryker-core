@@ -25,7 +25,7 @@ class LogBusinessFactory extends AbstractBusinessFactory
     {
         return new Sanitizer(
             $this->getConfig()->getSanitizerFieldNames(),
-            $this->getConfig()->getSanitizedFieldValue()
+            $this->getConfig()->getSanitizedFieldValue(),
         );
     }
 
@@ -35,7 +35,7 @@ class LogBusinessFactory extends AbstractBusinessFactory
     public function createLogListener()
     {
         return new LogListenerCollection(
-            $this->getProvidedDependency(LogDependencyProvider::LOG_LISTENERS)
+            $this->getProvidedDependency(LogDependencyProvider::LOG_LISTENERS),
         );
     }
 
@@ -46,7 +46,7 @@ class LogBusinessFactory extends AbstractBusinessFactory
     {
         return new LogClear(
             $this->getFilesystem(),
-            $this->getConfig()->getLogFileDirectories()
+            $this->getConfig()->getLogFileDirectories(),
         );
     }
 

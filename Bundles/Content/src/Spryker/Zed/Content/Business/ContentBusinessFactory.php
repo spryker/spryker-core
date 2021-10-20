@@ -36,7 +36,7 @@ class ContentBusinessFactory extends AbstractBusinessFactory
     {
         return new ContentWriter(
             $this->getEntityManager(),
-            $this->createContentKeyProvider()
+            $this->createContentKeyProvider(),
         );
     }
 
@@ -46,7 +46,7 @@ class ContentBusinessFactory extends AbstractBusinessFactory
     public function createContentReader(): ContentReaderInterface
     {
         return new ContentReader(
-            $this->getRepository()
+            $this->getRepository(),
         );
     }
 
@@ -57,7 +57,7 @@ class ContentBusinessFactory extends AbstractBusinessFactory
     {
         return new ContentValidator(
             $this->createContentConstraintsProvider(),
-            $this->getValidatorAdapter()
+            $this->getValidatorAdapter(),
         );
     }
 
@@ -76,7 +76,7 @@ class ContentBusinessFactory extends AbstractBusinessFactory
     {
         return new ContentKeyProvider(
             $this->getUtilUuidGeneratorService(),
-            $this->getRepository()
+            $this->getRepository(),
         );
     }
 

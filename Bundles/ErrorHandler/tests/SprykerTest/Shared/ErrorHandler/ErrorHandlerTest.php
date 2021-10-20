@@ -117,7 +117,7 @@ class ErrorHandlerTest extends Unit
         $errorHandlerMock = $this->getErrorHandlerMock($errorLoggerMock, $errorRendererMock, ['getLastError', 'handleException']);
         $errorHandlerMock->expects($this->once())->method('handleException');
         $errorHandlerMock->expects($this->once())->method('getLastError')->willReturn(
-            ['message' => 'message', 'file' => 'file', 'type' => 1, 'line' => 123]
+            ['message' => 'message', 'file' => 'file', 'type' => 1, 'line' => 123],
         );
 
         $errorHandlerMock->handleFatal();

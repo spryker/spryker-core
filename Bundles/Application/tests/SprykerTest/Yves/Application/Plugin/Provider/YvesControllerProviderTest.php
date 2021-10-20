@@ -121,7 +121,7 @@ class YvesControllerProviderTest extends Unit
             ->method('__call')
             ->with(
                 $this->equalTo($methodName),
-                $this->equalTo([])
+                $this->equalTo([]),
             );
 
         return $controllerMock;

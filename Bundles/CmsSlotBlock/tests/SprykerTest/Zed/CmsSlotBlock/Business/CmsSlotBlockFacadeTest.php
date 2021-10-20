@@ -82,10 +82,10 @@ class CmsSlotBlockFacadeTest extends Unit
         $this->tester->createCmsSlotBlockFacade()->createCmsSlotBlockRelations($cmsSlotBlockCollectionTransfer);
 
         $cmsSlotBlocks1 = $this->cmsSlotBlockRepository->getCmsSlotBlocks(
-            $this->tester->createCmsSlotBlockCriteriaTransfer($idCmsSlotTemplate1, $idCmsSlot1)
+            $this->tester->createCmsSlotBlockCriteriaTransfer($idCmsSlotTemplate1, $idCmsSlot1),
         )->getCmsSlotBlocks();
         $cmsSlotBlocks2 = $this->cmsSlotBlockRepository->getCmsSlotBlocks(
-            $this->tester->createCmsSlotBlockCriteriaTransfer($idCmsSlotTemplate2, $idCmsSlot2)
+            $this->tester->createCmsSlotBlockCriteriaTransfer($idCmsSlotTemplate2, $idCmsSlot2),
         )->getCmsSlotBlocks();
 
         $cmsSlotBlockTransferFromDb1_1 = $cmsSlotBlocks1[0];
@@ -147,7 +147,7 @@ class CmsSlotBlockFacadeTest extends Unit
 
         // Act
         $cmsSlotBlocks = $this->tester->createCmsSlotBlockFacade()->getCmsSlotBlockCollection(
-            $cmsSlotBlockCriteriaTransfer
+            $cmsSlotBlockCriteriaTransfer,
         )->getCmsSlotBlocks();
 
         // Assert

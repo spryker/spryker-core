@@ -75,7 +75,7 @@ class PriceProductOfferTableDataMapper implements PriceProductOfferTableDataMapp
             $priceProductOfferTableViewRowKey = $this->createPriceProductOfferTableViewRowKey(
                 $storeName,
                 $currencyCode,
-                $priceProductTransfer->getVolumeQuantityOrFail()
+                $priceProductTransfer->getVolumeQuantityOrFail(),
             );
 
             if (!array_key_exists($priceProductOfferTableViewRowKey, $priceProductOfferTableViewTransfers)) {
@@ -85,7 +85,7 @@ class PriceProductOfferTableDataMapper implements PriceProductOfferTableDataMapp
                     $priceProductTransfer,
                     $prices,
                     $storeName,
-                    $currencyCode
+                    $currencyCode,
                 );
 
                 $priceProductOfferTableViewTransfers[$priceProductOfferTableViewRowKey] = $priceProductOfferTableViewTransfer;
@@ -97,18 +97,18 @@ class PriceProductOfferTableDataMapper implements PriceProductOfferTableDataMapp
                 ->mergePriceProductTransferToPriceProductOfferTableViewTransfer(
                     $priceProductOfferTableViewTransfers[$priceProductOfferTableViewRowKey],
                     $priceProductTransfer,
-                    $priceTypeTransfers
+                    $priceTypeTransfers,
                 );
         }
 
         $paginationTransfer = $this->mapPriceProductOfferTableViewTransfersToPaginationTransfer(
             $priceProductOfferTableViewTransfers,
-            new PaginationTransfer()
+            new PaginationTransfer(),
         );
 
         $priceProductOfferTableViewCollectionTransfer
             ->setPriceProductOfferTableViews(
-                new ArrayObject($priceProductOfferTableViewTransfers)
+                new ArrayObject($priceProductOfferTableViewTransfers),
             )
             ->setPagination($paginationTransfer);
 
@@ -131,7 +131,7 @@ class PriceProductOfferTableDataMapper implements PriceProductOfferTableDataMapp
             '%s-%s-%d',
             $storeName,
             $currencyCode,
-            $volumeQuantity
+            $volumeQuantity,
         );
     }
 
@@ -192,18 +192,18 @@ class PriceProductOfferTableDataMapper implements PriceProductOfferTableDataMapp
 
         $pricesCombined = array_merge(
             $priceProductOfferTableViewTransfer->getPrices(),
-            $pricesAdditional
+            $pricesAdditional,
         );
         $typePriceProductOfferIdsCombined = sprintf(
             '%s,%s',
             $priceProductOfferTableViewTransfer->getTypePriceProductOfferIds(),
-            $typePriceProductOfferIdAdditional
+            $typePriceProductOfferIdAdditional,
         );
 
         $priceProductOfferTableViewTransfer
             ->setPrices($pricesCombined)
             ->addPriceProductOfferId(
-                $priceProductTransfer->getPriceDimensionOrFail()->getIdPriceProductOffer()
+                $priceProductTransfer->getPriceDimensionOrFail()->getIdPriceProductOffer(),
             )
             ->setTypePriceProductOfferIds($typePriceProductOfferIdsCombined);
 
@@ -222,7 +222,7 @@ class PriceProductOfferTableDataMapper implements PriceProductOfferTableDataMapp
 
         foreach ($priceTypeTransfers as $priceTypeTransfer) {
             $priceTypeNameFromPriceProduct = mb_strtolower(
-                $priceProductTransfer->getPriceTypeOrFail()->getNameOrFail()
+                $priceProductTransfer->getPriceTypeOrFail()->getNameOrFail(),
             );
             $priceTypeName = mb_strtolower((string)$priceTypeTransfer->getNameOrFail());
 
@@ -273,7 +273,7 @@ class PriceProductOfferTableDataMapper implements PriceProductOfferTableDataMapp
         return sprintf(
             '%s:%d',
             $priceProductTransfer->getPriceTypeOrFail()->getNameOrFail(),
-            $priceProductTransfer->getPriceDimensionOrFail()->getIdPriceProductOfferOrFail()
+            $priceProductTransfer->getPriceDimensionOrFail()->getIdPriceProductOfferOrFail(),
         );
     }
 }

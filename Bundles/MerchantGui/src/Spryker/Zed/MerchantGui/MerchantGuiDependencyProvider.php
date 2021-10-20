@@ -286,8 +286,8 @@ class MerchantGuiDependencyProvider extends AbstractBundleDependencyProvider
                 'Missing instance of %s! You need to configure StoreRelationFormType ' .
                 'in your own MerchantGuiDependencyProvider::getStoreRelationFormTypePlugin() ' .
                 'to be able to manage merchants.',
-                FormTypeInterface::class
-            )
+                FormTypeInterface::class,
+            ),
         );
     }
 

@@ -32,7 +32,7 @@ class ConfigurableBundleDataHelper extends Module
 
         foreach ($configurableBundleTemplateTranslationSeeds as $configurableBundleTemplateTranslationSeed) {
             $configurableBundleTemplateBuilder->withTranslation(
-                new ConfigurableBundleTemplateTranslationBuilder($configurableBundleTemplateTranslationSeed)
+                new ConfigurableBundleTemplateTranslationBuilder($configurableBundleTemplateTranslationSeed),
             );
         }
 
@@ -55,7 +55,7 @@ class ConfigurableBundleDataHelper extends Module
 
         foreach ($configurableBundleTemplateSlotTranslationSeeds as $configurableBundleTemplateSlotTranslationSeed) {
             $configurableBundleTemplateSlotBuilder->withTranslation(
-                new ConfigurableBundleTemplateSlotTranslationBuilder($configurableBundleTemplateSlotTranslationSeed)
+                new ConfigurableBundleTemplateSlotTranslationBuilder($configurableBundleTemplateSlotTranslationSeed),
             );
         }
 

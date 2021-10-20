@@ -84,7 +84,7 @@ class ForeignKeyRelationResolverStrategy extends AbstractRelationResolverStrateg
         $relation = sprintf(
             static::RELATION_TEMPLATE,
             $this->getLeftTableRelationName($query, $aclEntityMetadataTransfer),
-            $this->getRightTableRelationName($aclEntityMetadataTransfer)
+            $this->getRightTableRelationName($aclEntityMetadataTransfer),
         );
 
         return $query->join($relation);
@@ -128,7 +128,7 @@ class ForeignKeyRelationResolverStrategy extends AbstractRelationResolverStrateg
     protected function getRightTableRelationName(AclEntityMetadataTransfer $aclEntityMetadataTransfer): string
     {
         $relationName = $this->convertFullToShortClassName(
-            $aclEntityMetadataTransfer->getParentOrFail()->getEntityNameOrFail()
+            $aclEntityMetadataTransfer->getParentOrFail()->getEntityNameOrFail(),
         );
         $targetTableMap = PropelQuery::from($aclEntityMetadataTransfer->getEntityNameOrFail())->getTableMap();
         if ($targetTableMap->hasRelation($relationName)) {
@@ -163,7 +163,7 @@ class ForeignKeyRelationResolverStrategy extends AbstractRelationResolverStrateg
         }
 
         throw new AclEntityException(
-            sprintf(static::RELATION_NOT_FOUND_MESSAGE_TEMPLATE, $parentShortClass, get_class($entity))
+            sprintf(static::RELATION_NOT_FOUND_MESSAGE_TEMPLATE, $parentShortClass, get_class($entity)),
         );
     }
 }

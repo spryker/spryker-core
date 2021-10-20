@@ -99,14 +99,14 @@ class ApiRouter implements RouterInterface
         $bundleControllerAction = new BundleControllerAction(
             $request->attributes->get('module'),
             $request->attributes->get('controller'),
-            'index'
+            'index',
         );
 
         $service = (new ControllerServiceBuilder())->createServiceForController(
             $this->app,
             $bundleControllerAction,
             $controllerResolver,
-            $routeNameResolver
+            $routeNameResolver,
         );
 
         return [
@@ -128,7 +128,7 @@ class ApiRouter implements RouterInterface
             throw new ResourceNotFoundException(sprintf(
                 'Invalid URI prefix, expected %s in path %s',
                 ApiConfig::ROUTE_PREFIX_API_REST,
-                $path
+                $path,
             ));
         }
     }

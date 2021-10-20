@@ -37,7 +37,7 @@ class ProductOfferToIdProductStep implements DataImportStepInterface
             throw new DataKeyNotFoundInDataSetException(sprintf(
                 '"%s" must be in the data set. Given: "%s"',
                 static::CONCRETE_SKU,
-                implode(', ', array_keys($dataSet->getArrayCopy()))
+                implode(', ', array_keys($dataSet->getArrayCopy())),
             ));
         }
         $dataSet[PriceProductOfferDataSetInterface::ID_PRODUCT_CONCRETE] = $this->resolveIdProductByConcreteSku($dataSet[static::CONCRETE_SKU]);

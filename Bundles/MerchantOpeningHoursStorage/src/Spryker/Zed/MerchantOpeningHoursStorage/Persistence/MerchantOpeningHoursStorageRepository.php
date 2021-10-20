@@ -73,7 +73,7 @@ class MerchantOpeningHoursStorageRepository extends AbstractRepository implement
     ): array {
         $merchantOpeningHoursStoragePropelQuery = $this->applyFilters(
             $this->getFactory()->getMerchantOpeningHoursStoragePropelQuery(),
-            $merchantOpeningHoursStorageCriteriaTransfer
+            $merchantOpeningHoursStorageCriteriaTransfer,
         );
 
         return $this->buildQueryFromCriteria($merchantOpeningHoursStoragePropelQuery, $merchantOpeningHoursStorageCriteriaTransfer->getFilter())

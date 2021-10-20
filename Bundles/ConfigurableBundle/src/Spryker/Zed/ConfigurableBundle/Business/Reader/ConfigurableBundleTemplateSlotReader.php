@@ -81,7 +81,7 @@ class ConfigurableBundleTemplateSlotReader implements ConfigurableBundleTemplate
 
         $configurableBundleTemplateSlotTransfer = $this->expandConfigurableBundleTemplateSlot(
             $configurableBundleTemplateSlotTransfer,
-            $configurableBundleTemplateSlotFilterTransfer
+            $configurableBundleTemplateSlotFilterTransfer,
         );
 
         return (new ConfigurableBundleTemplateSlotResponseTransfer())
@@ -137,13 +137,13 @@ class ConfigurableBundleTemplateSlotReader implements ConfigurableBundleTemplate
         $configurableBundleTemplateSlotTransfer = $this->configurableBundleTranslationExpander
             ->expandConfigurableBundleTemplateSlotWithTranslations(
                 $configurableBundleTemplateSlotTransfer,
-                $configurableBundleTemplateSlotFilterTransfer->getTranslationLocales()
+                $configurableBundleTemplateSlotFilterTransfer->getTranslationLocales(),
             );
 
         $configurableBundleTemplateTransfer = $this->configurableBundleTranslationExpander
             ->expandConfigurableBundleTemplateWithTranslations(
                 $configurableBundleTemplateSlotTransfer->getConfigurableBundleTemplate(),
-                $configurableBundleTemplateSlotFilterTransfer->getTranslationLocales()
+                $configurableBundleTemplateSlotFilterTransfer->getTranslationLocales(),
             );
 
         $configurableBundleTemplateSlotTransfer->setConfigurableBundleTemplate($configurableBundleTemplateTransfer);

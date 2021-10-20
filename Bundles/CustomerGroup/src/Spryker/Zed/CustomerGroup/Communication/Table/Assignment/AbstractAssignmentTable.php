@@ -122,7 +122,7 @@ abstract class AbstractAssignmentTable extends AbstractTable
     {
         $config->setDefaultSortField(
             static::COL_CUSTOMER_ID,
-            TableConfiguration::SORT_ASC
+            TableConfiguration::SORT_ASC,
         );
 
         $config->setSortable([
@@ -159,7 +159,7 @@ abstract class AbstractAssignmentTable extends AbstractTable
             '%s?%s=%s',
             $this->defaultUrl,
             static::PARAM_ID_CUSTOMER_GROUP,
-            $this->idCustomerGroup
+            $this->idCustomerGroup,
         ));
     }
 
@@ -228,7 +228,7 @@ abstract class AbstractAssignmentTable extends AbstractTable
                 'email' => $customerEntity->getEmail(),
                 'firstName' => $this->utilSanitizeService->escapeHtml($customerEntity->getFirstName()),
                 'lastName' => $this->utilSanitizeService->escapeHtml($customerEntity->getLastName()),
-            ]))
+            ])),
         );
     }
 

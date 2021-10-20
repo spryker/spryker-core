@@ -171,7 +171,7 @@ class StockFacadeTest extends Unit
         //Act
         $isNeverOutOfStock = $this->stockFacade->isProductAbstractNeverOutOfStockForStore(
             self::ABSTRACT_SKU,
-            $this->storeTransfer
+            $this->storeTransfer,
         );
 
         //Assert
@@ -190,7 +190,7 @@ class StockFacadeTest extends Unit
         //Act
         $isNeverOutOfStock = $this->stockFacade->isProductAbstractNeverOutOfStockForStore(
             self::ABSTRACT_SKU,
-            $this->storeTransfer
+            $this->storeTransfer,
         );
 
         //Assert
@@ -215,7 +215,7 @@ class StockFacadeTest extends Unit
         //Act
         $productAbstractStock = $this->stockFacade->calculateProductAbstractStockForStore(
             self::ABSTRACT_SKU,
-            $this->storeTransfer
+            $this->storeTransfer,
         );
 
         //Assert
@@ -318,7 +318,7 @@ class StockFacadeTest extends Unit
         $this->stockFacade->decrementStockProduct(
             self::CONCRETE_SKU,
             $this->stockEntity1->getName(),
-            new Decimal(10)
+            new Decimal(10),
         );
 
         $stockSize = $this->stockFacade->calculateStockForProduct(self::CONCRETE_SKU);
@@ -334,7 +334,7 @@ class StockFacadeTest extends Unit
         $this->stockFacade->incrementStockProduct(
             self::CONCRETE_SKU,
             $this->stockEntity1->getName(),
-            new Decimal(10)
+            new Decimal(10),
         );
 
         $stockSize = $this->stockFacade->calculateStockForProduct(self::CONCRETE_SKU);
@@ -349,7 +349,7 @@ class StockFacadeTest extends Unit
     {
         $exists = $this->stockFacade->hasStockProduct(
             self::CONCRETE_SKU,
-            $this->stockEntity1->getName()
+            $this->stockEntity1->getName(),
         );
 
         $this->assertTrue($exists);
@@ -362,7 +362,7 @@ class StockFacadeTest extends Unit
     {
         $exists = $this->stockFacade->hasStockProduct(
             'INVALIDSKU',
-            'INVALIDTYPE'
+            'INVALIDTYPE',
         );
 
         $this->assertFalse($exists);
@@ -480,12 +480,12 @@ class StockFacadeTest extends Unit
         $this->assertCount(1, $stockProductTransfers, 'Stock products count does not match expected value.');
         $this->assertTrue(
             $stockProductTransfers[0]->getQuantity()->equals(static::STOCK_QUANTITY_1),
-            'Stock product quantity does not match expected value.'
+            'Stock product quantity does not match expected value.',
         );
         $this->assertSame(
             $this->stockTransfer1->getIdStock(),
             $stockProductTransfers[0]->getFkStock(),
-            'Stock ID does not match expected value.'
+            'Stock ID does not match expected value.',
         );
     }
 
@@ -511,7 +511,7 @@ class StockFacadeTest extends Unit
         //Arrange
         $this->tester->haveStockStoreRelation(
             (new StockTransfer())->fromArray($this->stockEntity2->toArray(), true),
-            $this->storeTransfer
+            $this->storeTransfer,
         );
 
         //Act
@@ -548,28 +548,28 @@ class StockFacadeTest extends Unit
         $this->assertArrayHasKey(
             $this->storeTransfer->getName(),
             $storeToWarehouseMapping,
-            'Store to warehouse mapping collection does not have expected key.'
+            'Store to warehouse mapping collection does not have expected key.',
         );
         $this->assertContains(
             $this->stockTransfer1->getName(),
             $storeToWarehouseMapping[$this->storeTransfer->getName()],
-            'Store to warehouse mapping collection does not match expected value.'
+            'Store to warehouse mapping collection does not match expected value.',
         );
 
         $this->assertArrayHasKey(
             $storeTransfer2->getName(),
             $storeToWarehouseMapping,
-            'Store to warehouse mapping collection does not have expected key.'
+            'Store to warehouse mapping collection does not have expected key.',
         );
         $this->assertContains(
             $this->stockTransfer1->getName(),
             $storeToWarehouseMapping[$storeTransfer2->getName()],
-            'Store to warehouse mapping collection does not match expected value.'
+            'Store to warehouse mapping collection does not match expected value.',
         );
         $this->assertContains(
             $this->stockTransfer2->getName(),
             $storeToWarehouseMapping[$storeTransfer2->getName()],
-            'Store to warehouse mapping collection does not match expected value.'
+            'Store to warehouse mapping collection does not match expected value.',
         );
     }
 
@@ -584,7 +584,7 @@ class StockFacadeTest extends Unit
         //Act
         $productStockCollection = $this->stockFacade->findStockProductsByIdProductForStore(
             $this->productConcreteEntity->getIdProduct(),
-            $this->storeTransfer
+            $this->storeTransfer,
         );
 
         //Assert
@@ -594,7 +594,7 @@ class StockFacadeTest extends Unit
             $this->assertSame(
                 $this->productConcreteEntity->getSku(),
                 $stockProductTransfer->getSku(),
-                'Concrete product sku of stock product does not match expected value.'
+                'Concrete product sku of stock product does not match expected value.',
             );
         }
     }
@@ -611,7 +611,7 @@ class StockFacadeTest extends Unit
         //Act
         $productStockCollection = $this->stockFacade->findStockProductsByIdProductForStore(
             $this->productConcreteEntity->getIdProduct(),
-            $this->storeTransfer
+            $this->storeTransfer,
         );
 
         //Assert
@@ -621,7 +621,7 @@ class StockFacadeTest extends Unit
             $this->assertSame(
                 $this->productConcreteEntity->getSku(),
                 $stockProductTransfer->getSku(),
-                'Concrete product sku of stock product does not match expected value.'
+                'Concrete product sku of stock product does not match expected value.',
             );
         }
     }
@@ -639,17 +639,17 @@ class StockFacadeTest extends Unit
         $this->assertInstanceOf(
             StoreTransfer::class,
             $storeTransfers[0],
-            sprintf('Store transfer should be an instance of %s.', StoreTransfer::class)
+            sprintf('Store transfer should be an instance of %s.', StoreTransfer::class),
         );
         $this->assertSame(
             $this->storeTransfer->getIdStore(),
             $storeTransfers[0]->getIdStore(),
-            'Store ID does not match expected value.'
+            'Store ID does not match expected value.',
         );
         $this->assertSame(
             $this->storeTransfer->getName(),
             $storeTransfers[0]->getName(),
-            'Store name does not match expected value.'
+            'Store name does not match expected value.',
         );
     }
 
@@ -726,7 +726,7 @@ class StockFacadeTest extends Unit
         $this->assertEquals(
             $storeRelationTransfer->getIdStores(),
             $stockTransfer->getStoreRelation()->getIdStores(),
-            'IDs of related stores does not match expected value.'
+            'IDs of related stores does not match expected value.',
         );
         $this->assertContains($stockTransfer->getName(), $storeStockRelation, 'Store relation does not contain expected store name.');
     }
@@ -850,7 +850,7 @@ class StockFacadeTest extends Unit
         $this->assertSame(
             $this->stockEntity1->getName(),
             $stockCollectionTransfer->getStocks()->offsetGet(0)->getNameOrFail(),
-            'Stock name does not match expected value.'
+            'Stock name does not match expected value.',
         );
     }
 
@@ -910,7 +910,7 @@ class StockFacadeTest extends Unit
         $this->assertSame(
             $this->stockEntity1->getName(),
             $stockCollectionTransfer->getStocks()->offsetGet(0)->getNameOrFail(),
-            'Stock name does not match expected value.'
+            'Stock name does not match expected value.',
         );
     }
 
@@ -976,7 +976,7 @@ class StockFacadeTest extends Unit
     {
         $this->tester->haveStockStoreRelation(
             $stockTransfer,
-            $storeTransfer
+            $storeTransfer,
         );
     }
 

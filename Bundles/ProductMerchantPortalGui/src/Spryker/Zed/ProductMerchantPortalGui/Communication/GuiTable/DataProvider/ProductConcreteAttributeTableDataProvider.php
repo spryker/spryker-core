@@ -122,14 +122,14 @@ class ProductConcreteAttributeTableDataProvider extends AbstractGuiTableDataProv
             $attributes = $this->appendAttributes(
                 $localizedAttributesTransfer->getAttributes(),
                 $localizedAttributesTransfer->getLocaleOrFail()->getLocaleNameOrFail(),
-                $attributes
+                $attributes,
             );
         }
 
         $attributes = $this->appendAttributes(
             $productConcreteTransfer->getAttributes(),
             ProductAttributeGuiTableConfigurationProvider::COL_KEY_ATTRIBUTE_DEFAULT,
-            $attributes
+            $attributes,
         );
 
         foreach ($attributes as $attributeName => $values) {
@@ -140,7 +140,7 @@ class ProductConcreteAttributeTableDataProvider extends AbstractGuiTableDataProv
         $attributes = $this->sortAttributesArray(
             $attributes,
             $criteriaTransfer->getOrderBy() ?? static::ATTRIBUTES_DEFAULT_SORT_FIELD,
-            $criteriaTransfer->getOrderDirection() ?? static::ATTRIBUTES_DEFAULT_SORT_DIRECTION_ASC
+            $criteriaTransfer->getOrderDirection() ?? static::ATTRIBUTES_DEFAULT_SORT_DIRECTION_ASC,
         );
 
         return $this->getGuiTableDataResponseTransfer($attributes);
@@ -193,9 +193,9 @@ class ProductConcreteAttributeTableDataProvider extends AbstractGuiTableDataProv
 
                 return $direction ? strcasecmp($comparableValue, $comparatorValue) : strcasecmp(
                     $comparatorValue,
-                    $comparableValue
+                    $comparableValue,
                 );
-            }
+            },
         );
 
         return $attributes;
@@ -231,7 +231,7 @@ class ProductConcreteAttributeTableDataProvider extends AbstractGuiTableDataProv
         return $this->localizedAttributesExtractor->extractCombinedSuperAttributeNames(
             $productConcreteTransfer->getAttributes(),
             $productConcreteTransfer->getLocalizedAttributes(),
-            $localeTransfer
+            $localeTransfer,
         );
     }
 }

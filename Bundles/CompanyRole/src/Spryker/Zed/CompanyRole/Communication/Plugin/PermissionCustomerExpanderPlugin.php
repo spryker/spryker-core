@@ -37,7 +37,7 @@ class PermissionCustomerExpanderPlugin extends AbstractPlugin implements Custome
             ->findPermissionsByIdCompanyUser(
                 $customerTransfer
                     ->getCompanyUserTransfer()
-                    ->getIdCompanyUser()
+                    ->getIdCompanyUser(),
             );
 
         return $this->addCustomerPermissions($customerTransfer, $permissionCollectionTransfer);

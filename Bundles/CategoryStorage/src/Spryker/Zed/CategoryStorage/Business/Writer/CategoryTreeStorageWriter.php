@@ -134,7 +134,7 @@ class CategoryTreeStorageWriter implements CategoryTreeStorageWriterInterface
 
         return $this->categoryStorageNodeTreeBuilder->buildCategoryNodeStorageTransferTreesForLocaleAndStore(
             $categoryNodeIds,
-            $categoryNodeTransfers
+            $categoryNodeTransfers,
         );
     }
 }

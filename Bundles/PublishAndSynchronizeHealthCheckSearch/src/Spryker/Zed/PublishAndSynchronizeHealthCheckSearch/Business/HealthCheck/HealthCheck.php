@@ -104,7 +104,7 @@ class HealthCheck implements HealthCheckInterface
     ): HealthCheckServiceResponseTransfer {
         $healthCheckServiceResponseTransfer->setMessage(sprintf(
             $message,
-            SharedPublishAndSynchronizeHealthCheckSearchConfig::PUBLISH_AND_SYNCHRONIZE_HEALTH_CHECK_SEARCH_ID
+            SharedPublishAndSynchronizeHealthCheckSearchConfig::PUBLISH_AND_SYNCHRONIZE_HEALTH_CHECK_SEARCH_ID,
         ));
 
         return $healthCheckServiceResponseTransfer;

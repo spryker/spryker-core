@@ -50,7 +50,7 @@ class ProductConfigurationInstanceCartChangeExpander implements ProductConfigura
 
         $expandedItemTransfers = $this->expandItemsWithProductConfigurationInstance(
             $productConfigurationInstancesIndexedBySku,
-            $persistentCartChangeTransfer->getItems()
+            $persistentCartChangeTransfer->getItems(),
         );
 
         $persistentCartChangeTransfer->setItems($expandedItemTransfers);

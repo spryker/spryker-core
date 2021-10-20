@@ -49,7 +49,7 @@ class TwigBusinessFactory extends AbstractBusinessFactory
     {
         return new FilesystemCacheWriter(
             $this->getConfig()->getCacheFilePath(),
-            $this->getConfig()->getPermissionMode()
+            $this->getConfig()->getPermissionMode(),
         );
     }
 
@@ -61,7 +61,7 @@ class TwigBusinessFactory extends AbstractBusinessFactory
         $templatePathMapBuilder = new TemplatePathMapBuilder(
             $this->createFinder(),
             $this->createTemplateNameBuilderZed(),
-            $this->getConfig()->getZedDirectoryPathPatterns()
+            $this->getConfig()->getZedDirectoryPathPatterns(),
         );
 
         return $templatePathMapBuilder;
@@ -90,7 +90,7 @@ class TwigBusinessFactory extends AbstractBusinessFactory
     {
         return new FilesystemCacheWriter(
             $this->getConfig()->getCacheFilePathForYves(),
-            $this->getConfig()->getPermissionMode()
+            $this->getConfig()->getPermissionMode(),
         );
     }
 
@@ -102,7 +102,7 @@ class TwigBusinessFactory extends AbstractBusinessFactory
         $templatePathMapBuilder = new TemplatePathMapBuilder(
             $this->createFinder(),
             $this->createTemplateNameBuilderYves(),
-            $this->getConfig()->getYvesDirectoryPathPatterns()
+            $this->getConfig()->getYvesDirectoryPathPatterns(),
         );
 
         return $templatePathMapBuilder;

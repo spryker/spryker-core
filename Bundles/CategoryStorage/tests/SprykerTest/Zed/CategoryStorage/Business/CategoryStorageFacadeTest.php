@@ -134,7 +134,7 @@ class CategoryStorageFacadeTest extends Unit
         // Assert
         $categoryTreeStorageEntities = $this->tester->findCategoryTreeStorageEntitiesByLocalizedCategoryAndStoreName(
             $categoryTransfer,
-            static::STORE_NAME_DE
+            static::STORE_NAME_DE,
         );
         $this->assertCount($expectedCount, $categoryTreeStorageEntities, sprintf('Exactly %d category tree should exist.', $expectedCount));
     }
@@ -271,7 +271,7 @@ class CategoryStorageFacadeTest extends Unit
         $categoryTransfer = $this->tester->haveLocalizedCategoryWithStoreRelation([], [StoreTransfer::NAME => static::STORE_NAME_DE]);
 
         $eventEntityTransfer = (new EventEntityTransfer())->setId(
-            $categoryTransfer->getCategoryNode()->getIdCategoryNode()
+            $categoryTransfer->getCategoryNode()->getIdCategoryNode(),
         );
 
         // Act
@@ -292,7 +292,7 @@ class CategoryStorageFacadeTest extends Unit
         ], [StoreTransfer::NAME => static::STORE_NAME_DE]);
 
         $eventEntityTransfer = (new EventEntityTransfer())->setId(
-            $categoryTransfer->getCategoryNode()->getIdCategoryNode()
+            $categoryTransfer->getCategoryNode()->getIdCategoryNode(),
         );
 
         // Act
@@ -393,7 +393,7 @@ class CategoryStorageFacadeTest extends Unit
         $this->tester->haveCategoryNodeStorageByLocalizedCategory(
             $categoryTransfer,
             static::STORE_NAME_DE,
-            [static::KEY_CATEGORY_NODE_ID => $categoryNodeId]
+            [static::KEY_CATEGORY_NODE_ID => $categoryNodeId],
         );
 
         // Act
@@ -486,7 +486,7 @@ class CategoryStorageFacadeTest extends Unit
         $this->assertSame(
             $categoryLocalizedAttributesTransfer->getName(),
             $data[static::KEY_NAME],
-            'The name of the CategoryNodeStorageEntity does not equals to expected value.'
+            'The name of the CategoryNodeStorageEntity does not equals to expected value.',
         );
     }
 

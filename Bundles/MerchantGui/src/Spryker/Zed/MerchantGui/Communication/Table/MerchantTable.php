@@ -226,7 +226,7 @@ class MerchantTable extends AbstractTable
                 ->leftJoinSpyStore()
                 ->withColumn(
                     sprintf('GROUP_CONCAT(%s)', SpyStoreTableMap::COL_NAME),
-                    static::COL_STORES
+                    static::COL_STORES,
                 )
             ->endUse();
 
@@ -269,7 +269,7 @@ class MerchantTable extends AbstractTable
         $buttons = [];
         $buttons[] = $this->generateEditButton(
             Url::generate(MerchantGuiConfig::URL_MERCHANT_EDIT, [EditMerchantController::REQUEST_ID_MERCHANT => $item[SpyMerchantTableMap::COL_ID_MERCHANT]]),
-            'Edit'
+            'Edit',
         );
         $buttons[] = ($item[SpyMerchantTableMap::COL_IS_ACTIVE]) ?
             $this->createDeactivateButton($item[SpyMerchantTableMap::COL_ID_MERCHANT]) :
@@ -278,7 +278,7 @@ class MerchantTable extends AbstractTable
         $buttons = array_merge(
             $buttons,
             $this->generateMerchantTableActionButtons($item),
-            $this->buildAvailableStatusButtons($item)
+            $this->buildAvailableStatusButtons($item),
         );
 
         return implode(' ', $buttons);
@@ -297,11 +297,11 @@ class MerchantTable extends AbstractTable
             $availableStatusButtons[] = $this->generateFormButton(
                 Url::generate(
                     MerchantGuiConfig::URL_MERCHANT_STATUS,
-                    [EditMerchantController::REQUEST_ID_MERCHANT => $item[SpyMerchantTableMap::COL_ID_MERCHANT], 'status' => $availableStatus]
+                    [EditMerchantController::REQUEST_ID_MERCHANT => $item[SpyMerchantTableMap::COL_ID_MERCHANT], 'status' => $availableStatus],
                 ),
                 $availableStatus . '_button',
                 MerchantStatusForm::class,
-                ['icon' => 'fa fa-key', 'class' => static::STATUS_CLASS_BUTTON_MAPPING[$availableStatus]]
+                ['icon' => 'fa fa-key', 'class' => static::STATUS_CLASS_BUTTON_MAPPING[$availableStatus]],
             );
         }
 
@@ -318,14 +318,14 @@ class MerchantTable extends AbstractTable
         return $this->generateFormButton(
             Url::generate(
                 MerchantGuiConfig::URL_MERCHANT_ACTIVATE,
-                [EditMerchantController::REQUEST_ID_MERCHANT => $idMerchant]
+                [EditMerchantController::REQUEST_ID_MERCHANT => $idMerchant],
             ),
             'Activate',
             ToggleActiveMerchantForm::class,
             [
                 'class' => 'btn-view',
                 'icon' => 'fa fa-caret-right',
-            ]
+            ],
         );
     }
 
@@ -339,14 +339,14 @@ class MerchantTable extends AbstractTable
         return $this->generateFormButton(
             Url::generate(
                 MerchantGuiConfig::URL_MERCHANT_DEACTIVATE,
-                [EditMerchantController::REQUEST_ID_MERCHANT => $idMerchant]
+                [EditMerchantController::REQUEST_ID_MERCHANT => $idMerchant],
             ),
             'Deactivate',
             ToggleActiveMerchantForm::class,
             [
                     'class' => 'btn-remove',
                     'icon' => 'fa fa-trash',
-            ]
+            ],
         );
     }
 
@@ -365,7 +365,7 @@ class MerchantTable extends AbstractTable
                 $buttonTransfer->getUrl(),
                 $buttonTransfer->getTitle(),
                 $buttonTransfer->getDefaultOptions(),
-                $buttonTransfer->getCustomOptions()
+                $buttonTransfer->getCustomOptions(),
             );
         }
 

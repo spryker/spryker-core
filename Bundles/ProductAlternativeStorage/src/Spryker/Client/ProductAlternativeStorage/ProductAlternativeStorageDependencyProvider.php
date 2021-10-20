@@ -77,7 +77,7 @@ class ProductAlternativeStorageDependencyProvider extends AbstractDependencyProv
     {
         $container->set(static::CLIENT_PRODUCT_STORAGE, function (Container $container) {
             return new ProductAlternativeStorageToProductStorageClientBridge(
-                $container->getLocator()->productStorage()->client()
+                $container->getLocator()->productStorage()->client(),
             );
         });
 
@@ -93,7 +93,7 @@ class ProductAlternativeStorageDependencyProvider extends AbstractDependencyProv
     {
         $container->set(static::SERVICE_SYNCHRONIZATION, function (Container $container) {
             return new ProductAlternativeStorageToSynchronizationServiceBridge(
-                $container->getLocator()->synchronization()->service()
+                $container->getLocator()->synchronization()->service(),
             );
         });
 

@@ -53,7 +53,7 @@ class MerchantOpeningHoursDateScheduleWriterStep extends PublishAwareStep implem
 
             $this->addPublishEvents(
                 static::MERCHANT_OPENING_HOURS_PUBLISH,
-                $merchantOpeningHoursDateScheduleEntity->getFkMerchant()
+                $merchantOpeningHoursDateScheduleEntity->getFkMerchant(),
             );
         }
     }

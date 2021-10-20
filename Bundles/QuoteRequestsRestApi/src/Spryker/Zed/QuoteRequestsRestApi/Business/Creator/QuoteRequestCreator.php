@@ -48,7 +48,7 @@ class QuoteRequestCreator implements QuoteRequestCreatorInterface
         $quoteTransfer = $quoteRequestTransfer->getLatestVersionOrFail()->getQuoteOrFail();
         $quoteResponseTransfer = $this->quoteReader->findQuoteByUuidForCustomer(
             $quoteTransfer->getCustomerOrFail(),
-            $quoteTransfer->getUuidOrFail()
+            $quoteTransfer->getUuidOrFail(),
         );
 
         if (!$quoteResponseTransfer->getIsSuccessful()) {
@@ -57,7 +57,7 @@ class QuoteRequestCreator implements QuoteRequestCreatorInterface
 
             return $this->processErrorMessagesFromQuoteResponse(
                 $quoteResponseTransfer,
-                $quoteRequestResponseTransfer
+                $quoteRequestResponseTransfer,
             );
         }
 

@@ -27,7 +27,7 @@ class ProductOptionExpander implements ProductOptionExpanderInterface
             $bundleItem = $this->getExpandedBundleItemWithProductOptions($orderTransfer, $bundleItem);
 
             $bundleItem = $bundleItem->setProductOptions(
-                new ArrayObject($this->sortBundleProductOptions($bundleItem->getProductOptions()->getArrayCopy()))
+                new ArrayObject($this->sortBundleProductOptions($bundleItem->getProductOptions()->getArrayCopy())),
             );
 
             $expandedProductBundles->append($bundleItem);
@@ -78,7 +78,7 @@ class ProductOptionExpander implements ProductOptionExpanderInterface
 
             $mappedProductBundles[$productBundleItemIdentifier] = $this->expandBundleItemWithProductOptions(
                 $mappedProductBundles[$productBundleItemIdentifier] ?? $itemTransfer->getProductBundle(),
-                $itemTransfer
+                $itemTransfer,
             );
         }
 
@@ -94,7 +94,7 @@ class ProductOptionExpander implements ProductOptionExpanderInterface
     {
         foreach ($productBundles as $productBundle) {
             $productBundle->setProductOptions(
-                new ArrayObject($this->sortBundleProductOptions($productBundle->getProductOptions()->getArrayCopy()))
+                new ArrayObject($this->sortBundleProductOptions($productBundle->getProductOptions()->getArrayCopy())),
             );
         }
 
@@ -169,7 +169,7 @@ class ProductOptionExpander implements ProductOptionExpanderInterface
             $productOptionTransfers,
             function (ProductOptionTransfer $productOptionLeft, ProductOptionTransfer $productOptionRight) {
                 return ($productOptionLeft->getSku() < $productOptionRight->getSku()) ? -1 : 1;
-            }
+            },
         );
 
         return $productOptionTransfers;

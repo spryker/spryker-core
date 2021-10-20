@@ -211,8 +211,8 @@ class CustomerDependencyProvider extends AbstractDependencyProvider
             sprintf(
                 "Missing instance of %s! You need to configure an access token authentication handler plugin 
                       in your own CustomerDependencyProvider::getAccessTokenAuthenticationHandlerPlugin() to allow retrieve customer by access token.",
-                AccessTokenAuthenticationHandlerPluginInterface::class
-            )
+                AccessTokenAuthenticationHandlerPluginInterface::class,
+            ),
         );
     }
 }

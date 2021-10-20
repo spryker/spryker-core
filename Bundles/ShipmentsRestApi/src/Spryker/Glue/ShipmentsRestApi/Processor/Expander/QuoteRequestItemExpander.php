@@ -69,7 +69,7 @@ class QuoteRequestItemExpander implements QuoteRequestItemExpanderInterface
                     ) {
                         $restQuoteRequestShipmentTransfer = $this->createRestQuoteRequestShipmentTransfer(
                             $restQuoteRequestItemTransfers,
-                            $shipmentGroupTransfer
+                            $shipmentGroupTransfer,
                         );
                         $restQuoteRequestsCartTransfer->addShipment($restQuoteRequestShipmentTransfer);
                     }
@@ -100,7 +100,7 @@ class QuoteRequestItemExpander implements QuoteRequestItemExpanderInterface
 
         $restQuoteRequestShipmentTransfer = $this->createRestQuoteRequestsAddressTransfer(
             $restQuoteRequestShipmentTransfer,
-            $shipmentTransfer->getShippingAddress()
+            $shipmentTransfer->getShippingAddress(),
         );
 
         foreach ($shipmentGroupTransfer->getItems() as $itemTransfer) {

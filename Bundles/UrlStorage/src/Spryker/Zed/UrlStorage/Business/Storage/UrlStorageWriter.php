@@ -192,7 +192,7 @@ class UrlStorageWriter implements UrlStorageWriterInterface
 
         $this->getLogger()->warning(sprintf(
             "The URL entity resource type could not be determined, URL won't be published: %s",
-            json_encode($data)
+            json_encode($data),
         ));
 
         return null;
@@ -242,7 +242,7 @@ class UrlStorageWriter implements UrlStorageWriterInterface
             $urlStorageTransfer->addUrlStorage(
                 (new UrlStorageTransfer())
                     ->fromArray($otherUrlEntity->toArray(), true)
-                    ->setLocaleName($otherUrlEntity->getSpyLocale()->getLocaleName())
+                    ->setLocaleName($otherUrlEntity->getSpyLocale()->getLocaleName()),
             );
         }
 

@@ -70,7 +70,7 @@ class EditCompanyBusinessUnitController extends AbstractController
         $form = $this->getFactory()
             ->getCompanyBusinessUnitEditForm(
                 $companyBusinessUnitTransfer,
-                $dataProvider->getOptions($idCompanyBusinessUnit)
+                $dataProvider->getOptions($idCompanyBusinessUnit),
             )
             ->handleRequest($request);
 

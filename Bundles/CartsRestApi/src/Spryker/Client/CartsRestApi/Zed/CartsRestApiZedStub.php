@@ -58,7 +58,7 @@ class CartsRestApiZedStub implements CartsRestApiZedStubInterface
         /** @var \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer */
         $quoteResponseTransfer = $this->zedRequestClient->call(
             '/carts-rest-api/gateway/find-quote-by-uuid-with-quote-item-reload',
-            $quoteTransfer
+            $quoteTransfer,
         );
 
         return $quoteResponseTransfer;

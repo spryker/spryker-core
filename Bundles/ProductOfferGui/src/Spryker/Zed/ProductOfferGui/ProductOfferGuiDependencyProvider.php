@@ -169,7 +169,7 @@ class ProductOfferGuiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::FACADE_PRODUCT, function (Container $container) {
             return new ProductOfferGuiToProductFacadeBridge(
-                $container->getLocator()->product()->facade()
+                $container->getLocator()->product()->facade(),
             );
         });
 

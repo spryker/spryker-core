@@ -101,7 +101,7 @@ class QuoteToShoppingListConverter implements QuoteToShoppingListConverterInterf
     ): ShoppingListTransfer {
         $quoteResponseTransfer = $this->persistentCartFacade->findQuote(
             $shoppingListFromCartRequestTransfer->getIdQuote(),
-            $shoppingListFromCartRequestTransfer->getCustomer()
+            $shoppingListFromCartRequestTransfer->getCustomer(),
         );
 
         $shoppingListTransfer = $this->findShoppingListByShoppingListId($shoppingListFromCartRequestTransfer);
@@ -111,7 +111,7 @@ class QuoteToShoppingListConverter implements QuoteToShoppingListConverterInterf
 
             $shoppingListTransfer = $this->shoppingListResolver->createShoppingListIfNotExists(
                 $shoppingListFromCartRequestTransfer->getCustomer()->getCustomerReference(),
-                $shoppingListFromCartRequestTransfer->getShoppingListName()
+                $shoppingListFromCartRequestTransfer->getShoppingListName(),
             );
         }
 
@@ -203,7 +203,7 @@ class QuoteToShoppingListConverter implements QuoteToShoppingListConverterInterf
         return $this->can(
             'WriteShoppingListPermissionPlugin',
             $shoppingListTransfer->getIdCompanyUser(),
-            $shoppingListTransfer->getIdShoppingList()
+            $shoppingListTransfer->getIdShoppingList(),
         );
     }
 }

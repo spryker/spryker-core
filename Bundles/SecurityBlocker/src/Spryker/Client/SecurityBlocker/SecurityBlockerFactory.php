@@ -33,7 +33,7 @@ class SecurityBlockerFactory extends AbstractFactory
         return new SecurityBlockerStorageChecker(
             $this->createSecurityBlockerRedisWrapper(),
             $this->createSecurityBlockerStorageKeyBuilder(),
-            $this->createConfigurationResolver()
+            $this->createConfigurationResolver(),
         );
     }
 
@@ -45,7 +45,7 @@ class SecurityBlockerFactory extends AbstractFactory
         return new SecurityBlockerStorageWriter(
             $this->createSecurityBlockerRedisWrapper(),
             $this->createSecurityBlockerStorageKeyBuilder(),
-            $this->createConfigurationResolver()
+            $this->createConfigurationResolver(),
         );
     }
 
@@ -64,7 +64,7 @@ class SecurityBlockerFactory extends AbstractFactory
     {
         return new SecurityBlockerRedisWrapper(
             $this->getRedisClient(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 

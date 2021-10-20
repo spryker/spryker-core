@@ -91,7 +91,7 @@ class HttpApplicationPlugin extends AbstractPlugin implements ApplicationPluginI
             return new HttpKernel(
                 $this->getEventDispatcher($container),
                 $this->getResolver($container),
-                $this->getRequestStack($container)
+                $this->getRequestStack($container),
             );
         });
 

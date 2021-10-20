@@ -61,7 +61,7 @@ class UpSellingProductReader implements UpSellingProductReaderInterface
         $productStorageData = $this->productStorageClient->getBulkProductAbstractStorageDataByProductAbstractIdsForLocaleNameAndStore(
             $upSellingProductAbstractIds,
             $localeName,
-            $storeTransfer->getName()
+            $storeTransfer->getName(),
         );
 
         foreach ($productStorageData as $productStorageDatum) {

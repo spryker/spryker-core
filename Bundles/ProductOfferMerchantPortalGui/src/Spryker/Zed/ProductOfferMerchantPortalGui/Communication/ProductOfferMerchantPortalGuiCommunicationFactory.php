@@ -111,7 +111,7 @@ class ProductOfferMerchantPortalGuiCommunicationFactory extends AbstractCommunic
     {
         return new ProductGuiTableConfigurationProvider(
             $this->getTranslatorFacade(),
-            $this->getGuiTableFactory()
+            $this->getGuiTableFactory(),
         );
     }
 
@@ -123,7 +123,7 @@ class ProductOfferMerchantPortalGuiCommunicationFactory extends AbstractCommunic
         return new ProductOfferGuiTableConfigurationProvider(
             $this->getStoreFacade(),
             $this->getTranslatorFacade(),
-            $this->getGuiTableFactory()
+            $this->getGuiTableFactory(),
         );
     }
 
@@ -137,7 +137,7 @@ class ProductOfferMerchantPortalGuiCommunicationFactory extends AbstractCommunic
             $this->getPriceProductFacade(),
             $this->getStoreFacade(),
             $this->getCurrencyFacade(),
-            $this->createColumnIdCreator()
+            $this->createColumnIdCreator(),
         );
     }
 
@@ -151,7 +151,7 @@ class ProductOfferMerchantPortalGuiCommunicationFactory extends AbstractCommunic
             $this->getPriceProductFacade(),
             $this->getStoreFacade(),
             $this->getCurrencyFacade(),
-            $this->createColumnIdCreator()
+            $this->createColumnIdCreator(),
         );
     }
 
@@ -165,7 +165,7 @@ class ProductOfferMerchantPortalGuiCommunicationFactory extends AbstractCommunic
             $this->getTranslatorFacade(),
             $this->createProductNameBuilder(),
             $this->getMerchantUserFacade(),
-            $this->getLocaleFacade()
+            $this->getLocaleFacade(),
         );
     }
 
@@ -179,7 +179,7 @@ class ProductOfferMerchantPortalGuiCommunicationFactory extends AbstractCommunic
             $this->getTranslatorFacade(),
             $this->createProductNameBuilder(),
             $this->getMerchantUserFacade(),
-            $this->getLocaleFacade()
+            $this->getLocaleFacade(),
         );
     }
 
@@ -196,7 +196,7 @@ class ProductOfferMerchantPortalGuiCommunicationFactory extends AbstractCommunic
             $this->createPriceProductOfferTableDataMapper(),
             $this->createPriceProductReader(),
             $this->createPriceProductOfferTableViewSorter(),
-            $idProductOffer
+            $idProductOffer,
         );
     }
 
@@ -229,7 +229,7 @@ class ProductOfferMerchantPortalGuiCommunicationFactory extends AbstractCommunic
         return new ProductOfferCreateFormDataProvider(
             $this->getProductFacade(),
             $this->getMerchantUserFacade(),
-            $this->getMerchantStockFacade()
+            $this->getMerchantStockFacade(),
         );
     }
 
@@ -242,7 +242,7 @@ class ProductOfferMerchantPortalGuiCommunicationFactory extends AbstractCommunic
             $this->getProductFacade(),
             $this->getProductOfferFacade(),
             $this->getMerchantStockFacade(),
-            $this->getMerchantUserFacade()
+            $this->getMerchantUserFacade(),
         );
     }
 
@@ -285,7 +285,7 @@ class ProductOfferMerchantPortalGuiCommunicationFactory extends AbstractCommunic
             $this->createPriceProductToPriceProductOfferMerger(),
             $this->createColumnIdCreator(),
             $this->createPriceProductOfferDataProvider(),
-            $idProductOffer
+            $idProductOffer,
         );
     }
 
@@ -299,7 +299,7 @@ class ProductOfferMerchantPortalGuiCommunicationFactory extends AbstractCommunic
             $this->getMerchantUserFacade(),
             $this->getRouterFacade(),
             $this->getConfig(),
-            $this->getTwigEnvironment()
+            $this->getTwigEnvironment(),
         );
     }
 
@@ -314,7 +314,7 @@ class ProductOfferMerchantPortalGuiCommunicationFactory extends AbstractCommunic
             $this->getPriceProductOfferVolumeFacade(),
             $this->getPriceProductVolumeService(),
             $this->createPriceProductOfferPropertyPathAnalyzer(),
-            $this->createColumnIdCreator()
+            $this->createColumnIdCreator(),
         );
     }
 
@@ -334,7 +334,7 @@ class ProductOfferMerchantPortalGuiCommunicationFactory extends AbstractCommunic
         return new PriceProductOfferTableDataMapper(
             $this->getPriceProductFacade(),
             $this->getStoreFacade(),
-            $this->createColumnIdCreator()
+            $this->createColumnIdCreator(),
         );
     }
 
@@ -345,7 +345,7 @@ class ProductOfferMerchantPortalGuiCommunicationFactory extends AbstractCommunic
     {
         return new PriceProductReader(
             $this->getPriceProductOfferFacade(),
-            $this->createPriceProductFilter()
+            $this->createPriceProductFilter(),
         );
     }
 
@@ -364,7 +364,7 @@ class ProductOfferMerchantPortalGuiCommunicationFactory extends AbstractCommunic
     {
         return new PriceProductOfferTableViewSorter(
             $this->createPriceProductOfferTableViewSimpleGetterComparisonStrategy(),
-            $this->createPriceProductOfferTableViewComparisonStrategies()
+            $this->createPriceProductOfferTableViewComparisonStrategies(),
         );
     }
 
@@ -392,7 +392,7 @@ class ProductOfferMerchantPortalGuiCommunicationFactory extends AbstractCommunic
     public function createPriceProductOfferTableViewPriceComparisonStrategy(): PriceProductOfferTableViewComparisonStrategyInterface
     {
         return new PriceProductOfferTableViewPriceComparisonStrategy(
-            $this->createColumnIdCreator()
+            $this->createColumnIdCreator(),
         );
     }
 
@@ -404,7 +404,7 @@ class ProductOfferMerchantPortalGuiCommunicationFactory extends AbstractCommunic
         return new PriceProductOfferValidator(
             $this->getValidationAdapter(),
             $this->createPriceProductOfferCollectionConstraintProvider(),
-            $this->getPriceProductOfferFacade()
+            $this->getPriceProductOfferFacade(),
         );
     }
 
@@ -414,7 +414,7 @@ class ProductOfferMerchantPortalGuiCommunicationFactory extends AbstractCommunic
     public function createPriceProductOfferCollectionConstraintProvider(): PriceProductOfferConstraintProviderInterface
     {
         return new PriceProductOfferCollectionConstraintProvider(
-            $this->createPriceProductOfferCollectionConstraints()
+            $this->createPriceProductOfferCollectionConstraints(),
         );
     }
 
@@ -442,7 +442,7 @@ class ProductOfferMerchantPortalGuiCommunicationFactory extends AbstractCommunic
     public function createPriceProductToPriceProductOfferMerger(): PriceProductsMergerInterface
     {
         return new PriceProductsMerger(
-            $this->createPriceProductMergeStrategies()
+            $this->createPriceProductMergeStrategies(),
         );
     }
 
@@ -464,7 +464,7 @@ class ProductOfferMerchantPortalGuiCommunicationFactory extends AbstractCommunic
     public function createVolumePriceNotMatchingExistingPriceProductMergeStrategy(): PriceProductMergeStrategyInterface
     {
         return new VolumePriceNotMatchingExistingPriceProductMergeStrategy(
-            $this->getPriceProductVolumeService()
+            $this->getPriceProductVolumeService(),
         );
     }
 
@@ -474,7 +474,7 @@ class ProductOfferMerchantPortalGuiCommunicationFactory extends AbstractCommunic
     public function createPriceProductMatchingExistingVolumePriceMergeStrategy(): PriceProductMergeStrategyInterface
     {
         return new PriceProductMatchingExistingVolumePriceMergeStrategy(
-            $this->getPriceProductVolumeService()
+            $this->getPriceProductVolumeService(),
         );
     }
 
@@ -484,7 +484,7 @@ class ProductOfferMerchantPortalGuiCommunicationFactory extends AbstractCommunic
     public function createVolumePriceMatchingExistingPriceProductMergeStrategy(): PriceProductMergeStrategyInterface
     {
         return new VolumePriceMatchingExistingPriceProductMergeStrategy(
-            $this->getPriceProductVolumeService()
+            $this->getPriceProductVolumeService(),
         );
     }
 
@@ -502,7 +502,7 @@ class ProductOfferMerchantPortalGuiCommunicationFactory extends AbstractCommunic
     public function createPriceProductOfferPropertyPathAnalyzer(): PriceProductOfferPropertyPathAnalyzerInterface
     {
         return new PriceProductOfferPropertyPathAnalyzer(
-            $this->createColumnIdCreator()
+            $this->createColumnIdCreator(),
         );
     }
 
@@ -516,7 +516,7 @@ class ProductOfferMerchantPortalGuiCommunicationFactory extends AbstractCommunic
             $this->createPriceProductOfferMapper(),
             $this->getPriceProductOfferVolumeFacade(),
             $this->createPriceProductFilter(),
-            $this->createPriceProductOfferDataProvider()
+            $this->createPriceProductOfferDataProvider(),
         );
     }
 
@@ -529,7 +529,7 @@ class ProductOfferMerchantPortalGuiCommunicationFactory extends AbstractCommunic
             $this->getPriceProductFacade(),
             $this->getPriceProductOfferFacade(),
             $this->createPriceProductOfferMapper(),
-            $this->createPriceProductsVolumeDataExpander()
+            $this->createPriceProductsVolumeDataExpander(),
         );
     }
 
@@ -541,7 +541,7 @@ class ProductOfferMerchantPortalGuiCommunicationFactory extends AbstractCommunic
         return new PriceDeleter(
             $this->getPriceProductOfferFacade(),
             $this->getPriceProductVolumeService(),
-            $this->createPriceProductOfferValidator()
+            $this->createPriceProductOfferValidator(),
         );
     }
 
@@ -553,7 +553,7 @@ class ProductOfferMerchantPortalGuiCommunicationFactory extends AbstractCommunic
         return new PriceProductOfferDataProvider(
             $this->getMerchantUserFacade(),
             $this->getProductOfferFacade(),
-            $this->createPriceProductFilter()
+            $this->createPriceProductFilter(),
         );
     }
 

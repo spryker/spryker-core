@@ -104,10 +104,10 @@ class ProductReader implements ProductReaderInterface
 
         return [
             static::KEY_RESULTS => $this->mapProductAbstractSuggestionsToAutocompleteData(
-                $productAbstractSuggestionCollectionTransfer->getProductAbstracts()
+                $productAbstractSuggestionCollectionTransfer->getProductAbstracts(),
             ),
             static::KEY_PAGINATION => $this->getPaginationData(
-                $productAbstractSuggestionCollectionTransfer->getPagination()
+                $productAbstractSuggestionCollectionTransfer->getPagination(),
             ),
         ];
     }
@@ -124,7 +124,7 @@ class ProductReader implements ProductReaderInterface
         foreach ($productAbstractTransfers as $productAbstractTransfer) {
             $label = $this->productLabelFormatter->format(
                 $productAbstractTransfer->getName(),
-                $productAbstractTransfer->getSku()
+                $productAbstractTransfer->getSku(),
             );
             $productIds[$label] = $productAbstractTransfer->getIdProductAbstract();
         }
@@ -146,7 +146,7 @@ class ProductReader implements ProductReaderInterface
                 static::KEY_DATA_ID => $productAbstractTransfer->getIdProductAbstract(),
                 static::KEY_DATA_TEXT => $this->productLabelFormatter->format(
                     $productAbstractTransfer->getName(),
-                    $productAbstractTransfer->getSku()
+                    $productAbstractTransfer->getSku(),
                 ),
             ];
         }

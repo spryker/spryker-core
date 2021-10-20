@@ -39,7 +39,7 @@ class SalesOrderCommentMapper
         foreach ($salesOrderCommentEntities as $salesOrderCommentEntity) {
             $commentTransfers[$salesOrderCommentEntity->getFkSalesOrder()][] = (new CommentTransfer())->fromArray(
                 $salesOrderCommentEntity->toArray(),
-                true
+                true,
             );
         }
 

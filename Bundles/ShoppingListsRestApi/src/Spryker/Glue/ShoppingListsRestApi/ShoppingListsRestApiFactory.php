@@ -56,7 +56,7 @@ class ShoppingListsRestApiFactory extends AbstractFactory
             $this->getClient(),
             $this->getShoppingListClient(),
             $this->createShoppingListRestRequestReader(),
-            $this->createShoppingListRestResponseBuilder()
+            $this->createShoppingListRestResponseBuilder(),
         );
     }
 
@@ -68,7 +68,7 @@ class ShoppingListsRestApiFactory extends AbstractFactory
         return new ShoppingListCreator(
             $this->getClient(),
             $this->createShoppingListRestRequestReader(),
-            $this->createShoppingListRestResponseBuilder()
+            $this->createShoppingListRestResponseBuilder(),
         );
     }
 
@@ -80,7 +80,7 @@ class ShoppingListsRestApiFactory extends AbstractFactory
         return new ShoppingListUpdater(
             $this->getClient(),
             $this->createShoppingListRestRequestReader(),
-            $this->createShoppingListRestResponseBuilder()
+            $this->createShoppingListRestResponseBuilder(),
         );
     }
 
@@ -92,7 +92,7 @@ class ShoppingListsRestApiFactory extends AbstractFactory
         return new ShoppingListDeleter(
             $this->getClient(),
             $this->createShoppingListRestRequestReader(),
-            $this->createShoppingListRestResponseBuilder()
+            $this->createShoppingListRestResponseBuilder(),
         );
     }
 
@@ -105,7 +105,7 @@ class ShoppingListsRestApiFactory extends AbstractFactory
             $this->getClient(),
             $this->createShoppingListItemMapper(),
             $this->createShoppingListItemRestRequestReader(),
-            $this->createShoppingListItemRestResponseBuilder()
+            $this->createShoppingListItemRestResponseBuilder(),
         );
     }
 
@@ -118,7 +118,7 @@ class ShoppingListsRestApiFactory extends AbstractFactory
             $this->getClient(),
             $this->createShoppingListItemMapper(),
             $this->createShoppingListItemRestRequestReader(),
-            $this->createShoppingListItemRestResponseBuilder()
+            $this->createShoppingListItemRestResponseBuilder(),
         );
     }
 
@@ -130,7 +130,7 @@ class ShoppingListsRestApiFactory extends AbstractFactory
         return new ShoppingListItemDeleter(
             $this->getClient(),
             $this->createShoppingListItemRestRequestReader(),
-            $this->createShoppingListItemRestResponseBuilder()
+            $this->createShoppingListItemRestResponseBuilder(),
         );
     }
 
@@ -172,7 +172,7 @@ class ShoppingListsRestApiFactory extends AbstractFactory
     public function createShoppingListRestRequestReader(): ShoppingListRestRequestReaderInterface
     {
         return new ShoppingListRestRequestReader(
-            $this->createShoppingListMapper()
+            $this->createShoppingListMapper(),
         );
     }
 
@@ -193,7 +193,7 @@ class ShoppingListsRestApiFactory extends AbstractFactory
             $this->getResourceBuilder(),
             $this->createShoppingListMapper(),
             $this->createShoppingListItemRestResponseBuilder(),
-            $this->getGlossaryStorageClient()
+            $this->getGlossaryStorageClient(),
         );
     }
 
@@ -205,7 +205,7 @@ class ShoppingListsRestApiFactory extends AbstractFactory
         return new ShoppingListItemRestResponseBuilder(
             $this->getResourceBuilder(),
             $this->createShoppingListItemMapper(),
-            $this->getGlossaryStorageClient()
+            $this->getGlossaryStorageClient(),
         );
     }
 

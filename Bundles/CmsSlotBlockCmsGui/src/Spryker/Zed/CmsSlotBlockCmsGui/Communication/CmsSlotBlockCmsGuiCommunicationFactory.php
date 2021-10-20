@@ -36,7 +36,7 @@ class CmsSlotBlockCmsGuiCommunicationFactory extends AbstractCommunicationFactor
         return new CmsPageConditionDataProvider(
             $this->getCmsQueryContainer(),
             $this->getTranslatorFacade(),
-            $this->getLocaleFacade()
+            $this->getLocaleFacade(),
         );
     }
 

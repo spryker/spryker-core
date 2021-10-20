@@ -357,7 +357,7 @@ class GlossaryController extends AbstractController
         $dataProvider = $this->getFactory()->createCmsGlossaryFormDataProvider();
         $form = $this->getFactory()
             ->getCmsGlossaryForm(
-                $dataProvider->getData($idPage, $idMapping, $placeholder, $fkLocale)
+                $dataProvider->getData($idPage, $idMapping, $placeholder, $fkLocale),
             )
             ->handleRequest($request);
 
@@ -404,7 +404,7 @@ class GlossaryController extends AbstractController
 
         if ($cmsPage === null) {
             throw new MissingPageException(
-                sprintf('Page with id %s not found', $idPage)
+                sprintf('Page with id %s not found', $idPage),
             );
         }
 

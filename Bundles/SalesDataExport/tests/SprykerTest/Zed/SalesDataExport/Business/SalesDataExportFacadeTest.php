@@ -212,7 +212,7 @@ class SalesDataExportFacadeTest extends Unit
         $this->assertSame(
             sprintf($dataExportResultFileTemplate, $this->timestamp),
             $fileName,
-            'File name does not equals to an expected value'
+            'File name does not equals to an expected value',
         );
 
         $filePath = APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . 'data/export' . DIRECTORY_SEPARATOR . $fileName;

@@ -48,7 +48,7 @@ class AddCompanyController extends AbstractController
         $form = $this->getFactory()
             ->getCompanyForm(
                 $dataProvider->getData(),
-                $dataProvider->getOptions()
+                $dataProvider->getOptions(),
             )
             ->handleRequest($request);
 

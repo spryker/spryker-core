@@ -57,8 +57,8 @@ class PriceProductWishlistItemExpander implements PriceProductWishlistItemExpand
         $priceProductCriteriaTransfer = (new PriceProductCriteriaTransfer())
             ->setPriceDimension(
                 (new PriceProductDimensionTransfer())->setType(
-                    $this->priceProductConfig->getPriceDimensionDefault()
-                )
+                    $this->priceProductConfig->getPriceDimensionDefault(),
+                ),
             )
             ->setIdStore($this->storeFacade->getCurrentStore()->getIdStore());
 
@@ -66,7 +66,7 @@ class PriceProductWishlistItemExpander implements PriceProductWishlistItemExpand
         $sku = $wishlistItemTransfer->requireSku()->getSku();
         $priceProductTransfers = $this->priceProductConcreteReader->findProductConcretePricesBySkuAndCriteria(
             $sku,
-            $priceProductCriteriaTransfer
+            $priceProductCriteriaTransfer,
         );
 
         $priceProductTransfers = new ArrayObject($priceProductTransfers);

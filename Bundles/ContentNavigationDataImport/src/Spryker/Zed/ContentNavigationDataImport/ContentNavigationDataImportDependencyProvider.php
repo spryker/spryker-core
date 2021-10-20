@@ -57,7 +57,7 @@ class ContentNavigationDataImportDependencyProvider extends DataImportDependency
     {
         $container->set(static::FACADE_CONTENT_NAVIGATION, function (Container $container) {
             return new ContentNavigationDataImportToContentNavigationFacadeBridge(
-                $container->getLocator()->contentNavigation()->facade()
+                $container->getLocator()->contentNavigation()->facade(),
             );
         });
 
@@ -73,7 +73,7 @@ class ContentNavigationDataImportDependencyProvider extends DataImportDependency
     {
         $container->set(static::FACADE_CONTENT, function (Container $container) {
             return new ContentNavigationDataImportToContentBridge(
-                $container->getLocator()->content()->facade()
+                $container->getLocator()->content()->facade(),
             );
         });
 
@@ -89,7 +89,7 @@ class ContentNavigationDataImportDependencyProvider extends DataImportDependency
     {
         $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new ContentNavigationDataImportToUtilEncodingBridge(
-                $container->getLocator()->utilEncoding()->service()
+                $container->getLocator()->utilEncoding()->service(),
             );
         });
 

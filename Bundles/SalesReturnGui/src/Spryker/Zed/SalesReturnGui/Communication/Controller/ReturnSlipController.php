@@ -88,7 +88,7 @@ class ReturnSlipController extends AbstractController
         $returnTransfer->getReturnItems()->uasort(
             function (ReturnItemTransfer $firstReturnItemTransfer, ReturnItemTransfer $secondReturnItemTransfer) {
                 return strcmp($firstReturnItemTransfer->getOrderItem()->getOrderReference(), $secondReturnItemTransfer->getOrderItem()->getOrderReference());
-            }
+            },
         );
 
         return $returnTransfer;
@@ -102,7 +102,7 @@ class ReturnSlipController extends AbstractController
     protected function findReturn(Request $request): ?ReturnTransfer
     {
         $idSalesReturn = $this->castId(
-            $request->get(static::PARAM_ID_RETURN)
+            $request->get(static::PARAM_ID_RETURN),
         );
 
         return $this->getFactory()

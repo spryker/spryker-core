@@ -89,7 +89,7 @@ class ProductGroupTable extends AbstractProductTable
         $this->defaultUrl = sprintf(
             'product-group-table?%s=%d',
             ViewController::PARAM_ID_PRODUCT_ABSTRACT,
-            $idProductAbstract
+            $idProductAbstract,
         );
         $this->productGroupQueryContainer = $productGroupQueryContainer;
     }
@@ -189,14 +189,14 @@ class ProductGroupTable extends AbstractProductTable
             Url::generate('/product-management/view', [
                 EditController::PARAM_ID_PRODUCT_ABSTRACT => $item->getIdProductAbstract(),
             ]),
-            'View'
+            'View',
         );
 
         $urls[] = $this->generateEditButton(
             Url::generate('/product-management/edit', [
                 EditController::PARAM_ID_PRODUCT_ABSTRACT => $item->getIdProductAbstract(),
             ]),
-            'Edit'
+            'Edit',
         );
 
         return $urls;

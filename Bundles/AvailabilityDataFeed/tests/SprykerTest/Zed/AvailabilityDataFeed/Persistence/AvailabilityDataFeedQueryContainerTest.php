@@ -111,7 +111,7 @@ class AvailabilityDataFeedQueryContainerTest extends Unit
             ->queryAvailabilityDataFeed($this->availabilityDataFeedTransfer);
         $expectedParams = array_merge(
             $this->getParamsForLocaleFilter(),
-            $this->getParamsForDateFilter()
+            $this->getParamsForDateFilter(),
         );
 
         $this->assertInstanceOf(SpyProductAbstractQuery::class, $query);

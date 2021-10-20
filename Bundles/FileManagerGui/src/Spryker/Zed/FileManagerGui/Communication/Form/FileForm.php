@@ -192,8 +192,8 @@ class FileForm extends AbstractType
                     },
                     function (?UploadedFile $uploadedFile = null) {
                         return $this->mapUploadedFileToTransfer($uploadedFile);
-                    }
-                )
+                    },
+                ),
             );
 
         return $this;

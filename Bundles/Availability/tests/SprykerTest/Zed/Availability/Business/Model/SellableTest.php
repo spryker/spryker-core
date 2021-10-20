@@ -57,7 +57,7 @@ class SellableTest extends Unit
             ->with(static::SKU_PRODUCT, $this->createStoreTransfer())
             ->willReturn(
                 (new ProductConcreteAvailabilityTransfer())
-                    ->setIsNeverOutOfStock(true)
+                    ->setIsNeverOutOfStock(true),
             );
 
         $sellable = $this->createSellable($availabilityRepositoryMock);
@@ -93,7 +93,7 @@ class SellableTest extends Unit
             ->willReturn(
                 (new ProductConcreteAvailabilityTransfer())
                     ->setAvailability($existingAvailability)
-                    ->setIsNeverOutOfStock(false)
+                    ->setIsNeverOutOfStock(false),
             );
 
         $sellable = $this->createSellable($availabilityRepositoryMock);
@@ -122,7 +122,7 @@ class SellableTest extends Unit
                         ->setSku(static::SKU_PRODUCT_SECOND)
                         ->setAvailability(6)
                         ->setIsNeverOutOfStock(false),
-                ]
+                ],
             );
         $batchRequestData = [
             [
@@ -138,7 +138,7 @@ class SellableTest extends Unit
         $sellableItemsRequestTransfer = $this->createSellableItemsRequestTransfer($storeTransfer);
         $sellableItemsRequestTransfer = $this->addSellableItemRequestTransfersFromArray(
             $sellableItemsRequestTransfer,
-            $batchRequestData
+            $batchRequestData,
         );
         $sellableItemsResponseTransfer = $this->createSellableItemsResponseTransfer();
 
@@ -147,7 +147,7 @@ class SellableTest extends Unit
         //Act
         $sellableItemsResponseTransfer = $sellable->areProductConcretesSellableForStore(
             $sellableItemsRequestTransfer,
-            $sellableItemsResponseTransfer
+            $sellableItemsResponseTransfer,
         );
 
         //Assert
@@ -179,7 +179,7 @@ class SellableTest extends Unit
                         ->setSku(static::SKU_PRODUCT_SECOND)
                         ->setAvailability(6)
                         ->setIsNeverOutOfStock(false),
-                ]
+                ],
             );
         $batchRequestData = [
             [
@@ -195,7 +195,7 @@ class SellableTest extends Unit
         $sellableItemsRequestTransfer = $this->createSellableItemsRequestTransfer($storeTransfer);
         $sellableItemsRequestTransfer = $this->addSellableItemRequestTransfersFromArray(
             $sellableItemsRequestTransfer,
-            $batchRequestData
+            $batchRequestData,
         );
         $sellableItemsResponseTransfer = $this->createSellableItemsResponseTransfer();
 
@@ -204,7 +204,7 @@ class SellableTest extends Unit
         //Act
         $sellableItemsResponseTransfer = $sellable->areProductConcretesSellableForStore(
             $sellableItemsRequestTransfer,
-            $sellableItemsResponseTransfer
+            $sellableItemsResponseTransfer,
         );
 
         //Assert
@@ -234,7 +234,7 @@ class SellableTest extends Unit
                     (new ProductConcreteAvailabilityTransfer())
                         ->setSku(static::SKU_PRODUCT_SECOND)
                         ->setIsNeverOutOfStock(true),
-                ]
+                ],
             );
         $batchRequestData = [
             [
@@ -250,7 +250,7 @@ class SellableTest extends Unit
         $sellableItemsRequestTransfer = $this->createSellableItemsRequestTransfer($storeTransfer);
         $sellableItemsRequestTransfer = $this->addSellableItemRequestTransfersFromArray(
             $sellableItemsRequestTransfer,
-            $batchRequestData
+            $batchRequestData,
         );
         $sellableItemsResponseTransfer = $this->createSellableItemsResponseTransfer();
 
@@ -259,7 +259,7 @@ class SellableTest extends Unit
         //Act
         $sellableItemsResponseTransfer = $sellable->areProductConcretesSellableForStore(
             $sellableItemsRequestTransfer,
-            $sellableItemsResponseTransfer
+            $sellableItemsResponseTransfer,
         );
 
         //Assert

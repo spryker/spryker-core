@@ -92,19 +92,19 @@ class ProductRelationQueryContainerTest extends Unit
             $productAbstractTransfer1->getSku(),
             $relatedProductAbstractTransfer1->getIdProductAbstract(),
             'test-relation-11',
-            $productRelationTypeTransfer->getKey()
+            $productRelationTypeTransfer->getKey(),
         );
         $productRelationTransfer12 = $this->tester->haveProductRelation(
             $productAbstractTransfer1->getSku(),
             $relatedProductAbstractTransfer2->getIdProductAbstract(),
             'test-relation-12',
-            $productRelationTypeTransfer->getKey()
+            $productRelationTypeTransfer->getKey(),
         );
         $productRelationTransfer21 = $this->tester->haveProductRelation(
             $productAbstractTransfer2->getSku(),
             $relatedProductAbstractTransfer2->getIdProductAbstract(),
             'test-relation-21',
-            $productRelationTypeTransfer->getKey()
+            $productRelationTypeTransfer->getKey(),
         );
 
         // Act
@@ -117,7 +117,7 @@ class ProductRelationQueryContainerTest extends Unit
         $this->assertCount(3, $result);
         $resultProductRelationIds = array_map(
             'intval',
-            array_column($result, SpyProductRelationTableMap::COL_ID_PRODUCT_RELATION)
+            array_column($result, SpyProductRelationTableMap::COL_ID_PRODUCT_RELATION),
         );
         $this->assertContains($productRelationTransfer11->getIdProductRelation(), $resultProductRelationIds);
         $this->assertContains($productRelationTransfer12->getIdProductRelation(), $resultProductRelationIds);

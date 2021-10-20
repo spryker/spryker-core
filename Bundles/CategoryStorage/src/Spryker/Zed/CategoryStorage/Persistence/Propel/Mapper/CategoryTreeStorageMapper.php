@@ -45,7 +45,7 @@ class CategoryTreeStorageMapper
         foreach ($categoryTreeStorageEntities as $categoryTreeStorageEntity) {
             $categoryTreeStorageTransfers[] = $this->mapCategoryTreeStorageEntityToCategoryTreeStorageTransfer(
                 $categoryTreeStorageEntity,
-                new CategoryTreeStorageTransfer()
+                new CategoryTreeStorageTransfer(),
             );
         }
 
@@ -66,8 +66,8 @@ class CategoryTreeStorageMapper
         $categoryTreeStorageData = $this->utilSanitizeService->arrayFilterRecursive(
             array_intersect_key(
                 $categoryTreeStorageTransfer->modifiedToArray(),
-                [static::KEY_CATEGORY_NODES_STORAGE => []]
-            )
+                [static::KEY_CATEGORY_NODES_STORAGE => []],
+            ),
         );
         $categoryTreeStorageEntity->setData($categoryTreeStorageData);
 

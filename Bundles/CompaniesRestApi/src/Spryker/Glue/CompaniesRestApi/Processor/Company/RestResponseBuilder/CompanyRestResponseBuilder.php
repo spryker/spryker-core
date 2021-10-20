@@ -57,7 +57,7 @@ class CompanyRestResponseBuilder implements CompanyRestResponseBuilderInterface
         return $this->restResourceBuilder->createRestResource(
             CompaniesRestApiConfig::RESOURCE_COMPANIES,
             $companyUuid,
-            $restCompanyAttributesTransfer
+            $restCompanyAttributesTransfer,
         );
     }
 

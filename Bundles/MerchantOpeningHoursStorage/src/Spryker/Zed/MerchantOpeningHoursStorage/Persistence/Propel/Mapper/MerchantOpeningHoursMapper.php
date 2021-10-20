@@ -29,7 +29,7 @@ class MerchantOpeningHoursMapper implements MerchantOpeningHoursMapperInterface
         foreach ($weekdayScheduleEntities as $weekdayScheduleEntity) {
             $weekdayScheduleTransfer = $this->mapWeekdayScheduleEntityToWeekdayScheduleTransfer(
                 $weekdayScheduleEntity->getSpyWeekdaySchedule(),
-                new WeekdayScheduleTransfer()
+                new WeekdayScheduleTransfer(),
             );
             $weekdayScheduleTransfers->append($weekdayScheduleTransfer);
         }
@@ -63,7 +63,7 @@ class MerchantOpeningHoursMapper implements MerchantOpeningHoursMapperInterface
         foreach ($dateScheduleEntities as $dateScheduleEntity) {
             $dateScheduleTransfer = $this->mapDateScheduleEntityToDateScheduleTransfer(
                 $dateScheduleEntity->getSpyDateSchedule(),
-                new DateScheduleTransfer()
+                new DateScheduleTransfer(),
             );
             $dateScheduleTransfers->append($dateScheduleTransfer);
         }

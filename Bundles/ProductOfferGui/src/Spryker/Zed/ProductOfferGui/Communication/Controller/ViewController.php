@@ -39,7 +39,7 @@ class ViewController extends AbstractController
     public function indexAction(Request $request)
     {
         $idProductOffer = $this->castId($request->get(
-            static::PARAM_ID_PRODUCT_OFFER
+            static::PARAM_ID_PRODUCT_OFFER,
         ));
 
         $productOfferCriteria = (new ProductOfferCriteriaTransfer())

@@ -31,7 +31,7 @@ class SalesConfigurableBundleRepository extends AbstractRepository implements Sa
 
         $salesOrderConfiguredBundleQuery = $this->setSalesOrderConfiguredBundleFilters(
             $salesOrderConfiguredBundleQuery,
-            $salesOrderConfiguredBundleFilterTransfer
+            $salesOrderConfiguredBundleFilterTransfer,
         );
 
         return $this->getFactory()

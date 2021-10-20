@@ -50,7 +50,7 @@ class TaxProductConnectorBusinessFactory extends AbstractBusinessFactory
     public function createProductAbstractTaxSetExpander(): ProductAbstractTaxSetExpanderInterface
     {
         return new ProductAbstractTaxSetExpander(
-            $this->getRepository()
+            $this->getRepository(),
         );
     }
 
@@ -71,7 +71,7 @@ class TaxProductConnectorBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductItemTaxRateCalculatorWithMultipleShipmentTaxRate(
             $this->getQueryContainer(),
-            $this->getTaxFacade()
+            $this->getTaxFacade(),
         );
     }
 

@@ -147,7 +147,7 @@ class ShoppingListResolver implements ShoppingListResolverInterface
         $this->messengerFacade->addSuccessMessage(
             (new MessageTransfer())
                 ->setValue(static::GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_CREATE_SUCCESS)
-                ->setParameters([static::GLOSSARY_PARAM_NAME => $shoppingListName])
+                ->setParameters([static::GLOSSARY_PARAM_NAME => $shoppingListName]),
         );
     }
 }

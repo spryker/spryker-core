@@ -65,7 +65,7 @@ class CategoryDataFeedQueryContainer extends AbstractQueryContainer implements C
 
         $categoryQuery = $this->joinProducts(
             $categoryQuery,
-            $categoryDataFeedTransfer
+            $categoryDataFeedTransfer,
         );
 
         return $categoryQuery;
@@ -122,7 +122,7 @@ class CategoryDataFeedQueryContainer extends AbstractQueryContainer implements C
             $categoryQuery->condition(
                 self::UPDATED_FROM_CONDITION,
                 SpyCategoryAttributeTableMap::COL_UPDATED_AT . ' >= ?',
-                $categoryDataFeedTransfer->getUpdatedFrom()
+                $categoryDataFeedTransfer->getUpdatedFrom(),
             )->where([self::UPDATED_FROM_CONDITION]);
         }
 
@@ -130,7 +130,7 @@ class CategoryDataFeedQueryContainer extends AbstractQueryContainer implements C
             $categoryQuery->condition(
                 self::UPDATED_TO_CONDITION,
                 SpyCategoryAttributeTableMap::COL_UPDATED_AT . ' <= ?',
-                $categoryDataFeedTransfer->getUpdatedTo()
+                $categoryDataFeedTransfer->getUpdatedTo(),
             )->where([self::UPDATED_TO_CONDITION]);
         }
 

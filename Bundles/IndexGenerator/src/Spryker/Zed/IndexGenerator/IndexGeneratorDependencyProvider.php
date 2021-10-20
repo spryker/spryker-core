@@ -43,7 +43,7 @@ class IndexGeneratorDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::FACADE_PROPEL, function (Container $container) {
             return new IndexGeneratorToPropelFacadeBridge(
-                $container->getLocator()->propel()->facade()
+                $container->getLocator()->propel()->facade(),
             );
         });
 

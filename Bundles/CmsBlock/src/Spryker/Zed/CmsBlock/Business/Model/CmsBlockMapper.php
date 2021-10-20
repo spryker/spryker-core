@@ -40,7 +40,7 @@ class CmsBlockMapper implements CmsBlockMapperInterface
         $cmsBlockTransfer->fromArray($spyCmsBlock->toArray(), true);
         $cmsBlockTransfer->setTemplateName($spyCmsBlock->getCmsBlockTemplate()->getTemplateName());
         $cmsBlockTransfer->setStoreRelation(
-            $this->cmsBlockStoreRelationMapper->mapStoreRelationToTransfer($spyCmsBlock)
+            $this->cmsBlockStoreRelationMapper->mapStoreRelationToTransfer($spyCmsBlock),
         );
 
         $cmsBlockGlossaryTransfer = $this->createGlossaryTransfer($spyCmsBlock);

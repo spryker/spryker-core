@@ -28,7 +28,7 @@ class ProductReviewCollectorBusinessFactory extends AbstractBusinessFactory
     {
         $storageProductReviewCollector = new ProductReviewSearchCollector(
             $this->getUtilDataReaderService(),
-            $this->getCurrentStore()
+            $this->getCurrentStore(),
         );
 
         $storageProductReviewCollector->setTouchQueryContainer($this->getTouchQueryContainer());
@@ -43,7 +43,7 @@ class ProductReviewCollectorBusinessFactory extends AbstractBusinessFactory
     public function createStorageProductAbstractReviewCollector()
     {
         $storageProductReviewCollector = new ProductAbstractReviewStorageCollector(
-            $this->getUtilDataReaderService()
+            $this->getUtilDataReaderService(),
         );
 
         $storageProductReviewCollector->setTouchQueryContainer($this->getTouchQueryContainer());
@@ -115,7 +115,7 @@ class ProductReviewCollectorBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductReviewCollectorRunner(
             $this->createSearchProductReviewCollector(),
-            $this->getCollectorFacade()
+            $this->getCollectorFacade(),
         );
     }
 
@@ -126,7 +126,7 @@ class ProductReviewCollectorBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductReviewCollectorRunner(
             $this->createStorageProductAbstractReviewCollector(),
-            $this->getCollectorFacade()
+            $this->getCollectorFacade(),
         );
     }
 }

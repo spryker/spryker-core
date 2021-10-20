@@ -132,7 +132,7 @@ class CategoryToucher implements CategoryToucherInterface
         if ($rootNodeEntity) {
             $this->touchFacade->touchActive(
                 CategoryConfig::RESOURCE_TYPE_NAVIGATION,
-                $rootNodeEntity->getIdCategoryNode()
+                $rootNodeEntity->getIdCategoryNode(),
             );
         }
     }

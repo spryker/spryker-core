@@ -26,7 +26,7 @@ class MerchantRelationshipSalesOrderThresholdDataImportBusinessFactory extends D
     public function createMerchantRelationshipSalesOrderThresholdDataImport()
     {
         $dataImporter = $this->getCsvDataImporterFromConfig(
-            $this->getConfig()->getMerchantRelationshipSalesOrderThresholdDataImporterConfiguration()
+            $this->getConfig()->getMerchantRelationshipSalesOrderThresholdDataImporterConfiguration(),
         );
 
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();
@@ -35,8 +35,8 @@ class MerchantRelationshipSalesOrderThresholdDataImportBusinessFactory extends D
                 $this->getMerchantRelationshipSalesOrderThresholdFacade(),
                 $this->getMerchantRelationshipFacade(),
                 $this->getStoreFacade(),
-                $this->getCurrencyFacade()
-            )
+                $this->getCurrencyFacade(),
+            ),
         );
 
         $dataImporter->addDataSetStepBroker($dataSetStepBroker);

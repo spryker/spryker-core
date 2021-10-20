@@ -120,7 +120,7 @@ class ProductOfferStorageReader implements ProductOfferStorageReaderInterface
         if ($productOfferStorageCriteriaTransfer->getMerchantReference()) {
             $productOfferStorageTransfers = $this->filterProductOfferStorageTransfersByMerchantReference(
                 $productOfferStorageTransfers,
-                $productOfferStorageCriteriaTransfer->getMerchantReference()
+                $productOfferStorageCriteriaTransfer->getMerchantReference(),
             );
         }
 
@@ -170,7 +170,7 @@ class ProductOfferStorageReader implements ProductOfferStorageReaderInterface
 
             $productOfferStorageTransfers[] = $this->merchantProductOfferMapper->mapMerchantProductOfferStorageDataToProductOfferStorageTransfer(
                 $decodedMerchantProductOfferStorageData,
-                new ProductOfferStorageTransfer()
+                new ProductOfferStorageTransfer(),
             );
         }
 
@@ -241,7 +241,7 @@ class ProductOfferStorageReader implements ProductOfferStorageReaderInterface
 
         $merchantStorageTransfers = $this->merchantStorageClient->get(
             (new MerchantStorageCriteriaTransfer())
-                ->setMerchantReferences($merchantReferences)
+                ->setMerchantReferences($merchantReferences),
         );
         $merchantStorageTransfers = $this->indexMerchantStorageTransfersByMerchantReference($merchantStorageTransfers);
 

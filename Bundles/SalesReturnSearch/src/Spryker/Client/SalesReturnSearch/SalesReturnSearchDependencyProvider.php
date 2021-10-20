@@ -63,7 +63,7 @@ class SalesReturnSearchDependencyProvider extends AbstractDependencyProvider
     {
         $container->set(static::CLIENT_SEARCH, function (Container $container) {
             return new SalesReturnSearchToSearchClientBridge(
-                $container->getLocator()->search()->client()
+                $container->getLocator()->search()->client(),
             );
         });
 

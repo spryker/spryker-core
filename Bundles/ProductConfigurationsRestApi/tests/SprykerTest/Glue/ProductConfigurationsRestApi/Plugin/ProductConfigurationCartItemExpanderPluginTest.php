@@ -53,22 +53,22 @@ class ProductConfigurationCartItemExpanderPluginTest extends Unit
         // Act
         $cartItemRequestTransfer = $productConfigurationCartItemExpanderPlugin->expand(
             $cartItemRequestTransfer,
-            $restCartItemsAttributesTransfer
+            $restCartItemsAttributesTransfer,
         );
 
         // Assert
         $this->assertNotNull($cartItemRequestTransfer->getProductConfigurationInstance());
         $this->assertSame(
             $restCartItemsAttributesTransfer->getProductConfigurationInstance()->getConfiguration(),
-            $cartItemRequestTransfer->getProductConfigurationInstance()->getConfiguration()
+            $cartItemRequestTransfer->getProductConfigurationInstance()->getConfiguration(),
         );
         $this->assertSame(
             $restCartItemsAttributesTransfer->getProductConfigurationInstance()->getConfiguratorKey(),
-            $cartItemRequestTransfer->getProductConfigurationInstance()->getConfiguratorKey()
+            $cartItemRequestTransfer->getProductConfigurationInstance()->getConfiguratorKey(),
         );
         $this->assertSame(
             $restCartItemsAttributesTransfer->getProductConfigurationInstance()->getDisplayData(),
-            $cartItemRequestTransfer->getProductConfigurationInstance()->getDisplayData()
+            $cartItemRequestTransfer->getProductConfigurationInstance()->getDisplayData(),
         );
     }
 }

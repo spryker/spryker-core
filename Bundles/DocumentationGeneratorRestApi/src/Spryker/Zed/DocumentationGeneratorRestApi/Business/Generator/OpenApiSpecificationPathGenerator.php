@@ -81,7 +81,7 @@ class OpenApiSpecificationPathGenerator implements PathGeneratorInterface
         $responseSchemaDataTransfer = $this->addDefaultSuccessResponseToResponseSchemaDataTransfer(
             $pathMethodDataTransfer,
             $responseSchemaDataTransfer,
-            (string)Response::HTTP_OK
+            (string)Response::HTTP_OK,
         );
         if ($responseSchemaDataTransfer) {
             $pathMethodDataTransfer->addResponseSchema($responseSchemaDataTransfer);
@@ -115,7 +115,7 @@ class OpenApiSpecificationPathGenerator implements PathGeneratorInterface
         $responseSchemaDataTransfer = $this->addDefaultSuccessResponseToResponseSchemaDataTransfer(
             $pathMethodDataTransfer,
             $responseSchemaDataTransfer,
-            (string)Response::HTTP_CREATED
+            (string)Response::HTTP_CREATED,
         );
         if ($responseSchemaDataTransfer) {
             $pathMethodDataTransfer->addResponseSchema($responseSchemaDataTransfer);
@@ -155,7 +155,7 @@ class OpenApiSpecificationPathGenerator implements PathGeneratorInterface
         $responseSchemaDataTransfer = $this->addDefaultSuccessResponseToResponseSchemaDataTransfer(
             $pathMethodDataTransfer,
             $responseSchemaDataTransfer,
-            (string)Response::HTTP_OK
+            (string)Response::HTTP_OK,
         );
         if ($responseSchemaDataTransfer) {
             $pathMethodDataTransfer->addResponseSchema($responseSchemaDataTransfer);
@@ -187,7 +187,7 @@ class OpenApiSpecificationPathGenerator implements PathGeneratorInterface
         $responseSchemaDataTransfer = $this->addDefaultSuccessResponseToResponseSchemaDataTransfer(
             $pathMethodDataTransfer,
             new PathSchemaDataTransfer(),
-            (string)Response::HTTP_NO_CONTENT
+            (string)Response::HTTP_NO_CONTENT,
         );
         if ($responseSchemaDataTransfer) {
             $pathMethodDataTransfer->addResponseSchema($responseSchemaDataTransfer);

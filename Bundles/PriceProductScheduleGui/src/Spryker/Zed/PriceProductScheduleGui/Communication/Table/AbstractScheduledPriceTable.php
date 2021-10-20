@@ -216,7 +216,7 @@ abstract class AbstractScheduledPriceTable extends AbstractTable
             Url::generate('/price-product-schedule-gui/edit', [
                 'id-price-product-schedule' => $item->getIdPriceProductSchedule(),
             ]),
-            'Edit'
+            'Edit',
         );
     }
 
@@ -231,7 +231,7 @@ abstract class AbstractScheduledPriceTable extends AbstractTable
             Url::generate('/price-product-schedule-gui/delete', [
                 'id-price-product-schedule' => $item->getIdPriceProductSchedule(),
             ]),
-            'Delete'
+            'Delete',
         );
     }
 

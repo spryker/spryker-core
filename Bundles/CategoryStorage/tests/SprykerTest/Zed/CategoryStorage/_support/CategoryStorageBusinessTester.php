@@ -100,7 +100,7 @@ class CategoryStorageBusinessTester extends Actor
         }
 
         $spyCategoryNodeStorageEntity->setData(
-            $this->getLocator()->utilEncoding()->service()->encodeJson($storageData)
+            $this->getLocator()->utilEncoding()->service()->encodeJson($storageData),
         );
 
         $spyCategoryNodeStorageEntity->save();
@@ -118,7 +118,7 @@ class CategoryStorageBusinessTester extends Actor
     ): SpyCategoryTreeStorage {
         $categoryTreeStorageEntity = $this->createSpyCategoryTreeStorageQueryByLocalizedCategoryAndStoreName(
             $categoryTransfer,
-            $storeName
+            $storeName,
         )->findOneOrCreate();
 
         if ($categoryTreeStorageEntity->isNew()) {

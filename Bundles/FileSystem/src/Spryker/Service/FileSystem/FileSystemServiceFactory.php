@@ -23,7 +23,7 @@ class FileSystemServiceFactory extends AbstractServiceFactory
     public function createFileSystemReader()
     {
         return new FileSystemReader(
-            $this->getFileSystemReaderPlugin()
+            $this->getFileSystemReaderPlugin(),
         );
     }
 
@@ -33,7 +33,7 @@ class FileSystemServiceFactory extends AbstractServiceFactory
     public function createFileSystemWriter()
     {
         return new FileSystemWriter(
-            $this->getFileSystemWriterPlugin()
+            $this->getFileSystemWriterPlugin(),
         );
     }
 
@@ -43,7 +43,7 @@ class FileSystemServiceFactory extends AbstractServiceFactory
     public function createFileSystemStream()
     {
         return new FileSystemStream(
-            $this->getFileSystemStreamPlugin()
+            $this->getFileSystemStreamPlugin(),
         );
     }
 

@@ -126,7 +126,7 @@ class CollectorExporter
         $output->writeln('<fg=yellow>----------------------------------------</fg=yellow>');
         $output->writeln(sprintf(
             '<fg=yellow>Exporting Store:</fg=yellow> <fg=white>%s</fg=white>',
-            $storeName
+            $storeName,
         ));
 
         $localeCollection = $this->getLocalesForStore();
@@ -166,8 +166,8 @@ class CollectorExporter
                     $result->getTotalCount(),
                     $result->getProcessedLocale() ? $result->getProcessedLocale()->getLocaleName() : null,
                     $result->getDeletedCount(),
-                    $result->getFailedCount()
-                )
+                    $result->getFailedCount(),
+                ),
             );
         }
     }

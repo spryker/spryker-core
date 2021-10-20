@@ -176,7 +176,7 @@ class EventDispatcherApplicationPluginTest extends Unit
             public static function getSubscribedEvents(): array
             {
                 return [
-                    EventDispatcherApplicationPluginTest::DUMMY_EVENT => 'onDummyEvent',
+                    self::DUMMY_EVENT => 'onDummyEvent',
                 ];
             }
 

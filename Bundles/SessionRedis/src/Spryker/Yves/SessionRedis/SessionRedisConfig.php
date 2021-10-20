@@ -71,13 +71,13 @@ class SessionRedisConfig extends AbstractBundleConfig
     {
         return (new RedisConfigurationTransfer())
             ->setDataSourceNames(
-                $this->getDataSourceNames()
+                $this->getDataSourceNames(),
             )
             ->setConnectionCredentials(
-                $this->getConnectionCredentials()
+                $this->getConnectionCredentials(),
             )
             ->setClientOptions(
-                $this->getConnectionOptions()
+                $this->getConnectionOptions(),
             );
     }
 

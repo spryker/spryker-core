@@ -57,7 +57,7 @@ class ValidUniqueStoreCurrencyGrossNetConstraintValidator extends AbstractConstr
             ->setPriceType($priceTypeTransfer->getNameOrFail())
             ->setPriceDimension(
                 (new PriceProductDimensionTransfer())
-                    ->setType(PriceProductConfig::PRICE_DIMENSION_DEFAULT)
+                    ->setType(PriceProductConfig::PRICE_DIMENSION_DEFAULT),
             );
 
         $priceProductTransfers = $constraint->getPriceProductRepository()

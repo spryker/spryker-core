@@ -65,7 +65,7 @@ class MaintenanceController extends AbstractController
         $table = $this->getFactory()->createSearchTable();
 
         return $this->jsonResponse(
-            $table->fetchData()
+            $table->fetchData(),
         );
     }
 

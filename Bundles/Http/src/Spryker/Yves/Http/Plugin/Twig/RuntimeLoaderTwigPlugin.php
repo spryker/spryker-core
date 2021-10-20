@@ -94,7 +94,7 @@ class RuntimeLoaderTwigPlugin extends AbstractPlugin implements TwigPluginInterf
     protected function createFragmentHandler(ContainerInterface $container): FragmentHandler
     {
         $fragmentHandler = new FragmentHandler(
-            $this->getRequestStack($container)
+            $this->getRequestStack($container),
         );
 
         $fragmentHandler = $this->extendFragmentHandler($fragmentHandler, $container);

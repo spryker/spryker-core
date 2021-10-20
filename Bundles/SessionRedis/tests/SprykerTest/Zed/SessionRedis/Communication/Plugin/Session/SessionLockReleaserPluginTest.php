@@ -69,7 +69,7 @@ class SessionLockReleaserPluginTest extends Unit
         return $this->getFactory()
             ->createSessionHandlerFactory()
             ->createSessionSpinLockLocker(
-                $this->getFactory()->createZedSessionRedisWrapper()
+                $this->getFactory()->createZedSessionRedisWrapper(),
             );
     }
 
@@ -79,7 +79,7 @@ class SessionLockReleaserPluginTest extends Unit
     protected function getSessionLockReader(): SessionLockReaderInterface
     {
         return $this->getFactory()->createRedisSessionLockReader(
-            $this->getFactory()->createZedSessionRedisWrapper()
+            $this->getFactory()->createZedSessionRedisWrapper(),
         );
     }
 

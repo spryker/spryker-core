@@ -60,14 +60,14 @@ class RestProductConfigurationPriceProductVolumeMapper implements RestProductCon
 
             $productConfigurationInstanceTransfer = $this->mapRestProductConfigurationPriceAttributesVolumePricesToProductConfigurationInstanceTransfer(
                 $restProductConfigurationPriceAttributesTransfer,
-                $productConfigurationInstanceTransfer
+                $productConfigurationInstanceTransfer,
             );
         }
 
         $priceProductTransfers = $this->fillUpPriceDimensionWithProductConfigurationInstanceHash(
             $productConfigurationInstanceTransfer->getPrices(),
             $this->productConfigurationService
-                ->getProductConfigurationInstanceHash($productConfigurationInstanceTransfer)
+                ->getProductConfigurationInstanceHash($productConfigurationInstanceTransfer),
         );
 
         return $productConfigurationInstanceTransfer->setPrices($priceProductTransfers);
@@ -91,7 +91,7 @@ class RestProductConfigurationPriceProductVolumeMapper implements RestProductCon
 
             $extractedPriceProductTransfers[] = $this->extractVolumePrices(
                 $priceProductTransfer,
-                $restProductConfigurationPriceAttributesTransfer
+                $restProductConfigurationPriceAttributesTransfer,
             );
         }
 
@@ -121,7 +121,7 @@ class RestProductConfigurationPriceProductVolumeMapper implements RestProductCon
             $extractedPrices[] = $this->mapVolumePriceDataToPriceProductTransfer(
                 $priceProductTransferForMapping,
                 $restProductPriceVolumesAttributesTransfer,
-                $restProductConfigurationPriceAttributesTransfer->getCurrencyOrFail()
+                $restProductConfigurationPriceAttributesTransfer->getCurrencyOrFail(),
             );
         }
 

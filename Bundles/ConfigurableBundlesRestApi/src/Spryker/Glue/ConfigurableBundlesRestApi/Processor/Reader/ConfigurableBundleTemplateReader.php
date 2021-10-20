@@ -99,7 +99,7 @@ class ConfigurableBundleTemplateReader implements ConfigurableBundleTemplateRead
         return $this->configurableBundleTemplateRestResponseBuilder
             ->buildConfigurableBundleTemplateCollectionRestResponse(
                 $configurableBundleTemplateStorageTransfers,
-                $restRequest->getMetadata()->getLocale()
+                $restRequest->getMetadata()->getLocale(),
             );
     }
 

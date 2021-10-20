@@ -134,7 +134,7 @@ class PriceProductConcreteWriter extends BaseProductPriceWriter implements Price
         if (!$priceProductTransfer->getPriceDimension()) {
             $priceProductTransfer->setPriceDimension(
                 (new PriceProductDimensionTransfer())
-                    ->setType($this->config->getPriceDimensionDefault())
+                    ->setType($this->config->getPriceDimensionDefault()),
             );
         }
 
@@ -166,7 +166,7 @@ class PriceProductConcreteWriter extends BaseProductPriceWriter implements Price
             /** @var int $idPriceProductDefault */
             $idPriceProductDefault = $priceProductDefaultEntityTransfer->getIdPriceProductDefault();
             $priceDimensionTransfer->setIdPriceProductDefault(
-                $idPriceProductDefault
+                $idPriceProductDefault,
             );
 
             return $priceProductTransfer->setPriceDimension($priceDimensionTransfer);

@@ -48,7 +48,7 @@ class AutoloadUpdaterTest extends Unit
                 AutoloadUpdater::BASE_TESTS_DIRECTORY,
                 $autoloadKey,
             ],
-            $this->getComposerJson($autoloadKey)
+            $this->getComposerJson($autoloadKey),
         );
         $this->assertSame($this->getComposerJson($autoloadKey)['autoload-dev'], $updatedJson['autoload-dev']);
     }
@@ -114,7 +114,7 @@ class AutoloadUpdaterTest extends Unit
                     $pathParts,
                     implode(DIRECTORY_SEPARATOR, $pathParts) . '/',
                 ],
-            ]
+            ],
         );
 
         $this->assertSame($this->getComposerJson()['autoload'], $updatedJson['autoload']);
@@ -143,7 +143,7 @@ class AutoloadUpdaterTest extends Unit
                     $pathParts,
                     implode(DIRECTORY_SEPARATOR, $pathParts) . '/',
                 ],
-            ]
+            ],
         );
     }
 

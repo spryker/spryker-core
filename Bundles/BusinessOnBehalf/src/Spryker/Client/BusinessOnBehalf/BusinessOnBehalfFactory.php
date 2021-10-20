@@ -22,7 +22,7 @@ class BusinessOnBehalfFactory extends AbstractFactory
     public function createCustomerChecker(): CompanyUserCheckerInterface
     {
         return new CompanyUserChecker(
-            $this->getCompanyUserChangeAllowedCheckPlugins()
+            $this->getCompanyUserChangeAllowedCheckPlugins(),
         );
     }
 

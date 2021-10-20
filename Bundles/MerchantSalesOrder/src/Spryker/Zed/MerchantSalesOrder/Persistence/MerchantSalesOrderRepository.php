@@ -43,14 +43,14 @@ class MerchantSalesOrderRepository extends AbstractRepository implements Merchan
     ): MerchantOrderCollectionTransfer {
         $merchantSalesOrderQuery = $this->getFactory()->createMerchantSalesOrderQuery();
         $merchantSalesOrderQuery = $this->addMerchantSalesOrderTotalsDataToMerchantSalesOrderQuery(
-            $merchantSalesOrderQuery
+            $merchantSalesOrderQuery,
         );
         $merchantSalesOrderQuery = $this->applyMerchantOrderFilters($merchantSalesOrderQuery, $merchantOrderCriteriaTransfer);
 
         /** @var \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderQuery<\Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrder> $merchantSalesOrderQuery */
         $merchantSalesOrderQuery = $this->buildQueryFromCriteria(
             $merchantSalesOrderQuery,
-            $merchantOrderCriteriaTransfer->getFilter()
+            $merchantOrderCriteriaTransfer->getFilter(),
         );
         $merchantSalesOrderQuery->setFormatter(ModelCriteria::FORMAT_OBJECT);
 
@@ -71,7 +71,7 @@ class MerchantSalesOrderRepository extends AbstractRepository implements Merchan
             $merchantOrderTransfers[$merchantSalesOrderEntity->getIdMerchantSalesOrder()] = $merchantSalesOrderMapper
                 ->mapMerchantSalesOrderEntityToMerchantOrderTransfer(
                     $merchantSalesOrderEntity,
-                    new MerchantOrderTransfer()
+                    new MerchantOrderTransfer(),
                 );
         }
 
@@ -80,7 +80,7 @@ class MerchantSalesOrderRepository extends AbstractRepository implements Merchan
         }
 
         return (new MerchantOrderCollectionTransfer())->setMerchantOrders(
-            new ArrayObject(array_values($merchantOrderTransfers))
+            new ArrayObject(array_values($merchantOrderTransfers)),
         );
     }
 
@@ -92,7 +92,7 @@ class MerchantSalesOrderRepository extends AbstractRepository implements Merchan
     protected function addMerchantOrderItemsToMerchantOrders(array $merchantOrderTransfers): array
     {
         $merchantSalesOrderItemEntityCollection = $this->getMerchantSalesOrderItemEntityCollectionByMerchantOrderIds(
-            array_keys($merchantOrderTransfers)
+            array_keys($merchantOrderTransfers),
         );
 
         $merchantSalesOrderMapper = $this->getFactory()->createMerchantSalesOrderMapper();
@@ -102,8 +102,8 @@ class MerchantSalesOrderRepository extends AbstractRepository implements Merchan
             $merchantOrderTransfers[$merchantSalesOrderItemEntity->getFkMerchantSalesOrder()]->addMerchantOrderItem(
                 $merchantSalesOrderMapper->mapMerchantSalesOrderItemEntityToMerchantOrderItemTransfer(
                     $merchantSalesOrderItemEntity,
-                    new MerchantOrderItemTransfer()
-                )
+                    new MerchantOrderItemTransfer(),
+                ),
             );
         }
 
@@ -135,7 +135,7 @@ class MerchantSalesOrderRepository extends AbstractRepository implements Merchan
     ): ?MerchantOrderTransfer {
         $merchantSalesOrderQuery = $this->getFactory()->createMerchantSalesOrderQuery();
         $merchantSalesOrderQuery = $this->addMerchantSalesOrderTotalsDataToMerchantSalesOrderQuery(
-            $merchantSalesOrderQuery
+            $merchantSalesOrderQuery,
         );
         $merchantSalesOrderEntity = $this
             ->applyMerchantOrderFilters($merchantSalesOrderQuery, $merchantOrderCriteriaTransfer)
@@ -219,25 +219,25 @@ class MerchantSalesOrderRepository extends AbstractRepository implements Merchan
     ): SpyMerchantSalesOrderQuery {
         if ($merchantOrderCriteriaTransfer->getIdMerchantOrder() !== null) {
             $merchantSalesOrderQuery->filterByIdMerchantSalesOrder(
-                $merchantOrderCriteriaTransfer->getIdMerchantOrder()
+                $merchantOrderCriteriaTransfer->getIdMerchantOrder(),
             );
         }
 
         if ($merchantOrderCriteriaTransfer->getMerchantOrderReference() !== null) {
             $merchantSalesOrderQuery->filterByMerchantSalesOrderReference(
-                $merchantOrderCriteriaTransfer->getMerchantOrderReference()
+                $merchantOrderCriteriaTransfer->getMerchantOrderReference(),
             );
         }
 
         if ($merchantOrderCriteriaTransfer->getMerchantReference() !== null) {
             $merchantSalesOrderQuery->filterByMerchantReference(
-                $merchantOrderCriteriaTransfer->getMerchantReference()
+                $merchantOrderCriteriaTransfer->getMerchantReference(),
             );
         }
 
         if ($merchantOrderCriteriaTransfer->getIdOrder() !== null) {
             $merchantSalesOrderQuery->filterByFkSalesOrder(
-                $merchantOrderCriteriaTransfer->getIdOrder()
+                $merchantOrderCriteriaTransfer->getIdOrder(),
             );
         }
 
@@ -245,11 +245,11 @@ class MerchantSalesOrderRepository extends AbstractRepository implements Merchan
             $merchantSalesOrderQuery->addJoin(
                 SpyMerchantSalesOrderTableMap::COL_MERCHANT_REFERENCE,
                 SpyMerchantTableMap::COL_MERCHANT_REFERENCE,
-                Criteria::INNER_JOIN
+                Criteria::INNER_JOIN,
             );
             $merchantSalesOrderQuery->addAnd(
                 SpyMerchantTableMap::COL_ID_MERCHANT,
-                $merchantOrderCriteriaTransfer->getIdMerchant()
+                $merchantOrderCriteriaTransfer->getIdMerchant(),
             );
         }
 
@@ -257,17 +257,17 @@ class MerchantSalesOrderRepository extends AbstractRepository implements Merchan
             $merchantSalesOrderQuery->addJoin(
                 SpyMerchantSalesOrderTableMap::COL_ID_MERCHANT_SALES_ORDER,
                 SpyMerchantSalesOrderItemTableMap::COL_FK_MERCHANT_SALES_ORDER,
-                Criteria::INNER_JOIN
+                Criteria::INNER_JOIN,
             );
             $merchantSalesOrderQuery->addJoin(
                 SpyMerchantSalesOrderItemTableMap::COL_FK_SALES_ORDER_ITEM,
                 SpySalesOrderItemTableMap::COL_ID_SALES_ORDER_ITEM,
-                Criteria::INNER_JOIN
+                Criteria::INNER_JOIN,
             );
             $merchantSalesOrderQuery->addAnd(
                 SpySalesOrderItemTableMap::COL_UUID,
                 $merchantOrderCriteriaTransfer->getOrderItemUuids(),
-                Criteria::IN
+                Criteria::IN,
             );
         }
 
@@ -333,7 +333,7 @@ class MerchantSalesOrderRepository extends AbstractRepository implements Merchan
         $merchantSalesOrderItemQuery = $this->getFactory()->createMerchantSalesOrderItemQuery();
         $merchantSalesOrderItemQuery = $this->applyMerchantOrderItemFilters(
             $merchantOrderItemCriteriaTransfer,
-            $merchantSalesOrderItemQuery
+            $merchantSalesOrderItemQuery,
         );
 
         $merchantSalesOrderItemEntity = $merchantSalesOrderItemQuery->findOne();
@@ -346,7 +346,7 @@ class MerchantSalesOrderRepository extends AbstractRepository implements Merchan
             ->createMerchantSalesOrderMapper()
             ->mapMerchantSalesOrderItemEntityToMerchantOrderItemTransfer(
                 $merchantSalesOrderItemEntity,
-                new MerchantOrderItemTransfer()
+                new MerchantOrderItemTransfer(),
             );
     }
 
@@ -359,7 +359,7 @@ class MerchantSalesOrderRepository extends AbstractRepository implements Merchan
     {
         return $this->applyMerchantOrderFilters(
             $this->getFactory()->createMerchantSalesOrderQuery(),
-            $merchantOrderCriteriaTransfer
+            $merchantOrderCriteriaTransfer,
         )->count();
     }
 
@@ -373,7 +373,7 @@ class MerchantSalesOrderRepository extends AbstractRepository implements Merchan
         $merchantSalesOrderItemQuery = $this->getFactory()->createMerchantSalesOrderItemQuery();
         $merchantSalesOrderItemQuery = $this->applyMerchantOrderItemFilters(
             $merchantOrderItemCriteriaTransfer,
-            $merchantSalesOrderItemQuery
+            $merchantSalesOrderItemQuery,
         );
 
         /** @var \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItem> $merchantSalesOrderEntities */
@@ -383,7 +383,7 @@ class MerchantSalesOrderRepository extends AbstractRepository implements Merchan
             ->createMerchantSalesOrderMapper()
             ->mapMerchantSalesOrderItemEntitiesToMerchantOrderItemCollectionTransfer(
                 $merchantSalesOrderEntities,
-                new MerchantOrderItemCollectionTransfer()
+                new MerchantOrderItemCollectionTransfer(),
             );
     }
 
@@ -418,7 +418,7 @@ class MerchantSalesOrderRepository extends AbstractRepository implements Merchan
 
         if ($merchantOrderItemCriteriaTransfer->getMerchantOrderItemReference() !== null) {
             $merchantSalesOrderItemQuery->filterByMerchantOrderItemReference(
-                $merchantOrderItemCriteriaTransfer->getMerchantOrderItemReference()
+                $merchantOrderItemCriteriaTransfer->getMerchantOrderItemReference(),
             );
         }
 

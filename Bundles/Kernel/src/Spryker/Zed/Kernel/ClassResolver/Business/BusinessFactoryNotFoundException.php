@@ -33,7 +33,7 @@ class BusinessFactoryNotFoundException extends Exception
         $message = 'Spryker Kernel Exception' . PHP_EOL;
         $message .= sprintf(
             'Can not resolve %1$sBusinessFactory for your module "%1$s"',
-            $callerClassInfo->getModule()
+            $callerClassInfo->getModule(),
         ) . PHP_EOL;
 
         $message .= 'You can fix this by adding the missing Factory to your module.' . PHP_EOL;
@@ -41,7 +41,7 @@ class BusinessFactoryNotFoundException extends Exception
         $message .= sprintf(
             'E.g. %1$s\\Zed\\%2$s\\Business\\%2$sBusinessFactory' . PHP_EOL . PHP_EOL,
             Config::getInstance()->get(KernelConstants::PROJECT_NAMESPACE),
-            $callerClassInfo->getModule()
+            $callerClassInfo->getModule(),
         );
 
         $message .= new Backtrace();

@@ -88,7 +88,7 @@ class MerchantSynchronizationDataBulkRepositoryPlugin extends AbstractPlugin imp
         return $this->getFacade()
             ->getSynchronizationDataTransfersByMerchantIds(
                 (new FilterTransfer())->setLimit($limit)->setOffset($offset),
-                $ids
+                $ids,
             );
     }
 

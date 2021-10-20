@@ -76,7 +76,7 @@ class CmsBlockSuggestController extends AbstractController
         return $this->jsonResponse(
             $this->getFactory()
                 ->createCmsBlockSuggestionFinder()
-                ->getCmsBlockSuggestions($cmsBlockCriteriaTransfer, $cmsSlotBlockCriteriaTransfer)
+                ->getCmsBlockSuggestions($cmsBlockCriteriaTransfer, $cmsSlotBlockCriteriaTransfer),
         );
     }
 }

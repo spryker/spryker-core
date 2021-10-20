@@ -58,7 +58,7 @@ class ProductLabelAggregateFormType extends AbstractType
             ProductLabelFormType::class,
             [
                 'label' => false,
-            ]
+            ],
         );
 
         return $this;
@@ -76,7 +76,7 @@ class ProductLabelAggregateFormType extends AbstractType
             RelatedProductFormType::class,
             [
                 'label' => false,
-            ]
+            ],
         );
 
         return $this;

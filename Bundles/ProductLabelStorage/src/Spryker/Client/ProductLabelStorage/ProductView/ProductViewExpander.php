@@ -40,7 +40,7 @@ class ProductViewExpander implements ProductViewExpanderInterface
         $productLabelDictionaryItems = $this->productAbstractLabelReader->findLabelsByIdProductAbstract(
             $productViewTransfer->getIdProductAbstract(),
             $localeName,
-            $storeName
+            $storeName,
         );
 
         return $productViewTransfer->setLabels(new ArrayObject($productLabelDictionaryItems));

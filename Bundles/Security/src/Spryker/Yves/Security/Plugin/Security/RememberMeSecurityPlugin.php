@@ -149,7 +149,7 @@ class RememberMeSecurityPlugin implements SecurityPluginInterface
                     $container->get('security.remember_me.service.' . $providerKey),
                     $container->get('security.authentication_manager'),
                     $container->has('logger') ? $container->get('logger') : null,
-                    $container->get(static::SERVICE_DISPATCHER)
+                    $container->get(static::SERVICE_DISPATCHER),
                 );
 
                 return $listener;

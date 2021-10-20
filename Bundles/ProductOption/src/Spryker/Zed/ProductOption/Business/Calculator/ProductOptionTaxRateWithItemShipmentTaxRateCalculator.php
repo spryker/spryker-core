@@ -83,7 +83,7 @@ class ProductOptionTaxRateWithItemShipmentTaxRateCalculator implements Calculato
             $this->setProductOptionTaxRate(
                 $itemTransfer,
                 $taxRates,
-                $this->getShippingCountryIso2CodeByItem($itemTransfer)
+                $this->getShippingCountryIso2CodeByItem($itemTransfer),
             );
         }
 
@@ -177,8 +177,8 @@ class ProductOptionTaxRateWithItemShipmentTaxRateCalculator implements Calculato
                 $this->getEffectiveTaxRate(
                     $taxRates,
                     $productOptionTransfer->getIdProductOptionValue(),
-                    $countryIso2Code
-                )
+                    $countryIso2Code,
+                ),
             );
         }
     }
@@ -212,7 +212,7 @@ class ProductOptionTaxRateWithItemShipmentTaxRateCalculator implements Calculato
         $taxSetCollection = $this->queryContainer
             ->queryTaxSetByIdProductOptionValueAndCountryIso2Codes(
                 $idProductOptionValues,
-                array_unique($countryIso2Codes)
+                array_unique($countryIso2Codes),
             )
             ->find();
 
@@ -231,7 +231,7 @@ class ProductOptionTaxRateWithItemShipmentTaxRateCalculator implements Calculato
         foreach ($taxSetCollection as $data) {
             $key = $this->getTaxGroupedKey(
                 $data[ProductOptionQueryContainer::COL_ID_PRODUCT_OPTION_VALUE],
-                $data[ProductOptionQueryContainer::COL_COUNTRY_ISO2_CODE]
+                $data[ProductOptionQueryContainer::COL_COUNTRY_ISO2_CODE],
             );
 
             $groupedTaxSetCollection[$key] = $data[ProductOptionQueryContainer::COL_MAX_TAX_RATE];

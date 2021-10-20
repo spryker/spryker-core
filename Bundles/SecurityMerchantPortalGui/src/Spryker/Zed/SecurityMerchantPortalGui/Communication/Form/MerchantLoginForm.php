@@ -90,7 +90,7 @@ class MerchantLoginForm extends AbstractType
                 'attr' => [
                     'placeholder' => 'Email Address',
                 ],
-            ]
+            ],
         );
 
         return $this;
@@ -115,7 +115,7 @@ class MerchantLoginForm extends AbstractType
                     'placeholder' => 'Password',
                     'autocomplete' => 'off',
                 ],
-            ]
+            ],
         );
 
         return $this;

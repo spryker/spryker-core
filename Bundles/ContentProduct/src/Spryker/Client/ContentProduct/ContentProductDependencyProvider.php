@@ -41,7 +41,7 @@ class ContentProductDependencyProvider extends AbstractDependencyProvider
     {
         $container->set(static::CLIENT_CONTENT_STORAGE, function (Container $container) {
             return new ContentProductToContentStorageClientBridge(
-                $container->getLocator()->contentStorage()->client()
+                $container->getLocator()->contentStorage()->client(),
             );
         });
 

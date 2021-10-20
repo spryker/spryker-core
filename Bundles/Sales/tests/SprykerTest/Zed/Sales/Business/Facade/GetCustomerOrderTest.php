@@ -118,7 +118,7 @@ class GetCustomerOrderTest extends Test
         // Arrange
         $this->tester->setDependency(
             SalesDependencyProvider::PLUGINS_CUSTOMER_ORDER_ACCESS_CHECK,
-            [$this->getCustomerOrderAccessCheckPluginMock()]
+            [$this->getCustomerOrderAccessCheckPluginMock()],
         );
 
         $customerTransfer = $this->tester->haveCustomer();

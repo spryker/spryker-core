@@ -56,7 +56,7 @@ class AmountSalesUnitHydrateOrder implements AmountSalesUnitHydrateOrderInterfac
         foreach ($salesOrderItemEntityTransfers as $salesOrderItemEntityTransfer) {
             $itemTransfer = $this->findItemTransferAmountSalesUnitsBelongTo(
                 $orderTransfer,
-                $salesOrderItemEntityTransfer->getIdSalesOrderItem()
+                $salesOrderItemEntityTransfer->getIdSalesOrderItem(),
             );
 
             if (!$itemTransfer || empty($salesOrderItemEntityTransfer->getAmountMeasurementUnitName())) {
@@ -98,7 +98,7 @@ class AmountSalesUnitHydrateOrder implements AmountSalesUnitHydrateOrderInterfac
 
         $productMeasurementUnitTransfer = $this->createProductMeasurementUnitTransfer(
             $salesOrderItemEntityTransfer->getAmountMeasurementUnitName(),
-            $salesOrderItemEntityTransfer->getAmountMeasurementUnitCode()
+            $salesOrderItemEntityTransfer->getAmountMeasurementUnitCode(),
         );
         $productMeasurementSalesUnitTransfer->setProductMeasurementUnit($productMeasurementUnitTransfer);
 

@@ -159,11 +159,11 @@ class IdeAutoCompletionWriterTest extends Unit
                 IdeAutoCompletionOptionConstants::TARGET_BASE_DIRECTORY => IdeAutoCompletion::TEST_TARGET_DIRECTORY,
                 IdeAutoCompletionOptionConstants::TARGET_DIRECTORY_PATTERN => sprintf(
                     'Generated/%s/Ide',
-                    IdeAutoCompletionConstants::APPLICATION_NAME_PLACEHOLDER
+                    IdeAutoCompletionConstants::APPLICATION_NAME_PLACEHOLDER,
                 ),
                 IdeAutoCompletionOptionConstants::TARGET_NAMESPACE_PATTERN => sprintf(
                     'Generated\%s\Ide',
-                    IdeAutoCompletionConstants::APPLICATION_NAME_PLACEHOLDER
+                    IdeAutoCompletionConstants::APPLICATION_NAME_PLACEHOLDER,
                 ),
                 IdeAutoCompletionConstants::DIRECTORY_PERMISSION => 0777,
             ]);

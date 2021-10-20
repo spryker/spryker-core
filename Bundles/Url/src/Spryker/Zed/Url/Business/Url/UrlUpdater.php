@@ -112,7 +112,7 @@ class UrlUpdater extends AbstractUrlUpdaterSubject implements UrlUpdaterInterfac
         if (!$urlEntity) {
             throw new MissingUrlException(sprintf(
                 'Tried to retrieve url with ID "%s", but it is missing',
-                $idUrl
+                $idUrl,
             ));
         }
 
@@ -131,7 +131,7 @@ class UrlUpdater extends AbstractUrlUpdaterSubject implements UrlUpdaterInterfac
         if ($this->urlReader->hasUrl($urlTransfer)) {
             throw new UrlExistsException(sprintf(
                 'Tried to create url "%s", but it already exists.',
-                $urlTransfer->getUrl()
+                $urlTransfer->getUrl(),
             ));
         }
     }

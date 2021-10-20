@@ -81,7 +81,7 @@ class CompanyUserRoleDataImportPluginTest extends AbstractCompanyRoleDataImportM
     {
         $this->assertSame(
             CompanyRoleDataImportConfig::IMPORT_TYPE_COMPANY_USER_ROLE,
-            $this->getCompanyUserRoleDataImportPlugin()->getImportType()
+            $this->getCompanyUserRoleDataImportPlugin()->getImportType(),
         );
     }
 

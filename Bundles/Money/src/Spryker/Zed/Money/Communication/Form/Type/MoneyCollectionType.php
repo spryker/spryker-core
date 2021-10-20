@@ -50,7 +50,7 @@ class MoneyCollectionType extends AbstractCollectionType
             FormEvents::PRE_SET_DATA,
             function (FormEvent $event) use ($options) {
                 $this->setInitialMoneyValueData($event, $options);
-            }
+            },
         );
 
         parent::buildForm($builder, array_replace_recursive($defaultOptions, $options));
@@ -86,7 +86,7 @@ class MoneyCollectionType extends AbstractCollectionType
 
         if (!($event->getData() instanceof Countable) || count($event->getData()) === 0) {
             $event->setData(
-                $moneyCollectionInitialDataProvider->getInitialData()
+                $moneyCollectionInitialDataProvider->getInitialData(),
             );
 
             return;
@@ -95,7 +95,7 @@ class MoneyCollectionType extends AbstractCollectionType
         /** @var \ArrayObject<int, \Generated\Shared\Transfer\MoneyValueTransfer> $data */
         $data = $event->getData();
         $event->setData(
-            $moneyCollectionInitialDataProvider->mergeMissingMoneyValues($data)
+            $moneyCollectionInitialDataProvider->mergeMissingMoneyValues($data),
         );
     }
 

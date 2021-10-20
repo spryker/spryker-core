@@ -39,7 +39,7 @@ class SyncMerchantUsersStatusMerchantPostUpdatePlugin extends AbstractPlugin imp
     {
         if ($merchantTransfer->getStatus() === static::MERCHANT_STATUS_DENIED) {
             $this->getFacade()->disableMerchantUsers(
-                (new MerchantUserCriteriaTransfer())->setIdMerchant($merchantTransfer->getIdMerchant())
+                (new MerchantUserCriteriaTransfer())->setIdMerchant($merchantTransfer->getIdMerchant()),
             );
         }
 

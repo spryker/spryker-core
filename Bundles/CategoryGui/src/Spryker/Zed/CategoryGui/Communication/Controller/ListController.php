@@ -39,7 +39,7 @@ class ListController extends AbstractController
             ->createCategoryTable();
 
         return $this->jsonResponse(
-            $categoryTable->fetchData()
+            $categoryTable->fetchData(),
         );
     }
 }

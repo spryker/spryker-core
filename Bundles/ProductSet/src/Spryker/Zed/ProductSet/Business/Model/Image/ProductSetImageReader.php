@@ -68,7 +68,7 @@ class ProductSetImageReader implements ProductSetImageReaderInterface
         if (!$productImageSetTransfer) {
             throw new MissingProductImageSetException(sprintf(
                 'Missing product image set #%d.',
-                $productImageSetEntity->getIdProductImageSet()
+                $productImageSetEntity->getIdProductImageSet(),
             ));
         }
 

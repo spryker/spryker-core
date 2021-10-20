@@ -73,7 +73,7 @@ class PredisAdapterFactory implements RedisAdapterFactoryInterface
     protected function createPredisAdapter(RedisConfigurationTransfer $redisConfigurationTransfer): RedisAdapterInterface
     {
         return new PredisAdapter(
-            $this->createPredisClient($redisConfigurationTransfer)
+            $this->createPredisClient($redisConfigurationTransfer),
         );
     }
 
@@ -86,7 +86,7 @@ class PredisAdapterFactory implements RedisAdapterFactoryInterface
     {
         return new LoggableRedisAdapter(
             $this->createPredisAdapter($redisConfigurationTransfer),
-            $this->createRedisLogger($redisConfigurationTransfer)
+            $this->createRedisLogger($redisConfigurationTransfer),
         );
     }
 
@@ -109,7 +109,7 @@ class PredisAdapterFactory implements RedisAdapterFactoryInterface
     {
         return new Client(
             $this->getConnectionParameters($redisConfigurationTransfer),
-            $redisConfigurationTransfer->getClientOptions()
+            $redisConfigurationTransfer->getClientOptions(),
         );
     }
 

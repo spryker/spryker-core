@@ -61,7 +61,7 @@ class UrlCollectorToCollectorFacadeBridge implements UrlCollectorToCollectorFaca
             $dataReader,
             $dataWriter,
             $touchUpdater,
-            $output
+            $output,
         );
     }
 }

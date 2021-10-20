@@ -42,7 +42,7 @@ class TimeDecisionRuleTest extends BaseRuleTester
         $isSatisfied = $monthDecisionRule->isSatisfiedBy(
             $this->createQuoteTransfer(),
             $this->createItemTransfer(),
-            $this->createClauseTransfer($dateTime->format(TimeDecisionRule::TIME_FORMAT))
+            $this->createClauseTransfer($dateTime->format(TimeDecisionRule::TIME_FORMAT)),
         );
 
         $this->assertTrue($isSatisfied);

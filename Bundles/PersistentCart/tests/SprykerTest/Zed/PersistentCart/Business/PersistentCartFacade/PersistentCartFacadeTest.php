@@ -102,11 +102,11 @@ class PersistentCartFacadeTest extends Unit
         $this->assertCount(
             3,
             $quoteResponseTransfer->getQuoteTransfer()->getItems(),
-            'Expected 3 items in the quote.'
+            'Expected 3 items in the quote.',
         );
         $this->assertFalse(
             $quoteResponseTransfer->getIsSuccessful(),
-            'Expected that quote response isSuccessful flag will be set to false when item to be replaced does not exist in quote.'
+            'Expected that quote response isSuccessful flag will be set to false when item to be replaced does not exist in quote.',
         );
     }
 
@@ -130,22 +130,22 @@ class PersistentCartFacadeTest extends Unit
         // Assert
         $this->assertTrue(
             $quoteResponseTransfer->getIsSuccessful(),
-            'Expected that quote response isSuccessful flag will be set to true when decreasing quantity for provided items.'
+            'Expected that quote response isSuccessful flag will be set to true when decreasing quantity for provided items.',
         );
         $this->assertSame(
             2,
             $quoteResponseTransfer->getQuoteTransfer()->getItems()->offsetGet(0)->getQuantity(),
-            'Expected that quantity of the item with sku fake_sku_1 in the quote will be decreased from 5 to 2.'
+            'Expected that quantity of the item with sku fake_sku_1 in the quote will be decreased from 5 to 2.',
         );
         $this->assertSame(
             1,
             $quoteResponseTransfer->getQuoteTransfer()->getItems()->offsetGet(1)->getQuantity(),
-            'Expected that quantity of the item with sku fake_sku_2 in the quote  will be decreased from 5 to 1.'
+            'Expected that quantity of the item with sku fake_sku_2 in the quote  will be decreased from 5 to 1.',
         );
         $this->assertSame(
             5,
             $quoteResponseTransfer->getQuoteTransfer()->getItems()->offsetGet(2)->getQuantity(),
-            'Expected that quantity of the item with sku fake_sku_3 in the quote wont be decreased.'
+            'Expected that quantity of the item with sku fake_sku_3 in the quote wont be decreased.',
         );
     }
 
@@ -169,22 +169,22 @@ class PersistentCartFacadeTest extends Unit
         // Assert
         $this->assertTrue(
             $quoteResponseTransfer->getIsSuccessful(),
-            'Expected that quote response isSuccessful flag will be set to true when increasing quantity for provided items.'
+            'Expected that quote response isSuccessful flag will be set to true when increasing quantity for provided items.',
         );
         $this->assertSame(
             7,
             $quoteResponseTransfer->getQuoteTransfer()->getItems()->offsetGet(0)->getQuantity(),
-            'Expected that quantity of the item with sku fake_sku_1 in the quote will be increased from 5 to 7.'
+            'Expected that quantity of the item with sku fake_sku_1 in the quote will be increased from 5 to 7.',
         );
         $this->assertSame(
             10,
             $quoteResponseTransfer->getQuoteTransfer()->getItems()->offsetGet(1)->getQuantity(),
-            'Expected that quantity of the item with sku fake_sku_2 in the quote will be increased from 5 to 10.'
+            'Expected that quantity of the item with sku fake_sku_2 in the quote will be increased from 5 to 10.',
         );
         $this->assertSame(
             5,
             $quoteResponseTransfer->getQuoteTransfer()->getItems()->offsetGet(2)->getQuantity(),
-            'Expected that quantity of item with sku fake_sku_3 item in the quote wont be increased.'
+            'Expected that quantity of item with sku fake_sku_3 item in the quote wont be increased.',
         );
     }
 
@@ -209,22 +209,22 @@ class PersistentCartFacadeTest extends Unit
         // Assert
         $this->assertTrue(
             $quoteResponseTransfer->getIsSuccessful(),
-            'Expected that quote response isSuccessful flag will be set to true when changing quantity for provided items.'
+            'Expected that quote response isSuccessful flag will be set to true when changing quantity for provided items.',
         );
         $this->assertSame(
             1,
             $quoteResponseTransfer->getQuoteTransfer()->getItems()->offsetGet(0)->getQuantity(),
-            'Expected that quantity of the item with sku fake_sku_1 in the quote will be decreased from 5 to 1.'
+            'Expected that quantity of the item with sku fake_sku_1 in the quote will be decreased from 5 to 1.',
         );
         $this->assertSame(
             10,
             $quoteResponseTransfer->getQuoteTransfer()->getItems()->offsetGet(1)->getQuantity(),
-            'Expected that quantity of the item with sku fake_sku_2 in the quote will be increased from 5 to 10.'
+            'Expected that quantity of the item with sku fake_sku_2 in the quote will be increased from 5 to 10.',
         );
         $this->assertSame(
             5,
             $quoteResponseTransfer->getQuoteTransfer()->getItems()->offsetGet(2)->getQuantity(),
-            'Expected that quantity of the item with sku fake_sku_3 in the quote wont be changed.'
+            'Expected that quantity of the item with sku fake_sku_3 in the quote wont be changed.',
         );
     }
 
@@ -246,22 +246,22 @@ class PersistentCartFacadeTest extends Unit
         // Assert
         $this->assertTrue(
             $quoteResponseTransfer->getIsSuccessful(),
-            'Expected that quote response isSuccessful flag will be set to true when updating cart items quantity with empty persistent cart change transfer.'
+            'Expected that quote response isSuccessful flag will be set to true when updating cart items quantity with empty persistent cart change transfer.',
         );
         $this->assertSame(
             5,
             $quoteResponseTransfer->getQuoteTransfer()->getItems()->offsetGet(0)->getQuantity(),
-            'Expected that quantity of the item with sku fake_sku_1 in the quote wont be changed.'
+            'Expected that quantity of the item with sku fake_sku_1 in the quote wont be changed.',
         );
         $this->assertSame(
             5,
             $quoteResponseTransfer->getQuoteTransfer()->getItems()->offsetGet(1)->getQuantity(),
-            'Expected that quantity of the item with sku fake_sku_1 in the quote wont be changed.'
+            'Expected that quantity of the item with sku fake_sku_1 in the quote wont be changed.',
         );
         $this->assertSame(
             5,
             $quoteResponseTransfer->getQuoteTransfer()->getItems()->offsetGet(2)->getQuantity(),
-            'Expected that quantity of the item with sku fake_sku_1 in the quote wont be changed.'
+            'Expected that quantity of the item with sku fake_sku_1 in the quote wont be changed.',
         );
     }
 
@@ -286,22 +286,22 @@ class PersistentCartFacadeTest extends Unit
         // Assert
         $this->assertTrue(
             $quoteResponseTransfer->getIsSuccessful(),
-            'Expected that quote response isSuccessful flag will be set to true when updating cart items quantity with same items quantity in the persistent cart change transfer.'
+            'Expected that quote response isSuccessful flag will be set to true when updating cart items quantity with same items quantity in the persistent cart change transfer.',
         );
         $this->assertSame(
             5,
             $quoteResponseTransfer->getQuoteTransfer()->getItems()->offsetGet(0)->getQuantity(),
-            'Expected that quantity of the item with sku fake_sku_1 in the quote wont be changed.'
+            'Expected that quantity of the item with sku fake_sku_1 in the quote wont be changed.',
         );
         $this->assertSame(
             5,
             $quoteResponseTransfer->getQuoteTransfer()->getItems()->offsetGet(1)->getQuantity(),
-            'Expected that quantity of the item with sku fake_sku_2 in the quote wont be changed.'
+            'Expected that quantity of the item with sku fake_sku_2 in the quote wont be changed.',
         );
         $this->assertSame(
             5,
             $quoteResponseTransfer->getQuoteTransfer()->getItems()->offsetGet(2)->getQuantity(),
-            'Expected that quantity of the item with sku fake_sku_3 in the quote wont be changed.'
+            'Expected that quantity of the item with sku fake_sku_3 in the quote wont be changed.',
         );
     }
 
@@ -325,12 +325,12 @@ class PersistentCartFacadeTest extends Unit
         // Assert
         $this->assertTrue(
             $quoteResponseTransfer->getIsSuccessful(),
-            'Expected that quote response isSuccessful flag will be set to true when replacing item in quote.'
+            'Expected that quote response isSuccessful flag will be set to true when replacing item in quote.',
         );
         $this->assertCount(
             3,
             $quoteResponseTransfer->getQuoteTransfer()->getItems(),
-            'Expected that after replacing count will left the same (3).'
+            'Expected that after replacing count will left the same (3).',
         );
     }
 
@@ -354,22 +354,22 @@ class PersistentCartFacadeTest extends Unit
         // Assert
         $this->assertFalse(
             $quoteResponseTransfer->getIsSuccessful(),
-            'Expected that quote response isSuccessful flag will be set to false when trying to decrease more item quantity that exits in quote.'
+            'Expected that quote response isSuccessful flag will be set to false when trying to decrease more item quantity that exits in quote.',
         );
         $this->assertSame(
             5,
             $quoteResponseTransfer->getQuoteTransfer()->getItems()->offsetGet(0)->getQuantity(),
-            'Expected that quantity of the item with sku fake_sku_1 in the quote wont be changed.'
+            'Expected that quantity of the item with sku fake_sku_1 in the quote wont be changed.',
         );
         $this->assertSame(
             5,
             $quoteResponseTransfer->getQuoteTransfer()->getItems()->offsetGet(1)->getQuantity(),
-            'Expected that quantity of the item with sku fake_sku_2 in the quote wont be changed.'
+            'Expected that quantity of the item with sku fake_sku_2 in the quote wont be changed.',
         );
         $this->assertSame(
             5,
             $quoteResponseTransfer->getQuoteTransfer()->getItems()->offsetGet(2)->getQuantity(),
-            'Expected that quantity of the item with sku fake_sku_3 in the quote wont be changed.'
+            'Expected that quantity of the item with sku fake_sku_3 in the quote wont be changed.',
         );
     }
 
@@ -394,22 +394,22 @@ class PersistentCartFacadeTest extends Unit
         // Assert
         $this->assertFalse(
             $quoteResponseTransfer->getIsSuccessful(),
-            'Expected that quote response isSuccessful flag will be set to false when trying to decrease more item quantity that exits in quote.'
+            'Expected that quote response isSuccessful flag will be set to false when trying to decrease more item quantity that exits in quote.',
         );
         $this->assertSame(
             5,
             $quoteResponseTransfer->getQuoteTransfer()->getItems()->offsetGet(0)->getQuantity(),
-            'Expected that quantity of the item with sku fake_sku_3 in the quote wont be changed.'
+            'Expected that quantity of the item with sku fake_sku_3 in the quote wont be changed.',
         );
         $this->assertSame(
             5,
             $quoteResponseTransfer->getQuoteTransfer()->getItems()->offsetGet(1)->getQuantity(),
-            'Expected that quantity of the item with sku fake_sku_3 in the quote wont be changed.'
+            'Expected that quantity of the item with sku fake_sku_3 in the quote wont be changed.',
         );
         $this->assertSame(
             5,
             $quoteResponseTransfer->getQuoteTransfer()->getItems()->offsetGet(2)->getQuantity(),
-            'Expected that quantity of the item with sku fake_sku_3 in the quote wont be changed.'
+            'Expected that quantity of the item with sku fake_sku_3 in the quote wont be changed.',
         );
     }
 

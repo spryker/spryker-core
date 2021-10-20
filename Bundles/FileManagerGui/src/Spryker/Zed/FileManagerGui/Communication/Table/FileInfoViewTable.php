@@ -24,7 +24,7 @@ class FileInfoViewTable extends FileInfoTable
             Url::generate('/file-manager-gui/download-file', [
                 static::REQUEST_ID_FILE_INFO => $item[static::COL_ID_FILE_INFO],
             ]),
-            'Download'
+            'Download',
         );
 
         return $buttons;

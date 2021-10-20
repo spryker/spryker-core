@@ -69,7 +69,7 @@ class CompanyUserStorageDependencyProvider extends AbstractBundleDependencyProvi
     {
         $container->set(static::FACADE_EVENT_BEHAVIOR, function (Container $container) {
             return new CompanyUserStorageToEventBehaviorFacadeBridge(
-                $container->getLocator()->eventBehavior()->facade()
+                $container->getLocator()->eventBehavior()->facade(),
             );
         });
 
@@ -85,7 +85,7 @@ class CompanyUserStorageDependencyProvider extends AbstractBundleDependencyProvi
     {
         $container->set(static::FACADE_COMPANY_USER, function (Container $container) {
             return new CompanyUserStorageToCompanyUserFacadeBridge(
-                $container->getLocator()->companyUser()->facade()
+                $container->getLocator()->companyUser()->facade(),
             );
         });
 

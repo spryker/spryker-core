@@ -264,8 +264,8 @@ class ProductOfferGuiTableConfigurationProvider implements GuiTableConfiguration
             'Manage Offer',
             sprintf(
                 '/product-offer-merchant-portal-gui/update-product-offer?product-offer-id=${row.%s}',
-                ProductOfferTransfer::ID_PRODUCT_OFFER
-            )
+                ProductOfferTransfer::ID_PRODUCT_OFFER,
+            ),
         )->setRowClickAction('update-offer');
 
         return $guiTableConfigurationBuilder;

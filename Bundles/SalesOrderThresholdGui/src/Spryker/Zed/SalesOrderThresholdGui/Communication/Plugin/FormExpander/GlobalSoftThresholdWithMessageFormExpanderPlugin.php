@@ -101,7 +101,7 @@ class GlobalSoftThresholdWithMessageFormExpanderPlugin extends AbstractPlugin im
         $salesOrderThresholdValueTransfer->setSalesOrderThresholdType(
             (new SalesOrderThresholdTypeTransfer())
                 ->setKey($this->getThresholdKey())
-                ->setThresholdGroup($this->getThresholdGroup())
+                ->setThresholdGroup($this->getThresholdGroup()),
         );
 
         return $salesOrderThresholdValueTransfer;

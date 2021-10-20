@@ -44,7 +44,7 @@ class CompanyUserMapper implements CompanyUserMapperInterface
         if ($companyUserEntityTransfer->getCustomer()) {
             $customerTransfer = (new CustomerTransfer())->fromArray(
                 $companyUserEntityTransfer->getCustomer()->modifiedToArray(),
-                true
+                true,
             );
             $companyUserTransfer->setCustomer($customerTransfer);
         }
@@ -52,7 +52,7 @@ class CompanyUserMapper implements CompanyUserMapperInterface
         if ($companyUserEntityTransfer->getCompany()) {
             $companyTransfer = (new CompanyTransfer())->fromArray(
                 $companyUserEntityTransfer->getCompany()->modifiedToArray(),
-                true
+                true,
             );
             $companyUserTransfer->setCompany($companyTransfer);
         }
@@ -89,17 +89,17 @@ class CompanyUserMapper implements CompanyUserMapperInterface
     ): CompanyUserTransfer {
         $companyUserTransfer = (new CompanyUserTransfer())->fromArray(
             $companyUserEntity->toArray(),
-            true
+            true,
         );
 
         $companyUserTransfer->setCustomer((new CustomerTransfer())->fromArray(
             $companyUserEntity->getCustomer()->toArray(),
-            true
+            true,
         ));
 
         $companyUserTransfer->setCompany((new CompanyTransfer())->fromArray(
             $companyUserEntity->getCompany()->toArray(),
-            true
+            true,
         ));
 
         return $companyUserTransfer;

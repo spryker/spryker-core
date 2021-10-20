@@ -99,7 +99,7 @@ class StockCreator implements StockCreatorInterface
         if ($stockTransfer->getStoreRelation() !== null) {
             $this->stockEntityManager->addStockStoreRelations(
                 $stockTransfer->getIdStock(),
-                $stockTransfer->getStoreRelation()->getIdStores()
+                $stockTransfer->getStoreRelation()->getIdStores(),
             );
         }
 
@@ -117,7 +117,7 @@ class StockCreator implements StockCreatorInterface
     {
         $this->touchFacade->touchActive(
             static::TOUCH_STOCK_TYPE,
-            $stockTransfer->getIdStock()
+            $stockTransfer->getIdStock(),
         );
     }
 

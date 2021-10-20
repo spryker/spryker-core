@@ -63,7 +63,7 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
             ->createSellableModel()
             ->areProductConcretesSellableForStore(
                 $sellableItemsRequestTransfer,
-                $sellableItemsResponseTransfer
+                $sellableItemsResponseTransfer,
             );
     }
 

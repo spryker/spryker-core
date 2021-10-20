@@ -42,7 +42,7 @@ class CompanyUserStorageMapper implements CompanyUserStorageMapperInterface
         foreach ($companyUserStorageEntityCollection as $companyUserStorageEntity) {
             $synchronizationDataTransfers[] = $this->mapCompanyUserStorageEntityToSynchronizationDataTransfer(
                 $companyUserStorageEntity,
-                new SynchronizationDataTransfer()
+                new SynchronizationDataTransfer(),
             );
         }
 

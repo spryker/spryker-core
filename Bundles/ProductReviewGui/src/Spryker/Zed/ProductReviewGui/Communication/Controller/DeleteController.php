@@ -36,7 +36,7 @@ class DeleteController extends AbstractController
             $this->addErrorMessage('CSRF token is not valid');
 
             return $this->redirectResponse(
-                Url::generate('/product-review-gui')->build()
+                Url::generate('/product-review-gui')->build(),
             );
         }
 
@@ -54,7 +54,7 @@ class DeleteController extends AbstractController
         ]);
 
         return $this->redirectResponse(
-            Url::generate('/product-review-gui')->build()
+            Url::generate('/product-review-gui')->build(),
         );
     }
 }

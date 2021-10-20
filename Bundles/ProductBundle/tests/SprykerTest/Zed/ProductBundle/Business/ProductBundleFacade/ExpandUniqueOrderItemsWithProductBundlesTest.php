@@ -51,7 +51,7 @@ class ExpandUniqueOrderItemsWithProductBundlesTest extends Unit
         // Act
         $itemTransfers = $this->tester->getFacade()->expandUniqueOrderItemsWithProductBundles(
             $orderTransfer->getItems()->getArrayCopy(),
-            $orderTransfer
+            $orderTransfer,
         );
 
         // Assert
@@ -70,7 +70,7 @@ class ExpandUniqueOrderItemsWithProductBundlesTest extends Unit
         // Act
         $itemTransfers = $this->tester->getFacade()->expandUniqueOrderItemsWithProductBundles(
             $orderTransfer->getItems()->getArrayCopy(),
-            $orderTransfer
+            $orderTransfer,
         );
 
         // Assert

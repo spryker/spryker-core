@@ -76,7 +76,7 @@ class ProductRelationMapper
         foreach ($productRelationEntities as $productRelationEntity) {
             $productRelationTransfers[] = $this->mapProductRelationEntityToProductRelationTransfer(
                 $productRelationEntity,
-                new ProductRelationTransfer()
+                new ProductRelationTransfer(),
             );
         }
 
@@ -97,13 +97,13 @@ class ProductRelationMapper
         $productRelationTransfer->setQuerySet(
             $this->ruleSetMapper->mapQuerySetDataToPropelQueryBuilderRuleSetTransfer(
                 $productRelationEntity->getQuerySetData(),
-                new PropelQueryBuilderRuleSetTransfer()
-            )
+                new PropelQueryBuilderRuleSetTransfer(),
+            ),
         );
         $productRelationTypeTransfer = $this->productRelationTypeMapper
             ->mapProductRelationTypeEntityToProductRelationTypeTransfer(
                 $productRelationEntity->getSpyProductRelationType(),
-                new ProductRelationTypeTransfer()
+                new ProductRelationTypeTransfer(),
             );
         $productRelationTransfer->setProductRelationType($productRelationTypeTransfer);
 
@@ -111,14 +111,14 @@ class ProductRelationMapper
         $productRelationTransfer->setStoreRelation(
             $this->storeRelationMapper->mapProductRelationStoreEntitiesToStoreRelationTransfer(
                 $productRelationEntity->getProductRelationStores(),
-                $this->createStoreRelationTransfer($productRelationTransfer)
-            )
+                $this->createStoreRelationTransfer($productRelationTransfer),
+            ),
         );
 
         $productRelationEntity->resetPartialSpyProductRelationProductAbstracts();
         $productRelationTransfer = $this->productMapper->mapProductRelationRelatedProductEntitiesToProductRelationTransfer(
             $productRelationEntity->getSpyProductRelationProductAbstracts(),
-            $productRelationTransfer
+            $productRelationTransfer,
         );
 
         return $productRelationTransfer;
@@ -167,7 +167,7 @@ class ProductRelationMapper
         }
 
         return $this->utilEncodingService->encodeJson(
-            $querySetData
+            $querySetData,
         );
     }
 }

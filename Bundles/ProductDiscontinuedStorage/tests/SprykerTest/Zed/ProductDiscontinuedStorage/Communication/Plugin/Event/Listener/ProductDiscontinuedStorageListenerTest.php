@@ -78,11 +78,11 @@ class ProductDiscontinuedStorageListenerTest extends Unit
         // Act
         $this->productDiscontinuedStorageListener->handleBulk(
             $eventTransfers,
-            ProductDiscontinuedEvents::PRODUCT_DISCONTINUED_PUBLISH
+            ProductDiscontinuedEvents::PRODUCT_DISCONTINUED_PUBLISH,
         );
         $productDiscontinuedEntityTransfers = $this->productDiscontinuedStorageRepository
             ->findProductDiscontinuedStorageEntitiesByIds(
-                [$this->productDiscontinuedTransfer->getIdProductDiscontinued()]
+                [$this->productDiscontinuedTransfer->getIdProductDiscontinued()],
             );
 
         // Assert
@@ -102,15 +102,15 @@ class ProductDiscontinuedStorageListenerTest extends Unit
         // Act
         $this->productDiscontinuedStorageListener->handleBulk(
             $eventTransfers,
-            ProductDiscontinuedEvents::PRODUCT_DISCONTINUED_PUBLISH
+            ProductDiscontinuedEvents::PRODUCT_DISCONTINUED_PUBLISH,
         );
         $this->productDiscontinuedStorageListener->handleBulk(
             $eventTransfers,
-            ProductDiscontinuedEvents::PRODUCT_DISCONTINUED_UNPUBLISH
+            ProductDiscontinuedEvents::PRODUCT_DISCONTINUED_UNPUBLISH,
         );
         $productDiscontinuedEntityTransfers = $this->productDiscontinuedStorageRepository
             ->findProductDiscontinuedStorageEntitiesByIds(
-                [$this->productDiscontinuedTransfer->getIdProductDiscontinued()]
+                [$this->productDiscontinuedTransfer->getIdProductDiscontinued()],
             );
 
         // Assert
@@ -135,12 +135,12 @@ class ProductDiscontinuedStorageListenerTest extends Unit
 
         $productDiscontinuedStoragePublishListener->handleBulk(
             $eventTransfers,
-            ProductDiscontinuedEvents::PRODUCT_DISCONTINUED_PUBLISH
+            ProductDiscontinuedEvents::PRODUCT_DISCONTINUED_PUBLISH,
         );
 
         $productDiscontinuedEntityTransfers = $this->productDiscontinuedStorageRepository
             ->findProductDiscontinuedStorageEntitiesByIds(
-                [$this->productDiscontinuedTransfer->getIdProductDiscontinued()]
+                [$this->productDiscontinuedTransfer->getIdProductDiscontinued()],
             );
 
         // Assert
@@ -164,11 +164,11 @@ class ProductDiscontinuedStorageListenerTest extends Unit
 
         $productDiscontinuedStorageUnpublishListener->handleBulk(
             $eventTransfers,
-            ProductDiscontinuedEvents::PRODUCT_DISCONTINUED_UNPUBLISH
+            ProductDiscontinuedEvents::PRODUCT_DISCONTINUED_UNPUBLISH,
         );
         $productDiscontinuedEntityTransfers = $this->productDiscontinuedStorageRepository
             ->findProductDiscontinuedStorageEntitiesByIds(
-                [$this->productDiscontinuedTransfer->getIdProductDiscontinued()]
+                [$this->productDiscontinuedTransfer->getIdProductDiscontinued()],
             );
 
         // Assert

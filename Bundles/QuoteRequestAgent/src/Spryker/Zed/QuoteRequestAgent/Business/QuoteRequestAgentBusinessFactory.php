@@ -26,7 +26,7 @@ class QuoteRequestAgentBusinessFactory extends AbstractBusinessFactory
     public function createQuoteRequestReader(): QuoteRequestReaderInterface
     {
         return new QuoteRequestReader(
-            $this->getQuoteRequestFacade()
+            $this->getQuoteRequestFacade(),
         );
     }
 
@@ -36,7 +36,7 @@ class QuoteRequestAgentBusinessFactory extends AbstractBusinessFactory
     public function createQuoteRequestWriter(): QuoteRequestWriterInterface
     {
         return new QuoteRequestWriter(
-            $this->getQuoteRequestFacade()
+            $this->getQuoteRequestFacade(),
         );
     }
 

@@ -29,7 +29,7 @@ class StockGuiCommunicationFactory extends AbstractCommunicationFactory
     {
         return new StockTable(
             $this->getStockPropelQuery(),
-            $this->getStockFacade()
+            $this->getStockFacade(),
         );
     }
 

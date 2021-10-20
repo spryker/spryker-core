@@ -71,9 +71,9 @@ class ReferenceValue implements PropertyValueInterface
                 sprintf(
                     'Expected reference to be %s, but %s encountered',
                     $this->getDefinition()->getType(),
-                    get_class($value)
+                    get_class($value),
                 ),
-                E_USER_WARNING
+                E_USER_WARNING,
             );
         }
 

@@ -39,7 +39,7 @@ class IndexController extends AbstractController
             [
                 $healthCheckResponseTransfer->toArray(),
             ],
-            $healthCheckResponseTransfer->getStatusCode()
+            $healthCheckResponseTransfer->getStatusCode(),
         );
     }
 }

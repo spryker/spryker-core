@@ -39,7 +39,7 @@ class CompanyBusinessUnitMapper implements CompanyBusinessUnitMapperInterface
 
         return $this->executeCompanyBusinessUnitMapperPlugins(
             $companyBusinessUnitTransfer,
-            $restCompanyBusinessUnitAttributesTransfer
+            $restCompanyBusinessUnitAttributesTransfer,
         );
     }
 
@@ -56,7 +56,7 @@ class CompanyBusinessUnitMapper implements CompanyBusinessUnitMapperInterface
         foreach ($this->companyBusinessUnitMapperPlugins as $companyBusinessUnitMapperPlugin) {
             $restCompanyBusinessUnitAttributesTransfer = $companyBusinessUnitMapperPlugin->mapCompanyBusinessUnitTransferToRestCompanyBusinessUnitAttributesTransfer(
                 $companyBusinessUnitTransfer,
-                $restCompanyBusinessUnitAttributesTransfer
+                $restCompanyBusinessUnitAttributesTransfer,
             );
         }
 

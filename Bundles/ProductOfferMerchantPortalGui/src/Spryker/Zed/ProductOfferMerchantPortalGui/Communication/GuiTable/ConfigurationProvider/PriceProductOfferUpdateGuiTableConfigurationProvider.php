@@ -125,7 +125,7 @@ class PriceProductOfferUpdateGuiTableConfigurationProvider extends AbstractPrice
         $guiTableConfigurationBuilder = $this->setEditableConfiguration(
             $guiTableConfigurationBuilder,
             $priceTypeTransfers,
-            $initialData
+            $initialData,
         );
 
         return $guiTableConfigurationBuilder->createConfiguration();
@@ -160,13 +160,13 @@ class PriceProductOfferUpdateGuiTableConfigurationProvider extends AbstractPrice
             static::URL_DELETE_PRICE,
             $deleteUrlParams,
             static::REQUEST_PARAM_PRICE_PRODUCT_OFFER_IDS,
-            static::REQUEST_PARAM_QUANTITY
+            static::REQUEST_PARAM_QUANTITY,
         );
 
         $guiTableConfigurationBuilder->addRowActionHttp(
             static::ID_ROW_ACTION_DELETE,
             static::TITLE_ROW_ACTION_DELETE,
-            $url
+            $url,
         );
 
         return $guiTableConfigurationBuilder;
@@ -187,7 +187,7 @@ class PriceProductOfferUpdateGuiTableConfigurationProvider extends AbstractPrice
         $guiTableConfigurationBuilder = parent::setEditableConfiguration(
             $guiTableConfigurationBuilder,
             $priceTypeTransfers,
-            $initialData
+            $initialData,
         );
 
         $urlSavePrices = sprintf(static::URL_SAVE_PRICES, $this->idProductOffer);

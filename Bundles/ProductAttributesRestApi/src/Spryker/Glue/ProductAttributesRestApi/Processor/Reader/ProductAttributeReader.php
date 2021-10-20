@@ -65,7 +65,7 @@ class ProductAttributeReader implements ProductAttributeReaderInterface
 
         return $this->restProductAttributeResponseBuilder->createProductAttributeListRestResponse(
             $productManagementAttributeFilterTransfer,
-            $productManagementAttributeCollectionTransfer
+            $productManagementAttributeCollectionTransfer,
         );
     }
 

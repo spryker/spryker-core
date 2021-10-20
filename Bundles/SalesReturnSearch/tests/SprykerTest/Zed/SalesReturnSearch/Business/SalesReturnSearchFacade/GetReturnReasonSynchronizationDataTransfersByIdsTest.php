@@ -64,13 +64,13 @@ class GetReturnReasonSynchronizationDataTransfersByIdsTest extends Unit
         $salesReturnSearchEntities = $this->tester->getSalesReturnSearchEntitiesByReturnReasonIds($returnReasonIds);
         $synchronizationDataTransfers = $this->tester->getFacade()->getReturnReasonSynchronizationDataTransfersByIds(
             new FilterTransfer(),
-            $returnReasonIds
+            $returnReasonIds,
         );
 
         // Assert
         $this->assertSame(
             count($salesReturnSearchEntities),
-            count($synchronizationDataTransfers)
+            count($synchronizationDataTransfers),
         );
     }
 
@@ -87,7 +87,7 @@ class GetReturnReasonSynchronizationDataTransfersByIdsTest extends Unit
         // Act
         $this->tester->getFacade()->writeCollectionByReturnReasonEvents($eventEntityTransfers);
         $synchronizationDataTransfers = $this->tester->getFacade()->getReturnReasonSynchronizationDataTransfersByIds(
-            (new FilterTransfer())->setOffset(1)->setLimit(1)
+            (new FilterTransfer())->setOffset(1)->setLimit(1),
         );
 
         // Assert
@@ -108,7 +108,7 @@ class GetReturnReasonSynchronizationDataTransfersByIdsTest extends Unit
         $this->tester->getFacade()->writeCollectionByReturnReasonEvents($eventEntityTransfers);
         $synchronizationDataTransfers = $this->tester->getFacade()->getReturnReasonSynchronizationDataTransfersByIds(
             (new FilterTransfer())->setOffset(1)->setLimit(1),
-            [$returnReasonIds[0]]
+            [$returnReasonIds[0]],
         );
 
         // Assert

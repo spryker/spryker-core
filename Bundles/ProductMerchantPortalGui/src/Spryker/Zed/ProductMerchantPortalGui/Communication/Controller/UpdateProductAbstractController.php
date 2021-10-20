@@ -75,7 +75,7 @@ class UpdateProductAbstractController extends AbstractUpdateProductController
                 $productAbstractTransfer,
                 $this->getFactory()
                     ->createProductAbstractFormDataProvider()
-                    ->getOptions()
+                    ->getOptions(),
             );
 
         $storedProductAttributes = $productAbstractTransfer->getAttributes();
@@ -84,11 +84,11 @@ class UpdateProductAbstractController extends AbstractUpdateProductController
 
         $priceTableInitialData = $this->getDefaultInitialData(
             PriceProductTableViewTransfer::PRICES,
-            $request->get($productAbstractForm->getName())
+            $request->get($productAbstractForm->getName()),
         );
         $attributesTableInitialData = $this->getDefaultInitialData(
             ProductAbstractTransfer::ATTRIBUTES,
-            $request->get($productAbstractForm->getName())
+            $request->get($productAbstractForm->getName()),
         );
 
         if ($productAbstractForm->isSubmitted()) {
@@ -100,7 +100,7 @@ class UpdateProductAbstractController extends AbstractUpdateProductController
                 $idMerchant,
                 $priceTableInitialData,
                 $attributesTableInitialData,
-                $initialCategoryIds
+                $initialCategoryIds,
             );
         }
 
@@ -110,7 +110,7 @@ class UpdateProductAbstractController extends AbstractUpdateProductController
             new ValidationResponseTransfer(),
             $priceTableInitialData,
             $attributesTableInitialData,
-            []
+            [],
         );
     }
 
@@ -158,13 +158,13 @@ class UpdateProductAbstractController extends AbstractUpdateProductController
                 ->createProductAttributesMapper()
                 ->mapAttributesDataToProductAttributes(
                     $attributesInitialData,
-                    $productAbstractTransfer->getAttributes()
+                    $productAbstractTransfer->getAttributes(),
                 );
             $productLocalizedAttributes = $this->getFactory()
                 ->createProductAttributesMapper()
                 ->mapAttributesDataToLocalizedAttributesTransfers(
                     $attributesInitialData,
-                    $productAbstractTransfer->getLocalizedAttributes()
+                    $productAbstractTransfer->getLocalizedAttributes(),
                 );
 
             $productAbstractTransfer->setAttributes($productAttributes)->setLocalizedAttributes($productLocalizedAttributes);
@@ -182,7 +182,7 @@ class UpdateProductAbstractController extends AbstractUpdateProductController
             $imageSetsErrors = $this->getFactory()
                 ->createImageSetMapper()
                 ->mapErrorsToImageSetValidationData(
-                    $productAbstractForm->getErrors(true, true)
+                    $productAbstractForm->getErrors(true, true),
                 );
 
             $attributesInitialData = $this->getFactory()
@@ -195,12 +195,12 @@ class UpdateProductAbstractController extends AbstractUpdateProductController
             ->mapValidationResponseTransferToInitialData(
                 $pricesValidationResponseTransfer,
                 $priceProductTransfers,
-                $priceInitialData
+                $priceInitialData,
             );
 
         $merchantProductValidationResponseTransfer->setIsSuccess(
             $pricesValidationResponseTransfer->getIsSuccessOrFail()
-            && $merchantProductValidationResponseTransfer->getIsSuccessOrFail()
+            && $merchantProductValidationResponseTransfer->getIsSuccessOrFail(),
         );
 
         return $this->getResponse(
@@ -209,7 +209,7 @@ class UpdateProductAbstractController extends AbstractUpdateProductController
             $merchantProductValidationResponseTransfer,
             $priceInitialData,
             $attributesInitialData,
-            $imageSetsErrors
+            $imageSetsErrors,
         );
     }
 
@@ -232,14 +232,14 @@ class UpdateProductAbstractController extends AbstractUpdateProductController
         foreach ($categoryIdsToAdd as $idCategory) {
             $productCategoryFacade->createProductCategoryMappings(
                 $idCategory,
-                [$productAbstractTransfer->getIdProductAbstractOrFail()]
+                [$productAbstractTransfer->getIdProductAbstractOrFail()],
             );
         }
 
         foreach ($categoryIdsToRemove as $idCategory) {
             $productCategoryFacade->removeProductCategoryMappings(
                 $idCategory,
-                [$productAbstractTransfer->getIdProductAbstractOrFail()]
+                [$productAbstractTransfer->getIdProductAbstractOrFail()],
             );
         }
     }
@@ -270,7 +270,7 @@ class UpdateProductAbstractController extends AbstractUpdateProductController
             ->createLocalizedAttributesExtractor()
             ->extractLocalizedAttributes(
                 $productAbstractTransfer->getLocalizedAttributes(),
-                $localeTransfer
+                $localeTransfer,
             );
 
         $imageSetTabNames = $this->getImageSetTabNames($productAbstractTransfer);
@@ -300,7 +300,7 @@ class UpdateProductAbstractController extends AbstractUpdateProductController
                         ->createProductAbstractFormDataProvider()
                         ->getProductCategoryTree(),
                     'urlAddProductConcrete' => static::URL_ADD_PRODUCT_CONCRETE,
-                ]
+                ],
             )->getContent(),
         ];
 
@@ -318,8 +318,8 @@ class UpdateProductAbstractController extends AbstractUpdateProductController
             $this->addErrorResponseDataToResponse(
                 $productAbstractForm,
                 $validationResponseTransfer,
-                $responseData
-            )
+                $responseData,
+            ),
         );
     }
 
@@ -387,8 +387,8 @@ class UpdateProductAbstractController extends AbstractUpdateProductController
                 $this->getFactory()
                     ->createPriceProductAbstractGuiTableConfigurationProvider()
                     ->getConfiguration(
-                        $idProductAbstract
-                    )
+                        $idProductAbstract,
+                    ),
             );
     }
 

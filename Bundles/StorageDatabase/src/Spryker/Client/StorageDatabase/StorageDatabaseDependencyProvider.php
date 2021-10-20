@@ -81,8 +81,8 @@ class StorageDatabaseDependencyProvider extends AbstractDependencyProvider
                 'There is no registered plugin which can perform storage database interaction.
                     Make sure that StorageDatabaseDependencyProvider::getStorageReaderProviderPlugin() returns
                     an implementation of %s',
-                StorageReaderPluginInterface::class
-            )
+                StorageReaderPluginInterface::class,
+            ),
         );
     }
 }

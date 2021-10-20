@@ -20,7 +20,7 @@ class ProductConfigurationPersistentCartFactory extends AbstractFactory
     public function createProductConfigurationInstanceCartChangeExpander(): ProductConfigurationInstanceCartChangeExpanderInterface
     {
         return new ProductConfigurationInstanceCartChangeExpander(
-            $this->getProductConfigurationStorageClient()
+            $this->getProductConfigurationStorageClient(),
         );
     }
 

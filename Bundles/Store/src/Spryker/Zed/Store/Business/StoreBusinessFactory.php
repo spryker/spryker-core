@@ -36,7 +36,7 @@ class StoreBusinessFactory extends AbstractBusinessFactory
             $this->getQueryContainer(),
             $this->getRepository(),
             $this->createStoreMapper(),
-            $this->createStoreCache()
+            $this->createStoreCache(),
         );
     }
 

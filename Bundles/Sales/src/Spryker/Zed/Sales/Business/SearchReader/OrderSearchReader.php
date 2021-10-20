@@ -58,7 +58,7 @@ class OrderSearchReader implements OrderSearchReaderInterface
         $orderListTransfer = $this->expandOrdersWithOrderItems($orderListTransfer);
 
         $orderTransfers = $this->executeSearchOrderExpanderPlugins(
-            $orderListTransfer->getOrders()->getArrayCopy()
+            $orderListTransfer->getOrders()->getArrayCopy(),
         );
 
         $orderListTransfer->getOrders()->exchangeArray($orderTransfers);
@@ -85,7 +85,7 @@ class OrderSearchReader implements OrderSearchReaderInterface
 
         $orderTransfers = $this->mapOrderItemTransfersToOrderTransfers(
             $itemTransfers,
-            $mappedOrderTransfers
+            $mappedOrderTransfers,
         );
 
         $orderListTransfer->setOrders(new ArrayObject($orderTransfers));
@@ -106,7 +106,7 @@ class OrderSearchReader implements OrderSearchReaderInterface
 
         $orderTransfers = $this->mapSalesOrderTotalsTransfersToOrderTransfers(
             $mappedTotalsTransfers,
-            $orderListTransfer->getOrders()
+            $orderListTransfer->getOrders(),
         );
 
         $orderListTransfer->setOrders(new ArrayObject($orderTransfers));
@@ -154,7 +154,7 @@ class OrderSearchReader implements OrderSearchReaderInterface
             if ($orderSearchQueryExpanderPlugin->isApplicable($filterTransfers)) {
                 $queryJoinCollectionTransfer = $orderSearchQueryExpanderPlugin->expand(
                     $filterTransfers,
-                    $queryJoinCollectionTransfer
+                    $queryJoinCollectionTransfer,
                 );
             }
         }

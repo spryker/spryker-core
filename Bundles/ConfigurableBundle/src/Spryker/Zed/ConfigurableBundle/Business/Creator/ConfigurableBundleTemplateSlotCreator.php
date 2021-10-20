@@ -83,7 +83,7 @@ class ConfigurableBundleTemplateSlotCreator implements ConfigurableBundleTemplat
         }
 
         $configurableBundleTemplateSlotTransfer->setConfigurableBundleTemplate(
-            $configurableBundleTemplateResponseTransfer->getConfigurableBundleTemplate()
+            $configurableBundleTemplateResponseTransfer->getConfigurableBundleTemplate(),
         );
 
         return $this->getTransactionHandler()->handleTransaction(function () use ($configurableBundleTemplateSlotTransfer) {

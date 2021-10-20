@@ -43,7 +43,7 @@ class CompaniesRestApiDependencyProvider extends AbstractBundleDependencyProvide
     {
         $container->set(static::CLIENT_COMPANY, function (Container $container) {
             return new CompaniesRestApiToCompanyClientBridge(
-                $container->getLocator()->company()->client()
+                $container->getLocator()->company()->client(),
             );
         });
 

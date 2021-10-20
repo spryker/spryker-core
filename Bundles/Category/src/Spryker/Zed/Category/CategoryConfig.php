@@ -102,7 +102,7 @@ class CategoryConfig extends AbstractBundleConfig
     {
         return $this->get(
             CategoryConstants::CATEGORY_IS_CLOSURE_TABLE_EVENTS_ENABLED,
-            static::DEFAULT_IS_CLOSURE_TABLE_EVENTS_ENABLED
+            static::DEFAULT_IS_CLOSURE_TABLE_EVENTS_ENABLED,
         );
     }
 }

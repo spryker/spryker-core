@@ -37,13 +37,13 @@ class PriceProductOfferRepository extends AbstractRepository implements PricePro
                 (new QueryJoinTransfer())
                     ->setLeft([SpyPriceProductStoreTableMap::COL_ID_PRICE_PRODUCT_STORE])
                     ->setRight([SpyPriceProductOfferTableMap::COL_FK_PRICE_PRODUCT_STORE])
-                    ->setJoinType(Criteria::LEFT_JOIN)
+                    ->setJoinType(Criteria::LEFT_JOIN),
             )
             ->addJoin(
                 (new QueryJoinTransfer())
                     ->setLeft([SpyPriceProductOfferTableMap::COL_FK_PRODUCT_OFFER])
                     ->setRight([SpyProductOfferTableMap::COL_ID_PRODUCT_OFFER])
-                    ->setJoinType(Criteria::LEFT_JOIN)
+                    ->setJoinType(Criteria::LEFT_JOIN),
             );
     }
 
@@ -115,14 +115,14 @@ class PriceProductOfferRepository extends AbstractRepository implements PricePro
                 $priceProductOfferQuery->filterBy(
                     SpyProductOfferTableMap::COL_PRODUCT_OFFER_REFERENCE,
                     $productOfferCriteriaTransfer->getProductOfferReferences(),
-                    Criteria::IN
+                    Criteria::IN,
                 );
             }
 
             if ($productOfferCriteriaTransfer->getProductOfferReference()) {
                 $priceProductOfferQuery->useSpyProductOfferQuery()
                     ->filterByProductOfferReference(
-                        $productOfferCriteriaTransfer->getProductOfferReference()
+                        $productOfferCriteriaTransfer->getProductOfferReference(),
                     )
                     ->endUse();
             }

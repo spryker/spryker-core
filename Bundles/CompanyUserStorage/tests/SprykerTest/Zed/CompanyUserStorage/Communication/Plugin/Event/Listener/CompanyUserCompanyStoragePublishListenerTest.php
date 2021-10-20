@@ -83,7 +83,7 @@ class CompanyUserCompanyStoragePublishListenerTest extends Unit
         //Act
         $this->companyUserCompanyStoragePublishListener->handleBulk(
             $eventTransfers,
-            CompanyEvents::ENTITY_SPY_COMPANY_UPDATE
+            CompanyEvents::ENTITY_SPY_COMPANY_UPDATE,
         );
         $companyUserStorageEntities = $this->companyUserStorageRepository->findCompanyUserStorageEntities([
             $this->companyUserTransfer->getIdCompanyUser(),
@@ -112,7 +112,7 @@ class CompanyUserCompanyStoragePublishListenerTest extends Unit
         //Act
         $this->companyUserCompanyStoragePublishListener->handleBulk(
             $eventTransfers,
-            CompanyEvents::ENTITY_SPY_COMPANY_UPDATE
+            CompanyEvents::ENTITY_SPY_COMPANY_UPDATE,
         );
         $companyUserStorageEntities = $this->companyUserStorageRepository->findCompanyUserStorageEntities([
             $this->companyUserTransfer->getIdCompanyUser(),

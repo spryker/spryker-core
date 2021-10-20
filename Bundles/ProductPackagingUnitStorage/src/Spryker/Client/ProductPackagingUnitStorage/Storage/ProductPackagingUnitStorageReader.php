@@ -44,7 +44,7 @@ class ProductPackagingUnitStorageReader implements ProductPackagingUnitStorageRe
     {
         $key = $this->productPackagingUnitStorageKeyGenerator->generateKey(
             ProductPackagingUnitStorageConfig::PRODUCT_PACKAGING_UNIT_RESOURCE_NAME,
-            $idProductConcrete
+            $idProductConcrete,
         );
 
         return $this->findProductPackagingUnitStorageTransfer($key);

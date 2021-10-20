@@ -118,7 +118,7 @@ class ProductRelationGuiCommunicationFactory extends AbstractCommunicationFactor
         return $this->getFormFactory()->create(
             ProductRelationFormType::class,
             $data,
-            $options
+            $options,
         );
     }
 
@@ -151,7 +151,7 @@ class ProductRelationGuiCommunicationFactory extends AbstractCommunicationFactor
             $this->getUtilEncodingService(),
             $this->getLocaleFacade(),
             $this->getConfig(),
-            $productRelationTransfer
+            $productRelationTransfer,
         );
     }
 
@@ -164,7 +164,7 @@ class ProductRelationGuiCommunicationFactory extends AbstractCommunicationFactor
             $this->getProductRelationPropelQuery(),
             $this->getProductFacade(),
             $this->getConfig(),
-            $this->getLocaleFacade()
+            $this->getLocaleFacade(),
         );
     }
 
@@ -179,7 +179,7 @@ class ProductRelationGuiCommunicationFactory extends AbstractCommunicationFactor
             $this->getProductAbstractPropelQuery(),
             $this->getLocaleFacade(),
             $this->getUtilEncodingService(),
-            $idProductRelation
+            $idProductRelation,
         );
     }
 
@@ -208,7 +208,7 @@ class ProductRelationGuiCommunicationFactory extends AbstractCommunicationFactor
             $this->getLocaleFacade(),
             $this->getProductAbstractPropelQuery(),
             $this->createMappingProvider(),
-            $this->getPropelQueryBuilderQueryContainer()
+            $this->getPropelQueryBuilderQueryContainer(),
         );
     }
 

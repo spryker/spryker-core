@@ -132,7 +132,7 @@ class CmsBlockProductAbstractType extends AbstractType
                     'required' => false,
                     'choices' => $data[static::FIELD_ID_PRODUCT_ABSTRACTS],
                     'multiple' => true,
-                ]
+                ],
             );
         };
     }

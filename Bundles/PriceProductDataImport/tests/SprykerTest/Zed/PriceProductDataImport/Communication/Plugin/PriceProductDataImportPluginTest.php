@@ -102,7 +102,7 @@ class PriceProductDataImportPluginTest extends Unit
         $originalPriceProductDataImportBusinessFactory = $this->getOriginalPriceProductDataImportBusinessFactory();
 
         $dataImporter = $originalPriceProductDataImportBusinessFactory->getCsvDataImporterFromConfig(
-            $this->getPriceProductDataImportConfig()->getPriceProductDataImporterConfiguration()
+            $this->getPriceProductDataImportConfig()->getPriceProductDataImporterConfiguration(),
         );
 
         $dataSetStepBroker = $originalPriceProductDataImportBusinessFactory->createDataSetStepBroker();

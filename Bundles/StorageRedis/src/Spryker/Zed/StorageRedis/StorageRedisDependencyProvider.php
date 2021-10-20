@@ -42,7 +42,7 @@ class StorageRedisDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::FACADE_REDIS, function (Container $container) {
             return new StorageRedisToRedisFacadeBridge(
-                $container->getLocator()->redis()->facade()
+                $container->getLocator()->redis()->facade(),
             );
         });
 

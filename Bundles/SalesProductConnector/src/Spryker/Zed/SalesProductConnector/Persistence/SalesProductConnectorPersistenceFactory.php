@@ -44,7 +44,7 @@ class SalesProductConnectorPersistenceFactory extends AbstractPersistenceFactory
     public function createSalesOrderItemMetadataMapper(): SalesOrderItemMetadataMapper
     {
         return new SalesOrderItemMetadataMapper(
-            $this->getUtilEncodingService()
+            $this->getUtilEncodingService(),
         );
     }
 

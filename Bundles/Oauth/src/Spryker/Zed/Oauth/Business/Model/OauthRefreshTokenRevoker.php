@@ -172,7 +172,7 @@ class OauthRefreshTokenRevoker implements OauthRefreshTokenRevokerInterface
 
             $oauthRefreshTokens = array_merge(
                 $oauthRefreshTokens,
-                $receivedOauthRefreshTokens
+                $receivedOauthRefreshTokens,
             );
         }
 

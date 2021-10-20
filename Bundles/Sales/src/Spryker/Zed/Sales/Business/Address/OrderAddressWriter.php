@@ -43,7 +43,7 @@ class OrderAddressWriter implements OrderAddressWriterInterface
     public function create(AddressTransfer $addressTransfer): AddressTransfer
     {
         $addressTransfer->setFkCountry(
-            $this->countryFacade->getIdCountryByIso2Code($addressTransfer->getIso2Code())
+            $this->countryFacade->getIdCountryByIso2Code($addressTransfer->getIso2Code()),
         );
 
         if ($addressTransfer->getIdSalesOrderAddress()) {

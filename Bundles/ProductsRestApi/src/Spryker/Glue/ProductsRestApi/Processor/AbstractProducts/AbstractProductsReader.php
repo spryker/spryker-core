@@ -143,7 +143,7 @@ class AbstractProductsReader implements AbstractProductsReaderInterface
             ->findBulkProductAbstractStorageDataByMapping(
                 static::PRODUCT_ABSTRACT_MAPPING_TYPE,
                 $skus,
-                $localeName
+                $localeName,
             );
 
         if (!$abstractProductCollection) {
@@ -166,7 +166,7 @@ class AbstractProductsReader implements AbstractProductsReaderInterface
             ->findProductAbstractStorageDataByMapping(
                 static::PRODUCT_ABSTRACT_MAPPING_TYPE,
                 $sku,
-                $localeName
+                $localeName,
             );
 
         if (!$productAbstractData) {
@@ -208,7 +208,7 @@ class AbstractProductsReader implements AbstractProductsReaderInterface
             ->getBulkProductAbstractStorageDataByProductAbstractIdsForLocaleNameAndStore(
                 $productAbstractIds,
                 $localeName,
-                $storeName
+                $storeName,
             );
 
         if (!$abstractProductCollection) {
@@ -231,7 +231,7 @@ class AbstractProductsReader implements AbstractProductsReaderInterface
         $restAbstractProductsAttributesTransfer = $this->expandRestAbstractProductsAttributesTransfer(
             $restAbstractProductsAttributesTransfer,
             $productAbstractData[static::KEY_ID_PRODUCT_ABSTRACT],
-            $localeName
+            $localeName,
         );
         $restAbstractProductsAttributesTransfer = $this->abstractProductAttributeTranslationExpander
             ->addProductAttributeTranslation($restAbstractProductsAttributesTransfer, $localeName);
@@ -239,7 +239,7 @@ class AbstractProductsReader implements AbstractProductsReaderInterface
         return $this->restResourceBuilder->createRestResource(
             ProductsRestApiConfig::RESOURCE_ABSTRACT_PRODUCTS,
             $restAbstractProductsAttributesTransfer->getSku(),
-            $restAbstractProductsAttributesTransfer
+            $restAbstractProductsAttributesTransfer,
         );
     }
 
@@ -259,7 +259,7 @@ class AbstractProductsReader implements AbstractProductsReaderInterface
             $abstractProductsRestAttributesTransfer = $abstractProductsResourceExpanderPlugin->expand(
                 $abstractProductsRestAttributesTransfer,
                 $idProductAbstract,
-                $localeName
+                $localeName,
             );
         }
 
@@ -303,7 +303,7 @@ class AbstractProductsReader implements AbstractProductsReaderInterface
         $concreteProductsResourceList = $this->concreteProductsReader
             ->getProductConcretesBySkus(
                 $attributes->getAttributeMap()[static::PRODUCT_CONCRETE_IDS_KEY],
-                $restRequest
+                $restRequest,
             );
 
         foreach ($concreteProductsResourceList as $concreteProductResource) {

@@ -30,7 +30,7 @@ class SalesConfigurableBundleEntityManager extends AbstractEntityManager impleme
             ->createSalesOrderConfiguredBundleMapper()
             ->mapBundleTransferToBundleEntity(
                 $salesOrderConfiguredBundleTransfer,
-                new SpySalesOrderConfiguredBundle()
+                new SpySalesOrderConfiguredBundle(),
             );
 
         $salesOrderConfiguredBundleEntity->save();
@@ -55,7 +55,7 @@ class SalesConfigurableBundleEntityManager extends AbstractEntityManager impleme
             ->createSalesOrderConfiguredBundleMapper()
             ->mapBundleItemTransferToBundleItemEntity(
                 $salesOrderConfiguredBundleItemTransfer,
-                new SpySalesOrderConfiguredBundleItem()
+                new SpySalesOrderConfiguredBundleItem(),
             );
 
         $salesOrderConfiguredBundleItemEntity->save();

@@ -64,14 +64,14 @@ class RefreshTokenGrant implements GrantInterface
             $accessTokenRequest = new ServerRequest('POST', '', []);
             $accessTokenRequest = $accessTokenRequest->withParsedBody($oauthRequestTransfer->toArray());
             $refreshTokenGrant = new LeagueRefreshTokenGrant(
-                $this->repositoryBuilder->createRefreshTokenRepository()
+                $this->repositoryBuilder->createRefreshTokenRepository(),
             );
             $refreshTokenGrant->setRefreshTokenTTL(
-                new DateInterval($this->oauthConfig->getRefreshTokenTTL())
+                new DateInterval($this->oauthConfig->getRefreshTokenTTL()),
             );
             $this->authorizationServer->enableGrantType(
                 $refreshTokenGrant,
-                new DateInterval($this->oauthConfig->getAccessTokenTTL())
+                new DateInterval($this->oauthConfig->getAccessTokenTTL()),
             );
             $response = $this->authorizationServer->respondToAccessTokenRequest($accessTokenRequest, new Response());
             $data = (string)$response->getBody();

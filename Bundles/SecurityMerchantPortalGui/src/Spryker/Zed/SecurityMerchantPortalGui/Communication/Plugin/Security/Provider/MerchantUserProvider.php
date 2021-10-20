@@ -92,7 +92,7 @@ class MerchantUserProvider extends AbstractPlugin implements UserProviderInterfa
                     ->setUsername($username)
                     ->setWithUser(true)
                     ->setStatus('active')
-                    ->setMerchantStatus(static::MERCHANT_STATUS_APPROVED)
+                    ->setMerchantStatus(static::MERCHANT_STATUS_APPROVED),
             );
     }
 }

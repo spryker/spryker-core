@@ -82,7 +82,7 @@ class MerchantRelationshipProductListBusinessTester extends Actor
             ->facade()
             ->getProductListById(
                 (new ProductListTransfer())
-                    ->setIdProductList($idProductList)
+                    ->setIdProductList($idProductList),
             );
     }
 

@@ -102,7 +102,7 @@ class ProductOfferCheckoutValidator implements ProductOfferCheckoutValidatorInte
             ->setIsActive(true)
             ->setApprovalStatuses([ProductOfferConfig::STATUS_APPROVED])
             ->setProductOfferReferences(
-                $this->extractProductOfferReferences($quoteTransfer)
+                $this->extractProductOfferReferences($quoteTransfer),
             );
 
         return $this->productOfferRepository->get($productOfferCriteriaFilterTransfer);

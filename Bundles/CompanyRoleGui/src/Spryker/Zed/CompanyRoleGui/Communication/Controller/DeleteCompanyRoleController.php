@@ -130,7 +130,7 @@ class DeleteCompanyRoleController extends AbstractController
     protected function redirectToReferer(Request $request): RedirectResponse
     {
         return $this->redirectResponse(
-            $request->headers->get(static::PARAM_REFERER, static::REDIRECT_URL_DEFAULT)
+            $request->headers->get(static::PARAM_REFERER, static::REDIRECT_URL_DEFAULT),
         );
     }
 }

@@ -47,7 +47,7 @@ class MerchantRelationshipOrderResourceExpander implements MerchantRelationshipO
 
         $merchantsResources = $this->merchantReader->getMerchantsResources(
             $merchantReferences,
-            $restRequest->getMetadata()->getLocale()
+            $restRequest->getMetadata()->getLocale(),
         );
 
         foreach ($resources as $orderResource) {
@@ -70,7 +70,7 @@ class MerchantRelationshipOrderResourceExpander implements MerchantRelationshipO
             if ($orderAttributes && $orderAttributes->offsetExists(static::RESOURCE_ATTRIBUTE_MERCHANT_REFERENCES)) {
                 $merchantReferences = array_merge(
                     $merchantReferences,
-                    $orderAttributes->offsetGet(static::RESOURCE_ATTRIBUTE_MERCHANT_REFERENCES)
+                    $orderAttributes->offsetGet(static::RESOURCE_ATTRIBUTE_MERCHANT_REFERENCES),
                 );
             }
         }

@@ -105,13 +105,13 @@ class CompanyBusinessUnitUserDataImportPluginTest extends AbstractCompanyBusines
         $companyBusinessUnitDataImportPlugin = new CompanyBusinessUnitDataImportPlugin();
         $this->assertSame(
             CompanyBusinessUnitDataImportConfig::IMPORT_TYPE_COMPANY_BUSINESS_UNIT,
-            $companyBusinessUnitDataImportPlugin->getImportType()
+            $companyBusinessUnitDataImportPlugin->getImportType(),
         );
 
         $companyBusinessUnitUserDataImportPlugin = new CompanyBusinessUnitUserDataImportPlugin();
         $this->assertSame(
             CompanyBusinessUnitDataImportConfig::IMPORT_TYPE_COMPANY_BUSINESS_UNIT_USER,
-            $companyBusinessUnitUserDataImportPlugin->getImportType()
+            $companyBusinessUnitUserDataImportPlugin->getImportType(),
         );
     }
 }

@@ -124,7 +124,7 @@ class StateUpdater implements StateUpdaterInterface
     ) {
         if (!isset($sourceStateBuffer[$stateMachineItemTransfer->getIdentifier()])) {
             throw new StateMachineException(
-                sprintf('Could not update state, source state not found.')
+                sprintf('Could not update state, source state not found.'),
             );
         }
     }

@@ -34,7 +34,7 @@ class ProductConfigurationStorageBusinessFactory extends AbstractBusinessFactory
             $this->getEventBehaviorFacade(),
             $this->getProductConfigurationFacade(),
             $this->createProductConfigurationStorageMapper(),
-            $this->getEntityManager()
+            $this->getEntityManager(),
         );
     }
 
@@ -45,7 +45,7 @@ class ProductConfigurationStorageBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductConfigurationStorageDeleter(
             $this->getEventBehaviorFacade(),
-            $this->getEntityManager()
+            $this->getEntityManager(),
         );
     }
 

@@ -54,7 +54,7 @@ class RuleQueryCreatorQueryTest extends Unit
             $this->getLocaleFacadeMock(),
             SpyProductAbstractQuery::create(),
             $this->getMappingProviderMock(),
-            $this->getPropelQueryBuilderQueryContainer()
+            $this->getPropelQueryBuilderQueryContainer(),
         );
 
         // Act

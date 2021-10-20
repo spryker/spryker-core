@@ -73,7 +73,7 @@ class TaxRateForm extends AbstractType
                 'constraints' => [
                     new NotBlank(),
                 ],
-            ]
+            ],
         );
 
         return $this;
@@ -122,7 +122,7 @@ class TaxRateForm extends AbstractType
                         'max' => 100,
                     ]),
                 ],
-            ]
+            ],
         );
 
         $builder->get(self::FIELD_RATE)

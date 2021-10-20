@@ -64,7 +64,7 @@ class SalesUnitByProductConcreteResourceRelationshipExpander implements SalesUni
         $productConcreteIds = $this->productStorageClient->getProductConcreteIdsByMapping(
             static::PRODUCT_CONCRETE_MAPPING_TYPE,
             $productConcreteSkus,
-            $restRequest->getMetadata()->getLocale()
+            $restRequest->getMetadata()->getLocale(),
         );
 
         $productConcreteProductMeasurementSalesUnitTransfers = $this->productMeasurementUnitStorageClient
@@ -81,7 +81,7 @@ class SalesUnitByProductConcreteResourceRelationshipExpander implements SalesUni
                     $resource,
                     $productConcreteProductMeasurementSalesUnitTransfer,
                     $productConcreteSkus,
-                    $concreteProductsRestAttributesTransfer
+                    $concreteProductsRestAttributesTransfer,
                 );
             }
         }
@@ -110,8 +110,8 @@ class SalesUnitByProductConcreteResourceRelationshipExpander implements SalesUni
             $resource->addRelationship(
                 $this->salesUnitRestResponseBuilder->createSalesUnitRestResource(
                     $productMeasurementSalesUnitTransfer,
-                    $resource->getId()
-                )
+                    $resource->getId(),
+                ),
             );
         }
     }

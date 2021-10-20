@@ -21,7 +21,7 @@ class CommentDataImportHelper extends Module
 
         $this->assertTrue(
             $commentQuery->find()->count() > 0,
-            'Expected at least one entry in the database table but database table is empty.'
+            'Expected at least one entry in the database table but database table is empty.',
         );
     }
 

@@ -277,7 +277,7 @@ class MerchantShipmentGroupFormDataProvider
             $addressTransfer->getAddress1(),
             $addressTransfer->getAddress2(),
             $addressTransfer->getZipCode(),
-            $addressTransfer->getCity()
+            $addressTransfer->getCity(),
         );
     }
 
@@ -361,7 +361,7 @@ class MerchantShipmentGroupFormDataProvider
             $shipmentMethodOptionNameCollection[$idShipmentMethod] = sprintf(
                 '%s - %s',
                 $shipmentMethodTransfer->getCarrierName(),
-                $shipmentMethodTransfer->getName()
+                $shipmentMethodTransfer->getName(),
             );
         }
 

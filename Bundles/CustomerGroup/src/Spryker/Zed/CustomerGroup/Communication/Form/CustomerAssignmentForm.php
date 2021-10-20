@@ -75,7 +75,7 @@ class CustomerAssignmentForm extends AbstractType
     {
         $builder->add(
             static::FIELD_ID_CUSTOMER_GROUP,
-            HiddenType::class
+            HiddenType::class,
         );
 
         return $this;
@@ -95,7 +95,7 @@ class CustomerAssignmentForm extends AbstractType
                 'attr' => [
                     'id' => 'js-items-to-assign-ids-csv-field',
                 ],
-            ]
+            ],
         );
 
         $this->addIdsCsvModelTransformer(static::FIELD_IDS_CUSTOMER_TO_ASSIGN_CSV, $builder);
@@ -117,7 +117,7 @@ class CustomerAssignmentForm extends AbstractType
                 'attr' => [
                     'id' => 'js-items-to-de-assign-ids-csv-field',
                 ],
-            ]
+            ],
         );
 
         $this->addIdsCsvModelTransformer(static::FIELD_IDS_CUSTOMER_TO_DE_ASSIGN_CSV, $builder);
@@ -149,7 +149,7 @@ class CustomerAssignmentForm extends AbstractType
                     }
 
                     return explode(',', $idsAsString);
-                }
+                },
             ));
     }
 

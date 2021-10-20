@@ -57,7 +57,7 @@ class PriceProductOfferTableViewPriceComparisonStrategy implements PriceProductO
         [$priceTypeName, $moneyValueType] = explode('_', $fieldName);
         $priceKey = $this->columnIdCreator->createPriceKey(
             $priceTypeName,
-            $moneyValueType . 'Amount'
+            $moneyValueType . 'Amount',
         );
 
         return function (
@@ -85,7 +85,7 @@ class PriceProductOfferTableViewPriceComparisonStrategy implements PriceProductO
         $pattern = sprintf(
             '/(%s|%s)$/',
             static::SUFFIX_PRICE_TYPE_GROSS,
-            static::SUFFIX_PRICE_TYPE_NET
+            static::SUFFIX_PRICE_TYPE_NET,
         );
 
         preg_match($pattern, $fieldName, $matches);

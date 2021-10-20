@@ -64,7 +64,7 @@ class SecurityOauthUserBusinessFactory extends AbstractBusinessFactory
             $this->getConfig(),
             $this->getUserFacade(),
             $this->getUtilTextService(),
-            $this->createAclGroupAdder()
+            $this->createAclGroupAdder(),
         );
     }
 
@@ -103,7 +103,7 @@ class SecurityOauthUserBusinessFactory extends AbstractBusinessFactory
         return new CreateUserAuthenticationStrategy(
             $this->getConfig(),
             $this->getUserFacade(),
-            $this->createOauthUserCreator()
+            $this->createOauthUserCreator(),
         );
     }
 

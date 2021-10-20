@@ -148,8 +148,8 @@ class VersionFinder implements VersionFinderInterface
             throw new MissingPageException(
                 sprintf(
                     'There is no valid Cms page with this id: %d .',
-                    $idCmsPage
-                )
+                    $idCmsPage,
+                ),
             );
         }
 

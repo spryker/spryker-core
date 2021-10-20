@@ -24,7 +24,7 @@ class ContentStorageFactory extends AbstractFactory
         return new ContentStorageReader(
             $this->getStorageClient(),
             $this->getSynchronizationService(),
-            $this->getUtilEncodingService()
+            $this->getUtilEncodingService(),
         );
     }
 

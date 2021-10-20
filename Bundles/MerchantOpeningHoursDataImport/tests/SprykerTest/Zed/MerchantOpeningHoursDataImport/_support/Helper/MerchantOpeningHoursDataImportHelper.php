@@ -22,7 +22,7 @@ class MerchantOpeningHoursDataImportHelper extends Module
 
         $this->assertTrue(
             $merchantOpeningHoursDateScheduleQuery->find()->count() > 0,
-            'Expected at least one entry in the database table but database table is empty.'
+            'Expected at least one entry in the database table but database table is empty.',
         );
     }
 
@@ -35,7 +35,7 @@ class MerchantOpeningHoursDataImportHelper extends Module
 
         $this->assertTrue(
             $merchantOpeningHoursWeekdayScheduleQuery->count() > 0,
-            'Expected at least one entry in the database table but database table is empty.'
+            'Expected at least one entry in the database table but database table is empty.',
         );
     }
 

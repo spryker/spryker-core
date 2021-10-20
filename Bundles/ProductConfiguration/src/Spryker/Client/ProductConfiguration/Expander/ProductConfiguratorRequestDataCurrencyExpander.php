@@ -33,7 +33,7 @@ class ProductConfiguratorRequestDataCurrencyExpander implements ProductConfigura
     public function expand(ProductConfiguratorRequestDataTransfer $productConfiguratorRequestDataTransfer): ProductConfiguratorRequestDataTransfer
     {
         return $productConfiguratorRequestDataTransfer->setCurrencyCode(
-            $this->currencyClient->getCurrent()->getCode()
+            $this->currencyClient->getCurrent()->getCode(),
         );
     }
 }

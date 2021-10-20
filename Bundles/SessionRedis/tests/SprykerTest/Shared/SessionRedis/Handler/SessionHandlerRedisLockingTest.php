@@ -152,7 +152,7 @@ class SessionHandlerRedisLockingTest extends Unit
             ->with(
                 $this->equalTo('session:session_key'),
                 $this->equalTo(static::TIME_TO_LIVE),
-                $this->equalTo($dummyData)
+                $this->equalTo($dummyData),
             )
             ->willReturn(true);
 
@@ -237,7 +237,7 @@ class SessionHandlerRedisLockingTest extends Unit
             $this->redisClientMock,
             $this->spinLockLockerMock,
             new SessionKeyBuilder(),
-            $this->sessionRedisLifeTimeCalculatorMock
+            $this->sessionRedisLifeTimeCalculatorMock,
         );
     }
 }

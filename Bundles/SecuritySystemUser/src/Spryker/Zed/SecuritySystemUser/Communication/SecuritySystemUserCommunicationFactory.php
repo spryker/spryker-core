@@ -39,7 +39,7 @@ class SecuritySystemUserCommunicationFactory extends AbstractCommunicationFactor
     {
         return new SystemUser(
             $userTransfer,
-            [SecuritySystemUserConfig::ROLE_SYSTEM_USER]
+            [SecuritySystemUserConfig::ROLE_SYSTEM_USER],
         );
     }
 

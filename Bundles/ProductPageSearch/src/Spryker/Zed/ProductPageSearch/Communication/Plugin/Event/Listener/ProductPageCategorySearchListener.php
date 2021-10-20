@@ -65,7 +65,7 @@ class ProductPageCategorySearchListener extends AbstractProductPageSearchListene
             [
                 SpyCategoryTableMap::COL_IS_ACTIVE,
                 SpyCategoryTableMap::COL_CATEGORY_KEY,
-            ]
+            ],
         );
 
         return $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($validEventTransfers);

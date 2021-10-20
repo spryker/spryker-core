@@ -46,7 +46,7 @@ class QueryStringController extends AbstractController
         $transformer = $this->getFactory()->createJavascriptQueryBuilderTransformer();
 
         return new JsonResponse(
-            $transformer->getFilters($type)
+            $transformer->getFilters($type),
         );
     }
 
@@ -62,7 +62,7 @@ class QueryStringController extends AbstractController
 
         return new JsonResponse(
             $this->getFacade()
-                ->getQueryStringFieldExpressionsForField($type, $field)
+                ->getQueryStringFieldExpressionsForField($type, $field),
         );
     }
 
@@ -77,7 +77,7 @@ class QueryStringController extends AbstractController
 
         return new JsonResponse(
             $this->getFacade()
-                ->getQueryStringLogicalComparators($type)
+                ->getQueryStringLogicalComparators($type),
         );
     }
 
@@ -93,7 +93,7 @@ class QueryStringController extends AbstractController
 
         return new JsonResponse(
             $this->getFacade()
-                ->validateQueryStringByType($type, $queryString)
+                ->validateQueryStringByType($type, $queryString),
         );
     }
 }

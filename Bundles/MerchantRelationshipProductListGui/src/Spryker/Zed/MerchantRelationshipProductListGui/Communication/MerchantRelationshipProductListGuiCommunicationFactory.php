@@ -63,7 +63,7 @@ class MerchantRelationshipProductListGuiCommunicationFactory extends AbstractCom
         return new ProductListUsedByTableExpander(
             $this->getMerchantRelationshipFacade(),
             $this->getMerchantRelationshipProductListFacade(),
-            $this->createProductListUsedByTableMapper()
+            $this->createProductListUsedByTableMapper(),
         );
     }
 
@@ -105,7 +105,7 @@ class MerchantRelationshipProductListGuiCommunicationFactory extends AbstractCom
     public function createProductListMerchantRelationshipFormExpander(): ProductListMerchantRelationshipFormExpanderInterface
     {
         return new ProductListMerchantRelationshipFormExpander(
-            $this->createProductListMerchantRelationshipFormDataProvider()
+            $this->createProductListMerchantRelationshipFormDataProvider(),
         );
     }
 
@@ -115,7 +115,7 @@ class MerchantRelationshipProductListGuiCommunicationFactory extends AbstractCom
     public function createProductListMerchantRelationshipFormDataProvider(): ProductListMerchantRelationshipFormDataProvider
     {
         return new ProductListMerchantRelationshipFormDataProvider(
-            $this->getMerchantRelationshipProductListFacade()
+            $this->getMerchantRelationshipProductListFacade(),
         );
     }
 }

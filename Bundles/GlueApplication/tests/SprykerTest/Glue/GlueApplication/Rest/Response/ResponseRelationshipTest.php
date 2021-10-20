@@ -77,10 +77,10 @@ class ResponseRelationshipTest extends Unit
                 function (array $resources, RestRequestInterface $restRequest) use ($restResponseBuilder): void {
                     foreach ($resources as $resource) {
                         $resource->addRelationship(
-                            $restResponseBuilder->createRestResource('related', 1)
+                            $restResponseBuilder->createRestResource('related', 1),
                         );
                     }
-                }
+                },
             );
 
         $relationshipLoaderMock
@@ -173,31 +173,31 @@ class ResponseRelationshipTest extends Unit
     {
         $abstractProductResource = $restResourceBuilder->createRestResource(
             static::RESOURCE_TYPE_PRODUCT_ABSTRACT,
-            static::RESOURCE_ABSTRACT_PRODUCT_ID
+            static::RESOURCE_ABSTRACT_PRODUCT_ID,
         );
 
         $imageSetResource = $restResourceBuilder->createRestResource(
             static::RESOURCE_TYPE_IMAGE_SET,
-            static::RESOURCE_IMAGE_SET_ID
+            static::RESOURCE_IMAGE_SET_ID,
         );
 
         $concreteProduct = $restResourceBuilder->createRestResource(
             static::RESOURCE_TYPE_PRODUCT_CONCRETE,
-            static::RESOURCE_CONCRETE_PRODUCT_ID
+            static::RESOURCE_CONCRETE_PRODUCT_ID,
         );
 
         $concreteProduct->addRelationship(
             $restResourceBuilder->createRestResource(
                 static::RESOURCE_TYPE_PRODUCT_ABSTRACT,
-                static::RESOURCE_ABSTRACT_PRODUCT_ID
-            )
+                static::RESOURCE_ABSTRACT_PRODUCT_ID,
+            ),
         );
 
         $concreteProduct->addRelationship(
             $restResourceBuilder->createRestResource(
                 static::RESOURCE_TYPE_IMAGE_SET,
-                static::RESOURCE_IMAGE_SET_ID
-            )
+                static::RESOURCE_IMAGE_SET_ID,
+            ),
         );
 
         $abstractProductResource->addRelationship($concreteProduct);
@@ -205,8 +205,8 @@ class ResponseRelationshipTest extends Unit
         $imageSetResource->addRelationship(
             $restResourceBuilder->createRestResource(
                 static::RESOURCE_TYPE_PRODUCT_CONCRETE,
-                static::RESOURCE_CONCRETE_PRODUCT_ID
-            )
+                static::RESOURCE_CONCRETE_PRODUCT_ID,
+            ),
         );
 
         return [$abstractProductResource, $imageSetResource];

@@ -62,7 +62,7 @@ class EditController extends AbstractController
         $form = $this->getFactory()
             ->createCustomerUpdateForm(
                 $formData,
-                $dataProvider->getOptions($idCustomer)
+                $dataProvider->getOptions($idCustomer),
             )
             ->handleRequest($request);
 
@@ -85,7 +85,7 @@ class EditController extends AbstractController
             $this->addSuccessMessage(static::MESSAGE_CUSTOMER_UPDATE_SUCCESS);
 
             return $this->redirectResponse(
-                sprintf('/customer/view?%s=%d', CustomerConstants::PARAM_ID_CUSTOMER, $idCustomer)
+                sprintf('/customer/view?%s=%d', CustomerConstants::PARAM_ID_CUSTOMER, $idCustomer),
             );
         }
 

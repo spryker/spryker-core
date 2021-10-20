@@ -67,7 +67,7 @@ class ProductOptionBusinessTester extends Actor
                 ->setFkStore($idStore)
                 ->setFkCurrency($idCurrency)
                 ->setNetAmount($netPrice)
-                ->setGrossAmount($grossPrice)
+                ->setGrossAmount($grossPrice),
         );
     }
 
@@ -174,7 +174,7 @@ class ProductOptionBusinessTester extends Actor
     {
         $this->setDependency(
             ProductOptionDependencyProvider::FACADE_STORE,
-            new ProductOptionToStoreFacadeBridge($storeFacade)
+            new ProductOptionToStoreFacadeBridge($storeFacade),
         );
     }
 
@@ -187,7 +187,7 @@ class ProductOptionBusinessTester extends Actor
     {
         $this->setDependency(
             ProductOptionDependencyProvider::FACADE_CURRENCY,
-            new ProductOptionToCurrencyFacadeBridge($currencyFacade)
+            new ProductOptionToCurrencyFacadeBridge($currencyFacade),
         );
     }
 
@@ -278,7 +278,7 @@ class ProductOptionBusinessTester extends Actor
                         ],
                     ],
                 ],
-            ]
+            ],
         );
 
         $productOptionTransfer = (new ProductOptionTransfer())

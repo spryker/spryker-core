@@ -149,7 +149,7 @@ class NavigationNodeCRUDTest extends Unit
         $this->assertSame(
             $navigationNodeLocalizedAttributesEntity->getIdNavigationNodeLocalizedAttributes(),
             $actualNavigationNodeTransfer->getNavigationNodeLocalizedAttributes()[0]->getIdNavigationNodeLocalizedAttributes(),
-            'Navigation node localized attributes should have correct data from database.'
+            'Navigation node localized attributes should have correct data from database.',
         );
     }
 

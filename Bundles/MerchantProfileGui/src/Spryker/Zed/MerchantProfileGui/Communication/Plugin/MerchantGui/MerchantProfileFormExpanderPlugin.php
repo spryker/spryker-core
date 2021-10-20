@@ -51,7 +51,7 @@ class MerchantProfileFormExpanderPlugin extends AbstractPlugin implements Mercha
         $builder->add(
             static::FIELD_MERCHANT_PROFILE,
             MerchantProfileFormType::class,
-            $options
+            $options,
         );
 
         return $this;

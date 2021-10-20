@@ -63,7 +63,7 @@ class PriceDeleter implements PriceDeleterInterface
             foreach ($priceProductTransfers as $priceProductTransfer) {
                 $validationResponseTransfer = $this->validatePriceProduct(
                     $priceProductTransfer,
-                    $validationResponseTransfer
+                    $validationResponseTransfer,
                 );
 
                 if (!$validationResponseTransfer->getIsSuccess()) {
@@ -97,7 +97,7 @@ class PriceDeleter implements PriceDeleterInterface
                 ->setIsSuccess(false)
                 ->addValidationError(
                     (new ValidationErrorTransfer())
-                        ->setMessage(static::MESSAGE_ERROR_PRICE_PRODUCT_HAS_VOLUME_PRICES)
+                        ->setMessage(static::MESSAGE_ERROR_PRICE_PRODUCT_HAS_VOLUME_PRICES),
                 );
         }
 
@@ -123,7 +123,7 @@ class PriceDeleter implements PriceDeleterInterface
 
         $defaultPriceProductTransfer = $this->priceProductVolumeService->deleteVolumePrice(
             $defaultPriceProductTransfer,
-            $volumePriceProductTransferToDelete
+            $volumePriceProductTransferToDelete,
         );
 
         $this->priceProductFacade

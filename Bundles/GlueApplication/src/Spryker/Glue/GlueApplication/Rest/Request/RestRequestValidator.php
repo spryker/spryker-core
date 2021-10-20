@@ -116,7 +116,7 @@ class RestRequestValidator implements RestRequestValidatorInterface
 
         $allResources = $restRequest->getHttpRequest()->attributes->get(
             RequestConstantsInterface::ATTRIBUTE_ALL_RESOURCES,
-            []
+            [],
         );
 
         if ($this->checkResourcesHaveId($allResources)) {

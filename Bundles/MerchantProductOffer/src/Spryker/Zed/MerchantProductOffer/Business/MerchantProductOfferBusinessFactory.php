@@ -26,7 +26,7 @@ class MerchantProductOfferBusinessFactory extends AbstractBusinessFactory
     {
         return new MerchantProductOfferReader(
             $this->getProductOfferFacade(),
-            $this->getRepository()
+            $this->getRepository(),
         );
     }
 

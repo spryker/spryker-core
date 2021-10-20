@@ -51,7 +51,7 @@ class CreateMerchantRelationshipController extends AbstractController
         $merchantRelationshipForm = $this->getFactory()
             ->getMerchantRelationshipCreateForm(
                 $dataProvider->getData(),
-                $dataProvider->getOptions($isSubmitPersist, $idCompany)
+                $dataProvider->getOptions($isSubmitPersist, $idCompany),
             )
             ->handleRequest($request);
 

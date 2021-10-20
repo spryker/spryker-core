@@ -114,7 +114,7 @@ class QuoteRequestUserTerminator implements QuoteRequestUserTerminatorInterface
         return $this->quoteRequestEntityManager->updateQuoteRequestStatus(
             $quoteRequestTransfer->getQuoteRequestReference(),
             $quoteRequestTransfer->getStatus(),
-            SharedQuoteRequestConfig::STATUS_CANCELED
+            SharedQuoteRequestConfig::STATUS_CANCELED,
         );
     }
 

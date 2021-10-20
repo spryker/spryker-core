@@ -114,7 +114,7 @@ class LocalizedAttributesCollectionWriter implements LocalizedAttributesCollecti
             ->queryContainer
             ->queryLocalizedAttributesByIdProductLabelAndIdLocale(
                 $localizedAttributesTransfer->getFkProductLabel(),
-                $localizedAttributesTransfer->getFkLocale()
+                $localizedAttributesTransfer->getFkLocale(),
             )
             ->findOneOrCreate();
 

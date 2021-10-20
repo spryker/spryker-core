@@ -30,7 +30,7 @@ class ContentStorageBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->getEntityManager(),
             $this->getUtilEncoding(),
-            $this->getStoreFacade()
+            $this->getStoreFacade(),
         );
     }
 

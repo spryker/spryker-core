@@ -43,7 +43,7 @@ class GlueServiceProviderPlugin extends AbstractPlugin implements ServiceProvide
             [
                 $this->getFactory()->createRestControllerListener(),
                 'onKernelController',
-            ]
+            ],
         );
     }
 

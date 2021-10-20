@@ -42,7 +42,7 @@ class ReturnReasonSearchResultFormatterPlugin extends AbstractElasticsearchResul
 
         foreach ($searchResult->getResults() as $document) {
             $returnReasonSearchCollection->addReturnReason(
-                $this->getMappedReturnReasonSearchTransfer($document->getSource()[ReturnReasonIndexMap::SEARCH_RESULT_DATA])
+                $this->getMappedReturnReasonSearchTransfer($document->getSource()[ReturnReasonIndexMap::SEARCH_RESULT_DATA]),
             );
         }
 

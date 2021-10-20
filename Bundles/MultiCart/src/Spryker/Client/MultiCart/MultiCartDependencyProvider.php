@@ -169,7 +169,7 @@ class MultiCartDependencyProvider extends AbstractDependencyProvider
     {
         $container->set(static::SERVICE_DATETIME, function (Container $container) {
             return new MultiCartToUtilDateTimeServiceBridge(
-                $container->getLocator()->utilDateTime()->service()
+                $container->getLocator()->utilDateTime()->service(),
             );
         });
 

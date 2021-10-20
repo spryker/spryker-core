@@ -28,7 +28,7 @@ class NoteExtractorStep implements DataImportStepInterface
             $key = ProductDiscontinuedDataSetInterface::KEY_NOTE . '.' . $localeName;
             if (!isset($dataSet[$key])) {
                 throw new InvalidDataException(
-                    sprintf('Could not find note for locale "%s" and sku "%s"', $localeName, $dataSet[ProductDiscontinuedDataSetInterface::KEY_CONCRETE_SKU])
+                    sprintf('Could not find note for locale "%s" and sku "%s"', $localeName, $dataSet[ProductDiscontinuedDataSetInterface::KEY_CONCRETE_SKU]),
                 );
             }
             if (empty($dataSet[$key])) {

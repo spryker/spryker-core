@@ -71,7 +71,7 @@ class CompanyBusinessUnitDataImportPluginTest extends AbstractCompanyBusinessUni
         $this->tester->haveCompany([CompanyTransfer::KEY => static::COMPANY_KEY]);
 
         $dataImportConfigurationTransfer = $this->getDataImportConfigurationTransfer(
-            static::IMPORT_COMPANY_BUSINESS_UNIT_CSV
+            static::IMPORT_COMPANY_BUSINESS_UNIT_CSV,
         );
 
         $companyBusinessUnitDataImportPlugin = new CompanyBusinessUnitDataImportPlugin();
@@ -92,7 +92,7 @@ class CompanyBusinessUnitDataImportPluginTest extends AbstractCompanyBusinessUni
         $this->tester->truncateCompanyBusinessUnitRelations();
 
         $dataImportConfigurationTransfer = $this->getDataImportConfigurationTransfer(
-            static::IMPORT_COMPANY_BUSINESS_UNIT_WITH_INVALID_COMPANY_CSV
+            static::IMPORT_COMPANY_BUSINESS_UNIT_WITH_INVALID_COMPANY_CSV,
         );
 
         $companyBusinessUnitDataImportPlugin = new CompanyBusinessUnitDataImportPlugin();
@@ -119,7 +119,7 @@ class CompanyBusinessUnitDataImportPluginTest extends AbstractCompanyBusinessUni
             CompanyBusinessUnitTransfer::KEY => static::COMPANY_CHILD_BUSINESS_UNIT_KEY,
         ]);
         $dataImportConfigurationTransfer = $this->getDataImportConfigurationTransfer(
-            static::IMPORT_COMPANY_BUSINESS_UNIT_WITH_INVALID_PARENT_CSV
+            static::IMPORT_COMPANY_BUSINESS_UNIT_WITH_INVALID_PARENT_CSV,
         );
 
         $companyBusinessUnitDataImportPlugin = new CompanyBusinessUnitDataImportPlugin();

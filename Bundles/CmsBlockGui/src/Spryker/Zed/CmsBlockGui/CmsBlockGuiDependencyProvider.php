@@ -231,8 +231,8 @@ class CmsBlockGuiDependencyProvider extends AbstractBundleDependencyProvider
                 'Missing instance of %s! You need to configure StoreRelationFormType ' .
                 'in your own CmsBlockGuiDependencyProvider::getStoreRelationFormTypePlugin() ' .
                 'to be able to manage cms blocks.',
-                FormTypeInterface::class
-            )
+                FormTypeInterface::class,
+            ),
         );
     }
 

@@ -52,7 +52,7 @@ class ProductConcreteExpander implements ProductConcreteExpanderInterface
 
         $mappedProductConcreteRestResources = $this->mapProductConcreteRestResourcesByProductId(
             $productConcreteRestResources,
-            $mappedProductConcreteIdsBySku
+            $mappedProductConcreteIdsBySku,
         );
 
         $this->addProductConcreteRestResources($mappedProductConcreteRestResources, $resources);

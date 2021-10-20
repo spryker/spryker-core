@@ -44,7 +44,7 @@ class ProductMoneyType extends AbstractType
             $this->getFactory()->getMoneyFormTypePlugin()->getType(),
             [
                 'data_class' => MoneyValueTransfer::class,
-            ]
+            ],
         );
     }
 

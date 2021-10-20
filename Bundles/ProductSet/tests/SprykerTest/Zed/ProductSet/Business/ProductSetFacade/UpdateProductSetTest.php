@@ -100,7 +100,7 @@ class UpdateProductSetTest extends Unit
         $this->assertEquals(
             $updatedProductSetDataTransfer->toArray(),
             $actualProductSetTransfer->getLocalizedData()[0]->getProductSetData()->toArray(),
-            'ProductSet should have expected data.'
+            'ProductSet should have expected data.',
         );
 
         $this->tester->assertTouchActive(ProductSetConfig::RESOURCE_TYPE_PRODUCT_SET, $productSetTransfer->getIdProductSet(), 'ProductSet should have been touched as active.');
@@ -125,7 +125,7 @@ class UpdateProductSetTest extends Unit
         $this->assertSame(
             '/updated/product/set/url',
             $actualProductSetTransfer->getLocalizedData()[0]->getUrl(),
-            'ProductSet should have expected URL.'
+            'ProductSet should have expected URL.',
         );
 
         $this->tester->assertTouchActive(ProductSetConfig::RESOURCE_TYPE_PRODUCT_SET, $productSetTransfer->getIdProductSet(), 'ProductSet should have been touched as active.');
@@ -156,7 +156,7 @@ class UpdateProductSetTest extends Unit
         $this->assertEquals(
             $productSetTransfer->getImageSets()[0]->toArray(),
             $actualProductSetTransfer->getImageSets()[0]->toArray(),
-            'Existing ImageSet should have expected data.'
+            'Existing ImageSet should have expected data.',
         );
 
         $this->tester->assertTouchActive(ProductSetConfig::RESOURCE_TYPE_PRODUCT_SET, $productSetTransfer->getIdProductSet(), 'ProductSet should have been touched as active.');
@@ -279,7 +279,7 @@ class UpdateProductSetTest extends Unit
         $this->assertSame(
             $productSetTransfer->getLocalizedData()[0]->getUrl(),
             $actualProductSetTransfer->getLocalizedData()[0]->getUrl(),
-            'ProductSet should have expected URL.'
+            'ProductSet should have expected URL.',
         );
 
         $this->tester->assertTouchActive(ProductSetConfig::RESOURCE_TYPE_PRODUCT_SET, $productSetTransfer->getIdProductSet(), 'ProductSet should have been touched as active.');

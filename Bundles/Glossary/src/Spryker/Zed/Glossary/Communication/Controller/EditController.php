@@ -53,7 +53,7 @@ class EditController extends AbstractController
             ->createTranslationDataProvider()
             ->getData(
                 $idGlossaryKey,
-                $this->getFactory()->getEnabledLocales()
+                $this->getFactory()->getEnabledLocales(),
             );
 
         if ($formData === []) {

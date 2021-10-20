@@ -60,7 +60,7 @@ class MerchantShipmentMapper
         $addressTransfer->fromArray($salesOrderAddress->toArray(), true);
         $countryTransfer = (new CountryTransfer())->fromArray(
             $salesOrderAddress->getCountry()->toArray(),
-            true
+            true,
         );
 
         $addressTransfer->setIso2Code($countryTransfer->getIso2Code());

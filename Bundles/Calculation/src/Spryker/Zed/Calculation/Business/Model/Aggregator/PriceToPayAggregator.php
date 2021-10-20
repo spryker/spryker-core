@@ -42,8 +42,8 @@ class PriceToPayAggregator implements CalculatorInterface
                     $itemTransfer->getUnitSubtotalAggregation(),
                     $priceMode,
                     $itemTransfer->getUnitDiscountAmountAggregation(),
-                    $itemTransfer->getUnitTaxAmountFullAggregation()
-                )
+                    $itemTransfer->getUnitTaxAmountFullAggregation(),
+                ),
             );
 
             $itemTransfer->setSumPriceToPayAggregation(
@@ -51,8 +51,8 @@ class PriceToPayAggregator implements CalculatorInterface
                     $itemTransfer->getSumSubtotalAggregation(),
                     $priceMode,
                     $itemTransfer->getSumDiscountAmountFullAggregation(),
-                    $itemTransfer->getSumTaxAmountFullAggregation()
-                )
+                    $itemTransfer->getSumTaxAmountFullAggregation(),
+                ),
             );
         }
     }
@@ -71,8 +71,8 @@ class PriceToPayAggregator implements CalculatorInterface
                     $expenseTransfer->getUnitPrice(),
                     $priceMode,
                     $expenseTransfer->getUnitDiscountAmountAggregation(),
-                    $expenseTransfer->getUnitTaxAmount()
-                )
+                    $expenseTransfer->getUnitTaxAmount(),
+                ),
             );
 
             $expenseTransfer->setSumPriceToPayAggregation(
@@ -80,8 +80,8 @@ class PriceToPayAggregator implements CalculatorInterface
                     $expenseTransfer->getSumPrice(),
                     $priceMode,
                     $expenseTransfer->getSumDiscountAmountAggregation(),
-                    $expenseTransfer->getSumTaxAmount()
-                )
+                    $expenseTransfer->getSumTaxAmount(),
+                ),
             );
         }
     }

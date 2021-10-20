@@ -123,7 +123,7 @@ class CmsPageFormTypeDataProvider
         $cmsPageAttributeTransfer->setLocaleName($localeTransfer->getLocaleName());
         $cmsPageAttributeTransfer->setFkLocale($localeTransfer->getIdLocale());
         $cmsPageAttributeTransfer->setUrlPrefix(
-            $this->cmsFacade->getPageUrlPrefix($cmsPageAttributeTransfer)
+            $this->cmsFacade->getPageUrlPrefix($cmsPageAttributeTransfer),
         );
 
         return $cmsPageAttributeTransfer;

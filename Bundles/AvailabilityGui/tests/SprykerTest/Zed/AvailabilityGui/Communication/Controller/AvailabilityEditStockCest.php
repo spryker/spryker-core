@@ -45,8 +45,8 @@ class AvailabilityEditStockCest
                 $productConcreteTransfer->getIdProductConcrete(),
                 $productConcreteTransfer->getSku(),
                 $productConcreteTransfer->getFkProductAbstract(),
-                AvailabilityPage::AVAILABILITY_ID_STORE
-            )
+                AvailabilityPage::AVAILABILITY_ID_STORE,
+            ),
         );
 
         $i->seeBreadcrumbNavigation('Catalog / Availability / Edit Stock');

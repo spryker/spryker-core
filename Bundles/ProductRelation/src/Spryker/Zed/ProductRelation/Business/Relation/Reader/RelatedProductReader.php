@@ -52,7 +52,7 @@ class RelatedProductReader implements RelatedProductReaderInterface
             $productRelationCriteriaFilterTransfer = $this->createProductRelationCriteriaFilterTransfer(
                 $productRelationTransfer,
                 $limit,
-                $offset
+                $offset,
             );
 
             yield $this->productRelationRepository

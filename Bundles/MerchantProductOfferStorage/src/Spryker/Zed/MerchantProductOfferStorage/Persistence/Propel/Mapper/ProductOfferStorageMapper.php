@@ -44,7 +44,7 @@ class ProductOfferStorageMapper
     ): ProductOfferTransfer {
         $productOfferTransfer = $productOfferTransfer->fromArray(
             $productOfferEntity->toArray(),
-            true
+            true,
         );
 
         return $productOfferTransfer;

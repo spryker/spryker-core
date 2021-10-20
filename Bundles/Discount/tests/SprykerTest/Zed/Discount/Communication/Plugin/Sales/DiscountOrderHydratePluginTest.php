@@ -514,7 +514,7 @@ class DiscountOrderHydratePluginTest extends Unit
                     $this->getDiscountPhpFieldName(SpySalesDiscountTableMap::COL_FK_SALES_ORDER) => $orderTransfer->getIdSalesOrder(),
                     $this->getDiscountPhpFieldName(SpySalesDiscountTableMap::COL_FK_SALES_ORDER_ITEM) => $orderItem->getIdSalesOrderItem(),
                     static::FIELD_NAME_NAME => $discountGeneralTransfer->getDisplayName(),
-                ]
+                ],
             ));
 
             $salesDiscountCodeEntity = SpySalesDiscountCodeQuery::create()

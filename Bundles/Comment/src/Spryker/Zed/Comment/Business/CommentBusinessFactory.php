@@ -33,7 +33,7 @@ class CommentBusinessFactory extends AbstractBusinessFactory
             $this->getEntityManager(),
             $this->getRepository(),
             $this->createCommentThreadReader(),
-            $this->createCommentThreadWriter()
+            $this->createCommentThreadWriter(),
         );
     }
 
@@ -45,7 +45,7 @@ class CommentBusinessFactory extends AbstractBusinessFactory
         return new CommentThreadWriter(
             $this->getEntityManager(),
             $this->getRepository(),
-            $this->createCommentTagWriter()
+            $this->createCommentTagWriter(),
         );
     }
 
@@ -58,7 +58,7 @@ class CommentBusinessFactory extends AbstractBusinessFactory
             $this->getEntityManager(),
             $this->getRepository(),
             $this->createCommentThreadReader(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -68,7 +68,7 @@ class CommentBusinessFactory extends AbstractBusinessFactory
     public function createCommentThreadReader(): CommentThreadReaderInterface
     {
         return new CommentThreadReader(
-            $this->getRepository()
+            $this->getRepository(),
         );
     }
 }

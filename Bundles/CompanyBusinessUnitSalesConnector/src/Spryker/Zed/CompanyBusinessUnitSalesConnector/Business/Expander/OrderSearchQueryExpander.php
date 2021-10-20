@@ -84,7 +84,7 @@ class OrderSearchQueryExpander implements OrderSearchQueryExpanderInterface
     ): QueryJoinCollectionTransfer {
         $filterFieldTransfer = $this->extractFilterFieldByType(
             $filterFieldTransfers,
-            CompanyBusinessUnitSalesConnectorConfig::FILTER_FIELD_TYPE_COMPANY_BUSINESS_UNIT
+            CompanyBusinessUnitSalesConnectorConfig::FILTER_FIELD_TYPE_COMPANY_BUSINESS_UNIT,
         );
 
         if (!$filterFieldTransfer) {
@@ -92,7 +92,7 @@ class OrderSearchQueryExpander implements OrderSearchQueryExpanderInterface
         }
 
         return $queryJoinCollectionTransfer->addQueryJoin(
-            $this->createCompanyBusinessUnitFilterQueryJoin($filterFieldTransfer->getValue())
+            $this->createCompanyBusinessUnitFilterQueryJoin($filterFieldTransfer->getValue()),
         );
     }
 
@@ -108,7 +108,7 @@ class OrderSearchQueryExpander implements OrderSearchQueryExpanderInterface
     ): QueryJoinCollectionTransfer {
         $filterFieldTransfer = $this->extractFilterFieldByType(
             $filterFieldTransfers,
-            CompanyBusinessUnitSalesConnectorConfig::FILTER_FIELD_TYPE_ALL
+            CompanyBusinessUnitSalesConnectorConfig::FILTER_FIELD_TYPE_ALL,
         );
 
         if (!$filterFieldTransfer) {
@@ -116,7 +116,7 @@ class OrderSearchQueryExpander implements OrderSearchQueryExpanderInterface
         }
 
         $queryJoinCollectionTransfer->addQueryJoin(
-            $this->createCustomerFilterQueryJoin($filterFieldTransfer->getValue())
+            $this->createCustomerFilterQueryJoin($filterFieldTransfer->getValue()),
         );
 
         return $queryJoinCollectionTransfer;
@@ -134,7 +134,7 @@ class OrderSearchQueryExpander implements OrderSearchQueryExpanderInterface
     ): QueryJoinCollectionTransfer {
         $filterFieldTransfer = $this->extractFilterFieldByType(
             $filterFieldTransfers,
-            CompanyBusinessUnitSalesConnectorConfig::FILTER_FIELD_TYPE_ORDER_BY
+            CompanyBusinessUnitSalesConnectorConfig::FILTER_FIELD_TYPE_ORDER_BY,
         );
 
         if (!$filterFieldTransfer) {
@@ -149,7 +149,7 @@ class OrderSearchQueryExpander implements OrderSearchQueryExpanderInterface
         }
 
         return $queryJoinCollectionTransfer->addQueryJoin(
-            $this->createCustomerSortingQueryJoin($orderColumn, $orderDirection)
+            $this->createCustomerSortingQueryJoin($orderColumn, $orderDirection),
         );
     }
 

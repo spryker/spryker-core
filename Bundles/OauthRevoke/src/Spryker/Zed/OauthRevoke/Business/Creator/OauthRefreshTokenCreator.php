@@ -47,7 +47,7 @@ class OauthRefreshTokenCreator implements OauthRefreshTokenCreatorInterface
     {
         $oauthRefreshTokenTransfer = $this->oauthRefreshTokenMapper->mapRefreshTokenEntityToOauthRefreshTokenTransfer(
             $refreshTokenEntity,
-            new OauthRefreshTokenTransfer()
+            new OauthRefreshTokenTransfer(),
         );
 
         $this->oauthRevokeEntityManager->saveRefreshToken($oauthRefreshTokenTransfer);

@@ -80,11 +80,11 @@ class ProductCategoryStorageBusinessTester extends Actor
         }
 
         $productAbstractCategoryStorageEntity->setLocale(
-            $productConcreteTransfer->getLocalizedAttributes()->offsetGet(0)->getLocale()->getLocaleName()
+            $productConcreteTransfer->getLocalizedAttributes()->offsetGet(0)->getLocale()->getLocaleName(),
         );
 
         $productAbstractCategoryStorageEntity->setData(
-            $this->getLocator()->utilEncoding()->service()->encodeJson($storageData)
+            $this->getLocator()->utilEncoding()->service()->encodeJson($storageData),
         );
 
         $productAbstractCategoryStorageEntity->save();

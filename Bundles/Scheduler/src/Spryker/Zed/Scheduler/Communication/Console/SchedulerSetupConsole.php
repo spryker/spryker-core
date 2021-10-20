@@ -70,7 +70,7 @@ class SchedulerSetupConsole extends AbstractSchedulerConsole
             static::ROLES_OPTION_SHORTCUT,
             InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY,
             static::ROLES_OPTION_DESCRIPTION,
-            []
+            [],
         );
 
         $this->addOption(
@@ -78,7 +78,7 @@ class SchedulerSetupConsole extends AbstractSchedulerConsole
             static::SCHEDULERS_OPTION_SHORTCUT,
             InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY,
             static::SCHEDULERS_OPTION_DESCRIPTION,
-            []
+            [],
         );
 
         parent::configure();

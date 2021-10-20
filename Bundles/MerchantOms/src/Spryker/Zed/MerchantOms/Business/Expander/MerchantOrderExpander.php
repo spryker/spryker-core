@@ -46,7 +46,7 @@ class MerchantOrderExpander implements MerchantOrderExpanderInterface
         $stateMachineItemStateIds = $this->getStateMachineItemStateIds($merchantOrderTransfer);
 
         $stateMachineItemTransfers = $this->merchantOmsRepository->getStateMachineItemsByStateIds(
-            $stateMachineItemStateIds
+            $stateMachineItemStateIds,
         );
 
         $manualEvents = $this->stateMachineFacade->getManualEventsForStateMachineItems($stateMachineItemTransfers);

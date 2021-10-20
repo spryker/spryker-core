@@ -159,7 +159,7 @@ class ConfigurableBundleTemplateTable extends AbstractTable
         $configurableBundleTemplateEntityCollection = $this->runQuery(
             $this->prepareQuery($this->configurableBundleTemplatePropelQuery),
             $config,
-            true
+            true,
         );
 
         if ($configurableBundleTemplateEntityCollection->count() === 0) {
@@ -185,7 +185,7 @@ class ConfigurableBundleTemplateTable extends AbstractTable
             ->addJoin(SpyGlossaryKeyTableMap::COL_ID_GLOSSARY_KEY, SpyGlossaryTranslationTableMap::COL_FK_GLOSSARY_KEY, Criteria::LEFT_JOIN)
             ->withColumn(
                 sprintf('COUNT(%s)', SpyConfigurableBundleTemplateSlotTableMap::COL_ID_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT),
-                static::COL_COUNT_OF_SLOTS
+                static::COL_COUNT_OF_SLOTS,
             )
             ->withColumn(SpyGlossaryTranslationTableMap::COL_VALUE, static::COL_NAME_TRANSLATION)
             ->where(
@@ -193,8 +193,8 @@ class ConfigurableBundleTemplateTable extends AbstractTable
                     '%s = %s',
                     SpyGlossaryTranslationTableMap::COL_FK_LOCALE,
                     $this->localeFacade->getCurrentLocale()
-                        ->getIdLocale()
-                )
+                        ->getIdLocale(),
+                ),
             )
             ->groupByIdConfigurableBundleTemplate();
 
@@ -245,7 +245,7 @@ class ConfigurableBundleTemplateTable extends AbstractTable
             Url::generate(static::ROUTE_EDIT_CONFIGURABLE_BUNDLE_TEMPLATE, [
                 static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE => $configurableBundleTemplateEntity->getIdConfigurableBundleTemplate(),
             ]),
-            'Edit'
+            'Edit',
         );
 
         $buttons[] = $this->generateTemplateStatusChangeButton($configurableBundleTemplateEntity);
@@ -253,7 +253,7 @@ class ConfigurableBundleTemplateTable extends AbstractTable
             Url::generate(static::ROUTE_CONFIGURABLE_BUNDLE_TEMPLATE_CONFIRM_DELETE, [
                 static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE => $configurableBundleTemplateEntity->getIdConfigurableBundleTemplate(),
             ]),
-            'Delete'
+            'Delete',
         );
 
         return implode(' ', $buttons);
@@ -275,7 +275,7 @@ class ConfigurableBundleTemplateTable extends AbstractTable
                 DeactivateConfigurableBundleTemplateForm::class,
                 [
                     static::BUTTON_CLASS => 'btn-danger safe-submit',
-                ]
+                ],
             );
         }
 
@@ -284,7 +284,7 @@ class ConfigurableBundleTemplateTable extends AbstractTable
                 static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE => $configurableBundleTemplateEntity->getIdConfigurableBundleTemplate(),
             ]),
             'Activate',
-            ActivateConfigurableBundleTemplateForm::class
+            ActivateConfigurableBundleTemplateForm::class,
         );
     }
 

@@ -53,7 +53,7 @@ class AvailabilityStorageMapper implements AvailabilityStorageMapperInterface
 
         $productConcreteAvailabilityTransfers = $this->mapProductConcreteAvailabilityDataToProductConcreteAvailabilityTransfers(
             $availabilityStorageData[static::KEY_SPY_AVAILABILITIES],
-            new ArrayObject()
+            new ArrayObject(),
         );
 
         $productAbstractAvailabilityTransfer->setProductConcreteAvailabilities($productConcreteAvailabilityTransfers);

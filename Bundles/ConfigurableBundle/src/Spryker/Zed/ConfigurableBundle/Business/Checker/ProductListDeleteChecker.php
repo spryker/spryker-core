@@ -90,7 +90,7 @@ class ProductListDeleteChecker implements ProductListDeleteCheckerInterface
 
         $productListResponseTransfer = $this->expandProductListResponseWithMessages(
             $productListResponseTransfer,
-            $configurableBundleTemplateSlotCollectionTransfer
+            $configurableBundleTemplateSlotCollectionTransfer,
         );
 
         return $productListResponseTransfer->setIsSuccessful(false);
@@ -114,7 +114,7 @@ class ProductListDeleteChecker implements ProductListDeleteCheckerInterface
 
             $productListResponseTransfer = $this->addMessageToProductListResponse(
                 $productListResponseTransfer,
-                $configurableBundleTemplateSlotTransfer
+                $configurableBundleTemplateSlotTransfer,
             );
         }
 

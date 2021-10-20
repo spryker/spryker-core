@@ -91,7 +91,7 @@ class ShipmentsRestApiFacade extends AbstractFacade implements ShipmentsRestApiF
             ->createCheckoutDataExpander()
             ->expandCheckoutDataWithAvailableShipmentMethods(
                 $restCheckoutDataTransfer,
-                $restCheckoutRequestAttributesTransfer
+                $restCheckoutRequestAttributesTransfer,
             );
     }
 

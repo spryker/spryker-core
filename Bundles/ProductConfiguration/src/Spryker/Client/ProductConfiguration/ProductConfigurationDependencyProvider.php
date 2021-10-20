@@ -128,7 +128,7 @@ class ProductConfigurationDependencyProvider extends AbstractDependencyProvider
     {
         $container->set(static::SERVICE_PRICE_PRODUCT, function (Container $container) {
             return new ProductConfigurationToPriceProductServiceBridge(
-                $container->getLocator()->priceProduct()->service()
+                $container->getLocator()->priceProduct()->service(),
             );
         });
 
@@ -158,7 +158,7 @@ class ProductConfigurationDependencyProvider extends AbstractDependencyProvider
     {
         $container->set(static::CLIENT_HTTP, function () {
             return new ProductConfigurationToGuzzleHttpClientAdapter(
-                new GuzzleHttpClient()
+                new GuzzleHttpClient(),
             );
         });
 
@@ -174,7 +174,7 @@ class ProductConfigurationDependencyProvider extends AbstractDependencyProvider
     {
         $container->set(static::CLIENT_CURRENCY, function (Container $container) {
             return new ProductConfigurationToCurrencyClientBridge(
-                $container->getLocator()->currency()->client()
+                $container->getLocator()->currency()->client(),
             );
         });
 
@@ -190,7 +190,7 @@ class ProductConfigurationDependencyProvider extends AbstractDependencyProvider
     {
         $container->set(static::CLIENT_PRICE, function (Container $container) {
             return new ProductConfigurationToPriceClientBridge(
-                $container->getLocator()->price()->client()
+                $container->getLocator()->price()->client(),
             );
         });
 
@@ -206,7 +206,7 @@ class ProductConfigurationDependencyProvider extends AbstractDependencyProvider
     {
         $container->set(static::CLIENT_LOCALE, function (Container $container) {
             return new ProductConfigurationToLocaleBridge(
-                $container->getLocator()->locale()->client()
+                $container->getLocator()->locale()->client(),
             );
         });
 
@@ -222,7 +222,7 @@ class ProductConfigurationDependencyProvider extends AbstractDependencyProvider
     {
         $container->set(static::CLIENT_CUSTOMER, function (Container $container) {
             return new ProductConfigurationToCustomerClientBridge(
-                $container->getLocator()->customer()->client()
+                $container->getLocator()->customer()->client(),
             );
         });
 
@@ -238,7 +238,7 @@ class ProductConfigurationDependencyProvider extends AbstractDependencyProvider
     {
         $container->set(static::CLIENT_STORE, function (Container $container) {
             return new ProductConfigurationToStoreClientBridge(
-                $container->getLocator()->store()->client()
+                $container->getLocator()->store()->client(),
             );
         });
 
@@ -254,7 +254,7 @@ class ProductConfigurationDependencyProvider extends AbstractDependencyProvider
     {
         $container->set(static::CLIENT_PRICE_PRODUCT_VOLUME, function (Container $container) {
             return new ProductConfigurationToPriceProductVolumeClientBridge(
-                $container->getLocator()->priceProductVolume()->client()
+                $container->getLocator()->priceProductVolume()->client(),
             );
         });
 
@@ -270,7 +270,7 @@ class ProductConfigurationDependencyProvider extends AbstractDependencyProvider
     {
         $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new ProductConfigurationToUtilEncodingServiceBridge(
-                $container->getLocator()->utilEncoding()->service()
+                $container->getLocator()->utilEncoding()->service(),
             );
         });
 
@@ -300,7 +300,7 @@ class ProductConfigurationDependencyProvider extends AbstractDependencyProvider
     {
         $container->set(static::CHECKSUM_GENERATOR, function () {
             return new ProductConfigurationToSprykerChecksumGeneratorAdapter(
-                $this->getChecksumGenerator()
+                $this->getChecksumGenerator(),
             );
         });
 
@@ -313,7 +313,7 @@ class ProductConfigurationDependencyProvider extends AbstractDependencyProvider
     protected function getChecksumGenerator(): ChecksumGeneratorInterface
     {
         return new CrcOpenSslChecksumGenerator(
-            $this->getConfig()->getProductConfiguratorHexInitializationVector()
+            $this->getConfig()->getProductConfiguratorHexInitializationVector(),
         );
     }
 

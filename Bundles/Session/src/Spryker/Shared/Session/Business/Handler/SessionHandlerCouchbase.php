@@ -115,7 +115,7 @@ class SessionHandlerCouchbase implements SessionHandlerInterface
             $this->user,
             $this->password,
             $this->bucketName,
-            $this->persistent
+            $this->persistent,
         );
 
         return $this->connection ? true : false;

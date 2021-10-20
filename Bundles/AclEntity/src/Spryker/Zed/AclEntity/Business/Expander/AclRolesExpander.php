@@ -41,7 +41,7 @@ class AclRolesExpander implements AclRolesExpanderInterface
 
         foreach ($roleTransfers as $roleTransfer) {
             $expandedRoleTransfers->append(
-                $this->expandRoleTransferWithAclEntityRules($aclEntityRuleCollection, $roleTransfer)
+                $this->expandRoleTransferWithAclEntityRules($aclEntityRuleCollection, $roleTransfer),
             );
         }
 

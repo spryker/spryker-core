@@ -76,7 +76,7 @@ class CmsSlotBlockStorageListenerTest extends Unit
         // Act
         $cmsSlotBlockStoragePublishListenerMock->handleBulk(
             $eventTransfers,
-            CmsSlotBlockEvents::CMS_SLOT_BLOCK_PUBLISH
+            CmsSlotBlockEvents::CMS_SLOT_BLOCK_PUBLISH,
         );
         $cmsSlotBlockStorageEntity = SpyCmsSlotBlockStorageQuery::create()
             ->filterByFkCmsSlotTemplate($cmsSlotBlockTransfer->getIdSlotTemplate())

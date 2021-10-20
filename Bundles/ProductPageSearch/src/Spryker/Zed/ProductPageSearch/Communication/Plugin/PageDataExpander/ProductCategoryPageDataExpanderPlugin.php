@@ -55,7 +55,7 @@ class ProductCategoryPageDataExpanderPlugin extends AbstractPlugin implements Pr
         foreach ($productAbstractPageSearchTransfer->getCategoryNodeIds() as $idCategory) {
             $allParentCategoryIds = array_merge(
                 $allParentCategoryIds,
-                $this->getAllParents($idCategory)
+                $this->getAllParents($idCategory),
             );
         }
 
@@ -67,13 +67,13 @@ class ProductCategoryPageDataExpanderPlugin extends AbstractPlugin implements Pr
             $allParentCategoryIds,
             $productAbstractPageSearchTransfer->getCategoryNodeIds(),
             $localeTransfer,
-            $productAbstractPageSearchTransfer
+            $productAbstractPageSearchTransfer,
         );
 
         $this->setSorting(
             $allParentCategoryIds,
             $productData['fk_product_abstract'],
-            $productAbstractPageSearchTransfer
+            $productAbstractPageSearchTransfer,
         );
     }
 
@@ -208,13 +208,13 @@ class ProductCategoryPageDataExpanderPlugin extends AbstractPlugin implements Pr
         $maxProductOrder = (pow(2, 31) - 1);
         $productCategoryEntities = $this->findNodeEntitiesWithProductOrderPosition(
             $directParentCategories,
-            $idProductAbstract
+            $idProductAbstract,
         );
 
         $sortedCategories = [];
         foreach ($productCategoryEntities as $productCategoryEntity) {
             $idCategoryNode = $productCategoryEntity->getVirtualColumn(
-                ProductCategoryQueryContainer::VIRTUAL_COLUMN_ID_CATEGORY_NODE
+                ProductCategoryQueryContainer::VIRTUAL_COLUMN_ID_CATEGORY_NODE,
             );
 
             $productOrder = (int)$productCategoryEntity->getProductOrder() ?: $maxProductOrder;
@@ -237,7 +237,7 @@ class ProductCategoryPageDataExpanderPlugin extends AbstractPlugin implements Pr
             ->getFactory()->getProductCategoryQueryContainer()
             ->queryProductCategoryMappingsByIdAbstractProductAndIdsCategoryNode(
                 $idProductAbstract,
-                $directParentCategories
+                $directParentCategories,
             )
             ->find();
     }

@@ -37,8 +37,8 @@ class MarkAsDefaultQuoteAfterSavePlugin extends AbstractPlugin implements QuoteW
         return $quoteTransfer->setIsDefault(
             $this->getFacade()->isSharedQuoteDefault(
                 $quoteTransfer->getIdQuote(),
-                $quoteTransfer->getCustomer()->getCompanyUserTransfer()->getIdCompanyUser()
-            )
+                $quoteTransfer->getCustomer()->getCompanyUserTransfer()->getIdCompanyUser(),
+            ),
         );
     }
 }

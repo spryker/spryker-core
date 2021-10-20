@@ -57,7 +57,7 @@ class AddController extends AbstractController
             ->getFactory()
             ->createProductFormAdd(
                 $dataProvider->getData($priceDimension),
-                $dataProvider->getOptions()
+                $dataProvider->getOptions(),
             )
             ->handleRequest($request);
 
@@ -72,7 +72,7 @@ class AddController extends AbstractController
                 $concreteProductCollection = $this->createProductConcreteCollection(
                     $type,
                     $productAbstractTransfer,
-                    $form
+                    $form,
                 );
 
                 $idProductAbstract = $this->getFactory()
@@ -114,7 +114,7 @@ class AddController extends AbstractController
         $params[static::PARAM_ID_PRODUCT_ABSTRACT] = $idProductAbstract;
 
         return $this->redirectResponse(
-            urldecode(Url::generate('/product-management/edit', $params)->build())
+            urldecode(Url::generate('/product-management/edit', $params)->build()),
         );
     }
 
@@ -131,7 +131,7 @@ class AddController extends AbstractController
             ->createBundledProductTable($idProductConcrete);
 
         return $this->jsonResponse(
-            $bundledProductTable->fetchData()
+            $bundledProductTable->fetchData(),
         );
     }
 

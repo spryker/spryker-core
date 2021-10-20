@@ -34,7 +34,7 @@ class PriceProductMatchingExistingVolumePriceMergeStrategy extends AbstractPrice
             ) {
                 $this->mergeIntoUnpersistedVolumePrice(
                     $priceProductTransfer,
-                    $newPriceProductTransfer
+                    $newPriceProductTransfer,
                 );
 
                 return $priceProductTransfers;

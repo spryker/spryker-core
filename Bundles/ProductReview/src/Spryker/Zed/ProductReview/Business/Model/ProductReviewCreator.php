@@ -113,8 +113,8 @@ class ProductReviewCreator implements ProductReviewCreatorInterface
             throw new RatingOutOfRangeException(
                 sprintf(
                     'Field Rating exceeds limit %d',
-                    $this->productReviewClient->getMaximumRating()
-                )
+                    $this->productReviewClient->getMaximumRating(),
+                ),
             );
         }
     }

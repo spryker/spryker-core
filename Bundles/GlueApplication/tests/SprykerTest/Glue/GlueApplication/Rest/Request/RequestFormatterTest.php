@@ -79,7 +79,7 @@ class RequestFormatterTest extends Unit
                 'HTTP_CONTENT-TYPE' => 'application/vnd.api+json; version=1.0',
                 'HTTP_ACCEPT' => 'application/vnd.api+json; version=1.0',
                 'Accept-Language' => 'en; de;q=0.5',
-            ]
+            ],
         );
 
         $restRequest = $requestFormatter->formatRequest($request);
@@ -104,7 +104,7 @@ class RequestFormatterTest extends Unit
                 'HTTP_CONTENT-TYPE' => 'application/vnd.api+json; version=1.0',
                 'HTTP_ACCEPT' => 'application/vnd.api+json; version=1.0',
                 'Accept-Language' => 'en; de;q=0.5',
-            ]
+            ],
         );
 
         $restRequest = $requestFormatter->formatRequest($request);
@@ -129,7 +129,7 @@ class RequestFormatterTest extends Unit
                 'HTTP_CONTENT-TYPE' => 'application/vnd.api+json; version=1.0',
                 'HTTP_ACCEPT' => 'application/vnd.api+json; version=1.0',
                 'Accept-Language' => 'en; de;q=0.5',
-            ]
+            ],
         );
 
         $restRequest = $requestFormatter->formatRequest($request);
@@ -156,7 +156,7 @@ class RequestFormatterTest extends Unit
                 'HTTP_CONTENT-TYPE' => 'application/vnd.api+json; version=1.0',
                 'HTTP_ACCEPT' => 'application/vnd.api+json; version=1.0',
                 'Accept-Language' => 'en; de;q=0.5',
-            ]
+            ],
         );
 
         $restRequest = $requestFormatter->formatRequest($request);
@@ -178,7 +178,7 @@ class RequestFormatterTest extends Unit
             $this->createRequestMetaDataExtractorMock(),
             new RequestResourceExtractor($restResourceBuilderMock, $this->createDecoderMatcherMock()),
             $glueApplicationConfigMock,
-            []
+            [],
         );
     }
 
@@ -248,7 +248,7 @@ class RequestFormatterTest extends Unit
                 'HTTP_CONTENT-TYPE' => 'application/vnd.api+json; version=1.0',
                 'HTTP_ACCEPT' => 'application/vnd.api+json; version=1.0',
                 'Accept-Language' => 'en; de;q=0.5',
-            ]
+            ],
         );
     }
 

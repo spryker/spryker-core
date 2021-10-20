@@ -31,7 +31,7 @@ class MerchantProductOffersRestApiFactory extends AbstractFactory
     {
         return new ProductOfferReader(
             $this->createProductOfferRestResponseBuilder(),
-            $this->getMerchantProductOfferStorageClient()
+            $this->getMerchantProductOfferStorageClient(),
         );
     }
 
@@ -49,7 +49,7 @@ class MerchantProductOffersRestApiFactory extends AbstractFactory
     public function createProductOfferRestResponseBuilder(): ProductOfferRestResponseBuilderInterface
     {
         return new ProductOfferRestResponseBuilder(
-            $this->getResourceBuilder()
+            $this->getResourceBuilder(),
         );
     }
 

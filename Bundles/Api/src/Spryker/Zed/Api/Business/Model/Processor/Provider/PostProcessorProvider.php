@@ -32,7 +32,7 @@ class PostProcessorProvider implements PostProcessorProviderInterface
     public function buildAddActionPostProcessor()
     {
         return new AddActionPostProcessor(
-            $this->apiConfig
+            $this->apiConfig,
         );
     }
 

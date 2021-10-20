@@ -55,7 +55,7 @@ class ProductBundleStorageReader implements ProductBundleStorageReaderInterface
     public function getProductBundles(ProductBundleStorageCriteriaTransfer $productBundleStorageCriteriaTransfer): array
     {
         $productBundleStorageData = $this->storageClient->getMulti(
-            $this->generateKeys($productBundleStorageCriteriaTransfer)
+            $this->generateKeys($productBundleStorageCriteriaTransfer),
         );
 
         if (!$productBundleStorageData) {

@@ -72,7 +72,7 @@ class InvitationSender implements InvitationSenderInterface
         }
 
         $companyUserInvitationTransfer = $this->invitationReader->findCompanyUserInvitationById(
-            $companyUserInvitationSendRequestTransfer->getCompanyUserInvitation()
+            $companyUserInvitationSendRequestTransfer->getCompanyUserInvitation(),
         );
 
         if (!$companyUserInvitationTransfer) {
@@ -80,7 +80,7 @@ class InvitationSender implements InvitationSenderInterface
         }
 
         $companyUserInvitationSendResponseTransfer->setIsSuccess(
-            $this->send($companyUserInvitationSendRequestTransfer->getIdCompanyUser(), $companyUserInvitationTransfer)
+            $this->send($companyUserInvitationSendRequestTransfer->getIdCompanyUser(), $companyUserInvitationTransfer),
         );
 
         return $companyUserInvitationSendResponseTransfer;
@@ -103,7 +103,7 @@ class InvitationSender implements InvitationSenderInterface
 
         $companyUserInvitationCollection = $this->createCompanyUserInvitationCollection(
             $companyUserTransfer,
-            CompanyUserInvitationConfig::INVITATION_STATUS_NEW
+            CompanyUserInvitationConfig::INVITATION_STATUS_NEW,
         );
 
         $invitationsTotal = $invitationsFailed = 0;

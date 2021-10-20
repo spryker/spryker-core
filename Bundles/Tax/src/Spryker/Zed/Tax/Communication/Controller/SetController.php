@@ -77,7 +77,7 @@ class SetController extends AbstractController
             $this->addErrorMessage("Tax set with id %s doesn't exist", ['%s' => $idTaxSet]);
 
             return $this->redirectResponse(
-                static::REDIRECT_URL_DEFAULT
+                static::REDIRECT_URL_DEFAULT,
             );
         }
 
@@ -164,7 +164,7 @@ class SetController extends AbstractController
         $table = $this->getFactory()->createTaxSetTable();
 
         return $this->jsonResponse(
-            $table->fetchData()
+            $table->fetchData(),
         );
     }
 }

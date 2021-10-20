@@ -152,12 +152,12 @@ class ProductSetStorageListenerTest extends Unit
         $this->assertSame(
             0,
             SpyProductSetStorageQuery::create()->filterByFkProductSet($productSetDeletedId)->count(),
-            static::MESSAGE_PRODUCT_SET_NOT_DELETED
+            static::MESSAGE_PRODUCT_SET_NOT_DELETED,
         );
         $this->assertGreaterThan(
             SpyProductSetStorageQuery::create()->count(),
             $productSetBeforeUnpublish,
-            static::MESSAGE_UNNECESSARY_PRODUCT_SET_DELETED
+            static::MESSAGE_UNNECESSARY_PRODUCT_SET_DELETED,
         );
     }
 

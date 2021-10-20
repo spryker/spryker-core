@@ -29,7 +29,7 @@ class ProductManagementAttributeMapper
         foreach ($productManagementAttributeEntities as $productManagementAttributeEntity) {
             $productManagementAttributeTransfer = $this->mapProductManagementAttributeEntityToTransfer(
                 $productManagementAttributeEntity,
-                new ProductManagementAttributeTransfer()
+                new ProductManagementAttributeTransfer(),
             );
 
             $productManagementAttributeCollectionTransfer->addProductManagementAttribute($productManagementAttributeTransfer);

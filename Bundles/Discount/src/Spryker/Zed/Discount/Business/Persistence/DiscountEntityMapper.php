@@ -62,7 +62,7 @@ class DiscountEntityMapper implements DiscountEntityMapperInterface
             $moneyValueTransfer->setIdEntity($discountMoneyAmountEntity->getPrimaryKey());
 
             $currencyTransfer = $this->getCurrencyByIdCurrency(
-                $discountMoneyAmountEntity->getFkCurrency()
+                $discountMoneyAmountEntity->getFkCurrency(),
             );
             $moneyValueTransfer->setCurrency($currencyTransfer);
 

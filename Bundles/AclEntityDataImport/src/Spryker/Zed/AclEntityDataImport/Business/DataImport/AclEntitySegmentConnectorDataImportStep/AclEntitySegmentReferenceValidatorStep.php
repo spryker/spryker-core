@@ -49,8 +49,8 @@ class AclEntitySegmentReferenceValidatorStep implements DataImportStepInterface
                 sprintf(
                     static::ACL_ENTITY_SEGMENT_NOT_FOUND_TEMPLATE,
                     SpyAclEntitySegment::class,
-                    $aclEntitySegmentReference
-                )
+                    $aclEntitySegmentReference,
+                ),
             );
         }
 

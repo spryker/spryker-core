@@ -65,7 +65,7 @@ class SecuritySystemUserConfig extends AbstractBundleConfig
     {
         return (int)$this->get(
             SecuritySystemUserConstants::SYSTEM_USER_SESSION_REDIS_LIFE_TIME,
-            $this->get(static::ZED_SESSION_TIME_TO_LIVE)
+            $this->get(static::ZED_SESSION_TIME_TO_LIVE),
         );
     }
 

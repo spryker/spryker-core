@@ -208,7 +208,7 @@ class ProductConcreteForm extends AbstractType
             CheckboxType::class,
             [
                 'required' => false,
-            ]
+            ],
         );
 
         return $this;
@@ -279,7 +279,7 @@ class ProductConcreteForm extends AbstractType
                 }
 
                 return $value;
-            }
+            },
         );
     }
 

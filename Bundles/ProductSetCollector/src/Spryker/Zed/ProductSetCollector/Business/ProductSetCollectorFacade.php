@@ -52,7 +52,7 @@ class ProductSetCollectorFacade extends AbstractFacade implements ProductSetColl
             $dataReader,
             $dataWriter,
             $touchUpdater,
-            $output
+            $output,
         );
     }
 
@@ -87,7 +87,7 @@ class ProductSetCollectorFacade extends AbstractFacade implements ProductSetColl
             $dataReader,
             $dataWriter,
             $touchUpdater,
-            $output
+            $output,
         );
     }
 }

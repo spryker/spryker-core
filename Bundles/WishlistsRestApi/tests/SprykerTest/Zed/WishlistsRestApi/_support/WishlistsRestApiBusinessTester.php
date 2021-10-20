@@ -53,7 +53,7 @@ class WishlistsRestApiBusinessTester extends Actor
         return $this->getWishlistFacade()->getWishlistByName(
             (new WishlistTransfer())
                 ->setName($name)
-                ->setFkCustomer($idCustomer)
+                ->setFkCustomer($idCustomer),
         );
     }
 }

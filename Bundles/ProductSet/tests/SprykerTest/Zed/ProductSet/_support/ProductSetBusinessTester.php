@@ -53,13 +53,13 @@ class ProductSetBusinessTester extends Actor
                     ->seed([
                         LocalizedProductSetTransfer::LOCALE => $localeTransfer,
                     ])
-                    ->withProductSetData()
+                    ->withProductSetData(),
             )
             ->withImageSet(
                 (new ProductImageSetBuilder([
                     ProductImageSetTransfer::LOCALE => null,
                 ]))
-                    ->withProductImage()
+                    ->withProductImage(),
             )
             ->build();
 

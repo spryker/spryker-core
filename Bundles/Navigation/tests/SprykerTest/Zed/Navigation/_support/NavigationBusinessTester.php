@@ -62,13 +62,13 @@ class NavigationBusinessTester extends Actor
         $navigationNodeLocalizedAttributesTransfer1 = $this->createNavigationNodeLocalizedAttributesTransfer(
             $idLocale1,
             'Node 1',
-            'http://example.com/ab/1'
+            'http://example.com/ab/1',
         );
         $idLocale2 = $this->haveLocale(['localeName' => 'ef_GH'])->getIdLocale();
         $navigationNodeLocalizedAttributesTransfer2 = $this->createNavigationNodeLocalizedAttributesTransfer(
             $idLocale2,
             'Node 1',
-            'http://example.com/ef/1'
+            'http://example.com/ef/1',
         );
         $navigationNodeTransfer
             ->addNavigationNodeLocalizedAttribute($navigationNodeLocalizedAttributesTransfer1)

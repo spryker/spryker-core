@@ -139,7 +139,7 @@ class BridgeBuilder
                 $bridgeBuilderDataTransfer->getModule() . '\\' .
                 'Dependency\\' .
                 $bridgeBuilderDataTransfer->getToType() . '\\' .
-                $bridgeBuilderDataTransfer->getModule() . 'To' . $bridgeBuilderDataTransfer->getToModule() . $bridgeBuilderDataTransfer->getToType() . 'Interface'
+                $bridgeBuilderDataTransfer->getModule() . 'To' . $bridgeBuilderDataTransfer->getToModule() . $bridgeBuilderDataTransfer->getToType() . 'Interface',
             );
 
             foreach ($existingInterface->getMethods() as $method) {
@@ -171,7 +171,7 @@ class BridgeBuilder
                 $bridgeBuilderDataTransfer->getModule() . '\\' .
                 'Dependency\\' .
                 $bridgeBuilderDataTransfer->getToType() . '\\' .
-                $bridgeBuilderDataTransfer->getModule() . 'To' . $bridgeBuilderDataTransfer->getToModule() . $bridgeBuilderDataTransfer->getToType() . 'Bridge'
+                $bridgeBuilderDataTransfer->getModule() . 'To' . $bridgeBuilderDataTransfer->getToModule() . $bridgeBuilderDataTransfer->getToType() . 'Bridge',
             );
 
             foreach ($existingBridge->getMethods() as $method) {
@@ -228,7 +228,7 @@ class BridgeBuilder
     protected function getTemplateContent(string $templateName): string
     {
         return file_get_contents(
-            __DIR__ . DIRECTORY_SEPARATOR . 'Templates' . DIRECTORY_SEPARATOR . $templateName . '.tpl'
+            __DIR__ . DIRECTORY_SEPARATOR . 'Templates' . DIRECTORY_SEPARATOR . $templateName . '.tpl',
         );
     }
 
@@ -365,7 +365,7 @@ class BridgeBuilder
 
         throw new InvalidArgumentException(sprintf(
             'Invalid input parameter "%s", accepted format is "[VendorName.]ModuleName[.BridgeType]".',
-            $subject
+            $subject,
         ));
     }
 
@@ -511,7 +511,7 @@ class BridgeBuilder
             $targetBridgeClass,
             $bridgeBuilderDataTransfer->getMethods(),
             $this->getBridgeMethodTemplateContent(),
-            $templateContent
+            $templateContent,
         );
     }
 
@@ -540,7 +540,7 @@ class BridgeBuilder
             $targetBridgeInterface,
             $bridgeBuilderDataTransfer->getMethods(),
             $this->getInterfaceMethodTemplateContent(),
-            $templateContent
+            $templateContent,
         );
     }
 
@@ -595,7 +595,7 @@ class BridgeBuilder
             $methods .= str_replace(
                 array_keys($replacements),
                 array_values($replacements),
-                $methodTemplate
+                $methodTemplate,
             ) . PHP_EOL . PHP_EOL . str_repeat(' ', 4);
         }
 
@@ -614,7 +614,7 @@ class BridgeBuilder
                 rtrim($methods, PHP_EOL . PHP_EOL . str_repeat(' ', 4)),
                 $useStatements,
             ],
-            $templateContent
+            $templateContent,
         );
     }
 

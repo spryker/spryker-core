@@ -47,7 +47,7 @@ class MerchantProductCartItemExpanderPluginTest extends Unit
         $cartItemRequestTransfer = $merchantProductCartItemExpanderPlugin->expand(
             new CartItemRequestTransfer(),
             (new RestCartItemsAttributesTransfer())
-                ->setMerchantReference(static::TEST_MERCHANT_REFERENCE)
+                ->setMerchantReference(static::TEST_MERCHANT_REFERENCE),
         );
 
         // Assert

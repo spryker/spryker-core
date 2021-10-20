@@ -114,15 +114,15 @@ class ProductAbstractTableDataMapper
         foreach ($productAbstractTableDataArray as $productAbstractTableRowDataArray) {
             $productAbstractTableRowDataArray[ProductAbstractTransfer::ATTRIBUTES] = $this->utilEncodingService->decodeJson(
                 $productAbstractTableRowDataArray[ProductAbstractTransfer::ATTRIBUTES],
-                true
+                true,
             );
             $productAbstractTableRowDataArray[ProductAbstractTransfer::STORE_NAMES] = array_filter(explode(
                 ',',
-                $productAbstractTableRowDataArray[ProductAbstractTransfer::STORE_NAMES]
+                $productAbstractTableRowDataArray[ProductAbstractTransfer::STORE_NAMES],
             ));
             $productAbstractTableRowDataArray[ProductAbstractTransfer::CATEGORY_NAMES] = array_filter(explode(
                 ',',
-                $productAbstractTableRowDataArray[ProductAbstractTransfer::CATEGORY_NAMES]
+                $productAbstractTableRowDataArray[ProductAbstractTransfer::CATEGORY_NAMES],
             ));
 
             $productAbstractTransfer = (new ProductAbstractTransfer())->fromArray($productAbstractTableRowDataArray, true);

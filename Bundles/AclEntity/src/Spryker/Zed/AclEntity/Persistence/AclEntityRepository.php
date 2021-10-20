@@ -37,7 +37,7 @@ class AclEntityRepository extends AbstractRepository implements AclEntityReposit
             ->createAclEntityRuleMapper()
             ->mapAclEntityRuleCollectionToAclEntityRuleCollectionTransfer(
                 $aclEntityRuleEntities,
-                new AclEntityRuleCollectionTransfer()
+                new AclEntityRuleCollectionTransfer(),
             );
     }
 
@@ -56,7 +56,7 @@ class AclEntityRepository extends AbstractRepository implements AclEntityReposit
             ->createAclEntityRuleMapper()
             ->mapAclEntityRuleCollectionToAclEntityRuleCollectionTransfer(
                 $aclEntityRuleEntities,
-                new AclEntityRuleCollectionTransfer()
+                new AclEntityRuleCollectionTransfer(),
             );
     }
 
@@ -104,7 +104,7 @@ class AclEntityRepository extends AbstractRepository implements AclEntityReposit
             function (RoleTransfer $roleTransfer): int {
                 return $roleTransfer->getIdAclRoleOrFail();
             },
-            $rolesTransfer->getRoles()->getArrayCopy()
+            $rolesTransfer->getRoles()->getArrayCopy(),
         );
     }
 }

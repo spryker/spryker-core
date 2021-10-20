@@ -51,7 +51,7 @@ class MerchantSearchBusinessFactory extends AbstractBusinessFactory
     {
         return new MerchantSearchMapper(
             $this->getUtilEncodingService(),
-            $this->createMerchantSearchDataMapper()
+            $this->createMerchantSearchDataMapper(),
         );
     }
 
@@ -65,7 +65,7 @@ class MerchantSearchBusinessFactory extends AbstractBusinessFactory
             $this->getEventBehaviorFacade(),
             $this->createMerchantSearchMapper(),
             $this->getEntityManager(),
-            $this->getMerchantSearchDataExpanderPlugins()
+            $this->getMerchantSearchDataExpanderPlugins(),
         );
     }
 
@@ -77,7 +77,7 @@ class MerchantSearchBusinessFactory extends AbstractBusinessFactory
         return new MerchantSearchDeleter(
             $this->getMerchantFacade(),
             $this->getEntityManager(),
-            $this->getEventBehaviorFacade()
+            $this->getEventBehaviorFacade(),
         );
     }
 

@@ -194,13 +194,13 @@ class CategoryHelper extends Module
             $categoryLocalizedAttributesTransfer = new CategoryLocalizedAttributesTransfer();
             $categoryLocalizedAttributesTransfer->setLocale($localeTransfer);
             $categoryLocalizedAttributesTransfer->setName(
-                $categoryTransfer->getCategoryKey() . ' name ' . $localeTransfer->getLocaleName()
+                $categoryTransfer->getCategoryKey() . ' name ' . $localeTransfer->getLocaleName(),
             );
             $categoryLocalizedAttributesTransfer->setMetaTitle(
-                $categoryTransfer->getCategoryKey() . ' title ' . $localeTransfer->getLocaleName()
+                $categoryTransfer->getCategoryKey() . ' title ' . $localeTransfer->getLocaleName(),
             );
             $categoryLocalizedAttributesTransfer->setMetaDescription(
-                $categoryTransfer->getCategoryKey() . ' description ' . $localeTransfer->getLocaleName()
+                $categoryTransfer->getCategoryKey() . ' description ' . $localeTransfer->getLocaleName(),
             );
             $categoryTransfer->addLocalizedAttributes($categoryLocalizedAttributesTransfer);
         }

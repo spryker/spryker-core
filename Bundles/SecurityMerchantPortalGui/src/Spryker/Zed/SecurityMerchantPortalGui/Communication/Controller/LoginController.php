@@ -24,7 +24,7 @@ class LoginController extends AbstractController
     {
         if ($this->getFactory()->getSecurityFacade()->isUserLoggedIn()) {
             return $this->redirectResponse(
-                $this->getFactory()->getConfig()->getDefaultTargetPath()
+                $this->getFactory()->getConfig()->getDefaultTargetPath(),
             );
         }
 

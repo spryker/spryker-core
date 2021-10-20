@@ -39,7 +39,7 @@ class CategoryTreeBuilder implements CategoryTreeBuilderInterface
             $categoryTree = $this->buildCategoryTreeByIdCategoryNode(
                 $categoryTree,
                 $idCategoryNode,
-                $formattedCategoryNodeAggregationTransfers[$idCategoryNode] ?? []
+                $formattedCategoryNodeAggregationTransfers[$idCategoryNode] ?? [],
             );
         }
 

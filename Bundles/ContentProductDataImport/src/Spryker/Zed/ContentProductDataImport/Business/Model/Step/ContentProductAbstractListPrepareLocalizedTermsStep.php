@@ -83,7 +83,7 @@ class ContentProductAbstractListPrepareLocalizedTermsStep implements DataImportS
                 $messageTransfer = $this->getMessageTransfer($contentValidationResponseTransfer);
                 $this->createInvalidDataImportException(
                     $this->getMessage($messageTransfer),
-                    $this->getParameters($messageTransfer, $dataSet, $localeName)
+                    $this->getParameters($messageTransfer, $dataSet, $localeName),
                 );
             }
 

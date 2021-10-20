@@ -249,7 +249,7 @@ class SharedCartRepository extends AbstractRepository implements SharedCartRepos
             ->toArray();
 
         $mappedQuotePermissionGroupIdIndexes = $this->mapStoredQuotePermissionGroupIdIndexesToAssociativeArray(
-            $storedQuotePermissionGroupIdIndexes
+            $storedQuotePermissionGroupIdIndexes,
         );
 
         return $mappedQuotePermissionGroupIdIndexes;
@@ -458,7 +458,7 @@ class SharedCartRepository extends AbstractRepository implements SharedCartRepos
             ->createQuotePermissionGroupMapper()
             ->mapQuotePermissionGroupEntityToQuotePermissionGroupTransfer(
                 $quotePermissionGroupEntity,
-                new QuotePermissionGroupTransfer()
+                new QuotePermissionGroupTransfer(),
             );
     }
 
@@ -473,7 +473,7 @@ class SharedCartRepository extends AbstractRepository implements SharedCartRepos
         $quoteCompanyUserQuery = $this->getFactory()->createQuoteCompanyUserQuery();
         $quoteCompanyUserQuery = $this->applySharedDetailCriteriaFiltersToQuoteCompanyUserQuery(
             $quoteCompanyUserQuery,
-            $shareDetailCriteriaFilterTransfer
+            $shareDetailCriteriaFilterTransfer,
         );
 
         $quoteCompanyUserQuery
@@ -581,7 +581,7 @@ class SharedCartRepository extends AbstractRepository implements SharedCartRepos
             ->createCustomerMapper()
             ->mapCustomerEntityCollectionToCustomerTransferCollection(
                 $customerEntityCollection,
-                new CustomerCollectionTransfer()
+                new CustomerCollectionTransfer(),
             );
     }
 }

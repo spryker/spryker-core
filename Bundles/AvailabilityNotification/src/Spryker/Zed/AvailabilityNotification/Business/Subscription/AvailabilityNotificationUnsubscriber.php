@@ -79,7 +79,7 @@ class AvailabilityNotificationUnsubscriber implements AvailabilityNotificationUn
 
         $availabilityNotificationSubscriptionTransfer = $this->availabilityNotificationReader->findOneByCustomerReferenceAndSku(
             $availabilityNotificationSubscriptionTransfer->getCustomerReference(),
-            $availabilityNotificationSubscriptionTransfer->getSku()
+            $availabilityNotificationSubscriptionTransfer->getSku(),
         );
 
         if ($availabilityNotificationSubscriptionTransfer === null) {

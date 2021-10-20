@@ -47,7 +47,7 @@ class GlueRouterTest extends Unit
             GlueApplicationDependencyProvider::PLUGIN_RESOURCE_ROUTES,
             [
                 new TestResourceRoutePlugin(),
-            ]
+            ],
         );
     }
 

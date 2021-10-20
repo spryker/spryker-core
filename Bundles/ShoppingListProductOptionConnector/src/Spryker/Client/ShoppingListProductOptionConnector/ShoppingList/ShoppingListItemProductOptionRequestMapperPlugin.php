@@ -35,7 +35,7 @@ class ShoppingListItemProductOptionRequestMapperPlugin extends AbstractPlugin im
     {
         foreach ($this->getProductOptionIds($params) as $idProductOption) {
             $shoppingListItemTransfer->addProductOption(
-                (new ProductOptionTransfer())->setIdProductOptionValue($idProductOption)
+                (new ProductOptionTransfer())->setIdProductOptionValue($idProductOption),
             );
         }
 

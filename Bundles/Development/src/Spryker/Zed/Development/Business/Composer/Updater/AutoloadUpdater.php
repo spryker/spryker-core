@@ -372,7 +372,7 @@ class AutoloadUpdater implements UpdaterInterface
                 rtrim($modulePath, DIRECTORY_SEPARATOR),
                 static::BASE_TESTS_DIRECTORY,
                 $testDirectoryKey,
-            ]
+            ],
         );
 
         if ($this->pathExists($directoryPath)) {
@@ -497,7 +497,7 @@ class AutoloadUpdater implements UpdaterInterface
                 static::AUTOLOAD_KEY => [$this, 'removeInvalidAutoloadPaths'],
                 static::AUTOLOAD_DEV_KEY => [$this, 'removeInvalidAutoloadNamespaces'],
             ],
-            $modulePath
+            $modulePath,
         );
 
         $composerJson = $this->removeAutoloadDuplicates($composerJson);

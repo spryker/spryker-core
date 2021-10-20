@@ -63,8 +63,8 @@ class ProductAbstractStoreRelationReader implements ProductAbstractStoreRelation
                 (new StoreTransfer())
                     ->fromArray(
                         $productAbstractStoreEntity->getSpyStore()->toArray(),
-                        true
-                    )
+                        true,
+                    ),
             );
         }
 

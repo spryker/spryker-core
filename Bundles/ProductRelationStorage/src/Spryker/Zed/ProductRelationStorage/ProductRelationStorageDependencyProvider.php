@@ -98,7 +98,7 @@ class ProductRelationStorageDependencyProvider extends AbstractBundleDependencyP
     {
         $container->set(static::FACADE_EVENT_BEHAVIOR, function (Container $container) {
             return new ProductRelationStorageToEventBehaviorFacadeBridge(
-                $container->getLocator()->eventBehavior()->facade()
+                $container->getLocator()->eventBehavior()->facade(),
             );
         });
 
@@ -114,7 +114,7 @@ class ProductRelationStorageDependencyProvider extends AbstractBundleDependencyP
     {
         $container->set(static::FACADE_PRODUCT_RELATION, function (Container $container) {
             return new ProductRelationStorageToProductRelationFacadeBridge(
-                $container->getLocator()->productRelation()->facade()
+                $container->getLocator()->productRelation()->facade(),
             );
         });
 

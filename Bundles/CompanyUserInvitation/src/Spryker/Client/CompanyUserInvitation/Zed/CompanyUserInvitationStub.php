@@ -46,7 +46,7 @@ class CompanyUserInvitationStub implements CompanyUserInvitationStubInterface
         /** @var \Generated\Shared\Transfer\CompanyUserInvitationImportResponseTransfer $companyUserInvitationImportResponseTransfer */
         $companyUserInvitationImportResponseTransfer = $this->zedRequestClient->call(
             '/company-user-invitation/gateway/import-company-user-invitations',
-            $companyUserInvitationImportRequestTransfer
+            $companyUserInvitationImportRequestTransfer,
         );
 
         return $companyUserInvitationImportResponseTransfer;
@@ -63,7 +63,7 @@ class CompanyUserInvitationStub implements CompanyUserInvitationStubInterface
         /** @var \Generated\Shared\Transfer\CompanyUserInvitationCollectionTransfer $companyUserInvitationCollectionTransfer */
         $companyUserInvitationCollectionTransfer = $this->zedRequestClient->call(
             '/company-user-invitation/gateway/get-company-user-invitation-collection',
-            $companyUserInvitationGetCollectionRequestTransfer
+            $companyUserInvitationGetCollectionRequestTransfer,
         );
 
         return $companyUserInvitationCollectionTransfer;
@@ -80,7 +80,7 @@ class CompanyUserInvitationStub implements CompanyUserInvitationStubInterface
         /** @var \Generated\Shared\Transfer\CompanyUserInvitationSendResponseTransfer $companyUserInvitationSendResponseTransfer */
         $companyUserInvitationSendResponseTransfer = $this->zedRequestClient->call(
             '/company-user-invitation/gateway/send-company-user-invitation',
-            $companyUserInvitationSendRequestTransfer
+            $companyUserInvitationSendRequestTransfer,
         );
 
         return $companyUserInvitationSendResponseTransfer;
@@ -97,7 +97,7 @@ class CompanyUserInvitationStub implements CompanyUserInvitationStubInterface
         /** @var \Generated\Shared\Transfer\CompanyUserInvitationSendBatchResponseTransfer $companyUserInvitationSendBatchResponseTransfer */
         $companyUserInvitationSendBatchResponseTransfer = $this->zedRequestClient->call(
             '/company-user-invitation/gateway/send-company-user-invitations',
-            $companyUserTransfer
+            $companyUserTransfer,
         );
 
         return $companyUserInvitationSendBatchResponseTransfer;
@@ -114,7 +114,7 @@ class CompanyUserInvitationStub implements CompanyUserInvitationStubInterface
         /** @var \Generated\Shared\Transfer\CompanyUserInvitationUpdateStatusResponseTransfer $companyUserInvitationUpdateStatusResponseTransfer */
         $companyUserInvitationUpdateStatusResponseTransfer = $this->zedRequestClient->call(
             '/company-user-invitation/gateway/update-company-user-invitation-status',
-            $companyUserInvitationUpdateStatusRequestTransfer
+            $companyUserInvitationUpdateStatusRequestTransfer,
         );
 
         return $companyUserInvitationUpdateStatusResponseTransfer;
@@ -131,7 +131,7 @@ class CompanyUserInvitationStub implements CompanyUserInvitationStubInterface
         /** @var \Generated\Shared\Transfer\CompanyUserInvitationTransfer $companyUserInvitationTransfer */
         $companyUserInvitationTransfer = $this->zedRequestClient->call(
             '/company-user-invitation/gateway/get-company-user-invitation-by-hash',
-            $companyUserInvitationTransfer
+            $companyUserInvitationTransfer,
         );
 
         return $companyUserInvitationTransfer;

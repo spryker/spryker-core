@@ -84,7 +84,7 @@ class CategoryStorageListener extends AbstractPlugin implements EventBulkHandler
             [
                 SpyCategoryTableMap::COL_IS_ACTIVE,
                 SpyCategoryTableMap::COL_CATEGORY_KEY,
-            ]
+            ],
         );
 
         return $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($validEventTransfers);

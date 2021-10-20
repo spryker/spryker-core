@@ -61,7 +61,7 @@ class ProductPageSearchBusinessFactory extends AbstractBusinessFactory
             $this->createProductPageWriter(),
             $this->getConfig(),
             $this->getStoreFacade(),
-            $this->createAddToCartSkuReader()
+            $this->createAddToCartSkuReader(),
         );
     }
 
@@ -78,7 +78,7 @@ class ProductPageSearchBusinessFactory extends AbstractBusinessFactory
             $this->createProductConcreteSearchDataMapper(),
             $this->getStoreFacade(),
             $this->getConfig(),
-            $this->getProductConcretePageDataExpanderPlugins()
+            $this->getProductConcretePageDataExpanderPlugins(),
         );
     }
 
@@ -89,7 +89,7 @@ class ProductPageSearchBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductConcretePageSearchUnpublisher(
             $this->createProductConcretePageSearchReader(),
-            $this->createProductConcretePageSearchWriter()
+            $this->createProductConcretePageSearchWriter(),
         );
     }
 
@@ -115,7 +115,7 @@ class ProductPageSearchBusinessFactory extends AbstractBusinessFactory
     public function createProductConcretePageSearchExpander(): ProductConcretePageSearchExpanderInterface
     {
         return new ProductConcretePageSearchExpander(
-            $this->getProductImageFacade()
+            $this->getProductImageFacade(),
         );
     }
 
@@ -134,7 +134,7 @@ class ProductPageSearchBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductAbstractPageRefresher(
             $this->createProductAbstractPagePublisher(),
-            $this->getProductPageRefreshPlugins()
+            $this->getProductPageRefreshPlugins(),
         );
     }
 
@@ -154,7 +154,7 @@ class ProductPageSearchBusinessFactory extends AbstractBusinessFactory
         return new ProductPageSearchMapper(
             $this->createProductPageAttribute(),
             $this->createProductAbstractSearchDataMapper(),
-            $this->getUtilEncoding()
+            $this->getUtilEncoding(),
         );
     }
 
@@ -164,7 +164,7 @@ class ProductPageSearchBusinessFactory extends AbstractBusinessFactory
     protected function createProductPageAttribute()
     {
         return new ProductPageAttribute(
-            $this->getProductFacade()
+            $this->getProductFacade(),
         );
     }
 
@@ -175,7 +175,7 @@ class ProductPageSearchBusinessFactory extends AbstractBusinessFactory
     {
         return new AddToCartSkuReader(
             $this->getRepository(),
-            $this->getProductAbstractAddToCartPlugins()
+            $this->getProductAbstractAddToCartPlugins(),
         );
     }
 
@@ -186,7 +186,7 @@ class ProductPageSearchBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductPageSearchWriter(
             $this->getUtilEncoding(),
-            $this->getConfig()->isSendingToQueue()
+            $this->getConfig()->isSendingToQueue(),
         );
     }
 
@@ -255,7 +255,7 @@ class ProductPageSearchBusinessFactory extends AbstractBusinessFactory
             $this->createPageMapBuilder(),
             $this->getSearchFacade(),
             $this->getProductSearchFacade(),
-            $this->getProductAbstractMapExpanderPlugins()
+            $this->getProductAbstractMapExpanderPlugins(),
         );
     }
 
@@ -266,7 +266,7 @@ class ProductPageSearchBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductConcreteSearchDataMapper(
             $this->createPageMapBuilder(),
-            $this->getProductConcreteMapExpanderPlugins()
+            $this->getProductConcreteMapExpanderPlugins(),
         );
     }
 
@@ -325,7 +325,7 @@ class ProductPageSearchBusinessFactory extends AbstractBusinessFactory
     {
         return new PriceProductPageExpander(
             $this->getPriceProductFacade(),
-            $this->getStoreFacade()
+            $this->getStoreFacade(),
         );
     }
 

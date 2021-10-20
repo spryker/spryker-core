@@ -49,7 +49,7 @@ class ViewFileController extends AbstractController
     public function fileInfoTableAction(Request $request)
     {
         $idFile = $this->castId(
-            $request->get(static::URL_PARAM_ID_FILE)
+            $request->get(static::URL_PARAM_ID_FILE),
         );
 
         $fileInfoTable = $this
@@ -57,7 +57,7 @@ class ViewFileController extends AbstractController
             ->createFileInfoViewTable($idFile);
 
         return $this->jsonResponse(
-            $fileInfoTable->fetchData()
+            $fileInfoTable->fetchData(),
         );
     }
 }

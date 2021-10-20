@@ -54,7 +54,7 @@ class UniqueUrlValidator extends ConstraintValidator
     protected function hasUrl(UrlTransfer $urlTransfer, UniqueUrl $constraint): bool
     {
         $existingUrlTransfer = $constraint->getUrlFacade()->findUrlCaseInsensitive(
-            (new UrlTransfer())->setUrl($urlTransfer->getUrl())
+            (new UrlTransfer())->setUrl($urlTransfer->getUrl()),
         );
 
         if (

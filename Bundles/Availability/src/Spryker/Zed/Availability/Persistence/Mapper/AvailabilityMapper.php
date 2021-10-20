@@ -76,8 +76,8 @@ class AvailabilityMapper implements AvailabilityMapperInterface
             $productConcreteAvailabilityCollectionTransfer->addProductConcreteAvailability(
                 $this->mapAvailabilityEntityToProductConcreteAvailabilityTransfer(
                     $availabilityEntity,
-                    new ProductConcreteAvailabilityTransfer()
-                )
+                    new ProductConcreteAvailabilityTransfer(),
+                ),
             );
         }
 
@@ -93,7 +93,7 @@ class AvailabilityMapper implements AvailabilityMapperInterface
     {
         if (array_key_exists(ProductAbstractAvailabilityTransfer::RESERVATION_QUANTITY, $availabilityAbstractData)) {
             $availabilityAbstractData[ProductAbstractAvailabilityTransfer::RESERVATION_QUANTITY] = $this->calculateReservation(
-                $availabilityAbstractData[ProductAbstractAvailabilityTransfer::RESERVATION_QUANTITY] ?? ''
+                $availabilityAbstractData[ProductAbstractAvailabilityTransfer::RESERVATION_QUANTITY] ?? '',
             );
         }
 

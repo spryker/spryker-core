@@ -35,7 +35,7 @@ class ProductEntityManager extends AbstractEntityManager implements ProductEntit
             $productConcreteTransfer->requireSku()->requireFkProductAbstract();
 
             $productEntityCollection->append(
-                $productMapper->mapProductConcreteTransferToProductEntity($productConcreteTransfer, new SpyProduct())
+                $productMapper->mapProductConcreteTransferToProductEntity($productConcreteTransfer, new SpyProduct()),
             );
         }
 
@@ -43,7 +43,7 @@ class ProductEntityManager extends AbstractEntityManager implements ProductEntit
 
         return $productMapper->mapProductEntityCollectionPrimaryKeysToProductConcreteCollectionTransfer(
             $productEntityCollection,
-            $productConcreteCollectionTransfer
+            $productConcreteCollectionTransfer,
         );
     }
 
@@ -69,8 +69,8 @@ class ProductEntityManager extends AbstractEntityManager implements ProductEntit
                 $productLocalizedAttributesEntityCollection->append(
                     $localizedAttributesMapper->mapLocalizedAttributesTransferToProductLocalizedAttributesEntity(
                         $localizedAttributesTransfer,
-                        (new SpyProductLocalizedAttributes())->setFkProduct($idProductConcrete)
-                    )
+                        (new SpyProductLocalizedAttributes())->setFkProduct($idProductConcrete),
+                    ),
                 );
             }
         }

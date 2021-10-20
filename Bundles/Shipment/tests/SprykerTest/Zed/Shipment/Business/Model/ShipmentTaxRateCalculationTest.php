@@ -230,7 +230,7 @@ class ShipmentTaxRateCalculationTest extends Unit
         return new ShipmentTaxRateCalculator(
             $this->createQueryContainerMock($countryTaxRate),
             $this->createProductOptionToTaxBridgeMock(),
-            $this->tester->getShipmentService()
+            $this->tester->getShipmentService(),
         );
     }
 

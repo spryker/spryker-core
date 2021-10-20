@@ -71,18 +71,18 @@ class ProductLabelDictionaryStorageWriter implements ProductLabelDictionaryStora
 
         $productLabelDictionaryItemTransfersMappedByStoreAndLocale = $this->productLabelDictionaryItemMapper
             ->mapProductLabelTransfersToProductLabelDictionaryItemTransfersByStoreNameAndLocaleName(
-                $productLabelTransfers
+                $productLabelTransfers,
             );
 
         $productLabelDictionaryStorageTransfers = $this->productLabelStorageRepository
             ->getProductLabelDictionaryStorageTransfers();
         $productLabelDictionaryStorageTransfers = $this->filterAndDeleteEmptyProductLabelDictionaryStorageTransfers(
             $productLabelDictionaryStorageTransfers,
-            $productLabelDictionaryItemTransfersMappedByStoreAndLocale
+            $productLabelDictionaryItemTransfersMappedByStoreAndLocale,
         );
         $productLabelDictionaryItemTransfersMappedByStoreAndLocale = $this->filterAndUpdateExistingProductLabelDictionaryStorageData(
             $productLabelDictionaryStorageTransfers,
-            $productLabelDictionaryItemTransfersMappedByStoreAndLocale
+            $productLabelDictionaryItemTransfersMappedByStoreAndLocale,
         );
 
         $this->createProductLabelDictionaryStorageData($productLabelDictionaryItemTransfersMappedByStoreAndLocale);
@@ -107,7 +107,7 @@ class ProductLabelDictionaryStorageWriter implements ProductLabelDictionaryStora
             }
 
             $this->productLabelStorageEntityManager->deleteProductLabelDictionaryStorageById(
-                $productLabelDictionaryStorageTransfer->getIdProductLabelDictionaryStorage()
+                $productLabelDictionaryStorageTransfer->getIdProductLabelDictionaryStorage(),
             );
             unset($productLabelDictionaryStorageTransfers[$dataKey]);
         }
@@ -130,10 +130,10 @@ class ProductLabelDictionaryStorageWriter implements ProductLabelDictionaryStora
             $localeName = $productLabelDictionaryStorageTransfer->getLocale();
 
             $productLabelDictionaryStorageTransfer->setItems(
-                new ArrayObject($productLabelDictionaryItemTransfersMappedByStoreAndLocale[$storeName][$localeName])
+                new ArrayObject($productLabelDictionaryItemTransfersMappedByStoreAndLocale[$storeName][$localeName]),
             );
             $this->productLabelStorageEntityManager->updateProductLabelDictionaryStorage(
-                $productLabelDictionaryStorageTransfer
+                $productLabelDictionaryStorageTransfer,
             );
             unset($productLabelDictionaryItemTransfersMappedByStoreAndLocale[$storeName][$localeName]);
         }
@@ -157,7 +157,7 @@ class ProductLabelDictionaryStorageWriter implements ProductLabelDictionaryStora
                     ->setItems(new ArrayObject($productLabelDictionaryItemTransfers));
 
                 $this->productLabelStorageEntityManager->createProductLabelDictionaryStorage(
-                    $productLabelDictionaryStorageTransfer
+                    $productLabelDictionaryStorageTransfer,
                 );
             }
         }

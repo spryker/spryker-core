@@ -41,7 +41,7 @@ class CmsBlockMapper implements CmsBlockMapperInterface
 
         $cmsBlockTemplateTransfer = $this->mapCmsBlockTemplateEntityToTransfer(
             $cmsBlockEntity->getCmsBlockTemplate(),
-            new CmsBlockTemplateTransfer()
+            new CmsBlockTemplateTransfer(),
         );
         $cmsBlockTransfer->setCmsBlockTemplate($cmsBlockTemplateTransfer);
 
@@ -56,7 +56,7 @@ class CmsBlockMapper implements CmsBlockMapperInterface
         foreach ($cmsBlockEntity->getSpyCmsBlockGlossaryKeyMappings() as $cmsBlockGlossaryKeyMappingsEntity) {
             $cmsBlockGlossaryPlaceholderTransfer = $this->mapCmsBlockGlossaryKeyMappingsEntityToCmsBlockGlossaryPlaceholderTransfer(
                 $cmsBlockGlossaryKeyMappingsEntity,
-                new CmsBlockGlossaryPlaceholderTransfer()
+                new CmsBlockGlossaryPlaceholderTransfer(),
             );
 
             $cmsBlockGlossaryTransfer->addGlossaryPlaceholder($cmsBlockGlossaryPlaceholderTransfer);
@@ -86,7 +86,7 @@ class CmsBlockMapper implements CmsBlockMapperInterface
         foreach ($glossaryKeyEntity->getSpyGlossaryTranslations() as $glossaryTranslationEntity) {
             $cmsBlockGlossaryPlaceholderTranslationTransfer = $this->mapGlossaryTranslationEntityToCmsBlockGlossaryPlaceholderTranslationTransfer(
                 $glossaryTranslationEntity,
-                new CmsBlockGlossaryPlaceholderTranslationTransfer()
+                new CmsBlockGlossaryPlaceholderTranslationTransfer(),
             );
 
             $cmsBlockGlossaryPlaceholderTransfer->addTranslation($cmsBlockGlossaryPlaceholderTranslationTransfer);

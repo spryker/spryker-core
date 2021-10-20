@@ -82,7 +82,7 @@ class OmsBusinessTester extends Actor
     {
         $quoteTransfer = $this->buildFakeQuote(
             $this->haveCustomer(),
-            $this->haveStore([StoreTransfer::NAME => 'DE'])
+            $this->haveStore([StoreTransfer::NAME => 'DE']),
         );
 
         $saveOrderTransfer = $this->haveOrderFromQuote($quoteTransfer, $stateMachineProcessName);
@@ -192,7 +192,7 @@ class OmsBusinessTester extends Actor
         for ($i = 1; $i < $orderItemsAmount; $i++) {
             $salesOrderItemEntity = $this->createSalesOrderItemForOrder(
                 $salesOrderTransferDE->getIdSalesOrder(),
-                ['state' => $stateName, 'process' => $processName]
+                ['state' => $stateName, 'process' => $processName],
             );
             $salesOrderEntity->addItem($salesOrderItemEntity);
         }

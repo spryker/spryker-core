@@ -43,7 +43,7 @@ class ShoppingListsRestApiStub implements ShoppingListsRestApiStubInterface
         /** @var \Generated\Shared\Transfer\ShoppingListCollectionTransfer $shoppingListCollectionResponseTransfer */
         $shoppingListCollectionResponseTransfer = $this->zedRequestClient->call(
             '/shopping-lists-rest-api/gateway/get-customer-shopping-list-collection',
-            $customerTransfer
+            $customerTransfer,
         );
 
         return $shoppingListCollectionResponseTransfer;
@@ -62,7 +62,7 @@ class ShoppingListsRestApiStub implements ShoppingListsRestApiStubInterface
         /** @var \Generated\Shared\Transfer\ShoppingListResponseTransfer $shoppingListResponseTransfer */
         $shoppingListResponseTransfer = $this->zedRequestClient->call(
             '/shopping-lists-rest-api/gateway/create-shopping-list',
-            $shoppingListTransfer
+            $shoppingListTransfer,
         );
 
         return $shoppingListResponseTransfer;
@@ -81,7 +81,7 @@ class ShoppingListsRestApiStub implements ShoppingListsRestApiStubInterface
         /** @var \Generated\Shared\Transfer\ShoppingListResponseTransfer $shoppingListResponseTransfer */
         $shoppingListResponseTransfer = $this->zedRequestClient->call(
             '/shopping-lists-rest-api/gateway/update-shopping-list',
-            $shoppingListTransfer
+            $shoppingListTransfer,
         );
 
         return $shoppingListResponseTransfer;
@@ -100,7 +100,7 @@ class ShoppingListsRestApiStub implements ShoppingListsRestApiStubInterface
         /** @var \Generated\Shared\Transfer\ShoppingListResponseTransfer $shoppingListResponseTransfer */
         $shoppingListResponseTransfer = $this->zedRequestClient->call(
             '/shopping-lists-rest-api/gateway/delete-shopping-list',
-            $shoppingListTransfer
+            $shoppingListTransfer,
         );
 
         return $shoppingListResponseTransfer;
@@ -119,7 +119,7 @@ class ShoppingListsRestApiStub implements ShoppingListsRestApiStubInterface
         /** @var \Generated\Shared\Transfer\ShoppingListItemResponseTransfer $shoppingListItemResponseTransfer */
         $shoppingListItemResponseTransfer = $this->zedRequestClient->call(
             '/shopping-lists-rest-api/gateway/add-shopping-list-item',
-            $shoppingListItemRequestTransfer
+            $shoppingListItemRequestTransfer,
         );
 
         return $shoppingListItemResponseTransfer;
@@ -138,7 +138,7 @@ class ShoppingListsRestApiStub implements ShoppingListsRestApiStubInterface
         /** @var \Generated\Shared\Transfer\ShoppingListItemResponseTransfer $shoppingListItemResponseTransfer */
         $shoppingListItemResponseTransfer = $this->zedRequestClient->call(
             '/shopping-lists-rest-api/gateway/delete-shopping-list-item',
-            $shoppingListItemRequestTransfer
+            $shoppingListItemRequestTransfer,
         );
 
         return $shoppingListItemResponseTransfer;
@@ -157,7 +157,7 @@ class ShoppingListsRestApiStub implements ShoppingListsRestApiStubInterface
         /** @var \Generated\Shared\Transfer\ShoppingListItemResponseTransfer $shoppingListItemResponseTransfer */
         $shoppingListItemResponseTransfer = $this->zedRequestClient->call(
             '/shopping-lists-rest-api/gateway/update-shopping-list-item',
-            $shoppingListItemRequestTransfer
+            $shoppingListItemRequestTransfer,
         );
 
         return $shoppingListItemResponseTransfer;

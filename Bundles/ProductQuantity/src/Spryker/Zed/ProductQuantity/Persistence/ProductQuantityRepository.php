@@ -81,7 +81,7 @@ class ProductQuantityRepository extends AbstractRepository implements ProductQua
     {
         $productQuantityEntityTransfers = $this->buildQueryFromCriteria(
             $this->getFactory()->createProductQuantityQuery(),
-            $filterTransfer
+            $filterTransfer,
         )->find();
 
         return $this->getMappedProductQuantityTransfers($productQuantityEntityTransfers);
@@ -100,7 +100,7 @@ class ProductQuantityRepository extends AbstractRepository implements ProductQua
         foreach ($productQuantityEntityTransfers as $productQuantityEntityTransfer) {
             $productQuantityTransfers[] = $mapper->mapProductQuantityTransfer(
                 $productQuantityEntityTransfer,
-                new ProductQuantityTransfer()
+                new ProductQuantityTransfer(),
             );
         }
 

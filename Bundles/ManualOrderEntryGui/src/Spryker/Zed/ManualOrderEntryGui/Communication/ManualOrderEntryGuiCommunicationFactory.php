@@ -224,7 +224,7 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
     {
         return new ManualOrderEntryFormPluginFilter(
             CreateController::PREVIOUS_STEP_NAME,
-            CreateController::NEXT_STEP_NAME
+            CreateController::NEXT_STEP_NAME,
         );
     }
 
@@ -237,7 +237,7 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
     {
         return new CustomersListDataProvider(
             $this->getCustomerQueryContainer(),
-            $request
+            $request,
         );
     }
 
@@ -254,7 +254,7 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
         return $this->getFormFactory()->create(
             CustomersListType::class,
             $formDataProvider->getData($quoteTransfer),
-            $formDataProvider->getOptions($quoteTransfer)
+            $formDataProvider->getOptions($quoteTransfer),
         );
     }
 
@@ -264,7 +264,7 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
     public function createOrderSourceListDataProvider(): OrderSourceListDataProvider
     {
         return new OrderSourceListDataProvider(
-            $this->getManualOrderEntryFacade()
+            $this->getManualOrderEntryFacade(),
         );
     }
 
@@ -281,7 +281,7 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
         return $this->getFormFactory()->create(
             OrderSourceListType::class,
             $formDataProvider->getData($quoteTransfer),
-            $formDataProvider->getOptions($quoteTransfer)
+            $formDataProvider->getOptions($quoteTransfer),
         );
     }
 
@@ -305,7 +305,7 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
         return $this->getFormFactory()->create(
             CustomerType::class,
             $customerFormDataProvider->getData($customerTransfer),
-            $customerFormDataProvider->getOptions($customerTransfer)
+            $customerFormDataProvider->getOptions($customerTransfer),
         );
     }
 
@@ -329,7 +329,7 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
         return $this->getFormFactory()->create(
             AddressCollectionType::class,
             $formDataProvider->getData($quoteTransfer),
-            $formDataProvider->getOptions($quoteTransfer)
+            $formDataProvider->getOptions($quoteTransfer),
         );
     }
 
@@ -339,7 +339,7 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
     public function createStoreDataProvider(): StoreDataProvider
     {
         return new StoreDataProvider(
-            $this->getCurrencyFacade()
+            $this->getCurrencyFacade(),
         );
     }
 
@@ -356,7 +356,7 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
         return $this->getFormFactory()->create(
             StoreType::class,
             $formDataProvider->getData($quoteTransfer),
-            $formDataProvider->getOptions($quoteTransfer)
+            $formDataProvider->getOptions($quoteTransfer),
         );
     }
 
@@ -380,7 +380,7 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
         return $this->getFormFactory()->create(
             ProductCollectionType::class,
             $formDataProvider->getData($quoteTransfer),
-            $formDataProvider->getOptions($quoteTransfer)
+            $formDataProvider->getOptions($quoteTransfer),
         );
     }
 
@@ -414,7 +414,7 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
         return $this->getFormFactory()->create(
             ItemCollectionType::class,
             $formDataProvider->getData($quoteTransfer),
-            $formDataProvider->getOptions($quoteTransfer)
+            $formDataProvider->getOptions($quoteTransfer),
         );
     }
 
@@ -438,7 +438,7 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
         return $this->getFormFactory()->create(
             VoucherType::class,
             $formDataProvider->getData($quoteTransfer),
-            $formDataProvider->getOptions($quoteTransfer)
+            $formDataProvider->getOptions($quoteTransfer),
         );
     }
 
@@ -449,7 +449,7 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
     {
         return new ShipmentDataProvider(
             $this->getShipmentFacade(),
-            $this->getMoneyFacade()
+            $this->getMoneyFacade(),
         );
     }
 
@@ -466,7 +466,7 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
         return $this->getFormFactory()->create(
             ShipmentType::class,
             $formDataProvider->getData($quoteTransfer),
-            $formDataProvider->getOptions($quoteTransfer)
+            $formDataProvider->getOptions($quoteTransfer),
         );
     }
 
@@ -476,7 +476,7 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
     public function createPaymentDataProvider(): PaymentDataProvider
     {
         return new PaymentDataProvider(
-            $this->getPaymentMethodSubFormPlugins()
+            $this->getPaymentMethodSubFormPlugins(),
         );
     }
 
@@ -493,7 +493,7 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
         return $this->getFormFactory()->create(
             PaymentType::class,
             $formDataProvider->getData($quoteTransfer),
-            $formDataProvider->getOptions($quoteTransfer)
+            $formDataProvider->getOptions($quoteTransfer),
         );
     }
 
@@ -512,7 +512,7 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
     {
         return new SummaryDataProvider(
             $this->getCalculationFacade(),
-            $this->getMessengerFacade()
+            $this->getMessengerFacade(),
         );
     }
 
@@ -528,7 +528,7 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
         return $this->getFormFactory()->create(
             SummaryType::class,
             $formDataProvider->getData($quoteTransfer),
-            $formDataProvider->getOptions($quoteTransfer)
+            $formDataProvider->getOptions($quoteTransfer),
         );
     }
 
@@ -546,7 +546,7 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
     public function createAddressFormHandler(): FormHandlerInterface
     {
         return new AddressFormHandler(
-            $this->getCustomerFacade()
+            $this->getCustomerFacade(),
         );
     }
 
@@ -556,7 +556,7 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
     public function createCustomerFormHandler(): FormHandlerInterface
     {
         return new CustomerFormHandler(
-            $this->getCustomerFacade()
+            $this->getCustomerFacade(),
         );
     }
 
@@ -567,7 +567,7 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
     {
         return new PaymentFormHandler(
             $this->getPaymentFacade(),
-            $this->getPaymentMethodSubFormPlugins()
+            $this->getPaymentMethodSubFormPlugins(),
         );
     }
 
@@ -578,7 +578,7 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
     {
         return new ProductFormHandler(
             $this->getCartFacade(),
-            $this->getProductFacade()
+            $this->getProductFacade(),
         );
     }
 
@@ -589,7 +589,7 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
     {
         return new ItemFormHandler(
             $this->getCartFacade(),
-            $this->getMessengerFacade()
+            $this->getMessengerFacade(),
         );
     }
 
@@ -599,7 +599,7 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
     public function createShipmentFormHandler(): FormHandlerInterface
     {
         return new ShipmentFormHandler(
-            $this->getShipmentFacade()
+            $this->getShipmentFacade(),
         );
     }
 
@@ -609,7 +609,7 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
     public function createStoreFormHandler(): FormHandlerInterface
     {
         return new StoreFormHandler(
-            $this->getCurrencyFacade()
+            $this->getCurrencyFacade(),
         );
     }
 
@@ -619,7 +619,7 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
     public function createVoucherFormHandler(): FormHandlerInterface
     {
         return new VoucherFormHandler(
-            $this->getCartFacade()
+            $this->getCartFacade(),
         );
     }
 
@@ -629,7 +629,7 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
     public function createOrderSourceFormHandler(): FormHandlerInterface
     {
         return new OrderSourceFormHandler(
-            $this->getManualOrderEntryFacade()
+            $this->getManualOrderEntryFacade(),
         );
     }
 
@@ -644,7 +644,7 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
 
         return $this->getFormFactory()->create(
             OrderType::class,
-            $formDataProvider->getOptions($quoteTransfer)
+            $formDataProvider->getOptions($quoteTransfer),
         );
     }
 

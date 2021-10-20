@@ -37,7 +37,7 @@ class ProductOfferPricesRestApiToProductStorageClientBridge implements ProductOf
         return $this->productStorageClient->getBulkProductConcreteStorageDataByMapping(
             $mappingType,
             $identifiers,
-            $localeName
+            $localeName,
         );
     }
 }

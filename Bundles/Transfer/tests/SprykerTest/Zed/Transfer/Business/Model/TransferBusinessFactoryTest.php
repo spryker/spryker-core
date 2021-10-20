@@ -49,7 +49,7 @@ class TransferBusinessFactoryTest extends Unit
     public function testCreateTransferGeneratorShouldReturnFullyConfiguredInstance(): void
     {
         $transferGenerator = $this->getFactory()->createTransferGenerator(
-            $this->getMessenger()
+            $this->getMessenger(),
         );
 
         $this->assertInstanceOf(TransferGenerator::class, $transferGenerator);

@@ -58,7 +58,7 @@ class WishlistItemAdder implements WishlistItemAdderInterface
         $wishlistItemRequest = $this->createWishlistItemRequest(
             $restRequest,
             $wishlistResource,
-            $restWishlistItemsAttributesRequestTransfer
+            $restWishlistItemsAttributesRequestTransfer,
         );
         $wishlistItemResponse = $this->wishlistRestApiClient->addWishlistItem($wishlistItemRequest);
 

@@ -49,7 +49,7 @@ class MerchantSalesOrderMerchantUserGuiCommunicationFactory extends AbstractComm
             $this->getUtilSanitizeService(),
             $this->getDateTimeService(),
             $this->getCustomerFacade(),
-            $this->getMerchantUserFacade()
+            $this->getMerchantUserFacade(),
         );
     }
 
@@ -114,7 +114,7 @@ class MerchantSalesOrderMerchantUserGuiCommunicationFactory extends AbstractComm
     {
         return new MerchantShipmentGroupFormDataProvider(
             $this->getCustomerFacade(),
-            $this->getShipmentFacade()
+            $this->getShipmentFacade(),
         );
     }
 

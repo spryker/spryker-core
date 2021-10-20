@@ -70,7 +70,7 @@ class CurrencyReader implements CurrencyReaderInterface
 
         if (!$currencyEntity) {
             throw new CurrencyNotFoundException(
-                sprintf('Currency with id "%d" not found.', $idCurrency)
+                sprintf('Currency with id "%d" not found.', $idCurrency),
             );
         }
 
@@ -135,7 +135,7 @@ class CurrencyReader implements CurrencyReaderInterface
 
         if (!$currencyEntity) {
             throw new CurrencyNotFoundException(
-                sprintf('Currency with ISO code "%s" not found.', $isoCode)
+                sprintf('Currency with ISO code "%s" not found.', $isoCode),
             );
         }
 
@@ -174,8 +174,8 @@ class CurrencyReader implements CurrencyReaderInterface
             throw new CurrencyNotFoundException(
                 sprintf(
                     "There is no currency configured for current store, 
-                    make sure you have currency ISO codes provided in 'currencyIsoCodes' array in current stores.php config."
-                )
+                    make sure you have currency ISO codes provided in 'currencyIsoCodes' array in current stores.php config.",
+                ),
             );
         }
 
@@ -197,7 +197,7 @@ class CurrencyReader implements CurrencyReaderInterface
         $storeWithCurrencyTransfer = new StoreWithCurrencyTransfer();
         $storeWithCurrencyTransfer->setStore($storeTransfer);
         $storeWithCurrencyTransfer->setCurrencies(
-            new ArrayObject($this->getCurrenciesByIsoCodes($storeTransfer))
+            new ArrayObject($this->getCurrenciesByIsoCodes($storeTransfer)),
         );
 
         return $storeWithCurrencyTransfer;

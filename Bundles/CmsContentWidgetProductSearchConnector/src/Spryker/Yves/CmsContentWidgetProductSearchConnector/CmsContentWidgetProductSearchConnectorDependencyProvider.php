@@ -49,7 +49,7 @@ class CmsContentWidgetProductSearchConnectorDependencyProvider extends AbstractB
     {
         $container->set(static::CLIENT_PRODUCT, function (Container $container) {
             return new CmsContentWidgetProductSearchConnectorToProductClientBridge(
-                $container->getLocator()->product()->client()
+                $container->getLocator()->product()->client(),
             );
         });
 
@@ -65,7 +65,7 @@ class CmsContentWidgetProductSearchConnectorDependencyProvider extends AbstractB
     {
         $container->set(static::CLIENT_SEARCH, function (Container $container) {
             return new CmsContentWidgetProductSearchConnectorToSearchClientBridge(
-                $container->getLocator()->search()->client()
+                $container->getLocator()->search()->client(),
             );
         });
 

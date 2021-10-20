@@ -97,7 +97,7 @@ class ProductDiscontinuedProductLabelConnectorDependencyProvider extends Abstrac
     {
         $container->set(static::FACADE_PRODUCT_LABEL, function (Container $container) {
             return new ProductDiscontinuedProductLabelConnectorToProductLabelBridge(
-                $container->getLocator()->productLabel()->facade()
+                $container->getLocator()->productLabel()->facade(),
             );
         });
 
@@ -113,7 +113,7 @@ class ProductDiscontinuedProductLabelConnectorDependencyProvider extends Abstrac
     {
         $container->set(static::FACADE_PRODUCT, function (Container $container) {
             return new ProductDiscontinuedProductLabelConnectorToProductBridge(
-                $container->getLocator()->product()->facade()
+                $container->getLocator()->product()->facade(),
             );
         });
 
@@ -129,7 +129,7 @@ class ProductDiscontinuedProductLabelConnectorDependencyProvider extends Abstrac
     {
         $container->set(static::FACADE_PRODUCT_DISCONTINUED, function (Container $container) {
             return new ProductDiscontinuedProductLabelConnectorToProductDiscontinuedFacadeBridge(
-                $container->getLocator()->productDiscontinued()->facade()
+                $container->getLocator()->productDiscontinued()->facade(),
             );
         });
 
@@ -145,7 +145,7 @@ class ProductDiscontinuedProductLabelConnectorDependencyProvider extends Abstrac
     {
         $container->set(static::FACADE_LOCALE, function (Container $container) {
             return new ProductDiscontinuedProductLabelConnectorToLocaleFacadeBridge(
-                $container->getLocator()->locale()->facade()
+                $container->getLocator()->locale()->facade(),
             );
         });
 

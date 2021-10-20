@@ -31,7 +31,7 @@ class NavigationTwigServiceProvider extends AbstractPlugin implements ServicePro
                 $twig->addExtension($twigExtension);
 
                 return $twig;
-            })
+            }),
         );
     }
 

@@ -150,7 +150,7 @@ class MimeTypeSettingsTable extends AbstractTable
             "<input id='mime_type_is_allowed_%s' class='mime_type_is_allowed' type='checkbox' data-id='%s' %s/>",
             $item[static::COL_ID_MIME_TYPE],
             $item[static::COL_ID_MIME_TYPE],
-            $item[static::COL_IS_ALLOWED] ? "checked='checked'" : ''
+            $item[static::COL_IS_ALLOWED] ? "checked='checked'" : '',
         );
     }
 
@@ -167,13 +167,13 @@ class MimeTypeSettingsTable extends AbstractTable
             Url::generate(static::ROUTE_EDIT, [
                 static::REQUEST_ID_MIME_TYPE => $item[static::COL_ID_MIME_TYPE],
             ]),
-            'Edit'
+            'Edit',
         );
         $buttons[] = $this->generateRemoveButton(
             Url::generate(static::ROUTE_DELETE, [
                 static::REQUEST_ID_MIME_TYPE => $item[static::COL_ID_MIME_TYPE],
             ]),
-            'Delete'
+            'Delete',
         );
 
         return $buttons;

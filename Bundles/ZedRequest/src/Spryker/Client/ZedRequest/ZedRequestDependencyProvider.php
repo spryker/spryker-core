@@ -115,7 +115,7 @@ class ZedRequestDependencyProvider extends AbstractDependencyProvider
     {
         $container->set(static::CLIENT_MESSENGER, function (Container $container) {
             return new ZedRequestToMessengerClientBridge(
-                $container->getLocator()->messenger()->client()
+                $container->getLocator()->messenger()->client(),
             );
         });
 
@@ -164,7 +164,7 @@ class ZedRequestDependencyProvider extends AbstractDependencyProvider
     {
         $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new ZedRequestToUtilEncodingServiceBridge(
-                $container->getLocator()->utilEncoding()->service()
+                $container->getLocator()->utilEncoding()->service(),
             );
         });
 

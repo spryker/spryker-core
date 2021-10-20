@@ -28,7 +28,7 @@ class CmsContentWidgetBusinessFactory extends AbstractBusinessFactory
         return new ContentWidgetParameterMapper(
             $this->getCmsContentWidgetParameterMapperPlugins(),
             $this->createCmsContentWidgetFunctionMatcher(),
-            $this->getGlossaryFacade()
+            $this->getGlossaryFacade(),
         );
     }
 

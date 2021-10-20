@@ -254,7 +254,7 @@ class CorsResponseTest extends Unit
             static::PARENT_RESOURCE_TYPE,
             static::PARENT_RESOURCE_ID,
             static::RESOURCE_TYPE,
-            static::RESOURCE_ID
+            static::RESOURCE_ID,
         );
     }
 }

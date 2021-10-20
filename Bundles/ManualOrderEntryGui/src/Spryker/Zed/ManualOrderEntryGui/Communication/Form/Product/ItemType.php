@@ -98,14 +98,14 @@ class ItemType extends AbstractType
             FormEvents::PRE_SET_DATA,
             function (FormEvent $event) use ($options) {
                 $this->convertIntToMoney($event, $options);
-            }
+            },
         );
 
         $builder->addEventListener(
             FormEvents::SUBMIT,
             function (FormEvent $event) use ($options) {
                 $this->convertMoneyToInt($event, $options);
-            }
+            },
         );
     }
 

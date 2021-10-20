@@ -104,7 +104,7 @@ class SessionHandlerRedisLockingTest extends Unit
             $redisClientMock,
             $lockerMock,
             new RedisSessionKeyGenerator(),
-            60
+            60,
         );
 
         return $sessionHandler;

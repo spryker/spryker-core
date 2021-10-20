@@ -64,7 +64,7 @@ class TestsResourceController extends AbstractController
             ->createRestResource(
                 $requestResource->getType(),
                 1,
-                $requestResource->getAttributes()
+                $requestResource->getAttributes(),
             );
 
         $restResponse->addResource($responseResource);

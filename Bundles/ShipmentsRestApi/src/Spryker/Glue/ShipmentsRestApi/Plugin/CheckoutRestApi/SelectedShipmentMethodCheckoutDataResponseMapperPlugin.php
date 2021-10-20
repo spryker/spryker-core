@@ -43,7 +43,7 @@ class SelectedShipmentMethodCheckoutDataResponseMapperPlugin extends AbstractPlu
             ->mapRestCheckoutDataResponseTransferToRestCheckoutDataResponseAttributesTransfer(
                 $restCheckoutDataTransfer,
                 $restCheckoutRequestAttributesTransfer,
-                $restCheckoutResponseAttributesTransfer
+                $restCheckoutResponseAttributesTransfer,
             );
     }
 }

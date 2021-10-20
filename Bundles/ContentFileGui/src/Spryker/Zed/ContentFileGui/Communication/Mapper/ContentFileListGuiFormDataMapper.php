@@ -23,7 +23,7 @@ class ContentFileListGuiFormDataMapper implements ContentFileListGuiFormDataMapp
         if ($params) {
             $contentFileListTermTransfer->fromArray($params);
             $contentFileListTermTransfer->setFileIds(
-                array_values($contentFileListTermTransfer->getFileIds())
+                array_values($contentFileListTermTransfer->getFileIds()),
             );
         }
 

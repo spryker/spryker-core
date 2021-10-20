@@ -46,7 +46,7 @@ class SharedCartUpdater implements SharedCartUpdaterInterface
         $shareDetailTransfer->requireUuid();
 
         $quoteCompanyUserTransfer = $this->sharedCartFacade->findQuoteCompanyUserByUuid(
-            (new QuoteCompanyUserTransfer())->setUuid($shareDetailTransfer->getUuid())
+            (new QuoteCompanyUserTransfer())->setUuid($shareDetailTransfer->getUuid()),
         );
 
         if (!$quoteCompanyUserTransfer) {
@@ -55,7 +55,7 @@ class SharedCartUpdater implements SharedCartUpdaterInterface
 
         $quotePermissionGroupResponseTransfer = $this->sharedCartFacade->findQuotePermissionGroupById(
             (new QuotePermissionGroupTransfer())
-                ->setIdQuotePermissionGroup($shareDetailTransfer->getQuotePermissionGroup()->getIdQuotePermissionGroup())
+                ->setIdQuotePermissionGroup($shareDetailTransfer->getQuotePermissionGroup()->getIdQuotePermissionGroup()),
         );
 
         if (!$quotePermissionGroupResponseTransfer->getIsSuccessful()) {
@@ -70,7 +70,7 @@ class SharedCartUpdater implements SharedCartUpdaterInterface
         $shareDetailTransfer->setIdQuoteCompanyUser($quoteCompanyUserTransfer->getIdQuoteCompanyUser());
 
         $shareCartResponseTransfer = $this->sharedCartFacade->updateQuoteCompanyUserPermissionGroup(
-            (new ShareCartRequestTransfer())->addShareDetail($shareDetailTransfer)
+            (new ShareCartRequestTransfer())->addShareDetail($shareDetailTransfer),
         );
 
         if (!$shareCartResponseTransfer->getIsSuccessful()) {

@@ -69,7 +69,7 @@ class SecurityBlockerAgentValidator implements SecurityBlockerAgentValidatorInte
 
         return $this->restErrorCollectionBuilder->createRestErrorCollectionTransfer(
             $securityCheckAuthResponseTransfer,
-            $restRequest->getMetadata()->getLocale()
+            $restRequest->getMetadata()->getLocale(),
         );
     }
 

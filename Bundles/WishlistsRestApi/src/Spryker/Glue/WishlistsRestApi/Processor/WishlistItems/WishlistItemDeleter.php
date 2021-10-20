@@ -54,7 +54,7 @@ class WishlistItemDeleter implements WishlistItemDeleterInterface
         }
 
         $deleteWishlistItemResponse = $this->wishlistRestApiClient->deleteWishlistItem(
-            $this->createWishlistItemRequest($restRequest)
+            $this->createWishlistItemRequest($restRequest),
         );
 
         if (!$deleteWishlistItemResponse->getIsSuccess()) {

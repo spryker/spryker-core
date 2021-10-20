@@ -42,7 +42,7 @@ class SessionFileDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::SERVICE_MONITORING, function (Container $container) {
             return new SessionFileToMonitoringServiceBridge(
-                $container->getLocator()->monitoring()->service()
+                $container->getLocator()->monitoring()->service(),
             );
         });
 

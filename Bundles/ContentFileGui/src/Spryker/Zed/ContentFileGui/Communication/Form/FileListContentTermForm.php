@@ -81,11 +81,11 @@ class FileListContentTermForm extends AbstractType
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         $view->vars['tables']['fileListViewTable'] = $this->getFactory()->createContentFileListViewTable(
-            $view->parent->vars['name']
+            $view->parent->vars['name'],
         );
         $view->vars['tables']['fileListSelectedTable'] = $this->getFactory()->createContentFileListSelectedTable(
             $view->vars['value']->getFileIds(),
-            $view->parent->vars['name']
+            $view->parent->vars['name'],
         );
         $view->vars['attr']['template_path'] = static::TEMPLATE_PATH;
     }
@@ -139,7 +139,7 @@ class FileListContentTermForm extends AbstractType
                 $ids = array_filter(array_values($event->getData()));
                 $event->setData($ids);
                 $event->getForm()->setData($ids);
-            }
+            },
         )->addEventListener(
             FormEvents::PRE_SET_DATA,
             function (FormEvent $event): void {
@@ -161,7 +161,7 @@ class FileListContentTermForm extends AbstractType
                 }
 
                 $event->setData($fileIds);
-            }
+            },
         );
 
         return $this;

@@ -40,7 +40,7 @@ class DevelopmentCommunicationFactory extends AbstractCommunicationFactory
     {
         $bundleFormDataProvider = new BundleFormDataProvider(
             $request,
-            $this->getFacade()->showOutgoingDependenciesForModule($moduleTransfer)
+            $this->getFacade()->showOutgoingDependenciesForModule($moduleTransfer),
         );
 
         return $bundleFormDataProvider;

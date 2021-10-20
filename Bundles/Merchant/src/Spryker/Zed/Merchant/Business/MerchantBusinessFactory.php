@@ -44,7 +44,7 @@ class MerchantBusinessFactory extends AbstractBusinessFactory
             $this->getConfig(),
             $this->getMerchantPostCreatePlugins(),
             $this->createMerchantUrlSaver(),
-            $this->getEventFacade()
+            $this->getEventFacade(),
         );
     }
 
@@ -59,7 +59,7 @@ class MerchantBusinessFactory extends AbstractBusinessFactory
             $this->createMerchantStatusValidator(),
             $this->getMerchantPostUpdatePlugins(),
             $this->createMerchantUrlSaver(),
-            $this->getEventFacade()
+            $this->getEventFacade(),
         );
     }
 
@@ -70,7 +70,7 @@ class MerchantBusinessFactory extends AbstractBusinessFactory
     {
         return new MerchantReader(
             $this->getRepository(),
-            $this->getMerchantExpanderPlugins()
+            $this->getMerchantExpanderPlugins(),
         );
     }
 
@@ -80,7 +80,7 @@ class MerchantBusinessFactory extends AbstractBusinessFactory
     public function createMerchantStatusReader(): MerchantStatusReaderInterface
     {
         return new MerchantStatusReader(
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -90,7 +90,7 @@ class MerchantBusinessFactory extends AbstractBusinessFactory
     public function createMerchantStatusValidator(): MerchantStatusValidatorInterface
     {
         return new MerchantStatusValidator(
-            $this->createMerchantStatusReader()
+            $this->createMerchantStatusReader(),
         );
     }
 
@@ -140,7 +140,7 @@ class MerchantBusinessFactory extends AbstractBusinessFactory
     public function createMerchantUrlSaver(): MerchantUrlSaverInterface
     {
         return new MerchantUrlSaver(
-            $this->getUrlFacade()
+            $this->getUrlFacade(),
         );
     }
 

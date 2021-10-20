@@ -98,7 +98,7 @@ class StorageRedisClientTest extends Unit
         $this->storageRedisClient->set(static::DUMMY_KEY, static::DUMMY_VALUE);
         $this->storageRedisClient->delete(static::DUMMY_KEY);
         $this->assertEmpty(
-            $this->storageRedisClient->get(static::DUMMY_KEY)
+            $this->storageRedisClient->get(static::DUMMY_KEY),
         );
     }
 
@@ -112,10 +112,10 @@ class StorageRedisClientTest extends Unit
         $this->storageRedisClient->delete(static::ANOTHER_DUMMY_KEY);
 
         $this->assertEmpty(
-            $this->storageRedisClient->get(static::DUMMY_KEY)
+            $this->storageRedisClient->get(static::DUMMY_KEY),
         );
         $this->assertEmpty(
-            $this->storageRedisClient->get(static::ANOTHER_DUMMY_KEY)
+            $this->storageRedisClient->get(static::ANOTHER_DUMMY_KEY),
         );
     }
 
@@ -130,7 +130,7 @@ class StorageRedisClientTest extends Unit
         $this->assertIsArray($result);
         $this->assertEquals(
             array_values($result),
-            array_values($this->dummyMultiData)
+            array_values($this->dummyMultiData),
         );
     }
 
@@ -154,7 +154,7 @@ class StorageRedisClientTest extends Unit
 
         $this->assertIsArray($result);
         $this->assertEmpty(
-            array_diff($this->prefixKeys(array_keys($this->dummyMultiData)), array_values($result))
+            array_diff($this->prefixKeys(array_keys($this->dummyMultiData)), array_values($result)),
         );
     }
 

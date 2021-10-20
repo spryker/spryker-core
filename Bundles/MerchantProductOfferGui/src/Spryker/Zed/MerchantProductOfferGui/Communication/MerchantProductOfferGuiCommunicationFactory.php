@@ -30,7 +30,7 @@ class MerchantProductOfferGuiCommunicationFactory extends AbstractCommunicationF
     {
         return new MerchantProductOfferTableExpander(
             $this->getRepository(),
-            $this->getRequest()
+            $this->getRequest(),
         );
     }
 

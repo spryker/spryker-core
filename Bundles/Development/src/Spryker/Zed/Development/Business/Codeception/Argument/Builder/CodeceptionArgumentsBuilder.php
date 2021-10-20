@@ -95,7 +95,7 @@ class CodeceptionArgumentsBuilder implements CodeceptionArgumentsBuilderInterfac
         if (!empty($options[static::OPTION_GROUP_INCLUDE])) {
             $codeceptionArguments->addArgument(
                 '-g',
-                explode(',', $options[static::OPTION_GROUP_INCLUDE])
+                explode(',', $options[static::OPTION_GROUP_INCLUDE]),
             );
         }
 
@@ -113,7 +113,7 @@ class CodeceptionArgumentsBuilder implements CodeceptionArgumentsBuilderInterfac
         if (!empty($options[static::OPTION_GROUP_EXCLUDE])) {
             $codeceptionArguments->addArgument(
                 '-x',
-                explode(',', $options[static::OPTION_GROUP_EXCLUDE])
+                explode(',', $options[static::OPTION_GROUP_EXCLUDE]),
             );
         }
 
@@ -160,7 +160,7 @@ class CodeceptionArgumentsBuilder implements CodeceptionArgumentsBuilderInterfac
     {
         return $codeceptionArguments->addArgument(
             '--ext',
-            ['\\' . SuiteFilterHelper::class]
+            ['\\' . SuiteFilterHelper::class],
         );
     }
 
@@ -183,12 +183,12 @@ class CodeceptionArgumentsBuilder implements CodeceptionArgumentsBuilderInterfac
         $extensionInlineConfig = sprintf(
             $extensionInlineConfigTemplate,
             $suiteFilterHelperClassName,
-            $inclusiveGroupsAsString
+            $inclusiveGroupsAsString,
         );
 
         return $codeceptionArguments->addArgument(
             '-o',
-            [$extensionInlineConfig]
+            [$extensionInlineConfig],
         );
     }
 }

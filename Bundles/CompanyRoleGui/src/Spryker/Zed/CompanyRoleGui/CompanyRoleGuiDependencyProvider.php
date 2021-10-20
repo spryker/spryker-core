@@ -72,7 +72,7 @@ class CompanyRoleGuiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::FACADE_COMPANY, function (Container $container) {
             return new CompanyRoleGuiToCompanyFacadeBridge(
-                $container->getLocator()->company()->facade()
+                $container->getLocator()->company()->facade(),
             );
         });
 
@@ -88,7 +88,7 @@ class CompanyRoleGuiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::FACADE_COMPANY_ROLE, function (Container $container) {
             return new CompanyRoleGuiToCompanyRoleFacadeBridge(
-                $container->getLocator()->companyRole()->facade()
+                $container->getLocator()->companyRole()->facade(),
             );
         });
 
@@ -118,7 +118,7 @@ class CompanyRoleGuiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::FACADE_GLOSSARY, function (Container $container) {
             return new CompanyRoleGuiToGlossaryFacadeBridge(
-                $container->getLocator()->glossary()->facade()
+                $container->getLocator()->glossary()->facade(),
             );
         });
 
@@ -134,7 +134,7 @@ class CompanyRoleGuiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::FACADE_PERMISSION, function (Container $container) {
             return new CompanyRoleGuiToPermissionFacadeBridge(
-                $container->getLocator()->permission()->facade()
+                $container->getLocator()->permission()->facade(),
             );
         });
 

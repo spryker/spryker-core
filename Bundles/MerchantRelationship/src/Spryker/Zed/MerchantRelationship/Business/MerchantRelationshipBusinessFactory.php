@@ -36,7 +36,7 @@ class MerchantRelationshipBusinessFactory extends AbstractBusinessFactory
             $this->createMerchantRelationshipKeyGenerator(),
             $this->getMerchantRelationshipPreDeletePlugins(),
             $this->getMerchantRelationshipPostCreatePlugins(),
-            $this->getMerchantRelationshipPostUpdatePlugins()
+            $this->getMerchantRelationshipPostUpdatePlugins(),
         );
     }
 
@@ -47,7 +47,7 @@ class MerchantRelationshipBusinessFactory extends AbstractBusinessFactory
     {
         return new MerchantRelationshipReader(
             $this->getRepository(),
-            $this->createMerchantRelationshipExpander()
+            $this->createMerchantRelationshipExpander(),
         );
     }
 

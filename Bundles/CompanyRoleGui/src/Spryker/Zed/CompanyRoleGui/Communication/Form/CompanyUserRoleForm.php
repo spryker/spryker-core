@@ -120,7 +120,7 @@ class CompanyUserRoleForm extends AbstractType
         $form->add(
             static::FIELD_COMPANY_ROLE_COLLECTION,
             CompanyRoleChoiceType::class,
-            $this->getCompanyRoleFieldParameters($options)
+            $this->getCompanyRoleFieldParameters($options),
         );
     }
 
@@ -135,7 +135,7 @@ class CompanyUserRoleForm extends AbstractType
         $builder->add(
             static::FIELD_COMPANY_ROLE_COLLECTION,
             CompanyRoleChoiceType::class,
-            $this->getCompanyRoleFieldParameters($options)
+            $this->getCompanyRoleFieldParameters($options),
         );
 
         return $this;

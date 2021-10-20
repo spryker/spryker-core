@@ -34,7 +34,7 @@ class MerchantProductOffersRestApiFacade extends AbstractFacade implements Merch
             ->createMerchantProductOfferMapper()
             ->mapCartItemRequestTransferToPersistentCartChangeTransfer(
                 $cartItemRequestTransfer,
-                $persistentCartChangeTransfer
+                $persistentCartChangeTransfer,
             );
     }
 }

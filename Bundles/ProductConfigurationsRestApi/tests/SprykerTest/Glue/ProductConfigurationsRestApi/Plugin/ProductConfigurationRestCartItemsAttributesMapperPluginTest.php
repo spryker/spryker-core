@@ -59,22 +59,22 @@ class ProductConfigurationRestCartItemsAttributesMapperPluginTest extends Unit
         $restItemsAttributesTransfer = $productConfigurationCartItemExpanderPlugin->mapItemTransferToRestItemsAttributesTransfer(
             $itemTransfer,
             $restItemsAttributesTransfer,
-            static::TEST_LOCALE
+            static::TEST_LOCALE,
         );
 
         // Assert
         $this->assertNotNull($restItemsAttributesTransfer->getProductConfigurationInstance());
         $this->assertSame(
             $itemTransfer->getProductConfigurationInstance()->getConfiguration(),
-            $restItemsAttributesTransfer->getProductConfigurationInstance()->getConfiguration()
+            $restItemsAttributesTransfer->getProductConfigurationInstance()->getConfiguration(),
         );
         $this->assertSame(
             $itemTransfer->getProductConfigurationInstance()->getConfiguratorKey(),
-            $restItemsAttributesTransfer->getProductConfigurationInstance()->getConfiguratorKey()
+            $restItemsAttributesTransfer->getProductConfigurationInstance()->getConfiguratorKey(),
         );
         $this->assertSame(
             $itemTransfer->getProductConfigurationInstance()->getDisplayData(),
-            $restItemsAttributesTransfer->getProductConfigurationInstance()->getDisplayData()
+            $restItemsAttributesTransfer->getProductConfigurationInstance()->getDisplayData(),
         );
     }
 }

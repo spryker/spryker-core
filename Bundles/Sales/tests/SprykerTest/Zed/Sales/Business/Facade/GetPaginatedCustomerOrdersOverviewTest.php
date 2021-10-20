@@ -54,7 +54,7 @@ class GetPaginatedCustomerOrdersOverviewTest extends Test
         // Arrange
         $this->tester->setDependency(
             SalesDependencyProvider::PLUGINS_SEARCH_ORDER_EXPANDER,
-            [$this->getSearchOrderExpanderPluginMock()]
+            [$this->getSearchOrderExpanderPluginMock()],
         );
 
         $orderTransfer = $this->tester->createOrderByStateMachineProcessName(static::DEFAULT_OMS_PROCESS_NAME);

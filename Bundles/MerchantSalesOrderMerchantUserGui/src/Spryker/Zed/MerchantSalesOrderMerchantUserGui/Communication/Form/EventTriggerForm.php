@@ -100,7 +100,7 @@ class EventTriggerForm extends AbstractType
     protected function setAction(FormBuilderInterface $builder, array $options)
     {
         $builder->setAction(
-            $this->createAction($options)
+            $this->createAction($options),
         );
 
         return $this;

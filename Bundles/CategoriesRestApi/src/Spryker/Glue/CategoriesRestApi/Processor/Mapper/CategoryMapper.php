@@ -27,7 +27,7 @@ class CategoryMapper implements CategoryMapperInterface
             $categoriesResourceTransfer = (new RestCategoryTreesAttributesTransfer())
                 ->fromArray(
                     $categoryNodeStorageTransfer->toArray(),
-                    true
+                    true,
                 );
             $rootCategories->append($categoriesResourceTransfer);
         }
@@ -45,7 +45,7 @@ class CategoryMapper implements CategoryMapperInterface
         return (new RestCategoryNodesAttributesTransfer())
             ->fromArray(
                 $categoryNodeStorageTransfer->toArray(),
-                true
+                true,
             );
     }
 }

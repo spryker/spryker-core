@@ -54,14 +54,14 @@ class ProductSetStorageMapper implements ProductSetStorageMapperInterface
         $imageSets = $storageProductTransfer->getImageSets();
         if (array_key_exists(ProductSetConfig::DEFAULT_IMAGE_SET_NAME, $imageSets) !== false) {
             $storageProductTransfer->setImages(
-                $this->mapStorageProductImageCollection($imageSets[ProductSetConfig::DEFAULT_IMAGE_SET_NAME])
+                $this->mapStorageProductImageCollection($imageSets[ProductSetConfig::DEFAULT_IMAGE_SET_NAME]),
             );
         }
 
         ksort($imageSets);
 
         $storageProductTransfer->setImages(
-            $this->mapStorageProductImageCollection(array_shift($imageSets))
+            $this->mapStorageProductImageCollection(array_shift($imageSets)),
         );
 
         return $storageProductTransfer;

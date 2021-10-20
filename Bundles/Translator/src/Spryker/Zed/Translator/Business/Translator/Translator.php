@@ -45,7 +45,7 @@ class Translator extends SymfonyTranslator implements TranslatorInterface
             $locale,
             $formatter,
             $translatorConfig->getTranslatorCacheDirectory(),
-            $translatorConfig->isZedTranslatorDebugEnabled()
+            $translatorConfig->isZedTranslatorDebugEnabled(),
         );
 
         $this->translatorBuilder = $translatorBuilder;

@@ -137,7 +137,7 @@ class Install implements InstallInterface
             array_flip($countries),
             function ($value) {
                 return (bool)preg_match('~^(?!' . implode('|', $this->countrySettings->getTerritoriesBlacklist()) . '$)[A-Z]{2}$~i', $value);
-            }
+            },
         );
 
         $countries = array_flip($countries);

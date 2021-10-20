@@ -61,7 +61,7 @@ class ProductConcretePageSynchronizationDataBulkPlugin extends AbstractPlugin im
         return $this->getFacade()
             ->getSynchronizationDataTransfersByFilterAndProductIds(
                 $this->createFilterTransfer($offset, $limit),
-                $productConcreteIds
+                $productConcreteIds,
             );
     }
 

@@ -154,7 +154,7 @@ class GiftCardCreator implements GiftCardCreatorInterface
             ->setCode($this->getCode($giftCardOrderItemMetadata))
             ->setValue($this->getGiftCardValue(
                 $orderItemEntity,
-                $giftCardOrderItemMetadata
+                $giftCardOrderItemMetadata,
             ));
 
         return $giftCardTransfer;

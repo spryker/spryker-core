@@ -104,19 +104,19 @@ class ProductBundlePriceCalculation implements ProductBundlePriceCalculationInte
     protected function addDiscounts(ItemTransfer $bundleItemTransfer, ItemTransfer $itemTransfer)
     {
         $bundleItemTransfer->setUnitDiscountAmountFullAggregation(
-            $bundleItemTransfer->getUnitDiscountAmountFullAggregation() + $itemTransfer->getUnitDiscountAmountFullAggregation()
+            $bundleItemTransfer->getUnitDiscountAmountFullAggregation() + $itemTransfer->getUnitDiscountAmountFullAggregation(),
         );
 
         $bundleItemTransfer->setSumDiscountAmountFullAggregation(
-            $bundleItemTransfer->getSumDiscountAmountFullAggregation() + $itemTransfer->getSumDiscountAmountFullAggregation()
+            $bundleItemTransfer->getSumDiscountAmountFullAggregation() + $itemTransfer->getSumDiscountAmountFullAggregation(),
         );
 
         $bundleItemTransfer->setUnitDiscountAmountAggregation(
-            $bundleItemTransfer->getUnitDiscountAmountAggregation() + $itemTransfer->getUnitDiscountAmountAggregation()
+            $bundleItemTransfer->getUnitDiscountAmountAggregation() + $itemTransfer->getUnitDiscountAmountAggregation(),
         );
 
         $bundleItemTransfer->setSumDiscountAmountAggregation(
-            $bundleItemTransfer->getSumDiscountAmountAggregation() + $itemTransfer->getSumDiscountAmountAggregation()
+            $bundleItemTransfer->getSumDiscountAmountAggregation() + $itemTransfer->getSumDiscountAmountAggregation(),
         );
     }
 
@@ -129,11 +129,11 @@ class ProductBundlePriceCalculation implements ProductBundlePriceCalculationInte
     protected function addGrossPrice(ItemTransfer $bundleItemTransfer, ItemTransfer $itemTransfer)
     {
         $bundleItemTransfer->setUnitGrossPrice(
-            $bundleItemTransfer->getUnitGrossPrice() + $itemTransfer->getUnitGrossPrice()
+            $bundleItemTransfer->getUnitGrossPrice() + $itemTransfer->getUnitGrossPrice(),
         );
 
         $bundleItemTransfer->setSumGrossPrice(
-            $bundleItemTransfer->getSumGrossPrice() + $itemTransfer->getSumGrossPrice()
+            $bundleItemTransfer->getSumGrossPrice() + $itemTransfer->getSumGrossPrice(),
         );
     }
 
@@ -146,11 +146,11 @@ class ProductBundlePriceCalculation implements ProductBundlePriceCalculationInte
     protected function addPrice(ItemTransfer $bundleItemTransfer, ItemTransfer $itemTransfer)
     {
         $bundleItemTransfer->setUnitPrice(
-            $bundleItemTransfer->getUnitPrice() + $itemTransfer->getUnitPrice()
+            $bundleItemTransfer->getUnitPrice() + $itemTransfer->getUnitPrice(),
         );
 
         $bundleItemTransfer->setSumPrice(
-            $bundleItemTransfer->getSumPrice() + $itemTransfer->getSumPrice()
+            $bundleItemTransfer->getSumPrice() + $itemTransfer->getSumPrice(),
         );
     }
 
@@ -163,11 +163,11 @@ class ProductBundlePriceCalculation implements ProductBundlePriceCalculationInte
     protected function addNetPrice(ItemTransfer $bundleItemTransfer, ItemTransfer $itemTransfer)
     {
         $bundleItemTransfer->setUnitNetPrice(
-            $bundleItemTransfer->getUnitNetPrice() + $itemTransfer->getUnitNetPrice()
+            $bundleItemTransfer->getUnitNetPrice() + $itemTransfer->getUnitNetPrice(),
         );
 
         $bundleItemTransfer->setSumNetPrice(
-            $bundleItemTransfer->getSumNetPrice() + $itemTransfer->getSumNetPrice()
+            $bundleItemTransfer->getSumNetPrice() + $itemTransfer->getSumNetPrice(),
         );
     }
 
@@ -180,11 +180,11 @@ class ProductBundlePriceCalculation implements ProductBundlePriceCalculationInte
     protected function addItemSubtotalAggregation(ItemTransfer $bundleItemTransfer, ItemTransfer $itemTransfer)
     {
         $bundleItemTransfer->setUnitSubtotalAggregation(
-            $bundleItemTransfer->getUnitSubtotalAggregation() + $itemTransfer->getUnitSubtotalAggregation()
+            $bundleItemTransfer->getUnitSubtotalAggregation() + $itemTransfer->getUnitSubtotalAggregation(),
         );
 
         $bundleItemTransfer->setSumSubtotalAggregation(
-            $bundleItemTransfer->getSumSubtotalAggregation() + $itemTransfer->getSumSubtotalAggregation()
+            $bundleItemTransfer->getSumSubtotalAggregation() + $itemTransfer->getSumSubtotalAggregation(),
         );
     }
 
@@ -197,11 +197,11 @@ class ProductBundlePriceCalculation implements ProductBundlePriceCalculationInte
     protected function addItemPriceToPayAggregation(ItemTransfer $bundleItemTransfer, ItemTransfer $itemTransfer)
     {
         $bundleItemTransfer->setUnitPriceToPayAggregation(
-            $bundleItemTransfer->getUnitPriceToPayAggregation() + $itemTransfer->getUnitPriceToPayAggregation()
+            $bundleItemTransfer->getUnitPriceToPayAggregation() + $itemTransfer->getUnitPriceToPayAggregation(),
         );
 
         $bundleItemTransfer->setSumPriceToPayAggregation(
-            $bundleItemTransfer->getSumPriceToPayAggregation() + $itemTransfer->getSumPriceToPayAggregation()
+            $bundleItemTransfer->getSumPriceToPayAggregation() + $itemTransfer->getSumPriceToPayAggregation(),
         );
     }
 

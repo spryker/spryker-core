@@ -61,10 +61,10 @@ class CmsBlockSuggestionFinder implements CmsBlockSuggestionFinderInterface
         return [
             static::RESPONSE_KEY_RESULTS => $this->transformCmsBlocksToSuggestionData(
                 $cmsBlockSuggestionCollectionTransfer,
-                $cmsSlotBlockCriteriaTransfer
+                $cmsSlotBlockCriteriaTransfer,
             ),
             static::RESPONSE_KEY_PAGINATION => $this->getPaginationData(
-                $cmsBlockSuggestionCollectionTransfer->getPagination()
+                $cmsBlockSuggestionCollectionTransfer->getPagination(),
             ),
         ];
     }

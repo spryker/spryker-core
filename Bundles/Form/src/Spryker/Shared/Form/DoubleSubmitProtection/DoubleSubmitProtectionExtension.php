@@ -63,7 +63,7 @@ class DoubleSubmitProtectionExtension extends AbstractExtension
                 $this->tokenGenerator,
                 $this->tokenStorage,
                 $this->translator,
-                $this->translationDomain
+                $this->translationDomain,
             ),
         ];
     }

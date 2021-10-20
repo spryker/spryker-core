@@ -19,7 +19,7 @@ class ProductGroupStorageFactory extends AbstractFactory
     {
         return new ProductGroupStorageReader(
             $this->getStorageClient(),
-            $this->getSynchronizationService()
+            $this->getSynchronizationService(),
         );
     }
 

@@ -65,7 +65,7 @@ class PaymentPluginExecutor implements PaymentPluginExecutorInterface
     {
         return $this->executePreCheckPluginsForPayment(
             $quoteTransfer,
-            $checkoutResponseTransfer
+            $checkoutResponseTransfer,
         );
     }
 
@@ -82,7 +82,7 @@ class PaymentPluginExecutor implements PaymentPluginExecutorInterface
         $this->executePluginsForType(
             PaymentDependencyProvider::CHECKOUT_ORDER_SAVER_PLUGINS,
             $quoteTransfer,
-            $checkoutResponseTransfer
+            $checkoutResponseTransfer,
         );
     }
 
@@ -97,7 +97,7 @@ class PaymentPluginExecutor implements PaymentPluginExecutorInterface
         $this->executePluginsForType(
             PaymentDependencyProvider::CHECKOUT_POST_SAVE_PLUGINS,
             $quoteTransfer,
-            $checkoutResponseTransfer
+            $checkoutResponseTransfer,
         );
     }
 

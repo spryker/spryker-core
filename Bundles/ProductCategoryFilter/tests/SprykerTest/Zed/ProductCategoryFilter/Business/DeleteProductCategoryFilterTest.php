@@ -40,7 +40,7 @@ class DeleteProductCategoryFilterTest extends Unit
         $this->tester->assertTouchDeleted(
             ProductCategoryFilterConfig::RESOURCE_TYPE_PRODUCT_CATEGORY_FILTER,
             $productCategoryFilter->getFkCategory(),
-            'Product category filter should have been touched as deleted.'
+            'Product category filter should have been touched as deleted.',
         );
     }
 }

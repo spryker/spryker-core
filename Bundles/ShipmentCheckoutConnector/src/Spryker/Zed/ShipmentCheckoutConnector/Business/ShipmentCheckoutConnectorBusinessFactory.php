@@ -38,7 +38,7 @@ class ShipmentCheckoutConnectorBusinessFactory extends AbstractBusinessFactory
     {
         return new ShipmentCheckoutPreCheckWithMultipleShippingAddress(
             $this->getShipmentFacade(),
-            $this->getShipmentService()
+            $this->getShipmentService(),
         );
     }
 

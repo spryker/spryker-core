@@ -48,7 +48,7 @@ class OauthUserAuthenticationFailureHandler implements AuthenticationFailureHand
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
     {
         $this->messengerFacade->addErrorMessage(
-            (new MessageTransfer())->setValue('Authentication failed!')
+            (new MessageTransfer())->setValue('Authentication failed!'),
         );
 
         return new RedirectResponse($this->securityOauthUserConfig->getUrlLogin());

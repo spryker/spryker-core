@@ -89,7 +89,7 @@ class PriceManager implements PriceManagerInterface
     public function addPriceToItems(CartChangeTransfer $cartChangeTransfer)
     {
         $cartChangeTransfer->setQuote(
-            $this->setQuotePriceMode($cartChangeTransfer->getQuote())
+            $this->setQuotePriceMode($cartChangeTransfer->getQuote()),
         );
         $priceMode = $cartChangeTransfer->getQuote()->getPriceMode();
 
@@ -100,7 +100,7 @@ class PriceManager implements PriceManagerInterface
         foreach ($cartChangeTransfer->getItems() as $key => $itemTransfer) {
             $priceProductTransfer = $this->resolveProductPriceByPriceProductFilter(
                 $priceProductTransfers,
-                $this->priceProductFilter->createPriceProductFilterTransfer($cartChangeTransfer, $itemTransfer)
+                $this->priceProductFilter->createPriceProductFilterTransfer($cartChangeTransfer, $itemTransfer),
             );
 
             $itemTransfer = $this->setOriginUnitPrices($itemTransfer, $priceProductTransfer, $priceMode);
@@ -135,15 +135,15 @@ class PriceManager implements PriceManagerInterface
     ): PriceProductTransfer {
         $priceProductTransfer = $this->priceProductService->resolveProductPriceByPriceProductFilter(
             $priceProductTransfers,
-            $priceFilterTransfer
+            $priceFilterTransfer,
         );
 
         if (!$priceProductTransfer) {
             throw new PriceMissingException(
                 sprintf(
                     static::ERROR_MESSAGE_CART_ITEM_CAN_NOT_BE_PRICED,
-                    $priceFilterTransfer->getSku()
-                )
+                    $priceFilterTransfer->getSku(),
+                ),
             );
         }
 
@@ -161,7 +161,7 @@ class PriceManager implements PriceManagerInterface
         foreach ($cartChangeTransfer->getItems() as $key => $itemTransfer) {
             $priceProductFilterTransfers[$key] = $this->priceProductFilter->createPriceProductFilterTransfer(
                 $cartChangeTransfer,
-                $itemTransfer
+                $itemTransfer,
             );
         }
 

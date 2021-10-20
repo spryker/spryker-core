@@ -32,7 +32,7 @@ class MerchantCategorySearchCommunicationFactory extends AbstractCommunicationFa
     public function createMerchantCategorySearchExpander(): MerchantCategorySearchExpanderInterface
     {
         return new MerchantCategorySearchExpander(
-            $this->getMerchantCategoryFacade()
+            $this->getMerchantCategoryFacade(),
         );
     }
 }

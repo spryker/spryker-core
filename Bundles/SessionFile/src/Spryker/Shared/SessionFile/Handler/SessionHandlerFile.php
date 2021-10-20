@@ -172,7 +172,7 @@ class SessionHandlerFile implements SessionHandlerInterface
             '%s%s%s*',
             $this->savePath,
             DIRECTORY_SEPARATOR,
-            $this->keyPrefix
+            $this->keyPrefix,
         );
     }
 

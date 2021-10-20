@@ -70,7 +70,7 @@ class QuotePermissionGroupInstaller implements QuotePermissionGroupInstallerInte
             foreach ($quotePermissionGroupTransfer->getPermissions() as $permissionTransfer) {
                 $this->sharedCartEntityManager->saveQuotePermissionGroupToPermission(
                     $quotePermissionGroupEntityTransfer,
-                    $permissionTransferIndex[$permissionTransfer->getKey()]
+                    $permissionTransferIndex[$permissionTransfer->getKey()],
                 );
             }
         }

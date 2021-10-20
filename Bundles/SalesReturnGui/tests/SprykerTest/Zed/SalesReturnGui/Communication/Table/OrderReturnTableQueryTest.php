@@ -81,7 +81,7 @@ class OrderReturnTableQueryTest extends Unit
         $orderReturnTableMock = new OrderReturnTableMock(
             $orderTransfer,
             $this->getMoneyFacadeMock(),
-            SpySalesReturnQuery::create()
+            SpySalesReturnQuery::create(),
         );
 
         // Act

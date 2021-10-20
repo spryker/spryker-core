@@ -268,7 +268,7 @@ class SlotTable extends AbstractTable
         return sprintf(
             static::COL_NAME_WRAPPER,
             $slot[static::COL_CONTENT_PROVIDER],
-            $slot[SpyCmsSlotTableMap::COL_NAME]
+            $slot[SpyCmsSlotTableMap::COL_NAME],
         );
     }
 
@@ -283,7 +283,7 @@ class SlotTable extends AbstractTable
             $this->getUrlActivate($slot[SpyCmsSlotTableMap::COL_ID_CMS_SLOT]),
             'Activate',
             ToggleActiveCmsSlotForm::class,
-            ['class' => 'btn-view js-slot-activation']
+            ['class' => 'btn-view js-slot-activation'],
         );
 
         if ($slot[static::COL_STATUS]) {
@@ -291,7 +291,7 @@ class SlotTable extends AbstractTable
                 $this->getUrlDeactivate($slot[SpyCmsSlotTableMap::COL_ID_CMS_SLOT]),
                 'Deactivate',
                 ToggleActiveCmsSlotForm::class,
-                ['class' => 'btn-danger js-slot-activation']
+                ['class' => 'btn-danger js-slot-activation'],
             );
         }
 

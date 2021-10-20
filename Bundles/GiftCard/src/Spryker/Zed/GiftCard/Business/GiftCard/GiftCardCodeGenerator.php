@@ -79,7 +79,7 @@ class GiftCardCodeGenerator implements GiftCardCodeGeneratorInterface
         return [
             '{prefix}' => $this->giftCardConfig->getCodePrefix(),
             '{randomPart}' => $this->getValidRandomString(
-                $this->giftCardConfig->getCodeRandomPartLength()
+                $this->giftCardConfig->getCodeRandomPartLength(),
             ),
             '{suffix}' => $this->giftCardConfig->getCodeSuffix(),
         ];
@@ -96,7 +96,7 @@ class GiftCardCodeGenerator implements GiftCardCodeGeneratorInterface
 
         while (!$this->isValid($result)) {
             $result = $this->generateRandomString(
-                $this->giftCardConfig->getCodeRandomPartLength()
+                $this->giftCardConfig->getCodeRandomPartLength(),
             );
         }
 

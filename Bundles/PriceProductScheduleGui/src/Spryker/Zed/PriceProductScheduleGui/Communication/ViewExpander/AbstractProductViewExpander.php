@@ -74,13 +74,13 @@ class AbstractProductViewExpander implements AbstractProductViewExpanderInterfac
 
             $priceProductScheduleAbstractTable = $this->viewExpanderTableFactory->createPriceProductScheduleAbstractTable(
                 $viewData['idProductAbstract'],
-                $priceTypeTransfer->getIdPriceType()
+                $priceTypeTransfer->getIdPriceType(),
             );
 
             $tablesByPriceType = $this->addTableByPriceType(
                 $tablesByPriceType,
                 $priceTypeTransfer,
-                $priceProductScheduleAbstractTable
+                $priceProductScheduleAbstractTable,
             );
         }
 

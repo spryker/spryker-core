@@ -75,7 +75,7 @@ class ContentStorageReader implements ContentStorageReaderInterface
     public function getContentTypeContextByKeys(array $contentKeys, string $localeName): array
     {
         $contentStorageData = $this->storageClient->getMulti(
-            $this->generateKeys($contentKeys, $localeName)
+            $this->generateKeys($contentKeys, $localeName),
         );
 
         if (!$contentStorageData) {

@@ -48,7 +48,7 @@ class ProductCategoryFilterStorageListenerTest extends Unit
         $productCategoryFilterFacade->createProductCategoryFilter(
             (new ProductCategoryFilterTransfer())
                 ->setFkCategory(1)
-                ->setFilterData('price')
+                ->setFilterData('price'),
         );
 
         SpyProductCategoryFilterStorageQuery::create()->filterByFkCategory(1)->delete();

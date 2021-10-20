@@ -57,18 +57,18 @@ class ProductConfigurationInstanceMapper implements ProductConfigurationInstance
     ): ProductConfigurationInstanceTransfer {
         $productConfigurationInstanceTransfer = $productConfigurationInstanceTransfer->fromArray(
             $restCartItemProductConfigurationInstanceAttributesTransfer->toArray(),
-            true
+            true,
         );
 
         $priceProductTransfers = $this->productConfigurationInstancePriceMapper->mapRestProductConfigurationPriceAttributesTransfersToPriceProductTransfers(
             $restCartItemProductConfigurationInstanceAttributesTransfer->getPrices(),
-            new ArrayObject()
+            new ArrayObject(),
         );
         $productConfigurationInstanceTransfer->setPrices(new ArrayObject($priceProductTransfers));
 
         return $this->executeProductConfigurationPriceMapperPlugins(
             $restCartItemProductConfigurationInstanceAttributesTransfer->getPrices()->getArrayCopy(),
-            $productConfigurationInstanceTransfer
+            $productConfigurationInstanceTransfer,
         );
     }
 
@@ -89,22 +89,22 @@ class ProductConfigurationInstanceMapper implements ProductConfigurationInstance
 
         $restCartItemProductConfigurationInstanceAttributesTransfer = (new RestCartItemProductConfigurationInstanceAttributesTransfer())->fromArray(
             $productConfigurationInstanceTransfer->toArray(),
-            true
+            true,
         );
 
         $restProductConfigurationPriceAttributesTransfers = $this->productConfigurationInstancePriceMapper
             ->mapPriceProductTransfersToRestProductConfigurationPriceAttributesTransfers(
                 $productConfigurationInstanceTransfer->getPrices(),
-                new ArrayObject()
+                new ArrayObject(),
             );
 
         $restProductConfigurationPriceAttributesTransfers = $this->executeRestProductConfigurationPriceMapperPlugins(
             $productConfigurationInstanceTransfer,
-            $restProductConfigurationPriceAttributesTransfers->getArrayCopy()
+            $restProductConfigurationPriceAttributesTransfers->getArrayCopy(),
         );
 
         $restCartItemProductConfigurationInstanceAttributesTransfer->setPrices(
-            new ArrayObject($restProductConfigurationPriceAttributesTransfers)
+            new ArrayObject($restProductConfigurationPriceAttributesTransfers),
         );
 
         return $restItemsAttributesTransfer->setProductConfigurationInstance($restCartItemProductConfigurationInstanceAttributesTransfer);
@@ -123,7 +123,7 @@ class ProductConfigurationInstanceMapper implements ProductConfigurationInstance
         foreach ($this->productConfigurationPriceMapperPlugins as $productConfigurationMapperPlugin) {
             $productConfigurationInstanceTransfer = $productConfigurationMapperPlugin->map(
                 $restProductConfigurationPriceAttributesTransfers,
-                $productConfigurationInstanceTransfer
+                $productConfigurationInstanceTransfer,
             );
         }
 
@@ -143,7 +143,7 @@ class ProductConfigurationInstanceMapper implements ProductConfigurationInstance
         foreach ($this->restProductConfigurationPriceMapperPlugins as $restProductConfigurationPriceMapperPlugin) {
             $restProductConfigurationPriceAttributesTransfers = $restProductConfigurationPriceMapperPlugin->map(
                 $productConfigurationInstanceTransfer,
-                $restProductConfigurationPriceAttributesTransfers
+                $restProductConfigurationPriceAttributesTransfers,
             );
         }
 

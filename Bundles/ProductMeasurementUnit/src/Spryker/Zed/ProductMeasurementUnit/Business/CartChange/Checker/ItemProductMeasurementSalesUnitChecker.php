@@ -70,7 +70,7 @@ class ItemProductMeasurementSalesUnitChecker implements ItemProductMeasurementSa
         $indexedProductMeasurementSalesUnitIdsData = $this->productMeasurementUnitRepository
             ->findIndexedStoreAwareProductMeasurementSalesUnitIds(
                 $productConcreteSkus,
-                $storeTransfer->getIdStore()
+                $storeTransfer->getIdStore(),
             );
 
         if (!$indexedProductMeasurementSalesUnitIdsData) {
@@ -82,7 +82,7 @@ class ItemProductMeasurementSalesUnitChecker implements ItemProductMeasurementSa
             $cartPreCheckResponseTransfer = $this->checkSalesUnit(
                 $itemTransfer,
                 $cartPreCheckResponseTransfer,
-                $productMeasurementSalesUnitIds
+                $productMeasurementSalesUnitIds,
             );
 
             if (!$cartPreCheckResponseTransfer->getIsSuccess()) {

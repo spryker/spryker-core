@@ -43,7 +43,7 @@ class CmsSlotBlockGuiCommunicationFactory extends AbstractCommunicationFactory
             $this->getCmsBlockPropelQuery(),
             $this->getConfig(),
             $idCmsSlotTemplate,
-            $idCmsSlot
+            $idCmsSlot,
         );
     }
 
@@ -60,7 +60,7 @@ class CmsSlotBlockGuiCommunicationFactory extends AbstractCommunicationFactory
         return $this->getFormFactory()->create(
             CmsSlotBlockCollectionForm::class,
             $cmsSlotBlockCollectionDataProvider->getData($idCmsSlotTemplate, $idCmsSlot),
-            $cmsSlotBlockCollectionDataProvider->getOptions($idCmsSlotTemplate)
+            $cmsSlotBlockCollectionDataProvider->getOptions($idCmsSlotTemplate),
         );
     }
 
@@ -79,7 +79,7 @@ class CmsSlotBlockGuiCommunicationFactory extends AbstractCommunicationFactory
     {
         return new CmsSlotBlockCollectionFormDataProvider(
             $this->getCmsSlotFacade(),
-            $this->getCmsSlotBlockFacade()
+            $this->getCmsSlotBlockFacade(),
         );
     }
 

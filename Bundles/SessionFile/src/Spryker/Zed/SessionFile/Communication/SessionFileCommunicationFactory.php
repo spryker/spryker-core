@@ -26,7 +26,7 @@ class SessionFileCommunicationFactory extends AbstractCommunicationFactory
         return new SessionHandlerFile(
             $this->getConfig()->getSessionHandlerFileSavePath(),
             $this->getConfig()->getSessionLifetime(),
-            $this->getMonitoringService()
+            $this->getMonitoringService(),
         );
     }
 

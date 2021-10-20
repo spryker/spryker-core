@@ -29,7 +29,7 @@ class PublishAndSynchronizeHealthCheckSearchBusinessFactory extends AbstractBusi
     {
         return new PublishAndSynchronizeHealthCheckSearchWriter(
             $this->getEventBehaviorFacade(),
-            $this->getRepository()
+            $this->getRepository(),
         );
     }
 
@@ -48,7 +48,7 @@ class PublishAndSynchronizeHealthCheckSearchBusinessFactory extends AbstractBusi
     {
         return new HealthCheck(
             $this->getSearchClient(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 

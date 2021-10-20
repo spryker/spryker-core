@@ -52,7 +52,7 @@ class ZedNavigationServiceProvider extends AbstractPlugin implements ServiceProv
                 $twig->addFunction($this->getBreadcrumbFunction($application));
 
                 return $twig;
-            })
+            }),
         );
 
         $this->addBackwardCompatibility($application);
@@ -154,7 +154,7 @@ class ZedNavigationServiceProvider extends AbstractPlugin implements ServiceProv
                 $variables['breadcrumbs'] = $breadcrumbs;
 
                 return $variables;
-            })
+            }),
         );
     }
 

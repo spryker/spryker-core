@@ -71,7 +71,7 @@ class PriceProductScheduleListCreator implements PriceProductScheduleListCreator
     {
         $priceProductScheduleListTransfer = new PriceProductScheduleListTransfer();
         $priceProductScheduleListTransfer->setName(
-            $this->priceProductScheduleConfig->getPriceProductScheduleListDefaultName()
+            $this->priceProductScheduleConfig->getPriceProductScheduleListDefaultName(),
         );
         $priceProductScheduleListTransfer->setIsActive(true);
 

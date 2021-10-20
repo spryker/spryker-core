@@ -123,13 +123,13 @@ class AclEntitySegmentConnectorDataImportPluginTest extends Unit
         // Assert
         $this->expectException(DataImportException::class);
         $this->expectExceptionMessage(
-            'Referenced entity class was not found: Orm\Zed\Product\Persistence\InvalidEntity'
+            'Referenced entity class was not found: Orm\Zed\Product\Persistence\InvalidEntity',
         );
 
         // Arrange
         $configurationTransfer = new DataImporterReaderConfigurationTransfer();
         $configurationTransfer->setFileName(
-            codecept_data_dir() . static::ACL_ENTITY_SEGMENT_CONNECTOR_IMPORT_FILE_NAME_INVALID_DATA_ENTITY
+            codecept_data_dir() . static::ACL_ENTITY_SEGMENT_CONNECTOR_IMPORT_FILE_NAME_INVALID_DATA_ENTITY,
         );
 
         $dataImporterConfigurationTransfer = (new DataImporterConfigurationTransfer())
@@ -149,7 +149,7 @@ class AclEntitySegmentConnectorDataImportPluginTest extends Unit
         // Assert
         $this->expectException(DataImportException::class);
         $this->expectExceptionMessage(
-            'Failed to find Orm\Zed\Merchant\Persistence\SpyMerchant by merchant_reference: "nonexistentkuDXyPJJx"'
+            'Failed to find Orm\Zed\Merchant\Persistence\SpyMerchant by merchant_reference: "nonexistentkuDXyPJJx"',
         );
 
         // Arrange
@@ -158,7 +158,7 @@ class AclEntitySegmentConnectorDataImportPluginTest extends Unit
 
         $configurationTransfer = new DataImporterReaderConfigurationTransfer();
         $configurationTransfer->setFileName(
-            codecept_data_dir() . static::ACL_ENTITY_SEGMENT_CONNECTOR_IMPORT_FILE_NAME_INVALID_ENTITY_REFERENCE
+            codecept_data_dir() . static::ACL_ENTITY_SEGMENT_CONNECTOR_IMPORT_FILE_NAME_INVALID_ENTITY_REFERENCE,
         );
 
         $dataImporterConfigurationTransfer = (new DataImporterConfigurationTransfer())
@@ -178,7 +178,7 @@ class AclEntitySegmentConnectorDataImportPluginTest extends Unit
         // Assert
         $this->expectException(DataImportException::class);
         $this->expectExceptionMessage(
-            'Failed to find Orm\Zed\AclEntity\Persistence\SpyAclEntitySegment by reference: "nonexistentsegmentreference"'
+            'Failed to find Orm\Zed\AclEntity\Persistence\SpyAclEntitySegment by reference: "nonexistentsegmentreference"',
         );
 
         // Arrange
@@ -189,7 +189,7 @@ class AclEntitySegmentConnectorDataImportPluginTest extends Unit
 
         $configurationTransfer = new DataImporterReaderConfigurationTransfer();
         $configurationTransfer->setFileName(
-            codecept_data_dir() . static::ACL_ENTITY_SEGMENT_CONNECTOR_IMPORT_FILE_NAME_INVALID_SEGMENT_REFERENCE
+            codecept_data_dir() . static::ACL_ENTITY_SEGMENT_CONNECTOR_IMPORT_FILE_NAME_INVALID_SEGMENT_REFERENCE,
         );
 
         $dataImporterConfigurationTransfer = (new DataImporterConfigurationTransfer())
@@ -282,7 +282,7 @@ class AclEntitySegmentConnectorDataImportPluginTest extends Unit
             [
                 static::MERCHANT_REFERENCE_1,
                 static::MERCHANT_REFERENCE_2,
-            ]
+            ],
         );
     }
 }

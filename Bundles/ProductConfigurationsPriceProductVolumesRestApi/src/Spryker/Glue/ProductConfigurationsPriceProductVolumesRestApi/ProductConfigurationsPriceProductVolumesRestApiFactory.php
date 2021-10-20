@@ -24,7 +24,7 @@ class ProductConfigurationsPriceProductVolumesRestApiFactory extends AbstractFac
     {
         return new RestProductConfigurationPriceProductVolumeMapper(
             $this->getProductConfigurationService(),
-            $this->getUtilEncodingService()
+            $this->getUtilEncodingService(),
         );
     }
 

@@ -55,7 +55,7 @@ class ReadProductCategoryRelationPlugin extends AbstractPlugin implements Catego
             $productNames[] = sprintf(
                 '%s (%s)',
                 $productTransfer->getLocalizedAttributes()[0]->getName(),
-                $productTransfer->getSku()
+                $productTransfer->getSku(),
             );
         }
 

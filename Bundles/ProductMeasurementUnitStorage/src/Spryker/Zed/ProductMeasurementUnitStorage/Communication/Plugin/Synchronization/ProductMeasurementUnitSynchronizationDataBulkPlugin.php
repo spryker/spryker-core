@@ -60,7 +60,7 @@ class ProductMeasurementUnitSynchronizationDataBulkPlugin extends AbstractPlugin
     {
         return $this->getRepository()->findFilteredProductMeasurementUnitStorageDataTransfers(
             $this->createFilterTransfer($offset, $limit),
-            $ids
+            $ids,
         );
     }
 

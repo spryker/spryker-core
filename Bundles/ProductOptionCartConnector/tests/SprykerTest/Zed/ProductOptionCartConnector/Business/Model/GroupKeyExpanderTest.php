@@ -37,7 +37,7 @@ class GroupKeyExpanderTest extends Unit
                    (new ProductOptionTransfer())->setIdProductOptionValue(2),
                    (new ProductOptionTransfer())->setIdProductOptionValue(1),
                 ],
-            ]
+            ],
         );
 
         $groupKeyExpander = new GroupKeyExpander();
@@ -58,7 +58,7 @@ class GroupKeyExpanderTest extends Unit
                    (new ProductOptionTransfer())->setIdProductOptionValue(2),
                    (new ProductOptionTransfer())->setIdProductOptionValue(1),
                 ],
-            ]
+            ],
         );
 
         $changeTransfer->getItems()[0]->setGroupKey('SKU');
@@ -89,7 +89,7 @@ class GroupKeyExpanderTest extends Unit
                     (new ProductOptionTransfer())->setIdProductOptionValue(3),
                     (new ProductOptionTransfer())->setIdProductOptionValue('A'),
                 ],
-            ]
+            ],
         );
 
         $groupKeyExpander = new GroupKeyExpander();

@@ -36,7 +36,7 @@ class MerchantProductOfferWishlistRestApiFacade extends AbstractFacade implement
     ): void {
         $this->getFactory()->createMerchantProductOfferWishlistRestApiDeleter()->deleteWishlistItem(
             $wishlistItemRequestTransfer,
-            $wishlistItemTransfers
+            $wishlistItemTransfers,
         );
     }
 
@@ -58,7 +58,7 @@ class MerchantProductOfferWishlistRestApiFacade extends AbstractFacade implement
     ): void {
         $this->getFactory()->createMerchantProductOfferWishlistRestApiDeleter()->deleteWishlistItemWithoutProductOffer(
             $wishlistItemRequestTransfer,
-            $wishlistItemTransfers
+            $wishlistItemTransfers,
         );
     }
 }

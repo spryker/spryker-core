@@ -73,7 +73,7 @@ class ConcreteProductAvailabilitiesReader implements ConcreteProductAvailabiliti
         $productConcreteSku = $concreteProductResource->getId();
         $concreteProductAvailabilityRestResource = $this->findConcreteProductAvailabilityBySku(
             $productConcreteSku,
-            $restRequest
+            $restRequest,
         );
 
         if (!$concreteProductAvailabilityRestResource) {
@@ -100,7 +100,7 @@ class ConcreteProductAvailabilitiesReader implements ConcreteProductAvailabiliti
             ->findProductConcreteStorageDataByMapping(
                 static::PRODUCT_CONCRETE_MAPPING_TYPE,
                 $productConcreteSku,
-                $localeName
+                $localeName,
             );
 
         if (!$productConcreteStorageData) {

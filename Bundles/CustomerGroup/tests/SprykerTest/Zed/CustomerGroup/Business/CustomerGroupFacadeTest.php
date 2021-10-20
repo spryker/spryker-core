@@ -113,12 +113,12 @@ class CustomerGroupFacadeTest extends Unit
 
         $customerGroupToCustomerEntities[] = $this->assignCustomerToGroup(
             $customerEntity->getIdCustomer(),
-            $customerGroupFirstEntity->getIdCustomerGroup()
+            $customerGroupFirstEntity->getIdCustomerGroup(),
         );
 
         $customerGroupToCustomerEntities[] = $this->assignCustomerToGroup(
             $customerEntity->getIdCustomer(),
-            $customerGroupSecondEntity->getIdCustomerGroup()
+            $customerGroupSecondEntity->getIdCustomerGroup(),
         );
 
         $customerGroupCollectionTransfer = $this->getCustomerGroupFacade()
@@ -215,7 +215,7 @@ class CustomerGroupFacadeTest extends Unit
         $customerGroupTransfer->setCustomerAssignment(
             (new CustomerGroupToCustomerAssignmentTransfer())
                 ->addIdCustomerToAssign($customerEntityTwo->getIdCustomer())
-                ->addIdCustomerToDeAssign($customerEntityOne->getIdCustomer())
+                ->addIdCustomerToDeAssign($customerEntityOne->getIdCustomer()),
         );
 
         $customerGroupTransfer->setName('Foo');
@@ -270,7 +270,7 @@ class CustomerGroupFacadeTest extends Unit
         $customerGroupTransfer->setIdCustomerGroup($customerGroupEntity->getIdCustomerGroup());
         $customerGroupTransfer->setCustomerAssignment(
             (new CustomerGroupToCustomerAssignmentTransfer())
-                ->addIdCustomerToDeAssign($customerEntity->getIdCustomer())
+                ->addIdCustomerToDeAssign($customerEntity->getIdCustomer()),
         );
 
         $customerGroupFacade->removeCustomersFromGroup($customerGroupTransfer);

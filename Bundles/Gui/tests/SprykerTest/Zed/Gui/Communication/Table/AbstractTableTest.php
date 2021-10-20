@@ -176,7 +176,7 @@ class AbstractTableTest extends Unit
         $this->expectExceptionMessage(sprintf(
             'You need to implement `%s::getCsvHeaders()` in your `%s`',
             AbstractTable::class,
-            FooTable::class
+            FooTable::class,
         ));
 
         // Act
@@ -196,7 +196,7 @@ class AbstractTableTest extends Unit
         $this->expectExceptionMessage(sprintf(
             'You need to implement `%s::getDownloadQuery()` in your `%s`',
             AbstractTable::class,
-            DownloadTableWithoutGetDownloadQueryMethod::class
+            DownloadTableWithoutGetDownloadQueryMethod::class,
         ));
 
         // Act

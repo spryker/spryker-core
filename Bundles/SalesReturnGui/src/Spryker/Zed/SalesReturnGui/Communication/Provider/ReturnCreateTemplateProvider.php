@@ -61,7 +61,7 @@ class ReturnCreateTemplateProvider implements ReturnCreateTemplateProviderInterf
         foreach ($this->returnCreateTemplatePlugins as $returnCreateTemplatePlugin) {
             $templates[$returnCreateTemplatePlugin->getTemplatePath()] = array_merge(
                 $templateData,
-                $returnCreateTemplatePlugin->getTemplateData($orderTransfer)
+                $returnCreateTemplatePlugin->getTemplateData($orderTransfer),
             );
         }
 

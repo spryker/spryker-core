@@ -180,7 +180,7 @@ class ApiControllerEventDispatcherPlugin extends AbstractPlugin implements Event
             'API request [%s %s]: %s',
             $requestTransfer->getRequestType(),
             $requestTransfer->getRequestUri(),
-            json_encode($filteredApiRequestTransfer->toArray())
+            json_encode($filteredApiRequestTransfer->toArray()),
         ));
     }
 
@@ -196,7 +196,7 @@ class ApiControllerEventDispatcherPlugin extends AbstractPlugin implements Event
         $this->getLogger()->info(sprintf(
             'API response [code %s]: %s',
             $responseTransfer->getCode(),
-            json_encode($array)
+            json_encode($array),
         ));
     }
 }

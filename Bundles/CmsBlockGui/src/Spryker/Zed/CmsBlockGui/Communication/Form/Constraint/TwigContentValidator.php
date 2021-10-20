@@ -41,8 +41,8 @@ class TwigContentValidator extends ConstraintValidator
             $this->context->buildViolation(
                 sprintf(
                     'Invalid twig template: %s',
-                    $exception->getMessage()
-                )
+                    $exception->getMessage(),
+                ),
             )->addViolation();
         }
     }

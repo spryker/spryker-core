@@ -117,7 +117,7 @@ class MerchantCartValidator implements MerchantCartValidatorInterface
         $merchantCollectionTransfer = $this->merchantFacade->get(
             (new MerchantCriteriaTransfer())
                 ->setMerchantReferences($merchantReferences)
-                ->setStore($quoteTransfer->getStore())
+                ->setStore($quoteTransfer->getStore()),
         );
         foreach ($merchantCollectionTransfer->getMerchants() as $merchantTransfer) {
             $merchantTransfers[$merchantTransfer->getMerchantReference()] = $merchantTransfer;

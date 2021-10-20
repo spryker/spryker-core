@@ -416,7 +416,7 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
             $guiTableFilterTransfer->setTypeOptions(
                 (new DateRangeGuiTableFilterTypeOptionsTransfer())
                     ->setPlaceholderFrom($placeholderFrom)
-                    ->setPlaceholderTo($placeholderTo)
+                    ->setPlaceholderTo($placeholderTo),
             );
         }
 
@@ -449,7 +449,7 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
             [
                 'action' => $url,
                 'method' => $method,
-            ]
+            ],
         );
 
         return $this;
@@ -479,7 +479,7 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
             [
                 'url' => $url,
                 'method' => $method,
-            ]
+            ],
         );
 
         return $this;
@@ -509,7 +509,7 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
             [
                 'url' => $url,
                 'method' => $method,
-            ]
+            ],
         );
 
         return $this;
@@ -556,7 +556,7 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
             ->setComponent($component)
             ->setOptions(
                 (new GuiTableRowActionOptionsTransfer())
-                    ->setInputs($options)
+                    ->setInputs($options),
             );
     }
 
@@ -584,7 +584,7 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
             [
                 'action' => $url,
                 'method' => $method,
-            ]
+            ],
         );
 
         return $this;
@@ -614,7 +614,7 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
             [
                 'url' => $url,
                 'method' => $method,
-            ]
+            ],
         );
 
         return $this;
@@ -646,7 +646,7 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
             [
                 'url' => $url,
                 'method' => $method,
-            ]
+            ],
         );
 
         return $this;
@@ -693,7 +693,7 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
             ->setComponent($component)
             ->setOptions(
                 (new GuiTableBatchActionOptionsTransfer())
-                    ->setInputs($options)
+                    ->setInputs($options),
             );
     }
 
@@ -932,22 +932,22 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
             $guiTableConfigurationTransfer->setTitle(
                 (new GuiTableTitleConfigurationTransfer())
                     ->setIsEnabled(true)
-                    ->setTitle($this->title)
+                    ->setTitle($this->title),
             );
         }
 
         if ($this->defaultPageSize) {
             $guiTableConfigurationTransfer->setPagination(
-                (new GuiTablePaginationConfigurationTransfer())->setDefaultSize($this->defaultPageSize)
+                (new GuiTablePaginationConfigurationTransfer())->setDefaultSize($this->defaultPageSize),
             );
         }
 
         $guiTableConfigurationTransfer->setColumnConfigurator(
-            (new GuiTableColumnConfiguratorConfigurationTransfer())->setEnabled($this->isColumnConfiguratorEnabled)
+            (new GuiTableColumnConfiguratorConfigurationTransfer())->setEnabled($this->isColumnConfiguratorEnabled),
         );
 
         $guiTableConfigurationTransfer->setSearch(
-            (new GuiTableSearchConfigurationTransfer())->setIsEnabled($this->isSearchEnabled)
+            (new GuiTableSearchConfigurationTransfer())->setIsEnabled($this->isSearchEnabled),
         );
 
         if ($this->searchPlaceholder) {
@@ -957,7 +957,7 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
 
         if ($this->isItemSelectionEnabled !== null) {
             $guiTableConfigurationTransfer->setItemSelection(
-                (new GuiTableItemSelectionConfigurationTransfer())->setIsEnabled($this->isItemSelectionEnabled)
+                (new GuiTableItemSelectionConfigurationTransfer())->setIsEnabled($this->isItemSelectionEnabled),
             );
         }
 
@@ -967,7 +967,7 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
 
         if ($this->isPaginationEnabled !== null) {
             $guiTableConfigurationTransfer->setPagination(
-                (new GuiTablePaginationConfigurationTransfer())->setIsEnabled($this->isPaginationEnabled)
+                (new GuiTablePaginationConfigurationTransfer())->setIsEnabled($this->isPaginationEnabled),
             );
         }
 
@@ -1250,7 +1250,7 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
     protected function setFilters(GuiTableConfigurationTransfer $guiTableConfigurationTransfer): GuiTableConfigurationTransfer
     {
         $guiTableConfigurationTransfer->setFilters(
-            (new GuiTableFiltersConfigurationTransfer())->setIsEnabled(false)
+            (new GuiTableFiltersConfigurationTransfer())->setIsEnabled(false),
         );
 
         if ($this->filters) {
@@ -1270,7 +1270,7 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
     protected function setRowActions(GuiTableConfigurationTransfer $guiTableConfigurationTransfer): GuiTableConfigurationTransfer
     {
         $guiTableConfigurationTransfer->setRowActions(
-            (new GuiTableRowActionsConfigurationTransfer())->setIsEnabled(false)
+            (new GuiTableRowActionsConfigurationTransfer())->setIsEnabled(false),
         );
 
         if ($this->rowActions) {

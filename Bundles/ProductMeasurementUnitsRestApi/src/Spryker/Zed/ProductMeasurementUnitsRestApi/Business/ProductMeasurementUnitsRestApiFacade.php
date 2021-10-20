@@ -34,7 +34,7 @@ class ProductMeasurementUnitsRestApiFacade extends AbstractFacade implements Pro
             ->createSalesUnitMapper()
             ->mapCartItemRequestTransferToPersistentCartChangeTransfer(
                 $cartItemRequestTransfer,
-                $persistentCartChangeTransfer
+                $persistentCartChangeTransfer,
             );
     }
 }

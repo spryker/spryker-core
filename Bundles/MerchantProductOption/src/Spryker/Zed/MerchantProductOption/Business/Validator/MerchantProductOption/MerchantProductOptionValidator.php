@@ -79,7 +79,7 @@ class MerchantProductOptionValidator implements MerchantProductOptionValidatorIn
             $cartPreCheckResponseTransfer = $this->addErrorsToCartPreCheckResponse(
                 $cartPreCheckResponseTransfer,
                 $itemTransfer,
-                $notApprovedProductOptionGroupIds
+                $notApprovedProductOptionGroupIds,
             );
         }
 
@@ -120,7 +120,7 @@ class MerchantProductOptionValidator implements MerchantProductOptionValidatorIn
             $checkoutResponseTransfer = $this->addErrorsToCheckoutResponse(
                 $checkoutResponseTransfer,
                 $itemTransfer,
-                $notApprovedProductOptionGroupIds
+                $notApprovedProductOptionGroupIds,
             );
         }
 

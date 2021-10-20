@@ -97,7 +97,7 @@ class ShoppingListItemOperation implements ShoppingListItemOperationInterface
         $shoppingListItemResponseTransfer = new ShoppingListItemResponseTransfer();
         $validatedShoppingListItemResponseTransfer = $this->shoppingListItemOperationValidator->validateItemAddRequest(
             $shoppingListItemTransfer,
-            $shoppingListItemResponseTransfer
+            $shoppingListItemResponseTransfer,
         );
         if (!$validatedShoppingListItemResponseTransfer->getIsSuccess()) {
             return $shoppingListItemResponseTransfer;
@@ -150,7 +150,7 @@ class ShoppingListItemOperation implements ShoppingListItemOperationInterface
 
             $validatedShoppingListResponseTransfer = $this->shoppingListItemOperationValidator->validateItemAddBulkRequest(
                 $shoppingListTransfer,
-                new ShoppingListResponseTransfer()
+                new ShoppingListResponseTransfer(),
             );
             if (!$validatedShoppingListResponseTransfer->getIsSuccess()) {
                 return $validatedShoppingListResponseTransfer;
@@ -194,7 +194,7 @@ class ShoppingListItemOperation implements ShoppingListItemOperationInterface
             $this->shoppingListItemOperationValidator->invalidateItemAddResponse(
                 (new ShoppingListItemResponseTransfer())
                     ->setShoppingListItem($shoppingListItemTransfer)
-                    ->setIsSuccess(true)
+                    ->setIsSuccess(true),
             );
         }
 
@@ -216,7 +216,7 @@ class ShoppingListItemOperation implements ShoppingListItemOperationInterface
 
         $validatedShoppingListItemResponseTransfer = $this->shoppingListItemOperationValidator->validateItemDeleteRequest(
             $shoppingListItemTransfer,
-            $shoppingListItemResponseTransfer
+            $shoppingListItemResponseTransfer,
         );
         if (!$validatedShoppingListItemResponseTransfer->getIsSuccess()) {
             return $shoppingListItemResponseTransfer;
@@ -252,7 +252,7 @@ class ShoppingListItemOperation implements ShoppingListItemOperationInterface
 
         $validatedShoppingListItemResponseTransfer = $this->shoppingListItemOperationValidator->validateItemUpdateRequest(
             $shoppingListItemTransfer,
-            $shoppingListItemResponseTransfer
+            $shoppingListItemResponseTransfer,
         );
         if (!$validatedShoppingListItemResponseTransfer->getIsSuccess()) {
             return $validatedShoppingListItemResponseTransfer;
@@ -318,7 +318,7 @@ class ShoppingListItemOperation implements ShoppingListItemOperationInterface
             $shoppingListItemTransfer = $this->shoppingListEntityManager->saveShoppingListItem($shoppingListItemTransfer);
             $this->pluginExecutor->executePostSavePlugins($shoppingListItemTransfer);
             $this->pluginExecutor->executeBulkPostSavePlugins(
-                (new ShoppingListItemCollectionTransfer())->addItem($shoppingListItemTransfer)
+                (new ShoppingListItemCollectionTransfer())->addItem($shoppingListItemTransfer),
             );
 
             return (new ShoppingListItemResponseTransfer())

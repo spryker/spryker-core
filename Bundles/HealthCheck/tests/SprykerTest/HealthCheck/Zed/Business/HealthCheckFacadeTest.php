@@ -78,7 +78,7 @@ class HealthCheckFacadeTest extends Unit
         $healthCheckPlugins = $this->getHealthCheckPlugins(
             static::IS_SERVICE_HEALTHY,
             static::IS_SERVICE_HEALTHY,
-            static::IS_SERVICE_HEALTHY
+            static::IS_SERVICE_HEALTHY,
         );
 
         $this->tester->setDependency(HealthCheckDependencyProvider::PLUGINS_HEALTH_CHECK, $healthCheckPlugins);
@@ -102,7 +102,7 @@ class HealthCheckFacadeTest extends Unit
         $healthCheckPlugins = $this->getHealthCheckPlugins(
             static::IS_SERVICE_UNHEALTHY,
             static::IS_SERVICE_UNHEALTHY,
-            static::IS_SERVICE_UNHEALTHY
+            static::IS_SERVICE_UNHEALTHY,
         );
         $this->tester->setDependency(HealthCheckDependencyProvider::PLUGINS_HEALTH_CHECK, $healthCheckPlugins);
 
@@ -125,7 +125,7 @@ class HealthCheckFacadeTest extends Unit
         $healthCheckPlugins = $this->getHealthCheckPlugins(
             static::IS_SERVICE_HEALTHY,
             static::IS_SERVICE_UNHEALTHY,
-            static::IS_SERVICE_HEALTHY
+            static::IS_SERVICE_HEALTHY,
         );
         $this->tester->setDependency(HealthCheckDependencyProvider::PLUGINS_HEALTH_CHECK, $healthCheckPlugins);
 
@@ -165,7 +165,7 @@ class HealthCheckFacadeTest extends Unit
         $healthCheckPlugins = $this->getHealthCheckPlugins(
             static::IS_SERVICE_HEALTHY,
             static::IS_SERVICE_HEALTHY,
-            static::IS_SERVICE_HEALTHY
+            static::IS_SERVICE_HEALTHY,
         );
 
         $this->tester->setDependency(HealthCheckDependencyProvider::PLUGINS_HEALTH_CHECK, $healthCheckPlugins);
@@ -190,7 +190,7 @@ class HealthCheckFacadeTest extends Unit
         $healthCheckPlugins = $this->getHealthCheckPlugins(
             static::IS_SERVICE_HEALTHY,
             static::IS_SERVICE_HEALTHY,
-            static::IS_SERVICE_HEALTHY
+            static::IS_SERVICE_HEALTHY,
         );
 
         $this->tester->setDependency(HealthCheckDependencyProvider::PLUGINS_HEALTH_CHECK, $healthCheckPlugins);
@@ -215,7 +215,7 @@ class HealthCheckFacadeTest extends Unit
         $healthCheckPlugins = $this->getHealthCheckPlugins(
             static::IS_SERVICE_HEALTHY,
             static::IS_SERVICE_HEALTHY,
-            static::IS_SERVICE_HEALTHY
+            static::IS_SERVICE_HEALTHY,
         );
 
         $this->tester->setDependency(HealthCheckDependencyProvider::PLUGINS_HEALTH_CHECK, $healthCheckPlugins);

@@ -87,15 +87,15 @@ class SalesOrderThresholdFacadeTest extends SalesOrderThresholdMocks
 
         // Arrange
         $salesOrderThresholdHardTypeTransfer = $this->findSalesOrderThresholdTypeTransferForGroup(
-            SalesOrderThresholdConfig::GROUP_HARD
+            SalesOrderThresholdConfig::GROUP_HARD,
         );
 
         $salesOrderThresholdHardMaxTypeTransfer = $this->findSalesOrderThresholdTypeTransferForGroup(
-            SalesOrderThresholdConfig::GROUP_HARD_MAX
+            SalesOrderThresholdConfig::GROUP_HARD_MAX,
         );
 
         $salesOrderThresholdSoftStrategy = $this->findSalesOrderThresholdTypeTransferForGroup(
-            SalesOrderThresholdConfig::GROUP_SOFT
+            SalesOrderThresholdConfig::GROUP_SOFT,
         );
 
         $storeTransferDE = $this->tester->getStoreTransfer();
@@ -109,8 +109,8 @@ class SalesOrderThresholdFacadeTest extends SalesOrderThresholdMocks
                 $salesOrderThresholdHardTypeTransfer,
                 $storeTransferDE,
                 $currencyTransferEUR,
-                10000
-            )
+                10000,
+            ),
         );
 
         $hardThreshold2 = $this->getFacade()->saveSalesOrderThreshold(
@@ -118,8 +118,8 @@ class SalesOrderThresholdFacadeTest extends SalesOrderThresholdMocks
                 $salesOrderThresholdHardTypeTransfer,
                 $storeTransferDE,
                 $currencyTransferEUR,
-                20000
-            )
+                20000,
+            ),
         );
 
         $hardMaxThreshold = $this->getFacade()->saveSalesOrderThreshold(
@@ -127,8 +127,8 @@ class SalesOrderThresholdFacadeTest extends SalesOrderThresholdMocks
                 $salesOrderThresholdHardMaxTypeTransfer,
                 $storeTransferDE,
                 $currencyTransferEUR,
-                300000
-            )
+                300000,
+            ),
         );
 
         $softThreshold1 = $this->getFacade()->saveSalesOrderThreshold(
@@ -136,8 +136,8 @@ class SalesOrderThresholdFacadeTest extends SalesOrderThresholdMocks
                 $salesOrderThresholdSoftStrategy,
                 $storeTransferDE,
                 $currencyTransferEUR,
-                20000
-            )
+                20000,
+            ),
         );
 
         $softThreshold2 = $this->getFacade()->saveSalesOrderThreshold(
@@ -145,8 +145,8 @@ class SalesOrderThresholdFacadeTest extends SalesOrderThresholdMocks
                 $salesOrderThresholdSoftStrategy,
                 $storeTransferUS,
                 $currencyTransferEUR,
-                20000
-            )
+                20000,
+            ),
         );
 
         $softThreshold3 = $this->getFacade()->saveSalesOrderThreshold(
@@ -154,8 +154,8 @@ class SalesOrderThresholdFacadeTest extends SalesOrderThresholdMocks
                 $salesOrderThresholdSoftStrategy,
                 $storeTransferUS,
                 $currencyTransferUSD,
-                20000
-            )
+                20000,
+            ),
         );
 
         // Assert
@@ -187,8 +187,8 @@ class SalesOrderThresholdFacadeTest extends SalesOrderThresholdMocks
                 $salesOrderThresholdTypeTransferWithWrongKey,
                 $storeTransferUS,
                 $currencyTransferUSD,
-                20000
-            )
+                20000,
+            ),
         );
     }
 
@@ -201,7 +201,7 @@ class SalesOrderThresholdFacadeTest extends SalesOrderThresholdMocks
 
         // Arrange
         $salesOrderThresholdSoftStrategy = $this->findSalesOrderThresholdTypeTransferForGroup(
-            SalesOrderThresholdConfig::GROUP_SOFT
+            SalesOrderThresholdConfig::GROUP_SOFT,
         );
 
         $storeTransfer = $this->tester->getStoreTransfer();
@@ -211,19 +211,19 @@ class SalesOrderThresholdFacadeTest extends SalesOrderThresholdMocks
             $salesOrderThresholdSoftStrategy,
             $storeTransfer,
             $currencyTransfer,
-            20000
+            20000,
         );
 
         $salesOrderThresholdTransfer
             ->addLocalizedMessage(
                 (new SalesOrderThresholdLocalizedMessageTransfer())
                     ->setLocaleCode('en_US')
-                    ->setMessage('Test message')
+                    ->setMessage('Test message'),
             );
 
         // Act
         $softThreshold = $this->getFacade()->saveSalesOrderThreshold(
-            $salesOrderThresholdTransfer
+            $salesOrderThresholdTransfer,
         );
 
         // Assert
@@ -244,21 +244,21 @@ class SalesOrderThresholdFacadeTest extends SalesOrderThresholdMocks
         $thresholdValue = 2000;
 
         $salesOrderThresholdSoftStrategy = $this->findSalesOrderThresholdTypeTransferForGroup(
-            SalesOrderThresholdConfig::GROUP_SOFT
+            SalesOrderThresholdConfig::GROUP_SOFT,
         );
 
         $salesOrderThresholdTransfer = $this->createSalesOrderThresholdTransfer(
             $salesOrderThresholdSoftStrategy,
             $storeTransfer,
             $currencyTransfer,
-            $thresholdValue
+            $thresholdValue,
         );
 
         $salesOrderThresholdTransfer
             ->addLocalizedMessage(
                 (new SalesOrderThresholdLocalizedMessageTransfer())
                     ->setLocaleCode('en_US')
-                    ->setMessage('Test message')
+                    ->setMessage('Test message'),
             );
 
         // Act
@@ -267,7 +267,7 @@ class SalesOrderThresholdFacadeTest extends SalesOrderThresholdMocks
         // Assert
         $globalThresholds = $this->getFacade()->getSalesOrderThresholds(
             $storeTransfer,
-            $currencyTransfer
+            $currencyTransfer,
         );
 
         foreach ($globalThresholds as $globalThreshold) {
@@ -307,7 +307,7 @@ class SalesOrderThresholdFacadeTest extends SalesOrderThresholdMocks
         // Act
         $this->getFacade()->checkCheckoutSalesOrderThreshold(
             $quoteTransfer,
-            $checkoutResponseTransfer
+            $checkoutResponseTransfer,
         );
     }
 
@@ -358,7 +358,7 @@ class SalesOrderThresholdFacadeTest extends SalesOrderThresholdMocks
                 (new SalesOrderThresholdValueTransfer())
                     ->setSalesOrderThresholdType($salesOrderThresholdTypeTransfer)
                     ->setThreshold($thresholdValue)
-                    ->setFee($fee)
+                    ->setFee($fee),
             )->setStore($storeTransfer)
             ->setCurrency($currencyTransfer);
     }

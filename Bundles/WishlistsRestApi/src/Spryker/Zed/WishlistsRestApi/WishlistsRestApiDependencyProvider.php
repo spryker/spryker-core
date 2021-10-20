@@ -82,7 +82,7 @@ class WishlistsRestApiDependencyProvider extends AbstractBundleDependencyProvide
     {
         $container->set(static::FACADE_WISHLIST, function (Container $container) {
             return new WishlistsRestApiToWishlistFacadeBridge(
-                $container->getLocator()->wishlist()->facade()
+                $container->getLocator()->wishlist()->facade(),
             );
         });
 

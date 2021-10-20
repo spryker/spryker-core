@@ -55,7 +55,7 @@ class SubmitButtonTwigPlugin extends AbstractPlugin implements TwigPluginInterfa
                 [
                     'value' => $value,
                     'attr' => $attr,
-                ]
+                ],
             );
         }, ['needs_environment' => true]);
     }

@@ -40,21 +40,21 @@ class ResolverPathTest extends Unit
     {
         $this->assertSame(
             $this->tester->getLocator()->dataset()->facade()->getFilenameByDatasetName(
-                $this->buildDatasetFilenameTransfer('.')
+                $this->buildDatasetFilenameTransfer('.'),
             )->getFilename(),
-            static::DEFAULT_FILENAME
+            static::DEFAULT_FILENAME,
         );
         $this->assertSame(
             $this->tester->getLocator()->dataset()->facade()->getFilenameByDatasetName(
-                $this->buildDatasetFilenameTransfer('.!+*.')
+                $this->buildDatasetFilenameTransfer('.!+*.'),
             )->getFilename(),
-            static::DEFAULT_FILENAME
+            static::DEFAULT_FILENAME,
         );
         $this->assertSame(
             $this->tester->getLocator()->dataset()->facade()->getFilenameByDatasetName(
-                $this->buildDatasetFilenameTransfer('%    % .. ... ?=')
+                $this->buildDatasetFilenameTransfer('%    % .. ... ?='),
             )->getFilename(),
-            static::DEFAULT_FILENAME
+            static::DEFAULT_FILENAME,
         );
     }
 
@@ -65,27 +65,27 @@ class ResolverPathTest extends Unit
     {
         $this->assertSame(
             $this->tester->getLocator()->dataset()->facade()->getFilenameByDatasetName(
-                $this->buildDatasetFilenameTransfer(' Extra         Spaces   123 ')
+                $this->buildDatasetFilenameTransfer(' Extra         Spaces   123 '),
             )->getFilename(),
-            'Extra Spaces 123'
+            'Extra Spaces 123',
         );
         $this->assertSame(
             $this->tester->getLocator()->dataset()->facade()->getFilenameByDatasetName(
-                $this->buildDatasetFilenameTransfer('Bad/Good Example')
+                $this->buildDatasetFilenameTransfer('Bad/Good Example'),
             )->getFilename(),
-            'BadGood Example'
+            'BadGood Example',
         );
         $this->assertSame(
             $this->tester->getLocator()->dataset()->facade()->getFilenameByDatasetName(
-                $this->buildDatasetFilenameTransfer('already-valid-name')
+                $this->buildDatasetFilenameTransfer('already-valid-name'),
             )->getFilename(),
-            'already-valid-name'
+            'already-valid-name',
         );
         $this->assertSame(
             $this->tester->getLocator()->dataset()->facade()->getFilenameByDatasetName(
-                $this->buildDatasetFilenameTransfer('Unacceptable Symbols / %?.. .?. ! \ ')
+                $this->buildDatasetFilenameTransfer('Unacceptable Symbols / %?.. .?. ! \ '),
             )->getFilename(),
-            'Unacceptable Symbols'
+            'Unacceptable Symbols',
         );
     }
 

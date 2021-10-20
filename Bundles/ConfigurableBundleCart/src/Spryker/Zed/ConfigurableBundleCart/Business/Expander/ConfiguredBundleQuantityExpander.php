@@ -25,7 +25,7 @@ class ConfiguredBundleQuantityExpander implements ConfiguredBundleQuantityExpand
             }
 
             $itemTransfer->getConfiguredBundleItem()->setQuantityPerSlot(
-                $this->getCalculatedConfiguredBundleItemQuantityPerSlot($itemTransfer)
+                $this->getCalculatedConfiguredBundleItemQuantityPerSlot($itemTransfer),
             );
         }
 

@@ -28,7 +28,7 @@ class QuoteApprovalEntityManager extends AbstractEntityManager implements QuoteA
             ->createQuoteApprovalMapper()
             ->mapQuoteApprovalTransferToEntity(
                 $quoteApprovalTransfer,
-                new SpyQuoteApproval()
+                new SpyQuoteApproval(),
             );
 
         $quoteApprovalEntity->save();

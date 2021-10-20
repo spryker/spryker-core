@@ -28,7 +28,7 @@ class WrongRequestBodyContentException extends Exception
     {
         return sprintf(
             'Key %s does not exist in request body content.',
-            $key
+            $key,
         );
     }
 }

@@ -257,7 +257,7 @@ class PaymentMethodTable extends AbstractTable
             Url::generate(static::URL_PAYMENT_METHOD_VIEW, [
                 static::PARAM_ID_PAYMENT_METHOD => $paymentMethodEntity->getIdPaymentMethod(),
             ]),
-            static::BUTTON_VIEW
+            static::BUTTON_VIEW,
         );
     }
 
@@ -272,7 +272,7 @@ class PaymentMethodTable extends AbstractTable
             Url::generate(static::URL_PAYMENT_METHOD_EDIT, [
                 static::PARAM_ID_PAYMENT_METHOD => $paymentMethodEntity->getIdPaymentMethod(),
             ]),
-            static::BUTTON_EDIT
+            static::BUTTON_EDIT,
         );
     }
 

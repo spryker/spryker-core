@@ -59,7 +59,7 @@ class ErrorHandlerFactory
         $errorHandler = new ErrorHandler(
             ErrorLogger::getInstance(),
             $this->createErrorRenderer(),
-            $this->getUtilSanitizeService()
+            $this->getUtilSanitizeService(),
         );
 
         return $errorHandler;

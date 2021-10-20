@@ -99,7 +99,7 @@ class ExternalDependencyFinder extends AbstractFileDependencyFinder
                     $dependentModule,
                     $this->getType(),
                     $this->isPluginFile($filePath),
-                    $this->isTestFile($filePath)
+                    $this->isTestFile($filePath),
                 );
             }
         }
@@ -223,7 +223,7 @@ class ExternalDependencyFinder extends AbstractFileDependencyFinder
         throw new Exception(sprintf(
             'Could not map "%s" to a internal dependency! Please update "%s" and add a new mapping.',
             $useStatement,
-            '\Spryker\Zed\Development\DevelopmentConfig::getExternalToInternalNamespaceMap()'
+            '\Spryker\Zed\Development\DevelopmentConfig::getExternalToInternalNamespaceMap()',
         ));
     }
 

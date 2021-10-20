@@ -152,8 +152,8 @@ class BundledProductTable extends AbstractTable
         $config->setUrl(
             sprintf(
                 'bundled-product-table?id-product-concrete=%d',
-                $this->idProductConcrete
-            )
+                $this->idProductConcrete,
+            ),
         );
 
         $defaultPriceMode = $this->priceFacade->getDefaultPriceMode();
@@ -293,7 +293,7 @@ class BundledProductTable extends AbstractTable
             "<input id='product_assign_checkbox_%d' class='product_assign_checkbox' type='checkbox' data-info='%s' %s >",
             $productConcreteEntity->getIdProduct(),
             $this->utilEncodingService->encodeJson($productConcreteEntity->toArray()),
-            $checked
+            $checked,
         );
     }
 
@@ -308,7 +308,7 @@ class BundledProductTable extends AbstractTable
             return $this->availabilityFacade
                 ->calculateAvailabilityForProductWithStore(
                     $productConcreteEntity->getSku(),
-                    $this->storeFacade->getCurrentStore()
+                    $this->storeFacade->getCurrentStore(),
                 );
         }
 

@@ -112,7 +112,7 @@ abstract class AbstractAttributeMarker implements AttributeMarkerInterface
         $join = new ModelJoin(
             $leftColumn,
             SpyProductAttributeKeyTableMap::COL_ID_PRODUCT_ATTRIBUTE_KEY,
-            Criteria::INNER_JOIN
+            Criteria::INNER_JOIN,
         );
         $join->setTableMap(new SpyProductAttributeKeyTableMap());
 

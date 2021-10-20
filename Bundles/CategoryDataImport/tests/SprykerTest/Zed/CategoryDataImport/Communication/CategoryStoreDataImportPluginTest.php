@@ -78,7 +78,7 @@ class CategoryStoreDataImportPluginTest extends Unit
 
         $this->tester->setDependency(
             CategoryDependencyProvider::PLUGIN_CATEGORY_STORE_ASSIGNER,
-            new MainChildrenPropagationCategoryStoreAssignerPlugin()
+            new MainChildrenPropagationCategoryStoreAssignerPlugin(),
         );
     }
 
@@ -112,8 +112,8 @@ class CategoryStoreDataImportPluginTest extends Unit
             sprintf(
                 'Imported number of category stores is %s, expected %s.',
                 $dataImporterReportTransfer->getImportedDataSetCount(),
-                static::EXPECTED_IMPORT_COUNT
-            )
+                static::EXPECTED_IMPORT_COUNT,
+            ),
         );
     }
 
@@ -151,12 +151,12 @@ class CategoryStoreDataImportPluginTest extends Unit
         $this->assertSame(
             2,
             $this->tester->countCategoryStoreRelations($parentCategoryTransfer->getIdCategoryOrFail()),
-            'Number of store does not match expected value.'
+            'Number of store does not match expected value.',
         );
         $this->assertSame(
             1,
             $this->tester->countCategoryStoreRelations($categoryTransfer->getIdCategoryOrFail()),
-            'Number of store does not match expected value.'
+            'Number of store does not match expected value.',
         );
     }
 

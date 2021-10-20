@@ -257,7 +257,7 @@ class DependencyViolationFinderConsole extends AbstractCoreModuleAwareConsole
             'Checking %d %s for %sdependency issues.',
             count($modulesToValidate),
             (count($modulesToValidate) === 1) ? 'Module <fg=yellow>' . $this->buildModuleKey(current($modulesToValidate)) . '</>' : 'Modules',
-            $typeMessage
+            $typeMessage,
         );
         if ($this->output->isVerbose()) {
             $this->info($message);

@@ -33,7 +33,7 @@ class RestWishlistItemsMapper implements RestWishlistItemsMapperInterface
             (new RestProductConcreteAvailabilityTransfer())
                 ->setisNeverOutOfStock($productConcreteAvailabilityTransfer->getIsNeverOutOfStock())
                 ->setQuantity($productConcreteAvailabilityTransfer->getAvailability())
-                ->setAvailability($wishlistItemTransfer->getIsSellable())
+                ->setAvailability($wishlistItemTransfer->getIsSellable()),
         );
     }
 }

@@ -60,7 +60,7 @@ class CartCreator implements CartCreatorInterface
         $restUser = $restRequest->getRestUser();
         $quoteTransfer = $this->cartMapper->mapRestCartsAttributesTransferToQuoteTransfer(
             $restCartsAttributesTransfer,
-            (new QuoteTransfer())->setCustomerReference($restUser->getNaturalIdentifier())
+            (new QuoteTransfer())->setCustomerReference($restUser->getNaturalIdentifier()),
         );
 
         $quoteTransfer->setCompanyUserId($restUser->getIdCompanyUser());
@@ -72,7 +72,7 @@ class CartCreator implements CartCreatorInterface
 
         return $this->cartRestResponseBuilder->createCartRestResponse(
             $quoteResponseTransfer->getQuoteTransfer(),
-            $restRequest->getMetadata()->getLocale()
+            $restRequest->getMetadata()->getLocale(),
         );
     }
 }

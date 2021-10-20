@@ -222,7 +222,7 @@ class Operation implements OperationInterface
 
         $cartChangeTransfer = $this->normalizeCartChangeTransfer($cartChangeTransfer);
         $this->addInfoMessages(
-            $this->getNotificationMessages($cartChangeTransfer)
+            $this->getNotificationMessages($cartChangeTransfer),
         );
 
         if (!$this->preCheckCart($cartChangeTransfer)) {
@@ -319,7 +319,7 @@ class Operation implements OperationInterface
 
         if ($this->quoteFacade->isQuoteLocked($originalQuoteTransfer)) {
             $this->messengerFacade->addErrorMessage(
-                $this->createMessengerMessageTransfer(static::GLOSSARY_KEY_LOCKED_CART_CHANGE_DENIED)
+                $this->createMessengerMessageTransfer(static::GLOSSARY_KEY_LOCKED_CART_CHANGE_DENIED),
             );
 
             return $this->addQuoteErrorsToQuoteResponse($quoteResponseTransfer);
@@ -354,7 +354,7 @@ class Operation implements OperationInterface
             $this->isTerminated(
                 static::TERMINATION_EVENT_NAME_RELOAD,
                 $cartChangeTransfer,
-                $quoteTransfer
+                $quoteTransfer,
             )
         ) {
             return $this->addQuoteErrorsToQuoteResponse($quoteResponseTransfer);
@@ -520,7 +520,7 @@ class Operation implements OperationInterface
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
             $notificationMessages = array_merge(
                 $notificationMessages,
-                $this->getMessagesByTypeFromItemTransfer($itemTransfer, static::MESSAGE_TYPE_NOTIFICATION)
+                $this->getMessagesByTypeFromItemTransfer($itemTransfer, static::MESSAGE_TYPE_NOTIFICATION),
             );
         }
 

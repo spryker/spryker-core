@@ -40,7 +40,7 @@ class ShipmentCartConnectorBusinessFactory extends AbstractBusinessFactory
         return new ShipmentCartExpander(
             $this->getShipmentFacade(),
             $this->getPriceFacade(),
-            $this->createSourcePriceCalculator()
+            $this->createSourcePriceCalculator(),
         );
     }
 
@@ -53,7 +53,7 @@ class ShipmentCartConnectorBusinessFactory extends AbstractBusinessFactory
             $this->getShipmentFacade(),
             $this->getPriceFacade(),
             $this->getShipmentService(),
-            $this->createSourcePriceCalculator()
+            $this->createSourcePriceCalculator(),
         );
     }
 
@@ -75,7 +75,7 @@ class ShipmentCartConnectorBusinessFactory extends AbstractBusinessFactory
         return new ShipmentCartValidatorWithMultiShippingAddress(
             $this->getShipmentFacade(),
             $this->getPriceFacade(),
-            $this->getShipmentService()
+            $this->getShipmentService(),
         );
     }
 

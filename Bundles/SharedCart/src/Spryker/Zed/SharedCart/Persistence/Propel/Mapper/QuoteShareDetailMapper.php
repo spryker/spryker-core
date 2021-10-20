@@ -27,7 +27,7 @@ class QuoteShareDetailMapper implements QuoteShareDetailMapperInterface
         return (new ShareDetailTransfer())
             ->fromArray($quoteCompanyUserEntity->toArray(), true)
             ->setQuotePermissionGroup(
-                (new QuotePermissionGroupTransfer())->setIdQuotePermissionGroup($quoteCompanyUserEntity->getFkQuotePermissionGroup())
+                (new QuotePermissionGroupTransfer())->setIdQuotePermissionGroup($quoteCompanyUserEntity->getFkQuotePermissionGroup()),
             );
     }
 
@@ -87,15 +87,15 @@ class QuoteShareDetailMapper implements QuoteShareDetailMapperInterface
 
         $customerEntity = $quoteCompanyUserEntity->getSpyCompanyUser()->getCustomer();
         $shareDetailTransfer->setCustomerName(
-            $this->formatCustomerFullName($customerEntity->getLastName(), $customerEntity->getFirstName())
+            $this->formatCustomerFullName($customerEntity->getLastName(), $customerEntity->getFirstName()),
         );
 
         $shareDetailTransfer->setCompanyUser(
-            $this->mapSpyCompanyUserToCompanyUserTransfer($quoteCompanyUserEntity->getSpyCompanyUser(), new CompanyUserTransfer())
+            $this->mapSpyCompanyUserToCompanyUserTransfer($quoteCompanyUserEntity->getSpyCompanyUser(), new CompanyUserTransfer()),
         );
 
         $shareDetailTransfer->setQuotePermissionGroup(
-            $indexedQuotePermissionGroupTransfers[$quoteCompanyUserEntity->getFkQuotePermissionGroup()]
+            $indexedQuotePermissionGroupTransfers[$quoteCompanyUserEntity->getFkQuotePermissionGroup()],
         );
 
         return $shareDetailTransfer;

@@ -116,7 +116,7 @@ abstract class AbstractRelatedProductTable extends AbstractTable
     protected function getNameColumn(SpyProductAbstract $productAbstractEntity)
     {
         return $productAbstractEntity->getVirtualColumn(
-            RelatedProductTableQueryBuilder::RESULT_FIELD_PRODUCT_ABSTRACT_NAME
+            RelatedProductTableQueryBuilder::RESULT_FIELD_PRODUCT_ABSTRACT_NAME,
         );
     }
 
@@ -128,7 +128,7 @@ abstract class AbstractRelatedProductTable extends AbstractTable
     protected function getCategoriesColumn(SpyProductAbstract $productAbstractEntity)
     {
         $categoriesCsv = $productAbstractEntity->getVirtualColumn(
-            RelatedProductTableQueryBuilder::RESULT_FIELD_PRODUCT_ABSTRACT_CATEGORY_NAMES_CSV
+            RelatedProductTableQueryBuilder::RESULT_FIELD_PRODUCT_ABSTRACT_CATEGORY_NAMES_CSV,
         );
         $categories = explode(',', $categoriesCsv);
         $categories = array_unique($categories);
@@ -162,7 +162,7 @@ abstract class AbstractRelatedProductTable extends AbstractTable
     protected function getStatusColumn(SpyProductAbstract $productAbstractEntity)
     {
         $statesCsv = $productAbstractEntity->getVirtualColumn(
-            RelatedProductTableQueryBuilder::RESULT_FIELD_PRODUCT_CONCRETE_STATES_CSV
+            RelatedProductTableQueryBuilder::RESULT_FIELD_PRODUCT_CONCRETE_STATES_CSV,
         );
         $states = explode(',', $statesCsv);
         $isActive = in_array('1', $states, true);

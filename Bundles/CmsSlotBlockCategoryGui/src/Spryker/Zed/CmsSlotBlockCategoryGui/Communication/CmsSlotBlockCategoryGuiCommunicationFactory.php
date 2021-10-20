@@ -36,7 +36,7 @@ class CmsSlotBlockCategoryGuiCommunicationFactory extends AbstractCommunicationF
         return new CategorySlotBlockDataProvider(
             $this->getCategoryFacade(),
             $this->getLocaleFacade(),
-            $this->getTranslatorFacade()
+            $this->getTranslatorFacade(),
         );
     }
 

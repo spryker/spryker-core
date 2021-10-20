@@ -70,7 +70,7 @@ class AbstractProductsCategoriesReader implements AbstractProductsCategoriesRead
             ->findProductAbstractStorageDataByMapping(
                 static::PRODUCT_ABSTRACT_MAPPING_TYPE,
                 $sku,
-                $localeName
+                $localeName,
             );
         if (!$abstractProductData) {
             return null;
@@ -91,7 +91,7 @@ class AbstractProductsCategoriesReader implements AbstractProductsCategoriesRead
             ->findBulkProductAbstractStorageDataByMapping(
                 static::PRODUCT_ABSTRACT_MAPPING_TYPE,
                 $productAbstractSkus,
-                $localeName
+                $localeName,
             );
         if (count($productAbstractData) === 0) {
             return [];
@@ -113,7 +113,7 @@ class AbstractProductsCategoriesReader implements AbstractProductsCategoriesRead
         $productCategories = $this->productCategoryStorageClient->findProductAbstractCategory(
             $idProductAbstract,
             $locale,
-            $this->storeClient->getCurrentStore()->getName()
+            $this->storeClient->getCurrentStore()->getName(),
         );
 
         if ($productCategories) {
@@ -141,7 +141,7 @@ class AbstractProductsCategoriesReader implements AbstractProductsCategoriesRead
         $productAbstractCategoryStorageTransfers = $this->productCategoryStorageClient->findBulkProductAbstractCategory(
             array_keys($productAbstractIds),
             $localeName,
-            $this->storeClient->getCurrentStore()->getName()
+            $this->storeClient->getCurrentStore()->getName(),
         );
 
         $productCategoryNodeIds = [];

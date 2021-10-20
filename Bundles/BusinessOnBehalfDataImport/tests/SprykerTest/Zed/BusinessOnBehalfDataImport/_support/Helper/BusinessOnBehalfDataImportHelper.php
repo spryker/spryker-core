@@ -91,7 +91,7 @@ class BusinessOnBehalfDataImportHelper extends Module
     {
         $companyUserQuery = $this->getCompanyUserQuery();
         $companyUserQuery->filterByFkCustomer(
-            $this->getCustomerQuery()->findOneByCustomerReference(static::CUSTOMER_REFERENCE)->getIdCustomer()
+            $this->getCustomerQuery()->findOneByCustomerReference(static::CUSTOMER_REFERENCE)->getIdCustomer(),
         );
         $this->assertTrue(($companyUserQuery->count() > 0), 'Expected entry in the database table with correct data but no one found.');
     }

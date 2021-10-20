@@ -49,7 +49,7 @@ class ProductMeasurementUnitsRestApiFactory extends AbstractFactory
         return new ProductMeasurementUnitReader(
             $this->createProductMEasurementUnitRestResponseBuilder(),
             $this->getProductMeasurementUnitStorageClient(),
-            $this->createProductMeasurementUnitNameTranslator()
+            $this->createProductMeasurementUnitNameTranslator(),
         );
     }
 
@@ -61,7 +61,7 @@ class ProductMeasurementUnitsRestApiFactory extends AbstractFactory
         return new SalesUnitReader(
             $this->createSalesUnitRestResponseBuilder(),
             $this->getProductMeasurementUnitStorageClient(),
-            $this->getProductStorageClient()
+            $this->getProductStorageClient(),
         );
     }
 
@@ -74,7 +74,7 @@ class ProductMeasurementUnitsRestApiFactory extends AbstractFactory
             $this->createProductMeasurementUnitRestResponseBuilder(),
             $this->getProductStorageClient(),
             $this->getProductMeasurementUnitStorageClient(),
-            $this->createProductMeasurementUnitNameTranslator()
+            $this->createProductMeasurementUnitNameTranslator(),
         );
     }
 
@@ -86,7 +86,7 @@ class ProductMeasurementUnitsRestApiFactory extends AbstractFactory
         return new SalesUnitByProductConcreteResourceRelationshipExpander(
             $this->createSalesUnitRestResponseBuilder(),
             $this->getProductStorageClient(),
-            $this->getProductMeasurementUnitStorageClient()
+            $this->getProductMeasurementUnitStorageClient(),
         );
     }
 
@@ -98,7 +98,7 @@ class ProductMeasurementUnitsRestApiFactory extends AbstractFactory
         return new ProductMeasurementUnitBySalesUnitResourceRelationshipExpander(
             $this->createProductMeasurementUnitRestResponseBuilder(),
             $this->getProductMeasurementUnitStorageClient(),
-            $this->createProductMeasurementUnitNameTranslator()
+            $this->createProductMeasurementUnitNameTranslator(),
         );
     }
 
@@ -110,7 +110,7 @@ class ProductMeasurementUnitsRestApiFactory extends AbstractFactory
         return new SalesUnitsByCartItemResourceRelationshipExpander(
             $this->createSalesUnitRestResponseBuilder(),
             $this->getProductStorageClient(),
-            $this->getProductMeasurementUnitStorageClient()
+            $this->getProductMeasurementUnitStorageClient(),
         );
     }
 
@@ -145,7 +145,7 @@ class ProductMeasurementUnitsRestApiFactory extends AbstractFactory
     {
         return new SalesUnitRestResponseBuilder(
             $this->getResourceBuilder(),
-            $this->createSalesUnitMapper()
+            $this->createSalesUnitMapper(),
         );
     }
 

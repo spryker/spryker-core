@@ -80,7 +80,7 @@ class SecurityMerchantPortalGuiDependencyProvider extends AbstractBundleDependen
     {
         $container->set(static::FACADE_MERCHANT_USER, function (Container $container) {
             return new SecurityMerchantPortalGuiToMerchantUserFacadeBridge(
-                $container->getLocator()->merchantUser()->facade()
+                $container->getLocator()->merchantUser()->facade(),
             );
         });
 
@@ -96,7 +96,7 @@ class SecurityMerchantPortalGuiDependencyProvider extends AbstractBundleDependen
     {
         $container->set(static::FACADE_MESSENGER, function (Container $container) {
             return new SecurityMerchantPortalGuiToMessengerFacadeBridge(
-                $container->getLocator()->messenger()->facade()
+                $container->getLocator()->messenger()->facade(),
             );
         });
 
@@ -112,7 +112,7 @@ class SecurityMerchantPortalGuiDependencyProvider extends AbstractBundleDependen
     {
         $container->set(static::FACADE_SECURITY, function (Container $container) {
             return new SecurityMerchantPortalGuiToSecurityFacadeBridge(
-                $container->getLocator()->security()->facade()
+                $container->getLocator()->security()->facade(),
             );
         });
 

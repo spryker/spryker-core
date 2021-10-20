@@ -31,7 +31,7 @@ class ProductDiscontinuedEntityManager extends AbstractEntityManager implements 
             ->createProductDiscontinuedMapper()
             ->mapTransferToEntity(
                 $productDiscontinuedTransfer,
-                $productDiscontinuedEntity
+                $productDiscontinuedEntity,
             );
 
         $productDiscontinuedEntity->save();

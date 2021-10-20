@@ -24,14 +24,14 @@ class FileInfoEditTable extends FileInfoTable
             Url::generate('/file-manager-gui/download-file', [
                 static::REQUEST_ID_FILE_INFO => $item[static::COL_ID_FILE_INFO],
             ]),
-            'Download'
+            'Download',
         );
         $buttons[] = $this->generateRemoveButton(
             Url::generate('/file-manager-gui/delete-file/file-info', [
                 static::REQUEST_ID_FILE_INFO => $item[static::COL_ID_FILE_INFO],
                 static::REQUEST_ID_FILE => $item[static::COL_FK_FILE],
             ]),
-            'Delete'
+            'Delete',
         );
 
         return $buttons;

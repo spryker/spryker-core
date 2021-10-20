@@ -50,7 +50,7 @@ class ProductCategoryFilterController extends AbstractController
         $productCategoryFilterForm = $this->getFactory()
             ->getProductCategoryFilterForm(
                 $productCategoryFilterDataProvider->getData(),
-                $productCategoryFilterDataProvider->getOptions()
+                $productCategoryFilterDataProvider->getOptions(),
             )
             ->handleRequest($request);
 
@@ -69,7 +69,7 @@ class ProductCategoryFilterController extends AbstractController
             $productCategoryFilterTransfer = $productCategoryFilterFormatter->generateTransferFromJson(
                 $savedProductCategoryFilters->getIdProductCategoryFilter(),
                 $idCategory,
-                $productCategoryFilterForm->getData()[ProductCategoryFilterForm::FIELD_FILTERS]
+                $productCategoryFilterForm->getData()[ProductCategoryFilterForm::FIELD_FILTERS],
             );
 
             $facadeFunction = 'createProductCategoryFilter';
@@ -91,7 +91,7 @@ class ProductCategoryFilterController extends AbstractController
                 ->getProductCategoryFilterClient()
                 ->updateFacetsByCategory(
                     $searchResultsForCategory[FacetResultFormatterPlugin::NAME],
-                    $productCategoryFilterTransfer->getFilterDataArray()
+                    $productCategoryFilterTransfer->getFilterDataArray(),
                 );
         }
 
@@ -99,7 +99,7 @@ class ProductCategoryFilterController extends AbstractController
         $productCategoryFilters = $productCategoryFilterTransfer->getFilters();
         $nonSearchFilters = $this->getNonSearchFilters(
             ($productCategoryFilters !== null) ? (array)$productCategoryFilters : [],
-            $searchResultsForCategory[FacetResultFormatterPlugin::NAME]
+            $searchResultsForCategory[FacetResultFormatterPlugin::NAME],
         );
 
         return $this->viewResponse([

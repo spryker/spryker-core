@@ -159,7 +159,7 @@ abstract class AbstractController
 
         trigger_error(
             'Please add `RedirectUrlValidationEventDispatcherPlugin` to `Pyz\Yves\EventDispatcher\EventDispatcherDependencyProvider::getEventDispatcherPlugins()`.',
-            E_USER_DEPRECATED
+            E_USER_DEPRECATED,
         );
 
         return $this->deprecatedRedirectResponseExternal($absoluteUrl, $code);

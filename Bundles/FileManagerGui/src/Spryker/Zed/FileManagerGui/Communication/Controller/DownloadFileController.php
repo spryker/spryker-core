@@ -88,7 +88,7 @@ class DownloadFileController extends AbstractController
         $disposition = $response->headers->makeDisposition(
             ResponseHeaderBag::DISPOSITION_ATTACHMENT,
             $fileName,
-            (string)$transliterator->transliterate($fileName)
+            (string)$transliterator->transliterate($fileName),
         );
 
         $response->headers->set(static::CONTENT_DISPOSITION, $disposition);

@@ -64,7 +64,7 @@ class MerchantSearchDependencyProvider extends AbstractDependencyProvider
     {
         $container->set(static::CLIENT_SEARCH, function (Container $container) {
             return new MerchantSearchToSearchClientBridge(
-                $container->getLocator()->search()->client()
+                $container->getLocator()->search()->client(),
             );
         });
 

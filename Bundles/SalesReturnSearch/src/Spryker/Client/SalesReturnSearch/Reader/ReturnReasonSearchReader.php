@@ -63,13 +63,13 @@ class ReturnReasonSearchReader implements ReturnReasonSearchReaderInterface
         $searchQuery = $this->searchClient->expandQuery(
             $this->returnReasonSearchQueryPlugin,
             $this->returnReasonSearchQueryExpanderPlugins,
-            $requestParameters
+            $requestParameters,
         );
 
         return $this->searchClient->search(
             $searchQuery,
             $this->returnReasonSearchResultFormatterPlugins,
-            $requestParameters
+            $requestParameters,
         );
     }
 }

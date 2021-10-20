@@ -214,7 +214,7 @@ class SearchPreferencesForm extends AbstractAttributeKeyForm
             },
             function ($submittedValue) {
                 return $submittedValue === 'yes' ? true : false;
-            }
+            },
         ));
     }
 }

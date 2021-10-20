@@ -686,7 +686,7 @@ class AbstractProductFormDataProvider
             foreach ($this->localeProvider->getLocaleCollection() as $localeTransfer) {
                 $productAttributeKeys = array_unique(array_merge(
                     $productAttributeKeys,
-                    $this->productFacade->getCombinedAbstractAttributeKeys($productAbstractTransfer, $localeTransfer)
+                    $this->productFacade->getCombinedAbstractAttributeKeys($productAbstractTransfer, $localeTransfer),
                 ));
             }
         }
@@ -869,7 +869,7 @@ class AbstractProductFormDataProvider
 
         $priceProducts = $this->priceProductFacade->findProductAbstractPricesWithoutPriceExtraction(
             $productAbstractTransfer->getIdProductAbstract(),
-            $priceProductCriteriaTransfer
+            $priceProductCriteriaTransfer,
         );
 
         return new ArrayObject($priceProducts);
@@ -899,7 +899,7 @@ class AbstractProductFormDataProvider
         $priceProducts = $this->priceProductFacade->findProductConcretePricesWithoutPriceExtraction(
             $productTransfer->getIdProductConcrete(),
             $productAbstractTransfer->getIdProductAbstract(),
-            $priceProductCriteriaTransfer
+            $priceProductCriteriaTransfer,
         );
 
         return new ArrayObject($priceProducts);

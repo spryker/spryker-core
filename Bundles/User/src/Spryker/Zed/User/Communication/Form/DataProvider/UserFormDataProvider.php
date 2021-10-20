@@ -42,7 +42,7 @@ class UserFormDataProvider
     public function getData($idUser)
     {
         $userTransfer = $this->userFacade->findUser(
-            (new UserCriteriaTransfer())->setIdUser($idUser)
+            (new UserCriteriaTransfer())->setIdUser($idUser),
         );
 
         if ($userTransfer === null) {

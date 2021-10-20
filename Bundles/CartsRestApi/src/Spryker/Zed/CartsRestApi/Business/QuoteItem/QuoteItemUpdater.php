@@ -112,7 +112,7 @@ class QuoteItemUpdater implements QuoteItemUpdaterInterface
 
         $persistentCartChangeQuantityTransfer = $this->createPersistentCartChangeQuantityTransfer(
             $quoteResponseTransfer->getQuoteTransfer(),
-            $cartItemRequestTransfer
+            $cartItemRequestTransfer,
         );
 
         $quoteResponseTransfer = $this->persistentCartFacade->changeItemQuantity($persistentCartChangeQuantityTransfer);
@@ -124,7 +124,7 @@ class QuoteItemUpdater implements QuoteItemUpdaterInterface
         }
 
         $quoteTransfer = $this->quoteReloader->reloadQuoteItems(
-            $quoteResponseTransfer->getQuoteTransfer()
+            $quoteResponseTransfer->getQuoteTransfer(),
         );
 
         return $quoteResponseTransfer->setQuoteTransfer($quoteTransfer);

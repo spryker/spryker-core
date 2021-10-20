@@ -66,8 +66,8 @@ class WishlistRepository extends AbstractRepository implements WishlistRepositor
             str_replace(
                 SpyWishlistItemTableMap::TABLE_NAME,
                 $alias,
-                SpyWishlistItemTableMap::COL_FK_WISHLIST
-            )
+                SpyWishlistItemTableMap::COL_FK_WISHLIST,
+            ),
         );
 
         $wishlistQuery = $this->getFactory()
@@ -86,7 +86,7 @@ class WishlistRepository extends AbstractRepository implements WishlistRepositor
             ->createWishlistMapper()
             ->mapWishlistEntityToWishlistTransferIncludingWishlistItems(
                 $wishlistEntityCollection->getFirst(),
-                new WishlistTransfer()
+                new WishlistTransfer(),
             );
     }
 

@@ -43,7 +43,7 @@ class DiscountMapper implements DiscountMapperInterface
         foreach ($this->discountMapperPlugins as $discountMapperPlugin) {
             $restDiscountsAttributesTransfer = $discountMapperPlugin->mapDiscountTransferToRestDiscountsAttributesTransfer(
                 $discountTransfer,
-                $restDiscountsAttributesTransfer
+                $restDiscountsAttributesTransfer,
             );
         }
 

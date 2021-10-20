@@ -269,7 +269,7 @@ Configured with %s %s:%s in %s. Error: Stacktrace:';
                 $this->setSslStatusMessage(),
                 $request->getUri()->getHost(),
                 $request->getUri()->getPort(),
-                $this->getConfigFilePathName()
+                $this->getConfigFilePathName(),
             );
             $response = $e->getResponse();
             if ($response) {
@@ -359,7 +359,7 @@ Configured with %s %s:%s in %s. Error: Stacktrace:';
     protected function sendRequest(MessageRequestInterface $request, ObjectInterface $requestTransfer, $requestOptions = null)
     {
         $client = $this->getClient(
-            $this->getClientConfiguration()
+            $this->getClientConfiguration(),
         );
 
         $response = $client->send($request, $this->buildRequestOptions($requestTransfer, $requestOptions));
@@ -404,7 +404,7 @@ Configured with %s %s:%s in %s. Error: Stacktrace:';
     {
         $isProfilerForwardingEnabled = Config::get(
             ZedRequestConstants::XDEBUG_PROFILER_FORWARD_ENABLED,
-            false
+            false,
         );
 
         if (!$isProfilerForwardingEnabled) {
@@ -413,7 +413,7 @@ Configured with %s %s:%s in %s. Error: Stacktrace:';
 
         $profilerName = Config::get(
             ZedRequestConstants::XDEBUG_PROFILER_NAME,
-            static::DEFAULT_XDEBUG_PROFILER_NAME
+            static::DEFAULT_XDEBUG_PROFILER_NAME,
         );
 
         return $this->addCookie($config, $profilerName);
@@ -515,7 +515,7 @@ Configured with %s %s:%s in %s. Error: Stacktrace:';
     {
         $isSessionForwardingEnabled = Config::get(
             ZedRequestConstants::TRANSFER_DEBUG_SESSION_FORWARD_ENABLED,
-            false
+            false,
         );
 
         if (!$isSessionForwardingEnabled) {
@@ -524,7 +524,7 @@ Configured with %s %s:%s in %s. Error: Stacktrace:';
 
         $debugSessionName = Config::get(
             ZedRequestConstants::TRANSFER_DEBUG_SESSION_NAME,
-            static::DEFAULT_XDEBUG_SESSIOIN_NAME
+            static::DEFAULT_XDEBUG_SESSIOIN_NAME,
         );
 
         return $this->addCookie($config, $debugSessionName);

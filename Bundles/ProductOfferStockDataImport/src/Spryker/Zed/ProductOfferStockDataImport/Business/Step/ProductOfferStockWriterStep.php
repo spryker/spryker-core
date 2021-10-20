@@ -51,7 +51,7 @@ class ProductOfferStockWriterStep extends PublishAwareStep implements DataImport
 
         $this->addPublishEvents(
             ProductOfferStockEvents::ENTITY_SPY_PRODUCT_OFFER_STOCK_PUBLISH,
-            $productOfferStockEntity->getIdProductOfferStock()
+            $productOfferStockEntity->getIdProductOfferStock(),
         );
     }
 

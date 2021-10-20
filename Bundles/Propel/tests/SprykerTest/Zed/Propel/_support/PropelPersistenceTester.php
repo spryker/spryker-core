@@ -189,7 +189,7 @@ class PropelPersistenceTester extends Actor
             'Could not create a value for "%s.%s" type "%s".',
             $columnMap->getTableName(),
             $columnMap->getName(),
-            $columnMap->getType()
+            $columnMap->getType(),
         ));
     }
 

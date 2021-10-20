@@ -24,7 +24,7 @@ class SecurityBusinessFactory extends AbstractBusinessFactory
     public function createSecurityAuthorizationChecker(): AuthorizationCheckerInterface
     {
         return new AuthorizationChecker(
-            $this->getAuthorizationCheckerService()
+            $this->getAuthorizationCheckerService(),
         );
     }
 

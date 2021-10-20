@@ -131,7 +131,7 @@ class ContentStorageFacadeTest extends Unit
             ContentTransfer::ID_CONTENT => $contentTransfer->getIdContent(),
             ContentStorageConfig::TERM_KEY => $data[ContentTransfer::CONTENT_TERM_KEY],
             ContentStorageConfig::CONTENT_KEY => json_decode(
-                $data[ContentTransfer::LOCALIZED_CONTENTS][0][LocalizedContentTransfer::PARAMETERS]
+                $data[ContentTransfer::LOCALIZED_CONTENTS][0][LocalizedContentTransfer::PARAMETERS],
             ),
         ]);
 

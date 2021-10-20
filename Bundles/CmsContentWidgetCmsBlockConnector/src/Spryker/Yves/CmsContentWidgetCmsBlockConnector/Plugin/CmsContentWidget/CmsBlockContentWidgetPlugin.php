@@ -201,7 +201,7 @@ class CmsBlockContentWidgetPlugin extends AbstractPlugin implements CmsContentWi
 
         $cmsBlockTransfer->setGlossary(
             (new CmsBlockGlossaryTransfer())
-                ->setGlossaryPlaceholders($cmsBlockGlossaryPlaceholderTransfers)
+                ->setGlossaryPlaceholders($cmsBlockGlossaryPlaceholderTransfers),
         );
 
         return $cmsBlockTransfer;

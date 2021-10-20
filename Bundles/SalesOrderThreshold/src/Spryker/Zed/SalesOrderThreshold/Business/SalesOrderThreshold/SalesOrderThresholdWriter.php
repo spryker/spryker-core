@@ -83,7 +83,7 @@ class SalesOrderThresholdWriter implements SalesOrderThresholdWriterInterface
 
         $salesOrderThresholdStrategy = $this->salesOrderThresholdStrategyResolver
             ->resolveSalesOrderThresholdStrategy(
-                $salesOrderThresholdTransfer->getSalesOrderThresholdValue()->getSalesOrderThresholdType()->getKey()
+                $salesOrderThresholdTransfer->getSalesOrderThresholdValue()->getSalesOrderThresholdType()->getKey(),
             );
 
         if (
@@ -96,7 +96,7 @@ class SalesOrderThresholdWriter implements SalesOrderThresholdWriterInterface
 
             $salesOrderThresholdTransfer->getSalesOrderThresholdValue()
                 ->setSalesOrderThresholdType(
-                    $salesOrderThresholdTypeTransfer
+                    $salesOrderThresholdTypeTransfer,
                 );
         }
 

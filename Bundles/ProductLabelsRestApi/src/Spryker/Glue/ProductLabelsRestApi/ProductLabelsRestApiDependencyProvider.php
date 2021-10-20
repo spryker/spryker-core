@@ -51,7 +51,7 @@ class ProductLabelsRestApiDependencyProvider extends AbstractBundleDependencyPro
     {
         $container->set(static::CLIENT_PRODUCT_STORAGE, function (Container $container) {
             return new ProductLabelsRestApiToProductStorageClientBridge(
-                $container->getLocator()->productStorage()->client()
+                $container->getLocator()->productStorage()->client(),
             );
         });
 
@@ -67,7 +67,7 @@ class ProductLabelsRestApiDependencyProvider extends AbstractBundleDependencyPro
     {
         $container->set(static::CLIENT_PRODUCT_LABEL_STORAGE, function (Container $container) {
             return new ProductLabelsRestApiToProductLabelStorageClientBridge(
-                $container->getLocator()->productLabelStorage()->client()
+                $container->getLocator()->productLabelStorage()->client(),
             );
         });
 

@@ -50,7 +50,7 @@ class PriceProductConstraintProvider implements PriceProductConstraintProviderIn
                     PriceProductTransfer::MONEY_VALUE => $this->getMoneyValueTransferConstraint(),
                     PriceProductTransfer::VOLUME_QUANTITY => $this->getVolumeQuantityConstraint(),
                 ]),
-            ]
+            ],
         );
     }
 

@@ -36,7 +36,7 @@ class MaintenanceController extends AbstractController
         return $this->viewResponse(
             [
                 'totalCount' => $count,
-            ]
+            ],
         );
     }
 
@@ -58,7 +58,7 @@ class MaintenanceController extends AbstractController
         $table = $this->getFactory()->createStorageTable();
 
         return $this->jsonResponse(
-            $table->fetchData()
+            $table->fetchData(),
         );
     }
 

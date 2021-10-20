@@ -29,7 +29,7 @@ class CmsCollectorBusinessFactory extends AbstractBusinessFactory
     {
         $cmsVersionPageCollector = new CmsVersionStoragePageCollector(
             $this->getUtilDataReaderService(),
-            $this->getCmsFacade()
+            $this->getCmsFacade(),
         );
 
         $cmsVersionPageCollector->setTouchQueryContainer($this->getTouchQueryContainer());
@@ -46,7 +46,7 @@ class CmsCollectorBusinessFactory extends AbstractBusinessFactory
         $cmsPageCollector = new CmsVersionSearchPageCollector(
             $this->getUtilDataReaderService(),
             $this->createCmsDataPageMapBuilder(),
-            $this->getSearchFacade()
+            $this->getSearchFacade(),
         );
 
         $cmsPageCollector->setTouchQueryContainer($this->getTouchQueryContainer());
@@ -126,7 +126,7 @@ class CmsCollectorBusinessFactory extends AbstractBusinessFactory
     {
         return new CmsCollectorRunner(
             $this->createSearchCmsVersionPageCollector(),
-            $this->getCollectorFacade()
+            $this->getCollectorFacade(),
         );
     }
 
@@ -137,7 +137,7 @@ class CmsCollectorBusinessFactory extends AbstractBusinessFactory
     {
         return new CmsCollectorRunner(
             $this->createStorageCmsVersionPageCollector(),
-            $this->getCollectorFacade()
+            $this->getCollectorFacade(),
         );
     }
 }

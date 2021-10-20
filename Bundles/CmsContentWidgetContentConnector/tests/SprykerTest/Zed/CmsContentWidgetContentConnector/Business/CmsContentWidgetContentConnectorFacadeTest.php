@@ -50,7 +50,7 @@ class CmsContentWidgetContentConnectorFacadeTest extends Unit
         $this->assertNotEmpty($mappedKeys);
         $this->assertEquals(
             [static::CONTENT_KEY => static::CONTENT_KEY],
-            $mappedKeys
+            $mappedKeys,
         );
     }
 

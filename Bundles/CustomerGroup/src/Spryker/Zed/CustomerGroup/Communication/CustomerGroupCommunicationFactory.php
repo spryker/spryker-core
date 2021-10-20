@@ -35,7 +35,7 @@ class CustomerGroupCommunicationFactory extends AbstractCommunicationFactory
     {
         return new CustomerGroupTable(
             $this->getQueryContainer(),
-            $this->getDateFormatterService()
+            $this->getDateFormatterService(),
         );
     }
 
@@ -48,7 +48,7 @@ class CustomerGroupCommunicationFactory extends AbstractCommunicationFactory
     {
         return new CustomerTable(
             $this->getQueryContainer(),
-            $customerGroupTransfer
+            $customerGroupTransfer,
         );
     }
 
@@ -63,7 +63,7 @@ class CustomerGroupCommunicationFactory extends AbstractCommunicationFactory
             $this->createAssignmentCustomerQueryBuilder(),
             $this->getUtilEncodingService(),
             $idCustomerGroup,
-            $this->getUtilSanitizeService()
+            $this->getUtilSanitizeService(),
         );
     }
 
@@ -78,7 +78,7 @@ class CustomerGroupCommunicationFactory extends AbstractCommunicationFactory
             $this->createAssignmentCustomerQueryBuilder(),
             $this->getUtilEncodingService(),
             $idCustomerGroup,
-            $this->getUtilSanitizeService()
+            $this->getUtilSanitizeService(),
         );
     }
 
@@ -88,7 +88,7 @@ class CustomerGroupCommunicationFactory extends AbstractCommunicationFactory
     protected function createAssignmentCustomerQueryBuilder()
     {
         return new AssignmentCustomerQueryBuilder(
-            $this->getCustomerQueryContainer()
+            $this->getCustomerQueryContainer(),
         );
     }
 

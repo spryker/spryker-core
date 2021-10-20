@@ -114,7 +114,7 @@ class AvailabilityTable extends AbstractTable
             ->queryAvailabilityWithStockByIdProductAbstractAndIdLocale(
                 $idProductAbstract,
                 $idLocale,
-                $idStore
+                $idStore,
             );
     }
 
@@ -207,7 +207,7 @@ class AvailabilityTable extends AbstractTable
         return $this->availabilityHelper->sumReservationsFromOtherStores(
             $productItem[AvailabilityHelperInterface::CONCRETE_SKU],
             $this->storeFacade->getStoreById($this->idStore),
-            $quantity
+            $quantity,
         );
     }
 
@@ -243,7 +243,7 @@ class AvailabilityTable extends AbstractTable
                 static::URL_PARAM_SKU => $productAbstract[AvailabilityHelperInterface::CONCRETE_SKU],
                 static::URL_PARAM_ID_PRODUCT_ABSTRACT => $this->idProductAbstract,
                 static::URL_PARAM_ID_STORE => $this->idStore,
-            ]
+            ],
         );
     }
 
@@ -260,7 +260,7 @@ class AvailabilityTable extends AbstractTable
                 BundledProductAvailabilityTable::URL_PARAM_ID_PRODUCT_BUNDLE => $productAbstract[AvailabilityHelperInterface::ID_PRODUCT],
                 BundledProductAvailabilityTable::URL_PARAM_BUNDLE_ID_PRODUCT_ABSTRACT => $this->idProductAbstract,
                 static::URL_PARAM_ID_STORE => $this->idStore,
-            ]
+            ],
         );
     }
 }

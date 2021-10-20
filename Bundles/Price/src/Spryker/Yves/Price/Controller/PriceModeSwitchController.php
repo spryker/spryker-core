@@ -61,7 +61,7 @@ class PriceModeSwitchController extends AbstractController
     protected function createRedirectResponse(Request $request)
     {
         return $this->redirectResponseExternal(
-            urldecode($request->get(static::URL_PARAM_REFERRER_URL))
+            urldecode($request->get(static::URL_PARAM_REFERRER_URL)),
         );
     }
 }

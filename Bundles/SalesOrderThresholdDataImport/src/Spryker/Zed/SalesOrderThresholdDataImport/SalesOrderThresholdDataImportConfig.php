@@ -26,7 +26,7 @@ class SalesOrderThresholdDataImportConfig extends DataImportConfig
     {
         return $this->buildImporterConfiguration(
             implode(DIRECTORY_SEPARATOR, [$this->getModuleDataImportDirectory(), 'sales_order_threshold.csv']),
-            static::IMPORT_TYPE_SALES_ORDER_THRESHOLD
+            static::IMPORT_TYPE_SALES_ORDER_THRESHOLD,
         );
     }
 

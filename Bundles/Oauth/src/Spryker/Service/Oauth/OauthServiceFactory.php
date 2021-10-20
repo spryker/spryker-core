@@ -22,7 +22,7 @@ class OauthServiceFactory extends AbstractServiceFactory
     public function createTokenDataExtractor(): TokenDataExtractorInterface
     {
         return new TokenDataExtractor(
-            $this->createJwtTokenParser()
+            $this->createJwtTokenParser(),
         );
     }
 
@@ -32,7 +32,7 @@ class OauthServiceFactory extends AbstractServiceFactory
     public function createJwtTokenParser(): JwtTokenParserInterface
     {
         return new JwtTokenParser(
-            $this->getUtilEncodingService()
+            $this->getUtilEncodingService(),
         );
     }
 

@@ -42,13 +42,13 @@ class PaymentEntityManager extends AbstractEntityManager implements PaymentEntit
 
         $paymentMethodEntity = $paymentMethodMapper->mapPaymentMethodTransferToPaymentMethodEntity(
             $paymentMethodTransfer,
-            $paymentMethodEntity
+            $paymentMethodEntity,
         );
         $paymentMethodEntity->save();
 
         return $paymentMethodMapper->mapPaymentMethodEntityToPaymentMethodTransfer(
             $paymentMethodEntity,
-            $paymentMethodTransfer
+            $paymentMethodTransfer,
         );
     }
 

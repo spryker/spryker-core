@@ -116,7 +116,7 @@ class ProductLabelSearchDependencyProvider extends AbstractBundleDependencyProvi
     {
         $container->set(static::SERVICE_UTIL_SANITIZE, function (Container $container): ProductLabelSearchToUtilSanitizeServiceInterface {
             return new ProductLabelSearchToUtilSanitizeServiceBridge(
-                $container->getLocator()->utilSanitize()->service()
+                $container->getLocator()->utilSanitize()->service(),
             );
         });
 
@@ -132,7 +132,7 @@ class ProductLabelSearchDependencyProvider extends AbstractBundleDependencyProvi
     {
         $container->set(static::FACADE_EVENT_BEHAVIOR, function (Container $container): ProductLabelSearchToEventBehaviorFacadeInterface {
             return new ProductLabelSearchToEventBehaviorFacadeBridge(
-                $container->getLocator()->eventBehavior()->facade()
+                $container->getLocator()->eventBehavior()->facade(),
             );
         });
 
@@ -148,7 +148,7 @@ class ProductLabelSearchDependencyProvider extends AbstractBundleDependencyProvi
     {
         $container->set(static::FACADE_PRODUCT_LABEL, function (Container $container): ProductLabelSearchToProductLabelInterface {
             return new ProductLabelSearchToProductLabelBridge(
-                $container->getLocator()->productLabel()->facade()
+                $container->getLocator()->productLabel()->facade(),
             );
         });
 
@@ -164,7 +164,7 @@ class ProductLabelSearchDependencyProvider extends AbstractBundleDependencyProvi
     {
         $container->set(static::FACADE_PRODUCT_PAGE_SEARCH, function (Container $container): ProductLabelSearchToProductPageSearchInterface {
             return new ProductLabelSearchToProductPageSearchBridge(
-                $container->getLocator()->productPageSearch()->facade()
+                $container->getLocator()->productPageSearch()->facade(),
             );
         });
 

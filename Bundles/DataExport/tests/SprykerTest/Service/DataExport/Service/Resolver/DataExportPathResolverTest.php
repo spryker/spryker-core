@@ -84,7 +84,7 @@ class DataExportPathResolverTest extends Unit
         //Act
         $resultDestination = (new DataExportPathResolver())->resolvePath(
             $resultDestination,
-            static::EXPORT_ROOT_DIR
+            static::EXPORT_ROOT_DIR,
         );
 
         //Assert
@@ -93,13 +93,13 @@ class DataExportPathResolverTest extends Unit
             APPLICATION_ROOT_DIR,
             static::DATA_ENTITY,
             $timestamp,
-            static::EXTENSION
+            static::EXTENSION,
         );
 
         $this->assertSame(
             $expectedDestination,
             $resultDestination,
-            'Resolved path does not equals to an expected value.'
+            'Resolved path does not equals to an expected value.',
         );
     }
 }

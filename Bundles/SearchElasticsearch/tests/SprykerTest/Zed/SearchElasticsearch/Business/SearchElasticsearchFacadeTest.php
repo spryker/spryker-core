@@ -112,7 +112,7 @@ class SearchElasticsearchFacadeTest extends Unit
 
         // Act
         $result = $this->tester->getFacade()->closeIndex(
-            $this->tester->buildSearchContextTransferFromIndexName($index->getName())
+            $this->tester->buildSearchContextTransferFromIndexName($index->getName()),
         );
 
         // Assert
@@ -284,7 +284,7 @@ class SearchElasticsearchFacadeTest extends Unit
         // Act
         $this->tester->getFacade()->copyIndex(
             $this->tester->buildSearchContextTransferFromIndexName($sourceIndex->getName()),
-            $this->tester->buildSearchContextTransferFromIndexName($destIndex->getName())
+            $this->tester->buildSearchContextTransferFromIndexName($destIndex->getName()),
         );
 
         $destIndex->refresh();
@@ -358,7 +358,7 @@ class SearchElasticsearchFacadeTest extends Unit
 
             return array_merge(
                 $settings,
-                ['location' => $this->tester->getVirtualRepositoryLocation()]
+                ['location' => $this->tester->getVirtualRepositoryLocation()],
             );
         });
 
@@ -373,7 +373,7 @@ class SearchElasticsearchFacadeTest extends Unit
     protected function assertRepositoryExists(string $repositoryName): void
     {
         $this->assertTrue(
-            $this->createRepositoryMock()->existsSnapshotRepository($repositoryName)
+            $this->createRepositoryMock()->existsSnapshotRepository($repositoryName),
         );
     }
 

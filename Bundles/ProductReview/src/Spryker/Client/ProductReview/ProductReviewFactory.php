@@ -48,7 +48,7 @@ class ProductReviewFactory extends AbstractFactory
         return $this->getSearchClient()->expandQuery(
             $productReviewsQueryPlugin,
             $this->getProductReviewsQueryExpanderPlugins(),
-            $productReviewSearchRequestTransfer->getRequestParams()
+            $productReviewSearchRequestTransfer->getRequestParams(),
         );
     }
 
@@ -69,7 +69,7 @@ class ProductReviewFactory extends AbstractFactory
         return $this->getSearchClient()->expandQuery(
             $bulkProductReviewsQueryPlugin,
             $queryExpanderPlugins,
-            $bulkProductReviewSearchRequestTransfer->getFilter()->toArray()
+            $bulkProductReviewSearchRequestTransfer->getFilter()->toArray(),
         );
     }
 
@@ -139,7 +139,7 @@ class ProductReviewFactory extends AbstractFactory
     {
         return new ProductAbstractReviewStorageReader(
             $this->getStorageClient(),
-            $this->createProductAbstractReviewResourceKeyBuilder()
+            $this->createProductAbstractReviewResourceKeyBuilder(),
         );
     }
 
@@ -207,7 +207,7 @@ class ProductReviewFactory extends AbstractFactory
     {
         return new ProductViewExpander(
             $this->createProductReviewSummaryCalculator(),
-            $this->createProductReviewSearchReader($productReviewSearchRequestTransfer)
+            $this->createProductReviewSearchReader($productReviewSearchRequestTransfer),
         );
     }
 
@@ -221,7 +221,7 @@ class ProductReviewFactory extends AbstractFactory
     ): ProductViewExpanderInterface {
         return new ProductViewExpander(
             $this->createProductReviewSummaryCalculator(),
-            $this->createProductReviewSearchBulkReader($bulkProductReviewSearchRequestTransfer)
+            $this->createProductReviewSearchBulkReader($bulkProductReviewSearchRequestTransfer),
         );
     }
 
@@ -235,7 +235,7 @@ class ProductReviewFactory extends AbstractFactory
         return new ProductReviewSearchReader(
             $this->createProductReviewsQueryPlugin($productReviewSearchRequestTransfer),
             $this->getSearchClient(),
-            $this->getProductReviewsSearchResultFormatterPlugins()
+            $this->getProductReviewsSearchResultFormatterPlugins(),
         );
     }
 
@@ -250,7 +250,7 @@ class ProductReviewFactory extends AbstractFactory
         return new ProductReviewSearchReader(
             $this->createBulkProductReviewsQueryPlugin($bulkProductReviewSearchRequestTransfer),
             $this->getSearchClient(),
-            $this->getProductReviewsBulkSearchResultFormatterPlugins()
+            $this->getProductReviewsBulkSearchResultFormatterPlugins(),
         );
     }
 

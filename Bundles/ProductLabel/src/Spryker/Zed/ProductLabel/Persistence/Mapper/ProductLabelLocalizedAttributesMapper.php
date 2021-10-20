@@ -43,7 +43,7 @@ class ProductLabelLocalizedAttributesMapper
         foreach ($productLabelLocalizedAttributesEntities as $productLabelLocalizedAttributesEntity) {
             $productLabelLocalizedAttributesTransfers->append($this->mapProductLabelLocalizedAttributesEntityToProductLabelLocalizedAttributesTransfer(
                 $productLabelLocalizedAttributesEntity,
-                new ProductLabelLocalizedAttributesTransfer()
+                new ProductLabelLocalizedAttributesTransfer(),
             ));
         }
 

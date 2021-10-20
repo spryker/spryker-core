@@ -86,7 +86,7 @@ class ProductListQueryExpanderPlugin extends AbstractPlugin implements QueryExpa
             throw new InvalidArgumentException(sprintf(
                 'ProductListFilterQueryExpander is only applicable with %s, got: %s.',
                 BoolQuery::class,
-                get_class($boolQuery)
+                get_class($boolQuery),
             ));
         }
 

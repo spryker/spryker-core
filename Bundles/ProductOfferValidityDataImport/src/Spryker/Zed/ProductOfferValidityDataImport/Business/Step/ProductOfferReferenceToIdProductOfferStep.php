@@ -48,7 +48,7 @@ class ProductOfferReferenceToIdProductOfferStep implements DataImportStepInterfa
             throw new DataKeyNotFoundInDataSetException(sprintf(
                 '"%s" key must be in the data set. Given: "%s"',
                 static::PRODUCT_OFFER_REFERENCE,
-                implode(', ', array_keys($dataSet->getArrayCopy()))
+                implode(', ', array_keys($dataSet->getArrayCopy())),
             ));
         }
 

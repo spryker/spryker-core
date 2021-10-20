@@ -42,7 +42,7 @@ class HeadersSecurityEventDispatcherPlugin extends AbstractPlugin implements Eve
                         $event->getResponse()->headers->set($securityHeaderName, $securityHeaderValue);
                     }
                 }
-            }
+            },
         );
 
         return $eventDispatcher;

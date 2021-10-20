@@ -90,7 +90,7 @@ class MerchantProductOfferSearchRepository extends AbstractRepository implements
                 ->createProductAbstractMerchantMapper()
                 ->mapProductAbstractMerchantDataToProductAbstractMerchantTransfer(
                     $productAbstractMerchantData,
-                    new ProductAbstractMerchantTransfer()
+                    new ProductAbstractMerchantTransfer(),
                 );
         }
 

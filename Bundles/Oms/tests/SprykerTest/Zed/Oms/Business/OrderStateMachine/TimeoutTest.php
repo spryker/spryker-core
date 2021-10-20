@@ -76,7 +76,7 @@ class TimeoutTest extends Unit
             ->withConsecutive(
                 [$this->equalTo(static::EVENT_PAY), $this->equalTo([$salesOrderItem1, $salesOrderItem2])],
                 [$this->equalTo(static::EVENT_PAY), $this->equalTo([$salesOrderItem3])],
-                [$this->equalTo(static::EVENT_SHIP), $this->equalTo([$salesOrderItem4])]
+                [$this->equalTo(static::EVENT_SHIP), $this->equalTo([$salesOrderItem4])],
             )
             ->willReturn([]);
 
@@ -155,7 +155,7 @@ class TimeoutTest extends Unit
         $this->assertSame(
             $expectedAffectedOrderItemsCount,
             $affectedOrderItems,
-            sprintf('Expected "%s" sales order items but "%s" are processed.', $expectedAffectedOrderItemsCount, $affectedOrderItems)
+            sprintf('Expected "%s" sales order items but "%s" are processed.', $expectedAffectedOrderItemsCount, $affectedOrderItems),
         );
     }
 
@@ -202,7 +202,7 @@ class TimeoutTest extends Unit
         $this->assertSame(
             $expectedAffectedOrderItemsCount,
             $affectedOrderItems,
-            sprintf('Expected "%s" sales order items but "%s" are processed.', $expectedAffectedOrderItemsCount, $affectedOrderItems)
+            sprintf('Expected "%s" sales order items but "%s" are processed.', $expectedAffectedOrderItemsCount, $affectedOrderItems),
         );
 
         $this->assertOrderItemsNotHaveTimeoutsWithState($salesOrderEntity->getItems(), 'payment pending');
@@ -271,8 +271,8 @@ class TimeoutTest extends Unit
                 'Expected no timeouts for order item ids "%s" in state "%s" but found "%s"',
                 implode(', ', $primaryKeys),
                 $stateName,
-                $omsEventTimeoutEntityCount
-            )
+                $omsEventTimeoutEntityCount,
+            ),
         );
     }
 

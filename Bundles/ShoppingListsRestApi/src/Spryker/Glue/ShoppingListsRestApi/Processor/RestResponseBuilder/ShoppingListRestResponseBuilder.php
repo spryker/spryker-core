@@ -95,13 +95,13 @@ class ShoppingListRestResponseBuilder extends RestResponseBuilder implements Sho
     ): RestResourceInterface {
         $restShoppingListsAttributesTransfer = $this->shoppingListsResourceMapper->mapShoppingListTransferToRestShoppingListsAttributesTransfer(
             $shoppingListTransfer,
-            new RestShoppingListsAttributesTransfer()
+            new RestShoppingListsAttributesTransfer(),
         );
 
         return $this->restResourceBuilder->createRestResource(
             ShoppingListsRestApiConfig::RESOURCE_SHOPPING_LISTS,
             $shoppingListTransfer->getUuid(),
-            $restShoppingListsAttributesTransfer
+            $restShoppingListsAttributesTransfer,
         )->setPayload($shoppingListTransfer);
     }
 }

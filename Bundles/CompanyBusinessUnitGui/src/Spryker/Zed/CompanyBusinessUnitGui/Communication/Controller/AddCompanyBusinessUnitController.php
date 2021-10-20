@@ -50,7 +50,7 @@ class AddCompanyBusinessUnitController extends AbstractController
         $form = $this->getFactory()
             ->getCompanyBusinessUnitForm(
                 $dataProvider->getData(),
-                $dataProvider->getOptions()
+                $dataProvider->getOptions(),
             )
             ->handleRequest($request);
 

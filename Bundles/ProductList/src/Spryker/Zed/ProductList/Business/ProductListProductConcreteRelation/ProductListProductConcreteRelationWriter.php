@@ -71,7 +71,7 @@ class ProductListProductConcreteRelationWriter implements ProductListProductConc
         $this->productListEntityManager->removeProductConcreteRelations($idProductList, $deleteProductConcreteIds);
 
         return $productListProductConcreteRelationTransfer->setProductIds(
-            $this->getRelatedProductConcreteIds($productListProductConcreteRelationTransfer)
+            $this->getRelatedProductConcreteIds($productListProductConcreteRelationTransfer),
         );
     }
 

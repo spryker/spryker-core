@@ -47,8 +47,8 @@ abstract class AbstractSpyUrlQuery extends BaseSpyUrlQuery
             throw new UnknownResourceTypeException(
                 sprintf(
                     'Tried to set a resource type that is unknown. ResourceType: %s',
-                    $resourceType
-                )
+                    $resourceType,
+                ),
             );
         }
 

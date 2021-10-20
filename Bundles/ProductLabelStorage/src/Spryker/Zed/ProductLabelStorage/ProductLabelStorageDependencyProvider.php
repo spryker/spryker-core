@@ -100,7 +100,7 @@ class ProductLabelStorageDependencyProvider extends AbstractBundleDependencyProv
     {
         $container->set(static::FACADE_EVENT_BEHAVIOR, function (Container $container): ProductLabelStorageToEventBehaviorFacadeInterface {
             return new ProductLabelStorageToEventBehaviorFacadeBridge(
-                $container->getLocator()->eventBehavior()->facade()
+                $container->getLocator()->eventBehavior()->facade(),
             );
         });
 
@@ -116,7 +116,7 @@ class ProductLabelStorageDependencyProvider extends AbstractBundleDependencyProv
     {
         $container->set(static::QUERY_CONTAINER_PRODUCT_LABEL, function (Container $container): ProductLabelStorageToProductLabelQueryContainerInterface {
             return new ProductLabelStorageToProductLabelQueryContainerBridge(
-                $container->getLocator()->productLabel()->queryContainer()
+                $container->getLocator()->productLabel()->queryContainer(),
             );
         });
 
@@ -146,7 +146,7 @@ class ProductLabelStorageDependencyProvider extends AbstractBundleDependencyProv
     {
         $container->set(static::FACADE_PRODUCT_LABEL, function (Container $container): ProductLabelStorageToProductLabelFacadeInterface {
             return new ProductLabelStorageToProductLabelFacadeBridge(
-                $container->getLocator()->productLabel()->facade()
+                $container->getLocator()->productLabel()->facade(),
             );
         });
 

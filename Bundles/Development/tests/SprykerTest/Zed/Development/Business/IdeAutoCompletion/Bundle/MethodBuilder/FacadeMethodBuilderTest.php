@@ -80,11 +80,11 @@ class FacadeMethodBuilderTest extends Unit
             ->expects($this->exactly(1))
             ->method('findFileByName')
             ->withConsecutive(
-                [$this->equalTo('FooBundleFacadeInterface.php'), $this->anything()]
+                [$this->equalTo('FooBundleFacadeInterface.php'), $this->anything()],
             )
             ->will($this->onConsecutiveCalls(
                 new SplFileInfo(static::BUNDLE_DIRECTORY . 'FooBundle/Business/FooBundleFacadeInterface.php', 'foo', 'bar'),
-                new SplFileInfo(static::BUNDLE_DIRECTORY . 'FooBundle/Business/FooBundleFacade.php', 'foo', 'bar')
+                new SplFileInfo(static::BUNDLE_DIRECTORY . 'FooBundle/Business/FooBundleFacade.php', 'foo', 'bar'),
             ));
 
         $bundleMethodTransfer = $methodBuilderMock->getMethod($this->getBundleTransfer());
@@ -103,11 +103,11 @@ class FacadeMethodBuilderTest extends Unit
             ->method('findFileByName')
             ->withConsecutive(
                 [$this->equalTo('FooBundleFacadeInterface.php'), $this->anything()],
-                [$this->equalTo('FooBundleFacade.php'), $this->anything()]
+                [$this->equalTo('FooBundleFacade.php'), $this->anything()],
             )
             ->will($this->onConsecutiveCalls(
                 null,
-                new SplFileInfo(static::BUNDLE_DIRECTORY . 'FooBundle/Business/FooBundleFacade.php', 'foo', 'bar')
+                new SplFileInfo(static::BUNDLE_DIRECTORY . 'FooBundle/Business/FooBundleFacade.php', 'foo', 'bar'),
             ));
 
         $bundleMethodTransfer = $methodBuilderMock->getMethod($this->getBundleTransfer());

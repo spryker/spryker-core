@@ -32,7 +32,7 @@ class QuoteRequestsRestApiFactory extends AbstractFactory
     public function createQuoteRequestMapper(): QuoteRequestMapperInterface
     {
         return new QuoteRequestMapper(
-            $this->getRestQuoteRequestAttributesExpanderPlugins()
+            $this->getRestQuoteRequestAttributesExpanderPlugins(),
         );
     }
 
@@ -43,7 +43,7 @@ class QuoteRequestsRestApiFactory extends AbstractFactory
     {
         return new QuoteRequestCanceler(
             $this->getQuoteRequestClient(),
-            $this->createQuoteRequestRestResponseBuilder()
+            $this->createQuoteRequestRestResponseBuilder(),
         );
     }
 
@@ -55,7 +55,7 @@ class QuoteRequestsRestApiFactory extends AbstractFactory
         return new QuoteRequestReader(
             $this->getQuoteRequestClient(),
             $this->createQuoteRequestRestResponseBuilder(),
-            $this->createQuoteRequestMapper()
+            $this->createQuoteRequestMapper(),
         );
     }
 
@@ -67,7 +67,7 @@ class QuoteRequestsRestApiFactory extends AbstractFactory
         return new QuoteRequestRestResponseBuilder(
             $this->getResourceBuilder(),
             $this->createQuoteRequestMapper(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -79,7 +79,7 @@ class QuoteRequestsRestApiFactory extends AbstractFactory
         return new QuoteRequestCreator(
             $this->getClient(),
             $this->createQuoteRequestRestResponseBuilder(),
-            $this->createQuoteRequestMapper()
+            $this->createQuoteRequestMapper(),
         );
     }
 

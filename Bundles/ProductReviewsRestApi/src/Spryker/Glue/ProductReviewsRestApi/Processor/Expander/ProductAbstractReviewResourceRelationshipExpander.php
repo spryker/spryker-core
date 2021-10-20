@@ -75,7 +75,7 @@ class ProductAbstractReviewResourceRelationshipExpander implements ProductAbstra
         $productAbstractDataCollection = $this->productStorageClient->findBulkProductAbstractStorageDataByMapping(
             static::PRODUCT_MAPPING_TYPE,
             $productAbstractSkus,
-            $restRequest->getMetadata()->getLocale()
+            $restRequest->getMetadata()->getLocale(),
         );
 
         if (!$productAbstractDataCollection) {
@@ -90,14 +90,14 @@ class ProductAbstractReviewResourceRelationshipExpander implements ProductAbstra
         $productReviewsRestResourcesCollection = $this->productReviewReader
             ->getProductReviewsResourceCollection(
                 $productAbstractIds,
-                $this->createFilterTransfer()
+                $this->createFilterTransfer(),
             );
 
         foreach ($resources as $resource) {
             $this->addProductReviewsRelationships(
                 $productReviewsRestResourcesCollection,
                 $productAbstractDataCollection,
-                $resource
+                $resource,
             );
         }
     }

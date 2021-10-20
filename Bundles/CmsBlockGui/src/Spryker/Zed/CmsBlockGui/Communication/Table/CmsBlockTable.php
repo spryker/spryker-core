@@ -164,21 +164,21 @@ class CmsBlockTable extends AbstractTable
             Url::generate(static::URL_CMS_BLOCK_VIEW, [
                 static::REQUEST_ID_CMS_BLOCK => $item[SpyCmsBlockTableMap::COL_ID_CMS_BLOCK],
             ]),
-            'View Block'
+            'View Block',
         );
 
         $buttons[] = $this->generateEditButton(
             Url::generate(static::URL_CMS_BLOCK_GLOSSARY, [
                 static::REQUEST_ID_CMS_BLOCK => $item[SpyCmsBlockTableMap::COL_ID_CMS_BLOCK],
             ]),
-            'Edit Placeholder'
+            'Edit Placeholder',
         );
 
         $buttons[] = $this->generateEditButton(
             Url::generate(static::URL_CMS_BLOCK_EDIT, [
                 static::REQUEST_ID_CMS_BLOCK => $item[SpyCmsBlockTableMap::COL_ID_CMS_BLOCK],
             ]),
-            'Edit Block'
+            'Edit Block',
         );
 
         $buttons[] = $this->generateStatusChangeButton($item);
@@ -203,7 +203,7 @@ class CmsBlockTable extends AbstractTable
                 [
                     static::BUTTON_ICON => 'fa-trash',
                     static::BUTTON_CLASS => 'btn-danger safe-submit',
-                ]
+                ],
             );
         } else {
             return $this->generateFormButton(
@@ -211,7 +211,7 @@ class CmsBlockTable extends AbstractTable
                         static::REQUEST_ID_CMS_BLOCK => $item[SpyCmsBlockTableMap::COL_ID_CMS_BLOCK],
                     ]),
                 'Activate',
-                ToggleActiveCmsBlockForm::class
+                ToggleActiveCmsBlockForm::class,
             );
         }
     }
@@ -256,7 +256,7 @@ class CmsBlockTable extends AbstractTable
         foreach ($cmsBlockStoreEntityCollection as $cmsBlockStoreEntity) {
             $storeNames[] = sprintf(
                 '<span class="label label-info">%s</span>',
-                $cmsBlockStoreEntity->getSpyStore()->getName()
+                $cmsBlockStoreEntity->getSpyStore()->getName(),
             );
         }
 

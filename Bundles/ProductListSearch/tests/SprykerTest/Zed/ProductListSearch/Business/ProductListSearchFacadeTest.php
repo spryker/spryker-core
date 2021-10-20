@@ -52,7 +52,7 @@ class ProductListSearchFacadeTest extends Unit
 
         // Act
         $this->getFacade()->expandProductConcretePageSearchTransferWithProductLists(
-            $productConcretePageSearchTransfer
+            $productConcretePageSearchTransfer,
         );
 
         // Assert

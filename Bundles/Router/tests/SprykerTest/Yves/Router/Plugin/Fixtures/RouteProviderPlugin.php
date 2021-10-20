@@ -54,7 +54,7 @@ class RouteProviderPlugin extends AbstractRouteProviderPlugin
             '%s/%s/%s',
             $moduleName,
             $controllerName,
-            $actionName
+            $actionName,
         );
 
         $route->setDefault('_controller', [$this, $actionName]);

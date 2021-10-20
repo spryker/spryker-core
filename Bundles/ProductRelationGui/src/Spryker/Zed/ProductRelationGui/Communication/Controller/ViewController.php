@@ -76,7 +76,7 @@ class ViewController extends BaseProductRelationController
         $productTable = $this->getFactory()->createProductTable($idProductRelation);
 
         return $this->jsonResponse(
-            $productTable->fetchData()
+            $productTable->fetchData(),
         );
     }
 

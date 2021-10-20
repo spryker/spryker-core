@@ -70,13 +70,13 @@ class HealthCheck implements HealthCheckInterface
         $restHealthCheckResponseAttributesTransfer = $this->healthCheckMapper
             ->mapHealthCheckServiceResponseTransferToRestHealthCheckResponseAttributesTransfer(
                 $healthCheckResponseTransfer,
-                new RestHealthCheckResponseAttributesTransfer()
+                new RestHealthCheckResponseAttributesTransfer(),
             );
 
         $restResource = $this->restResourceBuilder->createRestResource(
             HealthCheckConfig::RESOURCE_HEALTH_CHECK,
             null,
-            $restHealthCheckResponseAttributesTransfer
+            $restHealthCheckResponseAttributesTransfer,
         );
 
         return $restResponse

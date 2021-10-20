@@ -26,7 +26,7 @@ class CommentSalesConnectorBusinessFactory extends AbstractBusinessFactory
     public function createCommentThreadWriter(): CommentThreadWriterInterface
     {
         return new CommentThreadWriter(
-            $this->getCustomerFacade()
+            $this->getCustomerFacade(),
         );
     }
 
@@ -36,7 +36,7 @@ class CommentSalesConnectorBusinessFactory extends AbstractBusinessFactory
     public function createCommentThreadReader(): CommentThreadReaderInterface
     {
         return new CommentThreadReader(
-            $this->getCustomerFacade()
+            $this->getCustomerFacade(),
         );
     }
 

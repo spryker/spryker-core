@@ -31,7 +31,7 @@ class SlotListController extends AbstractController
         $idCmsSlotTemplate = $this->castId($request->get(static::PARAM_ID_CMS_SLOT_TEMPLATE));
 
         return $this->jsonResponse(
-            $this->getFactory()->createSlotListTable($idCmsSlotTemplate)->fetchData()
+            $this->getFactory()->createSlotListTable($idCmsSlotTemplate)->fetchData(),
         );
     }
 }

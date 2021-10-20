@@ -33,7 +33,7 @@ class MerchantRelationshipSalesOrderThresholdDataImportToMerchantRelationshipSal
         MerchantRelationshipSalesOrderThresholdTransfer $merchantRelationshipSalesOrderThresholdTransfer
     ): MerchantRelationshipSalesOrderThresholdTransfer {
         return $this->merchantRelationshipSalesOrderThresholdFacade->saveMerchantRelationshipSalesOrderThreshold(
-            $merchantRelationshipSalesOrderThresholdTransfer
+            $merchantRelationshipSalesOrderThresholdTransfer,
         );
     }
 }

@@ -61,7 +61,7 @@ class SnapshotTest extends Unit
 
         $this->elasticaSnapshotMock = $this->createElasticaSnapshotMock();
         $this->elasticsearchSnapshot = new Snapshot(
-            $this->elasticaSnapshotMock
+            $this->elasticaSnapshotMock,
         );
     }
 
@@ -77,7 +77,7 @@ class SnapshotTest extends Unit
                 static::REPOSITORY_NAME,
                 static::SNAPSHOT_NAME,
                 static::OPTIONS,
-                true
+                true,
             )
             ->willReturnSelf();
 
@@ -96,7 +96,7 @@ class SnapshotTest extends Unit
                 static::REPOSITORY_NAME,
                 static::SNAPSHOT_NAME,
                 static::OPTIONS,
-                true
+                true,
             )
             ->willReturnSelf();
 

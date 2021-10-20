@@ -71,7 +71,7 @@ class ImportSuccessListTable extends AbstractTable
         $config->setUrl(sprintf(
             'table?%s=%d',
             PriceProductScheduleListTransfer::ID_PRICE_PRODUCT_SCHEDULE_LIST,
-            $this->priceProductScheduleListTransfer->getIdPriceProductScheduleList()
+            $this->priceProductScheduleListTransfer->getIdPriceProductScheduleList(),
         ));
 
         $config->setSearchable([

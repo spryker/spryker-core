@@ -38,7 +38,7 @@ class BusinessOnBehalfStub implements BusinessOnBehalfStubInterface
         /** @var \Generated\Shared\Transfer\CompanyUserCollectionTransfer $companyUserCollection */
         $companyUserCollection = $this->zedRequestClient->call(
             '/business-on-behalf/gateway/find-active-company-users-by-customer-id',
-            $customerTransfer
+            $customerTransfer,
         );
 
         return $companyUserCollection;
@@ -54,7 +54,7 @@ class BusinessOnBehalfStub implements BusinessOnBehalfStubInterface
         /** @var \Generated\Shared\Transfer\CompanyUserResponseTransfer $companyUserResponseTransfer */
         $companyUserResponseTransfer = $this->zedRequestClient->call(
             '/business-on-behalf/gateway/set-default-company-user',
-            $companyUserTransfer
+            $companyUserTransfer,
         );
 
         return $companyUserResponseTransfer;
@@ -69,7 +69,7 @@ class BusinessOnBehalfStub implements BusinessOnBehalfStubInterface
     {
         $this->zedRequestClient->call(
             '/business-on-behalf/gateway/unset-default-company-user',
-            $customerTransfer
+            $customerTransfer,
         );
 
         return $customerTransfer;

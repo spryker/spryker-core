@@ -76,7 +76,7 @@ class TaxProductStorageDependencyProvider extends AbstractBundleDependencyProvid
     {
         $container->set(static::FACADE_EVENT_BEHAVIOR, function (Container $container) {
             return new TaxProductStorageToEventBehaviorFacadeBridge(
-                $container->getLocator()->eventBehavior()->facade()
+                $container->getLocator()->eventBehavior()->facade(),
             );
         });
 

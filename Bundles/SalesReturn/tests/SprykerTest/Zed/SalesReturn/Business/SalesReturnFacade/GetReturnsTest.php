@@ -102,11 +102,11 @@ class GetReturnsTest extends Unit
         $this->assertCount(2, $storedReturnTransfer->getReturnItems());
         $this->assertEquals(
             $returnTransfer->getReturnItems()->offsetGet(0),
-            $storedReturnTransfer->getReturnItems()->offsetGet(0)
+            $storedReturnTransfer->getReturnItems()->offsetGet(0),
         );
         $this->assertEquals(
             $returnTransfer->getReturnItems()->offsetGet(1),
-            $storedReturnTransfer->getReturnItems()->offsetGet(1)
+            $storedReturnTransfer->getReturnItems()->offsetGet(1),
         );
     }
 

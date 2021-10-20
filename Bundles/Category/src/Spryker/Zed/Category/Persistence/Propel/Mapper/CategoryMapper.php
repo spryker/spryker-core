@@ -76,12 +76,12 @@ class CategoryMapper implements CategoryMapperInterface
         $categoryTransfer = $this->mapLocalizedAttributes($spyCategory->getAttributes(), $categoryTransfer);
         $categoryTransfer->setCategoryTemplate($this->mapCategoryTemplateEntityToCategoryTemplateTransfer(
             $spyCategory->getCategoryTemplate(),
-            new CategoryTemplateTransfer()
+            new CategoryTemplateTransfer(),
         ));
         $categoryTransfer = $this->categoryNodeMapper->mapCategoryNodes($spyCategory, $categoryTransfer);
         $storeRelationTransfer = $this->categoryStoreRelationMapper->mapCategoryStoreEntitiesToStoreRelationTransfer(
             $spyCategory->getSpyCategoryStores(),
-            (new StoreRelationTransfer())->setIdEntity($spyCategory->getIdCategory())
+            (new StoreRelationTransfer())->setIdEntity($spyCategory->getIdCategory()),
         );
         $categoryTransfer->setStoreRelation($storeRelationTransfer);
 
@@ -101,7 +101,7 @@ class CategoryMapper implements CategoryMapperInterface
         foreach ($categoryNodeEntities as $categoryNodeEntity) {
             $nodeTransfer = $this->mapCategoryNodeEntityToNodeTransferWithCategoryRelation(
                 $categoryNodeEntity,
-                new NodeTransfer()
+                new NodeTransfer(),
             );
 
             $nodeCollectionTransfer->addNode($nodeTransfer);
@@ -142,13 +142,13 @@ class CategoryMapper implements CategoryMapperInterface
         $categoryTransfer = $this->mapLocalizedAttributes($categoryEntity->getAttributesJoinLocale(), $categoryTransfer, $nodeEntity->getSpyUrls());
         $storeRelationTransfer = $this->categoryStoreRelationMapper->mapCategoryStoreEntitiesToStoreRelationTransfer(
             $categoryEntity->getSpyCategoryStores(),
-            (new StoreRelationTransfer())->setIdEntity($categoryEntity->getIdCategory())
+            (new StoreRelationTransfer())->setIdEntity($categoryEntity->getIdCategory()),
         );
         $categoryTransfer->setStoreRelation($storeRelationTransfer);
 
         $categoryTemplateTransfer = $this->mapCategoryTemplateEntityToCategoryTemplateTransfer(
             $categoryEntity->getCategoryTemplate(),
-            new CategoryTemplateTransfer()
+            new CategoryTemplateTransfer(),
         );
         $categoryTransfer->setCategoryTemplate($categoryTemplateTransfer);
 
@@ -175,13 +175,13 @@ class CategoryMapper implements CategoryMapperInterface
 
             $nodeCollectionTransfer = $this->categoryNodeMapper->mapNodeCollection(
                 $categoryEntity->getNodes(),
-                new NodeCollectionTransfer()
+                new NodeCollectionTransfer(),
             );
             $categoryTransfer->setNodeCollection($nodeCollectionTransfer);
 
             $storeRelationTransfer = $this->categoryStoreRelationMapper->mapCategoryStoreEntitiesToStoreRelationTransfer(
                 $categoryEntity->getSpyCategoryStores(),
-                (new StoreRelationTransfer())->setIdEntity($categoryEntity->getIdCategory())
+                (new StoreRelationTransfer())->setIdEntity($categoryEntity->getIdCategory()),
             );
             $categoryTransfer->setStoreRelation($storeRelationTransfer);
 
@@ -254,7 +254,7 @@ class CategoryMapper implements CategoryMapperInterface
             if ($urlEntities) {
                 $categoryLocalizedAttributesTransfer = $this->categoryLocalizedAttributesUrlMapper->mapUrlEntitiesToCategoryLocalizedAttributesTransfer(
                     $urlEntities,
-                    $categoryLocalizedAttributesTransfer
+                    $categoryLocalizedAttributesTransfer,
                 );
             }
 

@@ -55,7 +55,7 @@ class MerchantUserUpdateFormDataProvider
         return $this->merchantUserFacade->findMerchantUser(
             (new MerchantUserCriteriaTransfer())
                 ->setIdMerchantUser($idMerchantUser)
-                ->setWithUser(true)
+                ->setWithUser(true),
         );
     }
 

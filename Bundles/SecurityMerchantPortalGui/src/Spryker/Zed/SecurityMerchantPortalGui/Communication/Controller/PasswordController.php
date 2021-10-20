@@ -72,7 +72,7 @@ class PasswordController extends AbstractController
                 ->getMerchantUserFacade()
                 ->findMerchantUser(
                     (new MerchantUserCriteriaTransfer())
-                        ->setUsername($formData[MerchantResetPasswordRequestForm::FIELD_EMAIL])
+                        ->setUsername($formData[MerchantResetPasswordRequestForm::FIELD_EMAIL]),
                 );
 
             if ($merchantUser) {
@@ -81,12 +81,12 @@ class PasswordController extends AbstractController
                     ->requestPasswordReset(
                         (new UserPasswordResetRequestTransfer())
                             ->setEmail($formData[MerchantResetPasswordRequestForm::FIELD_EMAIL])
-                            ->setResetPasswordPath(static::RESET_RASSWORD_PATH)
+                            ->setResetPasswordPath(static::RESET_RASSWORD_PATH),
                     );
             }
 
             $this->addSuccessMessage(
-                static::MESSAGE_USER_REQUEST_PASSWORD_SUCCESS
+                static::MESSAGE_USER_REQUEST_PASSWORD_SUCCESS,
             );
 
             return $this->viewResponse([]);
@@ -109,7 +109,7 @@ class PasswordController extends AbstractController
 
         if (!$this->isValidToken($token)) {
             return $this->redirectResponse(
-                $this->getFactory()->getConfig()->getUrlLogin()
+                $this->getFactory()->getConfig()->getUrlLogin(),
             );
         }
 
@@ -123,7 +123,7 @@ class PasswordController extends AbstractController
                 ->getMerchantUserFacade()
                 ->setNewPassword(
                     $token,
-                    $formData[MerchantResetPasswordForm::FIELD_PASSWORD]
+                    $formData[MerchantResetPasswordForm::FIELD_PASSWORD],
                 );
 
             if ($isPasswordReset) {
@@ -133,7 +133,7 @@ class PasswordController extends AbstractController
             }
 
             return $this->redirectResponse(
-                $this->getFactory()->getConfig()->getUrlLogin()
+                $this->getFactory()->getConfig()->getUrlLogin(),
             );
         }
 

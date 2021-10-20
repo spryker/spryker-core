@@ -88,7 +88,7 @@ class GroupController extends AbstractController
         $table = $this->getFactory()->createGroupTable();
 
         return $this->jsonResponse(
-            $table->fetchData()
+            $table->fetchData(),
         );
     }
 
@@ -104,7 +104,7 @@ class GroupController extends AbstractController
         $form = $this->getFactory()
             ->createGroupForm(
                 $dataProvider->getData(),
-                $dataProvider->getOptions()
+                $dataProvider->getOptions(),
             )
             ->handleRequest($request);
 
@@ -115,7 +115,7 @@ class GroupController extends AbstractController
 
             $groupTransfer = $this->getFacade()->addGroup(
                 $formData[GroupForm::FIELD_TITLE],
-                $roles
+                $roles,
             );
 
             $this->addSuccessMessage(static::MESSAGE_GROUP_CREATE_SUCCESS);
@@ -150,7 +150,7 @@ class GroupController extends AbstractController
         $form = $this->getFactory()
             ->createGroupForm(
                 $formData,
-                $dataProvider->getOptions()
+                $dataProvider->getOptions(),
             )
             ->handleRequest($request);
 
@@ -207,7 +207,7 @@ class GroupController extends AbstractController
         $usersTable = $this->getFactory()->createGroupUsersTable($idGroup);
 
         return $this->jsonResponse(
-            $usersTable->fetchData()
+            $usersTable->fetchData(),
         );
     }
 

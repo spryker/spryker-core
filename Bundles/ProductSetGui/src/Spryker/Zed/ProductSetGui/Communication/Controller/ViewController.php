@@ -70,7 +70,7 @@ class ViewController extends AbstractController
         return $this->jsonResponse(
             $this->getFactory()
                 ->createProductAbstractSetViewTable($localeTransfer, $idProductSet)
-                ->fetchData()
+                ->fetchData(),
         );
     }
 }

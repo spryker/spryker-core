@@ -312,7 +312,7 @@ class WishlistFacadeTest extends Test
         $wishlistTransfer = new WishlistTransfer();
         $wishlistTransfer->fromArray(
             $this->wishlist->toArray(),
-            true
+            true,
         );
 
         $wishlistTransfer->setName('new name');
@@ -332,7 +332,7 @@ class WishlistFacadeTest extends Test
         $wishlistTransfer = new WishlistTransfer();
         $wishlistTransfer->fromArray(
             $this->wishlist->toArray(),
-            true
+            true,
         );
 
         $wishlistTransfer->setName('new name');
@@ -375,7 +375,7 @@ class WishlistFacadeTest extends Test
         $wishlistTransfer = new WishlistTransfer();
         $wishlistTransfer->fromArray(
             $this->wishlist->toArray(),
-            true
+            true,
         );
 
         $wishlistTransfer = $this->wishlistFacade->removeWishlist($wishlistTransfer);
@@ -408,7 +408,7 @@ class WishlistFacadeTest extends Test
         $wishlistTransfer = new WishlistTransfer();
         $wishlistTransfer->fromArray(
             $this->wishlist->toArray(),
-            true
+            true,
         );
 
         $this->wishlistFacade->emptyWishlist($wishlistTransfer);

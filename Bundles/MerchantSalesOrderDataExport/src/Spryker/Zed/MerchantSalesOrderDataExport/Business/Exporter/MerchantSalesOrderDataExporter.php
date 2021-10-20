@@ -110,7 +110,7 @@ class MerchantSalesOrderDataExporter implements MerchantSalesOrderDataExporterIn
             $dataExportResultTransfer = $this->exportBatchData(
                 $dataExportBatchTransfer,
                 $dataExportConfigurationTransfer,
-                $dataExportResultTransfer
+                $dataExportResultTransfer,
             );
 
             if (!$dataExportResultTransfer->getIsSuccessful()) {
@@ -119,7 +119,7 @@ class MerchantSalesOrderDataExporter implements MerchantSalesOrderDataExporterIn
 
             $extendedDataExportConfigurationTransfer->addFilterCriterion(
                 static::FILTER_CRITERIA_KEY_OFFSET,
-                $dataExportResultTransfer->getExportCount()
+                $dataExportResultTransfer->getExportCount(),
             );
         } while ($dataExportResultTransfer->getExportCount() === static::LIMIT_VALUE);
 
@@ -161,7 +161,7 @@ class MerchantSalesOrderDataExporter implements MerchantSalesOrderDataExporterIn
             $dataExportWriteResponseTransfer = $this->writeMerchantOrderData(
                 $exportData,
                 $dataExportConfigurationTransfer,
-                $dataExportBatchTransfer
+                $dataExportBatchTransfer,
             );
 
             if (!$dataExportWriteResponseTransfer->getIsSuccessful()) {
@@ -179,7 +179,7 @@ class MerchantSalesOrderDataExporter implements MerchantSalesOrderDataExporterIn
         $dataExportWriteResponseTransfer = $this->writeMerchantOrderData(
             $exportData,
             $dataExportConfigurationTransfer,
-            $dataExportBatchTransfer
+            $dataExportBatchTransfer,
         );
 
         if (!$dataExportWriteResponseTransfer->getIsSuccessful()) {
@@ -208,11 +208,11 @@ class MerchantSalesOrderDataExporter implements MerchantSalesOrderDataExporterIn
     ): DataExportWriteResponseTransfer {
         $dataExportConfigurationTransfer->addHook(
             static::HOOK_KEY_MERCHANT_NAME,
-            $exportData[0][static::EXTENDED_DATA_EXPORT_CONFIGURATION_FIELD_MERCHANT_NAME]
+            $exportData[0][static::EXTENDED_DATA_EXPORT_CONFIGURATION_FIELD_MERCHANT_NAME],
         );
         $dataExportConfigurationTransfer->addHook(
             static::HOOK_KEY_STORE_NAME,
-            $exportData[0][static::EXTENDED_DATA_EXPORT_CONFIGURATION_FIELD_MERCHANT_ORDER_STORE]
+            $exportData[0][static::EXTENDED_DATA_EXPORT_CONFIGURATION_FIELD_MERCHANT_ORDER_STORE],
         );
 
         $dataExportBatchTransfer->setData($exportData);
@@ -220,7 +220,7 @@ class MerchantSalesOrderDataExporter implements MerchantSalesOrderDataExporterIn
 
         return $this->dataExportService->write(
             $dataExportBatchTransfer,
-            $dataExportConfigurationTransfer
+            $dataExportConfigurationTransfer,
         );
     }
 
@@ -258,11 +258,11 @@ class MerchantSalesOrderDataExporter implements MerchantSalesOrderDataExporterIn
         DataExportConfigurationTransfer $dataExportConfigurationTransfer
     ): DataExportConfigurationTransfer {
         $salesDataExportDataExportConfigurationsTransfer = $this->dataExportService->parseConfiguration(
-            $this->merchantSalesOrderDataExportConfig->getModuleDataExportConfigurationsFilePath()
+            $this->merchantSalesOrderDataExportConfig->getModuleDataExportConfigurationsFilePath(),
         );
         $dataExportConfigurationTransfer = $this->dataExportService->resolveDataExportActionConfiguration(
             $dataExportConfigurationTransfer,
-            $salesDataExportDataExportConfigurationsTransfer
+            $salesDataExportDataExportConfigurationsTransfer,
         );
 
         return $dataExportConfigurationTransfer;

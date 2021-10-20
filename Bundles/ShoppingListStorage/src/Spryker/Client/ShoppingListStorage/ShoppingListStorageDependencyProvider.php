@@ -82,7 +82,7 @@ class ShoppingListStorageDependencyProvider extends AbstractDependencyProvider
     {
         $container->set(static::SHOPPING_LIST_STORAGE_SYNCHRONIZATION_SERVICE, function (Container $container) {
             return new ShoppingListStorageToSynchronizationServiceBridge(
-                $container->getLocator()->synchronization()->service()
+                $container->getLocator()->synchronization()->service(),
             );
         });
 

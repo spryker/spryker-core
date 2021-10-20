@@ -98,7 +98,7 @@ class CmsBlockCategoryWriter implements CmsBlockCategoryWriterInterface
         $query = $this->queryContainer
             ->queryCmsBlockCategoryConnectorByIdCategory(
                 $categoryTransfer->getIdCategory(),
-                $categoryTransfer->getFkCategoryTemplate()
+                $categoryTransfer->getFkCategoryTemplate(),
             );
 
         $relations = $query->find();
@@ -117,7 +117,7 @@ class CmsBlockCategoryWriter implements CmsBlockCategoryWriterInterface
         foreach ($relations as $relation) {
             $this->touchFacade->touchActive(
                 CmsBlockCategoryConnectorConfig::RESOURCE_TYPE_CMS_BLOCK_CATEGORY_CONNECTOR,
-                $relation->getFkCategory()
+                $relation->getFkCategory(),
             );
         }
     }
@@ -137,7 +137,7 @@ class CmsBlockCategoryWriter implements CmsBlockCategoryWriterInterface
                     $idCmsBlocks,
                     [$categoryTransfer->getIdCategory()],
                     $idCmsBlockCategoryPosition,
-                    $idCategoryTemplate
+                    $idCategoryTemplate,
                 );
                 $this->touchActiveCategoryCmsBlockRelation([$categoryTransfer->getIdCategory()]);
             }
@@ -154,7 +154,7 @@ class CmsBlockCategoryWriter implements CmsBlockCategoryWriterInterface
         foreach ($idCategories as $idCategory) {
             $this->touchFacade->touchActive(
                 CmsBlockCategoryConnectorConfig::RESOURCE_TYPE_CMS_BLOCK_CATEGORY_CONNECTOR,
-                $idCategory
+                $idCategory,
             );
         }
     }
@@ -223,7 +223,7 @@ class CmsBlockCategoryWriter implements CmsBlockCategoryWriterInterface
                     $idCmsBlock,
                     $idCategory,
                     $idCmsBlockCategoryPosition,
-                    $idCategoryTemplate
+                    $idCategoryTemplate,
                 );
             }
         }

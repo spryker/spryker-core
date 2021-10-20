@@ -46,15 +46,15 @@ abstract class AbstractSpySalesOrderQuery extends BaseSpySalesOrderQuery
                 ->clearSelectColumns()
                 ->withColumn(
                     sprintf('GROUP_CONCAT(%s)', SpyOmsOrderItemStateTableMap::COL_NAME),
-                    $resultFieldName
+                    $resultFieldName,
                 )
                 ->filterByFkSalesOrder(
                     sprintf(
                         '%s = %s',
                         SpySalesOrderItemTableMap::COL_FK_SALES_ORDER,
-                        SpySalesOrderTableMap::COL_ID_SALES_ORDER
+                        SpySalesOrderTableMap::COL_ID_SALES_ORDER,
                     ),
-                    Criteria::CUSTOM
+                    Criteria::CUSTOM,
                 )
                 ->groupByFkSalesOrder()
             ->endUse();
@@ -78,15 +78,15 @@ abstract class AbstractSpySalesOrderQuery extends BaseSpySalesOrderQuery
             ->useItemQuery()
                 ->withColumn(
                     sprintf('COUNT(%s)', SpySalesOrderItemTableMap::COL_ID_SALES_ORDER_ITEM),
-                    $resultFieldName
+                    $resultFieldName,
                 )
                 ->filterByFkSalesOrder(
                     sprintf(
                         '%s = %s',
                         SpySalesOrderItemTableMap::COL_FK_SALES_ORDER,
-                        SpySalesOrderTableMap::COL_ID_SALES_ORDER
+                        SpySalesOrderTableMap::COL_ID_SALES_ORDER,
                     ),
-                    Criteria::CUSTOM
+                    Criteria::CUSTOM,
                 )
                 ->groupByFkSalesOrder()
             ->endUse();
@@ -111,15 +111,15 @@ abstract class AbstractSpySalesOrderQuery extends BaseSpySalesOrderQuery
             ->useOrderTotalQuery()
             ->withColumn(
                 SpySalesOrderTotalsTableMap::COL_GRAND_TOTAL,
-                $resultFieldName
+                $resultFieldName,
             )
             ->filterByFkSalesOrder(
                 sprintf(
                     '%s = %s',
                     SpySalesOrderTotalsTableMap::COL_FK_SALES_ORDER,
-                    SpySalesOrderTableMap::COL_ID_SALES_ORDER
+                    SpySalesOrderTableMap::COL_ID_SALES_ORDER,
                 ),
-                Criteria::CUSTOM
+                Criteria::CUSTOM,
             )
             ->limit(1)
             ->orderByCreatedAt(Criteria::DESC)
@@ -141,7 +141,7 @@ abstract class AbstractSpySalesOrderQuery extends BaseSpySalesOrderQuery
         $params = [];
         $this->withColumn(
             sprintf('(%s)', $subQuery->createSelectSql($params)),
-            $resultFieldName
+            $resultFieldName,
         );
     }
 

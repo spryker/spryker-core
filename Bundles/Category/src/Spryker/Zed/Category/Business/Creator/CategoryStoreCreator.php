@@ -50,13 +50,13 @@ class CategoryStoreCreator implements CategoryStoreCreatorInterface
         if ($categoryTransfer->getParentCategoryNode()) {
             $storeIdsToAdd = $this->filterOutStoreIdsMissingInParentCategoryStoreRelation(
                 $categoryTransfer->getParentCategoryNodeOrFail()->getIdCategoryNodeOrFail(),
-                $storeIdsToAdd
+                $storeIdsToAdd,
             );
         }
 
         $this->categoryEntityManager->bulkCreateCategoryStoreRelationForStores(
             [$categoryTransfer->getIdCategoryOrFail()],
-            $storeIdsToAdd
+            $storeIdsToAdd,
         );
     }
 

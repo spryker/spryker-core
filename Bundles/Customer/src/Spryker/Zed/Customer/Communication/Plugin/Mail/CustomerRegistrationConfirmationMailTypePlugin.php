@@ -99,7 +99,7 @@ class CustomerRegistrationConfirmationMailTypePlugin extends AbstractPlugin impl
 
         $mailBuilder->addRecipient(
             $customerTransfer->getEmail(),
-            $customerTransfer->getFirstName() . ' ' . $customerTransfer->getLastName()
+            $customerTransfer->getFirstName() . ' ' . $customerTransfer->getLastName(),
         );
 
         return $this;

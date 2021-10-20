@@ -144,7 +144,7 @@ class CmsBlockForm extends AbstractType
             $this->getFactory()->getStoreRelationFormTypePlugin()->getType(),
             [
                 'label' => false,
-            ]
+            ],
         );
 
         return $this;
@@ -321,7 +321,7 @@ class CmsBlockForm extends AbstractType
             },
             function ($value) {
                 return $value;
-            }
+            },
         );
     }
 

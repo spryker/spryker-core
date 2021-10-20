@@ -60,7 +60,7 @@ class WishlistsRestApiFacadeTest extends Test
             [
                 'name' => $originalName,
                 'fkCustomer' => $this->customer->getIdCustomer(),
-            ]
+            ],
         );
         $wishlistRequestTransfer = (new WishlistRequestTransfer())
             ->setUuid($originalWishlist->getUuid())
@@ -98,7 +98,7 @@ class WishlistsRestApiFacadeTest extends Test
         $this->assertFalse($wishlistResponseTransfer->getIsSuccess());
         $this->assertSame(
             $wishlistResponseTransfer->getErrorIdentifier(),
-            WishlistsRestApiConfig::ERROR_IDENTIFIER_WISHLIST_NOT_FOUND
+            WishlistsRestApiConfig::ERROR_IDENTIFIER_WISHLIST_NOT_FOUND,
         );
     }
 
@@ -114,7 +114,7 @@ class WishlistsRestApiFacadeTest extends Test
             [
                 'name' => $originalName,
                 'fkCustomer' => $this->customer->getIdCustomer(),
-            ]
+            ],
         );
         $wishlistRequestTransfer = (new WishlistRequestTransfer())
             ->setUuid($wishlist->getUuid())
@@ -128,7 +128,7 @@ class WishlistsRestApiFacadeTest extends Test
         $this->assertFalse($wishlistResponseTransfer->getIsSuccess());
         $this->assertSame(
             $wishlistResponseTransfer->getErrorIdentifier(),
-            WishlistsRestApiConfig::ERROR_IDENTIFIER_WISHLIST_NAME_WRONG_FORMAT
+            WishlistsRestApiConfig::ERROR_IDENTIFIER_WISHLIST_NAME_WRONG_FORMAT,
         );
     }
 
@@ -144,13 +144,13 @@ class WishlistsRestApiFacadeTest extends Test
             [
                 'name' => $firstWishlistName,
                 'fkCustomer' => $this->customer->getIdCustomer(),
-            ]
+            ],
         );
         $this->tester->haveWishlist(
             [
                 'name' => $secondWishlistName,
                 'fkCustomer' => $this->customer->getIdCustomer(),
-            ]
+            ],
         );
         $wishlistRequestTransfer = (new WishlistRequestTransfer())
             ->setUuid($wishlist1->getUuid())
@@ -164,7 +164,7 @@ class WishlistsRestApiFacadeTest extends Test
         $this->assertFalse($wishlistResponseTransfer->getIsSuccess());
         $this->assertSame(
             $wishlistResponseTransfer->getErrorIdentifier(),
-            WishlistsRestApiConfig::ERROR_IDENTIFIER_WISHLIST_NAME_ALREADY_EXIST
+            WishlistsRestApiConfig::ERROR_IDENTIFIER_WISHLIST_NAME_ALREADY_EXIST,
         );
     }
 
@@ -179,7 +179,7 @@ class WishlistsRestApiFacadeTest extends Test
             [
                 'fkCustomer' => $this->customer->getIdCustomer(),
                 'name' => $wishlistName,
-            ]
+            ],
         );
         $wishlistFilterTransfer = (new WishlistFilterTransfer())
             ->setUuid($wishlist->getUuid())
@@ -210,7 +210,7 @@ class WishlistsRestApiFacadeTest extends Test
         $this->assertFalse($wishlistResponseTransfer->getIsSuccess());
         $this->assertSame(
             $wishlistResponseTransfer->getErrorIdentifier(),
-            WishlistsRestApiConfig::ERROR_IDENTIFIER_WISHLIST_NOT_FOUND
+            WishlistsRestApiConfig::ERROR_IDENTIFIER_WISHLIST_NOT_FOUND,
         );
     }
 
@@ -225,7 +225,7 @@ class WishlistsRestApiFacadeTest extends Test
             [
                 'name' => $wishlistName,
                 'fkCustomer' => $this->customer->getIdCustomer(),
-            ]
+            ],
         );
         $concreteProduct = $this->tester->haveProduct();
         $wishlistItemRequestTransfer = (new WishlistItemRequestTransfer())
@@ -246,7 +246,7 @@ class WishlistsRestApiFacadeTest extends Test
         $this->assertSame(1, $wishlistTransfer->getNumberOfItems());
         $this->assertSame(
             $concreteProduct->getSku(),
-            $wishlistItemResponseTransfer->getWishlistItem()->getSku()
+            $wishlistItemResponseTransfer->getWishlistItem()->getSku(),
         );
     }
 
@@ -269,7 +269,7 @@ class WishlistsRestApiFacadeTest extends Test
         $this->assertFalse($wishlistItemResponseTransfer->getIsSuccess());
         $this->assertSame(
             $wishlistItemResponseTransfer->getErrorIdentifier(),
-            WishlistsRestApiConfig::ERROR_IDENTIFIER_WISHLIST_NOT_FOUND
+            WishlistsRestApiConfig::ERROR_IDENTIFIER_WISHLIST_NOT_FOUND,
         );
     }
 
@@ -283,7 +283,7 @@ class WishlistsRestApiFacadeTest extends Test
             [
                 'name' => 'name',
                 'fkCustomer' => $this->customer->getIdCustomer(),
-            ]
+            ],
         );
         $wishlistItemRequestTransfer = (new WishlistItemRequestTransfer())
             ->setUuidWishlist($wishlist->getUuid())
@@ -297,7 +297,7 @@ class WishlistsRestApiFacadeTest extends Test
         $this->assertFalse($wishlistItemResponseTransfer->getIsSuccess());
         $this->assertSame(
             $wishlistItemResponseTransfer->getErrorIdentifier(),
-            WishlistsRestApiConfig::ERROR_IDENTIFIER_WISHLIST_ITEM_CANT_BE_ADDED
+            WishlistsRestApiConfig::ERROR_IDENTIFIER_WISHLIST_ITEM_CANT_BE_ADDED,
         );
     }
 
@@ -312,7 +312,7 @@ class WishlistsRestApiFacadeTest extends Test
             [
                 'fkCustomer' => $this->customer->getIdCustomer(),
                 'name' => $wishlistName,
-            ]
+            ],
         );
         $concreteProduct = $this->tester->haveProduct();
         $wishlistItem = $this->tester->haveItemInWishlist(
@@ -321,7 +321,7 @@ class WishlistsRestApiFacadeTest extends Test
                 'fkCustomer' => $this->customer->getIdCustomer(),
                 'sku' => $concreteProduct->getSku(),
                 'wishlistName' => $wishlist->getName(),
-            ]
+            ],
         );
         $wishlistItemRequestTransfer = (new WishlistItemRequestTransfer())
             ->setUuidWishlist($wishlist->getUuid())
@@ -350,7 +350,7 @@ class WishlistsRestApiFacadeTest extends Test
             [
                 'fkCustomer' => $this->customer->getIdCustomer(),
                 'name' => 'name',
-            ]
+            ],
         );
         $concreteProduct = $this->tester->haveProduct();
         $wishlistItem = $this->tester->haveItemInWishlist(
@@ -359,7 +359,7 @@ class WishlistsRestApiFacadeTest extends Test
                 'fkCustomer' => $this->customer->getIdCustomer(),
                 'sku' => $concreteProduct->getSku(),
                 'wishlistName' => $wishlist->getName(),
-            ]
+            ],
         );
         $wishlistItemRequestTransfer = (new WishlistItemRequestTransfer())
             ->setUuidWishlist('uuid-does-not-exist')
@@ -374,7 +374,7 @@ class WishlistsRestApiFacadeTest extends Test
         $this->assertFalse($wishlistItemResponseTransfer->getIsSuccess());
         $this->assertSame(
             WishlistsRestApiConfig::ERROR_IDENTIFIER_WISHLIST_NOT_FOUND,
-            $wishlistItemResponseTransfer->getErrorIdentifier()
+            $wishlistItemResponseTransfer->getErrorIdentifier(),
         );
     }
 
@@ -388,7 +388,7 @@ class WishlistsRestApiFacadeTest extends Test
             [
                 'fkCustomer' => $this->customer->getIdCustomer(),
                 'name' => 'name',
-            ]
+            ],
         );
         $concreteProduct = $this->tester->haveProduct();
 
@@ -405,7 +405,7 @@ class WishlistsRestApiFacadeTest extends Test
         $this->assertFalse($wishlistItemResponseTransfer->getIsSuccess());
         $this->assertSame(
             WishlistsRestApiConfig::ERROR_IDENTIFIER_ITEM_WITH_SKU_NOT_FOUND_IN_WISHLIST,
-            $wishlistItemResponseTransfer->getErrorIdentifier()
+            $wishlistItemResponseTransfer->getErrorIdentifier(),
         );
     }
 }

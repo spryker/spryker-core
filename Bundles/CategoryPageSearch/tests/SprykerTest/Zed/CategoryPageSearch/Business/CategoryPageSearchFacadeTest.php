@@ -312,7 +312,7 @@ class CategoryPageSearchFacadeTest extends Unit
         $this->assertSame(
             $categoryLocalizedAttributesTransfer->getName(),
             $data[static::KEY_SEARCH_RESULT_DATA][static::KEY_NAME],
-            'The name of category in search-result-data does not equals to expected value.'
+            'The name of category in search-result-data does not equals to expected value.',
         );
     }
 

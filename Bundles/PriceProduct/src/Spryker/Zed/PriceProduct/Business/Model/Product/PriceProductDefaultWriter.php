@@ -53,7 +53,7 @@ class PriceProductDefaultWriter implements PriceProductDefaultWriterInterface
         $idEntity = $moneyValueTransfer->getIdEntity();
 
         $priceProductDefaultEntity = $this->priceProductRepository->findPriceProductDefaultByIdPriceProductStore(
-            $idEntity
+            $idEntity,
         );
 
         if ($priceProductDefaultEntity) {

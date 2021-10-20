@@ -33,7 +33,7 @@ class ProductConfiguratorRequestDataStoreExpander implements ProductConfigurator
     public function expand(ProductConfiguratorRequestDataTransfer $productConfiguratorRequestDataTransfer): ProductConfiguratorRequestDataTransfer
     {
         return $productConfiguratorRequestDataTransfer->setStoreName(
-            $this->storeClient->getCurrentStore()->getName()
+            $this->storeClient->getCurrentStore()->getName(),
         );
     }
 }

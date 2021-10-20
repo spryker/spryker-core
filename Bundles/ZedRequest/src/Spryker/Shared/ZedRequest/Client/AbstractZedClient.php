@@ -87,7 +87,7 @@ abstract class AbstractZedClient implements AbstractZedClientInterface
             $url,
             $object,
             $this->prepareAndGetMetaTransfers(),
-            $requestOptions
+            $requestOptions,
         );
 
         static::$lastResponse = $response;

@@ -180,7 +180,7 @@ class PaymentFacadeTest extends Unit
         $this->assertCount(
             1,
             $paymentMethodsTransfer->getMethods(),
-            'Amount of found payment method does not match to the expected value'
+            'Amount of found payment method does not match to the expected value',
         );
     }
 
@@ -243,7 +243,7 @@ class PaymentFacadeTest extends Unit
         $this->assertCount(
             2,
             $paymentMethodsTransfer->getMethods(),
-            'Amount of found payment method does not match to the expected value'
+            'Amount of found payment method does not match to the expected value',
         );
     }
 
@@ -293,13 +293,13 @@ class PaymentFacadeTest extends Unit
         $this->assertCount(
             1,
             $paymentProviderCollectionTransfer->getPaymentProviders(),
-            'Amount of payment providers does not match the expected value'
+            'Amount of payment providers does not match the expected value',
         );
         $paymentMethods = $paymentProviderCollectionTransfer->getPaymentProviders()[0]->getPaymentMethods();
         $this->assertCount(
             1,
             $paymentMethods,
-            'Amount of payment methods does not match the expected value'
+            'Amount of payment methods does not match the expected value',
         );
     }
 
@@ -491,8 +491,8 @@ class PaymentFacadeTest extends Unit
             (new PaymentMethodsTransfer())
                 ->addMethod(
                     (new PaymentMethodTransfer())->setMethodName('dummyPaymentInvoice')
-                    ->setPaymentMethodKey('dummyPaymentInvoice')
-                )
+                    ->setPaymentMethodKey('dummyPaymentInvoice'),
+                ),
         );
 
         /** @var \Spryker\Zed\Payment\Business\PaymentBusinessFactory $paymentBusinessFactoryMock */

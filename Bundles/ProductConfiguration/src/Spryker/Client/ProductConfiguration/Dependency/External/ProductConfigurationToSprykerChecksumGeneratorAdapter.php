@@ -32,7 +32,7 @@ class ProductConfigurationToSprykerChecksumGeneratorAdapter implements ProductCo
     {
         return $this->checksumGenerator->generateChecksum(
             $data,
-            $encryptionKey
+            $encryptionKey,
         );
     }
 }

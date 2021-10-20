@@ -69,7 +69,7 @@ class NumericFacetAggregation extends AbstractFacetAggregation
             $facetNameAgg = $this
                 ->createStandaloneFacetNameAggregation(
                     $fieldName,
-                    $this->facetConfigTransfer->getName()
+                    $this->facetConfigTransfer->getName(),
                 );
         } else {
             $facetNameAgg = $this->createFacetNameAggregation($fieldName, $this->getFacetNameAggregationSize());

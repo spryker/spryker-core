@@ -65,7 +65,7 @@ class CompanyBusinessUnitAddressReader implements CompanyBusinessUnitAddressRead
     protected function getCurrentUserCompanyBusinessUnitAddressByUuid(RestRequestInterface $restRequest): RestResponseInterface
     {
         $companyUnitAddressResponseTransfer = $this->companyBusinessUnitAddressClient->findCompanyBusinessUnitAddressByUuid(
-            (new CompanyUnitAddressTransfer())->setUuid($restRequest->getResource()->getId())
+            (new CompanyUnitAddressTransfer())->setUuid($restRequest->getResource()->getId()),
         );
 
         if (
@@ -78,13 +78,13 @@ class CompanyBusinessUnitAddressReader implements CompanyBusinessUnitAddressRead
         $restCompanyBusinessUnitAddressesAttributesTransfer = $this->companyBusinessUnitAddressMapperInterface
             ->mapCompanyUnitAddressTransferToRestCompanyBusinessUnitAddressesAttributesTransfer(
                 $companyUnitAddressResponseTransfer->getCompanyUnitAddressTransfer(),
-                new RestCompanyBusinessUnitAddressesAttributesTransfer()
+                new RestCompanyBusinessUnitAddressesAttributesTransfer(),
             );
 
         return $this->companyBusinessUnitAddressRestResponseBuilder
             ->createCompanyBusinessUnitAddressRestResponse(
                 $companyUnitAddressResponseTransfer->getCompanyUnitAddressTransfer()->getUuid(),
-                $restCompanyBusinessUnitAddressesAttributesTransfer
+                $restCompanyBusinessUnitAddressesAttributesTransfer,
             );
     }
 

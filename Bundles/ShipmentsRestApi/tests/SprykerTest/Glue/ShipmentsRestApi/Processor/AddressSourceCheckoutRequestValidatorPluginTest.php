@@ -53,7 +53,7 @@ class AddressSourceCheckoutRequestValidatorPluginTest extends Unit
 
         $restCheckoutRequestAttributesTransfer = (new RestCheckoutRequestAttributesTransfer())
             ->addShipment(
-                (new RestShipmentsTransfer())->setShippingAddress(new RestAddressTransfer())
+                (new RestShipmentsTransfer())->setShippingAddress(new RestAddressTransfer()),
             );
 
         // Act

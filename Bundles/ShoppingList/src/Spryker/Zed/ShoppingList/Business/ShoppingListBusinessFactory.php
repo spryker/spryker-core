@@ -68,7 +68,7 @@ class ShoppingListBusinessFactory extends AbstractBusinessFactory
             $this->getCompanyUserFacade(),
             $this->createShoppingListItemPluginExecutor(),
             $this->getMessengerFacade(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -83,7 +83,7 @@ class ShoppingListBusinessFactory extends AbstractBusinessFactory
             $this->getEventFacade(),
             $this->createShoppingListItemOperation(),
             $this->createShoppingListReader(),
-            $this->createShoppingListItemPluginExecutor()
+            $this->createShoppingListItemPluginExecutor(),
         );
     }
 
@@ -96,7 +96,7 @@ class ShoppingListBusinessFactory extends AbstractBusinessFactory
             $this->getEntityManager(),
             $this->getRepository(),
             $this->getMessengerFacade(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -110,7 +110,7 @@ class ShoppingListBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->createShoppingListResolver(),
             $this->createShoppingListItemOperationValidator(),
-            $this->createShoppingListItemPluginExecutor()
+            $this->createShoppingListItemPluginExecutor(),
         );
     }
 
@@ -134,7 +134,7 @@ class ShoppingListBusinessFactory extends AbstractBusinessFactory
             $this->getAddItemPreCheckPlugins(),
             $this->getItemExpanderPlugins(),
             $this->getItemCollectionExpanderPlugins(),
-            $this->getShoppingListItemBulkPostSavePlugins()
+            $this->getShoppingListItemBulkPostSavePlugins(),
         );
     }
 
@@ -149,7 +149,7 @@ class ShoppingListBusinessFactory extends AbstractBusinessFactory
             $this->getPersistentCartFacade(),
             $this->createShoppingListItemOperation(),
             $this->getQuoteItemExpanderPlugins(),
-            $this->getItemToShoppingListItemMapperPlugins()
+            $this->getItemToShoppingListItemMapperPlugins(),
         );
     }
 
@@ -160,7 +160,7 @@ class ShoppingListBusinessFactory extends AbstractBusinessFactory
     {
         return new ShoppingListSharer(
             $this->getEntityManager(),
-            $this->getRepository()
+            $this->getRepository(),
         );
     }
 
@@ -172,7 +172,7 @@ class ShoppingListBusinessFactory extends AbstractBusinessFactory
         return new ShoppingListItemOperationValidator(
             $this->createShoppingListItemAddOperationValidator(),
             $this->createShoppingListItemUpdateOperationValidator(),
-            $this->createShoppingListItemDeleteOperationValidator()
+            $this->createShoppingListItemDeleteOperationValidator(),
         );
     }
 
@@ -185,7 +185,7 @@ class ShoppingListBusinessFactory extends AbstractBusinessFactory
             $this->createShoppingListItemValidator(),
             $this->createShoppingListItemMessageAdder(),
             $this->createShoppingListItemPluginExecutor(),
-            $this->createShoppingListItemPermissionValidator()
+            $this->createShoppingListItemPermissionValidator(),
         );
     }
 
@@ -213,7 +213,7 @@ class ShoppingListBusinessFactory extends AbstractBusinessFactory
         return new ShoppingListItemValidator(
             $this->getRepository(),
             $this->createShoppingListItemPermissionValidator(),
-            $this->getProductFacade()
+            $this->getProductFacade(),
         );
     }
 
@@ -274,7 +274,7 @@ class ShoppingListBusinessFactory extends AbstractBusinessFactory
             $this->getEntityManager(),
             $this->getRepository(),
             $this->getCompanyUserFacade(),
-            $this->getEventFacade()
+            $this->getEventFacade(),
         );
     }
 

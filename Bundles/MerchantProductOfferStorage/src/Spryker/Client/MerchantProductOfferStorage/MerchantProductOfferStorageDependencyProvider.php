@@ -155,7 +155,7 @@ class MerchantProductOfferStorageDependencyProvider extends AbstractDependencyPr
     {
         $container->set(static::CLIENT_STORAGE, function (Container $container) {
             return new MerchantProductOfferStorageToStorageClientBridge(
-                $container->getLocator()->storage()->client()
+                $container->getLocator()->storage()->client(),
             );
         });
 
@@ -171,7 +171,7 @@ class MerchantProductOfferStorageDependencyProvider extends AbstractDependencyPr
     {
         $container->set(static::SERVICE_SYNCHRONIZATION, function (Container $container) {
             return new MerchantProductOfferStorageToSynchronizationServiceBridge(
-                $container->getLocator()->synchronization()->service()
+                $container->getLocator()->synchronization()->service(),
             );
         });
 
@@ -187,7 +187,7 @@ class MerchantProductOfferStorageDependencyProvider extends AbstractDependencyPr
     {
         $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new MerchantProductOfferStorageToUtilEncodingServiceBridge(
-                $container->getLocator()->utilEncoding()->service()
+                $container->getLocator()->utilEncoding()->service(),
             );
         });
 
@@ -203,7 +203,7 @@ class MerchantProductOfferStorageDependencyProvider extends AbstractDependencyPr
     {
         $container->set(static::CLIENT_STORE, function (Container $container) {
             return new MerchantProductOfferStorageToStoreClientBridge(
-                $container->getLocator()->store()->client()
+                $container->getLocator()->store()->client(),
             );
         });
 
@@ -219,7 +219,7 @@ class MerchantProductOfferStorageDependencyProvider extends AbstractDependencyPr
     {
         $container->set(static::CLIENT_MERCHANT_STORAGE, function (Container $container) {
             return new MerchantProductOfferStorageToMerchantStorageClientBridge(
-                $container->getLocator()->merchantStorage()->client()
+                $container->getLocator()->merchantStorage()->client(),
             );
         });
 

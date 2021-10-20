@@ -60,7 +60,7 @@ class DummyMarketplacePaymentFacadeTest extends Unit
         $this->assertCount($paymentMethodsTransfer->getMethods()->count(), $filteredPaymentMethodsTransfer->getMethods());
         $this->assertSame(
             $paymentMethod->getPaymentProvider()->getName(),
-            $filteredPaymentMethodsTransfer->getMethods()->offsetGet(0)->getPaymentProvider()->getName()
+            $filteredPaymentMethodsTransfer->getMethods()->offsetGet(0)->getPaymentProvider()->getName(),
         );
     }
 

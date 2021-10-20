@@ -42,7 +42,7 @@ class DiscountPromotionCalculationFormExpanderPlugin extends AbstractPlugin impl
             [
                 'data_class' => DiscountPromotionTransfer::class,
                 'label' => false,
-            ]
+            ],
         );
     }
 }

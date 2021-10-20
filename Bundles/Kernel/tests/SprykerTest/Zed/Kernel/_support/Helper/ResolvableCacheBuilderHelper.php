@@ -270,7 +270,7 @@ class ResolvableCacheBuilderHelper extends Module
         $this->assertSame(
             $expectedCacheValue,
             $currentCacheValue,
-            sprintf('Expected "%s" but found "%s" for cache key "%s" given.', $expectedCacheValue, $currentCacheValue, $cacheKey)
+            sprintf('Expected "%s" but found "%s" for cache key "%s" given.', $expectedCacheValue, $currentCacheValue, $cacheKey),
         );
     }
 

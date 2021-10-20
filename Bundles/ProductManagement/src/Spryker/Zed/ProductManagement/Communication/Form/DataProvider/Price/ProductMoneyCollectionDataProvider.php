@@ -56,7 +56,7 @@ class ProductMoneyCollectionDataProvider
                     $priceProductTransfer = $this->mapProductMoneyValueTransfer(
                         $currencyTransfer,
                         $storeWithCurrencyTransfer->getStore(),
-                        $priceTypeTransfer
+                        $priceTypeTransfer,
                     );
                     $productMoneyValueCollection->append($priceProductTransfer);
                 }
@@ -81,7 +81,7 @@ class ProductMoneyCollectionDataProvider
         return $this->mergeMultiStoreMoneyCollection(
             $currentFormMoneyValueCollection,
             $storeCurrencyCollection,
-            $existingCurrencyMap
+            $existingCurrencyMap,
         );
     }
 
@@ -99,7 +99,7 @@ class ProductMoneyCollectionDataProvider
             $identifier = $this->buildItemIdentifier(
                 $moneyValueTransfer->getFkStore(),
                 $priceProductTransfer->getPriceType(),
-                $moneyValueTransfer->getCurrency()
+                $moneyValueTransfer->getCurrency(),
             );
 
             $mappedProductMoneyValueCollection[$identifier] = $priceProductTransfer;
@@ -129,7 +129,7 @@ class ProductMoneyCollectionDataProvider
                     $identifier = $this->buildItemIdentifier(
                         $storeTransfer->getIdStore(),
                         $priceTypeTransfer,
-                        $currencyTransfer
+                        $currencyTransfer,
                     );
 
                     if (isset($existingCurrencyMap[$identifier])) {
@@ -139,7 +139,7 @@ class ProductMoneyCollectionDataProvider
                     $currentFormMoneyValueCollection[$identifier] = $this->mapProductMoneyValueTransfer(
                         $currencyTransfer,
                         $storeTransfer,
-                        $priceTypeTransfer
+                        $priceTypeTransfer,
                     );
                 }
             }
@@ -185,7 +185,7 @@ class ProductMoneyCollectionDataProvider
             $identifier = $this->buildItemIdentifier(
                 $moneyValueTransfer->getFkStore(),
                 $priceProductTransfer->getPriceType(),
-                $moneyValueTransfer->getCurrency()
+                $moneyValueTransfer->getCurrency(),
             );
 
             $currencyIndex[$identifier] = true;
@@ -213,7 +213,7 @@ class ProductMoneyCollectionDataProvider
                 $currencyTransfer->getIdCurrency(),
                 $priceTypeTransfer->getName(),
                 $priceTypeTransfer->getPriceModeConfiguration(),
-            ]
+            ],
         );
     }
 }

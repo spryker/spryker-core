@@ -76,14 +76,14 @@ class DataTableActionHelper extends Module
 
         $elementInRoot = sprintf(
             '//body/ul[@class="dropdown-menu"][1]//following::li/a[contains(., "%s")]',
-            $linkName
+            $linkName,
         );
 
         $elementInList = sprintf(
             '(//table[@data-qa="data-table"]//button[contains(., "%s")])[%s]/following::ul[1]//a[contains(., "%s")]',
             $buttonName,
             $rowPosition,
-            $linkName
+            $linkName,
         );
 
         $this->getDriver()->click(sprintf('%s | %s', $elementInRoot, $elementInList));

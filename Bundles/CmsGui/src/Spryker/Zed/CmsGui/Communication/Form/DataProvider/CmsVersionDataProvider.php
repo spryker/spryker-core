@@ -52,7 +52,7 @@ class CmsVersionDataProvider
         if (!$cmsVersionTransfer) {
             throw new CmsPageNotFoundException(sprintf(
                 'Cms page with id "%d" not found',
-                $idCmsPage
+                $idCmsPage,
             ));
         }
 
@@ -104,14 +104,14 @@ class CmsVersionDataProvider
         $optionLabel = sprintf(
             '%s published on %s ',
             $cmsVersionTransfer->getVersionName(),
-            (new DateTime($cmsVersionTransfer->getCreatedAt()))->format('d/m/Y H:i:s')
+            (new DateTime($cmsVersionTransfer->getCreatedAt()))->format('d/m/Y H:i:s'),
         );
 
         if ($cmsVersionTransfer->getFirstName() !== null) {
             $optionLabel .= sprintf(
                 'by %s %s',
                 $cmsVersionTransfer->getFirstName(),
-                $cmsVersionTransfer->getLastName()
+                $cmsVersionTransfer->getLastName(),
             );
         }
 

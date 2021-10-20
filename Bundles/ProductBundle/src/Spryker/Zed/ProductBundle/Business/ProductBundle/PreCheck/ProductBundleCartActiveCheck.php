@@ -55,7 +55,7 @@ class ProductBundleCartActiveCheck implements ProductBundleCartActiveCheckInterf
             if (!$this->checkBundledProductsActive($groupedProductForBundleTransfers[$itemTransfer->getSku()] ?? [])) {
                 $cartPreCheckResponseTransfer
                     ->addMessage(
-                        $this->createItemIsNotActiveMessageTransfer($itemTransfer->getSku())
+                        $this->createItemIsNotActiveMessageTransfer($itemTransfer->getSku()),
                     )
                     ->setIsSuccess(false);
             }

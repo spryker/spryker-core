@@ -58,7 +58,7 @@ class ProductAbstractReader implements ProductAbstractReaderInterface
         foreach ($categoryIds as $idCategory) {
             $relatedCategoryIds = $this->getRelatedCategoryIdsFromCategoryNodes(
                 $this->categoryFacade->getAllNodesByIdCategory($idCategory),
-                $relatedCategoryIds
+                $relatedCategoryIds,
             );
         }
 

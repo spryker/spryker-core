@@ -139,7 +139,7 @@ class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorage
 
         $productOfferReferencesGroupedByConcreteSku = $this->getProductOfferReferencesGroupedByConcreteSku(
             $productConcreteSkus,
-            $productOfferCollectionTransfer
+            $productOfferCollectionTransfer,
         );
 
         foreach ($productOfferReferencesGroupedByConcreteSku as $concreteSku => $productOfferReferencesGroupedByStore) {
@@ -203,7 +203,7 @@ class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorage
         foreach ($storeNamesToRemove as $storeName) {
             $this->productConcreteOffersStorageDeleter->deleteCollectionByProductSkus(
                 [$productSku],
-                $storeName
+                $storeName,
             );
         }
     }

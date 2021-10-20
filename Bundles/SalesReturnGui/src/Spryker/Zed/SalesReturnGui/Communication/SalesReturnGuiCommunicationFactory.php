@@ -49,7 +49,7 @@ class SalesReturnGuiCommunicationFactory extends AbstractCommunicationFactory
         return $this->getFormFactory()->create(
             ReturnCreateForm::class,
             $returnCreateFormDataProvider->getData($orderTransfer),
-            $returnCreateFormDataProvider->getOptions()
+            $returnCreateFormDataProvider->getOptions(),
         );
     }
 
@@ -61,7 +61,7 @@ class SalesReturnGuiCommunicationFactory extends AbstractCommunicationFactory
         return new ReturnCreateFormDataProvider(
             $this->getSalesReturnFacade(),
             $this->getGlossaryFacade(),
-            $this->getReturnCreateFormHandlerPlugins()
+            $this->getReturnCreateFormHandlerPlugins(),
         );
     }
 
@@ -71,7 +71,7 @@ class SalesReturnGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createReturnCreateTemplateProvider(): ReturnCreateTemplateProviderInterface
     {
         return new ReturnCreateTemplateProvider(
-            $this->getReturnCreateTemplatePlugins()
+            $this->getReturnCreateTemplatePlugins(),
         );
     }
 
@@ -83,7 +83,7 @@ class SalesReturnGuiCommunicationFactory extends AbstractCommunicationFactory
         return new ReturnTable(
             $this->getUtilDateTimeService(),
             $this->getConfig(),
-            $this->getSalesReturnPropelQuery()
+            $this->getSalesReturnPropelQuery(),
         );
     }
 
@@ -97,7 +97,7 @@ class SalesReturnGuiCommunicationFactory extends AbstractCommunicationFactory
         return new OrderReturnTable(
             $orderTransfer,
             $this->getMoneyFacade(),
-            $this->getSalesReturnPropelQuery()
+            $this->getSalesReturnPropelQuery(),
         );
     }
 
@@ -108,7 +108,7 @@ class SalesReturnGuiCommunicationFactory extends AbstractCommunicationFactory
     {
         return new ReturnHandler(
             $this->getSalesReturnFacade(),
-            $this->getReturnCreateFormHandlerPlugins()
+            $this->getReturnCreateFormHandlerPlugins(),
         );
     }
 
@@ -127,7 +127,7 @@ class SalesReturnGuiCommunicationFactory extends AbstractCommunicationFactory
     {
         return new CustomerReader(
             $this->getCustomerFacade(),
-            $this->getSalesFacade()
+            $this->getSalesFacade(),
         );
     }
 

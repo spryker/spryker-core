@@ -102,7 +102,7 @@ class ProductStorageListenerTest extends Unit
 
         $this->productConcreteTransfer = $this->tester->haveProduct();
         $this->productAbstractTransfer = $this->tester->getProductFacade()->findProductAbstractById(
-            $this->productConcreteTransfer->getFkProductAbstract()
+            $this->productConcreteTransfer->getFkProductAbstract(),
         );
 
         $localizedAttributes = $this->tester->generateLocalizedAttributes();

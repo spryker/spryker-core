@@ -94,7 +94,7 @@ class PriceProductScheduleListForm extends AbstractType
                 'attr' => [
                     'placeholder' => 'Please type a name of list',
                 ],
-            ]
+            ],
         );
 
         return $this;

@@ -94,7 +94,7 @@ class ProductAttributeTransferMapper implements ProductAttributeTransferMapperIn
         $glossaryKeyTransfers = $this->glossaryFacade->getGlossaryKeyTransfersByGlossaryKeys($glossaryKeys);
         $translationTransfers = $this->glossaryFacade->getTranslationsByGlossaryKeysAndLocaleTransfers(
             $glossaryKeys,
-            $localeTransfers
+            $localeTransfers,
         );
         $indexedTranslationTransfers = $this->translationMapper
             ->mapTranslationsByKeyNameAndLocaleName($translationTransfers, $localeTransfers, $glossaryKeyTransfers);
@@ -116,7 +116,7 @@ class ProductAttributeTransferMapper implements ProductAttributeTransferMapperIn
         $glossaryKeys = [];
         foreach ($productAttributeEntityCollection as $productAttributeEntity) {
             $glossaryKeys[] = $this->glossaryKeyBuilder->buildGlossaryKey(
-                $productAttributeEntity->getSpyProductAttributeKey()->getKey()
+                $productAttributeEntity->getSpyProductAttributeKey()->getKey(),
             );
         }
 

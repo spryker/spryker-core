@@ -51,7 +51,7 @@ class ProductMeasurementSalesUnitReader implements ProductMeasurementSalesUnitRe
         }
 
         $productMeasurementSalesUnitTransfers = $this->getProductMeasurementSalesUnits(
-            [$productConcreteMeasurementUnitStorageTransfer]
+            [$productConcreteMeasurementUnitStorageTransfer],
         );
 
         return $this->updateIsDefault(current($productMeasurementSalesUnitTransfers));
@@ -75,7 +75,7 @@ class ProductMeasurementSalesUnitReader implements ProductMeasurementSalesUnitRe
         }
 
         $indexedProductMeasurementSalesUnitTransfers = $this->getProductMeasurementSalesUnits(
-            $productConcreteMeasurementUnitStorageTransfers
+            $productConcreteMeasurementUnitStorageTransfers,
         );
         $productConcreteProductMeasurementSalesUnitTransfers = [];
         foreach ($indexedProductMeasurementSalesUnitTransfers as $idProductConcrete => $productMeasurementSalesUnitTransfers) {
@@ -110,7 +110,7 @@ class ProductMeasurementSalesUnitReader implements ProductMeasurementSalesUnitRe
 
         return $this->convertToProductMeasurementSalesUnitTransfers(
             $productConcreteMeasurementSalesUnitTransfers,
-            $this->getIndexedProductMeasurementUnitTransfers($productMeasurementUnitIds)
+            $this->getIndexedProductMeasurementUnitTransfers($productMeasurementUnitIds),
         );
     }
 
@@ -130,7 +130,7 @@ class ProductMeasurementSalesUnitReader implements ProductMeasurementSalesUnitRe
             $productMeasurementUnitTransfer = $indexedProductMeasurementUnitTransfers[$idProductMeasurementUnit];
             $productMeasurementSalesUnitTransfer = $this->mapProductMeasurementSalesUnitTransfer(
                 $productConcreteMeasurementSalesUnitTransfer,
-                new ProductMeasurementSalesUnitTransfer()
+                new ProductMeasurementSalesUnitTransfer(),
             );
             $productMeasurementSalesUnitTransfer->setProductMeasurementUnit($productMeasurementUnitTransfer);
             $productMeasurementSalesUnitTransfers[$productMeasurementSalesUnitTransfer->getFkProduct()][]
@@ -191,7 +191,7 @@ class ProductMeasurementSalesUnitReader implements ProductMeasurementSalesUnitRe
     ): ProductMeasurementSalesUnitTransfer {
         $measurementSalesUnitTransfer->fromArray(
             $concreteMeasurementSalesUnitTransfer->toArray(),
-            true
+            true,
         );
 
         return $measurementSalesUnitTransfer;

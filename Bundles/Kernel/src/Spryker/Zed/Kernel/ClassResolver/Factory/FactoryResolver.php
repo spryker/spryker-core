@@ -54,7 +54,7 @@ class FactoryResolver extends AbstractClassResolver
             self::KEY_NAMESPACE,
             self::KEY_BUNDLE,
             self::KEY_LAYER,
-            static::KEY_CODE_BUCKET
+            static::KEY_CODE_BUCKET,
         );
     }
 
@@ -76,7 +76,7 @@ class FactoryResolver extends AbstractClassResolver
         $className = str_replace(
             array_keys($searchAndReplace),
             array_values($searchAndReplace),
-            $this->getClassPattern()
+            $this->getClassPattern(),
         );
 
         return $className;

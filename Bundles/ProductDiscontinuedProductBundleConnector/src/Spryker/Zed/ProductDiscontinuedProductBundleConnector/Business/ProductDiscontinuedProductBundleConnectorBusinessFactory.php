@@ -29,7 +29,7 @@ class ProductDiscontinuedProductBundleConnectorBusinessFactory extends AbstractB
     {
         return new ProductBundleDiscontinuedWriter(
             $this->getRepository(),
-            $this->getProductDiscontinuedFacade()
+            $this->getProductDiscontinuedFacade(),
         );
     }
 
@@ -40,7 +40,7 @@ class ProductDiscontinuedProductBundleConnectorBusinessFactory extends AbstractB
     {
         return new ProductBundleDiscontinuedReader(
             $this->getProductDiscontinuedFacade(),
-            $this->getProductBundleFacade()
+            $this->getProductBundleFacade(),
         );
     }
 

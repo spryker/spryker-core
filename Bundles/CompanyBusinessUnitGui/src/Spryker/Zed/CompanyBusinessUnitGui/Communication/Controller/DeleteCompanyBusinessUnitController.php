@@ -59,7 +59,7 @@ class DeleteCompanyBusinessUnitController extends AbstractController
         }
 
         $idCompanyBusinessUnit = $this->castId(
-            $request->query->get(static::PARAM_ID_COMPANY_BUSINESS_UNIT)
+            $request->query->get(static::PARAM_ID_COMPANY_BUSINESS_UNIT),
         );
 
         $companyBusinessUnitTransfer = new CompanyBusinessUnitTransfer();

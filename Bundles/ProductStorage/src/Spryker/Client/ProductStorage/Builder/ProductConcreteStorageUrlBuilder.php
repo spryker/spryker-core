@@ -28,7 +28,7 @@ class ProductConcreteStorageUrlBuilder implements ProductConcreteStorageUrlBuild
         return sprintf(
             '%s?%s',
             $productConcreteStorageTransfer->getUrl(),
-            $this->resolveProductConcreteQueryString($productConcreteStorageTransfer)
+            $this->resolveProductConcreteQueryString($productConcreteStorageTransfer),
         );
     }
 
@@ -46,7 +46,7 @@ class ProductConcreteStorageUrlBuilder implements ProductConcreteStorageUrlBuild
 
         $superAttributes = $this->filterOutSuperAttributes(
             $productConcreteStorageTransfer->getAttributes(),
-            $productConcreteStorageTransfer->getSuperAttributesDefinition()
+            $productConcreteStorageTransfer->getSuperAttributesDefinition(),
         );
 
         return http_build_query([static::ATTRIBUTE_QUERY_STRING_PREFIX => $superAttributes]);

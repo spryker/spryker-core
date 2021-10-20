@@ -36,7 +36,7 @@ class ProductPriceRestWishlistItemsAttributesMapperPlugin extends AbstractPlugin
             ->createProductPricesMapper()
             ->mapWishlistItemTransferPricesToRestWishlistItemsAttributesTransfer(
                 $wishlistItemTransfer,
-                $restWishlistItemsAttributesTransfer
+                $restWishlistItemsAttributesTransfer,
             );
     }
 }

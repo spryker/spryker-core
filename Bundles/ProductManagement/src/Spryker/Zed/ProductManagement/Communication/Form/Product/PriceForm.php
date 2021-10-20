@@ -236,7 +236,7 @@ class PriceForm extends AbstractType
             'value' => static::MAX_PRICE_SIZE,
             'message' => sprintf(
                 'This value should be less than or equal to "%s".',
-                $this->getMaxPriceValue($currencyTransfer)
+                $this->getMaxPriceValue($currencyTransfer),
             ),
         ]);
     }
@@ -252,7 +252,7 @@ class PriceForm extends AbstractType
             static::MAX_PRICE_SIZE / $this->getDivisor($currencyTransfer),
             $this->getDivisor($currencyTransfer),
             '.',
-            ''
+            '',
         );
     }
 }

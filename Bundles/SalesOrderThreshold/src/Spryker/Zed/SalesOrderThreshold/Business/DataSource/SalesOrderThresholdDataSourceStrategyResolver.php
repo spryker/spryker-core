@@ -45,7 +45,7 @@ class SalesOrderThresholdDataSourceStrategyResolver implements SalesOrderThresho
         foreach ($this->salesOrderThresholdDataSourceStrategyPlugins as $salesOrderThresholdDataSourceStrategyPlugin) {
             $salesOrderThresholdTransfers = array_merge(
                 $salesOrderThresholdTransfers,
-                $salesOrderThresholdDataSourceStrategyPlugin->findApplicableThresholds($quoteTransfer)
+                $salesOrderThresholdDataSourceStrategyPlugin->findApplicableThresholds($quoteTransfer),
             );
         }
 

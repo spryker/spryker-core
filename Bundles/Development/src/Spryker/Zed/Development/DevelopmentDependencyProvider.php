@@ -150,7 +150,7 @@ class DevelopmentDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::FACADE_MODULE_FINDER, function (Container $container) {
             $developmentToModuleFinderFacadeBridge = new DevelopmentToModuleFinderFacadeBridge(
-                $container->getLocator()->moduleFinder()->facade()
+                $container->getLocator()->moduleFinder()->facade(),
             );
 
             return $developmentToModuleFinderFacadeBridge;

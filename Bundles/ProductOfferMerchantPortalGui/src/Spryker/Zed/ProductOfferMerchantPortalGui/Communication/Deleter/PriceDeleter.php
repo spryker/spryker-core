@@ -64,12 +64,12 @@ class PriceDeleter implements PriceDeleterInterface
     ): ValidationResponseTransfer {
         $priceProductOfferCollectionTransfer = $this->deletePriceByQuantityFromPriceProductOfferCollection(
             $priceProductOfferCollectionTransfer,
-            $quantity
+            $quantity,
         );
 
         $validationResponseTransfer = $this->validatePriceProductOfferCollection(
             $priceProductOfferCollectionTransfer,
-            $quantity
+            $quantity,
         );
 
         if (!$validationResponseTransfer->getIsSuccess()) {
@@ -183,7 +183,7 @@ class PriceDeleter implements PriceDeleterInterface
                         ->setIsSuccess(false)
                         ->addValidationError(
                             (new ValidationErrorTransfer())
-                                ->setMessage(static::MESSAGE_ERROR_PRICE_PRODUCT_HAS_VOLUME_PRICES)
+                                ->setMessage(static::MESSAGE_ERROR_PRICE_PRODUCT_HAS_VOLUME_PRICES),
                         );
                 }
             }
@@ -208,7 +208,7 @@ class PriceDeleter implements PriceDeleterInterface
             ->validatePriceProductOfferCollection($priceProductOfferCollectionTransfer);
 
         $generalValidationResponseTransfer->setIsSuccess(
-            $generalValidationResponseTransfer->getIsSuccess() && $validationResponseTransfer->getIsSuccess()
+            $generalValidationResponseTransfer->getIsSuccess() && $validationResponseTransfer->getIsSuccess(),
         );
 
         foreach ($validationResponseTransfer->getValidationErrors() as $validationErrorTransfer) {

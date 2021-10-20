@@ -95,7 +95,7 @@ class ViewShipmentMethodForm extends AbstractType
                 'label' => false,
                 'required' => false,
                 'disabled' => $options[ViewShipmentMethodFormDataProvider::OPTION_STORE_RELATION_DISABLED],
-            ]
+            ],
         );
 
         return $this;
@@ -116,7 +116,7 @@ class ViewShipmentMethodForm extends AbstractType
                 static::OPTION_AMOUNT_PER_STORE => true,
                 'required' => false,
                 'disabled' => $options[ViewShipmentMethodFormDataProvider::OPTION_PRICES_DISABLED],
-            ]
+            ],
         );
 
         return $this;
@@ -141,7 +141,7 @@ class ViewShipmentMethodForm extends AbstractType
                 'constraints' => [
                     new NotBlank(),
                 ],
-            ]
+            ],
         );
 
         return $this;

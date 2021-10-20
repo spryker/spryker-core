@@ -44,7 +44,7 @@ class CurrencyRepository extends AbstractRepository implements CurrencyRepositor
 
         return $this->currencyMapper->mapCurrencyEntityToCurrencyTransfer(
             $currencyEntity,
-            $this->createCurrencyTransfer()
+            $this->createCurrencyTransfer(),
         );
     }
 

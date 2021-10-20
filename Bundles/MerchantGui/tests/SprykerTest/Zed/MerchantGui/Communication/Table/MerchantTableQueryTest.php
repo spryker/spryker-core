@@ -81,7 +81,7 @@ class MerchantTableQueryTest extends Unit
             [],
             [],
             [],
-            []
+            [],
         );
 
         // Act

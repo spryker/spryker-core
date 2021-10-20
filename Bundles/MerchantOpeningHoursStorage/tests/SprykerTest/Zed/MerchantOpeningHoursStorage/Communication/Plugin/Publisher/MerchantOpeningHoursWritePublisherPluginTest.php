@@ -55,9 +55,9 @@ class MerchantOpeningHoursWritePublisherPluginTest extends Unit
             MerchantOpeningHoursStorageDependencyProvider::FACADE_EVENT_BEHAVIOR,
             function (SprykerContainer $container) {
                 return new MerchantOpeningHoursStorageToEventBehaviorFacadeBridge(
-                    $container->getLocator()->eventBehavior()->facade()
+                    $container->getLocator()->eventBehavior()->facade(),
                 );
-            }
+            },
         );
     }
 
@@ -82,7 +82,7 @@ class MerchantOpeningHoursWritePublisherPluginTest extends Unit
 
         // Assert
         $this->assertNotNull(
-            $this->tester->findMerchantOpeningHoursByFkMerchant($merchantTransfer->getIdMerchant())
+            $this->tester->findMerchantOpeningHoursByFkMerchant($merchantTransfer->getIdMerchant()),
         );
     }
 }

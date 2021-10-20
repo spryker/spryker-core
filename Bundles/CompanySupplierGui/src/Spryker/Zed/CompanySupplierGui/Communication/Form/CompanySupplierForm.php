@@ -71,7 +71,7 @@ class CompanySupplierForm extends AbstractType
                 'required' => false,
                 'choices' => $options[static::OPTION_VALUES_COMPANY_SUPPLIER],
                 'multiple' => true,
-            ]
+            ],
         );
 
         $this->addModelTransformer($builder);
@@ -106,8 +106,8 @@ class CompanySupplierForm extends AbstractType
                     }
 
                     return new ArrayObject($suppliers);
-                }
-            )
+                },
+            ),
         );
     }
 }

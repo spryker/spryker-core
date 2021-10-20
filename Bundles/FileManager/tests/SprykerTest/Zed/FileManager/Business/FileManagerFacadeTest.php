@@ -275,8 +275,8 @@ class FileManagerFacadeTest extends Unit
         $this->assertIsInt($fileManagerDataTransfer->getFile()->getIdFile());
         $this->assertFileExists(
             $this->tester->getDocumentFullFileName(
-                $fileDirectoryId . DIRECTORY_SEPARATOR . $fileManagerDataTransfer->getFile()->getIdFile() . '-v.1.txt'
-            )
+                $fileDirectoryId . DIRECTORY_SEPARATOR . $fileManagerDataTransfer->getFile()->getIdFile() . '-v.1.txt',
+            ),
         );
     }
 
@@ -342,7 +342,7 @@ class FileManagerFacadeTest extends Unit
     public function testDeleteFileDirectory(): void
     {
         $this->assertTrue(
-            $this->facade->deleteFileDirectory($this->tester->getIdFirstFileDirectory())
+            $this->facade->deleteFileDirectory($this->tester->getIdFirstFileDirectory()),
         );
     }
 

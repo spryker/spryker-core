@@ -152,7 +152,7 @@ class ProductConcreteValidator implements ProductConcreteValidatorInterface
                         static::FIELD_SUPER_ATTRIBUTES => [
                             new All($this->getSuperAttributeConstraints()),
                         ],
-                    ]
+                    ],
                 ),
             ]),
         ];
@@ -180,10 +180,10 @@ class ProductConcreteValidator implements ProductConcreteValidatorInterface
                             static::FIELD_VALUE => [
                                 new NotBlank(),
                             ],
-                        ]
+                        ],
                     ),
                 ],
-            ]
+            ],
         )];
     }
 }

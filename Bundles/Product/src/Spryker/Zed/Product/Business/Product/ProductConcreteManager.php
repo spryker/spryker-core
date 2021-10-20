@@ -263,8 +263,8 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
             throw new MissingProductException(
                 sprintf(
                     'Tried to retrieve a product concrete with sku %s, but it does not exist.',
-                    $productConcreteSku
-                )
+                    $productConcreteSku,
+                ),
             );
         }
     }
@@ -309,8 +309,8 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
             throw new MissingProductException(
                 sprintf(
                     'Tried to retrieve a product concrete with sku %s, but it does not exist.',
-                    $sku
-                )
+                    $sku,
+                ),
             );
         }
 
@@ -365,8 +365,8 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
             throw new MissingProductException(
                 sprintf(
                     'Tried to retrieve a product concrete with id %s, but it does not exist.',
-                    $idProductConcrete
-                )
+                    $idProductConcrete,
+                ),
             );
         }
 
@@ -461,7 +461,7 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
             ->requireFkProductAbstract();
 
         $encodedAttributes = $this->attributeEncoder->encodeAttributes(
-            $productConcreteTransfer->getAttributes()
+            $productConcreteTransfer->getAttributes(),
         );
 
         $productConcreteEntity = $this->productQueryContainer

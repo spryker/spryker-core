@@ -51,10 +51,10 @@ class MerchantSearchMapper implements MerchantSearchMapperInterface
         $merchantSearchTransfer->setIdMerchant($merchantTransfer->getIdMerchant());
         $merchantSearchData = $merchantTransfer->toArray(true, true);
         $merchantSearchTransfer->setData(
-            $this->merchantSearchDataMapper->mapMerchantDataToSearchData($merchantSearchData)
+            $this->merchantSearchDataMapper->mapMerchantDataToSearchData($merchantSearchData),
         );
         $merchantSearchTransfer->setStructuredData(
-            $this->utilEncodingService->encodeJson($merchantSearchData)
+            $this->utilEncodingService->encodeJson($merchantSearchData),
         );
 
         return $merchantSearchTransfer;
@@ -73,7 +73,7 @@ class MerchantSearchMapper implements MerchantSearchMapperInterface
         foreach ($merchantCollectionTransfer->getMerchants() as $merchantTransfer) {
             $merchantSearchTransfer = $this->mapMerchantTransferToMerchantSearchTransfer(
                 $merchantTransfer,
-                new MerchantSearchTransfer()
+                new MerchantSearchTransfer(),
             );
             $merchantSearchCollectionTransfer->addMerchant($merchantSearchTransfer);
         }

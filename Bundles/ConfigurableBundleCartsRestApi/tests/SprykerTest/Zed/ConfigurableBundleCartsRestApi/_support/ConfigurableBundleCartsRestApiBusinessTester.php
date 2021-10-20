@@ -81,7 +81,7 @@ class ConfigurableBundleCartsRestApiBusinessTester extends Actor
             [
                 QuoteTransfer::UUID => uniqid('uuid', true),
                 QuoteTransfer::CUSTOMER => $this->haveCustomer(),
-            ]
+            ],
         );
 
         $firstProductConcrete = $this->haveProduct();
@@ -93,7 +93,7 @@ class ConfigurableBundleCartsRestApiBusinessTester extends Actor
             ->setConfiguredBundle(
                 (new ConfiguredBundleTransfer())
                     ->setQuantity(1)
-                    ->setTemplate((new ConfigurableBundleTemplateTransfer())->setUuid($configurableBundleTemplateTransfer->getUuid()))
+                    ->setTemplate((new ConfigurableBundleTemplateTransfer())->setUuid($configurableBundleTemplateTransfer->getUuid())),
             );
 
         $secondProductConcrete = $this->haveProduct();
@@ -105,7 +105,7 @@ class ConfigurableBundleCartsRestApiBusinessTester extends Actor
             ->setConfiguredBundle(
                 (new ConfiguredBundleTransfer())
                     ->setQuantity(1)
-                    ->setTemplate((new ConfigurableBundleTemplateTransfer())->setUuid($configurableBundleTemplateTransfer->getUuid()))
+                    ->setTemplate((new ConfigurableBundleTemplateTransfer())->setUuid($configurableBundleTemplateTransfer->getUuid())),
             );
 
         return $createConfiguredBundleRequestTransfer = (new CreateConfiguredBundleRequestTransfer())

@@ -62,7 +62,7 @@ class PriceProductValidationMapper implements PriceProductValidationMapperInterf
                 $initialData = $this->addValidationErrorToInitialData(
                     $validationErrorTransfer,
                     $priceProductTransfers,
-                    $initialData
+                    $initialData,
                 );
             }
         }

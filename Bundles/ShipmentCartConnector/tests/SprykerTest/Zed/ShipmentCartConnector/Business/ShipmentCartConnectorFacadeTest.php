@@ -121,7 +121,7 @@ class ShipmentCartConnectorFacadeTest extends Unit
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             $this->assertSame(
                 $itemTransfer->getShipment()->getMethod()->getCurrencyIsoCode(),
-                $quoteTransfer->getCurrency()->getCode()
+                $quoteTransfer->getCurrency()->getCode(),
             );
 
             $price = $itemTransfer->getShipment()->getMethod()->getStoreCurrencyPrice();
@@ -155,7 +155,7 @@ class ShipmentCartConnectorFacadeTest extends Unit
         // Assert
         $this->assertSame(
             $sourcePrice,
-            $updatedCartChangeTransfer->getQuote()->getExpenses()->getIterator()->current()->getUnitGrossPrice()
+            $updatedCartChangeTransfer->getQuote()->getExpenses()->getIterator()->current()->getUnitGrossPrice(),
         );
     }
 
@@ -184,7 +184,7 @@ class ShipmentCartConnectorFacadeTest extends Unit
         // Assert
         $this->assertSame(
             $sourcePrice,
-            $updatedCartChangeTransfer->getQuote()->getExpenses()->getIterator()->current()->getUnitGrossPrice()
+            $updatedCartChangeTransfer->getQuote()->getExpenses()->getIterator()->current()->getUnitGrossPrice(),
         );
     }
 

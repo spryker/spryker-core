@@ -79,7 +79,7 @@ class SegmentConnectorGenerator implements SegmentConnectorGeneratorInterface
         return sprintf(
             static::CONNECTOR_TABLE_TEMPLATE,
             static::TABLE_PREFIX_DEFAULT,
-            $this->purifyTableName($baseTableName)
+            $this->purifyTableName($baseTableName),
         );
     }
 
@@ -106,7 +106,7 @@ class SegmentConnectorGenerator implements SegmentConnectorGeneratorInterface
         return $namespace . sprintf(
             static::CONNECTOR_CLASS_TEMPLATE,
             static::ENTITY_PREFIX_DEFAULT,
-            $this->purifyClassName($baseClassShort)
+            $this->purifyClassName($baseClassShort),
         );
     }
 
@@ -120,7 +120,7 @@ class SegmentConnectorGenerator implements SegmentConnectorGeneratorInterface
         return sprintf(
             static::CONNECTOR_RELATION_TEMPLATE,
             $this->generateShortClassName($baseClassName),
-            $this->generateConnectorClassName($this->generateShortClassName($baseClassName))
+            $this->generateConnectorClassName($this->generateShortClassName($baseClassName)),
         );
     }
 
@@ -134,7 +134,7 @@ class SegmentConnectorGenerator implements SegmentConnectorGeneratorInterface
         return sprintf(
             static::CONNECTOR_GETTER_TEMPLATE,
             static::ENTITY_PREFIX_DEFAULT,
-            $this->purifyClassName($this->generateShortClassName($baseClass))
+            $this->purifyClassName($this->generateShortClassName($baseClass)),
         );
     }
 
@@ -181,7 +181,7 @@ class SegmentConnectorGenerator implements SegmentConnectorGeneratorInterface
         return sprintf(
             static::CONNECTOR_UNIQUE_CONTAINT_TEMPLATE,
             $referencedTableName,
-            $referencedColumnName
+            $referencedColumnName,
         );
     }
 

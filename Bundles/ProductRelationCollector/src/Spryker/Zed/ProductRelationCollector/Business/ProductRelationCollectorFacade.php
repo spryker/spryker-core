@@ -52,7 +52,7 @@ class ProductRelationCollectorFacade extends AbstractFacade implements ProductRe
             $dataReader,
             $dataWriter,
             $touchUpdater,
-            $output
+            $output,
         );
     }
 }

@@ -28,7 +28,7 @@ class AgentMapper
         foreach ($customers as $customer) {
             $customerTransfer = $this->mapCustomerDataToCustomerTransfer(
                 $customer,
-                new CustomerTransfer()
+                new CustomerTransfer(),
             );
 
             $customerAutocompleteResponseTransfer->addCustomer($customerTransfer);

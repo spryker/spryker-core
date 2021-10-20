@@ -106,7 +106,7 @@ class ProductOptionGroupReader implements ProductOptionGroupReaderInterface
         $productOptionValueTranslations = $this->hydrateProductOptionValues(
             $productOptionGroupEntity,
             $productOptionGroupTransfer,
-            $availableLocales
+            $availableLocales,
         );
 
         $productOptionGroupTransfer->setProductOptionValueTranslations(new ArrayObject($productOptionValueTranslations));
@@ -114,7 +114,7 @@ class ProductOptionGroupReader implements ProductOptionGroupReaderInterface
         $groupNameTranslations = $this->getOptionTranslations(
             $availableLocales,
             $productOptionGroupTransfer->getName(),
-            $this->createRelatedKeyHash(ProductOptionGroupTransfer::class, $productOptionGroupTransfer->getIdProductOptionGroup())
+            $this->createRelatedKeyHash(ProductOptionGroupTransfer::class, $productOptionGroupTransfer->getIdProductOptionGroup()),
         );
 
         $productOptionGroupTransfer->setGroupNameTranslations(new ArrayObject($groupNameTranslations));
@@ -181,7 +181,7 @@ class ProductOptionGroupReader implements ProductOptionGroupReaderInterface
 
             $relatedOptionHash = $this->createRelatedKeyHash(
                 SpyProductOptionValue::class,
-                $productOptionValueEntity->getIdProductOptionValue()
+                $productOptionValueEntity->getIdProductOptionValue(),
             );
             $productOptionValueTransfer->setOptionHash($relatedOptionHash);
 
@@ -190,7 +190,7 @@ class ProductOptionGroupReader implements ProductOptionGroupReaderInterface
             $valueTranslations = $this->getOptionTranslations(
                 $availableLocales,
                 $productOptionValueTransfer->getValue(),
-                $relatedOptionHash
+                $relatedOptionHash,
             );
 
             $productOptionValueTranslations = array_merge($productOptionValueTranslations, $valueTranslations);
@@ -207,7 +207,7 @@ class ProductOptionGroupReader implements ProductOptionGroupReaderInterface
     protected function getPriceCollection(SpyProductOptionValue $productOptionValueEntity)
     {
         return $this->productOptionValuePriceHydrator->getMoneyValueCollection(
-            $productOptionValueEntity->getProductOptionValuePrices()
+            $productOptionValueEntity->getProductOptionValuePrices(),
         );
     }
 
@@ -241,8 +241,8 @@ class ProductOptionGroupReader implements ProductOptionGroupReaderInterface
             throw new ProductOptionGroupNotFoundException(
                 sprintf(
                     'Product Option Group with id "%d" not found.',
-                    $idProductOptionGroup
-                )
+                    $idProductOptionGroup,
+                ),
             );
         }
 

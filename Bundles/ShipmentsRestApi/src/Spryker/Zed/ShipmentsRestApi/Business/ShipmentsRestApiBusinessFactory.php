@@ -49,7 +49,7 @@ class ShipmentsRestApiBusinessFactory extends AbstractBusinessFactory
     {
         return new ShipmentQuoteItemMapper(
             $this->getShipmentFacade(),
-            $this->getAddressProviderStrategyPlugins()
+            $this->getAddressProviderStrategyPlugins(),
         );
     }
 

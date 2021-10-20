@@ -61,7 +61,7 @@ class PriceProductOfferTableViewSorter implements PriceProductOfferTableViewSort
         }
 
         $valueExtractorFunction = $this->getValueExtractorFunctionByStrategy(
-            $criteriaTransfer->getOrderByOrFail()
+            $criteriaTransfer->getOrderByOrFail(),
         );
         $sortAscending = strtolower($orderDirection) === static::DIRECTION_ASC;
 

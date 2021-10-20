@@ -42,7 +42,7 @@ class ConfigurableBundlePageSearchBusinessFactory extends AbstractBusinessFactor
             $this->getRepository(),
             $this->getEntityManager(),
             $this->createConfigurableBundlePageSearchMapper(),
-            $this->createConfigurableBundleTemplatePageSearchExpander()
+            $this->createConfigurableBundleTemplatePageSearchExpander(),
         );
     }
 
@@ -53,7 +53,7 @@ class ConfigurableBundlePageSearchBusinessFactory extends AbstractBusinessFactor
     {
         return new ConfigurableBundleTemplateUnpublisher(
             $this->getRepository(),
-            $this->getEntityManager()
+            $this->getEntityManager(),
         );
     }
 
@@ -65,7 +65,7 @@ class ConfigurableBundlePageSearchBusinessFactory extends AbstractBusinessFactor
         return new ConfigurableBundleTemplatePageSearchMapper(
             $this->getUtilEncodingService(),
             $this->createConfigurableBundlePageSearchDataMapper(),
-            $this->createConfigurableBundleTemplatePageSearchExpander()
+            $this->createConfigurableBundleTemplatePageSearchExpander(),
         );
     }
 
@@ -76,7 +76,7 @@ class ConfigurableBundlePageSearchBusinessFactory extends AbstractBusinessFactor
     {
         return new ConfigurableBundleTemplatePageSearchExpander(
             $this->getProductImageFacade(),
-            $this->getConfigurableBundleTemplatePageDataExpanderPlugins()
+            $this->getConfigurableBundleTemplatePageDataExpanderPlugins(),
         );
     }
 
@@ -119,7 +119,7 @@ class ConfigurableBundlePageSearchBusinessFactory extends AbstractBusinessFactor
     {
         return new ConfigurableBundlePageSearchDataMapper(
             $this->getConfigurableBundleTemplateMapExpanderPlugins(),
-            $this->createUnderscoreToDashFilter()
+            $this->createUnderscoreToDashFilter(),
         );
     }
 

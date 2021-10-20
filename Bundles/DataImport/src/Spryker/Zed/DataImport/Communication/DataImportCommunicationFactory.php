@@ -32,7 +32,7 @@ class DataImportCommunicationFactory extends AbstractCommunicationFactory
     {
         return new DataImportConfigurationYamlParser(
             $this->getUtilDataReaderService(),
-            $this->createDataImportConfigurationMapper()
+            $this->createDataImportConfigurationMapper(),
         );
     }
 
@@ -51,7 +51,7 @@ class DataImportCommunicationFactory extends AbstractCommunicationFactory
     {
         return new DataImportExecutor(
             $this->createDataImportConfigurationYamlParser(),
-            $this->getFacade()
+            $this->getFacade(),
         );
     }
 
@@ -63,7 +63,7 @@ class DataImportCommunicationFactory extends AbstractCommunicationFactory
         return new DataImportersDumpExecutor(
             $this->createDataImportConfigurationYamlParser(),
             $this->getFacade(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 

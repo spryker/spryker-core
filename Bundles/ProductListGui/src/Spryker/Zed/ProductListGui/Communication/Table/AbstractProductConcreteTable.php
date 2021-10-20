@@ -145,7 +145,7 @@ abstract class AbstractProductConcreteTable extends AbstractTable
             static::COLUMN_ACTION => sprintf(
                 '<input class="%s-all-products-checkbox" type="checkbox"  value="%d">',
                 static::TABLE_IDENTIFIER,
-                $product[SpyProductTableMap::COL_ID_PRODUCT]
+                $product[SpyProductTableMap::COL_ID_PRODUCT],
             ),
         ];
     }
@@ -169,7 +169,7 @@ abstract class AbstractProductConcreteTable extends AbstractTable
                     SpyProductTableMap::COL_ID_PRODUCT,
                     SpyProductTableMap::COL_SKU,
                     SpyProductLocalizedAttributesTableMap::COL_NAME,
-                ]
+                ],
             );
 
         return $this->filterQuery($this->spyProductQuery);

@@ -25,7 +25,7 @@ class MerchantProfileAddressMapper implements MerchantProfileAddressMapperInterf
         SpyMerchantProfileAddress $merchantProfileAddressEntity
     ): SpyMerchantProfileAddress {
         $merchantProfileAddressEntity->fromArray(
-            $merchantProfileAddressTransfer->modifiedToArray(false)
+            $merchantProfileAddressTransfer->modifiedToArray(false),
         );
 
         return $merchantProfileAddressEntity;
@@ -45,8 +45,8 @@ class MerchantProfileAddressMapper implements MerchantProfileAddressMapperInterf
             $merchantProfileAddressTransfers->append(
                 $this->mapMerchantProfileAddressEntityToMerchantProfileAddressTransfer(
                     $merchantProfileAddressEntity,
-                    new MerchantProfileAddressTransfer()
-                )
+                    new MerchantProfileAddressTransfer(),
+                ),
             );
         }
 
@@ -65,7 +65,7 @@ class MerchantProfileAddressMapper implements MerchantProfileAddressMapperInterf
     ): MerchantProfileAddressTransfer {
         $merchantProfileAddressTransfer->fromArray(
             $merchantProfileAddressEntity->toArray(),
-            true
+            true,
         );
 
         if ($merchantProfileAddressEntity->getSpyCountry() !== null) {

@@ -62,7 +62,7 @@ class GetCompanyBusinessUnitAddressTest extends Unit
         $quoteTransfer = (new QuoteBuilder())->withCustomer()->build();
 
         $quoteTransfer->getCustomer()->setCompanyUserTransfer(
-            (new CompanyUserTransfer())->setCompany($companyUnitAddressResponseTransfer->getCompanyUnitAddressTransfer()->getCompany())
+            (new CompanyUserTransfer())->setCompany($companyUnitAddressResponseTransfer->getCompanyUnitAddressTransfer()->getCompany()),
         );
 
         /** @var \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\CompanyBusinessUnitAddressesRestApi\Business\CompanyBusinessUnitAddressesRestApiBusinessFactory $companyBusinessUnitAddressesRestApiBusinessFactoryMock */
@@ -78,7 +78,7 @@ class GetCompanyBusinessUnitAddressTest extends Unit
         $addressTransfer = $this->tester->getFacadeMock($companyBusinessUnitAddressesRestApiBusinessFactoryMock)
             ->getCompanyBusinessUnitAddress(
                 (new RestAddressBuilder())->build(),
-                $quoteTransfer
+                $quoteTransfer,
             );
 
         // Assert
@@ -95,7 +95,7 @@ class GetCompanyBusinessUnitAddressTest extends Unit
         $quoteTransfer = (new QuoteBuilder())->withCustomer()->build();
 
         $quoteTransfer->getCustomer()->setCompanyUserTransfer(
-            (new CompanyUserTransfer())->setCompany((new CompanyTransfer())->setIdCompany(static::FAKE_ID_COMPANY))
+            (new CompanyUserTransfer())->setCompany((new CompanyTransfer())->setIdCompany(static::FAKE_ID_COMPANY)),
         );
 
         /** @var \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\CompanyBusinessUnitAddressesRestApi\Business\CompanyBusinessUnitAddressesRestApiBusinessFactory $companyBusinessUnitAddressesRestApiBusinessFactoryMock */
@@ -136,7 +136,7 @@ class GetCompanyBusinessUnitAddressTest extends Unit
         $addressTransfer = $this->tester->getFacadeMock($companyBusinessUnitAddressesRestApiBusinessFactoryMock)
             ->getCompanyBusinessUnitAddress(
                 $restAddressTransfer,
-                (new QuoteBuilder())->withCustomer()->build()
+                (new QuoteBuilder())->withCustomer()->build(),
             );
 
         // Assert
@@ -164,7 +164,7 @@ class GetCompanyBusinessUnitAddressTest extends Unit
         $addressTransfer = $this->tester->getFacadeMock($companyBusinessUnitAddressesRestApiBusinessFactoryMock)
             ->getCompanyBusinessUnitAddress(
                 $restAddressTransfer,
-                (new QuoteBuilder())->withCustomer()->build()
+                (new QuoteBuilder())->withCustomer()->build(),
             );
 
         // Assert

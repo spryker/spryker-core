@@ -117,7 +117,7 @@ class PriceProductScheduleGuiCommunicationFactory extends AbstractCommunicationF
         return new AbstractProductViewExpander(
             $this->getPriceProductFacade(),
             $this->getTranslatorFacade(),
-            $this
+            $this,
         );
     }
 
@@ -129,7 +129,7 @@ class PriceProductScheduleGuiCommunicationFactory extends AbstractCommunicationF
         return new ConcreteProductViewExpander(
             $this->getPriceProductFacade(),
             $this->getTranslatorFacade(),
-            $this
+            $this,
         );
     }
 
@@ -147,7 +147,7 @@ class PriceProductScheduleGuiCommunicationFactory extends AbstractCommunicationF
             $idProductAbstract,
             $idPriceType,
             $this->createRowFormatter(),
-            $this->getPriceProductScheduleQuery()
+            $this->getPriceProductScheduleQuery(),
         );
     }
 
@@ -168,7 +168,7 @@ class PriceProductScheduleGuiCommunicationFactory extends AbstractCommunicationF
             $idProductAbstract,
             $idPriceType,
             $this->createRowFormatter(),
-            $this->getPriceProductScheduleQuery()
+            $this->getPriceProductScheduleQuery(),
         );
     }
 
@@ -185,7 +185,7 @@ class PriceProductScheduleGuiCommunicationFactory extends AbstractCommunicationF
             ->create(
                 PriceProductScheduleImportFormType::class,
                 [],
-                $options
+                $options,
             );
     }
 
@@ -208,7 +208,7 @@ class PriceProductScheduleGuiCommunicationFactory extends AbstractCommunicationF
     ): ImportErrorListTable {
         return new ImportErrorListTable(
             $priceProductScheduleListImportResponseTransfer,
-            $this->getTranslatorFacade()
+            $this->getTranslatorFacade(),
         );
     }
 
@@ -231,7 +231,7 @@ class PriceProductScheduleGuiCommunicationFactory extends AbstractCommunicationF
         return new ImportSuccessListTable(
             $priceProductScheduleListTransfer,
             $this->getPriceProductScheduleQuery(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -242,7 +242,7 @@ class PriceProductScheduleGuiCommunicationFactory extends AbstractCommunicationF
     {
         return new PriceProductScheduleListTable(
             $this->getPriceProductScheduleListPropelQuery(),
-            $this->getStoreFacade()
+            $this->getStoreFacade(),
         );
     }
 
@@ -254,7 +254,7 @@ class PriceProductScheduleGuiCommunicationFactory extends AbstractCommunicationF
         return new PriceProductScheduleFormDataProvider(
             $this->getPriceProductFacade(),
             $this->getStoreFacade(),
-            $this->getCurrencyFacade()
+            $this->getCurrencyFacade(),
         );
     }
 
@@ -265,7 +265,7 @@ class PriceProductScheduleGuiCommunicationFactory extends AbstractCommunicationF
     {
         return new PriceProductScheduleCsvExporter(
             $this->getPriceProductScheduleFacade(),
-            $this->getUtilCsvService()
+            $this->getUtilCsvService(),
         );
     }
 
@@ -283,8 +283,8 @@ class PriceProductScheduleGuiCommunicationFactory extends AbstractCommunicationF
             PriceProductScheduleForm::class,
             $formDataProvider->getData($priceProductScheduleTransfer),
             $formDataProvider->getOptions(
-                $priceProductScheduleTransfer->getIdPriceProductSchedule()
-            )
+                $priceProductScheduleTransfer->getIdPriceProductSchedule(),
+            ),
         );
     }
 
@@ -298,7 +298,7 @@ class PriceProductScheduleGuiCommunicationFactory extends AbstractCommunicationF
         return new PriceProductScheduleTable(
             $this->createRowFormatter(),
             $this->getPriceProductScheduleQuery(),
-            $idPriceProductScheduleList
+            $idPriceProductScheduleList,
         );
     }
 
@@ -312,7 +312,7 @@ class PriceProductScheduleGuiCommunicationFactory extends AbstractCommunicationF
         return new PriceProductScheduleTableForEditList(
             $this->createRowFormatter(),
             $this->getPriceProductScheduleQuery(),
-            $idPriceProductScheduleList
+            $idPriceProductScheduleList,
         );
     }
 
@@ -339,7 +339,7 @@ class PriceProductScheduleGuiCommunicationFactory extends AbstractCommunicationF
         return $this->getFormFactory()->create(
             PriceProdductScheduleDeleteForm::class,
             $dataProvider->getData($priceProductScheduleTransfer),
-            $dataProvider->getOptions($redirectUrl)
+            $dataProvider->getOptions($redirectUrl),
         );
     }
 
@@ -363,7 +363,7 @@ class PriceProductScheduleGuiCommunicationFactory extends AbstractCommunicationF
     ): FormInterface {
         return $this->getFormFactory()->create(
             PriceProductScheduleListForm::class,
-            $dataProvider->getData($priceProductScheduleListTransfer)
+            $dataProvider->getData($priceProductScheduleListTransfer),
         );
     }
 
@@ -419,7 +419,7 @@ class PriceProductScheduleGuiCommunicationFactory extends AbstractCommunicationF
     {
         return new PriceProductScheduleDataExtractor(
             $this->getStoreFacade(),
-            $this->createPriceProductScheduleDataFormatter()
+            $this->createPriceProductScheduleDataFormatter(),
         );
     }
 
@@ -429,7 +429,7 @@ class PriceProductScheduleGuiCommunicationFactory extends AbstractCommunicationF
     public function createPriceProductScheduleDataFormatter(): PriceProductScheduleDataFormatterInterface
     {
         return new PriceProductScheduleDataFormatter(
-            $this->getProductFacade()
+            $this->getProductFacade(),
         );
     }
 

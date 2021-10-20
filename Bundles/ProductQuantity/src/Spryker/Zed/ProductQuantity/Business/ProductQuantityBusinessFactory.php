@@ -49,7 +49,7 @@ class ProductQuantityBusinessFactory extends AbstractBusinessFactory
     {
         return new CartChangeTransferQuantityNormalizer(
             $this->createProductQuantityReader(),
-            $this->getProductQuantityService()
+            $this->getProductQuantityService(),
         );
     }
 

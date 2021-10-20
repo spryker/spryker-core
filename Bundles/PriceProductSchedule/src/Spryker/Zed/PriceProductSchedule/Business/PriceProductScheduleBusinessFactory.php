@@ -96,7 +96,7 @@ class PriceProductScheduleBusinessFactory extends AbstractBusinessFactory
     public function createPriceProductScheduleCleaner(): PriceProductScheduleCleanerInterface
     {
         return new PriceProductScheduleCleaner(
-            $this->getEntityManager()
+            $this->getEntityManager(),
         );
     }
 
@@ -109,7 +109,7 @@ class PriceProductScheduleBusinessFactory extends AbstractBusinessFactory
             $this->createPriceProductScheduleDisabler(),
             $this->getRepository(),
             $this->getStoreFacade(),
-            $this->createPriceProductScheduleApplyTransactionExecutor()
+            $this->createPriceProductScheduleApplyTransactionExecutor(),
         );
     }
 
@@ -122,7 +122,7 @@ class PriceProductScheduleBusinessFactory extends AbstractBusinessFactory
             $this->getStoreFacade(),
             $this->getRepository(),
             $this->createPriceProductScheduleApplyTransactionExecutor(),
-            $this->createPriceProductScheduleDisabler()
+            $this->createPriceProductScheduleDisabler(),
         );
     }
 
@@ -135,7 +135,7 @@ class PriceProductScheduleBusinessFactory extends AbstractBusinessFactory
             $this->getStoreFacade(),
             $this->getRepository(),
             $this->createPriceProductScheduleApplyTransactionExecutor(),
-            $this->createPriceProductScheduleDisabler()
+            $this->createPriceProductScheduleDisabler(),
         );
     }
 
@@ -146,7 +146,7 @@ class PriceProductScheduleBusinessFactory extends AbstractBusinessFactory
     {
         return new PriceProductScheduleApplierByProductTypeResolver(
             $this->createAbstractProductPriceProductScheduleApplier(),
-            $this->createConcreteProductPriceProductScheduleApplier()
+            $this->createConcreteProductPriceProductScheduleApplier(),
         );
     }
 
@@ -158,7 +158,7 @@ class PriceProductScheduleBusinessFactory extends AbstractBusinessFactory
         return new PriceProductScheduleApplyTransactionExecutor(
             $this->createPriceProductScheduleDisabler(),
             $this->getPriceProductFacade(),
-            $this->getEntityManager()
+            $this->getEntityManager(),
         );
     }
 
@@ -172,7 +172,7 @@ class PriceProductScheduleBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->createPriceProductFallbackFinder(),
             $this->createProductPriceUpdater(),
-            $this->getPriceProductFacade()
+            $this->getPriceProductFacade(),
         );
     }
 
@@ -183,7 +183,7 @@ class PriceProductScheduleBusinessFactory extends AbstractBusinessFactory
     {
         return new PriceProductFallbackFinder(
             $this->getConfig(),
-            $this->getPriceProductFacade()
+            $this->getPriceProductFacade(),
         );
     }
 
@@ -194,7 +194,7 @@ class PriceProductScheduleBusinessFactory extends AbstractBusinessFactory
     {
         return new PriceProductUpdater(
             $this->getEntityManager(),
-            $this->getPriceProductFacade()
+            $this->getPriceProductFacade(),
         );
     }
 
@@ -206,7 +206,7 @@ class PriceProductScheduleBusinessFactory extends AbstractBusinessFactory
         return new PriceProductScheduleListCreator(
             $this->getEntityManager(),
             $this->createPriceProductScheduleListExpander(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -216,7 +216,7 @@ class PriceProductScheduleBusinessFactory extends AbstractBusinessFactory
     public function createPriceProductScheduleListExpander(): PriceProductScheduleListUserExpanderInterface
     {
         return new PriceProductScheduleListUserExpander(
-            $this->getUserFacade()
+            $this->getUserFacade(),
         );
     }
 
@@ -226,7 +226,7 @@ class PriceProductScheduleBusinessFactory extends AbstractBusinessFactory
     public function createPriceProductScheduleListUpdater(): PriceProductScheduleListUpdaterInterface
     {
         return new PriceProductScheduleListUpdater(
-            $this->getEntityManager()
+            $this->getEntityManager(),
         );
     }
 
@@ -239,7 +239,7 @@ class PriceProductScheduleBusinessFactory extends AbstractBusinessFactory
             $this->getEntityManager(),
             $this->createPriceProductScheduleImportValidator(),
             $this->createPriceProductScheduleMapper(),
-            $this->getPriceProductTransferDataExpanderList()
+            $this->getPriceProductTransferDataExpanderList(),
         );
     }
 
@@ -295,7 +295,7 @@ class PriceProductScheduleBusinessFactory extends AbstractBusinessFactory
     {
         return new PriceProductTransferMoneyValueDataExpander(
             $this->createStoreFinder(),
-            $this->createCurrencyFinder()
+            $this->createCurrencyFinder(),
         );
     }
 
@@ -354,7 +354,7 @@ class PriceProductScheduleBusinessFactory extends AbstractBusinessFactory
     {
         return new PriceProductScheduleListFinder(
             $this->getRepository(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -413,7 +413,7 @@ class PriceProductScheduleBusinessFactory extends AbstractBusinessFactory
     {
         return new UniqueDataValidator(
             $this->getRepository(),
-            $this->createPriceProductScheduleImportMapper()
+            $this->createPriceProductScheduleImportMapper(),
         );
     }
 
@@ -440,7 +440,7 @@ class PriceProductScheduleBusinessFactory extends AbstractBusinessFactory
     {
         return new PriceProductScheduleCsvReader(
             $this->getUtilCsvService(),
-            $this->createPriceProductScheduleImportMapper()
+            $this->createPriceProductScheduleImportMapper(),
         );
     }
 
@@ -451,7 +451,7 @@ class PriceProductScheduleBusinessFactory extends AbstractBusinessFactory
     {
         return new PriceProductScheduleCsvValidator(
             $this->getUtilCsvService(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -472,7 +472,7 @@ class PriceProductScheduleBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->getEntityManager(),
             $this->createPriceProductScheduleApplierByProductTypeResolver(),
-            $this->createPriceProductScheduleDisabler()
+            $this->createPriceProductScheduleDisabler(),
         );
     }
 
@@ -483,7 +483,7 @@ class PriceProductScheduleBusinessFactory extends AbstractBusinessFactory
     {
         return new PriceProductScheduleUpdater(
             $this->getEntityManager(),
-            $this->createPriceProductScheduleApplierByProductTypeResolver()
+            $this->createPriceProductScheduleApplierByProductTypeResolver(),
         );
     }
 
@@ -496,7 +496,7 @@ class PriceProductScheduleBusinessFactory extends AbstractBusinessFactory
             $this->getEntityManager(),
             $this->createPriceProductScheduleApplierByProductTypeResolver(),
             $this->createPriceProductScheduleListFinder(),
-            $this->createPriceProductScheduleListCreator()
+            $this->createPriceProductScheduleListCreator(),
         );
     }
 
@@ -509,7 +509,7 @@ class PriceProductScheduleBusinessFactory extends AbstractBusinessFactory
             $this->createPriceProductScheduleRemover(),
             $this->createPriceProductScheduleListFinder(),
             $this->getEntityManager(),
-            $this->getRepository()
+            $this->getRepository(),
         );
     }
 

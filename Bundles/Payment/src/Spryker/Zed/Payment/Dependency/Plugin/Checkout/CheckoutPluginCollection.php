@@ -60,13 +60,13 @@ class CheckoutPluginCollection implements CheckoutPluginCollectionInterface
     {
         if (empty($this->plugins[$type])) {
             throw new CheckoutPluginNotFoundException(
-                sprintf('Could not find "%s" plugin type for "%s" provider. You need to add the needed plugins within your DependencyInjector.', $type, $provider)
+                sprintf('Could not find "%s" plugin type for "%s" provider. You need to add the needed plugins within your DependencyInjector.', $type, $provider),
             );
         }
 
         if (empty($this->plugins[$type][$provider])) {
             throw new CheckoutPluginNotFoundException(
-                sprintf('Could not find any plugin for "%s" provider. You need to add the needed plugins within your DependencyInjector.', $provider)
+                sprintf('Could not find any plugin for "%s" provider. You need to add the needed plugins within your DependencyInjector.', $provider),
             );
         }
 

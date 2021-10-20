@@ -31,7 +31,7 @@ class ProductPackagingUnitAmountSalesUnitValue implements ProductPackagingUnitAm
             }
 
             $itemTransfer->getAmountSalesUnit()->setValue(
-                $this->calculateAmountSalesUnitValue($itemTransfer)
+                $this->calculateAmountSalesUnitValue($itemTransfer),
             );
         }
 
@@ -58,7 +58,7 @@ class ProductPackagingUnitAmountSalesUnitValue implements ProductPackagingUnitAm
         return $this->calculateValue(
             $amountPreQuantity,
             $itemTransfer->getAmountSalesUnit()->getConversion(),
-            $itemTransfer->getAmountSalesUnit()->getPrecision()
+            $itemTransfer->getAmountSalesUnit()->getPrecision(),
         );
     }
 

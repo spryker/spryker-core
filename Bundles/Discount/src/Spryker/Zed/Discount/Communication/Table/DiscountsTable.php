@@ -140,7 +140,7 @@ class DiscountsTable extends AbstractTable
 
         $config->setDefaultSortField(
             SpyDiscountTableMap::COL_ID_DISCOUNT,
-            TableConfiguration::SORT_DESC
+            TableConfiguration::SORT_DESC,
         );
 
         $config->addRawColumn(static::TABLE_COL_ACTIONS);
@@ -206,7 +206,7 @@ class DiscountsTable extends AbstractTable
         foreach ($discountStoreEntityCollection as $discountStoreEntity) {
             $storeNames[] = sprintf(
                 '<span class="label label-info">%s</span>',
-                $discountStoreEntity->getSpyStore()->getName()
+                $discountStoreEntity->getSpyStore()->getName(),
             );
         }
 
@@ -238,7 +238,7 @@ class DiscountsTable extends AbstractTable
     {
         return $this->generateLabel(
             $discountEntity->getIsActive() ? 'Active' : 'Inactive',
-            $discountEntity->getIsActive() ? 'label-info' : 'label-danger'
+            $discountEntity->getIsActive() ? 'label-info' : 'label-danger',
         );
     }
 
@@ -263,7 +263,7 @@ class DiscountsTable extends AbstractTable
             '/discount/index/edit',
             [
                 static::URL_PARAM_ID_DISCOUNT => $discountEntity->getIdDiscount(),
-            ]
+            ],
         );
 
         return $this->generateEditButton($editDiscountUrl, 'Edit');
@@ -280,7 +280,7 @@ class DiscountsTable extends AbstractTable
             '/discount/index/view',
             [
                 static::URL_PARAM_ID_DISCOUNT => $discountEntity->getIdDiscount(),
-            ]
+            ],
         );
 
         return $this->generateViewButton($viewDiscountUrl, 'View');
@@ -304,7 +304,7 @@ class DiscountsTable extends AbstractTable
             ],
             [
                 Url::FRAGMENT => static::URL_FRAGMENT_TAB_CONTENT_VOUCHER,
-            ]
+            ],
         );
 
         return $this->generateCreateButton($addVoucherCodeDiscountUrl, 'Add code');
@@ -328,7 +328,7 @@ class DiscountsTable extends AbstractTable
                 static::URL_PARAM_ID_DISCOUNT => $discountEntity->getIdDiscount(),
                 static::URL_PARAM_VISIBILITY => $visibility,
                 static::URL_PARAM_REDIRECT_URL => '/discount/index/list',
-            ]
+            ],
         );
 
         return $this->generateStatusButton($viewDiscountUrl, $visibility);
@@ -353,7 +353,7 @@ class DiscountsTable extends AbstractTable
             [
                 static::BUTTON_CLASS => 'btn-danger safe-submit',
                 static::BUTTON_ICON => 'fa-trash',
-            ]
+            ],
         );
     }
 
@@ -389,14 +389,14 @@ class DiscountsTable extends AbstractTable
             if ($discountAmountEntity->getNetAmount()) {
                 $netAmount = $calculatorPlugin->getFormattedAmount(
                     $discountAmountEntity->getNetAmount(),
-                    $currencyCode
+                    $currencyCode,
                 );
             }
 
             if ($discountAmountEntity->getGrossAmount()) {
                 $grossAmount = $calculatorPlugin->getFormattedAmount(
                     $discountAmountEntity->getGrossAmount(),
-                    $currencyCode
+                    $currencyCode,
                 );
             }
 

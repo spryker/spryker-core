@@ -90,7 +90,7 @@ class NavigationDuplicator implements NavigationDuplicatorInterface
         }
 
         $navigationTreeTransfer = $this->navigationTreeReader->findNavigationTree(
-            (new NavigationTransfer())->setIdNavigation($duplicateNavigationTransfer->getIdBaseNavigation())
+            (new NavigationTransfer())->setIdNavigation($duplicateNavigationTransfer->getIdBaseNavigation()),
         );
 
         if (!$navigationTreeTransfer) {
@@ -100,7 +100,7 @@ class NavigationDuplicator implements NavigationDuplicatorInterface
 
         $newNavigationElement = $this->createNavigationTransfer(
             $duplicateNavigationTransfer,
-            $navigationTreeTransfer->getNavigation()->getIsActive()
+            $navigationTreeTransfer->getNavigation()->getIsActive(),
         );
 
         return $this->getTransactionHandler()->handleTransaction(function () use ($newNavigationElement, $navigationTreeTransfer) {
@@ -145,7 +145,7 @@ class NavigationDuplicator implements NavigationDuplicatorInterface
         foreach ($navigationTreeNodeTransfers as $navigationTreeNodeTransfer) {
             $navigationNodeTransfer = $navigationTreeNodeTransfer->getNavigationNode();
             $newNavigationNodeLocalizedAttributesTransfers = $this->duplicateNavigationNodeLocalizedAttributesTransfers(
-                $navigationNodeTransfer->getNavigationNodeLocalizedAttributes()
+                $navigationNodeTransfer->getNavigationNodeLocalizedAttributes(),
             );
 
             $navigationNodeTransferForDuplication = clone $navigationNodeTransfer
@@ -157,7 +157,7 @@ class NavigationDuplicator implements NavigationDuplicatorInterface
             $this->duplicateNavigationNodeTransfers(
                 $navigationTreeNodeTransfer->getChildren(),
                 $idNavigation,
-                $this->navigationNodeCreator->createNavigationNode($navigationNodeTransferForDuplication)->getIdNavigationNode()
+                $this->navigationNodeCreator->createNavigationNode($navigationNodeTransferForDuplication)->getIdNavigationNode(),
             );
         }
     }
@@ -174,7 +174,7 @@ class NavigationDuplicator implements NavigationDuplicatorInterface
             $navigationNodeLocalizedAttributesTransfer->setIdNavigationNodeLocalizedAttributes(null);
             $newNavigationNodeLocalizedAttributesTransfers[] = (new NavigationNodeLocalizedAttributesTransfer())->fromArray(
                 $navigationNodeLocalizedAttributesTransfer->toArray(),
-                true
+                true,
             );
         }
 

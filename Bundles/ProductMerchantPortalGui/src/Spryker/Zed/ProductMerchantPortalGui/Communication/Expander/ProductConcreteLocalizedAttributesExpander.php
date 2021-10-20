@@ -66,14 +66,14 @@ class ProductConcreteLocalizedAttributesExpander implements ProductConcreteLocal
                 $localizedAttributes = $this->extractLocalizedAttributes(
                     $productManagementAttributeTransfers->getArrayCopy(),
                     $attributes,
-                    $localeTransfer
+                    $localeTransfer,
                 );
 
                 $productConcreteTransfer->addLocalizedAttributes(
                     (new LocalizedAttributesTransfer())
                         ->setName($name)
                         ->setLocale($localeTransfer)
-                        ->setAttributes($localizedAttributes)
+                        ->setAttributes($localizedAttributes),
                 );
             }
         }
@@ -116,7 +116,7 @@ class ProductConcreteLocalizedAttributesExpander implements ProductConcreteLocal
             $productManagementAttributeValueTransfer = $this->extractProductManagementAttributeValueTransfer(
                 $attributeKey,
                 $attributeValue,
-                $productManagementAttributeTransfers
+                $productManagementAttributeTransfers,
             );
 
             if (!$productManagementAttributeValueTransfer) {

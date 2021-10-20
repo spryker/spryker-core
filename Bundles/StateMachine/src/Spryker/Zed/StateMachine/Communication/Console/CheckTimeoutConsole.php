@@ -52,14 +52,14 @@ class CheckTimeoutConsole extends Console
         $this->addArgument(
             static::ARGUMENT_STATE_MACHINE_NAME,
             InputArgument::OPTIONAL,
-            'Name of state machine to trigger timeout expired items'
+            'Name of state machine to trigger timeout expired items',
         );
 
         $this->addOption(
             static::OPTION_STATE_MACHINE_NAME,
             's',
             InputOption::VALUE_REQUIRED,
-            '(deprecated) Name of state machine to trigger timeout expired items'
+            '(deprecated) Name of state machine to trigger timeout expired items',
         );
 
         parent::configure();

@@ -211,7 +211,7 @@ class ProductConcreteEditForm extends AbstractType
             ->setIdProductAbstract($productConcreteTransfer->getFkProductAbstractOrFail());
 
         $builder->get(static::FIELD_PRODUCT_CONCRETE)->get(ProductConcreteTransfer::PRICES)->addModelTransformer(
-            $priceProductTransformer
+            $priceProductTransformer,
         );
 
         return $this;
@@ -269,7 +269,7 @@ class ProductConcreteEditForm extends AbstractType
                 'attr' => [
                     'placeholder' => static::PLACEHOLDER_SEARCHABILITY,
                 ],
-            ]
+            ],
         );
 
         return $this;

@@ -61,7 +61,7 @@ class CompanyBusinessUnitAddressValidator implements CompanyBusinessUnitAddressV
         if (!$this->isCompanyUserAccount($checkoutDataTransfer)) {
             return $this->getErrorResponse(
                 $checkoutResponseTransfer,
-                static::GLOSSARY_KEY_COMPANY_ADDRESSES_APPLICABLE_FOR_COMPANY_USERS_ONLY
+                static::GLOSSARY_KEY_COMPANY_ADDRESSES_APPLICABLE_FOR_COMPANY_USERS_ONLY,
             );
         }
 
@@ -72,7 +72,7 @@ class CompanyBusinessUnitAddressValidator implements CompanyBusinessUnitAddressV
                 $checkoutResponseTransfer = $this->getErrorResponse(
                     $checkoutResponseTransfer,
                     static::GLOSSARY_KEY_COMPANY_ADDRESS_IN_CHECKOUT_DATA_NOT_FOUND,
-                    [static::GLOSSARY_PARAMETER_ID => $shippingAddressUuid]
+                    [static::GLOSSARY_PARAMETER_ID => $shippingAddressUuid],
                 );
             }
         }
@@ -152,7 +152,7 @@ class CompanyBusinessUnitAddressValidator implements CompanyBusinessUnitAddressV
             ->addError(
                 (new CheckoutErrorTransfer())
                     ->setMessage($message)
-                    ->setParameters($parameters)
+                    ->setParameters($parameters),
             );
     }
 }

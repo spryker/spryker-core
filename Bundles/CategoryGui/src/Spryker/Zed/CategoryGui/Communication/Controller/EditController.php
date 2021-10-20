@@ -66,7 +66,7 @@ class EditController extends CategoryAbstractController
         $categoryResponseTransfer = $this->handleCategoryEditForm($form);
         if ($categoryResponseTransfer->getIsSuccessful()) {
             return $this->redirectResponse(
-                $this->createSuccessRedirectUrl($idCategory)
+                $this->createSuccessRedirectUrl($idCategory),
             );
         }
 
@@ -103,7 +103,7 @@ class EditController extends CategoryAbstractController
             static::ROUTE_CATEGORY_EDIT,
             [
                 static::REQUEST_PARAM_ID_CATEGORY => $idCategory,
-            ]
+            ],
         );
 
         return $url->build();

@@ -68,7 +68,7 @@ class FileManagerGuiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::FACADE_FILE_MANAGER, function (Container $container) {
             return new FileManagerGuiToFileManagerFacadeBridge(
-                $container->getLocator()->fileManager()->facade()
+                $container->getLocator()->fileManager()->facade(),
             );
         });
 
@@ -84,7 +84,7 @@ class FileManagerGuiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::FACADE_LOCALE, function (Container $container) {
             return new FileManagerGuiToLocaleFacadeBridge(
-                $container->getLocator()->locale()->facade()
+                $container->getLocator()->locale()->facade(),
             );
         });
 

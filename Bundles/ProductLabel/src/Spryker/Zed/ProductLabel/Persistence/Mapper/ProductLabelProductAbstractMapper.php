@@ -26,7 +26,7 @@ class ProductLabelProductAbstractMapper
         foreach ($productLabelProductAbstractEntities as $productLabelProductAbstractEntity) {
             $productLabelProductAbstractTransfers[] = $this->mapProductLabelProductAbstractEntityToProductLabelProductTransfer(
                 $productLabelProductAbstractEntity,
-                new ProductLabelProductAbstractTransfer()
+                new ProductLabelProductAbstractTransfer(),
             );
         }
 

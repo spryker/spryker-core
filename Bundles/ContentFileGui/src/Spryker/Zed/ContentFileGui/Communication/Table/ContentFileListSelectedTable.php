@@ -216,7 +216,7 @@ class ContentFileListSelectedTable extends AbstractTable
                 'data-id' => $idFile,
                 'icon' => 'fa-trash',
                 'onclick' => 'return false;',
-            ]
+            ],
         );
         $actionButtons[] = $this->generateButton(
             '#',
@@ -227,7 +227,7 @@ class ContentFileListSelectedTable extends AbstractTable
                 'data-direction' => 'up',
                 'icon' => 'fa-arrow-up',
                 'onclick' => 'return false;',
-            ]
+            ],
         );
         $actionButtons[] = $this->generateButton(
             '#',
@@ -238,7 +238,7 @@ class ContentFileListSelectedTable extends AbstractTable
                 'data-direction' => 'down',
                 'icon' => 'fa-arrow-down',
                 'onclick' => 'return false;',
-            ]
+            ],
         );
 
         return implode(' ', $actionButtons);

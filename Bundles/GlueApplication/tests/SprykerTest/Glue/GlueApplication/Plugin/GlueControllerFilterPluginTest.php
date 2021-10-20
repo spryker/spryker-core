@@ -70,7 +70,7 @@ class GlueControllerFilterPluginTest extends Unit
             ->filter(
                 new TestsResourceController(),
                 'get',
-                $request
+                $request,
             );
 
         $this->assertSame(Response::HTTP_UNSUPPORTED_MEDIA_TYPE, $response->getStatusCode());
@@ -87,14 +87,14 @@ class GlueControllerFilterPluginTest extends Unit
             [],
             [],
             [],
-            $this->headers
+            $this->headers,
         );
 
         $response = $this->createGlueControllerListenerPlugin()
             ->filter(
                 new TestsResourceController(),
                 'getAction',
-                $request
+                $request,
             );
 
         $this->assertSame(Response::HTTP_OK, $response->getStatusCode());
@@ -112,7 +112,7 @@ class GlueControllerFilterPluginTest extends Unit
             [],
             [],
             $this->headers,
-            self::TESTS_POST_DATA
+            self::TESTS_POST_DATA,
         );
 
         $request->attributes->add($this->attributes);
@@ -121,7 +121,7 @@ class GlueControllerFilterPluginTest extends Unit
             ->filter(
                 new TestsResourceController(),
                 'postAction',
-                $request
+                $request,
             );
 
         $content = json_decode($response->getContent(), true);
@@ -145,7 +145,7 @@ class GlueControllerFilterPluginTest extends Unit
             [],
             [],
             $this->headers,
-            '{"data":{"type":"tests","attributes":{}}}'
+            '{"data":{"type":"tests","attributes":{}}}',
         );
 
         $request->attributes->add($this->attributes);
@@ -154,7 +154,7 @@ class GlueControllerFilterPluginTest extends Unit
             ->filter(
                 new TestsResourceController(),
                 'postAction',
-                $request
+                $request,
             );
 
         $content = json_decode($response->getContent(), true);
@@ -179,7 +179,7 @@ class GlueControllerFilterPluginTest extends Unit
             [],
             [],
             [],
-            $this->headers
+            $this->headers,
         );
 
         $request->attributes->add($this->attributes);
@@ -188,7 +188,7 @@ class GlueControllerFilterPluginTest extends Unit
             ->filter(
                 new TestsResourceController(),
                 'deleteAction',
-                $request
+                $request,
             );
 
         $this->assertSame(Response::HTTP_NO_CONTENT, $response->getStatusCode());
@@ -206,7 +206,7 @@ class GlueControllerFilterPluginTest extends Unit
             [],
             [],
             $this->headers,
-            self::TESTS_POST_DATA
+            self::TESTS_POST_DATA,
         );
 
         $request->attributes->add($this->attributes + [RequestConstantsInterface::ATTRIBUTE_ID => '1']);
@@ -215,7 +215,7 @@ class GlueControllerFilterPluginTest extends Unit
             ->filter(
                 new TestsResourceController(),
                 'patchAction',
-                $request
+                $request,
             );
 
         $content = json_decode($response->getContent(), true);
@@ -242,7 +242,7 @@ class GlueControllerFilterPluginTest extends Unit
             ],
             [],
             [],
-            $this->headers
+            $this->headers,
         );
 
         $request->attributes->add($this->attributes);
@@ -251,7 +251,7 @@ class GlueControllerFilterPluginTest extends Unit
             ->filter(
                 new TestsResourceController(),
                 'getAction',
-                $request
+                $request,
             );
 
         $content = json_decode($response->getContent(), true);

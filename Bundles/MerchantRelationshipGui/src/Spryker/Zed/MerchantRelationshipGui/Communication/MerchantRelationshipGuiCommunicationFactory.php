@@ -55,7 +55,7 @@ class MerchantRelationshipGuiCommunicationFactory extends AbstractCommunicationF
             $this->getMerchantRelationshipFacade(),
             $this->getMerchantFacade(),
             $this->getCompanyBusinessUnitFacade(),
-            $this->getCompanyFacade()
+            $this->getCompanyFacade(),
         );
     }
 

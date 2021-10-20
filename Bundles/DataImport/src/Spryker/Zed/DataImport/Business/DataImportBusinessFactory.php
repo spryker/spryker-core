@@ -64,7 +64,7 @@ class DataImportBusinessFactory extends AbstractBusinessFactory implements DataI
         return $dataImporterCollectionCollector->getDataImporterCollection(
             $this->createDataImporterCollection(),
             $dataImportConfigurationActionTransfer,
-            $this->getDataImporterByType($dataImportConfigurationActionTransfer)
+            $this->getDataImporterByType($dataImportConfigurationActionTransfer),
         );
     }
 
@@ -106,7 +106,7 @@ class DataImportBusinessFactory extends AbstractBusinessFactory implements DataI
         $dataImporterCollection = new DataImporterCollection(
             $this->getDataImportBeforeImportHookPlugins(),
             $this->getDataImportAfterImportHookPlugins(),
-            $this->getConfig()
+            $this->getConfig(),
         );
 
         return $dataImporterCollection;
@@ -199,7 +199,7 @@ class DataImportBusinessFactory extends AbstractBusinessFactory implements DataI
     public function createQueueDataImporter(QueueDataImporterConfigurationTransfer $queueDataImporterConfigurationTransfer): QueueDataImporterInterface
     {
         $dataReader = $this->createQueueReaderFromConfig(
-            $queueDataImporterConfigurationTransfer->getReaderConfiguration()
+            $queueDataImporterConfigurationTransfer->getReaderConfiguration(),
         );
 
         return new QueueDataImporter(
@@ -207,7 +207,7 @@ class DataImportBusinessFactory extends AbstractBusinessFactory implements DataI
             $dataReader,
             $this->getQueueClient(),
             $this->createQueueMessageHelper(),
-            $this->getGracefulRunnerFacade()
+            $this->getGracefulRunnerFacade(),
         );
     }
 
@@ -263,7 +263,7 @@ class DataImportBusinessFactory extends AbstractBusinessFactory implements DataI
     {
         $csvReaderConfiguration = new CsvReaderConfiguration(
             $dataImporterReaderConfigurationTransfer,
-            $this->createFileResolver()
+            $this->createFileResolver(),
         );
 
         return $this->createCsvReader($csvReaderConfiguration);
@@ -337,7 +337,7 @@ class DataImportBusinessFactory extends AbstractBusinessFactory implements DataI
         return new ImporterDumper(
             $this->getImporter(),
             $this,
-            $this->getDataImporterPlugins()
+            $this->getDataImporterPlugins(),
         );
     }
 
@@ -348,7 +348,7 @@ class DataImportBusinessFactory extends AbstractBusinessFactory implements DataI
     {
         return new QueueWriter(
             $this->getQueueClient(),
-            $this->getUtilEncodingService()
+            $this->getUtilEncodingService(),
         );
     }
 
@@ -362,7 +362,7 @@ class DataImportBusinessFactory extends AbstractBusinessFactory implements DataI
         return new QueueReader(
             $this->getQueueClient(),
             $this->createDataSet(),
-            $queueReaderConfigurationTransfer
+            $queueReaderConfigurationTransfer,
         );
     }
 

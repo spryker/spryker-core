@@ -50,7 +50,7 @@ class QuoteCalculatorExecutor implements QuoteCalculatorExecutorInterface
                 $calculableObjectTransfer = $this->recalculateWithLegacyCalculator(
                     $quoteTransfer,
                     $calculableObjectTransfer,
-                    $calculator
+                    $calculator,
                 );
             } else {
                 $calculator->recalculate($calculableObjectTransfer);

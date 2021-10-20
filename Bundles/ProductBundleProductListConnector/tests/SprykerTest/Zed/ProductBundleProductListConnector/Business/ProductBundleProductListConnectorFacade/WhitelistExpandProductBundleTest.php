@@ -152,7 +152,7 @@ class WhitelistExpandProductBundleTest extends Unit
     {
         return $this->tester->createProductListTransfer(
             $productIds,
-            static::PRODUCT_LIST_TYPE_WHITELIST
+            static::PRODUCT_LIST_TYPE_WHITELIST,
         );
     }
 }

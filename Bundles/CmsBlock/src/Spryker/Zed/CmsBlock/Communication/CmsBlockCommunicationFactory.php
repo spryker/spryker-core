@@ -40,7 +40,7 @@ class CmsBlockCommunicationFactory extends AbstractCommunicationFactory
         return new TwigFunction(
             $functionProvider->getFunctionName(),
             $functionProvider->getFunction(),
-            $functionProvider->getOptions()
+            $functionProvider->getOptions(),
         );
     }
 

@@ -71,7 +71,7 @@ class CmsPageMapper implements CmsPageMapperInterface
         $cmsPageAttributesTransfer->setLocaleName($localeEntity->getLocaleName());
         $cmsPageAttributesTransfer->setUrl($url);
         $cmsPageAttributesTransfer->setUrlPrefix(
-            $this->cmsPageUrlBuilder->getPageUrlPrefix($cmsPageAttributesTransfer)
+            $this->cmsPageUrlBuilder->getPageUrlPrefix($cmsPageAttributesTransfer),
         );
 
         return $cmsPageAttributesTransfer;
@@ -105,7 +105,7 @@ class CmsPageMapper implements CmsPageMapperInterface
         $cmsPageTransfer->fromArray($cmsPageEntity->toArray(), true);
 
         $storeRelationTransfer = $this->cmsPageStoreRelationReader->getStoreRelation(
-            (new StoreRelationTransfer())->setIdEntity($cmsPageEntity->getIdCmsPage())
+            (new StoreRelationTransfer())->setIdEntity($cmsPageEntity->getIdCmsPage()),
         );
 
         $cmsPageTransfer->setStoreRelation($storeRelationTransfer);

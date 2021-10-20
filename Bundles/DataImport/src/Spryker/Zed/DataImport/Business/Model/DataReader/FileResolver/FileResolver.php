@@ -32,7 +32,7 @@ class FileResolver implements FileResolverInterface
         throw new FileResolverFileNotFoundException(sprintf(
             'Could not find file "%s". Checked path(s): %s',
             $dataImporterReaderConfigurationTransfer->getFileName(),
-            implode(', ', $fileNames)
+            implode(', ', $fileNames),
         ));
     }
 

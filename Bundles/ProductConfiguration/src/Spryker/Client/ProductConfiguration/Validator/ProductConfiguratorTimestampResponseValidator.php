@@ -51,7 +51,7 @@ class ProductConfiguratorTimestampResponseValidator implements ProductConfigurat
         if ($timestampDiff > $this->config->getProductConfiguratorResponseMaxValidSeconds()) {
             return $this->getErrorResponse(
                 $productConfiguratorResponseProcessorResponseTransfer,
-                static::GLOSSARY_KEY_PRODUCT_CONFIGURATION_STORAGE_EXPIRED_TIMESTAMP
+                static::GLOSSARY_KEY_PRODUCT_CONFIGURATION_STORAGE_EXPIRED_TIMESTAMP,
             );
         }
 

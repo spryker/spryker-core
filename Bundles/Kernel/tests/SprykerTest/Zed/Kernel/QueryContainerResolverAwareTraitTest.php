@@ -29,7 +29,7 @@ class QueryContainerResolverAwareTraitTest extends Unit
     {
         $queryContainerResolverAwareTraitMock = $this->getQueryContainerResolverAwareTraitMock();
         $returned = $queryContainerResolverAwareTraitMock->setQueryContainer(
-            $this->getAbstractQueryContainerMock()
+            $this->getAbstractQueryContainerMock(),
         );
 
         $this->assertSame($queryContainerResolverAwareTraitMock, $returned);

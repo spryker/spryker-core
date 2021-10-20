@@ -117,7 +117,7 @@ class DefinitionNormalizer implements DefinitionNormalizerInterface
             $propertyDefinitions = isset($propertyDefinitions[0]) ? $propertyDefinitions : [$propertyDefinitions];
             $transferDefinition[static::KEY_PROPERTY] = $this->normalizeTransferPropertyDefinitionStrictMode(
                 $propertyDefinitions,
-                $isTransferInStrictMode
+                $isTransferInStrictMode,
             );
         }
 

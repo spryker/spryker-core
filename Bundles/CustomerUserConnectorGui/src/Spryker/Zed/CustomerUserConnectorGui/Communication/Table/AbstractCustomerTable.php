@@ -208,7 +208,7 @@ abstract class AbstractCustomerTable extends AbstractTable
                 'firstname' => $this->utilSanitizeService->escapeHtml($customerEntity->getFirstName()),
                 'lastname' => $this->utilSanitizeService->escapeHtml($customerEntity->getLastName()),
                 'gender' => $customerEntity->getGender(),
-            ]))
+            ])),
         );
     }
 

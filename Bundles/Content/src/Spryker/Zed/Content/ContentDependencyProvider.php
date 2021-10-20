@@ -64,7 +64,7 @@ class ContentDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::SERVICE_UTIL_UUID_GENERATOR, function (Container $container) {
             return new ContentToUtilUuidGeneratorServiceBridge(
-                $container->getLocator()->utilUuidGenerator()->service()
+                $container->getLocator()->utilUuidGenerator()->service(),
             );
         });
 

@@ -148,7 +148,7 @@ class CartsRestApiBusinessTester extends Actor
             ->withQuoteTransfer(
                 (new QuoteBuilder($quoteOverride))
                     ->withItem($itemOverride)
-                    ->withAnotherItem($item2Override)
+                    ->withAnotherItem($item2Override),
             )
             ->build();
     }
@@ -197,7 +197,7 @@ class CartsRestApiBusinessTester extends Actor
                 'uuid' => static::TEST_QUOTE_UUID,
                 'customerReference' => static::TEST_CUSTOMER_REFERENCE,
                 'customer' => (new CustomerTransfer())->setCustomerReference(static::TEST_CUSTOMER_REFERENCE),
-            ]
+            ],
         ))->build();
     }
 
@@ -212,7 +212,7 @@ class CartsRestApiBusinessTester extends Actor
                 'customerReference' => static::TEST_ANONYMOUS_CUSTOMER_REFERENCE,
                 'customer' => (new CustomerTransfer())->setCustomerReference(static::TEST_ANONYMOUS_CUSTOMER_REFERENCE),
                 'items' => static::ITEMS,
-            ]
+            ],
         ))->build();
     }
 
@@ -226,7 +226,7 @@ class CartsRestApiBusinessTester extends Actor
                 'uuid' => static::TEST_QUOTE_UUID,
                 'customerReference' => static::TEST_ANONYMOUS_CUSTOMER_REFERENCE,
                 'customer' => (new CustomerTransfer())->setCustomerReference(static::TEST_ANONYMOUS_CUSTOMER_REFERENCE),
-            ]
+            ],
         ))->build();
     }
 
@@ -239,7 +239,7 @@ class CartsRestApiBusinessTester extends Actor
             [
                 'uuid' => static::TEST_QUOTE_UUID,
                 'customerReference' => static::TEST_CUSTOMER_REFERENCE,
-            ]
+            ],
         ))->build();
     }
 
@@ -253,7 +253,7 @@ class CartsRestApiBusinessTester extends Actor
                 'quoteUuid' => static::TEST_QUOTE_UUID,
                 'customerReference' => static::TEST_CUSTOMER_REFERENCE,
                 'sku' => static::TEST_SKU,
-            ]
+            ],
         ))->build();
     }
 
@@ -269,7 +269,7 @@ class CartsRestApiBusinessTester extends Actor
                 'sku' => static::TEST_SKU,
                 'groupKey' => static::TEST_SKU,
                 'quantity' => static::TEST_QUANTITY,
-            ]
+            ],
         ))->build();
 
         $restCartItemsAttributesTransfer
@@ -290,7 +290,7 @@ class CartsRestApiBusinessTester extends Actor
                 'sku' => static::TEST_SKU2,
                 'groupKey' => static::TEST_SKU2,
                 'quantity' => static::TEST_QUANTITY,
-            ]
+            ],
         ))->build();
 
         $restCartItemsAttributesTransfer
@@ -309,7 +309,7 @@ class CartsRestApiBusinessTester extends Actor
                 'quoteUuid' => static::TEST_QUOTE_UUID,
                 'sku' => static::TEST_SKU,
                 'quantity' => static::TEST_QUANTITY,
-            ]
+            ],
         ))->build();
     }
 
@@ -324,7 +324,7 @@ class CartsRestApiBusinessTester extends Actor
                 'quantity' => static::TEST_QUANTITY,
                 'customer' => (new CustomerTransfer())->setCustomerReference(static::TEST_CUSTOMER_REFERENCE),
                 'sku' => static::TEST_SKU,
-            ]
+            ],
         ))->build();
     }
 
@@ -338,7 +338,7 @@ class CartsRestApiBusinessTester extends Actor
                 'quoteUuid' => static::TEST_QUOTE_UUID,
                 'quantity' => static::TEST_QUANTITY,
                 'sku' => static::TEST_SKU,
-            ]
+            ],
         ))->build();
     }
 
@@ -351,7 +351,7 @@ class CartsRestApiBusinessTester extends Actor
             [
                 'customerReference' => static::TEST_CUSTOMER_REFERENCE,
                 'anonymousCustomerReference' => static::TEST_ANONYMOUS_CUSTOMER_REFERENCE,
-            ]
+            ],
         ))->build();
     }
 
@@ -363,7 +363,7 @@ class CartsRestApiBusinessTester extends Actor
         return (new OauthResponseBuilder(
             [
                 'anonymousCustomerReference' => static::TEST_ANONYMOUS_CUSTOMER_REFERENCE,
-            ]
+            ],
         ))->build();
     }
 
@@ -375,7 +375,7 @@ class CartsRestApiBusinessTester extends Actor
         return (new OauthResponseBuilder(
             [
                 'customerReference' => static::TEST_CUSTOMER_REFERENCE,
-            ]
+            ],
         ))->build();
     }
 
@@ -389,7 +389,7 @@ class CartsRestApiBusinessTester extends Actor
                 'quoteUuid' => static::TEST_QUOTE_UUID,
                 'customer' => (new CustomerTransfer())->setCustomerReference(static::TEST_CUSTOMER_REFERENCE),
                 'sku' => static::TEST_SKU,
-            ]
+            ],
         ))->build();
     }
 
@@ -403,7 +403,7 @@ class CartsRestApiBusinessTester extends Actor
                 'sku' => static::TEST_SKU,
                 'customer' => (new CustomerTransfer())->setCustomerReference(static::TEST_CUSTOMER_REFERENCE),
                 'quantity' => static::TEST_QUANTITY,
-            ]
+            ],
         ))->build();
     }
 
@@ -417,7 +417,7 @@ class CartsRestApiBusinessTester extends Actor
                 'quoteUuid' => static::TEST_QUOTE_UUID,
                 'customer' => (new CustomerTransfer())->setCustomerReference(static::TEST_CUSTOMER_REFERENCE),
                 'quantity' => static::TEST_QUANTITY,
-            ]
+            ],
         ))->build();
     }
 
@@ -430,7 +430,7 @@ class CartsRestApiBusinessTester extends Actor
             [
                 'anonymousCustomerReference' => static::TEST_ANONYMOUS_CUSTOMER_REFERENCE,
                 'customerReference' => static::TEST_CUSTOMER_REFERENCE,
-            ]
+            ],
         ))->build();
     }
 
@@ -442,7 +442,7 @@ class CartsRestApiBusinessTester extends Actor
         return (new AssignGuestQuoteRequestBuilder(
             [
                 'anonymousCustomerReference' => static::TEST_ANONYMOUS_CUSTOMER_REFERENCE,
-            ]
+            ],
         ))->build();
     }
 
@@ -454,7 +454,7 @@ class CartsRestApiBusinessTester extends Actor
         return (new AssignGuestQuoteRequestBuilder(
             [
                 'customerReference' => static::TEST_CUSTOMER_REFERENCE,
-            ]
+            ],
         ))->build();
     }
 
@@ -468,7 +468,7 @@ class CartsRestApiBusinessTester extends Actor
                 'quoteUuid' => static::TEST_QUOTE_UUID,
                 'customerReference' => static::TEST_CUSTOMER_REFERENCE,
                 'quantity' => static::TEST_QUANTITY,
-            ]
+            ],
         ))->build();
     }
 
@@ -482,7 +482,7 @@ class CartsRestApiBusinessTester extends Actor
                 'sku' => static::TEST_SKU,
                 'customerReference' => static::TEST_CUSTOMER_REFERENCE,
                 'quantity' => static::TEST_QUANTITY,
-            ]
+            ],
         ))->build();
     }
 
@@ -534,7 +534,7 @@ class CartsRestApiBusinessTester extends Actor
             [
                 'customerReference' => $customerTransfer->getCustomerReference(),
                 'customer' => $customerTransfer,
-            ]
+            ],
         ))->build();
     }
 
@@ -549,7 +549,7 @@ class CartsRestApiBusinessTester extends Actor
             [
                 'customerReference' => $customerReference,
                 'anonymousCustomerReference' => static::TEST_ANONYMOUS_CUSTOMER_REFERENCE,
-            ]
+            ],
         ))->build();
     }
 
@@ -563,7 +563,7 @@ class CartsRestApiBusinessTester extends Actor
         return (new QuoteCriteriaFilterBuilder(
             [
                 'customerReference' => $customerReference,
-            ]
+            ],
         ))->build();
     }
 }

@@ -65,7 +65,7 @@ class CartCodeBusinessTester extends Actor
                 'customer' => (new CustomerTransfer())->setCustomerReference(static::TEST_CUSTOMER_REFERENCE),
                 'items' => static::ITEMS,
                 'isLocked' => $isLocked,
-            ]
+            ],
         ))->build();
     }
 
@@ -89,7 +89,7 @@ class CartCodeBusinessTester extends Actor
                     ],
                 ],
                 'isLocked' => $isLocked,
-            ]
+            ],
         ))->build();
     }
 }

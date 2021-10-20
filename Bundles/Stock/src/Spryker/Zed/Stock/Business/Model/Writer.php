@@ -266,7 +266,7 @@ class Writer implements WriterInterface
     {
         $this->touchFacade->touchActive(
             self::TOUCH_STOCK_TYPE,
-            $stockTypeEntity->getIdStock()
+            $stockTypeEntity->getIdStock(),
         );
     }
 
@@ -279,7 +279,7 @@ class Writer implements WriterInterface
     {
         $this->touchFacade->touchActive(
             self::TOUCH_STOCK_PRODUCT,
-            $stockProductEntity->getIdStockProduct()
+            $stockProductEntity->getIdStockProduct(),
         );
     }
 

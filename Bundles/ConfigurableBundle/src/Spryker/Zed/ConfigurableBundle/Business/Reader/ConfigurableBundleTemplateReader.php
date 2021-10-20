@@ -81,7 +81,7 @@ class ConfigurableBundleTemplateReader implements ConfigurableBundleTemplateRead
 
         $configurableBundleTemplateTransfer = $this->expandConfigurableBundleTemplate(
             $configurableBundleTemplateTransfer,
-            $configurableBundleTemplateFilterTransfer
+            $configurableBundleTemplateFilterTransfer,
         );
 
         return (new ConfigurableBundleTemplateResponseTransfer())
@@ -120,7 +120,7 @@ class ConfigurableBundleTemplateReader implements ConfigurableBundleTemplateRead
         foreach ($configurableBundleTemplateTransfers as $configurableBundleTemplateTransfer) {
             $expandedConfigurableBundleTemplateTransfer = $this->expandConfigurableBundleTemplate(
                 $configurableBundleTemplateTransfer,
-                $configurableBundleTemplateFilterTransfer
+                $configurableBundleTemplateFilterTransfer,
             );
 
             $configurableBundleTemplateCollectionTransfer->addConfigurableBundleTemplate($expandedConfigurableBundleTemplateTransfer);
@@ -142,13 +142,13 @@ class ConfigurableBundleTemplateReader implements ConfigurableBundleTemplateRead
         $configurableBundleTemplateTransfer = $this->configurableBundleTranslationExpander
             ->expandConfigurableBundleTemplateWithTranslations(
                 $configurableBundleTemplateTransfer,
-                $configurableBundleTemplateFilterTransfer->getTranslationLocales()
+                $configurableBundleTemplateFilterTransfer->getTranslationLocales(),
             );
 
         $configurableBundleTemplateTransfer = $this->configurableBundleTemplateImageSetExpander
             ->expandConfigurableBundleTemplateWithImageSets(
                 $configurableBundleTemplateTransfer,
-                $configurableBundleTemplateFilterTransfer->getTranslationLocales()
+                $configurableBundleTemplateFilterTransfer->getTranslationLocales(),
             );
 
         return $configurableBundleTemplateTransfer;

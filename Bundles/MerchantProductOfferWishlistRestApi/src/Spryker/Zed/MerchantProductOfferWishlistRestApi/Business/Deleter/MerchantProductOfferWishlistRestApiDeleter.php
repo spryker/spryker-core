@@ -43,7 +43,7 @@ class MerchantProductOfferWishlistRestApiDeleter implements MerchantProductOffer
             $uuid = sprintf(
                 '%s_%s',
                 $wishlistItemTransfer->getSku(),
-                $wishlistItemTransfer->getProductOfferReference()
+                $wishlistItemTransfer->getProductOfferReference(),
             );
 
             if ($wishlistItemRequestTransfer->getUuid() === $uuid) {

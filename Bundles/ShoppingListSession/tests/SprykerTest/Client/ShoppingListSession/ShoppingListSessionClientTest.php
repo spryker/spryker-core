@@ -54,7 +54,7 @@ class ShoppingListSessionClientTest extends Unit
             ShoppingListSessionDependencyProvider::SHOPPING_LIST_SESSION_COLLECTION_OUTDATED_PLUGINS,
             function () {
                 return [new CollectionOutdatedPluginReturnsFalse()];
-            }
+            },
         );
     }
 
@@ -93,13 +93,13 @@ class ShoppingListSessionClientTest extends Unit
         //Act
         $this->tester->setDependency(
             ShoppingListSessionDependencyProvider::SHOPPING_LIST_SESSION_SHOPPING_LIST_CLIENT,
-            $this->getShoppingListClientMock($shoppingListCollectionTransferFirst)
+            $this->getShoppingListClientMock($shoppingListCollectionTransferFirst),
         );
         $customerShoppingListCollectionFirstResult = $this->getShoppingListSessionClient()->getCustomerShoppingListCollection();
 
         $this->tester->setDependency(
             ShoppingListSessionDependencyProvider::SHOPPING_LIST_SESSION_SHOPPING_LIST_CLIENT,
-            $this->getShoppingListClientMock($shoppingListCollectionTransferSecond)
+            $this->getShoppingListClientMock($shoppingListCollectionTransferSecond),
         );
         $customerShoppingListCollectionSecondResult = $this->getShoppingListSessionClient()->getCustomerShoppingListCollection();
 
@@ -126,7 +126,7 @@ class ShoppingListSessionClientTest extends Unit
         //Act
         $this->tester->setDependency(
             ShoppingListSessionDependencyProvider::SHOPPING_LIST_SESSION_SHOPPING_LIST_CLIENT,
-            $this->getShoppingListClientMock($shoppingListCollectionTransferFirst)
+            $this->getShoppingListClientMock($shoppingListCollectionTransferFirst),
         );
         $customerShoppingListCollectionFirstResult = $this->getShoppingListSessionClient()->getCustomerShoppingListCollection();
 
@@ -134,7 +134,7 @@ class ShoppingListSessionClientTest extends Unit
             ShoppingListSessionDependencyProvider::SHOPPING_LIST_SESSION_COLLECTION_OUTDATED_PLUGINS,
             function () {
                 return [new CollectionOutdatedPluginReturnsTrue()];
-            }
+            },
         );
         $shoppingListClientMock = $this->getShoppingListClientMock($shoppingListCollectionTransferSecond);
         $this->tester->setDependency(ShoppingListSessionDependencyProvider::SHOPPING_LIST_SESSION_SHOPPING_LIST_CLIENT, $shoppingListClientMock);

@@ -42,7 +42,7 @@ class SalesOrderItemConfigurationMapper
         foreach ($salesOrderItemConfigurationEntityCollection as $salesOrderItemConfigurationEntity) {
             $salesOrderItemConfigurationTransfers[] = $this->mapSalesOrderItemConfigurationEntityToSalesOrderItemConfigurationTransfer(
                 $salesOrderItemConfigurationEntity,
-                new SalesOrderItemConfigurationTransfer()
+                new SalesOrderItemConfigurationTransfer(),
             );
         }
 
@@ -63,7 +63,7 @@ class SalesOrderItemConfigurationMapper
             ->fromArray($salesOrderItemConfigurationEntity->toArray(), true);
 
         $salesOrderItemConfigurationTransfer->setIdSalesOrderItem(
-            $salesOrderItemConfigurationEntity->getFkSalesOrderItem()
+            $salesOrderItemConfigurationEntity->getFkSalesOrderItem(),
         );
 
         return $salesOrderItemConfigurationTransfer;

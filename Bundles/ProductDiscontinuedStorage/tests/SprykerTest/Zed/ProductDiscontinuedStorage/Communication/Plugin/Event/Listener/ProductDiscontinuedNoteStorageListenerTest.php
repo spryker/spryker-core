@@ -79,11 +79,11 @@ class ProductDiscontinuedNoteStorageListenerTest extends Unit
         // Act
         $this->productDiscontinuedNoteStorageListener->handleBulk(
             $eventTransfers,
-            ProductDiscontinuedEvents::ENTITY_SPY_PRODUCT_DISCONTINUED_NOTE_CREATE
+            ProductDiscontinuedEvents::ENTITY_SPY_PRODUCT_DISCONTINUED_NOTE_CREATE,
         );
         $productDiscontinuedEntityTransfers = $this->productDiscontinuedStorageRepository
             ->findProductDiscontinuedStorageEntitiesByIds(
-                [$this->productDiscontinuedTransfer->getIdProductDiscontinued()]
+                [$this->productDiscontinuedTransfer->getIdProductDiscontinued()],
             );
 
         // Assert

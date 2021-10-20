@@ -122,7 +122,7 @@ class CreateProductAbstractController extends AbstractController
         return new RedirectResponse(
             $this->getFactory()
                 ->createCreateProductUrlGenerator()
-                ->getCreateUrl($formData, (bool)$formData[static::FIELD_IS_SINGLE_CONCRETE])
+                ->getCreateUrl($formData, (bool)$formData[static::FIELD_IS_SINGLE_CONCRETE]),
         );
     }
 
@@ -140,7 +140,7 @@ class CreateProductAbstractController extends AbstractController
             return new RedirectResponse(
                 $this->getFactory()
                     ->createCreateProductUrlGenerator()
-                    ->getCreateProductAbstractUrl($abstractProductSku, $abstractProductName)
+                    ->getCreateProductAbstractUrl($abstractProductSku, $abstractProductName),
             );
         }
 
@@ -199,7 +199,7 @@ class CreateProductAbstractController extends AbstractController
             return new RedirectResponse(
                 $this->getFactory()
                     ->createCreateProductUrlGenerator()
-                    ->getCreateProductAbstractUrl($abstractProductSku, $abstractProductName)
+                    ->getCreateProductAbstractUrl($abstractProductSku, $abstractProductName),
             );
         }
 
@@ -214,7 +214,7 @@ class CreateProductAbstractController extends AbstractController
         $createProductAbstractWithMultiConcreteForm->handleRequest($request);
 
         $productAbstractTransfer = $this->getProductAbstractTransfer(
-            $createProductAbstractWithMultiConcreteForm->getData()
+            $createProductAbstractWithMultiConcreteForm->getData(),
         );
 
         $superAttributes = $this->getFactory()
@@ -232,7 +232,7 @@ class CreateProductAbstractController extends AbstractController
 
         if (!$request->isMethod(Request::METHOD_POST)) {
             return new JsonResponse(
-                $this->createMultiConcreteResponse($viewData, $formData)
+                $this->createMultiConcreteResponse($viewData, $formData),
             );
         }
 
@@ -341,7 +341,7 @@ class CreateProductAbstractController extends AbstractController
         return [
             'form' => $this->renderView(
                 '@ProductMerchantPortalGui/Partials/create_product_abstract_with_multi_concrete_form.twig',
-                $viewData
+                $viewData,
             )->getContent(),
             'action' => $this->getFactory()->createCreateProductUrlGenerator()->getCreateUrl($formData, false),
         ];

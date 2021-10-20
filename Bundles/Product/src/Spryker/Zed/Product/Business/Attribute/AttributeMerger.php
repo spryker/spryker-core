@@ -22,7 +22,7 @@ class AttributeMerger implements AttributeMergerInterface
             $rawProductAttributesTransfer->getAbstractAttributes(),
             $rawProductAttributesTransfer->getAbstractLocalizedAttributes(),
             $rawProductAttributesTransfer->getConcreteAttributes(),
-            $rawProductAttributesTransfer->getConcreteLocalizedAttributes()
+            $rawProductAttributesTransfer->getConcreteLocalizedAttributes(),
         );
 
         return $combinedAttributes;

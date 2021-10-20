@@ -39,7 +39,7 @@ class ProductRelationTypeMapper
         foreach ($productRelationTypeEntities as $productRelationTypeEntity) {
             $productRelationTypeTransfers[] = $this->mapProductRelationTypeEntityToProductRelationTypeTransfer(
                 $productRelationTypeEntity,
-                new ProductRelationTypeTransfer()
+                new ProductRelationTypeTransfer(),
             );
         }
 

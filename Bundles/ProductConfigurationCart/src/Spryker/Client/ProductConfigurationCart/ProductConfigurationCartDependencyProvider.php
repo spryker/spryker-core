@@ -65,7 +65,7 @@ class ProductConfigurationCartDependencyProvider extends AbstractDependencyProvi
     {
         $container->set(static::CLIENT_PRODUCT_CONFIGURATION, function (Container $container) {
             return new ProductConfigurationCartToProductConfigurationClientBridge(
-                $container->getLocator()->productConfiguration()->client()
+                $container->getLocator()->productConfiguration()->client(),
             );
         });
 
@@ -81,7 +81,7 @@ class ProductConfigurationCartDependencyProvider extends AbstractDependencyProvi
     {
         $container->set(static::CLIENT_PRODUCT_CONFIGURATION_STORAGE, function (Container $container) {
             return new ProductConfigurationCartToProductConfigurationStorageClientBridge(
-                $container->getLocator()->productConfigurationStorage()->client()
+                $container->getLocator()->productConfigurationStorage()->client(),
             );
         });
 
@@ -97,7 +97,7 @@ class ProductConfigurationCartDependencyProvider extends AbstractDependencyProvi
     {
         $container->set(static::CLIENT_CART, function (Container $container) {
             return new ProductConfigurationCartToCartClientBridge(
-                $container->getLocator()->cart()->client()
+                $container->getLocator()->cart()->client(),
             );
         });
 
@@ -113,7 +113,7 @@ class ProductConfigurationCartDependencyProvider extends AbstractDependencyProvi
     {
         $container->set(static::CLIENT_QUOTE, function (Container $container) {
             return new ProductConfigurationCartToQuoteClientBridge(
-                $container->getLocator()->quote()->client()
+                $container->getLocator()->quote()->client(),
             );
         });
 

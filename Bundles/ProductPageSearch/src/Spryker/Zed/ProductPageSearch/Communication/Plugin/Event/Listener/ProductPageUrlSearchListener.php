@@ -57,7 +57,7 @@ class ProductPageUrlSearchListener extends AbstractProductPageSearchListener imp
 
         return $this->getFactory()->getEventBehaviorFacade()->getEventTransferForeignKeys(
             $validEventTransfers,
-            SpyUrlTableMap::COL_FK_RESOURCE_PRODUCT_ABSTRACT
+            SpyUrlTableMap::COL_FK_RESOURCE_PRODUCT_ABSTRACT,
         );
     }
 }

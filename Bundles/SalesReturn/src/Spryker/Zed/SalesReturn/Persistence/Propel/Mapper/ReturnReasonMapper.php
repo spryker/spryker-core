@@ -24,7 +24,7 @@ class ReturnReasonMapper
 
         foreach ($salesReturnReasonEntities as $salesReturnReasonEntity) {
             $returnReasonCollectionTransfer->addReturnReason(
-                (new ReturnReasonTransfer())->fromArray($salesReturnReasonEntity->toArray(), true)
+                (new ReturnReasonTransfer())->fromArray($salesReturnReasonEntity->toArray(), true),
             );
         }
 

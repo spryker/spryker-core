@@ -74,7 +74,7 @@ class RepositoryTest extends Unit
 
         $this->elasticaSnapshotMock = $this->createElasticaSnapshotMock();
         $this->elasticsearchRepository = new Repository(
-            $this->elasticaSnapshotMock
+            $this->elasticaSnapshotMock,
         );
     }
 
@@ -124,8 +124,8 @@ class RepositoryTest extends Unit
             ->will($this->throwException(
                 new ResponseException(
                     $this->createMock(Request::class),
-                    $this->createMock(Response::class)
-                )
+                    $this->createMock(Response::class),
+                ),
             ));
 
         // Act

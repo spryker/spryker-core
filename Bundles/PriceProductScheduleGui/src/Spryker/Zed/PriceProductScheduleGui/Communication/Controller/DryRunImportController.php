@@ -128,7 +128,7 @@ class DryRunImportController extends AbstractController
             ->createImportSuccessListTable($priceProductScheduleList);
 
         return $this->jsonResponse(
-            $successTable->fetchData()
+            $successTable->fetchData(),
         );
     }
 
@@ -175,7 +175,7 @@ class DryRunImportController extends AbstractController
             ->getPriceProductScheduleFacade()
             ->readPriceProductScheduleImportTransfersFromCsvFile(
                 $uploadedFile,
-                $priceProductScheduleListImportRequestTransfer
+                $priceProductScheduleListImportRequestTransfer,
             );
 
         return $this->getFactory()
@@ -203,7 +203,7 @@ class DryRunImportController extends AbstractController
         $priceProductScheduledListResponse = $this->getFactory()
             ->getPriceProductScheduleFacade()
             ->createPriceProductScheduleList(
-                (new PriceProductScheduleListTransfer())->setName($priceProductScheduleName)
+                (new PriceProductScheduleListTransfer())->setName($priceProductScheduleName),
             );
 
         return $priceProductScheduledListResponse->getPriceProductScheduleList();
@@ -219,7 +219,7 @@ class DryRunImportController extends AbstractController
     {
         $priceProductScheduleListImportResponseTransfer = $this->handlePriceProductScheduleImportForm(
             $priceProductScheduleImportForm,
-            $request
+            $request,
         );
 
         $errorTable = $this->getFactory()

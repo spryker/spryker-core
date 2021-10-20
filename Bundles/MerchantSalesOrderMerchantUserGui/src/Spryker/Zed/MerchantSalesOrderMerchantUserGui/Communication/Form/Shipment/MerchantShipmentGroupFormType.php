@@ -126,7 +126,7 @@ class MerchantShipmentGroupFormType extends AbstractType
         $builder->add(
             static::FIELD_SHIPMENT_FORM,
             $shipmentFormTypePlugin->getType(),
-            $options
+            $options,
         );
 
         return $this;

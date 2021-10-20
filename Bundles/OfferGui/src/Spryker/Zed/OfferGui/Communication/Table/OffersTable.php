@@ -197,7 +197,7 @@ class OffersTable extends AbstractTable
             '%s. %s %s',
             $customerTransfer->getSalutation(),
             $customerTransfer->getFirstName(),
-            $customerTransfer->getLastName()
+            $customerTransfer->getLastName(),
         );
 
         $customer = $this->sanitizeService->escapeHtml($customer);
@@ -277,7 +277,7 @@ class OffersTable extends AbstractTable
                 Url::generate(static::URL_OFFER_GUI_EDIT, [
                     static::URL_PARAM_ID_OFFER => $item[SpyOfferTableMap::COL_ID_OFFER],
                 ]),
-                'Edit'
+                'Edit',
             );
         }
 
@@ -285,7 +285,7 @@ class OffersTable extends AbstractTable
             Url::generate(static::URL_OFFER_GUI_VIEW_DETAILS, [
                 static::URL_PARAM_ID_OFFER => $item[SpyOfferTableMap::COL_ID_OFFER],
             ]),
-            'View'
+            'View',
         );
 
         $urls[] = $this->generateViewButton(
@@ -293,14 +293,14 @@ class OffersTable extends AbstractTable
                 static::URL_PARAM_ID_OFFER => $item[SpyOfferTableMap::COL_ID_OFFER],
             ]),
             'Print version',
-            ['target' => '_blank']
+            ['target' => '_blank'],
         );
 
         $urls[] = $this->generateCreateButton(
             Url::generate(static::URL_OFFER_GUI_SUGGEST, [
                 static::URL_PARAM_ID_OFFER => $item[SpyOfferTableMap::COL_ID_OFFER],
             ]),
-            'Suggest to'
+            'Suggest to',
         );
 
         if ($this->isClosed($item)) {
@@ -308,7 +308,7 @@ class OffersTable extends AbstractTable
                 Url::generate(static::URL_OFFER_GUI_PLACE_ORDER, [
                     static::URL_PARAM_ID_OFFER => $item[SpyOfferTableMap::COL_ID_OFFER],
                 ]),
-                'Place order'
+                'Place order',
             );
         }
 
@@ -430,7 +430,7 @@ class OffersTable extends AbstractTable
     protected function getCustomerByReference(array $item): ?CustomerTransfer
     {
         return $this->customerFacade->findCustomerByReference(
-            $item[SpyOfferTableMap::COL_CUSTOMER_REFERENCE]
+            $item[SpyOfferTableMap::COL_CUSTOMER_REFERENCE],
         );
     }
 

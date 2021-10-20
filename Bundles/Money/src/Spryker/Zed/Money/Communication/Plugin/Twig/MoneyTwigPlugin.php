@@ -145,10 +145,10 @@ class MoneyTwigPlugin extends AbstractPlugin implements TwigPluginInterface
                     $this->getConfig()->getMoneyTableTemplatePath(),
                     [
                         'moneyValueFormViewCollection' => $moneyValueFormViewCollection,
-                    ]
+                    ],
                 );
             },
-            $options
+            $options,
         );
     }
 }

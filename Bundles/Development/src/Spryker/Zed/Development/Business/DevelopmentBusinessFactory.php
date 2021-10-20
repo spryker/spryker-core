@@ -215,7 +215,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     {
         return new CodeStyleSniffer(
             $this->getConfig(),
-            $this->createCodeStyleSnifferConfigurationLoader()
+            $this->createCodeStyleSnifferConfigurationLoader(),
         );
     }
 
@@ -226,7 +226,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     {
         return new CodeStyleSnifferConfigurationLoader(
             $this->createConfigurationReader(),
-            $this->createCodeStyleSnifferConfiguration()
+            $this->createCodeStyleSnifferConfiguration(),
         );
     }
 
@@ -246,7 +246,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
         return new CodeTester(
             $this->getModuleFinderFacade(),
             $this->createConfigArgumentCollectionBuilder(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -256,7 +256,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     public function createPhpMdRunner()
     {
         return new PhpMdRunner(
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -268,7 +268,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
         return new PhpstanRunner(
             $this->getConfig(),
             $this->createPhpstanConfigFileFinder(),
-            $this->createPhpstanConfigFileManager()
+            $this->createPhpstanConfigFileManager(),
         );
     }
 
@@ -286,7 +286,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     public function createModuleBuilder()
     {
         return new ModuleBuilder(
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -306,7 +306,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
         return new ModuleDependencyParser(
             $this->createModuleFileFinder(),
             $this->createDependencyContainer(),
-            $this->createDependencyFinder()
+            $this->createDependencyFinder(),
         );
     }
 
@@ -347,7 +347,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     public function createSprykerModuleFilePathBuilder(): PathBuilderInterface
     {
         return new SprykerModulePathBuilder(
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -357,7 +357,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     public function createSprykerShopModuleFilePathBuilder(): PathBuilderInterface
     {
         return new SprykerShopModulePathBuilder(
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -367,7 +367,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     public function createSprykerEcoModuleFilePathBuilder(): PathBuilderInterface
     {
         return new SprykerEcoModulePathBuilder(
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -377,7 +377,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     public function createSprykerSdkModulePathBuilder(): PathBuilderInterface
     {
         return new SprykerSdkModulePathBuilder(
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -426,7 +426,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     {
         return new SprykerSdkDependencyFinder(
             $this->createUseStatementParser(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -437,7 +437,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     {
         return new InternalDependencyFinder(
             $this->createUseStatementParser(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -449,7 +449,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
         return new ExternalDependencyFinder(
             $this->createUseStatementParser(),
             $this->createExternalDependencyParser(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -475,7 +475,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     public function createExtensionDependencyFinder(): DependencyFinderInterface
     {
         return new ExtensionDependencyFinder(
-            $this->getModuleFinderFacade()
+            $this->getModuleFinderFacade(),
         );
     }
 
@@ -493,7 +493,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     public function createPersistenceDependencyFinder(): DependencyFinderInterface
     {
         return new PersistenceDependencyFinder(
-            $this->createPropelSchemaParser()
+            $this->createPropelSchemaParser(),
         );
     }
 
@@ -503,7 +503,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     public function createBehaviorDependencyFinder(): DependencyFinderInterface
     {
         return new BehaviorDependencyFinder(
-            $this->getModuleFinderFacade()
+            $this->getModuleFinderFacade(),
         );
     }
 
@@ -513,7 +513,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     public function createPropelSchemaParser(): PropelSchemaParserInterface
     {
         return new PropelSchemaParser(
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -531,7 +531,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     public function createTwigDependencyFinder(): DependencyFinderInterface
     {
         return new TwigDependencyFinder(
-            $this->getTwigDependencyFinder()
+            $this->getTwigDependencyFinder(),
         );
     }
 
@@ -637,7 +637,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
         return new Manager(
             $this->createModuleDependencyParser(),
             $this->getConfig(),
-            $this->createDependencyModuleMapper()
+            $this->createDependencyModuleMapper(),
         );
     }
 
@@ -692,7 +692,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     protected function createSprykerFinder()
     {
         $finder = new FileFinder(
-            $this->createSprykerPathBuilder()
+            $this->createSprykerPathBuilder(),
         );
 
         return $finder;
@@ -704,7 +704,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     protected function createSprykerMerchantPortalFinder()
     {
         $finder = new FileFinder(
-            $this->createSprykerMerchantPortalPathBuilder()
+            $this->createSprykerMerchantPortalPathBuilder(),
         );
 
         return $finder;
@@ -716,7 +716,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     protected function createSprykerPathBuilder()
     {
         return new SprykerPathBuilder(
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -726,7 +726,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     protected function createSprykerMerchantPortalPathBuilder()
     {
         return new SprykerMerchantPortalPathBuilder(
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -739,7 +739,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
             $this->createModuleDependencyParser(),
             $this->createComposerDependencyParser(),
             $this->createDependencyValidationRules(),
-            $this->createComposerNameFinder()
+            $this->createComposerNameFinder(),
         );
     }
 
@@ -877,7 +877,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     public function createComposerJsonValidator(): ComposerJsonInterface
     {
         return new ComposerJson(
-            $this->createComposerJsonValidatorComposite()
+            $this->createComposerJsonValidatorComposite(),
         );
     }
 
@@ -915,7 +915,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     {
         return new DependencyProviderUsedPluginFinder(
             $this->getModuleFinderFacade(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -933,7 +933,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     protected function createSdkFinder()
     {
         $finder = new FileFinder(
-            $this->createSprykerSdkPathBuilder()
+            $this->createSprykerSdkPathBuilder(),
         );
 
         return $finder;
@@ -945,7 +945,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     protected function createSprykerSdkPathBuilder()
     {
         return new SprykerSdkPathBuilder(
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -963,7 +963,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     protected function createEcoFinder()
     {
         $finder = new FileFinder(
-            $this->createSprykerEcoPathBuilder()
+            $this->createSprykerEcoPathBuilder(),
         );
 
         return $finder;
@@ -975,7 +975,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     protected function createSprykerEcoPathBuilder()
     {
         return new SprykerEcoPathBuilder(
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -985,7 +985,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     protected function createShopFinder()
     {
         $finder = new FileFinder(
-            $this->createSprykerShopPathBuilder()
+            $this->createSprykerShopPathBuilder(),
         );
 
         return $finder;
@@ -997,7 +997,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     protected function createSprykerShopPathBuilder()
     {
         return new SprykerShopPathBuilder(
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -1111,7 +1111,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
 
         $dependencyGraphBuilder = new DependencyGraphBuilder(
             $this->createDetailedGraphBuilder(),
-            $dependencyTreeFilter->filter($dependencyTreeReader->read())
+            $dependencyTreeFilter->filter($dependencyTreeReader->read()),
         );
 
         return $dependencyGraphBuilder;
@@ -1157,7 +1157,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
             $this->getGraph(),
             $this->createModuleDependencyParser(),
             $this->createDependencyManager(),
-            $excludedBundles
+            $excludedBundles,
         );
 
         return $outgoingDependencyGraphBuilder;
@@ -1184,7 +1184,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
 
         $dependencyGraphBuilder = new DependencyGraphBuilder(
             $this->createSimpleGraphBuilder(),
-            $dependencyTreeFilter->filter($dependencyTreeReader->read())
+            $dependencyTreeFilter->filter($dependencyTreeReader->read()),
         );
 
         return $dependencyGraphBuilder;
@@ -1262,7 +1262,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     {
         $dependencyGraphBuilder = new DependencyGraphBuilder(
             $this->createExternalGraphBuilder(),
-            $this->createExternalDependencyTree($bundleToView)
+            $this->createExternalDependencyTree($bundleToView),
         );
 
         return $dependencyGraphBuilder;
@@ -1284,7 +1284,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
         $adjacencyMatrixBuilder = new AdjacencyMatrixBuilder(
             $this->createDependencyManager()->collectAllModules(),
             $this->createDependencyTreeReader(),
-            $this->createAdjacencyMatrixDependencyTreeFilter()
+            $this->createAdjacencyMatrixDependencyTreeFilter(),
         );
 
         return $adjacencyMatrixBuilder;
@@ -1312,7 +1312,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
         return new DependencyViolationChecker(
             $this->createDependencyTreeReader(),
             $this->createViolationFinder(),
-            $this->createDependencyViolationFilter()
+            $this->createDependencyViolationFilter(),
         );
     }
 
@@ -1413,7 +1413,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     protected function createDependencyTreeForeignEngineBundleFilter()
     {
         return new ForeignEngineBundleFilter(
-            $this->getConfig()->getPathToBundleConfig()
+            $this->getConfig()->getPathToBundleConfig(),
         );
     }
 
@@ -1423,7 +1423,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     protected function createDependencyTreeEngineBundleFilter()
     {
         return new EngineBundleFilter(
-            $this->getConfig()->getPathToBundleConfig()
+            $this->getConfig()->getPathToBundleConfig(),
         );
     }
 
@@ -1433,7 +1433,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     protected function createDependencyTreeInvalidForeignBundleFilter()
     {
         return new InvalidForeignBundleFilter(
-            $this->createDependencyManager()->collectAllModules()
+            $this->createDependencyManager()->collectAllModules(),
         );
     }
 
@@ -1478,7 +1478,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     {
         return new ComposerJsonUpdater(
             $this->createComposerJsonFinder(),
-            $this->createComposerJsonUpdaterComposite()
+            $this->createComposerJsonUpdaterComposite(),
         );
     }
 
@@ -1488,7 +1488,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     protected function createComposerJsonFinder(): ComposerJsonFinderInterface
     {
         $composerJsonFinder = new ComposerJsonFinder(
-            $this->createFinder()
+            $this->createFinder(),
         );
 
         return $composerJsonFinder;
@@ -1613,7 +1613,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     public function createComposerDependencyParser()
     {
         return new ComposerDependencyParser(
-            $this->createComposerNameFinder()
+            $this->createComposerNameFinder(),
         );
     }
 
@@ -1624,7 +1624,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     {
         return $this->createIdeAutoCompletionWriter(
             $this->createYvesIdeAutoCompletionBundleBuilder(),
-            $this->getConfig()->getYvesIdeAutoCompletionOptions()
+            $this->getConfig()->getYvesIdeAutoCompletionOptions(),
         );
     }
 
@@ -1635,7 +1635,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     {
         return new IdeAutoCompletionBundleBuilder(
             $this->getYvesIdeAutoCompletionMethodBuilderStack(),
-            $this->getConfig()->getYvesIdeAutoCompletionOptions()
+            $this->getConfig()->getYvesIdeAutoCompletionOptions(),
         );
     }
 
@@ -1647,7 +1647,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
         return new DirectoryRemover(
             $this->createTargetDirectoryResolver(),
             $this->getFilesystem(),
-            $this->createGeneratedFileFinder()
+            $this->createGeneratedFileFinder(),
         );
     }
 
@@ -1658,7 +1658,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     {
         return $this->createIdeAutoCompletionWriter(
             $this->createZedIdeAutoCompletionBundleBuilder(),
-            $this->getConfig()->getZedIdeAutoCompletionOptions()
+            $this->getConfig()->getZedIdeAutoCompletionOptions(),
         );
     }
 
@@ -1669,7 +1669,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     {
         return new IdeAutoCompletionBundleBuilder(
             $this->getZedIdeAutoCompletionMethodBuilderStack(),
-            $this->getConfig()->getZedIdeAutoCompletionOptions()
+            $this->getConfig()->getZedIdeAutoCompletionOptions(),
         );
     }
 
@@ -1680,7 +1680,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     {
         return new IdeAutoCompletionBundleBuilder(
             $this->createGlueAutoCompletionMethodBuilderStack(),
-            $this->getConfig()->getGlueIdeAutoCompletionOptions()
+            $this->getConfig()->getGlueIdeAutoCompletionOptions(),
         );
     }
 
@@ -1691,7 +1691,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     {
         return $this->createIdeAutoCompletionWriter(
             $this->createGlueIdeAutoCompletionBundleBuilder(),
-            $this->getConfig()->getGlueIdeAutoCompletionOptions()
+            $this->getConfig()->getGlueIdeAutoCompletionOptions(),
         );
     }
 
@@ -1710,7 +1710,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     {
         return $this->createIdeAutoCompletionWriter(
             $this->createClientIdeAutoCompletionBundleBuilder(),
-            $this->getConfig()->getClientIdeAutoCompletionOptions()
+            $this->getConfig()->getClientIdeAutoCompletionOptions(),
         );
     }
 
@@ -1721,7 +1721,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     {
         return new IdeAutoCompletionBundleBuilder(
             $this->getClientIdeAutoCompletionMethodBuilderStack(),
-            $this->getConfig()->getClientIdeAutoCompletionOptions()
+            $this->getConfig()->getClientIdeAutoCompletionOptions(),
         );
     }
 
@@ -1732,7 +1732,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     {
         return $this->createIdeAutoCompletionWriter(
             $this->createServiceIdeAutoCompletionBundleBuilder(),
-            $this->getConfig()->getServiceIdeAutoCompletionOptions()
+            $this->getConfig()->getServiceIdeAutoCompletionOptions(),
         );
     }
 
@@ -1743,7 +1743,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     {
         return new IdeAutoCompletionBundleBuilder(
             $this->getServiceIdeAutoCompletionMethodBuilderStack(),
-            $this->getConfig()->getServiceIdeAutoCompletionOptions()
+            $this->getConfig()->getServiceIdeAutoCompletionOptions(),
         );
     }
 
@@ -1854,7 +1854,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     {
         return new IdeAutoCompletionWriter(
             $this->getIdeAutoCompletionGeneratorStack($options),
-            $this->createIdeAutoCompletionBundleFinder($bundleBuilder)
+            $this->createIdeAutoCompletionBundleFinder($bundleBuilder),
         );
     }
 
@@ -1868,7 +1868,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
         return new BundleFinder(
             $this->getFinder(),
             $bundleBuilder,
-            $this->getConfig()->getIdeAutoCompletionSourceDirectoryGlobPatterns()
+            $this->getConfig()->getIdeAutoCompletionSourceDirectoryGlobPatterns(),
         );
     }
 
@@ -1954,7 +1954,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
         return new ArchitectureSniffer(
             $xml,
             $command,
-            $this->createArchitectureSnifferConfigurationBuilder()
+            $this->createArchitectureSnifferConfigurationBuilder(),
         );
     }
 
@@ -1977,7 +1977,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
             $this->createFinder(),
             $this->createCamelCaseToDashFilter(),
             $this->getConfig()->getProjectNamespaces(),
-            $this->getConfig()->getCoreNamespaces()
+            $this->getConfig()->getCoreNamespaces(),
         );
     }
 
@@ -1989,7 +1989,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
         return new AllModuleFinder(
             $this->createFinder(),
             $this->getConfig(),
-            $this->createCamelCaseToDashFilter()
+            $this->createCamelCaseToDashFilter(),
         );
     }
 
@@ -2035,7 +2035,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     public function createConfigurationReader(): ConfigurationReaderInterface
     {
         return new ConfigurationReader(
-            $this->createYamlParser()
+            $this->createYamlParser(),
         );
     }
 
@@ -2046,7 +2046,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     {
         return new ArchitectureSnifferConfigurationBuilder(
             $this->createConfigurationReader(),
-            $this->getConfig()->getArchitectureSnifferDefaultPriority()
+            $this->getConfig()->getArchitectureSnifferDefaultPriority(),
         );
     }
 
@@ -2104,7 +2104,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     public function createConfigArgumentCollectionBuilder(): CodeceptionArgumentsBuilderInterface
     {
         return new CodeceptionArgumentsBuilder(
-            $this->getConfig()->getDefaultInclusiveGroups()
+            $this->getConfig()->getDefaultInclusiveGroups(),
         );
     }
 
@@ -2122,7 +2122,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     protected function createTargetDirectoryResolver(): TargetDirectoryResolver
     {
         return new TargetDirectoryResolver(
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 }

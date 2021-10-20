@@ -153,7 +153,7 @@ class ProductSetStorageCommunicationTester extends Actor
                 ->findOneByFkProductImage($productImage['id_product_image'])
                 ->getIdProductImageSetToProductImage();
             $this->assertTrue(
-                $idProductImageSetToProductImage > $idProductImageSetToProductImagePrevious
+                $idProductImageSetToProductImage > $idProductImageSetToProductImagePrevious,
             );
             $idProductImageSetToProductImagePrevious = $idProductImageSetToProductImage;
         }

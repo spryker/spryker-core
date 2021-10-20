@@ -85,16 +85,16 @@ class PriceProductScheduleListFinder implements PriceProductScheduleListFinderIn
                 static::ALIAS_NUMBER_OF_PRICES,
                 sprintf(
                     static::EXPRESSION_NUMBER_OF_PRICES,
-                    static::COL_ID_PRICE_PRODUCT_SCHEDULE
-                )
+                    static::COL_ID_PRICE_PRODUCT_SCHEDULE,
+                ),
             )
             ->addAsColumn(
                 static::ALIAS_NUMBER_OF_PRODUCTS,
                 sprintf(
                     static::EXPRESSION_NUMBER_OF_PRODUCTS,
                     static::COL_FK_PRODUCT,
-                    static::COL_FK_PRODUCT_ABSTRACT
-                )
+                    static::COL_FK_PRODUCT_ABSTRACT,
+                ),
             )
             ->endUse()
             ->groupByIdPriceProductScheduleList()
@@ -107,7 +107,7 @@ class PriceProductScheduleListFinder implements PriceProductScheduleListFinderIn
         return $this->priceProductScheduleListMapper
             ->mapPriceProductScheduleListEntityToPriceProductScheduleListTransfer(
                 $priceProductScheduleListEntity,
-                new PriceProductScheduleListTransfer()
+                new PriceProductScheduleListTransfer(),
             );
     }
 
@@ -129,7 +129,7 @@ class PriceProductScheduleListFinder implements PriceProductScheduleListFinderIn
         return $this->priceProductScheduleListMapper
             ->mapPriceProductScheduleListEntityToPriceProductScheduleListTransfer(
                 $priceProductScheduleListEntity,
-                new PriceProductScheduleListTransfer()
+                new PriceProductScheduleListTransfer(),
             );
     }
 }

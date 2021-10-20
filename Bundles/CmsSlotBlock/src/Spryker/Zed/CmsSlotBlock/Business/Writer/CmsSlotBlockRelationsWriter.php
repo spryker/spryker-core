@@ -85,7 +85,7 @@ class CmsSlotBlockRelationsWriter implements CmsSlotBlockRelationsWriterInterfac
 
         if (!$validationResponseTransfer->getIsSuccess()) {
             throw new InvalidCmsSlotBlockException(
-                $validationResponseTransfer->getErrorMessages()[0]->getValue()
+                $validationResponseTransfer->getErrorMessages()[0]->getValue(),
             );
         }
     }

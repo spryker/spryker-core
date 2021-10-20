@@ -130,7 +130,7 @@ class BundledItemExpander implements BundledItemExpanderInterface
                 $restItemsAttributesTransfer = $this->cartsRestApiResource->mapItemTransferToRestItemsAttributesTransfer(
                     $bundledItemTransfer,
                     (new RestItemsAttributesTransfer()),
-                    $localeName
+                    $localeName,
                 );
 
                 $bundledItemRestResource = $this->bundleItemRestResponseBuilder

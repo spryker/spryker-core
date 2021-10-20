@@ -100,7 +100,7 @@ class TriggerEventFromFileConsoleTest extends Unit
     {
         $merchantOmsFacade = $this->createMock(MerchantOmsFacade::class);
         $merchantOmsFacade->method('triggerEventForMerchantOrderItem')->willReturn(
-            (new MerchantOmsTriggerResponseTransfer())->setIsSuccessful(true)
+            (new MerchantOmsTriggerResponseTransfer())->setIsSuccessful(true),
         );
 
         return $merchantOmsFacade;

@@ -221,8 +221,8 @@ class CmsGuiDependencyProvider extends AbstractBundleDependencyProvider
                 'Missing instance of %s! You need to configure StoreRelationFormType ' .
                 'in your own CmsGuiDependencyProvider::getStoreRelationFormTypePlugin() ' .
                 'to be able to manage cms pages.',
-                FormTypeInterface::class
-            )
+                FormTypeInterface::class,
+            ),
         );
     }
 

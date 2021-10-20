@@ -30,7 +30,7 @@ class PriceProductMerchantRelationshipBusinessFactory extends AbstractBusinessFa
         return new MerchantRelationshipPriceWriter(
             $this->getEntityManager(),
             $this->getRepository(),
-            $this->getPriceProductFacade()
+            $this->getPriceProductFacade(),
         );
     }
 
@@ -40,7 +40,7 @@ class PriceProductMerchantRelationshipBusinessFactory extends AbstractBusinessFa
     public function createPriceProductDimensionExpander()
     {
         return new PriceProductDimensionExpander(
-            $this->getMerchantRelationshipFacade()
+            $this->getMerchantRelationshipFacade(),
         );
     }
 

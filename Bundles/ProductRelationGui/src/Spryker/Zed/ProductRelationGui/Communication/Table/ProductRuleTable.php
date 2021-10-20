@@ -180,14 +180,14 @@ class ProductRuleTable extends AbstractProductTable
             ->clearSelectColumns()
             ->withColumn(
                 'GROUP_CONCAT(' . SpyProductTableMap::COL_IS_ACTIVE . ')',
-                static::COL_IS_ACTIVE_AGGREGATION
+                static::COL_IS_ACTIVE_AGGREGATION,
             )
             ->withColumn(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT, static::COL_ID_PRODUCT_ABSTRACT)
             ->withColumn(SpyProductAbstractTableMap::COL_SKU, static::COL_SKU)
             ->withColumn(SpyProductAbstractLocalizedAttributesTableMap::COL_NAME, static::COL_NAME)
             ->withColumn(
                 'GROUP_CONCAT(DISTINCT ' . SpyCategoryAttributeTableMap::COL_NAME . ')',
-                static::COL_CATEGORY_NAME
+                static::COL_CATEGORY_NAME,
             )->setFormatter(new SimpleArrayFormatter());
     }
 
@@ -261,13 +261,13 @@ class ProductRuleTable extends AbstractProductTable
     protected function getDefaultUrl(ProductRelationTransfer $productRelationTransfer): string
     {
         $json = $this->utilEncodingService->encodeJson(
-            $productRelationTransfer->getQuerySet()->toArray()
+            $productRelationTransfer->getQuerySet()->toArray(),
         );
 
         return sprintf(
             $this->tableUrlTemplate,
             'rule-query-table',
-            $json
+            $json,
         );
     }
 

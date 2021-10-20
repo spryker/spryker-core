@@ -35,7 +35,7 @@ class MoneyCollectionMultiStoreCollectionDataProvider extends BaseMoneyCollectio
         foreach ($storeCurrencyCollection as $storeWithCurrencyTransfer) {
             foreach ($storeWithCurrencyTransfer->getCurrencies() as $currencyTransfer) {
                 $moneyValueCollection->append(
-                    $this->mapMoneyTransfer($currencyTransfer, $storeWithCurrencyTransfer->getStore())
+                    $this->mapMoneyTransfer($currencyTransfer, $storeWithCurrencyTransfer->getStore()),
                 );
             }
         }
@@ -57,7 +57,7 @@ class MoneyCollectionMultiStoreCollectionDataProvider extends BaseMoneyCollectio
         return $this->mergeMultiStoreMoneyCollection(
             $currentFormMoneyValueCollection,
             $storeCurrencyCollection,
-            $existingCurrencyMap
+            $existingCurrencyMap,
         );
     }
 
@@ -81,7 +81,7 @@ class MoneyCollectionMultiStoreCollectionDataProvider extends BaseMoneyCollectio
                 }
 
                 $currentFormMoneyValueCollection->append(
-                    $this->mapMoneyTransfer($currencyTransfer, $storeTransfer)
+                    $this->mapMoneyTransfer($currencyTransfer, $storeTransfer),
                 );
             }
         }

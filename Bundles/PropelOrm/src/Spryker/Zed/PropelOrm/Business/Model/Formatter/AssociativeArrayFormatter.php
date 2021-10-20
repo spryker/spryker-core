@@ -56,7 +56,7 @@ class AssociativeArrayFormatter extends SimpleArrayFormatter
             $key = strtolower((string)preg_replace(
                 '/([a-z])([A-Z])/',
                 '$1' . addcslashes($separator, '$') . '$2',
-                $phpName
+                $phpName,
             ));
         }
 

@@ -38,7 +38,7 @@ class ProductPackagingUnitGroupKeyGenerator implements ProductPackagingUnitGroup
             static::AMOUNT_GROUP_KEY_FORMAT,
             $itemTransfer->getGroupKey(),
             $amountPerQuantity->trim()->toString(),
-            $itemTransfer->getAmountSalesUnit()->getIdProductMeasurementSalesUnit()
+            $itemTransfer->getAmountSalesUnit()->getIdProductMeasurementSalesUnit(),
         );
     }
 }

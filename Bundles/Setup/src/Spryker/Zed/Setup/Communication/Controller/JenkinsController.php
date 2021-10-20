@@ -157,7 +157,7 @@ $command</command>";
                 'Zed',
                 'cronjobs',
                 'jobs.php',
-            ]
+            ],
         );
     }
 

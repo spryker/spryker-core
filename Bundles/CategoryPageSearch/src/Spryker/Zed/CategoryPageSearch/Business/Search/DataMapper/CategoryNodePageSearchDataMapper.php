@@ -53,7 +53,7 @@ class CategoryNodePageSearchDataMapper implements CategoryNodePageSearchDataMapp
     ): array {
         $categoryLocalizedAttributesTransfer = $this->findCategoryLocalizedAttributesTransferForLocale(
             $nodeTransfer->getCategoryOrFail()->getLocalizedAttributes(),
-            $localeName
+            $localeName,
         );
 
         return [

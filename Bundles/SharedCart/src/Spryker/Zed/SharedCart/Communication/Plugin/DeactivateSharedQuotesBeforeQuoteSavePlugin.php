@@ -36,7 +36,7 @@ class DeactivateSharedQuotesBeforeQuoteSavePlugin extends AbstractPlugin impleme
         }
 
         $this->getFacade()->resetQuoteDefaultFlagByCustomer(
-            $quoteTransfer->getCustomer()->getCompanyUserTransfer()->getIdCompanyUser()
+            $quoteTransfer->getCustomer()->getCompanyUserTransfer()->getIdCompanyUser(),
         );
 
         return $quoteTransfer;

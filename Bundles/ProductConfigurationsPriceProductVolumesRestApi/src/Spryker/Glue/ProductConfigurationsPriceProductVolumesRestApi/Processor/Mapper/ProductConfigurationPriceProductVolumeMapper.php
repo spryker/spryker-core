@@ -34,7 +34,7 @@ class ProductConfigurationPriceProductVolumeMapper implements ProductConfigurati
         return $this->getRestProductConfigurationPriceAttributesTransfers(
             $productConfigurationInstanceTransfer,
             $restProductConfigurationPriceAttributesTransfers,
-            $volumePriceProductTransfers
+            $volumePriceProductTransfers,
         );
     }
 
@@ -57,7 +57,7 @@ class ProductConfigurationPriceProductVolumeMapper implements ProductConfigurati
 
             $restProductPriceVolumesAttributesTransfer = $this->mapPriceProductTransferToRestProductPriceVolumesAttributesTransfer(
                 $volumePriceProductTransfer,
-                new RestProductPriceVolumesAttributesTransfer()
+                new RestProductPriceVolumesAttributesTransfer(),
             );
             $restProductPriceVolumesAttributesTransfer->setQuantity($volumePriceProductTransfer->getVolumeQuantity());
             $restProductConfigurationPriceAttributesTransfer->addVolumePrice($restProductPriceVolumesAttributesTransfer);
@@ -115,7 +115,7 @@ class ProductConfigurationPriceProductVolumeMapper implements ProductConfigurati
 
             $restProductConfigurationPriceAttributesTransferToMap = $this->extractRestProductConfigurationPriceAttributesTransfer(
                 $priceProductTransfer,
-                $restProductConfigurationPriceAttributesTransfers
+                $restProductConfigurationPriceAttributesTransfers,
             );
 
             if (!$restProductConfigurationPriceAttributesTransferToMap) {
@@ -125,7 +125,7 @@ class ProductConfigurationPriceProductVolumeMapper implements ProductConfigurati
             $mappedRestProductConfigurationPriceAttributesTransfers[] = $this->mapVolumePriceProductTransfersToRestCartItemProductConfigurationInstanceAttributesTransfer(
                 $volumePriceProductTransfers,
                 $restProductConfigurationPriceAttributesTransferToMap,
-                $priceProductTransfer
+                $priceProductTransfer,
             );
         }
 
@@ -146,7 +146,7 @@ class ProductConfigurationPriceProductVolumeMapper implements ProductConfigurati
             if (
                 $this->isSamePriceProduct(
                     $priceProductTransfer,
-                    $restProductConfigurationPriceAttributesTransfer
+                    $restProductConfigurationPriceAttributesTransfer,
                 )
             ) {
                 return $restProductConfigurationPriceAttributesTransfer;

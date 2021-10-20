@@ -28,8 +28,8 @@ class AclEntityMetadataConfigExpanderPluginMock implements AclEntityMetadataConf
                 ->addAclEntityMetadata(
                     SpyMerchant::class,
                     (new AclEntityMetadataTransfer())
-                        ->setEntityName(SpyMerchant::class)
-                )
+                        ->setEntityName(SpyMerchant::class),
+                ),
         );
     }
 }

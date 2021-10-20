@@ -27,7 +27,7 @@ class MerchantRelationshipMapper implements MerchantRelationshipMapperInterface
         SpyMerchantRelationship $spyMerchantRelationship
     ): SpyMerchantRelationship {
         $spyMerchantRelationship->fromArray(
-            $merchantRelationshipTransfer->modifiedToArray(false)
+            $merchantRelationshipTransfer->modifiedToArray(false),
         );
 
         return $spyMerchantRelationship;
@@ -45,7 +45,7 @@ class MerchantRelationshipMapper implements MerchantRelationshipMapperInterface
     ): MerchantRelationshipTransfer {
         $merchantRelationshipTransfer->fromArray(
             $spyMerchantRelationship->toArray(),
-            true
+            true,
         );
         /** @var \Orm\Zed\Merchant\Persistence\SpyMerchant|null $spyMerchant */
         $spyMerchant = $spyMerchantRelationship->getMerchant();
@@ -55,7 +55,7 @@ class MerchantRelationshipMapper implements MerchantRelationshipMapperInterface
             $merchantRelationshipTransfer->setMerchant($merchantTransfer);
         }
         $merchantRelationshipTransfer->setOwnerCompanyBusinessUnit(
-            $this->mapCompanyBusinessUnitEntityToTransfer($spyMerchantRelationship->getCompanyBusinessUnit(), new CompanyBusinessUnitTransfer())
+            $this->mapCompanyBusinessUnitEntityToTransfer($spyMerchantRelationship->getCompanyBusinessUnit(), new CompanyBusinessUnitTransfer()),
         );
 
         $merchantRelationshipTransfer = $this->mapAssigneeCompanyBusinessUnits($spyMerchantRelationship, $merchantRelationshipTransfer);
@@ -75,7 +75,7 @@ class MerchantRelationshipMapper implements MerchantRelationshipMapperInterface
     ): CompanyBusinessUnitTransfer {
         return $companyBusinessUnitTransfer->fromArray(
             $spyCompanyBusinessUnit->toArray(),
-            true
+            true,
         );
     }
 
@@ -95,8 +95,8 @@ class MerchantRelationshipMapper implements MerchantRelationshipMapperInterface
                 ->addCompanyBusinessUnit(
                     $this->mapCompanyBusinessUnitEntityToTransfer(
                         $spyMerchantRelationshipToCompanyBusinessUnits->getCompanyBusinessUnit(),
-                        new CompanyBusinessUnitTransfer()
-                    )
+                        new CompanyBusinessUnitTransfer(),
+                    ),
                 );
         }
 

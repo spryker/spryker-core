@@ -27,7 +27,7 @@ class ShoppingListProductOptionMapper
         foreach ($shoppingListProductOptionEntityCollection as $shoppingListProductOptionEntity) {
             $shoppingListProductOptionTransfer = $this->mapShoppingListProductOptionEntityToShoppingListProductOptionTransfer(
                 $shoppingListProductOptionEntity,
-                new ShoppingListProductOptionTransfer()
+                new ShoppingListProductOptionTransfer(),
             );
 
             $shoppingListProductOptionCollectionTransfer->addShoppingListProductOption($shoppingListProductOptionTransfer);

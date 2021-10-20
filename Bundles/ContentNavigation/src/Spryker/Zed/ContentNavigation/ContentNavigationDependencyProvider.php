@@ -52,7 +52,7 @@ class ContentNavigationDependencyProvider extends AbstractBundleDependencyProvid
     {
         $container->set(static::FACADE_NAVIGATION, function (Container $container): ContentNavigationToNavigationFacadeInterface {
             return new ContentNavigationToNavigationFacadeBridge(
-                $container->getLocator()->navigation()->facade()
+                $container->getLocator()->navigation()->facade(),
             );
         });
 

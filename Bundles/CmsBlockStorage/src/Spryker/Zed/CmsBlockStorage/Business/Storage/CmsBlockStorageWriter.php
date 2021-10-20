@@ -162,7 +162,7 @@ class CmsBlockStorageWriter implements CmsBlockStorageWriterInterface
     {
         $pairedEntities = $this->pairCmsBlockEntitiesWithCmsBlockStorageEntities(
             $cmsBlockEntities,
-            $cmsBlockStorageEntities
+            $cmsBlockStorageEntities,
         );
 
         $storeTransfer = $this->storeFacade->getCurrentStore();
@@ -191,7 +191,7 @@ class CmsBlockStorageWriter implements CmsBlockStorageWriterInterface
                 $cmsBlockEntity,
                 $cmsBlockStorageEntity,
                 $pair[static::STORE_NAME],
-                $pair[static::LOCALE_NAME]
+                $pair[static::LOCALE_NAME],
             );
         }
     }
@@ -275,7 +275,7 @@ class CmsBlockStorageWriter implements CmsBlockStorageWriterInterface
                 $cmsBlockEntity[static::RELATION_CMS_BLOCK_STORES],
                 $cmsBlockEntity,
                 $mappedCmsBlockStorageEntities,
-                $pairs
+                $pairs,
             );
         }
 

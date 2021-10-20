@@ -149,7 +149,7 @@ class GuiTableFacadeTest extends Unit
             ->addItem(
                 (new GuiTableFilterTransfer())
                     ->setId('filterId')
-                    ->setType(static::TEST_TYPE_DATE)
+                    ->setType(static::TEST_TYPE_DATE),
             );
         $guiTableConfigurationTransfer = (new GuiTableConfigurationTransfer())
             ->setFilters($guiTableFiltersConfigurationTransfer);
@@ -157,7 +157,7 @@ class GuiTableFacadeTest extends Unit
         // Act
         $guiTableDataRequestTransfer = $this->tester->getFacade()->buildGuiTableDataRequest(
             $requestParams,
-            $guiTableConfigurationTransfer
+            $guiTableConfigurationTransfer,
         );
 
         // Assert
@@ -187,7 +187,7 @@ class GuiTableFacadeTest extends Unit
         // Act
         $guiTableDataRequestTransfer = $this->tester->getFacade()->buildGuiTableDataRequest(
             $requestParams,
-            new GuiTableConfigurationTransfer()
+            new GuiTableConfigurationTransfer(),
         );
 
         // Assert
@@ -212,7 +212,7 @@ class GuiTableFacadeTest extends Unit
             ->addItem(
                 (new GuiTableFilterTransfer())
                     ->setId('filterId')
-                    ->setType(static::TEST_TYPE_DATE)
+                    ->setType(static::TEST_TYPE_DATE),
             );
         $guiTableConfigurationTransfer = (new GuiTableConfigurationTransfer())
             ->setFilters($guiTableFiltersConfigurationTransfer);
@@ -220,7 +220,7 @@ class GuiTableFacadeTest extends Unit
         // Act
         $guiTableDataRequestTransfer = $this->tester->getFacade()->buildGuiTableDataRequest(
             $requestParams,
-            $guiTableConfigurationTransfer
+            $guiTableConfigurationTransfer,
         );
         $filterValue = $guiTableDataRequestTransfer->getFilters()['filterId'];
 
@@ -241,7 +241,7 @@ class GuiTableFacadeTest extends Unit
         // Act
         $formattedGuiTableDataResponse = $this->tester->getFacade()->formatGuiTableDataResponse(
             $guiTableDataResponseTransfer,
-            new GuiTableConfigurationTransfer()
+            new GuiTableConfigurationTransfer(),
         );
 
         // Assert
@@ -273,7 +273,7 @@ class GuiTableFacadeTest extends Unit
         // Act
         $formattedGuiTableDataResponse = $this->tester->getFacade()->formatGuiTableDataResponse(
             $guiTableDataResponseTransfer,
-            $guiTableConfigurationTransfer
+            $guiTableConfigurationTransfer,
         );
 
         // Assert
@@ -291,7 +291,7 @@ class GuiTableFacadeTest extends Unit
             ->disableOriginalConstructor()
             ->getMock();
         $localeFacadeMock->method('getCurrentLocale')->willReturn(
-            (new LocaleTransfer())->setIdLocale(static::TEST_ID_LOCALE)
+            (new LocaleTransfer())->setIdLocale(static::TEST_ID_LOCALE),
         );
 
         $this->tester->setDependency(GuiTableDependencyProvider::FACADE_LOCALE, $localeFacadeMock);
@@ -310,7 +310,7 @@ class GuiTableFacadeTest extends Unit
 
         $this->tester->setDependency(
             GuiTableDependencyProvider::PLUGINS_REQUEST_FILTER_VALUE_NORMALIZER,
-            [$dateRangeRequestFilterValueNormalizerPluginMock]
+            [$dateRangeRequestFilterValueNormalizerPluginMock],
         );
     }
 
@@ -327,7 +327,7 @@ class GuiTableFacadeTest extends Unit
 
         $this->tester->setDependency(
             GuiTableDependencyProvider::PLUGINS_RESPONSE_COLUMN_VALUE_FORMATTER,
-            [$dateResponseColumnValueFormatterPluginMock]
+            [$dateResponseColumnValueFormatterPluginMock],
         );
     }
 
@@ -340,7 +340,7 @@ class GuiTableFacadeTest extends Unit
             function ($data) {
                 return (new GuiTableRowDataResponseTransfer())->setResponseData($data);
             },
-            static::TEST_TABLE_DATA
+            static::TEST_TABLE_DATA,
         );
 
         return (new GuiTableDataResponseTransfer())

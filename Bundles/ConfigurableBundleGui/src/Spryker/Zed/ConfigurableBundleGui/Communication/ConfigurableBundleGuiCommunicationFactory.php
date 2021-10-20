@@ -69,7 +69,7 @@ class ConfigurableBundleGuiCommunicationFactory extends AbstractCommunicationFac
         return $this->getFormFactory()->create(
             ConfigurableBundleTemplateForm::class,
             $configurableBundleTemplateTransfer,
-            $options
+            $options,
         );
     }
 
@@ -86,7 +86,7 @@ class ConfigurableBundleGuiCommunicationFactory extends AbstractCommunicationFac
         return $this->getFormFactory()->create(
             ConfigurableBundleTemplateSlotCreateForm::class,
             $configurableBundleTemplateSlotTransfer,
-            $options
+            $options,
         );
     }
 
@@ -103,7 +103,7 @@ class ConfigurableBundleGuiCommunicationFactory extends AbstractCommunicationFac
         return $this->getFormFactory()->create(
             ConfigurableBundleTemplateSlotEditForm::class,
             $configurableBundleTemplateSlotEditFormTransfer,
-            $options
+            $options,
         );
     }
 
@@ -114,7 +114,7 @@ class ConfigurableBundleGuiCommunicationFactory extends AbstractCommunicationFac
     {
         return new ConfigurableBundleTemplateFormDataProvider(
             $this->getConfigurableBundleFacade(),
-            $this->getLocaleFacade()
+            $this->getLocaleFacade(),
         );
     }
 
@@ -134,7 +134,7 @@ class ConfigurableBundleGuiCommunicationFactory extends AbstractCommunicationFac
         return new ConfigurableBundleTemplateSlotEditFormDataProvider(
             $this->getConfigurableBundleFacade(),
             $this->getLocaleFacade(),
-            $this->getConfigurableBundleTemplateSlotEditFormDataProviderExpanderPlugins()
+            $this->getConfigurableBundleTemplateSlotEditFormDataProviderExpanderPlugins(),
         );
     }
 
@@ -161,7 +161,7 @@ class ConfigurableBundleGuiCommunicationFactory extends AbstractCommunicationFac
     {
         return new ConfigurableBundleTemplateTable(
             $this->getConfigurableBundleTemplatePropelQuery(),
-            $this->getLocaleFacade()
+            $this->getLocaleFacade(),
         );
     }
 
@@ -176,7 +176,7 @@ class ConfigurableBundleGuiCommunicationFactory extends AbstractCommunicationFac
             $idConfigurableBundleTemplate,
             $this->getConfigurableBundleTemplateSlotPropelQuery(),
             $this->getLocaleFacade(),
-            $this->getProductListFacade()
+            $this->getProductListFacade(),
         );
     }
 
@@ -192,7 +192,7 @@ class ConfigurableBundleGuiCommunicationFactory extends AbstractCommunicationFac
             $this->getConfigurableBundleTemplateSlotPropelQuery(),
             $this->getProductPropelQuery(),
             $this->getLocaleFacade(),
-            $this->getProductListFacade()
+            $this->getProductListFacade(),
         );
     }
 
@@ -220,7 +220,7 @@ class ConfigurableBundleGuiCommunicationFactory extends AbstractCommunicationFac
         return new ProductListUsedByTableExpander(
             $this->getConfigurableBundleFacade(),
             $this->getLocaleFacade(),
-            $this->createProductListUsedByTableMapper()
+            $this->createProductListUsedByTableMapper(),
         );
     }
 

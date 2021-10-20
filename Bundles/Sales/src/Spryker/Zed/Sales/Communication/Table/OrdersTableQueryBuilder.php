@@ -144,7 +144,7 @@ class OrdersTableQueryBuilder implements OrdersTableQueryBuilderInterface
                     'min' => new DateTime('-7 day'),
                     'max' => new DateTime('-1 day'),
                 ],
-                SprykerCriteria::BETWEEN
+                SprykerCriteria::BETWEEN,
             );
         } else {
             $query->filterByLastItemStateChange(new DateTime('-7 day'), Criteria::LESS_THAN);

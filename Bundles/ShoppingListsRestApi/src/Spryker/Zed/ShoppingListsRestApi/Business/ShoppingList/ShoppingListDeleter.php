@@ -52,14 +52,14 @@ class ShoppingListDeleter implements ShoppingListDeleterInterface
 
         $shoppingListTransfer = $this->shoppingListMapper->mapShoppingListResponseTransferToShoppingListTransfer(
             $shoppingListResponseTransferByUuid,
-            $shoppingListTransfer
+            $shoppingListTransfer,
         );
 
         $shoppingListResponseTransfer = $this->shoppingListFacade->removeShoppingList($shoppingListTransfer);
 
         if ($shoppingListResponseTransfer->getIsSuccess() === false) {
             return $this->shoppingListMapper->mapShoppingListResponseErrorsToRestCodes(
-                $shoppingListResponseTransfer
+                $shoppingListResponseTransfer,
             );
         }
 

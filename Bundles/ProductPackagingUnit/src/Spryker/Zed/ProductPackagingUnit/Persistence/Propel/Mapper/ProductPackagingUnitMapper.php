@@ -32,14 +32,14 @@ class ProductPackagingUnitMapper implements ProductPackagingUnitMapperInterface
         $productPackagingUnitTransfer->fromArray($productPackagingUnitEntity->toArray(), true);
 
         $productPackagingUnitTransfer->setProductPackagingUnitAmount(
-            (new ProductPackagingUnitAmountTransfer())->fromArray($productPackagingUnitEntity->toArray(), true)
+            (new ProductPackagingUnitAmountTransfer())->fromArray($productPackagingUnitEntity->toArray(), true),
         );
 
         $productPackagingUnitTransfer->setProductPackagingUnitType(
             $this->mapProductPackagingUnitTypeTransfer(
                 $productPackagingUnitEntity->getProductPackagingUnitType(),
-                new ProductPackagingUnitTypeTransfer()
-            )
+                new ProductPackagingUnitTypeTransfer(),
+            ),
         );
 
         return $productPackagingUnitTransfer;

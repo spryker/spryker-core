@@ -63,7 +63,7 @@ class RowFormatter implements RowFormatterInterface
     {
         $currencyTransfer = $this->currencyMapper->mapCurrencyEntityToTransfer(
             $priceProductScheduleEntity->getCurrency(),
-            new CurrencyTransfer()
+            new CurrencyTransfer(),
         );
 
         $moneyTransfer = $this->createMoneyTransfer($amount, $currencyTransfer);
@@ -81,7 +81,7 @@ class RowFormatter implements RowFormatterInterface
     {
         $dateTime = $this->setTimezoneFromStore(
             $dateTime,
-            $fkStore
+            $fkStore,
         );
 
         return $dateTime->format(static::DATE_FORMAT);

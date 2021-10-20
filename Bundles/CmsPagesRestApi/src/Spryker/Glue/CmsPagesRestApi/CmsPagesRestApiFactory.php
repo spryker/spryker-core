@@ -31,7 +31,7 @@ class CmsPagesRestApiFactory extends AbstractFactory
             $this->createCmsPageRestResponseBuilder(),
             $this->getCmsStorageClient(),
             $this->getCmsPageSearchClient(),
-            $this->getStoreClient()
+            $this->getStoreClient(),
         );
     }
 
@@ -42,7 +42,7 @@ class CmsPagesRestApiFactory extends AbstractFactory
     {
         return new CmsPageRestResponseBuilder(
             $this->getResourceBuilder(),
-            $this->createCmsPageMapper()
+            $this->createCmsPageMapper(),
         );
     }
 
@@ -85,7 +85,7 @@ class CmsPagesRestApiFactory extends AbstractFactory
     {
         return new CmsPageUrlResolver(
             $this->getCmsStorageClient(),
-            $this->getStoreClient()
+            $this->getStoreClient(),
         );
     }
 }

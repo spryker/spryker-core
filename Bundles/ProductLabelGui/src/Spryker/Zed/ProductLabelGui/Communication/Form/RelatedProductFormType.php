@@ -83,7 +83,7 @@ class RelatedProductFormType extends AbstractType
             HiddenType::class,
             [
                 'property_path' => 'idProductLabel',
-            ]
+            ],
         );
 
         return $this;
@@ -104,7 +104,7 @@ class RelatedProductFormType extends AbstractType
                 'attr' => [
                     'id' => 'js-abstract-products-to-assign-ids-csv-field',
                 ],
-            ]
+            ],
         );
 
         $this->addIdsCsvModelTransformer(static::FIELD_IDS_PRODUCT_ABSTRACT_TO_ASSIGN_CSV, $builder);
@@ -127,7 +127,7 @@ class RelatedProductFormType extends AbstractType
                 'attr' => [
                     'id' => 'js-abstract-products-to-de-assign-ids-csv-field',
                 ],
-            ]
+            ],
         );
 
         $this->addIdsCsvModelTransformer(static::FIELD_IDS_PRODUCT_ABSTRACT_TO_DE_ASSIGN_CSV, $builder);
@@ -159,7 +159,7 @@ class RelatedProductFormType extends AbstractType
                     }
 
                     return explode(',', $idsProductAbstractAsCsv);
-                }
+                },
             ));
     }
 

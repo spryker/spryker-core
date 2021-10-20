@@ -44,7 +44,7 @@ class ProductConfigurationCartDependencyProvider extends AbstractBundleDependenc
     {
         $container->set(static::SERVICE_PRODUCT_CONFIGURATION, function (Container $container) {
             return new ProductConfigurationCartToProductConfigurationServiceBridge(
-                $container->getLocator()->productConfiguration()->service()
+                $container->getLocator()->productConfiguration()->service(),
             );
         });
 

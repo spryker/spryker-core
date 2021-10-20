@@ -297,7 +297,7 @@ class ProductOfferFacadeTest extends Unit
         $productOfferCollectionTransfer->setProductOffers(
             new ArrayObject([
                 (new ProductOfferTransfer())->setProductOfferReference('test1'),
-            ])
+            ]),
         );
 
         $productOfferRepositoryMock = $this->getMockBuilder(ProductOfferRepositoryInterface::class)
@@ -316,7 +316,7 @@ class ProductOfferFacadeTest extends Unit
         $productOfferBusinessFactoryMock
             ->method('resolveDependencyProvider')
             ->willReturn(
-                new ProductOfferDependencyProvider()
+                new ProductOfferDependencyProvider(),
             );
 
         /** @var \Spryker\Zed\ProductOffer\Business\ProductOfferFacadeInterface|\Spryker\Zed\Kernel\Business\AbstractFacade $productOfferFacade */
@@ -523,7 +523,7 @@ class ProductOfferFacadeTest extends Unit
         //Assert
         $this->assertTrue(
             $isCheckoutProductOfferValid,
-            'Expects that quote transfer will be valid when product offer is valid.'
+            'Expects that quote transfer will be valid when product offer is valid.',
         );
     }
 
@@ -551,7 +551,7 @@ class ProductOfferFacadeTest extends Unit
         //Assert
         $this->assertFalse(
             $isCheckoutProductOfferValid,
-            'Expects that quote transfer will be invalid when product offer is inactive.'
+            'Expects that quote transfer will be invalid when product offer is inactive.',
         );
     }
 
@@ -579,7 +579,7 @@ class ProductOfferFacadeTest extends Unit
         //Assert
         $this->assertFalse(
             $isCheckoutProductOfferValid,
-            'Expects that quote transfer will be invalid when product offer not approved.'
+            'Expects that quote transfer will be invalid when product offer not approved.',
         );
     }
 
@@ -595,7 +595,7 @@ class ProductOfferFacadeTest extends Unit
             static::TEST_SKU_1,
             2,
             static::TEST_MERCHANT_REFERENCE_1,
-            static::TEST_PRODUCT_REFERENCE_1
+            static::TEST_PRODUCT_REFERENCE_1,
         );
 
         // Act
@@ -618,7 +618,7 @@ class ProductOfferFacadeTest extends Unit
             static::TEST_SKU_1,
             2,
             static::TEST_MERCHANT_REFERENCE_1,
-            static::TEST_PRODUCT_REFERENCE_4
+            static::TEST_PRODUCT_REFERENCE_4,
         );
 
         // Act
@@ -640,7 +640,7 @@ class ProductOfferFacadeTest extends Unit
         $itemTransfer = $this->createItemTransfer(
             static::TEST_SKU_1,
             2,
-            static::TEST_MERCHANT_REFERENCE_3
+            static::TEST_MERCHANT_REFERENCE_3,
         );
 
         // Act
@@ -662,7 +662,7 @@ class ProductOfferFacadeTest extends Unit
         $itemTransfer = $this->createItemTransfer(
             static::TEST_SKU_1,
             2,
-            static::TEST_MERCHANT_REFERENCE_2
+            static::TEST_MERCHANT_REFERENCE_2,
         );
 
         // Act
@@ -707,39 +707,39 @@ class ProductOfferFacadeTest extends Unit
                 static::TEST_SKU_1,
                 1,
                 static::TEST_MERCHANT_REFERENCE_1,
-                static::TEST_PRODUCT_REFERENCE_1
-            )
+                static::TEST_PRODUCT_REFERENCE_1,
+            ),
         );
         $itemsInCart->append(
             $this->createItemTransfer(
                 static::TEST_SKU_1,
                 2,
                 static::TEST_MERCHANT_REFERENCE_1,
-                static::TEST_PRODUCT_REFERENCE_1
-            )
+                static::TEST_PRODUCT_REFERENCE_1,
+            ),
         );
         $itemsInCart->append(
             $this->createItemTransfer(
                 static::TEST_SKU_1,
                 2,
-                static::TEST_MERCHANT_REFERENCE_3
-            )
+                static::TEST_MERCHANT_REFERENCE_3,
+            ),
         );
         $itemsInCart->append(
             $this->createItemTransfer(
                 static::TEST_SKU_1,
                 2,
                 static::TEST_MERCHANT_REFERENCE_1,
-                static::TEST_PRODUCT_REFERENCE_2
-            )
+                static::TEST_PRODUCT_REFERENCE_2,
+            ),
         );
         $itemsInCart->append(
             $this->createItemTransfer(
                 static::TEST_SKU_2,
                 2,
                 static::TEST_MERCHANT_REFERENCE_2,
-                static::TEST_PRODUCT_REFERENCE_3
-            )
+                static::TEST_PRODUCT_REFERENCE_3,
+            ),
         );
 
         return $itemsInCart;

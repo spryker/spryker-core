@@ -112,7 +112,7 @@ class CmsConfig extends AbstractBundleConfig
             $this->get(CmsConstants::PROJECT_NAMESPACE),
             $twigLayer,
             $themeName,
-            $templateRelativePath
+            $templateRelativePath,
         );
     }
 

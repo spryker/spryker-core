@@ -48,13 +48,13 @@ class CmsSlotStorageReader implements CmsSlotStorageReaderInterface
     public function getCmsSlotByKey(string $cmsSlotKey): CmsSlotStorageTransfer
     {
         $cmsSlotStorageData = $this->storageClient->get(
-            $this->generateKey($cmsSlotKey)
+            $this->generateKey($cmsSlotKey),
         );
 
         if (!$cmsSlotStorageData) {
             throw new CmsSlotNotFoundException(sprintf(
                 'CMS Slot key "%s" not found.',
-                $cmsSlotKey
+                $cmsSlotKey,
             ));
         }
 

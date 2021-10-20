@@ -46,7 +46,7 @@ class DatasetSaver implements DatasetSaverInterface
     {
         if ($filePathTransfer !== null && file_exists($filePathTransfer->getFilePath())) {
             $datasetTransfer->setDatasetRowColumnValues(
-                $this->reader->parseFileToDataTransfers($filePathTransfer)
+                $this->reader->parseFileToDataTransfers($filePathTransfer),
             );
         }
         $this->entityManager->saveDataset($datasetTransfer);

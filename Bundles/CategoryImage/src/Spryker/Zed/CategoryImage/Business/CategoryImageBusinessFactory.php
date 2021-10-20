@@ -32,7 +32,7 @@ class CategoryImageBusinessFactory extends AbstractBusinessFactory
     public function createImageSetReader(): ImageSetReaderInterface
     {
         return new ImageSetReader(
-            $this->getRepository()
+            $this->getRepository(),
         );
     }
 
@@ -42,7 +42,7 @@ class CategoryImageBusinessFactory extends AbstractBusinessFactory
     public function createCategoryExpander(): CategoryExpanderInterface
     {
         return new CategoryExpander(
-            $this->createImageSetReader()
+            $this->createImageSetReader(),
         );
     }
 
@@ -52,7 +52,7 @@ class CategoryImageBusinessFactory extends AbstractBusinessFactory
     public function createImageSetCreator(): ImageSetCreatorInterface
     {
         return new ImageSetCreator(
-            $this->getEntityManager()
+            $this->getEntityManager(),
         );
     }
 
@@ -63,7 +63,7 @@ class CategoryImageBusinessFactory extends AbstractBusinessFactory
     {
         return new ImageSetUpdater(
             $this->getRepository(),
-            $this->getEntityManager()
+            $this->getEntityManager(),
         );
     }
 
@@ -74,7 +74,7 @@ class CategoryImageBusinessFactory extends AbstractBusinessFactory
     {
         return new ImageSetDeleter(
             $this->getRepository(),
-            $this->getEntityManager()
+            $this->getEntityManager(),
         );
     }
 }

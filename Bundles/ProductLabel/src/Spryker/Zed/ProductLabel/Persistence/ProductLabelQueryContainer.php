@@ -181,7 +181,7 @@ class ProductLabelQueryContainer extends AbstractQueryContainer implements Produ
             ->createProductLabelQuery()
             ->withColumn(
                 sprintf('MAX(%s)', SpyProductLabelTableMap::COL_POSITION),
-                static::COL_MAX_POSITION
+                static::COL_MAX_POSITION,
             )
             ->select([
                 static::COL_MAX_POSITION,

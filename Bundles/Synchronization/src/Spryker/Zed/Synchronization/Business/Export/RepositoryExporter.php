@@ -150,7 +150,7 @@ class RepositoryExporter implements ExporterInterface
                 $queueSendMessageTransfers[] = $this->queueMessageCreator->createQueueMessage(
                     $synchronizationQueueMessageTransfer,
                     $plugin,
-                    $store
+                    $store,
                 );
             }
         }
@@ -190,7 +190,7 @@ class RepositoryExporter implements ExporterInterface
         $synchronizationQueueMessageTransfers[] = $this->createSynchronizationQueueMessageTransfer(
             $plugin,
             $synchronizationDataTransfer->getKey(),
-            $data
+            $data,
         );
 
         foreach ($this->getSynchronizationMappings($synchronizationDataTransfer) as $mappingKey => $mappingData) {

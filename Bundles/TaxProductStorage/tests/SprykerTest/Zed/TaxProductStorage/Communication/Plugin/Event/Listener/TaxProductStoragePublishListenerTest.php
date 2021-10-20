@@ -81,11 +81,11 @@ class TaxProductStoragePublishListenerTest extends Unit
         // Act
         $this->taxProductStoragePublishListener->handleBulk(
             $eventTransfers,
-            ProductEvents::PRODUCT_ABSTRACT_PUBLISH
+            ProductEvents::PRODUCT_ABSTRACT_PUBLISH,
         );
         $synchronizationDataTransfers = $this->taxProductStorageRepository
             ->getSynchronizationDataTransfersFromTaxProductStoragesByProductAbstractIds(
-                [$this->productAbstractTransfer->getIdProductAbstract()]
+                [$this->productAbstractTransfer->getIdProductAbstract()],
             );
 
         // Assert

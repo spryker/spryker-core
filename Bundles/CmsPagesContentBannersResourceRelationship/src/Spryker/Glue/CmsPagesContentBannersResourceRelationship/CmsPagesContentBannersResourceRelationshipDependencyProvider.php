@@ -58,7 +58,7 @@ class CmsPagesContentBannersResourceRelationshipDependencyProvider extends Abstr
     {
         $container->set(static::CLIENT_CMS_STORAGE, function (Container $container) {
             return new CmsPagesContentBannersResourceRelationshipToCmsStorageClientBridge(
-                $container->getLocator()->cmsStorage()->client()
+                $container->getLocator()->cmsStorage()->client(),
             );
         });
 
@@ -74,7 +74,7 @@ class CmsPagesContentBannersResourceRelationshipDependencyProvider extends Abstr
     {
         $container->set(static::CLIENT_STORE, function (Container $container) {
             return new CmsPagesContentBannersResourceRelationshipToStoreClientBridge(
-                $container->getLocator()->store()->client()
+                $container->getLocator()->store()->client(),
             );
         });
 
@@ -90,7 +90,7 @@ class CmsPagesContentBannersResourceRelationshipDependencyProvider extends Abstr
     {
         $container->set(static::RESOURCE_CONTENT_BANNERS_REST_API, function (Container $container) {
             return new CmsPagesContentBannersResourceRelationshipToContentBannersRestApiResourceBridge(
-                $container->getLocator()->contentBannersRestApi()->resource()
+                $container->getLocator()->contentBannersRestApi()->resource(),
             );
         });
 

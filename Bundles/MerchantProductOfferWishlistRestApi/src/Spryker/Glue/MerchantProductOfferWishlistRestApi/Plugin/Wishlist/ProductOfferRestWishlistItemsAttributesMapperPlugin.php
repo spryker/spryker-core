@@ -37,7 +37,7 @@ class ProductOfferRestWishlistItemsAttributesMapperPlugin extends AbstractPlugin
             ->createMerchantProductOfferWishlistRestApiMapper()
             ->mapWishlistItemTransferToRestWishlistItemsAttributesTransfer(
                 $wishlistItemTransfer,
-                $restWishlistItemsAttributesTransfer
+                $restWishlistItemsAttributesTransfer,
             );
     }
 }

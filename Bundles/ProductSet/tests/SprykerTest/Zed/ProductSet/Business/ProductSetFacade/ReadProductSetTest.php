@@ -51,7 +51,7 @@ class ReadProductSetTest extends Unit
         $this->assertSame(
             $productSetTransfer->getLocalizedData()[0]->getProductSetData()->toArray(),
             $actualProductSetTransfer->getLocalizedData()[0]->getProductSetData()->toArray(),
-            'ProductSet name should be the same as generated data.'
+            'ProductSet name should be the same as generated data.',
         );
     }
 
@@ -80,12 +80,12 @@ class ReadProductSetTest extends Unit
         $this->assertCount(1, $actualProductSetTransfer->getLocalizedData(), 'ProductSet should have expected number of localized data.');
         $this->assertNotNull(
             $actualProductSetTransfer->getLocalizedData()[0]->getUrl(),
-            'ProductSet should have URL.'
+            'ProductSet should have URL.',
         );
         $this->assertSame(
             $productSetTransfer->getLocalizedData()[0]->getUrl(),
             $actualProductSetTransfer->getLocalizedData()[0]->getUrl(),
-            'ProductSet URL should be the same as generated data.'
+            'ProductSet URL should be the same as generated data.',
         );
     }
 
@@ -115,7 +115,7 @@ class ReadProductSetTest extends Unit
         $this->assertEquals(
             $productSetTransfer->getImageSets()[0]->toArray(),
             $actualProductSetTransfer->getImageSets()[0]->toArray(),
-            'ImageSet should have expected data.'
+            'ImageSet should have expected data.',
         );
     }
 

@@ -40,7 +40,7 @@ class StateHistoryExpander implements StateHistoryExpanderInterface
 
         foreach ($itemTransfers as $itemTransfer) {
             $itemTransfer->setStateHistory(
-                new ArrayObject($mappedItemStateTransfers[$itemTransfer->getIdSalesOrderItem()] ?? [])
+                new ArrayObject($mappedItemStateTransfers[$itemTransfer->getIdSalesOrderItem()] ?? []),
             );
 
             $this->updateLatestOrderItemState($itemTransfer);

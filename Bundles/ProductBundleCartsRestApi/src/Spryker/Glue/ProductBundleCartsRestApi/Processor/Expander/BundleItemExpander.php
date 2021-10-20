@@ -83,7 +83,7 @@ class BundleItemExpander implements BundleItemExpanderInterface
                 $restItemsAttributesTransfer = $this->cartsRestApiResource->mapItemTransferToRestItemsAttributesTransfer(
                     $bundleItemTransfer,
                     (new RestItemsAttributesTransfer()),
-                    $restRequest->getMetadata()->getLocale()
+                    $restRequest->getMetadata()->getLocale(),
                 );
 
                 $bundleItemRestResource = $this->bundleItemRestResponseBuilder
@@ -116,7 +116,7 @@ class BundleItemExpander implements BundleItemExpanderInterface
                 $restItemsAttributesTransfer = $this->cartsRestApiResource->mapItemTransferToRestItemsAttributesTransfer(
                     $bundleItemTransfer,
                     (new RestItemsAttributesTransfer()),
-                    $restRequest->getMetadata()->getLocale()
+                    $restRequest->getMetadata()->getLocale(),
                 );
 
                 $bundleItemRestResource = $this->bundleItemRestResponseBuilder

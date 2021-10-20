@@ -35,7 +35,7 @@ class OauthCustomerConnectorBusinessFactory extends AbstractBusinessFactory
         return new CustomerProvider(
             $this->getCustomerFacade(),
             $this->getUtilEncodingService(),
-            $this->getOauthCustomerIdentifierExpanderPlugins()
+            $this->getOauthCustomerIdentifierExpanderPlugins(),
         );
     }
 
@@ -64,7 +64,7 @@ class OauthCustomerConnectorBusinessFactory extends AbstractBusinessFactory
     {
         return new OauthCustomerScopeInstaller(
             $this->getOauthFacade(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 

@@ -102,7 +102,7 @@ class PublishAndSynchronizeTest extends Unit
     {
         $this->tester->assertEntityIsPublished(
             PublishAndSynchronizeHealthCheckEvents::ENTITY_SPY_PUBLISH_AND_SYNCHRONIZE_HEALTH_CHECK_CREATE,
-            PublishAndSynchronizeHealthCheckConfig::PUBLISH_PUBLISH_AND_SYNCHRONIZE_HEALTH_CHECK
+            PublishAndSynchronizeHealthCheckConfig::PUBLISH_PUBLISH_AND_SYNCHRONIZE_HEALTH_CHECK,
         );
         $this->tester->assertEntityIsSynchronizedToStorage(PublishAndSynchronizeHealthCheckStorageConfig::SYNC_STORAGE_PUBLISH_AND_SYNCHRONIZE_HEALTH_CHECK);
 
@@ -122,7 +122,7 @@ class PublishAndSynchronizeTest extends Unit
 
         $this->tester->assertEntityIsPublished(
             PublishAndSynchronizeHealthCheckEvents::ENTITY_SPY_PUBLISH_AND_SYNCHRONIZE_HEALTH_CHECK_UPDATE,
-            PublishAndSynchronizeHealthCheckConfig::PUBLISH_PUBLISH_AND_SYNCHRONIZE_HEALTH_CHECK
+            PublishAndSynchronizeHealthCheckConfig::PUBLISH_PUBLISH_AND_SYNCHRONIZE_HEALTH_CHECK,
         );
         $this->tester->assertEntityIsUpdatedInStorage(PublishAndSynchronizeHealthCheckStorageConfig::SYNC_STORAGE_PUBLISH_AND_SYNCHRONIZE_HEALTH_CHECK);
     }

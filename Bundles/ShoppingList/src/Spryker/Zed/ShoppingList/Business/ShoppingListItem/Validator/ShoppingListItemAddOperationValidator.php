@@ -74,7 +74,7 @@ class ShoppingListItemAddOperationValidator implements ShoppingListItemAddOperat
     ): ShoppingListItemResponseTransfer {
         if ($shoppingListItemResponseTransfer->getIsSuccess()) {
             $this->messageAdder->addShoppingListItemAddingSuccessMessage(
-                $shoppingListItemResponseTransfer->getShoppingListItem()->getSku()
+                $shoppingListItemResponseTransfer->getShoppingListItem()->getSku(),
             );
         }
 
@@ -93,7 +93,7 @@ class ShoppingListItemAddOperationValidator implements ShoppingListItemAddOperat
     ): ShoppingListItemResponseTransfer {
         $validatedShoppingListItemResponseTransfer = $this->validateShoppingListItemToBeAdded(
             $shoppingListItemTransfer,
-            $shoppingListItemResponseTransfer
+            $shoppingListItemResponseTransfer,
         );
         if (!$validatedShoppingListItemResponseTransfer->getIsSuccess()) {
             return $validatedShoppingListItemResponseTransfer;
@@ -171,7 +171,7 @@ class ShoppingListItemAddOperationValidator implements ShoppingListItemAddOperat
 
         $shoppingListItemResponseTransferWithPerformedItemAddPreCheckPlugins = $this->performShoppingListItemAddPreCheckPlugins(
             $shoppingListItemTransfer,
-            $shoppingListItemResponseTransfer
+            $shoppingListItemResponseTransfer,
         );
         if (!$shoppingListItemResponseTransferWithPerformedItemAddPreCheckPlugins->getIsSuccess()) {
             $this->messageAdder->addShoppingListItemAddingFailedMessage($shoppingListItemTransfer->getSku());

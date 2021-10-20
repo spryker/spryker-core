@@ -125,7 +125,7 @@ class TouchQueryContainerTest extends Unit
         $touchQuery = $touchQueryContainer->queryTouchEntriesByItemTypeAndItemIdsAllowableToUpdateWithItemEvent(
             static::ITEM_TYPE,
             SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE,
-            $itemsIds
+            $itemsIds,
         );
 
         // Assert
@@ -150,7 +150,7 @@ class TouchQueryContainerTest extends Unit
         $touchQuery = $touchQueryContainer->queryTouchEntriesByItemTypeAndItemIdsAllowableToUpdateWithItemEvent(
             static::ITEM_TYPE,
             SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE,
-            $itemsIds
+            $itemsIds,
         );
 
         // Assert
@@ -176,7 +176,7 @@ class TouchQueryContainerTest extends Unit
         $touchQuery = $touchQueryContainer->queryTouchEntriesByItemTypeAndItemIdsAllowableToUpdateWithItemEvent(
             static::ITEM_TYPE,
             SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE,
-            $itemsIds
+            $itemsIds,
         );
 
         // Assert

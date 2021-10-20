@@ -90,8 +90,8 @@ class ProductAbstractSkusToIdsConditionResolver implements ConditionResolverInte
             throw new EntityNotFoundException(
                 sprintf(
                     'Could not find Product Abstract IDs by skus "%s".',
-                    implode(',', $productAbstractSkus)
-                )
+                    implode(',', $productAbstractSkus),
+                ),
             );
         }
 

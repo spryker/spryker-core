@@ -74,7 +74,7 @@ class ProductConfigurationVolumePriceProductConfigurationMapperPluginTest extend
         // Act
         $productConfigurationInstanceTransfer = $productConfigurationVolumePriceProductConfigurationPriceMapperPlugin->map(
             [$restProductConfigurationPriceAttributesTransfer],
-            $productConfigurationInstanceTransfer
+            $productConfigurationInstanceTransfer,
         );
 
         // Assert

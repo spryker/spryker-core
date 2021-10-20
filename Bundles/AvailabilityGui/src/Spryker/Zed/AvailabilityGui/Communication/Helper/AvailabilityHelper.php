@@ -174,7 +174,7 @@ class AvailabilityHelper implements AvailabilityHelperInterface
     public function sumReservationsFromOtherStores(string $concreteSku, StoreTransfer $storeTransfer, Decimal $currentStoreReservationQuantity): Decimal
     {
         return $currentStoreReservationQuantity->add(
-            $this->omsFacade->getReservationsFromOtherStores($concreteSku, $storeTransfer)
+            $this->omsFacade->getReservationsFromOtherStores($concreteSku, $storeTransfer),
         );
     }
 
@@ -199,7 +199,7 @@ class AvailabilityHelper implements AvailabilityHelperInterface
         return $this->availabilityQueryContainer->queryAvailabilityAbstractWithStockByIdLocale(
             $idLocale,
             $idStore,
-            $this->getStockNamesForStoreByStoreId($idStore)
+            $this->getStockNamesForStoreByStoreId($idStore),
         );
     }
 
@@ -218,7 +218,7 @@ class AvailabilityHelper implements AvailabilityHelperInterface
         return $this->availabilityQueryContainer->queryAvailabilityAbstractWithCurrentStockAndReservedProductsAggregated(
             $idLocale,
             $idStore,
-            $stockIds
+            $stockIds,
         );
     }
 
@@ -235,7 +235,7 @@ class AvailabilityHelper implements AvailabilityHelperInterface
             $idProductAbstract,
             $idLocale,
             $idStore,
-            $this->getStockNamesForStoreByStoreId($idStore)
+            $this->getStockNamesForStoreByStoreId($idStore),
         );
     }
 
@@ -256,12 +256,12 @@ class AvailabilityHelper implements AvailabilityHelperInterface
                 $productAbstractIds,
                 $idLocale,
                 $idStore,
-                $this->getStockNamesForStoreByStoreId($idStore)
+                $this->getStockNamesForStoreByStoreId($idStore),
             )->find();
 
         return $this->orderAvailabilityAbstractEntitiesByProductAbstractIdsSequence(
             $availabilityAbstractEntities,
-            $productAbstractIds
+            $productAbstractIds,
         );
     }
 

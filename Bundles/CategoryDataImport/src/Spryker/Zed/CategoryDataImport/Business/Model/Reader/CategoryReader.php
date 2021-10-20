@@ -96,7 +96,7 @@ class CategoryReader implements CategoryReaderInterface
         if (!$this->categoryKeys->offsetExists($categoryKey)) {
             throw new CategoryByKeyNotFoundException(sprintf(
                 'Category by key "%s" not found. Maybe you have a typo in the category key.',
-                $categoryKey
+                $categoryKey,
             ));
         }
 
@@ -137,7 +137,7 @@ class CategoryReader implements CategoryReaderInterface
         if (!$this->categoryUrls->offsetExists($categoryKey)) {
             throw new CategoryByKeyNotFoundException(sprintf(
                 'Category url key "%s" not found. Maybe you have a typo in the category key.',
-                $categoryKey
+                $categoryKey,
             ));
         }
 
@@ -150,7 +150,7 @@ class CategoryReader implements CategoryReaderInterface
         throw new CategoryByKeyNotFoundException(sprintf(
             'Category url key "%s" and idLocale "%s" not found.',
             $categoryKey,
-            $idLocale
+            $idLocale,
         ));
     }
 

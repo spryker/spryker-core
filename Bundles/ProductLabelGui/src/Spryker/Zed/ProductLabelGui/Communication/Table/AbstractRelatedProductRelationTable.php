@@ -71,7 +71,7 @@ abstract class AbstractRelatedProductRelationTable extends AbstractRelatedProduc
     {
         $config->setDefaultSortField(
             SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT,
-            TableConfiguration::SORT_ASC
+            TableConfiguration::SORT_ASC,
         );
 
         $config->setSortable([
@@ -105,7 +105,7 @@ abstract class AbstractRelatedProductRelationTable extends AbstractRelatedProduc
             '%s?%s=%s',
             $this->defaultUrl,
             static::PARAM_ID_PRODUCT_LABEL,
-            (int)$this->idProductLabel
+            (int)$this->idProductLabel,
         ));
     }
 
@@ -165,7 +165,7 @@ abstract class AbstractRelatedProductRelationTable extends AbstractRelatedProduc
                 'id' => $productAbstractEntity->getIdProductAbstract(),
                 'sku' => $productAbstractEntity->getSku(),
                 'name' => $this->getNameColumn($productAbstractEntity),
-            ]))
+            ])),
         );
     }
 

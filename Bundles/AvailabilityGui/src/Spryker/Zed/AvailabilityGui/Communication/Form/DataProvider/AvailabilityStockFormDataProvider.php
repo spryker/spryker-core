@@ -124,7 +124,7 @@ class AvailabilityStockFormDataProvider
             }
 
             $stockProductTransfer->setQuantity(
-                $stockProductTransfer->getQuantity()->trim()
+                $stockProductTransfer->getQuantity()->trim(),
             );
         }
 
@@ -159,7 +159,7 @@ class AvailabilityStockFormDataProvider
             $stockProducts,
             function (StockProductTransfer $stockProductLeftTransfer, StockProductTransfer $stockProductRightTransfer) {
                 return strcmp($stockProductLeftTransfer->getStockType(), $stockProductRightTransfer->getStockType());
-            }
+            },
         );
 
         return $stockProducts;

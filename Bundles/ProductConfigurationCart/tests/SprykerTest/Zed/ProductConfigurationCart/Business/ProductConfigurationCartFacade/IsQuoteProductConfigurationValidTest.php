@@ -59,7 +59,7 @@ class IsQuoteProductConfigurationValidTest extends Unit
         // Assert
         $this->assertTrue(
             $isQuoteProductConfigurationValid,
-            'Expects that quote transfer will be valid when product configuration is valid.'
+            'Expects that quote transfer will be valid when product configuration is valid.',
         );
     }
 
@@ -85,7 +85,7 @@ class IsQuoteProductConfigurationValidTest extends Unit
         // Assert
         $this->assertFalse(
             $isQuoteProductConfigurationValid,
-            'Expects that quote transfer will be not valid when product configuration not valid.'
+            'Expects that quote transfer will be not valid when product configuration not valid.',
         );
     }
 
@@ -108,7 +108,7 @@ class IsQuoteProductConfigurationValidTest extends Unit
         // Assert
         $this->assertTrue(
             $isQuoteProductConfigurationValid,
-            'Expects that quote transfer will be valid when product configuration was not set.'
+            'Expects that quote transfer will be valid when product configuration was not set.',
         );
     }
 }

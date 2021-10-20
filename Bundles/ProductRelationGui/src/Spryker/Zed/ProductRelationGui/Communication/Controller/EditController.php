@@ -86,7 +86,7 @@ class EditController extends BaseProductRelationController
         $productRelationForm = $this->getFactory()
             ->createRelationForm(
                 $productRelationFormTypeDataProvider->getData($idProductRelation),
-                $productRelationFormTypeDataProvider->getOptions(true)
+                $productRelationFormTypeDataProvider->getOptions(true),
             );
 
         $productRelationTabs = $this->getFactory()
@@ -133,7 +133,7 @@ class EditController extends BaseProductRelationController
         $productTable = $this->getFactory()->createProductTable();
 
         return $this->jsonResponse(
-            $productTable->fetchData()
+            $productTable->fetchData(),
         );
     }
 
@@ -211,7 +211,7 @@ class EditController extends BaseProductRelationController
             ->getProductRelationFacade()
             ->getProductAbstractDataById(
                 $idProductAbstract,
-                $localeTransfer->getIdLocale()
+                $localeTransfer->getIdLocale(),
             );
     }
 
@@ -235,7 +235,7 @@ class EditController extends BaseProductRelationController
             static::REDIRECT_URL_EDIT,
             [
                 static::URL_PARAM_ID_PRODUCT_RELATION => $idProductRelation,
-            ]
+            ],
         )->build();
 
         return $this->redirectResponse($editProductRelationUrl);

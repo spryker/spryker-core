@@ -92,13 +92,13 @@ class CompanyBusinessUnitAddressDataImportPluginTest extends AbstractCompanyBusi
         $companyBusinessUnitDataImportPlugin = new CompanyBusinessUnitDataImportPlugin();
         $this->assertSame(
             CompanyBusinessUnitDataImportConfig::IMPORT_TYPE_COMPANY_BUSINESS_UNIT,
-            $companyBusinessUnitDataImportPlugin->getImportType()
+            $companyBusinessUnitDataImportPlugin->getImportType(),
         );
 
         $companyBusinessUnitAddressDataImportPlugin = new CompanyBusinessUnitAddressDataImportPlugin();
         $this->assertSame(
             CompanyBusinessUnitDataImportConfig::IMPORT_TYPE_COMPANY_BUSINESS_UNIT_ADDRESS,
-            $companyBusinessUnitAddressDataImportPlugin->getImportType()
+            $companyBusinessUnitAddressDataImportPlugin->getImportType(),
         );
     }
 }

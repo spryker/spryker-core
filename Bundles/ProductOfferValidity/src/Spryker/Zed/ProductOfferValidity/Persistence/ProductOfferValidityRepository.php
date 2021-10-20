@@ -32,7 +32,7 @@ class ProductOfferValidityRepository extends AbstractRepository implements Produ
             ->createProductOfferValidityMapper()
             ->productOfferValidityEntitiesToProductOfferValidityCollectionTransfer(
                 $productOfferValidityEntities,
-                new ProductOfferValidityCollectionTransfer()
+                new ProductOfferValidityCollectionTransfer(),
             );
     }
 
@@ -52,7 +52,7 @@ class ProductOfferValidityRepository extends AbstractRepository implements Produ
             ->createProductOfferValidityMapper()
             ->productOfferValidityEntitiesToProductOfferValidityCollectionTransfer(
                 $productOfferValidityEntities,
-                new ProductOfferValidityCollectionTransfer()
+                new ProductOfferValidityCollectionTransfer(),
             );
     }
 
@@ -76,7 +76,7 @@ class ProductOfferValidityRepository extends AbstractRepository implements Produ
             ->createProductOfferValidityMapper()
             ->productOfferValidityEntityToProductOfferValidityTransfer(
                 $productOfferValidityEntity,
-                new ProductOfferValidityTransfer()
+                new ProductOfferValidityTransfer(),
             );
     }
 }

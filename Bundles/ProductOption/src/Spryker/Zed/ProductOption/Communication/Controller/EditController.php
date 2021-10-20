@@ -40,7 +40,7 @@ class EditController extends BaseOptionController
                 '/product-option/edit/index',
                 [
                     BaseOptionController::URL_PARAM_ID_PRODUCT_OPTION_GROUP => $idProductOptionGroup,
-                ]
+                ],
             )->build();
 
             $this->addSuccessMessage('Product option group modified.');
@@ -50,7 +50,7 @@ class EditController extends BaseOptionController
 
         $productOptionsTable = $this->getFactory()->createProductOptionTable(
             $idProductOptionGroup,
-            ProductOptionTable::TABLE_CONTEXT_EDIT
+            ProductOptionTable::TABLE_CONTEXT_EDIT,
         );
 
         $productTable = $this->getFactory()->createProductTable($idProductOptionGroup);

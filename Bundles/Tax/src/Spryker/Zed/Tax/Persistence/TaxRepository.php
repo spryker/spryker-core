@@ -62,7 +62,7 @@ class TaxRepository extends AbstractRepository implements TaxRepositoryInterface
 
         return $this->getFactory()->createTaxRateMapper()->mapTaxRateEntityToTaxRateTransfer(
             $taxRateEntity,
-            new TaxRateTransfer()
+            new TaxRateTransfer(),
         );
     }
 
@@ -81,7 +81,7 @@ class TaxRepository extends AbstractRepository implements TaxRepositoryInterface
 
         return $this->getFactory()->createTaxSetMapper()->mapTaxSetEntityToTaxSetTransfer(
             $taxSetEntity,
-            new TaxSetTransfer()
+            new TaxSetTransfer(),
         );
     }
 }

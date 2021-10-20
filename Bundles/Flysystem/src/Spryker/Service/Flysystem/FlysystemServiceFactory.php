@@ -33,7 +33,7 @@ class FlysystemServiceFactory extends AbstractServiceFactory
     public function createFilesystemProvider(): FilesystemProviderInterface
     {
         return new FilesystemProvider(
-            $this->buildFilesystemCollection()
+            $this->buildFilesystemCollection(),
         );
     }
 
@@ -43,7 +43,7 @@ class FlysystemServiceFactory extends AbstractServiceFactory
     public function createReader()
     {
         return new Reader(
-            $this->createFilesystemProvider()
+            $this->createFilesystemProvider(),
         );
     }
 
@@ -53,7 +53,7 @@ class FlysystemServiceFactory extends AbstractServiceFactory
     public function createWriter()
     {
         return new Writer(
-            $this->createFilesystemProvider()
+            $this->createFilesystemProvider(),
         );
     }
 
@@ -63,7 +63,7 @@ class FlysystemServiceFactory extends AbstractServiceFactory
     public function createStream()
     {
         return new Stream(
-            $this->createFilesystemProvider()
+            $this->createFilesystemProvider(),
         );
     }
 
@@ -112,7 +112,7 @@ class FlysystemServiceFactory extends AbstractServiceFactory
         $configTransfer->setAdapterConfig($configData);
 
         $configTransfer->setFlysystemConfig(
-            $this->getConfig()->getFlysystemConfig()
+            $this->getConfig()->getFlysystemConfig(),
         );
 
         return $configTransfer;
@@ -151,7 +151,7 @@ class FlysystemServiceFactory extends AbstractServiceFactory
 
         throw new BuilderNotFoundException(sprintf(
             'FlysystemFileSystemBuilderPlugin "%s" was not found',
-            $configTransfer->getName()
+            $configTransfer->getName(),
         ));
     }
 

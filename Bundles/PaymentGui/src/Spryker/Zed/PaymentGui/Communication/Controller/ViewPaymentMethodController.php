@@ -34,7 +34,7 @@ class ViewPaymentMethodController extends AbstractController
     public function indexAction(Request $request)
     {
         $idPaymentMethod = $this->castId(
-            $request->query->getInt(static::PARAM_ID_PAYMENT_METHOD)
+            $request->query->getInt(static::PARAM_ID_PAYMENT_METHOD),
         );
 
         $paymentMethodResponseTransfer = $this->getFactory()
@@ -53,7 +53,7 @@ class ViewPaymentMethodController extends AbstractController
         $dataProvider = $this->getFactory()->createViewPaymentMethodFormDataProvider();
         $form = $this->getFactory()->createViewPaymentMethodForm(
             $dataProvider->getData($paymentMethodTransfer),
-            $dataProvider->getOptions()
+            $dataProvider->getOptions(),
         );
 
         return $this->viewResponse([

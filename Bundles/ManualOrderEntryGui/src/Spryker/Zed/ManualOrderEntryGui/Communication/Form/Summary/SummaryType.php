@@ -66,7 +66,7 @@ class SummaryType extends AbstractType
                 'property_path' => QuoteTransfer::MANUAL_ORDER . '.' . ManualOrderTransfer::IS_SUBMIT_ORDER,
                 'label' => 'Submit order',
                 'required' => true,
-            ]
+            ],
         );
 
         return $this;

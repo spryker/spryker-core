@@ -31,13 +31,13 @@ trait FixturesTrait
         if (!file_exists($filename)) {
             throw new ConfigurationException(sprintf(
                 'Fixtures file could not be loaded: %s. Make sure that `codecept fixtures` has been run before.',
-                $filename
+                $filename,
             ));
         }
 
         $object = unserialize(
             file_get_contents($filename),
-            ['allowed_classes' => true]
+            ['allowed_classes' => true],
         );
 
         foreach ($object->steps as $step) {
@@ -82,7 +82,7 @@ trait FixturesTrait
         return sprintf(
             '%s%s.fixtures',
             $path,
-            str_replace('\\', '_', $className)
+            str_replace('\\', '_', $className),
         );
     }
 }

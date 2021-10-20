@@ -49,7 +49,7 @@ class InMemorySearchPlugin implements InMemorySearchPluginInterface
             codecept_debug($this->format(sprintf(
                 'Search document <fg=yellow>%s</> not found in the source "%s".',
                 $searchDocumentId,
-                $sourceIdentifier
+                $sourceIdentifier,
             )));
 
             return new SearchDocumentTransfer();
@@ -76,7 +76,7 @@ class InMemorySearchPlugin implements InMemorySearchPluginInterface
             codecept_debug($this->format(sprintf(
                 'Search document <fg=yellow>%s</> not found in the source "%s".',
                 $searchDocumentId,
-                $sourceIdentifier
+                $sourceIdentifier,
             )));
 
             return false;
@@ -131,7 +131,7 @@ class InMemorySearchPlugin implements InMemorySearchPluginInterface
             codecept_debug($this->format(sprintf(
                 'Search document <fg=yellow>%s</> already exists in the source <fg=yellow>%s</>.',
                 $searchDocumentId,
-                $sourceIdentifier
+                $sourceIdentifier,
             )));
         }
 
@@ -140,7 +140,7 @@ class InMemorySearchPlugin implements InMemorySearchPluginInterface
         codecept_debug($this->format(sprintf(
             'Search document <fg=yellow>%s</> added to the source <fg=yellow>%s</>.',
             $searchDocumentId,
-            $sourceIdentifier
+            $sourceIdentifier,
         )));
 
         return true;

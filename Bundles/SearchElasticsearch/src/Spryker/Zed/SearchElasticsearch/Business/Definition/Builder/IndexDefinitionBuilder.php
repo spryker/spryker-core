@@ -62,7 +62,7 @@ class IndexDefinitionBuilder implements IndexDefinitionBuilderInterface
         if (isset($indexDefinitions[$indexName])) {
             $indexDefinition = $this->indexDefinitionMerger->merge(
                 $indexDefinitions[$indexName],
-                $indexDefinition
+                $indexDefinition,
             );
         }
 

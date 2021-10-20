@@ -61,7 +61,7 @@ class QuoteRequestReader implements QuoteRequestReaderInterface
 
         if ($quoteRequestFilterTransfer->getIdCompanyUser()) {
             $quoteRequestFilterTransfer->setCompanyUser(
-                (new CompanyUserTransfer())->setIdCompanyUser($quoteRequestFilterTransfer->getIdCompanyUser())
+                (new CompanyUserTransfer())->setIdCompanyUser($quoteRequestFilterTransfer->getIdCompanyUser()),
             );
         }
 
@@ -105,7 +105,7 @@ class QuoteRequestReader implements QuoteRequestReaderInterface
 
         $quoteRequestCollectionTransfer = $this->expandQuoteRequestCollection(
             $quoteRequestCollectionTransfer,
-            (bool)$quoteRequestFilterTransfer->getWithVersions()
+            (bool)$quoteRequestFilterTransfer->getWithVersions(),
         );
 
         $quoteRequestCollectionTransfer = $this->expandQuoteRequestCollectionWithBusinessUnits($quoteRequestCollectionTransfer);

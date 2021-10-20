@@ -72,7 +72,7 @@ class DiscountFacadeCalculateTest extends Unit
     {
         $discountEntity = $this->createDiscountEntity(
             '(sku = "123" or sku = "431")',
-            'sku = "123" or sku is in "123' . ComparatorOperators::LIST_DELIMITER . '431"'
+            'sku = "123" or sku is in "123' . ComparatorOperators::LIST_DELIMITER . '431"',
         );
 
         $quoteTransfer = $this->createQuoteTransfer();
@@ -97,7 +97,7 @@ class DiscountFacadeCalculateTest extends Unit
             '(sku = "123")',
             'sku = "123"',
             DiscountConstants::TYPE_CART_RULE,
-            2
+            2,
         );
 
         $quoteTransfer = $this->createQuoteTransfer();
@@ -119,7 +119,7 @@ class DiscountFacadeCalculateTest extends Unit
             '(sku = "123" or sku = "431")',
             'sku = "123" or sku is in "123' . ComparatorOperators::LIST_DELIMITER . '431"',
             DiscountConstants::TYPE_CART_RULE,
-            2
+            2,
         );
 
         $quoteTransfer = $this->createQuoteTransfer();
@@ -142,7 +142,7 @@ class DiscountFacadeCalculateTest extends Unit
     {
         $discountEntity = $this->createDiscountEntity(
             '',
-            'sku = "123" or sku is in "123' . ComparatorOperators::LIST_DELIMITER . '431"'
+            'sku = "123" or sku is in "123' . ComparatorOperators::LIST_DELIMITER . '431"',
         );
 
         $quoteTransfer = $this->createQuoteTransfer();
@@ -165,7 +165,7 @@ class DiscountFacadeCalculateTest extends Unit
     {
         $this->createDiscountEntity(
             'alskdhas jkashdj asjkdhjashdjs ahjdhas1293820',
-            'sku = "123" or sku is in "123' . ComparatorOperators::LIST_DELIMITER . '431"'
+            'sku = "123" or sku is in "123' . ComparatorOperators::LIST_DELIMITER . '431"',
         );
 
         $quoteTransfer = $this->createQuoteTransfer();
@@ -188,7 +188,7 @@ class DiscountFacadeCalculateTest extends Unit
         $discountEntity = $this->createDiscountEntity(
             '',
             'sku = "*"',
-            DiscountConstants::TYPE_VOUCHER
+            DiscountConstants::TYPE_VOUCHER,
         );
 
         $code1 = 'code1';
@@ -224,7 +224,7 @@ class DiscountFacadeCalculateTest extends Unit
     {
         $discountEntity = $this->createDiscountEntity(
             '(sku = "123" or sku = "431")',
-            'sku = "123" or sku is in "123' . ComparatorOperators::LIST_DELIMITER . '431"'
+            'sku = "123" or sku is in "123' . ComparatorOperators::LIST_DELIMITER . '431"',
         );
 
         $filterPluginMock = $this->createDiscountableItemFilterPluginMock();
@@ -268,7 +268,7 @@ class DiscountFacadeCalculateTest extends Unit
         $discountEntity = $this->createDiscountEntity(
             '',
             'sku = "*"',
-            DiscountConstants::TYPE_VOUCHER
+            DiscountConstants::TYPE_VOUCHER,
         );
 
         $code1 = 'code1';

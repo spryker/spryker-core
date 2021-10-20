@@ -201,7 +201,7 @@ class ShipmentFormType extends AbstractType
         return new Date([
             'message' => sprintf(
                 static::VALIDATION_INVALID_DATE_MESSAGE,
-                GreaterThanOrEqualDate::VALIDATION_VALID_DATE_FORMAT
+                GreaterThanOrEqualDate::VALIDATION_VALID_DATE_FORMAT,
             ),
         ]);
     }

@@ -40,7 +40,7 @@ class MerchantProductOptionGroupWriterStep extends PublishAwareStep implements D
 
         $this->addPublishEvents(
             static::EVENT_MERCHANT_PRODUCT_OPTION_GROUP_PUBLISH,
-            $merchantProductOptionGroupEntity->getIdMerchantProductOptionGroup()
+            $merchantProductOptionGroupEntity->getIdMerchantProductOptionGroup(),
         );
     }
 }

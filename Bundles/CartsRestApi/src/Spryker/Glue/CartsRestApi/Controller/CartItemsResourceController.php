@@ -47,7 +47,7 @@ class CartItemsResourceController extends AbstractController
             ->createCartItemAdder()
             ->addItem(
                 $restRequest,
-                $restCartItemsAttributesTransfer
+                $restCartItemsAttributesTransfer,
             );
     }
 
@@ -82,7 +82,7 @@ class CartItemsResourceController extends AbstractController
             ->createCartItemUpdater()
             ->updateItemQuantity(
                 $restRequest,
-                $restCartItemsAttributesTransfer
+                $restCartItemsAttributesTransfer,
             );
     }
 
@@ -114,7 +114,7 @@ class CartItemsResourceController extends AbstractController
         return $this->getFactory()
             ->createCartItemDeleter()
             ->deleteItem(
-                $restRequest
+                $restRequest,
             );
     }
 }

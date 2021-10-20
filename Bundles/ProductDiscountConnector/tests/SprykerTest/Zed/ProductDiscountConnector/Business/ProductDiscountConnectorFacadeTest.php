@@ -57,7 +57,7 @@ class ProductDiscountConnectorFacadeTest extends Unit
         $isSatisfied = $productDiscountConnectorFacade->isProductAttributeSatisfiedBy(
             $quoteTransfer,
             $quoteTransfer->getItems()[0],
-            $clauseTransfer
+            $clauseTransfer,
         );
 
         $this->assertTrue($isSatisfied);
@@ -79,7 +79,7 @@ class ProductDiscountConnectorFacadeTest extends Unit
         $isSatisfied = $productDiscountConnectorFacade->isProductAttributeSatisfiedBy(
             $quoteTransfer,
             $quoteTransfer->getItems()[0],
-            $clauseTransfer
+            $clauseTransfer,
         );
 
         $this->assertFalse($isSatisfied);

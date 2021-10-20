@@ -33,7 +33,7 @@ class UrlStorageFactory extends AbstractFactory
             $this->getStorageClient(),
             $this->getSynchronizationService(),
             $this->getUtilEncodingService(),
-            $this->getUrlStorageResourceMapperPlugins()
+            $this->getUrlStorageResourceMapperPlugins(),
         );
     }
 
@@ -53,7 +53,7 @@ class UrlStorageFactory extends AbstractFactory
         return new UrlRedirectStorageReader(
             $this->getStorageClient(),
             $this->createUrlRedirectStorageKeyBuilder(),
-            $this->createUrlRedirectStorageMapper()
+            $this->createUrlRedirectStorageMapper(),
         );
     }
 
@@ -66,7 +66,7 @@ class UrlStorageFactory extends AbstractFactory
             $this->getSynchronizationService(),
             $this->getStoreClient(),
             $this->getLocaleClient(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 

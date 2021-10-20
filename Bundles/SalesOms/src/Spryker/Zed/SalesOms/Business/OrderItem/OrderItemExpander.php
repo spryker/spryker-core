@@ -23,7 +23,7 @@ class OrderItemExpander implements OrderItemExpanderInterface
         ItemTransfer $itemTransfer
     ): SpySalesOrderItemEntityTransfer {
         $salesOrderItemEntityTransfer->setOrderItemReference(
-            $this->generateOrderItemReference($salesOrderItemEntityTransfer)
+            $this->generateOrderItemReference($salesOrderItemEntityTransfer),
         );
 
         return $salesOrderItemEntityTransfer;
@@ -52,8 +52,8 @@ class OrderItemExpander implements OrderItemExpanderInterface
                 $salesOrderItemEntityTransfer->toArray(false),
                 function ($elements) {
                     return is_int($elements) || is_string($elements);
-                }
-            )
+                },
+            ),
         );
     }
 }

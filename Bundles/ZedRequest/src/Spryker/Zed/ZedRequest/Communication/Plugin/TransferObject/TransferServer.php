@@ -93,7 +93,7 @@ class TransferServer
         if (!$this->request) {
             if ($this->repeatIsActive) {
                 $this->request = new Request(
-                    $this->repeater->getRepeatData($this->getHttpRequest()->query->get('mvc'))['params']
+                    $this->repeater->getRepeatData($this->getHttpRequest()->query->get('mvc'))['params'],
                 );
             } else {
                 $transferValues = json_decode($this->getHttpRequest()->getContent(), true);

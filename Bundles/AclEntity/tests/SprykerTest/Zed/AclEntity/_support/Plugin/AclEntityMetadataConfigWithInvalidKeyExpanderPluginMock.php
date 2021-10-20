@@ -28,8 +28,8 @@ class AclEntityMetadataConfigWithInvalidKeyExpanderPluginMock implements AclEnti
                 ->addAclEntityMetadata(
                     'test',
                     (new AclEntityMetadataTransfer())
-                        ->setEntityName(SpyMerchant::class)
-                )
+                        ->setEntityName(SpyMerchant::class),
+                ),
         );
     }
 }

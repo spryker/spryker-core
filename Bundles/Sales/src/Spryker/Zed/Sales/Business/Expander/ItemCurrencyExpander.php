@@ -32,12 +32,12 @@ class ItemCurrencyExpander implements ItemCurrencyExpanderInterface
     public function expandOrderItemsWithCurrencyIsoCode(array $itemTransfers): array
     {
         $currencyIsoCodesBySalesOrderIds = $this->salesRepository->getCurrencyIsoCodesBySalesOrderIds(
-            $this->getSalesOrderIds($itemTransfers)
+            $this->getSalesOrderIds($itemTransfers),
         );
 
         foreach ($itemTransfers as $itemTransfer) {
             $itemTransfer->setCurrencyIsoCode(
-                $currencyIsoCodesBySalesOrderIds[$itemTransfer->getFkSalesOrder()] ?? null
+                $currencyIsoCodesBySalesOrderIds[$itemTransfer->getFkSalesOrder()] ?? null,
             );
         }
 

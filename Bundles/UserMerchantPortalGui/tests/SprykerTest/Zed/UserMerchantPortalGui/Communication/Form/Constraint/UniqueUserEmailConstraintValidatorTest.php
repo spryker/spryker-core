@@ -44,7 +44,7 @@ class UniqueUserEmailConstraintValidatorTest extends ConstraintValidatorTestCase
     {
         // Arrange
         $uniqueUserEmailConstraint = $this->createUniqueUserEmailConstraint(
-            $this->createMerchantUserFacadeMock(null)
+            $this->createMerchantUserFacadeMock(null),
         );
 
         // Act
@@ -61,7 +61,7 @@ class UniqueUserEmailConstraintValidatorTest extends ConstraintValidatorTestCase
     {
         // Arrange
         $uniqueUserEmailConstraint = $this->createUniqueUserEmailConstraint(
-            $this->createMerchantUserFacadeMock(new UserTransfer())
+            $this->createMerchantUserFacadeMock(new UserTransfer()),
         );
 
         // Act

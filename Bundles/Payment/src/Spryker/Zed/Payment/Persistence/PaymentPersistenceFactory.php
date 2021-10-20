@@ -64,7 +64,7 @@ class PaymentPersistenceFactory extends AbstractPersistenceFactory
     {
         return new PaymentMapper(
             $this->createPaymentProviderMapper(),
-            $this->createStoreRelationMapper()
+            $this->createStoreRelationMapper(),
         );
     }
 

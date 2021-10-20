@@ -71,35 +71,35 @@ class CmsBlockCollectorQuery extends AbstractPropelCollectorQuery
         $this->touchQuery->addJoin(
             SpyTouchTableMap::COL_ITEM_ID,
             SpyCmsBlockTableMap::COL_ID_CMS_BLOCK,
-            Criteria::INNER_JOIN
+            Criteria::INNER_JOIN,
         );
         $this->touchQuery->addJoin(
             SpyCmsBlockTableMap::COL_FK_TEMPLATE,
             SpyCmsBlockTemplateTableMap::COL_ID_CMS_BLOCK_TEMPLATE,
-            Criteria::INNER_JOIN
+            Criteria::INNER_JOIN,
         );
         $this->touchQuery->addJoin(
             SpyCmsBlockTableMap::COL_ID_CMS_BLOCK,
             SpyCmsBlockGlossaryKeyMappingTableMap::COL_FK_CMS_BLOCK,
-            Criteria::INNER_JOIN
+            Criteria::INNER_JOIN,
         );
         $this->touchQuery->addJoin(
             SpyCmsBlockGlossaryKeyMappingTableMap::COL_FK_GLOSSARY_KEY,
             SpyGlossaryKeyTableMap::COL_ID_GLOSSARY_KEY,
-            Criteria::INNER_JOIN
+            Criteria::INNER_JOIN,
         );
 
         $this->touchQuery->withColumn(
             'GROUP_CONCAT(' . SpyCmsBlockGlossaryKeyMappingTableMap::COL_PLACEHOLDER . ')',
-            static::COL_PLACEHOLDERS
+            static::COL_PLACEHOLDERS,
         );
         $this->touchQuery->withColumn(
             'GROUP_CONCAT(' . SpyGlossaryKeyTableMap::COL_KEY . ')',
-            static::COL_GLOSSARY_KEYS
+            static::COL_GLOSSARY_KEYS,
         );
         $this->touchQuery->withColumn(
             SpyCmsBlockTemplateTableMap::COL_TEMPLATE_PATH,
-            static::COL_TEMPLATE_PATH
+            static::COL_TEMPLATE_PATH,
         );
 
         $this->touchQuery->addJoin(
@@ -111,7 +111,7 @@ class CmsBlockCollectorQuery extends AbstractPropelCollectorQuery
                 SpyCmsBlockStoreTableMap::COL_FK_CMS_BLOCK,
                 $this->storeTransfer->getIdStore(),
             ],
-            Criteria::LEFT_JOIN
+            Criteria::LEFT_JOIN,
         );
 
         $this->touchQuery->addAnd(SpyCmsBlockTableMap::COL_IS_ACTIVE, true);

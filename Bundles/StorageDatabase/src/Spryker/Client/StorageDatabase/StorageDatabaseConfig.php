@@ -157,7 +157,7 @@ class StorageDatabaseConfig extends AbstractBundleConfig
             $this->getDbEngineName(),
             $this->get(StorageDatabaseConstants::DB_HOST),
             $this->get(StorageDatabaseConstants::DB_PORT),
-            $this->get(StorageDatabaseConstants::DB_DATABASE)
+            $this->get(StorageDatabaseConstants::DB_DATABASE),
         );
     }
 }

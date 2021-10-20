@@ -244,7 +244,7 @@ class ProductRelationTable extends AbstractTable
     {
         $config->setDefaultSortField(
             SpyProductRelationTableMap::COL_ID_PRODUCT_RELATION,
-            TableConfiguration::SORT_DESC
+            TableConfiguration::SORT_DESC,
         );
     }
 
@@ -341,12 +341,12 @@ class ProductRelationTable extends AbstractTable
                 static::URL_PRODUCT_RELATION_VIEW,
                 [
                     ViewController::URL_PARAM_ID_PRODUCT_RELATION => $idProductRelation,
-                ]
+                ],
             ),
             'View',
             [
                 'icon' => 'fa-eye',
-            ]
+            ],
         );
     }
 
@@ -376,9 +376,9 @@ class ProductRelationTable extends AbstractTable
                 static::URL_PRODUCT_RELATION_EDIT,
                 [
                     'id-product-relation' => $idProductRelation,
-                ]
+                ],
             ),
-            'Edit'
+            'Edit',
         );
     }
 
@@ -394,7 +394,7 @@ class ProductRelationTable extends AbstractTable
                 DeleteController::URL_PARAM_ID_PRODUCT_RELATION => $idProductRelation,
                 DeleteController::URL_PARAM_REDIRECT_URL => static::URL_PRODUCT_RELATION_LIST,
             ]),
-            'Delete'
+            'Delete',
         );
     }
 
@@ -413,7 +413,7 @@ class ProductRelationTable extends AbstractTable
                 ]),
                 'Deactivate',
                 ProductRelationToggleIsActiveForm::class,
-                [static::BUTTON_CLASS => 'btn-danger safe-submit']
+                [static::BUTTON_CLASS => 'btn-danger safe-submit'],
             );
         }
 
@@ -423,7 +423,7 @@ class ProductRelationTable extends AbstractTable
                 EditController::URL_PARAM_REDIRECT_URL => static::URL_PRODUCT_RELATION_LIST,
             ]),
             'Activate',
-            ProductRelationToggleIsActiveForm::class
+            ProductRelationToggleIsActiveForm::class,
         );
     }
 

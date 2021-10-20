@@ -34,7 +34,7 @@ class ProductNameBuilder implements ProductNameBuilderInterface
         $extendedProductConcreteNameParts = [$productConcreteName];
         $productConcreteAttributes = array_merge(
             $productConcreteTransfer->getAttributes(),
-            $concreteLocalizedAttributesTransfer->getAttributes()
+            $concreteLocalizedAttributesTransfer->getAttributes(),
         );
 
         foreach ($productConcreteAttributes as $productConcreteAttribute) {

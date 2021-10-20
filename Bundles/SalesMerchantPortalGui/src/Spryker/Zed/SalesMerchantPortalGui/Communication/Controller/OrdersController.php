@@ -41,7 +41,7 @@ class OrdersController extends AbstractController
         return $this->getFactory()->getGuiTableHttpDataRequestExecutor()->execute(
             $request,
             $this->getFactory()->createMerchantOrderGuiTableDataProvider(),
-            $this->getFactory()->createMerchantOrderGuiTableConfigurationProvider()->getConfiguration()
+            $this->getFactory()->createMerchantOrderGuiTableConfigurationProvider()->getConfiguration(),
         );
     }
 }

@@ -122,7 +122,7 @@ class CheckoutFacadeTest extends Unit
         $this->tester->haveAvailabilityConcrete($productTransfer->getSku(), $storeTransfer, 3);
         $email = 'frodo.baggins@gmail.com';
         $itemBuilder = (new ItemBuilder([ItemTransfer::SKU => $productTransfer->getSku(), ItemTransfer::UNIT_PRICE => 1]))->withShipment(
-            (new ShipmentBuilder())->withShippingAddress([AddressTransfer::EMAIL => $email])
+            (new ShipmentBuilder())->withShippingAddress([AddressTransfer::EMAIL => $email]),
         );
 
         $quoteTransfer = (new QuoteBuilder())
@@ -375,7 +375,7 @@ class CheckoutFacadeTest extends Unit
         $productConcreteTransfer1 = $this->tester->haveProduct([ProductConcreteTransfer::SKU => 'OSB1339'], [ProductAbstractTransfer::SKU => 'AOSB1339']);
 
         $quoteTransfer->addItem(
-            $this->createItemTransfer($productConcreteTransfer1, 2)
+            $this->createItemTransfer($productConcreteTransfer1, 2),
         );
 
         // Act
@@ -397,7 +397,7 @@ class CheckoutFacadeTest extends Unit
         $productConcrete = $this->tester->haveProduct();
 
         $quoteTransfer->addItem(
-            $this->createItemTransfer($productConcrete, 2)
+            $this->createItemTransfer($productConcrete, 2),
         );
 
         // Act
@@ -423,7 +423,7 @@ class CheckoutFacadeTest extends Unit
 
         $quoteTransfer->addItem(
             $this->createItemTransfer($productConcreteTransfer1, 2)
-                ->setShipment($this->createShipmentTransfer())
+                ->setShipment($this->createShipmentTransfer()),
         );
 
         // Act
@@ -750,7 +750,7 @@ class CheckoutFacadeTest extends Unit
         $address = (new AddressBuilder([AddressTransfer::EMAIL => $customer->getEmail()]));
 
         return (new ItemBuilder($seed))->withShipment(
-            (new ShipmentBuilder())->withShippingAddress($address)
+            (new ShipmentBuilder())->withShippingAddress($address),
         );
     }
 

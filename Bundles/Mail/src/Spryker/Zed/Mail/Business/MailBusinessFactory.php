@@ -27,7 +27,7 @@ class MailBusinessFactory extends AbstractBusinessFactory
         return new MailHandler(
             $this->createMailBuilder(),
             $this->getMailTypeCollection(),
-            $this->getMailProviderCollection()
+            $this->getMailProviderCollection(),
         );
     }
 
@@ -38,7 +38,7 @@ class MailBusinessFactory extends AbstractBusinessFactory
     {
         return new MailBuilder(
             $this->getGlossaryFacade(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -65,7 +65,7 @@ class MailBusinessFactory extends AbstractBusinessFactory
     {
         return new SwiftMailer(
             $this->createRenderer(),
-            $this->getMailer()
+            $this->getMailer(),
         );
     }
 

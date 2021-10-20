@@ -80,7 +80,7 @@ class HttpClient extends AbstractHttpClient implements HttpClientInterface
         if (!isset($header['Auth-Token'])) {
             trigger_error(
                 sprintf('Spryker: When you need the "Auth-Token" header use the "%s" to add it. With the next major it will not be added automatically anymore.', AuthTokenHeaderExpanderPlugin::class),
-                E_USER_DEPRECATED
+                E_USER_DEPRECATED,
             );
 
             $header['Auth-Token'] = $this->utilTextService->generateToken($this->config->getRawToken(), $this->config->getTokenOptions());
@@ -89,7 +89,7 @@ class HttpClient extends AbstractHttpClient implements HttpClientInterface
         if (!isset($header['X-Request-ID'])) {
             trigger_error(
                 sprintf('Spryker: When you need the "X-Request-ID" header use the "%s" to add it. With the next major it will not be added automatically anymore.', RequestIdHeaderExpanderPlugin::class),
-                E_USER_DEPRECATED
+                E_USER_DEPRECATED,
             );
 
             $header['X-Request-ID'] = $this->utilNetworkService->getRequestId();

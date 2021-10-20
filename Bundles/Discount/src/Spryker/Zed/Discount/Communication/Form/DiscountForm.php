@@ -66,7 +66,7 @@ class DiscountForm extends AbstractType
             [
                 'data_class' => DiscountGeneralTransfer::class,
                 'label' => false,
-            ]
+            ],
         );
 
         return $this;
@@ -85,7 +85,7 @@ class DiscountForm extends AbstractType
             [
                 'data_class' => DiscountCalculatorTransfer::class,
                 'label' => false,
-            ]
+            ],
         );
 
         return $this;
@@ -104,7 +104,7 @@ class DiscountForm extends AbstractType
             [
                 'data_class' => DiscountConditionTransfer::class,
                 'label' => false,
-            ]
+            ],
         );
 
         return $this;

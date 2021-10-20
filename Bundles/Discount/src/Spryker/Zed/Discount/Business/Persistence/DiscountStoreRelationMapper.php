@@ -46,8 +46,8 @@ class DiscountStoreRelationMapper implements DiscountStoreRelationMapperInterfac
                 (new StoreTransfer())
                     ->fromArray(
                         $discountStoreEntity->getSpyStore()->toArray(),
-                        true
-                    )
+                        true,
+                    ),
             );
         }
 

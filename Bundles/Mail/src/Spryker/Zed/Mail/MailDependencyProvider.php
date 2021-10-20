@@ -188,7 +188,7 @@ class MailDependencyProvider extends AbstractBundleDependencyProvider
             $transport = new Swift_SmtpTransport(
                 $this->getConfig()->getSmtpHost(),
                 $this->getConfig()->getSmtpPort(),
-                $this->getConfig()->getSmtpEncryption()
+                $this->getConfig()->getSmtpEncryption(),
             );
 
             if ($this->getConfig()->getSmtpAuthMode() !== '') {

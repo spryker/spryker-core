@@ -62,7 +62,7 @@ class JsonMapperTest extends Unit
             static::RULE_FIELD,
             static::ATTRIBUTE_NAME,
             static::OPERATOR,
-            static::RULE_VALUE
+            static::RULE_VALUE,
         );
 
         // Act

@@ -77,7 +77,7 @@ class EditCompanyUnitAddressController extends AbstractController
             ->getCompanyUnitAddressFacade()
             ->getCompanyUnitAddressById(
                 (new CompanyUnitAddressTransfer())
-                    ->setIdCompanyUnitAddress($idCompanyUnitAddress)
+                    ->setIdCompanyUnitAddress($idCompanyUnitAddress),
             );
 
         return $this->viewResponse([

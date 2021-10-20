@@ -53,7 +53,7 @@ class LoggableZedClientTest extends Unit
         $zedRequestLoggerMock->expects($this->once())->method('log')->with(
             $uri,
             $payload->toArray(),
-            $expectedResult->toArray()
+            $expectedResult->toArray(),
         );
         $this->tester->mockFactoryMethod('createZedRequestLogger', $zedRequestLoggerMock);
         $this->tester->mockCreateZedClient(['call' => $expectedResult]);

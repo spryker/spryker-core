@@ -133,7 +133,7 @@ class SalesPaymentFacadeTest extends Unit
             SalesPaymentDependencyProvider::SALES_PAYMENT_EXPANDER_PLUGINS,
             [
                 $salesPaymentExpanderPluginMock,
-            ]
+            ],
         );
 
         // Act
@@ -181,7 +181,7 @@ class SalesPaymentFacadeTest extends Unit
             SalesPaymentDependencyProvider::SALES_PAYMENT_EXPANDER_PLUGINS,
             [
                 $salesPaymentExpanderPluginMock,
-            ]
+            ],
         );
 
         // Act

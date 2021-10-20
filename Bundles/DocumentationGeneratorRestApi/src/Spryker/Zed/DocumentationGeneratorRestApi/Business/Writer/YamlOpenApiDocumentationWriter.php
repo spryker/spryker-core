@@ -175,7 +175,7 @@ class YamlOpenApiDocumentationWriter implements DocumentationWriterInterface
             static::YAML_INDENT,
             DocumentationGeneratorRestApiToSymfonyYamlAdapter::DUMP_EMPTY_ARRAY_AS_SEQUENCE
             | DocumentationGeneratorRestApiToSymfonyYamlAdapter::DUMP_MULTI_LINE_LITERAL_BLOCK
-            | DocumentationGeneratorRestApiToSymfonyYamlAdapter::DUMP_OBJECT_AS_MAP
+            | DocumentationGeneratorRestApiToSymfonyYamlAdapter::DUMP_OBJECT_AS_MAP,
         );
 
         $this->filesystem->dumpFile($fileName, $yaml);

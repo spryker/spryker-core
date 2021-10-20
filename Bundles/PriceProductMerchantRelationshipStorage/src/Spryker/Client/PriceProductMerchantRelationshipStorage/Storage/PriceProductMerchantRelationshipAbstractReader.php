@@ -54,7 +54,7 @@ class PriceProductMerchantRelationshipAbstractReader implements PriceProductMerc
         $key = $this->priceStorageKeyGenerator->generateKey(
             PriceProductMerchantRelationshipStorageConstants::PRICE_PRODUCT_ABSTRACT_MERCHANT_RELATIONSHIP_RESOURCE_NAME,
             $idProductAbstract,
-            $idCompanyBusinessUnit
+            $idCompanyBusinessUnit,
         );
 
         return $this->findPriceProductTransfers($key);

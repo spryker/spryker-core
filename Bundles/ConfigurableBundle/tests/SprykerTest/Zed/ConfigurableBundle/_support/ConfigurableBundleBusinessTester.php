@@ -165,7 +165,7 @@ class ConfigurableBundleBusinessTester extends Actor
 
         foreach ($configurableBundleTemplateTranslations as $configurableBundleTemplateTranslation) {
             $configurableBundleTemplateTranslationTransfers->append(
-                (new ConfigurableBundleTemplateTranslationTransfer())->fromArray($configurableBundleTemplateTranslation)
+                (new ConfigurableBundleTemplateTranslationTransfer())->fromArray($configurableBundleTemplateTranslation),
             );
         }
 
@@ -184,7 +184,7 @@ class ConfigurableBundleBusinessTester extends Actor
 
         foreach ($configurableBundleTemplateSlotTranslations as $configurableBundleTemplateSlotTranslation) {
             $configurableBundleTemplateSlotTranslationTransfers->append(
-                (new ConfigurableBundleTemplateSlotTranslationTransfer())->fromArray($configurableBundleTemplateSlotTranslation)
+                (new ConfigurableBundleTemplateSlotTranslationTransfer())->fromArray($configurableBundleTemplateSlotTranslation),
             );
         }
 

@@ -24,7 +24,7 @@ class ContentFileFactory extends AbstractFactory
     {
         return new ContentFileListTypeMapper(
             $this->getContentStorageClient(),
-            $this->getContentFileTermExecutorMap()
+            $this->getContentFileTermExecutorMap(),
         );
     }
 

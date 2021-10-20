@@ -58,7 +58,7 @@ class Persistence implements PersistenceInterface
         foreach ($stateMachineHistoryItems as $stateMachineHistoryItemEntity) {
             $stateMachineItemTransfer = $this->createItemTransferForStateHistory(
                 $itemIdentifier,
-                $stateMachineHistoryItemEntity
+                $stateMachineHistoryItemEntity,
             );
 
             $stateMachineItems[] = $stateMachineItemTransfer;
@@ -83,7 +83,7 @@ class Persistence implements PersistenceInterface
 
         $stateMachineProcessEntity = $this->stateMachineQueryContainer
             ->queryProcessByProcessName(
-                $stateMachineProcessTransfer->getProcessName()
+                $stateMachineProcessTransfer->getProcessName(),
             )->findOne();
 
         if ($stateMachineProcessEntity === null) {
@@ -126,7 +126,7 @@ class Persistence implements PersistenceInterface
             $stateMachineItemStateEntity = $this->stateMachineQueryContainer
                 ->queryItemStateByIdProcessAndStateName(
                     $stateMachineItemTransfer->getIdStateMachineProcess(),
-                    $stateName
+                    $stateName,
                 )->findOne();
 
             if ($stateMachineItemStateEntity === null) {
@@ -138,7 +138,7 @@ class Persistence implements PersistenceInterface
         $stateMachineItemTransfer->setIdItemState($stateMachineItemStateEntity->getIdStateMachineItemState());
         $stateMachineItemTransfer->setStateName($stateMachineItemStateEntity->getName());
         $stateMachineItemTransfer->setStateMachineName(
-            $stateMachineItemStateEntity->getProcess()->getStateMachineName()
+            $stateMachineItemStateEntity->getProcess()->getStateMachineName(),
         );
 
         return $stateMachineItemTransfer;
@@ -171,7 +171,7 @@ class Persistence implements PersistenceInterface
 
             $stateMachineItemStateEntity = $this->stateMachineQueryContainer
                 ->queryStateByIdState(
-                    $stateMachineItemTransfer->getIdItemState()
+                    $stateMachineItemTransfer->getIdItemState(),
                 )->findOne();
 
             if ($stateMachineItemStateEntity === null) {
@@ -182,7 +182,7 @@ class Persistence implements PersistenceInterface
 
             $updatedStateMachineItems[] = $stateMachineItemTransfer->fromArray(
                 $updatedStateMachineItemTransfer->modifiedToArray(),
-                true
+                true,
             );
         }
 
@@ -201,7 +201,7 @@ class Persistence implements PersistenceInterface
         $stateMachineItemTransfer->setStateName($stateMachineItemStateEntity->getName());
         $stateMachineItemTransfer->setIdItemState($stateMachineItemStateEntity->getIdStateMachineItemState());
         $stateMachineItemTransfer->setIdStateMachineProcess(
-            $stateMachineProcessEntity->getIdStateMachineProcess()
+            $stateMachineProcessEntity->getIdStateMachineProcess(),
         );
         $stateMachineItemTransfer->setProcessName($stateMachineProcessEntity->getName());
         $stateMachineItemTransfer->setStateMachineName($stateMachineProcessEntity->getStateMachineName());
@@ -224,7 +224,7 @@ class Persistence implements PersistenceInterface
             $updatedStateMachineItemTransfer = $this->getProcessedStateMachineItemTransfer($stateMachineItemTransfer);
             $updatedStateMachineItems[] = $stateMachineItemTransfer->fromArray(
                 $updatedStateMachineItemTransfer->modifiedToArray(),
-                true
+                true,
             );
         }
 
@@ -280,7 +280,7 @@ class Persistence implements PersistenceInterface
             ->queryItemsByIdStateMachineProcessAndItemStates(
                 $stateMachineName,
                 $processName,
-                $states
+                $states,
             )->find();
 
         if ($stateMachineStateItems->count() === 0) {
@@ -305,7 +305,7 @@ class Persistence implements PersistenceInterface
         $stateMachineExpiredItems = $this->stateMachineQueryContainer
             ->queryItemsWithExpiredTimeout(
                 new DateTime('now'),
-                $stateMachineName
+                $stateMachineName,
             )->find();
 
         $expiredStateMachineItemsTransfer = [];
@@ -363,7 +363,7 @@ class Persistence implements PersistenceInterface
         $this->stateMachineQueryContainer
             ->queryEventTimeoutByIdentifierAndFkProcess(
                 $stateMachineItemTransfer->getIdentifier(),
-                $stateMachineItemTransfer->getIdStateMachineProcess()
+                $stateMachineItemTransfer->getIdStateMachineProcess(),
             )->delete();
     }
 

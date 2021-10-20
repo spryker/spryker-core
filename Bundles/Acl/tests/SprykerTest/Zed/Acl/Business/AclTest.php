@@ -704,7 +704,7 @@ class AclTest extends Unit
 
         // Act
         $navigationItemCollectionTransfer = $this->facade->filterNavigationItemCollectionByAccessibility(
-            $navigationItemCollectionTransfer
+            $navigationItemCollectionTransfer,
         );
 
         // Assert
@@ -753,7 +753,7 @@ class AclTest extends Unit
 
         // Act
         $navigationItemCollectionTransfer = $this->facade->filterNavigationItemCollectionByAccessibility(
-            $navigationItemCollectionTransfer
+            $navigationItemCollectionTransfer,
         );
 
         // Assert

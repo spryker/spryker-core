@@ -75,12 +75,12 @@ class ProductListWriter implements ProductListWriterInterface
 
         $productListIds = $this->cleanUpProductLists(
             $productListCollectionTransfer,
-            $merchantRelationshipTransfer->getProductListIds()
+            $merchantRelationshipTransfer->getProductListIds(),
         );
 
         $this->merchantRelationshipProductListEntityManager->assignProductListsToMerchantRelationship(
             $productListIds,
-            $merchantRelationshipTransfer->getIdMerchantRelationship()
+            $merchantRelationshipTransfer->getIdMerchantRelationship(),
         );
 
         return $merchantRelationshipTransfer;
@@ -101,7 +101,7 @@ class ProductListWriter implements ProductListWriterInterface
 
         $this->cleanUpProductLists(
             $productListCollectionTransfer,
-            $merchantRelationshipTransfer->getProductListIds()
+            $merchantRelationshipTransfer->getProductListIds(),
         );
     }
 
@@ -119,7 +119,7 @@ class ProductListWriter implements ProductListWriterInterface
             }
 
             $this->merchantRelationshipProductListEntityManager->clearProductListMerchantRelationship(
-                $productListTransfer->getIdProductList()
+                $productListTransfer->getIdProductList(),
             );
 
             unset($productListIds[$productListTransfer->getIdProductList()]);

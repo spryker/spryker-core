@@ -51,7 +51,7 @@ class ProductBundleCartsRestApiDependencyProvider extends AbstractBundleDependen
     {
         $container->set(static::CLIENT_PRODUCT_BUNDLE, function (Container $container) {
             return new ProductBundleCartsRestApiToProductBundleClientBridge(
-                $container->getLocator()->productBundle()->client()
+                $container->getLocator()->productBundle()->client(),
             );
         });
 
@@ -67,7 +67,7 @@ class ProductBundleCartsRestApiDependencyProvider extends AbstractBundleDependen
     {
         $container->set(static::RESOURCE_CARTS_REST_API, function (Container $container) {
             return new ProductBundleCartsRestApiToCartsRestApiResourceBridge(
-                $container->getLocator()->cartsRestApi()->resource()
+                $container->getLocator()->cartsRestApi()->resource(),
             );
         });
 

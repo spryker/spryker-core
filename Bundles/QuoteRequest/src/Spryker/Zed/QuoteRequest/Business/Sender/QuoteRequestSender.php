@@ -129,7 +129,7 @@ class QuoteRequestSender implements QuoteRequestSenderInterface
         return $this->quoteRequestEntityManager->updateQuoteRequestStatus(
             $quoteRequestTransfer->getQuoteRequestReference(),
             $quoteRequestTransfer->getStatus(),
-            SharedQuoteRequestConfig::STATUS_WAITING
+            SharedQuoteRequestConfig::STATUS_WAITING,
         );
     }
 }

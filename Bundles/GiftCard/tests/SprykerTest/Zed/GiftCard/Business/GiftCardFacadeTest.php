@@ -162,7 +162,7 @@ class GiftCardFacadeTest extends Test
         $this->assertCount(1, $quoteTransfer->getGiftCards());
         $this->assertSame(
             $this->tester::GIFT_CARD_CODE,
-            $resultQuoteTransfer->getGiftCards()[0]->getCode()
+            $resultQuoteTransfer->getGiftCards()[0]->getCode(),
         );
     }
 
@@ -265,11 +265,11 @@ class GiftCardFacadeTest extends Test
         $saveOrderTransfer = $this->tester->haveOrder([], BusinessHelper::DEFAULT_OMS_PROCESS_NAME);
         $oneSalesOrderItemEntity = $this->tester->createSalesOrderItemForOrder(
             $saveOrderTransfer->getIdSalesOrder(),
-            ['name' => 'item 1']
+            ['name' => 'item 1'],
         );
         $twoSalesOrderItemEntity = $this->tester->createSalesOrderItemForOrder(
             $saveOrderTransfer->getIdSalesOrder(),
-            ['name' => 'item 2']
+            ['name' => 'item 2'],
         );
 
         $oneGiftCardItemTransfer = new ItemTransfer();
@@ -378,7 +378,7 @@ class GiftCardFacadeTest extends Test
             GiftCardDependencyProvider::GIFT_CARD_PAYMENT_SAVER_PLUGINS,
             [
                 $giftCardPaymentSaverPluginMock,
-            ]
+            ],
         );
 
         // Act

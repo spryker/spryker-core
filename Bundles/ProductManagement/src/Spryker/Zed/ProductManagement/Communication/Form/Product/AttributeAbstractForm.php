@@ -228,7 +228,7 @@ class AttributeAbstractForm extends AbstractSubForm
                     ->queryFindAttributeByValueOrTranslation(
                         $attributeData->get(AbstractProductFormDataProvider::FORM_FIELD_ID),
                         $idLocale,
-                        $value
+                        $value,
                     )->findOne();
 
                 $input = Select2ComboBoxType::class;
@@ -265,7 +265,7 @@ class AttributeAbstractForm extends AbstractSubForm
         $valueCollection = $this->getQueryContainer()
             ->queryFindAttributeByValueOrTranslation(
                 $attributes[AbstractProductFormDataProvider::FORM_FIELD_ID],
-                $idLocale
+                $idLocale,
             )->find();
 
         if (!$existingValue && isset($attributeValue)) {

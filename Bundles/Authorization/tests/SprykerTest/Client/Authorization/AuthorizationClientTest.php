@@ -37,7 +37,7 @@ class AuthorizationClientTest extends Unit
         // Arrange
         $this->tester->setDependency(
             AuthorizationDependencyProvider::PLUGINS_AUTHORIZATION_STRATEGIES,
-            [$this->getAuthorizationStrategyPluginMock()]
+            [$this->getAuthorizationStrategyPluginMock()],
         );
         $authorizationRequestTransfer = (new AuthorizationRequestTransfer())
             ->setStrategy('test-strategy');
@@ -57,7 +57,7 @@ class AuthorizationClientTest extends Unit
         // Arrange
         $this->tester->setDependency(
             AuthorizationDependencyProvider::PLUGINS_AUTHORIZATION_STRATEGIES,
-            [$this->getAuthorizationStrategyPluginMock(false)]
+            [$this->getAuthorizationStrategyPluginMock(false)],
         );
         $authorizationRequestTransfer = (new AuthorizationRequestTransfer())
             ->setStrategy('test-strategy');

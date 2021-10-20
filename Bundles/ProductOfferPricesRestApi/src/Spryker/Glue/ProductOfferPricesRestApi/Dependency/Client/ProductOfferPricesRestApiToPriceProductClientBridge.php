@@ -37,7 +37,7 @@ class ProductOfferPricesRestApiToPriceProductClientBridge implements ProductOffe
     ): CurrentProductPriceTransfer {
         return $this->priceProductClient->resolveProductPriceTransferByPriceProductFilter(
             $priceProductTransfers,
-            $priceProductFilterTransfer
+            $priceProductFilterTransfer,
         );
     }
 }

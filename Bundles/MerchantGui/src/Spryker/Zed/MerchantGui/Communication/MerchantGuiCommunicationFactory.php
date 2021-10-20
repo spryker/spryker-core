@@ -43,7 +43,7 @@ class MerchantGuiCommunicationFactory extends AbstractCommunicationFactory
             $this->getMerchantTableActionExpanderPlugins(),
             $this->getMerchantTableHeaderExpanderPlugins(),
             $this->getMerchantTableDataExpanderPlugins(),
-            $this->getMerchantTableConfigExpanderPlugins()
+            $this->getMerchantTableConfigExpanderPlugins(),
         );
     }
 
@@ -77,7 +77,7 @@ class MerchantGuiCommunicationFactory extends AbstractCommunicationFactory
         return new MerchantFormDataProvider(
             $this->getMerchantFacade(),
             $this->getConfig(),
-            $this->getLocaleFacade()
+            $this->getLocaleFacade(),
         );
     }
 
@@ -87,7 +87,7 @@ class MerchantGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createMerchantFormTabs(): MerchantFormTabs
     {
         return new MerchantFormTabs(
-            $this->getMerchantFormTabsExpanderPlugins()
+            $this->getMerchantFormTabsExpanderPlugins(),
         );
     }
 

@@ -220,7 +220,7 @@ class SecurityConfiguration implements SecurityBuilderInterface, SecurityConfigu
         if (class_exists(LogoutEvent::class)) {
             throw new SecurityConfigurationException(sprintf(
                 'Adding a logout handler is forbidden, please add an event listener or subscriber. Use a "\Spryker\Shared\EventDispatcherExtension\Dependency\Plugin\EventDispatcherPluginInterface" with the event "%s" to add your logout handling.',
-                LogoutEvent::class
+                LogoutEvent::class,
             ));
         }
 

@@ -74,7 +74,7 @@ class IndexController extends AbstractController
         if ($productAbstractAvailabilityTransfer === null) {
             $this->addErrorMessage(
                 'The product [%d] you are trying to view, does not exist.',
-                ['%d' => $idProductAbstract]
+                ['%d' => $idProductAbstract],
             );
 
             return $this->redirectResponse(static::AVAILABILITY_LIST_URL);
@@ -137,7 +137,7 @@ class IndexController extends AbstractController
         $availabilityAbstractTable = $this->getAvailabilityAbstractTable($idStore);
 
         return $this->jsonResponse(
-            $availabilityAbstractTable->fetchData()
+            $availabilityAbstractTable->fetchData(),
         );
     }
 
@@ -153,7 +153,7 @@ class IndexController extends AbstractController
         $availabilityTable = $this->getAvailabilityTable($idProductAbstract, $idStore);
 
         return $this->jsonResponse(
-            $availabilityTable->fetchData()
+            $availabilityTable->fetchData(),
         );
     }
 
@@ -176,7 +176,7 @@ class IndexController extends AbstractController
         $bundledProductAvailabilityTable = $this->getBundledProductAvailabilityTable($idStore, $idBundleProduct, $idBundleProductAbstract);
 
         return $this->jsonResponse(
-            $bundledProductAvailabilityTable->fetchData()
+            $bundledProductAvailabilityTable->fetchData(),
         );
     }
 
@@ -219,7 +219,7 @@ class IndexController extends AbstractController
         return $this->getFactory()->createAvailabilityTable(
             $idProductAbstract,
             $localeTransfer->getIdLocale(),
-            $idStore
+            $idStore,
         );
     }
 
@@ -239,7 +239,7 @@ class IndexController extends AbstractController
                 $localeTransfer->getIdLocale(),
                 $idStore,
                 $idProductBundle,
-                $idBundleProductAbstract
+                $idBundleProductAbstract,
             );
     }
 

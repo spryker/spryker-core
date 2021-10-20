@@ -41,7 +41,7 @@ class UsageInformationController extends AbstractController
         return new JsonResponse(
             $this->getFactory()
                 ->getUtilEncodingService()
-                ->encodeJson($cmsContentWidgetConfiguration)
+                ->encodeJson($cmsContentWidgetConfiguration),
         );
     }
 }

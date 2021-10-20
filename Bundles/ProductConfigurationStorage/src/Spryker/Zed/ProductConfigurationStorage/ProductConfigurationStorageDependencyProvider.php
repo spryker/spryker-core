@@ -64,7 +64,7 @@ class ProductConfigurationStorageDependencyProvider extends AbstractBundleDepend
     {
         $container->set(static::FACADE_PRODUCT_CONFIGURATION, function (Container $container) {
             return new ProductConfigurationStorageToProductConfigurationFacadeBridge(
-                $container->getLocator()->productConfiguration()->facade()
+                $container->getLocator()->productConfiguration()->facade(),
             );
         });
 
@@ -80,7 +80,7 @@ class ProductConfigurationStorageDependencyProvider extends AbstractBundleDepend
     {
         $container->set(static::FACADE_EVENT_BEHAVIOR, function (Container $container) {
             return new ProductConfigurationStorageToEventBehaviorFacadeBridge(
-                $container->getLocator()->eventBehavior()->facade()
+                $container->getLocator()->eventBehavior()->facade(),
             );
         });
 

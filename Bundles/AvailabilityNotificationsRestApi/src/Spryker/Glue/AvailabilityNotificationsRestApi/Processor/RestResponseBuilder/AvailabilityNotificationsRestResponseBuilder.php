@@ -110,7 +110,7 @@ class AvailabilityNotificationsRestResponseBuilder implements AvailabilityNotifi
 
         return $this->createErrorResponse(
             (new RestErrorMessageTransfer())
-                ->fromArray($restErrorPayload)
+                ->fromArray($restErrorPayload),
         );
     }
 
@@ -126,7 +126,7 @@ class AvailabilityNotificationsRestResponseBuilder implements AvailabilityNotifi
 
         return $this->createErrorResponse(
             (new RestErrorMessageTransfer())
-                ->fromArray($restErrorPayload)
+                ->fromArray($restErrorPayload),
         );
     }
 
@@ -139,7 +139,7 @@ class AvailabilityNotificationsRestResponseBuilder implements AvailabilityNotifi
 
         return $this->createErrorResponse(
             (new RestErrorMessageTransfer())
-                ->fromArray($restErrorPayload)
+                ->fromArray($restErrorPayload),
         );
     }
 
@@ -165,13 +165,13 @@ class AvailabilityNotificationsRestResponseBuilder implements AvailabilityNotifi
             ->availabilityNotificationMapper
             ->mapAvailabilityNotificationSubscriptionTransferToRestAvailabilityNotificationsAttributesTransfer(
                 $availabilityNotificationSubscriptionTransfer,
-                new RestAvailabilityNotificationsAttributesTransfer()
+                new RestAvailabilityNotificationsAttributesTransfer(),
             );
 
         return $this->restResourceBuilder->createRestResource(
             AvailabilityNotificationsRestApiConfig::RESOURCE_AVAILABILITY_NOTIFICATIONS,
             $availabilityNotificationSubscriptionTransfer->getSubscriptionKey(),
-            $restAvailabilityNotificationsAttributesTransfer
+            $restAvailabilityNotificationsAttributesTransfer,
         );
     }
 }

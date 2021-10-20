@@ -102,8 +102,8 @@ class CreateController extends AbstractController
                     '/sales-reclamation-gui/detail',
                     [
                         static::PARAM_ID_RECLAMATION => $reclamationTransfer->getIdSalesReclamation(),
-                    ]
-                )->build()
+                    ],
+                )->build(),
             );
         }
 

@@ -226,7 +226,7 @@ class Reader implements ReaderInterface
         $priceProductFilterTransfer->requireSku();
 
         $priceTypeName = $this->priceProductTypeReader->handleDefaultPriceType(
-            $priceProductFilterTransfer->getPriceTypeName()
+            $priceProductFilterTransfer->getPriceTypeName(),
         );
 
         if (!$this->priceProductTypeReader->hasPriceType($priceTypeName)) {
@@ -316,7 +316,7 @@ class Reader implements ReaderInterface
                 $concretePriceProductTransfers,
                 $abstractKey,
                 $priceProductAbstractTransfer,
-                $priceProductTransfers
+                $priceProductTransfers,
             );
 
             if (!isset($priceProductTransfers[$abstractKey])) {
@@ -371,7 +371,7 @@ class Reader implements ReaderInterface
 
             $priceProductTransfers[$concreteKey] = $this->resolveConcreteProductPrice(
                 $priceProductAbstractTransfer,
-                $priceProductConcreteTransfer
+                $priceProductConcreteTransfer,
             );
         }
 
@@ -539,7 +539,7 @@ class Reader implements ReaderInterface
                 $moneyValueTransfer->getFkCurrency(),
                 $priceTypeTransfer->getName(),
                 $priceTypeTransfer->getPriceModeConfiguration(),
-            ]
+            ],
         );
     }
 
@@ -561,12 +561,12 @@ class Reader implements ReaderInterface
         $concretePricesBySku = $this->findPricesForConcreteProducts($priceProductFilterTransfers);
         $abstractPricesBySku = $this->findPricesForAbstractProducts(
             $this->getProductConcreteSkus($priceProductFilterTransfers),
-            $priceProductFilterTransfers
+            $priceProductFilterTransfers,
         );
 
         return $this->resolveProductPrices(
             $this->mergeIndexedPriceProductTransfers($abstractPricesBySku, $concretePricesBySku),
-            $priceProductFilterTransfers
+            $priceProductFilterTransfers,
         );
     }
 
@@ -583,14 +583,14 @@ class Reader implements ReaderInterface
         foreach ($indexedAbstractPriceProductTransfers as $sku => $abstractPriceProductTransfers) {
             $mergedPriceProductTransfers[$sku] = $this->priceProductService->mergeConcreteAndAbstractPrices(
                 $abstractPriceProductTransfers,
-                $indexedConcretePriceProductTransfers[$sku] ?? []
+                $indexedConcretePriceProductTransfers[$sku] ?? [],
             );
         }
 
         foreach ($indexedConcretePriceProductTransfers as $sku => $concretePriceProductTransfers) {
             $mergedPriceProductTransfers[$sku] = $this->priceProductService->mergeConcreteAndAbstractPrices(
                 $indexedAbstractPriceProductTransfers[$sku] ?? [],
-                $concretePriceProductTransfers
+                $concretePriceProductTransfers,
             );
         }
 
@@ -615,7 +615,7 @@ class Reader implements ReaderInterface
             $resolvedItemPrice = $this->resolveProductPriceByPriceProductCriteria(
                 $priceProductFilterTransfer->getIdentifierOrFail(),
                 $priceProductTransfers,
-                $priceProductCriteriaTransfer
+                $priceProductCriteriaTransfer,
             );
 
             if ($resolvedItemPrice) {
@@ -644,7 +644,7 @@ class Reader implements ReaderInterface
             /** @var \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer */
             $priceProductTransfer = $this->priceProductService->resolveProductPriceByPriceProductCriteria(
                 $priceProductTransfers[$priceProductCriteriaIdentifier],
-                $priceProductCriteriaTransfer
+                $priceProductCriteriaTransfer,
             );
             static::$resolvedPriceProductTransferCollection[$priceProductCriteriaIdentifier] = $priceProductTransfer;
         }
@@ -682,7 +682,7 @@ class Reader implements ReaderInterface
 
         $concretePriceProductTransfers = $this->priceProductConcreteReader->getProductConcretePricesByConcreteSkusAndCriteria(
             $productConcreteSkus,
-            $priceProductCriteriaTransfer
+            $priceProductCriteriaTransfer,
         );
 
         return $this->groupPriceProductTransfersByFilter($priceProductFilterTransfers, $concretePriceProductTransfers);
@@ -701,7 +701,7 @@ class Reader implements ReaderInterface
 
         $priceProductTransfers = $this->priceProductAbstractReader->getProductAbstractPricesByConcreteSkusAndCriteria(
             $productConcreteSkus,
-            $priceProductCriteriaTransfer
+            $priceProductCriteriaTransfer,
         );
 
         return $this->groupPriceProductTransfersByFilter($priceProductFilterTransfers, $priceProductTransfers);
@@ -722,7 +722,7 @@ class Reader implements ReaderInterface
             $priceProductFilterIdentifier = $priceProductFilterTransfer->getIdentifierOrFail();
             $priceProductTransfersGroupedByFilterIdentifier[$priceProductFilterIdentifier] = $this->priceProductService->resolveProductPricesByPriceProductFilter(
                 $priceProductTransfers,
-                $priceProductFilterTransfer
+                $priceProductFilterTransfer,
             );
         }
 
@@ -786,7 +786,7 @@ class Reader implements ReaderInterface
         $filteredPriceProductFilterTransfers = [];
         foreach ($priceProductFilterTransfers as $priceProductFilterTransfer) {
             $priceTypeName = $this->priceProductTypeReader->handleDefaultPriceType(
-                $priceProductFilterTransfer->getPriceTypeName()
+                $priceProductFilterTransfer->getPriceTypeName(),
             );
             if ($this->priceProductTypeReader->hasPriceType($priceTypeName)) {
                 $filteredPriceProductFilterTransfers[] = $priceProductFilterTransfer;
@@ -805,7 +805,7 @@ class Reader implements ReaderInterface
     {
         $priceProductFilterIdentifierTransfer = (new PriceProductFilterIdentifierTransfer())->fromArray(
             $priceProductFilterTransfer->toArray(),
-            true
+            true,
         );
         $priceProductFilterIdentifierTransfer->setQuantity((int)$priceProductFilterTransfer->getQuantity());
 
@@ -824,7 +824,7 @@ class Reader implements ReaderInterface
         }
 
         return $priceProductFilterTransfer->setIdentifier(
-            $this->buildPriceProductFilterIdentifier($priceProductFilterTransfer)
+            $this->buildPriceProductFilterIdentifier($priceProductFilterTransfer),
         );
     }
 }

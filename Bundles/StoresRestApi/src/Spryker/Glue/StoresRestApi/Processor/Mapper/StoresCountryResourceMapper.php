@@ -21,7 +21,7 @@ class StoresCountryResourceMapper implements StoresCountryResourceMapperInterfac
     {
         $storesCountryAttributes = (new StoreCountryRestAttributesTransfer())->fromArray(
             $countryTransfer->toArray(true),
-            true
+            true,
         );
 
         return $storesCountryAttributes;

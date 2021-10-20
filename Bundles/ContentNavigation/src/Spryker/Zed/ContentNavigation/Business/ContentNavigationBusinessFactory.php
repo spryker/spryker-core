@@ -30,7 +30,7 @@ class ContentNavigationBusinessFactory extends AbstractBusinessFactory
     {
         return new ContentNavigationValidator(
             $this->getValidationAdapter(),
-            $this->createContentNavigationConstraintsProvider()
+            $this->createContentNavigationConstraintsProvider(),
         );
     }
 

@@ -45,7 +45,7 @@ class UserCommunicationFactory extends AbstractCommunicationFactory
         return new UsersTable(
             $this->getQueryContainer(),
             $this->getProvidedDependency(UserDependencyProvider::SERVICE_DATE_FORMATTER),
-            $this->createUserTablePluginExecutor()
+            $this->createUserTablePluginExecutor(),
         );
     }
 
@@ -57,7 +57,7 @@ class UserCommunicationFactory extends AbstractCommunicationFactory
         return new UserTablePluginExecutor(
             $this->getUserTableActionExpanderPlugins(),
             $this->getUserTableConfigExpanderPlugins(),
-            $this->getUserTableDataExpanderPlugins()
+            $this->getUserTableDataExpanderPlugins(),
         );
     }
 

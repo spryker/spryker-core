@@ -29,7 +29,7 @@ class SalesReturnSearchFactory extends AbstractFactory
             $this->getSearchClient(),
             $this->getReturnReasonSearchQueryPlugin(),
             $this->getReturnReasonSearchQueryExpanderPlugins(),
-            $this->getReturnReasonSearchResultFormatterPlugins()
+            $this->getReturnReasonSearchResultFormatterPlugins(),
         );
     }
 
@@ -40,7 +40,7 @@ class SalesReturnSearchFactory extends AbstractFactory
     {
         $returnReasonSearchPaginationConfigBuilder = new ReturnReasonSearchPaginationConfigBuilder();
         $returnReasonSearchPaginationConfigBuilder->setPaginationConfigTransfer(
-            $this->getConfig()->getReturnReasonSearchPaginationConfigTransfer()
+            $this->getConfig()->getReturnReasonSearchPaginationConfigTransfer(),
         );
 
         return $returnReasonSearchPaginationConfigBuilder;

@@ -64,7 +64,7 @@ class ReturnCreateBundleForm extends AbstractType
                     ProductBundleReturnCreateFormDataProvider::OPTION_RETURN_REASONS => $options[ProductBundleReturnCreateFormDataProvider::OPTION_RETURN_REASONS],
                 ],
                 'label' => false,
-            ]
+            ],
         );
 
         return $this;

@@ -37,7 +37,7 @@ class ProductConfiguratorCheckSumResponseValidatorComposite implements ProductCo
         foreach ($this->productConfiguratorResponseValidators as $productConfiguratorResponseValidator) {
             $productConfiguratorResponseProcessorResponseTransfer = $productConfiguratorResponseValidator->validateProductConfiguratorCheckSumResponse(
                 $productConfiguratorResponseProcessorResponseTransfer,
-                $configuratorResponseData
+                $configuratorResponseData,
             );
 
             if (!$productConfiguratorResponseProcessorResponseTransfer->getIsSuccessful()) {

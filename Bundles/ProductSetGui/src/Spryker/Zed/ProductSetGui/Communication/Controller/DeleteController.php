@@ -51,7 +51,7 @@ class DeleteController extends AbstractController
         ]);
 
         return $this->redirectResponse(
-            Url::generate('/product-set-gui')->build()
+            Url::generate('/product-set-gui')->build(),
         );
     }
 }

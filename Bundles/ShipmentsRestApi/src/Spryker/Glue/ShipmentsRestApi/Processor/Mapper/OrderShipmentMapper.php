@@ -26,12 +26,12 @@ class OrderShipmentMapper implements OrderShipmentMapperInterface
     ): RestOrderDetailsAttributesTransfer {
         $restOrderDetailsAttributesTransfer = $this->expandRestOrderDetailsAttributesTransferWithItemShipmentId(
             $orderTransfer,
-            $restOrderDetailsAttributesTransfer
+            $restOrderDetailsAttributesTransfer,
         );
 
         $restOrderDetailsAttributesTransfer = $this->expandRestOrderDetailsAttributesTransferWithExpenseShipmentId(
             $orderTransfer,
-            $restOrderDetailsAttributesTransfer
+            $restOrderDetailsAttributesTransfer,
         );
 
         return $restOrderDetailsAttributesTransfer;

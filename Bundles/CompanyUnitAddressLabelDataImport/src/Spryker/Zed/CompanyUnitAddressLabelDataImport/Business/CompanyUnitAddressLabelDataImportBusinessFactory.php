@@ -39,7 +39,7 @@ class CompanyUnitAddressLabelDataImportBusinessFactory extends DataImportBusines
     public function createCompanyUnitAddressLabelRelationDataImport()
     {
         $dataImporter = $this->getCsvDataImporterFromConfig(
-            $this->getConfig()->getCompanyUnitAddressLabelRelationDataImporterConfiguration()
+            $this->getConfig()->getCompanyUnitAddressLabelRelationDataImporterConfiguration(),
         );
 
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();

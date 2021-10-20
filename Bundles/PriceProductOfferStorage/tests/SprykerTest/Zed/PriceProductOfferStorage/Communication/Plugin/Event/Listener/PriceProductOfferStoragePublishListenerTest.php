@@ -93,7 +93,7 @@ class PriceProductOfferStoragePublishListenerTest extends Unit
         //Act
         $this->priceProductOfferStoragePublishListener->handleBulk(
             $eventTransfers,
-            PriceProductOfferEvents::ENTITY_SPY_PRICE_PRODUCT_OFFER_PUBLISH
+            PriceProductOfferEvents::ENTITY_SPY_PRICE_PRODUCT_OFFER_PUBLISH,
         );
 
         $countPriceProductOfferStorageEntities = $this->tester->getCountPriceProductOfferStorageCount($this->productConcreteTransfer->getIdProductConcrete());

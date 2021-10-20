@@ -41,7 +41,7 @@ class ResourceShareValidator implements ResourceShareValidatorInterface
             return $resourceShareResponseTransfer
                 ->setIsSuccessful(false)
                 ->addMessage(
-                    (new MessageTransfer())->setValue(static::GLOSSARY_KEY_RESOURCE_TYPE_IS_NOT_DEFINED)
+                    (new MessageTransfer())->setValue(static::GLOSSARY_KEY_RESOURCE_TYPE_IS_NOT_DEFINED),
                 );
         }
 
@@ -49,7 +49,7 @@ class ResourceShareValidator implements ResourceShareValidatorInterface
             return $resourceShareResponseTransfer
                 ->setIsSuccessful(false)
                 ->addMessage(
-                    (new MessageTransfer())->setValue(static::GLOSSARY_KEY_CUSTOMER_REFERENCE_IS_NOT_DEFINED)
+                    (new MessageTransfer())->setValue(static::GLOSSARY_KEY_CUSTOMER_REFERENCE_IS_NOT_DEFINED),
                 );
         }
 
@@ -57,7 +57,7 @@ class ResourceShareValidator implements ResourceShareValidatorInterface
             return $resourceShareResponseTransfer
                 ->setIsSuccessful(false)
                 ->addMessage(
-                    (new MessageTransfer())->setValue(static::GLOSSARY_KEY_RESOURCE_SHARE_IS_EXPIRED)
+                    (new MessageTransfer())->setValue(static::GLOSSARY_KEY_RESOURCE_SHARE_IS_EXPIRED),
                 );
         }
 

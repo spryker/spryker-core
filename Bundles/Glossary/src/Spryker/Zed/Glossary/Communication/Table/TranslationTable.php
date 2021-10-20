@@ -174,7 +174,7 @@ class TranslationTable extends AbstractTable
             Url::generate(self::URL_GLOSSARY_EDIT, [
                 EditController::URL_PARAMETER_GLOSSARY_KEY => $idGlossaryKey,
             ]),
-            'Edit'
+            'Edit',
         );
 
         return $urls;

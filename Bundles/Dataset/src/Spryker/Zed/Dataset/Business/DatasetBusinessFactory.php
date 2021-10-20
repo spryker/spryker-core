@@ -35,7 +35,7 @@ class DatasetBusinessFactory extends AbstractBusinessFactory
     {
         return new DatasetFinder(
             $this->getRepository(),
-            $this->getEntityManager()
+            $this->getEntityManager(),
         );
     }
 
@@ -46,7 +46,7 @@ class DatasetBusinessFactory extends AbstractBusinessFactory
     {
         return new DatasetSaver(
             $this->getEntityManager(),
-            $this->createReader()
+            $this->createReader(),
         );
     }
 

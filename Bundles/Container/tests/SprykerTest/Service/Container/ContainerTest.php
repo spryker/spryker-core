@@ -382,7 +382,7 @@ class ContainerTest extends Unit
         //Assert
         $this->assertSame(
             [static::SERVICE_PROPERTY_1 => true, static::SERVICE_PROPERTY_2 => true],
-            $container->get(static::SERVICE)
+            $container->get(static::SERVICE),
         );
     }
 
@@ -407,7 +407,7 @@ class ContainerTest extends Unit
         //Assert
         $this->assertSame(
             [static::SERVICE_PROPERTY_1 => true, static::SERVICE_PROPERTY_2 => true],
-            $container->get(static::SERVICE)
+            $container->get(static::SERVICE),
         );
     }
 

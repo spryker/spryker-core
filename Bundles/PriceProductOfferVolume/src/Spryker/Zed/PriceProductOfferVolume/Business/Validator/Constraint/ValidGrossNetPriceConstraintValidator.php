@@ -52,7 +52,7 @@ class ValidGrossNetPriceConstraintValidator extends ConstraintValidator
             $pathPrefix = sprintf(
                 '[%s:%s]',
                 PriceProductTransfer::MONEY_VALUE,
-                mb_strtolower($priceTypeName)
+                mb_strtolower($priceTypeName),
             );
 
             $this->context->buildViolation($constraint->getMessage())

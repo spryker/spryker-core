@@ -80,7 +80,7 @@ class ProductBundleGrouper implements ProductBundleGrouperInterface
                     $groupedBundleItems,
                     $bundleItemTransfer,
                     $groupedBundleQuantity,
-                    $bundleGroupKey
+                    $bundleGroupKey,
                 );
 
                 $currentBundleItemTransfer = $this->getBundleProduct($groupedBundleItems, $bundleGroupKey);
@@ -91,7 +91,7 @@ class ProductBundleGrouper implements ProductBundleGrouperInterface
                 $groupedBundleItems[$bundleGroupKey][static::BUNDLE_ITEMS] = $this->groupBundledItems(
                     $groupedBundleItems,
                     $itemTransfer,
-                    $bundleGroupKey
+                    $bundleGroupKey,
                 );
             }
         }
@@ -100,7 +100,7 @@ class ProductBundleGrouper implements ProductBundleGrouperInterface
 
         return array_merge(
             $singleItems,
-            $groupedBundleItems
+            $groupedBundleItems,
         );
     }
 
@@ -154,7 +154,7 @@ class ProductBundleGrouper implements ProductBundleGrouperInterface
             $options,
             function (ProductOptionTransfer $productOptionLeft, ProductOptionTransfer $productOptionRight) {
                 return ($productOptionLeft->getSku() < $productOptionRight->getSku()) ? -1 : 1;
-            }
+            },
         );
 
         return $options;
@@ -249,7 +249,7 @@ class ProductBundleGrouper implements ProductBundleGrouperInterface
         } else {
             $currentBundleItemTransfer = $currentBundledItems[$currentBundleIdentifer];
             $currentBundleItemTransfer->setQuantity(
-                $currentBundleItemTransfer->getQuantity() + $bundledItemTransfer->getQuantity()
+                $currentBundleItemTransfer->getQuantity() + $bundledItemTransfer->getQuantity(),
             );
         }
 
@@ -316,11 +316,11 @@ class ProductBundleGrouper implements ProductBundleGrouperInterface
                 }
 
                 $groupedBundleItemTransfer->setUnitSubtotalAggregation(
-                    $groupedBundleItemTransfer->getUnitSubtotalAggregation() + $bundleItemTransfer->getUnitSubtotalAggregation()
+                    $groupedBundleItemTransfer->getUnitSubtotalAggregation() + $bundleItemTransfer->getUnitSubtotalAggregation(),
                 );
 
                 $groupedBundleItemTransfer->setSumSubtotalAggregation(
-                    $groupedBundleItemTransfer->getSumSubtotalAggregation() + $bundleItemTransfer->getSumSubtotalAggregation()
+                    $groupedBundleItemTransfer->getSumSubtotalAggregation() + $bundleItemTransfer->getSumSubtotalAggregation(),
                 );
             }
         }

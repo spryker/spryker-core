@@ -53,7 +53,7 @@ class SalesInvoiceRepository extends AbstractRepository implements SalesInvoiceR
             $orderInvoiceCollectionTransfer->addOrderInvoice(
                 (new OrderInvoiceTransfer())
                     ->fromArray($orderInvoiceEntity->toArray(), true)
-                    ->setIdSalesOrder($orderInvoiceEntity->getFkSalesOrder())
+                    ->setIdSalesOrder($orderInvoiceEntity->getFkSalesOrder()),
             );
         }
 
@@ -72,13 +72,13 @@ class SalesInvoiceRepository extends AbstractRepository implements SalesInvoiceR
     ): void {
         if ($orderInvoiceCriteriaTransfer->getSalesOrderIds()) {
             $salesOrderInvoiceQuery->filterByFkSalesOrder_In(
-                $orderInvoiceCriteriaTransfer->getSalesOrderIds()
+                $orderInvoiceCriteriaTransfer->getSalesOrderIds(),
             );
         }
 
         if ($orderInvoiceCriteriaTransfer->getIsEmailSent() !== null) {
             $salesOrderInvoiceQuery->filterByEmailSent(
-                $orderInvoiceCriteriaTransfer->getIsEmailSent()
+                $orderInvoiceCriteriaTransfer->getIsEmailSent(),
             );
         }
     }

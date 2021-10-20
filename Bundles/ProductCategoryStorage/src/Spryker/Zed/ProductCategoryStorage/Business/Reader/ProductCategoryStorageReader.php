@@ -71,7 +71,7 @@ class ProductCategoryStorageReader implements ProductCategoryStorageReaderInterf
             $categoryNodeAggregationTransfers = $this->extractCategoryNodeAggregationsFromCategoryTree(
                 $nodeTransfer,
                 $storeName,
-                $localeName
+                $localeName,
             );
 
             $productCategoryTransfers[] = $this->buildProductCategoryStorageTransfers($categoryNodeAggregationTransfers);

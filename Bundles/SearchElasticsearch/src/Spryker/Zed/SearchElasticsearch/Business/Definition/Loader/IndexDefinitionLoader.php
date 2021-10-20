@@ -61,7 +61,7 @@ class IndexDefinitionLoader implements IndexDefinitionLoaderInterface
 
             $indexDefinition = $this->buildIndexDefinition(
                 $sourceIdentifier,
-                $schemaDefinitionFile
+                $schemaDefinitionFile,
             );
 
             if ($this->sourceIdentifier->isPrefixedWithStoreName($sourceIdentifier)) {

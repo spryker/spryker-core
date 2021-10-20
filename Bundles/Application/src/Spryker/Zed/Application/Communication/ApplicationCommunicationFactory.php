@@ -111,7 +111,7 @@ class ApplicationCommunicationFactory extends AbstractCommunicationFactory
     public function createKernelLogListener()
     {
         return new KernelLogListener(
-            $this->getLogger()
+            $this->getLogger(),
         );
     }
 
@@ -143,7 +143,7 @@ class ApplicationCommunicationFactory extends AbstractCommunicationFactory
         return new TwigFunction(
             $functionProvider->getFunctionName(),
             $functionProvider->getFunction(),
-            $functionProvider->getOptions()
+            $functionProvider->getOptions(),
         );
     }
 }

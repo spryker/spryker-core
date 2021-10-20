@@ -34,7 +34,7 @@ class ValidationResponseTranslator implements ValidationResponseTranslatorInterf
     {
         foreach ($validationResponseTransfer->getValidationErrors() as $validationErrorTransfer) {
             $validationErrorTransfer->setMessage(
-                $this->translatorFacade->trans($validationErrorTransfer->getMessageOrFail())
+                $this->translatorFacade->trans($validationErrorTransfer->getMessageOrFail()),
             );
         }
 

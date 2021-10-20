@@ -263,7 +263,7 @@ class QuoteApprovalRequestValidator implements QuoteApprovalRequestValidatorInte
         $quoteApprovalResponseTransfer = new QuoteApprovalResponseTransfer();
         $quoteApprovalResponseTransfer->setIsSuccessful(false);
         $quoteApprovalResponseTransfer->addMessage(
-            (new MessageTransfer())->setValue($message)
+            (new MessageTransfer())->setValue($message),
         );
 
         return $quoteApprovalResponseTransfer;
@@ -291,7 +291,7 @@ class QuoteApprovalRequestValidator implements QuoteApprovalRequestValidatorInte
         $quoteResponseTransfer->requireQuoteTransfer();
         $quoteTransfer = $quoteResponseTransfer->getQuoteTransfer();
         $quoteTransfer->setCustomer(
-            (new CustomerTransfer())->setCustomerReference($quoteTransfer->getCustomerReference())
+            (new CustomerTransfer())->setCustomerReference($quoteTransfer->getCustomerReference()),
         );
 
         return $quoteTransfer;
@@ -305,7 +305,7 @@ class QuoteApprovalRequestValidator implements QuoteApprovalRequestValidatorInte
     protected function isRemoveRequestSentByApprover(QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer): bool
     {
         $quoteApprovalTransfer = $this->quoteApprovalRepository->findQuoteApprovalById(
-            $quoteApprovalRequestTransfer->getIdQuoteApproval()
+            $quoteApprovalRequestTransfer->getIdQuoteApproval(),
         );
 
         return $quoteApprovalTransfer->getApproverCompanyUserId() === $quoteApprovalRequestTransfer->getRequesterCompanyUserId();
@@ -335,7 +335,7 @@ class QuoteApprovalRequestValidator implements QuoteApprovalRequestValidatorInte
         return $this->can(
             ApproveQuotePermissionPlugin::KEY,
             $idCompanyUser,
-            $this->permissionContextProvider->provideContext($quoteTransfer)
+            $this->permissionContextProvider->provideContext($quoteTransfer),
         );
     }
 
@@ -412,7 +412,7 @@ class QuoteApprovalRequestValidator implements QuoteApprovalRequestValidatorInte
 
         return $this->mergeQuotes(
             $quoteApprovalRequestTransfer->getQuote(),
-            $quoteTransfer
+            $quoteTransfer,
         );
     }
 }

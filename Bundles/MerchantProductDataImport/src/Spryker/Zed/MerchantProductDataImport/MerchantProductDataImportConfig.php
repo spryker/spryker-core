@@ -28,7 +28,7 @@ class MerchantProductDataImportConfig extends DataImportConfig
 
         return $this->buildImporterConfiguration(
             $moduleDataImportDirectory . 'merchant_product.csv',
-            static::IMPORT_TYPE_MERCHANT_PRODUCT
+            static::IMPORT_TYPE_MERCHANT_PRODUCT,
         );
     }
 
@@ -42,7 +42,7 @@ class MerchantProductDataImportConfig extends DataImportConfig
             . DIRECTORY_SEPARATOR . '..'
             . DIRECTORY_SEPARATOR . '..'
             . DIRECTORY_SEPARATOR . '..'
-            . DIRECTORY_SEPARATOR . '..'
+            . DIRECTORY_SEPARATOR . '..',
         );
 
         return $moduleRoot . DIRECTORY_SEPARATOR;

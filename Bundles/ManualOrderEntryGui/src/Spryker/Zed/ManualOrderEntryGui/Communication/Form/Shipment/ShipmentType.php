@@ -46,7 +46,7 @@ class ShipmentType extends AbstractType
     {
         $this->addStoreField(
             $builder,
-            $options[static::OPTION_SHIPMENT_METHODS_ARRAY]
+            $options[static::OPTION_SHIPMENT_METHODS_ARRAY],
         );
     }
 

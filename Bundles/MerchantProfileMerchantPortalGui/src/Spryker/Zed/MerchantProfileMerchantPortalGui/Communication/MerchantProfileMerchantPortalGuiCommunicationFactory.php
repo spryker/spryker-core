@@ -49,7 +49,7 @@ class MerchantProfileMerchantPortalGuiCommunicationFactory extends AbstractCommu
             $this->getConfig(),
             $this->getMerchantFacade(),
             $this->getGlossaryFacade(),
-            $this->getLocaleFacade()
+            $this->getLocaleFacade(),
         );
     }
 

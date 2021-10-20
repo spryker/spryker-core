@@ -35,7 +35,7 @@ class ProductConfigurationStorageEntityManager extends AbstractEntityManager imp
         $productConfigurationStorageEntity = $this->getFactory()->createProductConfigurationStorageMapper()
             ->mapProductConfigurationStorageTransferToProductConfigurationStorageEntity(
                 $productConfigurationStorageEntity,
-                $productConfigurationStorageTransfer
+                $productConfigurationStorageTransfer,
             );
 
         $productConfigurationStorageEntity->save();
@@ -43,7 +43,7 @@ class ProductConfigurationStorageEntityManager extends AbstractEntityManager imp
         return $this->getFactory()->createProductConfigurationStorageMapper()
             ->mapProductConfigurationStorageEntityToProductConfigurationStorageTransfer(
                 $productConfigurationStorageEntity,
-                new ProductConfigurationStorageTransfer()
+                new ProductConfigurationStorageTransfer(),
             );
     }
 

@@ -94,7 +94,7 @@ class ElasticsearchCopyIndexConsole extends Console
         return sprintf(
             'Search index "%s" is successfully copied to search index "%s".',
             $input->getArgument(static::ARGUMENT_SOURCE_INDEX_NAME),
-            $input->getArgument(static::ARGUMENT_TARGET_INDEX_NAME)
+            $input->getArgument(static::ARGUMENT_TARGET_INDEX_NAME),
         );
     }
 
@@ -108,7 +108,7 @@ class ElasticsearchCopyIndexConsole extends Console
         return sprintf(
             'Could not copy search index "%s" to search index "%s".',
             $input->getArgument(static::ARGUMENT_SOURCE_INDEX_NAME),
-            $input->getArgument(static::ARGUMENT_TARGET_INDEX_NAME)
+            $input->getArgument(static::ARGUMENT_TARGET_INDEX_NAME),
         );
     }
 

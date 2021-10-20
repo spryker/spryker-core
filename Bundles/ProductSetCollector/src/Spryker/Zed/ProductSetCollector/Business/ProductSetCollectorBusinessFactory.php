@@ -30,7 +30,7 @@ class ProductSetCollectorBusinessFactory extends AbstractBusinessFactory
     {
         $storageProductSetCollector = new ProductSetStorageCollector(
             $this->getUtilDataReaderService(),
-            $this->createStorageProductImageReader()
+            $this->createStorageProductImageReader(),
         );
 
         $storageProductSetCollector->setTouchQueryContainer($this->getTouchQueryContainer());
@@ -47,7 +47,7 @@ class ProductSetCollectorBusinessFactory extends AbstractBusinessFactory
         $storageProductSetCollector = new ProductSetSearchCollector(
             $this->getUtilDataReaderService(),
             $this->createProductSetPageMapBuilder(),
-            $this->getSearchFacade()
+            $this->getSearchFacade(),
         );
 
         $storageProductSetCollector->setTouchQueryContainer($this->getTouchQueryContainer());
@@ -135,7 +135,7 @@ class ProductSetCollectorBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductSetCollectorRunner(
             $this->createSearchProductSetCollector(),
-            $this->getCollectorFacade()
+            $this->getCollectorFacade(),
         );
     }
 
@@ -146,7 +146,7 @@ class ProductSetCollectorBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductSetCollectorRunner(
             $this->createStorageProductSetCollector(),
-            $this->getCollectorFacade()
+            $this->getCollectorFacade(),
         );
     }
 }

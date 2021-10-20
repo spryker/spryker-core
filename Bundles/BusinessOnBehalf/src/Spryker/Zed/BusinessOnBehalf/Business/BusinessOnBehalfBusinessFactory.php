@@ -41,7 +41,7 @@ class BusinessOnBehalfBusinessFactory extends AbstractBusinessFactory
     {
         return new CompanyUserReader(
             $this->getRepository(),
-            $this->getCompanyUserFacade()
+            $this->getCompanyUserFacade(),
         );
     }
 
@@ -51,7 +51,7 @@ class BusinessOnBehalfBusinessFactory extends AbstractBusinessFactory
     public function createCompanyUserWriter(): CompanyUserWriterInterface
     {
         return new CompanyUserWriter(
-            $this->getEntityManager()
+            $this->getEntityManager(),
         );
     }
 
@@ -62,7 +62,7 @@ class BusinessOnBehalfBusinessFactory extends AbstractBusinessFactory
     {
         return new CustomerHydrator(
             $this->getRepository(),
-            $this->getCompanyUserFacade()
+            $this->getCompanyUserFacade(),
         );
     }
 

@@ -47,7 +47,7 @@ class SalesMerchantPortalGuiCommunicationFactory extends AbstractCommunicationFa
             $this->getStoreFacade(),
             $this->getMerchantOmsFacade(),
             $this->getMerchantUserFacade(),
-            $this->getGuiTableFactory()
+            $this->getGuiTableFactory(),
         );
     }
 
@@ -61,7 +61,7 @@ class SalesMerchantPortalGuiCommunicationFactory extends AbstractCommunicationFa
             $this->getMerchantUserFacade(),
             $this->getGuiTableFactory(),
             $this->getTranslatorFacade(),
-            $this->getMerchantOrderItemTableExpanderPlugins()
+            $this->getMerchantOrderItemTableExpanderPlugins(),
         );
     }
 
@@ -74,7 +74,7 @@ class SalesMerchantPortalGuiCommunicationFactory extends AbstractCommunicationFa
             $this->getRepository(),
             $this->getMerchantUserFacade(),
             $this->getCurrencyFacade(),
-            $this->getMoneyFacade()
+            $this->getMoneyFacade(),
         );
     }
 
@@ -91,7 +91,7 @@ class SalesMerchantPortalGuiCommunicationFactory extends AbstractCommunicationFa
             $this->getMerchantOmsFacade(),
             $this->getSalesFacade(),
             $merchantOrderItemIds,
-            $this->getMerchantOrderItemTableExpanderPlugins()
+            $this->getMerchantOrderItemTableExpanderPlugins(),
         );
     }
 
@@ -105,7 +105,7 @@ class SalesMerchantPortalGuiCommunicationFactory extends AbstractCommunicationFa
             $this->getMerchantUserFacade(),
             $this->getRouterFacade(),
             $this->getConfig(),
-            $this->getTwigEnvironment()
+            $this->getTwigEnvironment(),
         );
     }
 

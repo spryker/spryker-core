@@ -133,7 +133,7 @@ class ProductAttributeDependencyProvider extends AbstractBundleDependencyProvide
     {
         $container->set(static::SERVICE_UTIL_SANITIZE_XSS, function (Container $container) {
             return new ProductAttributeToUtilSanitizeXssServiceBridge(
-                $container->getLocator()->utilSanitizeXss()->service()
+                $container->getLocator()->utilSanitizeXss()->service(),
             );
         });
 

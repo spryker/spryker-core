@@ -75,7 +75,7 @@ class ProductConfigurationTableDataExpander implements ProductConfigurationTable
         $item[static::COL_PRODUCT_TYPES] = sprintf(
             '%s, %s',
             $item[static::COL_PRODUCT_TYPES],
-            static::CONFIGURABLE_PRODUCT_TYPE
+            static::CONFIGURABLE_PRODUCT_TYPE,
         );
 
         return $item;

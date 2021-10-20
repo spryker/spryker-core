@@ -106,7 +106,7 @@ class FormApplicationPlugin extends AbstractPlugin implements ApplicationPluginI
     {
         return new CsrfTokenManager(
             null,
-            $this->createTokenStorage($container)
+            $this->createTokenStorage($container),
         );
     }
 

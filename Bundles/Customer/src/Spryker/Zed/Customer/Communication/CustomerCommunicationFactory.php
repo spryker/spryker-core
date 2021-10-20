@@ -39,7 +39,7 @@ class CustomerCommunicationFactory extends AbstractCommunicationFactory
         return new CustomerTable(
             $this->getQueryContainer(),
             $this->getUtilDateTimeService(),
-            $this->createCustomerTableActionPluginExecutor()
+            $this->createCustomerTableActionPluginExecutor(),
         );
     }
 
@@ -118,7 +118,7 @@ class CustomerCommunicationFactory extends AbstractCommunicationFactory
         return new AddressFormDataProvider(
             $this->getProvidedDependency(CustomerDependencyProvider::FACADE_COUNTRY),
             $this->getQueryContainer(),
-            $this->getStore()
+            $this->getStore(),
         );
     }
 
@@ -196,7 +196,7 @@ class CustomerCommunicationFactory extends AbstractCommunicationFactory
     public function createCustomerTableActionPluginExecutor(): CustomerTableExpanderPluginExecutorInterface
     {
         return new CustomerTableExpanderPluginExecutor(
-            $this->getCustomerTableActionExpanderPlugins()
+            $this->getCustomerTableActionExpanderPlugins(),
         );
     }
 }

@@ -31,7 +31,7 @@ class ProductSetController extends AbstractController
         $idProductSet = $request->query->getInt(static::PARAM_ID) ?: null;
 
         return $this->jsonResponse(
-            $this->getFactory()->createProductSetSelectedTable($idProductSet)->fetchData()
+            $this->getFactory()->createProductSetSelectedTable($idProductSet)->fetchData(),
         );
     }
 
@@ -43,7 +43,7 @@ class ProductSetController extends AbstractController
     public function productSetViewTableAction(Request $request): JsonResponse
     {
         return $this->jsonResponse(
-            $this->getFactory()->createProductSetViewTable()->fetchData()
+            $this->getFactory()->createProductSetViewTable()->fetchData(),
         );
     }
 }

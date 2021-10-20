@@ -46,12 +46,12 @@ class GiftCardRestResponseBuilder implements GiftCardRestResponseBuilderInterfac
             $giftCardRestResource = $this->restResourceBuilder->createRestResource(
                 GiftCardsRestApiConfig::RESOURCE_GIFT_CARDS,
                 $giftCardCode,
-                $restGiftCardsAttributesTransfer
+                $restGiftCardsAttributesTransfer,
             );
 
             $giftCardRestResource->addLink(
                 RestLinkInterface::LINK_SELF,
-                $this->getGiftCardsResourceSelfLink($parentResourceType, $parentResourceId, $giftCardCode)
+                $this->getGiftCardsResourceSelfLink($parentResourceType, $parentResourceId, $giftCardCode),
             );
 
             $giftCardResources[] = $giftCardRestResource;
@@ -77,7 +77,7 @@ class GiftCardRestResponseBuilder implements GiftCardRestResponseBuilderInterfac
             $parentResourceType,
             $parentResourceId,
             GiftCardsRestApiConfig::RESOURCE_CART_CODES,
-            $giftCardCode
+            $giftCardCode,
         );
     }
 }

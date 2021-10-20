@@ -91,7 +91,7 @@ class CompanyBusinessUnitDataImportBusinessFactory extends DataImportBusinessFac
     public function createParentBusinessUnitKeyToIdCompanyBusinessUnitStep()
     {
         return new ParentBusinessUnitKeyToIdCompanyBusinessUnitStep(
-            $this->getRepository()
+            $this->getRepository(),
         );
     }
 
@@ -101,7 +101,7 @@ class CompanyBusinessUnitDataImportBusinessFactory extends DataImportBusinessFac
     public function createCompanyBusinessUnitUserWriterStep(): CompanyBusinessUnitUserWriterStep
     {
         return new CompanyBusinessUnitUserWriterStep(
-            $this->getRepository()
+            $this->getRepository(),
         );
     }
 
@@ -111,7 +111,7 @@ class CompanyBusinessUnitDataImportBusinessFactory extends DataImportBusinessFac
     public function createBusinessUnitKeyToAddressKeyStep(): BusinessUnitKeyToAddressKeyStep
     {
         return new BusinessUnitKeyToAddressKeyStep(
-            $this->getRepository()
+            $this->getRepository(),
         );
     }
 }

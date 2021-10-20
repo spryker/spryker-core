@@ -70,7 +70,7 @@ class SwitchDefaultCartByResourceShare implements SwitchDefaultCartByResourceSha
                 ->setIsSuccessful(false)
                 ->addMessage(
                     (new MessageTransfer())
-                        ->setValue(static::GLOSSARY_KEY_QUOTE_IS_NOT_AVAILABLE)
+                        ->setValue(static::GLOSSARY_KEY_QUOTE_IS_NOT_AVAILABLE),
                 );
         }
 

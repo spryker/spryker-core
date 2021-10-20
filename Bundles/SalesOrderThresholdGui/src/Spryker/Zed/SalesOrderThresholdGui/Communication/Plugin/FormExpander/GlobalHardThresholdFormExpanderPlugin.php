@@ -101,7 +101,7 @@ class GlobalHardThresholdFormExpanderPlugin extends AbstractPlugin implements Sa
         $salesOrderThresholdValueTransfer->setSalesOrderThresholdType(
             (new SalesOrderThresholdTypeTransfer())
                 ->setKey($this->getThresholdKey())
-                ->setThresholdGroup($this->getThresholdGroup())
+                ->setThresholdGroup($this->getThresholdGroup()),
         );
 
         return $salesOrderThresholdValueTransfer;

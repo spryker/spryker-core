@@ -109,7 +109,7 @@ class ProductOfferWriter implements ProductOfferWriterInterface
             return (new ProductOfferResponseTransfer())
                 ->setIsSuccessful(false)
                 ->addError(
-                    (new ProductOfferErrorTransfer())->setMessage(static::ERROR_MESSAGE_PRODUCT_OFFER_NOT_FOUND)
+                    (new ProductOfferErrorTransfer())->setMessage(static::ERROR_MESSAGE_PRODUCT_OFFER_NOT_FOUND),
                 );
         }
 
@@ -135,7 +135,7 @@ class ProductOfferWriter implements ProductOfferWriterInterface
         if (!$productOfferTransfer->getProductOfferReference()) {
             $productOfferTransfer->setProductOfferReference(
                 $this->productOfferReferenceGenerator
-                    ->generateProductOfferReferenceById($productOfferTransfer->getIdProductOffer())
+                    ->generateProductOfferReferenceById($productOfferTransfer->getIdProductOffer()),
             );
         }
         $productOfferTransfer = $this->productOfferEntityManager->updateProductOffer($productOfferTransfer);
@@ -171,21 +171,21 @@ class ProductOfferWriter implements ProductOfferWriterInterface
         $productOfferTransfer->requireIdProductOffer();
 
         $persistedProductOfferStoreTransfers = $this->indexStoreTransfersByIdStore(
-            $this->productOfferRepository->getProductOfferStores($productOfferTransfer->getIdProductOffer())
+            $this->productOfferRepository->getProductOfferStores($productOfferTransfer->getIdProductOffer()),
         );
         $productOfferStoreTransfers = $this->indexStoreTransfersByIdStore($productOfferTransfer->getStores()->getArrayCopy());
 
         $this->productOfferEntityManager->deleteProductOfferStores(
             $productOfferTransfer->getIdProductOffer(),
-            array_keys(array_diff_key($persistedProductOfferStoreTransfers, $productOfferStoreTransfers))
+            array_keys(array_diff_key($persistedProductOfferStoreTransfers, $productOfferStoreTransfers)),
         );
 
         $this->productOfferEntityManager->createProductOfferStores(
             (new ProductOfferTransfer())
                 ->setStores(new ArrayObject(
-                    array_diff_key($productOfferStoreTransfers, $persistedProductOfferStoreTransfers)
+                    array_diff_key($productOfferStoreTransfers, $persistedProductOfferStoreTransfers),
                 ))
-                ->setIdProductOffer($productOfferTransfer->getIdProductOffer())
+                ->setIdProductOffer($productOfferTransfer->getIdProductOffer()),
         );
 
         return $productOfferTransfer;

@@ -75,7 +75,7 @@ class ProductOptionValueExpander implements ProductOptionValueExpanderInterface
 
             $productOptionTransfer = $this->productOptionFacade->getProductOptionValueById(
                 $productOptionTransfer->getIdProductOptionValue(),
-                $currencyCode
+                $currencyCode,
             );
 
             $this->sanitizePrices($productOptionTransfer, $priceMode);

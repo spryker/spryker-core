@@ -56,7 +56,7 @@ class PluginUsageFinderConsole extends Console
     public function execute(InputInterface $input, OutputInterface $output)
     {
         $dependencyProviderCollectionTransfer = $this->getFacade()->getInProjectDependencyProviderUsedPlugins(
-            $this->buildModuleFilterTransfer()
+            $this->buildModuleFilterTransfer(),
         );
 
         $this->printDependencyProviderPluginUsageList($dependencyProviderCollectionTransfer);

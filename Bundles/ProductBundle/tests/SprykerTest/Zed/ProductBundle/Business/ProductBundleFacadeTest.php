@@ -157,7 +157,7 @@ class ProductBundleFacadeTest extends Unit
         foreach ($productConcreteBundleTransfer->getProductBundle()->getBundledProducts() as $bundledProduct) {
             //Act
             $productBundleCollection = $this->getProductBundleFacade()->getProductBundleCollectionByCriteriaFilter(
-                (new ProductBundleCriteriaFilterTransfer())->setIdBundledProduct($bundledProduct->getIdProductConcrete())
+                (new ProductBundleCriteriaFilterTransfer())->setIdBundledProduct($bundledProduct->getIdProductConcrete()),
             );
 
             /** @var \Generated\Shared\Transfer\ProductBundleTransfer $productBundleTransfer */
@@ -193,7 +193,7 @@ class ProductBundleFacadeTest extends Unit
 
         $this->assertSame(
             $groupKeyBefore . ProductBundleCartItemGroupKeyExpander::GROUP_KEY_DELIMITER . $itemTransfer->getRelatedBundleItemIdentifier() . '1',
-            $itemTransfer->getGroupKey()
+            $itemTransfer->getGroupKey(),
         );
     }
 
@@ -402,7 +402,7 @@ class ProductBundleFacadeTest extends Unit
             [
                 $productConcreteTransferToAssign1,
                 $productConcreteTransferToAssign2,
-            ]
+            ],
         );
 
         $storeTransfer = (new StoreTransfer())->setIdStore(static::ID_STORE);
@@ -416,7 +416,7 @@ class ProductBundleFacadeTest extends Unit
         $bundledProductAvailability = $this->createAvailabilityFacade()
             ->findOrCreateProductConcreteAvailabilityBySkuForStore(
                 static::BUNDLE_SKU_3,
-                $storeTransfer
+                $storeTransfer,
             );
 
         // Assert
@@ -493,7 +493,7 @@ class ProductBundleFacadeTest extends Unit
         // Act
         $bundledProducts = $this->getProductBundleFacade()
             ->findBundledProductsByIdProductConcrete(
-                $productConcreteBundleTransfer->getIdProductConcrete()
+                $productConcreteBundleTransfer->getIdProductConcrete(),
             );
 
         $this->assertCount(2, $bundledProducts);

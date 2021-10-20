@@ -43,7 +43,7 @@ class CurrencyDecisionRulePlugin extends AbstractPlugin implements DecisionRuleP
             ->isCurrencyDecisionRuleSatisfiedBy(
                 $quoteTransfer,
                 $itemTransfer,
-                $clauseTransfer
+                $clauseTransfer,
             );
     }
 

@@ -28,7 +28,7 @@ class RelatedProductsRestApiFactory extends AbstractFactory
             $this->getProductStorageClient(),
             $this->getProductRelationStorageClient(),
             $this->createRelatedProductRestResponseBuilder(),
-            $this->getStoreClient()
+            $this->getStoreClient(),
         );
     }
 
@@ -39,7 +39,7 @@ class RelatedProductsRestApiFactory extends AbstractFactory
     {
         return new RelatedProductRestResponseBuilder(
             $this->getProductsRestApiResource(),
-            $this->getResourceBuilder()
+            $this->getResourceBuilder(),
         );
     }
 

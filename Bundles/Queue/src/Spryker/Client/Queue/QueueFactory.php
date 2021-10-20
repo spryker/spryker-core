@@ -29,7 +29,7 @@ class QueueFactory extends AbstractFactory
             static::$queueProxy = new QueueProxy(
                 $this->getQueueAdapters(),
                 $this->getConfig()->getQueueAdapterConfiguration(),
-                $this->getConfig()->getDefaultQueueAdapterConfiguration()
+                $this->getConfig()->getDefaultQueueAdapterConfiguration(),
             );
         }
 

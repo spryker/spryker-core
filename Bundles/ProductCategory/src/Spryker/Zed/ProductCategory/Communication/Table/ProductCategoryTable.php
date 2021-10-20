@@ -148,7 +148,7 @@ class ProductCategoryTable extends AbstractTable
         return sprintf(
             "<input id='product_category_checkbox_%d' class='product_category_checkbox' type='checkbox' checked='checked' data-info='%s'>",
             $productCategory['id_product_abstract'],
-            $this->utilEncodingService->encodeJson($info)
+            $this->utilEncodingService->encodeJson($info),
         );
     }
 
@@ -167,7 +167,7 @@ class ProductCategoryTable extends AbstractTable
             "<input type='text' value='%d' id='product_category_order_%d' class='product_category_order' size='4' data-info='%s'>",
             $productCategory['product_order'],
             $productCategory['id_product_abstract'],
-            $this->utilEncodingService->encodeJson($info)
+            $this->utilEncodingService->encodeJson($info),
         );
     }
 }

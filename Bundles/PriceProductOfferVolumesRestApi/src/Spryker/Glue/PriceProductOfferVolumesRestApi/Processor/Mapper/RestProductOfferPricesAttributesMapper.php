@@ -73,7 +73,7 @@ class RestProductOfferPricesAttributesMapper implements RestProductOfferPricesAt
         foreach ($restProductOfferPricesAttributesTransfer->getPrices() as $restProductOfferPriceAttributesTransfer) {
             $restProductPriceVolumesAttributesTransfers = $this->getRestProductPriceVolumesAttributesTransfers(
                 $currentProductPriceTransfer,
-                $restProductOfferPriceAttributesTransfer->getPriceTypeNameOrFail()
+                $restProductOfferPriceAttributesTransfer->getPriceTypeNameOrFail(),
             );
 
             $restProductOfferPriceAttributesTransfer->setVolumePrices($restProductPriceVolumesAttributesTransfers);
@@ -101,7 +101,7 @@ class RestProductOfferPricesAttributesMapper implements RestProductOfferPricesAt
 
         return $this->mapVolumePricesDataToRestProductPriceVolumesAttributesTransfers(
             $volumePricesData,
-            $restProductPriceVolumesAttributesTransfers
+            $restProductPriceVolumesAttributesTransfers,
         );
     }
 
@@ -142,7 +142,7 @@ class RestProductOfferPricesAttributesMapper implements RestProductOfferPricesAt
         foreach ($volumePricesData as $volumePriceData) {
             $restProductPriceVolumesAttributesTransfer = $this->mapVolumePriceDataToRestProductPriceVolumesAttributes(
                 $volumePriceData,
-                new RestProductPriceVolumesAttributesTransfer()
+                new RestProductPriceVolumesAttributesTransfer(),
             );
 
             $restProductPriceVolumesAttributesTransfers->append($restProductPriceVolumesAttributesTransfer);

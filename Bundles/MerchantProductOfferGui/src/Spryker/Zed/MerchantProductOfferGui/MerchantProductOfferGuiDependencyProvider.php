@@ -71,7 +71,7 @@ class MerchantProductOfferGuiDependencyProvider extends AbstractBundleDependency
     {
         $container->set(static::FACADE_MERCHANT, function (Container $container) {
             return new MerchantProductOfferGuiToMerchantFacadeBridge(
-                $container->getLocator()->merchant()->facade()
+                $container->getLocator()->merchant()->facade(),
             );
         });
 

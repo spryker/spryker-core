@@ -128,7 +128,7 @@ class AclMerchantPortalFacadeTest extends Unit
         parent::setUp();
         $this->tester->setDependency(
             AclEntityDependencyProvider::PLUGINS_ACL_ENTITY_METADATA_COLLECTION_EXPANDER,
-            [new MerchantPortalAclEntityMetadataConfigExpanderPlugin()]
+            [new MerchantPortalAclEntityMetadataConfigExpanderPlugin()],
         );
     }
 
@@ -148,7 +148,7 @@ class AclMerchantPortalFacadeTest extends Unit
         $this->assertCount(1, $merchantResponseTransfer->getErrors());
         $this->assertSame(
             static::ERROR_MESSAGE_MERCHANT_REFERENCE,
-            $merchantResponseTransfer->getErrors()->getIterator()->current()->getMessage()
+            $merchantResponseTransfer->getErrors()->getIterator()->current()->getMessage(),
         );
     }
 
@@ -168,7 +168,7 @@ class AclMerchantPortalFacadeTest extends Unit
         $this->assertCount(1, $merchantResponseTransfer->getErrors());
         $this->assertSame(
             static::ERROR_MESSAGE_MERCHANT_NAME,
-            $merchantResponseTransfer->getErrors()->getIterator()->current()->getMessage()
+            $merchantResponseTransfer->getErrors()->getIterator()->current()->getMessage(),
         );
     }
 
@@ -224,7 +224,7 @@ class AclMerchantPortalFacadeTest extends Unit
         // Act
         $aclEntityMetadataConfigTransfer = $this->tester->getAclEntityMetadataConfigTransfer();
         $aclEntityMetadataConfigTransfer = $this->tester->getFacade()->expandAclEntityMetadataConfig(
-            $aclEntityMetadataConfigTransfer
+            $aclEntityMetadataConfigTransfer,
         );
 
         $aclEntityMetadataCollectionTransfer = $aclEntityMetadataConfigTransfer->getAclEntityMetadataCollection();

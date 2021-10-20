@@ -210,7 +210,7 @@ class DataImportConsole extends Console
     {
         if (!$this->checkImportTypeAndGroupConfiguration($input)) {
             $this->error(
-                sprintf('No import group (except "%s") can be used when an import type is specified', DataImportConfig::IMPORT_GROUP_FULL)
+                sprintf('No import group (except "%s") can be used when an import type is specified', DataImportConfig::IMPORT_GROUP_FULL),
             );
 
             return static::CODE_ERROR;
@@ -255,7 +255,7 @@ class DataImportConsole extends Console
         $this->warning(sprintf(
             'Using a data import without config specified is deprecated. ' .
             'Please, define default configuration yaml file in %s or pass it with --config option',
-            DataImportConfig::class
+            DataImportConfig::class,
         ));
 
         $this->info(sprintf('<fg=white>Start "<fg=green>%s</>" import</>', $importerType));
@@ -376,7 +376,7 @@ class DataImportConsole extends Console
             $dataImporterReport->getExpectedImportableDataSetCount(),
             $dataImporterReport->getImportedDataSetCount(),
             $dataImporterReport->getImportTime(),
-            $this->getImportStatusByDataImportReportStatus($dataImporterReport)
+            $this->getImportStatusByDataImportReportStatus($dataImporterReport),
         ));
     }
 

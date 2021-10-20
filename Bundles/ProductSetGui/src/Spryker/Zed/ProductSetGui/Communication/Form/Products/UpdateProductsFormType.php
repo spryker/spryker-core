@@ -57,7 +57,7 @@ class UpdateProductsFormType extends AbstractType
 
         $builder->addEventListener(
             FormEvents::SUBMIT,
-            [$this, 'onSubmit']
+            [$this, 'onSubmit'],
         );
     }
 
@@ -134,7 +134,7 @@ class UpdateProductsFormType extends AbstractType
                 },
                 function ($productAbstractIds = '{}') {
                     return $this->getFactory()->getUtilEncodingService()->decodeJson($productAbstractIds, true);
-                }
+                },
             ));
 
         return $this;
@@ -214,7 +214,7 @@ class UpdateProductsFormType extends AbstractType
             },
             function ($productAbstractIds = '') {
                 return $productAbstractIds ? explode(',', $productAbstractIds) : [];
-            }
+            },
         );
     }
 }

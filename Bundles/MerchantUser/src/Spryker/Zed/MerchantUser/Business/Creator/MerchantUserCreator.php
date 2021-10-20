@@ -101,7 +101,7 @@ class MerchantUserCreator implements MerchantUserCreatorInterface
         $merchantUserTransfer->setIdUser($userTransfer->getIdUser())->setUser($userTransfer);
         $multipleMerchantCheckResponse = $this->checkForMultipleMerchant(
             $merchantUserTransfer,
-            $merchantUserResponseTransfer
+            $merchantUserResponseTransfer,
         );
 
         if (!$multipleMerchantCheckResponse->getIsSuccessful()) {
@@ -146,7 +146,7 @@ class MerchantUserCreator implements MerchantUserCreatorInterface
     protected function hasUserAnotherMerchant(MerchantUserTransfer $merchantUserTransfer): bool
     {
         $existingMerchantUserTransfer = $this->merchantUserRepository->findOne(
-            (new MerchantUserCriteriaTransfer())->setIdUser($merchantUserTransfer->getIdUser())
+            (new MerchantUserCriteriaTransfer())->setIdUser($merchantUserTransfer->getIdUser()),
         );
 
         if (!$existingMerchantUserTransfer) {
@@ -168,7 +168,7 @@ class MerchantUserCreator implements MerchantUserCreatorInterface
 
         if (!$existingUserTransfer) {
             $userTransfer->setPassword(
-                $this->utilTextService->generateRandomByteString(static::USER_CREATION_DEFAULT_PASSWORD_LENGTH)
+                $this->utilTextService->generateRandomByteString(static::USER_CREATION_DEFAULT_PASSWORD_LENGTH),
             )->setStatus($this->merchantUserConfig->getUserCreationStatus());
 
             return $this->userFacade->createUser($userTransfer);

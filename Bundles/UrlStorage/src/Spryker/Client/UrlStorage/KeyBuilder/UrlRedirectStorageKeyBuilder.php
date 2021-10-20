@@ -66,7 +66,7 @@ class UrlRedirectStorageKeyBuilder implements UrlRedirectStorageKeyBuilderInterf
                 '%s.%s.resource.redirect.%s',
                 strtolower($this->storeClient->getCurrentStore()->getName()),
                 strtolower($this->localeClient->getCurrentLocale()),
-                $idRedirectUrl
+                $idRedirectUrl,
             );
         }
 

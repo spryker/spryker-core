@@ -93,7 +93,7 @@ class ConfigurableBundleStorageReader implements ConfigurableBundleStorageReader
         string $localeName
     ): ?ConfigurableBundleTemplateStorageTransfer {
         $mappingData = $this->storageClient->get(
-            $this->generateKey(static::MAPPING_TYPE_UUID . static::MAPPING_DELIMITER . $configurableBundleTemplateUuid)
+            $this->generateKey(static::MAPPING_TYPE_UUID . static::MAPPING_DELIMITER . $configurableBundleTemplateUuid),
         );
 
         if (!$mappingData) {
@@ -124,7 +124,7 @@ class ConfigurableBundleStorageReader implements ConfigurableBundleStorageReader
 
         return $this->configurableBundleTemplateImageStorageExpander->expandConfigurableBundleTemplatesStorageWithImageSets(
             $configurableBundleTemplateStorageTransfers,
-            $configurableBundleTemplateStorageFilterTransfer->getLocaleName()
+            $configurableBundleTemplateStorageFilterTransfer->getLocaleName(),
         );
     }
 
@@ -137,7 +137,7 @@ class ConfigurableBundleStorageReader implements ConfigurableBundleStorageReader
     protected function findStorageData(string $key, string $localeName): ?ConfigurableBundleTemplateStorageTransfer
     {
         $configurableBundleTemplateStorageTransferData = $this->storageClient->get(
-            $this->generateKey($key)
+            $this->generateKey($key),
         );
 
         if (!$configurableBundleTemplateStorageTransferData) {
@@ -212,7 +212,7 @@ class ConfigurableBundleStorageReader implements ConfigurableBundleStorageReader
 
         foreach ($configurableBundleTemplateStorageData as $configurableBundleTemplateStorageTransferData) {
             $configurableBundleTemplateStorageTransfers[] = $this->mapToConfigurableBundleStorage(
-                $this->utilEncodingService->decodeJson($configurableBundleTemplateStorageTransferData, true) ?? []
+                $this->utilEncodingService->decodeJson($configurableBundleTemplateStorageTransferData, true) ?? [],
             );
         }
 

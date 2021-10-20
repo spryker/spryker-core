@@ -234,7 +234,7 @@ class CodeTester
             $commandLine,
             $this->argumentBuilder
                 ->build($options)
-                ->getArguments()
+                ->getArguments(),
         );
 
         if ($options[static::OPTION_DRY_RUN]) {
@@ -270,7 +270,7 @@ class CodeTester
             $commandLine,
             $this->argumentBuilder
                 ->build($options)
-                ->getArguments()
+                ->getArguments(),
         );
 
         $process = new Process($commandLine, $this->config->getPathToRoot(), null, null, $this->config->getProcessTimeout());

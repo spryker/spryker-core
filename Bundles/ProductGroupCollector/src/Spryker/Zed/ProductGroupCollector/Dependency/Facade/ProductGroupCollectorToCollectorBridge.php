@@ -61,7 +61,7 @@ class ProductGroupCollectorToCollectorBridge implements ProductGroupCollectorToC
             $dataReader,
             $dataWriter,
             $touchUpdater,
-            $output
+            $output,
         );
     }
 }

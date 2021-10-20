@@ -33,7 +33,7 @@ class SharedCartDataImportConfig extends DataImportConfig
 
         return $this->buildImporterConfiguration(
             $moduleDataImportDirectory . static::FILE_NAME,
-            static::IMPORT_TYPE_SHARED_CART
+            static::IMPORT_TYPE_SHARED_CART,
         );
     }
 
@@ -47,7 +47,7 @@ class SharedCartDataImportConfig extends DataImportConfig
             . DIRECTORY_SEPARATOR . '..'
             . DIRECTORY_SEPARATOR . '..'
             . DIRECTORY_SEPARATOR . '..'
-            . DIRECTORY_SEPARATOR . '..'
+            . DIRECTORY_SEPARATOR . '..',
         );
 
         return $moduleRoot . DIRECTORY_SEPARATOR;

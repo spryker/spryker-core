@@ -28,7 +28,7 @@ class CmsPageConditionConstraintValidator extends ConstraintValidator
             throw new InvalidArgumentException(sprintf(
                 'Expected constraint instance of %s, got %s instead.',
                 CmsPageConditionConstraint::class,
-                get_class($constraint)
+                get_class($constraint),
             ));
         }
 

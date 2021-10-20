@@ -39,7 +39,7 @@ class PriceProductMerchantRelationshipStorageDimensionPlugin extends AbstractPlu
             ->createPriceProductMerchantRelationshipConcreteReader()
             ->findPriceMerchantRelationshipConcrete(
                 $idProductConcrete,
-                $idBusinessUnitFromCurrentCustomer
+                $idBusinessUnitFromCurrentCustomer,
             );
     }
 
@@ -66,7 +66,7 @@ class PriceProductMerchantRelationshipStorageDimensionPlugin extends AbstractPlu
             ->createPriceProductMerchantRelationshipAbstractReader()
             ->findProductAbstractPrices(
                 $idProductAbstract,
-                $idBusinessUnitFromCurrentCustomer
+                $idBusinessUnitFromCurrentCustomer,
             );
     }
 

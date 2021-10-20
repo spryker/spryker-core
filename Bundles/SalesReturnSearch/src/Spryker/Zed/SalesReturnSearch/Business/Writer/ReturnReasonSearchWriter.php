@@ -97,7 +97,7 @@ class ReturnReasonSearchWriter implements ReturnReasonSearchWriterInterface
         }
 
         $returnReasonCollectionTransfer = $this->salesReturnFacade->getReturnReasons(
-            (new ReturnReasonFilterTransfer())->setReturnReasonIds($returnReasonIds)
+            (new ReturnReasonFilterTransfer())->setReturnReasonIds($returnReasonIds),
         );
 
         if (!$returnReasonCollectionTransfer->getReturnReasons()->count()) {
@@ -110,13 +110,13 @@ class ReturnReasonSearchWriter implements ReturnReasonSearchWriterInterface
         $returnReasonTranslations = $this->glossaryReader->getReturnReasonTranslations($returnReasonTransfers);
 
         $returnReasonSearchTransfers = $this->indexReturnReasonSearchTransfersByIdReturnReasonAndLocaleName(
-            $this->repository->getReturnReasonSearchTransfersByReturnReasonIds($returnReasonIds)
+            $this->repository->getReturnReasonSearchTransfersByReturnReasonIds($returnReasonIds),
         );
 
         $this->writeCollection(
             $returnReasonTransfers,
             $returnReasonSearchTransfers,
-            $returnReasonTranslations
+            $returnReasonTranslations,
         );
     }
 
@@ -139,7 +139,7 @@ class ReturnReasonSearchWriter implements ReturnReasonSearchWriterInterface
                 $returnReasonTransfer,
                 $returnReasonSearchTransfers,
                 $returnReasonTranslations,
-                $localeTransfers
+                $localeTransfers,
             );
         }
     }
@@ -168,7 +168,7 @@ class ReturnReasonSearchWriter implements ReturnReasonSearchWriterInterface
                 $returnReasonTransfer,
                 $returnReasonSearchTransfer,
                 $localeTransfer,
-                $returnReasonTranslations
+                $returnReasonTranslations,
             );
 
             $this->entityManager->saveReturnReasonSearch($returnReasonSearchTransfer);

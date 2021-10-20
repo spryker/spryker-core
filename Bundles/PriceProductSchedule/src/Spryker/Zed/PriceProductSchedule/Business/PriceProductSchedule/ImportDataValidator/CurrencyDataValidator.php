@@ -46,7 +46,7 @@ class CurrencyDataValidator extends AbstractImportDataValidator
         return $this->createPriceProductScheduleListImportErrorTransfer(
             $priceProductScheduleImportTransfer,
             static::ERROR_MESSAGE_CURRENCY_NOT_FOUND,
-            ['%isoCode%' => $priceProductScheduleImportTransfer->getCurrencyCode()]
+            ['%isoCode%' => $priceProductScheduleImportTransfer->getCurrencyCode()],
         );
     }
 

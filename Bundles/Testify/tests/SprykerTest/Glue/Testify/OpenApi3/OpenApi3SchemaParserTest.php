@@ -39,23 +39,23 @@ class OpenApi3SchemaParserTest extends Unit
 
         $this->assertSame(
             ['name'],
-            $document->paths['/pets']->post->responses[200]->content['application/json']->schema->allOf[0]->required->toArray()
+            $document->paths['/pets']->post->responses[200]->content['application/json']->schema->allOf[0]->required->toArray(),
         );
         $this->assertSame(
             'string',
-            $document->paths['/pets']->post->responses[200]->content['application/json']->schema->allOf[0]->properties['name']->type
+            $document->paths['/pets']->post->responses[200]->content['application/json']->schema->allOf[0]->properties['name']->type,
         );
         $this->assertSame(
             ['id'],
-            $document->paths['/pets']->post->responses[200]->content['application/json']->schema->allOf[1]->required->toArray()
+            $document->paths['/pets']->post->responses[200]->content['application/json']->schema->allOf[1]->required->toArray(),
         );
         $this->assertSame(
             'integer',
-            $document->paths['/pets']->post->responses[200]->content['application/json']->schema->allOf[1]->properties['id']->type
+            $document->paths['/pets']->post->responses[200]->content['application/json']->schema->allOf[1]->properties['id']->type,
         );
         $this->assertSame(
             'string',
-            $document->paths['/pets']->get->parameters[0]->schema->items->type
+            $document->paths['/pets']->get->parameters[0]->schema->items->type,
         );
     }
 }

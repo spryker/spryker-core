@@ -65,7 +65,7 @@ class ReturnReader implements ReturnReaderInterface
 
         return $this->restReturnResponseBuilder->createReturnListRestResponse(
             $returnFilterTransfer,
-            $returnCollectionTransfer
+            $returnCollectionTransfer,
         );
     }
 

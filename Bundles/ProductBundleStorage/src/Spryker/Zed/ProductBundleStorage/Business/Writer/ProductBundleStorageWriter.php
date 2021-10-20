@@ -102,7 +102,7 @@ class ProductBundleStorageWriter implements ProductBundleStorageWriterInterface
 
         $productConcreteBundleIds = array_merge(
             $this->getProductConcreteBundleIds($productConcreteIds),
-            $productConcreteIds
+            $productConcreteIds,
         );
 
         $this->writeCollection($productConcreteBundleIds);

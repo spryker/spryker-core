@@ -62,7 +62,7 @@ class ContentProductSetDataImportPluginTest extends Unit
     {
         // Arrange
         $dataImportConfigurationTransfer = $this->createConfigurationTransfer(
-            'import/content_product_set.csv'
+            'import/content_product_set.csv',
         );
 
         // Act
@@ -83,7 +83,7 @@ class ContentProductSetDataImportPluginTest extends Unit
     {
         // Arrange
         $dataImportConfigurationTransfer = $this->createConfigurationTransfer(
-            'import/content_product_set_wrong_key.csv'
+            'import/content_product_set_wrong_key.csv',
         )->setThrowException(true);
 
         // Assert
@@ -113,7 +113,7 @@ class ContentProductSetDataImportPluginTest extends Unit
         // Arrange
         $this->setProductSetQueryReturn(2);
         $dataImportConfigurationTransfer = $this->createConfigurationTransfer(
-            'import/content_product_set(update).csv'
+            'import/content_product_set(update).csv',
         );
 
         // Act
@@ -135,7 +135,7 @@ class ContentProductSetDataImportPluginTest extends Unit
         // Arrange
         $this->setProductSetQueryReturn(1);
         $dataImportConfigurationTransfer = $this->createConfigurationTransfer(
-            'import/content_product_set(update_locale_from_default).csv'
+            'import/content_product_set(update_locale_from_default).csv',
         );
 
         // Act
@@ -157,7 +157,7 @@ class ContentProductSetDataImportPluginTest extends Unit
         // Arrange
         $this->setProductSetQueryReturn(3);
         $dataImportConfigurationTransfer = $this->createConfigurationTransfer(
-            'import/content_product_set(update_locale_to_default).csv'
+            'import/content_product_set(update_locale_to_default).csv',
         );
 
         // Act

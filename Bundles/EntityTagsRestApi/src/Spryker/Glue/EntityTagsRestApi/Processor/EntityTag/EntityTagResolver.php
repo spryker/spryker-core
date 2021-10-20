@@ -50,7 +50,7 @@ class EntityTagResolver implements EntityTagResolverInterface
         return $this->entityTagClient->write(
             $restResource->getType(),
             $restResource->getId(),
-            $restResource->getAttributes()->toArray()
+            $restResource->getAttributes()->toArray(),
         );
     }
 }

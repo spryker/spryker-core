@@ -43,7 +43,7 @@ class SalesOrderItemMapper implements SalesOrderItemMapperInterface
         foreach ($salesOrderItemEntities as $salesOrderItemEntity) {
             $productMeasurementSalesUnitTransfer = $this->mapSalesOrderItemEntityToProductMeasurementSalesUnitTransfer(
                 $salesOrderItemEntity,
-                new ProductMeasurementSalesUnitTransfer()
+                new ProductMeasurementSalesUnitTransfer(),
             );
 
             $mappedProductMeasurementSalesUnitTransfers[$salesOrderItemEntity->getIdSalesOrderItem()] = $productMeasurementSalesUnitTransfer;
@@ -71,7 +71,7 @@ class SalesOrderItemMapper implements SalesOrderItemMapperInterface
 
         $productMeasurementUnitTransfer = $this->createProductMeasurementUnitTransfer(
             $salesOrderItemEntity->getQuantityMeasurementUnitName(),
-            $salesOrderItemEntity->getQuantityMeasurementUnitCode()
+            $salesOrderItemEntity->getQuantityMeasurementUnitCode(),
         );
         $productMeasurementSalesUnitTransfer->setProductMeasurementUnit($productMeasurementUnitTransfer);
 

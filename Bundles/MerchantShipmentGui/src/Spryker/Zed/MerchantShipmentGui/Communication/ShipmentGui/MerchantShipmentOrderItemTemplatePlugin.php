@@ -56,12 +56,12 @@ class MerchantShipmentOrderItemTemplatePlugin extends AbstractPlugin implements 
             function (ItemTransfer $itemTransfer) {
                 return $itemTransfer->getMerchantReference();
             },
-            $itemTransfers->getArrayCopy()
+            $itemTransfers->getArrayCopy(),
         );
         $merchantReferences = array_unique(array_filter($merchantReferences));
 
         $merchantCollectionTransfer = $this->getFactory()->getMerchantFacade()->get(
-            (new MerchantCriteriaTransfer())->setMerchantReferences($merchantReferences)
+            (new MerchantCriteriaTransfer())->setMerchantReferences($merchantReferences),
         );
 
         foreach ($merchantCollectionTransfer->getMerchants() as $merchantTransfer) {

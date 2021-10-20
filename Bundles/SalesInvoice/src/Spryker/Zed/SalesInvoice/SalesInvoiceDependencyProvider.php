@@ -91,7 +91,7 @@ class SalesInvoiceDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::FACADE_SEQUENCE_NUMBER, function (Container $container) {
             return new SalesInvoiceToSequenceNumberFacadeBridge(
-                $container->getLocator()->sequenceNumber()->facade()
+                $container->getLocator()->sequenceNumber()->facade(),
             );
         });
 
@@ -139,7 +139,7 @@ class SalesInvoiceDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::FACADE_MAIL, function (Container $container) {
             return new SalesInvoiceToMailFacadeBridge(
-                $container->getLocator()->mail()->facade()
+                $container->getLocator()->mail()->facade(),
             );
         });
 
@@ -155,7 +155,7 @@ class SalesInvoiceDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::FACADE_SALES, function (Container $container) {
             return new SalesInvoiceToSalesFacadeBridge(
-                $container->getLocator()->sales()->facade()
+                $container->getLocator()->sales()->facade(),
             );
         });
 

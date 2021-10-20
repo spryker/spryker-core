@@ -117,7 +117,7 @@ class QueueHelper extends AbstractHelper
                     'rabbitmq' => $rabbitMqConsumerOptionTransfer,
                 ],
             ],
-            'Queue'
+            'Queue',
         );
     }
 
@@ -168,7 +168,7 @@ class QueueHelper extends AbstractHelper
 
         $this->assertEmpty($unhandledMessages, $this->format(sprintf(
             '<fg=yellow>Something is wrong in the queue message processing. All received messages must be handled. One place to debug is <fg=green>%s::processMessages()</>.',
-            QueueMessageProcessorInterface::class
+            QueueMessageProcessorInterface::class,
         )));
     }
 
@@ -219,7 +219,7 @@ class QueueHelper extends AbstractHelper
         $this->getClientHelper()->mockFactoryMethod(
             'createQueueProxy',
             $queueProxyMock,
-            'Queue'
+            'Queue',
         );
 
         // Resolves the QueueClientInterface with all mocks from above.
@@ -256,21 +256,21 @@ class QueueHelper extends AbstractHelper
         $queueInformation = $this->getInMemoryQueueAdapter()->getAll();
 
         $this->assertNotNull($messageCount, $this->format(
-            sprintf('Whether the queue <fg=green>%s</> does not exists or is empty. Found queues: "%s"', $queueName, implode(', ', array_keys($queueInformation['queues'])))
+            sprintf('Whether the queue <fg=green>%s</> does not exists or is empty. Found queues: "%s"', $queueName, implode(', ', array_keys($queueInformation['queues']))),
         ));
 
         $this->assertTrue($messageCount >= $expectedMessageCount, $this->format(sprintf(
             'Expected at least <fg=green>%s</> message(s) in queue <fg=green>%s</> but found <fg=green>%s</>.',
             $expectedMessageCount,
             $queueName,
-            $messageCount
+            $messageCount,
         )));
 
         // Show some informative output to the use so he can follow whats going on internally
         codecept_debug($this->format(sprintf(
             'Queue <fg=green>%s</> contains <fg=green>%s</> message(s).',
             $queueName,
-            $messageCount
+            $messageCount,
         )));
     }
 
@@ -316,7 +316,7 @@ class QueueHelper extends AbstractHelper
 
         $this->getDependencyProviderHelper()->setDependency(
             SynchronizationDependencyProvider::CLIENT_STORAGE,
-            new SynchronizationToStorageClientBridge($storageClientMock)
+            new SynchronizationToStorageClientBridge($storageClientMock),
         );
     }
 
@@ -362,7 +362,7 @@ class QueueHelper extends AbstractHelper
 
         $this->getDependencyProviderHelper()->setDependency(
             SynchronizationDependencyProvider::CLIENT_SEARCH,
-            new SynchronizationToSearchClientBridge($searchClient)
+            new SynchronizationToSearchClientBridge($searchClient),
         );
     }
 

@@ -94,7 +94,7 @@ class CmsBlockStorageListenerTest extends Unit
         $this->assertFalse(
             SpyCmsBlockStorageQuery::create()
                 ->filterByFkCmsBlock($cmsBlockTransfer->getIdCmsBlock())
-                ->exists()
+                ->exists(),
         );
     }
 

@@ -86,31 +86,31 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
         $merchantProductAbstractPropelQuery = $this->buildProductAbstractTableBaseQuery($merchantProductTableCriteriaTransfer);
         $merchantProductAbstractPropelQuery = $this->applyProductAbstractSearch(
             $merchantProductAbstractPropelQuery,
-            $merchantProductTableCriteriaTransfer
+            $merchantProductTableCriteriaTransfer,
         );
         $merchantProductAbstractPropelQuery = $this->addProductAbstractSorting(
             $merchantProductAbstractPropelQuery,
-            $merchantProductTableCriteriaTransfer
+            $merchantProductTableCriteriaTransfer,
         );
         $merchantProductAbstractPropelQuery = $this->addProductAbstractFilters(
             $merchantProductAbstractPropelQuery,
-            $merchantProductTableCriteriaTransfer
+            $merchantProductTableCriteriaTransfer,
         );
 
         $propelPager = $merchantProductAbstractPropelQuery->paginate(
             $merchantProductTableCriteriaTransfer->getPageOrFail(),
-            $merchantProductTableCriteriaTransfer->getPageSizeOrFail()
+            $merchantProductTableCriteriaTransfer->getPageSizeOrFail(),
         );
 
         $paginationTransfer = $this->getFactory()->createPropelModelPagerMapper()->mapPropelModelPagerToPaginationTransfer(
             $propelPager,
-            new PaginationTransfer()
+            new PaginationTransfer(),
         );
         $productAbstractCollectionTransfer = $this->getFactory()
             ->createProductAbstractTableDataMapper()
             ->mapProductAbstractTableDataArrayToProductAbstractCollectionTransfer(
                 $propelPager->getResults()->getData(),
-                new ProductAbstractCollectionTransfer()
+                new ProductAbstractCollectionTransfer(),
             );
         $productAbstractCollectionTransfer->setPagination($paginationTransfer);
 
@@ -149,7 +149,7 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
             ->leftJoinSpyProductAbstractLocalizedAttributes(static::RELATION_LOCALE_FALLBACK)
                 ->addJoinCondition(
                     static::RELATION_LOCALE_FALLBACK,
-                    sprintf('(%s is null OR %s = \'\')', SpyProductAbstractLocalizedAttributesTableMap::COL_NAME, SpyProductAbstractLocalizedAttributesTableMap::COL_NAME)
+                    sprintf('(%s is null OR %s = \'\')', SpyProductAbstractLocalizedAttributesTableMap::COL_NAME, SpyProductAbstractLocalizedAttributesTableMap::COL_NAME),
                 )
                 ->addJoinCondition(static::RELATION_LOCALE_FALLBACK, static::RELATION_LOCALE_FALLBACK . '.name is not null')
                 ->addJoinCondition(static::RELATION_LOCALE_FALLBACK, static::RELATION_LOCALE_FALLBACK . '.name != \'\'')
@@ -197,7 +197,7 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
                 SpyProductImageSetTableMap::COL_FK_PRODUCT_ABSTRACT,
                 SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT,
                 SpyProductImageSetTableMap::COL_FK_LOCALE,
-                $idLocale
+                $idLocale,
             ))
             ->orderBy(SpyProductImageSetTableMap::COL_FK_LOCALE)
             ->limit(1);
@@ -218,7 +218,7 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
         $productQuery->addAsColumn('products_count', 'COUNT(*)');
 
         $productQuery->where(
-            SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT . ' = ' . SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT
+            SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT . ' = ' . SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT,
         );
 
         return $productQuery->createSelectSql($params);
@@ -235,7 +235,7 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
 
         $productQuery->where(
             SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT . ' = ' . SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT
-            . ' AND ' . SpyProductTableMap::COL_IS_ACTIVE
+            . ' AND ' . SpyProductTableMap::COL_IS_ACTIVE,
         );
 
         return $productQuery->createSelectSql($params);
@@ -274,7 +274,7 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
             SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT,
             SpyProductCategoryTableMap::COL_FK_PRODUCT_ABSTRACT,
             SpyCategoryAttributeTableMap::COL_FK_LOCALE,
-            $idLocale
+            $idLocale,
         ));
         $productStoresSubquery->addAsColumn('category_names', sprintf('GROUP_CONCAT(DISTINCT %s)', SpyCategoryAttributeTableMap::COL_NAME));
         $params = [];
@@ -293,7 +293,7 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
             ->where(sprintf(
                 '%s = %s',
                 SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT,
-                SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT
+                SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT,
             ));
         $productQuery->addSelectColumn(SpyProductTableMap::COL_ATTRIBUTES);
         $params = [];
@@ -343,7 +343,7 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
         $likeCriterion = $criteria->getNewCriterion(
             SpyProductAbstractLocalizedAttributesTableMap::COL_NAME,
             '%' . $searchTerm . '%',
-            Criteria::LIKE
+            Criteria::LIKE,
         );
 
         return $likeCriterion->setIgnoreCase(true);
@@ -361,7 +361,7 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
         $likeCriterion = $criteria->getNewCriterion(
             SpyProductAbstractTableMap::COL_SKU,
             '%' . $searchTerm . '%',
-            Criteria::LIKE
+            Criteria::LIKE,
         );
 
         return $likeCriterion->setIgnoreCase(true);
@@ -445,16 +445,16 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
     ): SpyMerchantProductAbstractQuery {
         $merchantProductAbstractQuery = $this->addIsVisibleProductAbstractFilter(
             $merchantProductAbstractQuery,
-            $merchantProductTableCriteriaTransfer
+            $merchantProductTableCriteriaTransfer,
         );
         $merchantProductAbstractQuery = $this->addInStoresProductAbstractFilter(
             $merchantProductAbstractQuery,
-            $merchantProductTableCriteriaTransfer
+            $merchantProductTableCriteriaTransfer,
         );
 
         $merchantProductAbstractQuery = $this->addInCategoriesProductAbstractFilter(
             $merchantProductAbstractQuery,
-            $merchantProductTableCriteriaTransfer
+            $merchantProductTableCriteriaTransfer,
         );
 
         return $merchantProductAbstractQuery;
@@ -484,8 +484,8 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
             sprintf(
                 '(%s) %s 0',
                 $this->createActiveProductsCountSubquery(),
-                $isVisible ? '>' : '='
-            )
+                $isVisible ? '>' : '=',
+            ),
         );
 
         return $merchantProductAbstractQuery;
@@ -563,7 +563,7 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
 
         $propelPager = $productConcreteQuery->paginate(
             $productTableCriteriaTransfer->getPageOrFail(),
-            $productTableCriteriaTransfer->getPageSizeOrFail()
+            $productTableCriteriaTransfer->getPageSizeOrFail(),
         );
         $paginationTransfer = $this->getFactory()
             ->createPropelModelPagerMapper()
@@ -574,7 +574,7 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
             ->mapProductTableDataArrayToProductConcreteCollectionTransfer(
                 $propelPager->getResults()->getData(),
                 new ProductConcreteCollectionTransfer(),
-                $localeTransfer
+                $localeTransfer,
             );
         $productConcreteCollectionTransfer->setPagination($paginationTransfer);
 
@@ -682,7 +682,7 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
         $likeCriterion = $criteria->getNewCriterion(
             SpyProductLocalizedAttributesTableMap::COL_NAME,
             '%' . $searchTerm . '%',
-            Criteria::LIKE
+            Criteria::LIKE,
         );
 
         return $likeCriterion->setIgnoreCase(true);
@@ -700,7 +700,7 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
         $likeCriterion = $criteria->getNewCriterion(
             SpyProductTableMap::COL_SKU,
             '%' . $searchTerm . '%',
-            Criteria::LIKE
+            Criteria::LIKE,
         );
 
         return $likeCriterion->setIgnoreCase(true);

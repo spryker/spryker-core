@@ -40,7 +40,7 @@ class UserBusinessFactory extends AbstractBusinessFactory
             $this->getConfig(),
             $this->getPostSavePlugins(),
             $this->getUserPreSavePlugins(),
-            $this->getUserTransferExpanderPlugins()
+            $this->getUserTransferExpanderPlugins(),
         );
     }
 
@@ -84,7 +84,7 @@ class UserBusinessFactory extends AbstractBusinessFactory
         return new Installer(
             $this->getQueryContainer(),
             $this->createUserModel(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 }

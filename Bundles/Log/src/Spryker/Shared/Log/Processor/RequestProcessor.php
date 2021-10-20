@@ -123,7 +123,7 @@ class RequestProcessor implements ProcessorInterface
         $request = Request::createFromGlobals();
         $all = array_merge(
             $request->request->all(),
-            $request->query->all()
+            $request->query->all(),
         );
 
         return $this->sanitizer->sanitize($all);

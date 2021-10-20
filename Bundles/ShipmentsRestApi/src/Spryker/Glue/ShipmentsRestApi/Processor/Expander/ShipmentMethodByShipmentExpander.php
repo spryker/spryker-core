@@ -65,7 +65,7 @@ class ShipmentMethodByShipmentExpander implements ShipmentMethodByShipmentExpand
 
             $restShipmentMethodsAttributesTransfers = $this->shipmentMethodMapper
                 ->mapShipmentMethodTransfersToRestShipmentMethodsAttributesTransfers(
-                    $shipmentGroupTransfer->getAvailableShipmentMethods()->getMethods()
+                    $shipmentGroupTransfer->getAvailableShipmentMethods()->getMethods(),
                 );
 
             $restShipmentMethodsAttributesTransfers = $this->shipmentMethodSorter

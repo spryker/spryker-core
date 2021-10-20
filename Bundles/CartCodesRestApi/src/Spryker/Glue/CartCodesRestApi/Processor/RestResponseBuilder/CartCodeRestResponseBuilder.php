@@ -97,8 +97,8 @@ class CartCodeRestResponseBuilder implements CartCodeRestResponseBuilderInterfac
             $restResponse->addError(
                 $this->cartCodeMapper->mapMessageTransferToRestErrorMessageTransfer(
                     $messageTransfer,
-                    new RestErrorMessageTransfer()
-                )
+                    new RestErrorMessageTransfer(),
+                ),
             );
         }
 

@@ -96,7 +96,7 @@ class ShipmentPersistenceWithItemsTest extends Test
         $salesOrderItemEntities = $salesOrderItemQuery->find();
         $idSalesShipmentEntities = array_map(
             'intval',
-            $idSalesShipmentQuery->find()->getData()
+            $idSalesShipmentQuery->find()->getData(),
         );
 
         $this->assertCount($countOfNewShipments, $idSalesShipmentEntities, 'Saved order shipments count mismatch!');

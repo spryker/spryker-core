@@ -34,7 +34,7 @@ class ProductsCategoriesResourceRelationshipFactory extends AbstractFactory
     {
         return new CategoriesResourceRelationshipExpander(
             $this->getCategoriesResource(),
-            $this->createAbstractProductsCategoriesReader()
+            $this->createAbstractProductsCategoriesReader(),
         );
     }
 
@@ -62,7 +62,7 @@ class ProductsCategoriesResourceRelationshipFactory extends AbstractFactory
         return new AbstractProductsCategoriesReader(
             $this->getProductStorageClient(),
             $this->getProductCategoryStorageClient(),
-            $this->getStoreClient()
+            $this->getStoreClient(),
         );
     }
 

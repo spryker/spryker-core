@@ -31,7 +31,7 @@ class MerchantStorageFactory extends AbstractFactory
             $this->getSynchronizationService(),
             $this->getStorageClient(),
             $this->getUtilEncodingService(),
-            $this->getStoreClient()
+            $this->getStoreClient(),
         );
     }
 
@@ -51,7 +51,7 @@ class MerchantStorageFactory extends AbstractFactory
         return new UrlStorageMerchantMapper(
             $this->getSynchronizationService(),
             $this->getStorageClient(),
-            $this->getStoreClient()
+            $this->getStoreClient(),
         );
     }
 

@@ -67,7 +67,7 @@ class ProductAlternativeReader implements ProductAlternativeReaderInterface
 
         return $this->mapProductAlternativeToProductAlternativeItemTransfer(
             $productAlternativeCollection,
-            new ProductAlternativeListTransfer()
+            new ProductAlternativeListTransfer(),
         );
     }
 
@@ -120,7 +120,7 @@ class ProductAlternativeReader implements ProductAlternativeReaderInterface
         foreach ($productAlternativeCollectionTransfer->getProductAlternatives() as $productAlternativeTransfer) {
             if ($productAlternativeTransfer->getIdProductAbstractAlternative()) {
                 $productAlternativeListItemTransfer = $this->getProductAbstractListItemTransfer(
-                    $productAlternativeTransfer
+                    $productAlternativeTransfer,
                 );
                 $productAlternativeListTransfer->addProductAlternative($productAlternativeListItemTransfer);
 
@@ -128,7 +128,7 @@ class ProductAlternativeReader implements ProductAlternativeReaderInterface
             }
 
             $productAlternativeListItemTransfer = $this->getProductConcreteListItemTransfer(
-                $productAlternativeTransfer
+                $productAlternativeTransfer,
             );
             $productAlternativeListTransfer->addProductAlternative($productAlternativeListItemTransfer);
         }
@@ -148,7 +148,7 @@ class ProductAlternativeReader implements ProductAlternativeReaderInterface
         $productAbstractListItemTransfer = $this->productAlternativeRepository
             ->getProductAlternativeListItemTransferForProductAbstract(
                 $idProductAbstractAlternative,
-                $this->localeFacade->getCurrentLocale()
+                $this->localeFacade->getCurrentLocale(),
             )
             ->setStatus($this->productFacade->isProductActive($idProductAbstractAlternative))
             ->setIdProductAlternative($productAlternativeTransfer->getIdProductAlternative());
@@ -167,7 +167,7 @@ class ProductAlternativeReader implements ProductAlternativeReaderInterface
         $productConcreteListItemTransfer = $this->productAlternativeRepository
             ->getProductAlternativeListItemTransferForProductConcrete(
                 $productAlternativeTransfer->getIdProductConcreteAlternative(),
-                $this->localeFacade->getCurrentLocale()
+                $this->localeFacade->getCurrentLocale(),
             )
             ->setIdProductAlternative($productAlternativeTransfer->getIdProductAlternative());
 

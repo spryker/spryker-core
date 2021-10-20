@@ -71,7 +71,7 @@ class MerchantOpeningHoursReader implements MerchantOpeningHoursReaderInterface
         $merchantReference = $merchantResource->getId();
 
         $merchantStorageTransfer = $this->merchantStorageClient->findOne(
-            (new MerchantStorageCriteriaTransfer())->addMerchantReference($merchantReference)
+            (new MerchantStorageCriteriaTransfer())->addMerchantReference($merchantReference),
         );
 
         if (!$merchantStorageTransfer) {
@@ -88,12 +88,12 @@ class MerchantOpeningHoursReader implements MerchantOpeningHoursReaderInterface
         $merchantOpeningHoursStorageTransfers = $this->merchantOpeningHoursTranslator
             ->translateMerchantOpeningHoursTransfers(
                 $merchantOpeningHoursStorageTransfers,
-                $restRequest->getMetadata()->getLocale()
+                $restRequest->getMetadata()->getLocale(),
             );
 
         return $this->merchantOpeningHoursRestResponseBuilder->createMerchantOpeningHoursRestResponse(
             reset($merchantOpeningHoursStorageTransfers),
-            $merchantReference
+            $merchantReference,
         );
     }
 
@@ -109,7 +109,7 @@ class MerchantOpeningHoursReader implements MerchantOpeningHoursReaderInterface
 
         $merchantOpeningHoursStorageTransfers = $this->getTranslatedMerchantOpeningHoursStorageTransfers(
             $merchantIdsIndexedByReference,
-            $restRequest->getMetadata()->getLocale()
+            $restRequest->getMetadata()->getLocale(),
         );
 
         return $this->merchantOpeningHoursRestResponseBuilder
@@ -124,7 +124,7 @@ class MerchantOpeningHoursReader implements MerchantOpeningHoursReaderInterface
     protected function getMerchantIdsIndexedByReference(array $merchantReferences): array
     {
         $merchantStorageTransfers = $this->merchantStorageClient->get(
-            (new MerchantStorageCriteriaTransfer())->setMerchantReferences($merchantReferences)
+            (new MerchantStorageCriteriaTransfer())->setMerchantReferences($merchantReferences),
         );
 
         $merchantIdsIndexedByReference = [];
@@ -154,7 +154,7 @@ class MerchantOpeningHoursReader implements MerchantOpeningHoursReaderInterface
 
         $indexedMerchantOpeningHoursStorageTransfers = $this->indexCollectionByMerchantReferences(
             $merchantOpeningHoursStorageTransfers,
-            $merchantIdsIndexedByReference
+            $merchantIdsIndexedByReference,
         );
 
         return $this->merchantOpeningHoursTranslator

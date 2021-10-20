@@ -28,7 +28,7 @@ class NavigationKeyExistsConstraintValidator extends ConstraintValidator
             throw new InvalidArgumentException(sprintf(
                 'Expected constraint instance of %s, got %s instead.',
                 NavigationKeyExistsConstraint::class,
-                get_class($constraint)
+                get_class($constraint),
             ));
         }
 

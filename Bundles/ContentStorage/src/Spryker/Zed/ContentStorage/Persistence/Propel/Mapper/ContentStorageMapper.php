@@ -51,7 +51,7 @@ class ContentStorageMapper implements ContentStorageMapperInterface
         foreach ($contentEntityCollection as $contentEntity) {
             $contentTransfers[] = $this->mapContentEntityToContentTransfer(
                 $contentEntity,
-                new ContentTransfer()
+                new ContentTransfer(),
             );
         }
 

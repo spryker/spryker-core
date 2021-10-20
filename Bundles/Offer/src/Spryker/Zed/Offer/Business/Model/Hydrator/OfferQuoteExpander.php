@@ -52,7 +52,7 @@ class OfferQuoteExpander implements OfferQuoteExpanderInterface
 
         $customerTransfer = $this->customerFacade
             ->findCustomerByReference(
-                $offerTransfer->getCustomerReference()
+                $offerTransfer->getCustomerReference(),
             );
 
         if ($customerTransfer) {

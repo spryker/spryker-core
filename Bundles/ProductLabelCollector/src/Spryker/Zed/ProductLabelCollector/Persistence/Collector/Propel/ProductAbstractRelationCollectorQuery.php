@@ -38,15 +38,15 @@ class ProductAbstractRelationCollectorQuery extends AbstractPropelCollectorQuery
     {
         $this->touchQuery->addJoin(
             SpyTouchTableMap::COL_ITEM_ID,
-            SpyProductLabelProductAbstractTableMap::COL_FK_PRODUCT_ABSTRACT
+            SpyProductLabelProductAbstractTableMap::COL_FK_PRODUCT_ABSTRACT,
         );
         $this->touchQuery->addJoin(
             SpyProductLabelProductAbstractTableMap::COL_FK_PRODUCT_LABEL,
-            SpyProductLabelTableMap::COL_ID_PRODUCT_LABEL
+            SpyProductLabelTableMap::COL_ID_PRODUCT_LABEL,
         );
         $this->touchQuery->withColumn(
             SpyProductLabelProductAbstractTableMap::COL_FK_PRODUCT_ABSTRACT,
-            static::RESULT_FIELD_ID_PRODUCT_ABSTRACT
+            static::RESULT_FIELD_ID_PRODUCT_ABSTRACT,
         );
 
         $this->touchQuery->withColumn(
@@ -56,9 +56,9 @@ class ProductAbstractRelationCollectorQuery extends AbstractPropelCollectorQuery
                 static::LABEL_DELIMITER,
                 SpyProductLabelTableMap::COL_IS_ACTIVE,
                 SpyProductLabelTableMap::COL_POSITION,
-                Criteria::ASC
+                Criteria::ASC,
             ),
-            static::RESULT_FIELD_ID_PRODUCT_LABELS_CSV
+            static::RESULT_FIELD_ID_PRODUCT_LABELS_CSV,
         );
         $this->touchQuery->groupBy(SpyTouchTableMap::COL_ITEM_ID);
         $this->touchQuery->groupBy(SpyTouchTableMap::COL_ITEM_TYPE);

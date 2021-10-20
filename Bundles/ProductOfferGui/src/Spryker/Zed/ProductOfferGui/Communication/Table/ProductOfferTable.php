@@ -131,7 +131,7 @@ class ProductOfferTable extends AbstractTable
     {
         $url = Url::generate(
             '/table',
-            $this->getRequest()->query->all()
+            $this->getRequest()->query->all(),
         );
         $config->setUrl($url);
 
@@ -202,7 +202,7 @@ class ProductOfferTable extends AbstractTable
     {
         $this->productOfferQuery = $this->repository->mapQueryCriteriaTransferToModelCriteria(
             $this->productOfferQuery,
-            $this->buildQueryCriteriaTransfer()
+            $this->buildQueryCriteriaTransfer(),
         );
 
         $this->total = $this->productOfferQuery->count();
@@ -213,7 +213,7 @@ class ProductOfferTable extends AbstractTable
                 ->leftJoinSpyStore()
                 ->withColumn(
                     sprintf('GROUP_CONCAT(%s)', SpyStoreTableMap::COL_NAME),
-                    static::COL_STORES
+                    static::COL_STORES,
                 )
             ->endUse()
             ->addJoin(SpyProductOfferTableMap::COL_CONCRETE_SKU, SpyProductTableMap::COL_SKU, Criteria::INNER_JOIN)
@@ -222,7 +222,7 @@ class ProductOfferTable extends AbstractTable
             ->withColumn(SpyProductLocalizedAttributesTableMap::COL_NAME, static::COL_PRODUCT_NAME)
             ->withColumn(
                 SpyProductLocalizedAttributesTableMap::COL_FK_PRODUCT,
-                static::COL_ID_PRODUCT_CONCRETE
+                static::COL_ID_PRODUCT_CONCRETE,
             );
 
         return $this->productOfferQuery;
@@ -275,10 +275,10 @@ class ProductOfferTable extends AbstractTable
                 ProductOfferGuiConfig::URL_VIEW,
                 [
                     ProductOfferGuiConfig::REQUEST_PARAM_ID_PRODUCT_OFFER => $item[SpyProductOfferTableMap::COL_ID_PRODUCT_OFFER],
-                ]
+                ],
             ),
             'View',
-            ['icon' => 'fa fa fa-eye', 'class' => 'btn-info']
+            ['icon' => 'fa fa fa-eye', 'class' => 'btn-info'],
         );
 
         $availableApprovalStatusButtonsMapping = static::APPROVAL_STATUS_CLASS_BUTTON_MAPPING;
@@ -297,11 +297,11 @@ class ProductOfferTable extends AbstractTable
                         ProductOfferGuiConfig::REQUEST_PARAM_ID_PRODUCT_OFFER => $item[SpyProductOfferTableMap::COL_ID_PRODUCT_OFFER],
                         ProductOfferGuiConfig::REQUEST_PARAM_APPROVAL_STATUS => $availableApprovalStatus,
                         ProductOfferGuiConfig::REQUEST_PARAM_ID_PRODUCT_CONCRETE => $item[static::COL_ID_PRODUCT_CONCRETE],
-                    ]
+                    ],
                 ),
                 $availableApprovalStatus . '_offer_button',
                 ApprovalStatusForm::class,
-                ['icon' => $iconClass, 'class' => $availableApprovalStatusButtonsMapping[$availableApprovalStatus]]
+                ['icon' => $iconClass, 'class' => $availableApprovalStatusButtonsMapping[$availableApprovalStatus]],
             );
         }
 

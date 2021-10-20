@@ -43,7 +43,7 @@ class ProductBundleItemExpander implements ProductBundleItemExpanderInterface
     public function expandItemsWithProductBundles(array $itemTransfers): array
     {
         $bundleItemTransfers = $this->productBundleRepository->getBundleItemsBySalesOrderItemIds(
-            $this->getSalesOrderItemIds($itemTransfers)
+            $this->getSalesOrderItemIds($itemTransfers),
         );
 
         if (!$bundleItemTransfers) {
@@ -74,7 +74,7 @@ class ProductBundleItemExpander implements ProductBundleItemExpanderInterface
     protected function expandBundleItemsWithIds(array $bundleItemTransfers): array
     {
         $productConcretesRawData = $this->productBundleRepository->getProductConcretesRawDataByProductConcreteSkus(
-            $this->getProductConcreteSkus($bundleItemTransfers)
+            $this->getProductConcreteSkus($bundleItemTransfers),
         );
 
         foreach ($bundleItemTransfers as $bundleItemTransfer) {

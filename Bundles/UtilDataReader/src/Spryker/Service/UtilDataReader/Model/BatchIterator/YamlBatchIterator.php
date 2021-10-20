@@ -62,11 +62,11 @@ class YamlBatchIterator implements CountableIteratorInterface
             if (!is_file($this->yamlFilename) || !is_readable($this->yamlFilename)) {
                 throw new ResourceNotFoundException(sprintf(
                     'Could not open Yaml file "%s"',
-                    $this->yamlFilename
+                    $this->yamlFilename,
                 ));
             }
             $this->batchData = $this->yamlReader->parse(
-                file_get_contents($this->yamlFilename)
+                file_get_contents($this->yamlFilename),
             );
         }
     }

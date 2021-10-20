@@ -76,7 +76,7 @@ class ConfiguredBundleWriter implements ConfiguredBundleWriterInterface
 
         $persistentCartChangeTransfer = $this->configuredBundleMapper->mapCreateConfiguredBundleRequestToPersistentCartChange(
             $createConfiguredBundleRequestTransfer,
-            (new PersistentCartChangeTransfer())->fromArray($quoteResponseTransfer->getQuoteTransfer()->toArray(), true)
+            (new PersistentCartChangeTransfer())->fromArray($quoteResponseTransfer->getQuoteTransfer()->toArray(), true),
         );
 
         $quoteResponseTransfer = $this->persistentCartFacade->add($persistentCartChangeTransfer);
@@ -107,7 +107,7 @@ class ConfiguredBundleWriter implements ConfiguredBundleWriterInterface
 
         $persistentCartChangeTransfer = $this->configuredBundleMapper->mapUpdateConfiguredBundleRequestToPersistentCartChange(
             $updateConfiguredBundleRequestTransfer,
-            (new PersistentCartChangeTransfer())->setQuote((new QuoteTransfer())->fromArray($quoteResponseTransfer->getQuoteTransfer()->toArray(), true))
+            (new PersistentCartChangeTransfer())->setQuote((new QuoteTransfer())->fromArray($quoteResponseTransfer->getQuoteTransfer()->toArray(), true)),
         );
 
         if (!$persistentCartChangeTransfer->getItems()->count()) {
@@ -140,7 +140,7 @@ class ConfiguredBundleWriter implements ConfiguredBundleWriterInterface
 
         $persistentCartChangeTransfer = $this->configuredBundleMapper->mapUpdateConfiguredBundleRequestToPersistentCartChange(
             $updateConfiguredBundleRequestTransfer,
-            (new PersistentCartChangeTransfer())->setQuote((new QuoteTransfer())->fromArray($quoteResponseTransfer->getQuoteTransfer()->toArray(), true))
+            (new PersistentCartChangeTransfer())->setQuote((new QuoteTransfer())->fromArray($quoteResponseTransfer->getQuoteTransfer()->toArray(), true)),
         );
 
         if (!$persistentCartChangeTransfer->getItems()->count()) {

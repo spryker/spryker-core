@@ -150,7 +150,7 @@ class MerchantSalesOrderDataExportDependencyProvider extends AbstractBundleDepen
     {
         $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container): MerchantSalesOrderDataExportToUtilEncodingServiceInterface {
             return new MerchantSalesOrderDataExportToUtilEncodingServiceBridge(
-                $container->getLocator()->utilEncoding()->service()
+                $container->getLocator()->utilEncoding()->service(),
             );
         });
 
@@ -166,7 +166,7 @@ class MerchantSalesOrderDataExportDependencyProvider extends AbstractBundleDepen
     {
         $container->set(static::SERVICE_DATA_EXPORT, function (Container $container): MerchantSalesOrderDataExportToDataExportServiceInterface {
             return new MerchantSalesOrderDataExportToDataExportServiceBridge(
-                $container->getLocator()->dataExport()->service()
+                $container->getLocator()->dataExport()->service(),
             );
         });
 

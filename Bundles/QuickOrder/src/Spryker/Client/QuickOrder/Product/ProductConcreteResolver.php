@@ -131,7 +131,7 @@ class ProductConcreteResolver implements ProductConcreteResolverInterface
         $productAbstractStorageData = $this->productStorageClient
             ->findProductAbstractStorageData(
                 $productConcreteStorageData[static::ID_PRODUCT_ABSTRACT],
-                $this->localeClient->getCurrentLocale()
+                $this->localeClient->getCurrentLocale(),
             );
 
         if ($productAbstractStorageData === null) {

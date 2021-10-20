@@ -35,7 +35,7 @@ class PricePageDataLoaderPlugin extends AbstractPlugin implements ProductPageDat
         $pricesByIdProductAbstract = $this->findPricesByIdProductAbstractIn($productAbstractIds);
 
         $productPageLoadTransfer->setPayloadTransfers(
-            $this->updatePayloadTransfers($productPageLoadTransfer->getPayloadTransfers(), $pricesByIdProductAbstract)
+            $this->updatePayloadTransfers($productPageLoadTransfer->getPayloadTransfers(), $pricesByIdProductAbstract),
         );
 
         return $productPageLoadTransfer;

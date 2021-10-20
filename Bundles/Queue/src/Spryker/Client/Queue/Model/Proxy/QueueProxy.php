@@ -213,8 +213,8 @@ class QueueProxy implements QueueProxyInterface
                 'There is no queue adapter configuration with this name: %s ,' .
                 ' you can fix this by adding the queue adapter in ' .
                 'QUEUE_ADAPTER_CONFIGURATION in the config_default.php',
-                $queueName
-            )
+                $queueName,
+            ),
         );
     }
 
@@ -238,8 +238,8 @@ class QueueProxy implements QueueProxyInterface
                 'There is no such a queue adapter with this name: %s ,' .
                 ' you can fix this by adding the queue adapter in ' .
                 'QueueDependencyProvider::createQueueAdapters()',
-                $queueConfiguration[QueueConfig::CONFIG_QUEUE_ADAPTER]
-            )
+                $queueConfiguration[QueueConfig::CONFIG_QUEUE_ADAPTER],
+            ),
         );
     }
 }

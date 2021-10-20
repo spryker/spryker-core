@@ -29,7 +29,7 @@ class ProductAttributeMapper implements ProductAttributeMapperInterface
 
         foreach ($productManagementAttributeEntity->getSpyProductManagementAttributeValues() as $productManagementAttributeValueEntity) {
             $productManagementAttributeTransfer->addValue(
-                $this->mapProductManagementAttributeValueEntityToTransfer($productManagementAttributeValueEntity, new ProductManagementAttributeValueTransfer())
+                $this->mapProductManagementAttributeValueEntityToTransfer($productManagementAttributeValueEntity, new ProductManagementAttributeValueTransfer()),
             );
         }
 
@@ -47,7 +47,7 @@ class ProductAttributeMapper implements ProductAttributeMapperInterface
         ProductManagementAttributeValueTransfer $productManagementAttributeValueTransfer
     ): ProductManagementAttributeValueTransfer {
         return $productManagementAttributeValueTransfer->fromArray(
-            $productManagementAttributeValueEntity->toArray()
+            $productManagementAttributeValueEntity->toArray(),
         );
     }
 }

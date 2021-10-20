@@ -53,7 +53,7 @@ class OrderExpander implements OrderExpanderInterface
         foreach ($orderTransfers as $orderTransfer) {
             $itemTransfers = array_merge(
                 $itemTransfers,
-                $orderTransfer->getItems()->getArrayCopy()
+                $orderTransfer->getItems()->getArrayCopy(),
             );
         }
 
@@ -90,7 +90,7 @@ class OrderExpander implements OrderExpanderInterface
             $orderTransfer->requireIdSalesOrder();
 
             $orderTransfer->getItems()->exchangeArray(
-                $groupedItemTransfers[$orderTransfer->getIdSalesOrder()]
+                $groupedItemTransfers[$orderTransfer->getIdSalesOrder()],
             );
         }
 

@@ -293,7 +293,7 @@ class UserTest extends Unit
         $userModel = new User(
             $this->createQueryContainer(),
             $sessionClient,
-            new UserConfig()
+            new UserConfig(),
         );
 
         $userTransfer = $this->createUserTransfer(static::USERNAME);
@@ -305,8 +305,8 @@ class UserTest extends Unit
                 $this->stringContains('user'),
                 $this->logicalAnd(
                     $this->equalTo($userTransfer),
-                    $this->logicalNot($this->identicalTo($userTransfer))
-                )
+                    $this->logicalNot($this->identicalTo($userTransfer)),
+                ),
             );
 
         $userModel->setCurrentUser($userTransfer);
@@ -322,7 +322,7 @@ class UserTest extends Unit
         $userModel = new User(
             $this->createQueryContainer(),
             $sessionClient,
-            new UserConfig()
+            new UserConfig(),
         );
 
         $userTransfer = $this->createUserTransfer(static::USERNAME);
@@ -351,7 +351,7 @@ class UserTest extends Unit
         $userModel = new User(
             $this->createQueryContainer(),
             $sessionClient,
-            new UserConfig()
+            new UserConfig(),
         );
 
         $sessionClient->expects($this->once())
@@ -382,7 +382,7 @@ class UserTest extends Unit
         ];
         $userCriteriaData = array_intersect_key(
             $userCriteriaData,
-            array_flip($userCriteriaKeys)
+            array_flip($userCriteriaKeys),
         );
 
         $userCriteriaTransfer = (new UserCriteriaTransfer())

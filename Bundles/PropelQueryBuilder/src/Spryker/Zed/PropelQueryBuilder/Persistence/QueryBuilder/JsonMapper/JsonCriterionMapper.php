@@ -47,7 +47,7 @@ class JsonCriterionMapper implements JsonCriterionMapperInterface
         $name = trim(preg_replace(
             $this->pattern,
             $this->replacement,
-            $ruleSetTransfer->getId()
+            $ruleSetTransfer->getId(),
         ));
 
         if ($name === $ruleSetTransfer->getId()) {
@@ -93,7 +93,7 @@ class JsonCriterionMapper implements JsonCriterionMapperInterface
         return $criteria->getNewCriterion(
             $field,
             $value,
-            $operatorExpression
+            $operatorExpression,
         );
     }
 }

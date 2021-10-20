@@ -55,7 +55,7 @@ class PropelInstallConsole extends Console
             self::OPTION_NO_DIFF,
             self::OPTION_NO_DIFF_SHORTCUT,
             InputOption::VALUE_NONE,
-            self::OPTION_NO_DIFF_DESCRIPTION
+            self::OPTION_NO_DIFF_DESCRIPTION,
         );
 
         parent::configure();
@@ -123,8 +123,8 @@ class PropelInstallConsole extends Console
             $this->output->writeln(
                 sprintf(
                     '<fg=red>There is no command defined with the name "%s". Make sure the command was registered properly.</>',
-                    $command
-                )
+                    $command,
+                ),
             );
         }
 

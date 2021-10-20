@@ -76,7 +76,7 @@ class ProductBundleSynchronizationDataBulkRepositoryPluginTest extends Unit
         $synchronizationDataTransfers = $productBundleSynchronizationDataBulkRepositoryPlugin->getData(
             0,
             10,
-            [$productConcreteTransfer->getIdProductConcrete()]
+            [$productConcreteTransfer->getIdProductConcrete()],
         );
 
         // Assert
@@ -93,7 +93,7 @@ class ProductBundleSynchronizationDataBulkRepositoryPluginTest extends Unit
         $synchronizationDataTransfers = $productBundleSynchronizationDataBulkRepositoryPlugin->getData(
             0,
             1,
-            [static::FAKE_ID_PRODUCT_CONCRETE]
+            [static::FAKE_ID_PRODUCT_CONCRETE],
         );
 
         // Assert

@@ -71,7 +71,7 @@ class QuoteRequestsRestApiDependencyProvider extends AbstractBundleDependencyPro
     {
         $container->set(static::CLIENT_QUOTE_REQUEST, function (Container $container) {
             return new QuoteRequestsRestApiToQuoteRequestClientBridge(
-                $container->getLocator()->quoteRequest()->client()
+                $container->getLocator()->quoteRequest()->client(),
             );
         });
 

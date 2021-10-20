@@ -139,7 +139,7 @@ class SharedCartFacadeTest extends Test
         $this->assertFalse($resourceShareResponseTransfer->getIsSuccessful());
         $this->hasResourceShareResponseTransferErrorMessage(
             $resourceShareResponseTransfer,
-            static::GLOSSARY_KEY_CART_ACCESS_DENIED
+            static::GLOSSARY_KEY_CART_ACCESS_DENIED,
         );
     }
 
@@ -170,7 +170,7 @@ class SharedCartFacadeTest extends Test
         $this->assertFalse($resourceShareResponseTransfer->getIsSuccessful());
         $this->hasResourceShareResponseTransferErrorMessage(
             $resourceShareResponseTransfer,
-            static::GLOSSARY_KEY_UNABLE_TO_SHARE_CART
+            static::GLOSSARY_KEY_UNABLE_TO_SHARE_CART,
         );
     }
 
@@ -201,7 +201,7 @@ class SharedCartFacadeTest extends Test
         $this->assertFalse($resourceShareResponseTransfer->getIsSuccessful());
         $this->hasResourceShareResponseTransferErrorMessage(
             $resourceShareResponseTransfer,
-            static::GLOSSARY_KEY_UNABLE_TO_SHARE_CART
+            static::GLOSSARY_KEY_UNABLE_TO_SHARE_CART,
         );
     }
 
@@ -308,7 +308,7 @@ class SharedCartFacadeTest extends Test
         $this->assertFalse($resourceShareResponseTransfer->getIsSuccessful());
         $this->hasResourceShareResponseTransferErrorMessage(
             $resourceShareResponseTransfer,
-            static::GLOSSARY_KEY_QUOTE_IS_NOT_AVAILABLE
+            static::GLOSSARY_KEY_QUOTE_IS_NOT_AVAILABLE,
         );
     }
 
@@ -337,7 +337,7 @@ class SharedCartFacadeTest extends Test
             $this->tester->haveQuotePermissionGroup(static::PERMISSION_GROUP_FULL_ACCESS, [
                 ReadSharedCartPermissionPlugin::KEY,
                 WriteSharedCartPermissionPlugin::KEY,
-            ])
+            ]),
         );
 
         //Act
@@ -374,7 +374,7 @@ class SharedCartFacadeTest extends Test
             $this->tester->haveQuotePermissionGroup(static::PERMISSION_GROUP_FULL_ACCESS, [
                 ReadSharedCartPermissionPlugin::KEY,
                 WriteSharedCartPermissionPlugin::KEY,
-            ])
+            ]),
         );
 
         //Act
@@ -386,7 +386,7 @@ class SharedCartFacadeTest extends Test
         $this->assertCount(1, $customerCollectionTransfer->getCustomers());
         $this->assertSame(
             $otherCustomerTransfer->getCustomerReference(),
-            $customerCollectionTransfer->getCustomers()->offsetGet(0)->getCustomerReference()
+            $customerCollectionTransfer->getCustomers()->offsetGet(0)->getCustomerReference(),
         );
     }
 

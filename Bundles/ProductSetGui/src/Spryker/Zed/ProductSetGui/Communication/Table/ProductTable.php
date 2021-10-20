@@ -183,7 +183,7 @@ class ProductTable extends AbstractTable
     {
         $checkbox_html = sprintf(
             '<input id="all_products_checkbox_%1$d" class="all-products-checkbox" type="checkbox" data-id="%1$s">',
-            $productAbstractEntity->getIdProductAbstract()
+            $productAbstractEntity->getIdProductAbstract(),
         );
 
         return $checkbox_html;

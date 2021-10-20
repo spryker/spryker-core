@@ -36,7 +36,7 @@ class DeleteController extends EditController
         $customerGroupTransfer->setIdCustomerGroup($idCustomerGroup);
 
         $this->getFacade()->delete(
-            $customerGroupTransfer
+            $customerGroupTransfer,
         );
 
         return $this->redirectResponse('/customer-group');

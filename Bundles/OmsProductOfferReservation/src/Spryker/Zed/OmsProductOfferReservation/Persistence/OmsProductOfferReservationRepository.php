@@ -51,7 +51,7 @@ class OmsProductOfferReservationRepository extends AbstractRepository implements
             ->createOmsProductOfferReservationMapper()
             ->mapOmsProductOfferReservationEntityToOmsProductOfferReservationTransfer(
                 $omsProductOfferReservationEntity,
-                new OmsProductOfferReservationTransfer()
+                new OmsProductOfferReservationTransfer(),
             );
     }
 
@@ -69,7 +69,7 @@ class OmsProductOfferReservationRepository extends AbstractRepository implements
 
         $omsProductOfferReservationQuery = $this->applyFilters(
             $omsProductOfferReservationQuery,
-            $omsProductOfferReservationCriteriaTransfer
+            $omsProductOfferReservationCriteriaTransfer,
         );
 
         $quantity = $omsProductOfferReservationQuery
@@ -143,7 +143,7 @@ class OmsProductOfferReservationRepository extends AbstractRepository implements
     ): SpyOmsProductOfferReservationQuery {
         if ($omsProductOfferReservationCriteriaTransfer->getStore()->getIdStore()) {
             $omsProductOfferReservationQuery->filterByFkStore(
-                $omsProductOfferReservationCriteriaTransfer->getStore()->getIdStore()
+                $omsProductOfferReservationCriteriaTransfer->getStore()->getIdStore(),
             );
         }
 

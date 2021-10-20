@@ -36,7 +36,7 @@ class CompanyGuiFormatter implements CompanyGuiFormatterInterface
                 static::KEY_TEXT => sprintf(
                     '%s (ID: %d)',
                     $companyTransfer->getName(),
-                    $companyTransfer->getIdCompany()
+                    $companyTransfer->getIdCompany(),
                 ),
             ];
         }

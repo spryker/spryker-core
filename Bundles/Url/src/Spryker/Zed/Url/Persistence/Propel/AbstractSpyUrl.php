@@ -84,8 +84,8 @@ abstract class AbstractSpyUrl extends BaseSpyUrl
         throw new MissingResourceException(
             sprintf(
                 'Encountered a URL entity that is missing a resource: %s',
-                json_encode($this->toArray())
-            )
+                json_encode($this->toArray()),
+            ),
         );
     }
 
@@ -120,8 +120,8 @@ abstract class AbstractSpyUrl extends BaseSpyUrl
             throw new UnknownResourceTypeException(
                 sprintf(
                     'Tried to set a resource type that is unknown. ResourceType: %s',
-                    $resourceType
-                )
+                    $resourceType,
+                ),
             );
         }
 

@@ -41,7 +41,7 @@ class QuoteRequestAgentStub implements QuoteRequestAgentStubInterface
         /** @var \Generated\Shared\Transfer\QuoteRequestResponseTransfer $quoteRequestResponseTransfer */
         $quoteRequestResponseTransfer = $this->zedRequestClient->call(
             '/quote-request-agent/gateway/create-quote-request',
-            $quoteRequestTransfer
+            $quoteRequestTransfer,
         );
 
         return $quoteRequestResponseTransfer;
@@ -59,7 +59,7 @@ class QuoteRequestAgentStub implements QuoteRequestAgentStubInterface
         /** @var \Generated\Shared\Transfer\QuoteRequestResponseTransfer $quoteRequestResponseTransfer */
         $quoteRequestResponseTransfer = $this->zedRequestClient->call(
             '/quote-request-agent/gateway/update-quote-request',
-            $quoteRequestTransfer
+            $quoteRequestTransfer,
         );
 
         $this->zedRequestClient->addFlashMessagesFromLastZedRequest();
@@ -79,7 +79,7 @@ class QuoteRequestAgentStub implements QuoteRequestAgentStubInterface
         /** @var \Generated\Shared\Transfer\QuoteRequestResponseTransfer $quoteRequestResponseTransfer */
         $quoteRequestResponseTransfer = $this->zedRequestClient->call(
             '/quote-request-agent/gateway/cancel-quote-request',
-            $quoteRequestFilterTransfer
+            $quoteRequestFilterTransfer,
         );
 
         return $quoteRequestResponseTransfer;
@@ -97,7 +97,7 @@ class QuoteRequestAgentStub implements QuoteRequestAgentStubInterface
         /** @var \Generated\Shared\Transfer\QuoteRequestResponseTransfer $quoteRequestResponseTransfer */
         $quoteRequestResponseTransfer = $this->zedRequestClient->call(
             '/quote-request-agent/gateway/revise-quote-request',
-            $quoteRequestFilterTransfer
+            $quoteRequestFilterTransfer,
         );
 
         return $quoteRequestResponseTransfer;
@@ -115,7 +115,7 @@ class QuoteRequestAgentStub implements QuoteRequestAgentStubInterface
         /** @var \Generated\Shared\Transfer\QuoteRequestResponseTransfer $quoteRequestResponseTransfer */
         $quoteRequestResponseTransfer = $this->zedRequestClient->call(
             '/quote-request-agent/gateway/send-quote-request-to-customer',
-            $quoteRequestFilterTransfer
+            $quoteRequestFilterTransfer,
         );
 
         return $quoteRequestResponseTransfer;
@@ -134,7 +134,7 @@ class QuoteRequestAgentStub implements QuoteRequestAgentStubInterface
         /** @var \Generated\Shared\Transfer\QuoteRequestOverviewCollectionTransfer $quoteRequestOverviewCollectionTransfer */
         $quoteRequestOverviewCollectionTransfer = $this->zedRequestClient->call(
             '/quote-request-agent/gateway/get-quote-request-overview-collection',
-            $quoteRequestOverviewFilterTransfer
+            $quoteRequestOverviewFilterTransfer,
         );
 
         return $quoteRequestOverviewCollectionTransfer;

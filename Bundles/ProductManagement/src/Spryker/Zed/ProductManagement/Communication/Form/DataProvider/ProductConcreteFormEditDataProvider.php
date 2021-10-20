@@ -89,7 +89,7 @@ class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvide
             $taxCollection,
             $imageUrlPrefix,
             $store,
-            $productAttributeReader
+            $productAttributeReader,
         );
 
         $this->productStockHelper = $productStockHelper;
@@ -230,7 +230,7 @@ class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvide
         $formData[ProductFormAdd::FIELD_PRICES] = $this->getProductConcretePricesByPriceDimension(
             $productTransfer,
             $productAbstractTransfer,
-            $formData
+            $formData,
         );
         $stockType = $this->stockQueryContainer->queryAllStockTypes()->find()->getData();
         $productTransfer = $this->productStockHelper->addMissingStockTypes($productTransfer, $stockType);
@@ -336,7 +336,7 @@ class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvide
     {
         return array_merge(
             $formData,
-            $this->getProductImagesForConcreteProduct($productTransfer->getIdProductConcrete())
+            $this->getProductImagesForConcreteProduct($productTransfer->getIdProductConcrete()),
         );
     }
 

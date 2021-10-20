@@ -138,13 +138,13 @@ class Trigger implements TriggerInterface
         $this->stateUpdater->updateStateMachineItemState(
             $stateMachineItemTransfers,
             $processes,
-            $sourceStateBuffer
+            $sourceStateBuffer,
         );
 
         $stateMachineItemsWithOnEnterEvent = $this->finder->filterItemsWithOnEnterEvent(
             $stateMachineItemTransfers,
             $processes,
-            $sourceStateBuffer
+            $sourceStateBuffer,
         );
 
         $this->transitionLog->saveAll();
@@ -167,7 +167,7 @@ class Trigger implements TriggerInterface
         foreach ($stateMachineHandler->getActiveProcesses() as $processName) {
             $stateMachineItemsWithOnEnterEvent = $this->condition->getOnEnterEventsForStatesWithoutTransition(
                 $stateMachineName,
-                $processName
+                $processName,
             );
             $this->triggerOnEnterEvents($stateMachineItemsWithOnEnterEvent);
         }
@@ -296,7 +296,7 @@ class Trigger implements TriggerInterface
 
             $process = $this->finder->findProcessByStateMachineAndProcessName(
                 $stateMachineItemTransfer->getStateMachineName(),
-                $stateMachineItemTransfer->getProcessName()
+                $stateMachineItemTransfer->getProcessName(),
             );
 
             $sourceState = $process->getStateFromAllProcesses($stateName);
@@ -313,7 +313,7 @@ class Trigger implements TriggerInterface
                     $transitions,
                     $stateMachineItemTransfer,
                     $sourceState,
-                    $this->transitionLog
+                    $this->transitionLog,
                 );
                 $this->transitionLog->addTargetState($stateMachineItemTransfer, $targetState->getName());
             }
@@ -425,7 +425,7 @@ class Trigger implements TriggerInterface
         $idStateMachineItemState = $this->stateMachinePersistence
             ->getInitialStateIdByStateName(
                 $stateMachineItemTransfer,
-                $initialStateName
+                $initialStateName,
             );
 
         $this->assertInitialStateCreated($idStateMachineItemState, $initialStateName);
@@ -450,8 +450,8 @@ class Trigger implements TriggerInterface
                 sprintf(
                     'Initial state name for process "%s" is not provided. You can provide it in "%s::getInitialStateForProcess" method.',
                     $processName,
-                    StateMachineHandlerInterface::class
-                )
+                    StateMachineHandlerInterface::class,
+                ),
             );
         }
     }
@@ -470,8 +470,8 @@ class Trigger implements TriggerInterface
             throw new TriggerException(
                 sprintf(
                     'Initial state "%s" could not be created.',
-                    $initialStateName
-                )
+                    $initialStateName,
+                ),
             );
         }
     }
@@ -489,8 +489,8 @@ class Trigger implements TriggerInterface
             throw new TriggerException(
                 sprintf(
                     'Process with name "%s" not found!',
-                    $idStateMachineProcess
-                )
+                    $idStateMachineProcess,
+                ),
             );
         }
     }
@@ -510,8 +510,8 @@ class Trigger implements TriggerInterface
                 sprintf(
                     'Command plugin "%s" not registered in "%s" class. Please add it to getCommandPlugins() method.',
                     $commandString,
-                    get_class($stateMachineHandler)
-                )
+                    get_class($stateMachineHandler),
+                ),
             );
         }
     }

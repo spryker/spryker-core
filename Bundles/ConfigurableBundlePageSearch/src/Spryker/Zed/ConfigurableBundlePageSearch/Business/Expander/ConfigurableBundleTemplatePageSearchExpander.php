@@ -48,12 +48,12 @@ class ConfigurableBundleTemplatePageSearchExpander implements ConfigurableBundle
     ): ConfigurableBundleTemplatePageSearchTransfer {
         $configurableBundleTemplatePageSearchTransfer = $this->expandConfigurableBundleTemplatePageSearchTransferWithImages(
             $configurableBundleTemplateTransfer,
-            $configurableBundleTemplatePageSearchTransfer
+            $configurableBundleTemplatePageSearchTransfer,
         );
 
         $configurableBundleTemplatePageSearchTransfer = $this->executeConfigurableBundleTemplatePageDataExpanderPlugins(
             $configurableBundleTemplateTransfer,
-            $configurableBundleTemplatePageSearchTransfer
+            $configurableBundleTemplatePageSearchTransfer,
         );
 
         return $configurableBundleTemplatePageSearchTransfer;
@@ -72,7 +72,7 @@ class ConfigurableBundleTemplatePageSearchExpander implements ConfigurableBundle
         foreach ($this->configurableBundleTemplatePageDataExpanderPlugins as $configurableBundleTemplatePageDataExpanderPlugin) {
             $configurableBundleTemplatePageSearchTransfer = $configurableBundleTemplatePageDataExpanderPlugin->expand(
                 $configurableBundleTemplateTransfer,
-                $configurableBundleTemplatePageSearchTransfer
+                $configurableBundleTemplatePageSearchTransfer,
             );
         }
 
@@ -93,7 +93,7 @@ class ConfigurableBundleTemplatePageSearchExpander implements ConfigurableBundle
 
         $productImageSetTransfers = $this->productImageFacade->resolveProductImageSetsForLocale(
             $configurableBundleTemplateTransfer->getProductImageSets(),
-            $configurableBundleTemplatePageSearchTransfer->getLocale()
+            $configurableBundleTemplatePageSearchTransfer->getLocale(),
         );
 
         foreach ($productImageSetTransfers as $productImageSetTransfer) {

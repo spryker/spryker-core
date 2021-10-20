@@ -97,7 +97,7 @@ class MerchantRepository extends AbstractRepository implements MerchantRepositor
                 ->createPropelMerchantMapper()
                 ->mapMerchantStoreEntitiesToStoreRelationTransfer(
                     $this->filterMerchantStoresById($merchantStoreEntities, $idMerchant),
-                    (new StoreRelationTransfer())->setIdEntity($idMerchant)
+                    (new StoreRelationTransfer())->setIdEntity($idMerchant),
                 );
         }
 

@@ -52,7 +52,7 @@ class ProductDataValidator extends AbstractImportDataValidator
         if ($this->isSkuFieldUnique($priceProductScheduleImportTransfer) === false) {
             return $this->createPriceProductScheduleListImportErrorTransfer(
                 $priceProductScheduleImportTransfer,
-                static::ERROR_MESSAGE_SKU_NOT_VALID
+                static::ERROR_MESSAGE_SKU_NOT_VALID,
             );
         }
 
@@ -60,7 +60,7 @@ class ProductDataValidator extends AbstractImportDataValidator
             return $this->createPriceProductScheduleListImportErrorTransfer(
                 $priceProductScheduleImportTransfer,
                 static::ERROR_MESSAGE_PRODUCT_ABSTRACT_NOT_FOUND,
-                ['%sku%' => $priceProductScheduleImportTransfer->getSkuProductAbstract()]
+                ['%sku%' => $priceProductScheduleImportTransfer->getSkuProductAbstract()],
             );
         }
 
@@ -68,7 +68,7 @@ class ProductDataValidator extends AbstractImportDataValidator
             return $this->createPriceProductScheduleListImportErrorTransfer(
                 $priceProductScheduleImportTransfer,
                 static::ERROR_MESSAGE_PRODUCT_CONCRETE_NOT_FOUND,
-                ['%sku%' => $priceProductScheduleImportTransfer->getSkuProduct()]
+                ['%sku%' => $priceProductScheduleImportTransfer->getSkuProduct()],
             );
         }
 

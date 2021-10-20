@@ -48,7 +48,7 @@ class CompanyBusinessUnitAddressReader implements CompanyBusinessUnitAddressRead
     ): CompanyUnitAddressCollectionTransfer {
         $criteriaFilterTransfer = new CompanyUnitAddressCriteriaFilterTransfer();
         $criteriaFilterTransfer->setIdCompanyBusinessUnit(
-            $companyBusinessUnitTransfer->getIdCompanyBusinessUnit()
+            $companyBusinessUnitTransfer->getIdCompanyBusinessUnit(),
         );
 
         return $this->getCompanyBusinessUnitAddressesByCriteriaFilter($criteriaFilterTransfer);

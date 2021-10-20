@@ -48,7 +48,7 @@ class DoubleSubmitProtectionFormPlugin extends AbstractPlugin implements FormPlu
     public function extend(FormFactoryBuilderInterface $formFactoryBuilder, ContainerInterface $container): FormFactoryBuilderInterface
     {
         $formFactoryBuilder->addExtension(
-            $this->createDoubleSubmitProtectionExtension($container)
+            $this->createDoubleSubmitProtectionExtension($container),
         );
 
         return $formFactoryBuilder;
@@ -64,7 +64,7 @@ class DoubleSubmitProtectionFormPlugin extends AbstractPlugin implements FormPlu
         return new DoubleSubmitProtectionExtension(
             $this->getFactory()->createTokenGenerator(),
             $this->createTokenStorage($container),
-            $this->getTranslatorService($container)
+            $this->getTranslatorService($container),
         );
     }
 

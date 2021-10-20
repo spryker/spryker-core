@@ -218,7 +218,7 @@ class QuoteRequestWriter implements QuoteRequestWriterInterface
         }
 
         $this->quoteRequestEntityManager->updateQuoteRequestVersion(
-            $this->quoteRequestVersionSanitizer->cleanUpQuoteRequestVersionQuote($quoteRequestTransfer->getLatestVersion())
+            $this->quoteRequestVersionSanitizer->cleanUpQuoteRequestVersionQuote($quoteRequestTransfer->getLatestVersion()),
         );
 
         return $this->createSuccessfulResponse($quoteRequestTransfer);
@@ -291,7 +291,7 @@ class QuoteRequestWriter implements QuoteRequestWriterInterface
             ->setFkQuoteRequest($quoteRequestTransfer->getIdQuoteRequest());
 
         $quoteRequestVersionTransfer->setVersionReference(
-            $this->quoteRequestReferenceGenerator->generateQuoteRequestVersionReference($quoteRequestTransfer, $quoteRequestVersionTransfer)
+            $this->quoteRequestReferenceGenerator->generateQuoteRequestVersionReference($quoteRequestTransfer, $quoteRequestVersionTransfer),
         );
 
         return $this->quoteRequestEntityManager->createQuoteRequestVersion($quoteRequestVersionTransfer);
@@ -317,7 +317,7 @@ class QuoteRequestWriter implements QuoteRequestWriterInterface
             ->setMetadata($latestQuoteRequestVersionTransfer->getMetadata());
 
         $quoteRequestVersionTransfer->setVersionReference(
-            $this->quoteRequestReferenceGenerator->generateQuoteRequestVersionReference($quoteRequestTransfer, $quoteRequestVersionTransfer)
+            $this->quoteRequestReferenceGenerator->generateQuoteRequestVersionReference($quoteRequestTransfer, $quoteRequestVersionTransfer),
         );
 
         $quoteRequestVersionTransfer = $this->quoteRequestVersionSanitizer->cleanUpQuoteRequestVersionQuote($quoteRequestVersionTransfer);
@@ -336,7 +336,7 @@ class QuoteRequestWriter implements QuoteRequestWriterInterface
         return $this->quoteRequestEntityManager->updateQuoteRequestStatus(
             $quoteRequestTransfer->getQuoteRequestReference(),
             $quoteRequestTransfer->getStatus(),
-            SharedQuoteRequestConfig::STATUS_DRAFT
+            SharedQuoteRequestConfig::STATUS_DRAFT,
         );
     }
 

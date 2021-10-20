@@ -60,7 +60,7 @@ class CmsBlockProductStorageReader implements CmsBlockProductStorageReaderInterf
 
         $searchKey = $this->generateKey(
             (string)$cmsBlockRequestTransfer->getProduct(),
-            static::RESOURCE_CMS_BLOCK_PRODUCT
+            static::RESOURCE_CMS_BLOCK_PRODUCT,
         );
 
         $block = $this->storageClient->get($searchKey);

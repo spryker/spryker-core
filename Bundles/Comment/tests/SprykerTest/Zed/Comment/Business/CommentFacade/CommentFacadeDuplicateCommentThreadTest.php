@@ -195,7 +195,7 @@ class CommentFacadeDuplicateCommentThreadTest extends Unit
         $this->assertFalse($commentThreadResponseTransfer->getIsSuccessful());
         $this->assertEquals(
             static::GLOSSARY_KEY_COMMENT_THREAD_ALREADY_EXISTS,
-            $commentThreadResponseTransfer->getMessages()[0]->getValue()
+            $commentThreadResponseTransfer->getMessages()[0]->getValue(),
         );
     }
 
@@ -246,7 +246,7 @@ class CommentFacadeDuplicateCommentThreadTest extends Unit
         $this->assertCount(1, $commentThreadTransfer->getComments());
         $this->assertEquals(
             $commentTransfer->getCommentTags()->offsetGet(0)->getName(),
-            $storedCommentTransfer->getCommentTags()->offsetGet(0)->getName()
+            $storedCommentTransfer->getCommentTags()->offsetGet(0)->getName(),
         );
     }
 

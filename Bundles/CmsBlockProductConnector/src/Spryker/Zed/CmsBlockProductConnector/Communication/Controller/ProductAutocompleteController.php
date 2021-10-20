@@ -83,10 +83,10 @@ class ProductAutocompleteController extends AbstractController
 
         return $this->jsonResponse([
             static::RESPONSE_KEY_RESULTS => $this->transformProductAbstractSuggestionsToAutocompleteData(
-                $productAbstractSuggestionCollectionTransfer->getProductAbstracts()
+                $productAbstractSuggestionCollectionTransfer->getProductAbstracts(),
             ),
             static::RESPONSE_KEY_PAGINATION => $this->getPaginationData(
-                $productAbstractSuggestionCollectionTransfer->getPagination()
+                $productAbstractSuggestionCollectionTransfer->getPagination(),
             ),
         ]);
     }
@@ -118,7 +118,7 @@ class ProductAutocompleteController extends AbstractController
                 static::RESPONSE_DATA_KEY_ID => $productAbstractTransfer->getIdProductAbstract(),
                 static::RESPONSE_DATA_KEY_TEXT => $productLabelFormatter->format(
                     $productAbstractTransfer->getName(),
-                    $productAbstractTransfer->getSku()
+                    $productAbstractTransfer->getSku(),
                 ),
             ];
         }

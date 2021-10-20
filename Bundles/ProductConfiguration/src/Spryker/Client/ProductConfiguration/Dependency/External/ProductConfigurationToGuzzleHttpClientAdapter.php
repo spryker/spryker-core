@@ -44,7 +44,7 @@ class ProductConfigurationToGuzzleHttpClientAdapter implements ProductConfigurat
             throw new ProductConfigurationHttpRequestException(
                 $exception->getMessage(),
                 $exception->getCode(),
-                $exception
+                $exception,
             );
         }
     }

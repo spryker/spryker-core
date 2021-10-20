@@ -120,7 +120,7 @@ class ProductRelationRepository extends AbstractRepository implements ProductRel
             ->createProductRelationMapper()
             ->mapProductRelationEntityToProductRelationTransfer(
                 $productRelationEntity,
-                new ProductRelationTransfer()
+                new ProductRelationTransfer(),
             );
     }
 
@@ -153,7 +153,7 @@ class ProductRelationRepository extends AbstractRepository implements ProductRel
             ->createProductMapper()
             ->mapProductAbstractEntitiesToProductAbstractTransfers(
                 $relatedProducts,
-                []
+                [],
             );
     }
 
@@ -229,7 +229,7 @@ class ProductRelationRepository extends AbstractRepository implements ProductRel
             ->createProductRelationTypeMapper()
             ->mapProductRelationTypeEntitiesToProductRelationTypeTransfer(
                 $productRelationTypeEntities,
-                []
+                [],
             );
     }
 
@@ -255,7 +255,7 @@ class ProductRelationRepository extends AbstractRepository implements ProductRel
             ->createProductRelationMapper()
             ->mapProductRelationEntitiesToProductRelationTransfers(
                 $productRelationEntities,
-                []
+                [],
             );
     }
 

@@ -62,7 +62,7 @@ class ExpandQueryJoinCollectionWithCompanyBusinessUnitFilterTest extends Unit
         // Act
         $queryJoinCollectionTransfer = $this->tester->getFacade()->expandQueryJoinCollectionWithCompanyBusinessUnitFilter(
             [$filterFieldTransfer],
-            $queryJoinCollectionTransfer
+            $queryJoinCollectionTransfer,
         );
 
         // Assert
@@ -100,7 +100,7 @@ class ExpandQueryJoinCollectionWithCompanyBusinessUnitFilterTest extends Unit
         // Act
         $queryJoinCollectionTransfer = $this->tester->getFacade()->expandQueryJoinCollectionWithCompanyBusinessUnitFilter(
             [$filterFieldTransfer],
-            $queryJoinCollectionTransfer
+            $queryJoinCollectionTransfer,
         );
 
         // Assert

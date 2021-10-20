@@ -123,7 +123,7 @@ class PriceProductConcreteReader implements PriceProductConcreteReaderInterface
             ->findProductConcretePricesBySkuAndCriteria($sku, $priceProductCriteriaTransfer);
 
         $priceProductTransfers = $this->priceProductMapper->mapPriceProductStoreEntitiesToPriceProductTransfers(
-            $priceProductStoreEntities
+            $priceProductStoreEntities,
         );
 
         $priceProductTransfers = $this->priceProductExpander->expandPriceProductTransfers($priceProductTransfers);
@@ -148,11 +148,11 @@ class PriceProductConcreteReader implements PriceProductConcreteReaderInterface
 
         $priceProductStoreEntities = $this->priceProductRepository->findProductConcretePricesByIdAndCriteria(
             $idProductConcrete,
-            $priceProductCriteriaTransfer
+            $priceProductCriteriaTransfer,
         );
 
         $priceProductTransfers = $this->priceProductMapper->mapPriceProductStoreEntitiesToPriceProductTransfers(
-            $priceProductStoreEntities
+            $priceProductStoreEntities,
         );
 
         $priceProductTransfers = $this->priceProductExpander->expandPriceProductTransfers($priceProductTransfers);
@@ -186,7 +186,7 @@ class PriceProductConcreteReader implements PriceProductConcreteReaderInterface
             ->findProductConcretePricesBySkuAndCriteria($sku, $priceProductCriteriaTransfer);
 
         $priceProductTransfers = $this->priceProductMapper->mapPriceProductStoreEntitiesToPriceProductTransfers(
-            $priceProductStoreEntities
+            $priceProductStoreEntities,
         );
 
         $priceProductTransfers = $this->priceProductExpander->expandPriceProductTransfers($priceProductTransfers);
@@ -232,10 +232,10 @@ class PriceProductConcreteReader implements PriceProductConcreteReaderInterface
 
         $priceProductStoreEntities = $this->priceProductRepository->findProductConcretePricesByIdAndCriteria(
             $idProductConcrete,
-            $priceProductCriteriaTransfer
+            $priceProductCriteriaTransfer,
         );
         $priceProductTransfers = $this->priceProductMapper->mapPriceProductStoreEntitiesToPriceProductTransfers(
-            $priceProductStoreEntities
+            $priceProductStoreEntities,
         );
         $priceProductTransfers = $this->priceProductExpander->expandPriceProductTransfers($priceProductTransfers);
 
@@ -267,14 +267,14 @@ class PriceProductConcreteReader implements PriceProductConcreteReaderInterface
     {
         $priceProductCriteriaTransfer = (new PriceProductCriteriaTransfer())->setPriceDimension(
             (new PriceProductDimensionTransfer())
-                ->setType(PriceProductConfig::PRICE_DIMENSION_DEFAULT)
+                ->setType(PriceProductConfig::PRICE_DIMENSION_DEFAULT),
         );
 
         /** @var int $idProductConcrete */
         $idProductConcrete = $productConcreteTransfer->requireIdProductConcrete()->getIdProductConcrete();
         $priceProductTransfers = $this->findProductConcretePricesById(
             $idProductConcrete,
-            $priceProductCriteriaTransfer
+            $priceProductCriteriaTransfer,
         );
 
         if ($priceProductTransfers) {
@@ -316,7 +316,7 @@ class PriceProductConcreteReader implements PriceProductConcreteReaderInterface
         foreach ($this->priceProductExternalProviderPlugins as $priceProductExternalProviderPlugin) {
             $priceProductTransfers = array_merge($priceProductTransfers, $priceProductExternalProviderPlugin->providePriceProductTransfers(
                 $skus,
-                $priceProductCriteriaTransfer
+                $priceProductCriteriaTransfer,
             ));
         }
 

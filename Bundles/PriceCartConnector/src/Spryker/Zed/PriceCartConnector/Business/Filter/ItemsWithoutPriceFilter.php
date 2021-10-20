@@ -135,7 +135,7 @@ class ItemsWithoutPriceFilter implements ItemFilterInterface
 
         $priceProductFilterTransfer = $this->mapItemTransferToPriceProductFilterTransfer(
             (new PriceProductFilterTransfer()),
-            $itemTransfer
+            $itemTransfer,
         );
 
         $priceProductFilterTransfer->setStoreName($storeName)

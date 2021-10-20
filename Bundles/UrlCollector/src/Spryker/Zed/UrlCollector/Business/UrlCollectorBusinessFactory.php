@@ -34,7 +34,7 @@ class UrlCollectorBusinessFactory extends AbstractBusinessFactory
     {
         $collector = new UrlCollector(
             $this->getDataReaderService(),
-            $this->getUrlQueryContainer()
+            $this->getUrlQueryContainer(),
         );
 
         $collector->setTouchQueryContainer($this->getTouchQueryContainer());
@@ -82,7 +82,7 @@ class UrlCollectorBusinessFactory extends AbstractBusinessFactory
     {
         return new UrlCollectorRunner(
             $this->createStorageUrlCollector(),
-            $this->getCollectorFacade()
+            $this->getCollectorFacade(),
         );
     }
 }

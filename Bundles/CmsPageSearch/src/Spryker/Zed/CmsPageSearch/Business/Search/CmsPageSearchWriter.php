@@ -129,7 +129,7 @@ class CmsPageSearchWriter implements CmsPageSearchWriterInterface
     {
         $pairedEntities = $this->pairCmsPageEntitiesWithCmsPageSearchEntities(
             $cmsPageEntities,
-            $cmsPageSearchEntities
+            $cmsPageSearchEntities,
         );
 
         foreach ($pairedEntities as $pair) {
@@ -149,7 +149,7 @@ class CmsPageSearchWriter implements CmsPageSearchWriterInterface
                 $cmsPageEntity,
                 $cmsPageSearchEntity,
                 $pair[static::LOCALE_NAME],
-                $pair[static::STORE_NAME]
+                $pair[static::STORE_NAME],
             );
         }
     }
@@ -218,7 +218,7 @@ class CmsPageSearchWriter implements CmsPageSearchWriterInterface
     {
         return $this->cmsPageSearchDataMapper->mapCmsDataToSearchData(
             $cmsPageDataTransfer->toArray(),
-            (new LocaleTransfer())->setLocaleName($localeName)
+            (new LocaleTransfer())->setLocaleName($localeName),
         );
     }
 
@@ -279,16 +279,16 @@ class CmsPageSearchWriter implements CmsPageSearchWriterInterface
     ): LocaleCmsPageDataTransfer {
         $url = $this->extractUrlByLocales(
             $cmsPageEntity->getSpyUrls()->getData(),
-            $localeName
+            $localeName,
         );
 
         $cmsVersionDataTransfer = $this->cmsFacade->extractCmsVersionDataTransfer(
-            $cmsPageEntity->getSpyCmsVersions()->getFirst()->getData()
+            $cmsPageEntity->getSpyCmsVersions()->getFirst()->getData(),
         );
 
         $localeCmsPageDataTransfer = $this->cmsFacade->extractLocaleCmsPageDataTransfer(
             $cmsVersionDataTransfer,
-            (new LocaleTransfer())->setLocaleName($localeName)
+            (new LocaleTransfer())->setLocaleName($localeName),
         );
 
         $localeCmsPageDataTransfer->setStoreName($storeName);
@@ -335,7 +335,7 @@ class CmsPageSearchWriter implements CmsPageSearchWriterInterface
                 $cmsPageEntity,
                 $cmsPageSearchEntities,
                 $localeNames,
-                $pairs
+                $pairs,
             );
         }
 

@@ -108,7 +108,7 @@ class PersistentCartStub implements PersistentCartStubInterface
         /** @var \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer */
         $quoteResponseTransfer = $this->zedRequestClient->call(
             '/persistent-cart/gateway/update-quantity',
-            $persistentCartChangeTransfer
+            $persistentCartChangeTransfer,
         );
 
         return $quoteResponseTransfer;

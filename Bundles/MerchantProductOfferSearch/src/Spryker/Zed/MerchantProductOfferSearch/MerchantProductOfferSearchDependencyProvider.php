@@ -76,7 +76,7 @@ class MerchantProductOfferSearchDependencyProvider extends AbstractBundleDepende
     {
         $container->set(static::FACADE_EVENT_BEHAVIOR, function (Container $container) {
             return new MerchantProductOfferSearchToEventBehaviorFacadeBridge(
-                $container->getLocator()->eventBehavior()->facade()
+                $container->getLocator()->eventBehavior()->facade(),
             );
         });
 
@@ -92,7 +92,7 @@ class MerchantProductOfferSearchDependencyProvider extends AbstractBundleDepende
     {
         $container->set(static::FACADE_PRODUCT_PAGE_SEARCH, function (Container $container) {
             return new MerchantProductOfferSearchToProductPageSearchFacadeBridge(
-                $container->getLocator()->productPageSearch()->facade()
+                $container->getLocator()->productPageSearch()->facade(),
             );
         });
 

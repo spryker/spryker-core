@@ -43,7 +43,7 @@ class ResourceShareActivator implements ResourceShareActivatorInterface
         ResourceShareRequestTransfer $resourceShareRequestTransfer
     ): ResourceShareResponseTransfer {
         return $this->executeResourceShareActivatorStrategyPlugins(
-            $resourceShareRequestTransfer
+            $resourceShareRequestTransfer,
         );
     }
 

@@ -361,7 +361,7 @@ class StorageDatabaseClientTest extends Unit
             $this->tester->haveRecordInFixtureStorageTable(
                 $fixtureRowData[StorageDatabaseHelper::COLUMN_KEY],
                 $fixtureRowData[StorageDatabaseHelper::COLUMN_DATA],
-                $fixtureRowData[StorageDatabaseHelper::COLUMN_ALIAS_KEYS]
+                $fixtureRowData[StorageDatabaseHelper::COLUMN_ALIAS_KEYS],
             );
         }
 

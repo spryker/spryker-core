@@ -63,7 +63,7 @@ class ProductImageCartPluginTest extends Unit
             ->addItem(
                 (new ItemTransfer())
                     ->setProductConcrete($productConcreteTransfer)
-                    ->setId($productConcreteTransfer->getIdProductConcrete())
+                    ->setId($productConcreteTransfer->getIdProductConcrete()),
             );
 
         // Act

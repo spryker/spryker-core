@@ -54,7 +54,7 @@ class ProductBundleStorageDependencyProvider extends AbstractDependencyProvider
     {
         $container->set(static::CLIENT_STORAGE, function (Container $container) {
             return new ProductBundleStorageToStorageClientBridge(
-                $container->getLocator()->storage()->client()
+                $container->getLocator()->storage()->client(),
             );
         });
 
@@ -70,7 +70,7 @@ class ProductBundleStorageDependencyProvider extends AbstractDependencyProvider
     {
         $container->set(static::SERVICE_SYNCHRONIZATION, function (Container $container) {
             return new ProductBundleStorageToSynchronizationServiceBridge(
-                $container->getLocator()->synchronization()->service()
+                $container->getLocator()->synchronization()->service(),
             );
         });
 
@@ -86,7 +86,7 @@ class ProductBundleStorageDependencyProvider extends AbstractDependencyProvider
     {
         $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new ProductBundleStorageToUtilEncodingServiceBridge(
-                $container->getLocator()->utilEncoding()->service()
+                $container->getLocator()->utilEncoding()->service(),
             );
         });
 

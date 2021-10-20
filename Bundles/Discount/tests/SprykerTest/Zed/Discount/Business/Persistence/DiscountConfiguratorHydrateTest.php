@@ -56,77 +56,77 @@ class DiscountConfiguratorHydrateTest extends Unit
 
         $this->assertSame(
             $discountEntity->getDecisionRuleQueryString(),
-            $hydratedDiscountConfiguration->getDiscountCondition()->getDecisionRuleQueryString()
+            $hydratedDiscountConfiguration->getDiscountCondition()->getDecisionRuleQueryString(),
         );
 
         $this->assertSame(
             $discountEntity->getAmount(),
-            $hydratedDiscountConfiguration->getDiscountCalculator()->getAmount()
+            $hydratedDiscountConfiguration->getDiscountCalculator()->getAmount(),
         );
 
         $this->assertSame(
             $discountEntity->getCollectorQueryString(),
-            $hydratedDiscountConfiguration->getDiscountCalculator()->getCollectorQueryString()
+            $hydratedDiscountConfiguration->getDiscountCalculator()->getCollectorQueryString(),
         );
 
         $this->assertSame(
             $discountEntity->getCalculatorPlugin(),
-            $hydratedDiscountConfiguration->getDiscountCalculator()->getCalculatorPlugin()
+            $hydratedDiscountConfiguration->getDiscountCalculator()->getCalculatorPlugin(),
         );
 
         $this->assertSame(
             $discountEntity->getDisplayName(),
-            $hydratedDiscountConfiguration->getDiscountGeneral()->getDisplayName()
+            $hydratedDiscountConfiguration->getDiscountGeneral()->getDisplayName(),
         );
 
         $this->assertSame(
             $discountEntity->getDescription(),
-            $hydratedDiscountConfiguration->getDiscountGeneral()->getDescription()
+            $hydratedDiscountConfiguration->getDiscountGeneral()->getDescription(),
         );
 
         $this->assertEquals(
             $discountEntity->getValidFrom(),
-            $hydratedDiscountConfiguration->getDiscountGeneral()->getValidFrom()
+            $hydratedDiscountConfiguration->getDiscountGeneral()->getValidFrom(),
         );
 
         $this->assertEquals(
             $discountEntity->getValidTo(),
-            $hydratedDiscountConfiguration->getDiscountGeneral()->getValidTo()
+            $hydratedDiscountConfiguration->getDiscountGeneral()->getValidTo(),
         );
 
         $this->assertSame(
             $discountEntity->getIsActive(),
-            $hydratedDiscountConfiguration->getDiscountGeneral()->getIsActive()
+            $hydratedDiscountConfiguration->getDiscountGeneral()->getIsActive(),
         );
 
         $this->assertSame(
             $discountEntity->getIsExclusive(),
-            $hydratedDiscountConfiguration->getDiscountGeneral()->getIsExclusive()
+            $hydratedDiscountConfiguration->getDiscountGeneral()->getIsExclusive(),
         );
 
         $this->assertSame(
             $discountEntity->getFkDiscountVoucherPool(),
-            $hydratedDiscountConfiguration->getDiscountVoucher()->getFkDiscountVoucherPool()
+            $hydratedDiscountConfiguration->getDiscountVoucher()->getFkDiscountVoucherPool(),
         );
 
         $this->assertSame(
             $discountEntity->getSpyDiscountStores()->getFirst()->getSpyStore()->getIdStore(),
-            $hydratedDiscountConfiguration->getDiscountGeneral()->getStoreRelation()->getStores()[0]->getIdStore()
+            $hydratedDiscountConfiguration->getDiscountGeneral()->getStoreRelation()->getStores()[0]->getIdStore(),
         );
 
         $this->assertSame(
             $discountEntity->getSpyDiscountStores()->getFirst()->getSpyStore()->getName(),
-            $hydratedDiscountConfiguration->getDiscountGeneral()->getStoreRelation()->getStores()[0]->getName()
+            $hydratedDiscountConfiguration->getDiscountGeneral()->getStoreRelation()->getStores()[0]->getName(),
         );
 
         $this->assertSame(
             $discountEntity->getSpyDiscountStores()->count(),
-            $hydratedDiscountConfiguration->getDiscountGeneral()->getStoreRelation()->getStores()->count()
+            $hydratedDiscountConfiguration->getDiscountGeneral()->getStoreRelation()->getStores()->count(),
         );
 
         $this->assertSame(
             $discountEntity->getSpyDiscountStores()->count(),
-            count($hydratedDiscountConfiguration->getDiscountGeneral()->getStoreRelation()->getIdStores())
+            count($hydratedDiscountConfiguration->getDiscountGeneral()->getStoreRelation()->getIdStores()),
         );
     }
 
@@ -157,7 +157,7 @@ class DiscountConfiguratorHydrateTest extends Unit
             $discountQueryContainerMock,
             $discountEntityMapperMock,
             $discountStoreRelationMapper,
-            $discountConfigurationExpanderPlugins
+            $discountConfigurationExpanderPlugins,
         );
     }
 
@@ -185,16 +185,16 @@ class DiscountConfiguratorHydrateTest extends Unit
                 ->setSpyStore(
                     (new SpyStore())
                         ->setIdStore(1)
-                        ->setName('DE')
-                )
+                        ->setName('DE'),
+                ),
         );
         $discountEntity->addSpyDiscountStore(
             (new SpyDiscountStore())
                 ->setSpyStore(
                     (new SpyStore())
                         ->setIdStore(2)
-                        ->setName('AT')
-                )
+                        ->setName('AT'),
+                ),
         );
 
         return $discountEntity;

@@ -40,7 +40,7 @@ class SalesReturnStub implements SalesReturnStubInterface
         /** @var \Generated\Shared\Transfer\ReturnCollectionTransfer $returnCollectionTransfer */
         $returnCollectionTransfer = $this->zedRequestClient->call(
             '/sales-return/gateway/get-returns',
-            $returnFilterTransfer
+            $returnFilterTransfer,
         );
 
         return $returnCollectionTransfer;
@@ -58,7 +58,7 @@ class SalesReturnStub implements SalesReturnStubInterface
         /** @var \Generated\Shared\Transfer\ReturnResponseTransfer $returnResponseTransfer */
         $returnResponseTransfer = $this->zedRequestClient->call(
             '/sales-return/gateway/create-return',
-            $returnCreateRequestTransfer
+            $returnCreateRequestTransfer,
         );
 
         return $returnResponseTransfer;

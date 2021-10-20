@@ -43,7 +43,7 @@ class ProductConcreteAssertion implements ProductConcreteAssertionInterface
         if ($productExists) {
             throw new ProductConcreteExistsException(sprintf(
                 'Product concrete with sku %s already exists',
-                $sku
+                $sku,
             ));
         }
     }
@@ -66,7 +66,7 @@ class ProductConcreteAssertion implements ProductConcreteAssertionInterface
         if (!$isUnique) {
             throw new ProductConcreteExistsException(sprintf(
                 'Product concrete with sku %s already exists',
-                $sku
+                $sku,
             ));
         }
     }
@@ -88,7 +88,7 @@ class ProductConcreteAssertion implements ProductConcreteAssertionInterface
         if (!$productExists) {
             throw new MissingProductException(sprintf(
                 'Product concrete with id "%s" does not exist.',
-                $idProduct
+                $idProduct,
             ));
         }
     }

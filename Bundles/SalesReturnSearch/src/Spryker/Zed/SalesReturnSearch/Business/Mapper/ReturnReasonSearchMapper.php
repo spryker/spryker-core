@@ -53,19 +53,19 @@ class ReturnReasonSearchMapper implements ReturnReasonSearchMapperInterface
     ): ReturnReasonSearchTransfer {
         $returnReasonSearchTransfer->fromArray($returnReasonTransfer->toArray(), true);
         $returnReasonSearchTransfer->setName(
-            $returnReasonTranslations[$returnReasonTransfer->getGlossaryKeyReason()][$localeTransfer->getIdLocale()] ?? $returnReasonTransfer->getGlossaryKeyReason()
+            $returnReasonTranslations[$returnReasonTransfer->getGlossaryKeyReason()][$localeTransfer->getIdLocale()] ?? $returnReasonTransfer->getGlossaryKeyReason(),
         );
 
         $returnReasonSearchData = $returnReasonSearchTransfer->toArray(true, true);
 
         $returnReasonSearchTransfer->setData(
-            $this->returnReasonSearchDataMapper->mapReturnReasonDataToSearchData($returnReasonSearchData, $localeTransfer)
+            $this->returnReasonSearchDataMapper->mapReturnReasonDataToSearchData($returnReasonSearchData, $localeTransfer),
         );
 
         unset($returnReasonSearchData[ReturnReasonSearchTransfer::STRUCTURED_DATA]);
 
         $returnReasonSearchTransfer->setStructuredData(
-            $this->utilEncodingService->encodeJson($returnReasonSearchData)
+            $this->utilEncodingService->encodeJson($returnReasonSearchData),
         );
 
         $returnReasonSearchTransfer->setLocale($localeTransfer->getLocaleName());

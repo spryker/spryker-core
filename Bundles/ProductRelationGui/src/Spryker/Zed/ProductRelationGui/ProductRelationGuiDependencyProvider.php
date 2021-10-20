@@ -121,7 +121,7 @@ class ProductRelationGuiDependencyProvider extends AbstractBundleDependencyProvi
     {
         $container->set(static::QUERY_CONTAINER_PROPEL_QUERY_BUILDER, function (Container $container) {
             return new ProductRelationGuiToPropelQueryBuilderQueryContainerBridge(
-                $container->getLocator()->propelQueryBuilder()->queryContainer()
+                $container->getLocator()->propelQueryBuilder()->queryContainer(),
             );
         });
 
@@ -165,7 +165,7 @@ class ProductRelationGuiDependencyProvider extends AbstractBundleDependencyProvi
     {
         $container->set(static::FACADE_PRODUCT_ATTRIBUTE, function (Container $container) {
             return new ProductRelationGuiToProductAttributeFacadeBridge(
-                $container->getLocator()->productAttribute()->facade()
+                $container->getLocator()->productAttribute()->facade(),
             );
         });
 
@@ -181,7 +181,7 @@ class ProductRelationGuiDependencyProvider extends AbstractBundleDependencyProvi
     {
         $container->set(static::FACADE_LOCALE, function (Container $container) {
             return new ProductRelationGuiToLocaleFacadeBridge(
-                $container->getLocator()->locale()->facade()
+                $container->getLocator()->locale()->facade(),
             );
         });
 
@@ -197,7 +197,7 @@ class ProductRelationGuiDependencyProvider extends AbstractBundleDependencyProvi
     {
         $container->set(static::FACADE_PRODUCT_RELATION, function (Container $container) {
             return new ProductRelationGuiToProductRelationFacadeBridge(
-                $container->getLocator()->productRelation()->facade()
+                $container->getLocator()->productRelation()->facade(),
             );
         });
 
@@ -213,7 +213,7 @@ class ProductRelationGuiDependencyProvider extends AbstractBundleDependencyProvi
     {
         $container->set(static::FACADE_PRODUCT, function (Container $container) {
             return new ProductRelationGuiToProductFacadeBridge(
-                $container->getLocator()->product()->facade()
+                $container->getLocator()->product()->facade(),
             );
         });
 
@@ -229,7 +229,7 @@ class ProductRelationGuiDependencyProvider extends AbstractBundleDependencyProvi
     {
         $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new ProductRelationGuiToUtilEncodingServiceBridge(
-                $container->getLocator()->utilEncoding()->service()
+                $container->getLocator()->utilEncoding()->service(),
             );
         });
 
@@ -262,8 +262,8 @@ class ProductRelationGuiDependencyProvider extends AbstractBundleDependencyProvi
                 'Missing instance of %s! You need to configure StoreRelationFormType ' .
                 'in your own ProductRelationGuiDependencyProvider::getStoreRelationFormTypePlugin() ' .
                 'to be able to manage product relations.',
-                FormTypeInterface::class
-            )
+                FormTypeInterface::class,
+            ),
         );
     }
 }

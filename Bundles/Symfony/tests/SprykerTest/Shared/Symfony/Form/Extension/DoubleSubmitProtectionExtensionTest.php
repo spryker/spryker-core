@@ -88,8 +88,8 @@ class DoubleSubmitProtectionExtensionTest extends Unit
                     'form',
                     FormType::class,
                     null,
-                    ['token_field_name' => '_requestToken']
-                )
+                    ['token_field_name' => '_requestToken'],
+                ),
             )
             ->getForm()
             ->get('form')

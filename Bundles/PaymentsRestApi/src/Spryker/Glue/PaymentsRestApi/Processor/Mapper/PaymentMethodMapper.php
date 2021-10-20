@@ -72,7 +72,7 @@ class PaymentMethodMapper implements PaymentMethodMapperInterface
         foreach ($paymentProviders as $paymentProviderTransfer) {
             $isPaymentProviderRequested = $this->isPaymentProviderRequested(
                 $restCheckoutRequestAttributesTransfer,
-                $paymentProviderTransfer
+                $paymentProviderTransfer,
             );
 
             if (!$isPaymentProviderRequested) {
@@ -82,7 +82,7 @@ class PaymentMethodMapper implements PaymentMethodMapperInterface
             $restCheckoutDataResponseAttributesTransfer = $this->addSelectedPaymentMethodToRestCheckoutDataResponseAttributesTransfer(
                 $restCheckoutDataResponseAttributesTransfer,
                 $paymentProviderTransfer,
-                $restCheckoutRequestAttributesTransfer
+                $restCheckoutRequestAttributesTransfer,
             );
         }
 
@@ -124,7 +124,7 @@ class PaymentMethodMapper implements PaymentMethodMapperInterface
         foreach ($paymentProviderTransfer->getPaymentMethods() as $paymentMethodTransfer) {
             $isPaymentMethodRequested = $this->isPaymentMethodRequested(
                 $restCheckoutRequestAttributesTransfer,
-                $paymentMethodTransfer
+                $paymentMethodTransfer,
             );
             if (!$isPaymentMethodRequested) {
                 continue;
@@ -133,8 +133,8 @@ class PaymentMethodMapper implements PaymentMethodMapperInterface
             $restCheckoutDataResponseAttributesTransfer->addSelectedPaymentMethod(
                 $this->createRestPaymentMethodTransfer(
                     $paymentMethodTransfer,
-                    $paymentProviderTransfer
-                )
+                    $paymentProviderTransfer,
+                ),
             );
         }
 
@@ -175,7 +175,7 @@ class PaymentMethodMapper implements PaymentMethodMapperInterface
             ->setPaymentMethodName($paymentMethodTransfer->getName())
             ->setPaymentProviderName($paymentProviderTransfer->getPaymentProviderKey())
             ->setRequiredRequestData(
-                $this->config->getRequiredRequestDataForPaymentMethod($paymentProviderTransfer->getName(), $paymentMethodTransfer->getName())
+                $this->config->getRequiredRequestDataForPaymentMethod($paymentProviderTransfer->getName(), $paymentMethodTransfer->getName()),
             );
     }
 
@@ -196,7 +196,7 @@ class PaymentMethodMapper implements PaymentMethodMapperInterface
             ->setPaymentProviderName($paymentProviderKey)
             ->setPriority($this->config->getPaymentMethodPriority()[$paymentMethodKey] ?? null)
             ->setRequiredRequestData(
-                $this->config->getRequiredRequestDataForPaymentMethod($paymentProviderKey, $paymentMethodKey)
+                $this->config->getRequiredRequestDataForPaymentMethod($paymentProviderKey, $paymentMethodKey),
             );
     }
 }

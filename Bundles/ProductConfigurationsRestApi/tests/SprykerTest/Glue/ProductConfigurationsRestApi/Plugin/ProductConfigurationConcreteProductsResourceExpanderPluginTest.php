@@ -48,12 +48,12 @@ class ProductConfigurationConcreteProductsResourceExpanderPluginTest extends Uni
         $productConfigurationInstanceTransfer = (new ProductConfigurationInstanceBuilder())->build();
         $restProductConfigurationInstanceAttributesTransfer = (new RestProductConfigurationInstanceAttributesTransfer())->fromArray(
             $productConfigurationInstanceTransfer->toArray(),
-            true
+            true,
         );
         $concreteProductsRestAttributesTransfer = (new ConcreteProductsRestAttributesBuilder())->build();
         $this->tester->setDependency(
             ProductConfigurationsRestApiDependencyProvider::CLIENT_PRODUCT_CONFIGURATION_STORAGE,
-            $this->createProductConfigurationStorageClientMock($productConfigurationInstanceTransfer)
+            $this->createProductConfigurationStorageClientMock($productConfigurationInstanceTransfer),
         );
 
         $productConfigurationConcreteProductsResourceExpanderPlugin = new ProductConfigurationConcreteProductsResourceExpanderPlugin();
@@ -62,14 +62,14 @@ class ProductConfigurationConcreteProductsResourceExpanderPluginTest extends Uni
         $concreteProductsRestAttributesTransfer = $productConfigurationConcreteProductsResourceExpanderPlugin->expand(
             $concreteProductsRestAttributesTransfer,
             static::TEST_ID_PRODUCT_CONCRETE,
-            $this->createRestRequestMock()
+            $this->createRestRequestMock(),
         );
 
         // Assert
         $this->assertNotNull($concreteProductsRestAttributesTransfer->getProductConfigurationInstance());
         $this->assertEquals(
             $concreteProductsRestAttributesTransfer->getProductConfigurationInstance()->toArray(),
-            $restProductConfigurationInstanceAttributesTransfer->toArray()
+            $restProductConfigurationInstanceAttributesTransfer->toArray(),
         );
     }
 
@@ -82,7 +82,7 @@ class ProductConfigurationConcreteProductsResourceExpanderPluginTest extends Uni
         $concreteProductsRestAttributesTransfer = (new ConcreteProductsRestAttributesBuilder())->build();
         $this->tester->setDependency(
             ProductConfigurationsRestApiDependencyProvider::CLIENT_PRODUCT_CONFIGURATION_STORAGE,
-            $this->createProductConfigurationStorageClientMock()
+            $this->createProductConfigurationStorageClientMock(),
         );
 
         $productConfigurationConcreteProductsResourceExpanderPlugin = new ProductConfigurationConcreteProductsResourceExpanderPlugin();
@@ -91,7 +91,7 @@ class ProductConfigurationConcreteProductsResourceExpanderPluginTest extends Uni
         $concreteProductsRestAttributesTransfer = $productConfigurationConcreteProductsResourceExpanderPlugin->expand(
             $concreteProductsRestAttributesTransfer,
             static::TEST_ID_PRODUCT_CONCRETE,
-            $this->createRestRequestMock()
+            $this->createRestRequestMock(),
         );
 
         // Assert

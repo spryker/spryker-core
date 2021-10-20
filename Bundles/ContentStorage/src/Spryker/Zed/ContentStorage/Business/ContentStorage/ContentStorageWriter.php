@@ -131,7 +131,7 @@ class ContentStorageWriter implements ContentStorageWriterInterface
             $contentStorageTransfer = new ContentStorageTransfer();
             if (!empty($contentStorageTransfers[$contentTransfer->getIdContent()][$availableLocale])) {
                 $contentStorageTransfer->fromArray(
-                    $contentStorageTransfers[$contentTransfer->getIdContent()][$availableLocale]->toArray()
+                    $contentStorageTransfers[$contentTransfer->getIdContent()][$availableLocale]->toArray(),
                 );
             }
 

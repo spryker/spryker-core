@@ -52,7 +52,7 @@ class ProductOptionsRestApiToProductStorageClientBridge implements ProductOption
         return $this->productStorageClient->getBulkProductConcreteStorageDataByMapping(
             $mappingType,
             $identifiers,
-            $localeName
+            $localeName,
         );
     }
 
@@ -68,7 +68,7 @@ class ProductOptionsRestApiToProductStorageClientBridge implements ProductOption
     ): ?array {
         return $this->productStorageClient->findProductConcreteStorageDataByMappingForCurrentLocale(
             $mappingType,
-            $identifier
+            $identifier,
         );
     }
 }

@@ -33,7 +33,7 @@ class PriceProductOfferStorageFactory extends AbstractFactory
             $this->getStorageClient(),
             $this->getStoreClient(),
             $this->getPriceProductService(),
-            $this->getPriceProductOfferStoragePriceExtractorPlugins()
+            $this->getPriceProductOfferStoragePriceExtractorPlugins(),
         );
     }
 

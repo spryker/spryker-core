@@ -49,11 +49,11 @@ class CompanyBusinessUnitAddressWriter implements CompanyBusinessUnitAddressWrit
         $deleteAddresses = array_diff($currentAddresses, $requestedAddresses);
         $this->assignToCompanyBusinessUnit(
             $saveAddresses,
-            $companyBusinessUnitTransfer->getIdCompanyBusinessUnit()
+            $companyBusinessUnitTransfer->getIdCompanyBusinessUnit(),
         );
         $this->unAssignFromCompanyBusinessUnit(
             $deleteAddresses,
-            $companyBusinessUnitTransfer->getIdCompanyBusinessUnit()
+            $companyBusinessUnitTransfer->getIdCompanyBusinessUnit(),
         );
     }
 
@@ -94,7 +94,7 @@ class CompanyBusinessUnitAddressWriter implements CompanyBusinessUnitAddressWrit
         $idAddresses = [];
 
         $addressCollection = $this->companyBusinessUnitAddressReader->getCompanyBusinessUnitAddresses(
-            $companyBusinessUnitTransfer
+            $companyBusinessUnitTransfer,
         );
 
         foreach ($addressCollection->getCompanyUnitAddresses() as $companyUnitAddress) {

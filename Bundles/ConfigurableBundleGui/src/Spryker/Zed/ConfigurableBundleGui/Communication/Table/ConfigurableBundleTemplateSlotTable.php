@@ -135,8 +135,8 @@ class ConfigurableBundleTemplateSlotTable extends AbstractTable
             sprintf(
                 static::ROUTE_TABLE_RENDERING,
                 static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE,
-                $this->idConfigurableBundleTemplate
-            )
+                $this->idConfigurableBundleTemplate,
+            ),
         );
 
         return $config;
@@ -153,7 +153,7 @@ class ConfigurableBundleTemplateSlotTable extends AbstractTable
         $configurableBundleTemplateSlotCollection = $this->runQuery(
             $this->prepareQuery($this->configurableBundleTemplateSlotPropelQuery),
             $config,
-            true
+            true,
         );
 
         if (!$configurableBundleTemplateSlotCollection->count()) {
@@ -183,7 +183,7 @@ class ConfigurableBundleTemplateSlotTable extends AbstractTable
             ->where(sprintf(
                 '%s = %s',
                 SpyGlossaryTranslationTableMap::COL_FK_LOCALE,
-                $this->localeFacade->getCurrentLocale()->getIdLocale()
+                $this->localeFacade->getCurrentLocale()->getIdLocale(),
             ))
             ->select([
                 SpyConfigurableBundleTemplateSlotTableMap::COL_ID_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT,
@@ -206,8 +206,8 @@ class ConfigurableBundleTemplateSlotTable extends AbstractTable
             $configurableBundleTemplateSlotCollection[$index][static::COL_ACTIONS] = $this->buildLinks($configurableBundleTemplateSlotData);
             $configurableBundleTemplateSlotCollection[$index][static::COL_NUMBER_OF_ITEMS] = count(
                 $this->productListFacade->getProductConcreteIdsByProductListIds(
-                    [$configurableBundleTemplateSlotData[SpyConfigurableBundleTemplateSlotTableMap::COL_FK_PRODUCT_LIST]]
-                )
+                    [$configurableBundleTemplateSlotData[SpyConfigurableBundleTemplateSlotTableMap::COL_FK_PRODUCT_LIST]],
+                ),
             );
         }
 
@@ -226,7 +226,7 @@ class ConfigurableBundleTemplateSlotTable extends AbstractTable
             Url::generate(static::ROUTE_EDIT_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT, [
                 static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT => $configurableBundleTemplateSlotData[SpyConfigurableBundleTemplateSlotTableMap::COL_ID_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT],
             ]),
-            'Edit'
+            'Edit',
         );
         $buttons[] = $this->generateRemoveButton(
             Url::generate(static::ROUTE_DELETE_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT, [
@@ -234,7 +234,7 @@ class ConfigurableBundleTemplateSlotTable extends AbstractTable
             ]),
             'Delete',
             [],
-            DeleteConfigurableBundleSlotForm::class
+            DeleteConfigurableBundleSlotForm::class,
         );
 
         return implode(' ', $buttons);

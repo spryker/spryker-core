@@ -46,8 +46,8 @@ class ProductAbstractTaxReader implements ProductAbstractTaxReaderInterface
             $taxSetResponseTransfer->setError(
                 sprintf(
                     static::EXCEPTION_MESSAGE_TAX_SET_NOT_FOUND_FOR_ABSTRACT,
-                    $productAbstractTransfer->getIdProductAbstract()
-                )
+                    $productAbstractTransfer->getIdProductAbstract(),
+                ),
             );
 
             return $taxSetResponseTransfer;

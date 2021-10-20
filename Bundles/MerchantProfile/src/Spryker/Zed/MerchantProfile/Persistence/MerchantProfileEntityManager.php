@@ -49,8 +49,8 @@ class MerchantProfileEntityManager extends AbstractEntityManager implements Merc
             throw new MerchantProfileNotFoundException(
                 sprintf(
                     'Merchant profile entity could not be found by given id %s',
-                    $merchantProfileTransfer->getIdMerchantProfile()
-                )
+                    $merchantProfileTransfer->getIdMerchantProfile(),
+                ),
             );
         }
 

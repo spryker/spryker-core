@@ -264,7 +264,7 @@ class EditOfferType extends AbstractType
                 $data[static::FIELD_STORE_NAME] = $storeName;
                 $data[static::FIELD_CURRENCY_CODE] = $currencyCode;
                 $event->setData($data);
-            }
+            },
         );
 
         return $this;
@@ -565,7 +565,7 @@ class EditOfferType extends AbstractType
             },
             function ($value) {
                 return (int)($value * 100);
-            }
+            },
         );
     }
 
@@ -588,7 +588,7 @@ class EditOfferType extends AbstractType
                 }
 
                 return $value;
-            }
+            },
         );
     }
 }

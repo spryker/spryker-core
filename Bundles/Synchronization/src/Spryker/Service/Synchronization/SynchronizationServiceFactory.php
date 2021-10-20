@@ -22,7 +22,7 @@ class SynchronizationServiceFactory extends AbstractServiceFactory
         return new SynchronizationKeyBuilder(
             $this->createDefaultKeyGeneratorPlugin(),
             $this->getSynchronizationStorageKeyGeneratorPlugins(),
-            $this->getSynchronizationSearchKeyGeneratorPlugins()
+            $this->getSynchronizationSearchKeyGeneratorPlugins(),
         );
     }
 
@@ -48,7 +48,7 @@ class SynchronizationServiceFactory extends AbstractServiceFactory
     protected function createDefaultKeyGeneratorPlugin()
     {
         return new DefaultKeyGeneratorPlugin(
-            $this->createKeyFilter()
+            $this->createKeyFilter(),
         );
     }
 

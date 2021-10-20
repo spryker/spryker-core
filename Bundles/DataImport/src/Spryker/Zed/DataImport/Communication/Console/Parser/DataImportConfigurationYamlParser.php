@@ -52,7 +52,7 @@ class DataImportConfigurationYamlParser implements DataImportConfigurationParser
 
         $dataImportConfigurationTransfer = $this->dataImportConfigurationMapper->mapDataImportConfigurationDataToDataImportConfigurationTransfer(
             $configData,
-            new DataImportConfigurationTransfer()
+            new DataImportConfigurationTransfer(),
         );
 
         return $this->formatDataImportConfigurationTransfer($dataImportConfigurationTransfer);

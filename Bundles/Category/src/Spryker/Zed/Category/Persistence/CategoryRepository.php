@@ -125,7 +125,7 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
             ->addAnd(
                 SpyCategoryAttributeTableMap::COL_FK_LOCALE,
                 $localeTransfer->getIdLocale(),
-                Criteria::EQUAL
+                Criteria::EQUAL,
             )
             ->find();
 
@@ -145,7 +145,7 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
             ->createCategoryMapper()
             ->mapCategoryCollection(
                 $this->applyCategoryFilters($this->getFactory()->createCategoryQuery(), $categoryCriteriaTransfer)->find(),
-                new CategoryCollectionTransfer()
+                new CategoryCollectionTransfer(),
             );
     }
 
@@ -160,7 +160,7 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
         $nodePathQuery = $this->queryNodePathWithRootNode(
             $idCategoryNode,
             $localeTransfer->getIdLocaleOrFail(),
-            static::NODE_PATH_ZERO_DEPTH
+            static::NODE_PATH_ZERO_DEPTH,
         );
 
         return $this->generateNodePathString($nodePathQuery, static::NODE_PATH_GLUE);
@@ -177,7 +177,7 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
         $nodePathQuery = $this->queryNodePathWithoutRootNode(
             $idNode,
             $localeTransfer->getIdLocaleOrFail(),
-            static::NODE_PATH_NULL_DEPTH
+            static::NODE_PATH_NULL_DEPTH,
         );
 
         return $this->generateNodePathString($nodePathQuery, static::CATEGORY_NODE_PATH_GLUE);
@@ -289,7 +289,7 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
 
         return $this->getFactory()->createCategoryMapper()->mapCategoryWithRelations(
             $spyCategoryEntity,
-            new CategoryTransfer()
+            new CategoryTransfer(),
         );
     }
 
@@ -373,7 +373,7 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
     ): array {
         $categoryClosureTableQuery = $this->buildCategoryClosureTableQueryByIdCategory(
             $categoryTransfer,
-            $categoryCriteriaTransfer
+            $categoryCriteriaTransfer,
         );
 
         $categoryIds = [];
@@ -402,7 +402,7 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
     ): array {
         $categoryClosureTableQuery = $this->buildCategoryClosureTableQueryByIdCategory(
             $categoryTransfer,
-            $categoryCriteriaTransfer
+            $categoryCriteriaTransfer,
         );
 
         $categoryNodeIds = [];
@@ -456,7 +456,7 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
         foreach ($categoryClosureTableEntities as $categoryClosureTableEntity) {
             $nodeTransfer = $categoryMapper->mapCategoryNodeEntityToNodeTransferWithCategoryRelation(
                 $categoryClosureTableEntity->getDescendantNode(),
-                new NodeTransfer()
+                new NodeTransfer(),
             );
             $categoryNodes[$nodeTransfer->getFkParentCategoryNode()][] = $nodeTransfer;
         }
@@ -600,7 +600,7 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
                 SpyCategoryClosureTableTableMap::TABLE_NAME,
                 sprintf('%s = %s', SpyCategoryClosureTableTableMap::COL_FK_CATEGORY_NODE_DESCENDANT, SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE),
                 null,
-                Criteria::LOGICAL_OR
+                Criteria::LOGICAL_OR,
             )
             ->leftJoinWithSpyUrl()
             ->leftJoinWithCategory()
@@ -688,7 +688,7 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
             ->createCategoryMapper()
             ->mapCategoryNodeEntitiesToNodeCollectionTransferWithCategoryRelation(
                 $categoryNodeQuery->find(),
-                new NodeCollectionTransfer()
+                new NodeCollectionTransfer(),
             );
     }
 
@@ -772,7 +772,7 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
             ->createCategoryStoreRelationMapper()
             ->mapCategoryStoreEntitiesToStoreRelationTransfer(
                 $categoryStoreEntities,
-                $storeRelationTransfer
+                $storeRelationTransfer,
             );
     }
 

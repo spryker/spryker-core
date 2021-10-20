@@ -34,7 +34,7 @@ class CommentFactory extends AbstractFactory
     {
         return new CommentTagWriter(
             $this->createZedCommentStub(),
-            $this->getModuleConfig()
+            $this->getModuleConfig(),
         );
     }
 

@@ -464,8 +464,8 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
                 'Missing instance of %s! You need to configure MoneyFormTypePlugin ' .
                 'in your own ProductManagementDependencyProvider::createMoneyFormTypePlugin() ' .
                 'to be able to manage product prices.',
-                FormTypeInterface::class
-            )
+                FormTypeInterface::class,
+            ),
         );
     }
 
@@ -503,8 +503,8 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
                 'Missing instance of %s! You need to configure StoreRelationFormType ' .
                 'in your own ProductManagementDependencyProvider::getStoreRelationFormTypePlugin() ' .
                 'to be able to manage shipment prices.',
-                FormTypeInterface::class
-            )
+                FormTypeInterface::class,
+            ),
         );
     }
 

@@ -84,7 +84,7 @@ class ProductBundlesSalesOrderHydrate implements ProductBundlesSalesOrderHydrate
             $bundledProducts = $this->productBundlePriceCalculation->calculateForBundleItems(
                 $orderTransfer,
                 $salesOrderItemEntity,
-                $bundledProducts
+                $bundledProducts,
             );
         }
 

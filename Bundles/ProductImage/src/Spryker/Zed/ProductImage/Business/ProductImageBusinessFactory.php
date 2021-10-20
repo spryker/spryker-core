@@ -33,7 +33,7 @@ class ProductImageBusinessFactory extends AbstractBusinessFactory
         return new Reader(
             $this->getQueryContainer(),
             $this->createTransferGenerator(),
-            $this->getLocaleFacade()
+            $this->getLocaleFacade(),
         );
     }
 
@@ -51,7 +51,7 @@ class ProductImageBusinessFactory extends AbstractBusinessFactory
     public function createProductImageWriter()
     {
         return new Writer(
-            $this->getQueryContainer()
+            $this->getQueryContainer(),
         );
     }
 
@@ -61,7 +61,7 @@ class ProductImageBusinessFactory extends AbstractBusinessFactory
     public function createTransferGenerator()
     {
         return new ProductImageTransferMapper(
-            $this->getLocaleFacade()
+            $this->getLocaleFacade(),
         );
     }
 
@@ -72,7 +72,7 @@ class ProductImageBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductImageSetCombiner(
             $this->getQueryContainer(),
-            $this->createTransferGenerator()
+            $this->createTransferGenerator(),
         );
     }
 

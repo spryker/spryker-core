@@ -97,7 +97,7 @@ class ConfigurableBundleItemTransformer implements ConfigurableBundleItemTransfo
         return sprintf(
             '%s-%s',
             $itemTransfer->getConfiguredBundle()->getGroupKey(),
-            $groupKeyIndex
+            $groupKeyIndex,
         );
     }
 
@@ -112,7 +112,7 @@ class ConfigurableBundleItemTransformer implements ConfigurableBundleItemTransfo
         $transformedProductOptions = new ArrayObject();
         foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {
             $transformedProductOptions->append(
-                $this->copyProductOptionTransfer($productOptionTransfer, $itemTransfer->getConfiguredBundleItem()->getQuantityPerSlot())
+                $this->copyProductOptionTransfer($productOptionTransfer, $itemTransfer->getConfiguredBundleItem()->getQuantityPerSlot()),
             );
         }
 

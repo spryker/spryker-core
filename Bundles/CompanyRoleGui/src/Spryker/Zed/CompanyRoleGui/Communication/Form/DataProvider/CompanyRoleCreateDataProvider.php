@@ -88,11 +88,11 @@ class CompanyRoleCreateDataProvider
     public function getOptions(): array
     {
         $availablePermissions = $this->prepareAvailablePermissions(
-            $this->permissionFacade->findMergedRegisteredNonInfrastructuralPermissions()
+            $this->permissionFacade->findMergedRegisteredNonInfrastructuralPermissions(),
         );
 
         $availableCompanies = $this->prepareAvailableCompanies(
-            $this->companyFacade->getCompanies()
+            $this->companyFacade->getCompanies(),
         );
 
         return [
@@ -114,7 +114,7 @@ class CompanyRoleCreateDataProvider
             $key = sprintf(
                 '%s (ID: %d)',
                 $companyTransfer->getName(),
-                $companyTransfer->getIdCompany()
+                $companyTransfer->getIdCompany(),
             );
             $preparedCompanies[$key] = $companyTransfer->getIdCompany();
         }
@@ -150,7 +150,7 @@ class CompanyRoleCreateDataProvider
         $permissionTransfer->requireKey();
 
         return $this->glossaryFacade->translate(
-            static::GLOSSARY_KEY_PREFIX_PERMISSION_NAME . $permissionTransfer->getKey()
+            static::GLOSSARY_KEY_PREFIX_PERMISSION_NAME . $permissionTransfer->getKey(),
         );
     }
 }

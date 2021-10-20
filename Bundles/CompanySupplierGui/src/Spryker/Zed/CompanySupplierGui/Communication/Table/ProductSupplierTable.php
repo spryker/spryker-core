@@ -121,7 +121,7 @@ class ProductSupplierTable extends AbstractTable
         $this->defaultUrl = sprintf(
             static::TABLE_URL_DEFAULT_FORMAT,
             static::PARAM_ID_COMPANY,
-            $idCompany
+            $idCompany,
         );
     }
 
@@ -161,7 +161,7 @@ class ProductSupplierTable extends AbstractTable
         $productSupplierCollection = $this->runQuery(
             $this->prepareQuery(),
             $config,
-            true
+            true,
         );
 
         if ($productSupplierCollection->count() < 1) {
@@ -270,7 +270,7 @@ class ProductSupplierTable extends AbstractTable
                     static::PRICE_FORMAT,
                     $this->storeFacade->getStoreById($priceProductEntity->getFkStore())->getName(),
                     $this->currencyFacade->getByIdCurrency($priceProductEntity->getFkCurrency())->getSymbol(),
-                    $this->moneyFacade->convertIntegerToDecimal($priceProductEntity->getGrossPrice())
+                    $this->moneyFacade->convertIntegerToDecimal($priceProductEntity->getGrossPrice()),
                 );
             }
         }

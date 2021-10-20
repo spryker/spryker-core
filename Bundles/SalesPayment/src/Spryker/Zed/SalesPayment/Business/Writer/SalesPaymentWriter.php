@@ -93,7 +93,7 @@ class SalesPaymentWriter implements SalesPaymentWriterInterface
                     ->setFkSalesOrder($idSalesOrder)
                     ->setPaymentMethod($paymentTransfer->getPaymentMethod())
                     ->setPaymentProvider($paymentTransfer->getPaymentProvider())
-                    ->setAmount($paymentTransfer->getAmount())
+                    ->setAmount($paymentTransfer->getAmount()),
             );
 
             $paymentTransfer->setIdSalesPayment($salesPaymentTransfer->getIdSalesPayment());
@@ -110,7 +110,7 @@ class SalesPaymentWriter implements SalesPaymentWriterInterface
         return sprintf(
             '%s-%s',
             $paymentTransfer->getPaymentProvider(),
-            $paymentTransfer->getPaymentMethod()
+            $paymentTransfer->getPaymentMethod(),
         );
     }
 }

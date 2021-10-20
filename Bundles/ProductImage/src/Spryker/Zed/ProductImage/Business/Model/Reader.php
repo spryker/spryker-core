@@ -123,7 +123,7 @@ class Reader implements ReaderInterface
     public function expandProductAbstractWithImageSets(ProductAbstractTransfer $productAbstractTransfer)
     {
         $imageSetCollection = $this->getProductImagesSetCollectionByProductAbstractId(
-            $productAbstractTransfer->requireIdProductAbstract()->getIdProductAbstract()
+            $productAbstractTransfer->requireIdProductAbstract()->getIdProductAbstract(),
         );
 
         if (!$imageSetCollection) {
@@ -143,7 +143,7 @@ class Reader implements ReaderInterface
     public function expandProductConcreteWithImageSets(ProductConcreteTransfer $productConcreteTransfer)
     {
         $productImageSetCollection = $this->getProductImagesSetCollectionByProductId(
-            $productConcreteTransfer->requireIdProductConcrete()->getIdProductConcrete()
+            $productConcreteTransfer->requireIdProductConcrete()->getIdProductConcrete(),
         );
 
         if (!$productImageSetCollection) {

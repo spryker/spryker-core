@@ -30,7 +30,7 @@ class ProductLabelsRestApiFactory extends AbstractFactory
             $this->getProductLabelStorageClient(),
             $this->createProductLabelMapper(),
             $this->getResourceBuilder(),
-            $this->getProductStorageClient()
+            $this->getProductStorageClient(),
         );
     }
 

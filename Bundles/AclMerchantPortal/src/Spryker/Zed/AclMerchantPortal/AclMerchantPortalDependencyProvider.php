@@ -51,7 +51,7 @@ class AclMerchantPortalDependencyProvider extends AbstractBundleDependencyProvid
     {
         $container->set(static::FACADE_ACL, function (Container $container) {
             return new AclMerchantPortalToAclFacadeBridge(
-                $container->getLocator()->acl()->facade()
+                $container->getLocator()->acl()->facade(),
             );
         });
 
@@ -67,7 +67,7 @@ class AclMerchantPortalDependencyProvider extends AbstractBundleDependencyProvid
     {
         $container->set(static::FACADE_ACL_ENTITY, function (Container $container) {
             return new AclMerchantPortalToAclEntityFacadeBridge(
-                $container->getLocator()->aclEntity()->facade()
+                $container->getLocator()->aclEntity()->facade(),
             );
         });
 

@@ -72,7 +72,7 @@ class QuoteRequestCreator implements QuoteRequestCreatorInterface
         $quoteRequestAgentsRequestAttributesTransfer = $restRequest->getResource()->getAttributes();
         $companyUserStorageTransfer = $this->companyUserStorageClient->findCompanyUserByMapping(
             static::MAPPING_TYPE_UUID,
-            $quoteRequestAgentsRequestAttributesTransfer->getCompanyUserUuidOrFail()
+            $quoteRequestAgentsRequestAttributesTransfer->getCompanyUserUuidOrFail(),
         );
 
         if (!$companyUserStorageTransfer) {
@@ -95,7 +95,7 @@ class QuoteRequestCreator implements QuoteRequestCreatorInterface
         return $this->quoteRequestsRestApiResource
             ->createQuoteRequestRestResponse(
                 $quoteRequestResponseTransfer,
-                $restRequest->getMetadata()->getLocale()
+                $restRequest->getMetadata()->getLocale(),
             );
     }
 }

@@ -24,7 +24,7 @@ class ItemToShoppingListItemMapper implements ItemToShoppingListItemMapperInterf
         ShoppingListItemTransfer $shoppingListItemTransfer
     ): ShoppingListItemTransfer {
         $shoppingListItemTransfer->setShoppingListItemNote(
-            (new ShoppingListItemNoteTransfer())->setNote($itemTransfer->getCartNote())
+            (new ShoppingListItemNoteTransfer())->setNote($itemTransfer->getCartNote()),
         );
 
         return $shoppingListItemTransfer;

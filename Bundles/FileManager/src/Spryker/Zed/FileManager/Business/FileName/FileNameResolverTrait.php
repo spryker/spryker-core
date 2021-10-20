@@ -29,7 +29,7 @@ trait FileNameResolverTrait
             $fileInfoTransfer->getFkFile(),
             $this->getFileNameVersionDelimiter(),
             $fileInfoTransfer->getVersionName(),
-            $fileInfoTransfer->getExtension()
+            $fileInfoTransfer->getExtension(),
         );
 
         if ($fileInfoTransfer->getFkFile() && $idFileDirectory) {

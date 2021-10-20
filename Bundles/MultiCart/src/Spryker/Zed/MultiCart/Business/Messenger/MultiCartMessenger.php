@@ -59,7 +59,7 @@ class MultiCartMessenger implements MultiCartMessengerInterface
 
         $isQuoteDefault = $this->multiCartRepository->isQuoteDefault(
             $quoteTransfer->getIdQuote(),
-            $quoteTransfer->getCustomer()->getCustomerReference()
+            $quoteTransfer->getCustomer()->getCustomerReference(),
         );
 
         if ($isQuoteDefault) {

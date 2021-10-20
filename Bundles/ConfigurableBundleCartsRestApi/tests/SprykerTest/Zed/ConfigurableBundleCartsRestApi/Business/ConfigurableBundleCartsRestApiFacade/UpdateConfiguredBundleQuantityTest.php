@@ -98,11 +98,11 @@ class UpdateConfiguredBundleQuantityTest extends Unit
 
         $this->assertSame(
             $bundleQuantity * $firstItemTransfer->getConfiguredBundleItem()->getQuantityPerSlot(),
-            $firstItemTransfer->getQuantity()
+            $firstItemTransfer->getQuantity(),
         );
         $this->assertSame(
             $bundleQuantity * $secondItemTransfer->getConfiguredBundleItem()->getQuantityPerSlot(),
-            $secondItemTransfer->getQuantity()
+            $secondItemTransfer->getQuantity(),
         );
     }
 
@@ -243,7 +243,7 @@ class UpdateConfiguredBundleQuantityTest extends Unit
         $this->assertFalse($quoteResponseTransfer->getIsSuccessful());
         $this->assertSame(
             static::ERROR_IDENTIFIER_UNAUTHORIZED_CART_ACTION,
-            $quoteResponseTransfer->getErrors()[0]->getErrorIdentifier()
+            $quoteResponseTransfer->getErrors()[0]->getErrorIdentifier(),
         );
     }
 
@@ -272,7 +272,7 @@ class UpdateConfiguredBundleQuantityTest extends Unit
         $this->assertFalse($quoteResponseTransfer->getIsSuccessful());
         $this->assertSame(
             static::ERROR_IDENTIFIER_FAILED_UPDATING_CONFIGURED_BUNDLE,
-            $quoteResponseTransfer->getErrors()[0]->getErrorIdentifier()
+            $quoteResponseTransfer->getErrors()[0]->getErrorIdentifier(),
         );
     }
 

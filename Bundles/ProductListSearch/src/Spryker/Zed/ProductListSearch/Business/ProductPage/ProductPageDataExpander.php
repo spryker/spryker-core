@@ -36,7 +36,7 @@ class ProductPageDataExpander implements ProductPageDataExpanderInterface
 
         $updatedPayloadTransfers = $this->updatePayloadTransfers(
             $productPageLoadTransfer->getPayloadTransfers(),
-            $productList
+            $productList,
         );
 
         $productPageLoadTransfer->setPayloadTransfers($updatedPayloadTransfers);

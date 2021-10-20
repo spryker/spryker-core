@@ -65,7 +65,7 @@ class OrderAggregatedItemStateExpander implements OrderAggregatedItemStateExpand
     {
         foreach ($orderTransfers as $orderTransfer) {
             $orderTransfer->setAggregatedItemStates(
-                new ArrayObject(array_values($aggregatedItemStateMap[$orderTransfer->getIdSalesOrder()] ?? []))
+                new ArrayObject(array_values($aggregatedItemStateMap[$orderTransfer->getIdSalesOrder()] ?? [])),
             );
         }
 

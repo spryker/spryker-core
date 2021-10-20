@@ -50,7 +50,7 @@ class ConfigurableBundlesProductsResourceRelationshipDependencyProvider extends 
     {
         $container->set(static::RESOURCE_PRODUCTS_REST_API, function (Container $container) {
             return new ConfigurableBundlesProductsResourceRelationshipToProductsRestApiResourceBridge(
-                $container->getLocator()->productsRestApi()->resource()
+                $container->getLocator()->productsRestApi()->resource(),
             );
         });
 
@@ -66,7 +66,7 @@ class ConfigurableBundlesProductsResourceRelationshipDependencyProvider extends 
     {
         $container->set(static::CLIENT_CATALOG, function (Container $container) {
             return new ConfigurableBundlesProductsResourceRelationshipToCatalogClientBridge(
-                $container->getLocator()->catalog()->client()
+                $container->getLocator()->catalog()->client(),
             );
         });
 

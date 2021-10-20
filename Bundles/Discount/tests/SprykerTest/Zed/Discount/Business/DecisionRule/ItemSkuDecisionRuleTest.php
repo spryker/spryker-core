@@ -39,7 +39,7 @@ class ItemSkuDecisionRuleTest extends BaseRuleTester
         $isSatisfied = $itemSkuDecisionRule->isSatisfiedBy(
             $this->createQuoteTransfer(),
             $this->createItemTransfer(1000, 5, 'sku-123'),
-            $this->createClauseTransfer('sku-123')
+            $this->createClauseTransfer('sku-123'),
         );
 
         $this->assertTrue($isSatisfied);

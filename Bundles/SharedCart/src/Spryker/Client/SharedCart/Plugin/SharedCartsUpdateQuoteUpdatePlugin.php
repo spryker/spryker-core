@@ -38,7 +38,7 @@ class SharedCartsUpdateQuoteUpdatePlugin extends AbstractPlugin implements Quote
                 $customerQuoteCollectionTransfer->addQuote($quoteTransfer);
             }
             $multiCartClient->setQuoteCollection(
-                $this->sortQuoteCollectionByName($customerQuoteCollectionTransfer)
+                $this->sortQuoteCollectionByName($customerQuoteCollectionTransfer),
             );
         }
 
@@ -55,7 +55,7 @@ class SharedCartsUpdateQuoteUpdatePlugin extends AbstractPlugin implements Quote
         $quoteTransferList = (array)$quoteCollectionTransfer->getQuotes();
         usort($quoteTransferList, [$this, 'compareQuotes']);
         $quoteCollectionTransfer->setQuotes(
-            new ArrayObject($quoteTransferList)
+            new ArrayObject($quoteTransferList),
         );
 
         return $quoteCollectionTransfer;

@@ -21,7 +21,7 @@ class SearchElasticsearchGuiBusinessFactory extends AbstractBusinessFactory
     public function createDocumentReader(): DocumentReaderInterface
     {
         return new DocumentReader(
-            $this->getSearchElasticsearchClient()
+            $this->getSearchElasticsearchClient(),
         );
     }
 

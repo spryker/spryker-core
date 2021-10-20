@@ -37,7 +37,7 @@ class CmsRedirectHelper extends Module
 
         $this->debug(sprintf(
             'Inserted UrlRedirect: %d',
-            $urlRedirectTransfer->getIdUrlRedirect()
+            $urlRedirectTransfer->getIdUrlRedirect(),
         ));
 
         $this->getDataCleanupHelper()->_addCleanup(function () use ($urlRedirectTransfer): void {

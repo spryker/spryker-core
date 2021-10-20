@@ -79,7 +79,7 @@ class CheckDuplicateOrderTest extends Test
         $this->assertNotNull($quoteTransfer->getOrderReference());
         $this->assertEquals(
             $quoteTransfer->getOrderReference(),
-            $checkoutResponseTransfer->getSaveOrder()->getOrderReference()
+            $checkoutResponseTransfer->getSaveOrder()->getOrderReference(),
         );
     }
 
@@ -102,7 +102,7 @@ class CheckDuplicateOrderTest extends Test
         $this->assertNotNull($quoteTransfer->getOrderReference());
         $this->assertEquals(
             $quoteTransfer->getOrderReference(),
-            $checkoutResponseTransfer->getSaveOrder()->getOrderReference()
+            $checkoutResponseTransfer->getSaveOrder()->getOrderReference(),
         );
     }
 
@@ -125,7 +125,7 @@ class CheckDuplicateOrderTest extends Test
         $this->assertNotNull($quoteTransfer->getOrderReference());
         $this->assertNotEquals(
             $quoteTransfer->getOrderReference(),
-            $checkoutResponseTransfer->getSaveOrder()->getOrderReference()
+            $checkoutResponseTransfer->getSaveOrder()->getOrderReference(),
         );
     }
 

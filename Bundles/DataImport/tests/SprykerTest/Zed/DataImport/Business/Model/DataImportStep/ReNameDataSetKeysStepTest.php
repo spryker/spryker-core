@@ -72,7 +72,7 @@ class ReNameDataSetKeysStepTest extends Unit
         $this->assertArrayHasKey($newKey, $dataSet, sprintf(
             'Expected that key "%s" is re-named to "%s" but new key name was not found in data set.',
             $oldKey,
-            $newKey
+            $newKey,
         ));
         $this->assertSame($value, $dataSet[$newKey], 'Expected that original value is copied to new key but it was not copied');
     }

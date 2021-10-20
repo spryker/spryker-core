@@ -33,7 +33,7 @@ class PriceProductOfferDataImportBusinessFactory extends DataImportBusinessFacto
     public function createPriceProductOfferDataImport(): DataImporterInterface
     {
         $dataImporter = $this->getCsvDataImporterFromConfig(
-            $this->getConfig()->getPriceProductOfferDataImporterConfiguration()
+            $this->getConfig()->getPriceProductOfferDataImporterConfiguration(),
         );
 
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();
@@ -116,7 +116,7 @@ class PriceProductOfferDataImportBusinessFactory extends DataImportBusinessFacto
     {
         return new PreparePriceDataStep(
             $this->getPriceProductFacade(),
-            $this->getUtilEncodingService()
+            $this->getUtilEncodingService(),
         );
     }
 

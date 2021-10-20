@@ -49,7 +49,7 @@ class CreateController extends BaseProductRelationController
         $productRelationForm = $this->getFactory()
             ->createRelationForm(
                 $productRelationFormTypeDataProvider->getData(),
-                $productRelationFormTypeDataProvider->getOptions()
+                $productRelationFormTypeDataProvider->getOptions(),
             );
 
         $productRelationTabs = $this->getFactory()
@@ -63,7 +63,7 @@ class CreateController extends BaseProductRelationController
 
         $productTable = $this->getFactory()->createProductTable();
         $productRuleTable = $this->getFactory()->createProductRuleTable(
-            $productRelationFormTypeDataProvider->getData()
+            $productRelationFormTypeDataProvider->getData(),
         );
 
         return [
@@ -100,7 +100,7 @@ class CreateController extends BaseProductRelationController
             static::REDIRECT_URL_EDIT,
             [
                 EditController::URL_PARAM_ID_PRODUCT_RELATION => $productRelationTransfer->getIdProductRelation(),
-            ]
+            ],
         )->build();
 
         return $this->redirectResponse($editProductRelationUrl);
@@ -114,7 +114,7 @@ class CreateController extends BaseProductRelationController
         $productTable = $this->getFactory()->createProductTable();
 
         return $this->jsonResponse(
-            $productTable->fetchData()
+            $productTable->fetchData(),
         );
     }
 

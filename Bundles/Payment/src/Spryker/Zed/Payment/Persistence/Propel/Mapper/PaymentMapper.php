@@ -51,7 +51,7 @@ class PaymentMapper
         foreach ($paymentMethodEntityCollection as $paymentMethodEntity) {
             $paymentMethodsTransfer->addMethod($this->mapPaymentMethodEntityToPaymentMethodTransfer(
                 $paymentMethodEntity,
-                new PaymentMethodTransfer()
+                new PaymentMethodTransfer(),
             ));
         }
 
@@ -74,7 +74,7 @@ class PaymentMapper
 
         $paymentProviderTransfer = $this->paymentProviderMapper->mapPaymentProviderEntityToPaymentProviderTransfer(
             $paymentMethodEntity->getSpyPaymentProvider(),
-            new PaymentProviderTransfer()
+            new PaymentProviderTransfer(),
         );
 
         $paymentMethodTransfer->setPaymentProvider($paymentProviderTransfer);
@@ -85,8 +85,8 @@ class PaymentMapper
         $paymentMethodTransfer->setStoreRelation(
             $this->storeRelationMapper->mapPaymentMethodStoreEntitiesToStoreRelationTransfer(
                 $paymentMethodEntity->getSpyPaymentMethodStores(),
-                $storeRelationTransfer
-            )
+                $storeRelationTransfer,
+            ),
         );
 
         return $paymentMethodTransfer;

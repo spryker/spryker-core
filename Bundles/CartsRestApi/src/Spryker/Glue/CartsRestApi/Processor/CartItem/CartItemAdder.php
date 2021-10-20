@@ -79,7 +79,7 @@ class CartItemAdder implements CartItemAdderInterface
 
         return $this->cartRestResponseBuilder->createCartRestResponse(
             $quoteResponseTransfer->getQuoteTransfer(),
-            $restRequest->getMetadata()->getLocale()
+            $restRequest->getMetadata()->getLocale(),
         );
     }
 
@@ -126,7 +126,7 @@ class CartItemAdder implements CartItemAdderInterface
         foreach ($this->cartItemExpanderPlugins as $cartItemExpanderPlugin) {
             $cartItemRequestTransfer = $cartItemExpanderPlugin->expand(
                 $cartItemRequestTransfer,
-                $restCartItemsAttributesTransfer
+                $restCartItemsAttributesTransfer,
             );
         }
 

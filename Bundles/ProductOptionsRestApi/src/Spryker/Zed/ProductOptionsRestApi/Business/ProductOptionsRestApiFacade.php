@@ -34,7 +34,7 @@ class ProductOptionsRestApiFacade extends AbstractFacade implements ProductOptio
             ->createProductOptionMapper()
             ->mapCartItemRequestTransferToPersistentCartChangeTransfer(
                 $cartItemRequestTransfer,
-                $persistentCartChangeTransfer
+                $persistentCartChangeTransfer,
             );
     }
 }

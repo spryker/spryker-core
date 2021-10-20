@@ -21,7 +21,7 @@ class DictionaryFactory extends AbstractFactory
         return new LabelDictionary(
             $this->getStorageClient(),
             $this->createLabelDictionaryKeyBuilder(),
-            $this->createKeyByIdProductLabelStrategy()
+            $this->createKeyByIdProductLabelStrategy(),
         );
     }
 
@@ -33,7 +33,7 @@ class DictionaryFactory extends AbstractFactory
         return new LabelDictionary(
             $this->getStorageClient(),
             $this->createLabelDictionaryKeyBuilder(),
-            $this->createKeyByLocalizedNameStrategy()
+            $this->createKeyByLocalizedNameStrategy(),
         );
     }
 
@@ -45,7 +45,7 @@ class DictionaryFactory extends AbstractFactory
         return new LabelDictionary(
             $this->getStorageClient(),
             $this->createLabelDictionaryKeyBuilder(),
-            $this->createKeyByNameStrategy()
+            $this->createKeyByNameStrategy(),
         );
     }
 

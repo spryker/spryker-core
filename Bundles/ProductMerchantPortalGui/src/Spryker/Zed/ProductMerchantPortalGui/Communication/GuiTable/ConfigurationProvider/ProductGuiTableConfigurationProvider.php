@@ -141,7 +141,7 @@ class ProductGuiTableConfigurationProvider implements ProductGuiTableConfigurati
             '%s?%s=%s',
             static::DATA_URL,
             ProductConcreteTransfer::FK_PRODUCT_ABSTRACT,
-            $idProductAbstract
+            $idProductAbstract,
         );
 
         $guiTableConfigurationBuilder
@@ -207,7 +207,7 @@ class ProductGuiTableConfigurationProvider implements ProductGuiTableConfigurati
         $guiTableConfigurationBuilder->addBatchActionDrawerAjaxForm(
             'Edit',
             'Bulk edit',
-            static::BULK_EDIT_URL
+            static::BULK_EDIT_URL,
         );
 
         $guiTableConfigurationBuilder->setBatchActionRowIdPath(ProductConcreteTransfer::ID_PRODUCT_CONCRETE);
@@ -227,8 +227,8 @@ class ProductGuiTableConfigurationProvider implements ProductGuiTableConfigurati
             static::TITLE_ROW_ACTION_UPDATE_PRODUCT,
             sprintf(
                 static::ROW_EDIT_URL,
-                ProductConcreteTransfer::ID_PRODUCT_CONCRETE
-            )
+                ProductConcreteTransfer::ID_PRODUCT_CONCRETE,
+            ),
         )->setRowClickAction(static::ROW_EDIT_ID);
 
         return $guiTableConfigurationBuilder;

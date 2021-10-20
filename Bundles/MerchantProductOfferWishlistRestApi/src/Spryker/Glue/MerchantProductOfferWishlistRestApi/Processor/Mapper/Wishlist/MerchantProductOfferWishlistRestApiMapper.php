@@ -29,7 +29,7 @@ class MerchantProductOfferWishlistRestApiMapper implements MerchantProductOfferW
         $restWishlistItemsAttributesId = sprintf(
             '%s_%s',
             $wishlistItemTransfer->getSku(),
-            $wishlistItemTransfer->getProductOfferReference()
+            $wishlistItemTransfer->getProductOfferReference(),
         );
 
         return $restWishlistItemsAttributesTransfer->setId($restWishlistItemsAttributesId);

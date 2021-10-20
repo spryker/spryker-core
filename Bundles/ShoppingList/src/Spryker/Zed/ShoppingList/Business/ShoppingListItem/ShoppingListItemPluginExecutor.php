@@ -168,7 +168,7 @@ class ShoppingListItemPluginExecutor implements ShoppingListItemPluginExecutorIn
             if (!$shoppingListPreAddItemCheckResponseTransfer->getIsSuccess()) {
                 $this->processErrorMessages(
                     $shoppingListPreAddItemCheckResponseTransfer,
-                    $commonShoppingListPreAddItemCheckResponseTransfer->setIsSuccess(false)
+                    $commonShoppingListPreAddItemCheckResponseTransfer->setIsSuccess(false),
                 );
             }
         }

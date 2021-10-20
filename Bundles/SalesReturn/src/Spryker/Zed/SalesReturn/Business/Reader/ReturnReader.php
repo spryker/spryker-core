@@ -168,7 +168,7 @@ class ReturnReader implements ReturnReaderInterface
 
         foreach ($returnCollectionTransfer->getReturns() as $returnTransfer) {
             $returnTransfer->setReturnItems(
-                new ArrayObject($mappedReturnItemTransfers[$returnTransfer->getIdSalesReturn()] ?? [])
+                new ArrayObject($mappedReturnItemTransfers[$returnTransfer->getIdSalesReturn()] ?? []),
             );
 
             $this->expandReturnWithOrderItems($returnTransfer);
@@ -208,7 +208,7 @@ class ReturnReader implements ReturnReaderInterface
 
         foreach ($returnTransfer->getReturnItems() as $returnItemTransfer) {
             $returnItemTransfer->setOrderItem(
-                $mappedItemTransfers[$returnItemTransfer->getOrderItem()->getIdSalesOrderItem()] ?? null
+                $mappedItemTransfers[$returnItemTransfer->getOrderItem()->getIdSalesOrderItem()] ?? null,
             );
         }
 
@@ -272,7 +272,7 @@ class ReturnReader implements ReturnReaderInterface
     {
         foreach ($returnCollectionTransfer->getReturns() as $returnTransfer) {
             $returnTransfer->setReturnTotals(
-                $this->returnTotalCalculator->calculateReturnTotals($returnTransfer)
+                $this->returnTotalCalculator->calculateReturnTotals($returnTransfer),
             );
         }
 

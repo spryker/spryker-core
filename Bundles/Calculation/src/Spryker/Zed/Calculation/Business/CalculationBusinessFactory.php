@@ -51,7 +51,7 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
     {
         return new QuoteCalculatorExecutor(
             $this->getProvidedQuoteCalculatorPluginStack(),
-            $this->getQuotePostRecalculatePlugins()
+            $this->getQuotePostRecalculatePlugins(),
         );
     }
 
@@ -70,7 +70,7 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
     {
         return new PriceCalculator(
             $this->createNetPriceCalculators(),
-            $this->createGrossPriceCalculators()
+            $this->createGrossPriceCalculators(),
         );
     }
 

@@ -47,7 +47,7 @@ class MeasurementUnitConverter implements MeasurementUnitConverterInterface
         }
 
         throw new InvalidMeasurementUnitExchangeException(
-            sprintf(static::ERROR_INVALID_EXCHANGE, $fromCode, $toCode)
+            sprintf(static::ERROR_INVALID_EXCHANGE, $fromCode, $toCode),
         );
     }
 }

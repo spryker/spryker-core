@@ -83,7 +83,7 @@ class AbstractProductImageSetsReader implements AbstractProductImageSetsReaderIn
         $parentResource = $restRequest->findParentResourceByType(ProductsRestApiConfig::RESOURCE_ABSTRACT_PRODUCTS);
         if (!$parentResource) {
             return $restResponse->addError(
-                $this->createAbstractProductNotFoundError()
+                $this->createAbstractProductNotFoundError(),
             );
         }
 
@@ -111,7 +111,7 @@ class AbstractProductImageSetsReader implements AbstractProductImageSetsReaderIn
             ->findProductAbstractStorageDataByMapping(
                 static::PRODUCT_ABSTRACT_MAPPING_TYPE,
                 $sku,
-                $restRequest->getMetadata()->getLocale()
+                $restRequest->getMetadata()->getLocale(),
             );
 
         if (!$abstractProductStorageData) {
@@ -120,7 +120,7 @@ class AbstractProductImageSetsReader implements AbstractProductImageSetsReaderIn
 
         $abstractProductTransfer = (new ProductAbstractStorageTransfer())->fromArray(
             $abstractProductStorageData,
-            true
+            true,
         );
 
         $productImageAbstractStorageTransfer = $this->productImageStorageClient
@@ -149,14 +149,14 @@ class AbstractProductImageSetsReader implements AbstractProductImageSetsReaderIn
         $restResource = $this->restResourceBuilder->createRestResource(
             ProductImageSetsRestApiConfig::RESOURCE_ABSTRACT_PRODUCT_IMAGE_SETS,
             $sku,
-            $restProductAbstractImageSetAttributesTransfer
+            $restProductAbstractImageSetAttributesTransfer,
         );
 
         $restResourceSelfLink = sprintf(
             static::SELF_LINK_FORMAT,
             ProductsRestApiConfig::RESOURCE_ABSTRACT_PRODUCTS,
             $sku,
-            ProductImageSetsRestApiConfig::RESOURCE_ABSTRACT_PRODUCT_IMAGE_SETS
+            ProductImageSetsRestApiConfig::RESOURCE_ABSTRACT_PRODUCT_IMAGE_SETS,
         );
         $restResource->addLink(RestLinkInterface::LINK_SELF, $restResourceSelfLink);
 

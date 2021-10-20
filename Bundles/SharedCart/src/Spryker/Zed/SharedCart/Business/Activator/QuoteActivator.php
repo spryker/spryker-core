@@ -34,7 +34,7 @@ class QuoteActivator implements QuoteActivatorInterface
     {
         $this->sharedCartEntityManager->setQuoteDefault(
             $quoteTransfer->getCustomer()->getCompanyUserTransfer()->getIdCompanyUser(),
-            $quoteTransfer->getIdQuote()
+            $quoteTransfer->getIdQuote(),
         );
         if ($quoteTransfer->getCustomer()->getCustomerReference() === $quoteTransfer->getCustomerReference()) {
             return $quoteTransfer;

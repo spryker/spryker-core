@@ -30,7 +30,7 @@ class CmsPageDataImportBusinessFactory extends DataImportBusinessFactory
     public function createCmsPageImporter()
     {
         $dataImporter = $this->getCsvDataImporterFromConfig(
-            $this->getConfig()->getCmsPageDataImporterConfiguration()
+            $this->getConfig()->getCmsPageDataImporterConfiguration(),
         );
 
         $cmsPageWriterStep = new CmsPageWriterStep();
@@ -62,7 +62,7 @@ class CmsPageDataImportBusinessFactory extends DataImportBusinessFactory
     public function createCmsPageStoreImporter()
     {
         $dataImporter = $this->getCsvDataImporterFromConfig(
-            $this->getConfig()->getCmsPageStoreDataImporterConfiguration()
+            $this->getConfig()->getCmsPageStoreDataImporterConfiguration(),
         );
 
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker(CmsPageStoreWriterStep::BULK_SIZE);

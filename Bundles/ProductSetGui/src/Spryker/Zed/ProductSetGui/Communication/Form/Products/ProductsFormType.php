@@ -66,7 +66,7 @@ class ProductsFormType extends AbstractType
                 },
                 function ($productAbstractIds = '') {
                     return $productAbstractIds ? explode(',', $productAbstractIds) : [];
-                }
+                },
             ));
 
         return $this;

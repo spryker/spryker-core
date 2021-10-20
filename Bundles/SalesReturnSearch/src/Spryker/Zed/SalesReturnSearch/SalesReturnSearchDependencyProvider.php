@@ -86,7 +86,7 @@ class SalesReturnSearchDependencyProvider extends AbstractBundleDependencyProvid
     {
         $container->set(static::FACADE_EVENT_BEHAVIOR, function (Container $container) {
             return new SalesReturnSearchToEventBehaviorFacadeBridge(
-                $container->getLocator()->eventBehavior()->facade()
+                $container->getLocator()->eventBehavior()->facade(),
             );
         });
 
@@ -102,7 +102,7 @@ class SalesReturnSearchDependencyProvider extends AbstractBundleDependencyProvid
     {
         $container->set(static::FACADE_SALES_RETURN, function (Container $container) {
             return new SalesReturnSearchToSalesReturnFacadeBridge(
-                $container->getLocator()->salesReturn()->facade()
+                $container->getLocator()->salesReturn()->facade(),
             );
         });
 
@@ -118,7 +118,7 @@ class SalesReturnSearchDependencyProvider extends AbstractBundleDependencyProvid
     {
         $container->set(static::FACADE_GLOSSARY, function (Container $container) {
             return new SalesReturnSearchToGlossaryFacadeBridge(
-                $container->getLocator()->glossary()->facade()
+                $container->getLocator()->glossary()->facade(),
             );
         });
 
@@ -134,7 +134,7 @@ class SalesReturnSearchDependencyProvider extends AbstractBundleDependencyProvid
     {
         $container->set(static::FACADE_LOCALE, function (Container $container) {
             return new SalesReturnSearchToLocaleFacadeBridge(
-                $container->getLocator()->locale()->facade()
+                $container->getLocator()->locale()->facade(),
             );
         });
 
@@ -150,7 +150,7 @@ class SalesReturnSearchDependencyProvider extends AbstractBundleDependencyProvid
     {
         $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new SalesReturnSearchToUtilEncodingServiceBridge(
-                $container->getLocator()->utilEncoding()->service()
+                $container->getLocator()->utilEncoding()->service(),
             );
         });
 

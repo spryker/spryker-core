@@ -112,7 +112,7 @@ class JenkinsApi implements JenkinsApiInterface
         $request = $this->requestBuilder->buildPsrRequest(
             static::REQUEST_GET_METHOD,
             $configurationProvider,
-            static::GET_JOBS_URL
+            static::GET_JOBS_URL,
         );
 
         $request = $this->extendRequestWithCsrfToken($request, $configurationProvider);
@@ -133,7 +133,7 @@ class JenkinsApi implements JenkinsApiInterface
             static::REQUEST_POST_METHOD,
             $configurationProvider,
             sprintf(static::UPDATE_JOB_URL, $jobName),
-            $jobXmlTemplate
+            $jobXmlTemplate,
         );
 
         $request = $this->extendRequestWithCsrfToken($request, $configurationProvider);
@@ -154,7 +154,7 @@ class JenkinsApi implements JenkinsApiInterface
             static::REQUEST_POST_METHOD,
             $configurationProvider,
             sprintf(static::CREATE_JOB_URL, $jobName),
-            $jobXmlTemplate
+            $jobXmlTemplate,
         );
 
         $request = $this->extendRequestWithCsrfToken($request, $configurationProvider);
@@ -173,7 +173,7 @@ class JenkinsApi implements JenkinsApiInterface
         $request = $this->requestBuilder->buildPsrRequest(
             static::REQUEST_POST_METHOD,
             $configurationProvider,
-            sprintf(static::DELETE_JOB_URL, $jobName)
+            sprintf(static::DELETE_JOB_URL, $jobName),
         );
 
         $request = $this->extendRequestWithCsrfToken($request, $configurationProvider);
@@ -192,7 +192,7 @@ class JenkinsApi implements JenkinsApiInterface
         $request = $this->requestBuilder->buildPsrRequest(
             static::REQUEST_POST_METHOD,
             $configurationProvider,
-            sprintf(static::ENABLE_JOB_URL, $jobName)
+            sprintf(static::ENABLE_JOB_URL, $jobName),
         );
 
         $request = $this->extendRequestWithCsrfToken($request, $configurationProvider);
@@ -211,7 +211,7 @@ class JenkinsApi implements JenkinsApiInterface
         $request = $this->requestBuilder->buildPsrRequest(
             static::REQUEST_POST_METHOD,
             $configurationProvider,
-            sprintf(static::DISABLE_JOB_URL, $jobName)
+            sprintf(static::DISABLE_JOB_URL, $jobName),
         );
 
         $request = $this->extendRequestWithCsrfToken($request, $configurationProvider);
@@ -250,7 +250,7 @@ class JenkinsApi implements JenkinsApiInterface
         $request = $this->requestBuilder->buildPsrRequest(
             static::REQUEST_GET_METHOD,
             $configurationProvider,
-            static::JENKINS_URL_API_CSRF_TOKEN
+            static::JENKINS_URL_API_CSRF_TOKEN,
         );
 
         $responseTransfer = $this->requestExecutor->execute($request, $configurationProvider);

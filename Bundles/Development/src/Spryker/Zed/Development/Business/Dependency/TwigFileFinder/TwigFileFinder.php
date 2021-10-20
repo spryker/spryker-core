@@ -66,7 +66,7 @@ class TwigFileFinder implements TwigFileFinderInterface
             $twigFilePaths,
             function (string $twigFilePath) {
                 return glob($twigFilePath, GLOB_NOSORT);
-            }
+            },
         );
     }
 }

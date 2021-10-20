@@ -72,7 +72,7 @@ class ContentBannerTypeMapper implements ContentBannerTypeMapperInterface
     {
         $contentTypeContextTransfers = $this->contentStorageClient->getContentTypeContextByKeys(
             $contentKeys,
-            $localeName
+            $localeName,
         );
 
         if (!$contentTypeContextTransfers) {

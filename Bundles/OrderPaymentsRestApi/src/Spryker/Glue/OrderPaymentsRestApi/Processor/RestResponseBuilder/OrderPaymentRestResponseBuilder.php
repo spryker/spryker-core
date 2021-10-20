@@ -39,7 +39,7 @@ class OrderPaymentRestResponseBuilder implements OrderPaymentRestResponseBuilder
         $orderPaymentRestResource = $this->restResourceBuilder->createRestResource(
             OrderPaymentsRestApiConfig::RESOURCE_ORDER_PAYMENTS,
             $restOrderPaymentsAttributesTransfer->getPaymentIdentifier(),
-            $restOrderPaymentsAttributesTransfer
+            $restOrderPaymentsAttributesTransfer,
         );
 
         return $this->restResourceBuilder->createRestResponse()->addResource($orderPaymentRestResource);

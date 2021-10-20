@@ -109,7 +109,7 @@ class ConfiguredBundleMapper implements ConfiguredBundleMapperInterface
             ->setTemplate(
                 (new ConfigurableBundleTemplateTransfer())
                     ->setUuid($configuredBundleTransfer->getTemplate()->getUuid())
-                    ->setName($configuredBundleTransfer->getTemplate()->getName())
+                    ->setName($configuredBundleTransfer->getTemplate()->getName()),
             );
     }
 
@@ -131,7 +131,7 @@ class ConfiguredBundleMapper implements ConfiguredBundleMapperInterface
             ->setQuantityPerSlot($itemTransfer->getConfiguredBundleItem()->getQuantityPerSlot())
             ->setSlot(
                 (new ConfigurableBundleTemplateSlotTransfer())
-                    ->setUuid($itemTransfer->getConfiguredBundleItem()->getSlot()->getUuid())
+                    ->setUuid($itemTransfer->getConfiguredBundleItem()->getSlot()->getUuid()),
             );
 
         $itemTransfer

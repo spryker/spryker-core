@@ -73,7 +73,7 @@ class TransferDefinitionLoader implements LoaderInterface
     {
         $this->loadDefinitions();
         $this->transferDefinitions = $this->definitionNormalizer->normalizeDefinitions(
-            $this->transferDefinitions
+            $this->transferDefinitions,
         );
 
         return $this->transferDefinitions;
@@ -174,8 +174,8 @@ class TransferDefinitionLoader implements LoaderInterface
                     'Transfer name `%s` does not match expected name `%s` for module `%s`',
                     $name,
                     $filteredName,
-                    $bundle
-                )
+                    $bundle,
+                ),
             );
         }
     }

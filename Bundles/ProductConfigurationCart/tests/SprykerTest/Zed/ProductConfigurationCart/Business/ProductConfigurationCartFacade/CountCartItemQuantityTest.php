@@ -45,7 +45,7 @@ class CountCartItemQuantityTest extends Unit
         $this->assertSame(
             0,
             $cartItemQuantity->getQuantity(),
-            'Expects that default cart item quantity when no items in the cart.'
+            'Expects that default cart item quantity when no items in the cart.',
         );
     }
 
@@ -69,7 +69,7 @@ class CountCartItemQuantityTest extends Unit
         $this->assertSame(
             3,
             $cartItemQuantity->getQuantity(),
-            'Expects that item quantity will be counted correctly.'
+            'Expects that item quantity will be counted correctly.',
         );
     }
 }

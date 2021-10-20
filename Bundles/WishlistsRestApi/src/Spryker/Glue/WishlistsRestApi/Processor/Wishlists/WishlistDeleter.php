@@ -45,7 +45,7 @@ class WishlistDeleter implements WishlistDeleterInterface
     public function delete(RestRequestInterface $restRequest): RestResponseInterface
     {
         $wishlistResponseTransfer = $this->wishlistsRestApiClient->deleteWishlist(
-            $this->createWishlistFilterTransferFromRequest($restRequest)
+            $this->createWishlistFilterTransferFromRequest($restRequest),
         );
 
         if (!$wishlistResponseTransfer->getIsSuccess()) {

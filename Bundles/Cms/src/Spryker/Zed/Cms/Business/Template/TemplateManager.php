@@ -81,8 +81,8 @@ class TemplateManager implements TemplateManagerInterface
             throw new TemplateExistsException(
                 sprintf(
                     'Tried to create a template with path %s, but it already exists',
-                    $path
-                )
+                    $path,
+                ),
             );
         }
     }
@@ -205,8 +205,8 @@ class TemplateManager implements TemplateManagerInterface
             throw new MissingTemplateException(
                 sprintf(
                     'Tried to retrieve a missing template with path %s',
-                    $path
-                )
+                    $path,
+                ),
             );
         }
 
@@ -227,8 +227,8 @@ class TemplateManager implements TemplateManagerInterface
             throw new MissingTemplateException(
                 sprintf(
                     'Tried to retrieve a missing template with id %s',
-                    $idTemplate
-                )
+                    $idTemplate,
+                ),
             );
         }
 
@@ -267,7 +267,7 @@ class TemplateManager implements TemplateManagerInterface
     {
         if (!$this->isTemplateFileExists($path)) {
             throw new TemplateFileNotFoundException(
-                sprintf('Template file not found in "%s"', $path)
+                sprintf('Template file not found in "%s"', $path),
             );
         }
     }

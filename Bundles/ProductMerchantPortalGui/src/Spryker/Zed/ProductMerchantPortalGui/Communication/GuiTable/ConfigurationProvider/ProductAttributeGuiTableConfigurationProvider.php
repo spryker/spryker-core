@@ -79,7 +79,7 @@ class ProductAttributeGuiTableConfigurationProvider implements ProductAttributeG
                 $localeTransfer->getLocaleNameOrFail(),
                 $localeTransfer->getLocaleNameOrFail(),
                 true,
-                true
+                true,
             );
         }
 

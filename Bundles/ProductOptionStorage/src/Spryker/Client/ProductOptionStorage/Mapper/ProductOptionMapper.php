@@ -38,7 +38,7 @@ class ProductOptionMapper implements ProductOptionMapperInterface
             $productAbstractOptionStorageTransfers[] =
                 $this->mapProductAbstractOptionStorageDataItemToProductAbstractOptionStorageTransfer(
                     $productOptionStorageDataItem,
-                    new ProductAbstractOptionStorageTransfer()
+                    new ProductAbstractOptionStorageTransfer(),
                 );
         }
 

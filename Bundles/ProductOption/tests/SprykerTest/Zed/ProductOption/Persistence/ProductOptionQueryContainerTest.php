@@ -114,7 +114,7 @@ class ProductOptionQueryContainerTest extends Unit
         $result = $productOptionQueryContainer->queryProductsAbstractBySearchTermForAssignment(
             static::TEST_LOCALIZED_PRODUCT_NAME,
             $productOptionGroupTransfer->getIdProductOptionGroup(),
-            $localeTransfer
+            $localeTransfer,
         )->find();
 
         // Assert

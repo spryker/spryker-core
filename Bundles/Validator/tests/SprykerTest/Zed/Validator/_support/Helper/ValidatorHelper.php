@@ -98,7 +98,7 @@ class ValidatorHelper extends Module
         $this->addDependencies();
 
         $this->getApplicationHelper()->addApplicationPlugin(
-            $this->getValidatorApplicationPluginStub()
+            $this->getValidatorApplicationPluginStub(),
         );
     }
 

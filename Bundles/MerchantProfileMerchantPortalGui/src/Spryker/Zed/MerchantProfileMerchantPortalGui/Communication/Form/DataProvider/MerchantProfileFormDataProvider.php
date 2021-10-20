@@ -110,7 +110,7 @@ class MerchantProfileFormDataProvider implements MerchantProfileFormDataProvider
 
         foreach ($availableLocaleTransfers as $localeTransfer) {
             $urlCollection->append(
-                $this->addUrlPrefixToUrlTransfer($merchantProfileUrlCollection, $localeTransfer)
+                $this->addUrlPrefixToUrlTransfer($merchantProfileUrlCollection, $localeTransfer),
             );
         }
         $merchantTransfer->setUrlCollection($urlCollection);
@@ -140,7 +140,7 @@ class MerchantProfileFormDataProvider implements MerchantProfileFormDataProvider
         }
         $urlTransfer->setFkLocale($localeTransfer->getIdLocale());
         $urlTransfer->setUrlPrefix(
-            $this->getLocalizedUrlPrefix($localeTransfer)
+            $this->getLocalizedUrlPrefix($localeTransfer),
         );
 
         return $urlTransfer;
@@ -172,7 +172,7 @@ class MerchantProfileFormDataProvider implements MerchantProfileFormDataProvider
         $localeTransfers = $this->localeFacade->getLocaleCollection();
         foreach ($localeTransfers as $localeTransfer) {
             $merchantProfileGlossaryAttributeValues->append(
-                $this->addGlossaryAttributesByLocale($merchantProfileTransfer, $localeTransfer)
+                $this->addGlossaryAttributesByLocale($merchantProfileTransfer, $localeTransfer),
             );
         }
 
@@ -194,7 +194,7 @@ class MerchantProfileFormDataProvider implements MerchantProfileFormDataProvider
         $merchantProfileLocalizedGlossaryAttributesTransfer = new MerchantProfileLocalizedGlossaryAttributesTransfer();
         $merchantProfileLocalizedGlossaryAttributesTransfer->setLocale($localeTransfer);
         $merchantProfileLocalizedGlossaryAttributesTransfer->setMerchantProfileGlossaryAttributeValues(
-            $this->addGlossaryAttributeTranslations($merchantProfileTransfer, $localeTransfer)
+            $this->addGlossaryAttributeTranslations($merchantProfileTransfer, $localeTransfer),
         );
 
         return $merchantProfileLocalizedGlossaryAttributesTransfer;

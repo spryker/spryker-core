@@ -216,7 +216,7 @@ class RestApiDocumentationSchemaGeneratorTest extends Unit
     {
         $this->schemaGenerator->addResponseResourceSchemaForPlugin(
             new TestResourceRoutePlugin(),
-            (new AnnotationTransfer())->setResponseAttributesClassName(RestTestAlternativeAttributesTransfer::class)
+            (new AnnotationTransfer())->setResponseAttributesClassName(RestTestAlternativeAttributesTransfer::class),
         );
 
         $schemas = $this->schemaGenerator->getSchemas();
@@ -270,7 +270,7 @@ class RestApiDocumentationSchemaGeneratorTest extends Unit
     public function testAddResponseCollectionSchemaForPluginWithNullablePropertiesInTransferShouldGenerateValidResponseResourceSchemas(): void
     {
         $this->schemaGenerator->addResponseResourceSchemaForPlugin(
-            new TestResourceRouteWithNullableIdPlugin()
+            new TestResourceRouteWithNullableIdPlugin(),
         );
 
         $schemas = $this->schemaGenerator->getSchemas();
@@ -285,7 +285,7 @@ class RestApiDocumentationSchemaGeneratorTest extends Unit
     {
         $this->schemaGenerator->addResponseResourceSchemaForPlugin(
             new TestResourceRouteWithNullableIdPlugin(),
-            (new AnnotationTransfer())->setIsIdNullable(true)
+            (new AnnotationTransfer())->setIsIdNullable(true),
         );
 
         $schemas = $this->schemaGenerator->getSchemas();

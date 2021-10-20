@@ -206,7 +206,7 @@ class StorageRedisWrapper implements StorageRedisWrapperInterface
             [
                 'COUNT' => $this->storageRedisConfig->getRedisScanChunkSize(),
                 'MATCH' => $match,
-            ]
+            ],
         );
     }
 
@@ -248,7 +248,7 @@ class StorageRedisWrapper implements StorageRedisWrapperInterface
         $this->addWriteAccessStats($key);
         if (!$result) {
             throw new StorageRedisException(
-                sprintf('Could not set redisKey: "%s" with value: "%s"', $key, json_encode($value))
+                sprintf('Could not set redisKey: "%s" with value: "%s"', $key, json_encode($value)),
             );
         }
 
@@ -288,8 +288,8 @@ class StorageRedisWrapper implements StorageRedisWrapperInterface
                 sprintf(
                     'Could not set redisKeys for items: "[%s]" with values: "[%s]"',
                     implode(',', array_keys($items)),
-                    implode(',', array_values($items))
-                )
+                    implode(',', array_values($items)),
+                ),
             );
         }
     }
@@ -449,7 +449,7 @@ class StorageRedisWrapper implements StorageRedisWrapperInterface
     {
         $this->redisClient->setupConnection(
             $this->connectionKey,
-            $configurationTransfer
+            $configurationTransfer,
         );
     }
 }

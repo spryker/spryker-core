@@ -35,7 +35,7 @@ class AvailabilityViewCest
         $i->amOnPage(sprintf(
             AvailabilityPage::AVAILABILITY_VIEW_URL,
             AvailabilityPage::AVAILABILITY_ID,
-            AvailabilityPage::AVAILABILITY_ID_STORE
+            AvailabilityPage::AVAILABILITY_ID_STORE,
         ));
 
         $i->seeBreadcrumbNavigation('Catalog / Availability / Product Availability');

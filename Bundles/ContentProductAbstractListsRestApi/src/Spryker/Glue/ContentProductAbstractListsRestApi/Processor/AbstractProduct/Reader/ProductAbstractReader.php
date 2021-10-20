@@ -64,7 +64,7 @@ class ProductAbstractReader implements ProductAbstractReaderInterface
     public function getProductAbstractByContentProductAbstractListId(RestRequestInterface $restRequest): RestResponseInterface
     {
         $parentResource = $restRequest->findParentResourceByType(
-            ContentProductAbstractListsRestApiConfig::RESOURCE_CONTENT_PRODUCT_ABSTRACT_LISTS
+            ContentProductAbstractListsRestApiConfig::RESOURCE_CONTENT_PRODUCT_ABSTRACT_LISTS,
         );
 
         if (!$parentResource || !$parentResource->getId()) {
@@ -75,7 +75,7 @@ class ProductAbstractReader implements ProductAbstractReaderInterface
         try {
             $contentProductAbstractListTypeTransfer = $this->contentProductClient->executeProductAbstractListTypeByKey(
                 $parentResource->getId(),
-                $localeName
+                $localeName,
             );
         } catch (Throwable $e) {
             return $this->contentProductAbstractListRestResponseBuilder->createContentTypeInvalidErrorResponse();
@@ -88,7 +88,7 @@ class ProductAbstractReader implements ProductAbstractReaderInterface
         $abstractProductResources = $this->productsRestApiResource->getProductAbstractsByIds(
             $contentProductAbstractListTypeTransfer->getIdProductAbstracts(),
             $localeName,
-            $this->storeClient->getCurrentStore()->getName()
+            $this->storeClient->getCurrentStore()->getName(),
         );
 
         return $this->contentProductAbstractListRestResponseBuilder
@@ -107,7 +107,7 @@ class ProductAbstractReader implements ProductAbstractReaderInterface
     {
         $contentProductAbstractListTypeTransfers = $this->contentProductClient->executeProductAbstractListTypeByKeys(
             $contentProductAbstractListKeys,
-            $localeName
+            $localeName,
         );
 
         if (!$contentProductAbstractListTypeTransfers) {
@@ -122,12 +122,12 @@ class ProductAbstractReader implements ProductAbstractReaderInterface
         $productAbstractRestResources = $this->productsRestApiResource->getProductAbstractsByIds(
             array_merge(...array_values($productAbstractIds)),
             $localeName,
-            $this->storeClient->getCurrentStore()->getName()
+            $this->storeClient->getCurrentStore()->getName(),
         );
 
         return $this->groupProductAbstractsByContentProductAbstractListKey(
             $productAbstractRestResources,
-            $productAbstractIds
+            $productAbstractIds,
         );
     }
 

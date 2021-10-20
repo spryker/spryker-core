@@ -39,7 +39,7 @@ class ColumnIdCreator implements ColumnIdCreatorInterface
     {
         return $this->createPriceKey(
             $priceTypeName,
-            MoneyValueTransfer::GROSS_AMOUNT
+            MoneyValueTransfer::GROSS_AMOUNT,
         );
     }
 
@@ -52,7 +52,7 @@ class ColumnIdCreator implements ColumnIdCreatorInterface
     {
         return $this->createPriceKey(
             $priceTypeName,
-            MoneyValueTransfer::NET_AMOUNT
+            MoneyValueTransfer::NET_AMOUNT,
         );
     }
 
@@ -80,7 +80,7 @@ class ColumnIdCreator implements ColumnIdCreatorInterface
             '%s[%s][%s]',
             mb_strtolower($priceTypeName),
             PriceProductTransfer::MONEY_VALUE,
-            $moneyValueType
+            $moneyValueType,
         );
     }
 }

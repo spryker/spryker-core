@@ -58,7 +58,7 @@ class MerchantRelationshipSalesOrderThresholdDependencyProvider extends Abstract
     {
         $container->set(static::FACADE_SALES_ORDER_THRESHOLD, function (Container $container) {
             return new MerchantRelationshipSalesOrderThresholdToSalesOrderThresholdFacadeBridge(
-                $container->getLocator()->salesOrderThreshold()->facade()
+                $container->getLocator()->salesOrderThreshold()->facade(),
             );
         });
 

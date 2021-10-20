@@ -107,8 +107,8 @@ class StoreSubForm extends AbstractType
                 ->createPriceProductScheduleFormDataProvider()
                 ->getOptions(
                     null,
-                    $storeTransfer->getIdStore()
-                )[PriceProductScheduleFormDataProvider::OPTION_CURRENCY_CHOICES]
+                    $storeTransfer->getIdStore(),
+                )[PriceProductScheduleFormDataProvider::OPTION_CURRENCY_CHOICES],
         );
     }
 

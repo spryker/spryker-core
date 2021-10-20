@@ -32,7 +32,7 @@ class LabelDictionaryTouchManager implements LabelDictionaryTouchManagerInterfac
     {
         $this->touchFacade->touchActive(
             ProductLabelConstants::RESOURCE_TYPE_PRODUCT_LABEL_DICTIONARY,
-            ProductLabelConstants::RESOURCE_TYPE_PRODUCT_LABEL_DICTIONARY_IDENTIFIER
+            ProductLabelConstants::RESOURCE_TYPE_PRODUCT_LABEL_DICTIONARY_IDENTIFIER,
         );
     }
 }

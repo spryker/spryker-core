@@ -23,7 +23,7 @@ class ProductLabelMapper implements ProductLabelMapperInterface
         foreach ($productLabelTransfers as $productLabelTransfer) {
             $productLabelIdsMap = $this->mapProductLabelTransferToProductLabelIdsByIdProductAbstractAndStoreName(
                 $productLabelTransfer,
-                $productLabelIdsMap
+                $productLabelIdsMap,
             );
         }
 

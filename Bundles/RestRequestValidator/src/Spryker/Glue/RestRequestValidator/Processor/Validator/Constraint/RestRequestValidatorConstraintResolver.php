@@ -72,7 +72,7 @@ class RestRequestValidatorConstraintResolver implements RestRequestValidatorCons
         }
 
         $constraints = $this->constraintCollectionAdapter->createCollection(
-            [static::FIELDS => $initializedConstraintCollection] + $this->getConstraintCollectionOptions()
+            [static::FIELDS => $initializedConstraintCollection] + $this->getConstraintCollectionOptions(),
         );
 
         return $constraints;
@@ -116,7 +116,7 @@ class RestRequestValidatorConstraintResolver implements RestRequestValidatorCons
 
         return array_map(
             $this->instantiateConstraintFromConfig(),
-            $validators
+            $validators,
         );
     }
 

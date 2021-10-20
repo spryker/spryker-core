@@ -39,7 +39,7 @@ class SalesReturnsRestApiFactory extends AbstractFactory
     {
         return new ReturnReasonReader(
             $this->getSalesReturnSearchClient(),
-            $this->createRestReturnReasonResponseBuilder()
+            $this->createRestReturnReasonResponseBuilder(),
         );
     }
 
@@ -49,7 +49,7 @@ class SalesReturnsRestApiFactory extends AbstractFactory
     public function createReturnItemExpander(): ReturnItemExpanderInterface
     {
         return new ReturnItemExpander(
-            $this->createRestReturnResponseBuilder()
+            $this->createRestReturnResponseBuilder(),
         );
     }
 
@@ -60,7 +60,7 @@ class SalesReturnsRestApiFactory extends AbstractFactory
     {
         return new ReturnWriter(
             $this->getSalesReturnClient(),
-            $this->createRestReturnResponseBuilder()
+            $this->createRestReturnResponseBuilder(),
         );
     }
 
@@ -71,7 +71,7 @@ class SalesReturnsRestApiFactory extends AbstractFactory
     {
         return new ReturnReader(
             $this->getSalesReturnClient(),
-            $this->createRestReturnResponseBuilder()
+            $this->createRestReturnResponseBuilder(),
         );
     }
 
@@ -83,7 +83,7 @@ class SalesReturnsRestApiFactory extends AbstractFactory
         return new RestReturnResponseBuilder(
             $this->getResourceBuilder(),
             $this->createReturnResourceMapper(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -94,7 +94,7 @@ class SalesReturnsRestApiFactory extends AbstractFactory
     {
         return new RestReturnReasonResponseBuilder(
             $this->getResourceBuilder(),
-            $this->createReturnReasonResourceMapper()
+            $this->createReturnReasonResourceMapper(),
         );
     }
 
@@ -112,7 +112,7 @@ class SalesReturnsRestApiFactory extends AbstractFactory
     public function createReturnResourceMapper(): ReturnResourceMapperInterface
     {
         return new ReturnResourceMapper(
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
