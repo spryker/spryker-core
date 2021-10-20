@@ -21,6 +21,7 @@ class ProductOfferCheckoutValidator implements ProductOfferCheckoutValidatorInte
      * @var string
      */
     protected const GLOSSARY_KEY_PRODUCT_OFFER_NOT_ACTIVE_OR_APPROVED = 'product-offer.message.not-active-or-approved';
+
     /**
      * @var string
      */

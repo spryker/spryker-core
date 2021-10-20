@@ -20,6 +20,7 @@ class InactiveItemsFilter implements InactiveItemsFilterInterface
      * @var string
      */
     protected const MESSAGE_PARAM_SKU = '%sku%';
+
     /**
      * @var string
      */

@@ -27,6 +27,7 @@ class UpdateTest extends Test
      * @var string
      */
     protected const INITIAL_NAME = 'Initial Name';
+
     /**
      * @var string
      */

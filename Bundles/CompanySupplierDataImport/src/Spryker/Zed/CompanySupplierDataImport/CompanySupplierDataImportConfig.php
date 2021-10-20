@@ -16,10 +16,12 @@ class CompanySupplierDataImportConfig extends DataImportConfig
      * @var string
      */
     public const IMPORT_TYPE_COMPANY_TYPE = 'company-type';
+
     /**
      * @var string
      */
     public const IMPORT_TYPE_COMPANY_SUPPLIER = 'company-supplier';
+
     /**
      * @var string
      */

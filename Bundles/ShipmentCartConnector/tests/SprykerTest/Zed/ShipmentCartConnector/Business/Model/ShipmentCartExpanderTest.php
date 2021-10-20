@@ -47,6 +47,7 @@ class ShipmentCartExpanderTest extends Test
      * @var string
      */
     public const CURRENCY_CODE_EUR = 'EUR';
+
     /**
      * @var string
      */

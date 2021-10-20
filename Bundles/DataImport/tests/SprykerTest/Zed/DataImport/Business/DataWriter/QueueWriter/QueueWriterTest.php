@@ -33,6 +33,7 @@ class QueueWriterTest extends Unit
      * @var string
      */
     protected const DUMMY_QUEUE_NAME = 'dummy_queue';
+
     /**
      * @var array
      */

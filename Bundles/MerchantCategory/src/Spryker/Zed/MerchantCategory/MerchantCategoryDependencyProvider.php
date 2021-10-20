@@ -21,6 +21,7 @@ class MerchantCategoryDependencyProvider extends AbstractBundleDependencyProvide
      * @var string
      */
     public const FACADE_EVENT = 'FACADE_EVENT';
+
     /**
      * @var string
      */

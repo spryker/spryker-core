@@ -26,10 +26,12 @@ class ConfigurableBundleTemplateSlotTable extends AbstractTable
      * @var string
      */
     protected const COL_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT_NAME_TRANSLATION = 'configurable_bundle_template_slot_name_translation';
+
     /**
      * @var string
      */
     protected const COL_NUMBER_OF_ITEMS = 'number_of_items';
+
     /**
      * @var string
      */
@@ -39,6 +41,7 @@ class ConfigurableBundleTemplateSlotTable extends AbstractTable
      * @var string
      */
     protected const PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE = 'id-configurable-bundle-template';
+
     /**
      * @var string
      */

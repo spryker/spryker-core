@@ -21,6 +21,7 @@ class SearchConsole extends Console
      * @var string
      */
     public const COMMAND_NAME = 'search:setup';
+
     /**
      * @var string
      */

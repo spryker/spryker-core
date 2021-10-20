@@ -30,6 +30,7 @@ class GlossaryFacadeTest extends Unit
      * @var string
      */
     public const GLOSSARY_KEY = 'glossary_key';
+
     /**
      * @var string
      */

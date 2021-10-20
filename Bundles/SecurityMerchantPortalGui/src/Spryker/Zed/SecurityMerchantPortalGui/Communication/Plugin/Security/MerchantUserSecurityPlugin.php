@@ -29,6 +29,7 @@ class MerchantUserSecurityPlugin extends AbstractPlugin implements SecurityPlugi
      * @var string
      */
     protected const ROUTE_LOGIN = 'security-merchant-portal-gui:login';
+
     /**
      * @var string
      */

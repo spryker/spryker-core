@@ -21,6 +21,7 @@ class ProductCategoryFilterDependencyProvider extends AbstractBundleDependencyPr
      * @var string
      */
     public const FACADE_TOUCH = 'FACADE_TOUCH';
+
     /**
      * @var string
      */

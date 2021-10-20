@@ -16,6 +16,7 @@ class GiftCardCartCodeOperationMessageFinder implements GiftCardCartCodeOperatio
      * @var string
      */
     public const CART_GIFT_CARD_APPLY_SUCCESSFUL = 'cart.giftcard.apply.successful';
+
     /**
      * @var string
      */

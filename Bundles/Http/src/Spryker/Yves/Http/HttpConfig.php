@@ -19,6 +19,7 @@ class HttpConfig extends AbstractBundleConfig
      * @var int
      */
     protected const DEFAULT_REQUEST_HTTP_PORT = 80;
+
     /**
      * @var int
      */

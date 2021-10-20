@@ -15,6 +15,7 @@ class MerchantsRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESOURCE_MERCHANTS = 'merchants';
+
     /**
      * @var string
      */
@@ -24,6 +25,7 @@ class MerchantsRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESPONSE_CODE_MERCHANT_NOT_FOUND = '3501';
+
     /**
      * @var string
      */
@@ -33,6 +35,7 @@ class MerchantsRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESPONSE_CODE_MERCHANT_IDENTIFIER_MISSING = '3502';
+
     /**
      * @var string
      */

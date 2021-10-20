@@ -43,6 +43,7 @@ class AclEntityDataImportCommunicationTester extends Actor
      * @var string
      */
     protected const ACL_ENTITY_SEGMENT_REFERENCE_1 = 'sH9qLMZtt6sxWqRJVYib';
+
     /**
      * @var string
      */
@@ -52,6 +53,7 @@ class AclEntityDataImportCommunicationTester extends Actor
      * @var string
      */
     protected const ACL_ENTITY_SEGMENT_NAME_1 = 'Segment 1';
+
     /**
      * @var string
      */

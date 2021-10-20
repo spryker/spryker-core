@@ -21,6 +21,7 @@ class TranslatorDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const CLIENT_GLOSSARY_STORAGE = 'CLIENT_GLOSSARY_STORAGE';
+
     /**
      * @var string
      */

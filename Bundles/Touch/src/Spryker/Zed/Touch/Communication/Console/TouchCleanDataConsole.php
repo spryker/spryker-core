@@ -21,6 +21,7 @@ class TouchCleanDataConsole extends Console
      * @var string
      */
     public const COMMAND_NAME = 'touch:clean-data';
+
     /**
      * @var string
      */

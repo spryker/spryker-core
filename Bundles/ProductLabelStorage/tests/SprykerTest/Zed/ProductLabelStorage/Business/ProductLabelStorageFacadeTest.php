@@ -37,6 +37,7 @@ class ProductLabelStorageFacadeTest extends Unit
      * @var string
      */
     protected const STORE_NAME_DE = 'DE';
+
     /**
      * @var string
      */

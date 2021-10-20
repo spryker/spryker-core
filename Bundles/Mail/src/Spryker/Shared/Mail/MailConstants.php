@@ -21,6 +21,7 @@ interface MailConstants
      * @var string
      */
     public const SMTP_HOST = 'MAIL_CONSTANTS:SMTP_HOST';
+
     /**
      * @var string
      */

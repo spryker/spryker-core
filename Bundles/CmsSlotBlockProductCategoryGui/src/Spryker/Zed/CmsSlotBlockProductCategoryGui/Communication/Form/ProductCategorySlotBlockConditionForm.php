@@ -27,10 +27,12 @@ class ProductCategorySlotBlockConditionForm extends AbstractType
      * @var string
      */
     public const OPTION_PRODUCT_ARRAY = 'option-product-array';
+
     /**
      * @var string
      */
     public const OPTION_CATEGORY_ARRAY = 'option-category-array';
+
     /**
      * @var string
      */
@@ -55,6 +57,7 @@ class ProductCategorySlotBlockConditionForm extends AbstractType
      * @var string
      */
     protected const LABEL_PRODUCT_PAGES = 'Products Pages';
+
     /**
      * @var string
      */

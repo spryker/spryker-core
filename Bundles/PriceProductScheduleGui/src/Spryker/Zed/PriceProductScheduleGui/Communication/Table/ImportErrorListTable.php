@@ -20,6 +20,7 @@ class ImportErrorListTable extends AbstractTable
      * @var string
      */
     protected const HEADER_ROW_NUMBER = 'Row n°';
+
     /**
      * @var string
      */

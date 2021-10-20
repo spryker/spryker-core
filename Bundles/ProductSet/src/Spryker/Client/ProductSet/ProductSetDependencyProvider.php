@@ -18,10 +18,12 @@ class ProductSetDependencyProvider extends AbstractDependencyProvider
      * @var string
      */
     public const CLIENT_SEARCH = 'CLIENT_SEARCH';
+
     /**
      * @var string
      */
     public const CLIENT_STORAGE = 'CLIENT_STORAGE';
+
     /**
      * @var string
      */
@@ -31,6 +33,7 @@ class ProductSetDependencyProvider extends AbstractDependencyProvider
      * @var string
      */
     public const PLUGIN_PRODUCT_SET_LIST_RESULT_FORMATTERS = 'PLUGIN_PRODUCT_SET_SEARCH_RESULT_FORMATTERS';
+
     /**
      * @var string
      */

@@ -21,6 +21,7 @@ class OrderItemSplitController extends AbstractController
      * @var string
      */
     public const SALES_ORDER_DETAIL_URL = '/sales/detail?id-sales-order=%d';
+
     /**
      * @var string
      */

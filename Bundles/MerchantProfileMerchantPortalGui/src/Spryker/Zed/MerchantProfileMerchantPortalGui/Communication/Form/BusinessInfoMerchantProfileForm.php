@@ -28,42 +28,52 @@ class BusinessInfoMerchantProfileForm extends AbstractType
      * @var string
      */
     protected const FIELD_ID_MERCHANT = 'id_merchant';
+
     /**
      * @var string
      */
     protected const FIELD_CONTACT_PERSON_TITLE = 'contact_person_title';
+
     /**
      * @var string
      */
     protected const FIELD_CONTACT_PERSON_FIRST_NAME = 'contact_person_first_name';
+
     /**
      * @var string
      */
     protected const FIELD_CONTACT_PERSON_LAST_NAME = 'contact_person_last_name';
+
     /**
      * @var string
      */
     protected const FIELD_CONTACT_PERSON_ROLE = 'contact_person_role';
+
     /**
      * @var string
      */
     protected const FIELD_NAME = 'name';
+
     /**
      * @var string
      */
     protected const FIELD_REGISTRATION_NUMBER = 'registration_number';
+
     /**
      * @var string
      */
     protected const FIELD_EMAIL = 'email';
+
     /**
      * @var string
      */
     protected const FIELD_MERCHANT_REFERENCE = 'merchant_reference';
+
     /**
      * @var string
      */
     protected const FIELD_MERCHANT_PROFILE = 'merchantProfile';
+
     /**
      * @var string
      */
@@ -73,34 +83,42 @@ class BusinessInfoMerchantProfileForm extends AbstractType
      * @var string
      */
     protected const LABEL_CONTACT_PERSON_TITLE = 'Title';
+
     /**
      * @var string
      */
     protected const LABEL_CONTACT_PERSON_FIRST_NAME = 'First Name';
+
     /**
      * @var string
      */
     protected const LABEL_CONTACT_PERSON_LAST_NAME = 'Last Name';
+
     /**
      * @var string
      */
     protected const LABEL_CONTACT_PERSON_ROLE = 'Role';
+
     /**
      * @var string
      */
     protected const LABEL_NAME = 'Company Name';
+
     /**
      * @var string
      */
     protected const LABEL_REGISTRATION_NUMBER = 'Registration number';
+
     /**
      * @var string
      */
     protected const LABEL_EMAIL = 'Email';
+
     /**
      * @var string
      */
     protected const LABEL_MERCHANT_REFERENCE = 'Merchant Reference';
+
     /**
      * @var string
      */

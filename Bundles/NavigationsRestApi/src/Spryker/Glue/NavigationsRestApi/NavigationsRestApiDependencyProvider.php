@@ -21,6 +21,7 @@ class NavigationsRestApiDependencyProvider extends AbstractBundleDependencyProvi
      * @var string
      */
     public const CLIENT_NAVIGATION_STORAGE = 'CLIENT_NAVIGATION_STORAGE';
+
     /**
      * @var string
      */

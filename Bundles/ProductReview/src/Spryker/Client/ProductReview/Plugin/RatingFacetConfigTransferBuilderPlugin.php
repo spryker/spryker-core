@@ -19,6 +19,7 @@ class RatingFacetConfigTransferBuilderPlugin extends AbstractPlugin implements F
      * @var string
      */
     public const NAME = 'rating';
+
     /**
      * @var string
      */

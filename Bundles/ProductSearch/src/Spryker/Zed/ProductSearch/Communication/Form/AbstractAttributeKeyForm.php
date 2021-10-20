@@ -33,10 +33,12 @@ abstract class AbstractAttributeKeyForm extends AbstractType
      * @var string
      */
     public const OPTION_FILTER_TYPE_CHOICES = 'filter_type_choices';
+
     /**
      * @var string
      */
     public const OPTION_IS_UPDATE = 'is_update';
+
     /**
      * @var string
      */

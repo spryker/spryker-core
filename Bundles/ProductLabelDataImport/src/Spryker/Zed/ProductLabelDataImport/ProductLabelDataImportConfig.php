@@ -16,10 +16,12 @@ class ProductLabelDataImportConfig extends DataImportConfig
      * @var string
      */
     public const IMPORT_TYPE_PRODUCT_LABEL = 'product-label';
+
     /**
      * @var string
      */
     public const IMPORT_TYPE_PRODUCT_LABEL_STORE = 'product-label-store';
+
     /**
      * @var int
      */

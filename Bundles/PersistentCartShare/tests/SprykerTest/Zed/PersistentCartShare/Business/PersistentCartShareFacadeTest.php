@@ -65,6 +65,7 @@ class PersistentCartShareFacadeTest extends Test
      * @var string
      */
     protected const VALUE_NOT_EXISTING_UUID = 'VALUE_NOT_EXISTING_UUID';
+
     /**
      * @var int
      */

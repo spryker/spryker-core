@@ -13,6 +13,7 @@ interface ProductEvents
      * @var string
      */
     public const PRODUCT_ABSTRACT_BEFORE_CREATE = 'Product.product_abstract.before.create';
+
     /**
      * @var string
      */
@@ -22,6 +23,7 @@ interface ProductEvents
      * @var string
      */
     public const PRODUCT_CONCRETE_BEFORE_CREATE = 'Product.product_concrete.before.create';
+
     /**
      * @var string
      */
@@ -31,6 +33,7 @@ interface ProductEvents
      * @var string
      */
     public const PRODUCT_ABSTRACT_AFTER_UPDATE = 'Product.product_abstract.after.update';
+
     /**
      * @var string
      */
@@ -40,6 +43,7 @@ interface ProductEvents
      * @var string
      */
     public const PRODUCT_CONCRETE_AFTER_CREATE = 'Product.product_concrete.after.create';
+
     /**
      * @var string
      */
@@ -49,6 +53,7 @@ interface ProductEvents
      * @var string
      */
     public const PRODUCT_ABSTRACT_READ = 'Product.product_abstract.read';
+
     /**
      * @var string
      */

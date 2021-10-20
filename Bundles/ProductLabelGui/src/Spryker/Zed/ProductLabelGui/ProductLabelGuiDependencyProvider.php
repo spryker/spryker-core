@@ -26,14 +26,17 @@ class ProductLabelGuiDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const FACADE_LOCALE = 'FACADE_LOCALE';
+
     /**
      * @var string
      */
     public const FACADE_PRODUCT_LABEL = 'FACADE_PRODUCT_LABEL';
+
     /**
      * @var string
      */
     public const FACADE_MONEY = 'FACADE_MONEY';
+
     /**
      * @var string
      */

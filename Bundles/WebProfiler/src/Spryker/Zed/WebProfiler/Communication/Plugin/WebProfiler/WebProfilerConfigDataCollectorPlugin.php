@@ -18,6 +18,7 @@ class WebProfilerConfigDataCollectorPlugin implements WebProfilerDataCollectorPl
      * @var string
      */
     protected const NAME = 'config';
+
     /**
      * @var string
      */

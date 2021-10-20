@@ -16,6 +16,7 @@ class CategoryKeyUniqueConstraint extends Constraint
      * @var string
      */
     public const OPTION_CATEGORY_GUI_REPOSITORY = 'categoryGuiRepository';
+
     /**
      * @var string
      */
@@ -25,6 +26,7 @@ class CategoryKeyUniqueConstraint extends Constraint
      * @var string
      */
     protected const PARAMETER_CATEGORY_KEY = '%categoryKey%';
+
     /**
      * @var string
      */

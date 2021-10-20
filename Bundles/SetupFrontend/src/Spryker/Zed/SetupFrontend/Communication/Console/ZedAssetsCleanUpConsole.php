@@ -20,6 +20,7 @@ class ZedAssetsCleanUpConsole extends Console
      * @var string
      */
     public const COMMAND_NAME = 'frontend:zed:cleanup-assets';
+
     /**
      * @var string
      */

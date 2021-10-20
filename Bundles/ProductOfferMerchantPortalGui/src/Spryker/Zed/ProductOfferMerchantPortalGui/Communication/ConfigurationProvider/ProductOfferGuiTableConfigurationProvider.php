@@ -20,50 +20,62 @@ class ProductOfferGuiTableConfigurationProvider implements GuiTableConfiguration
      * @var string
      */
     public const COL_KEY_OFFER_REFERENCE = 'offerReference';
+
     /**
      * @var string
      */
     public const COL_KEY_MERCHANT_SKU = 'merchantSku';
+
     /**
      * @var string
      */
     public const COL_KEY_CONCRETE_SKU = 'concreteSku';
+
     /**
      * @var string
      */
     public const COL_KEY_IMAGE = 'image';
+
     /**
      * @var string
      */
     public const COL_KEY_PRODUCT_NAME = 'productName';
+
     /**
      * @var string
      */
     public const COL_KEY_STORES = 'stores';
+
     /**
      * @var string
      */
     public const COL_KEY_STOCK = 'stock';
+
     /**
      * @var string
      */
     public const COL_KEY_STATUS = 'status';
+
     /**
      * @var string
      */
     public const COL_KEY_APPROVAL_STATUS = 'approvalStatus';
+
     /**
      * @var string
      */
     public const COL_KEY_VALID_FROM = 'validFrom';
+
     /**
      * @var string
      */
     public const COL_KEY_VALID_TO = 'validTo';
+
     /**
      * @var string
      */
     public const COL_KEY_CREATED_AT = 'createdAt';
+
     /**
      * @var string
      */
@@ -73,6 +85,7 @@ class ProductOfferGuiTableConfigurationProvider implements GuiTableConfiguration
      * @var string
      */
     public const COLUMN_DATA_STATUS_ACTIVE = 'Active';
+
     /**
      * @var string
      */

@@ -30,6 +30,7 @@ class ProductConfigurationRestCartItemsAttributesMapperPluginTest extends Unit
      * @var string
      */
     protected const TEST_SKU = 'test-sku';
+
     /**
      * @var string
      */

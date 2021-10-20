@@ -26,14 +26,17 @@ class CmsDataPageMapBuilder implements PageMapInterface
      * @var string
      */
     public const TYPE_CMS_PAGE = 'cms_page';
+
     /**
      * @var string
      */
     public const TYPE = 'type';
+
     /**
      * @var string
      */
     public const ID_CMS_PAGE = 'id_cms_page';
+
     /**
      * @var string
      */

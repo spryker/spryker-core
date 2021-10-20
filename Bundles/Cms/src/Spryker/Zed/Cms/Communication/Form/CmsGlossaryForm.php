@@ -34,26 +34,32 @@ class CmsGlossaryForm extends AbstractType
      * @var string
      */
     public const FIELD_FK_PAGE = 'fkPage';
+
     /**
      * @var string
      */
     public const FIELD_PLACEHOLDER = 'placeholder';
+
     /**
      * @var string
      */
     public const FIELD_GLOSSARY_KEY = 'glossary_key';
+
     /**
      * @var string
      */
     public const FIELD_ID_KEY_MAPPING = 'idCmsGlossaryKeyMapping';
+
     /**
      * @var string
      */
     public const FIELD_TEMPLATE_NAME = 'templateName';
+
     /**
      * @var string
      */
     public const FIELD_SEARCH_OPTION = 'search_option';
+
     /**
      * @var string
      */
@@ -63,14 +69,17 @@ class CmsGlossaryForm extends AbstractType
      * @var string
      */
     protected const TYPE_GLOSSARY_NEW = 'New glossary';
+
     /**
      * @var string
      */
     protected const TYPE_GLOSSARY_FIND = 'Find glossary';
+
     /**
      * @var string
      */
     protected const TYPE_AUTO_GLOSSARY = 'Auto';
+
     /**
      * @var string
      */
@@ -80,6 +89,7 @@ class CmsGlossaryForm extends AbstractType
      * @var string
      */
     protected const GROUP_PLACEHOLDER_CHECK = 'placeholder_check';
+
     /**
      * @var string
      */

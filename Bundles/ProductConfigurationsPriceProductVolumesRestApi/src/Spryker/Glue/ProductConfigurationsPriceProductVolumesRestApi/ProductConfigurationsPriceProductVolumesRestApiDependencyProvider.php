@@ -21,6 +21,7 @@ class ProductConfigurationsPriceProductVolumesRestApiDependencyProvider extends 
      * @var string
      */
     public const SERVICE_PRODUCT_CONFIGURATION = 'SERVICE_PRODUCT_CONFIGURATION';
+
     /**
      * @var string
      */

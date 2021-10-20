@@ -22,6 +22,7 @@ class CloseOutdatedQuoteRequestConsole extends Console
      * @var string
      */
     protected const COMMAND_NAME = 'quote-request:close-outdated';
+
     /**
      * @var string
      */

@@ -25,14 +25,17 @@ class HstsHeaderEventDispatcher extends AbstractPlugin implements EventDispatche
      * @var string
      */
     protected const HEADER_HSTS = 'Strict-Transport-Security';
+
     /**
      * @var string
      */
     protected const HSTS_CONFIG_MAX_AGE = 'max_age';
+
     /**
      * @var string
      */
     protected const HSTS_CONFIG_INCLUDE_SUBDOMAINS = 'include_sub_domains';
+
     /**
      * @var string
      */

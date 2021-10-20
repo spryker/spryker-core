@@ -32,6 +32,7 @@ class PropelSchemaMergerTest extends Unit
      * @var string
      */
     public const LEVEL_PROJECT = 'Project';
+
     /**
      * @var string
      */

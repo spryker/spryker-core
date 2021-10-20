@@ -26,6 +26,7 @@ class TwigCurrencyServiceProvider extends AbstractPlugin implements ServiceProvi
      * @var string
      */
     public const NO_SYMBOL_FOUND = '-';
+
     /**
      * @var string
      */

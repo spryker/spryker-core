@@ -17,6 +17,7 @@ class DateRangeRequestFilterValueNormalizer implements DateRangeRequestFilterVal
      * @var string
      */
     protected const FILTER_DATE_TIME_FORMAT = 'Y-m-d\TH:i:s.uP';
+
     /**
      * @var string
      */

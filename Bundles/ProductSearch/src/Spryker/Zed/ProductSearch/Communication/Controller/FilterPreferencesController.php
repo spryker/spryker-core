@@ -22,6 +22,7 @@ class FilterPreferencesController extends AbstractController
      * @var string
      */
     public const PARAM_ID = 'id';
+
     /**
      * @var string
      */
@@ -31,6 +32,7 @@ class FilterPreferencesController extends AbstractController
      * @var string
      */
     public const MESSAGE_FILTER_PREFERENCE_CREATE_SUCCESS = 'Filter preference was created successfully.';
+
     /**
      * @var string
      */

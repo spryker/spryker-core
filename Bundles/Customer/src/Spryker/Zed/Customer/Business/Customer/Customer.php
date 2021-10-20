@@ -44,6 +44,7 @@ class Customer implements CustomerInterface
      * @var int
      */
     protected const BCRYPT_FACTOR = 12;
+
     /**
      * @var string
      */
@@ -53,10 +54,12 @@ class Customer implements CustomerInterface
      * @var string
      */
     protected const GLOSSARY_KEY_CONFIRM_EMAIL_LINK_INVALID_OR_USED = 'customer.error.confirm_email_link.invalid_or_used';
+
     /**
      * @var string
      */
     protected const GLOSSARY_KEY_CUSTOMER_AUTHORIZATION_VALIDATE_EMAIL_ADDRESS = 'customer.authorization.validate_email_address';
+
     /**
      * @var string
      */

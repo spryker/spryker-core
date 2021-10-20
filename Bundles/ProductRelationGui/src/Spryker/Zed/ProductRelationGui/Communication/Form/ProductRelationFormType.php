@@ -30,30 +30,37 @@ class ProductRelationFormType extends AbstractType
      * @var string
      */
     public const FIELD_RELATION_TYPE = 'productRelationType';
+
     /**
      * @var string
      */
     public const FIELD_FK_PRODUCT_ABSTRACT = 'fkProductAbstract';
+
     /**
      * @var string
      */
     public const FIELD_ID_PRODUCT_RELATION = 'idProductRelation';
+
     /**
      * @var string
      */
     public const FIELD_QUERY_SET = 'querySet';
+
     /**
      * @var string
      */
     public const FIELD_IS_REBUILD_SCHEDULED = 'isRebuildScheduled';
+
     /**
      * @var string
      */
     public const FIELD_IS_ACTIVE = 'isActive';
+
     /**
      * @var string
      */
     public const FIELD_STORE_RELATION = 'storeRelation';
+
     /**
      * @var string
      */
@@ -68,6 +75,7 @@ class ProductRelationFormType extends AbstractType
      * @var string
      */
     public const GROUP_AFTER = 'After';
+
     /**
      * @var string
      */

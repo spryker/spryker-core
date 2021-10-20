@@ -157,7 +157,7 @@ class ProductAbstractAttributeUniqueCombinationConstraintValidatorTest extends C
 
         $this->assertCount(1, $violations);
         $this->assertSame($violations->get(0)->getMessage(), 'translated message');
-        $this->assertSame($violations->get(0)->getParameters(), [ 'attributesRowNumber' => 'invalid case']);
+        $this->assertSame($violations->get(0)->getParameters(), ['attributesRowNumber' => 'invalid case']);
     }
 
     /**

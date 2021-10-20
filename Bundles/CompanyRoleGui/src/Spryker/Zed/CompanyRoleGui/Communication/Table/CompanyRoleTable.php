@@ -25,14 +25,17 @@ class CompanyRoleTable extends AbstractTable
      * @var string
      */
     protected const HEADER_ID_COMPANY_ROLE = 'Role ID';
+
     /**
      * @var string
      */
     protected const HEADER_NAME_COMPANY_ROLE = 'Name';
+
     /**
      * @var string
      */
     protected const HEADER_NAME_COMPANY = 'Company Name';
+
     /**
      * @var string
      */
@@ -47,6 +50,7 @@ class CompanyRoleTable extends AbstractTable
      * @var string
      */
     protected const UPDATE_ROLE_URL = '/company-role-gui/edit-company-role';
+
     /**
      * @var string
      */
@@ -56,6 +60,7 @@ class CompanyRoleTable extends AbstractTable
      * @var string
      */
     protected const BUTTON_TITLE_DELETE = 'Delete';
+
     /**
      * @var string
      */

@@ -19,10 +19,12 @@ class CompanyRoleDependencyProvider extends AbstractDependencyProvider
      * @var string
      */
     public const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
+
     /**
      * @var string
      */
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
+
     /**
      * @var string
      */

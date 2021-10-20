@@ -27,6 +27,7 @@ class ProductRelationRepository extends AbstractRepository implements ProductRel
      * @var string
      */
     protected const COL_IS_ACTIVE_AGGREGATION = 'is_active_aggregation';
+
     /**
      * @var string
      */

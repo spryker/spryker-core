@@ -33,26 +33,32 @@ class CmsPageFormType extends AbstractType
      * @var string
      */
     public const FIELD_SEARCHABLE = 'isSearchable';
+
     /**
      * @var string
      */
     public const FIELD_PAGE_ATTRIBUTES = 'pageAttributes';
+
     /**
      * @var string
      */
     public const FIELD_PAGE_META_ATTRIBUTES = 'metaAttributes';
+
     /**
      * @var string
      */
     public const FIELD_FK_TEMPLATE = 'fkTemplate';
+
     /**
      * @var string
      */
     public const FIELD_FK_PAGE = 'fkPage';
+
     /**
      * @var string
      */
     public const FIELD_VALID_FROM = 'validFrom';
+
     /**
      * @var string
      */
@@ -62,14 +68,17 @@ class CmsPageFormType extends AbstractType
      * @var string
      */
     public const OPTION_TEMPLATE_CHOICES = 'template_choices';
+
     /**
      * @var string
      */
     public const OPTION_DATA_CLASS_ATTRIBUTES = 'data_class_attributes';
+
     /**
      * @var string
      */
     public const OPTION_DATA_CLASS_META_ATTRIBUTES = 'data_class_meta_attributes';
+
     /**
      * @var string
      */

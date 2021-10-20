@@ -13,10 +13,12 @@ interface ShoppingListDataSetInterface
      * @var string
      */
     public const COLUMN_KEY = 'shopping_list_key';
+
     /**
      * @var string
      */
     public const COLUMN_NAME = 'name';
+
     /**
      * @var string
      */

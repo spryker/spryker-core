@@ -23,6 +23,7 @@ class SlotBlockController extends AbstractController
      * @var string
      */
     protected const PARAM_ID_CMS_SLOT_TEMPLATE = 'id-cms-slot-template';
+
     /**
      * @var string
      */

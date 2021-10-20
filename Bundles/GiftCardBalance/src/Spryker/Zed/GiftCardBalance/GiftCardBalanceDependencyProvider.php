@@ -21,6 +21,7 @@ class GiftCardBalanceDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const FACADE_MONEY = 'FACADE_MONEY';
+
     /**
      * @var string
      */

@@ -26,6 +26,7 @@ class ShoppingListSharer implements ShoppingListSharerInterface
      * @var string
      */
     protected const CANNOT_UPDATE_SHOPPING_LIST = 'customer.account.shopping_list.error.cannot_update';
+
     /**
      * @var string
      */

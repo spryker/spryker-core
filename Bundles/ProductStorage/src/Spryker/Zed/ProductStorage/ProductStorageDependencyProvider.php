@@ -31,10 +31,12 @@ class ProductStorageDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
+
     /**
      * @var string
      */
     public const FACADE_PRODUCT = 'FACADE_PRODUCT';
+
     /**
      * @var string
      */

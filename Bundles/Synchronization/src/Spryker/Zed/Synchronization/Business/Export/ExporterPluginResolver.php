@@ -17,6 +17,7 @@ class ExporterPluginResolver implements ExporterPluginResolverInterface
      * @var string
      */
     public const REPOSITORY_SYNCHRONIZATION_PLUGINS = 'repository';
+
     /**
      * @var string
      */

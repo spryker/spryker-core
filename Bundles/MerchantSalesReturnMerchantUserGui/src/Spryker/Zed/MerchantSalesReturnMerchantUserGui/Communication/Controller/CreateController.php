@@ -43,22 +43,27 @@ class CreateController extends AbstractController
      * @var string
      */
     protected const ROUTE_RETURN_DETAIL = '/merchant-sales-return-merchant-user-gui/detail';
+
     /**
      * @var string
      */
     protected const MESSAGE_MERCHANT_NOT_FOUND_ERROR = 'Merchant for current user not found.';
+
     /**
      * @var string
      */
     protected const MESSAGE_MERCHANT_ORDER_NOT_FOUND_ERROR = 'Merchant sales order #%d not found.';
+
     /**
      * @var string
      */
     protected const MESSAGE_PARAM_ID = '%id%';
+
     /**
      * @var string
      */
     protected const MESSAGE_RETURN_CREATED_SUCCESS = 'Return was successfully created.';
+
     /**
      * @var string
      */

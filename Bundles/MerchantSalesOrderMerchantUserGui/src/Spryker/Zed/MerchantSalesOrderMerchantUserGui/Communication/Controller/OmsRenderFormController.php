@@ -20,14 +20,17 @@ class OmsRenderFormController extends AbstractController
      * @var string
      */
     protected const DEFAULT_REDIRECT_URL = 'redirectUrl';
+
     /**
      * @var string
      */
     protected const URL_PARAM_EVENTS = 'events';
+
     /**
      * @var string
      */
     protected const URL_PARAM_ID_MERCHANT_SALES_ORDER = 'idMerchantSalesOrder';
+
     /**
      * @var string
      */

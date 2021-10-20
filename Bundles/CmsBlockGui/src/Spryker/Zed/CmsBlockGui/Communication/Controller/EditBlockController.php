@@ -28,14 +28,17 @@ class EditBlockController extends AbstractCmsBlockController
      * @var string
      */
     public const MESSAGE_CMS_BLOCK_UPDATE_ERROR = 'Invalid data provided.';
+
     /**
      * @var string
      */
     public const MESSAGE_CMS_BLOCK_UPDATE_SUCCESS = 'CMS Block was updated successfully.';
+
     /**
      * @var string
      */
     public const MESSAGE_CMS_BLOCK_ACTIVATE_SUCCESS = 'CMS Block was activated successfully.';
+
     /**
      * @var string
      */

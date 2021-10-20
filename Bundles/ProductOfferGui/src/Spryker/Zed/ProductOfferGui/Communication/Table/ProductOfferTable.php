@@ -32,18 +32,22 @@ class ProductOfferTable extends AbstractTable
      * @var string
      */
     protected const COL_STORES = 'stores';
+
     /**
      * @var string
      */
     protected const COL_ACTIONS = 'actions';
+
     /**
      * @var string
      */
     protected const COL_PRODUCT_NAME = 'product_name';
+
     /**
      * @var string
      */
     protected const COL_ID_PRODUCT_CONCRETE = 'id_product_concrete';
+
     /**
      * @var string
      */
@@ -259,14 +263,13 @@ class ProductOfferTable extends AbstractTable
     }
 
     /**
-     * @phpstan-param array<string, mixed> $item
-     *
-     * @param array $item
+     * @param array<string, mixed> $item
      *
      * @return string
      */
     protected function buildLinks(array $item): string
     {
+        $buttons = [];
         $buttons[] = $this->generateViewButton(
             Url::generate(
                 ProductOfferGuiConfig::URL_VIEW,

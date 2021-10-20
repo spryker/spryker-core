@@ -40,10 +40,12 @@ class ConfigurableBundleFacadeTest extends Unit
      * @var int
      */
     protected const FAKE_TEMPLATE_ID = 666;
+
     /**
      * @var int
      */
     protected const FAKE_TEMPLATE_SLOT_ID = 666;
+
     /**
      * @var int
      */
@@ -53,6 +55,7 @@ class ConfigurableBundleFacadeTest extends Unit
      * @var string
      */
     protected const FAKE_PRODUCT_IMAGE_SET_NAME_1 = 'FAKE_PRODUCT_IMAGE_SET_NAME_1';
+
     /**
      * @var string
      */

@@ -29,18 +29,22 @@ class IndexController extends AbstractController
      * @var string
      */
     public const URL_PARAM_ID_DISCOUNT = 'id-discount';
+
     /**
      * @var string
      */
     public const URL_PARAM_BATCH_PARAMETER = 'batch';
+
     /**
      * @var string
      */
     public const URL_PARAM_ID_POOL = 'id-pool';
+
     /**
      * @var string
      */
     public const URL_PARAM_VISIBILITY = 'visibility';
+
     /**
      * @var string
      */

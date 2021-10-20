@@ -28,6 +28,7 @@ class CreateController extends AbstractController
      * @var string
      */
     public const PARAM_TYPE = 'type';
+
     /**
      * @var string
      */
@@ -37,6 +38,7 @@ class CreateController extends AbstractController
      * @var string
      */
     public const PREVIOUS_STEP_NAME = 'previous-step';
+
     /**
      * @var string
      */
@@ -46,10 +48,12 @@ class CreateController extends AbstractController
      * @var string
      */
     protected const ERROR_MESSAGE_INVALID_DATA_PROVIDED = 'Invalid data provided.';
+
     /**
      * @var string
      */
     protected const SUCCESSFUL_MESSAGE_CUSTOMER_CREATED = 'Customer is registered successfully.';
+
     /**
      * @var string
      */

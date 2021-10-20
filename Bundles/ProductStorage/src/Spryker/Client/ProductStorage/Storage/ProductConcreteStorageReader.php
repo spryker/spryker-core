@@ -28,14 +28,17 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
      * @var string
      */
     protected const KEY_ID_PRODUCT_CONCRETE = 'id_product_concrete';
+
     /**
      * @var string
      */
     protected const KEY_PRICES = 'prices';
+
     /**
      * @var string
      */
     protected const KEY_IMAGE_SETS = 'imageSets';
+
     /**
      * @var string
      */

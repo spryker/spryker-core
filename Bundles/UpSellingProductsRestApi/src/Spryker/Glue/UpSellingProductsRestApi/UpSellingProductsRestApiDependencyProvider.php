@@ -23,10 +23,12 @@ class UpSellingProductsRestApiDependencyProvider extends AbstractBundleDependenc
      * @var string
      */
     public const CLIENT_PRODUCT_RELATION_STORAGE = 'CLIENT_PRODUCT_RELATION_STORAGE';
+
     /**
      * @var string
      */
     public const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE';
+
     /**
      * @var string
      */

@@ -33,18 +33,22 @@ class MerchantRelationshipThresholdType extends AbstractType
      * @var string
      */
     public const FIELD_STORE_CURRENCY = 'storeCurrency';
+
     /**
      * @var string
      */
     public const FIELD_ID_MERCHANT_RELATIONSHIP = 'idMerchantRelationship';
+
     /**
      * @var string
      */
     public const FIELD_HARD = 'hardThreshold';
+
     /**
      * @var string
      */
     public const FIELD_SOFT = 'softThreshold';
+
     /**
      * @var string
      */
@@ -54,18 +58,22 @@ class MerchantRelationshipThresholdType extends AbstractType
      * @var string
      */
     public const OPTION_CURRENCY_CODE = 'option-currency-code';
+
     /**
      * @var string
      */
     public const OPTION_STORE_CURRENCY_ARRAY = 'option-store-currency-array';
+
     /**
      * @var string
      */
     public const OPTION_HARD_TYPES_ARRAY = 'option-hard-types-array';
+
     /**
      * @var string
      */
     public const OPTION_SOFT_TYPES_ARRAY = 'option-soft-types-array';
+
     /**
      * @var string
      */

@@ -25,22 +25,27 @@ class NavigationStorageDependencyProvider extends AbstractBundleDependencyProvid
      * @var string
      */
     public const QUERY_CONTAINER_NAVIGATION = 'QUERY_CONTAINER_NAVIGATION';
+
     /**
      * @var string
      */
     public const QUERY_CONTAINER_LOCALE = 'QUERY_CONTAINER_LOCALE';
+
     /**
      * @var string
      */
     public const FACADE_NAVIGATION = 'FACADE_NAVIGATION';
+
     /**
      * @var string
      */
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
+
     /**
      * @var string
      */
     public const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
+
     /**
      * @var string
      */

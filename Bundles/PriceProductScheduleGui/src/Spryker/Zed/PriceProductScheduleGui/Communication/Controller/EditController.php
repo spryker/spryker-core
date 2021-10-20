@@ -23,6 +23,7 @@ class EditController extends AbstractController
      * @var string
      */
     protected const PARAM_ID_PRICE_PRODUCT_SCHEDULE = 'id-price-product-schedule';
+
     /**
      * @var string
      */
@@ -32,6 +33,7 @@ class EditController extends AbstractController
      * @var string
      */
     protected const KEY_HEADER_REFERER = 'referer';
+
     /**
      * @var string
      */
@@ -41,26 +43,32 @@ class EditController extends AbstractController
      * @var string
      */
     protected const KEY_FORM = 'form';
+
     /**
      * @var string
      */
     protected const KEY_TITLE = 'title';
+
     /**
      * @var string
      */
     protected const KEY_REDIRECT_URL = 'redirectUrl';
+
     /**
      * @var string
      */
     protected const KEY_TIMEZONE_TEXT = 'timezoneText';
+
     /**
      * @var string
      */
     protected const KEY_ID_PRODUCT = 'idProduct';
+
     /**
      * @var string
      */
     protected const KEY_TIMEZONE = 'timezone';
+
     /**
      * @var string
      */

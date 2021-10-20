@@ -22,10 +22,12 @@ class ProductSearchConfigStorageDependencyProvider extends AbstractBundleDepende
      * @var string
      */
     public const FACADE_PRODUCT_SEARCH = 'FACADE_PRODUCT_SEARCH';
+
     /**
      * @var string
      */
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
+
     /**
      * @var string
      */

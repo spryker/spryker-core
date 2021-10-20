@@ -15,6 +15,7 @@ class SkuRegexConstraint extends Regex
      * @var string
      */
     protected const REGEX_PATTERN = '/^[a-zA-Z0-9-_\.]+$/u';
+
     /**
      * @var string
      */

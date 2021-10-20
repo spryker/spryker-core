@@ -37,6 +37,7 @@ class StateMachineFacadeExceptionTest extends Unit
      * @var string
      */
     public const TESTING_SM = 'TestingSm';
+
     /**
      * @var string
      */

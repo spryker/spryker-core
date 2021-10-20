@@ -25,6 +25,7 @@ class DependencyProviderHelper extends Module
      * @var string
      */
     protected const DEPENDENCY_PROVIDER_CLASS_NAME_PATTERN = '\%1$s\Yves\%2$s\%2$sDependencyProvider';
+
     /**
      * @var int
      */

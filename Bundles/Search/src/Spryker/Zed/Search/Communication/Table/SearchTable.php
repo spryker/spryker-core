@@ -17,14 +17,17 @@ class SearchTable extends AbstractTable
      * @var string
      */
     public const COL_ID = 'id';
+
     /**
      * @var string
      */
     public const COL_INDEX = 'index';
+
     /**
      * @var string
      */
     public const COL_TYPE = 'type';
+
     /**
      * @var string
      */

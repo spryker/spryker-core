@@ -35,6 +35,7 @@ class FormHelper extends Module
      * @var string
      */
     protected const MODULE_NAME = 'Form';
+
     /**
      * @var string
      */

@@ -20,6 +20,7 @@ class MaintenanceController extends AbstractController
      * @var string
      */
     public const REFERENCE_KEY = 'reference_key';
+
     /**
      * @var string
      */

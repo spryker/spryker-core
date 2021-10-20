@@ -16,6 +16,7 @@ class MerchantDataImportConfig extends DataImportConfig
      * @var string
      */
     public const IMPORT_TYPE_MERCHANT = 'merchant';
+
     /**
      * @var string
      */

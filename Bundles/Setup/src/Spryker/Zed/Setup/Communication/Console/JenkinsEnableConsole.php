@@ -23,6 +23,7 @@ class JenkinsEnableConsole extends Console
      * @var string
      */
     public const COMMAND_NAME = 'setup:jenkins:enable';
+
     /**
      * @var string
      */

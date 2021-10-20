@@ -24,6 +24,7 @@ class QueueWorkerConsole extends Console
      * @var string
      */
     public const COMMAND_NAME = 'queue:worker:start';
+
     /**
      * @var string
      */
@@ -33,6 +34,7 @@ class QueueWorkerConsole extends Console
      * @var string
      */
     public const OPTION_STOP_WHEN_EMPTY = 'stop-when-empty';
+
     /**
      * @var string
      */

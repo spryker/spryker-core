@@ -29,18 +29,22 @@ class ImageSetForm extends AbstractType
      * @var string
      */
     public const FIELD_ID = 'idCategoryImageSet';
+
     /**
      * @var string
      */
     public const FIELD_NAME = 'name';
+
     /**
      * @var string
      */
     public const FIELD_LOCALE = 'locale';
+
     /**
      * @var string
      */
     public const FIELD_CATEGORY = 'idCategory';
+
     /**
      * @var string
      */

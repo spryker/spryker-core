@@ -57,14 +57,17 @@ interface StorageConstants
      * @var string
      */
     public const STORAGE_CACHE_STRATEGY = 'STORAGE_CACHE_STRATEGY';
+
     /**
      * @var string
      */
     public const STORAGE_CACHE_STRATEGY_REPLACE = 'STORAGE_CACHE_STRATEGY_REPLACE';
+
     /**
      * @var string
      */
     public const STORAGE_CACHE_STRATEGY_INCREMENTAL = 'STORAGE_CACHE_STRATEGY_INCREMENTAL';
+
     /**
      * @var string
      */

@@ -28,6 +28,7 @@ class PhpMdRunner
      * @var string
      */
     public const OPTION_DRY_RUN = 'dry-run';
+
     /**
      * @var string
      */

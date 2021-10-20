@@ -21,6 +21,7 @@ class SharedCartsRestApiDependencyProvider extends AbstractBundleDependencyProvi
      * @var string
      */
     public const FACADE_QUOTE = 'FACADE_QUOTE';
+
     /**
      * @var string
      */

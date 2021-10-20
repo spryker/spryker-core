@@ -18,6 +18,7 @@ class ProductCategorySlotBlockDataProvider implements ProductCategorySlotBlockDa
      * @var string
      */
     protected const KEY_OPTION_ALL_PRODUCTS = 'All Product Pages';
+
     /**
      * @var string
      */

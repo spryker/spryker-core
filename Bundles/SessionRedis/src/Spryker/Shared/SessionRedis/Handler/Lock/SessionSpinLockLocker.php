@@ -16,10 +16,12 @@ class SessionSpinLockLocker implements SessionLockerInterface
      * @var int
      */
     public const DEFAULT_TIMEOUT_MILLISECONDS = 10000;
+
     /**
      * @var int
      */
     public const DEFAULT_RETRY_DELAY_MICROSECONDS = 10000;
+
     /**
      * @var int
      */
@@ -29,10 +31,12 @@ class SessionSpinLockLocker implements SessionLockerInterface
      * @var string
      */
     public const LOG_METRIC_LOCK_ACQUIRE_TIME = 'Redis/Session_lock_acquire_time';
+
     /**
      * @var string
      */
     public const LOG_METRIC_LOCK_RELEASE_TIME = 'Redis/Session_lock_release_time';
+
     /**
      * @var string
      */

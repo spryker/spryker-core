@@ -32,6 +32,7 @@ class PaymentMethodTable extends AbstractTable
      * @var string
      */
     protected const URL_PAYMENT_METHOD_VIEW = '/payment-gui/view-payment-method/index';
+
     /**
      * @var string
      */
@@ -41,6 +42,7 @@ class PaymentMethodTable extends AbstractTable
      * @var string
      */
     protected const BUTTON_VIEW = 'View';
+
     /**
      * @var string
      */
@@ -50,22 +52,27 @@ class PaymentMethodTable extends AbstractTable
      * @var string
      */
     protected const HEADER_PAYMENT_METHOD_KEY = 'Payment Method Key';
+
     /**
      * @var string
      */
     protected const HEADER_NAME = 'Name';
+
     /**
      * @var string
      */
     protected const HEADER_PROVIDER = 'Provider';
+
     /**
      * @var string
      */
     protected const HEADER_STATUS = 'Status';
+
     /**
      * @var string
      */
     protected const HEADER_AVAILABLE_IN_STORE = 'Available in Store';
+
     /**
      * @var string
      */

@@ -29,6 +29,7 @@ class StorageRedisWrapperTest extends Unit
      * @var string
      */
     protected const CONNECTION_KEY = 'connection key';
+
     /**
      * @var string
      */
@@ -38,6 +39,7 @@ class StorageRedisWrapperTest extends Unit
      * @var string
      */
     protected const PLAIN_TEXT_DATA = 'plain text data';
+
     /**
      * @var string
      */
@@ -47,6 +49,7 @@ class StorageRedisWrapperTest extends Unit
      * @var string
      */
     protected const PLAIN_TEXT_KEY = 'plainTextKey';
+
     /**
      * @var string
      */

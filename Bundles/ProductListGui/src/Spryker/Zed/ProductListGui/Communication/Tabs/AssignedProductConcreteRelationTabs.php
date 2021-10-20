@@ -17,10 +17,12 @@ class AssignedProductConcreteRelationTabs extends AbstractTabs
      * @var string
      */
     public const ASSIGNED_PRODUCT_TAB_NAME = 'assigned_product';
+
     /**
      * @var string
      */
     public const ASSIGNED_PRODUCT_TAB_TITLE = 'Products in this list';
+
     /**
      * @var string
      */
@@ -30,10 +32,12 @@ class AssignedProductConcreteRelationTabs extends AbstractTabs
      * @var string
      */
     public const DEASSIGNED_PRODUCT_TAB_NAME = 'deassignment_product';
+
     /**
      * @var string
      */
     public const DEASSIGNED_PRODUCT_TAB_TITLE = 'Products to be deassigned';
+
     /**
      * @var string
      */

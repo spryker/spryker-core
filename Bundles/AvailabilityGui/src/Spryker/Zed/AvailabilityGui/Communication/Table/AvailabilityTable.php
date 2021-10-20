@@ -23,22 +23,27 @@ class AvailabilityTable extends AbstractTable
      * @var string
      */
     public const TABLE_COL_ACTION = 'Actions';
+
     /**
      * @var string
      */
     public const URL_PARAM_ID_PRODUCT = 'id-product';
+
     /**
      * @var string
      */
     public const URL_PARAM_ID_PRODUCT_ABSTRACT = 'id-abstract';
+
     /**
      * @var string
      */
     public const URL_PARAM_SKU = 'sku';
+
     /**
      * @var string
      */
     public const URL_PARAM_ID_STORE = 'id-store';
+
     /**
      * @var string
      */

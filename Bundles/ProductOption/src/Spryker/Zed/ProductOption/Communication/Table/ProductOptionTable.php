@@ -27,6 +27,7 @@ class ProductOptionTable extends AbstractTable
      * @var string
      */
     public const COL_CHECKBOX = 'checkbox';
+
     /**
      * @var string
      */
@@ -36,6 +37,7 @@ class ProductOptionTable extends AbstractTable
      * @var string
      */
     public const TABLE_CONTEXT_EDIT = 'edit';
+
     /**
      * @var string
      */

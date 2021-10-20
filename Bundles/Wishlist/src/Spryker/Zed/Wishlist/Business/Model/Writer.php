@@ -34,6 +34,7 @@ class Writer implements WriterInterface
      * @var string
      */
     protected const ERROR_MESSAGE_NAME_ALREADY_EXISTS = 'wishlist.validation.error.name.already_exists';
+
     /**
      * @var string
      */

@@ -18,6 +18,7 @@ class ProductAbstractGroupsCollectorQuery extends AbstractPropelCollectorQuery
      * @var string
      */
     public const FIELD_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
+
     /**
      * @var string
      */

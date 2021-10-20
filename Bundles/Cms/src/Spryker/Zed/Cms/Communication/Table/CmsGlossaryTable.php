@@ -23,14 +23,17 @@ class CmsGlossaryTable extends AbstractTable
      * @var string
      */
     public const ACTIONS = 'Actions';
+
     /**
      * @var string
      */
     public const REQUEST_ID_MAPPING = 'id-mapping';
+
     /**
      * @var string
      */
     public const URL_CMS_GLOSSARY_EDIT = '/cms/glossary/edit';
+
     /**
      * @var string
      */

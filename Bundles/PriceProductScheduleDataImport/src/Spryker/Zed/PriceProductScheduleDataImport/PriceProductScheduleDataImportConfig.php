@@ -16,6 +16,7 @@ class PriceProductScheduleDataImportConfig extends DataImportConfig
      * @var string
      */
     public const IMPORT_TYPE_PRODUCT_PRICE_SCHEDULE = 'product-price-schedule';
+
     /**
      * @var string
      */

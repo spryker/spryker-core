@@ -21,6 +21,7 @@ class CategoriesRestApiDependencyProvider extends AbstractBundleDependencyProvid
      * @var string
      */
     public const CLIENT_CATEGORY_STORAGE = 'CLIENT_CATEGORY_STORAGE';
+
     /**
      * @var string
      */

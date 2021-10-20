@@ -22,14 +22,17 @@ class MerchantUserCreateForm extends AbstractType
      * @var string
      */
     public const FIELD_USERNAME = 'username';
+
     /**
      * @var string
      */
     public const FIELD_FIRST_NAME = 'firstName';
+
     /**
      * @var string
      */
     public const FIELD_LAST_NAME = 'lastName';
+
     /**
      * @var string
      */

@@ -22,6 +22,7 @@ class ZedInstallDependenciesConsole extends Console
      * @var string
      */
     public const COMMAND_NAME = 'frontend:zed:install-dependencies';
+
     /**
      * @var string
      */

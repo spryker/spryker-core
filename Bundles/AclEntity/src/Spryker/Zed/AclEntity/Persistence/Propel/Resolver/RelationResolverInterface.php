@@ -20,10 +20,12 @@ interface RelationResolverInterface
      * @var string
      */
     public const STRATEGY_FOREIGN_KEY = 'STRATEGY_FOREIGN_KEY';
+
     /**
      * @var string
      */
     public const STRATEGY_PIVOT_TABLE = 'STRATEGY_PIVOT_TABLE';
+
     /**
      * @var string
      */

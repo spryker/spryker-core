@@ -21,10 +21,12 @@ class SalesConfig extends AbstractBundleConfig
      * @var string
      */
     public const PARAM_ID_SALES_ORDER = 'id-sales-order';
+
     /**
      * @var string
      */
     public const PARAM_CUSTOMER_REFERENCE = 'customer-reference';
+
     /**
      * @var string
      */

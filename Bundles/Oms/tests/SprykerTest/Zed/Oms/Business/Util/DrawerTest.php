@@ -39,6 +39,7 @@ class DrawerTest extends Unit
      * @var string
      */
     public const CONDITION_NAME = 'conditionName';
+
     /**
      * @var string
      */
@@ -48,6 +49,7 @@ class DrawerTest extends Unit
      * @var string
      */
     protected const TIMEOUT_PROCESSOR_NAME = 'Test/TimeoutProcessorName';
+
     /**
      * @var string
      */

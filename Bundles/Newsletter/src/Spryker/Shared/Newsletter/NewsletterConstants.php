@@ -16,10 +16,12 @@ interface NewsletterConstants
      * @var string
      */
     public const SHOP_MAIL_DOUBLE_OPT_IN_CONFIRMATION_TEMPLATE_NAME = 'DOUBLE_OPT_IN_CONFIRMATION_TEMPLATE_NAME';
+
     /**
      * @var string
      */
     public const SHOP_MAIL_DOUBLE_OPT_IN_CONFIRMATION_SUBJECT = 'DOUBLE_OPT_IN_CONFIRMATION_SUBJECT';
+
     /**
      * @var string
      */

@@ -20,14 +20,17 @@ class EventTriggerFormDataProvider
      * @var string
      */
     protected const URL_PARAM_IDENTIFIER = 'identifier';
+
     /**
      * @var string
      */
     protected const URL_PARAM_ID_STATE = 'id-state';
+
     /**
      * @var string
      */
     protected const URL_PARAM_REDIRECT = 'redirect';
+
     /**
      * @var string
      */

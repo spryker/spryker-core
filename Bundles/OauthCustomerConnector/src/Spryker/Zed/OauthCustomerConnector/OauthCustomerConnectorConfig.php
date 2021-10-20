@@ -16,6 +16,7 @@ class OauthCustomerConnectorConfig extends AbstractBundleConfig
      * @var string
      */
     public const SCOPE_CUSTOMER = 'customer';
+
     /**
      * @var string
      */

@@ -24,26 +24,32 @@ class PriceProductOfferPropertyPathAnalyzer implements PriceProductOfferProperty
      * @var int
      */
     protected const PROPERTY_PATH_VALUES_INDEX_PRICE_PRODUCT_OFFER_INDEX = 1;
+
     /**
      * @var int
      */
     protected const PROPERTY_PATH_VALUES_INDEX_PRICES = 3;
+
     /**
      * @var int
      */
     protected const PROPERTY_PATH_VALUES_INDEX_PRICE_PRODUCT_INDEX = 4;
+
     /**
      * @var int
      */
     protected const PROPERTY_PATH_VALUES_INDEX_PRICE_PRODUCT = 5;
+
     /**
      * @var int
      */
     protected const PROPERTY_PATH_VALUES_INDEX_MONEY_VALUE = 6;
+
     /**
      * @var int
      */
     protected const PROPERTY_PATH_VALUES_INDEX_VOLUME_PRICE_TYPE = 7;
+
     /**
      * @var int
      */
@@ -53,6 +59,7 @@ class PriceProductOfferPropertyPathAnalyzer implements PriceProductOfferProperty
      * @var int
      */
     protected const BASE_PRICE_VIOLATION_PROPERTY_PATH_VALUES_NUMBER = 5;
+
     /**
      * @var int
      */

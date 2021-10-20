@@ -22,6 +22,7 @@ abstract class AbstractUpdateProductController extends AbstractController
      * @var string
      */
     protected const RESPONSE_NOTIFICATION_MESSAGE_SUCCESS = 'The Product is saved.';
+
     /**
      * @var string
      */

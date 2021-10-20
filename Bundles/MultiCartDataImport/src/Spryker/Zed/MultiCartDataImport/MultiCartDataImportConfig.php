@@ -16,6 +16,7 @@ class MultiCartDataImportConfig extends DataImportConfig
      * @var string
      */
     public const IMPORT_TYPE_MULTI_CART = 'multi-cart';
+
     /**
      * @var string
      */

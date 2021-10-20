@@ -20,6 +20,7 @@ class WishlistsRestApiDependencyProvider extends AbstractBundleDependencyProvide
      * @var string
      */
     public const CLIENT_WISHLIST = 'CLIENT_WISHLIST';
+
     /**
      * @var string
      */

@@ -29,26 +29,32 @@ class PriceProductScheduleGuiDependencyProvider extends AbstractBundleDependency
      * @var string
      */
     public const FACADE_MONEY = 'FACADE_MONEY';
+
     /**
      * @var string
      */
     public const FACADE_PRICE_PRODUCT = 'FACADE_PRICE_PRODUCT';
+
     /**
      * @var string
      */
     public const FACADE_STORE = 'FACADE_STORE';
+
     /**
      * @var string
      */
     public const FACADE_TRANSLATOR = 'FACADE_TRANSLATOR';
+
     /**
      * @var string
      */
     public const FACADE_PRICE_PRODUCT_SCHEDULE = 'FACADE_PRICE_PRODUCT_SCHEDULE';
+
     /**
      * @var string
      */
     public const FACADE_CURRENCY = 'FACADE_CURRENCY';
+
     /**
      * @var string
      */
@@ -58,6 +64,7 @@ class PriceProductScheduleGuiDependencyProvider extends AbstractBundleDependency
      * @var string
      */
     public const PROPEL_QUERY_PRICE_PRODUCT_SCHEDULE = 'PROPEL_QUERY_PRICE_PRODUCT_SCHEDULE';
+
     /**
      * @var string
      */

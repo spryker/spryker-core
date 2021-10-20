@@ -27,10 +27,12 @@ class PriceVolumeFormType extends AbstractType
      * @var string
      */
     public const FIELD_QUANTITY = 'quantity';
+
     /**
      * @var string
      */
     protected const FIELD_NET_PRICE = 'net_price';
+
     /**
      * @var string
      */
@@ -40,10 +42,12 @@ class PriceVolumeFormType extends AbstractType
      * @var int
      */
     public const MINIMUM_QUANTITY = 1;
+
     /**
      * @var int
      */
     protected const MINIMUM_PRICE_VALUE = 0;
+
     /**
      * @var string
      */

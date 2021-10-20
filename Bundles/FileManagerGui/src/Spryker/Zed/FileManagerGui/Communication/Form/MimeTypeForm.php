@@ -27,14 +27,17 @@ class MimeTypeForm extends AbstractType
      * @var string
      */
     public const FIELD_ID_MIME_TYPE = 'idMimeType';
+
     /**
      * @var string
      */
     public const FIELD_NAME = 'name';
+
     /**
      * @var string
      */
     public const FIELD_COMMENT = 'comment';
+
     /**
      * @var string
      */

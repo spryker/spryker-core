@@ -41,6 +41,7 @@ class GetCompanyBusinessUnitAddressTest extends Unit
      * @var int
      */
     protected const ID_COMPANY = 5555;
+
     /**
      * @var int
      */

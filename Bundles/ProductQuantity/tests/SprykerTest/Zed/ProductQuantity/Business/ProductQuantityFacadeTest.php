@@ -87,15 +87,15 @@ class ProductQuantityFacadeTest extends Unit
         return [
             [true, 5, 2, 1, null, 1], // general rule
             [true, 5, 2, 3, null, 1], // min equals new quantity
-            [true, 5, 2, 1, 3,    1], // max equals new quantity
+            [true, 5, 2, 1, 3, 1], // max equals new quantity
             [true, 5, 2, 1, null, 2], // shifted interval matches new quantity
             [true, 5, 2, 0, null, 3], // interval matches new quantity
-            [true, 5, 2, 3, 3,    3], // min, max, interval matches new quantity
-            [true, 5, 5, 2, 4,    3], // can remove all items regardless rules
+            [true, 5, 2, 3, 3, 3], // min, max, interval matches new quantity
+            [true, 5, 5, 2, 4, 3], // can remove all items regardless rules
 
             [false, 5, 6, 1, null, 1], // general rule
             [false, 5, 2, 4, null, 1], // min above new quantity
-            [false, 5, 2, 1, 2,    1], // max below new quantity
+            [false, 5, 2, 1, 2, 1], // max below new quantity
             [false, 5, 2, 1, null, 3], // shifted interval does not match new quantity
             [false, 5, 2, 0, null, 2], // interval does not match new quantity
             [false, 0, 1, 1, null, 1], // empty quote
@@ -139,8 +139,8 @@ class ProductQuantityFacadeTest extends Unit
     public function itemRemovalProductsWithoutProductQuantity(): array
     {
         return [
-            [true,  5, 4],
-            [true,  5, 5],
+            [true, 5, 4],
+            [true, 5, 5],
             [false, 0, 1],
             [false, 5, 6],
         ];
@@ -191,16 +191,16 @@ class ProductQuantityFacadeTest extends Unit
         return [
             [true, 5, 2, 1, null, 1], // general rule
             [true, 5, 2, 7, null, 1], // min equals new quantity
-            [true, 5, 2, 7, 7,    1], // max equals new quantity
+            [true, 5, 2, 7, 7, 1], // max equals new quantity
             [true, 5, 2, 7, null, 2], // shifted interval matches new quantity
             [true, 5, 2, 0, null, 7], // interval matches new quantity
-            [true, 5, 2, 7, 7,    7], // min, max, interval matches new quantity
+            [true, 5, 2, 7, 7, 7], // min, max, interval matches new quantity
             [true, 0, 1, 1, null, 1], // empty quote
 
             [false, 0, 0, 1, null, 1], // general rule 0 qty
             [false, 0, -4, 1, null, 1], // general rule negative qty
             [false, 5, 2, 8, null, 1], // min above new quantity
-            [false, 5, 2, 1, 6,    1], // max below new quantity
+            [false, 5, 2, 1, 6, 1], // max below new quantity
             [false, 5, 2, 1, null, 4], // shifted interval does not match new quantity
             [false, 5, 2, 0, null, 2], // interval does not match new quantity
         ];

@@ -27,14 +27,17 @@ class RouterDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const PLUGINS_BACKOFFICE_ROUTER = 'PLUGINS_BACKOFFICE_ROUTER';
+
     /**
      * @var string
      */
     public const PLUGINS_BACKEND_GATEWAY_ROUTER = 'PLUGINS_BACKEND_GATEWAY_ROUTER';
+
     /**
      * @var string
      */
     public const PLUGINS_BACKEND_API_ROUTER = 'PLUGINS_BACKEND_API_ROUTER';
+
     /**
      * @var string
      */
@@ -51,10 +54,12 @@ class RouterDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const PLUGINS_BACKOFFICE_ROUTER_ENHANCER = 'PLUGINS_BACKOFFICE_ROUTER_ENHANCER';
+
     /**
      * @var string
      */
     public const PLUGINS_MERCHANT_PORTAL_ROUTER_ENHANCER = 'PLUGINS_MERCHANT_PORTAL_ROUTER_ENHANCER';
+
     /**
      * @var string
      */

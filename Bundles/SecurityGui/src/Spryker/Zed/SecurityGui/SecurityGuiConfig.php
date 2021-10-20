@@ -15,22 +15,27 @@ class SecurityGuiConfig extends AbstractBundleConfig
      * @var string
      */
     public const ROLE_BACK_OFFICE_USER = 'ROLE_BACK_OFFICE_USER';
+
     /**
      * @var string
      */
     protected const HOME_PATH = '/';
+
     /**
      * @var string
      */
     protected const LOGIN_PATH = '/security-gui/login';
+
     /**
      * @var string
      */
     protected const PASSWORD_RESET_PATH = '/security-gui/password/reset';
+
     /**
      * @var string
      */
     protected const BACKOFFICE_ROUTE_PATTERN = '^/';
+
     /**
      * @var string
      */

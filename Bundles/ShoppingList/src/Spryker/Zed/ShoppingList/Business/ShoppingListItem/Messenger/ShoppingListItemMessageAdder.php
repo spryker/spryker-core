@@ -16,6 +16,7 @@ class ShoppingListItemMessageAdder implements ShoppingListItemMessageAdderInterf
      * @var string
      */
     protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEM_ADD_SUCCESS = 'customer.account.shopping_list.item.add.success';
+
     /**
      * @var string
      */

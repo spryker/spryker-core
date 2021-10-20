@@ -23,6 +23,7 @@ class ProductAbstractLabelReader implements ProductAbstractLabelReaderInterface
      * @var string
      */
     protected const KEY_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
+
     /**
      * @var string
      */

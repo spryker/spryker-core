@@ -24,6 +24,7 @@ class SearchCreateSnapshotConsole extends Console
      * @var string
      */
     public const COMMAND_NAME = 'search:snapshot:create';
+
     /**
      * @var string
      */
@@ -33,6 +34,7 @@ class SearchCreateSnapshotConsole extends Console
      * @var string
      */
     public const ARGUMENT_SNAPSHOT_REPOSITORY = 'snapshot-repository';
+
     /**
      * @var string
      */

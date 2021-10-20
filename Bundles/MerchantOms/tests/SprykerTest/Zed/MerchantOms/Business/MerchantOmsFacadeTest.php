@@ -44,22 +44,27 @@ class MerchantOmsFacadeTest extends Unit
      * @var string
      */
     protected const TEST_STATE_MACHINE = 'Test01';
+
     /**
      * @var string
      */
     protected const TEST_STATE_MACHINE_EVENT = 'test';
+
     /**
      * @var string
      */
     protected const TEST_PROCESS_NAME = 'processName';
+
     /**
      * @var array
      */
     protected const TEST_STATE_NAMES = ['new', 'canceled'];
+
     /**
      * @var array
      */
     protected const TEST_MANUAL_EVENTS = ['ship', 'cancel'];
+
     /**
      * @var array
      */

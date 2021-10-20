@@ -30,6 +30,7 @@ class UserPasswordResetFacadeTest extends Unit
      * @var string
      */
     public const TEST_MAIL = 'username@example.com';
+
     /**
      * @var string
      */

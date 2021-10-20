@@ -33,50 +33,62 @@ class ManualOrderEntryGuiDependencyProvider extends AbstractBundleDependencyProv
      * @var string
      */
     public const FACADE_CUSTOMER = 'FACADE_CUSTOMER';
+
     /**
      * @var string
      */
     public const FACADE_PRODUCT = 'FACADE_PRODUCT';
+
     /**
      * @var string
      */
     public const FACADE_CART = 'FACADE_CART';
+
     /**
      * @var string
      */
     public const FACADE_DISCOUNT = 'FACADE_DISCOUNT';
+
     /**
      * @var string
      */
     public const FACADE_CURRENCY = 'FACADE_CURRENCY';
+
     /**
      * @var string
      */
     public const FACADE_MESSENGER = 'FACADE_MESSENGER';
+
     /**
      * @var string
      */
     public const FACADE_SHIPMENT = 'FACADE_SHIPMENT';
+
     /**
      * @var string
      */
     public const FACADE_STORE = 'FACADE_STORE';
+
     /**
      * @var string
      */
     public const FACADE_MONEY = 'FACADE_MONEY';
+
     /**
      * @var string
      */
     public const FACADE_PAYMENT = 'FACADE_PAYMENT';
+
     /**
      * @var string
      */
     public const FACADE_CHECKOUT = 'FACADE_CHECKOUT';
+
     /**
      * @var string
      */
     public const FACADE_CALCULATION = 'FACADE_CALCULATION';
+
     /**
      * @var string
      */
@@ -96,6 +108,7 @@ class ManualOrderEntryGuiDependencyProvider extends AbstractBundleDependencyProv
      * @var string
      */
     public const PLUGINS_MANUAL_ORDER_ENTRY_FORM = 'PLUGINS_MANUAL_ORDER_ENTRY_FORM';
+
     /**
      * @var string
      */

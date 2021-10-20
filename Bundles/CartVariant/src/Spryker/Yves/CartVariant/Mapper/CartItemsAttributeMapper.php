@@ -22,6 +22,7 @@ class CartItemsAttributeMapper implements CartItemsMapperInterface
      * @var string
      */
     public const CONCRETE_PRODUCTS_AVAILABILITY = 'concrete_products_availability';
+
     /**
      * @var string
      */

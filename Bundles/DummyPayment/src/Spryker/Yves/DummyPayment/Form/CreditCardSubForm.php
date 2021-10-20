@@ -25,22 +25,27 @@ class CreditCardSubForm extends AbstractSubForm
      * @var string
      */
     public const FIELD_CARD_TYPE = 'card_type';
+
     /**
      * @var string
      */
     public const FIELD_CARD_NUMBER = 'card_number';
+
     /**
      * @var string
      */
     public const FIELD_NAME_ON_CARD = 'name_on_card';
+
     /**
      * @var string
      */
     public const FIELD_CARD_EXPIRES_MONTH = 'card_expires_month';
+
     /**
      * @var string
      */
     public const FIELD_CARD_EXPIRES_YEAR = 'card_expires_year';
+
     /**
      * @var string
      */
@@ -50,6 +55,7 @@ class CreditCardSubForm extends AbstractSubForm
      * @var string
      */
     public const OPTION_CARD_EXPIRES_CHOICES_MONTH = 'month choices';
+
     /**
      * @var string
      */

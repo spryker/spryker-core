@@ -33,18 +33,22 @@ class TouchFacadeTest extends Unit
      * @var string
      */
     public const ITEM_TYPE = 'test.item';
+
     /**
      * @var int
      */
     public const ITEM_ID_1 = 1;
+
     /**
      * @var int
      */
     public const ITEM_ID_2 = 2;
+
     /**
      * @var int
      */
     public const ITEM_ID_3 = 3;
+
     /**
      * @var int
      */
@@ -54,10 +58,12 @@ class TouchFacadeTest extends Unit
      * @var string
      */
     public const ITEM_EVENT_ACTIVE = 'active';
+
     /**
      * @var string
      */
     public const ITEM_EVENT_INACTIVE = 'inactive';
+
     /**
      * @var string
      */
@@ -67,6 +73,7 @@ class TouchFacadeTest extends Unit
      * @var int
      */
     protected const UNIQUE_INDEX_ITEM_ID = 1;
+
     /**
      * @var string
      */

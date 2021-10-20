@@ -44,22 +44,27 @@ class ContentProductAbstractListsRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESPONSE_CODE_CONTENT_NOT_FOUND = '2201';
+
     /**
      * @var string
      */
     public const RESPONSE_DETAILS_CONTENT_NOT_FOUND = 'Content item not found.';
+
     /**
      * @var string
      */
     public const RESPONSE_CODE_CONTENT_KEY_IS_MISSING = '2202';
+
     /**
      * @var string
      */
     public const RESPONSE_DETAILS_CONTENT_KEY_IS_MISSING = 'Content key is missing.';
+
     /**
      * @var string
      */
     public const RESPONSE_CODE_CONTENT_TYPE_INVALID = '2203';
+
     /**
      * @var string
      */

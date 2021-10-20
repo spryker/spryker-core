@@ -20,14 +20,17 @@ class CmsSlotBlockCategoryGuiDependencyProvider extends AbstractBundleDependency
      * @var string
      */
     public const FACADE_CATEGORY = 'FACADE_CATEGORY';
+
     /**
      * @var string
      */
     public const FACADE_LOCALE = 'FACADE_LOCALE';
+
     /**
      * @var string
      */
     public const FACADE_TRANSLATOR = 'FACADE_TRANSLATOR';
+
     /**
      * @var string
      */

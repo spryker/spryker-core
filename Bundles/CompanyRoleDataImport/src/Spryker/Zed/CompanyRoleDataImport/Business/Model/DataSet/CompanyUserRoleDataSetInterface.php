@@ -13,6 +13,7 @@ interface CompanyUserRoleDataSetInterface
      * @var string
      */
     public const COLUMN_COMPANY_ROLE_KEY = 'company_role_key';
+
     /**
      * @var string
      */

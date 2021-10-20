@@ -20,10 +20,12 @@ class CmsBlockCategoryStorageWriter implements CmsBlockCategoryStorageWriterInte
      * @var string
      */
     protected const KEYS = 'keys';
+
     /**
      * @var string
      */
     protected const NAMES = 'names';
+
     /**
      * @uses \Spryker\Zed\CmsBlockCategoryStorage\Persistence\CmsBlockCategoryStorageQueryContainer::NAME
      * @var string

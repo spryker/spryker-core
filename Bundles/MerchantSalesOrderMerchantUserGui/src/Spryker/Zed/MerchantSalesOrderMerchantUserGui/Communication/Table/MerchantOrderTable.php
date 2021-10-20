@@ -29,18 +29,22 @@ class MerchantOrderTable extends AbstractTable
      * @var string
      */
     protected const REQUEST_PARAM_ID_MERCHANT_SALES_ORDER = 'id-merchant-sales-order';
+
     /**
      * @var string
      */
     protected const COL_FULL_CUSTOMER_NAME = 'fullCustomerName';
+
     /**
      * @var string
      */
     protected const COL_ITEM_COUNT = 'itemCount';
+
     /**
      * @var string
      */
     protected const COL_ORDER_STATE = 'orderState';
+
     /**
      * @var string
      */

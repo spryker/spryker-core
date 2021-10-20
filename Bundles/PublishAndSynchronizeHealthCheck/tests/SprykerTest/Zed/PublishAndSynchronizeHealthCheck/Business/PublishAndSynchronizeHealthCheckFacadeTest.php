@@ -27,6 +27,7 @@ class PublishAndSynchronizeHealthCheckFacadeTest extends Unit
      * @var string
      */
     public const TEST_HEALTH_CHECK_KEY = 'ps:hc:valid_key';
+
     /**
      * @var string
      */

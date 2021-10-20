@@ -13,6 +13,7 @@ interface StockStoreDataSetInterface
      * @var string
      */
     public const COLUMN_WAREHOUSE_NAME = 'warehouse_name';
+
     /**
      * @var string
      */
@@ -22,6 +23,7 @@ interface StockStoreDataSetInterface
      * @var string
      */
     public const COLUMN_ID_STORE = 'fk_store';
+
     /**
      * @var string
      */

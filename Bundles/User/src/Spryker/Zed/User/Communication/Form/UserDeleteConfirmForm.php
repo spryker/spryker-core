@@ -24,6 +24,7 @@ class UserDeleteConfirmForm extends AbstractType
      * @var string
      */
     protected const DELETE_USER_URL = '/user/edit/delete';
+
     /**
      * @var string
      */

@@ -29,14 +29,17 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
      * @var string
      */
     public const PRODUCT_ABSTRACT_LOCALIZED_ENTITY = 'PRODUCT_ABSTRACT_LOCALIZED_ENTITY';
+
     /**
      * @var string
      */
     public const PRODUCT_ABSTRACT_PAGE_SEARCH_ENTITY = 'PRODUCT_ABSTRACT_PAGE_SEARCH_ENTITY';
+
     /**
      * @var string
      */
     public const STORE_NAME = 'STORE_NAME';
+
     /**
      * @var string
      */

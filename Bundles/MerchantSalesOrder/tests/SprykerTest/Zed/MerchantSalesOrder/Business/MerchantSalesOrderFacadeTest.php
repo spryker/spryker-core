@@ -33,15 +33,18 @@ class MerchantSalesOrderFacadeTest extends Unit
      * @var string
      */
     protected const TEST_STATE_MACHINE = 'Test01';
+
     /**
      * @var int
      */
     protected const TEST_MERCHANT_ORDER_ITEM_ID = 1;
     protected const TEST_INVALID_MERCHANT_ORDER_ITEM_ID = -1;
+
     /**
      * @var string
      */
     protected const TEST_MERCHANT_REFERENCE = 'test-merchant-reference';
+
     /**
      * @var int
      */

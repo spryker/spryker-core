@@ -24,6 +24,7 @@ class ConfigurableBundlePageSearchDependencyProvider extends AbstractBundleDepen
      * @var string
      */
     public const FACADE_CONFIGURABLE_BUNDLE = 'FACADE_CONFIGURABLE_BUNDLE';
+
     /**
      * @var string
      */
@@ -34,6 +35,7 @@ class ConfigurableBundlePageSearchDependencyProvider extends AbstractBundleDepen
      * @var string
      */
     public const FACADE_SEARCH = 'FACADE_SEARCH';
+
     /**
      * @var string
      */
@@ -54,6 +56,7 @@ class ConfigurableBundlePageSearchDependencyProvider extends AbstractBundleDepen
      * @var string
      */
     public const PLUGINS_CONFIGURABLE_BUNDLE_TEMPLATE_PAGE_MAP_EXPANDER = 'PLUGINS_CONFIGURABLE_BUNDLE_TEMPLATE_PAGE_MAP_EXPANDER';
+
     /**
      * @var string
      */

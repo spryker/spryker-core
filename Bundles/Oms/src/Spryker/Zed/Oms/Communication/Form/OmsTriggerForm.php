@@ -26,14 +26,17 @@ class OmsTriggerForm extends AbstractType
      * @var string
      */
     public const OPTION_OMS_ACTION = 'OPTION_OMS_ACTION';
+
     /**
      * @var string
      */
     public const OPTION_QUERY_PARAMS = 'OPTION_QUERY_PARAMS';
+
     /**
      * @var string
      */
     public const OPTION_EVENT = 'OPTION_EVENT';
+
     /**
      * @var string
      */

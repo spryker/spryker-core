@@ -20,6 +20,7 @@ class ReturnCreateFormDataProvider
      * @var string
      */
     protected const CUSTOM_REASON = 'Custom reason';
+
     /**
      * @var string
      */

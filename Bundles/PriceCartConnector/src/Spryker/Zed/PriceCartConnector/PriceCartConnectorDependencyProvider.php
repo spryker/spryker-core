@@ -24,26 +24,32 @@ class PriceCartConnectorDependencyProvider extends AbstractBundleDependencyProvi
      * @var string
      */
     public const FACADE_PRICE_PRODUCT = 'price product facade';
+
     /**
      * @var string
      */
     public const SERVICE_PRICE_PRODUCT = 'SERVICE_PRICE_PRODUCT';
+
     /**
      * @var string
      */
     public const FACADE_PRICE = 'price facade';
+
     /**
      * @var string
      */
     public const FACADE_MESSENGER = 'FACADE_MESSENGER';
+
     /**
      * @var string
      */
     public const FACADE_CURRENCY = 'FACADE_CURRENCY';
+
     /**
      * @var string
      */
     public const PLUGINS_PRICE_PRODUCT_EXPANDER = 'PLUGINS_PRICE_PRODUCT_EXPANDER';
+
     /**
      * @var string
      */

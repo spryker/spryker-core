@@ -18,6 +18,7 @@ class ShoppingListsRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESOURCE_SHOPPING_LISTS = 'shopping-lists';
+
     /**
      * @var string
      */
@@ -27,6 +28,7 @@ class ShoppingListsRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESPONSE_CODE_SHOPPING_LIST_ID_NOT_SPECIFIED = '1501';
+
     /**
      * @var string
      */
@@ -36,6 +38,7 @@ class ShoppingListsRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESPONSE_CODE_SHOPPING_LIST_ITEM_ID_NOT_SPECIFIED = '1502';
+
     /**
      * @var string
      */
@@ -45,6 +48,7 @@ class ShoppingListsRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESPONSE_CODE_SHOPPING_LIST_NOT_FOUND = '1503';
+
     /**
      * @var string
      */
@@ -54,6 +58,7 @@ class ShoppingListsRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESPONSE_CODE_SHOPPING_LIST_ITEM_NOT_FOUND = '1504';
+
     /**
      * @var string
      */
@@ -63,6 +68,7 @@ class ShoppingListsRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESPONSE_CODE_SHOPPING_LIST_WRITE_PERMISSION_REQUIRED = '1505';
+
     /**
      * @var string
      */
@@ -72,6 +78,7 @@ class ShoppingListsRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESPONSE_CODE_SHOPPING_LIST_DUPLICATE_NAME = '1506';
+
     /**
      * @var string
      */
@@ -81,6 +88,7 @@ class ShoppingListsRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESPONSE_CODE_SHOPPING_LIST_WRONG_QUANTITY = '1507';
+
     /**
      * @var string
      */
@@ -90,6 +98,7 @@ class ShoppingListsRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESPONSE_CODE_SHOPPING_LIST_PRODUCT_NOT_FOUND = '1508';
+
     /**
      * @var string
      */
@@ -104,6 +113,7 @@ class ShoppingListsRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESPONSE_CODE_SHOPPING_LIST_PRE_ADD_CHECK_PRODUCT_DISCONTINUED = '1510';
+
     /**
      * @var string
      */
@@ -113,6 +123,7 @@ class ShoppingListsRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESPONSE_CODE_LIST_ITEM_PRODUCT_NOT_ACTIVE = '1511';
+
     /**
      * @var string
      */

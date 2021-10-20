@@ -33,6 +33,7 @@ class NonPersistentProviderTest extends Unit
      * @var string
      */
     public const COUPON_CODE_1 = 'coupon code 1';
+
     /**
      * @var string
      */

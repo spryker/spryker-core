@@ -20,6 +20,7 @@ class ProductPageSearchConfig extends AbstractBundleConfig
      * @var int
      */
     protected const PRODUCT_CONCRETE_PAGE_PUBLISH_CHUNK_SIZE = 500;
+
     /**
      * @var int
      */

@@ -76,10 +76,12 @@ class SecurityApplicationPluginTest extends Unit
      * @var string
      */
     protected const HOMEPAGE_PATH = '/homepage';
+
     /**
      * @var string
      */
     protected const USER_PAGE_PATH = '/homepage/user';
+
     /**
      * @var string
      */
@@ -89,18 +91,22 @@ class SecurityApplicationPluginTest extends Unit
      * @var string
      */
     protected const USER_NAME = 'user';
+
     /**
      * @var string
      */
     protected const USER_PASSWORD = 'foo';
+
     /**
      * @var string
      */
     protected const USER_ENCODED_PASSWORD = '$2y$15$lzUNsTegNXvZW3qtfucV0erYBcEqWVeyOmjolB7R1uodsAVJ95vvu';
+
     /**
      * @var string
      */
     protected const USER_INVALID_PASSWORD = 'bar';
+
     /**
      * @var string
      */

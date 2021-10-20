@@ -22,10 +22,12 @@ class CmsBlockCategoryStorageDependencyProvider extends AbstractBundleDependency
      * @var string
      */
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
+
     /**
      * @var string
      */
     public const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
+
     /**
      * @var string
      */

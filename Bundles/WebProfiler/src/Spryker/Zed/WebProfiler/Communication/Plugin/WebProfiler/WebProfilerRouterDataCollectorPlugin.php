@@ -18,6 +18,7 @@ class WebProfilerRouterDataCollectorPlugin implements WebProfilerDataCollectorPl
      * @var string
      */
     protected const NAME = 'router';
+
     /**
      * @var string
      */

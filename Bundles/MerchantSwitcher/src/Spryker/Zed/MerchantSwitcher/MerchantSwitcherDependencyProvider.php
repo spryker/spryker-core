@@ -22,10 +22,12 @@ class MerchantSwitcherDependencyProvider extends AbstractBundleDependencyProvide
      * @var string
      */
     public const FACADE_QUOTE = 'FACADE_QUOTE';
+
     /**
      * @var string
      */
     public const FACADE_CART = 'FACADE_CART';
+
     /**
      * @var string
      */

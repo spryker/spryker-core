@@ -43,58 +43,72 @@ class EditOfferType extends AbstractType
      * @var string
      */
     public const FIELD_ID_OFFER = 'idOffer';
+
     /**
      * @var string
      */
     public const FIELD_STORE_NAME = 'storeName';
+
     /**
      * @var string
      */
     public const FIELD_CURRENCY_CODE = 'currencyCode';
+
     /**
      * @var string
      */
     public const FIELD_STORE_CURRENCY = 'storeCurrency';
+
     /**
      * @var string
      */
     public const FIELD_ITEMS = 'items';
+
     /**
      * @var string
      */
     public const FIELD_INCOMING_ITEMS = 'incomingItems';
+
     /**
      * @var string
      */
     public const FIELD_VOUCHER_DISCOUNTS = 'voucherDiscounts';
+
     /**
      * @var string
      */
     public const FIELD_CUSTOMER_REFERENCE = 'customerReference';
+
     /**
      * @var string
      */
     public const FIELD_QUOTE_SHIPPING_ADDRESS = 'shippingAddress';
+
     /**
      * @var string
      */
     public const FIELD_QUOTE_BILLING_ADDRESS = 'billingAddress';
+
     /**
      * @var string
      */
     public const FIELD_OFFER_FEE = 'offerFee';
+
     /**
      * @var string
      */
     public const FIELD_CONTACT_PERSON = 'contactPerson';
+
     /**
      * @var string
      */
     public const FIELD_CONTACT_DATE = 'contactDate';
+
     /**
      * @var string
      */
     public const FIELD_NOTE = 'note';
+
     /**
      * @var string
      */
@@ -104,10 +118,12 @@ class EditOfferType extends AbstractType
      * @var string
      */
     public const OPTION_CUSTOMER_LIST = 'option-customer-list';
+
     /**
      * @var string
      */
     public const OPTION_STORE_CURRENCY_LIST = 'option-store-currency-list';
+
     /**
      * @var string
      */
@@ -117,6 +133,7 @@ class EditOfferType extends AbstractType
      * @var string
      */
     protected const ERROR_MESSAGE_PRICE = 'Invalid Price.';
+
     /**
      * @var string
      */

@@ -16,6 +16,7 @@ class ContentProductSetDataImportConfig extends DataImportConfig
      * @var string
      */
     public const IMPORT_FILE_NAME = 'content_product_set.csv';
+
     /**
      * @var string
      */

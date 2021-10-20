@@ -32,14 +32,17 @@ class AclMerchantPortalWriter implements AclMerchantPortalWriterInterface
      * @var string
      */
     protected const KEY_FK_MERCHANT = 'fk_merchant';
+
     /**
      * @var string
      */
     protected const KEY_FK_MERCHANT_USER = 'fk_merchant_user';
+
     /**
      * @var string
      */
     protected const ERROR_MESSAGE_MERCHANT_REFERENCE = 'Merchant reference not found';
+
     /**
      * @var string
      */

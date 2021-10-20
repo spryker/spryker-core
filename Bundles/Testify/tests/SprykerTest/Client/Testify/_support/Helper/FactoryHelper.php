@@ -29,6 +29,7 @@ class FactoryHelper extends Module
      * @var string
      */
     protected const FACTORY_CLASS_NAME_PATTERN = '\%1$s\Client\%3$s\%3$sFactory';
+
     /**
      * @var int
      */

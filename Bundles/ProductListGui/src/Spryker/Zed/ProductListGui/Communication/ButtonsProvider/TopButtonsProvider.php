@@ -17,10 +17,12 @@ class TopButtonsProvider implements TopButtonsProviderInterface
      * @var string
      */
     protected const CREATE_PRODUCT_LIST_BUTTON_URL = '/product-list-gui/create';
+
     /**
      * @var string
      */
     protected const CREATE_PRODUCT_LIST_BUTTON_TITLE = 'Create a Product List';
+
     /**
      * @var array
      */

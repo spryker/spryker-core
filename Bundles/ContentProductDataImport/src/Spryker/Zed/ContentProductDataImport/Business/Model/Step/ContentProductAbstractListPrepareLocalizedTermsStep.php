@@ -25,10 +25,12 @@ class ContentProductAbstractListPrepareLocalizedTermsStep implements DataImportS
      * @var string
      */
     protected const ERROR_MESSAGE_SUFFIX = 'Please check row with key: "{key}", column: {column}';
+
     /**
      * @var string
      */
     protected const ERROR_MESSAGE_PARAMETER_COLUMN = '{column}';
+
     /**
      * @var string
      */
@@ -72,7 +74,8 @@ class ContentProductAbstractListPrepareLocalizedTermsStep implements DataImportS
                 continue;
             }
 
-            $localizedProductAbstractListTermParameter[SpyContentLocalizedTableMap::COL_FK_LOCALE] = $idLocale ?? $idLocale;
+            $localizedProductAbstractListTermParameter = [];
+            $localizedProductAbstractListTermParameter[SpyContentLocalizedTableMap::COL_FK_LOCALE] = $idLocale;
             $contentProductAbstractListTermTransfer = (new ContentProductAbstractListTermTransfer())->setIdProductAbstracts($dataSet[$localizedColumnIds]);
             $contentValidationResponseTransfer = $this->contentProductFacade->validateContentProductAbstractListTerm($contentProductAbstractListTermTransfer);
 

@@ -17,6 +17,7 @@ interface MessengerConstants
      * @var string
      */
     public const SESSION_TRAY = 'SESSION_TRAY';
+
     /**
      * @deprecated Use {@link \Spryker\Shared\Messenger\MessengerConfig::IN_MEMORY_TRAY} instead.
      * @var string
@@ -27,10 +28,12 @@ interface MessengerConstants
      * @var string
      */
     public const FLASH_MESSAGES_SUCCESS = 'flash.messages.success';
+
     /**
      * @var string
      */
     public const FLASH_MESSAGES_ERROR = 'flash.messages.error';
+
     /**
      * @var string
      */

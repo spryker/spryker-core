@@ -20,6 +20,7 @@ class MonitoringDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const MONITORING_SERVICE = 'monitoring service';
+
     /**
      * @var string
      */

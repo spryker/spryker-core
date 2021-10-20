@@ -59,14 +59,17 @@ class CompanyBusinessUnitAddressesRestApiBusinessTester extends Actor
      * @var string
      */
     public const FAKE_COMPANY_BUSINESS_UNIT_ADDRESS1 = 'Address1';
+
     /**
      * @var string
      */
     public const FAKE_COMPANY_BUSINESS_UNIT_ADDRESS2 = 'Address2';
+
     /**
      * @var string
      */
     public const FAKE_COMPANY_BUSINESS_UNIT_ADDRESS_UUID1 = 'fake-company-business-unit-address-uuid1';
+
     /**
      * @var string
      */
@@ -76,10 +79,12 @@ class CompanyBusinessUnitAddressesRestApiBusinessTester extends Actor
      * @var int
      */
     protected const FAKE_ID_COMPANY = 555;
+
     /**
      * @var int
      */
     protected const FAKE_ID_COMPANY_BUSINESS_UNIT = 777;
+
     /**
      * @var int
      */

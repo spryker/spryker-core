@@ -24,18 +24,22 @@ class ProductResourceAliasStorageDependencyProvider extends AbstractBundleDepend
      * @var string
      */
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
+
     /**
      * @var string
      */
     public const PROPEL_QUERY_PRODUCT = 'PROPEL_QUERY_PRODUCT';
+
     /**
      * @var string
      */
     public const PROPEL_QUERY_PRODUCT_ABSTRACT = 'PROPEL_QUERY_PRODUCT_ABSTRACT';
+
     /**
      * @var string
      */
     public const PROPEL_QUERY_PRODUCT_ABSTRACT_STORAGE = 'PROPEL_QUERY_PRODUCT_ABSTRACT_STORAGE';
+
     /**
      * @var string
      */

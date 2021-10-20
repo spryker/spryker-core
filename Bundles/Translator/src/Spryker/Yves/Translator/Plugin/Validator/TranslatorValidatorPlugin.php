@@ -20,6 +20,7 @@ class TranslatorValidatorPlugin extends AbstractPlugin implements ValidatorPlugi
      * @var string
      */
     protected const SERVICE_TRANSLATOR = 'translator';
+
     /**
      * @var string
      */

@@ -23,14 +23,17 @@ class CmsStorageDependencyProvider extends AbstractDependencyProvider
      * @var string
      */
     public const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
+
     /**
      * @var string
      */
     public const STORE = 'STORE';
+
     /**
      * @var string
      */
     public const CLIENT_STORAGE = 'CLIENT_STORAGE';
+
     /**
      * @var string
      */

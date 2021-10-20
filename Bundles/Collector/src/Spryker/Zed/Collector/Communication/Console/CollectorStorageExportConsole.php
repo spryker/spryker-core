@@ -20,6 +20,7 @@ class CollectorStorageExportConsole extends AbstractCollectorConsole
      * @var string
      */
     public const COMMAND_NAME = 'collector:storage:export';
+
     /**
      * @var string
      */

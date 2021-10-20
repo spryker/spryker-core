@@ -28,14 +28,17 @@ class ShipmentGuiDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const FACADE_SALES = 'FACADE_SALES';
+
     /**
      * @var string
      */
     public const FACADE_SHIPMENT = 'FACADE_SHIPMENT';
+
     /**
      * @var string
      */
     public const FACADE_CUSTOMER = 'FACADE_CUSTOMER';
+
     /**
      * @var string
      */
@@ -55,10 +58,12 @@ class ShipmentGuiDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const PLUGIN_MONEY_COLLECTION_FORM_TYPE = 'PLUGIN_MONEY_COLLECTION_FORM_TYPE';
+
     /**
      * @var string
      */
     public const PLUGIN_STORE_RELATION_FORM_TYPE = 'PLUGIN_STORE_RELATION_FORM_TYPE';
+
     /**
      * @var string
      */

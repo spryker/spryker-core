@@ -43,18 +43,22 @@ class PriceProductScheduleConfig extends AbstractBundleConfig
      * @var string
      */
     protected const KEY_ABSTRACT_SKU = 'abstract_sku';
+
     /**
      * @var string
      */
     protected const KEY_CONCRETE_SKU = 'concrete_sku';
+
     /**
      * @var string
      */
     protected const KEY_STORE = 'store';
+
     /**
      * @var string
      */
     protected const KEY_CURRENCY = 'currency';
+
     /**
      * @var string
      */
@@ -64,6 +68,7 @@ class PriceProductScheduleConfig extends AbstractBundleConfig
      * @var string
      */
     protected const KEY_VALUE_NET = 'value_net';
+
     /**
      * @var string
      */
@@ -73,6 +78,7 @@ class PriceProductScheduleConfig extends AbstractBundleConfig
      * @var string
      */
     protected const KEY_FROM_INCLUDED = 'from_included';
+
     /**
      * @var string
      */

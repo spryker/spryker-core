@@ -13,6 +13,7 @@ interface ConfigurableBundleTemplateImageDataSetInterface
      * @var string
      */
     public const COLUMN_CONFIGURABLE_BUNDLE_TEMPLATE_KEY = 'configurable_bundle_template_key';
+
     /**
      * @var string
      */

@@ -27,6 +27,7 @@ class GlossaryStorageDependencyProvider extends AbstractDependencyProvider
      * @var string
      */
     public const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
+
     /**
      * @var string
      */

@@ -15,6 +15,7 @@ class StorageDatabaseConfig extends AbstractSharedConfig
      * @var string
      */
     public const DB_ENGINE_PGSQL = 'pgsql';
+
     /**
      * @var string
      */
@@ -24,10 +25,12 @@ class StorageDatabaseConfig extends AbstractSharedConfig
      * @var string
      */
     public const KEY_STORAGE_TABLE_PREFIX = 'KEY_STORAGE_TABLE_PREFIX';
+
     /**
      * @var string
      */
     public const KEY_STORAGE_TABLE_SUFFIX = 'KEY_STORAGE_TABLE_SUFFIX';
+
     /**
      * @var string
      */

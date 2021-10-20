@@ -23,14 +23,17 @@ class BridgeBuilder
      * @var string
      */
     protected const TEMPLATE_INTERFACE = 'interface';
+
     /**
      * @var string
      */
     protected const TEMPLATE_BRIDGE = 'bridge';
+
     /**
      * @var string
      */
     protected const TEMPLATE_INTERFACE_METHOD = 'interface_method';
+
     /**
      * @var string
      */
@@ -40,6 +43,7 @@ class BridgeBuilder
      * @var string
      */
     protected const DEFAULT_VENDOR = 'Spryker';
+
     /**
      * @var string
      */
@@ -70,6 +74,7 @@ class BridgeBuilder
      * @var string
      */
     protected const NULLABLE_RETURN_TYPE_HINT = ': ?';
+
     /**
      * @var string
      */
@@ -79,6 +84,7 @@ class BridgeBuilder
      * @var string
      */
     protected const TYPE_HINT = 'type_hint';
+
     /**
      * @var string
      */

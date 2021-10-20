@@ -18,6 +18,7 @@ class CartCurrencyConnectorDependencyProvider extends AbstractBundleDependencyPr
      * @var string
      */
     public const CLIENT_CART = 'CLIENT_CART';
+
     /**
      * @var string
      */

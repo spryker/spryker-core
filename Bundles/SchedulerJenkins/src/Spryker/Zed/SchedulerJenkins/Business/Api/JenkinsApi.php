@@ -26,22 +26,27 @@ class JenkinsApi implements JenkinsApiInterface
      * @var string
      */
     protected const GET_JOBS_URL = 'api/json/jobs?pretty=true&tree=jobs[name]';
+
     /**
      * @var string
      */
     protected const CREATE_JOB_URL = 'createItem?name=%s';
+
     /**
      * @var string
      */
     protected const DELETE_JOB_URL = 'job/%s/doDelete';
+
     /**
      * @var string
      */
     protected const UPDATE_JOB_URL = 'job/%s/config.xml';
+
     /**
      * @var string
      */
     protected const ENABLE_JOB_URL = 'job/%s/enable';
+
     /**
      * @var string
      */
@@ -51,6 +56,7 @@ class JenkinsApi implements JenkinsApiInterface
      * @var string
      */
     protected const REQUEST_GET_METHOD = 'GET';
+
     /**
      * @var string
      */
@@ -60,6 +66,7 @@ class JenkinsApi implements JenkinsApiInterface
      * @var string
      */
     protected const AUTH_KEY = 'auth';
+
     /**
      * @var string
      */

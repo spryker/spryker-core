@@ -15,10 +15,12 @@ class CheckoutConfig extends AbstractBundleConfig
      * @var int
      */
     public const ERROR_CODE_CUSTOMER_ALREADY_REGISTERED = 4001;
+
     /**
      * @var int
      */
     public const ERROR_CODE_PRODUCT_UNAVAILABLE = 4002;
+
     /**
      * @var string
      */

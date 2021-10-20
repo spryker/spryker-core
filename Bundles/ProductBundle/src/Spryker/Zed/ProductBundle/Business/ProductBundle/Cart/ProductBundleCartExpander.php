@@ -29,6 +29,7 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
      * @var string
      */
     public const BUNDLE_IDENTIFIER_DELIMITER = '_';
+
     /**
      * @var string
      */

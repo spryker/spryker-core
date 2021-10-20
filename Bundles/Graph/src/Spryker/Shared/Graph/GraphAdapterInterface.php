@@ -13,22 +13,27 @@ interface GraphAdapterInterface extends GraphInterface
      * @var string
      */
     public const GRAPH = 'graph';
+
     /**
      * @var string
      */
     public const GRAPH_STRICT = 'strict graph';
+
     /**
      * @var string
      */
     public const DIRECTED_GRAPH = 'digraph';
+
     /**
      * @var string
      */
     public const DIRECTED_GRAPH_STRICT = 'strict digraph';
+
     /**
      * @var string
      */
     public const SUB_GRAPH = 'subgraph';
+
     /**
      * @var string
      */

@@ -29,6 +29,7 @@ class TransferToMoneyConverterTest extends Unit
      * @var int
      */
     public const AMOUNT = 1000;
+
     /**
      * @var string
      */

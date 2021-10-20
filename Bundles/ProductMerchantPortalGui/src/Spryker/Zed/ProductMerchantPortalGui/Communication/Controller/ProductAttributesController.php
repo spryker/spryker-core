@@ -26,6 +26,7 @@ class ProductAttributesController extends AbstractController
      * @var string
      */
     protected const RESPONSE_NOTIFICATION_MESSAGE_DELETE_SUCCESS = 'Success! The Attribute is deleted.';
+
     /**
      * @var string
      */
@@ -35,18 +36,22 @@ class ProductAttributesController extends AbstractController
      * @var string
      */
     protected const ERROR_MESSAGE_EMPTY_ATTRIBUTE_NAME = 'The attribute name must be not empty';
+
     /**
      * @var string
      */
     protected const ERROR_MESSAGE_EMPTY_ATTRIBUTES = 'Please fill in at least one value';
+
     /**
      * @var string
      */
     protected const ERROR_MESSAGE_ABSTRACT_PRODUCT_CANNOT_BE_FOUND = 'Abstract Product cannot be found';
+
     /**
      * @var string
      */
     protected const ERROR_MESSAGE_CONCRETE_PRODUCT_CANNOT_BE_FOUND = 'Concrete Product cannot be found';
+
     /**
      * @var string
      */
@@ -56,6 +61,7 @@ class ProductAttributesController extends AbstractController
      * @var string
      */
     protected const PARAM_ID_PRODUCT_ABSTRACT = 'idProductAbstract';
+
     /**
      * @var string
      */

@@ -18,6 +18,7 @@ class DependencyInjectorResolver extends AbstractClassResolver
      * @var string
      */
     public const CLASS_NAME_PATTERN = '\\%1$s\\Zed\\%2$s%3$s\\Dependency\\Injector\\%4$sDependencyInjector';
+
     /**
      * @var string
      */

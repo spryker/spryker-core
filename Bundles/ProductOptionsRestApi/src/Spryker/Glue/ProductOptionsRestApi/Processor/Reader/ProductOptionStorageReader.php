@@ -20,6 +20,7 @@ class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
      * @var string
      */
     protected const PRODUCT_ABSTRACT_MAPPING_TYPE = 'sku';
+
     /**
      * @var string
      */
@@ -29,10 +30,12 @@ class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
      * @var string
      */
     protected const KEY_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
+
     /**
      * @var string
      */
     protected const KEY_PRODUCT_ABSTRACT_SKU = 'sku';
+
     /**
      * @var string
      */

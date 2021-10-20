@@ -33,6 +33,7 @@ class CompanyRoleFacadeTest extends Test
      * @var array
      */
     protected const CONFIGURATION = ['testKey' => 'testValue'];
+
     /**
      * @var string
      */

@@ -21,6 +21,7 @@ class BusinessOnBehalfDependencyProvider extends AbstractBundleDependencyProvide
      * @var string
      */
     public const PROPEL_QUERY_COMPANY_USER = 'PROPEL_QUERY_COMPANY_USER';
+
     /**
      * @var string
      */

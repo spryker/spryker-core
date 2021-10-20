@@ -25,6 +25,7 @@ class FileSaver implements FileSaverInterface
      * @var string
      */
     protected const FILE_NAME_PATTERN = '%u%s%s.%s';
+
     /**
      * @var string
      */

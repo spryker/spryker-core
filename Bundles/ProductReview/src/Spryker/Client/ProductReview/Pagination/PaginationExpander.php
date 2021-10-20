@@ -16,6 +16,7 @@ class PaginationExpander implements PaginationExpanderInterface
      * @var string
      */
     protected const PARAMETER_NAME_OFFSET = 'offset';
+
     /**
      * @var string
      */

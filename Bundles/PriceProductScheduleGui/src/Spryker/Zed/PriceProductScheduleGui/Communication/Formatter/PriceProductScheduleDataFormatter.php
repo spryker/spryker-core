@@ -16,6 +16,7 @@ class PriceProductScheduleDataFormatter implements PriceProductScheduleDataForma
      * @var string
      */
     protected const TITLE_PRODUCT_ABSTRACT_PATTERN = 'Edit Product Abstract: %s';
+
     /**
      * @var string
      */

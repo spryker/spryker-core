@@ -15,10 +15,12 @@ class ProductAlternativeProductLabelConnectorConfig extends AbstractBundleConfig
      * @var string
      */
     protected const PRODUCT_ALTERNATIVES_LABEL_NAME = 'Alternatives available';
+
     /**
      * @var string
      */
     protected const PRODUCT_ALTERNATIVES_LABEL_FRONT_END_REFERENCE = 'alternatives';
+
     /**
      * @var int
      */

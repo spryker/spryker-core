@@ -20,6 +20,7 @@ class SessionDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const MONITORING_SERVICE = 'monitoring service';
+
     /**
      * @var string
      */

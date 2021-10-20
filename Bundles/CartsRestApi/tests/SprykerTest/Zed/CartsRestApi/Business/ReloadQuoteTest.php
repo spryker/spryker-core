@@ -49,6 +49,7 @@ class ReloadQuoteTest extends Unit
      * @var int
      */
     protected const ORIGINAL_PRODUCT_GROSS_PRICE = 200;
+
     /**
      * @var int
      */

@@ -27,6 +27,7 @@ class QuoteRequestAgentsRestApiDependencyProvider extends AbstractBundleDependen
      * @var string
      */
     public const CLIENT_QUOTE_REQUEST_AGENT = 'CLIENT_QUOTE_REQUEST_AGENT';
+
     /**
      * @var string
      */

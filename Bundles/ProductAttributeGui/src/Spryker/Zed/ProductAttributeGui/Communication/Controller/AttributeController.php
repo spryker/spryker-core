@@ -20,14 +20,17 @@ class AttributeController extends AbstractController
      * @var string
      */
     public const PARAM_ID = 'id';
+
     /**
      * @var string
      */
     public const PARAM_SEARCH_TEXT = 'q';
+
     /**
      * @var string
      */
     public const PARAM_TERM = 'term';
+
     /**
      * @var string
      */
@@ -37,14 +40,17 @@ class AttributeController extends AbstractController
      * @var string
      */
     public const MESSAGE_ATTRIBUTE_CREATE_SUCCESS = 'Product attribute was created successfully.';
+
     /**
      * @var string
      */
     public const MESSAGE_ATTRIBUTE_CREATE_ERROR = 'Product attribute was not created.';
+
     /**
      * @var string
      */
     public const MESSAGE_ATTRIBUTE_UPDATE_SUCCESS = 'Product attribute was updated successfully.';
+
     /**
      * @var string
      */

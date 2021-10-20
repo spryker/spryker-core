@@ -29,6 +29,7 @@ class MerchantUpdater implements MerchantUpdaterInterface
      * @var string
      */
     protected const ERROR_MESSAGE_MERCHANT_NOT_FOUND = 'Merchant is not found.';
+
     /**
      * @var string
      */

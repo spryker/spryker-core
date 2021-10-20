@@ -26,10 +26,12 @@ class VersionPageController extends AbstractController
      * @var string
      */
     public const URL_PARAM_ID_CMS_PAGE = 'id-cms-page';
+
     /**
      * @var string
      */
     public const URL_PARAM_VERSION = 'version';
+
     /**
      * @var string
      */

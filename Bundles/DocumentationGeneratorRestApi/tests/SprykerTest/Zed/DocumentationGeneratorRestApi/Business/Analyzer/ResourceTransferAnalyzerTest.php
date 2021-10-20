@@ -32,34 +32,42 @@ class ResourceTransferAnalyzerTest extends Unit
      * @var string
      */
     protected const REQUEST_SCHEMA_NAME = 'RestTestRequest';
+
     /**
      * @var string
      */
     protected const REQUEST_DATA_SCHEMA_NAME = 'RestTestRequestData';
+
     /**
      * @var string
      */
     protected const REQUEST_ATTRIBUTES_SCHEMA_NAME = 'RestTestRequestAttributes';
+
     /**
      * @var string
      */
     protected const RESPONSE_COLLECTION_SCHEMA_NAME = 'RestTestCollectionResponse';
+
     /**
      * @var string
      */
     protected const RESPONSE_COLLECTION_DATA_SCHEMA_NAME = 'RestTestCollectionResponseData';
+
     /**
      * @var string
      */
     protected const RESPONSE_RESOURCE_SCHEMA_NAME = 'RestTestResponse';
+
     /**
      * @var string
      */
     protected const RESPONSE_RESOURCE_DATA_SCHEMA_NAME = 'RestTestResponseData';
+
     /**
      * @var string
      */
     protected const RESPONSE_ATTRIBUTES_SCHEMA_NAME = 'RestTestAttributes';
+
     /**
      * @var string
      */

@@ -35,26 +35,32 @@ class NavigationNodeLocalizedAttributesFormType extends AbstractType
      * @var string
      */
     public const FIELD_TITLE = 'title';
+
     /**
      * @var string
      */
     public const FIELD_FK_LOCALE = 'fk_locale';
+
     /**
      * @var string
      */
     public const FIELD_LINK = 'link';
+
     /**
      * @var string
      */
     public const FIELD_EXTERNAL_URL = 'external_url';
+
     /**
      * @var string
      */
     public const FIELD_CMS_PAGE_URL = 'cms_page_url';
+
     /**
      * @var string
      */
     public const FIELD_CATEGORY_URL = 'category_url';
+
     /**
      * @var string
      */
@@ -64,14 +70,17 @@ class NavigationNodeLocalizedAttributesFormType extends AbstractType
      * @var string
      */
     public const GROUP_CMS = 'cms_page';
+
     /**
      * @var string
      */
     public const GROUP_CATEGORY = 'category';
+
     /**
      * @var string
      */
     public const GROUP_LINK = 'link';
+
     /**
      * @var string
      */

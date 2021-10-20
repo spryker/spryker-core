@@ -31,6 +31,7 @@ class AddCompanyUnitAddressController extends AbstractController
      * @var string
      */
     protected const MESSAGE_COMPANY_UNIT_ADDRESS_CREATE_SUCCESS = 'Company unit address has been successfully created.';
+
     /**
      * @var string
      */

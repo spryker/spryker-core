@@ -28,14 +28,17 @@ class ItemType extends AbstractType
      * @var string
      */
     public const FIELD_SKU = 'sku';
+
     /**
      * @var string
      */
     public const FIELD_QUANTITY = 'quantity';
+
     /**
      * @var string
      */
     public const FIELD_UNIT_GROSS_PRICE = 'unitGrossPrice';
+
     /**
      * @var string
      */
@@ -50,10 +53,12 @@ class ItemType extends AbstractType
      * @var string
      */
     protected const ERROR_MESSAGE_QUANTITY = 'Invalid Quantity.';
+
     /**
      * @var string
      */
     protected const ERROR_MESSAGE_PRICE = 'Invalid Price.';
+
     /**
      * @var string
      */

@@ -21,6 +21,7 @@ class PlaceOrderController extends AbstractController
      * @var string
      */
     public const PARAM_ID_OFFER = 'id-offer';
+
     /**
      * @var string
      */

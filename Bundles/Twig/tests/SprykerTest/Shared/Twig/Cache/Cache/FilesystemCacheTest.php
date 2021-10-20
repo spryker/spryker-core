@@ -30,6 +30,7 @@ class FilesystemCacheTest extends Unit
      * @var string
      */
     public const EXISTING_CACHE_KEY = 'key';
+
     /**
      * @var string
      */
@@ -39,6 +40,7 @@ class FilesystemCacheTest extends Unit
      * @var string
      */
     public const NEW_CACHE_KEY = 'new key';
+
     /**
      * @var string
      */
@@ -48,6 +50,7 @@ class FilesystemCacheTest extends Unit
      * @var string
      */
     public const NOT_EXISTING_CACHE_KEY = 'not existing key';
+
     /**
      * @var string
      */

@@ -22,6 +22,7 @@ class ShipmentCartConnectorDependencyProvider extends AbstractBundleDependencyPr
      * @var string
      */
     public const FACADE_SHIPMENT = 'shipment facade';
+
     /**
      * @var string
      */

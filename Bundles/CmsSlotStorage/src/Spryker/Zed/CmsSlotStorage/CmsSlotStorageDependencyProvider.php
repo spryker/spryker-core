@@ -21,6 +21,7 @@ class CmsSlotStorageDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const FACADE_CMS_SLOT = 'FACADE_CMS_SLOT';
+
     /**
      * @var string
      */

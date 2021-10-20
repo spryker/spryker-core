@@ -24,10 +24,12 @@ class ProductPageDataExpander implements ProductPageDataExpanderInterface
      * @var string
      */
     protected const COLUMN_ID_CATEGORY_NODE = 'id_category_node';
+
     /**
      * @var string
      */
     protected const COLUMN_PRODUCT_ORDER = 'product_order';
+
     /**
      * @var string
      */
@@ -37,6 +39,7 @@ class ProductPageDataExpander implements ProductPageDataExpanderInterface
      * @var string
      */
     protected const RELATION_LOCALE = 'Locale';
+
     /**
      * @var string
      */

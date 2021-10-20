@@ -33,6 +33,7 @@ class ProductAttributeDataHelper extends Module
      * @var string
      */
     protected const COLUMN_PRODUCT_ATTRIBUTE_KEY = 'key';
+
     /**
      * @var string
      */

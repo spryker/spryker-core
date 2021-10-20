@@ -18,6 +18,7 @@ class DuplicateOrderChecker implements DuplicateOrderCheckerInterface
      * @var string
      */
     protected const GLOSSARY_KEY_CHECKOUT_DUPLICATE_ORDER = 'checkout.order.duplicate';
+
     /**
      * @var string
      */

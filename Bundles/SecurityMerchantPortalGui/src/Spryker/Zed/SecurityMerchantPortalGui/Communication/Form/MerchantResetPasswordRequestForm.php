@@ -24,30 +24,37 @@ class MerchantResetPasswordRequestForm extends AbstractType
      * @var string
      */
     public const FIELD_EMAIL = 'email';
+
     /**
      * @var string
      */
     public const FIELD_SUBMIT = 'submit';
+
     /**
      * @var string
      */
     protected const LABEL_EMAIL = 'email';
+
     /**
      * @var string
      */
     protected const LABEL_SEND_EMAIL = 'Send email';
+
     /**
      * @var string
      */
     protected const MESSAGE_VALIDATION_NOT_BLANK_ERROR = 'The value cannot be blank. Please fill in this input';
+
     /**
      * @var string
      */
     protected const MESSAGE_VALIDATION_EMAIL_FORMAT_ERROR = 'Please fill in a valid email address for this input';
+
     /**
      * @var string
      */
     protected const PLACEHOLDER_EMAIL_FIELD = 'example@spryker.com';
+
     /**
      * @var string
      */

@@ -30,10 +30,12 @@ class ResponseTest extends Unit
      * @var string
      */
     public const MESSAGE_SUCCESS = 'success';
+
     /**
      * @var string
      */
     public const MESSAGE_INFO = 'info';
+
     /**
      * @var string
      */

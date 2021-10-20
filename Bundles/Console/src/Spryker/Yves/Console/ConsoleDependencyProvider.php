@@ -19,6 +19,7 @@ class ConsoleDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const COMMANDS = 'COMMANDS';
+
     /**
      * @var string
      */
@@ -33,6 +34,7 @@ class ConsoleDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const PLUGINS_CONSOLE_PRE_RUN_HOOK = 'PLUGINS_CONSOLE_PRE_RUN_HOOK';
+
     /**
      * @var string
      */

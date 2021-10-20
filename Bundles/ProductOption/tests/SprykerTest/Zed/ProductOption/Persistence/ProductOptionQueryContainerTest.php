@@ -34,6 +34,7 @@ class ProductOptionQueryContainerTest extends Unit
      * @var string
      */
     protected const TEST_LOCALE_NAME = 'xxx';
+
     /**
      * @var string
      */

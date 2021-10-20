@@ -35,10 +35,12 @@ class ValidatorHelper extends Module
      * @var string
      */
     protected const MODULE_NAME = 'Validator';
+
     /**
      * @var string
      */
     protected const CONFIG_KEY_VALIDATOR_PLUGINS = 'validatorPlugins';
+
     /**
      * @var string
      */

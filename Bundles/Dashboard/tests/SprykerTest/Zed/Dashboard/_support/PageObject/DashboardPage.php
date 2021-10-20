@@ -13,6 +13,7 @@ class DashboardPage
      * @var string
      */
     public const URL = '/dashboard';
+
     /**
      * @var string
      */

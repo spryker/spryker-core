@@ -22,10 +22,12 @@ class ContentFileListSelectedTable extends AbstractTable
      * @var string
      */
     public const TABLE_IDENTIFIER = 'file-list-selected-table';
+
     /**
      * @var string
      */
     public const TABLE_CLASS = 'item-list-selected-table gui-table-data';
+
     /**
      * @var string
      */
@@ -35,10 +37,12 @@ class ContentFileListSelectedTable extends AbstractTable
      * @var string
      */
     public const COL_ID_FILE = 'ID';
+
     /**
      * @var string
      */
     public const COL_FILE_NAME = 'File Name';
+
     /**
      * @var string
      */
@@ -48,10 +52,12 @@ class ContentFileListSelectedTable extends AbstractTable
      * @var string
      */
     public const BUTTON_DELETE = 'Delete';
+
     /**
      * @var string
      */
     public const BUTTON_MOVE_UP = 'Move Up';
+
     /**
      * @var string
      */

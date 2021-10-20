@@ -38,10 +38,12 @@ class ProductOptionsRestApiBusinessTester extends Actor
      * @var string
      */
     public const PRODUCT_CONCRETE_SKU = 'PRODUCT_CONCRETE_SKU';
+
     /**
      * @var string
      */
     public const DIFFERENT_PRODUCT_CONCRETE_SKU = 'DIFFERENT_PRODUCT_CONCRETE_SKU';
+
     /**
      * @var string
      */

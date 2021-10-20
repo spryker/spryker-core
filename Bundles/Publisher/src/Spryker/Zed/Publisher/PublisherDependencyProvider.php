@@ -20,6 +20,7 @@ class PublisherDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const PLUGINS_PUBLISHER = 'PLUGINS_PUBLISHER';
+
     /**
      * @var string
      */

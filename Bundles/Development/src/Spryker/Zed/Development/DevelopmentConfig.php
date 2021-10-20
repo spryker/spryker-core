@@ -19,6 +19,7 @@ class DevelopmentConfig extends AbstractBundleConfig
      * @var string
      */
     public const BUNDLE_PLACEHOLDER = '[BUNDLE]';
+
     /**
      * @var string
      */
@@ -28,22 +29,27 @@ class DevelopmentConfig extends AbstractBundleConfig
      * @var string
      */
     protected const NAMESPACE_SPRYKER = 'Spryker';
+
     /**
      * @var string
      */
     protected const NAMESPACE_SPRYKER_SHOP = 'SprykerShop';
+
     /**
      * @var string
      */
     protected const NAMESPACE_SPRYKER_ECO = 'SprykerEco';
+
     /**
      * @var string
      */
     protected const NAMESPACE_SPRYKER_SDK = 'SprykerSdk';
+
     /**
      * @var string
      */
     protected const NAMESPACE_SPRYKER_MIDDLEWARE = 'SprykerMiddleware';
+
     /**
      * @var string
      */

@@ -18,6 +18,7 @@ class CmsSlotBlockProductCategoryConnectorDependencyProvider extends AbstractDep
      * @var string
      */
     public const CLIENT_LOCALE = 'CLIENT_LOCALE';
+
     /**
      * @var string
      */

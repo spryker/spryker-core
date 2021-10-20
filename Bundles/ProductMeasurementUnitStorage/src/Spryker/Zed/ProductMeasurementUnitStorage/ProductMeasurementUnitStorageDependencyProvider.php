@@ -23,18 +23,22 @@ class ProductMeasurementUnitStorageDependencyProvider extends AbstractBundleDepe
      * @var string
      */
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
+
     /**
      * @var string
      */
     public const FACADE_PRODUCT_MEASUREMENT_UNIT = 'FACADE_PRODUCT_MEASUREMENT_UNIT';
+
     /**
      * @var string
      */
     public const REPOSITORY_PRODUCT_MEASUREMENT_UNIT = 'REPOSITORY_PRODUCT_MEASUREMENT_UNIT';
+
     /**
      * @var string
      */
     public const PROPEL_QUERY_PRODUCT_MEASUREMENT_SALES_UNIT = 'PROPEL_QUERY_PRODUCT_MEASUREMENT_SALES_UNIT';
+
     /**
      * @var string
      */

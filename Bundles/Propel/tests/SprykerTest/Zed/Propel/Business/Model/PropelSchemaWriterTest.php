@@ -27,6 +27,7 @@ class PropelSchemaWriterTest extends AbstractPropelSchemaTest
      * @var string
      */
     public const TEST_FILE_NAME = 'test_file';
+
     /**
      * @var string
      */

@@ -19,6 +19,7 @@ class OauthConfig extends AbstractBundleConfig
      * @var string
      */
     public const GRANT_TYPE_PASSWORD = 'password';
+
     /**
      * @var string
      */

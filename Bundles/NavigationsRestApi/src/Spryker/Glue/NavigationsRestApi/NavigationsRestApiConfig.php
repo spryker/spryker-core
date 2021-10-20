@@ -15,6 +15,7 @@ class NavigationsRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESOURCE_NAVIGATIONS = 'navigations';
+
     /**
      * @var string
      */
@@ -29,6 +30,7 @@ class NavigationsRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESPONSE_CODE_NAVIGATION_NOT_FOUND = '1601';
+
     /**
      * @var string
      */
@@ -38,6 +40,7 @@ class NavigationsRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESPONSE_DETAILS_NAVIGATION_NOT_FOUND = 'Navigation not found.';
+
     /**
      * @var string
      */

@@ -30,30 +30,37 @@ class ProductRelationQueryContainer extends AbstractQueryContainer implements Pr
      * @var string
      */
     public const COL_ASSIGNED_CATEGORIES = 'assignedCategories';
+
     /**
      * @var string
      */
     public const COL_NUMBER_OF_RELATED_PRODUCTS = 'numberOfRelatedProducts';
+
     /**
      * @var string
      */
     public const COL_CATEGORY_NAME = 'category_name';
+
     /**
      * @var string
      */
     public const COL_NAME = 'name';
+
     /**
      * @var string
      */
     public const COL_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
+
     /**
      * @var string
      */
     public const COL_SKU = 'sku';
+
     /**
      * @var string
      */
     public const COL_IS_ACTIVE_AGGREGATION = 'is_active_aggregation';
+
     /**
      * @var string
      */

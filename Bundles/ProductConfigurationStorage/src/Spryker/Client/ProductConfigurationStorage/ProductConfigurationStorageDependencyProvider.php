@@ -24,14 +24,17 @@ class ProductConfigurationStorageDependencyProvider extends AbstractDependencyPr
      * @var string
      */
     public const CLIENT_SESSION = 'CLIENT_SESSION';
+
     /**
      * @var string
      */
     public const CLIENT_STORAGE = 'CLIENT_STORAGE';
+
     /**
      * @var string
      */
     public const CLIENT_LOCALE = 'CLIENT_LOCALE';
+
     /**
      * @var string
      */

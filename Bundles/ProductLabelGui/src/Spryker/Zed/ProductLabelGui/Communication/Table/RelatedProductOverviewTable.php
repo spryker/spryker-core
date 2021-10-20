@@ -19,6 +19,7 @@ class RelatedProductOverviewTable extends AbstractRelatedProductTable
      * @var string
      */
     public const PARAM_ID_PRODUCT_LABEL = 'id-product-label';
+
     /**
      * @var string
      */

@@ -21,6 +21,7 @@ class StorageRedisImportRdbConsole extends Console
      * @var string
      */
     public const COMMAND_NAME = 'storage:redis:import-rdb';
+
     /**
      * @var string
      */

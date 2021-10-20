@@ -15,6 +15,7 @@ class ProductMeasurementUnitsRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESOURCE_PRODUCT_MEASUREMENT_UNITS = 'product-measurement-units';
+
     /**
      * @var string
      */
@@ -54,6 +55,7 @@ class ProductMeasurementUnitsRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESPONSE_CODE_PRODUCT_MEASUREMENT_UNIT_CODE_IS_NOT_SPECIFIED = '3401';
+
     /**
      * @var string
      */
@@ -63,6 +65,7 @@ class ProductMeasurementUnitsRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESPONSE_DETAIL_MEASUREMENT_UNIT_CODE_IS_NOT_SPECIFIED = 'Product measurement unit code has not been specified.';
+
     /**
      * @var string
      */

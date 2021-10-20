@@ -22,6 +22,7 @@ class SuiteFilterHelper extends Extension
      * @var string
      */
     protected const CONFIG_KEY_INCLUDE = 'groups';
+
     /**
      * @var string
      */
@@ -31,6 +32,7 @@ class SuiteFilterHelper extends Extension
      * @var string
      */
     protected const CONFIG_KEY_INCLUSIVE = 'inclusive';
+
     /**
      * @var string
      */

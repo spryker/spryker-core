@@ -21,6 +21,7 @@ class CustomerUserConnectorDependencyProvider extends AbstractBundleDependencyPr
      * @var string
      */
     public const QUERY_CONTAINER_USER = 'QUERY_CONTAINER_USER';
+
     /**
      * @var string
      */

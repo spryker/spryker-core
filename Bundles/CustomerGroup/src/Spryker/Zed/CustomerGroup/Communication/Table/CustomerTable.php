@@ -27,18 +27,22 @@ class CustomerTable extends AbstractTable
      * @var string
      */
     public const COL_FK_CUSTOMER = 'fk_customer';
+
     /**
      * @var string
      */
     public const COL_FIRST_NAME = 'first_name';
+
     /**
      * @var string
      */
     public const COL_LAST_NAME = 'last_name';
+
     /**
      * @var string
      */
     public const COL_GENDER = 'gender';
+
     /**
      * @var string
      */

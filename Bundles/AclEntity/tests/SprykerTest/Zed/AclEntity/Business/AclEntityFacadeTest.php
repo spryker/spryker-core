@@ -52,6 +52,7 @@ class AclEntityFacadeTest extends Unit
      * @var string
      */
     protected const ACL_ROLE_TEST_NAME = 'role test';
+
     /**
      * @var string
      */

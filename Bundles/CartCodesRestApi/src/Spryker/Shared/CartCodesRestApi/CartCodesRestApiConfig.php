@@ -16,14 +16,17 @@ class CartCodesRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const ERROR_IDENTIFIER_CART_NOT_FOUND = 'ERROR_IDENTIFIER_CART_NOT_FOUND';
+
     /**
      * @var string
      */
     public const ERROR_IDENTIFIER_CART_CODE_NOT_FOUND = 'ERROR_IDENTIFIER_CART_CODE_NOT_FOUND';
+
     /**
      * @var string
      */
     public const ERROR_IDENTIFIER_CART_CODE_CANNOT_BE_REMOVED = 'ERROR_IDENTIFIER_CART_CODE_CANNOT_BE_REMOVED';
+
     /**
      * @var string
      */

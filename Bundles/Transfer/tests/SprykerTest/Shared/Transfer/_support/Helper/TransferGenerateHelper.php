@@ -19,10 +19,12 @@ class TransferGenerateHelper extends Module
      * @var string
      */
     protected const TARGET_DIRECTORY = 'target_directory';
+
     /**
      * @var string
      */
     protected const CONFIG_SCHEMA_DIRECTORIES = 'schemaDirectories';
+
     /**
      * @var string
      */

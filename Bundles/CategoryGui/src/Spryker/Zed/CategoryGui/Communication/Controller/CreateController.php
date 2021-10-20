@@ -22,10 +22,12 @@ class CreateController extends CategoryAbstractController
      * @var string
      */
     protected const REQUEST_PARAM_ID_CATEGORY = 'id-category';
+
     /**
      * @var string
      */
     protected const REQUEST_PARAM_ID_PARENT_NODE = 'id-parent-node';
+
     /**
      * @var string
      */

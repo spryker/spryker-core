@@ -20,6 +20,7 @@ class BuildRestApiValidationCacheConsole extends Console
      * @var string
      */
     protected const COMMAND_NAME = 'rest-api:build-request-validation-cache';
+
     /**
      * @var string
      */

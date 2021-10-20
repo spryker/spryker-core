@@ -30,18 +30,22 @@ class MailDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const MAIL_PROVIDER_COLLECTION = 'mail provider collection';
+
     /**
      * @var string
      */
     public const MAIL_TYPE_COLLECTION = 'mail collection';
+
     /**
      * @var string
      */
     public const FACADE_GLOSSARY = 'glossary facade';
+
     /**
      * @var string
      */
     public const RENDERER = 'twig';
+
     /**
      * @var string
      */

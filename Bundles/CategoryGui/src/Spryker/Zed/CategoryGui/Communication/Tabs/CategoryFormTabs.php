@@ -17,6 +17,7 @@ class CategoryFormTabs extends AbstractTabs
      * @var string
      */
     protected const NAME_SETTINGS = 'settings';
+
     /**
      * @var string
      */

@@ -15,6 +15,7 @@ class ProductBundleCartsRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESOURCE_BUNDLE_ITEMS = 'bundle-items';
+
     /**
      * @var string
      */

@@ -27,10 +27,12 @@ class CmsBlockProductAbstractType extends AbstractType
      * @var string
      */
     public const FIELD_ID_CMS_BLOCK = 'id_cms_block';
+
     /**
      * @var string
      */
     public const FIELD_ID_PRODUCT_ABSTRACTS = 'id_product_abstracts';
+
     /**
      * @var string
      */
@@ -46,6 +48,7 @@ class CmsBlockProductAbstractType extends AbstractType
      * @var string
      */
     public const OPTION_ASSIGNED_PRODUCT_ABSTRACTS = 'option-assigned-product-abstracts';
+
     /**
      * @var string
      */

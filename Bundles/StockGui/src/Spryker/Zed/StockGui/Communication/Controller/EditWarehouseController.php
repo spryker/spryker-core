@@ -28,6 +28,7 @@ class EditWarehouseController extends AbstractController
      * @var string
      */
     protected const MESSAGE_SUCCESS = 'Warehouse has been successfully updated';
+
     /**
      * @var string
      */

@@ -35,6 +35,7 @@ class CompanyBusinessUnitDataImportPluginTest extends AbstractCompanyBusinessUni
      * @var string
      */
     protected const COMPANY_BUSINESS_UNIT_KEY = 'spryker-business-unit';
+
     /**
      * @var string
      */
@@ -44,10 +45,12 @@ class CompanyBusinessUnitDataImportPluginTest extends AbstractCompanyBusinessUni
      * @var string
      */
     protected const IMPORT_COMPANY_BUSINESS_UNIT_CSV = 'import/company_business_unit.csv';
+
     /**
      * @var string
      */
     protected const IMPORT_COMPANY_BUSINESS_UNIT_WITH_INVALID_COMPANY_CSV = 'import/company_business_unit_with_invalid_company.csv';
+
     /**
      * @var string
      */

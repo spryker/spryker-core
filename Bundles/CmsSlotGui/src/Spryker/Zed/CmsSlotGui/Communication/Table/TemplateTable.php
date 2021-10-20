@@ -18,6 +18,7 @@ class TemplateTable extends AbstractTable
     protected const COL_ID = SpyCmsSlotTemplateTableMap::COL_ID_CMS_SLOT_TEMPLATE;
     protected const COL_NAME = SpyCmsSlotTemplateTableMap::COL_NAME;
     protected const COL_DESCRIPTION = SpyCmsSlotTemplateTableMap::COL_DESCRIPTION;
+
     /**
      * @var string
      */
@@ -27,14 +28,17 @@ class TemplateTable extends AbstractTable
      * @var string
      */
     protected const VALUE_COL_ID = 'ID';
+
     /**
      * @var string
      */
     protected const VALUE_COL_NAME = 'Name';
+
     /**
      * @var string
      */
     protected const VALUE_COL_DESCRIPTION = 'Description';
+
     /**
      * @var string
      */

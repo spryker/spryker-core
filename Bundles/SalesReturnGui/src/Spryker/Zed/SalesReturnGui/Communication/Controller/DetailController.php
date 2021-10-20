@@ -34,6 +34,7 @@ class DetailController extends AbstractController
      * @var string
      */
     protected const MESSAGE_RETURN_NOT_FOUND = 'Requested return with ID "%id%" was not found.';
+
     /**
      * @var string
      */

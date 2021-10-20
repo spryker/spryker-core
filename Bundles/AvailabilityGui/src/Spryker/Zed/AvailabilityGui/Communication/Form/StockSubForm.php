@@ -28,10 +28,12 @@ class StockSubForm extends AbstractType
      * @var string
      */
     public const FIELD_QUANTITY = 'quantity';
+
     /**
      * @var string
      */
     public const FIELD_STOCK_TYPE = 'stockType';
+
     /**
      * @var string
      */

@@ -16,6 +16,7 @@ class MerchantProductOfferDataImportConfig extends DataImportConfig
      * @var string
      */
     public const IMPORT_TYPE_MERCHANT_PRODUCT_OFFER = 'merchant-product-offer';
+
     /**
      * @var string
      */

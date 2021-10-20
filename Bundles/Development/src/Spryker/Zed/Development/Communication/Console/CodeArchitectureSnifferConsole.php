@@ -31,30 +31,37 @@ class CodeArchitectureSnifferConsole extends Console
      * @var string
      */
     protected const COMMAND_NAME = 'code:sniff:architecture';
+
     /**
      * @var string
      */
     protected const OPTION_MODULE = 'module';
+
     /**
      * @var string
      */
     protected const OPTION_STRICT = 'strict';
+
     /**
      * @var string
      */
     protected const OPTION_PRIORITY = 'priority';
+
     /**
      * @var string
      */
     protected const OPTION_DRY_RUN = 'dry-run';
+
     /**
      * @var string
      */
     protected const ARGUMENT_SUB_PATH = 'path';
+
     /**
      * @var string
      */
     protected const OPTION_VERBOSE = 'verbose';
+
     /**
      * @var array
      */
@@ -64,10 +71,12 @@ class CodeArchitectureSnifferConsole extends Console
      * @var string
      */
     protected const NAMESPACE_SPRYKER_SHOP = 'SprykerShop';
+
     /**
      * @var string
      */
     protected const NAMESPACE_SPRYKER = 'Spryker';
+
     /**
      * @var string
      */

@@ -17,10 +17,12 @@ class BranchAliasUpdater implements UpdaterInterface
      * @var string
      */
     public const KEY_EXTRA = 'extra';
+
     /**
      * @var string
      */
     public const KEY_BRANCH_ALIAS = 'branch-alias';
+
     /**
      * @var string
      */

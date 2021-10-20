@@ -16,6 +16,7 @@ class ReturnCreateTemplateProvider implements ReturnCreateTemplateProviderInterf
      * @var string
      */
     protected const FIELD_RETURN_CREATE_FORM = 'returnCreateForm';
+
     /**
      * @var string
      */

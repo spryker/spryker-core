@@ -24,10 +24,12 @@ class CustomersListType extends AbstractType
      * @var string
      */
     public const TYPE_NAME = 'customers';
+
     /**
      * @var string
      */
     public const FIELD_CUSTOMER = 'idCustomer';
+
     /**
      * @var string
      */

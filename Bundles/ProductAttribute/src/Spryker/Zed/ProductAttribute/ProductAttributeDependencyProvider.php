@@ -24,10 +24,12 @@ class ProductAttributeDependencyProvider extends AbstractBundleDependencyProvide
      * @var string
      */
     public const FACADE_LOCALE = 'FACADE_LOCALE';
+
     /**
      * @var string
      */
     public const FACADE_GLOSSARY = 'FACADE_GLOSSARY';
+
     /**
      * @var string
      */
@@ -37,10 +39,12 @@ class ProductAttributeDependencyProvider extends AbstractBundleDependencyProvide
      * @var string
      */
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
+
     /**
      * @var string
      */
     public const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
+
     /**
      * @var string
      */

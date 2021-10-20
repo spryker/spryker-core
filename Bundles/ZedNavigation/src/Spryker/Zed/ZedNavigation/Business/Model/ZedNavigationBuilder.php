@@ -19,6 +19,7 @@ class ZedNavigationBuilder
      * @var string
      */
     public const MENU = 'menu';
+
     /**
      * @var string
      */

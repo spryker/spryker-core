@@ -18,6 +18,7 @@ class ProductAbstractReviewTwigExtension extends TwigExtension
      * @var string
      */
     public const FUNCTION_NAME_PRODUCT_ABSTRACT_REVIEW = 'spyProductAbstractReview';
+
     /**
      * @var string
      */

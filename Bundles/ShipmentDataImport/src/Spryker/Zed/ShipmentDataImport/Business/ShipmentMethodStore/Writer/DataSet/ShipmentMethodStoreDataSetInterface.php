@@ -13,6 +13,7 @@ interface ShipmentMethodStoreDataSetInterface
      * @var string
      */
     public const COL_SHIPMENT_METHOD_KEY = 'shipment_method_key';
+
     /**
      * @var string
      */
@@ -22,6 +23,7 @@ interface ShipmentMethodStoreDataSetInterface
      * @var string
      */
     public const COL_ID_SHIPMENT_METHOD = 'fk_shipment_method';
+
     /**
      * @var string
      */

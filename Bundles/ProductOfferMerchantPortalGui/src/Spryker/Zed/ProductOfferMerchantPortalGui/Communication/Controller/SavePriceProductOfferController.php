@@ -26,10 +26,12 @@ class SavePriceProductOfferController extends AbstractPriceProductOfferControlle
      * @var string
      */
     protected const PARAM_TYPE_PRICE_PRODUCT_OFFER_IDS = 'type-price-product-offer-ids';
+
     /**
      * @var string
      */
     protected const PARAM_VOLUME_QUANTITY = 'volume_quantity';
+
     /**
      * @var string
      */

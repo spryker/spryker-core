@@ -23,6 +23,7 @@ class GlobalThresholdDataProvider
      * @var string
      */
     protected const FORMAT_STORE_CURRENCY_ROW_LABEL = '%s - %s [%s]';
+
     /**
      * @var string
      */

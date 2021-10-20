@@ -26,10 +26,12 @@ class PersistentCartShareClientTest extends Unit
      * @var string
      */
     protected const VALUE_SHARE_OPTION_GROUP = 'VALUE_SHARE_OPTION_GROUP';
+
     /**
      * @var string
      */
     protected const VALUE_KEY = 'VALUE_KEY';
+
     /**
      * @var bool
      */

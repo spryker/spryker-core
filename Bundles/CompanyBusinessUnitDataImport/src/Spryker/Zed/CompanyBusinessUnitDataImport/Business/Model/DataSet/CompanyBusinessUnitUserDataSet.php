@@ -13,6 +13,7 @@ interface CompanyBusinessUnitUserDataSet
      * @var string
      */
     public const COLUMN_BUSINESS_UNIT_KEY = 'business_unit_key';
+
     /**
      * @var string
      */

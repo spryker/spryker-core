@@ -19,10 +19,12 @@ class ProductPackagingUnitStorageDependencyProvider extends AbstractDependencyPr
      * @var string
      */
     public const CLIENT_STORAGE = 'CLIENT_STORAGE';
+
     /**
      * @var string
      */
     public const CLIENT_PRODUCT_MEASUREMENT_UNIT_STORAGE = 'CLIENT_PRODUCT_MEASUREMENT_UNIT_STORAGE';
+
     /**
      * @var string
      */

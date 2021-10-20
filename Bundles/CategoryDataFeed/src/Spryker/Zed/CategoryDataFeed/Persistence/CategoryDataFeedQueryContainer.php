@@ -23,6 +23,7 @@ class CategoryDataFeedQueryContainer extends AbstractQueryContainer implements C
      * @var string
      */
     public const UPDATED_FROM_CONDITION = 'UPDATED_FROM_CONDITION';
+
     /**
      * @var string
      */

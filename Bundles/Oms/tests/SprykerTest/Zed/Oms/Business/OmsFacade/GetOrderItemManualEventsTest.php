@@ -28,6 +28,7 @@ class GetOrderItemManualEventsTest extends Unit
      * @var string
      */
     protected const DEFAULT_OMS_PROCESS_NAME = 'Test01';
+
     /**
      * @var int
      */
@@ -37,6 +38,7 @@ class GetOrderItemManualEventsTest extends Unit
      * @var string
      */
     protected const SHIPPED_STATE_NAME = 'shipped';
+
     /**
      * @var string
      */

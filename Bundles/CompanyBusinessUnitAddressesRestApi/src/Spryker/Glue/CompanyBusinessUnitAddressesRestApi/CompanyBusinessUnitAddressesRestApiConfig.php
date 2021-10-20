@@ -15,6 +15,7 @@ class CompanyBusinessUnitAddressesRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESOURCE_COMPANY_BUSINESS_UNIT_ADDRESSES = 'company-business-unit-addresses';
+
     /**
      * @var string
      */
@@ -30,6 +31,7 @@ class CompanyBusinessUnitAddressesRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESPONSE_CODE_COMPANY_BUSINESS_UNIT_ADDRESS_NOT_FOUND = '2001';
+
     /**
      * @var string
      */
@@ -39,6 +41,7 @@ class CompanyBusinessUnitAddressesRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESPONSE_CODE_COMPANY_USER_NOT_SELECTED = '2003';
+
     /**
      * @var string
      */

@@ -15,6 +15,7 @@ class CompanyRolesRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESOURCE_COMPANY_ROLES = 'company-roles';
+
     /**
      * @var string
      */
@@ -30,6 +31,7 @@ class CompanyRolesRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESPONSE_CODE_COMPANY_ROLE_NOT_FOUND = '2101';
+
     /**
      * @var string
      */
@@ -39,6 +41,7 @@ class CompanyRolesRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESPONSE_CODE_COMPANY_USER_NOT_SELECTED = '2103';
+
     /**
      * @var string
      */

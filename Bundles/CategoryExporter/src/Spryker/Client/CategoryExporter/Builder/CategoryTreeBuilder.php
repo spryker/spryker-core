@@ -17,6 +17,7 @@ class CategoryTreeBuilder
      * @var string
      */
     public const SUBTREE_DEPTH_KEY = 'depth';
+
     /**
      * @var int
      */

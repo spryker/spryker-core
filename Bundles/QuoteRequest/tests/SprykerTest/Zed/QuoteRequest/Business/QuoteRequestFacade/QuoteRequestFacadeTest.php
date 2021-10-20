@@ -43,6 +43,7 @@ class QuoteRequestFacadeTest extends Unit
      * @var string
      */
     protected const FAKE_QUOTE_REQUEST_REFERENCE = 'FAKE_QUOTE_REQUEST_REFERENCE';
+
     /**
      * @var string
      */

@@ -25,6 +25,7 @@ class PriceProductScheduleDisabler implements PriceProductScheduleDisablerInterf
      * @var string
      */
     protected const PATTERN_MINUS_ONE_DAY = '-1 day';
+
     /**
      * @var string
      */

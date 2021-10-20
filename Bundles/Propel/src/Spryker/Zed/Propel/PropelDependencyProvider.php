@@ -22,14 +22,17 @@ class PropelDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const UTIL_TEXT_SERVICE = 'util text service';
+
     /**
      * @var string
      */
     public const FACADE_LOG = 'FACADE_LOG';
+
     /**
      * @var string
      */
     public const FACADE_TRANSFER = 'FACADE_TRANSFER';
+
     /**
      * @var string
      */

@@ -22,6 +22,7 @@ class NewsletterDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const FACADE_MAIL = 'mail facade';
+
     /**
      * @var string
      */

@@ -26,6 +26,7 @@ class CompanyUserStorageDependencyProvider extends AbstractBundleDependencyProvi
      * @var string
      */
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
+
     /**
      * @var string
      */

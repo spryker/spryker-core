@@ -31,50 +31,62 @@ class AvailabilityQueryContainer extends AbstractQueryContainer implements Avail
      * @var string
      */
     public const SUM_QUANTITY = 'sumQuantity';
+
     /**
      * @var string
      */
     public const ABSTRACT_SKU = 'abstractSku';
+
     /**
      * @var string
      */
     public const AVAILABILITY_QUANTITY = 'availabilityQuantity';
+
     /**
      * @var string
      */
     public const STOCK_QUANTITY = 'stockQuantity';
+
     /**
      * @var string
      */
     public const RESERVATION_QUANTITY = 'reservationQuantity';
+
     /**
      * @var string
      */
     public const PRODUCT_NAME = 'productName';
+
     /**
      * @var string
      */
     public const CONCRETE_SKU = 'concreteSku';
+
     /**
      * @var string
      */
     public const CONCRETE_AVAILABILITY = 'concreteAvailability';
+
     /**
      * @var string
      */
     public const CONCRETE_NAME = 'concreteName';
+
     /**
      * @var string
      */
     public const ID_PRODUCT = 'idProduct';
+
     /**
      * @var string
      */
     public const GROUP_CONCAT = 'GROUP_CONCAT';
+
     /**
      * @var string
      */
     public const CONCAT = 'CONCAT';
+
     /**
      * @var string
      */

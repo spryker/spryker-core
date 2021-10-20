@@ -26,6 +26,7 @@ class CompanyUserBusinessUnitForm extends AbstractType
      * @var string
      */
     public const OPTION_VALUES_BUSINESS_UNITS_CHOICES = 'company_business_unit_choices';
+
     /**
      * @var string
      */

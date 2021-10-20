@@ -23,6 +23,7 @@ class AgentAuthRestApiDependencyProvider extends AbstractBundleDependencyProvide
      * @var string
      */
     public const CLIENT_AGENT = 'CLIENT_AGENT';
+
     /**
      * @var string
      */
@@ -32,6 +33,7 @@ class AgentAuthRestApiDependencyProvider extends AbstractBundleDependencyProvide
      * @var string
      */
     public const SERVICE_OAUTH = 'SERVICE_OAUTH';
+
     /**
      * @var string
      */

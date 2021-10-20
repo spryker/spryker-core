@@ -28,6 +28,7 @@ class GlobalController extends AbstractController
      * @var string
      */
     protected const PARAM_STORE_CURRENCY_REQUEST = 'store_currency';
+
     /**
      * @var string
      */

@@ -16,6 +16,7 @@ class GiftCardsRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESOURCE_CARTS = 'carts';
+
     /**
      * @var string
      */

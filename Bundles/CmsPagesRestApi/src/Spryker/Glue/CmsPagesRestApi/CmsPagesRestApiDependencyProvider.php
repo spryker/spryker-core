@@ -22,10 +22,12 @@ class CmsPagesRestApiDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const CLIENT_CMS_STORAGE = 'CLIENT_CMS_STORAGE';
+
     /**
      * @var string
      */
     public const CLIENT_CMS_PAGE_SEARCH = 'CLIENT_CMS_PAGE_SEARCH';
+
     /**
      * @var string
      */

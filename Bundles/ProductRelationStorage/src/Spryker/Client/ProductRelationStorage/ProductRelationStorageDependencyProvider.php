@@ -22,14 +22,17 @@ class ProductRelationStorageDependencyProvider extends AbstractDependencyProvide
      * @var string
      */
     public const CLIENT_STORAGE = 'CLIENT_STORAGE';
+
     /**
      * @var string
      */
     public const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
+
     /**
      * @var string
      */
     public const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE';
+
     /**
      * @var string
      */

@@ -21,6 +21,7 @@ class AclEntityDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const FACADE_USER = 'FACADE_USER';
+
     /**
      * @var string
      */
@@ -35,10 +36,12 @@ class AclEntityDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const PLUGINS_ACL_ENTITY_METADATA_COLLECTION_EXPANDER = 'PLUGINS_ACL_ENTITY_METADATA_COLLECTION_EXPANDER';
+
     /**
      * @var string
      */
     public const PLUGINS_ACL_ENTITY_DISABLER = 'PLUGINS_ACL_ENTITY_DISABLER';
+
     /**
      * @var string
      */
@@ -48,6 +51,7 @@ class AclEntityDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const IS_ACL_ENTITY_ENABLED = 'IS_ACL_ENTITY_ENABLED';
+
     /**
      * @var string
      */

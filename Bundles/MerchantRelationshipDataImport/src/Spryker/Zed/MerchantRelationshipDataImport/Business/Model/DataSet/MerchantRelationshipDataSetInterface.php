@@ -13,14 +13,17 @@ interface MerchantRelationshipDataSetInterface
      * @var string
      */
     public const MERCHANT_RELATIONSHIP_KEY = 'merchant_relation_key';
+
     /**
      * @var string
      */
     public const MERCHANT_REFERENCE = 'merchant_reference';
+
     /**
      * @var string
      */
     public const COMPANY_BUSINESS_UNIT_OWNER_KEY = 'company_business_unit_owner_key';
+
     /**
      * @var string
      */
@@ -30,10 +33,12 @@ interface MerchantRelationshipDataSetInterface
      * @var string
      */
     public const ID_MERCHANT = 'id_merchant';
+
     /**
      * @var string
      */
     public const ID_COMPANY_BUSINESS_UNIT = 'id_company_business_unit';
+
     /**
      * @var string
      */

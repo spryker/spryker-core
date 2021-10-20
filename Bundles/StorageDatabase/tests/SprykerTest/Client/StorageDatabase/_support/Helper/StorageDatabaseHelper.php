@@ -20,14 +20,17 @@ class StorageDatabaseHelper extends Module
      * @var string
      */
     public const FIXTURE_TABLE_NAME = 'spy_test_fixture_storage';
+
     /**
      * @var string
      */
     public const COLUMN_DATA = 'data';
+
     /**
      * @var string
      */
     public const COLUMN_KEY = 'key';
+
     /**
      * @var string
      */

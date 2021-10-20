@@ -30,22 +30,27 @@ class ReaderTest extends Unit
      * @var string
      */
     public const DUMMY_TAX_SET_NAME = 'SalesTax';
+
     /**
      * @var string
      */
     public const DUMMY_TAX_RATE1_NAME = 'Local';
+
     /**
      * @var int
      */
     public const DUMMY_TAX_RATE1_PERCENTAGE = 25;
+
     /**
      * @var string
      */
     public const DUMMY_TAX_RATE2_NAME = 'Regional';
+
     /**
      * @var int
      */
     public const DUMMY_TAX_RATE2_PERCENTAGE = 10;
+
     /**
      * @var int
      */

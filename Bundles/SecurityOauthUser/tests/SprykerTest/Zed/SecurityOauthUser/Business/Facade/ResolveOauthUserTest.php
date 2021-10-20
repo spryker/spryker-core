@@ -30,6 +30,7 @@ class ResolveOauthUserTest extends Unit
      * @var string
      */
     protected const FAKE_EMAIL = 'fake@mail.com';
+
     /**
      * @var string
      */
@@ -113,7 +114,7 @@ class ResolveOauthUserTest extends Unit
     {
         // Arrange
         $securityOauthUserFacade = $this->tester->mockSecurityOauthUserFacade(
-            SecurityOauthUserConfig::AUTHENTICATION_STRATEGY_CREATE_USER_ON_FIRST_LOGIN,
+            SecurityOauthUserConfig::AUTHENTICATION_STRATEGY_CREATE_USER_ON_FIRST_LOGIN
         );
 
         $userTransfer = $this->tester->haveUser();

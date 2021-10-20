@@ -28,6 +28,7 @@ class ProductAbstractListContentTermForm extends AbstractType
      * @var string
      */
     public const FIELD_ID_ABSTRACT_PRODUCTS = 'idProductAbstracts';
+
     /**
      * @var string
      */

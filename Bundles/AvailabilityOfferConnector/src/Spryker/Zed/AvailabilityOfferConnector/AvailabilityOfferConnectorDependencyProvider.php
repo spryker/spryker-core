@@ -18,6 +18,7 @@ class AvailabilityOfferConnectorDependencyProvider extends AbstractBundleDepende
      * @var string
      */
     public const FACADE_STORE = 'FACADE_STORE';
+
     /**
      * @var string
      */

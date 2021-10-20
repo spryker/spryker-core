@@ -40,6 +40,7 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
      * @var string
      */
     public const KEY_FILTERED_PRODUCTS_RESULT = 'result';
+
     /**
      * @var string
      */

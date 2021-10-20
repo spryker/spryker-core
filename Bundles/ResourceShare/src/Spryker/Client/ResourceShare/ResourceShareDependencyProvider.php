@@ -17,10 +17,12 @@ class ResourceShareDependencyProvider extends AbstractDependencyProvider
      * @var string
      */
     public const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
+
     /**
      * @var string
      */
     public const PLUGINS_AFTER_ZED_RESOURCE_SHARE_ACTIVATOR_STRATEGY = 'PLUGINS_RESOURCE_SHARE_ACTIVATOR_STRATEGY';
+
     /**
      * @var string
      */

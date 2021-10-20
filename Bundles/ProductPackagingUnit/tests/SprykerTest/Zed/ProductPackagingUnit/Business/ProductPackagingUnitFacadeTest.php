@@ -54,6 +54,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
      * @var string
      */
     protected const PACKAGING_TYPE_DEFAULT = 'item';
+
     /**
      * @var string
      */
@@ -63,6 +64,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
      * @var int
      */
     protected const ITEM_QUANTITY = 2;
+
     /**
      * @var int
      */
@@ -72,14 +74,17 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
      * @var string
      */
     protected const GROUP_KEY = 'GROUP_KEY_DUMMY';
+
     /**
      * @var string
      */
     protected const GROUP_KEY_FORMAT = '%s_amount_%s_sales_unit_id_%s';
+
     /**
      * @var int
      */
     protected const AMOUNT_VALUE = 5;
+
     /**
      * @var int
      */
@@ -94,6 +99,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
      * @var string
      */
     protected const PRICE_MODE_NET = 'NET_MODE';
+
     /**
      * @var string
      */
@@ -103,6 +109,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
      * @var string
      */
     protected const ABSTRACT_PRODUCT_SKU = 'ABSTRACT_PRODUCT_SKU';
+
     /**
      * @var string
      */
@@ -706,11 +713,11 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
             // expectedResult, defaultAmount, itemAmount, itemQuantity, minRestriction, maxRestriction, intervalRestriction, isAmountVariable
             [true, 1, 2, 1, 1, null, 1, true], // general rule
             [true, 1, 7, 1, 7, null, 1, true], // min equals new amount
-            [true, 1, 5, 1, 5, 5,    1, true], // max equals new amount
+            [true, 1, 5, 1, 5, 5, 1, true], // max equals new amount
             [true, 1, 7, 1, 0, null, 7, true], // interval matches new amount
-            [false, 1, 5, 1, 7, 7,    7, true], // min, max, interval matches new amount
+            [false, 1, 5, 1, 7, 7, 7, true], // min, max, interval matches new amount
             [false, 1, 5, 1, 8, null, 1, true], // min above new amount
-            [false, 1, 5, 1, 1, 3,    1, true], // max below new amount
+            [false, 1, 5, 1, 1, 3, 1, true], // max below new amount
             [false, 1, 5, 1, 1, null, 3, true], // interval does not match new amount
             [true, 1, 1, 1, null, null, null, false], // is not variable
             [true, 2, 4, 2, null, null, null, false], // is not variable with quantity more than 1

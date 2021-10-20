@@ -28,10 +28,12 @@ class DependencyViolationFixConsole extends AbstractCoreModuleAwareConsole
      * @var string
      */
     protected const COMMAND_NAME = 'dev:dependency:fix';
+
     /**
      * @var string
      */
     protected const OPTION_DRY_RUN = 'dry-run';
+
     /**
      * @var string
      */

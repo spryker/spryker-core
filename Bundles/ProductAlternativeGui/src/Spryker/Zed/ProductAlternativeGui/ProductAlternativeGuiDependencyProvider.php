@@ -18,6 +18,7 @@ class ProductAlternativeGuiDependencyProvider extends AbstractBundleDependencyPr
      * @var string
      */
     public const FACADE_PRODUCT = 'FACADE_PRODUCT';
+
     /**
      * @var string
      */

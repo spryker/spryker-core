@@ -28,6 +28,7 @@ abstract class AbstractController
      * @var string
      */
     protected const SERVICE_LOCALE = 'locale';
+
     /**
      * @var string
      */

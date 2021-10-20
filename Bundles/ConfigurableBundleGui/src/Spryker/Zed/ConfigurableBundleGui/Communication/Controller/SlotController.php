@@ -76,14 +76,17 @@ class SlotController extends AbstractController
      * @var string
      */
     protected const ERROR_MESSAGE_SLOT_NOT_FOUND = 'Configurable bundle template slot with id "%id%" was not found.';
+
     /**
      * @var string
      */
     protected const ERROR_MESSAGE_SLOT_CREATE_FAIL = 'Configurable bundle template slot has not been created.';
+
     /**
      * @var string
      */
     protected const ERROR_MESSAGE_SLOT_UPDATE_FAIL = 'Configurable bundle template slot has not been updated.';
+
     /**
      * @var string
      */
@@ -93,10 +96,12 @@ class SlotController extends AbstractController
      * @var string
      */
     protected const SUCCESS_MESSAGE_SLOT_CREATED = 'Configurable bundle template slot was successfully created.';
+
     /**
      * @var string
      */
     protected const SUCCESS_MESSAGE_SLOT_UPDATED = 'Configurable bundle template slot was successfully updated.';
+
     /**
      * @var string
      */
@@ -111,6 +116,7 @@ class SlotController extends AbstractController
      * @var string
      */
     protected const PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE = 'id-configurable-bundle-template';
+
     /**
      * @var string
      */

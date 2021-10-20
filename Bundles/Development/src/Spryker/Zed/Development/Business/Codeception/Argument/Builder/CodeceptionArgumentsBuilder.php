@@ -17,18 +17,22 @@ class CodeceptionArgumentsBuilder implements CodeceptionArgumentsBuilderInterfac
      * @var string
      */
     protected const OPTION_CONFIG_PATH = 'config';
+
     /**
      * @var string
      */
     protected const OPTION_GROUP_INCLUDE = 'group';
+
     /**
      * @var string
      */
     protected const OPTION_GROUP_EXCLUDE = 'exclude';
+
     /**
      * @var string
      */
     protected const OPTION_VERBOSE = 'verbose';
+
     /**
      * @var string
      */

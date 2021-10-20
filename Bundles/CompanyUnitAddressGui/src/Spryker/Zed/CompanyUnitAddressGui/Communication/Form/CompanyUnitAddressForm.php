@@ -27,6 +27,7 @@ class CompanyUnitAddressForm extends AbstractType
      * @var string
      */
     public const OPTION_COMPANY_CHOICES = 'company_choices';
+
     /**
      * @var string
      */

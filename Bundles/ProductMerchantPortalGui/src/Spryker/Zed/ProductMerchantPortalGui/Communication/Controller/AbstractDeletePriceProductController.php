@@ -24,6 +24,7 @@ abstract class AbstractDeletePriceProductController extends AbstractController
      * @var string
      */
     protected const RESPONSE_NOTIFICATION_MESSAGE_SUCCESS = 'Success! The Price is deleted.';
+
     /**
      * @var string
      */

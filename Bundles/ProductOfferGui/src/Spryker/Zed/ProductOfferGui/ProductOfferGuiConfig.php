@@ -15,10 +15,12 @@ class ProductOfferGuiConfig extends AbstractBundleConfig
      * @var string
      */
     public const REQUEST_PARAM_ID_PRODUCT_OFFER = 'id-product-offer';
+
     /**
      * @var string
      */
     public const REQUEST_PARAM_ID_PRODUCT_CONCRETE = 'id-product-concrete';
+
     /**
      * @var string
      */

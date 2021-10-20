@@ -42,18 +42,22 @@ class RestRequestValidatorPluginsTest extends Unit
      * @var string
      */
     protected const VALIDATION_CACHE_FILENAME_PATTERN = '%s/result.validation.yaml';
+
     /**
      * @var string
      */
     protected const VALIDATION_CACHE_WRONG_FILENAME_PATTERN = '%s/wrong.validation.yaml';
+
     /**
      * @var string
      */
     protected const STORE_NAME_DE = 'DE';
+
     /**
      * @var string
      */
     protected const STORE_NAME_AT = 'AT';
+
     /**
      * @var array
      */
@@ -66,6 +70,7 @@ class RestRequestValidatorPluginsTest extends Unit
             'test_email' => 'tester@test.com',
         ],
     ];
+
     /**
      * @var array
      */

@@ -39,6 +39,7 @@ class ShoppingListCompanyUserDataImportPluginTest extends Unit
      * @var string
      */
     protected const TEST_SHOPPING_LIST_KEY = 'test-shopping-list';
+
     /**
      * @var string
      */

@@ -36,22 +36,27 @@ class TemplateController extends AbstractController
      * @var string
      */
     protected const ERROR_MESSAGE_TEMPLATE_NOT_FOUND = 'Configurable bundle template with id "%id%" was not found.';
+
     /**
      * @var string
      */
     protected const ERROR_MESSAGE_TEMPLATE_CREATE_FAIL = 'Configurable bundle template has not been created.';
+
     /**
      * @var string
      */
     protected const ERROR_MESSAGE_TEMPLATE_UPDATE_FAIL = 'Configurable bundle template has not been updated.';
+
     /**
      * @var string
      */
     protected const ERROR_MESSAGE_TEMPLATE_DELETE_FAIL = 'Configurable bundle template has not been deleted.';
+
     /**
      * @var string
      */
     protected const ERROR_MESSAGE_TEMPLATE_ACTIVATE_FAIL = 'Template "%template_name%" has not been activated.';
+
     /**
      * @var string
      */
@@ -61,18 +66,22 @@ class TemplateController extends AbstractController
      * @var string
      */
     protected const SUCCESS_MESSAGE_TEMPLATE_CREATED = 'Configurable bundle template has been successfully created.';
+
     /**
      * @var string
      */
     protected const SUCCESS_MESSAGE_TEMPLATE_UPDATED = 'Configurable bundle template has been successfully updated.';
+
     /**
      * @var string
      */
     protected const SUCCESS_MESSAGE_TEMPLATE_DELETED = 'Configurable bundle template has been successfully deleted.';
+
     /**
      * @var string
      */
     protected const SUCCESS_MESSAGE_TEMPLATE_ACTIVATED = 'Template "%template_name%" has been activated.';
+
     /**
      * @var string
      */
@@ -87,6 +96,7 @@ class TemplateController extends AbstractController
      * @var string
      */
     protected const PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE = 'id-configurable-bundle-template';
+
     /**
      * @var string
      */

@@ -20,6 +20,7 @@ class ResourceShareDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const PLUGINS_RESOURCE_SHARE_ACTIVATOR_STRATEGY = 'PLUGINS_RESOURCE_SHARE_ACTIVATOR_STRATEGY';
+
     /**
      * @var string
      */

@@ -9,7 +9,7 @@ namespace Spryker\Shared\Application\ServiceProvider;
 
 use Silex\Application;
 use Silex\ServiceProviderInterface;
-use Spryker\Shared\Symfony\Form\Extension\DoubleSubmitProtection\DoubleSubmitProtectionExtension as DoubleSubmitProtectionExtension;
+use Spryker\Shared\Symfony\Form\Extension\DoubleSubmitProtection\DoubleSubmitProtectionExtension;
 use Spryker\Shared\Symfony\Form\Extension\DoubleSubmitProtection\RequestTokenProvider\SessionStorage;
 use Spryker\Shared\Symfony\Form\Extension\DoubleSubmitProtection\RequestTokenProvider\TokenHashGenerator;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;

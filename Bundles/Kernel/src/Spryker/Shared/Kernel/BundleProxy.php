@@ -21,10 +21,12 @@ class BundleProxy
      * @var string
      */
     protected const LOCATOR_MATCHER_SUFFIX = 'Matcher';
+
     /**
      * @var string
      */
     protected const INSTANCE = 'instance';
+
     /**
      * @var string
      */

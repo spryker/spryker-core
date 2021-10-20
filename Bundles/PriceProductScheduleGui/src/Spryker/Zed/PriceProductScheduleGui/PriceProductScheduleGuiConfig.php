@@ -74,6 +74,7 @@ class PriceProductScheduleGuiConfig extends AbstractBundleConfig
      * @var string
      */
     protected const FILE_MAX_SIZE = '50M';
+
     /**
      * @var array
      */

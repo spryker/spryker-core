@@ -30,6 +30,7 @@ class CouplingBetweenObjectsTest extends Unit
      * @var int
      */
     public const NUMBER_OF_COUPLING_BETWEEN_OBJECTS = 2;
+
     /**
      * @var int
      */

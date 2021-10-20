@@ -18,6 +18,7 @@ class TwigRenderer implements RendererInterface
      * @var string
      */
     public const LAYOUT_TEMPLATE_TEXT = 'Mail/Mail/layout/mail_layout.text.twig';
+
     /**
      * @var string
      */

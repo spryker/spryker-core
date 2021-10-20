@@ -24,26 +24,32 @@ class EntityDefinitionNormalizer extends DefinitionNormalizer
      * @var string
      */
     public const KEY_TYPE = 'type';
+
     /**
      * @var string
      */
     public const KEY_COLUMN = 'column';
+
     /**
      * @var string
      */
     public const KEY_FOREIGN_KEY = 'foreign-key';
+
     /**
      * @var string
      */
     public const KEY_ENTITY = 'Entity';
+
     /**
      * @var string
      */
     public const FOREIGN_TABLE = 'foreignTable';
+
     /**
      * @var string
      */
     public const KEY_PHP_NAME = 'phpName';
+
     /**
      * @var string
      */

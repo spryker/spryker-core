@@ -16,6 +16,7 @@ class ProductRelationDataImportConfig extends DataImportConfig
      * @var string
      */
     public const IMPORT_TYPE_PRODUCT_RELATION = 'product-relation';
+
     /**
      * @var string
      */

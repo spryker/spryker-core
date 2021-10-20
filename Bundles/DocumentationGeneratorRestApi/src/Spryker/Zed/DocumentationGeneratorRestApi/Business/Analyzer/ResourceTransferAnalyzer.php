@@ -17,6 +17,7 @@ class ResourceTransferAnalyzer implements ResourceTransferAnalyzerInterface
      * @var string
      */
     protected const TRANSFER_NAME_PARTIAL_ATTRIBUTES = 'Attributes';
+
     /**
      * @var string
      */
@@ -26,26 +27,32 @@ class ResourceTransferAnalyzer implements ResourceTransferAnalyzerInterface
      * @var string
      */
     protected const SCHEMA_NAME_PARTIAL_ATTRIBUTES = 'Attributes';
+
     /**
      * @var string
      */
     protected const SCHEMA_NAME_PARTIAL_COLLECTION = 'Collection';
+
     /**
      * @var string
      */
     protected const SCHEMA_NAME_PARTIAL_DATA = 'Data';
+
     /**
      * @var string
      */
     protected const SCHEMA_NAME_PARTIAL_RELATIONSHIPS = 'Relationships';
+
     /**
      * @var string
      */
     protected const SCHEMA_NAME_PARTIAL_INCLUDED = 'Included';
+
     /**
      * @var string
      */
     protected const SCHEMA_NAME_PARTIAL_REQUEST = 'Request';
+
     /**
      * @var string
      */

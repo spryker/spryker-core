@@ -15,6 +15,7 @@ class SalesOrderThresholdGlossaryKeyGenerator implements SalesOrderThresholdGlos
      * @var string
      */
     protected const SALES_ORDER_THRESHOLD_GLOSSARY_PREFIX = 'sales-order-threshold';
+
     /**
      * @var string
      */

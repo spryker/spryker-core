@@ -27,14 +27,17 @@ class AddProductConcreteController extends AbstractController
      * @var string
      */
     protected const RESPONSE_KEY_POST_ACTIONS = 'postActions';
+
     /**
      * @var string
      */
     protected const RESPONSE_KEY_NOTIFICATIONS = 'notifications';
+
     /**
      * @var string
      */
     protected const RESPONSE_KEY_TYPE = 'type';
+
     /**
      * @var string
      */
@@ -44,14 +47,17 @@ class AddProductConcreteController extends AbstractController
      * @var string
      */
     protected const RESPONSE_TYPE_REFRESH_TABLE = 'refresh_table';
+
     /**
      * @var string
      */
     protected const RESPONSE_TYPE_CLOSE_OVERLAY = 'close_overlay';
+
     /**
      * @var string
      */
     protected const RESPONSE_TYPE_SUCCESS = 'success';
+
     /**
      * @var string
      */
@@ -61,10 +67,12 @@ class AddProductConcreteController extends AbstractController
      * @var string
      */
     protected const RESPONSE_MESSAGE_SUCCESS_PRODUCTS_SAVED = 'Success! %d Concrete Products are saved.';
+
     /**
      * @var string
      */
     protected const RESPONSE_MESSAGE_SUCCESS_PRODUCT_SAVED = 'Success! %d Concrete Product is saved.';
+
     /**
      * @var string
      */

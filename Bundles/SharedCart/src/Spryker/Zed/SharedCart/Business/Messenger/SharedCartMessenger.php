@@ -18,6 +18,7 @@ class SharedCartMessenger implements SharedCartMessengerInterface
      * @var string
      */
     protected const GLOSSARY_KEY_SHARED_CART_SET_DEFAULT_SUCCESS = 'shared_cart.cart.set_default.success';
+
     /**
      * @var string
      */

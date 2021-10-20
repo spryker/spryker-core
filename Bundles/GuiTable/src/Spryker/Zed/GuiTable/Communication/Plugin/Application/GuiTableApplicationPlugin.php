@@ -23,6 +23,7 @@ class GuiTableApplicationPlugin extends AbstractPlugin implements ApplicationPlu
      * @var string
      */
     public const SERVICE_GUI_TABLE_FACTORY = 'gui_table_factory';
+
     /**
      * @var string
      */

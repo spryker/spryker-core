@@ -30,6 +30,7 @@ class OauthUserSecurityPlugin extends AbstractPlugin implements SecurityPluginIn
      * @var string
      */
     protected const SECURITY_FIREWALL_NAME = 'OauthUser';
+
     /**
      * @var string
      */

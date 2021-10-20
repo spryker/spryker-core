@@ -28,6 +28,7 @@ class ZedNavigationServiceProvider extends AbstractPlugin implements ServiceProv
      * @var string
      */
     public const URI_SUFFIX_INDEX = '\/index$';
+
     /**
      * @var string
      */

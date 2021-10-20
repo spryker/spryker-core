@@ -21,6 +21,7 @@ class ConcreteProductAvailabilitiesReader implements ConcreteProductAvailabiliti
      * @var string
      */
     protected const PRODUCT_CONCRETE_MAPPING_TYPE = 'sku';
+
     /**
      * @var string
      */

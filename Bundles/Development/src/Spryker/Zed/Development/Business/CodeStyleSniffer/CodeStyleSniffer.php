@@ -33,6 +33,7 @@ class CodeStyleSniffer
      * @var array
      */
     protected const APPLICATION_NAMESPACES = ['Orm'];
+
     /**
      * @var array
      */
@@ -42,6 +43,7 @@ class CodeStyleSniffer
      * @var string
      */
     protected const NAMESPACE_SPRYKER_SHOP = 'SprykerShop';
+
     /**
      * @var string
      */

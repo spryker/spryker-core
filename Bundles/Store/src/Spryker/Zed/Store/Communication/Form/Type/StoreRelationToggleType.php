@@ -29,10 +29,12 @@ class StoreRelationToggleType extends AbstractType
      * @var string
      */
     public const FIELD_ID_ENTITY = 'id_entity';
+
     /**
      * @var string
      */
     public const FIELD_ID_STORES = 'id_stores';
+
     /**
      * @var string
      */

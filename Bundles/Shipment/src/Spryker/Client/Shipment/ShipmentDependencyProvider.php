@@ -19,6 +19,7 @@ class ShipmentDependencyProvider extends AbstractDependencyProvider
      * @var string
      */
     public const SERVICE_ZED = 'zed service';
+
     /**
      * @var string
      */

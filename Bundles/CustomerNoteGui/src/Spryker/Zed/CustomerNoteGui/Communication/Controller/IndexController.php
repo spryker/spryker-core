@@ -20,10 +20,12 @@ class IndexController extends AbstractController
      * @var string
      */
     protected const CUSTOMER_PARAM = 'customerTransfer';
+
     /**
      * @var string
      */
     protected const MESSAGE_SUCCESS = 'Comment successfully added';
+
     /**
      * @var string
      */

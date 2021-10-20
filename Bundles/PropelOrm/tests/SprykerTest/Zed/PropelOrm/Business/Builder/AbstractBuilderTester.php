@@ -24,35 +24,42 @@ abstract class AbstractBuilderTester extends Unit
      */
     protected const TESTING_TABLE_NAME = 'foo';
     protected const TESTING_TABLE_NAMESPACE = __NAMESPACE__ . '\\Fixtures';
+
     /**
      * @var string
      */
     protected const TESTING_COLUMN_NAME = 'id_foo';
     protected const TESTING_COLUMN_TYPE = PropelTypes::INTEGER;
+
     /**
      * @var string
      */
     protected const TESTING_COLUMN_BOOLEAN_NAME = 'flag_foo';
     protected const TESTING_COLUMN_BOOLEAN_TYPE = PropelTypes::BOOLEAN;
+
     /**
      * @var string
      */
     protected const TESTING_COLUMN_BOOLEAN_DEFAULT_VALUE_NAME = 'flag_default_foo';
     protected const TESTING_COLUMN_BOOLEAN_DEFAULT_VALUE_TYPE = PropelTypes::BOOLEAN;
+
     /**
      * @var bool
      */
     protected const TESTING_COLUMN_BOOLEAN_DEFAULT_VALUE = true;
+
     /**
      * @var string
      */
     protected const TESTING_COLUMN_VARCHAR_NAME = 'string_foo';
     protected const TESTING_COLUMN_VARCHAR_TYPE = PropelTypes::VARCHAR;
+
     /**
      * @var string
      */
     protected const TESTING_COLUMN_VARCHAR_DEFAULT_VALUE_NAME = 'string_default_foo';
     protected const TESTING_COLUMN_VARCHAR_DEFAULT_VALUE_TYPE = PropelTypes::VARCHAR;
+
     /**
      * @var string
      */
@@ -71,7 +78,8 @@ abstract class AbstractBuilderTester extends Unit
          *
          * @see \Propel\Generator\Model\Domain
          */
-        $columns = [[
+        $columns = [
+        [
                 'name' => static::TESTING_COLUMN_NAME,
                 'type' => static::TESTING_COLUMN_TYPE,
             ], [

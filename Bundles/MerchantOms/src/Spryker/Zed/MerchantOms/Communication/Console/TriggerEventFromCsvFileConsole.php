@@ -27,18 +27,22 @@ class TriggerEventFromCsvFileConsole extends Console
      * @var string
      */
     protected const COMMAND_NAME = 'merchant-oms:trigger-event:from-csv-file';
+
     /**
      * @var string
      */
     protected const COMMAND_DESCRIPTION = 'Triggers event for merchant order items from given file.';
+
     /**
      * @var string
      */
     protected const ARGUMENT_FILE_PATH = 'file-path';
+
     /**
      * @var string
      */
     protected const OPTION_IGNORE_ERRORS = 'ignore-errors';
+
     /**
      * @var string
      */
@@ -48,18 +52,22 @@ class TriggerEventFromCsvFileConsole extends Console
      * @var string
      */
     protected const TABLE_HEADER_COLUMN_ROW_NUMBER = 'row_number';
+
     /**
      * @var string
      */
     protected const TABLE_HEADER_COLUMN_MERCHANT_ORDER_ITEM_REFERENCE = 'merchant_order_item_reference';
+
     /**
      * @var string
      */
     protected const TABLE_HEADER_COLUMN_MERCHANT_ORDER_ITEM_OMS_EVENT_STATE = 'merchant_order_item_oms_event_state';
+
     /**
      * @var string
      */
     protected const TABLE_HEADER_COLUMN_RESULT = 'result';
+
     /**
      * @var string
      */

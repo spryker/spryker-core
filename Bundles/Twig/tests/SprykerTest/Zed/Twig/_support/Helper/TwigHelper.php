@@ -43,10 +43,12 @@ class TwigHelper extends Module
      * @var string
      */
     protected const MODULE_NAME = 'Twig';
+
     /**
      * @var string
      */
     protected const CONFIG_KEY_TWIG_PLUGINS = 'twigPlugins';
+
     /**
      * @var string
      */

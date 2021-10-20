@@ -27,46 +27,57 @@ class OauthDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const PLUGIN_USER_PROVIDER = 'PLUGIN_USER_PROVIDER';
+
     /**
      * @var string
      */
     public const PLUGIN_SCOPE_PROVIDER = 'PLUGIN_SCOPE_PROVIDER';
+
     /**
      * @var string
      */
     public const PLUGINS_GRANT_TYPE_CONFIGURATION_PROVIDER = 'PLUGINS_GRANT_TYPE_CONFIGURATION_PROVIDER';
+
     /**
      * @var string
      */
     public const PLUGINS_OAUTH_USER_IDENTIFIER_FILTER = 'PLUGINS_OAUTH_USER_IDENTIFIER_FILTER';
+
     /**
      * @var string
      */
     public const PLUGINS_OAUTH_REFRESH_TOKEN_REVOKER = 'PLUGINS_OAUTH_REFRESH_TOKEN_REVOKER';
+
     /**
      * @var string
      */
     public const PLUGINS_OAUTH_REFRESH_TOKENS_REVOKER = 'PLUGINS_OAUTH_REFRESH_TOKENS_REVOKER';
+
     /**
      * @var string
      */
     public const PLUGINS_OAUTH_REFRESH_TOKEN_SAVER = 'PLUGINS_OAUTH_REFRESH_TOKEN_SAVER';
+
     /**
      * @var string
      */
     public const PLUGINS_OAUTH_REFRESH_TOKEN_PERSISTENCE = 'PLUGINS_OAUTH_REFRESH_TOKEN_PERSISTENCE';
+
     /**
      * @var string
      */
     public const PLUGINS_OAUTH_REFRESH_TOKEN_CHECKER = 'PLUGINS_OAUTH_REFRESH_TOKEN_CHECKER';
+
     /**
      * @var string
      */
     public const PLUGINS_OAUTH_EXPIRED_REFRESH_TOKEN_REMOVER = 'PLUGINS_OAUTH_EXPIRED_REFRESH_TOKEN_REMOVER';
+
     /**
      * @var string
      */
     public const PLUGINS_OAUTH_REFRESH_TOKEN_READER = 'PLUGINS_OAUTH_REFRESH_TOKEN_READER';
+
     /**
      * @var string
      */

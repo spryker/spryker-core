@@ -25,6 +25,7 @@ class CompanySupplierForm extends AbstractType
      * @var string
      */
     public const OPTION_VALUES_COMPANY_SUPPLIER = 'OPTION_VALUES_COMPANY_SUPPLIER';
+
     /**
      * @var string
      */

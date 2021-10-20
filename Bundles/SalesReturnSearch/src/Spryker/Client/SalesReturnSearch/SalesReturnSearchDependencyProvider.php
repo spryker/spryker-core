@@ -27,10 +27,12 @@ class SalesReturnSearchDependencyProvider extends AbstractDependencyProvider
      * @var string
      */
     public const PLUGIN_RETURN_REASON_SEARCH_QUERY = 'PLUGIN_RETURN_REASON_SEARCH_QUERY';
+
     /**
      * @var string
      */
     public const PLUGINS_RETURN_REASON_SEARCH_RESULT_FORMATTER = 'PLUGINS_RETURN_REASON_SEARCH_RESULT_FORMATTER';
+
     /**
      * @var string
      */

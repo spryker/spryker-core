@@ -17,6 +17,7 @@ class PriceProductScheduleListFinder implements PriceProductScheduleListFinderIn
      * @var string
      */
     public const ALIAS_NUMBER_OF_PRICES = 'numberOfPrices';
+
     /**
      * @var string
      */
@@ -26,6 +27,7 @@ class PriceProductScheduleListFinder implements PriceProductScheduleListFinderIn
      * @var string
      */
     protected const EXPRESSION_NUMBER_OF_PRICES = 'COUNT(%s)';
+
     /**
      * @var string
      */
@@ -35,10 +37,12 @@ class PriceProductScheduleListFinder implements PriceProductScheduleListFinderIn
      * @var string
      */
     protected const COL_ID_PRICE_PRODUCT_SCHEDULE = 'id_price_product_schedule';
+
     /**
      * @var string
      */
     protected const COL_FK_PRODUCT = 'fk_product';
+
     /**
      * @var string
      */

@@ -20,10 +20,12 @@ abstract class AbstractProductAbstractTable extends AbstractTable
      * @var string
      */
     public const HEADER_ID_PRODUCT_ABSTRACT = 'ID';
+
     /**
      * @var string
      */
     public const HEADER_NAME = 'Name';
+
     /**
      * @var string
      */
@@ -33,30 +35,37 @@ abstract class AbstractProductAbstractTable extends AbstractTable
      * @var string
      */
     public const COL_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
+
     /**
      * @var string
      */
     public const COL_SKU = 'sku';
+
     /**
      * @var string
      */
     public const COL_IMAGE = 'Image';
+
     /**
      * @var string
      */
     public const COL_NAME = 'name';
+
     /**
      * @var string
      */
     public const COL_STORES = 'Stores';
+
     /**
      * @var string
      */
     public const COL_STATUS = 'Status';
+
     /**
      * @var string
      */
     public const COL_SELECTED = 'Selected';
+
     /**
      * @var string
      */

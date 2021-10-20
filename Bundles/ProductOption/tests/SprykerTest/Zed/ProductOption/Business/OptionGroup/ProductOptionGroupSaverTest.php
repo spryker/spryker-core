@@ -38,6 +38,7 @@ class ProductOptionGroupSaverTest extends MockProvider
      * @var int
      */
     protected const VALUE_ID_PRODUCT_OPTION_GROUP = 1;
+
     /**
      * @var int
      */

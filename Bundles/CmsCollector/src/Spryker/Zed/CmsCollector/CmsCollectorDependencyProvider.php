@@ -22,10 +22,12 @@ class CmsCollectorDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const FACADE_COLLECTOR = 'FACADE_COLLECTOR';
+
     /**
      * @var string
      */
     public const FACADE_SEARCH = 'FACADE_SEARCH';
+
     /**
      * @var string
      */

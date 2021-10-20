@@ -21,6 +21,7 @@ class GenerateSourceMapConsole extends Console
      * @var string
      */
     public const COMMAND_NAME = 'search:setup:source-map';
+
     /**
      * @var string
      */

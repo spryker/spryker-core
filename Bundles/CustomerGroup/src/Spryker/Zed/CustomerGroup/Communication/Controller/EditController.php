@@ -22,6 +22,7 @@ class EditController extends AbstractController
      * @var string
      */
     public const PARAM_ID_CUSTOMER_GROUP = 'id-customer-group';
+
     /**
      * @var string
      */

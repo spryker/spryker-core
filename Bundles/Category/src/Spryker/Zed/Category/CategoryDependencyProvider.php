@@ -24,10 +24,12 @@ class CategoryDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const FACADE_TOUCH = 'touch facade';
+
     /**
      * @var string
      */
     public const FACADE_URL = 'url facade';
+
     /**
      * @var string
      */
@@ -37,26 +39,32 @@ class CategoryDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const PLUGIN_STACK_RELATION_DELETE = 'delete relation plugin stack';
+
     /**
      * @var string
      */
     public const PLUGIN_STACK_RELATION_UPDATE = 'update relation plugin stack';
+
     /**
      * @var string
      */
     public const PLUGINS_CATEGORY_URL_PATH = 'PLUGINS_CATEGORY_URL_PATH';
+
     /**
      * @var string
      */
     public const PLUGIN_CATEGORY_POST_CREATE = 'PLUGIN_CATEGORY_POST_CREATE';
+
     /**
      * @var string
      */
     public const PLUGIN_CATEGORY_POST_UPDATE = 'PLUGIN_CATEGORY_POST_UPDATE';
+
     /**
      * @var string
      */
     public const PLUGIN_CATEGORY_POST_READ = 'PLUGIN_CATEGORY_POST_READ';
+
     /**
      * @var string
      */

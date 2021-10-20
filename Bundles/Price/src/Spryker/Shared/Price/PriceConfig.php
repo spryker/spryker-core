@@ -15,6 +15,7 @@ class PriceConfig extends AbstractSharedConfig
      * @var string
      */
     public const PRICE_MODE_NET = 'NET_MODE';
+
     /**
      * @var string
      */

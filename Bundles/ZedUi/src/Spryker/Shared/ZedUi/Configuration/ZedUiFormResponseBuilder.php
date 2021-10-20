@@ -17,22 +17,27 @@ class ZedUiFormResponseBuilder implements ZedUiFormResponseBuilderInterface
      * @var string
      */
     protected const RESPONSE_ACTION_TYPE_REDIRECT = 'redirect';
+
     /**
      * @var string
      */
     protected const RESPONSE_ACTION_TYPE_NOTIFICATION = 'notification';
+
     /**
      * @var string
      */
     protected const RESPONSE_ACTION_TYPE_REFRESH_TABLE = 'refresh-table';
+
     /**
      * @var string
      */
     protected const RESPONSE_ACTION_TYPE_REFRESH_PARENT_TABLE = 'refresh-parent-table';
+
     /**
      * @var string
      */
     protected const RESPONSE_ACTION_TYPE_REFRESH_DRAWER = 'refresh-drawer';
+
     /**
      * @var string
      */
@@ -42,14 +47,17 @@ class ZedUiFormResponseBuilder implements ZedUiFormResponseBuilderInterface
      * @var string
      */
     protected const RESPONSE_NOTIFICATION_TYPE_INFO = 'info';
+
     /**
      * @var string
      */
     protected const RESPONSE_NOTIFICATION_TYPE_SUCCESS = 'success';
+
     /**
      * @var string
      */
     protected const RESPONSE_NOTIFICATION_TYPE_ERROR = 'error';
+
     /**
      * @var string
      */

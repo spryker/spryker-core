@@ -21,10 +21,12 @@ class SalesReturnsRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESOURCE_RETURNS = 'returns';
+
     /**
      * @var string
      */
     public const RESOURCE_RETURN_ITEMS = 'return-items';
+
     /**
      * @var string
      */
@@ -34,10 +36,12 @@ class SalesReturnsRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESPONSE_CODE_RETURN_CANT_BE_CREATED = '3601';
+
     /**
      * @var string
      */
     public const RESPONSE_CODE_CANT_FIND_RETURN = '3602';
+
     /**
      * @var string
      */
@@ -47,10 +51,12 @@ class SalesReturnsRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESPONSE_MESSAGE_RETURN_CANT_BE_CREATED = 'Return can\'t be created.';
+
     /**
      * @var string
      */
     public const RESPONSE_MESSAGE_CANT_FIND_RETURN = 'Can\'t find return by the given return reference.';
+
     /**
      * @var string
      */

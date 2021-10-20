@@ -41,7 +41,7 @@ class RedisInMemoryLoggerTest extends Unit
             $redisInMemoryLogger->log(
                 $singleCallData['command'],
                 $singleCallData['payload'],
-                $singleCallData['result'],
+                $singleCallData['result']
             );
         }
 

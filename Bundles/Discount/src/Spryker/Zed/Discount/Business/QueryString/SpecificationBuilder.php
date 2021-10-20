@@ -18,6 +18,7 @@ class SpecificationBuilder implements SpecificationBuilderInterface
      * @var string
      */
     public const OPEN_PARENTHESIS = '(';
+
     /**
      * @var string
      */

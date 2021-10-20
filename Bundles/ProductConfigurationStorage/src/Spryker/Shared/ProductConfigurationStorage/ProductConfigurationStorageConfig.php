@@ -55,6 +55,7 @@ class ProductConfigurationStorageConfig extends AbstractBundleConfig
      * @var string
      */
     public const PRODUCT_CONFIGURATION_UNPUBLISH = 'Entity.spy_product_configuration.unpublish';
+
     /**
      * Specification
      * - This events will be used for spy_product_configuration entity creation.

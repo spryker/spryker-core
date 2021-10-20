@@ -36,6 +36,7 @@ class CartClientTest extends Unit
      * @var string
      */
     protected const PARAM_SEPARATE_PRODUCT = 'separate_product';
+
     /**
      * @var string
      */

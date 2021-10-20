@@ -15,6 +15,7 @@ class ProductRatingValueTransformer implements FacetSearchResultValueTransformer
      * @var int
      */
     public const CONVERSION_PRECISION = 100;
+
     /**
      * @var int
      */

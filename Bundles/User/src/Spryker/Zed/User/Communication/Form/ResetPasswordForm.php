@@ -26,6 +26,7 @@ class ResetPasswordForm extends AbstractType
      * @var string
      */
     public const FIELD_CURRENT_PASSWORD = 'current_password';
+
     /**
      * @var string
      */

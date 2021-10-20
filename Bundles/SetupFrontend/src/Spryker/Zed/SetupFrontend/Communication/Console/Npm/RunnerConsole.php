@@ -37,6 +37,7 @@ class RunnerConsole extends Console
      * @var string
      */
     public const OPTION_TASK_BUILD_ALL = 'build-all';
+
     /**
      * @var string
      */
@@ -46,6 +47,7 @@ class RunnerConsole extends Console
      * @var string
      */
     public const OPTION_TASK_BUILD_CORE = 'build-core';
+
     /**
      * @var string
      */
@@ -55,6 +57,7 @@ class RunnerConsole extends Console
      * @var string
      */
     public const OPTION_TASK_BUILD_YVES = 'build-yves';
+
     /**
      * @var string
      */
@@ -64,6 +67,7 @@ class RunnerConsole extends Console
      * @var string
      */
     public const OPTION_TASK_BUILD_ZED = 'build-zed';
+
     /**
      * @var string
      */

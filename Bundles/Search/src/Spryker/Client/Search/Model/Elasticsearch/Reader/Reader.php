@@ -18,6 +18,7 @@ class Reader implements ReaderInterface
      * @var string
      */
     public const READER_NAME = 'elastic-search-reader';
+
     /**
      * @var string
      */

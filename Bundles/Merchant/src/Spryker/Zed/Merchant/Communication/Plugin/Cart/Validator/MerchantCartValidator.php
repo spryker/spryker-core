@@ -20,14 +20,17 @@ class MerchantCartValidator implements MerchantCartValidatorInterface
      * @var string
      */
     protected const MESSAGE_TYPE_ERROR = 'error';
+
     /**
      * @var string
      */
     protected const GLOSSARY_KEY_REMOVED_MERCHANT = 'merchant.message.removed';
+
     /**
      * @var string
      */
     protected const GLOSSARY_KEY_INACTIVE_MERCHANT = 'merchant.message.inactive';
+
     /**
      * @var string
      */

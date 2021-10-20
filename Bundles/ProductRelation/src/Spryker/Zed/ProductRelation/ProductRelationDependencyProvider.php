@@ -24,6 +24,7 @@ class ProductRelationDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const FACADE_LOCALE = 'locale facade';
+
     /**
      * @var string
      */
@@ -33,6 +34,7 @@ class ProductRelationDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const QUERY_CONTAINER_PRODUCT = 'product query container';
+
     /**
      * @var string
      */

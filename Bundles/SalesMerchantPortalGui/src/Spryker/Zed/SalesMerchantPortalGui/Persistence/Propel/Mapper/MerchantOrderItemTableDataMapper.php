@@ -86,7 +86,7 @@ class MerchantOrderItemTableDataMapper
         $merchantOrderItemTransfers = [];
 
         foreach ($merchantOrderItemTableDataArray as $merchantOrderItemTableRowDataArray) {
-            $attributes = $merchantOrderItemTableRowDataArray[ItemTransfer::CONCRETE_ATTRIBUTES] ?  $this->utilEncodingService->decodeJson(
+            $attributes = $merchantOrderItemTableRowDataArray[ItemTransfer::CONCRETE_ATTRIBUTES] ? $this->utilEncodingService->decodeJson(
                 $merchantOrderItemTableRowDataArray[ItemTransfer::CONCRETE_ATTRIBUTES],
                 true
             ) : [];

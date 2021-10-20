@@ -19,6 +19,7 @@ class FileTable extends AbstractTable
 {
     protected const COL_ID_FILE = SpyFileTableMap::COL_ID_FILE;
     protected const COL_FILE_NAME = SpyFileTableMap::COL_FILE_NAME;
+
     /**
      * @var string
      */
@@ -28,10 +29,12 @@ class FileTable extends AbstractTable
      * @var string
      */
     protected const URL_FILE_MANAGER_GUI_VIEW = '/file-manager-gui/view-file';
+
     /**
      * @var string
      */
     protected const URL_FILE_MANAGER_GUI_EDIT = '/file-manager-gui/edit-file';
+
     /**
      * @var string
      */
@@ -41,10 +44,12 @@ class FileTable extends AbstractTable
      * @var string
      */
     protected const VIEW_TITLE = 'View';
+
     /**
      * @var string
      */
     protected const EDIT_TITLE = 'Edit';
+
     /**
      * @var string
      */

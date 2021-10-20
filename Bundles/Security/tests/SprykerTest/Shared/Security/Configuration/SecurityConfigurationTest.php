@@ -29,6 +29,7 @@ class SecurityConfigurationTest extends Unit
      * @var string
      */
     protected const FIREWALL_MAIN = 'main';
+
     /**
      * @var string
      */

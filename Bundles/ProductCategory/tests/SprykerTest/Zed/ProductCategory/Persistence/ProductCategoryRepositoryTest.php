@@ -36,6 +36,7 @@ class ProductCategoryRepositoryTest extends Unit
      * @var string
      */
     protected const CATEGORY_NAME_1 = 'CATEGORY_1';
+
     /**
      * @var string
      */
@@ -45,10 +46,12 @@ class ProductCategoryRepositoryTest extends Unit
      * @var string
      */
     protected const CATEGORY_ATTRIBUTE_1 = 'CATEGORY_ATTRIBUTE_1';
+
     /**
      * @var string
      */
     protected const CATEGORY_ATTRIBUTE_2 = 'CATEGORY_ATTRIBUTE_2';
+
     /**
      * @var string
      */

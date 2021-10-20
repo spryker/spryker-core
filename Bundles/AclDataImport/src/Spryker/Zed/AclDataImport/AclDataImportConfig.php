@@ -16,10 +16,12 @@ class AclDataImportConfig extends DataImportConfig
      * @var string
      */
     public const IMPORT_TYPE_ACL_ROLE = 'acl-role';
+
     /**
      * @var string
      */
     public const IMPORT_TYPE_ACL_GROUP = 'acl-group';
+
     /**
      * @var string
      */
@@ -29,10 +31,12 @@ class AclDataImportConfig extends DataImportConfig
      * @var string
      */
     protected const FILE_ACL_ROLE = 'acl_role.csv';
+
     /**
      * @var string
      */
     protected const FILE_ACL_GROUP = 'acl_group.csv';
+
     /**
      * @var string
      */

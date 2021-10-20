@@ -16,6 +16,7 @@ class StockDataImportConfig extends DataImportConfig
      * @var string
      */
     public const IMPORT_TYPE_STOCK = 'stock';
+
     /**
      * @var string
      */

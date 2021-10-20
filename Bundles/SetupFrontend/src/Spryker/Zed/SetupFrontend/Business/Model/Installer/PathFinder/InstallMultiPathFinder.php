@@ -15,6 +15,7 @@ class InstallMultiPathFinder implements PathFinderInterface
      * @var string
      */
     protected const PACKAGE_JSON_FILE_PATTERN = 'package.json';
+
     /**
      * @var string
      */

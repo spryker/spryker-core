@@ -32,11 +32,13 @@ class ProductConcreteAttributeTableDataProvider extends AbstractGuiTableDataProv
      * @var string
      */
     protected const ATTRIBUTES_DEFAULT_SORT_FIELD = 'attribute_name';
+
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductConcreteAttributeGuiTableConfigurationProvider::COL_KEY_ID_PRODUCT_CONCRETE
      * @var string
      */
     protected const COL_KEY_ID_PRODUCT_CONCRETE = 'idProductConcrete';
+
     /**
      * @var string
      */

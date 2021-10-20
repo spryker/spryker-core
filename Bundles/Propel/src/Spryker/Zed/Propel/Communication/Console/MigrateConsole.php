@@ -21,6 +21,7 @@ class MigrateConsole extends Console
      * @var string
      */
     public const COMMAND_NAME = 'propel:migrate';
+
     /**
      * @var string
      */

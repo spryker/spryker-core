@@ -22,6 +22,7 @@ class CustomerConfig extends AbstractBundleConfig
      * @var int
      */
     public const ERROR_CODE_CUSTOMER_ALREADY_REGISTERED = 4001;
+
     /**
      * @var int
      */
@@ -32,10 +33,12 @@ class CustomerConfig extends AbstractBundleConfig
      * @var string
      */
     public const CUSTOMER_REGISTRATION_MAIL_TYPE = 'customer registration mail';
+
     /**
      * @var string
      */
     public const CUSTOMER_REGISTRATION_WITH_CONFIRMATION_MAIL_TYPE = 'customer registration confirmation mail';
+
     /**
      * @var int
      */

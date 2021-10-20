@@ -20,30 +20,37 @@ class CompanyUnitAddressGuiDependencyProvider extends AbstractBundleDependencyPr
      * @var string
      */
     public const FACADE_COMPANY_UNIT_ADDRESS = 'FACADE_COMPANY_UNIT_ADDRESS';
+
     /**
      * @var string
      */
     public const PLUGINS_COMPANY_UNIT_ADDRESS_FORM = 'PLUGINS_COMPANY_UNIT_ADDRESS_FORM';
+
     /**
      * @var string
      */
     public const PLUGINS_COMPANY_UNIT_ADDRESS_TABLE_CONFIG_EXPANDER = 'PLUGINS_COMPANY_UNIT_ADDRESS_TABLE_CONFIG_EXPANDER';
+
     /**
      * @var string
      */
     public const PLUGINS_COMPANY_UNIT_ADDRESS_TABLE_HEADER_EXPANDER = 'PLUGINS_COMPANY_UNIT_ADDRESS_TABLE_HEADER_EXPANDER';
+
     /**
      * @var string
      */
     public const PLUGINS_COMPANY_UNIT_ADDRESS_TABLE_DATA_EXPANDER = 'PLUGINS_COMPANY_UNIT_ADDRESS_TABLE_DATA_EXPANDER';
+
     /**
      * @var string
      */
     public const FACADE_COMPANY = 'FACADE_COMPANY';
+
     /**
      * @var string
      */
     public const FACADE_COUNTRY = 'FACADE_COUNTRY';
+
     /**
      * @var string
      */

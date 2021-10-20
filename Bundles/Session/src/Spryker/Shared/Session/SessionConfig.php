@@ -27,6 +27,7 @@ class SessionConfig extends AbstractSharedConfig
      * @var string
      */
     public const SESSION_HANDLER_REDIS_LOCKING = 'redis_locking';
+
     /**
      * @var string
      */
@@ -42,30 +43,37 @@ class SessionConfig extends AbstractSharedConfig
      * @var string
      */
     public const SESSION_LIFETIME_BROWSER_SESSION = '0';
+
     /**
      * @var string
      */
     public const SESSION_LIFETIME_1_HOUR = '3600';
+
     /**
      * @var string
      */
     public const SESSION_LIFETIME_0_5_HOUR = '1800';
+
     /**
      * @var string
      */
     public const SESSION_LIFETIME_1_DAY = '86400';
+
     /**
      * @var string
      */
     public const SESSION_LIFETIME_2_DAYS = '172800';
+
     /**
      * @var string
      */
     public const SESSION_LIFETIME_3_DAYS = '259200';
+
     /**
      * @var string
      */
     public const SESSION_LIFETIME_30_DAYS = '2592000';
+
     /**
      * @var string
      */

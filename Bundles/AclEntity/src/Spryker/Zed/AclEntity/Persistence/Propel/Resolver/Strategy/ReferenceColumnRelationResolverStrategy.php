@@ -22,6 +22,7 @@ class ReferenceColumnRelationResolverStrategy extends AbstractRelationResolverSt
      * @var string
      */
     protected const COLUMN_GETTER_TEMPLATE = 'get%s';
+
     /**
      * @var string
      */

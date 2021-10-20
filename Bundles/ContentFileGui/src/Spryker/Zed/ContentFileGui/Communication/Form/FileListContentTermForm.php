@@ -28,6 +28,7 @@ class FileListContentTermForm extends AbstractType
      * @var string
      */
     public const FIELD_FILE_IDS = 'fileIds';
+
     /**
      * @var string
      */

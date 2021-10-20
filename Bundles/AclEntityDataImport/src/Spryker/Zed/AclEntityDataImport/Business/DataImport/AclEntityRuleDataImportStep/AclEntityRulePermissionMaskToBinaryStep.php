@@ -24,14 +24,17 @@ class AclEntityRulePermissionMaskToBinaryStep implements DataImportStepInterface
      * @var string
      */
     protected const OPERATION_CREATE = 'C';
+
     /**
      * @var string
      */
     protected const OPERATION_READ = 'R';
+
     /**
      * @var string
      */
     protected const OPERATION_UPDATE = 'U';
+
     /**
      * @var string
      */

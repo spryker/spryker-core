@@ -16,18 +16,22 @@ class RestRequestValidatorConfig extends AbstractBundleConfig
      * @var string
      */
     protected const VALIDATION_FILENAME_PATTERN = '*.validation.yaml';
+
     /**
      * @var string
      */
     protected const PATH_PATTERN_PROJECT_STORE_VALIDATION = '/*/Glue/*%s/Validation';
+
     /**
      * @var string
      */
     protected const PATH_PATTERN_PROJECT_VALIDATION = '/*/Glue/*/Validation';
+
     /**
      * @var string
      */
     protected const PATH_PATTERN_STORE_MODULES = '/(%s)\/Validation/';
+
     /**
      * @var string
      */

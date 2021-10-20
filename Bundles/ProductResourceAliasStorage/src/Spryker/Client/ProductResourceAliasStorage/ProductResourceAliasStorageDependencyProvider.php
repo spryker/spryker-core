@@ -20,6 +20,7 @@ class ProductResourceAliasStorageDependencyProvider extends AbstractDependencyPr
      * @var string
      */
     public const CLIENT_STORAGE = 'CLIENT_STORAGE';
+
     /**
      * @var string
      */

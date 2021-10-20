@@ -22,10 +22,12 @@ class ProductGroupStorageDependencyProvider extends AbstractBundleDependencyProv
      * @var string
      */
     public const QUERY_CONTAINER_PRODUCT = 'QUERY_CONTAINER_PRODUCT';
+
     /**
      * @var string
      */
     public const QUERY_CONTAINER_PRODUCT_GROUP = 'QUERY_CONTAINER_PRODUCT_GROUP';
+
     /**
      * @var string
      */

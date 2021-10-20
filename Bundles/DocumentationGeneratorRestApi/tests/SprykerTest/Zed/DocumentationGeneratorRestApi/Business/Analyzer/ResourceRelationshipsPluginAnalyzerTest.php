@@ -30,6 +30,7 @@ class ResourceRelationshipsPluginAnalyzerTest extends Unit
      * @var string
      */
     protected const RELATIONSHIP_VALUE = 'test-resource-with-relationship';
+
     /**
      * @var string
      */

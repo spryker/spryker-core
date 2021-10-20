@@ -21,10 +21,12 @@ class CategorySlotBlockDataProvider implements CategorySlotBlockDataProviderInte
      * @var string
      */
     protected const KEY_OPTION_ALL_CATEGORIES = 'All Category Pages';
+
     /**
      * @var string
      */
     protected const KEY_OPTION_SPECIFIC_CATEGORY = 'Specific Category Pages';
+
     /**
      * @var string
      */

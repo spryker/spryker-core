@@ -22,22 +22,27 @@ class Worker implements WorkerInterface
      * @var int
      */
     public const DEFAULT_MAX_QUEUE_WORKER = 1;
+
     /**
      * @var int
      */
     public const SECOND_TO_MILLISECONDS = 1000;
+
     /**
      * @var string
      */
     public const PROCESS_BUSY = 'busy';
+
     /**
      * @var string
      */
     public const PROCESS_NEW = 'new';
+
     /**
      * @var string
      */
     public const PROCESSES_INSTANCES = 'processes';
+
     /**
      * @var int
      */

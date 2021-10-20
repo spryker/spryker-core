@@ -21,6 +21,7 @@ class OauthPermissionDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const FACADE_PERMISSION = 'FACADE_PERMISSION';
+
     /**
      * @var string
      */

@@ -64,10 +64,12 @@ class CodeStyleSnifferConfiguration implements CodeStyleSnifferConfigurationInte
      * @var string
      */
     protected const MODULE_CONFIG_LEVEL = 'level';
+
     /**
      * @var int
      */
     protected const LEVEL_SPRYKER_BASIC = 1;
+
     /**
      * @var int
      */

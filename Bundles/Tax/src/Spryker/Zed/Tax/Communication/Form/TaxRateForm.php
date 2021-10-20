@@ -28,14 +28,17 @@ class TaxRateForm extends AbstractType
      * @var string
      */
     public const FIELD_NAME = 'name';
+
     /**
      * @var string
      */
     public const FIELD_RATE = 'rate';
+
     /**
      * @var string
      */
     public const FIELD_COUNTRY = 'fkCountry';
+
     /**
      * @var string
      */

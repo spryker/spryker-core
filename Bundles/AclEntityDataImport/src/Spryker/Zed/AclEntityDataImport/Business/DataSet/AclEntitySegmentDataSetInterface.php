@@ -13,6 +13,7 @@ interface AclEntitySegmentDataSetInterface
      * @var string
      */
     public const NAME = 'name';
+
     /**
      * @var string
      */

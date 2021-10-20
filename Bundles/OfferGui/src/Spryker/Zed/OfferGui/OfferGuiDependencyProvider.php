@@ -33,54 +33,67 @@ class OfferGuiDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const FACADE_OFFER = 'FACADE_OFFER';
+
     /**
      * @var string
      */
     public const FACADE_CUSTOMER = 'FACADE_CUSTOMER';
+
     /**
      * @var string
      */
     public const FACADE_MONEY = 'FACADE_MONEY';
+
     /**
      * @var string
      */
     public const FACADE_OMS = 'FACADE_OMS';
+
     /**
      * @var string
      */
     public const FACADE_CART = 'FACADE_CART';
+
     /**
      * @var string
      */
     public const FACADE_STORE = 'FACADE_STORE';
+
     /**
      * @var string
      */
     public const FACADE_MESSENGER = 'FACADE_MESSENGER';
+
     /**
      * @var string
      */
     public const FACADE_CURRENCY = 'FACADE_CURRENCY';
+
     /**
      * @var string
      */
     public const FACADE_PRICE = 'FACADE_PRICE';
+
     /**
      * @var string
      */
     public const CLIENT_SESSION = 'CLIENT_SESSION';
+
     /**
      * @var string
      */
     public const SERVICE_UTIL_DATE_TIME = 'SERVICE_UTIL_DATE_TIME';
+
     /**
      * @var string
      */
     public const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
+
     /**
      * @var string
      */
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
+
     /**
      * @var string
      */

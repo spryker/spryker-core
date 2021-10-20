@@ -36,14 +36,17 @@ class AclGroupRoleDataImportPluginTest extends Unit
      * @var string
      */
     protected const ACL_GROUP_NAME_1 = 'Group foo';
+
     /**
      * @var string
      */
     protected const ACL_GROUP_NAME_2 = 'Group bar';
+
     /**
      * @var string
      */
     protected const ACL_GROUP_REFERENCE_1 = 'group_foo';
+
     /**
      * @var string
      */
@@ -53,14 +56,17 @@ class AclGroupRoleDataImportPluginTest extends Unit
      * @var string
      */
     protected const ACL_ROLE_NAME_1 = 'Role foo';
+
     /**
      * @var string
      */
     protected const ACL_ROLE_NAME_2 = 'Role bar';
+
     /**
      * @var string
      */
     protected const ACL_ROLE_REFERENCE_1 = 'role_foo';
+
     /**
      * @var string
      */

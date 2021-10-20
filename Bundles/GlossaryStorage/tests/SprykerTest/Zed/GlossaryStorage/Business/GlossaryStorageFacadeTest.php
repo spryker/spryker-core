@@ -37,6 +37,7 @@ class GlossaryStorageFacadeTest extends Unit
      * @var int
      */
     public const ID_GLOSSARY = 1;
+
     /**
      * @var string
      */

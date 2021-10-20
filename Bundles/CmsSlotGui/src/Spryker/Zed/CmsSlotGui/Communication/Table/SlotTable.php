@@ -28,6 +28,7 @@ class SlotTable extends AbstractTable
     protected const COL_DESCRIPTION = SpyCmsSlotTableMap::COL_DESCRIPTION;
     protected const COL_CONTENT_PROVIDER = SpyCmsSlotTableMap::COL_CONTENT_PROVIDER_TYPE;
     protected const COL_STATUS = SpyCmsSlotTableMap::COL_IS_ACTIVE;
+
     /**
      * @var string
      */
@@ -37,22 +38,27 @@ class SlotTable extends AbstractTable
      * @var string
      */
     protected const VALUE_COL_ID_CMS_SLOT = 'ID';
+
     /**
      * @var string
      */
     protected const VALUE_COL_NAME = 'Name';
+
     /**
      * @var string
      */
     protected const VALUE_COL_DESCRIPTION = 'Description';
+
     /**
      * @var string
      */
     protected const VALUE_COL_CONTENT_PROVIDER = 'Content Provider';
+
     /**
      * @var string
      */
     protected const VALUE_COL_STATUS = 'Status';
+
     /**
      * @var string
      */
@@ -62,6 +68,7 @@ class SlotTable extends AbstractTable
      * @var string
      */
     protected const URL_ACTIVATE_BUTTON = '/cms-slot-gui/activate-slot/activate';
+
     /**
      * @var string
      */
@@ -288,7 +295,9 @@ class SlotTable extends AbstractTable
             );
         }
 
-        $buttons[] = $statusToggleButton;
+        $buttons = [
+            $statusToggleButton,
+        ];
 
         return implode(' ', $buttons);
     }

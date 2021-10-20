@@ -17,6 +17,7 @@ class ProductReviewConfig extends AbstractBundleConfig
      * @var int
      */
     public const PAGINATION_DEFAULT_ITEMS_PER_PAGE = 10;
+
     /**
      * @var array
      */

@@ -30,14 +30,17 @@ class DataImportFacadeTest extends Unit
      * @var string
      */
     public const IMPORT_TYPE_FULL_IMPORT = 'full';
+
     /**
      * @var string
      */
     public const IMPORT_GROUP_FULL = 'FULL';
+
     /**
      * @var string
      */
     public const IMPORT_TYPE_SPECIFIC_A = 'specific-importer-a';
+
     /**
      * @var string
      */

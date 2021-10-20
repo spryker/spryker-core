@@ -22,6 +22,7 @@ class CustomerAddressesUuidWriterConsole extends Console
      * @var string
      */
     protected const COMMAND_NAME = 'customer-addresses:uuid:generate';
+
     /**
      * @var string
      */

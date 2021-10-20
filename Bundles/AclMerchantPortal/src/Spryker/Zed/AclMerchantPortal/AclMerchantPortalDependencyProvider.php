@@ -21,6 +21,7 @@ class AclMerchantPortalDependencyProvider extends AbstractBundleDependencyProvid
      * @var string
      */
     public const FACADE_ACL_ENTITY = 'FACADE_ACL_ENTITY';
+
     /**
      * @var string
      */

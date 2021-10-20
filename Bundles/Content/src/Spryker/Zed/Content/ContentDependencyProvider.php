@@ -21,6 +21,7 @@ class ContentDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const ADAPTER_VALIDATION = 'ADAPTER_VALIDATION';
+
     /**
      * @var string
      */

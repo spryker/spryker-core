@@ -23,6 +23,7 @@ class EditController extends BaseProductRelationController
      * @var string
      */
     public const URL_PARAM_ID_PRODUCT_RELATION = 'id-product-relation';
+
     /**
      * @var string
      */
@@ -32,14 +33,17 @@ class EditController extends BaseProductRelationController
      * @var string
      */
     protected const MESSAGE_SUCCESS = 'Product relation successfully modified';
+
     /**
      * @var string
      */
     protected const MESSAGE_ACTIVATE_SUCCESS = 'Relation successfully activated.';
+
     /**
      * @var string
      */
     protected const MESSAGE_DEACTIVATE_SUCCESS = 'Relation successfully deactivated.';
+
     /**
      * @var string
      */
@@ -49,6 +53,7 @@ class EditController extends BaseProductRelationController
      * @var string
      */
     protected const ERROR_MESSAGE_PRODUCT_RELATION_NOT_FOUND = 'Product relation with id "%id%" not found.';
+
     /**
      * @var string
      */

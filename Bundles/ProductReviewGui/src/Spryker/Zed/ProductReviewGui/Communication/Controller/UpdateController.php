@@ -23,6 +23,7 @@ class UpdateController extends AbstractController
      * @var string
      */
     public const PARAM_ID = 'id';
+
     /**
      * @var string
      */

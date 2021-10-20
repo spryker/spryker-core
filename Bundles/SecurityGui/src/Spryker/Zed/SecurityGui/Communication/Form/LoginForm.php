@@ -29,6 +29,7 @@ class LoginForm extends AbstractType
      * @var string
      */
     public const FIELD_USERNAME = 'username';
+
     /**
      * @var string
      */

@@ -18,6 +18,7 @@ interface CompanyBusinessUnitDataSet
      * @var string
      */
     public const COMPANY_KEY = 'company_key';
+
     /**
      * @var string
      */
@@ -27,6 +28,7 @@ interface CompanyBusinessUnitDataSet
      * @var string
      */
     public const PARENT_BUSINESS_UNIT_KEY = 'parent_business_unit_key';
+
     /**
      * @var string
      */

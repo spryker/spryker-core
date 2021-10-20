@@ -37,6 +37,7 @@ class ProductConfigurationVolumePriceProductConfigurationMapperPluginTest extend
      * @var string
      */
     protected const PRICE_TYPE_NAME = 'priceTypeName';
+
     /**
      * @var string
      */

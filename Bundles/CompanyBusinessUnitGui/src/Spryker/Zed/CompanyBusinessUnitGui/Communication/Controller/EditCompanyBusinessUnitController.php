@@ -21,10 +21,12 @@ class EditCompanyBusinessUnitController extends AbstractController
      * @var string
      */
     protected const PARAM_ID_COMPANY_BUSINESS_UNIT = 'id-company-business-unit';
+
     /**
      * @var string
      */
     protected const PARAM_REDIRECT_URL = 'redirect-url';
+
     /**
      * @see ListCompanyBusinessUnitController::indexAction()
      * @var string
@@ -35,6 +37,7 @@ class EditCompanyBusinessUnitController extends AbstractController
      * @var string
      */
     protected const MESSAGE_COMPANY_BUSINESS_UNIT_UPDATE_SUCCESS = 'Company Business Unit "%s" has been updated.';
+
     /**
      * @var string
      */

@@ -28,22 +28,27 @@ class ProductOptionListTable extends AbstractTable
      * @var string
      */
     public const TABLE_COL_PRICE = 'price';
+
     /**
      * @var string
      */
     public const TABLE_COL_GROSS_PRICE = 'gross_price';
+
     /**
      * @var string
      */
     public const TABLE_COL_NET_PRICE = 'net_price';
+
     /**
      * @var string
      */
     public const TABLE_COL_SKU = 'sku';
+
     /**
      * @var string
      */
     public const TABLE_COL_NAME = 'name';
+
     /**
      * @var string
      */
@@ -53,10 +58,12 @@ class ProductOptionListTable extends AbstractTable
      * @var string
      */
     public const URL_PARAM_ID_PRODUCT_OPTION_GROUP = 'id-product-option-group';
+
     /**
      * @var string
      */
     public const URL_PARAM_ACTIVE = 'active';
+
     /**
      * @var string
      */
@@ -66,6 +73,7 @@ class ProductOptionListTable extends AbstractTable
      * @var string
      */
     public const PRICE_NET = 'PRICE_NET';
+
     /**
      * @var string
      */

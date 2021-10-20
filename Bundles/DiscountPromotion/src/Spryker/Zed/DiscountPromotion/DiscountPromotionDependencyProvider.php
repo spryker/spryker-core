@@ -21,6 +21,7 @@ class DiscountPromotionDependencyProvider extends AbstractBundleDependencyProvid
      * @var string
      */
     public const FACADE_PRODUCT = 'FACADE_PRODUCT';
+
     /**
      * @var string
      */

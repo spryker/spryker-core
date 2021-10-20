@@ -20,10 +20,12 @@ class DeleteCompanyUserController extends AbstractController
      * @var string
      */
     protected const MESSAGE_SUCCESS_COMPANY_USER_DELETE = 'Company user successfully removed.';
+
     /**
      * @var string
      */
     protected const MESSAGE_ERROR_COMPANY_USER_DELETE = 'Company user cannot be removed.';
+
     /**
      * @var string
      */

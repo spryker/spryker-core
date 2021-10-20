@@ -19,6 +19,7 @@ class PriceProductConstraintProvider implements PriceProductConstraintProviderIn
      * @var string
      */
     protected const VALUE_IS_INVALID = 'This value is not valid.';
+
     /**
      * @var string
      */
@@ -49,7 +50,7 @@ class PriceProductConstraintProvider implements PriceProductConstraintProviderIn
                     PriceProductTransfer::MONEY_VALUE => $this->getMoneyValueTransferConstraint(),
                     PriceProductTransfer::VOLUME_QUANTITY => $this->getVolumeQuantityConstraint(),
                 ]),
-            ],
+            ]
         );
     }
 

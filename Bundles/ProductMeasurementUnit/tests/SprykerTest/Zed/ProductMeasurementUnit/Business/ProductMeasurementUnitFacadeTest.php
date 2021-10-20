@@ -33,6 +33,7 @@ class ProductMeasurementUnitFacadeTest extends Unit
      * @var int
      */
     protected const PRODUCT_MEASUREMENT_SALES_UNIT_ID = 777;
+
     /**
      * @var int
      */

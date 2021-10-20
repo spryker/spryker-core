@@ -18,6 +18,7 @@ class PriceProductItemValidator implements PriceProductItemValidatorInterface
      * @var string
      */
     protected const MESSAGE_TYPE_ERROR = 'error';
+
     /**
      * @var string
      */

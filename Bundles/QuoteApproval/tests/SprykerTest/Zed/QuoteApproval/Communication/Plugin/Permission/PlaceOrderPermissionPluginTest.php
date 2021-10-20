@@ -30,18 +30,22 @@ class PlaceOrderPermissionPluginTest extends Unit
      * @var string
      */
     protected const FIELD_MULTI_CURRENCY = 'store_multi_currency';
+
     /**
      * @var string
      */
     protected const CURRENCY_CODE = 'EUR';
+
     /**
      * @var int
      */
     protected const CENT_AMOUNT = 100;
+
     /**
      * @var int
      */
     protected const CENT_SHIPMENT_COST = 20;
+
     /**
      * @var string
      */

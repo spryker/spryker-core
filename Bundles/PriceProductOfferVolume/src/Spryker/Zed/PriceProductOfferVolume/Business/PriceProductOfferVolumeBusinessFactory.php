@@ -77,7 +77,7 @@ class PriceProductOfferVolumeBusinessFactory extends AbstractBusinessFactory
     public function createPriceProductConstraintProvider(): PriceProductConstraintProviderInterface
     {
         return new PriceProductConstraintProvider(
-            $this->createPriceProductConstraints(),
+            $this->createPriceProductConstraints()
         );
     }
 

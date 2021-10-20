@@ -27,14 +27,17 @@ abstract class AbstractRouterDebugConsole extends Console
      * @var string
      */
     protected const NAME = 'router:debug';
+
     /**
      * @var string
      */
     protected const ARGUMENT_ROUTE_NAME = 'name';
+
     /**
      * @var string
      */
     protected const OPTION_SHOW_CONTROLLERS = 'show-controllers';
+
     /**
      * @var string
      */

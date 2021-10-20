@@ -27,10 +27,12 @@ class CustomerAssignmentForm extends AbstractType
      * @var string
      */
     public const FIELD_ID_CUSTOMER_GROUP = 'idCustomerGroup';
+
     /**
      * @var string
      */
     public const FIELD_IDS_CUSTOMER_TO_ASSIGN_CSV = 'idsCustomerToAssign';
+
     /**
      * @var string
      */

@@ -18,6 +18,7 @@ class ZedUiDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
+
     /**
      * @var string
      */

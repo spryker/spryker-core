@@ -30,22 +30,27 @@ class CreateProductAbstractWithSingleConcreteForm extends AbstractType
      * @var string
      */
     protected const FIELD_NAME = 'name';
+
     /**
      * @var string
      */
     protected const FIELD_SKU = 'sku';
+
     /**
      * @var string
      */
     protected const FIELD_CONCRETE_NAME = 'concreteName';
+
     /**
      * @var string
      */
     protected const FIELD_CONCRETE_SKU = 'concreteSku';
+
     /**
      * @var string
      */
     protected const FIELD_AUTOGENERATE_SKU = 'autogenerateSku';
+
     /**
      * @var string
      */
@@ -55,14 +60,17 @@ class CreateProductAbstractWithSingleConcreteForm extends AbstractType
      * @var string
      */
     protected const LABEL_CONCRETE_SKU = 'Concrete Product SKU';
+
     /**
      * @var string
      */
     protected const LABEL_CONCRETE_NAME = 'Concrete Product Name';
+
     /**
      * @var string
      */
     protected const LABEL_AUTOGENERATE_SKU = 'Autogenerate SKU';
+
     /**
      * @var string
      */
@@ -72,10 +80,12 @@ class CreateProductAbstractWithSingleConcreteForm extends AbstractType
      * @var string
      */
     protected const PLACEHOLDER_CONCRETE_SKU = 'Enter concrete product SKU';
+
     /**
      * @var string
      */
     protected const PLACEHOLDER_CONCRETE_NAME = 'Enter concrete product name';
+
     /**
      * @var string
      */

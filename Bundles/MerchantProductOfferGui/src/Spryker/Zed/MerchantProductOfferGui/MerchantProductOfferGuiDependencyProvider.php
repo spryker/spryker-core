@@ -21,6 +21,7 @@ class MerchantProductOfferGuiDependencyProvider extends AbstractBundleDependency
      * @var string
      */
     public const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
+
     /**
      * @var string
      */

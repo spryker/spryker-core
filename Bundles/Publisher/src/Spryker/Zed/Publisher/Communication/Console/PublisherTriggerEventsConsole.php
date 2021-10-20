@@ -22,6 +22,7 @@ class PublisherTriggerEventsConsole extends Console
      * @var string
      */
     public const COMMAND_NAME = 'publish:trigger-events';
+
     /**
      * @var string
      */
@@ -31,6 +32,7 @@ class PublisherTriggerEventsConsole extends Console
      * @var string
      */
     public const RESOURCE_OPTION = 'resource';
+
     /**
      * @var string
      */
@@ -40,6 +42,7 @@ class PublisherTriggerEventsConsole extends Console
      * @var string
      */
     public const RESOURCE_IDS_OPTION = 'ids';
+
     /**
      * @var string
      */

@@ -22,6 +22,7 @@ class MerchantProfileGlossaryAttributeLocaleFormType extends AbstractType
      * @var string
      */
     protected const FIELD_ID_LOCALE = 'idLocale';
+
     /**
      * @var string
      */

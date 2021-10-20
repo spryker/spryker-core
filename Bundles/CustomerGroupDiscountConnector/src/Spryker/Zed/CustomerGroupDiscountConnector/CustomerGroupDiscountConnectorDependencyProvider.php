@@ -21,6 +21,7 @@ class CustomerGroupDiscountConnectorDependencyProvider extends AbstractBundleDep
      * @var string
      */
     public const FACADE_DISCOUNT = 'FACADE_DISCOUNT';
+
     /**
      * @var string
      */

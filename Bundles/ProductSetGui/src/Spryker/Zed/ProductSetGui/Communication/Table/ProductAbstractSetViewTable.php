@@ -28,10 +28,12 @@ class ProductAbstractSetViewTable extends AbstractTable
      * @var string
      */
     public const COL_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
+
     /**
      * @var string
      */
     public const COL_IMAGE = 'image';
+
     /**
      * @var string
      */

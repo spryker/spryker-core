@@ -22,10 +22,12 @@ class ProductCustomerPermissionDependencyProvider extends AbstractBundleDependen
      * @var string
      */
     public const FACADE_GLOSSARY = 'FACADE_GLOSSARY';
+
     /**
      * @var string
      */
     public const FACADE_PRODUCT = 'FACADE_PRODUCT';
+
     /**
      * @var string
      */

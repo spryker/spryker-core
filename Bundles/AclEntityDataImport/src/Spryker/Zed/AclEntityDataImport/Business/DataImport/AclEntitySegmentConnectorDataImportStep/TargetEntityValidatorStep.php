@@ -20,6 +20,7 @@ class TargetEntityValidatorStep implements DataImportStepInterface
      * @var string
      */
     protected const ENTITY_NOT_FOUND_TEMPLATE = 'Failed to find %s by %s: "%s"';
+
     /**
      * @var string
      */
@@ -40,7 +41,7 @@ class TargetEntityValidatorStep implements DataImportStepInterface
         $entityCount = $query
             ->filterBy(
                 $query->getTableMap()->getColumn($columnName)->getPhpName(),
-                $dataSet[AclEntitySegmentConnectorDataSetInterface::ENTITY_REFERENCE],
+                $dataSet[AclEntitySegmentConnectorDataSetInterface::ENTITY_REFERENCE]
             )
             ->count();
 

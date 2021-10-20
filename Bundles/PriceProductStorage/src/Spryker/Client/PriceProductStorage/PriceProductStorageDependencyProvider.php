@@ -24,10 +24,12 @@ class PriceProductStorageDependencyProvider extends AbstractDependencyProvider
      * @var string
      */
     public const CLIENT_PRICE_PRODUCT = 'CLIENT_PRICE_PRODUCT';
+
     /**
      * @var string
      */
     public const CLIENT_STORAGE = 'CLIENT_STORAGE';
+
     /**
      * @var string
      */
@@ -37,6 +39,7 @@ class PriceProductStorageDependencyProvider extends AbstractDependencyProvider
      * @var string
      */
     public const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
+
     /**
      * @var string
      */
@@ -46,10 +49,12 @@ class PriceProductStorageDependencyProvider extends AbstractDependencyProvider
      * @var string
      */
     public const PLUGIN_STORAGE_PRICE_DIMENSION = 'PLUGIN_STORAGE_PRICE_DIMENSION';
+
     /**
      * @var string
      */
     public const PLUGIN_PRICE_PRODUCT_PRICES_EXTRACTOR = 'PLUGIN_PRICE_PRODUCT_PRICES_EXTRACTOR';
+
     /**
      * @var string
      */

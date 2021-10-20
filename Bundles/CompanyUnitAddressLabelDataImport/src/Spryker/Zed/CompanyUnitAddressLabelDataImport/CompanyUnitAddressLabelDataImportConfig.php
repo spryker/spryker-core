@@ -16,6 +16,7 @@ class CompanyUnitAddressLabelDataImportConfig extends DataImportConfig
      * @var string
      */
     public const IMPORT_TYPE_COMPANY_UNIT_ADDRESS_LABEL = 'company-unit-address-label';
+
     /**
      * @var string
      */

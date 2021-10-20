@@ -20,6 +20,7 @@ class ComposerJsonUpdater implements ComposerJsonUpdaterInterface
      * @var string
      */
     public const KEY_REQUIRE = 'require';
+
     /**
      * @var string
      */

@@ -17,6 +17,7 @@ class StoreValidator implements StoreValidatorInterface
      * @var string
      */
     protected const ERROR_MESSAGE_STORE_DATA_IS_MISSING = 'Store data is missing';
+
     /**
      * @var string
      */

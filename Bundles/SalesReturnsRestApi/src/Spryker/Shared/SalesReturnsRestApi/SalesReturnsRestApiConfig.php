@@ -15,10 +15,12 @@ class SalesReturnsRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const ERROR_IDENTIFIER_FAILED_CREATE_RETURN = 'ERROR_IDENTIFIER_FAILED_CREATE_RETURN';
+
     /**
      * @var string
      */
     public const ERROR_IDENTIFIER_RETURN_NOT_FOUND = 'ERROR_IDENTIFIER_RETURN_NOT_FOUND';
+
     /**
      * @var string
      */

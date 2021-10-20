@@ -25,10 +25,12 @@ class FileDirectoryLocalizedAttributesForm extends AbstractType
      * @var string
      */
     public const FIELD_TITLE = 'title';
+
     /**
      * @var string
      */
     public const FIELD_FK_LOCALE = 'fk_locale';
+
     /**
      * @var string
      */

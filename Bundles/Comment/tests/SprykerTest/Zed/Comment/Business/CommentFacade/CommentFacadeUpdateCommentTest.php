@@ -30,6 +30,7 @@ class CommentFacadeUpdateCommentTest extends Unit
      * @var string
      */
     protected const FAKE_COMMENT_MESSAGE = 'FAKE_COMMENT_MESSAGE';
+
     /**
      * @var string
      */

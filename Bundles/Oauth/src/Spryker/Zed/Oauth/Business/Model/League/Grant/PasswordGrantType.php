@@ -23,10 +23,12 @@ class PasswordGrantType extends AbstractGrant implements GrantTypeInterface
      * @var string
      */
     protected const REQUEST_PARAMETER_PASSWORD = 'password';
+
     /**
      * @var string
      */
     protected const REQUEST_PARAMETER_SCOPE = 'scope';
+
     /**
      * @var string
      */

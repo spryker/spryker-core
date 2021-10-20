@@ -24,10 +24,12 @@ class CompletionQueryExpanderPlugin extends AbstractPlugin implements QueryExpan
      * @var string
      */
     protected const AGGREGATION_NAME = 'completion';
+
     /**
      * @var int
      */
     protected const SIZE = 10;
+
     /**
      * @var string
      */

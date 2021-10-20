@@ -24,6 +24,7 @@ class ProductListUsedByTableMapper implements ProductListUsedByTableMapperInterf
      * @var string
      */
     protected const EDIT_BUTTON_TITLE = 'Edit Merchant Relationship';
+
     /**
      * @var array
      */
@@ -37,6 +38,7 @@ class ProductListUsedByTableMapper implements ProductListUsedByTableMapperInterf
      * @var string
      */
     protected const ROUTE_EDIT_MERCHANT_RELATIONSHIP = '/merchant-relationship-gui/edit-merchant-relationship';
+
     /**
      * @var string
      */

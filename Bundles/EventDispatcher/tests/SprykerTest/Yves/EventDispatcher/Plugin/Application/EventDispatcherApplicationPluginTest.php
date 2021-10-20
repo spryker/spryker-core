@@ -35,6 +35,7 @@ class EventDispatcherApplicationPluginTest extends Unit
      * @var string
      */
     protected const SERVICE_DISPATCHER = 'dispatcher';
+
     /**
      * @var string
      */

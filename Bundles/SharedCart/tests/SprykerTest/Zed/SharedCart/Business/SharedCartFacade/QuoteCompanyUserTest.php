@@ -35,6 +35,7 @@ class QuoteCompanyUserTest extends Unit
      * @var string
      */
     protected const QUOTE_PERMISSION_GROUP_READ_ONLY = 'READ_ONLY';
+
     /**
      * @var string
      */

@@ -21,6 +21,7 @@ class MoneyDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const STORE = 'store';
+
     /**
      * @var string
      */

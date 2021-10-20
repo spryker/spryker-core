@@ -22,10 +22,12 @@ class CmsSlotBlockDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const FACADE_EVENT = 'FACADE_EVENT';
+
     /**
      * @var string
      */
     public const FACADE_CMS_SLOT = 'FACADE_CMS_SLOT';
+
     /**
      * @var string
      */

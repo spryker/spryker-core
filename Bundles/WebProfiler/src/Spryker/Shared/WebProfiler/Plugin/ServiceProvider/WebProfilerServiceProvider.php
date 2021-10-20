@@ -72,16 +72,16 @@ class WebProfilerServiceProvider implements ServiceProviderInterface, Controller
 
         $app['data_collector.templates'] = $app->share(function () {
             $templates = [
-                ['config',    '@WebProfiler/Collector/config.html.twig'],
-                ['request',   '@WebProfiler/Collector/request.html.twig'],
+                ['config', '@WebProfiler/Collector/config.html.twig'],
+                ['request', '@WebProfiler/Collector/request.html.twig'],
                 ['exception', '@WebProfiler/Collector/exception.html.twig'],
-                ['events',    '@WebProfiler/Collector/events.html.twig'],
-                ['logger',    '@WebProfiler/Collector/logger.html.twig'],
-                ['time',      '@WebProfiler/Collector/time.html.twig'],
-                ['router',    '@WebProfiler/Collector/router.html.twig'],
-                ['memory',    '@WebProfiler/Collector/memory.html.twig'],
-                ['form',      '@WebProfiler/Collector/form.html.twig'],
-                ['ajax',      '@WebProfiler/Collector/ajax.html.twig'],
+                ['events', '@WebProfiler/Collector/events.html.twig'],
+                ['logger', '@WebProfiler/Collector/logger.html.twig'],
+                ['time', '@WebProfiler/Collector/time.html.twig'],
+                ['router', '@WebProfiler/Collector/router.html.twig'],
+                ['memory', '@WebProfiler/Collector/memory.html.twig'],
+                ['form', '@WebProfiler/Collector/form.html.twig'],
+                ['ajax', '@WebProfiler/Collector/ajax.html.twig'],
             ];
             if (class_exists(ProfilerExtension::class)) {
                 $templates[] = ['twig', '@WebProfiler/Collector/twig.html.twig'];

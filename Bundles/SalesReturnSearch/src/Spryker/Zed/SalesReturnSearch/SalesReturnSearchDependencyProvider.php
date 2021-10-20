@@ -24,14 +24,17 @@ class SalesReturnSearchDependencyProvider extends AbstractBundleDependencyProvid
      * @var string
      */
     public const FACADE_SALES_RETURN = 'FACADE_SALES_RETURN';
+
     /**
      * @var string
      */
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
+
     /**
      * @var string
      */
     public const FACADE_GLOSSARY = 'FACADE_GLOSSARY';
+
     /**
      * @var string
      */

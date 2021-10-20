@@ -23,6 +23,7 @@ class GroupUsersTable extends AbstractTable
      * @var string
      */
     public const PARAMETER_ID_USER = 'id-user';
+
     /**
      * @var string
      */
@@ -32,22 +33,27 @@ class GroupUsersTable extends AbstractTable
      * @var string
      */
     public const COL_ID_ACL_GROUP = 'id_acl_group';
+
     /**
      * @var string
      */
     public const COL_ID_USER = 'id_user';
+
     /**
      * @var string
      */
     public const COL_EMAIL = 'email';
+
     /**
      * @var string
      */
     public const COL_FIRST_NAME = 'first_name';
+
     /**
      * @var string
      */
     public const COL_LAST_NAME = 'last_name';
+
     /**
      * @var string
      */

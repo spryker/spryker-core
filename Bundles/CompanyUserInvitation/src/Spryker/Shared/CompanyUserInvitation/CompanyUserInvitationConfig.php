@@ -13,14 +13,17 @@ class CompanyUserInvitationConfig
      * @var string
      */
     public const INVITATION_STATUS_DELETED = 'deleted';
+
     /**
      * @var string
      */
     public const INVITATION_STATUS_NEW = 'new';
+
     /**
      * @var string
      */
     public const INVITATION_STATUS_ACCEPTED = 'accepted';
+
     /**
      * @var string
      */
@@ -30,6 +33,7 @@ class CompanyUserInvitationConfig
      * @var string
      */
     public const ROUTE_INVITATION_ACCEPT = 'invitation/accept';
+
     /**
      * @var string
      */

@@ -32,6 +32,7 @@ class ProductBundleCartActiveCheckTest extends Unit
      * @var string
      */
     protected const PRODUCT_SKU_INACTIVE = 'inactive';
+
     /**
      * @var string
      */

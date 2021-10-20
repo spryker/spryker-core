@@ -32,10 +32,12 @@ class MapShipmentsToQuoteTest extends Unit
      * @var int
      */
     protected const FAKE_ID_SHIPMENT_METHOD = 6666;
+
     /**
      * @var string
      */
     protected const FAKE_GROUP_KEY = 'FAKE_GROUP_KEY';
+
     /**
      * @var string
      */

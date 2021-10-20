@@ -22,10 +22,12 @@ class ProductCategoryFilterStorageDependencyProvider extends AbstractBundleDepen
      * @var string
      */
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
+
     /**
      * @var string
      */
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
+
     /**
      * @var string
      */

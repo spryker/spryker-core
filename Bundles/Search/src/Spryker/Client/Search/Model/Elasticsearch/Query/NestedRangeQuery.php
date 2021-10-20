@@ -19,10 +19,12 @@ class NestedRangeQuery extends AbstractNestedQuery
      * @var string
      */
     public const RANGE_DIVIDER = '-';
+
     /**
      * @var string
      */
     public const RANGE_MIN = 'min';
+
     /**
      * @var string
      */

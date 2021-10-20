@@ -41,7 +41,7 @@ class ZedRequestInMemoryLoggerTest extends Unit
             $zedRequestInMemoryLogger->log(
                 $singleCallData['destination'],
                 $singleCallData['payload'],
-                $singleCallData['result'],
+                $singleCallData['result']
             );
         }
 

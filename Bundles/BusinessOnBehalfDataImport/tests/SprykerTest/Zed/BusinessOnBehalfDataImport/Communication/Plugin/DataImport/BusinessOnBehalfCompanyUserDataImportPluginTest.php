@@ -35,6 +35,7 @@ class BusinessOnBehalfCompanyUserDataImportPluginTest extends Unit
      * @var string
      */
     protected const COMPANY_KEY = 'test-company';
+
     /**
      * @var string
      */

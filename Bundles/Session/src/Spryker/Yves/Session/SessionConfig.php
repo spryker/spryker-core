@@ -21,6 +21,7 @@ class SessionConfig extends AbstractBundleConfig
      * @var string
      */
     public const DATA_SOURCE_NAME_TEMPLATE_TCP = 'tcp://[host]:[port]?database=[database][authFragment]';
+
     /**
      * @var string
      */
@@ -30,6 +31,7 @@ class SessionConfig extends AbstractBundleConfig
      * @var string
      */
     public const DATA_SOURCE_NAME_TEMPLATE_REDIS = 'redis://[authFragment][host]:[port]/[database]';
+
     /**
      * @var string
      */

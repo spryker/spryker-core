@@ -64,10 +64,12 @@ class ResourceShareFacadeTest extends Test
      * @var string
      */
     protected const VALUE_RESOURCE_SHARE_UUID = 'VALUE_RESOURCE_SHARE_UUID';
+
     /**
      * @var string
      */
     protected const VALUE_CUSTOMER_REFERENCE = 'VALUE_CUSTOMER_REFERENCE';
+
     /**
      * @var string
      */
@@ -77,10 +79,12 @@ class ResourceShareFacadeTest extends Test
      * @var string
      */
     protected const VALUE_RESOURCE_DATA = 'VALUE_RESOURCE_DATA';
+
     /**
      * @var string
      */
     protected const VALUE_RESOURCE_DATA_REPLACED = 'VALUE_RESOURCE_DATA_REPLACED';
+
     /**
      * @var string
      */

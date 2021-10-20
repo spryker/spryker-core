@@ -42,10 +42,12 @@ class CategoryStorageFacadeTest extends Unit
      * @var string
      */
     protected const STORE_NAME_DE = 'DE';
+
     /**
      * @var string
      */
     protected const STORE_NAME_US = 'US';
+
     /**
      * @var string
      */
@@ -55,6 +57,7 @@ class CategoryStorageFacadeTest extends Unit
      * @var string
      */
     protected const KEY_NAME = 'name';
+
     /**
      * @var string
      */

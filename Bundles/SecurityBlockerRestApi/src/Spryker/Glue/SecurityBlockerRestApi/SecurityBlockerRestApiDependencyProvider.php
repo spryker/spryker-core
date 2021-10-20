@@ -21,6 +21,7 @@ class SecurityBlockerRestApiDependencyProvider extends AbstractBundleDependencyP
      * @var string
      */
     public const CLIENT_SECURITY_BLOCKER = 'CLIENT_SECURITY_BLOCKER';
+
     /**
      * @var string
      */

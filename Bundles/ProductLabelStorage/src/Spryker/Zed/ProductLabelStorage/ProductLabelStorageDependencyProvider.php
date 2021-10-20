@@ -37,10 +37,12 @@ class ProductLabelStorageDependencyProvider extends AbstractBundleDependencyProv
      * @var string
      */
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
+
     /**
      * @var string
      */
     public const FACADE_PRODUCT_LABEL = 'FACADE_PRODUCT_LABEL';
+
     /**
      * @var string
      */

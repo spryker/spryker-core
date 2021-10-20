@@ -44,6 +44,7 @@ class CartItemProductConfigurationRestRequestValidatorPluginTest extends Unit
      * @var string
      */
     protected const PRODUCT_CONFIGURATION_KEY = 'TEST_PRODUCT_CONFIGURATION';
+
     /**
      * @var string
      */

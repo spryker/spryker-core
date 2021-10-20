@@ -30,6 +30,7 @@ class ProductCollectionType extends AbstractType
      * @var string
      */
     public const FIELD_PRODUCTS = 'products';
+
     /**
      * @var string
      */

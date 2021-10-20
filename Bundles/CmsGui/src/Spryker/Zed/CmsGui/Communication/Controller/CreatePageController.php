@@ -24,6 +24,7 @@ class CreatePageController extends AbstractController
      * @var string
      */
     public const ERROR_MESSAGE_INVALID_DATA_PROVIDED = 'Page was not created.';
+
     /**
      * @var string
      */

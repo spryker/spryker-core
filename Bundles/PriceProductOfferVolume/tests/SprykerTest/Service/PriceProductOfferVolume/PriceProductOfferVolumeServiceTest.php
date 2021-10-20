@@ -28,14 +28,17 @@ class PriceProductOfferVolumeServiceTest extends Unit
      * @var string
      */
     protected const PRICE_DATA_VOLUME = '{"volume_prices":[{"quantity":3,"net_price":350,"gross_price":385},{"quantity":8,"net_price":340,"gross_price":375}]}';
+
     /**
      * @var int
      */
     protected const MONEY_VALUE = 10000;
+
     /**
      * @var string
      */
     protected const PRICE_DIMENSION_TYPE = 'PRODUCT_OFFER';
+
     /**
      * @var string
      */

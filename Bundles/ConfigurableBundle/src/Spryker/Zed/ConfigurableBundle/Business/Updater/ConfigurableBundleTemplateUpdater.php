@@ -26,6 +26,7 @@ class ConfigurableBundleTemplateUpdater implements ConfigurableBundleTemplateUpd
      * @var string
      */
     protected const GLOSSARY_KEY_CONFIGURABLE_BUNDLE_TEMPLATE_ALREADY_ACTIVATED = 'configurable_bundle.template.validation.error.already_activated';
+
     /**
      * @var string
      */

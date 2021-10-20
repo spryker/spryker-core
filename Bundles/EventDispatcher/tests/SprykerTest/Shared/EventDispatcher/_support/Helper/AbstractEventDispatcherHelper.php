@@ -38,6 +38,7 @@ abstract class AbstractEventDispatcherHelper extends Module
      * @var string
      */
     protected const MODULE_NAME = 'EventDispatcher';
+
     /**
      * @var string
      */

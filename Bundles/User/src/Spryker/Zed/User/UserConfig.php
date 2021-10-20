@@ -21,6 +21,7 @@ class UserConfig extends AbstractBundleConfig
      * @var int
      */
     protected const MIN_LENGTH_USER_PASSWORD = 8;
+
     /**
      * @var int
      */

@@ -25,10 +25,12 @@ class AddressController extends AbstractController
      * @var string
      */
     protected const URL_CUSTOMER_LIST = '/customer';
+
     /**
      * @var string
      */
     protected const URL_CUSTOMER_VIEW = '/customer/view';
+
     /**
      * @var string
      */

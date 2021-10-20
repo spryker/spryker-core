@@ -22,6 +22,7 @@ class MerchantRelationshipProductListDependencyProvider extends AbstractBundleDe
      * @var string
      */
     public const FACADE_PRODUCT_LIST = 'FACADE_PRODUCT_LIST';
+
     /**
      * @var string
      */

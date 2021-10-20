@@ -60,7 +60,7 @@ class ProductConfigurationCartBusinessFactory extends AbstractBusinessFactory
     public function createProductConfigurationCartItemQuantityCounter(): ProductConfigurationCartItemQuantityCounterInterface
     {
         return new ProductConfigurationCartItemQuantityCounter(
-            $this->createItemComparator(),
+            $this->createItemComparator()
         );
     }
 
@@ -70,7 +70,7 @@ class ProductConfigurationCartBusinessFactory extends AbstractBusinessFactory
     public function createProductConfigurationItemQuantityCounter(): ProductConfigurationItemQuantityCounterInterface
     {
         return new ProductConfigurationItemQuantityCounter(
-            $this->createItemComparator(),
+            $this->createItemComparator()
         );
     }
 

@@ -28,10 +28,12 @@ class RouterApplicationPlugin extends AbstractPlugin implements ApplicationPlugi
      * @var string
      */
     public const SERVICE_ROUTER = 'routers';
+
     /**
      * @var string
      */
     public const SERVICE_CONTROLLER_RESOLVER = 'controller-resolver';
+
     /**
      * @var string
      */

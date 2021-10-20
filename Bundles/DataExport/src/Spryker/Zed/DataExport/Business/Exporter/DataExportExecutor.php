@@ -24,6 +24,7 @@ class DataExportExecutor
      * @var string
      */
     protected const HOOK_KEY_EXTENSION = 'extension';
+
     /**
      * @var string
      */

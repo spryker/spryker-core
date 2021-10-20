@@ -25,14 +25,17 @@ class ProductCategoryDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const FACADE_LOCALE = 'locale facade';
+
     /**
      * @var string
      */
     public const FACADE_PRODUCT = 'product facade';
+
     /**
      * @var string
      */
     public const FACADE_CATEGORY = 'category facade';
+
     /**
      * @var string
      */

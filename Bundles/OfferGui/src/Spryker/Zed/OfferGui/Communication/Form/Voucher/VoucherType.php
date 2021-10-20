@@ -23,6 +23,7 @@ class VoucherType extends AbstractType
      * @var string
      */
     public const FIELD_VOUCHER_CODE = 'voucherCode';
+
     /**
      * @var string
      */

@@ -16,10 +16,12 @@ class CompanyBusinessUnitDataImportConfig extends DataImportConfig
      * @var string
      */
     public const IMPORT_TYPE_COMPANY_BUSINESS_UNIT = 'company-business-unit';
+
     /**
      * @var string
      */
     public const IMPORT_TYPE_COMPANY_BUSINESS_UNIT_USER = 'company-business-unit-user';
+
     /**
      * @var string
      */

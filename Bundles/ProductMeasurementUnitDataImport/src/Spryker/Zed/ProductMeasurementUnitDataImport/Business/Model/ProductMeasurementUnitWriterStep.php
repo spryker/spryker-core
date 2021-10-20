@@ -18,7 +18,7 @@ class ProductMeasurementUnitWriterStep extends PublishAwareStep implements DataI
     /**
      * @var int
      */
-    protected const  DEFAULT_PRECISION = 1;
+    protected const DEFAULT_PRECISION = 1;
 
     /**
      * @see \Spryker\Zed\ProductMeasurementUnit\Dependency\ProductMeasurementUnitEvents::PRODUCT_MEASUREMENT_UNIT_PUBLISH

@@ -23,14 +23,17 @@ class EditController extends AbstractController
      * @var string
      */
     public const FORM_UPDATE_TYPE = 'update';
+
     /**
      * @var string
      */
     public const URL_PARAMETER_GLOSSARY_KEY = 'fk-glossary-key';
+
     /**
      * @var string
      */
     public const MESSAGE_UPDATE_SUCCESS = 'Translation %d was updated successfully.';
+
     /**
      * @var string
      */

@@ -21,10 +21,12 @@ class ProductConcreteReviewResourceRelationshipExpander implements ProductConcre
      * @var string
      */
     protected const KEY_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
+
     /**
      * @var string
      */
     protected const KEY_SKU = 'sku';
+
     /**
      * @var string
      */

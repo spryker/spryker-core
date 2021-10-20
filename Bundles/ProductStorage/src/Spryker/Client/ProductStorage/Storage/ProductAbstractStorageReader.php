@@ -27,22 +27,27 @@ class ProductAbstractStorageReader implements ProductAbstractStorageReaderInterf
      * @var string
      */
     protected const KEY_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
+
     /**
      * @var string
      */
     protected const KEY_PRICES = 'prices';
+
     /**
      * @var string
      */
     protected const KEY_CATEGORIES = 'categories';
+
     /**
      * @var string
      */
     protected const KEY_IMAGE_SETS = 'imageSets';
+
     /**
      * @var string
      */
     protected const KEY_ATTRIBUTE_MAP = 'attribute_map';
+
     /**
      * @var string
      */

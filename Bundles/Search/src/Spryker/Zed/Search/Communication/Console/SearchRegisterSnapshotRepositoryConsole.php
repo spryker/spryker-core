@@ -24,6 +24,7 @@ class SearchRegisterSnapshotRepositoryConsole extends Console
      * @var string
      */
     public const COMMAND_NAME = 'search:snapshot:register-repository';
+
     /**
      * @var string
      */

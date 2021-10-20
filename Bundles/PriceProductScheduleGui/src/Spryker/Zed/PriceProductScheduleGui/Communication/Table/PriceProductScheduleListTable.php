@@ -30,6 +30,7 @@ class PriceProductScheduleListTable extends AbstractTable
      * @var string
      */
     protected const TEMPLATE_FULL_NAME = '%s %s';
+
     /**
      * @var string
      */
@@ -39,6 +40,7 @@ class PriceProductScheduleListTable extends AbstractTable
      * @var string
      */
     protected const EXPRESSION_COUNT = 'COUNT(%s)';
+
     /**
      * @var string
      */
@@ -48,26 +50,32 @@ class PriceProductScheduleListTable extends AbstractTable
      * @var string
      */
     protected const COL_IMPORT_ID = 'id_price_product_schedule_list';
+
     /**
      * @var string
      */
     protected const COL_NAME = 'name';
+
     /**
      * @var string
      */
     protected const COL_IMPORTED_BY = 'created_at';
+
     /**
      * @var string
      */
     protected const COL_STATUS = 'is_active';
+
     /**
      * @var string
      */
     protected const COL_NUMBER_OF_PRICES = 'number_of_prices';
+
     /**
      * @var string
      */
     protected const COL_NUMBER_OF_PRODUCTS = 'number_of_products';
+
     /**
      * @var string
      */
@@ -77,6 +85,7 @@ class PriceProductScheduleListTable extends AbstractTable
      * @var string
      */
     protected const STATUS_DRAFT = 'Draft';
+
     /**
      * @var string
      */
@@ -86,26 +95,32 @@ class PriceProductScheduleListTable extends AbstractTable
      * @var string
      */
     protected const HEADER_IMPORT_ID = 'Import ID';
+
     /**
      * @var string
      */
     protected const HEADER_NAME = 'Name';
+
     /**
      * @var string
      */
     protected const HEADER_IMPORTED_BY = 'Imported by and on the';
+
     /**
      * @var string
      */
     protected const HEADER_STATUS = 'Status';
+
     /**
      * @var string
      */
     protected const HEADER_NUMBER_OF_PRICES = 'Number of prices';
+
     /**
      * @var string
      */
     protected const HEADER_NUMBER_OF_PRODUCTS = 'Number of products';
+
     /**
      * @var string
      */
@@ -115,14 +130,17 @@ class PriceProductScheduleListTable extends AbstractTable
      * @var string
      */
     protected const BUTTON_VIEW = 'View';
+
     /**
      * @var string
      */
     protected const BUTTON_EDIT = 'Edit';
+
     /**
      * @var string
      */
     protected const BUTTON_DOWNLOAD = 'Download';
+
     /**
      * @var string
      */
@@ -142,18 +160,22 @@ class PriceProductScheduleListTable extends AbstractTable
      * @var string
      */
     public const URL_PRICE_PRODUCT_SCHEDULE_LIST_VIEW = '/price-product-schedule-gui/view-schedule-list';
+
     /**
      * @var string
      */
     public const URL_PRICE_PRODUCT_SCHEDULE_LIST_EDIT = '/price-product-schedule-gui/edit-schedule-list';
+
     /**
      * @var string
      */
     public const URL_PRICE_PRODUCT_SCHEDULE_LIST_DOWNLOAD = '/price-product-schedule-gui/download-schedule-list';
+
     /**
      * @var string
      */
     public const URL_PRICE_PRODUCT_SCHEDULE_LIST_DELETE = '/price-product-schedule-gui/delete-schedule-list';
+
     /**
      * @var string
      */

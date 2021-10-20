@@ -18,6 +18,7 @@ class DataImporterPublisher implements DataImporterPublisherInterface
      * @var int
      */
     public const DEFAULT_CHUNK_SIZE = 20000;
+
     /**
      * @var int
      */

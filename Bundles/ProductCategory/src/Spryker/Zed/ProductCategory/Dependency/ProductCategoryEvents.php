@@ -13,6 +13,7 @@ interface ProductCategoryEvents
      * @var string
      */
     public const PRODUCT_CATEGORY_ASSIGNED = 'ProductCategory.product.assigned';
+
     /**
      * @var string
      */

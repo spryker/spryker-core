@@ -25,6 +25,7 @@ class MerchantUserStatusController extends AbstractCrudMerchantUserController
      * @var string
      */
     protected const MESSAGE_ERROR_MERCHANT_WRONG_PARAMETERS = 'User status can\'t be updated.';
+
     /**
      * @var string
      */

@@ -26,6 +26,7 @@ interface CmsBlockProductConnectorEvents
      * @var string
      */
     public const CMS_BLOCK_PRODUCT_CONNECTOR_UNPUBLISH = 'CmsBlockProduct.connector.unpublish';
+
     /**
      * Specification
      * - This events will be used for spy_cms_block_product_connector entity creation

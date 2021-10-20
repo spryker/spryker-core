@@ -37,6 +37,7 @@ class ProductOptionCartConnectorFacadeTest extends Unit
      * @var int
      */
     public const ID_PRODUCT_OPTION = 5;
+
     /**
      * @var int
      */

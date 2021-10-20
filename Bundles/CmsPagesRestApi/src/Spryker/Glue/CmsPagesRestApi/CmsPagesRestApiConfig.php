@@ -25,6 +25,7 @@ class CmsPagesRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESPONSE_CODE_CMS_PAGE_NOT_FOUND = '3801';
+
     /**
      * @var string
      */

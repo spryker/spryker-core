@@ -65,6 +65,7 @@ class SearchElasticsearchConfig extends AbstractBundleConfig
      * @var string
      */
     public const INDEX_OPEN_STATE = 'open';
+
     /**
      * @var string
      */

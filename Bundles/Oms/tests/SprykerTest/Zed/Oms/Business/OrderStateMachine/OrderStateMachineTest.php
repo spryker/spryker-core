@@ -46,6 +46,7 @@ class OrderStateMachineTest extends Unit
      * @var string
      */
     public const CONDITION_NAME = 'conditionName';
+
     /**
      * @var string
      */

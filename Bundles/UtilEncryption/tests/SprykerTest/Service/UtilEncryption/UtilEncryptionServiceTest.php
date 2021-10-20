@@ -25,6 +25,7 @@ class UtilEncryptionServiceTest extends Unit
      * @var string
      */
     protected const OPEN_SSL_ENCRYPTION_KEY = 'OPEN_SSL_ENCRYPTION_KEY';
+
     /**
      * @var string
      */

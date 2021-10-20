@@ -37,6 +37,7 @@ class ActiveProcessFetcherTest extends Unit
      * @var string
      */
     protected const TEST_STATE_MACHINE_NAME = 'ActiveStateMachine';
+
     /**
      * @var array
      */

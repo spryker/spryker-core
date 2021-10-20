@@ -19,6 +19,7 @@ class RequestExecutor implements RequestExecutorInterface
      * @var string
      */
     protected const AUTH_KEY = 'auth';
+
     /**
      * @var string
      */

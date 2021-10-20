@@ -29,6 +29,7 @@ abstract class AbstractPriceProductTableDataProvider extends AbstractGuiTableDat
      * @var int
      */
     protected const INDEX_PRICE_TYPE = 0;
+
     /**
      * @var int
      */

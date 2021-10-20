@@ -28,10 +28,12 @@ class DataImportDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const FACADE_TOUCH = 'touch facade';
+
     /**
      * @var string
      */
     public const FACADE_EVENT = 'event facade';
+
     /**
      * @var string
      */
@@ -41,14 +43,17 @@ class DataImportDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const DATA_IMPORTER_PLUGINS = 'IMPORTER_PLUGINS';
+
     /**
      * @var string
      */
     public const DATA_IMPORT_BEFORE_HOOK_PLUGINS = 'DATA_IMPORT_BEFORE_HOOK_PLUGINS';
+
     /**
      * @var string
      */
     public const DATA_IMPORT_AFTER_HOOK_PLUGINS = 'DATA_IMPORT_AFTER_HOOK_PLUGINS';
+
     /**
      * @var string
      */
@@ -58,6 +63,7 @@ class DataImportDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const PROPEL_CONNECTION = 'propel connection';
+
     /**
      * @var string
      */
@@ -72,6 +78,7 @@ class DataImportDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
+
     /**
      * @var string
      */

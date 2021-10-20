@@ -33,18 +33,22 @@ class ProductManagerTest extends Unit
      * @var string
      */
     public const CONCRETE_SKU = 'concrete sku';
+
     /**
      * @var string
      */
     public const ABSTRACT_SKU = 'abstract sku';
+
     /**
      * @var string
      */
     public const ID_PRODUCT_CONCRETE = 'id product concrete';
+
     /**
      * @var string
      */
     public const ID_PRODUCT_ABSTRACT = 'id product abstract';
+
     /**
      * @var string
      */

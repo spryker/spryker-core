@@ -56,7 +56,7 @@ class CategoryNavigationConnectorFacadeTest extends Unit
     {
         // Arrange
         $locale = $this->tester->haveLocale();
-        $category = $this->tester->haveLocalizedCategory([ 'locale' => $locale, CategoryTransfer::CATEGORY_NODE => [ NodeTransfer::IS_ROOT => false ], CategoryTransfer::IS_ACTIVE => $isActive ]);
+        $category = $this->tester->haveLocalizedCategory(['locale' => $locale, CategoryTransfer::CATEGORY_NODE => [NodeTransfer::IS_ROOT => false], CategoryTransfer::IS_ACTIVE => $isActive]);
         $navigation = $this->tester->haveNavigation();
 
         /** @var \Spryker\Zed\Url\Persistence\UrlQueryContainerInterface $urlQueryContainer */

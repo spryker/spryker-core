@@ -36,6 +36,7 @@ class CmsSlotBlockProductCategoryConnectorClientTest extends Unit
      * @var int
      */
     protected const ID_PRODUCT_ABSTRACT = 1;
+
     /**
      * @var int
      */

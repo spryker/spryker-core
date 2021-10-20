@@ -22,6 +22,7 @@ class PriceProductConstraintProvider implements PriceProductConstraintProviderIn
      * @var string
      */
     protected const MESSAGE_VALUE_IS_INVALID = 'This value is not valid.';
+
     /**
      * @var string
      */

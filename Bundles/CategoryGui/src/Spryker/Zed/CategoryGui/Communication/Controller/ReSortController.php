@@ -22,6 +22,7 @@ class ReSortController extends CategoryAbstractController
      * @var string
      */
     protected const PARAM_RE_SORT_FORM_TOKEN_ID = 'category_nodes_re_sort_token';
+
     /**
      * @var string
      */
@@ -31,10 +32,12 @@ class ReSortController extends CategoryAbstractController
      * @var string
      */
     protected const REQUEST_PARAM_ID_CATEGORY = 'id-category';
+
     /**
      * @var string
      */
     protected const REQUEST_PARAM_ID_NODE = 'id-node';
+
     /**
      * @var string
      */

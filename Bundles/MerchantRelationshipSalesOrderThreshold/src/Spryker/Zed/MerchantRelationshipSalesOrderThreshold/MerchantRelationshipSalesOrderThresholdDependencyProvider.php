@@ -22,10 +22,12 @@ class MerchantRelationshipSalesOrderThresholdDependencyProvider extends Abstract
      * @var string
      */
     public const FACADE_SALES_ORDER_THRESHOLD = 'FACADE_SALES_ORDER_THRESHOLD';
+
     /**
      * @var string
      */
     public const FACADE_GLOSSARY = 'FACADE_GLOSSARY';
+
     /**
      * @var string
      */

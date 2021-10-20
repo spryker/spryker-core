@@ -35,6 +35,7 @@ class DataImportConsole extends Console
      * @var string
      */
     public const DEFAULT_NAME = 'data:import';
+
     /**
      * @var string
      */
@@ -49,6 +50,7 @@ class DataImportConsole extends Console
      * @var string
      */
     public const OPTION_FILE_NAME = 'file-name';
+
     /**
      * @var string
      */
@@ -58,6 +60,7 @@ class DataImportConsole extends Console
      * @var string
      */
     public const OPTION_OFFSET = 'offset';
+
     /**
      * @var string
      */
@@ -67,6 +70,7 @@ class DataImportConsole extends Console
      * @var string
      */
     public const OPTION_LIMIT = 'limit';
+
     /**
      * @var string
      */
@@ -76,6 +80,7 @@ class DataImportConsole extends Console
      * @var string
      */
     public const OPTION_CSV_DELIMITER = 'delimiter';
+
     /**
      * @var string
      */
@@ -85,6 +90,7 @@ class DataImportConsole extends Console
      * @var string
      */
     public const OPTION_CSV_ENCLOSURE = 'enclosure';
+
     /**
      * @var string
      */
@@ -94,6 +100,7 @@ class DataImportConsole extends Console
      * @var string
      */
     public const OPTION_CSV_ESCAPE = 'escape';
+
     /**
      * @var string
      */
@@ -103,6 +110,7 @@ class DataImportConsole extends Console
      * @var string
      */
     public const OPTION_CSV_HAS_HEADER = 'has-header';
+
     /**
      * @var string
      */
@@ -112,10 +120,12 @@ class DataImportConsole extends Console
      * @var string
      */
     public const OPTION_THROW_EXCEPTION = 'throw-exception';
+
     /**
      * @var string
      */
     public const OPTION_THROW_EXCEPTION_SHORT = 't';
+
     /**
      * @var string
      */
@@ -125,6 +135,7 @@ class DataImportConsole extends Console
      * @var string
      */
     public const OPTION_IMPORT_GROUP = 'group';
+
     /**
      * @var string
      */
@@ -134,6 +145,7 @@ class DataImportConsole extends Console
      * @var string
      */
     public const OPTION_CONFIG = 'config';
+
     /**
      * @var string
      */

@@ -20,18 +20,22 @@ class StockTable extends AbstractTable
      * @var string
      */
     public const COL_ID_STOCK = 'id_stock';
+
     /**
      * @var string
      */
     public const COL_NAME = 'name';
+
     /**
      * @var string
      */
     public const COL_IS_ACTIVE = 'is_active';
+
     /**
      * @var string
      */
     public const COL_AVAILABLE_IN_STORE = 'available_in_store';
+
     /**
      * @var string
      */

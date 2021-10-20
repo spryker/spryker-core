@@ -16,6 +16,7 @@ class ProductAbstractSkusToIdsConditionResolver implements ConditionResolverInte
      * @var string
      */
     protected const KEY_PRODUCT_ABSTRACT_IDS = 'productIds';
+
     /**
      * @var int
      */

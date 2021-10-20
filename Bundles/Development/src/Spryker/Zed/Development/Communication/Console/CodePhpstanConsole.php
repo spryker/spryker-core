@@ -27,6 +27,7 @@ class CodePhpstanConsole extends Console
     protected const OPTION_DRY_RUN = PhpstanRunner::OPTION_DRY_RUN;
     protected const OPTION_LEVEL = PhpstanRunner::OPTION_LEVEL;
     protected const OPTION_OFFSET = PhpstanRunner::OPTION_OFFSET;
+
     /**
      * @deprecated Not Used
      * @var string

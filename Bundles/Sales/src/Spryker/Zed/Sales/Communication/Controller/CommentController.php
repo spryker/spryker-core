@@ -27,6 +27,7 @@ class CommentController extends AbstractController
      * @var string
      */
     protected const ROUTE_REDIRECT = '/sales/detail';
+
     /**
      * @uses \Spryker\Zed\Sales\Communication\Controller\DetailController::PARAM_ID_SALES_ORDER
      * @var string

@@ -24,6 +24,7 @@ class CategoryGuiRepository extends AbstractRepository implements CategoryGuiRep
      * @var string
      */
     protected const ID_CATEGORY_TEMPLATE = 'idCategoryTemplate';
+
     /**
      * @var string
      */
@@ -33,6 +34,7 @@ class CategoryGuiRepository extends AbstractRepository implements CategoryGuiRep
      * @var string
      */
     protected const CHILDREN_ID_CATEGORY_NODE = 'id';
+
     /**
      * @var string
      */

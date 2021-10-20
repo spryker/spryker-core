@@ -28,18 +28,22 @@ class CmsGuiDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const FACADE_LOCALE = 'locale facade';
+
     /**
      * @var string
      */
     public const FACADE_CMS = 'locale cms';
+
     /**
      * @var string
      */
     public const FACADE_URL = 'url facade';
+
     /**
      * @var string
      */
     public const FACADE_GLOSSARY = 'glossary facade';
+
     /**
      * @var string
      */
@@ -70,18 +74,22 @@ class CmsGuiDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const PLUGINS_CMS_PAGE_TABLE_EXPANDER = 'PLUGINS_CMS_PAGE_TABLE_EXPANDER';
+
     /**
      * @var string
      */
     public const PLUGINS_CREATE_GLOSSARY_EXPANDER = 'PLUGINS_CREATE_GLOSSARY_EXPANDER';
+
     /**
      * @var string
      */
     public const PLUGIN_STORE_RELATION_FORM_TYPE = 'PLUGIN_STORE_RELATION_FORM_TYPE';
+
     /**
      * @var string
      */
     public const PLUGINS_CMS_GLOSSARY_BEFORE_SAVE = 'PLUGINS_CMS_GLOSSARY_BEFORE_SAVE';
+
     /**
      * @var string
      */

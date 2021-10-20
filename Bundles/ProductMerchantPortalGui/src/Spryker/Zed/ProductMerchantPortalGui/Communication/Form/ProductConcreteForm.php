@@ -53,10 +53,12 @@ class ProductConcreteForm extends AbstractType
      * @var string
      */
     protected const LABEL_VALID_FROM = 'From';
+
     /**
      * @var string
      */
     protected const LABEL_VALID_TO = 'To';
+
     /**
      * @var string
      */
@@ -66,6 +68,7 @@ class ProductConcreteForm extends AbstractType
      * @var string
      */
     protected const DATE_TIME_FORMAT = 'Y-m-d H:i:s';
+
     /**
      * @var string
      */

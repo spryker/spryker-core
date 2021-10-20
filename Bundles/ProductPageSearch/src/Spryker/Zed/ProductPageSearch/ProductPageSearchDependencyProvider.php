@@ -51,90 +51,112 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
      * @var string
      */
     public const QUERY_CONTAINER_PRODUCT = 'QUERY_CONTAINER_PRODUCT';
+
     /**
      * @var string
      */
     public const QUERY_CONTAINER_PRODUCT_IMAGE = 'QUERY_CONTAINER_PRODUCT_IMAGE';
+
     /**
      * @var string
      */
     public const QUERY_CONTAINER_PRODUCT_CATEGORY = 'QUERY_CONTAINER_PRODUCT_CATEGORY';
+
     /**
      * @var string
      */
     public const QUERY_CONTAINER_CATEGORY = 'QUERY_CONTAINER_CATEGORY';
+
     /**
      * @var string
      */
     public const PROPEL_QUERY_CATEGORY_NODE = 'QUERY_CONTAINER_CATEGORY_NODE';
+
     /**
      * @var string
      */
     public const QUERY_CONTAINER_PRICE = 'QUERY_CONTAINER_PRICE';
+
     /**
      * @var string
      */
     public const PROPEL_QUERY_PRODUCT = 'PROPEL_QUERY_PRODUCT';
+
     /**
      * @var string
      */
     public const SERVICE_UTIL_ENCODING = 'util encoding service';
+
     /**
      * @var string
      */
     public const SERVICE_PRICE_PRODUCT = 'SERVICE_PRICE_PRODUCT';
+
     /**
      * @var string
      */
     public const CLIENT_CATALOG_PRICE_PRODUCT_CONNECTOR = 'CLIENT_CATALOG_PRICE_PRODUCT_CONNECTOR';
+
     /**
      * @var string
      */
     public const FACADE_PRODUCT = 'FACADE_PRODUCT';
+
     /**
      * @var string
      */
     public const FACADE_STORE = 'FACADE_STORE';
+
     /**
      * @var string
      */
     public const FACADE_PRICE_PRODUCT = 'FACADE_PRICE_PRODUCT';
+
     /**
      * @var string
      */
     public const FACADE_PRODUCT_SEARCH = 'FACADE_PRODUCT_SEARCH';
+
     /**
      * @var string
      */
     public const FACADE_SEARCH = 'FACADE_SEARCH';
+
     /**
      * @var string
      */
     public const FACADE_CATEGORY = 'FACADE_CATEGORY';
+
     /**
      * @var string
      */
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
+
     /**
      * @var string
      */
     public const FACADE_PRICE = 'FACADE_PRICE';
+
     /**
      * @var string
      */
     public const FACADE_PRODUCT_IMAGE = 'FACADE_PRODUCT_IMAGE';
+
     /**
      * @var string
      */
     public const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
+
     /**
      * @var string
      */
     public const PLUGIN_PRODUCT_PAGE_DATA_EXPANDER = 'PLUGIN_PRODUCT_PAGE_DATA_EXPANDER';
+
     /**
      * @var string
      */
     public const PLUGIN_PRODUCT_PAGE_DATA_LOADER = 'PLUGIN_PRODUCT_PAGE_DATA_LOADER';
+
     /**
      * @var string
      */
@@ -145,26 +167,32 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
      * @var string
      */
     public const PLUGIN_PRODUCT_PAGE_MAP_EXPANDER = 'PLUGIN_PRODUCT_PAGE_MAP_EXPANDER';
+
     /**
      * @var string
      */
     public const PLUGIN_PRODUCT_PRICE_PAGE_DATA = 'PLUGIN_PRODUCT_PRICE_PAGE_DATA';
+
     /**
      * @var string
      */
     public const PLUGIN_PRODUCT_CATEGORY_PAGE_DATA = 'PLUGIN_PRODUCT_CATEGORY_PAGE_DATA';
+
     /**
      * @var string
      */
     public const PLUGIN_PRODUCT_IMAGE_PAGE_DATA = 'PLUGIN_PRODUCT_IMAGE_PAGE_DATA';
+
     /**
      * @var string
      */
     public const PLUGINS_PRODUCT_CONCRETE_PAGE_DATA_EXPANDER = 'PLUGINS_PRODUCT_CONCRETE_PAGE_DATA_EXPANDER';
+
     /**
      * @var string
      */
     public const PLUGINS_CONCRETE_PRODUCT_MAP_EXPANDER = 'PLUGINS_CONCRETE_PRODUCT_PAGE_MAP_EXPANDER';
+
     /**
      * @var string
      */
@@ -175,14 +203,17 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
      * @var string
      */
     public const PLUGINS_PRODUCT_CONCRETE_PAGE_MAP_EXPANDER = 'PLUGINS_PRODUCT_CONCRETE_PAGE_MAP_EXPANDER';
+
     /**
      * @var string
      */
     public const PROPEL_QUERY_PRODUCT_SEARCH = 'PROPEL_QUERY_PRODUCT_SEARCH';
+
     /**
      * @var string
      */
     public const PLUGINS_PRODUCT_ABSTRACT_MAP_EXPANDER = 'PLUGINS_PRODUCT_ABSTRACT_PAGE_MAP_EXPANDER';
+
     /**
      * @var string
      */

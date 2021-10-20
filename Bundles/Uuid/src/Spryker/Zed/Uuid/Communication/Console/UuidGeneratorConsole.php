@@ -25,6 +25,7 @@ class UuidGeneratorConsole extends Console
      * @var string
      */
     public const COMMAND_NAME = 'uuid:generate';
+
     /**
      * @var string
      */
@@ -34,10 +35,12 @@ class UuidGeneratorConsole extends Console
      * @var string
      */
     protected const ARGUMENT_MODULE = 'module';
+
     /**
      * @var string
      */
     protected const ARGUMENT_TABLE = 'table';
+
     /**
      * @var string
      */

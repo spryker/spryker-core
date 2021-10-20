@@ -28,6 +28,7 @@ class QuoteItemReplacer implements QuoteItemReplacerInterface
      * @var string
      */
     protected const GLOSSARY_MESSAGE_PARAMETER_SKU = '%sku%';
+
     /**
      * @var string
      */
@@ -37,6 +38,7 @@ class QuoteItemReplacer implements QuoteItemReplacerInterface
      * @var string
      */
     protected const GLOSSARY_KEY_PRODUCT_CONFIGURATION_ITEM_NOT_FOUND_IN_CART = 'product_configuration.error.configured_item_not_found_in_cart';
+
     /**
      * @var string
      */

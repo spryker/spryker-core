@@ -23,10 +23,12 @@ class CmsSlotBlockGuiDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const FACADE_CMS_SLOT_BLOCK = 'FACADE_CMS_SLOT_BLOCK';
+
     /**
      * @var string
      */
     public const FACADE_CMS_SLOT = 'FACADE_CMS_SLOT';
+
     /**
      * @var string
      */
@@ -36,6 +38,7 @@ class CmsSlotBlockGuiDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const PROPEL_QUERY_CMS_BLOCK = 'PROPEL_QUERY_CMS_BLOCK';
+
     /**
      * @var string
      */

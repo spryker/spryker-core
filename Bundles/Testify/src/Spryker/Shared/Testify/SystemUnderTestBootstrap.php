@@ -32,18 +32,22 @@ class SystemUnderTestBootstrap
      * @var string
      */
     public const APPLICATION_ZED = 'Zed';
+
     /**
      * @var string
      */
     public const APPLICATION_YVES = 'Yves';
+
     /**
      * @var string
      */
     public const APPLICATION_SHARED = 'Shared';
+
     /**
      * @var string
      */
     public const APPLICATION_CLIENT = 'Client';
+
     /**
      * @var string
      */

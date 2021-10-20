@@ -18,6 +18,7 @@ class CartItemCheckoutDataValidator implements CartItemCheckoutDataValidatorInte
      * @var string
      */
     protected const GLOSSARY_PARAMETER_ID = '%id%';
+
     /**
      * @var string
      */

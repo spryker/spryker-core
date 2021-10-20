@@ -21,6 +21,7 @@ class SharedCartsRestApiDependencyProvider extends AbstractBundleDependencyProvi
      * @var string
      */
     public const PLUGIN_COMPANY_USER_PROVIDER = 'PLUGIN_COMPANY_USER_PROVIDER';
+
     /**
      * @var string
      */

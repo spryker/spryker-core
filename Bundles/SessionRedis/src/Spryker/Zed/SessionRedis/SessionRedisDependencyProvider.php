@@ -22,18 +22,22 @@ class SessionRedisDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const SERVICE_MONITORING = 'SERVICE_MONITORING';
+
     /**
      * @var string
      */
     public const CLIENT_SESSION_REDIS = 'CLIENT_SESSION_REDIS';
+
     /**
      * @var string
      */
     public const PLUGINS_HANDLER_SESSION = 'PLUGINS_HANDLER_SESSION';
+
     /**
      * @var string
      */
     public const PLUGINS_SESSION_REDIS_LIFE_TIME_CALCULATOR = 'PLUGINS_SESSION_REDIS_LIFE_TIME_CALCULATOR';
+
     /**
      * @var string
      */

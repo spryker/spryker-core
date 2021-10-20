@@ -22,14 +22,17 @@ class MerchantSalesOrderMapper
      * @var string
      */
     protected const KEY_MERCHANT_ORDER_COMMENTS = 'merchant_order_comments';
+
     /**
      * @var string
      */
     protected const KEY_ORDER_SALUTATION = 'salutation';
+
     /**
      * @var string
      */
     protected const KEY_BILLING_ADDRESS_SALUTATION = 'billing_address_salutation';
+
     /**
      * @var string
      */

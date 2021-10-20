@@ -36,6 +36,7 @@ class SharedCartsRestApiFacadeTest extends Test
      * @var string
      */
     protected const QUOTE_PERMISSION_GROUP_READ_ONLY = 'READ_ONLY';
+
     /**
      * @var string
      */
@@ -45,6 +46,7 @@ class SharedCartsRestApiFacadeTest extends Test
      * @var string
      */
     protected const READ_SHARED_CART_PERMISSION_PLUGIN_KEY = 'ReadSharedCartPermissionPlugin';
+
     /**
      * @var string
      */
@@ -54,10 +56,12 @@ class SharedCartsRestApiFacadeTest extends Test
      * @var string
      */
     protected const WRONG_QUOTE_UUID = 'WRONG_QUOTE_UUID';
+
     /**
      * @var string
      */
     protected const WRONG_CUSTOMER_REFERENCE = 'WRONG_CUSTOMER_REFERENCE';
+
     /**
      * @var string
      */

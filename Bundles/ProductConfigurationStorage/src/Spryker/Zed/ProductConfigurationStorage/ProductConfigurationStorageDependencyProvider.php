@@ -21,6 +21,7 @@ class ProductConfigurationStorageDependencyProvider extends AbstractBundleDepend
      * @var string
      */
     public const FACADE_PRODUCT_CONFIGURATION = 'FACADE_PRODUCT_CONFIGURATION';
+
     /**
      * @var string
      */

@@ -24,10 +24,12 @@ class RestRequestValidatorConfig extends AbstractBundleConfig
      * @var string
      */
     protected const CONSTRAINTS_NAMESPACE_SYMFONY_COMPONENT_VALIDATOR = 'Symfony\\Component\\Validator\\Constraints\\';
+
     /**
      * @var string
      */
     protected const CONSTRAINTS_NAMESPACE_PROJECT_STORE_REST_REQUEST_VALIDATOR = '\\Glue\\RestRequestValidator%s\\Constraints\\';
+
     /**
      * @var string
      */

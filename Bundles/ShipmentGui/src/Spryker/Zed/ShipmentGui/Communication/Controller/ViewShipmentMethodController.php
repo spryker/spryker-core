@@ -19,10 +19,12 @@ class ViewShipmentMethodController extends AbstractController
      * @var string
      */
     protected const PARAM_ID_SHIPMENT_METHOD = 'id-shipment-method';
+
     /**
      * @var string
      */
     protected const REDIRECT_URL = '/shipment-gui/shipment-method';
+
     /**
      * @var string
      */

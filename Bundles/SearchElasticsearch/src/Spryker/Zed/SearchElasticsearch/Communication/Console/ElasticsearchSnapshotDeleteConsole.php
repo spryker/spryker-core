@@ -22,10 +22,12 @@ class ElasticsearchSnapshotDeleteConsole extends Console
      * @var string
      */
     public const COMMAND_NAME = 'elasticsearch:snapshot:delete';
+
     /**
      * @var string
      */
     public const COMMAND_ALIAS = 'search:snapshot:delete';
+
     /**
      * @var string
      */
@@ -35,6 +37,7 @@ class ElasticsearchSnapshotDeleteConsole extends Console
      * @var string
      */
     public const ARGUMENT_SNAPSHOT_REPOSITORY = 'snapshot-repository';
+
     /**
      * @var string
      */

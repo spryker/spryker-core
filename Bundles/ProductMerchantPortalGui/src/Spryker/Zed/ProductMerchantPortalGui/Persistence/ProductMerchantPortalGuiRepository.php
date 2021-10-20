@@ -47,6 +47,7 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
      * @var string
      */
     protected const SUFFIX_PRICE_TYPE_NET = '_net';
+
     /**
      * @var string
      */
@@ -68,6 +69,7 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
      * @var string
      */
     protected const COL_NAME_FALLBACK = 'name_fallback';
+
     /**
      * @var string
      */

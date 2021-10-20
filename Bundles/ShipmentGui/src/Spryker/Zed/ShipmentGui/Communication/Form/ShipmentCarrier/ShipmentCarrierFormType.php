@@ -29,10 +29,12 @@ class ShipmentCarrierFormType extends AbstractType
      * @var string
      */
     public const FIELD_NAME = 'name';
+
     /**
      * @var string
      */
     public const FIELD_IS_ACTIVE = 'isActive';
+
     /**
      * @var string
      */
@@ -42,10 +44,12 @@ class ShipmentCarrierFormType extends AbstractType
      * @var string
      */
     protected const LABEL_NAME = 'Name';
+
     /**
      * @var string
      */
     protected const LABEL_IS_ACTIVE_FIELD = 'Enabled?';
+
     /**
      * @var string
      */

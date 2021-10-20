@@ -26,6 +26,7 @@ class RestRequestValidator implements RestRequestValidatorInterface
      * @var array
      */
     protected const ERROR_DETAIL_REPLACED_SYMBOLS = ['][', '[', ']'];
+
     /**
      * @var array
      */

@@ -16,10 +16,12 @@ class ProductViewMerchantProductExpander implements ProductViewMerchantProductEx
      * @var string
      */
     protected const SELECTED_ATTRIBUTE_MERCHANT_REFERENCE = 'merchant_reference';
+
     /**
      * @var string
      */
     protected const PARAM_SELECTED_MERCHANT_REFERENCE = 'selected_merchant_reference';
+
     /**
      * @var string
      */

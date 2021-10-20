@@ -29,6 +29,7 @@ class ConsoleBootstrap extends Application
      * @var string
      */
     protected const VERSION = '1';
+
     /**
      * @var string
      */

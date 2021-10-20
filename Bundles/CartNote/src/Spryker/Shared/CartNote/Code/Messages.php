@@ -13,6 +13,7 @@ interface Messages
      * @var string
      */
     public const MESSAGE_CART_NOTE_ADDED_TO_ITEM_SUCCESS = 'cart_note.cart_page.item.note_added';
+
     /**
      * @var string
      */

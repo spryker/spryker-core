@@ -21,6 +21,7 @@ class ProductTaxSetsRestApiDependencyProvider extends AbstractBundleDependencyPr
      * @var string
      */
     public const CLIENT_TAX_PRODUCT_STORAGE = 'CLIENT_TAX_PRODUCT_STORAGE';
+
     /**
      * @var string
      */

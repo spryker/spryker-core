@@ -22,6 +22,7 @@ class ProductQuantityDataImportWriterStep extends PublishAwareStep implements Da
      * @var int|null
      */
     protected const DEFAULT_MAX = null;
+
     /**
      * @var int
      */

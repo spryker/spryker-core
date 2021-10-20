@@ -33,10 +33,12 @@ class TaxSetForm extends AbstractType
      * @var string
      */
     public const FIELD_NAME = 'name';
+
     /**
      * @var string
      */
     public const FIELD_TAX_RATES = 'taxRates';
+
     /**
      * @var string
      */

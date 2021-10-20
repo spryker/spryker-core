@@ -24,10 +24,12 @@ class ImageSetCollectionForm extends AbstractType
      * @var string
      */
     public const OPTION_LOCALES = 'locales';
+
     /**
      * @var string
      */
     public const OPTION_IS_RENDERED = 'is_rendered';
+
     /**
      * @var string
      */

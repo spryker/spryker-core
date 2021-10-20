@@ -15,10 +15,12 @@ class AgentAuthRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESOURCE_AGENT_CUSTOMER_IMPERSONATION_ACCESS_TOKENS = 'agent-customer-impersonation-access-tokens';
+
     /**
      * @var string
      */
     public const RESOURCE_AGENT_ACCESS_TOKENS = 'agent-access-tokens';
+
     /**
      * @var string
      */
@@ -45,6 +47,7 @@ class AgentAuthRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESPONSE_CODE_INVALID_LOGIN = '4101';
+
     /**
      * @var string
      */
@@ -54,6 +57,7 @@ class AgentAuthRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESPONSE_CODE_INVALID_ACCESS_TOKEN = '4102';
+
     /**
      * @var string
      */
@@ -63,6 +67,7 @@ class AgentAuthRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESPONSE_CODE_AGENT_ONLY = '4103';
+
     /**
      * @var string
      */
@@ -72,6 +77,7 @@ class AgentAuthRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESPONSE_CODE_FAILED_TO_IMPERSONATE_CUSTOMER = '4104';
+
     /**
      * @var string
      */

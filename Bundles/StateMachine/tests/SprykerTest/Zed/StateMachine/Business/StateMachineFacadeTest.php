@@ -48,18 +48,22 @@ class StateMachineFacadeTest extends Unit
      * @var string
      */
     public const TESTING_SM = 'TestingSm';
+
     /**
      * @var string
      */
     public const TEST_PROCESS_NAME = 'TestProcess';
+
     /**
      * @var string
      */
     public const TEST_PROCESS_WITHOUT_EVENTS_NAME = 'TestProcessWithoutEvent';
+
     /**
      * @var string
      */
     public const TEST_PROCESS_WITH_LOOP_NAME = 'TestProcessWithLoop';
+
     /**
      * @var int
      */

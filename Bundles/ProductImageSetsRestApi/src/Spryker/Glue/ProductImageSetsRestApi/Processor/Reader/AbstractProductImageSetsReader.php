@@ -28,6 +28,7 @@ class AbstractProductImageSetsReader implements AbstractProductImageSetsReaderIn
      * @var string
      */
     protected const PRODUCT_ABSTRACT_MAPPING_TYPE = 'sku';
+
     /**
      * @var string
      */

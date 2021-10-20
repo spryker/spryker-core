@@ -26,6 +26,7 @@ class ZedNavigationTwigPlugin extends AbstractPlugin implements TwigPluginInterf
      * @var string
      */
     protected const URI_SUFFIX_INDEX = '\/index$';
+
     /**
      * @var string
      */
@@ -35,6 +36,7 @@ class ZedNavigationTwigPlugin extends AbstractPlugin implements TwigPluginInterf
      * @var string
      */
     protected const TWIG_FUNCTION_NAME_NAVIGATION = 'navigation';
+
     /**
      * @var string
      */
@@ -44,6 +46,7 @@ class ZedNavigationTwigPlugin extends AbstractPlugin implements TwigPluginInterf
      * @var string
      */
     protected const TWIG_GLOBAL_VARIABLE_NAME_NAVIGATION = 'navigation';
+
     /**
      * @var string
      */

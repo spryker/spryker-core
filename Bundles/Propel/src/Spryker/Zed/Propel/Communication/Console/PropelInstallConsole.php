@@ -22,10 +22,12 @@ class PropelInstallConsole extends Console
      * @var string
      */
     public const OPTION_NO_DIFF = 'no-diff';
+
     /**
      * @var string
      */
     public const OPTION_NO_DIFF_SHORTCUT = 'o';
+
     /**
      * @var string
      */
@@ -35,6 +37,7 @@ class PropelInstallConsole extends Console
      * @var string
      */
     public const COMMAND_NAME = 'propel:install';
+
     /**
      * @var string
      */

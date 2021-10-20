@@ -15,6 +15,7 @@ class MySqlStorageReader extends AbstractStorageReader
      * @var string
      */
     protected const DEFAULT_PLACEHOLDER_KEY = ':key';
+
     /**
      * @var string
      */

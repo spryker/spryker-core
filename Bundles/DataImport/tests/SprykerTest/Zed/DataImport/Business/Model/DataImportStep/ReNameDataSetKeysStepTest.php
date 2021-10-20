@@ -29,10 +29,12 @@ class ReNameDataSetKeysStepTest extends Unit
      * @var string
      */
     public const ORIGINAL_KEY_A = 'key-a';
+
     /**
      * @var string
      */
     public const NEW_KEY_A = 'new-key-a';
+
     /**
      * @var string
      */

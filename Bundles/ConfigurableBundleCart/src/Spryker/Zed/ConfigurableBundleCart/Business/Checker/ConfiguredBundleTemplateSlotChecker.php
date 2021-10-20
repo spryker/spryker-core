@@ -20,6 +20,7 @@ class ConfiguredBundleTemplateSlotChecker implements ConfiguredBundleTemplateSlo
      * @var string
      */
     protected const KEY_CONFIGURABLE_BUNDLE_TEMPLATE_UUID = 'configurableBundleTemplateUuid';
+
     /**
      * @var string
      */

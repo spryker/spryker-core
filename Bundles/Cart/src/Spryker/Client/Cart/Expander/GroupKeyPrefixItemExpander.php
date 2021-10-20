@@ -17,6 +17,7 @@ class GroupKeyPrefixItemExpander implements GroupKeyPrefixItemExpanderInterface
      * @var string
      */
     protected const PARAM_SEPARATE_PRODUCT = 'separate_product';
+
     /**
      * @var string
      */

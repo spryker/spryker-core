@@ -19,6 +19,7 @@ class CmsBlockProductStorageReader implements CmsBlockProductStorageReaderInterf
      * @var string
      */
     protected const RESOURCE_CMS_BLOCK_PRODUCT = 'cms_block_product';
+
     /**
      * @var string
      */

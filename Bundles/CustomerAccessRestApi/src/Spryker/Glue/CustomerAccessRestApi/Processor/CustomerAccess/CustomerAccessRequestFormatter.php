@@ -20,6 +20,7 @@ class CustomerAccessRequestFormatter implements CustomerAccessRequestFormatterIn
      * @var string
      */
     protected const REQUEST_ATTRIBUTE_IS_PROTECTED = 'is-protected';
+
     /**
      * @var string
      */

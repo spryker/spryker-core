@@ -21,6 +21,7 @@ class ResourceShareQuoteShare implements ResourceShareQuoteShareInterface
      * @var string
      */
     protected const GLOSSARY_KEY_CART_ACCESS_DENIED = 'shared_cart.resource_share.strategy.error.cart_access_denied';
+
     /**
      * @var string
      */

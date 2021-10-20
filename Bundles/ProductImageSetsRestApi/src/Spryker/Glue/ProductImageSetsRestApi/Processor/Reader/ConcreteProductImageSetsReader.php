@@ -27,6 +27,7 @@ class ConcreteProductImageSetsReader implements ConcreteProductImageSetsReaderIn
      * @var string
      */
     protected const PRODUCT_CONCRETE_MAPPING_TYPE = 'sku';
+
     /**
      * @var string
      */

@@ -19,18 +19,22 @@ class ProductReader implements ProductReaderInterface
      * @var string
      */
     protected const KEY_RESULTS = 'results';
+
     /**
      * @var string
      */
     protected const KEY_PAGINATION = 'pagination';
+
     /**
      * @var string
      */
     protected const KEY_PAGINATION_MORE = 'more';
+
     /**
      * @var string
      */
     protected const KEY_DATA_ID = 'id';
+
     /**
      * @var string
      */

@@ -30,6 +30,7 @@ class CreateController extends BaseProductRelationController
      * @var string
      */
     protected const REDIRECT_URL_LIST = '/product-relation-gui/list/index';
+
     /**
      * @var string
      */

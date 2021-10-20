@@ -20,6 +20,7 @@ class PriceDependencyProvider extends AbstractDependencyProvider
      * @var string
      */
     public const CLIENT_QUOTE = 'CLIENT_QUOTE';
+
     /**
      * @var string
      */

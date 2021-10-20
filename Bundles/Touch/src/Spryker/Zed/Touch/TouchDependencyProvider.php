@@ -20,6 +20,7 @@ class TouchDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const PLUGIN_PROPEL_CONNECTION = 'propel connection plugin';
+
     /**
      * @var string
      */

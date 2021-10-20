@@ -27,6 +27,7 @@ class MerchantOpeningHoursRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESPONSE_CODE_MERCHANT_NOT_FOUND = '3501';
+
     /**
      * @uses \Spryker\Glue\MerchantsRestApi\MerchantsRestApiConfig::RESPONSE_DETAIL_MERCHANT_NOT_FOUND
      * @var string
@@ -38,6 +39,7 @@ class MerchantOpeningHoursRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESPONSE_CODE_MERCHANT_IDENTIFIER_MISSING = '3502';
+
     /**
      * @uses \Spryker\Glue\MerchantsRestApi\MerchantsRestApiConfig::RESPONSE_DETAIL_MERCHANT_IDENTIFIER_MISSING
      * @var string

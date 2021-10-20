@@ -25,10 +25,12 @@ class CreateBlockController extends AbstractController
      * @var string
      */
     public const ERROR_MESSAGE_INVALID_DATA_PROVIDED = 'Invalid data provided.';
+
     /**
      * @var string
      */
     public const ERROR_MESSAGE_LOST_TEMPLATE = 'Selected template doesn\'t exist anymore.';
+
     /**
      * @var string
      */

@@ -20,14 +20,17 @@ class ProductPackagingUnitAmountRestrictionValidator implements ProductPackaging
      * @var string
      */
     protected const ERROR_AMOUNT_MIN_NOT_FULFILLED = 'cart.pre.check.amount.min.failed';
+
     /**
      * @var string
      */
     protected const ERROR_AMOUNT_MAX_NOT_FULFILLED = 'cart.pre.check.amount.max.failed';
+
     /**
      * @var string
      */
     protected const ERROR_AMOUNT_INTERVAL_NOT_FULFILLED = 'cart.pre.check.amount.interval.failed';
+
     /**
      * @var string
      */

@@ -22,6 +22,7 @@ class StorageDatabaseDependencyProvider extends AbstractDependencyProvider
      * @var string
      */
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
+
     /**
      * @var string
      */

@@ -24,14 +24,17 @@ class CmsPageSearchWriter implements CmsPageSearchWriterInterface
      * @var string
      */
     protected const CMS_PAGE_ENTITY = 'CMS_PAGE_ENTITY';
+
     /**
      * @var string
      */
     protected const CMS_PAGE_SEARCH_ENTITY = 'CMS_PAGE_SEARCH_ENTITY';
+
     /**
      * @var string
      */
     protected const LOCALE_NAME = 'LOCALE_NAME';
+
     /**
      * @var string
      */

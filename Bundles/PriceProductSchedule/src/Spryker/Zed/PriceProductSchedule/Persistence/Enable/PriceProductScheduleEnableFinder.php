@@ -23,6 +23,7 @@ class PriceProductScheduleEnableFinder implements PriceProductScheduleEnableFind
      * @var string
      */
     protected const COL_PRODUCT_ID = 'product_id';
+
     /**
      * @var string
      */
@@ -32,6 +33,7 @@ class PriceProductScheduleEnableFinder implements PriceProductScheduleEnableFind
      * @var string
      */
     protected const ALIAS_CONCATENATED = 'concatenated';
+
     /**
      * @var string
      */

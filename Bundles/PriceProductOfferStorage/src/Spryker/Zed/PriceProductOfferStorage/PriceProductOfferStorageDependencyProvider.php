@@ -22,10 +22,12 @@ class PriceProductOfferStorageDependencyProvider extends AbstractBundleDependenc
      * @var string
      */
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
+
     /**
      * @var string
      */
     public const FACADE_EVENT = 'FACADE_EVENT';
+
     /**
      * @var string
      */

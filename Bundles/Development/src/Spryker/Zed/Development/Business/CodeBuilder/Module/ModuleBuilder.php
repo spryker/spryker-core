@@ -18,6 +18,7 @@ class ModuleBuilder
      * @var string
      */
     protected const OPTION_FILE = 'file';
+
     /**
      * @var string
      */
@@ -27,6 +28,7 @@ class ModuleBuilder
      * @var string
      */
     protected const NAMESPACE_SPRYKER = 'Spryker';
+
     /**
      * @var string
      */

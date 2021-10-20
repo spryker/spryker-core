@@ -15,6 +15,7 @@ class ProductAvailabilitiesRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESOURCE_ABSTRACT_PRODUCT_AVAILABILITIES = 'abstract-product-availabilities';
+
     /**
      * @var string
      */
@@ -24,6 +25,7 @@ class ProductAvailabilitiesRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESPONSE_CODE_ABSTRACT_PRODUCT_AVAILABILITY_NOT_FOUND = '305';
+
     /**
      * @var string
      */
@@ -33,6 +35,7 @@ class ProductAvailabilitiesRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESPONSE_CODE_CONCRETE_PRODUCT_AVAILABILITY_NOT_FOUND = '306';
+
     /**
      * @var string
      */

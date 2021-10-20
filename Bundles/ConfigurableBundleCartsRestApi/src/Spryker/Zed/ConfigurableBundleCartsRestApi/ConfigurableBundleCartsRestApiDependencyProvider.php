@@ -23,10 +23,12 @@ class ConfigurableBundleCartsRestApiDependencyProvider extends AbstractBundleDep
      * @var string
      */
     public const FACADE_PERSISTENT_CART = 'FACADE_PERSISTENT_CART';
+
     /**
      * @var string
      */
     public const FACADE_CARTS_REST_API = 'FACADE_CARTS_REST_API';
+
     /**
      * @var string
      */

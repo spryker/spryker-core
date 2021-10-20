@@ -28,10 +28,12 @@ abstract class AbstractConfigurableBundleForm extends AbstractType
      * @var string
      */
     protected const FIELD_NAME = 'name';
+
     /**
      * @var string
      */
     protected const FIELD_TRANSLATIONS = 'translations';
+
     /**
      * @var string
      */

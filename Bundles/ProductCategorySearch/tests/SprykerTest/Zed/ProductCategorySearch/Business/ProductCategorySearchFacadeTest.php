@@ -37,10 +37,12 @@ class ProductCategorySearchFacadeTest extends Unit
      * @var string
      */
     protected const STORE_DE = 'DE';
+
     /**
      * @var int
      */
     protected const FAKE_ID_PRODUCT_ABSTRACT = 6666;
+
     /**
      * @var string
      */

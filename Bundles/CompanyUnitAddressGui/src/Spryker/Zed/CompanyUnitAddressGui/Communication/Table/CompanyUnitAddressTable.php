@@ -32,6 +32,7 @@ class CompanyUnitAddressTable extends AbstractTable
      * @var string
      */
     protected const COL_COUNTRY_RELATION = 'Country';
+
     /**
      * @var string
      */

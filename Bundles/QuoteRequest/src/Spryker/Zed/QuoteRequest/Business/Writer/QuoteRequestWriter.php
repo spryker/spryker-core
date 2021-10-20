@@ -30,14 +30,17 @@ class QuoteRequestWriter implements QuoteRequestWriterInterface
      * @var string
      */
     protected const GLOSSARY_KEY_QUOTE_REQUEST_COMPANY_USER_NOT_FOUND = 'quote_request.validation.error.company_user_not_found';
+
     /**
      * @var string
      */
     protected const GLOSSARY_KEY_QUOTE_REQUEST_CART_IS_EMPTY = 'quote_request.validation.error.cart_is_empty';
+
     /**
      * @var string
      */
     protected const GLOSSARY_KEY_QUOTE_REQUEST_WRONG_STATUS = 'quote_request.validation.error.wrong_status';
+
     /**
      * @var string
      */

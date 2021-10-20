@@ -20,22 +20,27 @@ class CheckoutRestApiDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const CLIENT_GLOSSARY_STORAGE = 'CLIENT_GLOSSARY_STORAGE';
+
     /**
      * @var string
      */
     public const PLUGINS_CHECKOUT_REQUEST_ATTRIBUTES_VALIDATOR = 'PLUGINS_CHECKOUT_REQUEST_ATTRIBUTES_VALIDATOR';
+
     /**
      * @var string
      */
     public const PLUGINS_CHECKOUT_REQUEST_VALIDATOR = 'PLUGINS_CHECKOUT_REQUEST_VALIDATOR';
+
     /**
      * @var string
      */
     public const PLUGINS_CHECKOUT_RESPONSE_MAPPER = 'PLUGINS_CHECKOUT_RESPONSE_MAPPER';
+
     /**
      * @var string
      */
     public const PLUGINS_CHECKOUT_DATA_RESPONSE_MAPPER = 'PLUGINS_CHECKOUT_DATA_RESPONSE_MAPPER';
+
     /**
      * @var string
      */

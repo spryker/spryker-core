@@ -18,10 +18,12 @@ class StorageRedisConfig extends AbstractBundleConfig
      * @var string
      */
     protected const STORAGE_REDIS_CONNECTION_KEY = 'STORAGE_REDIS';
+
     /**
      * @var int
      */
     protected const REDIS_DEFAULT_DATABASE = 0;
+
     /**
      * @var int
      */

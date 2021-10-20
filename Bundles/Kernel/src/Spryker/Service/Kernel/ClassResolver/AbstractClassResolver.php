@@ -15,14 +15,17 @@ abstract class AbstractClassResolver extends SharedAbstractClassResolver
      * @var string
      */
     public const KEY_NAMESPACE = '%namespace%';
+
     /**
      * @var string
      */
     public const KEY_APPLICATION = '%application%';
+
     /**
      * @var string
      */
     public const KEY_BUNDLE = '%bundle%';
+
     /**
      * @var string
      */

@@ -20,6 +20,7 @@ class CartCodesRestApiDependencyProvider extends AbstractBundleDependencyProvide
      * @var string
      */
     public const RESOURCE_CARTS_REST_API = 'RESOURCE_CARTS_REST_API';
+
     /**
      * @var string
      */

@@ -33,34 +33,42 @@ class MerchantSalesReturnMerchantUserGuiDependencyProvider extends AbstractBundl
      * @var string
      */
     public const FACADE_MONEY = 'FACADE_MONEY';
+
     /**
      * @var string
      */
     public const FACADE_SALES = 'FACADE_SALES';
+
     /**
      * @var string
      */
     public const FACADE_CUSTOMER = 'FACADE_CUSTOMER';
+
     /**
      * @var string
      */
     public const FACADE_MERCHANT_USER = 'FACADE_MERCHANT_USER';
+
     /**
      * @var string
      */
     public const FACADE_MERCHANT_SALES_ORDER = 'FACADE_MERCHANT_SALES_ORDER';
+
     /**
      * @var string
      */
     public const FACADE_MERCHANT_OMS = 'FACADE_MERCHANT_OMS';
+
     /**
      * @var string
      */
     public const FACADE_SHIPMENT = 'FACADE_SHIPMENT';
+
     /**
      * @var string
      */
     public const FACADE_SALES_RETURN = 'FACADE_SALES_RETURN';
+
     /**
      * @var string
      */
@@ -70,10 +78,12 @@ class MerchantSalesReturnMerchantUserGuiDependencyProvider extends AbstractBundl
      * @var string
      */
     public const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
+
     /**
      * @var string
      */
     public const SERVICE_DATE_TIME = 'SERVICE_DATE_TIME';
+
     /**
      * @var string
      */

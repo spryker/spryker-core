@@ -42,6 +42,7 @@ class DetailController extends AbstractController
      * @var string
      */
     protected const MESSAGE_MERCHANT_NOT_FOUND_ERROR = 'Merchant for current user not found.';
+
     /**
      * @var string
      */

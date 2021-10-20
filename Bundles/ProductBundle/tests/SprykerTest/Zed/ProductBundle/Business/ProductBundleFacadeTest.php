@@ -46,10 +46,12 @@ class ProductBundleFacadeTest extends Unit
      * @var string
      */
     public const SKU_BUNDLED_1 = 'sku-1-test-tester';
+
     /**
      * @var string
      */
     public const SKU_BUNDLED_2 = 'sku-2-test-tester';
+
     /**
      * @var string
      */
@@ -59,14 +61,17 @@ class ProductBundleFacadeTest extends Unit
      * @var int
      */
     public const BUNDLED_PRODUCT_PRICE_1 = 50;
+
     /**
      * @var int
      */
     public const BUNDLED_PRODUCT_PRICE_2 = 100;
+
     /**
      * @var int
      */
     public const ID_STORE = 1;
+
     /**
      * @var string
      */

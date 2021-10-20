@@ -32,10 +32,12 @@ class CmsFacadePageTest extends Unit
      * @var string
      */
     public const CMS_PAGE_NEW_TITLE = 'new title';
+
     /**
      * @var string
      */
     public const CMS_PAGE_NEW_KEY_WORDS = 'new key words';
+
     /**
      * @var string
      */

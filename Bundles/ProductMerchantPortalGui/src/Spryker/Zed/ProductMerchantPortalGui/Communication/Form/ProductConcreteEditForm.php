@@ -27,22 +27,27 @@ class ProductConcreteEditForm extends AbstractType
      * @var string
      */
     protected const FIELD_PRODUCT_CONCRETE = 'productConcrete';
+
     /**
      * @var string
      */
     protected const FIELD_USE_ABSTRACT_PRODUCT_NAME = 'useAbstractProductName';
+
     /**
      * @var string
      */
     protected const FIELD_USE_ABSTRACT_PRODUCT_DESCRIPTION = 'useAbstractProductDescription';
+
     /**
      * @var string
      */
     protected const FIELD_USE_ABSTRACT_PRODUCT_PRICES = 'useAbstractProductPrices';
+
     /**
      * @var string
      */
     protected const FIELD_USE_ABSTRACT_PRODUCT_IMAGE_SETS = 'useAbstractProductImageSets';
+
     /**
      * @var string
      */
@@ -62,18 +67,22 @@ class ProductConcreteEditForm extends AbstractType
      * @var string
      */
     protected const LABEL_USE_ABSTRACT_PRODUCT_NAME = 'Use Abstract Product Name';
+
     /**
      * @var string
      */
     protected const LABEL_USE_ABSTRACT_PRODUCT_DESCRIPTION = 'Use Abstract Product Description';
+
     /**
      * @var string
      */
     protected const LABEL_USE_ABSTRACT_PRODUCT_PRICES = 'Use Abstract Product prices';
+
     /**
      * @var string
      */
     protected const LABEL_USE_ABSTRACT_PRODUCT_IMAGE_SETS = 'Use Abstract Product Image Sets';
+
     /**
      * @var string
      */

@@ -17,10 +17,12 @@ class ProductRelationTabs extends AbstractTabs
      * @var string
      */
     protected const RELATION_TAB_NAME = 'relation-type';
+
     /**
      * @var string
      */
     protected const RELATION_TAB_TEMPLATE = '@ProductRelationGui/_partial/tab-relation-type.twig';
+
     /**
      * @var string
      */
@@ -30,10 +32,12 @@ class ProductRelationTabs extends AbstractTabs
      * @var string
      */
     protected const ASSIGN_TAB_NAME = 'assign-products';
+
     /**
      * @var string
      */
     protected const ASSIGN_TAB_TEMPLATE = '@ProductRelationGui/_partial/tab-assign-products.twig';
+
     /**
      * @var string
      */

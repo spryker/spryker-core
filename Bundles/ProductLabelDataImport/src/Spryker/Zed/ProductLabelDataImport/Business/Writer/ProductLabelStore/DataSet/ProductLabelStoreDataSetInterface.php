@@ -13,6 +13,7 @@ interface ProductLabelStoreDataSetInterface
      * @var string
      */
     public const COL_NAME = 'name';
+
     /**
      * @var string
      */
@@ -22,6 +23,7 @@ interface ProductLabelStoreDataSetInterface
      * @var string
      */
     public const COL_ID_PRODUCT_LABEL = 'id_product_label';
+
     /**
      * @var string
      */

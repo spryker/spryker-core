@@ -27,18 +27,22 @@ class CodeTestConsole extends Console
      * @var string
      */
     public const OPTION_MODULE = 'module';
+
     /**
      * @var string
      */
     public const OPTION_INITIALIZE = 'initialize';
+
     /**
      * @var string
      */
     public const OPTION_GROUP = 'group';
+
     /**
      * @var string
      */
     public const OPTION_TYPE_EXCLUDE = 'exclude';
+
     /**
      * @var string
      */

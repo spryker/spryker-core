@@ -24,6 +24,7 @@ class ProductListStorageDependencyProvider extends AbstractBundleDependencyProvi
      * @var string
      */
     public const PROPEL_QUERY_PRODUCT = 'PROPEL_QUERY_PRODUCT';
+
     /**
      * @var string
      */
@@ -33,10 +34,12 @@ class ProductListStorageDependencyProvider extends AbstractBundleDependencyProvi
      * @var string
      */
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
+
     /**
      * @var string
      */
     public const FACADE_PRODUCT_LIST = 'FACADE_PRODUCT_LIST';
+
     /**
      * @var string
      */

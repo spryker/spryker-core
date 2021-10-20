@@ -30,10 +30,12 @@ class ProductLabelTable extends AbstractTable
     public const COL_STATUS = SpyProductLabelTableMap::COL_IS_ACTIVE;
     public const COL_STORES = SpyStoreTableMap::COL_NAME;
     public const COL_PRIORITY = SpyProductLabelTableMap::COL_POSITION;
+
     /**
      * @var string
      */
     public const COL_ABSTRACT_PRODUCT_RELATION_COUNT = 'abstract_product_relation_count';
+
     /**
      * @var string
      */

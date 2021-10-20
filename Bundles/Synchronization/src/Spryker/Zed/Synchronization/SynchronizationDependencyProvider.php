@@ -24,22 +24,27 @@ class SynchronizationDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const CLIENT_STORAGE = 'CLIENT_STORAGE';
+
     /**
      * @var string
      */
     public const CLIENT_SEARCH = 'CLIENT_SEARCH';
+
     /**
      * @var string
      */
     public const CLIENT_QUEUE = 'CLIENT_QUEUE';
+
     /**
      * @var string
      */
     public const SERVICE_UTIL_ENCODING = 'UTIL_ENCODING_SERVICE';
+
     /**
      * @var string
      */
     public const PLUGINS_SYNCHRONIZATION_DATA = 'PLUGINS_SYNCHRONIZATION_DATA';
+
     /**
      * @var string
      */

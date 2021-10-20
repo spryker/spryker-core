@@ -25,6 +25,7 @@ class CmsBlockGuiDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const FACADE_CMS_BLOCK = 'CMS_BLOCK_GUI:FACADE_CMS_BLOCK';
+
     /**
      * @var string
      */
@@ -39,10 +40,12 @@ class CmsBlockGuiDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const PLUGINS_CMS_BLOCK_FORM = 'CMS_BLOCK_GUI:PLUGINS_CMS_BLOCK_FORM';
+
     /**
      * @var string
      */
     public const PLUGINS_CMS_BLOCK_VIEW = 'CMS_BLOCK_GUI:PLUGINS_CMS_BLOCK_VIEW';
+
     /**
      * @var string
      */
@@ -63,6 +66,7 @@ class CmsBlockGuiDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const PLUGINS_CMS_BLOCK_GLOSSARY_BEFORE_SAVE = 'PLUGINS_CMS_BLOCK_GLOSSARY_BEFORE_SAVE';
+
     /**
      * @var string
      */

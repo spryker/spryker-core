@@ -21,6 +21,7 @@ class ProductImageSetsRestApiDependencyProvider extends AbstractBundleDependency
      * @var string
      */
     public const CLIENT_PRODUCT_IMAGE_STORAGE = 'CLIENT_PRODUCT_IMAGE_STORAGE';
+
     /**
      * @var string
      */

@@ -19,10 +19,12 @@ class ProductAbstractSelectedTable extends AbstractProductAbstractTable
      * @var string
      */
     public const TABLE_IDENTIFIER = 'product-abstract-selected-table';
+
     /**
      * @var string
      */
     public const TABLE_CLASS = 'product-abstract-selected-table gui-table-data';
+
     /**
      * @var string
      */
@@ -37,10 +39,12 @@ class ProductAbstractSelectedTable extends AbstractProductAbstractTable
      * @var string
      */
     public const BUTTON_DELETE = 'Delete';
+
     /**
      * @var string
      */
     public const BUTTON_MOVE_UP = 'Move Up';
+
     /**
      * @var string
      */

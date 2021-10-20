@@ -24,6 +24,7 @@ abstract class AbstractRelatedProductTable extends AbstractTable
     public const COL_PRODUCT_ABSTRACT_CATEGORIES = RelatedProductTableQueryBuilder::RESULT_FIELD_PRODUCT_ABSTRACT_CATEGORY_NAMES_CSV;
     public const COL_PRODUCT_ABSTRACT_PRICE = RelatedProductTableQueryBuilder::RESULT_FIELD_PRODUCT_ABSTRACT_PRICE;
     public const COL_PRODUCT_ABSTRACT_STATUS = RelatedProductTableQueryBuilder::RESULT_FIELD_PRODUCT_CONCRETE_STATES_CSV;
+
     /**
      * @var string
      */

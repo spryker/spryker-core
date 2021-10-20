@@ -26,14 +26,17 @@ class CmsBlockContentWidgetPlugin extends AbstractPlugin implements CmsContentWi
      * @var string
      */
     protected const STORAGE_DATA_KEY_CMS_BLOCK_GLOSSARY_KEY_MAPPINGS = 'SpyCmsBlockGlossaryKeyMappings';
+
     /**
      * @var string
      */
     protected const CMS_BLOCK_GLOSSARY_KEY_MAPPING_PLACEHOLDER = 'placeholder';
+
     /**
      * @var string
      */
     protected const CMS_BLOCK_GLOSSARY_KEY_MAPPING_GLOSSARY_KEY = 'GlossaryKey';
+
     /**
      * @var string
      */

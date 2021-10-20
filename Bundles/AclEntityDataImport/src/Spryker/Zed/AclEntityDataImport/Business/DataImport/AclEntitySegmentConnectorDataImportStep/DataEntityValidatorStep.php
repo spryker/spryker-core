@@ -19,6 +19,7 @@ class DataEntityValidatorStep implements DataImportStepInterface
      * @var string
      */
     protected const REFERENCED_ENTITY_CLASS_WAS_NOT_FOUND_TEMPLATE = 'Referenced entity class was not found: %s';
+
     /**
      * @var string
      */

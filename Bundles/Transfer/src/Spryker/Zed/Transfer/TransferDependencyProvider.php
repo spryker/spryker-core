@@ -23,10 +23,12 @@ class TransferDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const SERVICE_UTIL_GLOB = 'util glob service';
+
     /**
      * @var string
      */
     public const SYMFONY_FILE_SYSTEM = 'symfony_file_system';
+
     /**
      * @var string
      */

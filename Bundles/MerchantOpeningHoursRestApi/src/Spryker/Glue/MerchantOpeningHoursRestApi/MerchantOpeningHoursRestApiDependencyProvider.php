@@ -22,10 +22,12 @@ class MerchantOpeningHoursRestApiDependencyProvider extends AbstractBundleDepend
      * @var string
      */
     public const CLIENT_MERCHANT_OPENING_HOURS_STORAGE = 'CLIENT_MERCHANT_OPENING_HOURS_STORAGE';
+
     /**
      * @var string
      */
     public const CLIENT_MERCHANT_STORAGE = 'CLIENT_MERCHANT_STORAGE';
+
     /**
      * @var string
      */

@@ -19,10 +19,12 @@ class ProductDependencyProvider extends AbstractDependencyProvider
      * @var string
      */
     public const CLIENT_LOCALE = 'client locale';
+
     /**
      * @var string
      */
     public const KV_STORAGE = 'kv storage';
+
     /**
      * @var string
      */

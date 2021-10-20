@@ -25,14 +25,17 @@ class WishlistDependencyProvider extends AbstractDependencyProvider
      * @var string
      */
     public const CLIENT_CART = 'CLIENT_CART';
+
     /**
      * @var string
      */
     public const CLIENT_PRODUCT = 'CLIENT_PRODUCT';
+
     /**
      * @var string
      */
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
+
     /**
      * @var string
      */
@@ -42,6 +45,7 @@ class WishlistDependencyProvider extends AbstractDependencyProvider
      * @var string
      */
     public const PLUGINS_WISHLIST_POST_MOVE_TO_CART_COLLECTION_EXPANDER = 'PLUGINS_WISHLIST_POST_MOVE_TO_CART_COLLECTION_EXPANDER';
+
     /**
      * @var string
      */

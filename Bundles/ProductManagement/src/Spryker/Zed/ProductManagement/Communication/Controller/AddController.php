@@ -29,10 +29,12 @@ class AddController extends AbstractController
      * @var string
      */
     public const PARAM_ID_PRODUCT_ABSTRACT = 'id-product-abstract';
+
     /**
      * @var string
      */
     protected const PARAM_ID_PRODUCT = 'id-product';
+
     /**
      * @var string
      */

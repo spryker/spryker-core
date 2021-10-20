@@ -31,6 +31,7 @@ class MoneyDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const FACADE_CURRENCY = 'currency facade';
+
     /**
      * @var string
      */

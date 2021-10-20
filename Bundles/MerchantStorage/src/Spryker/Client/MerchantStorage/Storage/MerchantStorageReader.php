@@ -23,6 +23,7 @@ class MerchantStorageReader implements MerchantStorageReaderInterface
      * @var string
      */
     protected const KEY_ID_MERCHANT = 'id';
+
     /**
      * @var string
      */

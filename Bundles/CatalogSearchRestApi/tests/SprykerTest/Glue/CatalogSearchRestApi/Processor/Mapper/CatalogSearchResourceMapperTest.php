@@ -44,14 +44,17 @@ class CatalogSearchResourceMapperTest extends Unit
      * @var string
      */
     protected const REQUESTED_CURRENCY = 'CHF';
+
     /**
      * @var string
      */
     protected const GROSS_AMOUNT = 'grossAmount';
+
     /**
      * @var string
      */
     protected const GROSS_MODE = 'GROSS_MODE';
+
     /**
      * @var string
      */
@@ -62,6 +65,7 @@ class CatalogSearchResourceMapperTest extends Unit
      * @var string
      */
     protected const KEY_PRODUCTS = 'products';
+
     /**
      * @var string
      */

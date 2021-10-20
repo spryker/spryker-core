@@ -21,6 +21,7 @@ class ContentKeyProvider implements ContentKeyProviderInterface
      * @var int
      */
     protected const KEY_GENERATOR_ITERATION_LIMIT = 10;
+
     /**
      * @var string
      */

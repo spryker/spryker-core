@@ -25,6 +25,7 @@ class GeneralForm extends AbstractSubForm
      * @var string
      */
     public const FIELD_NAME = 'name';
+
     /**
      * @var string
      */

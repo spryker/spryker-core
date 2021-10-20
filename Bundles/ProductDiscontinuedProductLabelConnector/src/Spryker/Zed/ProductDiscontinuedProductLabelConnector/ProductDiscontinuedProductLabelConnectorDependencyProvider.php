@@ -24,18 +24,22 @@ class ProductDiscontinuedProductLabelConnectorDependencyProvider extends Abstrac
      * @var string
      */
     public const FACADE_PRODUCT_LABEL = 'FACADE_PRODUCT_LABEL';
+
     /**
      * @var string
      */
     public const FACADE_PRODUCT_DISCONTINUED = 'FACADE_PRODUCT_DISCONTINUED';
+
     /**
      * @var string
      */
     public const FACADE_PRODUCT = 'FACADE_PRODUCT';
+
     /**
      * @var string
      */
     public const FACADE_LOCALE = 'FACADE_LOCALE';
+
     /**
      * @var string
      */

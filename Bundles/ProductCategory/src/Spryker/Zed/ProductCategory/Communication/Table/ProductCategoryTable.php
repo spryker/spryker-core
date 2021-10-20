@@ -22,10 +22,12 @@ class ProductCategoryTable extends AbstractTable
      * @var string
      */
     public const TABLE_IDENTIFIER = 'product-category-table';
+
     /**
      * @var string
      */
     public const COL_CHECKBOX = 'checkbox';
+
     /**
      * @var string
      */

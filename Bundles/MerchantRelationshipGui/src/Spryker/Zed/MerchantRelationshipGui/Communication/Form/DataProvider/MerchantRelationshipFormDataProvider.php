@@ -21,18 +21,22 @@ class MerchantRelationshipFormDataProvider
      * @var string
      */
     public const OPTION_SELECTED_COMPANY = 'id_company';
+
     /**
      * @var string
      */
     public const OPTION_IS_PERSISTENCE_FORM = 'is_persistence_form';
+
     /**
      * @var string
      */
     public const OPTION_COMPANY_CHOICES = 'company_choices';
+
     /**
      * @var string
      */
     public const OPTION_MERCHANT_CHOICES = 'merchant_choices';
+
     /**
      * @var string
      */

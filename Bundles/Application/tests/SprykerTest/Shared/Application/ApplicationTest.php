@@ -29,6 +29,7 @@ class ApplicationTest extends Unit
      * @var string
      */
     public const SERVICE = 'SERVICE';
+
     /**
      * @var string
      */

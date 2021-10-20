@@ -16,10 +16,12 @@ class PriceProductOfferUpdateGuiTableConfigurationProvider extends AbstractPrice
      * @var string
      */
     protected const ID_FILTER_IN_STORES = 'inStores';
+
     /**
      * @var string
      */
     protected const ID_FILTER_IN_CURRENCIES = 'inCurrencies';
+
     /**
      * @var string
      */
@@ -29,18 +31,22 @@ class PriceProductOfferUpdateGuiTableConfigurationProvider extends AbstractPrice
      * @var string
      */
     protected const TITLE_FILTER_STORES = 'Stores';
+
     /**
      * @var string
      */
     protected const TITLE_FILTER_CURRENCIES = 'Currencies';
+
     /**
      * @var string
      */
     protected const TITLE_ROW_ACTION_DELETE = 'Delete';
+
     /**
      * @var string
      */
     protected const TITLE_ADD_BUTTON = 'Save';
+
     /**
      * @var string
      */

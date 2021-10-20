@@ -20,6 +20,7 @@ class ProductOfferStockGuiDependencyProvider extends AbstractBundleDependencyPro
      * @var string
      */
     public const FACADE_PRODUCT_OFFER_STOCK = 'FACADE_PRODUCT_OFFER_STOCK';
+
     /**
      * @var string
      */

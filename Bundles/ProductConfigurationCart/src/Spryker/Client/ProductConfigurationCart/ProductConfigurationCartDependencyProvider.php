@@ -23,14 +23,17 @@ class ProductConfigurationCartDependencyProvider extends AbstractDependencyProvi
      * @var string
      */
     public const CLIENT_PRODUCT_CONFIGURATION = 'CLIENT_PRODUCT_CONFIGURATION';
+
     /**
      * @var string
      */
     public const CLIENT_PRODUCT_CONFIGURATION_STORAGE = 'CLIENT_PRODUCT_CONFIGURATION_STORAGE';
+
     /**
      * @var string
      */
     public const CLIENT_CART = 'CLIENT_CART';
+
     /**
      * @var string
      */

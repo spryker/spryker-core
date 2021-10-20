@@ -17,6 +17,7 @@ class ProductBundleReturnCreateFormDataProvider
      * @var string
      */
     public const FIELD_RETURN_ITEMS = 'returnItems';
+
     /**
      * @var string
      */

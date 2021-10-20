@@ -43,6 +43,7 @@ class PdoBatchIteratorTest extends Unit
      * @var string
      */
     protected const TESTING_TABLE_NAME = 'foo';
+
     /**
      * @var string
      */

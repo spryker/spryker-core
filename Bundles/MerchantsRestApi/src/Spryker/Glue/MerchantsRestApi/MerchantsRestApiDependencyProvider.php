@@ -22,10 +22,12 @@ class MerchantsRestApiDependencyProvider extends AbstractBundleDependencyProvide
      * @var string
      */
     public const CLIENT_MERCHANT_STORAGE = 'CLIENT_MERCHANT_STORAGE';
+
     /**
      * @var string
      */
     public const CLIENT_MERCHANT_SEARCH = 'CLIENT_MERCHANT_SEARCH';
+
     /**
      * @var string
      */

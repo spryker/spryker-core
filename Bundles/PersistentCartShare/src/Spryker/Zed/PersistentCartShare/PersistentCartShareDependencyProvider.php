@@ -21,6 +21,7 @@ class PersistentCartShareDependencyProvider extends AbstractBundleDependencyProv
      * @var string
      */
     public const FACADE_RESOURCE_SHARE = 'FACADE_RESOURCE_SHARE';
+
     /**
      * @var string
      */

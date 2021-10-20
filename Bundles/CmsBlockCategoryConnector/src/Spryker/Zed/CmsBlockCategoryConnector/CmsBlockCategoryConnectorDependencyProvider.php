@@ -24,10 +24,12 @@ class CmsBlockCategoryConnectorDependencyProvider extends AbstractBundleDependen
      * @var string
      */
     public const FACADE_LOCALE = 'CMS_BLOCK_CATEGORY_CONNECTOR:FACADE_LOCALE';
+
     /**
      * @var string
      */
     public const FACADE_TOUCH = 'CMS_BLOCK_CATEGORY_CONNECTOR:FACADE_TOUCH';
+
     /**
      * @var string
      */
@@ -37,10 +39,12 @@ class CmsBlockCategoryConnectorDependencyProvider extends AbstractBundleDependen
      * @var string
      */
     public const QUERY_CONTAINER_CMS_BLOCK = 'CMS_BLOCK_CATEGORY_CONNECTOR:QUERY_CONTAINER_CMS_BLOCK';
+
     /**
      * @var string
      */
     public const QUERY_CONTAINER_CATEGORY = 'CMS_BLOCK_CATEGORY_CONNECTOR:QUERY_CONTAINER_CATEGORY';
+
     /**
      * @var string
      */
@@ -50,6 +54,7 @@ class CmsBlockCategoryConnectorDependencyProvider extends AbstractBundleDependen
      * @var string
      */
     public const SERVICE_DATA_READER = 'CMS_BLOCK_CATEGORY_CONNECTOR:SERVICE_DATA_READER';
+
     /**
      * @var string
      */

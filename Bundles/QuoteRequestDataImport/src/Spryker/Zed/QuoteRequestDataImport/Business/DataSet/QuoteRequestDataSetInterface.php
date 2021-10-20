@@ -13,10 +13,12 @@ interface QuoteRequestDataSetInterface
      * @var string
      */
     public const COLUMN_QUOTE_REQUEST_REFERENCE = 'quote_request_reference';
+
     /**
      * @var string
      */
     public const COLUMN_COMPANY_USER_KEY = 'company_user_key';
+
     /**
      * @var string
      */
@@ -26,6 +28,7 @@ interface QuoteRequestDataSetInterface
      * @var string
      */
     public const ID_QUOTE_REQUEST = 'id_company_user';
+
     /**
      * @var string
      */

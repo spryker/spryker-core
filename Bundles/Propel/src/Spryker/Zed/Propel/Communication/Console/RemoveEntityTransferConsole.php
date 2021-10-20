@@ -21,6 +21,7 @@ class RemoveEntityTransferConsole extends Console
      * @var string
      */
     public const COMMAND_NAME = 'transfer:entity:remove';
+
     /**
      * @var string
      */

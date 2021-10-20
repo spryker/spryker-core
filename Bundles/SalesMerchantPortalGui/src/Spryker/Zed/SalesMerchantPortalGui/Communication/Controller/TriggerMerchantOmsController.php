@@ -26,10 +26,12 @@ class TriggerMerchantOmsController extends AbstractSalesMerchantPortalGuiControl
      * @var string
      */
     protected const PARAM_ID_MERCHANT_ORDER = 'merchant-order-id';
+
     /**
      * @var string
      */
     protected const PARAM_MERCHANT_ORDER_IDS = 'merchant-order-ids';
+
     /**
      * @var string
      */

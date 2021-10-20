@@ -25,6 +25,7 @@ class CurrencyTwigPlugin extends AbstractPlugin implements TwigPluginInterface
      * @var string
      */
     protected const NO_SYMBOL_FOUND = '-';
+
     /**
      * @var string
      */

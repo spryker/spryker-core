@@ -24,18 +24,22 @@ class ProductOptionStorageDependencyProvider extends AbstractBundleDependencyPro
      * @var string
      */
     public const QUERY_CONTAINER_PRODUCT = 'QUERY_CONTAINER_PRODUCT';
+
     /**
      * @var string
      */
     public const QUERY_CONTAINER_PRODUCT_OPTION = 'QUERY_CONTAINER_PRODUCT_OPTION';
+
     /**
      * @var string
      */
     public const FACADE_PRODUCT_OPTION = 'FACADE_PRODUCT_OPTION';
+
     /**
      * @var string
      */
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
+
     /**
      * @var string
      */

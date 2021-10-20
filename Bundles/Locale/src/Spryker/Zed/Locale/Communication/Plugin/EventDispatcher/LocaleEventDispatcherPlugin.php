@@ -27,6 +27,7 @@ class LocaleEventDispatcherPlugin extends AbstractPlugin implements EventDispatc
      * @var string
      */
     protected const SERVICE_LOCALE = 'locale';
+
     /**
      * @var int
      */

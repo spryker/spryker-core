@@ -26,26 +26,32 @@ class SalesInvoiceDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const FACADE_MAIL = 'FACADE_MAIL';
+
     /**
      * @var string
      */
     public const FACADE_STORE = 'FACADE_STORE';
+
     /**
      * @var string
      */
     public const FACADE_SEQUENCE_NUMBER = 'FACADE_SEQUENCE_NUMBER';
+
     /**
      * @var string
      */
     public const FACADE_SALES = 'FACADE_SALES';
+
     /**
      * @var string
      */
     public const TWIG_ENVIRONMENT = 'TWIG_ENVIRONMENT';
+
     /**
      * @var string
      */
     public const PLUGINS_ORDER_INVOICE_BEFORE_SAVE = 'PLUGINS_ORDER_INVOICE_BEFORE_SAVE';
+
     /**
      * @var string
      */

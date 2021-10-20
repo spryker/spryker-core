@@ -36,10 +36,12 @@ class DeletePriceProductOfferController extends AbstractPriceProductOfferControl
      * @var string
      */
     protected const PARAM_PRODUCT_OFFER_ID = 'product-offer-id';
+
     /**
      * @var string
      */
     protected const PARAM_PRICE_PRODUCT_OFFER_IDS = 'price-product-offer-ids';
+
     /**
      * @var string
      */

@@ -18,6 +18,7 @@ class CustomerTableButtonCreator extends AbstractButtonCreator implements Custom
      * @var string
      */
     protected const PATH_ATTACH_CUSTOMER_TO_COMPANY = '/company-user-gui/create-company-user/attach-customer';
+
     /**
      * @var string
      */

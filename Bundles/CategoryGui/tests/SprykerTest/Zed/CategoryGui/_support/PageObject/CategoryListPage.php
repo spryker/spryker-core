@@ -18,6 +18,7 @@ class CategoryListPage
      * @var string
      */
     public const SELECTOR_TABLE = 'dataTables_wrapper';
+
     /**
      * @var string
      */

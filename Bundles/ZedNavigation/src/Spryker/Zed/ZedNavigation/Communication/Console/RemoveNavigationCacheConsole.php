@@ -21,6 +21,7 @@ class RemoveNavigationCacheConsole extends Console
      * @var string
      */
     public const COMMAND_NAME = 'navigation:cache:remove';
+
     /**
      * @var string
      */

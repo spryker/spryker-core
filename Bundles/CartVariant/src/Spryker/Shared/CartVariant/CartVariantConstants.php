@@ -16,6 +16,7 @@ interface CartVariantConstants
      * @var string
      */
     public const AVAILABLE = 'available';
+
     /**
      * @var string
      */

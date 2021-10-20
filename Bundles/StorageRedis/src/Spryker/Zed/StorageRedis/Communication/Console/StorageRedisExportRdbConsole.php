@@ -21,6 +21,7 @@ class StorageRedisExportRdbConsole extends Console
      * @var string
      */
     public const COMMAND_NAME = 'storage:redis:export-rdb';
+
     /**
      * @var string
      */

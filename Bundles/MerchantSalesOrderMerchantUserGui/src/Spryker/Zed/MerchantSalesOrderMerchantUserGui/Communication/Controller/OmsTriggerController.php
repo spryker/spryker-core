@@ -24,14 +24,17 @@ class OmsTriggerController extends AbstractController
      * @var string
      */
     protected const URL_PARAM_MERCHANT_SALES_ORDER_ITEM_REFERENCE = 'merchant-sales-order-item-reference';
+
     /**
      * @var string
      */
     protected const URL_PARAM_ID_MERCHANT_SALES_ORDER = 'id-merchant-sales-order';
+
     /**
      * @var string
      */
     protected const URL_PARAM_REDIRECT = 'redirect';
+
     /**
      * @var string
      */
@@ -57,6 +60,7 @@ class OmsTriggerController extends AbstractController
      * @var string
      */
     protected const MESSAGE_ORDER_NOT_FOUND_ERROR = 'Merchant sales order #%d not found.';
+
     /**
      * @var string
      */

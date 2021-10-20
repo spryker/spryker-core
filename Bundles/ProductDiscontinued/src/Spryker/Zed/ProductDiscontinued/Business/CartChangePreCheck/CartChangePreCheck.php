@@ -21,10 +21,12 @@ class CartChangePreCheck implements CartChangePreCheckInterface
      * @var string
      */
     protected const GLOSSARY_KEY_CART_PRE_CHECK_PRODUCT_DISCONTINUED = 'cart.pre.check.product_discontinued';
+
     /**
      * @var string
      */
     protected const GLOSSARY_PARAM_NAME = '%name%';
+
     /**
      * @var string
      */

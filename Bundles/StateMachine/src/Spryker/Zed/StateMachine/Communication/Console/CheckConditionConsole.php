@@ -25,14 +25,17 @@ class CheckConditionConsole extends Console
      * @var string
      */
     public const COMMAND_NAME = 'state-machine:check-condition';
+
     /**
      * @var string
      */
     public const COMMAND_DESCRIPTION = 'Check conditions';
+
     /**
      * @var string
      */
     public const ARGUMENT_STATE_MACHINE_NAME = 'state machine name';
+
     /**
      * @var string
      */

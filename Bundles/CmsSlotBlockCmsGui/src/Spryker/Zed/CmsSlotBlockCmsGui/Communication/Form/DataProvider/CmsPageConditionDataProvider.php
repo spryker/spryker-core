@@ -19,6 +19,7 @@ class CmsPageConditionDataProvider implements CmsPageConditionDataProviderInterf
      * @var string
      */
     protected const KEY_OPTION_ALL_CMS_PAGES = 'All CMS Pages';
+
     /**
      * @var string
      */

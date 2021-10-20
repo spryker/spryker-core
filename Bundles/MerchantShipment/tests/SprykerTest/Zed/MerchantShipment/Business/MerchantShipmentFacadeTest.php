@@ -28,6 +28,7 @@ class MerchantShipmentFacadeTest extends Unit
      * @var string
      */
     protected const TEST_MERCHANT_REFERENCE = 'test_merchant_reference';
+
     /**
      * @var string
      */

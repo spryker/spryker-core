@@ -35,10 +35,12 @@ class TranslationManager implements TranslationManagerInterface
      * @var string
      */
     public const TOUCH_TRANSLATION = 'translation';
+
     /**
      * @var string
      */
     public const GLOSSARY_KEY = 'glossary_key';
+
     /**
      * @var string
      */

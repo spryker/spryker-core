@@ -20,14 +20,17 @@ class CmsGlossaryFormTypeDataProvider
      * @var string
      */
     public const TYPE_GLOSSARY_NEW = 'New glossary';
+
     /**
      * @var string
      */
     public const TYPE_GLOSSARY_FIND = 'Find glossary by key';
+
     /**
      * @var string
      */
     public const TYPE_AUTO_GLOSSARY = 'Auto';
+
     /**
      * @var string
      */

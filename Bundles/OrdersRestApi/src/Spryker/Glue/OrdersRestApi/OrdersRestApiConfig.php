@@ -15,10 +15,12 @@ class OrdersRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESOURCE_ORDERS = 'orders';
+
     /**
      * @var string
      */
     public const RESOURCE_ORDER_ITEMS = 'order-items';
+
     /**
      * @uses \Spryker\Glue\CustomersRestApi\CustomersRestApiConfig::RESOURCE_CUSTOMERS
      * @var string
@@ -34,6 +36,7 @@ class OrdersRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESPONSE_CODE_CANT_FIND_ORDER = '801';
+
     /**
      * @var string
      */
@@ -43,6 +46,7 @@ class OrdersRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESPONSE_DETAIL_CANT_FIND_ORDER = 'Can\'t find order by the given order reference';
+
     /**
      * @var string
      */

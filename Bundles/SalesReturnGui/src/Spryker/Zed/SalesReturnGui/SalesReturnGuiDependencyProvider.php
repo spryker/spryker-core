@@ -27,22 +27,27 @@ class SalesReturnGuiDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const FACADE_SALES_RETURN = 'FACADE_SALES_RETURN';
+
     /**
      * @var string
      */
     public const FACADE_MONEY = 'FACADE_MONEY';
+
     /**
      * @var string
      */
     public const FACADE_SALES = 'FACADE_SALES';
+
     /**
      * @var string
      */
     public const FACADE_GLOSSARY = 'FACADE_GLOSSARY';
+
     /**
      * @var string
      */
     public const FACADE_CUSTOMER = 'FACADE_CUSTOMER';
+
     /**
      * @var string
      */
@@ -52,6 +57,7 @@ class SalesReturnGuiDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const PLUGINS_RETURN_CREATE_FORM_HANDLER = 'PLUGINS_RETURN_CREATE_FORM_HANDLER';
+
     /**
      * @var string
      */

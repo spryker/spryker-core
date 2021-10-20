@@ -22,10 +22,12 @@ class EditController extends AbstractController
      * @var string
      */
     public const PARAM_ID_OFFER = 'id-offer';
+
     /**
      * @var string
      */
     public const PARAM_SUBMIT_RELOAD = 'submit-reload';
+
     /**
      * @var string
      */
@@ -35,6 +37,7 @@ class EditController extends AbstractController
      * @var string
      */
     protected const MESSAGE_OFFER_UPDATE_SUCCESS = 'Offer was updated successfully.';
+
     /**
      * @var string
      */

@@ -20,6 +20,7 @@ class LogDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const CLIENT_QUEUE = 'queue client';
+
     /**
      * @var string
      */
@@ -29,10 +30,12 @@ class LogDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const LOG_PROCESSORS = 'LOG_PROCESSORS';
+
     /**
      * @var string
      */
     public const LOG_LISTENERS = 'LOG_LISTENERS';
+
     /**
      * @var string
      */

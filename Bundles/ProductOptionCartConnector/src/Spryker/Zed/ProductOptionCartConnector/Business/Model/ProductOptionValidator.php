@@ -20,6 +20,7 @@ class ProductOptionValidator implements ProductOptionValidatorInterface
      * @var string
      */
     protected const MESSAGE_PARAM_NAME = '%name%';
+
     /**
      * @var string
      */

@@ -26,6 +26,7 @@ class DuplicateNavigationForm extends AbstractType
      * @var string
      */
     protected const FIELD_NAME = 'name';
+
     /**
      * @var string
      */

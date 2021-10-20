@@ -18,14 +18,17 @@ class QuoteValidator implements QuoteValidatorInterface
      * @var string
      */
     protected const MESSAGE_CURRENCY_DATA_IS_MISSING = 'quote.validation.error.currency_is_missing';
+
     /**
      * @var string
      */
     protected const MESSAGE_CURRENCY_DATA_IS_INCORRECT = 'quote.validation.error.currency_is_incorrect';
+
     /**
      * @var string
      */
     protected const GLOSSARY_KEY_ISO_CODE = '{{iso_code}}';
+
     /**
      * @var string
      */

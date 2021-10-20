@@ -25,14 +25,17 @@ class AclEntityBehavior extends Behavior
      * @var string
      */
     protected const ACTION_SELECT = 'Select';
+
     /**
      * @var string
      */
     protected const ACTION_UPDATE = 'Update';
+
     /**
      * @var string
      */
     protected const ACTION_CREATE = 'Create';
+
     /**
      * @var string
      */

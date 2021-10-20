@@ -25,6 +25,7 @@ class GuiDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const GUI_TWIG_FUNCTIONS = 'gui_twig_functions';
+
     /**
      * @var string
      */

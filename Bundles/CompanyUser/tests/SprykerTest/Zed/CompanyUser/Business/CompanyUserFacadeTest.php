@@ -649,7 +649,7 @@ class CompanyUserFacadeTest extends Test
         $companyUserTransfer = $this->tester->createCompanyUserTransfer(
             [
                 CompanyUserTransfer::IS_ACTIVE => false,
-            ],
+            ]
         );
         $customerTransfer = (new CustomerTransfer())->setIdCustomer($companyUserTransfer->getFkCustomerOrFail());
 

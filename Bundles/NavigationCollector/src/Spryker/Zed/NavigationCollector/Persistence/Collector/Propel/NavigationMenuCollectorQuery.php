@@ -18,6 +18,7 @@ class NavigationMenuCollectorQuery extends AbstractPropelCollectorQuery
      * @var string
      */
     public const FIELD_ID_NAVIGATION = 'id_navigation';
+
     /**
      * @var string
      */

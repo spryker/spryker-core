@@ -32,6 +32,7 @@ class NavigationCRUDTest extends Unit
      * @var string
      */
     protected const TEST_NAVIGATION_KEY = 'test-navigation-1';
+
     /**
      * @var string
      */

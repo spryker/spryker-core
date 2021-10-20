@@ -33,6 +33,7 @@ class ProductBarcodeFacadeTest extends Test
      * @var string
      */
     protected const BARCODE_GENERATION_SOURCE_TEXT = 'generated text';
+
     /**
      * @var string
      */

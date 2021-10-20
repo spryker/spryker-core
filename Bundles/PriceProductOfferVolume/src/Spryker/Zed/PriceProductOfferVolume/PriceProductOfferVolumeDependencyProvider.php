@@ -22,10 +22,12 @@ class PriceProductOfferVolumeDependencyProvider extends AbstractBundleDependency
      * @var string
      */
     public const SERVICE_PRICE_PRODUCT_OFFER_VOLUME = 'SERVICE_PRICE_PRODUCT_OFFER_VOLUME';
+
     /**
      * @var string
      */
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
+
     /**
      * @var string
      */

@@ -24,6 +24,7 @@ class DeleteSetController extends AbstractController
      * @var string
      */
     protected const PARAM_REQUEST_ID_TAX_SET = 'id-tax-set';
+
     /**
      * @var string
      */

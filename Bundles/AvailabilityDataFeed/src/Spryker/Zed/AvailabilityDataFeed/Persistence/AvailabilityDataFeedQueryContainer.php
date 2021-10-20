@@ -23,6 +23,7 @@ class AvailabilityDataFeedQueryContainer extends AbstractQueryContainer implemen
      * @var string
      */
     public const UPDATED_FROM_CONDITION = 'UPDATED_FROM_CONDITION';
+
     /**
      * @var string
      */

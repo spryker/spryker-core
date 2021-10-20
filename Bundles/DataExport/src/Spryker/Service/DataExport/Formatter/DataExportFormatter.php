@@ -18,6 +18,7 @@ class DataExportFormatter implements DataExportFormatterInterface
      * @var string
      */
     protected const MESSAGE_FORMATTER_PLUGIN_NOT_FOUND = 'Formatter plugin not found for format "%s"';
+
     /**
      * @var string
      */

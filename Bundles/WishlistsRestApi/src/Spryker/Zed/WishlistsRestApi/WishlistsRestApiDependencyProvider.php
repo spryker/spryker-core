@@ -26,6 +26,7 @@ class WishlistsRestApiDependencyProvider extends AbstractBundleDependencyProvide
      * @var string
      */
     public const FACADE_WISHLIST = 'FACADE_WISHLIST';
+
     /**
      * @var string
      */

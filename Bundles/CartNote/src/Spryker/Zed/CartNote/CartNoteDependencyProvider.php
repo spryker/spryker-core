@@ -20,10 +20,12 @@ class CartNoteDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const SALES_ORDER_QUERY = 'SALES_ORDER_QUERY';
+
     /**
      * @var string
      */
     public const FACADE_QUOTE = 'FACADE_QUOTE';
+
     /**
      * @var string
      */

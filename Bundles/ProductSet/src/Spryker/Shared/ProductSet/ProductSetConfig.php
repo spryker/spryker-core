@@ -13,6 +13,7 @@ interface ProductSetConfig
      * @var string
      */
     public const RESOURCE_TYPE_PRODUCT_SET = 'product_set';
+
     /**
      * @var string
      */

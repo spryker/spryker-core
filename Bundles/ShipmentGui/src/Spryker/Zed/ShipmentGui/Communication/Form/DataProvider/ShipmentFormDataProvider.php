@@ -26,10 +26,12 @@ class ShipmentFormDataProvider
      * @var string
      */
     protected const ADDRESS_LABEL_PATTERN = '%s %s %s, %s %s, %s %s';
+
     /**
      * @var string
      */
     protected const SHIPMENT_METHODS_OPTIONS_NAMES_PATTERN = '%s - %s';
+
     /**
      * @var string
      */

@@ -20,10 +20,12 @@ class CmsBlockStorage implements CmsBlockStorageInterface
      * @var string
      */
     protected const OPTION_NAME = 'name';
+
     /**
      * @var string
      */
     protected const OPTION_KEY = 'key';
+
     /**
      * @var string
      */

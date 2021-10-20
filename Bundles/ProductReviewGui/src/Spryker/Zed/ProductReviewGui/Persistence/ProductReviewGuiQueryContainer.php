@@ -21,18 +21,22 @@ class ProductReviewGuiQueryContainer extends AbstractQueryContainer implements P
      * @var string
      */
     public const FIELD_PRODUCT_NAME = 'product_name';
+
     /**
      * @var string
      */
     public const FIELD_ID_CUSTOMER = 'id_customer';
+
     /**
      * @var string
      */
     public const FIELD_CUSTOMER_FIRST_NAME = 'first_name';
+
     /**
      * @var string
      */
     public const FIELD_CUSTOMER_LAST_NAME = 'last_name';
+
     /**
      * @var string
      */

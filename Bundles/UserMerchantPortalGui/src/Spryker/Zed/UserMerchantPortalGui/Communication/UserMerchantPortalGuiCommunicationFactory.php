@@ -44,7 +44,7 @@ class UserMerchantPortalGuiCommunicationFactory extends AbstractCommunicationFac
     {
         return new MerchantAccountFormDataProvider(
             $this->getLocaleFacade(),
-            $this->getMerchantUserFacade(),
+            $this->getMerchantUserFacade()
         );
     }
 

@@ -35,6 +35,7 @@ class ContentProductSetDataImportPluginTest extends Unit
      * @var string
      */
     protected const ERROR_MESSAGE_PRODUCT_SET_WRONG_KEY = 'Please check "product_set_key.default" in the row with key: "ps-1". The wrong product set key passed.';
+
     /**
      * @var string
      */

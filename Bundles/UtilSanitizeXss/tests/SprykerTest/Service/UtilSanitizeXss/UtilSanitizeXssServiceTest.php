@@ -29,6 +29,7 @@ class UtilSanitizeXssServiceTest extends Unit
      * @var string
      */
     protected const HTML_TAG_IFRAME = 'iframe';
+
     /**
      * @var string
      */

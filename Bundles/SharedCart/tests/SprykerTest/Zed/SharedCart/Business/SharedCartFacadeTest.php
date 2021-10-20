@@ -64,10 +64,12 @@ class SharedCartFacadeTest extends Test
      * @var int
      */
     protected const VALUE_NOT_EXISTING_ID_COMPANY_USER = 0;
+
     /**
      * @var string
      */
     protected const VALUE_NOT_EXISTING_SHARE_OPTION = 'VALUE_NIT_EXISTING_SHARE_OPTION';
+
     /**
      * @var bool
      */

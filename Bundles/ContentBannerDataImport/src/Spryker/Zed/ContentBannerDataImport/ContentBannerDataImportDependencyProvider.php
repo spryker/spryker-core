@@ -22,10 +22,12 @@ class ContentBannerDataImportDependencyProvider extends DataImportDependencyProv
      * @var string
      */
     public const FACADE_CONTENT = 'FACADE_CONTENT';
+
     /**
      * @var string
      */
     public const FACADE_CONTENT_BANNER = 'FACADE_CONTENT_BANNER';
+
     /**
      * @var string
      */

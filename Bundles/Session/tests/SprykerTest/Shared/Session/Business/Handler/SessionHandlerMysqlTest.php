@@ -34,6 +34,7 @@ class SessionHandlerMysqlTest extends Unit
      * @var string
      */
     protected const SESSION_ID = 'SESSION_ID';
+
     /**
      * @var string
      */

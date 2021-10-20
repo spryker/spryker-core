@@ -32,14 +32,17 @@ class PercentageTest extends Unit
      * @var int
      */
     public const ITEM_GROSS_PRICE_1000 = 1000;
+
     /**
      * @var int
      */
     public const DISCOUNT_PERCENTAGE_10 = 1000;
+
     /**
      * @var int
      */
     public const DISCOUNT_PERCENTAGE_100 = 10000;
+
     /**
      * @var int
      */

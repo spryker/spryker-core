@@ -52,14 +52,17 @@ class ProductOptionFacadeTest extends Unit
      * @var int
      */
     public const DEFAULT_ID_CURRENCY = 5;
+
     /**
      * @var int|null
      */
     public const DEFAULT_ID_STORE = null;
+
     /**
      * @var int
      */
     public const DEFAULT_NET_PRICE = 100;
+
     /**
      * @var int
      */

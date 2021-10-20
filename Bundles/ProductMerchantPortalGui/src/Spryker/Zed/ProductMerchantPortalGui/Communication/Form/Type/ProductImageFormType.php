@@ -29,14 +29,17 @@ class ProductImageFormType extends AbstractType
      * @var string
      */
     public const FIELD_ID_PRODUCT_IMAGE = 'idProductImage';
+
     /**
      * @var string
      */
     public const FIELD_SORT_ORDER = 'sortOrder';
+
     /**
      * @var string
      */
     public const FIELD_EXTERNAL_URL_SMALL = 'externalUrlSmall';
+
     /**
      * @var string
      */
@@ -46,6 +49,7 @@ class ProductImageFormType extends AbstractType
      * @var string
      */
     protected const LABEL_SMALL_IMAGE_URL = 'Small Image URL';
+
     /**
      * @var string
      */
@@ -55,10 +59,12 @@ class ProductImageFormType extends AbstractType
      * @var int
      */
     protected const MAX_SORT_ORDER_VALUE = 2147483647; // 32 bit integer
+
     /**
      * @var int
      */
     protected const MIN_SORT_ORDER_VALUE = 0;
+
     /**
      * @var int
      */

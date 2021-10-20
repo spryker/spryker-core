@@ -16,6 +16,7 @@ class MerchantProfileDataImportConfig extends DataImportConfig
      * @var string
      */
     public const IMPORT_TYPE_MERCHANT_PROFILE = 'merchant-profile';
+
     /**
      * @var string
      */

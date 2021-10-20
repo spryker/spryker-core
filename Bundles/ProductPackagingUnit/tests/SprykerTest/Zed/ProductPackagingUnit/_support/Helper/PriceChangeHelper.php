@@ -25,18 +25,22 @@ class PriceChangeHelper extends Module
      * @var int
      */
     protected const DEFAULT_AMOUNT = 10000;
+
     /**
      * @var int
      */
     protected const AMOUNT = 48;
+
     /**
      * @var int
      */
     protected const QUANTITY = 1;
+
     /**
      * @var int
      */
     protected const UNIT_NET_PRICE = 3250;
+
     /**
      * @var string
      */

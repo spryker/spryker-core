@@ -18,6 +18,7 @@ interface CompanyUnitAddressDataSet
      * @var string
      */
     public const COMPANY_KEY = 'company_key';
+
     /**
      * @var string
      */
@@ -27,10 +28,12 @@ interface CompanyUnitAddressDataSet
      * @var string
      */
     public const COUNTRY_ISO_2_CODE = 'country_iso2_code';
+
     /**
      * @var string
      */
     public const COUNTRY_ISO_3_CODE = 'country_iso3_code';
+
     /**
      * @var string
      */

@@ -25,34 +25,42 @@ class ProductAutocompleteController extends AbstractController
      * @var string
      */
     protected const REQUEST_PARAM_SUGGESTION = 'term';
+
     /**
      * @var string
      */
     protected const REQUEST_PARAM_PAGE = 'page';
+
     /**
      * @var string
      */
     protected const RESPONSE_KEY_RESULTS = 'results';
+
     /**
      * @var string
      */
     protected const RESPONSE_KEY_PAGINATION = 'pagination';
+
     /**
      * @var string
      */
     protected const RESPONSE_KEY_PAGINATION_MORE = 'more';
+
     /**
      * @var string
      */
     protected const RESPONSE_DATA_KEY_ID = 'id';
+
     /**
      * @var string
      */
     protected const RESPONSE_DATA_KEY_TEXT = 'text';
+
     /**
      * @var int
      */
     protected const DEFAULT_PAGE = 1;
+
     /**
      * @var int
      */

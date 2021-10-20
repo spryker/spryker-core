@@ -31,34 +31,42 @@ class SalesMerchantPortalGuiDependencyProvider extends AbstractBundleDependencyP
      * @var string
      */
     public const FACADE_MERCHANT_USER = 'FACADE_MERCHANT_USER';
+
     /**
      * @var string
      */
     public const FACADE_CURRENCY = 'FACADE_CURRENCY';
+
     /**
      * @var string
      */
     public const FACADE_MONEY = 'FACADE_MONEY';
+
     /**
      * @var string
      */
     public const FACADE_STORE = 'FACADE_STORE';
+
     /**
      * @var string
      */
     public const FACADE_MERCHANT_OMS = 'FACADE_MERCHANT_OMS';
+
     /**
      * @var string
      */
     public const FACADE_MERCHANT_SALES_ORDER = 'FACADE_MERCHANT_SALES_ORDER';
+
     /**
      * @var string
      */
     public const FACADE_ROUTER = 'FACADE_ROUTER';
+
     /**
      * @var string
      */
     public const FACADE_SALES = 'FACADE_SALES';
+
     /**
      * @var string
      */
@@ -69,6 +77,7 @@ class SalesMerchantPortalGuiDependencyProvider extends AbstractBundleDependencyP
      * @var string
      */
     public const SERVICE_TWIG = 'twig';
+
     /**
      * @var string
      */
@@ -96,6 +105,7 @@ class SalesMerchantPortalGuiDependencyProvider extends AbstractBundleDependencyP
      * @var string
      */
     public const PROPEL_QUERY_MERCHANT_SALES_ORDER = 'PROPEL_QUERY_MERCHANT_SALES_ORDER';
+
     /**
      * @var string
      */

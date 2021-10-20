@@ -31,10 +31,12 @@ class GetFilteredProductConfigurationStorageDataTransfersTest extends Unit
      * @var int
      */
     protected const DEFAULT_QUERY_OFFSET = 0;
+
     /**
      * @var int
      */
     protected const DEFAULT_QUERY_LIMIT = 100;
+
     /**
      * @var int
      */

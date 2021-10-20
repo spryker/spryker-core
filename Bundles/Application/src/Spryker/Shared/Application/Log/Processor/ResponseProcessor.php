@@ -16,6 +16,7 @@ class ResponseProcessor
      * @var string
      */
     public const EXTRA = 'response';
+
     /**
      * @var string
      */

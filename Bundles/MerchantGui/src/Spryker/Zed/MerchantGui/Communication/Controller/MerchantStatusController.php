@@ -21,6 +21,7 @@ class MerchantStatusController extends AbstractController
      * @var string
      */
     protected const PARAM_ID_MERCHANT = 'id-merchant';
+
     /**
      * @var string
      */
@@ -30,6 +31,7 @@ class MerchantStatusController extends AbstractController
      * @var string
      */
     protected const MESSAGE_ERROR_MERCHANT_WRONG_PARAMETERS = 'merchant_gui.error_wrong_params';
+
     /**
      * @var string
      */

@@ -52,6 +52,7 @@ class ProductPackagingUnitDataImportPluginTest extends Unit
      * @var string
      */
     protected const PACKAGING_TYPE_DEFAULT = 'item';
+
     /**
      * @var string
      */

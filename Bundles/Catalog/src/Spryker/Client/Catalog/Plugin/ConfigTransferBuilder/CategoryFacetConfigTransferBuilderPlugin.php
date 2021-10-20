@@ -20,10 +20,12 @@ class CategoryFacetConfigTransferBuilderPlugin extends AbstractPlugin implements
      * @var string
      */
     public const NAME = 'category';
+
     /**
      * @var string
      */
     public const PARAMETER_NAME = 'category';
+
     /**
      * @var int
      */

@@ -27,6 +27,7 @@ class ReturnSlipController extends AbstractController
      * @var string
      */
     protected const ERROR_MESSAGE_RETURN_NOT_FOUND = 'Return with id "%id%" was not found.';
+
     /**
      * @var string
      */

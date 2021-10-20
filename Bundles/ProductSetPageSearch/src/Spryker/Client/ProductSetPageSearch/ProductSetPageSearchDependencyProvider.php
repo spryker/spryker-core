@@ -17,14 +17,17 @@ class ProductSetPageSearchDependencyProvider extends AbstractDependencyProvider
      * @var string
      */
     public const CLIENT_PRODUCT_SET_STORAGE = 'CLIENT_PRODUCT_SET_STORAGE';
+
     /**
      * @var string
      */
     public const CLIENT_SEARCH = 'CLIENT_SEARCH';
+
     /**
      * @var string
      */
     public const PLUGIN_PRODUCT_SET_LIST_RESULT_FORMATTERS = 'PLUGIN_PRODUCT_SET_SEARCH_RESULT_FORMATTERS';
+
     /**
      * @var string
      */

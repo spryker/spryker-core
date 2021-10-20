@@ -27,14 +27,17 @@ class DataExportPathResolverTest extends Unit
      * @var string
      */
     protected const EXPORT_ROOT_DIR = '{application_root_dir}';
+
     /**
      * @var string
      */
     protected const DESTINATION = '{data_entity}s_{timestamp}.{extension}';
+
     /**
      * @var string
      */
     protected const DATA_ENTITY = 'test-data-entity';
+
     /**
      * @var string
      */
@@ -44,14 +47,17 @@ class DataExportPathResolverTest extends Unit
      * @var string
      */
     protected const HOOK_KEY_APPLICATION_ROOT_DIR = 'application_root_dir';
+
     /**
      * @var string
      */
     protected const HOOK_KEY_DATA_ENTITY = 'data_entity';
+
     /**
      * @var string
      */
     protected const HOOK_KEY_TIMESTAMP = 'timestamp';
+
     /**
      * @var string
      */

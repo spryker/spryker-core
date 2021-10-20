@@ -26,10 +26,12 @@ class PriceProductScheduleListForm extends AbstractType
      * @var string
      */
     public const FIELD_PRICE_PRODUCT_SCHEDULE_NAME = 'name';
+
     /**
      * @var int
      */
     public const FIELD_PRICE_PRODUCT_SCHEDULE_NAME_MAX_LENGTH = 255;
+
     /**
      * @var string
      */

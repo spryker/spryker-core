@@ -19,6 +19,7 @@ class PriceChangeExpander implements PriceChangeExpanderInterface
      * @var string
      */
     protected const PRICE_MODE_NET = 'NET_MODE';
+
     /**
      * @var int
      */

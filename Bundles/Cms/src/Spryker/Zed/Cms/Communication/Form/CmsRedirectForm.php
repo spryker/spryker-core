@@ -36,14 +36,17 @@ class CmsRedirectForm extends AbstractType
      * @var string
      */
     public const FIELD_ID_URL_REDIRECT = 'id_url_redirect';
+
     /**
      * @var string
      */
     public const FIELD_FROM_URL = 'from_url';
+
     /**
      * @var string
      */
     public const FIELD_TO_URL = 'to_url';
+
     /**
      * @var string
      */
@@ -53,6 +56,7 @@ class CmsRedirectForm extends AbstractType
      * @var string
      */
     protected const GROUP_UNIQUE_URL_CHECK = 'unique_url_check';
+
     /**
      * @var int
      */

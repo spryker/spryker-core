@@ -25,18 +25,22 @@ class TriggerController extends AbstractController
      * @var string
      */
     protected const REQUEST_PARAMETER_ID_SALES_ORDER_ITEM = 'id-sales-order-item';
+
     /**
      * @var string
      */
     protected const REQUEST_PARAMETER_ID_SALES_ORDER = 'id-sales-order';
+
     /**
      * @var string
      */
     protected const REQUEST_PARAMETER_ITEMS = 'items';
+
     /**
      * @var string
      */
     protected const REQUEST_PARAMETER_EVENT = 'event';
+
     /**
      * @var string
      */
@@ -51,6 +55,7 @@ class TriggerController extends AbstractController
      * @var string
      */
     protected const ROUTE_REDIRECT_DEFAULT = '/';
+
     /**
      * @var string
      */

@@ -26,6 +26,7 @@ class MimeTypeSettingsForm extends AbstractType
      * @var string
      */
     public const FORM_DATA_KEY_ID_MIME_TYPE = 'idMimeType';
+
     /**
      * @var string
      */

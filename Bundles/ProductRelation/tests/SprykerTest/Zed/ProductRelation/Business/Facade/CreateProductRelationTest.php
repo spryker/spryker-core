@@ -35,6 +35,7 @@ class CreateProductRelationTest extends Unit
      * @var string
      */
     protected const FIRST_FIXTURE_VALUE = 'test';
+
     /**
      * @var string
      */

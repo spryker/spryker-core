@@ -31,14 +31,17 @@ class MoneyType extends AbstractType
      * @var string
      */
     public const FIELD_NET_AMOUNT = 'net_amount';
+
     /**
      * @var string
      */
     public const FIELD_GROSS_AMOUNT = 'gross_amount';
+
     /**
      * @var string
      */
     public const FIELD_FK_CURRENCY = 'fk_currency';
+
     /**
      * @var string
      */
@@ -48,6 +51,7 @@ class MoneyType extends AbstractType
      * @var int
      */
     public const MAX_MONEY_INT = 21474835;
+
     /**
      * @var int
      */

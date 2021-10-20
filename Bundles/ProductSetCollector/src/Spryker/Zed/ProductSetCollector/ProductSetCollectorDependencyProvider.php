@@ -22,10 +22,12 @@ class ProductSetCollectorDependencyProvider extends AbstractBundleDependencyProv
      * @var string
      */
     public const FACADE_COLLECTOR = 'FACADE_COLLECTOR';
+
     /**
      * @var string
      */
     public const FACADE_PRODUCT_SET = 'QUERY_CONTAINER_PRODUCT_SET';
+
     /**
      * @var string
      */

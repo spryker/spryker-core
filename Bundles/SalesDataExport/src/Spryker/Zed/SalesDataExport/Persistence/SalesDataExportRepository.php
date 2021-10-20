@@ -27,18 +27,22 @@ class SalesDataExportRepository extends AbstractRepository implements SalesDataE
      * @var string
      */
     public const FILTER_CRITERIA_KEY_STORE_NAME = 'store_name';
+
     /**
      * @var string
      */
     public const FILTER_CRITERIA_KEY_ORDER_CREATED_AT = 'order_created_at';
+
     /**
      * @var string
      */
     public const FILTER_CRITERIA_KEY_ORDER_UPDATED_AT = 'order_updated_at';
+
     /**
      * @var string
      */
     public const FILTER_CRITERIA_PARAM_DATE_FROM = 'from';
+
     /**
      * @var string
      */
@@ -48,6 +52,7 @@ class SalesDataExportRepository extends AbstractRepository implements SalesDataE
      * @var string
      */
     public const PROPEL_CRITERIA_BETWEEN_MIN = 'min';
+
     /**
      * @var string
      */

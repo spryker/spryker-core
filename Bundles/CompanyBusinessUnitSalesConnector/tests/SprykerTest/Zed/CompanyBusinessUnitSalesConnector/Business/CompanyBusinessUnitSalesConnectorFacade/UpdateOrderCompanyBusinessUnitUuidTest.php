@@ -27,6 +27,7 @@ class UpdateOrderCompanyBusinessUnitUuidTest extends Unit
      * @var string
      */
     protected const DEFAULT_OMS_PROCESS_NAME = 'Test01';
+
     /**
      * @var string
      */

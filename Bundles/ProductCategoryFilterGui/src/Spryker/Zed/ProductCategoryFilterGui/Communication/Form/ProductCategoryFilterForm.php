@@ -23,6 +23,7 @@ class ProductCategoryFilterForm extends AbstractType
      * @var string
      */
     public const FIELD_FILTER_AUTOCOMPLETE = 'filter-autocomplete';
+
     /**
      * @var string
      */

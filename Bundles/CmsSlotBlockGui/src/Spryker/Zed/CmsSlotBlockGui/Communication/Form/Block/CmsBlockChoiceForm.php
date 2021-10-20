@@ -23,14 +23,17 @@ class CmsBlockChoiceForm extends AbstractType
      * @var string
      */
     protected const FIELD_CMS_BLOCKS = 'cmsBlocks';
+
     /**
      * @var string
      */
     protected const FIELD_ADD = 'add';
+
     /**
      * @var string
      */
     protected const PLACEHOLDER_CMS_BLOCKS = 'Select or type a block name to assign';
+
     /**
      * @var string
      */

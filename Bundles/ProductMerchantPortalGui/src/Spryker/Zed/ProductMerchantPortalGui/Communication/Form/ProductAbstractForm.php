@@ -30,6 +30,7 @@ class ProductAbstractForm extends AbstractType
      * @var string
      */
     public const OPTION_STORE_CHOICES = 'OPTION_STORE_CHOICES';
+
     /**
      * @var string
      */
@@ -47,6 +48,7 @@ class ProductAbstractForm extends AbstractType
      * @var string
      */
     protected const NAME_VALIDATION_GROUP = 'name_validation_group';
+
     /**
      * @var string
      */
@@ -56,6 +58,7 @@ class ProductAbstractForm extends AbstractType
      * @var string
      */
     protected const LABEL_STORES = 'Stores';
+
     /**
      * @var string
      */
@@ -65,6 +68,7 @@ class ProductAbstractForm extends AbstractType
      * @var string
      */
     protected const PLACEHOLDER_STORES = 'Select';
+
     /**
      * @var string
      */
@@ -74,6 +78,7 @@ class ProductAbstractForm extends AbstractType
      * @var string
      */
     protected const KEY_OPTIONS_DATA = 'data';
+
     /**
      * @var string
      */

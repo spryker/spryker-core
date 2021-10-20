@@ -20,6 +20,7 @@ class ProductLabelsRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const CONTROLLER_PRODUCT_LABELS = 'product-labels-resource';
+
     /**
      * @var string
      */
@@ -29,6 +30,7 @@ class ProductLabelsRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESPONSE_CODE_CANT_FIND_PRODUCT_LABEL = '1201';
+
     /**
      * @var string
      */
@@ -38,6 +40,7 @@ class ProductLabelsRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESPONSE_CODE_PRODUCT_LABEL_ID_IS_MISSING = '1202';
+
     /**
      * @var string
      */

@@ -29,10 +29,12 @@ class ProductMeasurementUnitDependencyProvider extends AbstractBundleDependencyP
      * @var string
      */
     public const FACADE_EVENT = 'FACADE_EVENT';
+
     /**
      * @var string
      */
     public const FACADE_GLOSSARY = 'FACADE_GLOSSARY';
+
     /**
      * @var string
      */

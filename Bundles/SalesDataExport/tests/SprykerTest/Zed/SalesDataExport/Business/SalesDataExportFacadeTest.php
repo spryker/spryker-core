@@ -38,14 +38,17 @@ class SalesDataExportFacadeTest extends Unit
      * @var string
      */
     protected const DESTINATION_TEMPLATE = '{data_entity}s_DE_{timestamp}.{extension}';
+
     /**
      * @var string
      */
     protected const FORMATTER_TYPE = 'csv';
+
     /**
      * @var string
      */
     protected const CONNECTION_TYPE = 'local';
+
     /**
      * @var string
      */
@@ -60,6 +63,7 @@ class SalesDataExportFacadeTest extends Unit
      * @var string
      */
     protected const DATA_ENTITY_ORDER = 'order';
+
     /**
      * @var string
      */
@@ -69,6 +73,7 @@ class SalesDataExportFacadeTest extends Unit
      * @var string
      */
     protected const DATA_ENTITY_ORDER_ITEM = 'order-item';
+
     /**
      * @var string
      */
@@ -78,6 +83,7 @@ class SalesDataExportFacadeTest extends Unit
      * @var string
      */
     protected const DATA_ENTITY_ORDER_EXPENSE = 'order-expense';
+
     /**
      * @var string
      */

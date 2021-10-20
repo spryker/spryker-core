@@ -25,6 +25,7 @@ class DoubleSubmitFormType extends AbstractTypeExtension
      * @var string
      */
     protected const OPTION_KEY_ERROR_MESSAGE = 'double_submit_error';
+
     /**
      * @var string
      */
@@ -34,6 +35,7 @@ class DoubleSubmitFormType extends AbstractTypeExtension
      * @var string
      */
     protected const DEFAULT_TOKEN_FIELD_NAME = '_requestToken';
+
     /**
      * @var string
      */

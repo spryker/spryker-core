@@ -26,6 +26,7 @@ class AddressTable extends AbstractTable
      * @var string
      */
     public const DEFAULT_BILLING_ADDRESS = 'default_billing_address';
+
     /**
      * @var string
      */

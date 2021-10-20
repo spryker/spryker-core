@@ -18,18 +18,22 @@ class OrdersTableQueryBuilder implements OrdersTableQueryBuilderInterface
      * @var string
      */
     public const FIELD_ITEM_STATE_NAMES_CSV = 'item_state_names_csv';
+
     /**
      * @var string
      */
     public const FIELD_NUMBER_OF_ORDER_ITEMS = 'number_of_order_items';
+
     /**
      * @var string
      */
     public const DATE_FILTER_DAY = 'day';
+
     /**
      * @var string
      */
     public const DATE_FILTER_WEEK = 'week';
+
     /**
      * @var string
      */

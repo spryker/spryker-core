@@ -29,10 +29,12 @@ class ProductOfferValidityForm extends AbstractType
      * @var string
      */
     protected const FIELD_ID_PRODUCT_OFFER = 'idProductOffer';
+
     /**
      * @var string
      */
     protected const FIELD_VALID_FROM = 'validFrom';
+
     /**
      * @var string
      */
@@ -42,6 +44,7 @@ class ProductOfferValidityForm extends AbstractType
      * @var string
      */
     protected const LABEL_VALID_FROM = 'Valid from';
+
     /**
      * @var string
      */
@@ -51,6 +54,7 @@ class ProductOfferValidityForm extends AbstractType
      * @var string
      */
     protected const PLACEHOLDER_VALID_FROM = 'From';
+
     /**
      * @var string
      */

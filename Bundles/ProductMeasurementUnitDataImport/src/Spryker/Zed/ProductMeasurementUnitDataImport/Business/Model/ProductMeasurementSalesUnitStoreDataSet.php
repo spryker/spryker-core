@@ -13,6 +13,7 @@ interface ProductMeasurementSalesUnitStoreDataSet
      * @var string
      */
     public const COLUMN_SALES_UNIT_KEY = 'sales_unit_key';
+
     /**
      * @var string
      */

@@ -16,6 +16,7 @@ class PropelCommandConfigurator implements PropelCommandConfiguratorInterface
      * @var string
      */
     protected const KEY_CONFIG_PROPEL_GENERATOR = 'generator';
+
     /**
      * @var string
      */

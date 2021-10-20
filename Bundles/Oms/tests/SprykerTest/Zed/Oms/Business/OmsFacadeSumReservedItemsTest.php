@@ -38,18 +38,22 @@ class OmsFacadeSumReservedItemsTest extends Unit
      * @var string
      */
     public const ORDER_ITEM_SKU = 'oms-reserverd-sku-test';
+
     /**
      * @var string
      */
     public const NOT_RESERVED_ITEM_STATE_EXCEPT_PROCESS_3 = 'paid';
+
     /**
      * @var string
      */
     public const NOT_RESERVED_SUBPROCESS_ITEM_STATE = 'awaiting approval';
+
     /**
      * @var string
      */
     public const RESERVED_SUBPROCESS_ITEM_STATE = 'payment preparations';
+
     /**
      * @var string
      */

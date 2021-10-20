@@ -29,6 +29,7 @@ class YvesControllerProviderTest extends Unit
      * @var string
      */
     public const METHOD_REQUIRE_HTTP = 'requireHttp';
+
     /**
      * @var string
      */

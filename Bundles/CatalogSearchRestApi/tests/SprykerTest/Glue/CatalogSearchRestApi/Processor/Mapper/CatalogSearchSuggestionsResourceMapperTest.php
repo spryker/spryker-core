@@ -36,6 +36,7 @@ class CatalogSearchSuggestionsResourceMapperTest extends Unit
      * @var string
      */
     protected const KEY_PRODUCTS = 'products';
+
     /**
      * @var string
      */

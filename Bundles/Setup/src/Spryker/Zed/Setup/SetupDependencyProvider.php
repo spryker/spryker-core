@@ -21,6 +21,7 @@ class SetupDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const SYMFONY_FILE_SYSTEM = 'symfony_file_system';
+
     /**
      * @var string
      */

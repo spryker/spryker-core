@@ -20,6 +20,7 @@ class PreConditionChecker implements PreConditionCheckerInterface
      * @var string
      */
     public const ERROR_EMAIL_INVALID = 'customer.email.invalid';
+
     /**
      * @var string
      */

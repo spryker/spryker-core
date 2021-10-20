@@ -39,10 +39,12 @@ class MerchantUserFacadeTest extends Unit
      * @var string
      */
     protected const USER_STATUS_BLOCKED = 'blocked';
+
     /**
      * @var string
      */
     protected const USER_AUTHENTICATION_TOKEN = 'token';
+
     /**
      * @var string
      */

@@ -29,38 +29,47 @@ class ProductCategoryFilterGuiDependencyProvider extends AbstractBundleDependenc
      * @var string
      */
     public const FACADE_PRODUCT_CATEGORY_FILTER = 'FACADE_PRODUCT_CATEGORY_FILTER';
+
     /**
      * @var string
      */
     public const FACADE_LOCALE = 'FACADE_LOCALE';
+
     /**
      * @var string
      */
     public const FACADE_CATEGORY = 'FACADE_CATEGORY';
+
     /**
      * @var string
      */
     public const FACADE_PRODUCT = 'FACADE_PRODUCT';
+
     /**
      * @var string
      */
     public const FACADE_PRODUCT_SEARCH = 'FACADE_PRODUCT_SEARCH';
+
     /**
      * @var string
      */
     public const QUERY_CONTAINER_CATEGORY = 'QUERY_CONTAINER_CATEGORY';
+
     /**
      * @var string
      */
     public const QUERY_CONTAINER_PRODUCT_CATEGORY = 'QUERY_CONTAINER_PRODUCT_CATEGORY';
+
     /**
      * @var string
      */
     public const CLIENT_CATALOG = 'CLIENT_CATALOG';
+
     /**
      * @var string
      */
     public const CLIENT_PRODUCT_CATEGORY_FILTER = 'CLIENT_PRODUCT_CATEGORY_FILTER';
+
     /**
      * @var string
      */

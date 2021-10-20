@@ -20,14 +20,17 @@ class MerchantProductCartValidator implements MerchantProductCartValidatorInterf
      * @var string
      */
     protected const MESSAGE_TYPE_ERROR = 'error';
+
     /**
      * @var string
      */
     protected const GLOSSARY_KEY_INVALID_MERCHANT_PRODUCT = 'merchant_product.message.invalid';
+
     /**
      * @var string
      */
     protected const GLOSSARY_PARAM_MERCHANT_REFERENCE = '%merchant_reference%';
+
     /**
      * @var string
      */

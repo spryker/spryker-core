@@ -16,10 +16,12 @@ class DefaultFieldSortingComparisonStrategy implements PriceProductSortingCompar
      * @var string
      */
     protected const SUFFIX_PRICE_TYPE_NET = '_net';
+
     /**
      * @var string
      */
     protected const SUFFIX_PRICE_TYPE_GROSS = '_gross';
+
     /**
      * @var string
      */

@@ -28,6 +28,7 @@ class CommentTagWriter implements CommentTagWriterInterface
      * @var string
      */
     protected const GLOSSARY_KEY_COMMENT_NOT_FOUND = 'comment.validation.error.comment_not_found';
+
     /**
      * @var string
      */

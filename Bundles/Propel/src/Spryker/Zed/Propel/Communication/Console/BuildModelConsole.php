@@ -21,6 +21,7 @@ class BuildModelConsole extends Console
      * @var string
      */
     public const COMMAND_NAME = 'propel:model:build';
+
     /**
      * @var string
      */

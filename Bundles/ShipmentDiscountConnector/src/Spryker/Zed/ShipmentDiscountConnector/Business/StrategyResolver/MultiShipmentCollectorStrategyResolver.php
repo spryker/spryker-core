@@ -20,6 +20,7 @@ class MultiShipmentCollectorStrategyResolver implements MultiShipmentCollectorSt
      * @var string
      */
     public const STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT = 'STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT';
+
     /**
      * @var string
      */
@@ -29,10 +30,12 @@ class MultiShipmentCollectorStrategyResolver implements MultiShipmentCollectorSt
      * @var string
      */
     public const DISCOUNT_TYPE_CARRIER = 'DISCOUNT_TYPE_CARRIER';
+
     /**
      * @var string
      */
     public const DISCOUNT_TYPE_METHOD = 'DISCOUNT_TYPE_METHOD';
+
     /**
      * @var string
      */

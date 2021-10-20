@@ -18,10 +18,12 @@ class ProductListButtonsExpander implements ProductListButtonsExpanderInterface
      * @var string
      */
     protected const CONFIGURABLE_BUNDLE_TEMPLATE_LIST_BUTTON_URL = '/configurable-bundle-gui/template';
+
     /**
      * @var string
      */
     protected const CONFIGURABLE_BUNDLE_TEMPLATE_LIST_BUTTON_TITLE = 'Configurable Bundle Templates';
+
     /**
      * @var array
      */

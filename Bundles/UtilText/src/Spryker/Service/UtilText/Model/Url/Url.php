@@ -16,30 +16,37 @@ class Url
      * @var string
      */
     public const SCHEME = 'scheme';
+
     /**
      * @var string
      */
     public const HOST = 'host';
+
     /**
      * @var string
      */
     public const PORT = 'port';
+
     /**
      * @var string
      */
     public const USER = 'user';
+
     /**
      * @var string
      */
     public const PASS = 'pass';
+
     /**
      * @var string
      */
     public const PATH = 'path';
+
     /**
      * @var string
      */
     public const QUERY = 'query';
+
     /**
      * @var string
      */

@@ -15,6 +15,7 @@ class ProductImageSetsRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESOURCE_ABSTRACT_PRODUCT_IMAGE_SETS = 'abstract-product-image-sets';
+
     /**
      * @var string
      */
@@ -24,6 +25,7 @@ class ProductImageSetsRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESPONSE_CODE_ABSTRACT_PRODUCT_IMAGE_SETS_NOT_FOUND = '303';
+
     /**
      * @var string
      */
@@ -33,6 +35,7 @@ class ProductImageSetsRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESPONSE_CODE_CONCRETE_PRODUCT_IMAGE_SETS_NOT_FOUND = '304';
+
     /**
      * @var string
      */

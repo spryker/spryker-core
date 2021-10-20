@@ -15,10 +15,12 @@ class ProductDiscontinuedProductLabelConnectorConfig extends AbstractBundleConfi
      * @var string
      */
     protected const PRODUCT_DISCONTINUE_LABEL_NAME = 'Discontinued';
+
     /**
      * @var string
      */
     protected const PRODUCT_DISCONTINUE_LABEL_FRONT_END_REFERENCE = 'discontinued';
+
     /**
      * @var int
      */

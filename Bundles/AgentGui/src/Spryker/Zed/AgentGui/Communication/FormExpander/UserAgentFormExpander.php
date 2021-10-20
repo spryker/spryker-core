@@ -16,6 +16,7 @@ class UserAgentFormExpander implements UserAgentFormExpanderInterface
      * @var string
      */
     protected const FIELD_IS_AGENT = 'is_agent';
+
     /**
      * @var string
      */

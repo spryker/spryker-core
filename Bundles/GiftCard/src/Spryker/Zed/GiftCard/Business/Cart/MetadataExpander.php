@@ -18,6 +18,7 @@ class MetadataExpander implements MetadataExpanderInterface
      * @var string
      */
     protected const SKU_ABSTRACT = 'SKU_ABSTRACT';
+
     /**
      * @var string
      */

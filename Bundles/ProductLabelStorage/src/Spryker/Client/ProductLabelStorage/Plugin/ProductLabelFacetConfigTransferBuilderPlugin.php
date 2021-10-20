@@ -19,6 +19,7 @@ class ProductLabelFacetConfigTransferBuilderPlugin extends AbstractPlugin implem
      * @var string
      */
     public const NAME = 'label';
+
     /**
      * @var string
      */

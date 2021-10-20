@@ -21,22 +21,27 @@ class ZedRequestDependencyProvider extends AbstractDependencyProvider
      * @var string
      */
     public const SERVICE_NETWORK = 'util network service';
+
     /**
      * @var string
      */
     public const SERVICE_TEXT = 'util text service';
+
     /**
      * @var string
      */
     public const META_DATA_PROVIDER_PLUGINS = 'META_DATA_PROVIDER_PLUGINS';
+
     /**
      * @var string
      */
     public const CLIENT_MESSENGER = 'CLIENT_MESSENGER';
+
     /**
      * @var string
      */
     public const PLUGINS_HEADER_EXPANDER = 'PLUGINS_HEADER_EXPANDER';
+
     /**
      * @var string
      */

@@ -15,6 +15,7 @@ class CmsProductSearchContentWidgetConfigurationProvider implements CmsContentWi
      * @var string
      */
     public const FUNCTION_NAME = 'product_search';
+
     /**
      * @var string
      */

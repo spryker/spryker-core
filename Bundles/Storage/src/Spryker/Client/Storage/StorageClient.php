@@ -24,18 +24,22 @@ class StorageClient extends AbstractClient implements StorageClientInterface
      * @var string
      */
     public const KEY_NAME_PREFIX = 'storage';
+
     /**
      * @var string
      */
     public const KEY_NAME_SEPARATOR = ':';
+
     /**
      * @var string
      */
     public const KEY_USED = 'used';
+
     /**
      * @var string
      */
     public const KEY_NEW = 'new';
+
     /**
      * @var string
      */

@@ -33,6 +33,7 @@ class QuoteMergerTest extends Unit
      * @var string
      */
     protected const EXISTING_ITEM_SKU = 'sku_1';
+
     /**
      * @var string
      */

@@ -30,10 +30,12 @@ class MailProviderCollectionTest extends Unit
      * @var string
      */
     public const TYPE_A = 'type a';
+
     /**
      * @var string
      */
     public const TYPE_B = 'type b';
+
     /**
      * @var string
      */

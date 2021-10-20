@@ -22,18 +22,22 @@ class PriceProductGuiTableConfigurationBuilderProvider implements PriceProductGu
      * @var string
      */
     protected const TITLE_COLUMN_STORE = 'Store';
+
     /**
      * @var string
      */
     protected const TITLE_COLUMN_CURRENCY = 'Currency';
+
     /**
      * @var string
      */
     protected const TITLE_COLUMN_PREFIX_PRICE_TYPE_NET = 'Net';
+
     /**
      * @var string
      */
     protected const TITLE_COLUMN_PREFIX_PRICE_TYPE_GROSS = 'Gross';
+
     /**
      * @var string
      */
@@ -43,6 +47,7 @@ class PriceProductGuiTableConfigurationBuilderProvider implements PriceProductGu
      * @var string
      */
     protected const TITLE_FILTER_IN_STORES = 'Stores';
+
     /**
      * @var string
      */

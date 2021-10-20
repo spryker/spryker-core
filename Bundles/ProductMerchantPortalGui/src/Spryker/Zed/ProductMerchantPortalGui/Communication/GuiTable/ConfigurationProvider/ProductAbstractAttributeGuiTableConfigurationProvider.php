@@ -24,6 +24,7 @@ class ProductAbstractAttributeGuiTableConfigurationProvider implements ProductAb
      * @var string
      */
     protected const PARAM_ID_PRODUCT_ABSTRACT = 'idProductAbstract';
+
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Controller\ProductAttributesController::PARAM_ATTRIBUTE_NAME
      * @var string
@@ -34,22 +35,27 @@ class ProductAbstractAttributeGuiTableConfigurationProvider implements ProductAb
      * @var string
      */
     public const COL_KEY_COLUMN_TYPE = 'columnType';
+
     /**
      * @var string
      */
     public const COL_KEY_COLUMN_TYPE_OPTIONS = 'columnTypeOptions';
+
     /**
      * @var string
      */
     public const COL_KEY_ALLOW_INPUT = 'allowInput';
+
     /**
      * @var string
      */
     public const COL_KEY_ID_PRODUCT_ABSTRACT = 'idProductAbstract';
+
     /**
      * @var string
      */
     public const COL_KEY_ATTRIBUTE_NAME = 'attribute_name';
+
     /**
      * @var string
      */
@@ -59,6 +65,7 @@ class ProductAbstractAttributeGuiTableConfigurationProvider implements ProductAb
      * @var string
      */
     protected const TITLE_COLUMN_ATTRIBUTE_NAME = 'Attribute';
+
     /**
      * @var string
      */
@@ -68,6 +75,7 @@ class ProductAbstractAttributeGuiTableConfigurationProvider implements ProductAb
      * @var string
      */
     protected const ID_ROW_ACTION_DELETE = 'delete-attribute';
+
     /**
      * @var string
      */
@@ -111,6 +119,7 @@ class ProductAbstractAttributeGuiTableConfigurationProvider implements ProductAb
      * @var string
      */
     protected const COLOR_GREY = 'gray';
+
     /**
      * @var string
      */
@@ -275,7 +284,7 @@ class ProductAbstractAttributeGuiTableConfigurationProvider implements ProductAb
             static::PARAM_ATTRIBUTE_NAME,
             static::COL_KEY_ATTRIBUTE_NAME,
             static::PARAM_ID_PRODUCT_ABSTRACT,
-            static::COL_KEY_ID_PRODUCT_ABSTRACT,
+            static::COL_KEY_ID_PRODUCT_ABSTRACT
         );
     }
 }

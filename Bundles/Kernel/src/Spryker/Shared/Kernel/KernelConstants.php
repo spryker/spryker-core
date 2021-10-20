@@ -26,6 +26,7 @@ interface KernelConstants
      * @var string
      */
     public const PROJECT_NAMESPACE = 'PROJECT_NAMESPACE';
+
     /**
      * @var string
      */
@@ -46,6 +47,7 @@ interface KernelConstants
      * @var string
      */
     public const DEPENDENCY_INJECTOR_YVES = 'DEPENDENCY_INJECTOR_YVES';
+
     /**
      * @var string
      */
@@ -62,6 +64,7 @@ interface KernelConstants
      * @var string
      */
     public const AUTO_LOADER_UNRESOLVABLE_CACHE_PROVIDER = 'AUTO_LOADER_UNRESOLVABLE_CACHE_PROVIDER';
+
     /**
      * @deprecated Will be removed without replacement.
      *
@@ -69,6 +72,7 @@ interface KernelConstants
      * @var string
      */
     public const AUTO_LOADER_CACHE_FILE_NO_LOCK = 'AUTO_LOADER_CACHE_FILE_NO_LOCK';
+
     /**
      * @deprecated Will be removed without replacement.
      *

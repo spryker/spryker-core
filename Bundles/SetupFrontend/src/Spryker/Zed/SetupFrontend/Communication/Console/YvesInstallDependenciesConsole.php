@@ -22,6 +22,7 @@ class YvesInstallDependenciesConsole extends Console
      * @var string
      */
     public const COMMAND_NAME = 'frontend:yves:install-dependencies';
+
     /**
      * @var string
      */

@@ -26,6 +26,7 @@ class ProductListGuiDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const PROPEL_QUERY_PRODUCT = 'PROPEL_QUERY_PRODUCT';
+
     /**
      * @var string
      */
@@ -35,14 +36,17 @@ class ProductListGuiDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const FACADE_PRODUCT_LIST = 'FACADE_PRODUCT_LIST';
+
     /**
      * @var string
      */
     public const FACADE_LOCALE = 'FACADE_LOCALE';
+
     /**
      * @var string
      */
     public const FACADE_CATEGORY = 'FACADE_CATEGORY';
+
     /**
      * @var string
      */
@@ -57,18 +61,22 @@ class ProductListGuiDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const PLUGINS_PRODUCT_LIST_TABLE_ACTION_EXPANDER = 'PLUGINS_PRODUCT_LIST_TABLE_ACTION_EXPANDER';
+
     /**
      * @var string
      */
     public const PLUGINS_PRODUCT_LIST_TABLE_CONFIG_EXPANDER = 'PLUGINS_PRODUCT_LIST_TABLE_CONFIG_EXPANDER';
+
     /**
      * @var string
      */
     public const PLUGINS_PRODUCT_LIST_TABLE_QUERY_CRITERIA_EXPANDER = 'PLUGINS_PRODUCT_LIST_TABLE_QUERY_CRITERIA_EXPANDER';
+
     /**
      * @var string
      */
     public const PLUGINS_PRODUCT_LIST_TABLE_DATA_EXPANDER = 'PLUGINS_PRODUCT_LIST_TABLE_DATA_EXPANDER';
+
     /**
      * @var string
      */

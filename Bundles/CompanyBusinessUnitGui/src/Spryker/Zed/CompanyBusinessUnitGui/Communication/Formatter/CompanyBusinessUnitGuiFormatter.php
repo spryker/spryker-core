@@ -17,6 +17,7 @@ class CompanyBusinessUnitGuiFormatter implements CompanyBusinessUnitGuiFormatter
      * @var string
      */
     protected const KEY_ID = 'id';
+
     /**
      * @var string
      */

@@ -16,14 +16,17 @@ class QueueConfig extends AbstractBundleConfig
      * @var string
      */
     public const DEFAULT_QUEUE_OUTPUT_FILE_NAME = 'queue.log';
+
     /**
      * @var int
      */
     public const DEFAULT_INTERVAL_MILLISECONDS = 1000;
+
     /**
      * @var int
      */
     public const DEFAULT_PROCESS_TRIGGER_INTERVAL_MICROSECONDS = 1000;
+
     /**
      * @var int
      */

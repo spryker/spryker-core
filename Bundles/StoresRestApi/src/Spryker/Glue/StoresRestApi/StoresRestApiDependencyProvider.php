@@ -22,10 +22,12 @@ class StoresRestApiDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const CLIENT_COUNTRY = 'CLIENT_COUNTRY';
+
     /**
      * @var string
      */
     public const CLIENT_CURRENCY = 'CLIENT_CURRENCY';
+
     /**
      * @var string
      */

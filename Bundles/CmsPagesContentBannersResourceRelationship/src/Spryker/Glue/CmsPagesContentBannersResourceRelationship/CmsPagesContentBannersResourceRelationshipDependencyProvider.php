@@ -22,10 +22,12 @@ class CmsPagesContentBannersResourceRelationshipDependencyProvider extends Abstr
      * @var string
      */
     public const CLIENT_CMS_STORAGE = 'CLIENT_CMS_STORAGE';
+
     /**
      * @var string
      */
     public const CLIENT_STORE = 'CLIENT_STORE';
+
     /**
      * @var string
      */

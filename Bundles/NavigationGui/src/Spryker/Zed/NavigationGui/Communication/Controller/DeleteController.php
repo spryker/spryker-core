@@ -28,6 +28,7 @@ class DeleteController extends AbstractController
      * @var string
      */
     protected const MESSAGE_NAVIGATION_REMOVAL_SUCCESS = 'Navigation element %d was deleted successfully.';
+
     /**
      * @var string
      */

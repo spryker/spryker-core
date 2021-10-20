@@ -36,6 +36,7 @@ class ProductConfigurationInstancePriceMapper implements ProductConfigurationIns
      * @var string
      */
     protected const KEY_PRICE_DATA = 'priceData';
+
     /**
      * @var string
      */

@@ -19,30 +19,37 @@ class ProductGuiTableConfigurationProvider implements GuiTableConfigurationProvi
      * @var string
      */
     public const COL_KEY_NAME = 'name';
+
     /**
      * @var string
      */
     public const COL_KEY_SKU = 'sku';
+
     /**
      * @var string
      */
     public const COL_KEY_IMAGE = 'image';
+
     /**
      * @var string
      */
     public const COL_KEY_STORES = 'stores';
+
     /**
      * @var string
      */
     public const COL_KEY_STATUS = 'status';
+
     /**
      * @var string
      */
     public const COL_KEY_OFFERS = 'offers';
+
     /**
      * @var string
      */
     public const COL_KEY_VALID_FROM = 'validFrom';
+
     /**
      * @var string
      */
@@ -52,6 +59,7 @@ class ProductGuiTableConfigurationProvider implements GuiTableConfigurationProvi
      * @var string
      */
     public const COLUMN_DATA_STATUS_ACTIVE = 'Online';
+
     /**
      * @var string
      */

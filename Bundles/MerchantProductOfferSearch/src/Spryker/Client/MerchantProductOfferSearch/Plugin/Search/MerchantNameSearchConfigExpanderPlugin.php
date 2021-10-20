@@ -20,6 +20,7 @@ class MerchantNameSearchConfigExpanderPlugin extends AbstractPlugin implements S
      * @var string
      */
     protected const NAME = 'merchant_name';
+
     /**
      * @var string
      */

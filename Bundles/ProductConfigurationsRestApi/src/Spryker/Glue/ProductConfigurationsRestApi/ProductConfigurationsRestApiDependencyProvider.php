@@ -25,6 +25,7 @@ class ProductConfigurationsRestApiDependencyProvider extends AbstractBundleDepen
      * @var string
      */
     public const PLUGINS_PRODUCT_CONFIGURATION_PRICE_MAPPER = 'PLUGINS_PRODUCT_CONFIGURATION_PRICE_MAPPER';
+
     /**
      * @var string
      */

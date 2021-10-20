@@ -21,6 +21,7 @@ class SalesReturnsRestApiDependencyProvider extends AbstractBundleDependencyProv
      * @var string
      */
     public const CLIENT_SALES_RETURN = 'CLIENT_SALES_RETURN';
+
     /**
      * @var string
      */

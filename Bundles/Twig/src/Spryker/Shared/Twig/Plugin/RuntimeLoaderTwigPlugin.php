@@ -24,6 +24,7 @@ class RuntimeLoaderTwigPlugin implements TwigPluginInterface
      * @var string
      */
     protected const SERVICE_REQUEST_STACK = 'request_stack';
+
     /**
      * @var string
      */

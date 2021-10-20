@@ -18,6 +18,7 @@ class ProductDiscontinuedGuiDependencyProvider extends AbstractBundleDependencyP
      * @var string
      */
     public const FACADE_PRODUCT_DISCONTINUED = 'FACADE_PRODUCT_DISCONTINUED';
+
     /**
      * @var string
      */

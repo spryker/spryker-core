@@ -311,7 +311,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     {
         return new SalesOrderReader(
             $this->getRepository(),
-            $this->getHydrateOrderPlugins(),
+            $this->getHydrateOrderPlugins()
         );
     }
 

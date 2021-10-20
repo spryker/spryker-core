@@ -31,6 +31,7 @@ class CompanyBusinessUnitAddressDataImportPluginTest extends AbstractCompanyBusi
      * @var string
      */
     protected const COMPANY_ADDRESS_KEY = 'Address--1';
+
     /**
      * @var string
      */
@@ -40,6 +41,7 @@ class CompanyBusinessUnitAddressDataImportPluginTest extends AbstractCompanyBusi
      * @var string
      */
     protected const IMPORT_COMPANY_BUSINESS_UNIT_ADDRESS_CSV = 'import/company_business_unit_address.csv';
+
     /**
      * @var string
      */

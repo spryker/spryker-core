@@ -23,10 +23,12 @@ class MerchantProfileForm extends AbstractType
      * @var string
      */
     protected const FIELD_BUSINESS_INFO_MERCHANT_PROFILE = 'businessInfoMerchantProfile';
+
     /**
      * @var string
      */
     protected const FIELD_ONLINE_PROFILE_MERCHANT_PROFILE = 'onlineProfileMerchantProfile';
+
     /**
      * @var string
      */

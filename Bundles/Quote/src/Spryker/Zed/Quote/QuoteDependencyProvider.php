@@ -21,46 +21,57 @@ class QuoteDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const FACADE_STORE = 'FACADE_STORE';
+
     /**
      * @var string
      */
     public const PLUGINS_QUOTE_CREATE_AFTER = 'PLUGINS_QUOTE_CREATE_AFTER';
+
     /**
      * @var string
      */
     public const PLUGINS_QUOTE_CREATE_BEFORE = 'PLUGINS_QUOTE_CREATE_BEFORE';
+
     /**
      * @var string
      */
     public const PLUGINS_QUOTE_UPDATE_AFTER = 'PLUGINS_QUOTE_UPDATE_AFTER';
+
     /**
      * @var string
      */
     public const PLUGINS_QUOTE_UPDATE_BEFORE = 'PLUGINS_QUOTE_UPDATE_BEFORE';
+
     /**
      * @var string
      */
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
+
     /**
      * @var string
      */
     public const PLUGINS_QUOTE_DELETE_BEFORE = 'PLUGINS_QUOTE_DELETE_BEFORE';
+
     /**
      * @var string
      */
     public const PLUGINS_QUOTE_DELETE_AFTER = 'PLUGINS_QUOTE_DELETE_AFTER';
+
     /**
      * @var string
      */
     public const PLUGINS_QUOTE_VALIDATOR = 'PLUGINS_QUOTE_VALIDATOR';
+
     /**
      * @var string
      */
     public const PLUGINS_QUOTE_EXPANDER = 'PLUGINS_QUOTE_EXPANDER';
+
     /**
      * @var string
      */
     public const PLUGINS_QUOTE_EXPAND_BEFORE_CREATE = 'PLUGINS_QUOTE_EXPAND_BEFORE_CREATE';
+
     /**
      * @var string
      */

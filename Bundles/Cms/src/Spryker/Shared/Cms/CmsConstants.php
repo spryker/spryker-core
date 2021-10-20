@@ -20,14 +20,17 @@ interface CmsConstants
      * @var string
      */
     public const RESOURCE_TYPE_PAGE = 'page';
+
     /**
      * @var string
      */
     public const RESOURCE_TYPE_BLOCK = 'block';
+
     /**
      * @var string
      */
     public const RESOURCE_TYPE_CATEGORY_NODE = 'category';
+
     /**
      * @var string
      */

@@ -18,6 +18,7 @@ class ProductCategoryFilterStorageDependencyProvider extends AbstractDependencyP
      * @var string
      */
     public const CLIENT_STORAGE = 'CLIENT_STORAGE';
+
     /**
      * @var string
      */

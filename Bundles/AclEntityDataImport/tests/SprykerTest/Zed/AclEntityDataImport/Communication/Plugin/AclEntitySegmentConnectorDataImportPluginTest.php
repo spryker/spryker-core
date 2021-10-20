@@ -38,6 +38,7 @@ class AclEntitySegmentConnectorDataImportPluginTest extends Unit
      * @var string
      */
     protected const MERCHANT_REFERENCE_1 = 'yoJaVJStcddyqgDXyPJJ';
+
     /**
      * @var string
      */
@@ -47,6 +48,7 @@ class AclEntitySegmentConnectorDataImportPluginTest extends Unit
      * @var string
      */
     protected const ACL_ENTITY_SEGMENT_REFERENCE_1 = 'VZ70yrh8KdWtozCNSwnDw';
+
     /**
      * @var string
      */
@@ -56,6 +58,7 @@ class AclEntitySegmentConnectorDataImportPluginTest extends Unit
      * @var string
      */
     protected const ACL_ENTITY_SEGMENT_NAME_1 = 'Segment name 1';
+
     /**
      * @var string
      */
@@ -65,14 +68,17 @@ class AclEntitySegmentConnectorDataImportPluginTest extends Unit
      * @var string
      */
     protected const ACL_ENTITY_SEGMENT_CONNECTOR_IMPORT_FILE_NAME = 'import/acl_entity_segment_connector.csv';
+
     /**
      * @var string
      */
     protected const ACL_ENTITY_SEGMENT_CONNECTOR_IMPORT_FILE_NAME_INVALID_DATA_ENTITY = 'import/acl_entity_segment_connector_invalid_data_entity.csv';
+
     /**
      * @var string
      */
     protected const ACL_ENTITY_SEGMENT_CONNECTOR_IMPORT_FILE_NAME_INVALID_ENTITY_REFERENCE = 'import/acl_entity_segment_connector_invalid_entity_reference.csv';
+
     /**
      * @var string
      */

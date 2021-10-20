@@ -27,6 +27,7 @@ class SessionConfigTest extends Unit
      * @var string
      */
     public const EXPECTED_DSN_TCP_WITHOUT_PASSWORD = 'tcp://10.10.0.1:6435?database=0';
+
     /**
      * @var string
      */
@@ -36,6 +37,7 @@ class SessionConfigTest extends Unit
      * @var string
      */
     public const EXPECTED_DSN_REDIS_WITHOUT_PASSWORD = 'redis://10.10.0.1:6435/0';
+
     /**
      * @var string
      */

@@ -15,6 +15,7 @@ class CmsSlotBlockGuiConfig extends AbstractBundleConfig
      * @var int
      */
     protected const MAX_NUMBER_BLOCKS_ASSIGNED_TO_SLOT = 500;
+
     /**
      * @var int
      */

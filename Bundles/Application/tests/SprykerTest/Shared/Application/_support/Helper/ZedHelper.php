@@ -20,6 +20,7 @@ class ZedHelper extends Module
      * @var string
      */
     protected const LOGOUT_LINK_SELECTOR = "(//a[contains(@href,'/auth/logout')])[2]";
+
     /**
      * @var string
      */

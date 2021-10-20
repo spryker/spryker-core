@@ -19,6 +19,7 @@ class ContentFileListValidator implements ContentFileListValidatorInterface
      * @var string
      */
     protected const ERROR_MESSAGE_MAX_NUMBER_OF_FILES = 'There are too many files in the list, please reduce the list size to {{ number }} or fewer.';
+
     /**
      * @var string
      */

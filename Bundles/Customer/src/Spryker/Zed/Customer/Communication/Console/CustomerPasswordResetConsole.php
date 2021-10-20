@@ -26,14 +26,17 @@ class CustomerPasswordResetConsole extends Console
      * @var string
      */
     protected const COMMAND_NAME = 'customer:password:reset';
+
     /**
      * @var string
      */
     protected const OPTION_FORCE = 'force';
+
     /**
      * @var string
      */
     protected const OPTION_FORCE_SHORT = 'f';
+
     /**
      * @var string
      */

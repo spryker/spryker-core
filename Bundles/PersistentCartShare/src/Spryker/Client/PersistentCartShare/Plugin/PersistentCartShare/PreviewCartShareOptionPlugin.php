@@ -18,6 +18,7 @@ class PreviewCartShareOptionPlugin extends AbstractPlugin implements CartShareOp
      * @var string
      */
     protected const SHARE_OPTION_KEY_PREVIEW = 'PREVIEW';
+
     /**
      * @var string
      */

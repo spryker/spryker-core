@@ -28,6 +28,7 @@ class TwigMoneyServiceProvider extends AbstractPlugin implements ServiceProvider
      * @var string
      */
     public const FUNCTION_NAME_MONEY_COLLECTION = 'form_money_collection';
+
     /**
      * @var string
      */

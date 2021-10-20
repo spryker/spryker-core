@@ -13,6 +13,7 @@ interface MerchantProductDataSetInterface
      * @var string
      */
     public const MERCHANT_REFERENCE = 'merchant_reference';
+
     /**
      * @var string
      */
@@ -22,6 +23,7 @@ interface MerchantProductDataSetInterface
      * @var string
      */
     public const PRODUCT_ABSTRACT_SKU = 'sku';
+
     /**
      * @var string
      */

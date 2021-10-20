@@ -13,6 +13,7 @@ class LogicalComparators
      * @var string
      */
     public const COMPARATOR_AND = 'and';
+
     /**
      * @var string
      */

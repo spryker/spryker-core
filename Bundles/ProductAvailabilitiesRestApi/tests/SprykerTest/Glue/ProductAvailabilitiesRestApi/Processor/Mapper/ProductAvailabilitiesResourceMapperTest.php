@@ -36,18 +36,22 @@ class ProductAvailabilitiesResourceMapperTest extends Unit
      * @var int
      */
     protected const PRODUCTS_AVAILABILITY_QUANTITY = 10;
+
     /**
      * @var bool
      */
     protected const PRODUCTS_AVAILABILITY_IS_NEVER_OUT_OF_STOCK = false;
+
     /**
      * @var string
      */
     protected const PRODUCT_CONCRETE_SKU = '001_25904006';
+
     /**
      * @var string
      */
     protected const PRODUCT_CONCRETE_AVAILABILITY_ID = '1';
+
     /**
      * @var string
      */

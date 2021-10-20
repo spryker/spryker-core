@@ -40,10 +40,12 @@ class TranslationTableQueryTest extends Unit
      * @var string
      */
     protected const TEST_LOCALE_1 = 'xxx';
+
     /**
      * @var string
      */
     protected const TEST_LOCALE_2 = 'yyy';
+
     /**
      * @var string
      */

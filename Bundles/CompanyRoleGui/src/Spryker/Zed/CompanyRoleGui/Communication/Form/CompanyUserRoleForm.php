@@ -28,6 +28,7 @@ class CompanyUserRoleForm extends AbstractType
      * @var string
      */
     public const OPTION_VALUES_ROLES_CHOICES = 'company_role_choices';
+
     /**
      * @var string
      */
@@ -38,6 +39,7 @@ class CompanyUserRoleForm extends AbstractType
      * @var string
      */
     protected const FIELD_FK_COMPANY = 'fk_company';
+
     /**
      * @var string
      */

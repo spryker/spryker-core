@@ -23,6 +23,7 @@ class QuoteStatusChecker implements QuoteStatusCheckerInterface
      * @var string
      */
     protected const GLOSSARY_KEY_CART_REQUIRE_APPROVAL = 'quote_approval.cart.require_approval';
+
     /**
      * @var string
      */

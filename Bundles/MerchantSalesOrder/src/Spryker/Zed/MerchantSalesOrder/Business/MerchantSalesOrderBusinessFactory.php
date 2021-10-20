@@ -107,7 +107,7 @@ class MerchantSalesOrderBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->getMerchantOrderFilterPlugins(),
             $this->getMerchantOrderExpanderPlugins(),
-            $this->getMerchantFacade(),
+            $this->getMerchantFacade()
         );
     }
 

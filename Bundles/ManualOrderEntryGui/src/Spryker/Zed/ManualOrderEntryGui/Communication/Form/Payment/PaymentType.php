@@ -37,6 +37,7 @@ class PaymentType extends AbstractType
      * @var string
      */
     public const KEY_SUBFORM = 'SUBFORM';
+
     /**
      * @var string
      */

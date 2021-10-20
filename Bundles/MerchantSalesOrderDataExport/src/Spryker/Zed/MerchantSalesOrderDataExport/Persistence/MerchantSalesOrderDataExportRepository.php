@@ -43,6 +43,7 @@ class MerchantSalesOrderDataExportRepository extends AbstractRepository implemen
      * @var string
      */
     protected const FILTER_CRITERIA_KEY_MERCHANT_ORDER_CREATED_AT = 'merchant_order_created_at';
+
     /**
      * @var string
      */
@@ -52,6 +53,7 @@ class MerchantSalesOrderDataExportRepository extends AbstractRepository implemen
      * @var string
      */
     protected const FILTER_CRITERIA_PARAM_OFFSET = 'offset';
+
     /**
      * @var string
      */
@@ -61,6 +63,7 @@ class MerchantSalesOrderDataExportRepository extends AbstractRepository implemen
      * @var string
      */
     protected const FILTER_CRITERIA_PARAM_DATE_FROM = 'from';
+
     /**
      * @var string
      */
@@ -70,6 +73,7 @@ class MerchantSalesOrderDataExportRepository extends AbstractRepository implemen
      * @var string
      */
     protected const PROPEL_CRITERIA_BETWEEN_MIN = 'min';
+
     /**
      * @var string
      */

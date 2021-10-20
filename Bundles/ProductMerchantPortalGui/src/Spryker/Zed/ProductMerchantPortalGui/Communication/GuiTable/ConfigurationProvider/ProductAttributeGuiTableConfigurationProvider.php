@@ -19,6 +19,7 @@ class ProductAttributeGuiTableConfigurationProvider implements ProductAttributeG
      * @var string
      */
     public const COL_KEY_ATTRIBUTE_NAME = 'attribute_name';
+
     /**
      * @var string
      */
@@ -28,6 +29,7 @@ class ProductAttributeGuiTableConfigurationProvider implements ProductAttributeG
      * @var string
      */
     protected const TITLE_COLUMN_ATTRIBUTE_NAME = 'Attribute';
+
     /**
      * @var string
      */

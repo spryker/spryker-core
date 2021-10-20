@@ -28,70 +28,87 @@ class YamlOpenApiDocumentationWriter implements DocumentationWriterInterface
      * @var string
      */
     protected const KEY_OPENAPI = 'openapi';
+
     /**
      * @var string
      */
     protected const KEY_INFO = 'info';
+
     /**
      * @var string
      */
     protected const KEY_VERSION = 'version';
+
     /**
      * @var string
      */
     protected const KEY_CONTACT = 'contact';
+
     /**
      * @var string
      */
     protected const KEY_CONTACT_NAME = 'name';
+
     /**
      * @var string
      */
     protected const KEY_CONTACT_URL = 'url';
+
     /**
      * @var string
      */
     protected const KEY_CONTACT_EMAIL = 'email';
+
     /**
      * @var string
      */
     protected const KEY_TITLE = 'title';
+
     /**
      * @var string
      */
     protected const KEY_LICENSE = 'license';
+
     /**
      * @var string
      */
     protected const KEY_NAME = 'name';
+
     /**
      * @var string
      */
     protected const KEY_SERVERS = 'servers';
+
     /**
      * @var string
      */
     protected const KEY_URL = 'url';
+
     /**
      * @var string
      */
     protected const KEY_PATHS = 'paths';
+
     /**
      * @var string
      */
     protected const KEY_COMPONENTS = 'components';
+
     /**
      * @var string
      */
     protected const KEY_SCHEMAS = 'schemas';
+
     /**
      * @var string
      */
     protected const KEY_SECURITY_SCHEMES = 'securitySchemes';
+
     /**
      * @var string
      */
     protected const KEY_TAGS = 'tags';
+
     /**
      * @var string
      */
@@ -101,6 +118,7 @@ class YamlOpenApiDocumentationWriter implements DocumentationWriterInterface
      * @var int
      */
     protected const YAML_NESTING_LEVEL = 9;
+
     /**
      * @var int
      */

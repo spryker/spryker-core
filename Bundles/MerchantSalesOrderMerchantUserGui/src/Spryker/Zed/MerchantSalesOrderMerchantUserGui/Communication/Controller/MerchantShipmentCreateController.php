@@ -20,14 +20,17 @@ class MerchantShipmentCreateController extends AbstractMerchantShipmentControlle
      * @var string
      */
     protected const MESSAGE_SHIPMENT_CREATE_SUCCESS = 'Shipment has been successfully created.';
+
     /**
      * @var string
      */
     protected const MESSAGE_SHIPMENT_CREATE_FAIL = 'Shipment has not been created.';
+
     /**
      * @var string
      */
     protected const MESSAGE_MERCHANT_REFERENCE_NOT_FOUND = 'Merchant reference not found.';
+
     /**
      * @var string
      */

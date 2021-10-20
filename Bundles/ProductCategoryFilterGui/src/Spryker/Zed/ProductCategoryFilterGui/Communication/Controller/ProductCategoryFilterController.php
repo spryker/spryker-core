@@ -24,6 +24,7 @@ class ProductCategoryFilterController extends AbstractController
      * @var string
      */
     public const PARAM_ID_CATEGORY_NODE = 'id-category-node';
+
     /**
      * @var string
      */

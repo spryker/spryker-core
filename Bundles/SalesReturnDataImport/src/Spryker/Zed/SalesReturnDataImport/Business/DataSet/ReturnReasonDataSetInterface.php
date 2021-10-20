@@ -13,6 +13,7 @@ interface ReturnReasonDataSetInterface
      * @var string
      */
     public const COLUMN_REASON_KEY = 'reason_key';
+
     /**
      * @var string
      */

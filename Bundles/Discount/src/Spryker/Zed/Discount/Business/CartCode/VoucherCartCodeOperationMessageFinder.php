@@ -16,6 +16,7 @@ class VoucherCartCodeOperationMessageFinder implements VoucherCartCodeOperationM
      * @var string
      */
     protected const GLOSSARY_KEY_VOUCHER_NON_APPLICABLE = 'cart.voucher.apply.non_applicable';
+
     /**
      * @var string
      */

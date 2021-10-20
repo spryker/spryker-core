@@ -22,10 +22,12 @@ class CompanyUsersRestApiDependencyProvider extends AbstractBundleDependencyProv
      * @var string
      */
     public const PROPEL_QUERY_COMPANY_USER = 'PROPEL_QUERY_COMPANY_USER';
+
     /**
      * @var string
      */
     public const PROPEL_QUERY_COMPANY_ROLE = 'PROPEL_QUERY_COMPANY_ROLE';
+
     /**
      * @var string
      */

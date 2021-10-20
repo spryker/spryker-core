@@ -13,6 +13,7 @@ interface ProductDiscontinuedDataSetInterface
      * @var string
      */
     public const KEY_CONCRETE_SKU = 'sku_concrete';
+
     /**
      * @var string
      */
@@ -22,10 +23,12 @@ interface ProductDiscontinuedDataSetInterface
      * @var string
      */
     public const KEY_LOCALES = 'locales';
+
     /**
      * @var string
      */
     public const KEY_NOTE = 'note';
+
     /**
      * @var string
      */

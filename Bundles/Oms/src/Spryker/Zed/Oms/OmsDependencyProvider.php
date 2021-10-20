@@ -30,6 +30,7 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const CONDITION_PLUGINS = 'CONDITION_PLUGINS';
+
     /**
      * @var string
      */
@@ -44,42 +45,52 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const PLUGIN_GRAPH = 'PLUGIN_GRAPH';
+
     /**
      * @var string
      */
     public const PLUGINS_RESERVATION = 'PLUGIN_RESERVATION';
+
     /**
      * @var string
      */
     public const PLUGINS_RESERVATION_AGGREGATION = 'PLUGINS_RESERVATION_AGGREGATION';
+
     /**
      * @var string
      */
     public const PLUGINS_OMS_RESERVATION_AGGREGATION = 'PLUGINS_OMS_RESERVATION_AGGREGATION';
+
     /**
      * @var string
      */
     public const PLUGINS_RESERVATION_EXPORT = 'PLUGINS_RESERVATION_EXPORT';
+
     /**
      * @var string
      */
     public const PLUGINS_OMS_ORDER_MAIL_EXPANDER = 'PLUGINS_OMS_ORDER_MAIL_EXPANDER';
+
     /**
      * @var string
      */
     public const PLUGINS_OMS_MANUAL_EVENT_GROUPER = 'PLUGINS_OMS_MANUAL_EVENT_GROUPER';
+
     /**
      * @var string
      */
     public const PLUGINS_OMS_RESERVATION_READER_STRATEGY = 'PLUGINS_OMS_RESERVATION_READER_STRATEGY';
+
     /**
      * @var string
      */
     public const PLUGINS_OMS_RESERVATION_WRITER_STRATEGY = 'PLUGINS_OMS_RESERVATION_WRITER_STRATEGY';
+
     /**
      * @var string
      */
     public const PLUGINS_RESERVATION_HANDLER_TERMINATION_AWARE_STRATEGY = 'PLUGINS_RESERVATION_HANDLER_TERMINATION_AWARE_STRATEGY';
+
     /**
      * @var string
      */
@@ -89,6 +100,7 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const FACADE_MAIL = 'FACADE_MAIL';
+
     /**
      * @var string
      */
@@ -98,14 +110,17 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const FACADE_STORE = 'FACADE_STORE';
+
     /**
      * @var string
      */
     public const FACADE_UTIL_TEXT = 'FACADE_UTIL_TEXT';
+
     /**
      * @var string
      */
     public const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
+
     /**
      * @var string
      */

@@ -54,6 +54,7 @@ class AclMerchantPortalConfig extends AbstractBundleConfig
      * @var string
      */
     protected const RULE_TYPE_ALLOW = 'allow';
+
     /**
      * @var string
      */
@@ -63,6 +64,7 @@ class AclMerchantPortalConfig extends AbstractBundleConfig
      * @var string
      */
     protected const ACL_ROLE_PRODUCT_VIEWER_NAME = 'Product Viewer for Offer creation';
+
     /**
      * @var string
      */

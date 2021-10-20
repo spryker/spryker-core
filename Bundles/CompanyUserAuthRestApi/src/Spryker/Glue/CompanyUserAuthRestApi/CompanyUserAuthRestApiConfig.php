@@ -15,6 +15,7 @@ class CompanyUserAuthRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESOURCE_COMPANY_USER_ACCESS_TOKENS = 'company-user-access-tokens';
+
     /**
      * @var string
      */
@@ -29,10 +30,12 @@ class CompanyUserAuthRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESPONSE_DETAIL_MISSING_ACCESS_TOKEN = 'Missing access token.';
+
     /**
      * @var string
      */
     public const RESPONSE_DETAIL_INVALID_ACCESS_TOKEN = 'Invalid access token.';
+
     /**
      * @var string
      */
@@ -42,10 +45,12 @@ class CompanyUserAuthRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESPONSE_CODE_ACCESS_CODE_INVALID = '001';
+
     /**
      * @var string
      */
     public const RESPONSE_CODE_FORBIDDEN = '002';
+
     /**
      * @var string
      */

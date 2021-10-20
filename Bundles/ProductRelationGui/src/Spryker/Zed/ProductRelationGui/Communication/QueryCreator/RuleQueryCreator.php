@@ -30,6 +30,7 @@ class RuleQueryCreator implements RuleQueryCreatorInterface
      * @var string
      */
     protected const COL_CATEGORY_NAME = 'category_name';
+
     /**
      * @var string
      */

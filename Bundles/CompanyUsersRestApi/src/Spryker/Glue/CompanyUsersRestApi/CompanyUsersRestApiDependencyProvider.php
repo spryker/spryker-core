@@ -21,6 +21,7 @@ class CompanyUsersRestApiDependencyProvider extends AbstractBundleDependencyProv
      * @var string
      */
     public const CLIENT_COMPANY_USER = 'CLIENT_COMPANY_USER';
+
     /**
      * @var string
      */

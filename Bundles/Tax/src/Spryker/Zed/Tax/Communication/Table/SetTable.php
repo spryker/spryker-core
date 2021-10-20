@@ -21,6 +21,7 @@ class SetTable extends AbstractTable
      * @var string
      */
     public const TABLE_COL_ACTIONS = 'Actions';
+
     /**
      * @var string
      */

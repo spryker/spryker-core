@@ -24,6 +24,7 @@ class CreateShipmentMethodController extends AbstractController
      * @var string
      */
     protected const REDIRECT_URL = '/shipment-gui/shipment-method/index';
+
     /**
      * @var string
      */

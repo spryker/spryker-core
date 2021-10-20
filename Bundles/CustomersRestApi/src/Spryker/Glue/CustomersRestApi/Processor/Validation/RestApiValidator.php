@@ -21,6 +21,7 @@ class RestApiValidator implements RestApiValidatorInterface
      * @var string
      */
     protected const CUSTOMERS_GENDER_ENUM_MALE = 'Male';
+
     /**
      * @var string
      */

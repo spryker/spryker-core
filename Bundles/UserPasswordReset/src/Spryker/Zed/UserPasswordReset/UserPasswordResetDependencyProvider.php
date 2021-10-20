@@ -21,10 +21,12 @@ class UserPasswordResetDependencyProvider extends AbstractBundleDependencyProvid
      * @var string
      */
     public const FACADE_USER = 'FACADE_USER';
+
     /**
      * @var string
      */
     public const SERVICE_UTIL_TEXT = 'SERVICE_UTIL_TEXT';
+
     /**
      * @var string
      */

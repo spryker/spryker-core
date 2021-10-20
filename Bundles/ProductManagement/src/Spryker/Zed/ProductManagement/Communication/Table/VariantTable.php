@@ -30,38 +30,47 @@ class VariantTable extends AbstractProductTable
      * @var string
      */
     public const COL_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
+
     /**
      * @var string
      */
     public const COL_ID_PRODUCT = 'id_product';
+
     /**
      * @var string
      */
     public const COL_SKU = 'sku';
+
     /**
      * @var string
      */
     public const COL_NAME = 'name';
+
     /**
      * @var string
      */
     public const COL_STATUS = 'status';
+
     /**
      * @var string
      */
     public const COL_ACTIONS = 'actions';
+
     /**
      * @var string
      */
     public const COL_ID_PRODUCT_BUNDLE = 'idProductBundle';
+
     /**
      * @var string
      */
     public const COL_IS_BUNDLE = 'is_bundle';
+
     /**
      * @var string
      */
     public const COL_VALID_FROM = 'valid_from';
+
     /**
      * @var string
      */

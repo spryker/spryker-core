@@ -20,10 +20,12 @@ class CmsBlockCategoryStorageReader implements CmsBlockCategoryStorageReaderInte
      * @var string
      */
     protected const OPTION_KEY_POSITION = 'position';
+
     /**
      * @var string
      */
     protected const KEY_CMS_BLOCK_CATEGORIES = 'cms_block_categories';
+
     /**
      * @var string
      */

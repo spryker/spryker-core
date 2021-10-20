@@ -39,10 +39,12 @@ class CategoryPageSearchFacadeTest extends Unit
      * @var string
      */
     protected const KEY_SEARCH_RESULT_DATA = 'search-result-data';
+
     /**
      * @var string
      */
     protected const KEY_NAME = 'name';
+
     /**
      * @var string
      */

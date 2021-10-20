@@ -24,10 +24,12 @@ class RepeaterHelper extends Module
      * @var string
      */
     public const BUNDLE = 'module';
+
     /**
      * @var string
      */
     public const CONTROLLER = 'controller';
+
     /**
      * @var string
      */

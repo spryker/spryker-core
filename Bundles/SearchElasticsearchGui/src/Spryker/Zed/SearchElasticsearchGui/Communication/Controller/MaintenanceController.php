@@ -21,6 +21,7 @@ class MaintenanceController extends AbstractController
      * @var string
      */
     public const URL_PARAM_INDEX = 'index';
+
     /**
      * @var string
      */

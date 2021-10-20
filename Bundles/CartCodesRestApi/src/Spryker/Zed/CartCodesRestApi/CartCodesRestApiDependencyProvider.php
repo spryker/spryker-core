@@ -21,6 +21,7 @@ class CartCodesRestApiDependencyProvider extends AbstractBundleDependencyProvide
      * @var string
      */
     public const FACADE_CART_CODE = 'FACADE_CART_CODE';
+
     /**
      * @var string
      */

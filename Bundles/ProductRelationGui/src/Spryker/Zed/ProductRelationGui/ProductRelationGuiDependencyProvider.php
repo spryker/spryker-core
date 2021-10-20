@@ -30,14 +30,17 @@ class ProductRelationGuiDependencyProvider extends AbstractBundleDependencyProvi
      * @var string
      */
     public const FACADE_PRODUCT_RELATION = 'FACADE_PRODUCT_RELATION';
+
     /**
      * @var string
      */
     public const FACADE_PRODUCT = 'FACADE_PRODUCT';
+
     /**
      * @var string
      */
     public const FACADE_LOCALE = 'FACADE_LOCALE';
+
     /**
      * @var string
      */
@@ -52,10 +55,12 @@ class ProductRelationGuiDependencyProvider extends AbstractBundleDependencyProvi
      * @var string
      */
     public const PROPEL_QUERY_PRODUCT_RELATION = 'PROPEL_QUERY_PRODUCT_RELATION';
+
     /**
      * @var string
      */
     public const PROPEL_QUERY_PRODUCT_ABSTRACT = 'PROPEL_QUERY_PRODUCT_ABSTRACT';
+
     /**
      * @var string
      */

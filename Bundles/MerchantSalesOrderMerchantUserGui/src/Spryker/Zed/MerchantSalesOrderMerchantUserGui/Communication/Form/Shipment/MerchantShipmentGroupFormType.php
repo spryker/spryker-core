@@ -24,18 +24,22 @@ class MerchantShipmentGroupFormType extends AbstractType
      * @var string
      */
     protected const FIELD_SHIPMENT_FORM = 'shipment';
+
     /**
      * @var string
      */
     protected const FIELD_ID_SHIPMENT_METHOD = 'idShipmentMethod';
+
     /**
      * @var string
      */
     protected const FIELD_SALES_ORDER_ITEMS_FORM = 'items';
+
     /**
      * @var string
      */
     protected const FIELD_ID_SALES_SHIPMENT = 'idSalesShipment';
+
     /**
      * @var string
      */
@@ -45,14 +49,17 @@ class MerchantShipmentGroupFormType extends AbstractType
      * @var string
      */
     protected const OPTION_SHIPMENT_METHOD_CHOICES = 'method_choices';
+
     /**
      * @var string
      */
     protected const OPTION_SALUTATION_CHOICES = 'salutation_choices';
+
     /**
      * @var string
      */
     protected const OPTION_SHIPMENT_ADDRESS_CHOICES = 'address_choices';
+
     /**
      * @var string
      */

@@ -32,6 +32,7 @@ class MerchantTable extends AbstractTable
      * @var string
      */
     public const COL_ACTIONS = 'actions';
+
     /**
      * @var string
      */

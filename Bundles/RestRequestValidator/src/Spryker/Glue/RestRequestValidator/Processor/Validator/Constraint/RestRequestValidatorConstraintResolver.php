@@ -22,6 +22,7 @@ class RestRequestValidatorConstraintResolver implements RestRequestValidatorCons
      * @var string
      */
     protected const FIELDS = 'fields';
+
     /**
      * @var string
      */

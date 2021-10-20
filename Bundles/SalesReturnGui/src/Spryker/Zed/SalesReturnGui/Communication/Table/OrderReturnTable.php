@@ -38,6 +38,7 @@ class OrderReturnTable extends AbstractTable
      * @var string
      */
     protected const URL_RETURN_DETAIL = '/sales-return-gui/detail';
+
     /**
      * @var string
      */
@@ -53,18 +54,22 @@ class OrderReturnTable extends AbstractTable
      * @var string
      */
     protected const COL_RETURN_REFERENCE = 'return_reference';
+
     /**
      * @var string
      */
     protected const COL_ITEMS = 'items';
+
     /**
      * @var string
      */
     protected const COL_REMUNERATION_TOTAL = 'remuneration_total';
+
     /**
      * @var string
      */
     protected const COL_CURRENCY = 'currency';
+
     /**
      * @var string
      */

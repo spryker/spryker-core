@@ -26,6 +26,7 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
      * @var string
      */
     public const COL_CATEGORY_NAME = 'category_name';
+
     /**
      * @var string
      */

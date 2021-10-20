@@ -34,6 +34,7 @@ class FacadeMethodBuilderTest extends Unit
      * @var string
      */
     public const BASE_DIRECTORY = '/foo/bar/baz/*/src/';
+
     /**
      * @var string
      */

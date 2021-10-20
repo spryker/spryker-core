@@ -28,10 +28,12 @@ class RequestServiceProvider extends AbstractPlugin implements ServiceProviderIn
      * @var string
      */
     public const BUNDLE = 'module';
+
     /**
      * @var string
      */
     public const CONTROLLER = 'controller';
+
     /**
      * @var string
      */
@@ -41,10 +43,12 @@ class RequestServiceProvider extends AbstractPlugin implements ServiceProviderIn
      * @var string
      */
     public const DEFAULT_BUNDLE = 'application';
+
     /**
      * @var string
      */
     public const DEFAULT_CONTROLLER = 'index';
+
     /**
      * @var string
      */

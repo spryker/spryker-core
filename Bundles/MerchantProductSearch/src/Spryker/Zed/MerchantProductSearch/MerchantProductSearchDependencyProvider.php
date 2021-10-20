@@ -22,10 +22,12 @@ class MerchantProductSearchDependencyProvider extends AbstractBundleDependencyPr
      * @var string
      */
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
+
     /**
      * @var string
      */
     public const FACADE_PRODUCT_PAGE_SEARCH = 'FACADE_PRODUCT_PAGE_SEARCH';
+
     /**
      * @var string
      */

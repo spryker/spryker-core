@@ -22,6 +22,7 @@ class CategoryType extends CommonCategoryType
      * @var string
      */
     public const OPTION_PARENT_CATEGORY_NODE_CHOICES = 'parent_category_node_choices';
+
     /**
      * @var string
      */
@@ -31,10 +32,12 @@ class CategoryType extends CommonCategoryType
      * @var string
      */
     public const OPTION_ATTRIBUTE_ACTION_URL = 'action_url';
+
     /**
      * @var string
      */
     public const OPTION_ATTRIBUTE_ACTION_EVENT = 'action_event';
+
     /**
      * @var string
      */
@@ -49,6 +52,7 @@ class CategoryType extends CommonCategoryType
      * @var string
      */
     protected const FIELD_PARENT_CATEGORY_NODE = 'parent_category_node';
+
     /**
      * @var string
      */
@@ -58,6 +62,7 @@ class CategoryType extends CommonCategoryType
      * @var string
      */
     protected const LABEL_PARENT_CATEGORY_NODE = 'Parent';
+
     /**
      * @var string
      */

@@ -29,10 +29,12 @@ class CategoryStorageDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const FACADE_CATEGORY = 'FACADE_CATEGORY';
+
     /**
      * @var string
      */
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
+
     /**
      * @var string
      */

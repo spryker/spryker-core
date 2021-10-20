@@ -25,6 +25,7 @@ class EditController extends AbstractController
      * @var string
      */
     public const PAGE_EDIT = '/customer-user-connector-gui/edit';
+
     /**
      * @var string
      */

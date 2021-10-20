@@ -24,6 +24,7 @@ class ThresholdMessenger implements ThresholdMessengerInterface
      * @var string
      */
     protected const THRESHOLD_GLOSSARY_PARAMETER = '{{threshold}}';
+
     /**
      * @var string
      */

@@ -19,10 +19,12 @@ class AvailabilityMerchantPortalGuiDependencyProvider extends AbstractBundleDepe
      * @var string
      */
     public const FACADE_AVAILABILITY = 'FACADE_AVAILABILITY';
+
     /**
      * @var string
      */
     public const FACADE_MERCHANT_USER = 'FACADE_MERCHANT_USER';
+
     /**
      * @var string
      */

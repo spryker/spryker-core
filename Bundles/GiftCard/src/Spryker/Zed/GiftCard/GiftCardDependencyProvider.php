@@ -22,22 +22,27 @@ class GiftCardDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const SERVICE_ENCODING = 'SERVICE_ENCODING';
+
     /**
      * @var string
      */
     public const ATTRIBUTE_PROVIDER_PLUGINS = 'ATTRIBUTE_PROVIDER_PLUGINS';
+
     /**
      * @var string
      */
     public const GIFT_CARD_DECISION_RULE_PLUGINS = 'GIFT_CARD_DECISION_RULE_PLUGINS';
+
     /**
      * @var string
      */
     public const GIFT_CARD_VALUE_PROVIDER = 'GIFT_CARD_VALUE_PROVIDER';
+
     /**
      * @var string
      */
     public const GIFT_CARD_PAYMENT_SAVER_PLUGINS = 'GIFT_CARD_PAYMENT_SAVER_PLUGINS';
+
     /**
      * @var string
      */

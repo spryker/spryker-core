@@ -24,6 +24,7 @@ class StatusOrderChartPlugin extends AbstractPlugin implements ChartPluginInterf
      * @var string
      */
     public const NAME = 'status-orders';
+
     /**
      * @var string
      */

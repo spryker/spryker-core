@@ -22,6 +22,7 @@ class DatasetTable extends AbstractTable
     public const REQUEST_ID_DATASET = 'id-dataset';
     public const COL_ID_DATASET = SpyDatasetTableMap::COL_ID_DATASET;
     public const COL_DATASET_NAME = SpyDatasetTableMap::COL_NAME;
+
     /**
      * @var string
      */
@@ -33,18 +34,22 @@ class DatasetTable extends AbstractTable
      * @var string
      */
     public const DATASET_ACTIVATE_URL = '/dataset/activate';
+
     /**
      * @var string
      */
     public const DATASET_DEACTIVATE_URL = '/dataset/deactivate';
+
     /**
      * @var string
      */
     public const DATASET_EDIT_URL = '/dataset/edit';
+
     /**
      * @var string
      */
     public const DATASET_DOWNLOAD_URL = '/dataset/download';
+
     /**
      * @var string
      */

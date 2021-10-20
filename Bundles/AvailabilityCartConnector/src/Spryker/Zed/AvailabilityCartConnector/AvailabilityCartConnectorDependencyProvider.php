@@ -17,6 +17,7 @@ class AvailabilityCartConnectorDependencyProvider extends AbstractBundleDependen
      * @var string
      */
     public const FACADE_AVAILABILITY = 'FACADE_AVAILABILITY';
+
     /**
      * @var string
      */

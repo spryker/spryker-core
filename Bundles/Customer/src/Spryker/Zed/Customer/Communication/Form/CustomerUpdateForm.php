@@ -23,6 +23,7 @@ class CustomerUpdateForm extends CustomerForm
      * @var string
      */
     public const FIELD_DEFAULT_BILLING_ADDRESS = 'default_billing_address';
+
     /**
      * @var string
      */

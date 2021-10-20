@@ -32,10 +32,12 @@ class CompanyBusinessUnitUserDataImportPluginTest extends AbstractCompanyBusines
      * @var string
      */
     protected const COMPANY_KEY = 'spryker';
+
     /**
      * @var string
      */
     protected const COMPANY_USER_KEY = 'ComUser--1';
+
     /**
      * @var string
      */
@@ -45,6 +47,7 @@ class CompanyBusinessUnitUserDataImportPluginTest extends AbstractCompanyBusines
      * @var string
      */
     protected const IMPORT_COMPANY_BUSINESS_UNIT_USER_CSV = 'import/company_business_unit_user.csv';
+
     /**
      * @var string
      */

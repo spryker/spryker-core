@@ -28,14 +28,17 @@ class PriceFacadeTest extends Unit
      * @var string
      */
     protected const ERROR_MESSAGE_PRICE_MODE_DATA_IS_MISSING = 'quote.validation.error.price_mode_is_missing';
+
     /**
      * @var string
      */
     protected const ERROR_MESSAGE_PRICE_MODE_DATA_IS_INCORRECT = 'quote.validation.error.price_mode_is_incorrect';
+
     /**
      * @var string
      */
     protected const WRONG_PRICE_MODE = 'WRONGPRICEMODE';
+
     /**
      * @var string
      */

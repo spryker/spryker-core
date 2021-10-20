@@ -24,6 +24,7 @@ class ProductSetGuiQueryContainer extends AbstractQueryContainer implements Prod
      * @var string
      */
     public const COL_ALIAS_NAME = 'name';
+
     /**
      * @var string
      */

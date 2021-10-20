@@ -20,18 +20,22 @@ class ProductConcreteResolver implements ProductConcreteResolverInterface
      * @var string
      */
     protected const MAPPING_TYPE_SKU = 'sku';
+
     /**
      * @var string
      */
     protected const ID_PRODUCT_CONCRETE = 'id_product_concrete';
+
     /**
      * @var string
      */
     protected const ID_PRODUCT_ABSTRACT = 'id_product_abstract';
+
     /**
      * @var string
      */
     protected const SKU = 'sku';
+
     /**
      * @var string
      */

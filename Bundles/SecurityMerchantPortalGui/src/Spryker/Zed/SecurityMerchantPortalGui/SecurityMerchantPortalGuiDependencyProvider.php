@@ -22,10 +22,12 @@ class SecurityMerchantPortalGuiDependencyProvider extends AbstractBundleDependen
      * @var string
      */
     public const FACADE_MERCHANT_USER = 'FACADE_MERCHANT_USER';
+
     /**
      * @var string
      */
     public const FACADE_MESSENGER = 'FACADE_MESSENGER';
+
     /**
      * @var string
      */

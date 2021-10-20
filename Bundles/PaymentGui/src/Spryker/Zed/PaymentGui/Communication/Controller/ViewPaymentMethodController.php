@@ -20,6 +20,7 @@ class ViewPaymentMethodController extends AbstractController
      * @var string
      */
     protected const PARAM_ID_PAYMENT_METHOD = 'id-payment-method';
+
     /**
      * @var string
      */

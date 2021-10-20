@@ -20,6 +20,7 @@ class CurrencySwitchController extends AbstractController
      * @var string
      */
     public const URL_PARAM_CURRENCY_ISO_CODE = 'currency-iso-code';
+
     /**
      * @var string
      */

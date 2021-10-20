@@ -13,6 +13,7 @@ class BarcodeGeneratorPluginMockRegistered2 extends AbstractBarcodeGeneratorPlug
      * @var string
      */
     public const GENERATED_CODE = 'mock_registered_2_generated_code';
+
     /**
      * @var string
      */

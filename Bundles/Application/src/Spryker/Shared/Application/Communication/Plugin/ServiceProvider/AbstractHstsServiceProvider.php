@@ -25,14 +25,17 @@ abstract class AbstractHstsServiceProvider implements ServiceProviderInterface
      * @var string
      */
     public const HEADER_HSTS = 'Strict-Transport-Security';
+
     /**
      * @var string
      */
     public const HSTS_CONFIG_MAXAGE = 'max_age';
+
     /**
      * @var string
      */
     public const HSTS_CONFIG_INCLUDE_SUBDOMAINS = 'include_sub_domains';
+
     /**
      * @var string
      */

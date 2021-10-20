@@ -19,10 +19,12 @@ class ShoppingListStorageDependencyProvider extends AbstractDependencyProvider
      * @var string
      */
     public const SHOPPING_LIST_STORAGE_CUSTOMER_CLIENT = 'SHOPPING_LIST_STORAGE_CUSTOMER_CLIENT';
+
     /**
      * @var string
      */
     public const SHOPPING_LIST_STORAGE_STORAGE_CLIENT = 'SHOPPING_LIST_STORAGE_STORAGE_CLIENT';
+
     /**
      * @var string
      */

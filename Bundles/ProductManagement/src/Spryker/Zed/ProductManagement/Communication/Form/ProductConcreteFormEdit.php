@@ -33,14 +33,17 @@ class ProductConcreteFormEdit extends ProductFormAdd
      * @var string
      */
     public const FIELD_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
+
     /**
      * @var string
      */
     public const FIELD_ID_PRODUCT_CONCRETE = 'id_product';
+
     /**
      * @var string
      */
     public const FIELD_VALID_FROM = 'valid_from';
+
     /**
      * @var string
      */
@@ -50,10 +53,12 @@ class ProductConcreteFormEdit extends ProductFormAdd
      * @var string
      */
     public const FORM_ASSIGNED_BUNDLED_PRODUCTS = 'assigned_bundled_products';
+
     /**
      * @var string
      */
     public const BUNDLED_PRODUCTS_TO_BE_REMOVED = 'product_bundles_to_be_removed';
+
     /**
      * @var string
      */
@@ -63,6 +68,7 @@ class ProductConcreteFormEdit extends ProductFormAdd
      * @var string
      */
     public const OPTION_IS_BUNDLE_ITEM = 'is_bundle_item';
+
     /**
      * @var string
      */

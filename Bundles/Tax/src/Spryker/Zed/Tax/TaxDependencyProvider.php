@@ -21,10 +21,12 @@ class TaxDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const STORE_CONFIG = 'store config';
+
     /**
      * @var string
      */
     public const FACADE_COUNTRY = 'facade country';
+
     /**
      * @var string
      */

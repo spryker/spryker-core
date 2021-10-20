@@ -31,6 +31,7 @@ class SecurityOauthUserConfig extends AbstractBundleConfig
      * @var string
      */
     public const REQUEST_PARAMETER_AUTHENTICATION_CODE = 'code';
+
     /**
      * @var string
      */
@@ -41,10 +42,12 @@ class SecurityOauthUserConfig extends AbstractBundleConfig
      * @var string
      */
     public const ROLE_BACK_OFFICE_USER = 'ROLE_BACK_OFFICE_USER';
+
     /**
      * @var string
      */
     public const ROLE_OAUTH_USER = 'ROLE_OAUTH_USER';
+
     /**
      * @var string
      */
@@ -60,6 +63,7 @@ class SecurityOauthUserConfig extends AbstractBundleConfig
      * @var string
      */
     protected const BACK_OFFICE_ROUTE_PATTERN = '^/';
+
     /**
      * @var string
      */

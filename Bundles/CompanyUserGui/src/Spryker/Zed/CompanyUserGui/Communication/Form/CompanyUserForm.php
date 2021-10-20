@@ -29,6 +29,7 @@ class CompanyUserForm extends AbstractType
      * @var string
      */
     public const FIELD_ID_COMPANY_USER = 'id_company_user';
+
     /**
      * @var string
      */

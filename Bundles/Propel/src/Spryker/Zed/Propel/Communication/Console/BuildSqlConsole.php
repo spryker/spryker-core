@@ -21,6 +21,7 @@ class BuildSqlConsole extends Console
      * @var string
      */
     public const COMMAND_NAME = 'propel:sql:build';
+
     /**
      * @var string
      */

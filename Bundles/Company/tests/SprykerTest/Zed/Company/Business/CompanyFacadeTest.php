@@ -31,18 +31,22 @@ class CompanyFacadeTest extends Test
      * @var string
      */
     protected const STATUS_PENDING = 'pending';
+
     /**
      * @var string
      */
     protected const STATUS_APPROVED = 'approved';
+
     /**
      * @var string
      */
     protected const TEST_NAME = 'TEST_NAME';
+
     /**
      * @var string
      */
     protected const TEST_FAKE_NAME = 'TEST_FAKE_NAME';
+
     /**
      * @var string
      */

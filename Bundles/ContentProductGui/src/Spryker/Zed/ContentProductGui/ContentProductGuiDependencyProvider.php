@@ -23,14 +23,17 @@ class ContentProductGuiDependencyProvider extends AbstractBundleDependencyProvid
      * @var string
      */
     public const FACADE_LOCALE = 'FACADE_LOCALE';
+
     /**
      * @var string
      */
     public const FACADE_CONTENT_PRODUCT = 'FACADE_CONTENT_PRODUCT';
+
     /**
      * @var string
      */
     public const FACADE_PRODUCT_IMAGE = 'FACADE_PRODUCT_IMAGE';
+
     /**
      * @var string
      */

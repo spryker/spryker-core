@@ -16,6 +16,7 @@ class RestRequestValidatorConfig extends AbstractBundleConfig
      * @var string
      */
     public const VALIDATION_CACHE_FILENAME_PATTERN = '/Generated/Glue/Validator/%s/validation.cache';
+
     /**
      * @var string
      */

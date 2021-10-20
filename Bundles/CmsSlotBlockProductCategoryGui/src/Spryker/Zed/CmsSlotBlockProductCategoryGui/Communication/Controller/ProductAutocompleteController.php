@@ -21,6 +21,7 @@ class ProductAutocompleteController extends AbstractController
      * @var string
      */
     protected const REQUEST_PARAM_SUGGESTION = 'term';
+
     /**
      * @var string
      */

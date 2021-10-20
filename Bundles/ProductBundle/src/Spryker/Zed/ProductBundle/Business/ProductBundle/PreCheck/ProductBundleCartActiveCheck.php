@@ -18,6 +18,7 @@ class ProductBundleCartActiveCheck implements ProductBundleCartActiveCheckInterf
      * @var string
      */
     protected const GLOSSARY_KEY_CART_PRE_CHECK_ACTIVE_FAILED = 'cart.pre.check.active.failed';
+
     /**
      * @var string
      */

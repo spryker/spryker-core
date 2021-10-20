@@ -20,14 +20,17 @@ class CmsSlotBlockCmsGuiDependencyProvider extends AbstractBundleDependencyProvi
      * @var string
      */
     public const QUERY_CONTAINER_CMS = 'QUERY_CONTAINER_CMS';
+
     /**
      * @var string
      */
     public const FACADE_TRANSLATOR = 'FACADE_TRANSLATOR';
+
     /**
      * @var string
      */
     public const FACADE_LOCALE = 'FACADE_LOCALE';
+
     /**
      * @var string
      */

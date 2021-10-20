@@ -90,7 +90,7 @@ class IncrementLoginAttemptCountTest extends Test
                 $securityBlockerConfig->getRedisConnectionKey(),
                 $expectedRedisKey,
                 $securityBlockerConfig->getDefaultSecurityBlockerConfigurationSettings()->getTtl(),
-                '1',
+                '1'
             )
             ->willReturn(true);
 

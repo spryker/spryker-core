@@ -17,10 +17,12 @@ class PriceProductOfferVolumeReader implements PriceProductOfferVolumeReaderInte
      * @var string
      */
     protected const KEY_PRICE_DATA_VOLUME_PRICES = 'volume_prices';
+
     /**
      * @var string
      */
     protected const KEY_VOLUME_PRICES = 'volumePrices';
+
     /**
      * @var string
      */

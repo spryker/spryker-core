@@ -16,6 +16,7 @@ class ProductManagementConfig extends AbstractBundleConfig
      * @var string
      */
     public const PRODUCT_TYPE_BUNDLE = 'bundle';
+
     /**
      * @var string
      */

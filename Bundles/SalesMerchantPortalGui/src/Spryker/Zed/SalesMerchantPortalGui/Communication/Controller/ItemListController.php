@@ -23,6 +23,7 @@ class ItemListController extends AbstractController
      * @var string
      */
     protected const PARAM_MERCHANT_ORDER_ITEM_IDS = 'merchant-order-item-ids';
+
     /**
      * @var string
      */

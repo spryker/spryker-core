@@ -18,10 +18,12 @@ class ZedRequestDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const SERVICE_UTIL_NETWORK = 'util network service';
+
     /**
      * @var string
      */
     public const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
+
     /**
      * @var string
      */

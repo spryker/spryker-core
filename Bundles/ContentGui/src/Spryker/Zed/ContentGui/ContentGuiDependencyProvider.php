@@ -24,26 +24,32 @@ class ContentGuiDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const PLUGINS_CONTENT_ITEM = 'PLUGINS_CONTENT_ITEM';
+
     /**
      * @var string
      */
     public const PLUGINS_CONTENT_EDITOR = 'PLUGINS_CONTENT_EDITOR';
+
     /**
      * @var string
      */
     public const PROPEL_QUERY_CONTENT = 'PROPEL_QUERY_CONTENT';
+
     /**
      * @var string
      */
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
+
     /**
      * @var string
      */
     public const FACADE_LOCALE = 'FACADE_LOCALE';
+
     /**
      * @var string
      */
     public const FACADE_CONTENT = 'FACADE_CONTENT';
+
     /**
      * @var string
      */

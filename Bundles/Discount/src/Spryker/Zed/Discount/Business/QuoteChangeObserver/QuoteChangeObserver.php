@@ -21,10 +21,12 @@ class QuoteChangeObserver implements QuoteChangeObserverInterface
      * @var string
      */
     public const GLOSSARY_KEY_DISCOUNT_QUOTE_CHANGE_DISCOUNT_NOT_AVAILABLE = 'discount.quote_change.discount.not_available';
+
     /**
      * @var string
      */
     public const GLOSSARY_KEY_DISCOUNT_QUOTE_CHANGE_DISCOUNT_AMOUNT_CHANGED = 'discount.quote_change.discount.amount_changed';
+
     /**
      * @var string
      */

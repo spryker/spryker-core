@@ -21,6 +21,7 @@ class CheckoutRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESOURCE_CHECKOUT_DATA = 'checkout-data';
+
     /**
      * @var string
      */
@@ -30,6 +31,7 @@ class CheckoutRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const CONTROLLER_CHECKOUT_DATA = 'checkout-data-resource';
+
     /**
      * @var string
      */
@@ -39,14 +41,17 @@ class CheckoutRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const ACTION_CHECKOUT_DATA_POST = 'post';
+
     /**
      * @var string
      */
     public const ACTION_CHECKOUT_DATA_GET = 'get';
+
     /**
      * @var string
      */
     public const ACTION_CHECKOUT_POST = 'post';
+
     /**
      * @var string
      */
@@ -56,30 +61,37 @@ class CheckoutRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESPONSE_CODE_CHECKOUT_DATA_INVALID = '1101';
+
     /**
      * @var string
      */
     public const RESPONSE_CODE_ORDER_NOT_PLACED = '1102';
+
     /**
      * @var string
      */
     public const RESPONSE_CODE_CART_NOT_FOUND = '1103';
+
     /**
      * @var string
      */
     public const RESPONSE_CODE_CART_IS_EMPTY = '1104';
+
     /**
      * @var string
      */
     public const RESPONSE_CODE_USER_IS_NOT_SPECIFIED = '1105';
+
     /**
      * @var string
      */
     public const RESPONSE_CODE_UNABLE_TO_DELETE_CART = '1106';
+
     /**
      * @var string
      */
     public const RESPONSE_CODE_MULTIPLE_PAYMENTS_NOT_ALLOWED = '1107';
+
     /**
      * @var string
      */
@@ -89,30 +101,37 @@ class CheckoutRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESPONSE_DETAILS_CHECKOUT_DATA_INVALID = 'Checkout data is invalid.';
+
     /**
      * @var string
      */
     public const RESPONSE_DETAILS_ORDER_NOT_PLACED = 'Order could not be placed.';
+
     /**
      * @var string
      */
     public const RESPONSE_DETAILS_CART_NOT_FOUND = 'Cart not found.';
+
     /**
      * @var string
      */
     public const RESPONSE_DETAILS_CART_IS_EMPTY = 'Cart is empty.';
+
     /**
      * @var string
      */
     public const RESPONSE_DETAILS_USER_IS_NOT_SPECIFIED = 'One of Authorization or X-Anonymous-Customer-Unique-Id headers is required.';
+
     /**
      * @var string
      */
     public const RESPONSE_DETAILS_UNABLE_TO_DELETE_CART = 'Unable to delete cart.';
+
     /**
      * @var string
      */
     public const RESPONSE_DETAILS_MULTIPLE_PAYMENTS_NOT_ALLOWED = 'Multiple payments are not allowed.';
+
     /**
      * @var string
      */
@@ -130,6 +149,7 @@ class CheckoutRestApiConfig extends AbstractBundleConfig
      * @var array
      */
     protected const PAYMENT_METHOD_REQUIRED_FIELDS = [];
+
     /**
      * @var array
      */

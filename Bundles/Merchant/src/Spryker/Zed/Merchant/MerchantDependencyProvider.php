@@ -23,10 +23,12 @@ class MerchantDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const FACADE_URL = 'FACADE_URL';
+
     /**
      * @var string
      */
     public const FACADE_EVENT = 'FACADE_EVENT';
+
     /**
      * @var string
      */
@@ -36,10 +38,12 @@ class MerchantDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const PLUGINS_MERCHANT_POST_CREATE = 'PLUGINS_MERCHANT_POST_CREATE';
+
     /**
      * @var string
      */
     public const PLUGINS_MERCHANT_POST_UPDATE = 'PLUGINS_MERCHANT_POST_UPDATE';
+
     /**
      * @var string
      */

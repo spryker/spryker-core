@@ -35,6 +35,7 @@ class ProductPackagingUnitSynchronizationDataBulkPluginTest extends Unit
      * @var int
      */
     protected const TEST_INVALID_ID = 111;
+
     /**
      * @var string
      */

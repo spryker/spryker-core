@@ -19,6 +19,7 @@ class MerchantSearchResultFormatterPlugin extends AbstractElasticsearchResultFor
      * @var string
      */
     protected const NAME = 'MerchantSearchCollection';
+
     /**
      * @var string
      */

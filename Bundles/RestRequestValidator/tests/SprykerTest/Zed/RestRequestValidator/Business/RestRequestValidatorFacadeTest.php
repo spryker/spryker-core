@@ -33,6 +33,7 @@ class RestRequestValidatorFacadeTest extends Unit
      * @var string
      */
     protected const STORE_DE = 'DE';
+
     /**
      * @var string
      */

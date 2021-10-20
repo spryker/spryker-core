@@ -29,10 +29,12 @@ class LoggableZedClientTest extends Unit
      * @var string
      */
     public const MESSAGE_TYPE_SUCCESS = 'success';
+
     /**
      * @var string
      */
     public const MESSAGE_TYPE_ERROR = 'error';
+
     /**
      * @var string
      */

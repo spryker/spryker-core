@@ -21,14 +21,17 @@ class Environment
      * @var string
      */
     public const PRODUCTION = 'production';
+
     /**
      * @var string
      */
     public const STAGING = 'staging';
+
     /**
      * @var string
      */
     public const DEVELOPMENT = 'development';
+
     /**
      * @var string
      */

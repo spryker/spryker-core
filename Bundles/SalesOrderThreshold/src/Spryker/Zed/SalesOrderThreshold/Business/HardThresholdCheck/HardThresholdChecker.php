@@ -25,10 +25,12 @@ class HardThresholdChecker implements HardThresholdCheckerInterface
      * @var string
      */
     protected const THRESHOLD_GLOSSARY_PARAMETER = '{{threshold}}';
+
     /**
      * @var string
      */
     protected const THRESHOLD_EXPENSE_TYPE = 'THRESHOLD_EXPENSE_TYPE';
+
     /**
      * @var string
      */

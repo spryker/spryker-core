@@ -24,6 +24,7 @@ class DatabaseExportConsole extends Console
      * @var string
      */
     public const COMMAND_NAME = 'propel:database:export';
+
     /**
      * @var string
      */

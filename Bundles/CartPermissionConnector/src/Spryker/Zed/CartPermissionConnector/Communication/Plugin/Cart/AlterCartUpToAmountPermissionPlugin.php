@@ -31,6 +31,7 @@ class AlterCartUpToAmountPermissionPlugin extends AbstractPlugin implements Exec
      * @var string
      */
     protected const FIELD_CENT_AMOUNT = 'cent_amount';
+
     /**
      * @var array
      */

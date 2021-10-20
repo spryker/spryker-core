@@ -15,6 +15,7 @@ class CategoriesRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESOURCE_CATEGORY_TREES_ACTION_NAME = 'get';
+
     /**
      * @var bool
      */
@@ -24,6 +25,7 @@ class CategoriesRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESOURCE_CATEGORY_NODES_ACTION_NAME = 'get';
+
     /**
      * @var bool
      */
@@ -38,6 +40,7 @@ class CategoriesRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESOURCE_CATEGORY_TREES = 'category-trees';
+
     /**
      * @var string
      */
@@ -47,10 +50,12 @@ class CategoriesRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const CONTROLLER_CATEGORIES = 'category-tree-resource';
+
     /**
      * @var string
      */
     public const CONTROLLER_CATEGORY = 'category-resource';
+
     /**
      * @var string
      */
@@ -60,10 +65,12 @@ class CategoriesRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESPONSE_CODE_INVALID_CATEGORY_ID = '701';
+
     /**
      * @var string
      */
     public const RESPONSE_CODE_ABSTRACT_PRODUCT_CATEGORIES_ARE_MISSING = '702';
+
     /**
      * @var string
      */
@@ -73,10 +80,12 @@ class CategoriesRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESPONSE_DETAILS_INVALID_CATEGORY_ID = 'Category node id has not been specified or invalid.';
+
     /**
      * @var string
      */
     public const RESPONSE_DETAILS_ABSTRACT_PRODUCT_CATEGORIES_ARE_MISSING = 'Can\'t find product categories by requested SKU.';
+
     /**
      * @var string
      */

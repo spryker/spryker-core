@@ -27,14 +27,17 @@ class CompanyUserTable extends AbstractTable
      * @var string
      */
     protected const COL_COMPANY_NAME = 'company_name';
+
     /**
      * @var string
      */
     protected const COL_COMPANY_USER_NAME = 'company_user_name';
+
     /**
      * @var string
      */
     protected const COL_IS_ACTIVE = 'is_active';
+
     /**
      * @var string
      */

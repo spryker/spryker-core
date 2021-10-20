@@ -34,22 +34,27 @@ class ResponseRelationshipTest extends Unit
      * @var string
      */
     protected const RESOURCE_TYPE_PRODUCT_ABSTRACT = 'product-abstract';
+
     /**
      * @var string
      */
     protected const RESOURCE_TYPE_PRODUCT_CONCRETE = 'product-concrete';
+
     /**
      * @var string
      */
     protected const RESOURCE_TYPE_IMAGE_SET = 'concrete-product-image-sets';
+
     /**
      * @var int
      */
     protected const RESOURCE_ABSTRACT_PRODUCT_ID = 1;
+
     /**
      * @var int
      */
     protected const RESOURCE_IMAGE_SET_ID = 1;
+
     /**
      * @var int
      */

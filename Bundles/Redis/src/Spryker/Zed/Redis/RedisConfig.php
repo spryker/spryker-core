@@ -15,6 +15,7 @@ class RedisConfig extends AbstractBundleConfig
      * @var int
      */
     protected const PROCESS_TIMEOUT = 60;
+
     /**
      * @var string
      */

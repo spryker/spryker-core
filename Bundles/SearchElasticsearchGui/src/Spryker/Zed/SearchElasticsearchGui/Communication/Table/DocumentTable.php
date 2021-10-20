@@ -20,10 +20,12 @@ class DocumentTable extends AbstractTable
      * @var string
      */
     protected const COL_ID = 'COL_ID';
+
     /**
      * @var string
      */
     protected const COL_INDEX = 'COL_INDEX';
+
     /**
      * @var string
      */

@@ -22,6 +22,7 @@ class ConfigurableBundlePageSearchDependencyProvider extends AbstractDependencyP
      * @var string
      */
     public const PLUGINS_CONFIGURABLE_BUNDLE_TEMPLATE_PAGE_SEARCH_RESULT_FORMATTER = 'PLUGINS_CONFIGURABLE_BUNDLE_TEMPLATE_PAGE_SEARCH_RESULT_FORMATTER';
+
     /**
      * @var string
      */

@@ -21,14 +21,17 @@ class SearchElasticsearchDependencyProvider extends AbstractBundleDependencyProv
      * @var string
      */
     public const CLIENT_SEARCH = 'CLIENT_SEARCH';
+
     /**
      * @var string
      */
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
+
     /**
      * @var string
      */
     public const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
+
     /**
      * @var string
      */

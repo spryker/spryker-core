@@ -45,58 +45,72 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
      * @var string
      */
     public const FACADE_LOCALE = 'FACADE_LOCALE';
+
     /**
      * @var string
      */
     public const FACADE_PRODUCT = 'FACADE_PRODUCT';
+
     /**
      * @var string
      */
     public const FACADE_PRODUCT_ATTRIBUTE = 'FACADE_PRODUCT_ATTRIBUTE';
+
     /**
      * @var string
      */
     public const FACADE_PRODUCT_CATEGORY = 'FACADE_PRODUCT_CATEGORY';
+
     /**
      * @var string
      */
     public const FACADE_PRODUCT_IMAGE = 'FACADE_PRODUCT_IMAGE';
+
     /**
      * @var string
      */
     public const FACADE_PRODUCT_BUNDLE = 'FACADE_PRODUCT_BUNDLE';
+
     /**
      * @var string
      */
     public const FACADE_TOUCH = 'FACADE_TOUCH';
+
     /**
      * @var string
      */
     public const FACADE_TAX = 'FACADE_TAX';
+
     /**
      * @var string
      */
     public const FACADE_PRICE = 'FACADE_PRICE';
+
     /**
      * @var string
      */
     public const FACADE_PRICE_PRODUCT = 'FACADE_PRICE_PRODUCT';
+
     /**
      * @var string
      */
     public const FACADE_STOCK = 'FACADE_STOCK';
+
     /**
      * @var string
      */
     public const FACADE_MONEY = 'FACADE_MONEY';
+
     /**
      * @var string
      */
     public const FACADE_CURRENCY = 'FACADE_CURRENCY';
+
     /**
      * @var string
      */
     public const FACADE_AVAILABILITY = 'FACADE_AVAILABILITY';
+
     /**
      * @var string
      */
@@ -111,18 +125,22 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
      * @var string
      */
     public const QUERY_CONTAINER_CATEGORY = 'QUERY_CONTAINER_CATEGORY';
+
     /**
      * @var string
      */
     public const QUERY_CONTAINER_PRODUCT = 'QUERY_CONTAINER_PRODUCT';
+
     /**
      * @var string
      */
     public const QUERY_CONTAINER_STOCK = 'QUERY_CONTAINER_STOCK';
+
     /**
      * @var string
      */
     public const QUERY_CONTAINER_PRODUCT_IMAGE = 'QUERY_CONTAINER_PRODUCT_IMAGE';
+
     /**
      * @var string
      */
@@ -132,6 +150,7 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
      * @var string
      */
     public const PLUGINS_PRODUCT_ABSTRACT_VIEW = 'PRODUCT_MANAGEMENT:PLUGINS_PRODUCT_ABSTRACT_VIEW';
+
     /**
      * @var string
      */
@@ -146,50 +165,62 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
      * @var string
      */
     public const PRODUCT_CONCRETE_EDIT_FORM_EXPANDER_PLUGINS = 'PRODUCT_CONCRETE_EDIT_FORM_EXPANDER_PLUGINS';
+
     /**
      * @var string
      */
     public const PRODUCT_CONCRETE_FORM_EDIT_DATA_PROVIDER_EXPANDER_PLUGINS = 'PRODUCT_CONCRETE_FORM_EDIT_DATA_PROVIDER_EXPANDER_PLUGINS';
+
     /**
      * @var string
      */
     public const PRODUCT_FORM_TRANSFER_MAPPER_EXPANDER_PLUGINS = 'PRODUCT_FORM_TRANSFER_MAPPER_EXPANDER_PLUGINS';
+
     /**
      * @var string
      */
     public const PLUGINS_PRODUCT_CONCRETE_FORM_EDIT_TABS_EXPANDER = 'PLUGINS_PRODUCT_CONCRETE_FORM_EDIT_TABS_EXPANDER';
+
     /**
      * @var string
      */
     public const PLUGINS_PRODUCT_ABSTRACT_FORM_EXPANDER = 'PLUGINS_PRODUCT_ABSTRACT_FORM_EXPANDER';
+
     /**
      * @var string
      */
     public const PLUGINS_PRODUCT_CONCRETE_FORM_EXPANDER = 'PLUGINS_PRODUCT_CONCRETE_FORM_EXPANDER';
+
     /**
      * @var string
      */
     public const PLUGINS_PRODUCT_ABSTRACT_FORM_EDIT_TABS_EXPANDER = 'PLUGINS_PRODUCT_ABSTRACT_FORM_EDIT_TABS_EXPANDER';
+
     /**
      * @var string
      */
     public const PLUGINS_PRODUCT_ABSTRACT_EDIT_VIEW_EXPANDER = 'PLUGINS_PRODUCT_ABSTRACT_EDIT_VIEW_EXPANDER';
+
     /**
      * @var string
      */
     public const PLUGINS_PRODUCT_CONCRETE_EDIT_VIEW_EXPANDER = 'PLUGINS_PRODUCT_CONCRETE_EDIT_VIEW_EXPANDER';
+
     /**
      * @var string
      */
     public const PLUGINS_PRODUCT_ABSTRACT_LIST_ACTION_VIEW_DATA_EXPANDER = 'PLUGINS_PRODUCT_ABSTRACT_LIST_ACTION_VIEW_DATA_EXPANDER';
+
     /**
      * @var string
      */
     public const PLUGINS_PRODUCT_ABSTRACT_VIEW_ACTION_VIEW_DATA_EXPANDER = 'PLUGINS_PRODUCT_ABSTRACT_VIEW_ACTION_VIEW_DATA_EXPANDER';
+
     /**
      * @var string
      */
     public const PLUGINS_PRODUCT_TABLE_QUERY_CRITERIA_EXPANDER = 'PLUGINS_PRODUCT_TABLE_QUERY_CRITERIA_EXPANDER';
+
     /**
      * @var string
      */

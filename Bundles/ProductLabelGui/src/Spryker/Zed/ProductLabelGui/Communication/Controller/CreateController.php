@@ -24,6 +24,7 @@ class CreateController extends AbstractController
      * @var string
      */
     protected const ROUTE_PRODUCT_LABEL_EDIT = '/product-label-gui/edit';
+
     /**
      * @var string
      */

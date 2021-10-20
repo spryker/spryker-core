@@ -21,6 +21,7 @@ class CustomersRestApiDependencyProvider extends AbstractBundleDependencyProvide
      * @var string
      */
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
+
     /**
      * @deprecated Will be removed in the next major.
      * @var string

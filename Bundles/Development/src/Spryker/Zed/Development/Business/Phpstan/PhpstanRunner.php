@@ -28,6 +28,7 @@ class PhpstanRunner implements PhpstanRunnerInterface
      * @var string
      */
     public const NAMESPACE_SPRYKER_SHOP = 'SprykerShop';
+
     /**
      * @var string
      */
@@ -37,10 +38,12 @@ class PhpstanRunner implements PhpstanRunnerInterface
      * @var string
      */
     public const DEFAULT_LEVEL = 'defaultLevel';
+
     /**
      * @var string
      */
     public const MEMORY_LIMIT = '-1';
+
     /**
      * @var int
      */
@@ -50,18 +53,22 @@ class PhpstanRunner implements PhpstanRunnerInterface
      * @var string
      */
     public const OPTION_DRY_RUN = 'dry-run';
+
     /**
      * @var string
      */
     public const OPTION_VERBOSE = 'verbose';
+
     /**
      * @var string
      */
     public const OPTION_MODULE = 'module';
+
     /**
      * @var string
      */
     public const OPTION_LEVEL = 'level';
+
     /**
      * @var string
      */
@@ -71,6 +78,7 @@ class PhpstanRunner implements PhpstanRunnerInterface
      * @var int
      */
     protected const SUCCESS_EXIT_CODE = 0;
+
     /**
      * @var int
      */

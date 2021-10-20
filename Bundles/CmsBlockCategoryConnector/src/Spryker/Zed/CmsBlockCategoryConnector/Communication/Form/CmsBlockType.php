@@ -31,10 +31,12 @@ class CmsBlockType extends AbstractType
      * @var string
      */
     public const OPTION_CATEGORY_ARRAY = 'option-category-array';
+
     /**
      * @var string
      */
     public const OPTION_CMS_BLOCK_POSITION_LIST = 'option-cms-block-position-list';
+
     /**
      * @var string
      */

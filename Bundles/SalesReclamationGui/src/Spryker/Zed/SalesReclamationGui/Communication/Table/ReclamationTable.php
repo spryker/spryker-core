@@ -31,6 +31,7 @@ class ReclamationTable extends AbstractTable
      * @var string
      */
     protected const URL_RECLAMATION_DETAIL = '/sales-reclamation-gui/detail';
+
     /**
      * @var string
      */

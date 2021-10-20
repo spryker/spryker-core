@@ -16,10 +16,12 @@ class ProductAbstractViewTable extends AbstractProductAbstractTable
      * @var string
      */
     public const TABLE_IDENTIFIER = 'product-abstract-view-table';
+
     /**
      * @var string
      */
     public const TABLE_CLASS = 'product-abstract-view-table gui-table-data';
+
     /**
      * @var string
      */

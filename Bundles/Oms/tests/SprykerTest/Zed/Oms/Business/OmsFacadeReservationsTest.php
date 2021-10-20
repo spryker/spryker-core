@@ -34,6 +34,7 @@ class OmsFacadeReservationsTest extends Unit
      * @var string
      */
     protected const STORE_NAME_AT = 'AT';
+
     /**
      * @var string
      */
@@ -43,6 +44,7 @@ class OmsFacadeReservationsTest extends Unit
      * @var string
      */
     protected const TEST_SKU_1 = 'test-sku-1';
+
     /**
      * @var string
      */

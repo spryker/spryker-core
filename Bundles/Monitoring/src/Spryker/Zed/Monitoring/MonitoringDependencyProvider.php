@@ -22,14 +22,17 @@ class MonitoringDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const MONITORING_SERVICE = 'monitoring service';
+
     /**
      * @var string
      */
     public const FACADE_STORE = 'store facade';
+
     /**
      * @var string
      */
     public const FACADE_LOCALE = 'locale facade';
+
     /**
      * @var string
      */

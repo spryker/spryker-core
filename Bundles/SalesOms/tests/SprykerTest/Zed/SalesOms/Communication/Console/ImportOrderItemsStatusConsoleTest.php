@@ -35,6 +35,7 @@ class ImportOrderItemsStatusConsoleTest extends Unit
      * @var int
      */
     protected const CODE_SUCCESS = 0;
+
     /**
      * @var int
      */

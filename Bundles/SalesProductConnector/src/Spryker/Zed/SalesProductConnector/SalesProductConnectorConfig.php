@@ -15,6 +15,7 @@ class SalesProductConnectorConfig extends AbstractBundleConfig
      * @var int
      */
     protected const POPULARITY_DAYS_INTERVAL = 90;
+
     /**
      * @var int
      */

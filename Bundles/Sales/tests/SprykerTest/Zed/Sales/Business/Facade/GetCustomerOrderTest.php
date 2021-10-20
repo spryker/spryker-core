@@ -31,6 +31,7 @@ class GetCustomerOrderTest extends Test
      * @var int
      */
     protected const FAKE_CUSTOMER_ID = 6666;
+
     /**
      * @var string
      */

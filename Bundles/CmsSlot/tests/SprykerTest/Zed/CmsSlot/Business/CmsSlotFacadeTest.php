@@ -33,6 +33,7 @@ class CmsSlotFacadeTest extends Unit
      * @var string
      */
     protected const EXCEPTION_ERROR_MESSAGE_MISSING_CMS_SLOT_TEMPLATE = 'CMS Slot Template with id "%d" not found.';
+
     /**
      * @var string
      */

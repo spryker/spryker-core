@@ -32,6 +32,7 @@ class MessengerDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const PLUGIN_TRANSLATION = 'translation plugin';
+
     /**
      * @var string
      */

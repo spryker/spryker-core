@@ -18,6 +18,7 @@ class ProductLabelTwigExtension extends TwigExtension
      * @var string
      */
     public const FUNCTION_PRODUCT_ABSTRACT_LABELS = 'spyProductAbstractLabels';
+
     /**
      * @var string
      */

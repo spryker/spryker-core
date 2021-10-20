@@ -34,6 +34,7 @@ class QuoteApprovalCreator implements QuoteApprovalCreatorInterface
      * @var string
      */
     protected const PERMISSION_GROUP_READ_ONLY = 'READ_ONLY';
+
     /**
      * @var string
      */

@@ -19,10 +19,12 @@ class CartNoteDependencyProvider extends AbstractDependencyProvider
      * @var string
      */
     public const CLIENT_QUOTE = 'CLIENT_QUOTE';
+
     /**
      * @var string
      */
     public const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
+
     /**
      * @var string
      */

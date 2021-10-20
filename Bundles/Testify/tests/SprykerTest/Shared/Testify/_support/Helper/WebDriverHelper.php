@@ -24,18 +24,22 @@ class WebDriverHelper extends Extension
      * @var string
      */
     protected const KEY_REMOTE_ENABLE = 'remote-enable';
+
     /**
      * @var string
      */
     protected const KEY_HOST = 'host';
+
     /**
      * @var string
      */
     protected const KEY_PORT = 'port';
+
     /**
      * @var string
      */
     protected const KEY_BROWSER = 'browser';
+
     /**
      * @var string
      */
@@ -45,18 +49,22 @@ class WebDriverHelper extends Extension
      * @var string
      */
     protected const DEFAULT_HOST = '0.0.0.0';
+
     /**
      * @var int
      */
     protected const DEFAULT_PORT = 4444;
+
     /**
      * @var string
      */
     protected const DEFAULT_BROWSER = 'phantomjs';
+
     /**
      * @var string
      */
     protected const DEFAULT_PATH = 'vendor/bin/phantomjs';
+
     /**
      * @var int
      */

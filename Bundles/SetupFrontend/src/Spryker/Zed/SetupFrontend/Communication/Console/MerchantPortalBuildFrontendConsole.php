@@ -22,6 +22,7 @@ class MerchantPortalBuildFrontendConsole extends Console
      * @var string
      */
     public const COMMAND_NAME = 'frontend:mp:build';
+
     /**
      * @var string
      */
@@ -31,10 +32,12 @@ class MerchantPortalBuildFrontendConsole extends Console
      * @var string
      */
     protected const OPTION_ENVIRONMENT = 'environment';
+
     /**
      * @var string
      */
     protected const OPTION_ENVIRONMENT_SHORT = 'e';
+
     /**
      * @var string
      */

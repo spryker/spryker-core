@@ -31,6 +31,7 @@ class ProductPackagingUnitRepository extends AbstractRepository implements Produ
      * @var string
      */
     protected const SKU = 'sku';
+
     /**
      * @var string
      */

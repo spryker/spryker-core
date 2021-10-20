@@ -19,30 +19,37 @@ class ProductAbstractGuiTableConfigurationProvider implements ProductAbstractGui
      * @var string
      */
     public const COL_KEY_SKU = 'sku';
+
     /**
      * @var string
      */
     public const COL_KEY_IMAGE = 'image';
+
     /**
      * @var string
      */
     public const COL_KEY_NAME = 'name';
+
     /**
      * @var string
      */
     public const COL_KEY_SUPER_ATTRIBUTES = 'superAttributes';
+
     /**
      * @var string
      */
     public const COL_KEY_VARIANTS = 'variants';
+
     /**
      * @var string
      */
     public const COL_KEY_CATEGORIES = 'categories';
+
     /**
      * @var string
      */
     public const COL_KEY_STORES = 'stores';
+
     /**
      * @var string
      */
@@ -52,6 +59,7 @@ class ProductAbstractGuiTableConfigurationProvider implements ProductAbstractGui
      * @var string
      */
     public const COLUMN_DATA_VISIBILITY_ONLINE = 'Online';
+
     /**
      * @var string
      */

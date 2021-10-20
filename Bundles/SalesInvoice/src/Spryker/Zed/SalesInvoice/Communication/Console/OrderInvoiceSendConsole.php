@@ -24,6 +24,7 @@ class OrderInvoiceSendConsole extends Console
      * @var string
      */
     protected const COMMAND_NAME = 'order:invoice:send';
+
     /**
      * @var string
      */
@@ -33,6 +34,7 @@ class OrderInvoiceSendConsole extends Console
      * @var string
      */
     protected const ARGUMENT_ORDER_IDS = 'order_ids';
+
     /**
      * @var string
      */
@@ -42,6 +44,7 @@ class OrderInvoiceSendConsole extends Console
      * @var string
      */
     protected const ARGUMENT_FORCE_EMAIL_SEND = 'force';
+
     /**
      * @var string
      */

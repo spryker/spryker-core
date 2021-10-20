@@ -20,18 +20,22 @@ class SuggestController extends AbstractController
      * @var string
      */
     protected const PARAM_NAME = 'term';
+
     /**
      * @var string
      */
     protected const KEY_RESULTS = 'results';
+
     /**
      * @var string
      */
     protected const KEY_ID = 'id';
+
     /**
      * @var string
      */
     protected const KEY_TEXT = 'text';
+
     /**
      * @var string
      */

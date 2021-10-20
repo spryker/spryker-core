@@ -36,10 +36,12 @@ class ProductMoneyCollectionType extends AbstractCollectionType
      * @var string
      */
     protected const PRICE_PRODUCT_VOLUME_EDIT_URL = '/price-product-volume-gui/price-volume/edit';
+
     /**
      * @var string
      */
     protected const PRICE_PRODUCT_VOLUME_ADD_URL = '/price-product-volume-gui/price-volume/add';
+
     /**
      * @var string
      */

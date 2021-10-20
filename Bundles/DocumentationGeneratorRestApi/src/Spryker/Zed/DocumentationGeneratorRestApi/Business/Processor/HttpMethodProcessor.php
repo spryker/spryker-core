@@ -24,18 +24,22 @@ class HttpMethodProcessor implements HttpMethodProcessorInterface
      * @var string
      */
     protected const PATTERN_SUMMARY_GET_RESOURCE = 'Get %s.';
+
     /**
      * @var string
      */
     protected const PATTERN_SUMMARY_GET_COLLECTION = 'Get collection of %s.';
+
     /**
      * @var string
      */
     protected const PATTERN_SUMMARY_POST_RESOURCE = 'Create %s.';
+
     /**
      * @var string
      */
     protected const PATTERN_SUMMARY_PATCH_RESOURCE = 'Update %s.';
+
     /**
      * @var string
      */
@@ -45,18 +49,22 @@ class HttpMethodProcessor implements HttpMethodProcessorInterface
      * @var string
      */
     protected const PATTERN_OPERATION_ID_GET_RESOURCE = 'get-%s';
+
     /**
      * @var string
      */
     protected const PATTERN_OPERATION_ID_GET_COLLECTION = 'get-collection-of-%s';
+
     /**
      * @var string
      */
     protected const PATTERN_OPERATION_ID_POST_RESOURCE = 'create-%s';
+
     /**
      * @var string
      */
     protected const PATTERN_OPERATION_ID_PATCH_RESOURCE = 'update-%s';
+
     /**
      * @var string
      */

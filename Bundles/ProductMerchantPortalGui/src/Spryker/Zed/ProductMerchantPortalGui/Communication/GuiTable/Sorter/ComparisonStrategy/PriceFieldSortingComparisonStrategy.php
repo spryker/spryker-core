@@ -17,6 +17,7 @@ class PriceFieldSortingComparisonStrategy implements PriceProductSortingComparis
      * @var string
      */
     protected const SUFFIX_PRICE_TYPE_NET = 'net';
+
     /**
      * @var string
      */

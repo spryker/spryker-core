@@ -31,14 +31,17 @@ class StockForm extends AbstractType
      * @var string
      */
     protected const FIELD_ID_STOCK = 'idStock';
+
     /**
      * @var string
      */
     protected const FIELD_NAME = 'name';
+
     /**
      * @var string
      */
     protected const FIELD_IS_ACTIVE = 'isActive';
+
     /**
      * @var string
      */

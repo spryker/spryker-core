@@ -21,6 +21,7 @@ class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const SERVICE_CUSTOMER = 'SERVICE_CUSTOMER';
+
     /**
      * @var string
      */

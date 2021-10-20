@@ -24,14 +24,17 @@ class ShoppingListItemValidator implements ShoppingListItemValidatorInterface
      * @var string
      */
     protected const ERROR_SHOPPING_LIST_NOT_FOUND = 'customer.account.shopping_list.error.not_found';
+
     /**
      * @var string
      */
     protected const ERROR_SHOPPING_LIST_ITEM_NOT_FOUND = 'customer.account.shopping_list_item.error.not_found';
+
     /**
      * @var string
      */
     protected const ERROR_SHOPPING_LIST_ITEM_QUANTITY_NOT_VALID = 'customer.account.shopping_list_item.error.quantity_not_valid';
+
     /**
      * @var string
      */

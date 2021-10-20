@@ -30,6 +30,7 @@ class BusinessHelper extends Module
      * @var string
      */
     public const DEFAULT_OMS_PROCESS_NAME = 'Test01';
+
     /**
      * @var string
      */
@@ -39,14 +40,17 @@ class BusinessHelper extends Module
      * @var int
      */
     protected const ORDER_ITEM_QTY = 1;
+
     /**
      * @var int
      */
     protected const ORDER_ITEM_GROSS_PRICE_1 = 500;
+
     /**
      * @var int
      */
     protected const ORDER_ITEM_GROSS_PRICE_2 = 800;
+
     /**
      * @var int
      */

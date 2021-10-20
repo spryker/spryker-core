@@ -24,6 +24,7 @@ class DeleteCompanyBusinessUnitController extends AbstractController
      * @var string
      */
     protected const PARAM_ID_COMPANY_BUSINESS_UNIT = 'id-company-business-unit';
+
     /**
      * @see ListCompanyBusinessUnitController::indexAction()
      * @var string
@@ -34,6 +35,7 @@ class DeleteCompanyBusinessUnitController extends AbstractController
      * @var string
      */
     protected const MESSAGE_SUCCESS_COMPANY_BUSINESS_UNIT_DELETE = 'Company Business Unit "%s" was deleted.';
+
     /**
      * @var string
      */

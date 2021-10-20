@@ -32,38 +32,47 @@ class ProductLabelFormType extends AbstractType
      * @var string
      */
     public const FIELD_NAME = 'name';
+
     /**
      * @var string
      */
     public const FIELD_EXCLUSIVE_FLAG = 'isExclusive';
+
     /**
      * @var string
      */
     public const FIELD_DYNAMIC_FLAG = 'isDynamic';
+
     /**
      * @var string
      */
     public const FIELD_PRIORITY = 'position';
+
     /**
      * @var string
      */
     public const FIELD_STORE_RELATION = 'storeRelation';
+
     /**
      * @var string
      */
     public const FIELD_STATUS_FLAG = 'isActive';
+
     /**
      * @var string
      */
     public const FIELD_VALID_FROM_DATE = 'validFrom';
+
     /**
      * @var string
      */
     public const FIELD_VALID_TO_DATE = 'validTo';
+
     /**
      * @var string
      */
     public const FIELD_FRONT_END_REFERENCE = 'frontEndReference';
+
     /**
      * @var string
      */

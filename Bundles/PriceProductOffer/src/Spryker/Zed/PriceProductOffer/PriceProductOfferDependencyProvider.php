@@ -23,10 +23,12 @@ class PriceProductOfferDependencyProvider extends AbstractBundleDependencyProvid
      * @var string
      */
     public const FACADE_PRICE_PRODUCT = 'FACADE_PRICE_PRODUCT';
+
     /**
      * @var string
      */
     public const FACADE_STORE = 'FACADE_STORE';
+
     /**
      * @var string
      */
@@ -41,10 +43,12 @@ class PriceProductOfferDependencyProvider extends AbstractBundleDependencyProvid
      * @var string
      */
     public const PLUGINS_PRICE_PRODUCT_OFFER_EXTRACTOR = 'PLUGINS_PRICE_PRODUCT_OFFER_EXTRACTOR';
+
     /**
      * @var string
      */
     public const PLUGINS_PRICE_PRODUCT_OFFER_EXPANDER = 'PLUGINS_PRICE_PRODUCT_OFFER_EXPANDER';
+
     /**
      * @var string
      */

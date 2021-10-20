@@ -22,34 +22,42 @@ class MerchantOrderGuiTableConfigurationProvider implements MerchantOrderGuiTabl
      * @var string
      */
     public const COL_KEY_REFERENCE = 'reference';
+
     /**
      * @var string
      */
     public const COL_KEY_MERCHANT_REFERENCE = 'merchantReference';
+
     /**
      * @var string
      */
     public const COL_KEY_CREATED = 'created';
+
     /**
      * @var string
      */
     public const COL_KEY_CUSTOMER = 'customer';
+
     /**
      * @var string
      */
     public const COL_KEY_EMAIL = 'Email';
+
     /**
      * @var string
      */
     public const COL_KEY_ITEMS_STATES = 'itemsStates';
+
     /**
      * @var string
      */
     public const COL_KEY_GRAND_TOTAL = 'grandTotal';
+
     /**
      * @var string
      */
     public const COL_KEY_NUMBER_OF_ITEMS = 'numberOfItems';
+
     /**
      * @var string
      */

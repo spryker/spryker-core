@@ -15,6 +15,7 @@ class ProductPackagingUnitGroupKeyGenerator implements ProductPackagingUnitGroup
      * @var string
      */
     protected const AMOUNT_GROUP_KEY_FORMAT = '%s_amount_%s_sales_unit_id_%s';
+
     /**
      * @var int
      */

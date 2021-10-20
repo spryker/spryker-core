@@ -23,10 +23,12 @@ class DependencyController extends AbstractController
      * @var string
      */
     public const APPLICATION_ZED = 'Zed';
+
     /**
      * @var string
      */
     public const QUERY_KEY_BUILD_TREE = 'build-tree';
+
     /**
      * @var string
      */

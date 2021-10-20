@@ -31,6 +31,7 @@ class GroupForm extends AbstractType
      * @var string
      */
     public const FIELD_TITLE = 'title';
+
     /**
      * @var string
      */

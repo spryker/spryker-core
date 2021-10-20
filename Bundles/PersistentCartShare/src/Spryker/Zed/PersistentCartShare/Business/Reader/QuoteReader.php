@@ -23,6 +23,7 @@ class QuoteReader implements QuoteReaderInterface
      * @var string
      */
     protected const GLOSSARY_KEY_QUOTE_IS_NOT_AVAILABLE = 'persistent_cart_share.error.quote_is_not_available';
+
     /**
      * @var string
      */

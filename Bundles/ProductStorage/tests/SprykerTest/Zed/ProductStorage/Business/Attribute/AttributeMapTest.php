@@ -36,6 +36,7 @@ class AttributeMapTest extends Unit
      * @var string
      */
     protected const FAKE_SKU_1 = 'fake-sku-1';
+
     /**
      * @var string
      */
@@ -68,22 +69,27 @@ class AttributeMapTest extends Unit
      * @var string
      */
     protected const KEY_ID_PRODUCT = 'spy_product.id_product';
+
     /**
      * @var string
      */
     protected const KEY_ATTRIBUTES = 'spy_product.attributes';
+
     /**
      * @var string
      */
     protected const KEY_SKU = 'spy_product.sku';
+
     /**
      * @var string
      */
     protected const KEY_FK_PRODUCT_ABSTRACT = 'spy_product.fk_product_abstract';
+
     /**
      * @var string
      */
     protected const KEY_FK_LOCALE = 'fk_locale';
+
     /**
      * @var string
      */

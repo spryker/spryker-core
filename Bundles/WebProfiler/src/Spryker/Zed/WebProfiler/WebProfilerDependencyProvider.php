@@ -20,6 +20,7 @@ class WebProfilerDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const PLUGINS_WEB_PROFILER = 'PLUGINS_WEB_PROFILER';
+
     /**
      * @var string
      */

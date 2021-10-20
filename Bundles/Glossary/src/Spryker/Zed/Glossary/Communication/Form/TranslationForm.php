@@ -32,6 +32,7 @@ class TranslationForm extends AbstractType
      * @var string
      */
     public const FIELD_GLOSSARY_KEY = 'glossary_key';
+
     /**
      * @var string
      */

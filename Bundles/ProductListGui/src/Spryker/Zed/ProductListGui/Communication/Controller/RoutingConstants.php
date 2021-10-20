@@ -13,10 +13,12 @@ interface RoutingConstants
      * @var string
      */
     public const URL_EDIT = '/product-list-gui/edit';
+
     /**
      * @var string
      */
     public const URL_DELETE = '/product-list-gui/delete';
+
     /**
      * @var string
      */

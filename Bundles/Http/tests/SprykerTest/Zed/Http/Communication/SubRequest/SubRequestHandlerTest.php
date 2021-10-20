@@ -29,6 +29,7 @@ class SubRequestHandlerTest extends Unit
      * @var array
      */
     public const GET_PARAMS = ['fruit' => 'mango'];
+
     /**
      * @var array
      */

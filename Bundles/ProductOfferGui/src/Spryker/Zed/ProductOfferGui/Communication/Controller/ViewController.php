@@ -23,6 +23,7 @@ class ViewController extends AbstractController
      * @var string
      */
     protected const PARAM_ID_PRODUCT_OFFER = 'id-product-offer';
+
     /**
      * @var string
      */

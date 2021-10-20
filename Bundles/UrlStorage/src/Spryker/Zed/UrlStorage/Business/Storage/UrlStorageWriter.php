@@ -25,6 +25,7 @@ class UrlStorageWriter implements UrlStorageWriterInterface
      * @var string
      */
     public const RESOURCE_TYPE = 'type';
+
     /**
      * @var string
      */

@@ -15,6 +15,7 @@ class PostgreSqlStorageReader extends AbstractStorageReader
      * @var string
      */
     protected const DEFAULT_PLACEHOLDER_KEY = ':key';
+
     /**
      * @var string
      */

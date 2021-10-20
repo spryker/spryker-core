@@ -25,6 +25,7 @@ class StorageRedisClientTest extends Unit
      * @var string
      */
     protected const DUMMY_KEY = 'dummy-key';
+
     /**
      * @var string
      */
@@ -34,6 +35,7 @@ class StorageRedisClientTest extends Unit
      * @var string
      */
     protected const DUMMY_VALUE = 'dummy-value';
+
     /**
      * @var string
      */

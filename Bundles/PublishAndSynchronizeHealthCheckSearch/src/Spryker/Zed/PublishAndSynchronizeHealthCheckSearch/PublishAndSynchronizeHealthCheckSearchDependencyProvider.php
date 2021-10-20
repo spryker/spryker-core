@@ -22,6 +22,7 @@ class PublishAndSynchronizeHealthCheckSearchDependencyProvider extends AbstractB
      * @var string
      */
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
+
     /**
      * @var string
      */

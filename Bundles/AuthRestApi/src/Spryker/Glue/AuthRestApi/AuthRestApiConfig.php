@@ -23,6 +23,7 @@ class AuthRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESOURCE_ACCESS_TOKENS = 'access-tokens';
+
     /**
      * @var string
      */
@@ -32,6 +33,7 @@ class AuthRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const CLIENT_GRANT_PASSWORD = 'password';
+
     /**
      * @var string
      */
@@ -41,10 +43,12 @@ class AuthRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESPONSE_DETAIL_MISSING_ACCESS_TOKEN = 'Missing access token.';
+
     /**
      * @var string
      */
     public const RESPONSE_DETAIL_INVALID_ACCESS_TOKEN = 'Invalid access token.';
+
     /**
      * @var string
      */
@@ -54,18 +58,22 @@ class AuthRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESPONSE_CODE_ACCESS_CODE_INVALID = '001';
+
     /**
      * @var string
      */
     public const RESPONSE_CODE_FORBIDDEN = '002';
+
     /**
      * @var string
      */
     public const RESPONSE_INVALID_LOGIN = '003';
+
     /**
      * @var string
      */
     public const RESPONSE_INVALID_REFRESH_TOKEN = '004';
+
     /**
      * @var string
      */

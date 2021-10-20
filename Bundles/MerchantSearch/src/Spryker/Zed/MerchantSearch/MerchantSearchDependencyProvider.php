@@ -22,6 +22,7 @@ class MerchantSearchDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const FACADE_MERCHANT = 'FACADE_MERCHANT';
+
     /**
      * @var string
      */

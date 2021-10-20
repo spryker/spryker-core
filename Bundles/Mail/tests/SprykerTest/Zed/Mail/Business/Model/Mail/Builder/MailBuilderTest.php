@@ -38,26 +38,32 @@ class MailBuilderTest extends Unit
      * @var string
      */
     protected const SUBJECT = 'subject';
+
     /**
      * @var string
      */
     protected const TEMPLATE_NAME_HTML = 'html.template.name';
+
     /**
      * @var string
      */
     protected const TEMPLATE_NAME_TEXT = 'text.template.name';
+
     /**
      * @var string
      */
     protected const EMAIL = 'email';
+
     /**
      * @var string
      */
     protected const NAME = 'name';
+
     /**
      * @var string
      */
     protected const BCC_EMAIL = 'bcc@email.com';
+
     /**
      * @var string
      */

@@ -16,6 +16,7 @@ abstract class AbstractBarcodeGeneratorPluginMock implements BarcodeGeneratorPlu
      * @var string
      */
     public const GENERATED_CODE = 'abstract_mock_generated_code';
+
     /**
      * @var string
      */

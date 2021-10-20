@@ -28,10 +28,12 @@ class InvoiceSubForm extends AbstractType
      * @var string
      */
     public const PAYMENT_METHOD = 'invoice';
+
     /**
      * @var string
      */
     public const FIELD_DATE_OF_BIRTH = 'date_of_birth';
+
     /**
      * @var string
      */

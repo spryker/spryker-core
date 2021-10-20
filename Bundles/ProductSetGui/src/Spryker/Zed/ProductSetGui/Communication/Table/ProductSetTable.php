@@ -33,18 +33,22 @@ class ProductSetTable extends AbstractTable
      */
     public const COL_ID_PRODUCT_SET = 'id_product_set';
     public const COL_NAME = ProductSetGuiQueryContainer::COL_ALIAS_NAME;
+
     /**
      * @var string
      */
     public const COL_PRODUCT_COUNT = 'product_count';
+
     /**
      * @var string
      */
     public const COL_WEIGHT = 'weight';
+
     /**
      * @var string
      */
     public const COL_IS_ACTIVE = 'is_active';
+
     /**
      * @var string
      */

@@ -25,10 +25,12 @@ abstract class AbstractConfigurableBundleTranslationForm extends AbstractType
      * @var string
      */
     protected const FIELD_NAME = 'name';
+
     /**
      * @var string
      */
     protected const FIELD_FK_LOCALE = 'fkLocale';
+
     /**
      * @var string
      */

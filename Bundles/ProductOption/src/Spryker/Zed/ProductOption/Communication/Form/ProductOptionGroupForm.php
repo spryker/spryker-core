@@ -35,22 +35,27 @@ class ProductOptionGroupForm extends AbstractType
      * @var string
      */
     public const FIELD_TAX_SET_FIELD = 'fkTaxSet';
+
     /**
      * @var string
      */
     public const FIELD_VALUES = 'productOptionValues';
+
     /**
      * @var string
      */
     public const FIELD_ID_PRODUCT_OPTION_GROUP = 'idProductOptionGroup';
+
     /**
      * @var string
      */
     public const FIELD_NAME = 'name';
+
     /**
      * @var string
      */
     public const FIELD_VALUE_TRANSLATIONS = 'productOptionValueTranslations';
+
     /**
      * @var string
      */
@@ -65,10 +70,12 @@ class ProductOptionGroupForm extends AbstractType
      * @var string
      */
     public const PRODUCTS_TO_BE_ASSIGNED = 'products_to_be_assigned';
+
     /**
      * @var string
      */
     public const PRODUCTS_TO_BE_DE_ASSIGNED = 'products_to_be_de_assigned';
+
     /**
      * @var string
      */

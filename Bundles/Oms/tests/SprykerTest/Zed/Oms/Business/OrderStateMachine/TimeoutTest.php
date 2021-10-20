@@ -41,10 +41,12 @@ class TimeoutTest extends Unit
      * @var string
      */
     public const CONDITION_NAME = 'conditionName';
+
     /**
      * @var string
      */
     public const EVENT_PAY = 'pay';
+
     /**
      * @var string
      */

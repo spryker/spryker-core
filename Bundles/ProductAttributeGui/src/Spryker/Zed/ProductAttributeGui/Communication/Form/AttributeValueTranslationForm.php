@@ -23,14 +23,17 @@ class AttributeValueTranslationForm extends AbstractType
      * @var string
      */
     public const FIELD_ID_PRODUCT_MANAGEMENT_ATTRIBUTE_VALUE = 'id_product_management_attribute_value';
+
     /**
      * @var string
      */
     public const FIELD_VALUE = 'value';
+
     /**
      * @var string
      */
     public const FIELD_TRANSLATION = 'translation';
+
     /**
      * @var string
      */

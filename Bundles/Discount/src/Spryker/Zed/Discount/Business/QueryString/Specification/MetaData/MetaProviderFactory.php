@@ -16,6 +16,7 @@ class MetaProviderFactory implements MetaProviderFactoryInterface
      * @var string
      */
     public const TYPE_COLLECTOR = 'collector';
+
     /**
      * @var string
      */

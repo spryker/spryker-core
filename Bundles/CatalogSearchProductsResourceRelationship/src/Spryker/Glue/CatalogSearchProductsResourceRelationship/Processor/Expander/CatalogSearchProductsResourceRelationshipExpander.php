@@ -19,6 +19,7 @@ class CatalogSearchProductsResourceRelationshipExpander implements CatalogSearch
      * @var string
      */
     protected const KEY_PRODUCTS = 'products';
+
     /**
      * @var string
      */

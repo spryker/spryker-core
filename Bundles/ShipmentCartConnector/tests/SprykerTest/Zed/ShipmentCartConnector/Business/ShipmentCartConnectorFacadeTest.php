@@ -38,10 +38,12 @@ class ShipmentCartConnectorFacadeTest extends Unit
      * @var string
      */
     public const SKU = 'sku';
+
     /**
      * @var string
      */
     public const CURRENCY_ISO_CODE = 'USD';
+
     /**
      * @var array
      */

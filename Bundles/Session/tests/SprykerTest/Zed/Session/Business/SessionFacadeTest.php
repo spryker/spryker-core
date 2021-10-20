@@ -34,10 +34,12 @@ class SessionFacadeTest extends Unit
      * @var string
      */
     protected const SUPPORTING_LOCK_SESSION_HANDLER_NAME = 'SUPPORTING_LOCK_SESSION_HANDLER_NAME';
+
     /**
      * @var string
      */
     protected const NOT_SUPPORTING_LOCK_SESSION_HANDLER_NAME = 'NOT_SUPPORTING_LOCK_SESSION_HANDLER_NAME';
+
     /**
      * @var string
      */

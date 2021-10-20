@@ -24,6 +24,7 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
      * @var int
      */
     protected const RANDOM_STRING_LENGTH = 32;
+
     /**
      * @var string
      */
@@ -33,6 +34,7 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
      * @var string
      */
     protected const SOURCE_CORE = 'core';
+
     /**
      * @var string
      */

@@ -17,6 +17,7 @@ interface ZedRequestConstants
      * @var string
      */
     public const AUTH_ZED_ENABLED = 'AUTH_ZED_ENABLED';
+
     /**
      * @var string
      */
@@ -53,15 +54,18 @@ interface ZedRequestConstants
      * @var string
      */
     public const TRANSFER_DEBUG_SESSION_FORWARD_ENABLED = 'TRANSFER_DEBUG_SESSION_FORWARD_ENABLED';
+
     /**
      * @var string
      */
     public const TRANSFER_DEBUG_SESSION_NAME = 'TRANSFER_DEBUG_SESSION_NAME';
+
     /**
      * @deprecated Will be removed without replacement.
      * @var string
      */
     public const TRANSFER_PASSWORD = 'TRANSFER_PASSWORD';
+
     /**
      * @deprecated Will be removed without replacement.
      * @var string

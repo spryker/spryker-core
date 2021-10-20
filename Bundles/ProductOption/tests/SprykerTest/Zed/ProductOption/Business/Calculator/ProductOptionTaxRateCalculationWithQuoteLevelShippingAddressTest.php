@@ -44,6 +44,7 @@ class ProductOptionTaxRateCalculationWithQuoteLevelShippingAddressTest extends U
      * @var string
      */
     protected const PRODUCT_OPTION_VALUE_SKU_1 = 'test.product.option.value.sku.1';
+
     /**
      * @var string
      */

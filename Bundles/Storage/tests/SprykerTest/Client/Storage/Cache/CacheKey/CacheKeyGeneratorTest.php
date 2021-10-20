@@ -31,6 +31,7 @@ class CacheKeyGeneratorTest extends Unit
      * @var string
      */
     protected const KEY_NAME_PREFIX = 'storage';
+
     /**
      * @var string
      */

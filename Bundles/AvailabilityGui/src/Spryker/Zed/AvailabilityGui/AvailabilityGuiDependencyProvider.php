@@ -26,14 +26,17 @@ class AvailabilityGuiDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const FACADE_LOCALE = 'locale facade';
+
     /**
      * @var string
      */
     public const FACADE_STOCK = 'stock facade';
+
     /**
      * @var string
      */
     public const FACADE_STORE = 'store facade';
+
     /**
      * @var string
      */
@@ -43,6 +46,7 @@ class AvailabilityGuiDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const QUERY_CONTAINER_AVAILABILITY = 'availability query container';
+
     /**
      * @var string
      */
@@ -52,10 +56,12 @@ class AvailabilityGuiDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const PLUGINS_AVAILABILITY_LIST_ACTION_VIEW_DATA_EXPANDER = 'PLUGINS_AVAILABILITY_LIST_ACTION_VIEW_DATA_EXPANDER';
+
     /**
      * @var string
      */
     public const PLUGINS_AVAILABILITY_VIEW_ACTION_VIEW_DATA_EXPANDER = 'PLUGINS_AVAILABILITY_VIEW_ACTION_VIEW_DATA_EXPANDER';
+
     /**
      * @var string
      */

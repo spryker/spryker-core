@@ -38,6 +38,7 @@ class NewsletterFacadeTest extends Unit
      * @var string
      */
     public const TEST_TYPE1 = 'TEST_TYPE1';
+
     /**
      * @var string
      */

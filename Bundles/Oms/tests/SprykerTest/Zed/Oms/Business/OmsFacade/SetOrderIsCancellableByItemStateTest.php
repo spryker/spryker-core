@@ -26,6 +26,7 @@ class SetOrderIsCancellableByItemStateTest extends Unit
      * @var string
      */
     protected const DEFAULT_OMS_PROCESS_NAME_WITH_CANCELLABLE_FLAGS = 'Test05';
+
     /**
      * @var string
      */

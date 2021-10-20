@@ -31,6 +31,7 @@ class CategoryImageFacadeTest extends Test
      * @var int
      */
     public const DEFAULT_CATEGORY_IMAGE_SET_COUNT = 1;
+
     /**
      * @var int
      */

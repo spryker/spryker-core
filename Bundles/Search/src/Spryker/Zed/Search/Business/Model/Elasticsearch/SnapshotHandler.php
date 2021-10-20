@@ -18,6 +18,7 @@ class SnapshotHandler implements SnapshotHandlerInterface
      * @var string
      */
     protected const TYPE_FILESYSTEM = 'fs';
+
     /**
      * @var string
      */

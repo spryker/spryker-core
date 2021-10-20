@@ -22,10 +22,12 @@ class SalesOrderThresholdDataImportDependencyProvider extends DataImportDependen
      * @var string
      */
     public const FACADE_SALES_ORDER_THRESHOLD = 'FACADE_SALES_ORDER_THRESHOLD';
+
     /**
      * @var string
      */
     public const FACADE_STORE = 'FACADE_STORE';
+
     /**
      * @var string
      */

@@ -24,6 +24,7 @@ class QuickOrderTransferBuilder implements QuickOrderTransferBuilderInterface
      * @var string
      */
     protected const MESSAGE_TYPE_ERROR = 'error';
+
     /**
      * @var string
      */

@@ -24,10 +24,12 @@ class CmsBlockCategoryStorageQueryContainer extends AbstractQueryContainer imple
      * @var string
      */
     public const POSITION = 'position';
+
     /**
      * @var string
      */
     public const NAME = 'name';
+
     /**
      * @var string
      */

@@ -25,14 +25,17 @@ class ViewShipmentMethodForm extends AbstractType
      * @var string
      */
     public const FIELD_STORE_RELATION = 'storeRelation';
+
     /**
      * @var string
      */
     public const FIELD_PRICES = 'prices';
+
     /**
      * @var string
      */
     public const FIELD_TAX_SET = 'fkTaxSet';
+
     /**
      * @var string
      */

@@ -23,14 +23,17 @@ class ProductPackagingUnitStorageDependencyProvider extends AbstractBundleDepend
      * @var string
      */
     public const PROPEL_QUERY_PRODUCT = 'PROPEL_QUERY_PRODUCT';
+
     /**
      * @var string
      */
     public const PROPEL_QUERY_PRODUCT_PACKAGING_UNIT = 'PROPEL_QUERY_PRODUCT_PACKAGING_UNIT';
+
     /**
      * @var string
      */
     public const FACADE_PRODUCT_PACKAGING_UNIT = 'FACADE_PRODUCT_PACKAGING_UNIT';
+
     /**
      * @var string
      */

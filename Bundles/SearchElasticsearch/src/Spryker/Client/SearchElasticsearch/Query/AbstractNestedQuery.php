@@ -15,6 +15,7 @@ abstract class AbstractNestedQuery implements NestedQueryInterface
      * @var string
      */
     public const FACET_NAME_SUFFIX = '.facet-name';
+
     /**
      * @var string
      */

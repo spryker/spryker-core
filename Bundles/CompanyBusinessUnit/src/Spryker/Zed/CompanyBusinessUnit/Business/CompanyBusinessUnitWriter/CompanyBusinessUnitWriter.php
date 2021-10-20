@@ -34,6 +34,7 @@ class CompanyBusinessUnitWriter implements CompanyBusinessUnitWriterInterface
      * @var string
      */
     protected const MESSAGE_BUSINESS_UNIT_UPDATE_SUCCESS = 'message.business_unit.update';
+
     /**
      * @var string
      */

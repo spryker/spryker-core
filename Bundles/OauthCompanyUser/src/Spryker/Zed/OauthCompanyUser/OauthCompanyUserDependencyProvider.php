@@ -23,10 +23,12 @@ class OauthCompanyUserDependencyProvider extends AbstractBundleDependencyProvide
      * @var string
      */
     public const FACADE_COMPANY_USER = 'FACADE_COMPANY_USER';
+
     /**
      * @var string
      */
     public const FACADE_OAUTH = 'FACADE_OAUTH';
+
     /**
      * @var string
      */
@@ -41,10 +43,12 @@ class OauthCompanyUserDependencyProvider extends AbstractBundleDependencyProvide
      * @var string
      */
     public const PLUGINS_OAUTH_COMPANY_USER_IDENTIFIER_EXPANDER = 'PLUGINS_OAUTH_COMPANY_USER_IDENTIFIER_EXPANDER';
+
     /**
      * @var string
      */
     public const PLUGINS_CUSTOMER_OAUTH_REQUEST_MAPPER = 'PLUGINS_CUSTOMER_OAUTH_REQUEST_MAPPER';
+
     /**
      * @var string
      */

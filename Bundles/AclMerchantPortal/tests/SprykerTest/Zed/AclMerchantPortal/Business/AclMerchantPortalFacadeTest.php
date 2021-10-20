@@ -94,18 +94,22 @@ class AclMerchantPortalFacadeTest extends Unit
      * @var string
      */
     protected const MERCHANT_REFERENCE = 'testMerchantReference';
+
     /**
      * @var string
      */
     protected const MERCHANT_NAME = 'Test Merchant';
+
     /**
      * @var int
      */
     protected const ID_USER = 1;
+
     /**
      * @var string
      */
     protected const USER_FIRST_NAME = 'Fname';
+
     /**
      * @var string
      */

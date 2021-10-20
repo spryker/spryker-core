@@ -23,14 +23,17 @@ abstract class AbstractFacetAggregation implements FacetAggregationInterface
      * @var string
      */
     public const FACET_VALUE = 'facet-value';
+
     /**
      * @var string
      */
     public const FACET_NAME = 'facet-name';
+
     /**
      * @var string
      */
     public const NAME_SUFFIX = '-name';
+
     /**
      * @var string
      */

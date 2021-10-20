@@ -21,6 +21,7 @@ class DataExportLocalWriter implements DataExportWriterInterface
      * @var string
      */
     protected const ACCESS_MODE_TYPE_OVERWRITE = 'wb';
+
     /**
      * @var string
      */

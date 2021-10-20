@@ -34,6 +34,7 @@ class ItemCollectionType extends AbstractType
      * @var string
      */
     public const OPTION_ITEM_CLASS_COLLECTION = 'item_class_collection';
+
     /**
      * @var string
      */

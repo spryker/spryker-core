@@ -31,18 +31,22 @@ class VaultFacadeTest extends Unit
      * @var string
      */
     protected const TEST_DATA_TYPE = 'TEST_DATA_TYPE';
+
     /**
      * @var string
      */
     protected const TEST_DATA_KEY = 'TEST_DATA_KEY';
+
     /**
      * @var string
      */
     protected const TEST_DATA = 'TEST_DATA';
+
     /**
      * @var string
      */
     protected const TEST_UPDATED_DATA = 'TEST_UPDATED_DATA';
+
     /**
      * @var string
      */

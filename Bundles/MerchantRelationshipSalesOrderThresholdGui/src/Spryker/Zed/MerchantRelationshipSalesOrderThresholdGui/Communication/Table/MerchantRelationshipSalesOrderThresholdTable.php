@@ -24,6 +24,7 @@ class MerchantRelationshipSalesOrderThresholdTable extends AbstractTable
      * @var string
      */
     protected const REQUEST_ID_MERCHANT_RELATIONSHIP = 'id-merchant-relationship';
+
     /**
      * @var string
      */
@@ -35,22 +36,27 @@ class MerchantRelationshipSalesOrderThresholdTable extends AbstractTable
      * @var string
      */
     protected const COL_COMPANY_NAME = 'company_name';
+
     /**
      * @var string
      */
     protected const COL_MERCHANT_RELATIONSHIP_NAME = 'merchant_relationship_name';
+
     /**
      * @var string
      */
     protected const COL_BUSINESS_UNIT_NAME = 'business_unit_name';
+
     /**
      * @var string
      */
     protected const COL_THRESHOLDS = 'merchant_relationship_thresholds';
+
     /**
      * @var string
      */
     protected const COL_THRESHOLD_GROUP = 'threshold_group';
+
     /**
      * @var string
      */

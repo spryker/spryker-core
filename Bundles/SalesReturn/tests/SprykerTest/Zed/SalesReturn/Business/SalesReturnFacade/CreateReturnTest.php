@@ -36,10 +36,12 @@ class CreateReturnTest extends Unit
      * @var string
      */
     protected const DEFAULT_OMS_PROCESS_NAME = 'Test01';
+
     /**
      * @var string
      */
     protected const FAKE_RETURN_REASON = 'FAKE_RETURN_REASON';
+
     /**
      * @var string
      */
@@ -49,6 +51,7 @@ class CreateReturnTest extends Unit
      * @var string
      */
     protected const SHIPPED_STATE_NAME = 'shipped';
+
     /**
      * @var string
      */

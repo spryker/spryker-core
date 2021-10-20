@@ -25,10 +25,12 @@ class GlossaryStorageReader implements GlossaryStorageReaderInterface
      * @var string
      */
     protected const KEY_VALUE = 'value';
+
     /**
      * @var string
      */
     protected const KEY_GLOSSARY_KEY = 'GlossaryKey';
+
     /**
      * @var string
      */

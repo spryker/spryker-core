@@ -27,6 +27,7 @@ class SearchClientBCTest extends Unit
      * @var string
      */
     protected const INDEX_NAME = 'de_search_devtest';
+
     /**
      * @var string
      */

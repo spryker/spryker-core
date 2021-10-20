@@ -33,22 +33,27 @@ class GeneralFormType extends AbstractType
      * @var string
      */
     public const FIELD_LOCALIZED_GENERAL_FORM_COLLECTION = 'localized_general_form_collection';
+
     /**
      * @var string
      */
     public const FIELD_IS_ACTIVE = 'is_active';
+
     /**
      * @var string
      */
     public const FIELD_ID_PRODUCT_SET = 'id_product_set';
+
     /**
      * @var string
      */
     public const FIELD_PRODUCT_SET_KEY = 'product_set_key';
+
     /**
      * @var string
      */
     public const FIELD_PRODUCT_SET_KEY_ORIGINAL = 'product_set_key_original';
+
     /**
      * @var string
      */

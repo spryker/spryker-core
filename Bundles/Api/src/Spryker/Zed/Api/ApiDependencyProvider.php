@@ -19,14 +19,17 @@ class ApiDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const SERVICE_ENCODING = 'SERVICE_ENCODING';
+
     /**
      * @var string
      */
     public const PLUGINS_API = 'PLUGINS_API';
+
     /**
      * @var string
      */
     public const PLUGINS_API_VALIDATOR = 'PLUGINS_API_VALIDATOR';
+
     /**
      * @var string
      */

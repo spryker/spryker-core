@@ -38,10 +38,12 @@ class AclRoleDataImportPluginTest extends Unit
      * @var string
      */
     protected const ACL_ROLE_NAME_1 = 'User';
+
     /**
      * @var string
      */
     protected const ACL_ROLE_NAME_2 = 'Moderator';
+
     /**
      * @var string
      */

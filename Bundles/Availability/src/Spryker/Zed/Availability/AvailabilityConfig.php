@@ -15,6 +15,7 @@ class AvailabilityConfig extends AbstractBundleConfig
      * @var int
      */
     public const ERROR_CODE_PRODUCT_UNAVAILABLE = 4002;
+
     /**
      * @var string
      */
@@ -24,6 +25,7 @@ class AvailabilityConfig extends AbstractBundleConfig
      * @var string
      */
     protected const ERROR_TYPE_AVAILABILITY = 'Availability';
+
     /**
      * @var string
      */

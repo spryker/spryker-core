@@ -16,6 +16,7 @@ class SynchronizationDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const SYNCHRONIZATION_STORAGE_KEY_GENERATOR_PLUGINS = 'SYNCHRONIZATION_STORAGE_KEY_GENERATOR_PLUGINS';
+
     /**
      * @var string
      */

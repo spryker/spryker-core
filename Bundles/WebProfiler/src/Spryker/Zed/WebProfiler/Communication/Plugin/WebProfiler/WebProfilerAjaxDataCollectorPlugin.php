@@ -23,6 +23,7 @@ class WebProfilerAjaxDataCollectorPlugin extends AbstractPlugin implements WebPr
      * @var string
      */
     protected const NAME = 'ajax';
+
     /**
      * @var string
      */

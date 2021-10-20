@@ -13,6 +13,7 @@ class FunctionalityNotSupportedException extends AclEntityException
      * @var string
      */
     public const SUB_ENTITY_NOT_SUPPORTED_MESSAGE = 'Sub entity functionality is not supported for bulk delete query';
+
     /**
      * @var string
      */

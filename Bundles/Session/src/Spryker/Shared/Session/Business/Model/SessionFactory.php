@@ -27,10 +27,12 @@ abstract class SessionFactory
      * @var string
      */
     public const BUCKET_NAME_POSTFIX = 'sessions';
+
     /**
      * @var string
      */
     public const PASSWORD = 'password';
+
     /**
      * @var string
      */

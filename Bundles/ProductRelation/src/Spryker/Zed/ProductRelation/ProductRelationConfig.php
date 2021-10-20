@@ -17,6 +17,7 @@ class ProductRelationConfig extends AbstractBundleConfig
      * @var int
      */
     protected const PRODUCT_RELATION_UPDATE_CHUNK_SIZE = 1000;
+
     /**
      * @var int
      */

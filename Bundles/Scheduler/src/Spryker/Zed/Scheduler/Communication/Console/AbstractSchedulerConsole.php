@@ -23,6 +23,7 @@ class AbstractSchedulerConsole extends Console
      * @var string
      */
     protected const OUTPUT_SUCCESS_COLOR = 'green';
+
     /**
      * @var string
      */
@@ -32,6 +33,7 @@ class AbstractSchedulerConsole extends Console
      * @var string
      */
     protected const OUTPUT_SUCCESS_MESSAGE = 'OK';
+
     /**
      * @var string
      */

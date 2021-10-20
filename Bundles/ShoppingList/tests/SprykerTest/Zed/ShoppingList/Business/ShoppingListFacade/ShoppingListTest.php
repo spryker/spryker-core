@@ -52,6 +52,7 @@ class ShoppingListTest extends Unit
      * @var string
      */
     protected const FAKE_PERMISSION_READ_ONLY = 'FAKE_READ_ONLY';
+
     /**
      * @var string
      */

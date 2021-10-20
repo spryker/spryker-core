@@ -20,10 +20,12 @@ class StorageDatabaseConfig extends AbstractBundleConfig
      * @var string
      */
     protected const DEFAULT_STORAGE_TABLE_PREFIX = 'spy';
+
     /**
      * @var string
      */
     protected const DEFAULT_STORAGE_TABLE_SUFFIX = 'storage';
+
     /**
      * @var string
      */

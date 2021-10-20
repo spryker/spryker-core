@@ -28,26 +28,32 @@ class MerchantRelationshipSalesOrderThresholdGuiDependencyProvider extends Abstr
      * @var string
      */
     public const FACADE_CURRENCY = 'FACADE_CURRENCY';
+
     /**
      * @var string
      */
     public const FACADE_STORE = 'FACADE_STORE';
+
     /**
      * @var string
      */
     public const FACADE_MERCHANT_RELATIONSHIP_SALES_ORDER_THRESHOLD = 'FACADE_MERCHANT_RELATIONSHIP_SALES_ORDER_THRESHOLD';
+
     /**
      * @var string
      */
     public const FACADE_MERCHANT_RELATIONSHIP = 'FACADE_MERCHANT_RELATIONSHIP';
+
     /**
      * @var string
      */
     public const FACADE_MONEY = 'FACADE_MONEY';
+
     /**
      * @var string
      */
     public const FACADE_LOCALE = 'FACADE_LOCALE';
+
     /**
      * @var string
      */
@@ -57,6 +63,7 @@ class MerchantRelationshipSalesOrderThresholdGuiDependencyProvider extends Abstr
      * @var string
      */
     public const PROPEL_QUERY_MERCHANT_RELATIONSHIP = 'PROPEL_QUERY_MERCHANT_RELATIONSHIP';
+
     /**
      * @var string
      */

@@ -16,10 +16,12 @@ interface DevelopmentConstants
      * @var string
      */
     public const COMPOSER_REQUIRE_VERSION = 'COMPOSER_REQUIRE_VERSION';
+
     /**
      * @var string
      */
     public const COMPOSER_REQUIRE_VERSION_EXTERNAL = 'COMPOSER_REQUIRE_VERSION_EXTERNAL';
+
     /**
      * @var string
      */

@@ -21,6 +21,7 @@ class PropelConfig extends AbstractBundleConfig
      * @var string
      */
     public const DB_ENGINE_MYSQL = 'mysql';
+
     /**
      * @var string
      */

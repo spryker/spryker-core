@@ -42,22 +42,27 @@ interface SessionConstants
      * @var string
      */
     public const YVES_SESSION_SAVE_HANDLER = 'SESSION:YVES_SESSION_SAVE_HANDLER';
+
     /**
      * @var string
      */
     public const YVES_SESSION_COOKIE_NAME = 'SESSION:YVES_SESSION_COOKIE_NAME';
+
     /**
      * @var string
      */
     public const YVES_SESSION_COOKIE_SECURE = 'SESSION:YVES_SESSION_COOKIE_SECURE';
+
     /**
      * @var string
      */
     public const YVES_SESSION_COOKIE_DOMAIN = 'SESSION:YVES_SESSION_COOKIE_DOMAIN';
+
     /**
      * @var string
      */
     public const YVES_SESSION_COOKIE_PATH = 'SESSION:YVES_SESSION_COOKIE_PATH';
+
     /**
      * @var string
      */
@@ -78,14 +83,17 @@ interface SessionConstants
      * @var string
      */
     public const YVES_SESSION_FILE_PATH = 'SESSION:YVES_SESSION_FILE_PATH';
+
     /**
      * @var string
      */
     public const YVES_SESSION_PERSISTENT_CONNECTION = 'SESSION:YVES_SESSION_PERSISTENT_CONNECTION';
+
     /**
      * @var string
      */
     public const YVES_SESSION_TIME_TO_LIVE = 'SESSION:YVES_SESSION_TIME_TO_LIVE';
+
     /**
      * @var string
      */
@@ -148,26 +156,32 @@ interface SessionConstants
      * @var string
      */
     public const ZED_SSL_ENABLED = 'SESSION:ZED_SSL_ENABLED';
+
     /**
      * @var string
      */
     public const ZED_SESSION_SAVE_HANDLER = 'SESSION:ZED_SESSION_SAVE_HANDLER';
+
     /**
      * @var string
      */
     public const ZED_SESSION_COOKIE_NAME = 'SESSION:ZED_SESSION_COOKIE_NAME';
+
     /**
      * @var string
      */
     public const ZED_SESSION_COOKIE_SECURE = 'SESSION:ZED_SESSION_COOKIE_SECURE';
+
     /**
      * @var string
      */
     public const ZED_SESSION_COOKIE_DOMAIN = 'SESSION:ZED_SESSION_COOKIE_DOMAIN';
+
     /**
      * @var string
      */
     public const ZED_SESSION_COOKIE_PATH = 'SESSION:ZED_SESSION_COOKIE_PATH';
+
     /**
      * @var string
      */
@@ -188,10 +202,12 @@ interface SessionConstants
      * @var string
      */
     public const ZED_SESSION_FILE_PATH = 'SESSION:ZED_SESSION_FILE_PATH';
+
     /**
      * @var string
      */
     public const ZED_SESSION_PERSISTENT_CONNECTION = 'SESSION:ZED_SESSION_PERSISTENT_CONNECTION';
+
     /**
      * @var string
      */

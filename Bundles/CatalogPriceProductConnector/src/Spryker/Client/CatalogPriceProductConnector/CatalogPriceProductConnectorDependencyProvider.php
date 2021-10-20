@@ -20,14 +20,17 @@ class CatalogPriceProductConnectorDependencyProvider extends AbstractDependencyP
      * @var string
      */
     public const CLIENT_PRICE_PRODUCT = 'CLIENT_PRICE_PRODUCT';
+
     /**
      * @var string
      */
     public const CLIENT_PRICE = 'CLIENT_PRICE';
+
     /**
      * @var string
      */
     public const CLIENT_CURRENCY = 'CLIENT_CURRENCY';
+
     /**
      * @var string
      */

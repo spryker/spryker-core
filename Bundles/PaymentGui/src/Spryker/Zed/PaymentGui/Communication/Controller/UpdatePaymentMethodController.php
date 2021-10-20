@@ -22,10 +22,12 @@ class UpdatePaymentMethodController extends AbstractController
      * @var string
      */
     protected const REDIRECT_URL = '/payment-gui/payment-method/index';
+
     /**
      * @var string
      */
     protected const MESSAGE_SUCCESS = 'Payment method has been successfully updated';
+
     /**
      * @var string
      */

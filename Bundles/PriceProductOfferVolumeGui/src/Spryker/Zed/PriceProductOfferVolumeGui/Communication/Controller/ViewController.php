@@ -22,14 +22,17 @@ class ViewController extends AbstractController
      * @var string
      */
     protected const PARAM_ID_PRODUCT_OFFER = 'id-product-offer';
+
     /**
      * @var string
      */
     protected const PARAM_STORE_NAME = 'store-name';
+
     /**
      * @var string
      */
     protected const PARAM_CURRENCY_CODE = 'currency-code';
+
     /**
      * @var string
      */

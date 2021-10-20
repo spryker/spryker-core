@@ -19,19 +19,23 @@ class Cronjobs
      * @var string
      */
     public const ROLE_ADMIN = 'admin';
+
     /**
      * @var string
      */
     public const ROLE_REPORTING = 'reporting';
+
     /**
      * @var string
      */
     public const ROLE_EMPTY = 'empty';
     public const DEFAULT_ROLE = self::ROLE_ADMIN;
+
     /**
      * @var int
      */
     public const DEFAULT_AMOUNT_OF_DAYS_FOR_LOGFILE_ROTATION = 7;
+
     /**
      * @var string
      */
@@ -41,6 +45,7 @@ class Cronjobs
      * @var string
      */
     protected const JENKINS_URL_API_CSRF_TOKEN = 'crumbIssuer/api/xml?xpath=concat(//crumbRequestField,":",//crumb)';
+
     /**
      * @var string
      */

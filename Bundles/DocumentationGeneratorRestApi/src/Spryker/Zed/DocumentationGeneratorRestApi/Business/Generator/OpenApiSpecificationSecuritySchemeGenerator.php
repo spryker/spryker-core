@@ -16,10 +16,12 @@ class OpenApiSpecificationSecuritySchemeGenerator implements SecuritySchemeGener
      * @var string
      */
     protected const DEFAULT_BEARER_AUTH_SCHEME_NAME = 'BearerAuth';
+
     /**
      * @var string
      */
     protected const DEFAULT_BEARER_AUTH_SCHEME_TYPE = 'http';
+
     /**
      * @var string
      */

@@ -29,6 +29,7 @@ class MerchantRelationshipPriceDimensionForm extends AbstractType
      * @var string
      */
     protected const FIELD_PLACEHOLDER_MERCHANT_RELATIONSHIP = 'Default prices';
+
     /**
      * @var string
      */

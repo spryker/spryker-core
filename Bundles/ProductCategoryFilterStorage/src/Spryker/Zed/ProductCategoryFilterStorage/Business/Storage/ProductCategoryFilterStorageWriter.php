@@ -18,6 +18,7 @@ class ProductCategoryFilterStorageWriter implements ProductCategoryFilterStorage
      * @var string
      */
     public const FK_CATEGORY = 'fkCategory';
+
     /**
      * @var string
      */

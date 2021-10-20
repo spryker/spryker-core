@@ -31,10 +31,12 @@ class EditController extends AbstractController
      * @var string
      */
     protected const PARAM_STORE_CURRENCY_REQUEST = 'store_currency';
+
     /**
      * @var string
      */
     protected const REQUEST_ID_MERCHANT_RELATIONSHIP = 'id-merchant-relationship';
+
     /**
      * @var string
      */

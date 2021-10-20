@@ -16,6 +16,7 @@ class GuiConfig extends AbstractBundleConfig
      * @var string
      */
     protected const FORM_RESOURCES_PATH = '/Presentation/Form/Type';
+
     /**
      * @var array
      */

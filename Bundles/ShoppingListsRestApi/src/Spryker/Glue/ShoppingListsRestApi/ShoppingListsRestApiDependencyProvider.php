@@ -21,6 +21,7 @@ class ShoppingListsRestApiDependencyProvider extends AbstractBundleDependencyPro
      * @var string
      */
     public const CLIENT_SHOPPING_LIST = 'CLIENT_SHOPPING_LIST';
+
     /**
      * @var string
      */

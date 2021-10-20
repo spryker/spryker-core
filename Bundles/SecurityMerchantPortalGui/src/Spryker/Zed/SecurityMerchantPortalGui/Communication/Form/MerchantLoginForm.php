@@ -30,10 +30,12 @@ class MerchantLoginForm extends AbstractType
      * @var string
      */
     public const FIELD_USERNAME = 'username';
+
     /**
      * @var string
      */
     public const FIELD_PASSWORD = 'password';
+
     /**
      * @var string
      */
@@ -43,10 +45,12 @@ class MerchantLoginForm extends AbstractType
      * @var string
      */
     protected const LABEL_USERNAME = 'Email';
+
     /**
      * @var string
      */
     protected const LABEL_PASSWORD = 'Password';
+
     /**
      * @var string
      */

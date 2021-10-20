@@ -22,6 +22,7 @@ class ApiQueryBuilderDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const QUERY_CONTAINER_API = 'QUERY_CONTAINER_API';
+
     /**
      * @var string
      */

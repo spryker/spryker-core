@@ -22,6 +22,7 @@ class Builder implements BuilderInterface
      * @var string
      */
     public const STATE_NAME_ATTRIBUTE = 'name';
+
     /**
      * @var string
      */
@@ -31,10 +32,12 @@ class Builder implements BuilderInterface
      * @var string
      */
     public const PROCESS_NAME_ATTRIBUTE = 'name';
+
     /**
      * @var string
      */
     public const PROCESS_FILE_ATTRIBUTE = 'file';
+
     /**
      * @var string
      */
@@ -44,14 +47,17 @@ class Builder implements BuilderInterface
      * @var string
      */
     public const EVENT_COMMAND_ATTRIBUTE = 'command';
+
     /**
      * @var string
      */
     public const EVENT_MANUAL_ATTRIBUTE = 'manual';
+
     /**
      * @var string
      */
     public const EVENT_ON_ENTER_ATTRIBUTE = 'onEnter';
+
     /**
      * @var string
      */
@@ -61,6 +67,7 @@ class Builder implements BuilderInterface
      * @var string
      */
     public const TRANSITION_CONDITION_ATTRIBUTE = 'condition';
+
     /**
      * @var string
      */

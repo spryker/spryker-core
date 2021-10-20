@@ -18,6 +18,7 @@ class ProductAbstractJoinQuery implements ProductAbstractJoinQueryInterface
      * @var string
      */
     public const LOCALE_FILTER_VALUE = 'LOCALE_FILTER_VALUE';
+
     /**
      * @var string
      */

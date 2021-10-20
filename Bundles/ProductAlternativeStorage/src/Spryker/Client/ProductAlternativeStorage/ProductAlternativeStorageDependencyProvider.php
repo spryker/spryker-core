@@ -22,14 +22,17 @@ class ProductAlternativeStorageDependencyProvider extends AbstractDependencyProv
      * @var string
      */
     public const CLIENT_STORAGE = 'CLIENT_STORAGE';
+
     /**
      * @var string
      */
     public const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
+
     /**
      * @var string
      */
     public const PLUGINS_ALTERNATIVE_PRODUCT_APPLICABLE_CHECK = 'PLUGINS_ALTERNATIVE_PRODUCT_APPLICABLE_CHECK';
+
     /**
      * @var string
      */

@@ -19,10 +19,12 @@ class UserMerchantPortalGuiDependencyProvider extends AbstractBundleDependencyPr
      * @var string
      */
     public const FACADE_LOCALE = 'FACADE_LOCALE';
+
     /**
      * @var string
      */
     public const FACADE_MERCHANT_USER = 'FACADE_MERCHANT_USER';
+
     /**
      * @var string
      */

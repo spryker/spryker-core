@@ -22,14 +22,17 @@ class CmsSlotBlockStorageDependencyProvider extends AbstractBundleDependencyProv
      * @var string
      */
     public const FACADE_CMS_SLOT_BLOCK = 'FACADE_CMS_SLOT_BLOCK';
+
     /**
      * @var string
      */
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
+
     /**
      * @var string
      */
     public const SERVICE_CMS_SLOT_BLOCK_STORAGE = 'SERVICE_CMS_SLOT_BLOCK_STORAGE';
+
     /**
      * @var string
      */

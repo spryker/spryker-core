@@ -26,6 +26,7 @@ abstract class AbstractMerchantShipmentController extends AbstractController
      * @var string
      */
     protected const PARAM_ID_MERCHANT_SALES_ORDER = 'id-merchant-sales-order';
+
     /**
      * @var string
      */

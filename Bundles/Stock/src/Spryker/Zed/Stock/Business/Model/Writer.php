@@ -28,10 +28,12 @@ class Writer implements WriterInterface
      * @var string
      */
     public const TOUCH_STOCK_TYPE = 'stock-type';
+
     /**
      * @var string
      */
     public const TOUCH_STOCK_PRODUCT = 'stock-product';
+
     /**
      * @var string
      */

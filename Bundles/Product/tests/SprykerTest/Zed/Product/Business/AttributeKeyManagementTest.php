@@ -28,6 +28,7 @@ class AttributeKeyManagementTest extends Unit
      * @var string
      */
     public const UNIQUE_ATTRIBUTE_KEY_NOT_EXISTING_IN_DB = 'unique_attribute_key_not_existing_in_db';
+
     /**
      * @var string
      */

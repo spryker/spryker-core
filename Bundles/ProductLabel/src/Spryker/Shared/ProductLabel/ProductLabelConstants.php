@@ -16,10 +16,12 @@ class ProductLabelConstants
      * @var int
      */
     public const RESOURCE_TYPE_PRODUCT_LABEL_DICTIONARY_IDENTIFIER = 1;
+
     /**
      * @var string
      */
     public const RESOURCE_TYPE_PRODUCT_LABEL_DICTIONARY = 'product_label_dictionary';
+
     /**
      * @var string
      */

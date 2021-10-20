@@ -21,10 +21,12 @@ class SalesDetailPage extends BaseSalesDetailPage
      * @var string
      */
     public const BUTTON_REFUND = 'refund';
+
     /**
      * @var string
      */
     public const STATE_RETURNED = 'returned';
+
     /**
      * @var string
      */

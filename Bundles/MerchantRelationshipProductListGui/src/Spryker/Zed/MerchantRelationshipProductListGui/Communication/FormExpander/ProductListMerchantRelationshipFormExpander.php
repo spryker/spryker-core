@@ -20,6 +20,7 @@ class ProductListMerchantRelationshipFormExpander implements ProductListMerchant
      * @var string
      */
     public const OPTION_PRODUCT_LIST_CHOICES = 'choices';
+
     /**
      * @var string
      */

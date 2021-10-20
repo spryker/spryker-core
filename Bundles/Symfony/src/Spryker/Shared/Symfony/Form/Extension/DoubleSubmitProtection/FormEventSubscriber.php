@@ -23,6 +23,7 @@ class FormEventSubscriber implements EventSubscriberInterface
      * @var string
      */
     public const DEFAULT_ERROR_MESSAGE = 'This form has been already submitted.';
+
     /**
      * @var string
      */

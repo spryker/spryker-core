@@ -28,6 +28,7 @@ class DataExportDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const DATA_EXPORT_CONNECTION_PLUGINS = 'DATA_EXPORT_CONNECTION_PLUGINS';
+
     /**
      * @var string
      */

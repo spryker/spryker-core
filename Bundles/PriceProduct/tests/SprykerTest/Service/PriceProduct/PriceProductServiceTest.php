@@ -56,6 +56,7 @@ class PriceProductServiceTest extends Unit
      * @var string
      */
     protected const TEST_DIMENSION = 'TEST_DIMENSION';
+
     /**
      * @var int
      */

@@ -21,6 +21,7 @@ class ProductConcreteCatalogSearchResultFormatterPlugin extends AbstractElastics
      * @var string
      */
     public const NAME = 'ProductConcreteCatalogSearchResultFormatterPlugin';
+
     /**
      * @var string
      */

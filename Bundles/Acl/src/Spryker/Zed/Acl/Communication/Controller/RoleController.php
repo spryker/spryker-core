@@ -29,10 +29,12 @@ class RoleController extends AbstractController
      * @var string
      */
     public const PARAM_ID_ROLE = 'id-role';
+
     /**
      * @var string
      */
     public const ACL_ROLE_LIST_URL = '/acl/role/index';
+
     /**
      * @var string
      */

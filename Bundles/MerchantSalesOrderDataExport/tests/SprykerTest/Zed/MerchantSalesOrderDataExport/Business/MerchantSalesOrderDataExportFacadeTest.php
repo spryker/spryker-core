@@ -27,6 +27,7 @@ class MerchantSalesOrderDataExportFacadeTest extends Unit
      * @var string
      */
     protected const DATA_ENTITY_MERCHANT_ORDER = 'merchant-order';
+
     /**
      * @var string
      */
@@ -36,6 +37,7 @@ class MerchantSalesOrderDataExportFacadeTest extends Unit
      * @var string
      */
     protected const DATA_ENTITY_MERCHANT_ORDER_ITEM = 'merchant-order-item';
+
     /**
      * @var string
      */
@@ -45,6 +47,7 @@ class MerchantSalesOrderDataExportFacadeTest extends Unit
      * @var string
      */
     protected const DATA_ENTITY_MERCHANT_ORDER_EXPENSE = 'merchant-order-expense';
+
     /**
      * @var string
      */

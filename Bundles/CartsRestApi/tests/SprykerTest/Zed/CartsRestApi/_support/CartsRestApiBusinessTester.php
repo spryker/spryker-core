@@ -49,6 +49,7 @@ class CartsRestApiBusinessTester extends Actor
      * @var int
      */
     public const TEST_ID_QUOTE = 67238;
+
     /**
      * @var string
      */
@@ -73,6 +74,7 @@ class CartsRestApiBusinessTester extends Actor
      * @var string
      */
     public const TEST_SKU = 'test-sku';
+
     /**
      * @var string
      */

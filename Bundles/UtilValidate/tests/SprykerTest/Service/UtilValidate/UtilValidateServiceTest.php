@@ -24,6 +24,7 @@ class UtilValidateServiceTest extends Unit
      * @var string
      */
     public const VALID_EMAIL = 'some.one@example.com';
+
     /**
      * @var string
      */

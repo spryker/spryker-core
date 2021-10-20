@@ -23,22 +23,27 @@ class MerchantOrderItemGuiTableConfigurationProvider implements MerchantOrderIte
      * @var string
      */
     public const COL_KEY_SKU = 'sku';
+
     /**
      * @var string
      */
     public const COL_KEY_IMAGE = 'image';
+
     /**
      * @var string
      */
     public const COL_KEY_NAME = 'name';
+
     /**
      * @var string
      */
     public const COL_KEY_QUANTITY = 'quantity';
+
     /**
      * @var string
      */
     public const COL_KEY_STATE = 'state';
+
     /**
      * @var string
      */

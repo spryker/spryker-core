@@ -25,10 +25,12 @@ class TaxProductConnectorQueryContainer extends AbstractQueryContainer implement
      * @var string
      */
     public const COL_MAX_TAX_RATE = 'MaxTaxRate';
+
     /**
      * @var string
      */
     public const COL_ID_ABSTRACT_PRODUCT = 'IdProductAbstract';
+
     /**
      * @var string
      */

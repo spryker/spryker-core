@@ -21,6 +21,7 @@ class CompanyUserTableButtonCreator extends AbstractButtonCreator implements Com
      * @var string
      */
     protected const PARAM_ID_CUSTOMER = 'id-customer';
+
     /**
      * @var string
      */
@@ -30,6 +31,7 @@ class CompanyUserTableButtonCreator extends AbstractButtonCreator implements Com
      * @var string
      */
     protected const COL_FK_CUSTOMER = 'spy_company_user.fk_customer';
+
     /**
      * @var string
      */

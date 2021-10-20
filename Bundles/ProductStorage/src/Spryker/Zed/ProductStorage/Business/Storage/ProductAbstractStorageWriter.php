@@ -21,10 +21,12 @@ class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterf
      * @var string
      */
     public const COL_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
+
     /**
      * @var string
      */
     public const COL_FK_PRODUCT_ABSTRACT = 'fk_product_abstract';
+
     /**
      * @var string
      */
@@ -34,14 +36,17 @@ class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterf
      * @var string
      */
     public const PRODUCT_ABSTRACT_LOCALIZED_ENTITY = 'PRODUCT_ABSTRACT_LOCALIZED_ENTITY';
+
     /**
      * @var string
      */
     public const PRODUCT_ABSTRACT_STORAGE_ENTITY = 'PRODUCT_ABSTRACT_STORAGE_ENTITY';
+
     /**
      * @var string
      */
     public const LOCALE_NAME = 'LOCALE_NAME';
+
     /**
      * @var string
      */

@@ -41,6 +41,7 @@ class DiscountOrderHydratePluginTest extends Unit
      * @var int
      */
     protected const DISCOUNT_AMOUNT = 50;
+
     /**
      * @var string
      */
@@ -50,10 +51,12 @@ class DiscountOrderHydratePluginTest extends Unit
      * @var string
      */
     protected const DISCOUNT_NAME = 'Discount order saver tester';
+
     /**
      * @var string
      */
     protected const FIELD_NAME_NAME = 'name';
+
     /**
      * @var string
      */

@@ -17,14 +17,17 @@ abstract class AbstractDependencyFinder
      * @var string
      */
     public const DEPENDS_LAYER = 'dependsLayer';
+
     /**
      * @var string
      */
     public const LAYER_BUSINESS = 'Business';
+
     /**
      * @var string
      */
     public const LAYER_PERSISTENCE = 'Persistence';
+
     /**
      * @var string
      */

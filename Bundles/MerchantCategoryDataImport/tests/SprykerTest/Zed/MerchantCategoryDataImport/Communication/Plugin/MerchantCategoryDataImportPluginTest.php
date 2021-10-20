@@ -34,6 +34,7 @@ class MerchantCategoryDataImportPluginTest extends Unit
      * @var string
      */
     protected const MERCHANT_REFERENCE = 'merchant_test_reference';
+
     /**
      * @var string
      */

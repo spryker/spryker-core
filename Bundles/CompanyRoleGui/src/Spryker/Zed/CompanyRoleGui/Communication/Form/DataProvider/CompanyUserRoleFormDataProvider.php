@@ -19,6 +19,7 @@ class CompanyUserRoleFormDataProvider
      * @var string
      */
     protected const OPTION_ATTRIBUTE_DATA = 'data-id_company';
+
     /**
      * @var string
      */

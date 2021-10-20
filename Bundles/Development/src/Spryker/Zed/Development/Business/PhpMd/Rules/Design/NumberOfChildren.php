@@ -17,6 +17,7 @@ class NumberOfChildren extends AbstractRule implements ClassAware
      * @var string
      */
     public const NUMBER_OF_CHILDREN = 'nocc';
+
     /**
      * @var string
      */

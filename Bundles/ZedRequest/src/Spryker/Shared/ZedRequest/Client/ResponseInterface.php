@@ -19,22 +19,27 @@ interface ResponseInterface
      * @var string
      */
     public const INFO_MESSAGES = 'infoMessages';
+
     /**
      * @var string
      */
     public const ERROR_MESSAGES = 'errorMessages';
+
     /**
      * @var string
      */
     public const SUCCESS_MESSAGES = 'successMessages';
+
     /**
      * @var string
      */
     public const SUCCESS = 'success';
+
     /**
      * @var string
      */
     public const TRANSFER_CLASSNAME = 'transferClassName';
+
     /**
      * @var string
      */

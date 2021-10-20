@@ -20,14 +20,17 @@ class PathRequestSpecificationComponent implements PathRequestSpecificationCompo
      * @var string
      */
     protected const KEY_APPLICATION_JSON = 'application/json';
+
     /**
      * @var string
      */
     protected const KEY_CONTENT = 'content';
+
     /**
      * @var string
      */
     protected const KEY_REF = '$ref';
+
     /**
      * @var string
      */

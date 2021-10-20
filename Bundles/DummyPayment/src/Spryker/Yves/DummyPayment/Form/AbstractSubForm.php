@@ -23,6 +23,7 @@ abstract class AbstractSubForm extends AbstractSubFormType implements SubFormInt
      * @var string
      */
     public const FIELD_DATE_OF_BIRTH = 'date_of_birth';
+
     /**
      * @var string
      */

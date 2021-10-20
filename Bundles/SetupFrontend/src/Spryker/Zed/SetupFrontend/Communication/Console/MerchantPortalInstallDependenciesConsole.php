@@ -22,6 +22,7 @@ class MerchantPortalInstallDependenciesConsole extends Console
      * @var string
      */
     public const COMMAND_NAME = 'frontend:mp:install-dependencies';
+
     /**
      * @var string
      */

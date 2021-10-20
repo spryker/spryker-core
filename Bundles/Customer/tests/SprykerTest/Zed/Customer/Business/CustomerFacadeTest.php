@@ -48,26 +48,32 @@ class CustomerFacadeTest extends Unit
      * @var string
      */
     public const TESTER_EMAIL = 'tester@spryker.com';
+
     /**
      * @var string
      */
     public const TESTER_INVALID_EMAIL = 'tester<>@spryker.com';
+
     /**
      * @var string
      */
     public const TESTER_NON_EXISTING_EMAIL = 'nonexisting@spryker.com';
+
     /**
      * @var string
      */
     public const TESTER_UPDATE_EMAIL = 'update.tester@spryker.com';
+
     /**
      * @var string
      */
     public const TESTER_PASSWORD = '$2tester';
+
     /**
      * @var string
      */
     public const TESTER_NEW_PASSWORD = '$3tester';
+
     /**
      * @var string
      */
@@ -113,18 +119,22 @@ class CustomerFacadeTest extends Unit
      * @var int
      */
     protected const MIN_LENGTH_CUSTOMER_PASSWORD = 6;
+
     /**
      * @var int
      */
     protected const MAX_LENGTH_CUSTOMER_PASSWORD = 12;
+
     /**
      * @var int
      */
     protected const SEQUENCE_LIMIT_CUSTOMER_PASSWORD = 3;
+
     /**
      * @var string
      */
     protected const CHARACTER_SET_REGEXP = '/^[a-zA-Z0-9]*$/';
+
     /**
      * @var bool
      */
@@ -134,6 +144,7 @@ class CustomerFacadeTest extends Unit
      * @var string
      */
     protected const VALUE_SHORT_PASSWORD = 'p2c';
+
     /**
      * @var string
      */
@@ -143,22 +154,27 @@ class CustomerFacadeTest extends Unit
      * @var string
      */
     protected const VALUE_VALID_PASSWORD = 'p2cfGyY4';
+
     /**
      * @var string
      */
     protected const VALUE_NEW_PASSWORD = 'pdcEphDN';
+
     /**
      * @var string
      */
     protected const VALUE_SEQUENCE_TOO_LONG_PASSWORD = '[3$0hhhh';
+
     /**
      * @var string
      */
     protected const VALUE_HAS_SEQUENCE_VALID_PASSWORD = '4sxjjvrt';
+
     /**
      * @var string
      */
     protected const VALUE_DENY_LIST_PASSWORD = 'qwerty';
+
     /**
      * @var string
      */

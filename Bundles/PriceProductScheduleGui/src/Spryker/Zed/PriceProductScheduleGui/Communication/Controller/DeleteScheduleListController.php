@@ -22,6 +22,7 @@ class DeleteScheduleListController extends AbstractController
      * @var string
      */
     protected const REDIRECT_URL = '/price-product-schedule-gui/import';
+
     /**
      * @var string
      */
@@ -31,10 +32,12 @@ class DeleteScheduleListController extends AbstractController
      * @var string
      */
     protected const PARAM_TEMPLATE_PRICE_PRODUCT_SCHEDULE_LIST = 'priceProductScheduleList';
+
     /**
      * @var string
      */
     protected const PARAM_TEMPLATE_FORM = 'form';
+
     /**
      * @var string
      */

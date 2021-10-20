@@ -27,6 +27,7 @@ class DryRunImportController extends AbstractController
      * @var string
      */
     public const URL_IMPORT_PAGE = '/price-product-schedule-gui/import';
+
     /**
      * @var string
      */

@@ -26,6 +26,7 @@ class ProductListDeleteChecker implements ProductListDeleteCheckerInterface
      * @var string
      */
     protected const ERROR_MESSAGE_PARAM_TEMPLATE = '%template%';
+
     /**
      * @var string
      */

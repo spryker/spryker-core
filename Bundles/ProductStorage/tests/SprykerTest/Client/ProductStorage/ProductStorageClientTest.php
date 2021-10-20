@@ -41,18 +41,22 @@ class ProductStorageClientTest extends Unit
      * @var string
      */
     protected const SUPER_ATTRIBUTE_NAME_1 = 'super_attribute_name_1';
+
     /**
      * @var string
      */
     protected const SUPER_ATTRIBUTE_NAME_2 = 'super_attribute_name_2';
+
     /**
      * @var string
      */
     protected const SUPER_ATTRIBUTE_VALUE_1 = 'super_attribute_value_1';
+
     /**
      * @var string
      */
     protected const SUPER_ATTRIBUTE_VALUE_2_1 = 'super_attribute_value_2_1';
+
     /**
      * @var string
      */
@@ -62,6 +66,7 @@ class ProductStorageClientTest extends Unit
      * @var int
      */
     protected const PRODUCT_CONCRETE_ID_1 = 10001;
+
     /**
      * @var int
      */

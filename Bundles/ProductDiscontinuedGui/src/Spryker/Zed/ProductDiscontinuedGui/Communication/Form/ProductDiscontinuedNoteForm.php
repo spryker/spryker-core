@@ -21,14 +21,17 @@ class ProductDiscontinuedNoteForm extends AbstractType
      * @var string
      */
     public const FIELD_FK_LOCALE = 'fkLocale';
+
     /**
      * @var string
      */
     public const FIELD_NOTE = 'note';
+
     /**
      * @var string
      */
     public const FIELD_FK_PRODUCT_DISCONTINUED = 'fkProductDiscontinued';
+
     /**
      * @var string
      */

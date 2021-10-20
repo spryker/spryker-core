@@ -36,10 +36,12 @@ class QuoteBusinessTester extends Actor
      * @var string
      */
     protected const ANONYMOUS_CUSTOMER_REFERENCE = 'anonymous:123';
+
     /**
      * @var string
      */
     protected const CONFIG_LIFETIME_ONE_SECOND = 'PT01S';
+
     /**
      * @var string
      */

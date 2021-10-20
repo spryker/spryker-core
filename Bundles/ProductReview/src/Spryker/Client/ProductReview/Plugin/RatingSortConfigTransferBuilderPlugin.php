@@ -18,10 +18,12 @@ class RatingSortConfigTransferBuilderPlugin extends AbstractPlugin implements So
      * @var string
      */
     public const NAME = 'rating';
+
     /**
      * @var string
      */
     public const PARAMETER_NAME = 'rating';
+
     /**
      * @var string
      */

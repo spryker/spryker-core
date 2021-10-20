@@ -19,18 +19,22 @@ class SynchronizationSearch implements SynchronizationInterface
      * @var string
      */
     public const KEY = 'key';
+
     /**
      * @var string
      */
     public const VALUE = 'value';
+
     /**
      * @var string
      */
     public const TYPE = 'type';
+
     /**
      * @var string
      */
     public const INDEX = 'index';
+
     /**
      * @var string
      */

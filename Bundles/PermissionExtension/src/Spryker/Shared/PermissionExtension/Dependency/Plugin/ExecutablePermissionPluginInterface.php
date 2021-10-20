@@ -13,10 +13,12 @@ interface ExecutablePermissionPluginInterface extends PermissionPluginInterface
      * @var string
      */
     public const CONFIG_FIELD_TYPE_STORE_MULTI_CURRENCY = 'CONFIG_FIELD_TYPE_STORE_MULTI_CURRENCY';
+
     /**
      * @var string
      */
     public const CONFIG_FIELD_TYPE_INT = 'CONFIG_FIELD_TYPE_INT';
+
     /**
      * @var string
      */

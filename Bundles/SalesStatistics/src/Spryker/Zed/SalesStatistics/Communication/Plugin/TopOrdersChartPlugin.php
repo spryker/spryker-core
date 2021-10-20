@@ -24,14 +24,17 @@ class TopOrdersChartPlugin extends AbstractPlugin implements ChartPluginInterfac
      * @var int
      */
     public const COUNT_PRODUCT = 10;
+
     /**
      * @var string
      */
     public const NAME = 'top-orders';
+
     /**
      * @var string
      */
     public const TITLE = 'Top Orders';
+
     /**
      * @var array
      */

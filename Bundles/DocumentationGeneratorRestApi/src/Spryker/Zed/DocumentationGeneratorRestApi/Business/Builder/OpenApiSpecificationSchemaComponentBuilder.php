@@ -20,18 +20,22 @@ class OpenApiSpecificationSchemaComponentBuilder implements SchemaComponentBuild
      * @var string
      */
     protected const VALUE_TYPE_ARRAY = 'array';
+
     /**
      * @var string
      */
     protected const VALUE_TYPE_BOOLEAN = 'boolean';
+
     /**
      * @var string
      */
     protected const VALUE_TYPE_INTEGER = 'integer';
+
     /**
      * @var string
      */
     protected const VALUE_TYPE_NUMBER = 'number';
+
     /**
      * @var string
      */
@@ -51,14 +55,17 @@ class OpenApiSpecificationSchemaComponentBuilder implements SchemaComponentBuild
      * @var string
      */
     protected const KEY_TYPE = 'type';
+
     /**
      * @var string
      */
     protected const KEY_IS_COLLECTION = 'is_collection';
+
     /**
      * @var string
      */
     protected const KEY_IS_NULLABLE = 'is_nullable';
+
     /**
      * @var string
      */

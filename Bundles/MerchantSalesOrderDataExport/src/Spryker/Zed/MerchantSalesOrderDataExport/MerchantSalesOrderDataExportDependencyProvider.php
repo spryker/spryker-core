@@ -27,6 +27,7 @@ class MerchantSalesOrderDataExportDependencyProvider extends AbstractBundleDepen
      * @var string
      */
     public const SERVICE_DATA_EXPORT = 'SERVICE_DATA_EXPORT';
+
     /**
      * @var string
      */
@@ -36,14 +37,17 @@ class MerchantSalesOrderDataExportDependencyProvider extends AbstractBundleDepen
      * @var string
      */
     public const PROPEL_QUERY_MERCHANT = 'PROPEL_QUERY_MERCHANT';
+
     /**
      * @var string
      */
     public const PROPEL_QUERY_MERCHANT_SALES_ORDER = 'PROPEL_QUERY_MERCHANT_SALES_ORDER';
+
     /**
      * @var string
      */
     public const PROPEL_QUERY_MERCHANT_SALES_ORDER_ITEM = 'PROPEL_QUERY_MERCHANT_SALES_ORDER_ITEM';
+
     /**
      * @var string
      */

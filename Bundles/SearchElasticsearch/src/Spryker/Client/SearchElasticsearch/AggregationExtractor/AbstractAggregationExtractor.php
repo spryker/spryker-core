@@ -15,6 +15,7 @@ abstract class AbstractAggregationExtractor implements AggregationExtractorInter
      * @var string
      */
     public const PATH_SEPARATOR = '.';
+
     /**
      * @var string
      */

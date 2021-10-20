@@ -15,6 +15,7 @@ class UniqueUrl extends SymfonyConstraint
      * @var string
      */
     public const OPTION_URL_FACADE = 'urlFacade';
+
     /**
      * @var string
      */

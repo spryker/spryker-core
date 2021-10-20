@@ -36,6 +36,7 @@ class GlueAnnotationAnalyzer implements GlueAnnotationAnalyzerInterface
      * @var string
      */
     protected const PATTERN_REGEX_GLUE_ANNOTATION = '/(?<=@Glue\()(.|\n)*?(?=(\s\*\n)*?\))/';
+
     /**
      * @var string
      */

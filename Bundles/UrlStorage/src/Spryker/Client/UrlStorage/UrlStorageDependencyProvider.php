@@ -24,10 +24,12 @@ class UrlStorageDependencyProvider extends AbstractDependencyProvider
      * @var string
      */
     public const CLIENT_STORAGE = 'CLIENT_STORAGE';
+
     /**
      * @var string
      */
     public const CLIENT_STORE = 'CLIENT_STORE';
+
     /**
      * @var string
      */
@@ -37,6 +39,7 @@ class UrlStorageDependencyProvider extends AbstractDependencyProvider
      * @var string
      */
     public const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
+
     /**
      * @var string
      */

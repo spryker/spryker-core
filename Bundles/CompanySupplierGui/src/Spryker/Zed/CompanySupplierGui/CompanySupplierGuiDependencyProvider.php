@@ -21,18 +21,22 @@ class CompanySupplierGuiDependencyProvider extends AbstractBundleDependencyProvi
      * @var string
      */
     public const FACADE_COMPANY_SUPPLIER = 'FACADE_COMPANY_SUPPLIER';
+
     /**
      * @var string
      */
     public const FACADE_MONEY = 'FACADE_MONEY';
+
     /**
      * @var string
      */
     public const FACADE_STORE = 'FACADE_STORE';
+
     /**
      * @var string
      */
     public const FACADE_CURRENCY = 'FACADE_CURRENCY';
+
     /**
      * @var string
      */

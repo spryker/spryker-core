@@ -23,14 +23,17 @@ class ProductAlternativeProductLabelConnectorDependencyProvider extends Abstract
      * @var string
      */
     public const FACADE_PRODUCT_LABEL = 'FACADE_PRODUCT_LABEL';
+
     /**
      * @var string
      */
     public const FACADE_PRODUCT_ALTERNATIVE = 'FACADE_PRODUCT_ALTERNATIVE';
+
     /**
      * @var string
      */
     public const FACADE_PRODUCT = 'FACADE_PRODUCT';
+
     /**
      * @var string
      */

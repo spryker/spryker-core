@@ -29,14 +29,17 @@ class ProductImageDataHelper extends Module
      * @var string
      */
     public const URL_SMALL = 'small';
+
     /**
      * @var string
      */
     public const URL_LARGE = 'large';
+
     /**
      * @var string
      */
     public const NAME = 'set';
+
     /**
      * @var int
      */

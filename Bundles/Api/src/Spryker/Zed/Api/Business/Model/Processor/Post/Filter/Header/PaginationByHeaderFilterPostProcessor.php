@@ -17,6 +17,7 @@ class PaginationByHeaderFilterPostProcessor implements PostProcessorInterface
      * @var string
      */
     public const HEADER_ACCEPT_RANGES = 'Accept-Ranges';
+
     /**
      * @var string
      */

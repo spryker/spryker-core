@@ -20,14 +20,17 @@ class CompanyDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const FACADE_STORE = 'FACADE_STORE';
+
     /**
      * @var string
      */
     public const COMPANY_PRE_SAVE_PLUGINS = 'COMPANY_PRE_SAVE_PLUGINS';
+
     /**
      * @var string
      */
     public const COMPANY_POST_SAVE_PLUGINS = 'COMPANY_POST_SAVE_PLUGINS';
+
     /**
      * @var string
      */

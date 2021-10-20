@@ -22,10 +22,12 @@ class SalesStatisticsDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const PROPEL_SALES_ORDER_QUERY = 'SALES_ORDER_QUERY';
+
     /**
      * @var string
      */
     public const PROPEL_SALES_ORDER_ITEM_QUERY = 'SALES_ORDER_ITEM_QUERY';
+
     /**
      * @var string
      */

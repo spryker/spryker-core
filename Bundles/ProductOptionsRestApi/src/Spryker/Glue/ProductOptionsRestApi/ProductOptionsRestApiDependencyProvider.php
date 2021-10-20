@@ -23,14 +23,17 @@ class ProductOptionsRestApiDependencyProvider extends AbstractBundleDependencyPr
      * @var string
      */
     public const CLIENT_PRODUCT_OPTION_STORAGE = 'CLIENT_PRODUCT_OPTION_STORAGE';
+
     /**
      * @var string
      */
     public const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE';
+
     /**
      * @var string
      */
     public const CLIENT_GLOSSARY_STORAGE = 'CLIENT_GLOSSARY_STORAGE';
+
     /**
      * @var string
      */

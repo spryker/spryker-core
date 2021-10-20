@@ -20,6 +20,7 @@ class AccessTokenUserFinder implements AccessTokenUserFinderInterface
      * @var string
      */
     protected const KEY_CUSTOMER_REFERENCE = 'customer_reference';
+
     /**
      * @var string
      */

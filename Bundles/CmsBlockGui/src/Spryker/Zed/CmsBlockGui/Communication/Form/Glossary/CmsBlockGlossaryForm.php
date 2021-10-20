@@ -25,6 +25,7 @@ class CmsBlockGlossaryForm extends AbstractType
      * @var string
      */
     public const FIELD_GLOSSARY_PLACEHOLDERS = 'glossaryPlaceholders';
+
     /**
      * @var string
      */

@@ -19,10 +19,12 @@ class CustomerAddressValidator implements CustomerAddressValidatorInterface
      * @var string
      */
     protected const GLOSSARY_PARAMETER_ID = '%id%';
+
     /**
      * @var string
      */
     protected const GLOSSARY_KEY_CUSTOMER_ADDRESS_IN_CHECKOUT_DATA_NOT_FOUND = 'checkout.validation.customer_address.not_found';
+
     /**
      * @var string
      */

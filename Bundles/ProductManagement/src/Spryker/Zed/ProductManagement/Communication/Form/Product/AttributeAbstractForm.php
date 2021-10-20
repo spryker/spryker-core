@@ -32,10 +32,12 @@ class AttributeAbstractForm extends AbstractSubForm
      * @var string
      */
     public const FIELD_NAME = 'name';
+
     /**
      * @var string
      */
     public const FIELD_VALUE = 'value';
+
     /**
      * @var string
      */
@@ -45,14 +47,17 @@ class AttributeAbstractForm extends AbstractSubForm
      * @var string
      */
     public const OPTION_ATTRIBUTE = 'option_attribute';
+
     /**
      * @var string
      */
     public const OPTION_PRODUCT_MANAGEMENT_QUERY_CONTAINER = 'product-management-query-container';
+
     /**
      * @var string
      */
     public const OPTION_LOCALE_PROVIDER = 'locale-provider';
+
     /**
      * @var string
      */

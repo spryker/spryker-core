@@ -21,6 +21,7 @@ class OrderCustomReferenceWriter implements OrderCustomReferenceWriterInterface
      * @var string
      */
     protected const GLOSSARY_KEY_ORDER_CUSTOM_REFERENCE_MESSAGE_INVALID_LENGTH = 'order_custom_reference.validation.error.message_invalid_length';
+
     /**
      * @var string
      */

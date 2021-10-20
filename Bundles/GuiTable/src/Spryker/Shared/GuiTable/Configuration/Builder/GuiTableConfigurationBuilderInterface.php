@@ -15,34 +15,42 @@ interface GuiTableConfigurationBuilderInterface
      * @var string
      */
     public const COLUMN_TYPE_AUTOCOMPLETE = 'autocomplete';
+
     /**
      * @var string
      */
     public const COLUMN_TYPE_TEXT = 'text';
+
     /**
      * @var string
      */
     public const COLUMN_TYPE_IMAGE = 'image';
+
     /**
      * @var string
      */
     public const COLUMN_TYPE_DATE = 'date';
+
     /**
      * @var string
      */
     public const COLUMN_TYPE_CHIP = 'chip';
+
     /**
      * @var string
      */
     public const COLUMN_TYPE_LIST = 'list';
+
     /**
      * @var string
      */
     public const COLUMN_TYPE_SELECT = 'select';
+
     /**
      * @var string
      */
     public const COLUMN_TYPE_INPUT = 'input';
+
     /**
      * @var string
      */
@@ -52,10 +60,12 @@ interface GuiTableConfigurationBuilderInterface
      * @var string
      */
     public const FILTER_TYPE_SELECT = 'select';
+
     /**
      * @var string
      */
     public const FILTER_TYPE_TREE_SELECT = 'tree-select';
+
     /**
      * @var string
      */
@@ -65,6 +75,7 @@ interface GuiTableConfigurationBuilderInterface
      * @var string
      */
     public const ACTION_TYPE_DRAWER = 'drawer';
+
     /**
      * @var string
      */
@@ -74,6 +85,7 @@ interface GuiTableConfigurationBuilderInterface
      * @var string
      */
     public const ACTION_DRAWER_COMPONENT_TYPE_AJAX_FORM = 'ajax-form';
+
     /**
      * @var string
      */
@@ -83,14 +95,17 @@ interface GuiTableConfigurationBuilderInterface
      * @var string
      */
     public const DATA_SOURCE_TYPE_INLINE = 'inline';
+
     /**
      * @var string
      */
     public const DATA_SOURCE_TYPE_DEPENDABLE = 'dependable';
+
     /**
      * @var string
      */
     public const DATA_SOURCE_TYPE_HTTP = 'http';
+
     /**
      * @var string
      */

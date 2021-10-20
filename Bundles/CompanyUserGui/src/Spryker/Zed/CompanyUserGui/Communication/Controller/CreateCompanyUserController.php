@@ -27,10 +27,12 @@ class CreateCompanyUserController extends AbstractController
      * @var string
      */
     protected const MESSAGE_SUCCESS_COMPANY_USER_CREATE = 'Company user has been created.';
+
     /**
      * @var string
      */
     protected const MESSAGE_ERROR_COMPANY_USER_CREATE = 'Company user has not been created.';
+
     /**
      * @var string
      */

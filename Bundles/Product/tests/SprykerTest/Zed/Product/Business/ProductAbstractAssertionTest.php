@@ -31,6 +31,7 @@ class ProductAbstractAssertionTest extends Unit
      * @var string
      */
     public const SKU = 'sku';
+
     /**
      * @var int
      */

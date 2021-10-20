@@ -27,14 +27,17 @@ class ComposerDependencyParser implements ComposerDependencyParserInterface
      * @var string
      */
     public const TYPE_INCLUDE = 'include';
+
     /**
      * @var string
      */
     public const TYPE_EXCLUDE = 'exclude';
+
     /**
      * @var string
      */
     public const TYPE_INCLUDE_DEV = 'include-dev';
+
     /**
      * @var string
      */

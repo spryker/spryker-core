@@ -21,6 +21,7 @@ class DataBuilderGeneratorConsole extends Console
      * @var string
      */
     public const COMMAND_NAME = 'transfer:databuilder:generate';
+
     /**
      * @var string
      */

@@ -13,18 +13,22 @@ interface CustomerAccessConfig
      * @var string
      */
     public const CONTENT_TYPE_PRICE = 'price';
+
     /**
      * @var string
      */
     public const CONTENT_TYPE_ORDER_PLACE_SUBMIT = 'order-place-submit';
+
     /**
      * @var string
      */
     public const CONTENT_TYPE_ADD_TO_CART = 'add-to-cart';
+
     /**
      * @var string
      */
     public const CONTENT_TYPE_WISHLIST = 'wishlist';
+
     /**
      * @var string
      */

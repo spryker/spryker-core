@@ -19,10 +19,12 @@ class CategoryExtractor implements AggregationExtractorInterface
      * @var string
      */
     protected const DOC_COUNT = 'doc_count';
+
     /**
      * @var string
      */
     protected const KEY_BUCKETS = 'buckets';
+
     /**
      * @var string
      */

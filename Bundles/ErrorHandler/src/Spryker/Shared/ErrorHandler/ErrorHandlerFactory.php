@@ -22,14 +22,17 @@ class ErrorHandlerFactory
      * @var string
      */
     public const APPLICATION_ZED = 'ZED';
+
     /**
      * @var string
      */
     public const APPLICATION_GLUE = 'GLUE';
+
     /**
      * @var string
      */
     public const SAPI_CLI = 'cli';
+
     /**
      * @var string
      */

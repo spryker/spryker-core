@@ -21,6 +21,7 @@ class QuoteRequestConverter implements QuoteRequestConverterInterface
      * @var string
      */
     protected const GLOSSARY_KEY_WRONG_QUOTE_REQUEST_STATUS = 'quote_request.checkout.validation.error.wrong_status';
+
     /**
      * @var string
      */

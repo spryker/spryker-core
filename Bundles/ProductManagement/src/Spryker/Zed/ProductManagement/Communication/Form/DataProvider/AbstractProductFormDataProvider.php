@@ -46,38 +46,47 @@ class AbstractProductFormDataProvider
      * @var string
      */
     public const FORM_FIELD_ID = 'id';
+
     /**
      * @var string
      */
     public const FORM_FIELD_VALUE = 'value';
+
     /**
      * @var string
      */
     public const FORM_FIELD_NAME = 'name';
+
     /**
      * @var string
      */
     public const FORM_FIELD_PRODUCT_SPECIFIC = 'product_specific';
+
     /**
      * @var string
      */
     public const FORM_FIELD_LABEL = 'label';
+
     /**
      * @var string
      */
     public const FORM_FIELD_SUPER = 'super';
+
     /**
      * @var string
      */
     public const FORM_FIELD_INPUT_TYPE = 'input_type';
+
     /**
      * @var string
      */
     public const FORM_FIELD_VALUE_DISABLED = 'value_disabled';
+
     /**
      * @var string
      */
     public const FORM_FIELD_NAME_DISABLED = 'name_disabled';
+
     /**
      * @var string
      */
@@ -92,6 +101,7 @@ class AbstractProductFormDataProvider
      * @var string
      */
     public const DEFAULT_INPUT_TYPE = 'text';
+
     /**
      * @var string
      */

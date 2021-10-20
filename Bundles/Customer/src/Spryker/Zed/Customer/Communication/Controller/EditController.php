@@ -25,10 +25,12 @@ class EditController extends AbstractController
      * @var string
      */
     public const MESSAGE_CUSTOMER_UPDATE_ERROR = 'Customer was not updated.';
+
     /**
      * @var string
      */
     public const MESSAGE_CUSTOMER_UPDATE_SUCCESS = 'Customer was updated successfully.';
+
     /**
      * @var string
      */

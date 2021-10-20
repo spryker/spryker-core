@@ -22,10 +22,12 @@ class NavigationGuiDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const FACADE_NAVIGATION = 'FACADE_NAVIGATION';
+
     /**
      * @var string
      */
     public const FACADE_LOCALE = 'FACADE_LOCALE';
+
     /**
      * @var string
      */

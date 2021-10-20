@@ -30,10 +30,12 @@ class AddressCollectionType extends AbstractType
      * @var string
      */
     public const FIELD_SHIPPING_ADDRESS = 'shippingAddress';
+
     /**
      * @var string
      */
     public const FIELD_BILLING_ADDRESS = 'billingAddress';
+
     /**
      * @var string
      */
@@ -43,6 +45,7 @@ class AddressCollectionType extends AbstractType
      * @var string
      */
     public const OPTION_ADDRESS_CHOICES = 'address_choices';
+
     /**
      * @var string
      */

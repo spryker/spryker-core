@@ -30,6 +30,7 @@ abstract class AbstractRouterApplicationPlugin extends AbstractPlugin implements
      * @var string
      */
     public const SERVICE_CONTROLLER_RESOLVER = 'controller-resolver';
+
     /**
      * @var string
      */

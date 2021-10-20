@@ -26,6 +26,7 @@ class SegmentScopeAclQueryDirectorStrategy implements AclQueryDirectorStrategyIn
      * @var string
      */
     public const FK_ACL_ENTITY_SEGMENT = 'fk_acl_entity_segment';
+
     /**
      * @var string
      */

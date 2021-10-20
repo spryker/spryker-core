@@ -23,10 +23,12 @@ class ComposerJsonUpdaterConsole extends AbstractCoreModuleAwareConsole
      * @var string
      */
     public const COMMAND_NAME = 'dev:composer:update-json-files';
+
     /**
      * @var string
      */
     public const OPTION_DRY_RUN = 'dry-run';
+
     /**
      * @var string
      */

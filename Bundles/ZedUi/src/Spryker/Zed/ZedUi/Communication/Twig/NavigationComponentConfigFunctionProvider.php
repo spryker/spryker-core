@@ -17,6 +17,7 @@ class NavigationComponentConfigFunctionProvider extends TwigFunctionProvider
      * @var string
      */
     protected const NAVIGATION_COMPONENT_CONFIG_FUNCTION_NAME = 'render_navigation_component_config';
+
     /**
      * @var string
      */

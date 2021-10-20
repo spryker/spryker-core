@@ -15,6 +15,7 @@ class EntityTagsRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESPONSE_CODE_IF_MATCH_HEADER_MISSING = '005';
+
     /**
      * @var string
      */
@@ -24,6 +25,7 @@ class EntityTagsRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESPONSE_DETAIL_IF_MATCH_HEADER_MISSING = 'If-Match header is missing.';
+
     /**
      * @var string
      */

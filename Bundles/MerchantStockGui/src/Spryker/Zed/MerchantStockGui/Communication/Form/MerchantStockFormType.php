@@ -22,6 +22,7 @@ class MerchantStockFormType extends AbstractType
      * @var string
      */
     protected const FIELD_STOCKS = 'stocks';
+
     /**
      * @var string
      */

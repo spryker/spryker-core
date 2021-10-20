@@ -39,6 +39,7 @@ class SecurityBlockerRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const ERROR_RESPONSE_CODE_ACCOUNT_BLOCKED = '4401';
+
     /**
      * @var string
      */

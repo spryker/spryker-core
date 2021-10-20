@@ -41,6 +41,7 @@ abstract class AbstractTable
      * @var string
      */
     public const TABLE_CLASS = 'gui-table-data';
+
     /**
      * @var string
      */
@@ -50,30 +51,37 @@ abstract class AbstractTable
      * @var string
      */
     public const BUTTON_CLASS = 'class';
+
     /**
      * @var string
      */
     public const BUTTON_HREF = 'href';
+
     /**
      * @var string
      */
     public const BUTTON_DEFAULT_CLASS = 'btn-default';
+
     /**
      * @var string
      */
     public const BUTTON_ICON = 'icon';
+
     /**
      * @var string
      */
     public const PARAMETER_VALUE = 'value';
+
     /**
      * @var string
      */
     public const SORT_BY_COLUMN = 'column';
+
     /**
      * @var string
      */
     public const SORT_BY_DIRECTION = 'dir';
+
     /**
      * @var string
      */

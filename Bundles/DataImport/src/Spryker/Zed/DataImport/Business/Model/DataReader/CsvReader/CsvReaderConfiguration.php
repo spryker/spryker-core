@@ -17,14 +17,17 @@ class CsvReaderConfiguration implements CsvReaderConfigurationInterface
      * @var bool
      */
     public const DEFAULT_HAS_HEADER = true;
+
     /**
      * @var string
      */
     public const DEFAULT_DELIMITER = ',';
+
     /**
      * @var string
      */
     public const DEFAULT_ENCLOSURE = '"';
+
     /**
      * @var string
      */

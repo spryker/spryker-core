@@ -33,6 +33,7 @@ class ProductOptionListTableTest extends Unit
      * @var string
      */
     protected const PRODUCT_OPTION_VALUE_SKU_1 = 'PRODUCT_OPTION_VALUE_SKU_1';
+
     /**
      * @var string
      */

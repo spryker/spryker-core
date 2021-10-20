@@ -21,10 +21,12 @@ class DataImportConfig extends AbstractBundleConfig
      * @var string
      */
     public const IMPORT_GROUP_FULL = 'FULL';
+
     /**
      * @var string
      */
     public const IMPORT_GROUP_QUEUE_READERS = 'QUEUE_READERS';
+
     /**
      * @var string
      */
@@ -39,10 +41,12 @@ class DataImportConfig extends AbstractBundleConfig
      * @var int
      */
     protected const DEFAULT_QUEUE_READER_CHUNK_SIZE = 100;
+
     /**
      * @var int
      */
     protected const DEFAULT_QUEUE_WRITER_CHUNK_SIZE = 100;
+
     /**
      * @var bool
      */

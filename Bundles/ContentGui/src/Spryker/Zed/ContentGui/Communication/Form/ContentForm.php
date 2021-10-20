@@ -28,18 +28,22 @@ class ContentForm extends AbstractType
      * @var string
      */
     public const FIELD_NAME = 'name';
+
     /**
      * @var string
      */
     public const FIELD_DESCRIPTION = 'description';
+
     /**
      * @var string
      */
     public const FIELD_CONTENT_TERM_KEY = 'content_term_key';
+
     /**
      * @var string
      */
     public const FIELD_CONTENT_TYPE_KEY = 'content_type_key';
+
     /**
      * @var string
      */
@@ -49,6 +53,7 @@ class ContentForm extends AbstractType
      * @var string
      */
     public const LABEL_NAME = 'Name';
+
     /**
      * @var string
      */
@@ -58,6 +63,7 @@ class ContentForm extends AbstractType
      * @var string
      */
     public const OPTION_AVAILABLE_LOCALES = 'OPTION_AVAILABLE_LOCALES';
+
     /**
      * @var string
      */

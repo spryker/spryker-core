@@ -139,7 +139,7 @@ class AttributeMap implements AttributeMapInterface
         if (!$this->productStorageConfig->isProductAttributesWithSingleValueIncluded()) {
             $productConcreteSuperAttributes = $this->singleValueSuperAttributeFilter->filterOutSingleValueSuperAttributes(
                 $productConcreteSuperAttributes,
-                $superAttributeVariations,
+                $superAttributeVariations
             );
         }
 

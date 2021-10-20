@@ -55,7 +55,7 @@ class GrantTypeBuilder implements GrantBuilderInterface
                 throw new InvalidBuilderException(sprintf(
                     'Provided builder %s must implement %s',
                     $builderFullyQualifiedClassName,
-                    GrantTypeBuilderInterface::class,
+                    GrantTypeBuilderInterface::class
                 ));
             }
 

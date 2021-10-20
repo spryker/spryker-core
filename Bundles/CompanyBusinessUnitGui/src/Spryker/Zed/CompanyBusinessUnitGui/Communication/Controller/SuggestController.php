@@ -28,6 +28,7 @@ class SuggestController extends AbstractController
      * @var string
      */
     protected const PARAM_SUGGESTION = 'suggestion';
+
     /**
      * @var string
      */

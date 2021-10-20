@@ -21,6 +21,7 @@ class RemoveTransferConsole extends Console
      * @var string
      */
     public const COMMAND_NAME = 'transfer:remove';
+
     /**
      * @var string
      */

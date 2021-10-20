@@ -25,18 +25,22 @@ class DownloadFileController extends AbstractController
      * @var string
      */
     protected const URL_PARAM_ID_FILE_INFO = 'id-file-info';
+
     /**
      * @var string
      */
     protected const CONTENT_DISPOSITION = 'Content-Disposition';
+
     /**
      * @var string
      */
     protected const CONTENT_TYPE = 'Content-Type';
+
     /**
      * @var string
      */
     protected const MESSAGE_FILE_UNAVAILABLE = 'File was not found';
+
     /**
      * @var string
      */

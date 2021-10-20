@@ -26,6 +26,7 @@ class DeleteController extends AbstractController
      * @var string
      */
     protected const MESSAGE_DELETE_PRODUCT_ALTERNATIVE_SUCCESS = 'Product Alternative was removed successfully.';
+
     /**
      * @var string
      */

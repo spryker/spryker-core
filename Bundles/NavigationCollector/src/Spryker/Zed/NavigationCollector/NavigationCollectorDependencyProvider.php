@@ -21,6 +21,7 @@ class NavigationCollectorDependencyProvider extends AbstractBundleDependencyProv
      * @var string
      */
     public const FACADE_COLLECTOR = 'FACADE_COLLECTOR';
+
     /**
      * @var string
      */

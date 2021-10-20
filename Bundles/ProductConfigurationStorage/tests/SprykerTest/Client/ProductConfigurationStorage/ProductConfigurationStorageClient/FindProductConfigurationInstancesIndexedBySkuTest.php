@@ -33,6 +33,7 @@ class FindProductConfigurationInstancesIndexedBySkuTest extends Unit
      * @var string
      */
     protected const TEST_SKU_1 = 'test-sku-1';
+
     /**
      * @var string
      */

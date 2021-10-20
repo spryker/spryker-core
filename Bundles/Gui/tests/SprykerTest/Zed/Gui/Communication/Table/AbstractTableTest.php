@@ -35,6 +35,7 @@ class AbstractTableTest extends Unit
      * @var string
      */
     public const COL_ONE = 'one';
+
     /**
      * @var string
      */

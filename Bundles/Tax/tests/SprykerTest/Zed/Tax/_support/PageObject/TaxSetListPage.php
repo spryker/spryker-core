@@ -13,6 +13,7 @@ class TaxSetListPage
      * @var string
      */
     public const URL = '/tax/set/list';
+
     /**
      * @var string
      */

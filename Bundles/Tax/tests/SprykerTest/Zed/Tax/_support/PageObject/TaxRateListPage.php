@@ -13,6 +13,7 @@ class TaxRateListPage
      * @var string
      */
     public const URL = '/tax/rate/list';
+
     /**
      * @var string
      */

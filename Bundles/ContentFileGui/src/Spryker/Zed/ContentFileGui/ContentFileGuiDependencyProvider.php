@@ -23,14 +23,17 @@ class ContentFileGuiDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const FACADE_LOCALE = 'FACADE_LOCALE';
+
     /**
      * @var string
      */
     public const FACADE_CONTENT_FILE = 'FACADE_CONTENT_FILE';
+
     /**
      * @var string
      */
     public const FACADE_FILE_MANAGER = 'FACADE_FILE_MANAGER';
+
     /**
      * @var string
      */

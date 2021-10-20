@@ -23,10 +23,12 @@ class PriceProductStorageQueryContainer extends AbstractQueryContainer implement
      * @var string
      */
     public const ID_PRODUCT_ABSTRACT = 'idProductAbstract';
+
     /**
      * @var string
      */
     public const ID_PRODUCT_CONCRETE = 'idProductConcrete';
+
     /**
      * @var string
      */

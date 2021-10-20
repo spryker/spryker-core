@@ -28,6 +28,7 @@ class ConfigurableBundleTemplateTable extends AbstractTable
      * @var string
      */
     protected const STATUS_ACTIVE = 'Active';
+
     /**
      * @var string
      */
@@ -37,18 +38,22 @@ class ConfigurableBundleTemplateTable extends AbstractTable
      * @var string
      */
     protected const COL_ID_CONFIGURABLE_BUNDLE_TEMPLATE = 'id_configurable_bundle_template';
+
     /**
      * @var string
      */
     protected const COL_NAME_TRANSLATION = 'name_translation';
+
     /**
      * @var string
      */
     protected const COL_COUNT_OF_SLOTS = 'count_of_slots';
+
     /**
      * @var string
      */
     protected const COL_STATUS = 'is_active';
+
     /**
      * @var string
      */

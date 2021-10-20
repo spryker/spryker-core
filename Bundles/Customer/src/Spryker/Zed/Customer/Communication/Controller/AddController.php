@@ -24,6 +24,7 @@ class AddController extends AbstractController
      * @var string
      */
     public const MESSAGE_CUSTOMER_CREATE_SUCCESS = 'Customer was created successfully.';
+
     /**
      * @var string
      */
@@ -33,6 +34,7 @@ class AddController extends AbstractController
      * @var string
      */
     public const REDIRECT_URL_DEFAULT = '/customer';
+
     /**
      * @var string
      */

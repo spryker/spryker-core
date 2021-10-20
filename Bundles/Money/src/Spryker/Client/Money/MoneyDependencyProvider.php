@@ -22,10 +22,12 @@ class MoneyDependencyProvider extends AbstractDependencyProvider
      * @var string
      */
     public const STORE = 'store';
+
     /**
      * @var string
      */
     public const PLUGIN_CURRENCY = 'currency plugin';
+
     /**
      * @var string
      */

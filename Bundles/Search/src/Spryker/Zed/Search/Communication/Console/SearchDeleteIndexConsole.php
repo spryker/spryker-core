@@ -23,6 +23,7 @@ class SearchDeleteIndexConsole extends Console
      * @var string
      */
     public const COMMAND_NAME = 'search:index:delete';
+
     /**
      * @var string
      */

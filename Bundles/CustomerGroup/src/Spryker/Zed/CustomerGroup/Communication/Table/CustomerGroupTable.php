@@ -26,14 +26,17 @@ class CustomerGroupTable extends AbstractTable
      * @var string
      */
     public const COL_ID_CUSTOMER_GROUP = 'id_customer_group';
+
     /**
      * @var string
      */
     public const COL_NAME = 'name';
+
     /**
      * @var string
      */
     public const COL_DESCRIPTION = 'description';
+
     /**
      * @var string
      */

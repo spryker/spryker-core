@@ -20,6 +20,7 @@ class UrlQueryContainer extends AbstractQueryContainer implements UrlQueryContai
      * @var string
      */
     public const TO_URL = 'toUrl';
+
     /**
      * @var string
      */

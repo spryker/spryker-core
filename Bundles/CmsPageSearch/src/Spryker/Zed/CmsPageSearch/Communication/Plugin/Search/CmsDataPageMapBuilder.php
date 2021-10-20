@@ -26,42 +26,52 @@ class CmsDataPageMapBuilder implements NamedPageMapInterface
      * @var string
      */
     public const COL_URL = 'url';
+
     /**
      * @var string
      */
     public const COL_IS_ACTIVE = 'is_active';
+
     /**
      * @var string
      */
     public const COL_DATA = 'data';
+
     /**
      * @var string
      */
     public const COL_VALID_FROM = 'valid_from';
+
     /**
      * @var string
      */
     public const COL_VALID_TO = 'valid_to';
+
     /**
      * @var string
      */
     public const COL_IS_SEARCHABLE = 'is_searchable';
+
     /**
      * @var string
      */
     public const TYPE_CMS_PAGE = 'cms_page';
+
     /**
      * @var string
      */
     public const TYPE = 'type';
+
     /**
      * @var string
      */
     public const ID_CMS_PAGE = 'id_cms_page';
+
     /**
      * @var string
      */
     public const NAME = 'name';
+
     /**
      * @var string
      */

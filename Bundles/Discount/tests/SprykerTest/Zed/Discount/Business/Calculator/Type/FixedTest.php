@@ -32,6 +32,7 @@ class FixedTest extends Unit
      * @var int
      */
     public const ITEM_GROSS_PRICE_1000 = 1000;
+
     /**
      * @var int
      */

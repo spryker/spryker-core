@@ -16,6 +16,7 @@ class ExternalGraphBuilder implements GraphBuilderInterface
      * @var string
      */
     public const FONT_COLOR = 'fontcolor';
+
     /**
      * @var string
      */

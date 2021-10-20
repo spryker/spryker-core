@@ -22,6 +22,7 @@ class FacetResultFormatterPlugin extends AbstractElasticsearchResultFormatterPlu
      * @var string
      */
     public const NAME = 'facets';
+
     /**
      * @var string
      */

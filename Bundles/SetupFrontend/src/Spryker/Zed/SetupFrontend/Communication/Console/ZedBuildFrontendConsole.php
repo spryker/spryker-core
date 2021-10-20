@@ -22,6 +22,7 @@ class ZedBuildFrontendConsole extends Console
      * @var string
      */
     public const COMMAND_NAME = 'frontend:zed:build';
+
     /**
      * @var string
      */
@@ -31,10 +32,12 @@ class ZedBuildFrontendConsole extends Console
      * @var string
      */
     protected const OPTION_ENVIRONMENT = 'environment';
+
     /**
      * @var string
      */
     protected const OPTION_ENVIRONMENT_SHORT = 'e';
+
     /**
      * @var string
      */

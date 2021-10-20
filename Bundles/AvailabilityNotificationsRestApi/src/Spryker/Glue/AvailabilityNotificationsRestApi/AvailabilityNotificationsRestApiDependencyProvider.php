@@ -21,6 +21,7 @@ class AvailabilityNotificationsRestApiDependencyProvider extends AbstractBundleD
      * @var string
      */
     public const CLIENT_AVAILABILITY_NOTIFICATION = 'CLIENT_AVAILABILITY_NOTIFICATION';
+
     /**
      * @var string
      */

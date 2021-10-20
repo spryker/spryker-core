@@ -20,10 +20,12 @@ class PathParameterSpecificationComponent implements PathParameterSpecificationC
      * @var string
      */
     protected const KEY_SCHEMA = 'schema';
+
     /**
      * @var string
      */
     protected const KEY_TYPE = 'type';
+
     /**
      * @var string
      */

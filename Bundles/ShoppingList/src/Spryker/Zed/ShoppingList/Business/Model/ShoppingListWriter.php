@@ -28,14 +28,17 @@ class ShoppingListWriter implements ShoppingListWriterInterface
      * @var string
      */
     protected const DUPLICATE_NAME_SHOPPING_LIST = 'customer.account.shopping_list.error.duplicate_name';
+
     /**
      * @var string
      */
     protected const CANNOT_UPDATE_SHOPPING_LIST = 'customer.account.shopping_list.error.cannot_update';
+
     /**
      * @var string
      */
     protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_DELETE_FAILED = 'customer.account.shopping_list.delete.failed';
+
     /**
      * @var string
      */

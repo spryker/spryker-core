@@ -20,14 +20,17 @@ class ProductValidator implements ProductValidatorInterface
      * @var string
      */
     public const MESSAGE_ERROR_ABSTRACT_PRODUCT_EXISTS = 'product-cart.validation.error.abstract-product-exists';
+
     /**
      * @var string
      */
     public const MESSAGE_ERROR_CONCRETE_PRODUCT_EXISTS = 'product-cart.validation.error.concrete-product-exists';
+
     /**
      * @var string
      */
     public const MESSAGE_PARAM_SKU = 'sku';
+
     /**
      * @var string
      */
@@ -37,6 +40,7 @@ class ProductValidator implements ProductValidatorInterface
      * @var string
      */
     protected const SKU_CONCRETE = 'SKU_CONCRETE';
+
     /**
      * @var string
      */

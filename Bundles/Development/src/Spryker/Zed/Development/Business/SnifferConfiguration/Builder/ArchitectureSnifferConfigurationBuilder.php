@@ -17,14 +17,17 @@ class ArchitectureSnifferConfigurationBuilder implements SnifferConfigurationBui
      * @var string
      */
     protected const CONFIG_NAME = 'architecture-sniffer';
+
     /**
      * @var string
      */
     protected const CONFIG_PRIORITY_NAME = 'priority';
+
     /**
      * @var int
      */
     protected const CONFIG_PRIORITY_SKIP_VALUE = 0;
+
     /**
      * @var string
      */

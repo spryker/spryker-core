@@ -25,6 +25,7 @@ class AttributeKeyForm extends AbstractType
      * @var string
      */
     public const FIELD_KEY = 'key';
+
     /**
      * @var string
      */

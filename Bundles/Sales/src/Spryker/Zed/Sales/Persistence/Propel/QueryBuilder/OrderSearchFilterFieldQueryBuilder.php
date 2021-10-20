@@ -51,6 +51,7 @@ class OrderSearchFilterFieldQueryBuilder implements OrderSearchFilterFieldQueryB
      * @var string
      */
     protected const SEARCH_TYPE_DATE_FROM = 'dateFrom';
+
     /**
      * @var string
      */
@@ -79,6 +80,7 @@ class OrderSearchFilterFieldQueryBuilder implements OrderSearchFilterFieldQueryB
      * @var string
      */
     protected const FILTER_FIELD_TYPE_CUSTOMER_REFERENCE = 'customerReference';
+
     /**
      * @var string
      */

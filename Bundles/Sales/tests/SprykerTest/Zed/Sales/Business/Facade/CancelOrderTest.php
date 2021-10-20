@@ -32,6 +32,7 @@ class CancelOrderTest extends Test
      * @var string
      */
     protected const DEFAULT_OMS_PROCESS_NAME_WITH_CANCELLABLE_FLAGS = 'Test05';
+
     /**
      * @var string
      */
@@ -41,6 +42,7 @@ class CancelOrderTest extends Test
      * @var int
      */
     protected const FAKE_ID_SALES_ORDER = 6666;
+
     /**
      * @var string
      */

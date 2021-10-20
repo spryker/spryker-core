@@ -28,18 +28,22 @@ class HttpApplicationPlugin extends AbstractPlugin implements ApplicationPluginI
      * @var string
      */
     protected const SERVICE_COOKIES = 'cookies';
+
     /**
      * @var string
      */
     protected const SERVICE_KERNEL = 'kernel';
+
     /**
      * @var string
      */
     protected const SERVICE_REQUEST_STACK = 'request_stack';
+
     /**
      * @var string
      */
     protected const SERVICE_REQUEST_CONTEXT = 'request_context';
+
     /**
      * @var string
      */

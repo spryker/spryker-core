@@ -19,10 +19,12 @@ class ContentFileListViewTable extends AbstractTable
      * @var string
      */
     public const TABLE_IDENTIFIER = 'file-list-view-table';
+
     /**
      * @var string
      */
     public const TABLE_CLASS = 'item-list-view-table gui-table-data';
+
     /**
      * @var string
      */
@@ -32,6 +34,7 @@ class ContentFileListViewTable extends AbstractTable
      * @var string
      */
     public const HEADER_NAME = 'File Name';
+
     /**
      * @var string
      */
@@ -41,6 +44,7 @@ class ContentFileListViewTable extends AbstractTable
      * @var string
      */
     public const COL_ID_FILE = 'id_file';
+
     /**
      * @var string
      */

@@ -21,26 +21,32 @@ class CompanyGuiDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const PROPEL_COMPANY_QUERY = 'PROPEL_COMPANY_QUERY';
+
     /**
      * @var string
      */
     public const FACADE_COMPANY = 'FACADE_COMPANY';
+
     /**
      * @var string
      */
     public const PLUGINS_COMPANY_TABLE_CONFIG_EXPANDER = 'PLUGINS_COMPANY_TABLE_CONFIG_EXPANDER';
+
     /**
      * @var string
      */
     public const PLUGINS_COMPANY_TABLE_HEADER_EXPANDER = 'PLUGINS_COMPANY_HEADER_TABLE_EXPANDER';
+
     /**
      * @var string
      */
     public const PLUGINS_COMPANY_TABLE_DATA_EXPANDER = 'PLUGINS_COMPANY_TABLE_DATA_EXPANDER';
+
     /**
      * @var string
      */
     public const PLUGINS_COMPANY_TABLE_ACTION_EXPANDER = 'PLUGINS_COMPANY_TABLE_ACTION_EXPANDER';
+
     /**
      * @var string
      */

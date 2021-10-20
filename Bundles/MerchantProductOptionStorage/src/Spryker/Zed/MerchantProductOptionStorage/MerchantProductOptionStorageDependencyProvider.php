@@ -23,10 +23,12 @@ class MerchantProductOptionStorageDependencyProvider extends AbstractBundleDepen
      * @var string
      */
     public const FACADE_MERCHANT_PRODUCT_OPTION = 'FACADE_MERCHANT_PRODUCT_OPTION';
+
     /**
      * @var string
      */
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
+
     /**
      * @var string
      */

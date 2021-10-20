@@ -16,10 +16,12 @@ class MerchantRelationshipSalesOrderThresholdGlossaryKeyGenerator implements Mer
      * @var string
      */
     protected const SALES_ORDER_THRESHOLD_GLOSSARY_PREFIX = 'merchant-relationship-threshold';
+
     /**
      * @var string
      */
     protected const SALES_ORDER_THRESHOLD_GLOSSARY_MESSAGE = 'message';
+
     /**
      * @var string
      */

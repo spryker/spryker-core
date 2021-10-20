@@ -36,6 +36,7 @@ class PriceProductScheduleFallbackTest extends Unit
      * @var int
      */
     public const DEFAULT_PRICE_TYPE_ID = 1;
+
     /**
      * @var int
      */

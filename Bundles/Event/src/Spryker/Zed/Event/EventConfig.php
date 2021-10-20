@@ -18,6 +18,7 @@ class EventConfig extends AbstractBundleConfig
      * @var int
      */
     public const DEFAULT_EVENT_MESSAGE_CHUNK_SIZE = 500;
+
     /**
      * @var int
      */
@@ -27,6 +28,7 @@ class EventConfig extends AbstractBundleConfig
      * @var int
      */
     public const DEFAULT_MAX_RETRY = 1;
+
     /**
      * @var int
      */

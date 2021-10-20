@@ -15,6 +15,7 @@ class ProductReviewConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESOURCE_TYPE_PRODUCT_REVIEW = 'product_review';
+
     /**
      * @var string
      */

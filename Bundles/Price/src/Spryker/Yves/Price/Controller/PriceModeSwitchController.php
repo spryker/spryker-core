@@ -19,10 +19,12 @@ class PriceModeSwitchController extends AbstractController
      * @var string
      */
     public const URL_PARAM_PRICE_MODE = 'price-mode';
+
     /**
      * @var string
      */
     public const URL_PARAM_REFERRER_URL = 'referrer-url';
+
     /**
      * @var string
      */

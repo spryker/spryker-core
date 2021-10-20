@@ -25,6 +25,7 @@ class PredisAdapterFactory implements RedisAdapterFactoryInterface
      * @var string
      */
     protected const CONNECTION_PARAMETERS = 'CONNECTION_PARAMETERS';
+
     /**
      * @var string
      */

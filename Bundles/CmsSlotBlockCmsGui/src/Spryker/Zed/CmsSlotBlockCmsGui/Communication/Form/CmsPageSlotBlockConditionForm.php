@@ -22,6 +22,7 @@ class CmsPageSlotBlockConditionForm extends AbstractType
      * @var string
      */
     public const OPTION_PAGE_ARRAY = 'option-page-array';
+
     /**
      * @var string
      */

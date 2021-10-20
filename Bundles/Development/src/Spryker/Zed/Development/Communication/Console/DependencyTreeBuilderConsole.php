@@ -29,10 +29,12 @@ class DependencyTreeBuilderConsole extends Console
      * @var string
      */
     public const OPTION_APPLICATION = 'application';
+
     /**
      * @var string
      */
     public const OPTION_MODULE = 'module';
+
     /**
      * @var string
      */

@@ -32,10 +32,12 @@ class ShipmentMethodTable extends AbstractTable
      * @var string
      */
     protected const URL_SHIPMENT_METHOD_VIEW = '/shipment-gui/view-shipment-method/index';
+
     /**
      * @var string
      */
     protected const URL_SHIPMENT_METHOD_EDIT = '/shipment-gui/update-shipment-method/index';
+
     /**
      * @var string
      */
@@ -45,10 +47,12 @@ class ShipmentMethodTable extends AbstractTable
      * @var string
      */
     protected const BUTTON_VIEW = 'View';
+
     /**
      * @var string
      */
     protected const BUTTON_EDIT = 'Edit';
+
     /**
      * @var string
      */
@@ -58,22 +62,27 @@ class ShipmentMethodTable extends AbstractTable
      * @var string
      */
     protected const HEADER_DELIVERY_METHOD_KEY = 'Delivery Method Key';
+
     /**
      * @var string
      */
     protected const HEADER_CARRIER_COMPANY = 'Carrier Company';
+
     /**
      * @var string
      */
     protected const HEADER_METHOD_NAME = 'Method Name';
+
     /**
      * @var string
      */
     protected const HEADER_STATUS = 'Status';
+
     /**
      * @var string
      */
     protected const HEADER_AVAILABLE_IN_STORE = 'Available in Store';
+
     /**
      * @var string
      */

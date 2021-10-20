@@ -19,10 +19,12 @@ class CmsBlockProductStorageWriter implements CmsBlockProductStorageWriterInterf
      * @var string
      */
     protected const KEYS = 'keys';
+
     /**
      * @var string
      */
     protected const NAMES = 'names';
+
     /**
      * @uses \Spryker\Zed\CmsBlockProductStorage\Persistence\CmsBlockProductStorageQueryContainer::NAME
      * @var string

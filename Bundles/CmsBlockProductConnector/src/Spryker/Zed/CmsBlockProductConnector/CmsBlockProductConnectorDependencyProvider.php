@@ -24,14 +24,17 @@ class CmsBlockProductConnectorDependencyProvider extends AbstractBundleDependenc
      * @var string
      */
     public const FACADE_LOCALE = 'CMS_BLOCK_PRODUCT_CONNECTOR:FACADE_LOCALE';
+
     /**
      * @var string
      */
     public const FACADE_TOUCH = 'CMS_BLOCK_PRODUCT_CONNECTOR:FACADE_TOUCH';
+
     /**
      * @var string
      */
     public const FACADE_COLLECTOR = 'CMS_BLOCK_PRODUCT_CONNECTOR:FACADE_COLLECTOR';
+
     /**
      * @var string
      */
@@ -41,6 +44,7 @@ class CmsBlockProductConnectorDependencyProvider extends AbstractBundleDependenc
      * @var string
      */
     public const QUERY_CONTAINER_PRODUCT_ABSTRACT = 'CMS_BLOCK_PRODUCT_CONNECTOR:QUERY_CONTAINER_PRODUCT_ABSTRACT';
+
     /**
      * @var string
      */

@@ -15,6 +15,7 @@ class SalesReturnConfig extends AbstractBundleConfig
      * @var string
      */
     protected const EVENT_START_RETURN = 'start-return';
+
     /**
      * @var int
      */

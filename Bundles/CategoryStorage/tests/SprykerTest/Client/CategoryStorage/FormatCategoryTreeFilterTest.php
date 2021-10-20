@@ -29,6 +29,7 @@ class FormatCategoryTreeFilterTest extends Unit
      * @var int
      */
     protected const FIRST_CATEGORY_NODE_ID = 1;
+
     /**
      * @var int
      */
@@ -38,6 +39,7 @@ class FormatCategoryTreeFilterTest extends Unit
      * @var int
      */
     protected const SECOND_CATEGORY_DOC_COUNT = 33;
+
     /**
      * @var int
      */
@@ -47,6 +49,7 @@ class FormatCategoryTreeFilterTest extends Unit
      * @var int
      */
     protected const THIRD_CATEGORY_DOC_COUNT = 41;
+
     /**
      * @var int
      */
@@ -56,6 +59,7 @@ class FormatCategoryTreeFilterTest extends Unit
      * @var string
      */
     protected const TEST_LOCALE_NAME = 'en_US';
+
     /**
      * @var string
      */

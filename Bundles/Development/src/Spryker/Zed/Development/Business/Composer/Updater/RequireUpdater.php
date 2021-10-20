@@ -15,10 +15,12 @@ class RequireUpdater implements UpdaterInterface
      * @var string
      */
     public const KEY_REQUIRE = 'require';
+
     /**
      * @var string
      */
     public const KEY_REQUIRE_PHP = 'php';
+
     /**
      * @var string
      */

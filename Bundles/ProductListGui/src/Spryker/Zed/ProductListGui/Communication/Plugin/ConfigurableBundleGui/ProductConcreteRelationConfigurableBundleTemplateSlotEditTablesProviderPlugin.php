@@ -20,6 +20,7 @@ class ProductConcreteRelationConfigurableBundleTemplateSlotEditTablesProviderPlu
      * @var string
      */
     protected const AVAILABLE_PRODUCT_CONCRETE_TABLE_NAME = 'availableProductConcreteTable';
+
     /**
      * @var string
      */

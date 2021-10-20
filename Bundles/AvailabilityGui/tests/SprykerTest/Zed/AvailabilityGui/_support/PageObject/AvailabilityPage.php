@@ -13,14 +13,17 @@ class AvailabilityPage
      * @var int
      */
     public const AVAILABILITY_ID = 107;
+
     /**
      * @var string
      */
     public const AVAILABILITY_SKU = '828188-1';
+
     /**
      * @var int
      */
     public const AVAILABILITY_ABSTRACT_PRODUCT_ID = 107;
+
     /**
      * @var int
      */
@@ -30,10 +33,12 @@ class AvailabilityPage
      * @var string
      */
     public const AVAILABILITY_LIST_URL = '/availability-gui';
+
     /**
      * @var string
      */
     public const AVAILABILITY_VIEW_URL = '/availability-gui/index/view?id-product=%d&id-store=%s';
+
     /**
      * @var string
      */
@@ -48,10 +53,12 @@ class AvailabilityPage
      * @var string
      */
     public const PAGE_AVAILABILITY_VIEW_HEADER = 'Product availability';
+
     /**
      * @var string
      */
     public const PAGE_AVAILABILITY_LIST_HEADER = 'Availability list';
+
     /**
      * @var string
      */

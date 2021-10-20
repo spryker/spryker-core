@@ -22,14 +22,17 @@ class ExportSynchronizedDataConsole extends Console
      * @var string
      */
     public const COMMAND_NAME = 'sync:data';
+
     /**
      * @var string
      */
     public const DESCRIPTION = 'Exports synchronized data into queues';
+
     /**
      * @var string
      */
     public const RESOURCE = 'resource';
+
     /**
      * @var string
      */

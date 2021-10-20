@@ -22,10 +22,12 @@ class ProductMeasurementUnitsRestApiDependencyProvider extends AbstractBundleDep
      * @var string
      */
     public const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE';
+
     /**
      * @var string
      */
     public const CLIENT_PRODUCT_MEASUREMENT_UNIT_STORAGE = 'CLIENT_PRODUCT_MEASUREMENT_UNIT_STORAGE';
+
     /**
      * @var string
      */

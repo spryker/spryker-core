@@ -104,6 +104,7 @@ class ContentStorageWriter implements ContentStorageWriterInterface
      */
     protected function getSharedPersistenceLocaleNames(StoreTransfer $storeTransfer): array
     {
+        $localeNames = [];
         $localeNames[] = $storeTransfer->getAvailableLocaleIsoCodes();
 
         foreach ($this->storeFacade->getStoresWithSharedPersistence($storeTransfer) as $store) {

@@ -25,14 +25,17 @@ class RelatedProductFormType extends AbstractType
      * @var string
      */
     public const FIELD_ID_PRODUCT_LABEL = 'idProductLabel';
+
     /**
      * @var string
      */
     public const FIELD_IDS_PRODUCT_ABSTRACT_CSV = 'idsProductAbstractCsv';
+
     /**
      * @var string
      */
     public const FIELD_IDS_PRODUCT_ABSTRACT_TO_ASSIGN_CSV = 'idsProductAbstractToAssignCsv';
+
     /**
      * @var string
      */

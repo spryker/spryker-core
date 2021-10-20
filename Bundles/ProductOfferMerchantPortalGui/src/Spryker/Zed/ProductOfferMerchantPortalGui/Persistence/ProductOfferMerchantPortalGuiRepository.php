@@ -64,6 +64,7 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
      * @var string
      */
     protected const SUFFIX_PRICE_TYPE_NET = '_net';
+
     /**
      * @var string
      */
@@ -73,6 +74,7 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
      * @var string
      */
     protected const COL_PRICE_PRODUCT_OFFER_IDS = 'price_product_offer_ids';
+
     /**
      * @var string
      */

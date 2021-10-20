@@ -21,6 +21,7 @@ class PostgresIndexRemoverConsole extends Console
      * @var string
      */
     protected const COMMAND_NAME = 'propel:postgres-indexes:remove';
+
     /**
      * @var string
      */

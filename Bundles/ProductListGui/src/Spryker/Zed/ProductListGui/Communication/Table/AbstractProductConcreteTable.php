@@ -22,6 +22,7 @@ abstract class AbstractProductConcreteTable extends AbstractTable
      * @var string
      */
     protected const DEFAULT_URL = 'table';
+
     /**
      * @var string
      */
@@ -30,6 +31,7 @@ abstract class AbstractProductConcreteTable extends AbstractTable
     protected const COLUMN_ID = SpyProductTableMap::COL_ID_PRODUCT;
     protected const COLUMN_SKU = SpyProductTableMap::COL_SKU;
     protected const COLUMN_NAME = SpyProductLocalizedAttributesTableMap::COL_NAME;
+
     /**
      * @var string
      */

@@ -20,6 +20,7 @@ class HttpDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const CLIENT_LOCALE = 'CLIENT_LOCALE';
+
     /**
      * @var string
      */

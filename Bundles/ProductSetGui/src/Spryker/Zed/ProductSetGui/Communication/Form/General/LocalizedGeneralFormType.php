@@ -34,22 +34,27 @@ class LocalizedGeneralFormType extends AbstractType
      * @var string
      */
     public const FIELD_NAME = 'name';
+
     /**
      * @var string
      */
     public const FIELD_URL = 'url';
+
     /**
      * @var string
      */
     public const FIELD_URL_PREFIX = 'url_prefix';
+
     /**
      * @var string
      */
     public const FIELD_ORIGINAL_URL = 'original_url';
+
     /**
      * @var string
      */
     public const FIELD_DESCRIPTION = 'description';
+
     /**
      * @var string
      */

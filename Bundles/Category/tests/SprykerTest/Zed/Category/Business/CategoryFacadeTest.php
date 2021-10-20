@@ -54,10 +54,12 @@ class CategoryFacadeTest extends Unit
      * @var string
      */
     protected const TEST_LOCALE = 'en_US';
+
     /**
      * @var string
      */
     protected const TEST_STORE_DE = 'DE';
+
     /**
      * @var string
      */

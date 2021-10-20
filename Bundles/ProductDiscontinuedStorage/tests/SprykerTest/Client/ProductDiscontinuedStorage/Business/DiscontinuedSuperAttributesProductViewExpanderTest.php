@@ -34,10 +34,12 @@ class DiscontinuedSuperAttributesProductViewExpanderTest extends Unit
      * @var int
      */
     protected const FAKE_ID_PRODUCT_CONCRETE_1 = 6666;
+
     /**
      * @var int
      */
     protected const FAKE_ID_PRODUCT_CONCRETE_2 = 6667;
+
     /**
      * @var int
      */
@@ -47,10 +49,12 @@ class DiscontinuedSuperAttributesProductViewExpanderTest extends Unit
      * @var string
      */
     protected const FAKE_SKU_1 = 'fake-sku-1';
+
     /**
      * @var string
      */
     protected const FAKE_SKU_2 = 'fake-sku-2';
+
     /**
      * @var string
      */

@@ -23,6 +23,7 @@ class ForeignKeyRelationResolverStrategy extends AbstractRelationResolverStrateg
      * @var string
      */
     protected const RELATION_GETTER_TEMPLATE = 'get%s';
+
     /**
      * @var string
      */

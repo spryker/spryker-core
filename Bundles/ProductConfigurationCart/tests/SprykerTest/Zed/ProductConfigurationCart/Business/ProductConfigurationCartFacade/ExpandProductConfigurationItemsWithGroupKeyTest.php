@@ -30,10 +30,12 @@ class ExpandProductConfigurationItemsWithGroupKeyTest extends Unit
      * @var array
      */
     protected const TEST_PRODUCT_CONFIGURATION_ARRAY = ['test_group_key'];
+
     /**
      * @var string
      */
     protected const TEST_PRODUCT_CONFIGURATION_HASH = '0146dbdb9eb9a1d17dc66478f869f556';
+
     /**
      * @var string
      */

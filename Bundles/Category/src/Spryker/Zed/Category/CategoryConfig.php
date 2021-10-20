@@ -29,6 +29,7 @@ class CategoryConfig extends AbstractBundleConfig
      * Used as `item_type` for touch mechanism.
      */
     public const RESOURCE_TYPE_NAVIGATION = SharedCategoryConfig::RESOURCE_TYPE_NAVIGATION;
+
     /**
      * @var string
      */

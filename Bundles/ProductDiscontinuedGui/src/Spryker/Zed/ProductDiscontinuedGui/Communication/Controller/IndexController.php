@@ -22,10 +22,12 @@ class IndexController extends AbstractController
      * @var string
      */
     public const PARAM_ID_PRODUCT_CONCRETE = 'id-product-concrete';
+
     /**
      * @var string
      */
     protected const HEADER_REFERER = 'referer';
+
     /**
      * @var string
      */
@@ -35,14 +37,17 @@ class IndexController extends AbstractController
      * @var string
      */
     protected const MESSAGE_PRODUCT_DISCONTINUED_SUCCESS = 'Product has been marked as discontinued.';
+
     /**
      * @var string
      */
     protected const MESSAGE_PRODUCT_DISCONTINUED_ERROR = 'Product can not be marked as  discontinued.';
+
     /**
      * @var string
      */
     protected const MESSAGE_PRODUCT_UNDISCONTINUED_SUCCESS = 'Product has been unmarked as discontinued.';
+
     /**
      * @var string
      */

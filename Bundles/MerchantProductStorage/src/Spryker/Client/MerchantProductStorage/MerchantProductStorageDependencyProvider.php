@@ -18,6 +18,7 @@ class MerchantProductStorageDependencyProvider extends AbstractDependencyProvide
      * @var string
      */
     public const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE';
+
     /**
      * @var string
      */

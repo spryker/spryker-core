@@ -13,6 +13,7 @@ class HealthCheckPage
      * @var string
      */
     public const URL_INDEX = '/health-check/index';
+
     /**
      * @var string
      */

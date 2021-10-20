@@ -22,6 +22,7 @@ class YvesBuildFrontendConsole extends Console
      * @var string
      */
     public const COMMAND_NAME = 'frontend:yves:build';
+
     /**
      * @var string
      */
@@ -31,10 +32,12 @@ class YvesBuildFrontendConsole extends Console
      * @var string
      */
     protected const OPTION_ENVIRONMENT = 'environment';
+
     /**
      * @var string
      */
     protected const OPTION_ENVIRONMENT_SHORT = 'e';
+
     /**
      * @var string
      */

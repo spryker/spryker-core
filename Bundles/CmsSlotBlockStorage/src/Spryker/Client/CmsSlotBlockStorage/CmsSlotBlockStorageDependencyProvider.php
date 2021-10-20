@@ -18,10 +18,12 @@ class CmsSlotBlockStorageDependencyProvider extends AbstractDependencyProvider
      * @var string
      */
     public const CLIENT_STORAGE = 'CLIENT_STORAGE';
+
     /**
      * @var string
      */
     public const SERVICE_CMS_SLOT_BLOCK_STORAGE = 'SERVICE_CMS_SLOT_BLOCK_STORAGE';
+
     /**
      * @var string
      */

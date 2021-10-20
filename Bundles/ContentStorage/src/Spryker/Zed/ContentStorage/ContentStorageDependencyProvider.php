@@ -24,18 +24,22 @@ class ContentStorageDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
+
     /**
      * @var string
      */
     public const PROPEL_QUERY_CONTENT = 'PROPEL_QUERY_CONTENT';
+
     /**
      * @var string
      */
     public const FACADE_LOCALE = 'FACADE_LOCALE';
+
     /**
      * @var string
      */
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
+
     /**
      * @var string
      */

@@ -37,6 +37,7 @@ class ZedNavigationConfig extends AbstractBundleConfig
      * @var string
      */
     protected const NAVIGATION_TYPE_MAIN = 'main';
+
     /**
      * @var string
      */

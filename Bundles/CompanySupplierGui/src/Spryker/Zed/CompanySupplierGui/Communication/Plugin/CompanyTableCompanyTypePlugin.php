@@ -23,6 +23,7 @@ class CompanyTableCompanyTypePlugin extends AbstractPlugin implements CompanyTab
      * @var string
      */
     protected const COL_COMPANY_TYPE = 'company_type';
+
     /**
      * @var string
      */

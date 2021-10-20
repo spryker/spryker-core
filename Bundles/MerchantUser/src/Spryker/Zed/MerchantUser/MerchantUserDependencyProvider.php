@@ -23,18 +23,22 @@ class MerchantUserDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const FACADE_USER = 'FACADE_USER';
+
     /**
      * @var string
      */
     public const FACADE_MERCHANT = 'FACADE_MERCHANT';
+
     /**
      * @var string
      */
     public const FACADE_USER_PASSWORD_RESET = 'FACADE_USER_PASSWORD_RESET';
+
     /**
      * @var string
      */
     public const SERVICE_UTIL_TEXT = 'UTIL_TEXT_SERVICE';
+
     /**
      * @var string
      */

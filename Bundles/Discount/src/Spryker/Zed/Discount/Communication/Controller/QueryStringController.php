@@ -23,10 +23,12 @@ class QueryStringController extends AbstractController
      * @var string
      */
     public const URL_PARAM_TYPE = 'type';
+
     /**
      * @var string
      */
     public const URL_PARAM_FIELD = 'field';
+
     /**
      * @var string
      */

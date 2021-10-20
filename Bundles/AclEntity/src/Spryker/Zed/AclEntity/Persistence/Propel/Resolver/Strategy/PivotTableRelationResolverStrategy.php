@@ -19,14 +19,17 @@ class PivotTableRelationResolverStrategy extends AbstractRelationResolverStrateg
      * @var string
      */
     protected const PIVOT_TABLE_GETTER_TEMPLATE = 'get%ss';
+
     /**
      * @var string
      */
     protected const REFERENCE_TABLE_GETTER_TEMPLATE = 'get%s';
+
     /**
      * @var string
      */
     protected const PIVOT_TABLE_JOINER_TEMPLATE = 'join%ss';
+
     /**
      * @var string
      */
@@ -140,7 +143,7 @@ class PivotTableRelationResolverStrategy extends AbstractRelationResolverStrateg
         $relationName = sprintf(
             static::RELATION_TEMPLATE,
             $this->getPivotTableRelationName($aclEntityMetadataTransfer),
-            $this->getTargetTableRelationName($aclEntityMetadataTransfer),
+            $this->getTargetTableRelationName($aclEntityMetadataTransfer)
         );
 
         return $query->join($relationName);

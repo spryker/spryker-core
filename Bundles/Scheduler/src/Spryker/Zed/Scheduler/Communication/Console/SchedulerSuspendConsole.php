@@ -21,6 +21,7 @@ class SchedulerSuspendConsole extends AbstractSchedulerConsole
      * @var string
      */
     public const COMMAND_NAME = 'scheduler:suspend';
+
     /**
      * @var string
      */
@@ -30,10 +31,12 @@ class SchedulerSuspendConsole extends AbstractSchedulerConsole
      * @var string
      */
     protected const ROLES_OPTION = 'roles';
+
     /**
      * @var string
      */
     protected const ROLES_OPTION_SHORTCUT = 'r';
+
     /**
      * @var string
      */
@@ -43,10 +46,12 @@ class SchedulerSuspendConsole extends AbstractSchedulerConsole
      * @var string
      */
     protected const SCHEDULERS_OPTION = 'schedulers';
+
     /**
      * @var string
      */
     protected const SCHEDULERS_OPTION_SHORTCUT = 's';
+
     /**
      * @var string
      */
@@ -56,10 +61,12 @@ class SchedulerSuspendConsole extends AbstractSchedulerConsole
      * @var string
      */
     protected const JOBS_OPTION = 'jobs';
+
     /**
      * @var string
      */
     protected const JOBS_OPTION_SHORTCUT = 'j';
+
     /**
      * @var string
      */

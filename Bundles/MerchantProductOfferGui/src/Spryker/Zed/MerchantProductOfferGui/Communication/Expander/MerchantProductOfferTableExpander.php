@@ -21,6 +21,7 @@ class MerchantProductOfferTableExpander implements MerchantProductOfferTableExpa
      * @var string
      */
     protected const URL_PARAM_ID_MERCHANT = 'id-merchant';
+
     /**
      * @var string
      */

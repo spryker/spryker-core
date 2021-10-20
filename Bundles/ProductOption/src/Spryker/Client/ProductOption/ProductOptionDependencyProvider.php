@@ -19,10 +19,12 @@ class ProductOptionDependencyProvider extends AbstractDependencyProvider
      * @var string
      */
     public const CLIENT_STORAGE = 'CLIENT_STORAGE';
+
     /**
      * @var string
      */
     public const CLIENT_PRICE = 'CLIENT_PRICE';
+
     /**
      * @var string
      */

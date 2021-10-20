@@ -17,6 +17,7 @@ class QueueMessageProcessor implements QueueMessageProcessorInterface
      * @var string
      */
     protected const TYPE_WRITE = 'write';
+
     /**
      * @var string
      */

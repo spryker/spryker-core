@@ -15,10 +15,12 @@ class CompanyUsersRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESOURCE_COMPANY_USERS = 'company-users';
+
     /**
      * @var string
      */
     public const CONTROLLER_RESOURCE_COMPANY_USERS = 'company-users-resource';
+
     /**
      * @var string
      */
@@ -40,6 +42,7 @@ class CompanyUsersRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESPONSE_CODE_REST_USER_IS_NOT_A_COMPANY_USER = '1401';
+
     /**
      * @var string
      */
@@ -49,6 +52,7 @@ class CompanyUsersRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESPONSE_CODE_COMPANY_USER_NOT_SELECTED = '1403';
+
     /**
      * @var string
      */
@@ -58,6 +62,7 @@ class CompanyUsersRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESPONSE_CODE_COMPANY_USER_NOT_FOUND = '1404';
+
     /**
      * @var string
      */

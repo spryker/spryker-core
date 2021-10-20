@@ -18,6 +18,7 @@ class NameValidatorStep implements DataImportStepInterface
      * @var int
      */
     protected const MAX_LENGTH = 255;
+
     /**
      * @var int
      */

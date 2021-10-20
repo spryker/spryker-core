@@ -28,6 +28,7 @@ class ContainerGlobalTest extends Unit
      * @var string
      */
     protected const SERVICE = 'service';
+
     /**
      * @var string
      */
@@ -37,6 +38,7 @@ class ContainerGlobalTest extends Unit
      * @var string
      */
     protected const SERVICE_PROPERTY_1 = 'SERVICE_PROPERTY_1';
+
     /**
      * @var string
      */

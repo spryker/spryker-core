@@ -21,26 +21,32 @@ class ConfigurableBundleCartsRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const ERROR_IDENTIFIER_FAILED_CART_ID_MISSING = 'ERROR_IDENTIFIER_FAILED_CART_ID_MISSING';
+
     /**
      * @var string
      */
     public const ERROR_IDENTIFIER_CONFIGURABLE_BUNDLE_TEMPLATE_NOT_FOUND = 'ERROR_IDENTIFIER_CONFIGURABLE_BUNDLE_TEMPLATE_NOT_FOUND';
+
     /**
      * @var string
      */
     public const ERROR_IDENTIFIER_CONFIGURED_BUNDLE_WRONG_QUANTITY = 'ERROR_IDENTIFIER_CONFIGURED_BUNDLE_WRONG_QUANTITY';
+
     /**
      * @var string
      */
     public const ERROR_IDENTIFIER_CONFIGURED_BUNDLE_NOT_FOUND = 'ERROR_IDENTIFIER_CONFIGURED_BUNDLE_NOT_FOUND';
+
     /**
      * @var string
      */
     public const ERROR_IDENTIFIER_FAILED_ADDING_CONFIGURED_BUNDLE = 'ERROR_IDENTIFIER_FAILED_ADDING_CONFIGURED_BUNDLE';
+
     /**
      * @var string
      */
     public const ERROR_IDENTIFIER_FAILED_UPDATING_CONFIGURED_BUNDLE = 'ERROR_IDENTIFIER_FAILED_UPDATING_CONFIGURED_BUNDLE';
+
     /**
      * @var string
      */

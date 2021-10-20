@@ -39,18 +39,22 @@ class DiscountPromotionFacadeTest extends Unit
      * @var string
      */
     protected const STORE_NAME_DE = 'DE';
+
     /**
      * @var string
      */
     protected const TEST_ITEM_SKU = 'test_sku';
+
     /**
      * @var int
      */
     protected const TEST_NOT_EXISTING_DISCOUNT_PROMOTION_ID = 0;
+
     /**
      * @var string
      */
     protected const CART_OPERATION_ADD = 'add';
+
     /**
      * @var string
      */

@@ -33,10 +33,12 @@ class HealthCheckFacadeTest extends Unit
      * @var string
      */
     protected const DATABASE_SERVICE_NAME = 'database';
+
     /**
      * @var string
      */
     protected const SEARCH_SERVICE_NAME = 'search';
+
     /**
      * @var string
      */
@@ -46,6 +48,7 @@ class HealthCheckFacadeTest extends Unit
      * @var bool
      */
     protected const IS_SERVICE_HEALTHY = true;
+
     /**
      * @var bool
      */

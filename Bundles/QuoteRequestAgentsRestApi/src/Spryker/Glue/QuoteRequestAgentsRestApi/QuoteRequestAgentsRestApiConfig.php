@@ -28,6 +28,7 @@ class QuoteRequestAgentsRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESPONSE_CODE_COMPANY_USER_NOT_FOUND = '1404';
+
     /**
      * @var string
      */
@@ -37,6 +38,7 @@ class QuoteRequestAgentsRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESPONSE_CODE_PROBLEM_CREATING_REQUEST_FOR_QUOTE_BY_AGENT = '4507';
+
     /**
      * @var string
      */
@@ -46,6 +48,7 @@ class QuoteRequestAgentsRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESPONSE_CODE_QUOTE_REQUEST_NOT_FOUND = '4501';
+
     /**
      * @var string
      */

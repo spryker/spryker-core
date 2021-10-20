@@ -39,6 +39,7 @@ class MerchantSalesOrderDataExporter implements MerchantSalesOrderDataExporterIn
      * @var string
      */
     protected const HOOK_KEY_MERCHANT_NAME = 'merchant_name';
+
     /**
      * @var string
      */
@@ -49,6 +50,7 @@ class MerchantSalesOrderDataExporter implements MerchantSalesOrderDataExporterIn
      * @var string
      */
     protected const EXTENDED_DATA_EXPORT_CONFIGURATION_FIELD_MERCHANT_NAME = 'merchant_name';
+
     /**
      * @var string
      */

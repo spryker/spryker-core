@@ -23,14 +23,17 @@ class BusinessOnBehalfGuiDependencyProvider extends AbstractBundleDependencyProv
      * @var string
      */
     public const FACADE_COMPANY = 'FACADE_COMPANY';
+
     /**
      * @var string
      */
     public const FACADE_CUSTOMER = 'FACADE_CUSTOMER';
+
     /**
      * @var string
      */
     public const FACADE_COMPANY_USER = 'FACADE_COMPANY_USER';
+
     /**
      * @var string
      */

@@ -19,6 +19,7 @@ class AddCompanyController extends AbstractController
      * @var string
      */
     protected const PARAM_REDIRECT_URL = 'redirect-url';
+
     /**
      * @var string
      */
@@ -28,6 +29,7 @@ class AddCompanyController extends AbstractController
      * @var string
      */
     protected const MESSAGE_COMPANY_CREATE_SUCCESS = 'Company has been created.';
+
     /**
      * @var string
      */

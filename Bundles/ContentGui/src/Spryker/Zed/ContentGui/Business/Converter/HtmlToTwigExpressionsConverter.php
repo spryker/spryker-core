@@ -20,10 +20,12 @@ class HtmlToTwigExpressionsConverter implements HtmlToTwigExpressionsConverterIn
      * @var string
      */
     protected const ERROR_MESSAGE_MAX_WIDGET_NUMBER = 'Limit exceeded, maximum number of widgets %d';
+
     /**
      * @var string
      */
     protected const HTML_OUTPUT_ENCODING = 'HTML-ENTITIES';
+
     /**
      * @var string
      */

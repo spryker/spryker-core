@@ -26,22 +26,27 @@ class BundledProductAvailabilityTable extends AbstractTable
      * @var string
      */
     public const URL_PARAM_ID_PRODUCT_BUNDLE = 'id-product';
+
     /**
      * @var string
      */
     public const URL_PARAM_ID_PRODUCT_ABSTRACT = 'id-abstract';
+
     /**
      * @var string
      */
     public const URL_PARAM_SKU = 'sku';
+
     /**
      * @var string
      */
     public const URL_PARAM_ID_PRODUCT = 'id-product';
+
     /**
      * @var string
      */
     public const URL_PARAM_BUNDLE_ID_PRODUCT_ABSTRACT = 'id-product-bundle-abstract';
+
     /**
      * @var string
      */
@@ -51,6 +56,7 @@ class BundledProductAvailabilityTable extends AbstractTable
      * @var string
      */
     public const COL_BUNDLED_ITEMS = 'bundledItems';
+
     /**
      * @var string
      */

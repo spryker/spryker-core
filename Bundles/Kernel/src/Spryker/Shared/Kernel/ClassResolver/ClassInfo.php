@@ -15,18 +15,22 @@ class ClassInfo
      * @var string
      */
     public const TEST_NAMESPACE_SUFFIX = 'Test';
+
     /**
      * @var int
      */
     public const KEY_NAMESPACE = 0;
+
     /**
      * @var int
      */
     public const KEY_APPLICATION = 1;
+
     /**
      * @var int
      */
     public const KEY_BUNDLE = 2;
+
     /**
      * @var int
      */

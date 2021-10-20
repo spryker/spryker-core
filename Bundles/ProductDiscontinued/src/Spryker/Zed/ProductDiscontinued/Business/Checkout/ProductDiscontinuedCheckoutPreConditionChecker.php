@@ -18,6 +18,7 @@ class ProductDiscontinuedCheckoutPreConditionChecker implements ProductDiscontin
      * @var string
      */
     protected const GLOSSARY_KEY_PLACE_ORDER_PRE_CHECK_PRODUCT_DISCONTINUED = 'place_order.pre_check.product_discontinued';
+
     /**
      * @var string
      */

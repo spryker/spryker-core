@@ -29,6 +29,7 @@ class SalesOmsFacadeTest extends Unit
      * @var string
      */
     protected const ORDER_ITEM_REFERENCE = 'Test01';
+
     /**
      * @var string
      */

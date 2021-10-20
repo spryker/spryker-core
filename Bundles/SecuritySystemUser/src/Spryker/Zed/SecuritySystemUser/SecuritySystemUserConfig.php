@@ -16,6 +16,7 @@ class SecuritySystemUserConfig extends AbstractBundleConfig
      * @var string
      */
     public const ROLE_SYSTEM_USER = 'ROLE_SYSTEM_USER';
+
     /**
      * @var string
      */

@@ -22,10 +22,12 @@ class ElasticsearchSnapshotCreateConsole extends Console
      * @var string
      */
     public const COMMAND_NAME = 'elasticsearch:snapshot:create';
+
     /**
      * @var string
      */
     public const COMMAND_ALIAS = 'search:snapshot:create';
+
     /**
      * @var string
      */
@@ -35,6 +37,7 @@ class ElasticsearchSnapshotCreateConsole extends Console
      * @var string
      */
     public const ARGUMENT_SNAPSHOT_REPOSITORY = 'snapshot-repository';
+
     /**
      * @var string
      */

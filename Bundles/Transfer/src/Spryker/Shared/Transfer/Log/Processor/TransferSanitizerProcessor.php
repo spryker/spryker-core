@@ -16,14 +16,17 @@ class TransferSanitizerProcessor
      * @var string
      */
     public const EXTRA = 'transfer';
+
     /**
      * @var string
      */
     public const CONTEXT_KEY = 'transfer';
+
     /**
      * @var string
      */
     public const RECORD_EXTRA = 'extra';
+
     /**
      * @var string
      */

@@ -20,6 +20,7 @@ class AddCompanyBusinessUnitController extends AbstractController
      * @var string
      */
     protected const PARAM_REDIRECT_URL = 'redirect-url';
+
     /**
      * @see ListCompanyBusinessUnitController::indexAction()
      * @var string
@@ -30,6 +31,7 @@ class AddCompanyBusinessUnitController extends AbstractController
      * @var string
      */
     protected const MESSAGE_SUCCESS_COMPANY_BUSINESS_UNIT_CREATE = 'Company Business Unit "%s" has been created.';
+
     /**
      * @var string
      */

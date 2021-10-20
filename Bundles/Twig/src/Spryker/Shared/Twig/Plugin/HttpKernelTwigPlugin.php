@@ -26,6 +26,7 @@ class HttpKernelTwigPlugin implements TwigPluginInterface
      * @var string
      */
     protected const SERVICE_FRAGMENT_HANDLER = 'fragment.handler';
+
     /**
      * @var string
      */

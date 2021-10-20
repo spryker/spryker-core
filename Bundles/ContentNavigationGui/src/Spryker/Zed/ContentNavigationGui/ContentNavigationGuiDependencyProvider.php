@@ -25,6 +25,7 @@ class ContentNavigationGuiDependencyProvider extends AbstractBundleDependencyPro
      * @var string
      */
     public const FACADE_CONTENT_NAVIGATION = 'FACADE_CONTENT_NAVIGATION';
+
     /**
      * @var string
      */

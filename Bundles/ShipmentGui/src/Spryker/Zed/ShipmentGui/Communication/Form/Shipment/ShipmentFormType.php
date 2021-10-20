@@ -28,22 +28,27 @@ class ShipmentFormType extends AbstractType
      * @var string
      */
     public const VALIDATION_GROUP_SHIPPING_ADDRESS = 'shippingAddress';
+
     /**
      * @var string
      */
     public const OPTION_SHIPMENT_ADDRESS_CHOICES = 'address_choices';
+
     /**
      * @var string
      */
     public const FIELD_ID_SALES_SHIPMENT = 'idSalesShipment';
+
     /**
      * @var string
      */
     public const FIELD_REQUESTED_DELIVERY_DATE = 'requestedDeliveryDate';
+
     /**
      * @var string
      */
     public const FIELD_SHIPPING_ADDRESS_FORM = 'shippingAddress';
+
     /**
      * @var string
      */
@@ -57,10 +62,12 @@ class ShipmentFormType extends AbstractType
      * @var string
      */
     protected const FIELD_REQUESTED_DELIVERY_DATE_FORMAT = 'yyyy-MM-dd';
+
     /**
      * @var string
      */
     protected const VALIDATION_DATE_TODAY = 'today';
+
     /**
      * @var string
      */

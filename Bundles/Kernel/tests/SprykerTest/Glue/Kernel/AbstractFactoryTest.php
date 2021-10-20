@@ -28,6 +28,7 @@ class AbstractFactoryTest extends Unit
      * @var string
      */
     public const TEST_KEY = 'test';
+
     /**
      * @var string
      */

@@ -21,6 +21,7 @@ class TransferGeneratorConsole extends Console
      * @var string
      */
     public const COMMAND_NAME = 'transfer:generate';
+
     /**
      * @var string
      */

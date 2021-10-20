@@ -19,6 +19,7 @@ class AclConfigReader implements AclConfigReaderInterface
      * @var string
      */
     protected const GROUP_KEY = 'group';
+
     /**
      * @var string
      */

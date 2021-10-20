@@ -24,10 +24,12 @@ class ResolvableCacheBuilderHelper extends Module
      * @var string
      */
     protected const CLASS_KEY_STORE = 'store';
+
     /**
      * @var string
      */
     protected const CLASS_KEY_PROJECT = 'project';
+
     /**
      * @var string
      */
@@ -42,6 +44,7 @@ class ResolvableCacheBuilderHelper extends Module
      * @var string
      */
     protected const CURRENT_STORE = 'DE';
+
     /**
      * @var string
      */

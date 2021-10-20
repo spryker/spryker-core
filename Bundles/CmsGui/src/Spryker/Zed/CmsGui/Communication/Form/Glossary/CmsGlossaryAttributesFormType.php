@@ -34,26 +34,32 @@ class CmsGlossaryAttributesFormType extends AbstractType
      * @var string
      */
     public const FIELD_PLACEHOLDER = 'placeholder';
+
     /**
      * @var string
      */
     public const FIELD_FK_PAGE = 'fkPage';
+
     /**
      * @var string
      */
     public const FIELD_FK_GLOSSARY_MAPPING = 'fkCmsGlossaryMapping';
+
     /**
      * @var string
      */
     public const FIELD_TEMPLATE_NAME = 'templateName';
+
     /**
      * @var string
      */
     public const FIELD_SEARCH_OPTION = 'searchOption';
+
     /**
      * @var string
      */
     public const FIELD_TRANSLATIONS = 'translations';
+
     /**
      * @var string
      */

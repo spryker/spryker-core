@@ -19,10 +19,12 @@ class CountryCheckoutDataValidator implements CountryCheckoutDataValidatorInterf
      * @var string
      */
     protected const GLOSSARY_KEY_BILLING_ADDRESS_IS_MISSING = 'billing.address.validation.is_missing';
+
     /**
      * @var string
      */
     protected const GLOSSARY_KEY_BILLING_ADDRESS_COUNTRY_NOT_FOUND = 'billing.address.country.validation.not_found';
+
     /**
      * @var string
      */

@@ -38,6 +38,7 @@ class DataExportServiceTest extends Unit
      * @var string
      */
     protected const DATA_ENTITY_PRIMARY = 'data-entity-primary';
+
     /**
      * @var string
      */
@@ -47,6 +48,7 @@ class DataExportServiceTest extends Unit
      * @var string
      */
     protected const HOOK_KEY_TIMESTAMP = 'timestamp';
+
     /**
      * @var string
      */
@@ -56,6 +58,7 @@ class DataExportServiceTest extends Unit
      * @var string
      */
     protected const DESTINATION_DIR = 'test-folder';
+
     /**
      * @var string
      */

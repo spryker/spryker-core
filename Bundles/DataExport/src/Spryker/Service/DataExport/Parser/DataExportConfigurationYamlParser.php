@@ -18,6 +18,7 @@ class DataExportConfigurationYamlParser implements DataExportConfigurationParser
      * @var string
      */
     protected const HOOK_KEY_TIMESTAMP = 'timestamp';
+
     /**
      * @var string
      */

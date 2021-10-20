@@ -37,6 +37,7 @@ class EventDispatcherGlueTester extends Actor
      * @var string
      */
     protected const SERVICE_DISPATCHER = 'dispatcher';
+
     /**
      * @var string
      */

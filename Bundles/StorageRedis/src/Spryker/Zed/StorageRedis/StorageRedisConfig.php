@@ -21,10 +21,12 @@ class StorageRedisConfig extends AbstractBundleConfig
      * @var string
      */
     protected const DEFAULT_RDB_DUMP_PATH = '/var/lib/redis/dump.rdb';
+
     /**
      * @var int
      */
     protected const DEFAULT_STORAGE_REDIS_PORT = 6379;
+
     /**
      * @var string
      */

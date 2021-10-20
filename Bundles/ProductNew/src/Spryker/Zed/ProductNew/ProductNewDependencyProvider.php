@@ -21,6 +21,7 @@ class ProductNewDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const QUERY_CONTAINER_PRODUCT_LABEL = 'QUERY_CONTAINER_PRODUCT_LABEL';
+
     /**
      * @var string
      */

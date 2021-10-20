@@ -28,14 +28,17 @@ class ConcreteProductPricesReader implements ConcreteProductPricesReaderInterfac
      * @var string
      */
     protected const PRODUCT_CONCRETE_MAPPING_TYPE = 'sku';
+
     /**
      * @var string
      */
     protected const KEY_ID_PRODUCT_CONCRETE = 'id_product_concrete';
+
     /**
      * @var string
      */
     protected const KEY_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
+
     /**
      * @var string
      */

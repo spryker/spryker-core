@@ -31,14 +31,17 @@ class MerchantRelationshipFacadeTest extends Unit
      * @var string
      */
     protected const MR_KEY_TEST = 'mr-test';
+
     /**
      * @var string
      */
     protected const BU_OWNER_KEY_OWNER = 'unit-owner';
+
     /**
      * @var string
      */
     protected const BU_KEY_UNIT_1 = 'unit-1';
+
     /**
      * @var string
      */

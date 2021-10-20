@@ -46,6 +46,7 @@ class RouterHelper extends Module
      * @var string
      */
     protected const MODULE_NAME = 'Router';
+
     /**
      * @var string
      */

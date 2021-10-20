@@ -27,6 +27,7 @@ class EditCompanyUnitAddressController extends AbstractController
      * @var string
      */
     protected const PARAM_ID_COMPANY_UNIT_ADDRESS = 'id-company-unit-address';
+
     /**
      * @var string
      */
@@ -36,10 +37,12 @@ class EditCompanyUnitAddressController extends AbstractController
      * @var string
      */
     protected const MESSAGE_COMPANY_UNIT_ADDRESS_NOT_FOUND = 'Company unit address not found.';
+
     /**
      * @var string
      */
     protected const MESSAGE_COMPANY_UNIT_ADDRESS_UPDATE_SUCCESS = 'Company unit address has been successfully updated.';
+
     /**
      * @var string
      */

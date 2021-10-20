@@ -20,6 +20,7 @@ class QuoteRequestsRestApiDependencyProvider extends AbstractBundleDependencyPro
      * @var string
      */
     public const PLUGINS_REST_QUOTE_REQUEST_ATTRIBUTES_EXPANDER = 'PLUGINS_REST_QUOTE_REQUEST_ATTRIBUTES_EXPANDER';
+
     /**
      * @var string
      */

@@ -32,6 +32,7 @@ class StorageDatabaseTest extends Unit
      * @var string
      */
     protected const DUMMY_KEY = 'dummy_key';
+
     /**
      * @var string
      */

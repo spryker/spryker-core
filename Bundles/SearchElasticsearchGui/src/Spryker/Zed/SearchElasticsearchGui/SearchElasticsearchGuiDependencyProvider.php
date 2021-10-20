@@ -18,6 +18,7 @@ class SearchElasticsearchGuiDependencyProvider extends AbstractBundleDependencyP
      * @var string
      */
     public const CLIENT_SEARCH_ELASTICSEARCH = 'CLIENT_SEARCH_ELASTICSEARCH';
+
     /**
      * @var string
      */

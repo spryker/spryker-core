@@ -53,10 +53,12 @@ class ProductLabelStorageListenerTest extends Unit
      * @var string
      */
     protected const STORE_NAME_DE = 'DE';
+
     /**
      * @var string
      */
     protected const STORE_NAME_AT = 'AT';
+
     /**
      * @var string
      */

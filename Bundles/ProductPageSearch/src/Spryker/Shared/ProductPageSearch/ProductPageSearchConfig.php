@@ -33,10 +33,12 @@ class ProductPageSearchConfig extends AbstractSharedConfig
      * @var string
      */
     public const PLUGIN_PRODUCT_PRICE_PAGE_DATA = 'PLUGIN_PRODUCT_PRICE_PAGE_DATA';
+
     /**
      * @var string
      */
     public const PLUGIN_PRODUCT_CATEGORY_PAGE_DATA = 'PLUGIN_PRODUCT_CATEGORY_PAGE_DATA';
+
     /**
      * @var string
      */

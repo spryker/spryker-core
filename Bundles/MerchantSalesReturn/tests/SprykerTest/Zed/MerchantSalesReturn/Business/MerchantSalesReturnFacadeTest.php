@@ -31,22 +31,27 @@ class MerchantSalesReturnFacadeTest extends Unit
      * @var string
      */
     protected const TEST_STATE_MACHINE = 'Test01';
+
     /**
      * @var string
      */
     protected const TEST_MERCHANT_SALES_ORDER_REFERENCE_1 = 'test-merchant-sales-order-reference-1';
+
     /**
      * @var string
      */
     protected const TEST_MERCHANT_REFERENCE_1 = 'test-merchant-reference-1';
+
     /**
      * @var string
      */
     protected const TEST_MERCHANT_REFERENCE_2 = 'test-merchant-reference-2';
+
     /**
      * @var string
      */
     protected const TEST_UUID = '3b6743a7-ad62-3779-8648-e0156e51a628';
+
     /**
      * @var string
      */

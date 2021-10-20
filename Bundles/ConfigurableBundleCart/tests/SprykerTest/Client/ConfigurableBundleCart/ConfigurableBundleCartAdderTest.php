@@ -44,6 +44,7 @@ class ConfigurableBundleCartAdderTest extends Unit
      * @var string
      */
     protected const FAKE_CONFIGURABLE_BUNDLE_SLOT_UUID_1 = 'FAKE_CONFIGURABLE_BUNDLE_SLOT_UUID_1';
+
     /**
      * @var string
      */

@@ -20,6 +20,7 @@ class MaintenanceDisableConsole extends AbstractMaintenanceConsole
      * @var string
      */
     public const COMMAND_NAME = 'maintenance:disable';
+
     /**
      * @var string
      */

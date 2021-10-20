@@ -22,10 +22,12 @@ class ElasticsearchSnapshotRegisterRepositoryConsole extends Console
      * @var string
      */
     public const COMMAND_NAME = 'elasticsearch:snapshot:register-repository';
+
     /**
      * @var string
      */
     public const COMMAND_ALIAS = 'search:snapshot:register-repository';
+
     /**
      * @var string
      */

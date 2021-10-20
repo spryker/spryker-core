@@ -18,14 +18,17 @@ class DiscontinuedSuperAttributesProductViewExpander implements DiscontinuedSupe
      * @var string
      */
     protected const GLOSSARY_KEY_SUPER_ATTRIBUTE_DISCONTINUED = 'product_discontinued.super_attribute_discontinued';
+
     /**
      * @var string
      */
     protected const PATTERN_DISCONTINUED_ATTRIBUTE_NAME = '%s - %s';
+
     /**
      * @var string
      */
     protected const PATTERN_ATTRIBUTE_KEY_VALUE_KEY = '%s:%s';
+
     /**
      * @var string
      */

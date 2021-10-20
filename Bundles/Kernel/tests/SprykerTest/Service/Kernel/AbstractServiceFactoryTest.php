@@ -27,6 +27,7 @@ class AbstractServiceFactoryTest extends Unit
      * @var string
      */
     public const CONTAINER_KEY = 'key';
+
     /**
      * @var string
      */

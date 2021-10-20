@@ -32,10 +32,12 @@ class GetResourceOwnerTest extends Unit
      * @var string
      */
     protected const RESOURCE_OWNER_WRONG_REQUEST_CODE = 'test';
+
     /**
      * @var string
      */
     protected const SOME_CODE = 'SOME_CODE';
+
     /**
      * @var string
      */

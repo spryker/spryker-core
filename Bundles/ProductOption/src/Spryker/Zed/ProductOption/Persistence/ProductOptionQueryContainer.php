@@ -34,10 +34,12 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
      * @var string
      */
     public const COL_MAX_TAX_RATE = 'MaxTaxRate';
+
     /**
      * @var string
      */
     public const COL_ID_PRODUCT_OPTION_VALUE = 'idProductOptionValue';
+
     /**
      * @var string
      */

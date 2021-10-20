@@ -21,6 +21,7 @@ class SessionRedisConfig extends AbstractBundleConfig
      * @var string
      */
     public const ZED_SESSION_REDIS_CONNECTION_KEY = 'SESSION_ZED';
+
     /**
      * @var string
      */

@@ -23,6 +23,7 @@ class ProductRelationCollectorDependencyProvider extends AbstractBundleDependenc
      * @var string
      */
     public const FACADE_COLLECTOR = 'FACADE_COLLECTOR';
+
     /**
      * @var string
      */
@@ -37,10 +38,12 @@ class ProductRelationCollectorDependencyProvider extends AbstractBundleDependenc
      * @var string
      */
     public const QUERY_CONTAINER_TOUCH = 'QUERY_CONTAINER_TOUCH';
+
     /**
      * @var string
      */
     public const QUERY_CONTAINER_PRODUCT_IMAGE = 'QUERY_CONTAINER_PRODUCT_IMAGE';
+
     /**
      * @var string
      */

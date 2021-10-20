@@ -19,10 +19,12 @@ class ProductCustomerPermissionDependencyProvider extends AbstractDependencyProv
      * @var string
      */
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
+
     /**
      * @var string
      */
     public const CLIENT_LOCALE = 'CLIENT_LOCALE';
+
     /**
      * @var string
      */

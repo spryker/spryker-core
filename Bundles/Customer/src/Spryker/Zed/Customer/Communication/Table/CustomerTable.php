@@ -30,22 +30,27 @@ class CustomerTable extends AbstractTable
      * @var string
      */
     public const COL_CREATED_AT = 'created_at';
+
     /**
      * @var string
      */
     public const COL_ID_CUSTOMER = 'id_customer';
+
     /**
      * @var string
      */
     public const COL_EMAIL = 'email';
+
     /**
      * @var string
      */
     public const COL_FIRST_NAME = 'first_name';
+
     /**
      * @var string
      */
     public const COL_LAST_NAME = 'last_name';
+
     /**
      * @var string
      */

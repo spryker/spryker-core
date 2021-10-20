@@ -24,10 +24,12 @@ class SalesReclamationGuiDependencyProvider extends AbstractBundleDependencyProv
      * @var string
      */
     public const FACADE_SALES_RECLAMATION = 'FACADE_SALES_RECLAMATION';
+
     /**
      * @var string
      */
     public const FACADE_SALES = 'FACADE_SALES';
+
     /**
      * @var string
      */

@@ -29,6 +29,7 @@ class ExpandUniqueOrderItemsWithProductBundlesTest extends Unit
      * @var string
      */
     protected const FAKE_BUNDLE_ITEM_IDENTIFIER_1 = 'FAKE_BUNDLE_ITEM_IDENTIFIER_1';
+
     /**
      * @var string
      */

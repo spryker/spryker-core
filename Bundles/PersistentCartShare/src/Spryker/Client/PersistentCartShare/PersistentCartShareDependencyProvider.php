@@ -18,6 +18,7 @@ class PersistentCartShareDependencyProvider extends AbstractDependencyProvider
      * @var string
      */
     public const CLIENT_RESOURCE_SHARE = 'CLIENT_RESOURCE_SHARE';
+
     /**
      * @var string
      */

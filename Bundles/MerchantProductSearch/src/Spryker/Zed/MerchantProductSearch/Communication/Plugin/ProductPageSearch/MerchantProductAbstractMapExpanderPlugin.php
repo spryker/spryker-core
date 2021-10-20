@@ -23,6 +23,7 @@ class MerchantProductAbstractMapExpanderPlugin extends AbstractPlugin implements
      * @var string
      */
     protected const KEY_MERCHANT_NAMES = 'merchant_names';
+
     /**
      * @var string
      */

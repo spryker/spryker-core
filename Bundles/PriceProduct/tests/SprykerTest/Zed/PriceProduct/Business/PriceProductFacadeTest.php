@@ -54,6 +54,7 @@ class PriceProductFacadeTest extends Unit
      * @var string
      */
     public const EUR_ISO_CODE = 'EUR';
+
     /**
      * @var string
      */

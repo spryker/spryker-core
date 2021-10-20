@@ -25,6 +25,7 @@ class IndexController extends AbstractController
      * @var string
      */
     public const AVAILABILITY_LIST_URL = '/availability-gui/index';
+
     /**
      * @var string
      */

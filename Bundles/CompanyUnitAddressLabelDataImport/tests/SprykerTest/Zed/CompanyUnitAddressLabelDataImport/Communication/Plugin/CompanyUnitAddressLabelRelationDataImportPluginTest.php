@@ -33,6 +33,7 @@ class CompanyUnitAddressLabelRelationDataImportPluginTest extends Unit
      * @var string
      */
     protected const COMPANY_ADDRESS_KEY_1 = 'spryker-address-1';
+
     /**
      * @var string
      */

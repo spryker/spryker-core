@@ -72,22 +72,27 @@ class MerchantUserTable extends AbstractTable
      * @var string
      */
     protected const MERCHANT_USER_STATUS = 'status';
+
     /**
      * @var string
      */
     protected const MERCHANT_USER_FIRST_NAME = 'first_name';
+
     /**
      * @var string
      */
     protected const MERCHANT_USER_LAST_NAME = 'last_name';
+
     /**
      * @var string
      */
     protected const MERCHANT_USER_NAME = 'username';
+
     /**
      * @var string
      */
     protected const MERCHANT_USER_ID = 'id';
+
     /**
      * @var string
      */

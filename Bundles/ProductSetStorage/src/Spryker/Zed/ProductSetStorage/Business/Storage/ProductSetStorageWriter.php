@@ -20,6 +20,7 @@ class ProductSetStorageWriter implements ProductSetStorageWriterInterface
      * @var string
      */
     public const COL_ID_PRODUCT_SET = 'id_product_set';
+
     /**
      * @var string
      */

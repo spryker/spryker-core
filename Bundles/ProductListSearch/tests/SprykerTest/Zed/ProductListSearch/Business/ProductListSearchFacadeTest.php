@@ -29,6 +29,7 @@ class ProductListSearchFacadeTest extends Unit
      * @var int
      */
     protected const TEST_WHITELIST_KEY = 1;
+
     /**
      * @var int
      */

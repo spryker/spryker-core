@@ -26,22 +26,27 @@ class AvailabilityDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const FACADE_EVENT = 'FACADE_EVENT';
+
     /**
      * @var string
      */
     public const FACADE_OMS = 'FACADE_OMS';
+
     /**
      * @var string
      */
     public const FACADE_STOCK = 'FACADE_STOCK';
+
     /**
      * @var string
      */
     public const FACADE_TOUCH = 'FACADE_TOUCH';
+
     /**
      * @var string
      */
     public const FACADE_STORE = 'FACADE_STORE';
+
     /**
      * @var string
      */

@@ -21,6 +21,7 @@ class ProductTable extends AbstractTable
      * @var string
      */
     public const TABLE_IDENTIFIER = 'product-table';
+
     /**
      * @var string
      */

@@ -31,6 +31,7 @@ class TriggerEventFromFileConsoleTest extends Unit
      * @var string
      */
     protected const TEST_STATE_MACHINE = 'Test01';
+
     /**
      * @var string
      */
@@ -40,6 +41,7 @@ class TriggerEventFromFileConsoleTest extends Unit
      * @var int
      */
     protected const CODE_SUCCESS = 0;
+
     /**
      * @var int
      */

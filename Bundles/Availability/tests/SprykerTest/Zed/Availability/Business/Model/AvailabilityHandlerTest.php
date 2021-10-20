@@ -38,6 +38,7 @@ class AvailabilityHandlerTest extends Unit
      * @var string
      */
     public const PRODUCT_ABSTRACT_SKU = 'sku-123';
+
     /**
      * @var string
      */

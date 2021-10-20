@@ -35,10 +35,12 @@ class CreateController extends AbstractController
      * @var string
      */
     protected const MESSAGE_SHIPMENT_CREATE_SUCCESS = 'Shipment has been successfully created.';
+
     /**
      * @var string
      */
     protected const MESSAGE_SHIPMENT_CREATE_FAIL = 'Shipment has not been created.';
+
     /**
      * @var string
      */

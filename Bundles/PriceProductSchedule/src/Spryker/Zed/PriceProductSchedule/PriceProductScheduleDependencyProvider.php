@@ -26,22 +26,27 @@ class PriceProductScheduleDependencyProvider extends AbstractBundleDependencyPro
      * @var string
      */
     public const FACADE_PRICE_PRODUCT = 'FACADE_PRICE_PRODUCT';
+
     /**
      * @var string
      */
     public const FACADE_STORE = 'FACADE_STORE';
+
     /**
      * @var string
      */
     public const FACADE_PROPEL = 'FACADE_PROPEL';
+
     /**
      * @var string
      */
     public const FACADE_CURRENCY = 'FACADE_CURRENCY';
+
     /**
      * @var string
      */
     public const FACADE_PRODUCT = 'FACADE_PRODUCT';
+
     /**
      * @var string
      */

@@ -15,6 +15,7 @@ class CompaniesRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESOURCE_COMPANIES = 'companies';
+
     /**
      * @var string
      */
@@ -30,6 +31,7 @@ class CompaniesRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESPONSE_CODE_COMPANY_NOT_FOUND = '1801';
+
     /**
      * @var string
      */
@@ -39,6 +41,7 @@ class CompaniesRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESPONSE_CODE_COMPANY_USER_NOT_SELECTED = '1803';
+
     /**
      * @var string
      */

@@ -30,18 +30,22 @@ class ImageSetForm extends AbstractSubForm
      * @var string
      */
     public const FIELD_SET_ID = 'id_product_image_set';
+
     /**
      * @var string
      */
     public const FIELD_SET_NAME = 'name';
+
     /**
      * @var string
      */
     public const FIELD_SET_FK_LOCALE = 'fk_locale';
+
     /**
      * @var string
      */
     public const FIELD_SET_FK_PRODUCT = 'fk_product';
+
     /**
      * @var string
      */

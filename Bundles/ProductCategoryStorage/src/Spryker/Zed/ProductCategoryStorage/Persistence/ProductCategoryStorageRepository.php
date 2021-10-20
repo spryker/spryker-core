@@ -38,6 +38,7 @@ class ProductCategoryStorageRepository extends AbstractRepository implements Pro
      * @var string
      */
     protected const COL_BOOSTED_DEPTH = 'boostedDepth';
+
     /**
      * @var int
      */

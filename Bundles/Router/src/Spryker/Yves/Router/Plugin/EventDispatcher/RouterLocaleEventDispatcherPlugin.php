@@ -24,6 +24,7 @@ class RouterLocaleEventDispatcherPlugin extends AbstractPlugin implements EventD
      * @var int
      */
     protected const EVENT_PRIORITY_KERNEL_REQUEST = 16;
+
     /**
      * @var int
      */
@@ -33,6 +34,7 @@ class RouterLocaleEventDispatcherPlugin extends AbstractPlugin implements EventD
      * @var string
      */
     protected const SERVICE_URL_MATCHER = 'url_matcher';
+
     /**
      * @var string
      */

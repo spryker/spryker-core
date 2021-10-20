@@ -38,6 +38,7 @@ class ProductBundleAvailabilityHandlerTest extends Unit
      * @var int
      */
     public const ID_STORE = 1;
+
     /**
      * @var string
      */

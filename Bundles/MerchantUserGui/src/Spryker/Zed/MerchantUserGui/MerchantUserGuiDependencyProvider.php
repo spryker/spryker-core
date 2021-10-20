@@ -22,10 +22,12 @@ class MerchantUserGuiDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const PROPEL_QUERY_MERCHANT_USER = 'PROPEL_MERCHANT_USER_QUERY';
+
     /**
      * @var string
      */
     public const FACADE_MERCHANT_USER = 'FACADE_MERCHANT_USER';
+
     /**
      * @var string
      */

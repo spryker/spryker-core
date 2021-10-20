@@ -33,6 +33,7 @@ class ProductConcretePageSearchPublisher implements ProductConcretePageSearchPub
      * @var string
      */
     protected const IDENTIFIER_PRODUCT_CONCRETE_PAGE_SEARCH = 'id_product_concrete_page_search';
+
     /**
      * @var string
      */

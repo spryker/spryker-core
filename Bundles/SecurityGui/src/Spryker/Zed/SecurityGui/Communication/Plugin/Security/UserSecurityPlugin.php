@@ -25,6 +25,7 @@ class UserSecurityPlugin extends AbstractPlugin implements SecurityPluginInterfa
      * @var string
      */
     protected const SECURITY_FIREWALL_NAME = 'User';
+
     /**
      * @var string
      */
@@ -34,6 +35,7 @@ class UserSecurityPlugin extends AbstractPlugin implements SecurityPluginInterfa
      * @var string
      */
     protected const ROUTE_LOGIN = 'security-gui:login';
+
     /**
      * @var string
      */

@@ -18,6 +18,7 @@ class ProductBarcodeGuiDependencyProvider extends AbstractBundleDependencyProvid
      * @var string
      */
     public const FACADE_LOCALE = 'FACADE_LOCALE';
+
     /**
      * @var string
      */

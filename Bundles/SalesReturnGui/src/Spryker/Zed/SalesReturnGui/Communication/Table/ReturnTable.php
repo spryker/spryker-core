@@ -25,26 +25,32 @@ class ReturnTable extends AbstractTable
      * @var string
      */
     protected const COL_RETURN_ID = 'id_sales_return';
+
     /**
      * @var string
      */
     protected const COL_RETURN_REFERENCE = 'return_reference';
+
     /**
      * @var string
      */
     protected const COL_ORDER_REFERENCE = 'order_reference';
+
     /**
      * @var string
      */
     protected const COL_RETURNED_PRODUCTS = 'returned_products';
+
     /**
      * @var string
      */
     protected const COL_RETURN_DATE = 'created_at';
+
     /**
      * @var string
      */
     protected const COL_STATE = 'state';
+
     /**
      * @var string
      */

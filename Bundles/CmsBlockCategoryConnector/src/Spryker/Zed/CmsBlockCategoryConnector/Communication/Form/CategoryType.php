@@ -33,18 +33,22 @@ class CategoryType extends AbstractType
      * @var string
      */
     public const OPTION_CMS_BLOCK_LIST = 'option-cms-block-list';
+
     /**
      * @var string
      */
     public const OPTION_CMS_BLOCK_POSITION_LIST = 'option-cms-block-position-list';
+
     /**
      * @var string
      */
     public const OPTION_WRONG_CMS_BLOCK_LIST = 'option-wrong-cms-block-list';
+
     /**
      * @var string
      */
     public const OPTION_ASSIGNED_CMS_BLOCK_TEMPLATE_LIST = 'option-assigned-cms-block-template-list';
+
     /**
      * @var string
      */

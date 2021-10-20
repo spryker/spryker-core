@@ -21,30 +21,37 @@ class WishlistDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const FACADE_PRODUCT = 'FACADE_PRODUCT';
+
     /**
      * @var string
      */
     public const QUERY_CONTAINER_PRODUCT = 'QUERY_CONTAINER_PRODUCT';
+
     /**
      * @var string
      */
     public const PLUGINS_ITEM_EXPANDER = 'PLUGINS_ITEM_EXPANDER';
+
     /**
      * @var string
      */
     public const PLUGINS_ADD_ITEM_PRE_CHECK = 'PLUGINS_ADD_ITEM_PRE_CHECK';
+
     /**
      * @var string
      */
     public const PLUGINS_WISHLIST_RELOAD_ITEMS = 'PLUGINS_RELOAD_ITEMS';
+
     /**
      * @var string
      */
     public const PLUGINS_WISHLIST_ITEMS_VALIDATOR = 'PLUGINS_WISHLIST_ITEMS_VALIDATOR';
+
     /**
      * @var string
      */
     public const PLUGINS_WISHLIST_PRE_ADD_ITEM = 'PLUGINS_WISHLIST_PRE_ADD_ITEM';
+
     /**
      * @var string
      */

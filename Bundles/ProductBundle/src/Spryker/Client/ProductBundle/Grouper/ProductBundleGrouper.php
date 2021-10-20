@@ -18,10 +18,12 @@ class ProductBundleGrouper implements ProductBundleGrouperInterface
      * @var string
      */
     public const BUNDLE_ITEMS = 'bundleItems';
+
     /**
      * @var string
      */
     public const BUNDLE_PRODUCT = 'bundleProduct';
+
     /**
      * @var string
      */

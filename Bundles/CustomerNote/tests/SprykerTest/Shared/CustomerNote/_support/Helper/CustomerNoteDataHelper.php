@@ -20,6 +20,7 @@ class CustomerNoteDataHelper extends Module
      * @var string
      */
     public const TEST_NOTE_AUTHOR = 'test_author';
+
     /**
      * @var string
      */

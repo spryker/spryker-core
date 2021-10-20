@@ -15,6 +15,7 @@ class CatalogSearchRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESOURCE_CATALOG_SEARCH = 'catalog-search';
+
     /**
      * @var string
      */

@@ -24,6 +24,7 @@ class MerchantOpeningHoursStorageDependencyProvider extends AbstractDependencyPr
      * @var string
      */
     public const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
+
     /**
      * @var string
      */

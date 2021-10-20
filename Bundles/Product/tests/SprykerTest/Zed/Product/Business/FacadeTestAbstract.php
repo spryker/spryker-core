@@ -75,6 +75,7 @@ class FacadeTestAbstract extends Unit
      * @var string
      */
     public const ABSTRACT_SKU = 'foo';
+
     /**
      * @var string
      */

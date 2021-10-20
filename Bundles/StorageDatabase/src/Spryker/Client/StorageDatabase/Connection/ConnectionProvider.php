@@ -24,6 +24,7 @@ class ConnectionProvider implements ConnectionProviderInterface
      * @var string
      */
     protected const CONNECTION_NAME = 'storage connection';
+
     /**
      * @var string
      */

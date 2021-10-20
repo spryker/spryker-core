@@ -60,6 +60,7 @@ class OauthFacadeTest extends Unit
      * @var string
      */
     protected const CLIENT_IDENTIFIER = 'test client';
+
     /**
      * @var string
      */

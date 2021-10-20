@@ -185,6 +185,8 @@ class RepositoryExporter implements ExporterInterface
     ): array {
         /** @var array $data */
         $data = $synchronizationDataTransfer->getData();
+
+        $synchronizationQueueMessageTransfers = [];
         $synchronizationQueueMessageTransfers[] = $this->createSynchronizationQueueMessageTransfer(
             $plugin,
             $synchronizationDataTransfer->getKey(),

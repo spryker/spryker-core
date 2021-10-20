@@ -23,50 +23,62 @@ class CmsPageSearchDataMapper implements CmsPageSearchDataMapperInterface
      * @var string
      */
     protected const KEY_URL = 'url';
+
     /**
      * @var string
      */
     protected const KEY_VALID_FROM = 'valid_from';
+
     /**
      * @var string
      */
     protected const KEY_VALID_TO = 'valid_to';
+
     /**
      * @var string
      */
     protected const KEY_TYPE = 'type';
+
     /**
      * @var string
      */
     protected const KEY_ID_CMS_PAGE = 'id_cms_page';
+
     /**
      * @var string
      */
     protected const KEY_NAME = 'name';
+
     /**
      * @var string
      */
     protected const KEY_IS_SEARCHABLE = 'is_searchable';
+
     /**
      * @var string
      */
     protected const KEY_IS_ACTIVE = 'is_active';
+
     /**
      * @var string
      */
     protected const KEY_STORE_NAME = 'store_name';
+
     /**
      * @var string
      */
     protected const KEY_META_TITLE = 'meta_title';
+
     /**
      * @var string
      */
     protected const KEY_META_KEYWORDS = 'meta_keywords';
+
     /**
      * @var string
      */
     protected const KEY_META_DESCRIPTION = 'meta_description';
+
     /**
      * @var string
      */

@@ -41,70 +41,87 @@ class ShoppingListsRestApiBusinessTester extends Actor
      * @var int
      */
     public const COMPANY_USER_ID = 123;
+
     /**
      * @var string
      */
     public const OWNER_NAME = 'John Doe';
+
     /**
      * @var string
      */
     public const SHOPPING_LIST_UUID = 'SHOPPING_LIST_UUID';
+
     /**
      * @var int
      */
     public const SHOPPING_LIST_ID = 123;
+
     /**
      * @var int
      */
     public const READ_ONLY_SHOPPING_LIST_ID = 456;
+
     /**
      * @var string
      */
     public const SHOPPING_LIST_ITEM_UUID = 'SHOPPING_LIST_ITEM_UUID';
+
     /**
      * @var int
      */
     public const SHOPPING_LIST_ITEM_ID = 123;
+
     /**
      * @var string
      */
     public const GOOD_CUSTOMER_REFERENCE = 'GOOD_CUSTOMER_REFERENCE';
+
     /**
      * @var string
      */
     public const BAD_CUSTOMER_REFERENCE = 'BAD_CUSTOMER_REFERENCE';
+
     /**
      * @var string
      */
     public const GOOD_SHOPPING_LIST_UUID = 'GOOD_SHOPPING_LIST_UUID';
+
     /**
      * @var string
      */
     public const BAD_SHOPPING_LIST_UUID = 'BAD_SHOPPING_LIST_UUID';
+
     /**
      * @var string
      */
     public const READ_ONLY_SHOPPING_LIST_UUID = 'FOREIGN_SHOPPING_LIST_UUID';
+
     /**
      * @var string
      */
     public const GOOD_SHOPPING_LIST_NAME = 'GOOD_SHOPPING_LIST_NAME';
+
     /**
      * @var string
      */
     public const BAD_SHOPPING_LIST_NAME = 'BAD_SHOPPING_LIST_NAME';
+
     /**
      * @var string
      */
     public const GOOD_SKU = '123_123';
+
     /**
      * @var string
      */
     public const BAD_SKU = '123_124';
+
     /**
      * @var int
      */
     public const GOOD_QUANTITY = 1;
+
     /**
      * @var int
      */

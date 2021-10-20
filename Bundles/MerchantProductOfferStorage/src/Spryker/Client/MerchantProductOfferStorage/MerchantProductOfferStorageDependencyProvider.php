@@ -23,30 +23,37 @@ class MerchantProductOfferStorageDependencyProvider extends AbstractDependencyPr
      * @var string
      */
     public const CLIENT_STORAGE = 'CLIENT_STORAGE';
+
     /**
      * @var string
      */
     public const CLIENT_STORE = 'CLIENT_STORE';
+
     /**
      * @var string
      */
     public const CLIENT_MERCHANT_STORAGE = 'CLIENT_MERCHANT_STORAGE';
+
     /**
      * @var string
      */
     public const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
+
     /**
      * @var string
      */
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
+
     /**
      * @var string
      */
     public const PLUGINS_PRODUCT_OFFER_REFERENCE_STRATEGY = 'PLUGINS_PRODUCT_OFFER_REFERENCE_STRATEGY';
+
     /**
      * @var string
      */
     public const PLUGINS_PRODUCT_OFFER_STORAGE_EXPANDER = 'PLUGINS_PRODUCT_OFFER_STORAGE_EXPANDER';
+
     /**
      * @var string
      */

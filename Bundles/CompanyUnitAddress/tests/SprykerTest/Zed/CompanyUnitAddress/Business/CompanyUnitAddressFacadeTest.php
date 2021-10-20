@@ -41,6 +41,7 @@ class CompanyUnitAddressFacadeTest extends Test
      * @var int
      */
     protected const VALUE_COMPANY_UNIT_ADDRESSES_MAX_PER_PAGE = 2;
+
     /**
      * @var int
      */

@@ -16,6 +16,7 @@ class BusinessOnBehalfDataImportConfig extends DataImportConfig
      * @var string
      */
     public const IMPORT_TYPE_COMPANY_USER = 'company-user-on-behalf';
+
     /**
      * @var string
      */

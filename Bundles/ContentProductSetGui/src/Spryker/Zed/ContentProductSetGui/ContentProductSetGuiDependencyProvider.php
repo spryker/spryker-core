@@ -21,6 +21,7 @@ class ContentProductSetGuiDependencyProvider extends AbstractBundleDependencyPro
      * @var string
      */
     public const FACADE_LOCALE = 'FACADE_LOCALE';
+
     /**
      * @var string
      */

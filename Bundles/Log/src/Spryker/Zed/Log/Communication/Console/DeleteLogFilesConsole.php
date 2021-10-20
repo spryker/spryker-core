@@ -21,6 +21,7 @@ class DeleteLogFilesConsole extends Console
      * @var string
      */
     public const COMMAND_NAME = 'log:clear';
+
     /**
      * @var string
      */

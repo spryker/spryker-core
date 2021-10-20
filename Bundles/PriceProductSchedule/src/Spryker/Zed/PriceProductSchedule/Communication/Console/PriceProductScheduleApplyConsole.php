@@ -21,6 +21,7 @@ class PriceProductScheduleApplyConsole extends Console
      * @var string
      */
     public const COMMAND_NAME = 'price-product-schedule:apply';
+
     /**
      * @var string
      */

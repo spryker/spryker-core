@@ -26,18 +26,22 @@ class Drawer implements DrawerInterface
      * @var string
      */
     public const EDGE_UPPER_HALF = 'upper half';
+
     /**
      * @var string
      */
     public const EDGE_LOWER_HALF = 'lower half';
+
     /**
      * @var string
      */
     public const EDGE_FULL = 'edge full';
+
     /**
      * @var string
      */
     public const HIGHLIGHT_COLOR = '#FFFFCC';
+
     /**
      * @var string
      */

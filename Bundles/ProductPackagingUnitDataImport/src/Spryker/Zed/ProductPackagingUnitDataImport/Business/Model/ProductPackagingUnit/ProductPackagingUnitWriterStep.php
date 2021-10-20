@@ -26,10 +26,12 @@ class ProductPackagingUnitWriterStep extends PublishAwareStep implements DataImp
      * @var int
      */
     protected const AMOUNT_INTERVAL_DEFAULT = 1;
+
     /**
      * @var int
      */
     protected const HEAP_LIMIT = 500;
+
     /**
      * @var string
      */

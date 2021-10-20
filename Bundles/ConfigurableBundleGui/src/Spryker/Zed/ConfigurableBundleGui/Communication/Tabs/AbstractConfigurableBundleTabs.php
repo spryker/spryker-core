@@ -17,6 +17,7 @@ class AbstractConfigurableBundleTabs extends AbstractTabs
      * @var string
      */
     protected const GENERAL_TAB_NAME = 'General';
+
     /**
      * @var string
      */

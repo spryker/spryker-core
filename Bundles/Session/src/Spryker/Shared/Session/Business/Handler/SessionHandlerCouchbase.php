@@ -17,10 +17,12 @@ class SessionHandlerCouchbase implements SessionHandlerInterface
      * @var string
      */
     public const METRIC_SESSION_DELETE_TIME = 'Couchbase/Session_delete_time';
+
     /**
      * @var string
      */
     public const METRIC_SESSION_WRITE_TIME = 'Couchbase/Session_write_time';
+
     /**
      * @var string
      */

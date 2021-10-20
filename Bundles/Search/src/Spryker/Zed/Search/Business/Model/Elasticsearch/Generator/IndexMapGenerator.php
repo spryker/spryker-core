@@ -46,10 +46,12 @@ class IndexMapGenerator implements IndexMapGeneratorInterface
      * @var string
      */
     public const TEMPLATE_VARIABLE_CLASS_NAME = 'className';
+
     /**
      * @var string
      */
     public const TEMPLATE_VARIABLE_CONSTANTS = 'constants';
+
     /**
      * @var string
      */

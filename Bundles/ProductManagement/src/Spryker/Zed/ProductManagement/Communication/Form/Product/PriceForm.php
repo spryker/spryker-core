@@ -32,10 +32,12 @@ class PriceForm extends AbstractType
      * @var string
      */
     public const FIELD_PRICE = 'price';
+
     /**
      * @var string
      */
     public const FIELD_PRICES = 'prices';
+
     /**
      * @var string
      */
@@ -45,22 +47,27 @@ class PriceForm extends AbstractType
      * @var string
      */
     public const OPTION_TAX_RATE_CHOICES = 'tax_rate_choices';
+
     /**
      * @var string
      */
     public const OPTION_CURRENCY_ISO_CODE = 'currency_iso_code';
+
     /**
      * @var string
      */
     public const OPTION_MONEY_FACADE = 'money-facade';
+
     /**
      * @var string
      */
     public const OPTION_CURRENCY_FACADE = 'currency-facade';
+
     /**
      * @var int
      */
     public const DEFAULT_SCALE = 2;
+
     /**
      * @var int
      */

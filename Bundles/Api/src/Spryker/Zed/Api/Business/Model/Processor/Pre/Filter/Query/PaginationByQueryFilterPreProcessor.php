@@ -17,6 +17,7 @@ class PaginationByQueryFilterPreProcessor implements PreProcessorInterface
      * @var string
      */
     public const LIMIT = 'limit';
+
     /**
      * @var string
      */

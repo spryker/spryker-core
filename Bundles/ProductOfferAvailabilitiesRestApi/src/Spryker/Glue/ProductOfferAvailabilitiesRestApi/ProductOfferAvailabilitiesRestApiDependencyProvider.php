@@ -21,6 +21,7 @@ class ProductOfferAvailabilitiesRestApiDependencyProvider extends AbstractBundle
      * @var string
      */
     public const CLIENT_STORE = 'CLIENT_STORE';
+
     /**
      * @var string
      */

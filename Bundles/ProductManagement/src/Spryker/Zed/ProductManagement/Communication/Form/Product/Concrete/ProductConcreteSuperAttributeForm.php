@@ -29,14 +29,17 @@ class ProductConcreteSuperAttributeForm extends AbstractType
      * @var string
      */
     public const FIELD_DROPDOWN = 'dropdown';
+
     /**
      * @var string
      */
     public const FIELD_INPUT = 'input';
+
     /**
      * @var string
      */
     public const FIELD_CHECKBOX = 'checkbox';
+
     /**
      * @var string
      */

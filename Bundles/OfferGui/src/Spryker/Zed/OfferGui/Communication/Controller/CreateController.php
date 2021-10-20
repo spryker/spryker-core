@@ -34,22 +34,27 @@ class CreateController extends AbstractController
      * @var string
      */
     public const PARAM_KEY_INITIAL_OFFER = 'key-offer';
+
     /**
      * @var string
      */
     public const PARAM_SUBMIT_PERSIST = 'submit-persist';
+
     /**
      * @var string
      */
     public const PARAM_SUBMIT_CUSTOMER_CREATE = 'submit-customer-create';
+
     /**
      * @var string
      */
     public const PARAM_SUBMIT_RELOAD = 'submit-reload';
+
     /**
      * @var string
      */
     public const PARAM_CUSTOMER_REFERENCE = 'customerReference';
+
     /**
      * @var string
      */

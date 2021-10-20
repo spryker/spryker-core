@@ -15,10 +15,12 @@ class MerchantProductOptionConfig extends AbstractBundleConfig
      * @var string
      */
     public const STATUS_WAITING_FOR_APPROVAL = 'waiting_for_approval';
+
     /**
      * @var string
      */
     public const STATUS_APPROVED = 'approved';
+
     /**
      * @var string
      */

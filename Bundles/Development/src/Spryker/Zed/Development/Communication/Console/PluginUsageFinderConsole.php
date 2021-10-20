@@ -28,6 +28,7 @@ class PluginUsageFinderConsole extends Console
      * @var string
      */
     protected const COMMAND_NAME = 'dev:plugin-usage:dump';
+
     /**
      * @var string
      */

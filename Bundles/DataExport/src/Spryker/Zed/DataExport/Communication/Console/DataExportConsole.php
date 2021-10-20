@@ -31,6 +31,7 @@ class DataExportConsole extends Console
      * @var string
      */
     protected const OPTION_CONFIG = 'config';
+
     /**
      * @var string
      */

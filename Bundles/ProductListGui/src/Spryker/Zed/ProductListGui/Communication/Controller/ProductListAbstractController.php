@@ -25,6 +25,7 @@ class ProductListAbstractController extends AbstractController
      * @var string
      */
     public const URL_PARAM_REDIRECT_URL = 'redirect-url';
+
     /**
      * @var string
      */

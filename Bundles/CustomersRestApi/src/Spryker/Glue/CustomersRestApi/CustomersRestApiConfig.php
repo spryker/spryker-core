@@ -17,22 +17,27 @@ class CustomersRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESOURCE_CUSTOMERS = 'customers';
+
     /**
      * @var string
      */
     public const RESOURCE_ADDRESSES = 'addresses';
+
     /**
      * @var string
      */
     public const RESOURCE_CUSTOMER_PASSWORD = 'customer-password';
+
     /**
      * @var string
      */
     public const RESOURCE_FORGOTTEN_PASSWORD = 'customer-forgotten-password';
+
     /**
      * @var string
      */
     public const RESOURCE_CUSTOMER_RESTORE_PASSWORD = 'customer-restore-password';
+
     /**
      * @var string
      */
@@ -42,6 +47,7 @@ class CustomersRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const CONTROLLER_CUSTOMER_FORGOTTEN_PASSWORD = 'customer-forgotten-password-resource';
+
     /**
      * @var string
      */
@@ -51,6 +57,7 @@ class CustomersRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESPONSE_CODE_CUSTOMER_ALREADY_EXISTS = '400';
+
     /**
      * @var string
      */
@@ -60,6 +67,7 @@ class CustomersRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESPONSE_CODE_CUSTOMER_CANT_REGISTER_CUSTOMER = '401';
+
     /**
      * @var string
      */
@@ -69,6 +77,7 @@ class CustomersRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESPONSE_CODE_CUSTOMER_NOT_FOUND = '402';
+
     /**
      * @var string
      */
@@ -78,6 +87,7 @@ class CustomersRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESPONSE_CODE_CUSTOMER_ADDRESSES_NOT_FOUND = '403';
+
     /**
      * @var string
      */
@@ -87,6 +97,7 @@ class CustomersRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESPONSE_CODE_ADDRESS_NOT_FOUND = '404';
+
     /**
      * @var string
      */
@@ -96,6 +107,7 @@ class CustomersRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESPONSE_CODE_CUSTOMER_REFERENCE_MISSING = '405';
+
     /**
      * @var string
      */
@@ -105,6 +117,7 @@ class CustomersRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESPONSE_CODE_PASSWORDS_DONT_MATCH = '406';
+
     /**
      * @var string
      */
@@ -114,6 +127,7 @@ class CustomersRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESPONSE_CODE_PASSWORD_CHANGE_FAILED = '407';
+
     /**
      * @var string
      */
@@ -123,6 +137,7 @@ class CustomersRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESPONSE_CODE_INVALID_PASSWORD = '408';
+
     /**
      * @var string
      */
@@ -132,6 +147,7 @@ class CustomersRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESPONSE_CODE_CUSTOMER_ADDRESS_FAILED_TO_SAVE = '409';
+
     /**
      * @var string
      */
@@ -141,6 +157,7 @@ class CustomersRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESPONSE_CODE_CUSTOMER_FAILED_TO_SAVE = '410';
+
     /**
      * @var string
      */
@@ -150,6 +167,7 @@ class CustomersRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESPONSE_CODE_CUSTOMER_UNAUTHORIZED = '411';
+
     /**
      * @var string
      */
@@ -159,6 +177,7 @@ class CustomersRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESPONSE_CODE_ADDRESS_UUID_MISSING = '412';
+
     /**
      * @var string
      */
@@ -168,6 +187,7 @@ class CustomersRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESPONSE_CODE_NOT_ACCEPTED_TERMS = '413';
+
     /**
      * @var string
      */
@@ -177,6 +197,7 @@ class CustomersRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESPONSE_CODE_NOT_VALID_GENDER = '414';
+
     /**
      * @var string
      */
@@ -186,6 +207,7 @@ class CustomersRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESPONSE_CODE_RESTORE_PASSWORD_KEY_INVALID = '415';
+
     /**
      * @var string
      */
@@ -195,6 +217,7 @@ class CustomersRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESPONSE_CODE_CUSTOMER_EMAIL_INVALID = '416';
+
     /**
      * @var string
      */
@@ -204,6 +227,7 @@ class CustomersRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESPONSE_CODE_CUSTOMER_EMAIL_LENGTH_EXCEEDED = '417';
+
     /**
      * @var string
      */
@@ -213,6 +237,7 @@ class CustomersRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESPONSE_CODE_CUSTOMER_PASSWORD_TOO_SHORT = '418';
+
     /**
      * @var string
      */
@@ -222,6 +247,7 @@ class CustomersRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESPONSE_CODE_CUSTOMER_PASSWORD_TOO_LONG = '419';
+
     /**
      * @var string
      */
@@ -231,6 +257,7 @@ class CustomersRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESPONSE_CODE_CUSTOMER_PASSWORD_INVALID_CHARACTER_SET = '420';
+
     /**
      * @var string
      */
@@ -240,6 +267,7 @@ class CustomersRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESPONSE_CODE_CUSTOMER_PASSWORD_SEQUENCE_NOT_ALLOWED = '421';
+
     /**
      * @var string
      */
@@ -249,6 +277,7 @@ class CustomersRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESPONSE_CODE_CUSTOMER_PASSWORD_DENY_LIST = '422';
+
     /**
      * @var string
      */
@@ -258,6 +287,7 @@ class CustomersRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESPONSE_CODE_CONFIRMATION_CODE_INVALID = '423';
+
     /**
      * @var string
      */
@@ -267,6 +297,7 @@ class CustomersRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESPONSE_CODE_CONFIRMATION_CODE_MISSING = '424';
+
     /**
      * @var string
      */
@@ -276,6 +307,7 @@ class CustomersRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESPONSE_CODE_CONFIRMATION_FAILED = '425';
+
     /**
      * @var string
      */

@@ -61,7 +61,7 @@ class ProductConfiguratorCheckSumResponseValidator implements ProductConfigurato
 
         $responseChecksum = $this->checksumGenerator->generateChecksum(
             $this->sanitizeProductConfiguratorResponseData($plainCopyOfConfiguredResponseData),
-            $this->productConfigurationConfig->getProductConfiguratorEncryptionKey(),
+            $this->productConfigurationConfig->getProductConfiguratorEncryptionKey()
         );
 
         if ($responseChecksum === $productConfiguratorResponseTransfer->getCheckSum()) {

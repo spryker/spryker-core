@@ -31,6 +31,7 @@ class FlysystemLocalFileSystemTest extends Unit
      * @var string
      */
     public const ROOT_DIRECTORY = 'fileSystemRoot/uploads/';
+
     /**
      * @var string
      */

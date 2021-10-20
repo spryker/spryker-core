@@ -26,10 +26,12 @@ abstract class AbstractZedClient implements AbstractZedClientInterface
      * @var string
      */
     protected const INFO_MESSAGES = 'infoMessages';
+
     /**
      * @var string
      */
     protected const ERROR_MESSAGES = 'errorMessages';
+
     /**
      * @var string
      */

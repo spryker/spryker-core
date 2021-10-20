@@ -25,26 +25,32 @@ class OfferDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const FACADE_CART = 'FACADE_CART';
+
     /**
      * @var string
      */
     public const FACADE_SALES = 'FACADE_SALES';
+
     /**
      * @var string
      */
     public const FACADE_MESSENGER = 'FACADE_MESSENGER';
+
     /**
      * @var string
      */
     public const FACADE_CUSTOMER = 'FACADE_CUSTOMER';
+
     /**
      * @var string
      */
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
+
     /**
      * @var string
      */
     public const PLUGINS_OFFER_HYDRATOR = 'PLUGINS_OFFER_HYDRATOR';
+
     /**
      * @var string
      */

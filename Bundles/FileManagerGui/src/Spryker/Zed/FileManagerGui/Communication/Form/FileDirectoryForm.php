@@ -27,6 +27,7 @@ class FileDirectoryForm extends AbstractType
      * @var string
      */
     public const FIELD_NAME = 'name';
+
     /**
      * @var string
      */
@@ -36,6 +37,7 @@ class FileDirectoryForm extends AbstractType
      * @var string
      */
     public const OPTION_DATA_CLASS = 'data_class';
+
     /**
      * @var string
      */

@@ -23,6 +23,7 @@ class ClearLocksConsole extends Console
      * @var string
      */
     public const COMMAND_NAME = 'state-machine:clear-locks';
+
     /**
      * @var string
      */

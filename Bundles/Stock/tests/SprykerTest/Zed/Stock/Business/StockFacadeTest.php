@@ -42,10 +42,12 @@ class StockFacadeTest extends Unit
      * @var string
      */
     protected const STORE_NAME_DE = 'DE';
+
     /**
      * @var string
      */
     protected const STORE_NAME_AT = 'AT';
+
     /**
      * @var string
      */
@@ -110,10 +112,12 @@ class StockFacadeTest extends Unit
      * @var string
      */
     public const ABSTRACT_SKU = 'abstract-sku';
+
     /**
      * @var string
      */
     public const CONCRETE_SKU = 'concrete-sku';
+
     /**
      * @var int
      */

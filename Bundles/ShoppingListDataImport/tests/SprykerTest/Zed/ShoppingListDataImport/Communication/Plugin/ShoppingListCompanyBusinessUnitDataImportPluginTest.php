@@ -41,10 +41,12 @@ class ShoppingListCompanyBusinessUnitDataImportPluginTest extends Unit
      * @var string
      */
     protected const TEST_SHOPPING_LIST_KEY = 'test-shopping-list';
+
     /**
      * @var string
      */
     protected const TEST_COMPANY_BUSINESS_UNIT_KEY = 'test-company-business-unit-key';
+
     /**
      * @var string
      */

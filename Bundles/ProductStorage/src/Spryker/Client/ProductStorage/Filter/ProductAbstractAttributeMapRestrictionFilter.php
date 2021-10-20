@@ -24,10 +24,12 @@ class ProductAbstractAttributeMapRestrictionFilter implements ProductAbstractAtt
      * @var string
      */
     protected const KEY_ATTRIBUTE_VARIANTS = 'attribute_variants';
+
     /**
      * @var string
      */
     protected const KEY_ATTRIBUTE_VARIANT_MAP = 'attribute_variant_map';
+
     /**
      * @var string
      */

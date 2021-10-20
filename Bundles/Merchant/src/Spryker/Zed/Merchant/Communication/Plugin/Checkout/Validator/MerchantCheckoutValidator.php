@@ -19,6 +19,7 @@ class MerchantCheckoutValidator implements MerchantCheckoutValidatorInterface
      * @var string
      */
     protected const GLOSSARY_KEY_REMOVED_MERCHANT = 'merchant.message.removed';
+
     /**
      * @var string
      */

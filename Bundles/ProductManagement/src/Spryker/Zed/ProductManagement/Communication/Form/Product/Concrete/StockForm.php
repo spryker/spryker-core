@@ -29,6 +29,7 @@ class StockForm extends AbstractType
      * @var string
      */
     public const FIELD_HIDDEN_STOCK_PRODUCT_ID = 'id_stock_product';
+
     /**
      * @var string
      */
@@ -38,10 +39,12 @@ class StockForm extends AbstractType
      * @var string
      */
     public const FIELD_TYPE = 'type';
+
     /**
      * @var string
      */
     public const FIELD_QUANTITY = 'quantity';
+
     /**
      * @var string
      */

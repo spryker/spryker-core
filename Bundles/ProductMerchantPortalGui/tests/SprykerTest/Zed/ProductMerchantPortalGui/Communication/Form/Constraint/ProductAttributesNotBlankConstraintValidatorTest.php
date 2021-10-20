@@ -127,7 +127,7 @@ class ProductAttributesNotBlankConstraintValidatorTest extends ConstraintValidat
 
         $this->assertCount(1, $violations);
         $this->assertSame($violations->get(0)->getMessage(), 'Please fill in at least one value');
-        $this->assertSame($violations->get(0)->getParameters(), [ 'attributesRowNumber' => 'invalid case']);
+        $this->assertSame($violations->get(0)->getParameters(), ['attributesRowNumber' => 'invalid case']);
     }
 
     /**

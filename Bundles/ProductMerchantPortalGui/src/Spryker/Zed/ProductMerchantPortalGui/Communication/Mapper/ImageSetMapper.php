@@ -16,18 +16,22 @@ class ImageSetMapper implements ImageSetMapperInterface
      * @var string
      */
     protected const FIELD_IMAGE_SMALL = 'externalUrlSmall';
+
     /**
      * @var string
      */
     protected const FIELD_IMAGE_LARGE = 'externalUrlLarge';
+
     /**
      * @var string
      */
     protected const FIELD_SORT_ORDER = 'sortOrder';
+
     /**
      * @var string
      */
     protected const FIELD_NAME = 'name';
+
     /**
      * @var string
      */

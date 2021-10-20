@@ -24,10 +24,12 @@ class CmsGlossaryTranslationFormType extends AbstractType
      * @var string
      */
     public const FIELD_FK_LOCALE = 'fkLocale';
+
     /**
      * @var string
      */
     public const FIELD_TRANSLATION = 'translation';
+
     /**
      * @var string
      */

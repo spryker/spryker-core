@@ -34,14 +34,17 @@ class DistributorTest extends Unit
      * @var int
      */
     public const ITEM_GROSS_PRICE_ZERO = 0;
+
     /**
      * @var int
      */
     public const ITEM_GROSS_PRICE_1000 = 1000;
+
     /**
      * @var int
      */
     public const ITEM_GROSS_PRICE_2000 = 2000;
+
     /**
      * @var int
      */
@@ -51,30 +54,37 @@ class DistributorTest extends Unit
      * @var int
      */
     public const DISCOUNT_AMOUNT_100 = 100;
+
     /**
      * @var int
      */
     public const DISCOUNT_AMOUNT_200 = 200;
+
     /**
      * @var int
      */
     public const DISCOUNT_AMOUNT_300 = 300;
+
     /**
      * @var int
      */
     public const DISCOUNT_AMOUNT_400 = 400;
+
     /**
      * @var int
      */
     public const DISCOUNT_AMOUNT_700 = 700;
+
     /**
      * @var int
      */
     public const DISCOUNT_AMOUNT_4000 = 4000;
+
     /**
      * @var int
      */
     public const DISCOUNT_AMOUNT_13333 = 133;
+
     /**
      * @var int
      */

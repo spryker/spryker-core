@@ -20,6 +20,7 @@ class UrlsRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESPONSE_CODE_URL_REQUEST_PARAMETER_MISSING = '2801';
+
     /**
      * @var string
      */
@@ -29,6 +30,7 @@ class UrlsRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESPONSE_CODE_URL_NOT_FOUND = '2802';
+
     /**
      * @var string
      */

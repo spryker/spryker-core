@@ -16,14 +16,17 @@ class CmsConfig extends AbstractBundleConfig
      * @var string
      */
     protected const CMS_TWIG_TEMPLATE_PREFIX = '@Cms';
+
     /**
      * @var string
      */
     protected const CMS_PLACEHOLDER_PATTERN = '/<!-- CMS_PLACEHOLDER : "[a-zA-Z0-9._-]*" -->/';
+
     /**
      * @var string
      */
     protected const CMS_PLACEHOLDER_VALUE_PATTERN = '/"([^"]+)"/';
+
     /**
      * @var string
      */

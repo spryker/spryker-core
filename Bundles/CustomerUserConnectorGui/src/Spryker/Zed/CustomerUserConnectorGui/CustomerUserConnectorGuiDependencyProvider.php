@@ -24,14 +24,17 @@ class CustomerUserConnectorGuiDependencyProvider extends AbstractBundleDependenc
      * @var string
      */
     public const QUERY_CONTAINER_CUSTOMER = 'QUERY_CONTAINER_CUSTOMER';
+
     /**
      * @var string
      */
     public const QUERY_CONTAINER_USER = 'QUERY_CONTAINER_USER';
+
     /**
      * @var string
      */
     public const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
+
     /**
      * @var string
      */

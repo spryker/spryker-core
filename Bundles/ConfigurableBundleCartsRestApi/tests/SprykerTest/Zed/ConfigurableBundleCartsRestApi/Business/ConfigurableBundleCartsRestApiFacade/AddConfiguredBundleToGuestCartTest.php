@@ -36,6 +36,7 @@ class AddConfiguredBundleToGuestCartTest extends Unit
      * @var string
      */
     protected const FAKE_QUOTE_UUID = 'FAKE_QUOTE_UUID';
+
     /**
      * @var string
      */

@@ -31,6 +31,7 @@ class RouterResource implements ResourceInterface
      * @var int
      */
     public const MODULE_NAME_POSITION = 2;
+
     /**
      * @var int
      */

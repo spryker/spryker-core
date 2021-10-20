@@ -13,10 +13,12 @@ class Messages
      * @var string
      */
     public const GROUP_EXISTS_ERROR = 'acl.error.group_exists';
+
     /**
      * @var string
      */
     public const GROUP_NOT_FOUND_ERROR = 'acl.error.group_not_found';
+
     /**
      * @var string
      */

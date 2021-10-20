@@ -25,6 +25,7 @@ class NoteForm extends AbstractType
      * @var string
      */
     protected const FORM_NAME = 'note';
+
     /**
      * @var string
      */

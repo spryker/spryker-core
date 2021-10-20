@@ -21,14 +21,17 @@ class ProductPackagingUnitCartPreCheck extends ProductPackagingUnitAvailabilityP
      * @var string
      */
     public const CART_PRE_CHECK_ITEM_AVAILABILITY_LEAD_PRODUCT_FAILED = 'cart.pre.check.availability.failed.lead.product';
+
     /**
      * @var string
      */
     public const CART_PRE_CHECK_AVAILABILITY_FAILED = 'cart.pre.check.availability.failed';
+
     /**
      * @var string
      */
     public const STOCK_TRANSLATION_PARAMETER = '%stock%';
+
     /**
      * @var string
      */

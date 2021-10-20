@@ -35,10 +35,12 @@ class MyAccountController extends AbstractController
      * @var string
      */
     protected const MESSAGE_MERCHANT_USER_UPDATE_SUCCESS = 'Success! The Account is updated.';
+
     /**
      * @var string
      */
     protected const MESSAGE_MERCHANT_USER_UPDATE_ERROR = 'Merchant user entity was not updated.';
+
     /**
      * @var string
      */

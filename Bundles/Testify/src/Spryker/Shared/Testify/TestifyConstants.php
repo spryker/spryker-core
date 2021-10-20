@@ -16,6 +16,7 @@ class TestifyConstants
      * @var string
      */
     public const BOOTSTRAP_CLASS_YVES = 'TESTIFY_CONSTANTS:BOOTSTRAP_CLASS_YVES';
+
     /**
      * @var string
      */

@@ -13,10 +13,12 @@ interface CategoryEvents
      * @var string
      */
     public const CATEGORY_BEFORE_CREATE = 'Category.before.create';
+
     /**
      * @var string
      */
     public const CATEGORY_BEFORE_UPDATE = 'Category.before.update';
+
     /**
      * @var string
      */
@@ -26,10 +28,12 @@ interface CategoryEvents
      * @var string
      */
     public const CATEGORY_AFTER_CREATE = 'Category.after.create';
+
     /**
      * @var string
      */
     public const CATEGORY_AFTER_UPDATE = 'Category.after.update';
+
     /**
      * @var string
      */

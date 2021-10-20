@@ -21,10 +21,12 @@ class QuoteRequestSender implements QuoteRequestSenderInterface
      * @var string
      */
     protected const GLOSSARY_KEY_CONCURRENT_CUSTOMERS = 'quote_request.update.validation.concurrent';
+
     /**
      * @var string
      */
     protected const GLOSSARY_KEY_QUOTE_REQUEST_WRONG_STATUS = 'quote_request.validation.error.wrong_status';
+
     /**
      * @var string
      */

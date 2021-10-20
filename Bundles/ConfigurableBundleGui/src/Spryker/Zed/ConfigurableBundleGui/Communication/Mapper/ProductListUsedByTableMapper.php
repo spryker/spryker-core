@@ -24,6 +24,7 @@ class ProductListUsedByTableMapper implements ProductListUsedByTableMapperInterf
      * @var string
      */
     protected const EDIT_BUTTON_TITLE = 'Edit Slot';
+
     /**
      * @var array
      */
@@ -37,6 +38,7 @@ class ProductListUsedByTableMapper implements ProductListUsedByTableMapperInterf
      * @var string
      */
     protected const ROUTE_EDIT_SLOT = '/configurable-bundle-gui/slot/edit';
+
     /**
      * @var string
      */

@@ -34,10 +34,12 @@ class ProductCategoryPageDataLoaderExpanderPlugin extends AbstractPlugin impleme
      * @var string
      */
     protected const KEY_FK_LOCALE = 'fk_locale';
+
     /**
      * @var string
      */
     protected const KEY_FK_CATEGORY_NODE_DESCENDANT = 'fk_category_node_descendant';
+
     /**
      * @var string
      */

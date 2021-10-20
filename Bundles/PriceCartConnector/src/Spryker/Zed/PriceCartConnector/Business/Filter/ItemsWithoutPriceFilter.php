@@ -23,6 +23,7 @@ class ItemsWithoutPriceFilter implements ItemFilterInterface
      * @var string
      */
     protected const MESSAGE_PARAM_SKU = '%sku%';
+
     /**
      * @var string
      */

@@ -21,6 +21,7 @@ class ProductAvailabilitiesRestApiDependencyProvider extends AbstractBundleDepen
      * @var string
      */
     public const CLIENT_AVAILABILITY_STORAGE = 'CLIENT_AVAILABILITY_STORAGE';
+
     /**
      * @var string
      */

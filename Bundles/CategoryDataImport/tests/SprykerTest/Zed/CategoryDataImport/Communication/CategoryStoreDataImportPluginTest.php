@@ -32,18 +32,22 @@ class CategoryStoreDataImportPluginTest extends Unit
      * @var string
      */
     protected const STORE_NAME_DE = 'DE';
+
     /**
      * @var string
      */
     protected const STORE_NAME_AT = 'AT';
+
     /**
      * @var string
      */
     protected const CATEGORY_NAME_TEST = 'test-category';
+
     /**
      * @var string
      */
     protected const CATEGORY_PARENT_NAME_TEST = 'parent-test-category';
+
     /**
      * @var string
      */

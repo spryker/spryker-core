@@ -20,6 +20,7 @@ class AbstractPriceProductOfferController extends AbstractController
      * @var string
      */
     protected const RESPONSE_NOTIFICATION_MESSAGE_SUCCESS = 'Success.';
+
     /**
      * @var string
      */

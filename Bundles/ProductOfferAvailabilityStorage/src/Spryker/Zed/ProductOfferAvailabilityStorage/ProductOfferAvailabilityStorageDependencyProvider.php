@@ -24,10 +24,12 @@ class ProductOfferAvailabilityStorageDependencyProvider extends AbstractBundleDe
      * @var string
      */
     public const FACADE_PRODUCT_OFFER = 'FACADE_PRODUCT_OFFER';
+
     /**
      * @var string
      */
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
+
     /**
      * @var string
      */

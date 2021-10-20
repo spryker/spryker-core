@@ -27,14 +27,17 @@ class CmsPageAttributesFormType extends AbstractType
      * @var string
      */
     public const FIELD_NAME = 'name';
+
     /**
      * @var string
      */
     public const FIELD_URL = 'url';
+
     /**
      * @var string
      */
     public const FIELD_LOCALE_NAME = 'localeName';
+
     /**
      * @var string
      */

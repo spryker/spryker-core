@@ -41,6 +41,7 @@ class ProductCategoryStorageFacadeTest extends Unit
      * @var string
      */
     protected const STORE_DE = 'DE';
+
     /**
      * @var string
      */
@@ -50,10 +51,12 @@ class ProductCategoryStorageFacadeTest extends Unit
      * @var int
      */
     protected const FAKE_ID_CATEGORY = 6666;
+
     /**
      * @var int
      */
     protected const FAKE_ID_CATEGORY_NODE = 8888;
+
     /**
      * @var int
      */

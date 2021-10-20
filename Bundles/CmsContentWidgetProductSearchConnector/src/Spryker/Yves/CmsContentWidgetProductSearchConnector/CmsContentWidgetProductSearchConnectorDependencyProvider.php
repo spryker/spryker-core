@@ -21,6 +21,7 @@ class CmsContentWidgetProductSearchConnectorDependencyProvider extends AbstractB
      * @var string
      */
     public const CLIENT_PRODUCT = 'PRODUCT CLIENT';
+
     /**
      * @var string
      */

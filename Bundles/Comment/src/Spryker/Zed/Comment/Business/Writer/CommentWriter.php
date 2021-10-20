@@ -26,6 +26,7 @@ class CommentWriter implements CommentWriterInterface
      * @var int
      */
     protected const COMMENT_MESSAGE_MIN_LENGTH = 1;
+
     /**
      * @var int
      */
@@ -35,14 +36,17 @@ class CommentWriter implements CommentWriterInterface
      * @var string
      */
     protected const GLOSSARY_KEY_COMMENT_NOT_FOUND = 'comment.validation.error.comment_not_found';
+
     /**
      * @var string
      */
     protected const GLOSSARY_KEY_COMMENT_THREAD_NOT_FOUND = 'comment.validation.error.comment_thread_not_found';
+
     /**
      * @var string
      */
     protected const GLOSSARY_KEY_COMMENT_ACCESS_DENIED = 'comment.validation.error.access_denied';
+
     /**
      * @var string
      */

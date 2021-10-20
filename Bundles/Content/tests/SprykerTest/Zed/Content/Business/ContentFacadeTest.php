@@ -29,14 +29,17 @@ class ContentFacadeTest extends Test
      * @var string
      */
     protected const NAME = 'New name';
+
     /**
      * @var string
      */
     protected const PARAMETERS = '{"sku"}';
+
     /**
      * @var string
      */
     protected const DESCRIPTION = 'Test description';
+
     /**
      * @var string
      */

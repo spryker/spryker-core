@@ -26,26 +26,32 @@ class MultiCartDependencyProvider extends AbstractDependencyProvider
      * @var string
      */
     public const CLIENT_MESSENGER = 'CLIENT_MESSENGER';
+
     /**
      * @var string
      */
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
+
     /**
      * @var string
      */
     public const CLIENT_PERSISTENT_CART = 'CLIENT_PERSISTENT_CART';
+
     /**
      * @var string
      */
     public const CLIENT_QUOTE = 'CLIENT_QUOTE';
+
     /**
      * @var string
      */
     public const CLIENT_SESSION = 'CLIENT_SESSION';
+
     /**
      * @var string
      */
     public const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
+
     /**
      * @var string
      */

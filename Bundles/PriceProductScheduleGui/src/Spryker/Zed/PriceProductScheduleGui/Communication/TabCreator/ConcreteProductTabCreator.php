@@ -16,10 +16,12 @@ class ConcreteProductTabCreator implements ConcreteProductTabCreatorInterface
      * @var string
      */
     public const TAB_SCHEDULED_PRICE_NAME = 'scheduled_prices';
+
     /**
      * @var string
      */
     public const TAB_SCHEDULED_PRICE_TITLE = 'Scheduled Prices';
+
     /**
      * @var string
      */

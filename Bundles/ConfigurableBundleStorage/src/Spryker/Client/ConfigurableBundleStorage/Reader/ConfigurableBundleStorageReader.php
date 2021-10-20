@@ -22,10 +22,12 @@ class ConfigurableBundleStorageReader implements ConfigurableBundleStorageReader
      * @var string
      */
     protected const MAPPING_TYPE_UUID = 'uuid';
+
     /**
      * @var string
      */
     protected const MAPPING_DELIMITER = ':';
+
     /**
      * @var string
      */

@@ -26,14 +26,17 @@ class ProductDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const FACADE_LOCALE = 'FACADE_LOCALE';
+
     /**
      * @var string
      */
     public const FACADE_URL = 'FACADE_URL';
+
     /**
      * @var string
      */
     public const FACADE_TOUCH = 'FACADE_TOUCH';
+
     /**
      * @var string
      */
@@ -43,6 +46,7 @@ class ProductDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const SERVICE_UTIL_TEXT = 'SERVICE_UTIL_TEXT';
+
     /**
      * @var string
      */
@@ -69,6 +73,7 @@ class ProductDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const PRODUCT_ABSTRACT_PLUGINS_READ = 'PRODUCT_ABSTRACT_PLUGINS_READ';
+
     /**
      * @var string
      */
@@ -79,6 +84,7 @@ class ProductDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const PRODUCT_ABSTRACT_PLUGINS_AFTER_CREATE = 'PRODUCT_ABSTRACT_PLUGINS_AFTER_CREATE';
+
     /**
      * @var string
      */
@@ -93,18 +99,22 @@ class ProductDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const PRODUCT_CONCRETE_PLUGINS_BEFORE_CREATE = 'PRODUCT_CONCRETE_PLUGINS_BEFORE_CREATE';
+
     /**
      * @var string
      */
     public const PRODUCT_CONCRETE_PLUGINS_BEFORE_UPDATE = 'PRODUCT_CONCRETE_PLUGINS_BEFORE_UPDATE';
+
     /**
      * @var string
      */
     public const PRODUCT_CONCRETE_PLUGINS_READ = 'PRODUCT_CONCRETE_PLUGINS_BEFORE_READ';
+
     /**
      * @var string
      */
     public const PRODUCT_CONCRETE_PLUGINS_AFTER_CREATE = 'PRODUCT_CONCRETE_PLUGINS_AFTER_CREATE';
+
     /**
      * @var string
      */

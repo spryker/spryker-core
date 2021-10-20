@@ -33,10 +33,12 @@ class CartOperationTest extends Unit
      * @var string
      */
     protected const FAKE_SKU_1 = 'fake_sku_1';
+
     /**
      * @var string
      */
     protected const FAKE_SKU_2 = 'fake_sku_2';
+
     /**
      * @var string
      */

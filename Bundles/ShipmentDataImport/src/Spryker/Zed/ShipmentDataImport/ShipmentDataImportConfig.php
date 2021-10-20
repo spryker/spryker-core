@@ -16,10 +16,12 @@ class ShipmentDataImportConfig extends DataImportConfig
      * @var string
      */
     public const IMPORT_TYPE_SHIPMENT_METHOD_STORE = 'shipment-method-store';
+
     /**
      * @var string
      */
     public const IMPORT_TYPE_SHIPMENT = 'shipment';
+
     /**
      * @var string
      */

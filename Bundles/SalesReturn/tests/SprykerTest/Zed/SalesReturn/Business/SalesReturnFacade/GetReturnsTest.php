@@ -33,6 +33,7 @@ class GetReturnsTest extends Unit
      * @var string
      */
     protected const FAKE_CUSTOMER_REFERENCE = 'FAKE_CUSTOMER_REFERENCE';
+
     /**
      * @var string
      */

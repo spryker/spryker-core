@@ -27,10 +27,12 @@ class ProductReviewCollectorDependencyProvider extends AbstractBundleDependencyP
      * @var string
      */
     public const FACADE_COLLECTOR = 'FACADE_COLLECTOR';
+
     /**
      * @var string
      */
     public const FACADE_PRODUCT_REVIEW = 'QUERY_CONTAINER_PRODUCT_REVIEW';
+
     /**
      * @var string
      */

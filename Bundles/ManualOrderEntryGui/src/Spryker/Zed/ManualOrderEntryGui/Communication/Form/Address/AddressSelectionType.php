@@ -18,6 +18,7 @@ class AddressSelectionType extends AddressType
      * @var string
      */
     public const OPTION_VALIDATION_GROUP = 'validation_group';
+
     /**
      * @var string
      */

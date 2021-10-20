@@ -38,6 +38,7 @@ class AclGroupDataImportPluginTest extends Unit
      * @var string
      */
     protected const ACL_GROUP_NAME_1 = 'Foo group';
+
     /**
      * @var string
      */

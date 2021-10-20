@@ -35,6 +35,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
      */
     public const META_TRANSFER_ERROR =
         'Adding MetaTransfer failed. Either name missing/invalid or no object of TransferInterface provided.';
+
     /**
      * @deprecated not valid constant name. Use ZED_REQUEST_ERROR instead
      * @var string
@@ -46,30 +47,37 @@ abstract class AbstractHttpClient implements HttpClientInterface
      * @var string
      */
     public const HEADER_USER_AGENT = 'User-Agent';
+
     /**
      * @var string
      */
     public const HEADER_HOST_YVES = 'X-Yves-Host';
+
     /**
      * @var string
      */
     public const HEADER_INTERNAL_REQUEST = 'X-Internal-Request';
+
     /**
      * @var string
      */
     public const HEADER_HOST_ZED = 'X-Zed-Host';
+
     /**
      * @var string
      */
     protected const SERVER_HTTP_HOST = 'HTTP_HOST';
+
     /**
      * @var string
      */
     protected const SERVER_PORT = 'SERVER_PORT';
+
     /**
      * @var int
      */
     protected const DEFAULT_PORT = 80;
+
     /**
      * @var int
      */
@@ -79,6 +87,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
      * @var string
      */
     protected const CONFIG_FILE_PREFIX = '/config/Shared/config_';
+
     /**
      * @var string
      */

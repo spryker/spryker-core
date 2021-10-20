@@ -20,10 +20,12 @@ class GroupTable extends AbstractTable
      * @var string
      */
     public const ROLES = 'roles';
+
     /**
      * @var string
      */
     public const EDIT = 'Edit';
+
     /**
      * @var string
      */

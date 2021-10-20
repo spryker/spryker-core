@@ -22,6 +22,7 @@ class CategorySlotBlockConditionForm extends AbstractType
      * @var string
      */
     public const OPTION_CATEGORY_ARRAY = 'option-category-array';
+
     /**
      * @var string
      */

@@ -23,6 +23,7 @@ class CmsVersionFormType extends AbstractType
      * @var string
      */
     public const OPTION_VERSION_NAME_CHOICES = 'version_choices';
+
     /**
      * @var string
      */

@@ -24,10 +24,12 @@ class CountOrderChartPlugin extends AbstractPlugin implements ChartPluginInterfa
      * @var string
      */
     public const NAME = 'count-orders';
+
     /**
      * @var string
      */
     public const TITLE = 'Count orders';
+
     /**
      * @var int
      */

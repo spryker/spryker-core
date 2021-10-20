@@ -25,22 +25,27 @@ class ProductTouchConsole extends Console
      * @var string
      */
     public const ACTION_ACTIVATE = 'activate';
+
     /**
      * @var string
      */
     public const ACTION_ACTIVATE_SHORT = 'a';
+
     /**
      * @var string
      */
     public const ACTION_INACTIVATE = 'inactivate';
+
     /**
      * @var string
      */
     public const ACTION_INACTIVATE_SHORT = 'i';
+
     /**
      * @var string
      */
     public const ACTION_DELETE = 'delete';
+
     /**
      * @var string
      */
@@ -50,6 +55,7 @@ class ProductTouchConsole extends Console
      * @var string
      */
     public const COMMAND_NAME = 'product:touch';
+
     /**
      * @var string
      */
@@ -59,6 +65,7 @@ class ProductTouchConsole extends Console
      * @var string
      */
     public const ARGUMENT_ID_ABSTRACT_PRODUCT = 'id_product_abstract';
+
     /**
      * @var string
      */
@@ -68,6 +75,7 @@ class ProductTouchConsole extends Console
      * @var string
      */
     public const ARGUMENT_TOUCH_ACTION = 'action';
+
     /**
      * @var string
      */

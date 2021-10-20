@@ -24,6 +24,7 @@ class SearchCopyIndexConsole extends Console
      * @var string
      */
     public const COMMAND_NAME = 'search:index:copy';
+
     /**
      * @var string
      */
@@ -33,6 +34,7 @@ class SearchCopyIndexConsole extends Console
      * @var string
      */
     public const ARGUMENT_SOURCE = 'source';
+
     /**
      * @var string
      */

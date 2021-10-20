@@ -19,10 +19,12 @@ class CompanyBusinessUnitAddressValidator implements CompanyBusinessUnitAddressV
      * @var string
      */
     protected const GLOSSARY_PARAMETER_ID = '%id%';
+
     /**
      * @var string
      */
     protected const GLOSSARY_KEY_COMPANY_ADDRESS_IN_CHECKOUT_DATA_NOT_FOUND = 'checkout.validation.company_address.not_found';
+
     /**
      * @var string
      */
@@ -59,7 +61,7 @@ class CompanyBusinessUnitAddressValidator implements CompanyBusinessUnitAddressV
         if (!$this->isCompanyUserAccount($checkoutDataTransfer)) {
             return $this->getErrorResponse(
                 $checkoutResponseTransfer,
-                static::GLOSSARY_KEY_COMPANY_ADDRESSES_APPLICABLE_FOR_COMPANY_USERS_ONLY,
+                static::GLOSSARY_KEY_COMPANY_ADDRESSES_APPLICABLE_FOR_COMPANY_USERS_ONLY
             );
         }
 

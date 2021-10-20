@@ -27,10 +27,12 @@ class CreateProductAbstractForm extends AbstractType
      * @var string
      */
     protected const FIELD_NAME = 'name';
+
     /**
      * @var string
      */
     protected const FIELD_SKU = 'sku';
+
     /**
      * @var string
      */
@@ -40,10 +42,12 @@ class CreateProductAbstractForm extends AbstractType
      * @var string
      */
     protected const LABEL_SKU = 'SKU Prefix';
+
     /**
      * @var string
      */
     protected const LABEL_NAME = 'Name';
+
     /**
      * @var string
      */
@@ -53,6 +57,7 @@ class CreateProductAbstractForm extends AbstractType
      * @var string
      */
     protected const PLACEHOLDER_SKU = 'Enter SKU prefix';
+
     /**
      * @var string
      */

@@ -23,18 +23,22 @@ class QuoteRequestTimeValidator implements QuoteRequestTimeValidatorInterface
      * @var string
      */
     protected const GLOSSARY_KEY_WRONG_QUOTE_REQUEST_VERSION_NOT_FOUND = 'quote_request.checkout.validation.error.version_not_found';
+
     /**
      * @var string
      */
     protected const GLOSSARY_KEY_WRONG_QUOTE_REQUEST_NOT_FOUND = 'quote_request.checkout.validation.error.not_found';
+
     /**
      * @var string
      */
     protected const GLOSSARY_KEY_WRONG_QUOTE_REQUEST_STATUS = 'quote_request.checkout.validation.error.wrong_status';
+
     /**
      * @var string
      */
     protected const GLOSSARY_KEY_WRONG_QUOTE_REQUEST_VERSION = 'quote_request.checkout.validation.error.wrong_version';
+
     /**
      * @var string
      */

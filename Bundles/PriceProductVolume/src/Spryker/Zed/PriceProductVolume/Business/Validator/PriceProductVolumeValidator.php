@@ -30,6 +30,7 @@ class PriceProductVolumeValidator implements PriceProductVolumeValidatorInterfac
      * @var string
      */
     protected const VALUE_IS_INVALID = 'This value is not valid.';
+
     /**
      * @var string
      */

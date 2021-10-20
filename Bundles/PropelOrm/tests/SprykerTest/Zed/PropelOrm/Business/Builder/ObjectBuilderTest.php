@@ -24,14 +24,17 @@ use SprykerTest\Zed\PropelOrm\Business\Builder\Fixtures\Foo;
 class ObjectBuilderTest extends AbstractBuilderTester
 {
     protected const FOO_BUILDER_CLASS = ObjectBuilder::class;
+
     /**
      * @var bool
      */
     protected const BOOLEAN_VALUE = true;
+
     /**
      * @var string
      */
     protected const VARCHAR_VALUE = 'The new value from testing method.';
+
     /**
      * @var string
      */

@@ -20,15 +20,18 @@ class CmsBlockTable extends AbstractTable
 {
     public const COL_ID_CMS_BLOCK = SpyCmsBlockTableMap::COL_ID_CMS_BLOCK;
     public const COL_NAME = SpyCmsBlockTableMap::COL_NAME;
+
     /**
      * @var string
      */
     public const COL_ACTIONS = 'Actions';
     public const COL_IS_ACTIVE = SpyCmsBlockTableMap::COL_IS_ACTIVE;
+
     /**
      * @var string
      */
     public const COL_STORE_RELATION = 'Store';
+
     /**
      * @var string
      */
@@ -43,18 +46,22 @@ class CmsBlockTable extends AbstractTable
      * @var string
      */
     public const URL_CMS_BLOCK_GLOSSARY = '/cms-block-gui/edit-glossary';
+
     /**
      * @var string
      */
     public const URL_CMS_BLOCK_VIEW = '/cms-block-gui/view-block';
+
     /**
      * @var string
      */
     public const URL_CMS_BLOCK_EDIT = '/cms-block-gui/edit-block';
+
     /**
      * @var string
      */
     public const URL_CMS_BLOCK_DEACTIVATE = '/cms-block-gui/edit-block/deactivate';
+
     /**
      * @var string
      */

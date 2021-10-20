@@ -30,10 +30,12 @@ class ResetPassword implements ResetPasswordInterface
      * @var string
      */
     protected const STATUS_ACTIVE = 'active';
+
     /**
      * @var string
      */
     protected const STATUS_EXPIRED = 'expired';
+
     /**
      * @var string
      */

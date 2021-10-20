@@ -22,10 +22,12 @@ class DatasetDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const FACADE_LOCALE = 'FACADE_LOCALE';
+
     /**
      * @var string
      */
     public const PROPEL_DATASET_QUERY = 'PROPEL_DATASET_QUERY';
+
     /**
      * @var string
      */

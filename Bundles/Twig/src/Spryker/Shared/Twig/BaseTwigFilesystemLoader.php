@@ -18,6 +18,7 @@ abstract class BaseTwigFilesystemLoader implements FilesystemLoaderInterface
      * @var int
      */
     protected const COMPONENT_DEFINITION_INDEX_MODULE = 1;
+
     /**
      * @var int
      */

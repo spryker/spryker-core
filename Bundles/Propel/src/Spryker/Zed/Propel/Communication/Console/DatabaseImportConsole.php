@@ -24,6 +24,7 @@ class DatabaseImportConsole extends Console
      * @var string
      */
     public const COMMAND_NAME = 'propel:database:import';
+
     /**
      * @var string
      */

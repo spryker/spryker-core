@@ -28,6 +28,7 @@ class Operation implements OperationInterface
      * @var string
      */
     public const ADD_ITEMS_SUCCESS = 'cart.add.items.success';
+
     /**
      * @var string
      */
@@ -37,14 +38,17 @@ class Operation implements OperationInterface
      * @var string
      */
     protected const TERMINATION_EVENT_NAME_ADD = 'add';
+
     /**
      * @var string
      */
     protected const TERMINATION_EVENT_NAME_REMOVE = 'remove';
+
     /**
      * @var string
      */
     protected const TERMINATION_EVENT_NAME_RELOAD = 'reload';
+
     /**
      * @var string
      */

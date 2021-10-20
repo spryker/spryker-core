@@ -34,26 +34,32 @@ class CmsBlockForm extends AbstractType
      * @var string
      */
     public const FIELD_ID_CMS_BLOCK = 'idCmsBlock';
+
     /**
      * @var string
      */
     public const FIELD_STORE_RELATION = 'storeRelation';
+
     /**
      * @var string
      */
     public const FIELD_FK_TEMPLATE = 'fkTemplate';
+
     /**
      * @var string
      */
     public const FIELD_NAME = 'name';
+
     /**
      * @var string
      */
     public const FIELD_IS_ACTIVE = 'is_active';
+
     /**
      * @var string
      */
     public const FIELD_VALID_FROM = 'validFrom';
+
     /**
      * @var string
      */

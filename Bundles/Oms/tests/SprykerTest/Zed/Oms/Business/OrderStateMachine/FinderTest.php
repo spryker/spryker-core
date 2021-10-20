@@ -38,10 +38,12 @@ class FinderTest extends Unit
      * @var string
      */
     public const STATE_DISPLAY_VALUE = 'name display value';
+
     /**
      * @var string
      */
     public const STATE_SUB_PROCESS_DISPLAY_VALUE = 'sub process state display value';
+
     /**
      * @var string
      */

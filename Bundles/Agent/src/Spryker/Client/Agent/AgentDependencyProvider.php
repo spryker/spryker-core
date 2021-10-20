@@ -24,10 +24,12 @@ class AgentDependencyProvider extends AbstractDependencyProvider
      * @var string
      */
     public const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
+
     /**
      * @var string
      */
     public const CLIENT_SESSION = 'CLIENT_SESSION';
+
     /**
      * @var string
      */

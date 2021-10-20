@@ -36,6 +36,7 @@ class ProductStorageFacadeTest extends Unit
      * @var string
      */
     protected const IS_SUPER_ATTRIBUTE_KEY = 'is_super';
+
     /**
      * @var string
      */
@@ -45,6 +46,7 @@ class ProductStorageFacadeTest extends Unit
      * @var string
      */
     protected const FORMAT_SUPER_ATTRIBUTE = 'attribute_%d';
+
     /**
      * @var string
      */
@@ -54,10 +56,12 @@ class ProductStorageFacadeTest extends Unit
      * @var string
      */
     protected const ATTRIBUTE_MAP_KEY = 'attribute_map';
+
     /**
      * @var string
      */
     protected const ATTRIBUTE_VARIANTS_KEY = 'attribute_variants';
+
     /**
      * @var string
      */

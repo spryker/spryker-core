@@ -26,10 +26,12 @@ abstract class AbstractMaintenanceConsole extends Console
      * @var string
      */
     public const APPLICATION_ALL = 'all';
+
     /**
      * @var string
      */
     public const APPLICATION_YVES = 'yves';
+
     /**
      * @var string
      */

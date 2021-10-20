@@ -63,26 +63,32 @@ class QuoteRequestsRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESPONSE_CODE_QUOTE_REQUEST_NOT_FOUND = '4501';
+
     /**
      * @var string
      */
     public const RESPONSE_CODE_COMPANY_USER_NOT_FOUND = '1404';
+
     /**
      * @var string
      */
     public const RESPONSE_CODE_QUOTE_REQUEST_WRONG_STATUS = '4504';
+
     /**
      * @var string
      */
     public const RESPONSE_CODE_QUOTE_REQUEST_CONCURRENT_CUSTOMERS = '4505';
+
     /**
      * @var string
      */
     public const RESPONSE_CODE_QUOTE_REQUEST_REFERENCE_MISSING = '4502';
+
     /**
      * @var string
      */
     public const RESPONSE_CODE_CART_IS_EMPTY = '4503';
+
     /**
      * @var string
      */
@@ -92,30 +98,37 @@ class QuoteRequestsRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESPONSE_DETAIL_CART_IS_EMPTY = 'Cart is empty.';
+
     /**
      * @var string
      */
     public const RESPONSE_DETAIL_QUOTE_REQUEST_NOT_FOUND = 'Quote request not found.';
+
     /**
      * @var string
      */
     public const EXCEPTION_MESSAGE_CART_WITH_ID_NOT_FOUND = 'Cart with given uuid not found.';
+
     /**
      * @var string
      */
     public const RESPONSE_DETAIL_COMPANY_USER_NOT_FOUND = 'Company user not found.';
+
     /**
      * @var string
      */
     public const RESPONSE_PROBLEM_CREATING_QUOTE_REQUEST_DESCRIPTION = 'There was a problem adding the quote request.';
+
     /**
      * @var string
      */
     public const RESPONSE_DETAIL_QUOTE_REQUEST_WRONG_STATUS = 'Wrong Quote Request status for this operation.';
+
     /**
      * @var string
      */
     public const RESPONSE_DETAIL_QUOTE_REQUEST_CONCURRENT_CUSTOMERS = 'Quote Request could not be updated due to parallel-customer interaction.';
+
     /**
      * @var string
      */

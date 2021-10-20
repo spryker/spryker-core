@@ -20,14 +20,17 @@ abstract class AbstractProductSearchDataMapper
      * @var string
      */
     protected const FACET_NAME = 'facet-name';
+
     /**
      * @var string
      */
     protected const FACET_VALUE = 'facet-value';
+
     /**
      * @var string
      */
     protected const ALL_PARENTS = 'all-parents';
+
     /**
      * @var string
      */

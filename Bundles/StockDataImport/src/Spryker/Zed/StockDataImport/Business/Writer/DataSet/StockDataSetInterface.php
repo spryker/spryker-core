@@ -13,6 +13,7 @@ interface StockDataSetInterface
      * @var string
      */
     public const COLUMN_NAME = 'name';
+
     /**
      * @var string
      */

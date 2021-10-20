@@ -41,6 +41,7 @@ class QuoteShareTest extends Unit
      * @var string
      */
     protected const READ_ONLY = 'READ_ONLY';
+
     /**
      * @var string
      */

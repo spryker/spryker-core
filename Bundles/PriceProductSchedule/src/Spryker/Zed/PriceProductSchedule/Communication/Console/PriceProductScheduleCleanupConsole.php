@@ -22,10 +22,12 @@ class PriceProductScheduleCleanupConsole extends Console
      * @var string
      */
     public const COMMAND_NAME = 'price-product-schedule:clean-up';
+
     /**
      * @var string
      */
     public const DESCRIPTION = 'Deletes scheduled prices that has been applied earlier than the days provided as argument';
+
     /**
      * @var string
      */

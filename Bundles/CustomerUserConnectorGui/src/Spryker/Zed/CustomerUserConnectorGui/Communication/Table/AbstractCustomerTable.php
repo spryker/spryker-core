@@ -23,26 +23,32 @@ abstract class AbstractCustomerTable extends AbstractTable
      * @var string
      */
     public const COL_ID = 'id_customer';
+
     /**
      * @var string
      */
     public const COL_FIRST_NAME = 'first_name';
+
     /**
      * @var string
      */
     public const COL_LAST_NAME = 'last_name';
+
     /**
      * @var string
      */
     public const COL_GENDER = 'gender';
+
     /**
      * @var string
      */
     public const COL_EMAIL = 'email';
+
     /**
      * @var string
      */
     public const COL_ASSIGNED_USER = 'assigned_zed_user';
+
     /**
      * @var string
      */

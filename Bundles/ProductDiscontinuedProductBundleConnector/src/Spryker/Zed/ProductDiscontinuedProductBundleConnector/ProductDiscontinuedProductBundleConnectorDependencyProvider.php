@@ -22,10 +22,12 @@ class ProductDiscontinuedProductBundleConnectorDependencyProvider extends Abstra
      * @var string
      */
     public const FACADE_PRODUCT_DISCONTINUED = 'FACADE_PRODUCT_DISCONTINUED';
+
     /**
      * @var string
      */
     public const FACADE_PRODUCT_BUNDLE = 'FACADE_PRODUCT_BUNDLE';
+
     /**
      * @var string
      */

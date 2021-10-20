@@ -18,6 +18,7 @@ class TooManyMethods extends AbstractRule implements ClassAware
      * @var string
      */
     public const MAX_METHODS = 'maxmethods';
+
     /**
      * @var string
      */

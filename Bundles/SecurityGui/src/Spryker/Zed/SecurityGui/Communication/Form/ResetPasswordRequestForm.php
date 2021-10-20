@@ -25,6 +25,7 @@ class ResetPasswordRequestForm extends AbstractType
      * @var string
      */
     public const FIELD_EMAIL = 'email';
+
     /**
      * @var string
      */

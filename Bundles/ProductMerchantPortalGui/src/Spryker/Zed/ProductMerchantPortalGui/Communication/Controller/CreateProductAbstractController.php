@@ -24,6 +24,7 @@ class CreateProductAbstractController extends AbstractController
      * @var string
      */
     protected const RESPONSE_NOTIFICATION_MESSAGE_SUCCESS = 'Product successfully created!';
+
     /**
      * @var string
      */
@@ -33,18 +34,22 @@ class CreateProductAbstractController extends AbstractController
      * @var string
      */
     protected const REQUEST_PARAM_NAME = 'name';
+
     /**
      * @var string
      */
     protected const REQUEST_PARAM_SKU = 'sku';
+
     /**
      * @var string
      */
     protected const REQUEST_PARAM_BACK = 'back';
+
     /**
      * @var string
      */
     protected const REQUEST_PARAM_CONCRETE_PRODUCTS = 'concreteProducts';
+
     /**
      * @var string
      */

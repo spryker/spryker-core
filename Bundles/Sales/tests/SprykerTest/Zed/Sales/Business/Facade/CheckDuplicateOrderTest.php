@@ -34,10 +34,12 @@ class CheckDuplicateOrderTest extends Test
      * @var string
      */
     protected const CURRENCY_ISO_CODE = 'CODE';
+
     /**
      * @var string
      */
     protected const ORDER_REFERENCE = 'ORDER_REFERENCE';
+
     /**
      * @var string
      */

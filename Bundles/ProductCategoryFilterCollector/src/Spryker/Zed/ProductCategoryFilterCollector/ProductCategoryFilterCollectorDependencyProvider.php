@@ -20,10 +20,12 @@ class ProductCategoryFilterCollectorDependencyProvider extends AbstractBundleDep
      * @var string
      */
     public const FACADE_COLLECTOR = 'FACADE_COLLECTOR';
+
     /**
      * @var string
      */
     public const SERVICE_DATA_READER = 'SERVICE_DATA_READER';
+
     /**
      * @var string
      */

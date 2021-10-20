@@ -31,6 +31,7 @@ class PriceProductOfferStorageWriter implements PriceProductOfferStorageWriterIn
      * @var string
      */
     protected const ID_PRICE_PRODUCT_OFFER = 'id_price_product_offer';
+
     /**
      * @var string
      */
@@ -40,6 +41,7 @@ class PriceProductOfferStorageWriter implements PriceProductOfferStorageWriterIn
      * @var string
      */
     protected const COL_ID_PRODUCT_NAME = 'IdProduct';
+
     /**
      * @var string
      */

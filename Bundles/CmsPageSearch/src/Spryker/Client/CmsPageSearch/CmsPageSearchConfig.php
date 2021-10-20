@@ -18,10 +18,12 @@ class CmsPageSearchConfig extends AbstractBundleConfig
      * @var string
      */
     protected const SORT_NAME = 'name';
+
     /**
      * @var string
      */
     protected const SORT_PARAMETER_NAME_ASC = 'name_asc';
+
     /**
      * @var string
      */
@@ -31,14 +33,17 @@ class CmsPageSearchConfig extends AbstractBundleConfig
      * @var int
      */
     protected const PAGINATION_DEFAULT_ITEMS_PER_PAGE = 12;
+
     /**
      * @var array
      */
     protected const PAGINATION_VALID_ITEMS_PER_PAGE_OPTIONS = [12, 24, 36];
+
     /**
      * @var string
      */
     protected const PAGINATION_PARAMETER_NAME_PAGE = 'page';
+
     /**
      * @var string
      */

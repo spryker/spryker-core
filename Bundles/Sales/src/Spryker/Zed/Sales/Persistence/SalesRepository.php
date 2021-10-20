@@ -40,6 +40,7 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
      * @var string
      */
     protected const ID_SALES_ORDER = 'id_sales_order';
+
     /**
      * @var array
      */

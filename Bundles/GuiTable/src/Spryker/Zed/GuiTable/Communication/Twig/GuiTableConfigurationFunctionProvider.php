@@ -26,6 +26,7 @@ class GuiTableConfigurationFunctionProvider extends TwigFunctionProvider
      * @var string
      */
     protected const CONFIG_ENABLED = 'enabled';
+
     /**
      * @var string
      */

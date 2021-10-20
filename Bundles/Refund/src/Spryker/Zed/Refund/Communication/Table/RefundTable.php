@@ -20,10 +20,12 @@ class RefundTable extends AbstractTable
      * @var string
      */
     public const ACTIONS = 'Actions';
+
     /**
      * @var string
      */
     public const SPY_SALES_ORDER = 'SpySalesOrder';
+
     /**
      * @var string
      */

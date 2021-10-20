@@ -20,6 +20,7 @@ class ConcreteProductViewExpander implements ConcreteProductViewExpanderInterfac
      * @var string
      */
     protected const PRICE_TYPE_TEMPLATE = '@PriceProductScheduleGui/_partials/price-type-tabs/price-type-tab.twig';
+
     /**
      * @var string
      */

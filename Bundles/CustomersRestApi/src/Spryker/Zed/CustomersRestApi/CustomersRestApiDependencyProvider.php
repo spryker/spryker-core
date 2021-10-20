@@ -21,6 +21,7 @@ class CustomersRestApiDependencyProvider extends AbstractBundleDependencyProvide
      * @var string
      */
     public const PROPEL_QUERY_CUSTOMER_ADDRESS = 'PROPEL_QUERY_CUSTOMER_ADDRESS';
+
     /**
      * @var string
      */

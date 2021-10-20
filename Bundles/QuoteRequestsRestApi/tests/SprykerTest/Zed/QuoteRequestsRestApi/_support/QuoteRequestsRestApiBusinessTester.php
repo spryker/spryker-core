@@ -46,6 +46,7 @@ class QuoteRequestsRestApiBusinessTester extends Actor
      * @var string
      */
     public const FAKE_CUSTOMER_REFERENCE = 'FAKE_CUSTOMER_REFERENCE';
+
     /**
      * @var string
      */

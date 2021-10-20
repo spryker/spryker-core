@@ -24,10 +24,12 @@ class ElasticsearchCopyIndexConsole extends Console
      * @var string
      */
     public const COMMAND_NAME = 'elasticsearch:index:copy';
+
     /**
      * @var string
      */
     public const DESCRIPTION = 'This command will copy one index to another.';
+
     /**
      * @var string
      */
@@ -37,6 +39,7 @@ class ElasticsearchCopyIndexConsole extends Console
      * @var string
      */
     protected const ARGUMENT_SOURCE_INDEX_NAME = 'source-index-name';
+
     /**
      * @var string
      */

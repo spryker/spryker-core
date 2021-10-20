@@ -52,6 +52,7 @@ class ProductLabelFacadeTest extends Unit
      * @var string
      */
     public const STORE_NAME_DE = 'DE';
+
     /**
      * @var string
      */
@@ -611,11 +612,11 @@ class ProductLabelFacadeTest extends Unit
         $productLabelTransfer = $this->tester->haveProductLabel();
         $this->tester->haveProductLabelToAbstractProductRelation(
             $productLabelTransfer->getIdProductLabel(),
-            $productTransfer2->getFkProductAbstract(),
+            $productTransfer2->getFkProductAbstract()
         );
         $this->tester->haveProductLabelToAbstractProductRelation(
             $productLabelTransfer->getIdProductLabel(),
-            $productTransfer3->getFkProductAbstract(),
+            $productTransfer3->getFkProductAbstract()
         );
 
         $productLabelRelationUpdaterPluginMock = $this->getMockBuilder(ProductLabelRelationUpdaterPluginInterface::class)

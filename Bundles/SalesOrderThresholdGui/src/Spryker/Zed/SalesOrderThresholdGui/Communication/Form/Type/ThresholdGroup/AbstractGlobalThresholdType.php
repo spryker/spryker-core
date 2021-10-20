@@ -26,10 +26,12 @@ abstract class AbstractGlobalThresholdType extends AbstractType
      * @var string
      */
     public const FIELD_ID_THRESHOLD = 'idThreshold';
+
     /**
      * @var string
      */
     public const FIELD_STRATEGY = 'strategy';
+
     /**
      * @var string
      */

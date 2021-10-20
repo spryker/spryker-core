@@ -27,6 +27,7 @@ class ConfigHelper extends Module
      * @var string
      */
     protected const CONFIG_CLASS_NAME_PATTERN = '\%1$s\%2$s\%3$s\%3$sConfig';
+
     /**
      * @var string
      */

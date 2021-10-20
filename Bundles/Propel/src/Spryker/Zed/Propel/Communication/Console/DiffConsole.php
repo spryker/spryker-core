@@ -21,6 +21,7 @@ class DiffConsole extends Console
      * @var string
      */
     public const COMMAND_NAME = 'propel:diff';
+
     /**
      * @var string
      */

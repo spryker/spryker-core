@@ -51,10 +51,12 @@ class ProductRelationTableTest extends Unit
      * @var string
      */
     protected const PRODUCT_RELATION_KEY_1 = 'PRODUCT_RELATION_KEY_1';
+
     /**
      * @var string
      */
     protected const PRODUCT_RELATION_KEY_2 = 'PRODUCT_RELATION_KEY_2';
+
     /**
      * @var string
      */

@@ -21,6 +21,7 @@ class MerchantProductWishlistDependencyProvider extends AbstractBundleDependency
      * @var string
      */
     public const FACADE_MERCHANT_PRODUCT = 'FACADE_MERCHANT_PRODUCT';
+
     /**
      * @var string
      */

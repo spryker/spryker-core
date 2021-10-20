@@ -31,10 +31,12 @@ class TooManyMethodsTest extends Unit
      * @var int
      */
     public const THRESHOLD_LOW = 1;
+
     /**
      * @var int
      */
     public const THRESHOLD_HIGH = 3;
+
     /**
      * @var int
      */

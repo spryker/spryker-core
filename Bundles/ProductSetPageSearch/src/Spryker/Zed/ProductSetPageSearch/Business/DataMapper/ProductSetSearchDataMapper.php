@@ -21,6 +21,7 @@ class ProductSetSearchDataMapper implements ProductSetSearchDataMapperInterface
      * @var string
      */
     protected const KEY_STORE = 'store';
+
     /**
      * @var string
      */

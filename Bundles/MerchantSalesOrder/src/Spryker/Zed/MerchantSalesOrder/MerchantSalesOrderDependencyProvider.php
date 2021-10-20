@@ -22,10 +22,12 @@ class MerchantSalesOrderDependencyProvider extends AbstractBundleDependencyProvi
      * @var string
      */
     public const FACADE_CALCULATION = 'FACADE_CALCULATION';
+
     /**
      * @var string
      */
     public const FACADE_MERCHANT = 'FACADE_MERCHANT';
+
     /**
      * @var string
      */
@@ -35,10 +37,12 @@ class MerchantSalesOrderDependencyProvider extends AbstractBundleDependencyProvi
      * @var string
      */
     public const PLUGINS_MERCHANT_ORDER_POST_CREATE = 'PLUGINS_MERCHANT_ORDER_POST_CREATE';
+
     /**
      * @var string
      */
     public const PLUGINS_MERCHANT_ORDER_EXPANDER = 'PLUGINS_MERCHANT_ORDER_EXPANDER';
+
     /**
      * @var string
      */

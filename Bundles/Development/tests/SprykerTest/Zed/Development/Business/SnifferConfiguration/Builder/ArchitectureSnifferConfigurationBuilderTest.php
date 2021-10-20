@@ -27,6 +27,7 @@ class ArchitectureSnifferConfigurationBuilderTest extends Unit
      * @var string
      */
     protected const CONFIG_PRIORITY_NAME = 'priority';
+
     /**
      * @var string
      */

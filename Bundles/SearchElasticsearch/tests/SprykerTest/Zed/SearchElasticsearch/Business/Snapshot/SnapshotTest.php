@@ -31,10 +31,12 @@ class SnapshotTest extends Unit
      * @var string
      */
     protected const REPOSITORY_NAME = 'repository';
+
     /**
      * @var string
      */
     protected const SNAPSHOT_NAME = 'snapshot';
+
     /**
      * @var array
      */

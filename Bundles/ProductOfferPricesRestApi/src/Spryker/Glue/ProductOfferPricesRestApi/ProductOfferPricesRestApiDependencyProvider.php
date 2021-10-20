@@ -23,18 +23,22 @@ class ProductOfferPricesRestApiDependencyProvider extends AbstractBundleDependen
      * @var string
      */
     public const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE';
+
     /**
      * @var string
      */
     public const CLIENT_MERCHANT_PRODUCT_OFFER_STORAGE = 'CLIENT_MERCHANT_PRODUCT_OFFER_STORAGE';
+
     /**
      * @var string
      */
     public const CLIENT_PRICE_PRODUCT_STORAGE = 'CLIENT_PRICE_PRODUCT_STORAGE';
+
     /**
      * @var string
      */
     public const CLIENT_PRICE_PRODUCT = 'CLIENT_PRICE_PRODUCT';
+
     /**
      * @var string
      */

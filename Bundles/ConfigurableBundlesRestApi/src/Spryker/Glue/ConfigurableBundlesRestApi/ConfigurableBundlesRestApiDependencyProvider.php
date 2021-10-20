@@ -22,10 +22,12 @@ class ConfigurableBundlesRestApiDependencyProvider extends AbstractBundleDepende
      * @var string
      */
     public const CLIENT_CONFIGURABLE_BUNDLE_STORAGE = 'CLIENT_CONFIGURABLE_BUNDLE_STORAGE';
+
     /**
      * @var string
      */
     public const CLIENT_CONFIGURABLE_BUNDLE_PAGE_SEARCH = 'CLIENT_CONFIGURABLE_BUNDLE_PAGE_SEARCH';
+
     /**
      * @var string
      */

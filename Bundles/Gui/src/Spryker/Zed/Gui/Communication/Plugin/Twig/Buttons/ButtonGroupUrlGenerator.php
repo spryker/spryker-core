@@ -13,6 +13,7 @@ class ButtonGroupUrlGenerator implements UrlGeneratorInterface
      * @var string
      */
     public const BUTTON_CLASS = 'class';
+
     /**
      * @var string
      */

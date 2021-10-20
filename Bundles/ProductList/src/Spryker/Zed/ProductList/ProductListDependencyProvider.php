@@ -27,6 +27,7 @@ class ProductListDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const FACADE_MESSENGER = 'FACADE_MESSENGER';
+
     /**
      * @var string
      */
@@ -36,10 +37,12 @@ class ProductListDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const PLUGINS_PRODUCT_LIST_PRE_CREATE = 'PLUGINS_PRODUCT_LIST_PRE_CREATE';
+
     /**
      * @var string
      */
     public const PLUGINS_PRODUCT_LIST_PRE_UPDATE = 'PLUGINS_PRODUCT_LIST_PRE_UPDATE';
+
     /**
      * @var string
      */

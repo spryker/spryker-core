@@ -17,10 +17,12 @@ class CmsBlockProductConnectorMapper implements CmsBlockProductConnectorMapperIn
      * @var string
      */
     public const PRODUCT_ABSTRACT_VIRTUAL_COLUMN_NAME = 'name';
+
     /**
      * @var string
      */
     public const PRODUCT_ABSTRACT_COLUMN_SKU = 'Sku';
+
     /**
      * @var string
      */

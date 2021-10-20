@@ -25,10 +25,12 @@ class MerchantOmsDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const FACADE_MERCHANT = 'FACADE_MERCHANT';
+
     /**
      * @var string
      */
     public const FACADE_STATE_MACHINE = 'FACADE_STATE_MACHINE';
+
     /**
      * @var string
      */
@@ -38,6 +40,7 @@ class MerchantOmsDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const PLUGINS_STATE_MACHINE_CONDITION = 'PLUGINS_STATE_MACHINE_CONDITION';
+
     /**
      * @var string
      */
@@ -47,6 +50,7 @@ class MerchantOmsDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const PROPEL_QUERY_MERCHANT_SALES_ORDER_ITEM = 'PROPEL_QUERY_MERCHANT_SALES_ORDER_ITEM';
+
     /**
      * @var string
      */

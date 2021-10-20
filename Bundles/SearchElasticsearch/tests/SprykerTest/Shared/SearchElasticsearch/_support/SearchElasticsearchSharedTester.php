@@ -34,10 +34,12 @@ class SearchElasticsearchSharedTester extends Actor
      * @var string
      */
     public const DEFAULT_ELASTICSEARCH_PROTOCOL = 'http';
+
     /**
      * @var string
      */
     public const DEFAULT_ELASTICSEARCH_HOST = 'localhost';
+
     /**
      * @var string
      */

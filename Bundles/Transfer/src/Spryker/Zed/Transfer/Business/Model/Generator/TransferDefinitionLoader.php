@@ -20,14 +20,17 @@ class TransferDefinitionLoader implements LoaderInterface
      * @var string
      */
     public const KEY_BUNDLE = 'bundle';
+
     /**
      * @var string
      */
     public const KEY_CONTAINING_BUNDLE = 'containing bundle';
+
     /**
      * @var string
      */
     public const KEY_TRANSFER = 'transfer';
+
     /**
      * @var string
      */

@@ -32,6 +32,7 @@ class DeleteController extends CategoryAbstractController
      * @var string
      */
     protected const ROUTE_CATEGORY_LIST = '/category-gui/list';
+
     /**
      * @var string
      */

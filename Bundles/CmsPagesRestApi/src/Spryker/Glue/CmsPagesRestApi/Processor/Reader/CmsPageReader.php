@@ -33,6 +33,7 @@ class CmsPageReader implements CmsPageReaderInterface
      * @var string
      */
     protected const ID_CMS_PAGE = 'id_cms_page';
+
     /**
      * @uses \Spryker\Client\CmsPageSearch\CmsPageSearchConfig::PAGINATION_PARAMETER_NAME_PAGE
      * @var string

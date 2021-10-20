@@ -15,10 +15,12 @@ class IntegerMoneyConstraint extends LessThan
      * @var int
      */
     protected const MAX_INT_VALUE = 214748364;
+
     /**
      * @var string
      */
     protected const OPTION_VALUE = 'value';
+
     /**
      * @var string
      */

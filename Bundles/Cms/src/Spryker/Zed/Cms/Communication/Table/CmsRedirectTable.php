@@ -23,6 +23,7 @@ class CmsRedirectTable extends AbstractTable
      * @var string
      */
     protected const ACTIONS = 'Actions';
+
     /**
      * @var string
      */

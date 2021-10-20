@@ -24,6 +24,7 @@ class JenkinsGenerateConsole extends Console
      * @var string
      */
     public const COMMAND_NAME = 'setup:jenkins:generate';
+
     /**
      * @var string
      */

@@ -21,6 +21,7 @@ class OauthPermissionDependencyProvider extends AbstractDependencyProvider
      * @var string
      */
     public const SERVICE_OAUTH = 'SERVICE_OAUTH';
+
     /**
      * @var string
      */

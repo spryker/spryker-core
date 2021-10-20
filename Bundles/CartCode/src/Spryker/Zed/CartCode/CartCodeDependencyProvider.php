@@ -21,6 +21,7 @@ class CartCodeDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const FACADE_CALCULATION = 'FACADE_CALCULATION';
+
     /**
      * @var string
      */

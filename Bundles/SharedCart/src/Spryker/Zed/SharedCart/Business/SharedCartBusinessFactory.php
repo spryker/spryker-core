@@ -41,7 +41,7 @@ use Spryker\Zed\SharedCart\Dependency\Facade\SharedCartToCustomerFacadeInterface
 use Spryker\Zed\SharedCart\Dependency\Facade\SharedCartToMessengerFacadeInterface;
 use Spryker\Zed\SharedCart\Dependency\Facade\SharedCartToPermissionFacadeInterface;
 use Spryker\Zed\SharedCart\Dependency\Facade\SharedCartToQuoteFacadeInterface;
-use Spryker\Zed\SharedCart\Dependency\Facade\SharedCartToStoreFacadeInterface as SharedCartToStoreFacadeInterface;
+use Spryker\Zed\SharedCart\Dependency\Facade\SharedCartToStoreFacadeInterface;
 use Spryker\Zed\SharedCart\SharedCartDependencyProvider;
 
 /**

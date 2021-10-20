@@ -24,6 +24,7 @@ class IndexController extends AbstractController
      * @var string
      */
     public const DEFAULT_FORMAT = 'svg';
+
     /**
      * @var int
      */

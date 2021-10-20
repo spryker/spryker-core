@@ -39,18 +39,22 @@ class TriggerTest extends StateMachineMocks
      * @var int
      */
     public const ITEM_IDENTIFIER = 1985;
+
     /**
      * @var string
      */
     public const TESTING_STATE_MACHINE = 'Testing state machine';
+
     /**
      * @var string
      */
     public const PROCESS_NAME = 'Process';
+
     /**
      * @var string
      */
     public const INITIAL_STATE = 'new';
+
     /**
      * @var string
      */

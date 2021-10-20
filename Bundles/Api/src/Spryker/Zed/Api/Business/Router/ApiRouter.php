@@ -22,10 +22,12 @@ class ApiRouter implements RouterInterface
      * @var string
      */
     protected const MODULE_NAME = 'Api';
+
     /**
      * @var string
      */
     protected const CONTROLLER_NAME = 'Rest';
+
     /**
      * @var string
      */

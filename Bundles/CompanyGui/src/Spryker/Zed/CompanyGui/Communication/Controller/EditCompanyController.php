@@ -21,10 +21,12 @@ class EditCompanyController extends AbstractController
      * @var string
      */
     public const URL_PARAM_ID_COMPANY = 'id-company';
+
     /**
      * @var string
      */
     public const URL_PARAM_REDIRECT_URL = 'redirect-url';
+
     /**
      * @var string
      */
@@ -34,26 +36,32 @@ class EditCompanyController extends AbstractController
      * @var string
      */
     public const MESSAGE_COMPANY_ACTIVATE_SUCCESS = 'Company has been activated.';
+
     /**
      * @var string
      */
     public const MESSAGE_COMPANY_DEACTIVATE_SUCCESS = 'Company has been deactivated.';
+
     /**
      * @var string
      */
     public const MESSAGE_COMPANY_APPROVE_SUCCESS = 'Company has been approved.';
+
     /**
      * @var string
      */
     public const MESSAGE_COMPANY_DENY_SUCCESS = 'Company has been denied.';
+
     /**
      * @var string
      */
     protected const MESSAGE_COMPANY_UPDATE_SUCCESS = 'Company has been updated.';
+
     /**
      * @var string
      */
     protected const MESSAGE_COMPANY_UPDATE_ERROR = 'Company has not been updated.';
+
     /**
      * @var string
      */

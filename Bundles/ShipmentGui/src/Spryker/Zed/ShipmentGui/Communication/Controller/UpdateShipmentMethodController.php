@@ -22,14 +22,17 @@ class UpdateShipmentMethodController extends AbstractController
      * @var string
      */
     protected const REDIRECT_URL = '/shipment-gui/shipment-method/index';
+
     /**
      * @var string
      */
     protected const MESSAGE_SUCCESS = 'Shipment method has been successfully updated';
+
     /**
      * @var string
      */
     protected const MESSAGE_SHIPMENT_METHOD_NOT_FOUND = 'Shipment method not found';
+
     /**
      * @var string
      */

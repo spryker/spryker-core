@@ -19,6 +19,7 @@ class IndexController extends AbstractController
      * @var string
      */
     protected const MESSAGE_SUCCESS_SYNC = 'Permission plugins have been synchronized';
+
     /**
      * @var string
      */

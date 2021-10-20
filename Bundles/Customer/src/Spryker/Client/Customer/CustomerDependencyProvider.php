@@ -21,6 +21,7 @@ class CustomerDependencyProvider extends AbstractDependencyProvider
      * @var string
      */
     public const SERVICE_SESSION = 'session service';
+
     /**
      * @var string
      */
@@ -30,18 +31,22 @@ class CustomerDependencyProvider extends AbstractDependencyProvider
      * @var string
      */
     public const PLUGINS_CUSTOMER_SESSION_GET = 'PLUGINS_CUSTOMER_SESSION_GET';
+
     /**
      * @var string
      */
     public const PLUGINS_CUSTOMER_SESSION_SET = 'PLUGINS_CUSTOMER_SESSION_SET';
+
     /**
      * @var string
      */
     public const PLUGINS_DEFAULT_ADDRESS_CHANGE = 'PLUGINS_DEFAULT_ADDRESS_CHANGE';
+
     /**
      * @var string
      */
     public const PLUGINS_CUSTOMER_SECURED_PATTERN_RULE = 'PLUGINS_CUSTOMER_SECURED_PATTERN_RULE';
+
     /**
      * @var string
      */

@@ -25,10 +25,12 @@ class StoreRelationDropdownType extends AbstractType
      * @var string
      */
     public const OPTION_INACTIVE_CHOICES = 'inactive_choices';
+
     /**
      * @var string
      */
     public const OPTION_DATA_CLASS = 'data_class';
+
     /**
      * @var string
      */
@@ -38,10 +40,12 @@ class StoreRelationDropdownType extends AbstractType
      * @var string
      */
     public const OPTION_ATTRIBUTE_ACTION_URL = 'action_url';
+
     /**
      * @var string
      */
     public const OPTION_ATTRIBUTE_ACTION_EVENT = 'action_event';
+
     /**
      * @var string
      */
@@ -56,10 +60,12 @@ class StoreRelationDropdownType extends AbstractType
      * @var string
      */
     protected const FIELD_ID_ENTITY = 'id_entity';
+
     /**
      * @var string
      */
     protected const FIELD_ID_STORES = 'id_stores';
+
     /**
      * @var string
      */

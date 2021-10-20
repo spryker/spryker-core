@@ -28,6 +28,7 @@ class ProductOptionGroupDataHelper extends Module
      * @var string
      */
     public const DEFAULT_STORE = 'DE';
+
     /**
      * @var string
      */
@@ -37,6 +38,7 @@ class ProductOptionGroupDataHelper extends Module
      * @var string
      */
     public const CURRENCY_CODE = 'currencyCode';
+
     /**
      * @var string
      */

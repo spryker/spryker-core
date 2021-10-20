@@ -20,6 +20,7 @@ class MerchantOrderItemTableExpander implements MerchantOrderItemTableExpanderIn
      * @var string
      */
     protected const COL_KEY_MERCHANT_SKU = 'merchantSku';
+
     /**
      * @var string
      */

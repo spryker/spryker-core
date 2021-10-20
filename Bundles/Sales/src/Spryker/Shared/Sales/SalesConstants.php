@@ -16,6 +16,7 @@ interface SalesConstants
      * @var string
      */
     public const NAME_ORDER_REFERENCE = 'OrderReference';
+
     /**
      * @var string
      */

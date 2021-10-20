@@ -21,6 +21,7 @@ class TaxProductConnectorDependencyProvider extends AbstractBundleDependencyProv
      * @var string
      */
     public const FACADE_PRODUCT = 'facade product';
+
     /**
      * @var string
      */

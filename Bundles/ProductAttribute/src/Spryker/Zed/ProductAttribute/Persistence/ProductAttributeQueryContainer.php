@@ -25,26 +25,32 @@ class ProductAttributeQueryContainer extends AbstractQueryContainer implements P
      * @var string
      */
     public const KEY = 'product_attribute_key';
+
     /**
      * @var string
      */
     public const IS_SUPER = 'is_super';
+
     /**
      * @var string
      */
     public const ATTRIBUTE_ID = 'attribute_id';
+
     /**
      * @var string
      */
     public const ALLOW_INPUT = 'allow_input';
+
     /**
      * @var string
      */
     public const INPUT_TYPE = 'input_type';
+
     /**
      * @var string
      */
     public const ID_PRODUCT_ATTRIBUTE_KEY = 'id_product_attribute_key';
+
     /**
      * @var string
      */

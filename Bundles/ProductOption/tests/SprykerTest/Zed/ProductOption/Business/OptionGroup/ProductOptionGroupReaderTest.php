@@ -75,7 +75,7 @@ class ProductOptionGroupReaderTest extends MockProvider
         $localeFacadeMock
             ->expects($this->any())
             ->method('getLocaleCollection')
-            ->willReturn([ new LocaleTransfer()]);
+            ->willReturn([new LocaleTransfer()]);
 
         $productOptionGroupEntity = new SpyProductOptionGroup();
 

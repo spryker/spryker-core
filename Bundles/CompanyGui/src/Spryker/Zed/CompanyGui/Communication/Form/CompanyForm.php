@@ -24,6 +24,7 @@ class CompanyForm extends AbstractType
      * @var string
      */
     protected const FIELD_ID_COMPANY = 'id_company';
+
     /**
      * @var string
      */

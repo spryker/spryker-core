@@ -23,6 +23,7 @@ class SelectType extends AbstractType
      * @var string
      */
     public const URL = 'url';
+
     /**
      * @var string
      */

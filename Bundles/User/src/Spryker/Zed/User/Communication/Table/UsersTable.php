@@ -23,18 +23,22 @@ class UsersTable extends AbstractTable
      * @var string
      */
     public const ACTION = 'Action';
+
     /**
      * @var string
      */
     public const UPDATE_USER_URL = '/user/edit/update';
+
     /**
      * @var string
      */
     public const DEACTIVATE_USER_URL = '/user/edit/deactivate-user';
+
     /**
      * @var string
      */
     public const ACTIVATE_USER_URL = '/user/edit/activate-user';
+
     /**
      * @var string
      */
@@ -176,7 +180,7 @@ class UsersTable extends AbstractTable
             Url::generate(self::UPDATE_USER_URL, [
                 self::PARAM_ID_USER => $user[SpyUserTableMap::COL_ID_USER],
             ]),
-            'Edit',
+            'Edit'
         );
 
         $urls[] = $this->createStatusButton($user);
@@ -222,7 +226,7 @@ class UsersTable extends AbstractTable
                     static::PARAM_ID_USER => $user[SpyUserTableMap::COL_ID_USER],
                 ]),
                 'Activate',
-                ActivateUserForm::class,
+                ActivateUserForm::class
             );
         }
 

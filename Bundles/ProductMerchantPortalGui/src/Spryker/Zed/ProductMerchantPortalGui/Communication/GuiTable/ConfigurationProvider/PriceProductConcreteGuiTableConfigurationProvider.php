@@ -19,6 +19,7 @@ class PriceProductConcreteGuiTableConfigurationProvider implements PriceProductC
      * @var string
      */
     protected const FORMAT_STRING_DATA_URL = '%s?%s=%s';
+
     /**
      * @var string
      */
@@ -28,6 +29,7 @@ class PriceProductConcreteGuiTableConfigurationProvider implements PriceProductC
      * @var string
      */
     protected const TITLE_ROW_ACTION_DELETE = 'Delete';
+
     /**
      * @var string
      */

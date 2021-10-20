@@ -20,6 +20,7 @@ class SortConfigBuilder extends AbstractPlugin implements SortConfigBuilderInter
      * @var string
      */
     public const DIRECTION_ASC = 'asc';
+
     /**
      * @var string
      */

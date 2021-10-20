@@ -23,14 +23,17 @@ class CatalogSearchRestApiDependencyProvider extends AbstractBundleDependencyPro
      * @var string
      */
     public const CLIENT_CATALOG = 'CLIENT_CATALOG';
+
     /**
      * @var string
      */
     public const CLIENT_PRICE = 'CLIENT_PRICE';
+
     /**
      * @var string
      */
     public const CLIENT_CURRENCY = 'CLIENT_CURRENCY';
+
     /**
      * @var string
      */

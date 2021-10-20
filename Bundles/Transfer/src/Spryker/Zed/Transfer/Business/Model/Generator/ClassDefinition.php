@@ -24,6 +24,7 @@ class ClassDefinition implements ClassDefinitionInterface
      * @var string
      */
     public const TYPE_FULLY_QUALIFIED = 'type_fully_qualified';
+
     /**
      * @var string
      */
@@ -33,6 +34,7 @@ class ClassDefinition implements ClassDefinitionInterface
      * @var string
      */
     protected const EXTRA_TYPE_HINTS = 'extra_type_hints';
+
     /**
      * @var array
      */

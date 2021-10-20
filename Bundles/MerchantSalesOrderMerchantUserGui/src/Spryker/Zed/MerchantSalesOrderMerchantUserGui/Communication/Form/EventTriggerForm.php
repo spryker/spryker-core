@@ -24,10 +24,12 @@ class EventTriggerForm extends AbstractType
      * @var string
      */
     public const OPTION_EVENT = 'OPTION_EVENT';
+
     /**
      * @var string
      */
     public const OPTION_SUBMIT_BUTTON_CLASS = 'OPTION_SUBMIT_BUTTON_CLASS';
+
     /**
      * @var string
      */
