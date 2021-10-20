@@ -224,7 +224,7 @@ class SchedulerFacadeTest extends Unit
     {
         return new SchedulerFilter(
             $this->getSchedulerConfigMock(),
-            $this->getSchedulerAdapterPlugins()
+            $this->getSchedulerAdapterPlugins(),
         );
     }
 
