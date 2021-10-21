@@ -119,8 +119,8 @@ class ApplicationTest extends Unit
              */
             public function provide(ContainerInterface $container): ContainerInterface
             {
-                $container->set(self::SERVICE, function () {
-                    return [self::SERVICE_PROPERTY => true];
+                $container->set(ApplicationTest::SERVICE, function () {
+                    return [ApplicationTest::SERVICE_PROPERTY => true];
                 });
 
                 return $container;

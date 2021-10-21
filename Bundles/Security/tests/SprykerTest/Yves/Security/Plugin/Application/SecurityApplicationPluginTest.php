@@ -326,7 +326,7 @@ class SecurityApplicationPluginTest extends Unit
                  *
                  * @return \Symfony\Component\HttpFoundation\Response
                  */
-                public function onAuthenticationSuccess(Request $request, TokenInterface $token)
+                public function onAuthenticationSuccess(Request $request, TokenInterface $token): Response
                 {
                     return new Response('authentication success');
                 }
