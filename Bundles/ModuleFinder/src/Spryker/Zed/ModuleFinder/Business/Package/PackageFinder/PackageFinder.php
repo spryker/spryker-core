@@ -10,6 +10,7 @@ namespace Spryker\Zed\ModuleFinder\Business\Package\PackageFinder;
 use Generated\Shared\Transfer\PackageTransfer;
 use Laminas\Filter\FilterChain;
 use Laminas\Filter\Word\DashToCamelCase;
+use RuntimeException;
 use Spryker\Zed\ModuleFinder\ModuleFinderConfig;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
@@ -90,13 +91,22 @@ class PackageFinder implements PackageFinderInterface
     /**
      * @param string $path
      *
+     * @throws \RuntimeException
+     *
      * @return array
      */
     protected function getComposerJsonAsArray(string $path): array
     {
         $pathToComposerJson = sprintf('%s/composer.json', $path);
         $fileContent = file_get_contents($pathToComposerJson);
+        if ($fileContent === false) {
+            throw new RuntimeException('Cannot read file content: ' . $pathToComposerJson);
+        }
+
         $composerJsonAsArray = json_decode($fileContent, true);
+        if ($composerJsonAsArray === false || $composerJsonAsArray === null) {
+            throw new RuntimeException('Invalid file content: ' . $pathToComposerJson);
+        }
 
         return $composerJsonAsArray;
     }

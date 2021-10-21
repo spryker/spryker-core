@@ -15,6 +15,7 @@ use Laminas\Filter\FilterChain;
 use Laminas\Filter\StringToLower;
 use Laminas\Filter\Word\CamelCaseToDash;
 use Laminas\Filter\Word\DashToCamelCase;
+use RuntimeException;
 use Spryker\Zed\ModuleFinder\Business\Module\ModuleMatcher\ModuleMatcherInterface;
 use Spryker\Zed\ModuleFinder\ModuleFinderConfig;
 use Symfony\Component\Finder\Finder;
@@ -330,6 +331,8 @@ class ModuleFinder implements ModuleFinderInterface
     /**
      * @param string $path
      *
+     * @throws \RuntimeException
+     *
      * @return array
      */
     protected function getComposerJsonAsArray(string $path): array
@@ -339,7 +342,14 @@ class ModuleFinder implements ModuleFinderInterface
             return [];
         }
         $fileContent = file_get_contents($pathToComposerJson);
+        if ($fileContent === false) {
+            throw new RuntimeException('Cannot read file content: ' . $pathToComposerJson);
+        }
+
         $composerJsonAsArray = json_decode($fileContent, true);
+        if ($composerJsonAsArray === false || $composerJsonAsArray === null) {
+            throw new RuntimeException('Invalid file content: ' . $pathToComposerJson);
+        }
 
         return $composerJsonAsArray;
     }
@@ -364,7 +374,7 @@ class ModuleFinder implements ModuleFinderInterface
      */
     protected function getOrganizationNameFromDirectory(SplFileInfo $directoryInfo): string
     {
-        $pathFragments = explode(DIRECTORY_SEPARATOR, $directoryInfo->getRealPath());
+        $pathFragments = explode(DIRECTORY_SEPARATOR, (string)$directoryInfo->getRealPath());
         $vendorPosition = array_search('vendor', $pathFragments);
 
         $organizationName = $pathFragments[$vendorPosition + 1];
@@ -379,7 +389,7 @@ class ModuleFinder implements ModuleFinderInterface
      */
     protected function getApplicationNameFromDirectory(SplFileInfo $directoryInfo): string
     {
-        $pathFragments = explode(DIRECTORY_SEPARATOR, $directoryInfo->getRealPath());
+        $pathFragments = explode(DIRECTORY_SEPARATOR, (string)$directoryInfo->getRealPath());
         $vendorPosition = array_search('vendor', $pathFragments);
 
         $applicationName = $pathFragments[$vendorPosition + 2];
