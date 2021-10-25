@@ -90,40 +90,40 @@ class RunnerConsole extends Console
     {
         $this->setName(static::COMMAND_NAME);
         $this->setDescription('This command will execute \'npm run\' with the specified task');
-        $this->setHelp(<<<EOM
+        $help = <<<EOM
 This command will execute 'npm run' with a specified task.
 
 Example:
- - code:npm --build-all  will build the client resources for the core, the project zed and the project yves code
-EOM
-        );
+ - code:npm --build-all  will build the client resources for the core, the project Zed and the project Yves code
+EOM;
+        $this->setHelp($help);
 
         $this->addOption(
             static::OPTION_TASK_BUILD_ALL,
             static::OPTION_TASK_BUILD_ALL_SHORT,
             InputOption::VALUE_NONE,
-            'execute \'npm run\' to build all core and project resources'
+            'execute \'npm run\' to build all core and project resources',
         );
 
         $this->addOption(
             static::OPTION_TASK_BUILD_CORE,
             static::OPTION_TASK_BUILD_CORE_SHORT,
             InputOption::VALUE_NONE,
-            'execute \'npm run\' to build the core resources of zed'
+            'execute \'npm run\' to build the core resources of Zed',
         );
 
         $this->addOption(
             static::OPTION_TASK_BUILD_ZED,
             static::OPTION_TASK_BUILD_ZED_SHORT,
             InputOption::VALUE_NONE,
-            'execute \'npm run\' to build the project resources of zed'
+            'execute \'npm run\' to build the project resources of Zed',
         );
 
         $this->addOption(
             static::OPTION_TASK_BUILD_YVES,
             static::OPTION_TASK_BUILD_YVES_SHORT,
             InputOption::VALUE_NONE,
-            'execute \'npm run\' to build the project resources of yves'
+            'execute \'npm run\' to build the project resources of Yves',
         );
     }
 

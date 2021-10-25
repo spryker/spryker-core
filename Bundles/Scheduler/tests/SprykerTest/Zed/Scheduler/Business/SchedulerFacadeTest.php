@@ -286,7 +286,7 @@ class SchedulerFacadeTest extends Unit
      */
     protected function getPhpSchedulerReaderPath(): string
     {
-        return codecept_data_dir() . static::TEST_SCHEDULER . '.php';
+        return codecept_data_dir() . 'cronjobs' . DIRECTORY_SEPARATOR . static::TEST_SCHEDULER . '.php';
     }
 
     /**
