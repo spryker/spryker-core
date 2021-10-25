@@ -249,4 +249,7 @@
         <property name="merchantOrderItemIds" type="int[]" singular="merchantOrderItemId"/>
     </transfer>
 
+    <transfer name="ZedUiFormResponse">
+    </transfer>
+
 </transfers>

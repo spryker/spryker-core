@@ -88,9 +88,15 @@
 
     <transfer name="MerchantRelationshipFilter">
         <property name="merchantRelationshipIds" type="int[]" singular="merchantRelationshipId"/>
+        <property name="merchantIds" type="int[]" singular="idMerchant"/>
     </transfer>
 
     <transfer name="MerchantRelationship">
         <property name="fkCompanyBusinessUnit" type="int" description="ID of Business Unit Owner"/>
+        <property name="assigneeCompanyBusinessUnits" type="CompanyBusinessUnitCollection"/>
+    </transfer>
+
+    <transfer name="CompanyBusinessUnitCollection">
+        <property name="companyBusinessUnits" type="CompanyBusinessUnit[]" singular="companyBusinessUnit"/>
     </transfer>
 </transfers>
