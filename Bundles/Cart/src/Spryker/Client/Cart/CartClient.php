@@ -319,7 +319,7 @@ class CartClient extends AbstractClient implements CartClientInterface
      *
      * @api
      *
-     * @deprecated
+     * @deprecated Will be removed without replacement.
      *
      * @return \Spryker\Client\Cart\Zed\CartStubInterface|\Spryker\Client\ZedRequest\Stub\ZedRequestStub
      */

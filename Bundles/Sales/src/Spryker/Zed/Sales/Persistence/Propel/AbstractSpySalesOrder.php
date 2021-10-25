@@ -47,7 +47,7 @@ abstract class AbstractSpySalesOrder extends BaseSpySalesOrder
     }
 
     /**
-     * @deprecated
+     * @deprecated Will be removed without replacement.
      *
      * This is for bc reasons, because we don't have database foreign key from fk_customer.
      * Will be removed in the future.
@@ -74,7 +74,7 @@ abstract class AbstractSpySalesOrder extends BaseSpySalesOrder
     }
 
     /**
-     * @deprecated
+     * @deprecated Will be removed without replacement.
      *
      * Get the associated SpyCustomer object
      *
@@ -94,7 +94,7 @@ abstract class AbstractSpySalesOrder extends BaseSpySalesOrder
     }
 
     /**
-     * @deprecated
+     * @deprecated Will be removed without replacement.
      *
      * This is for bc reasons, because we don't have database foreign key from fk_customer.
      * Will be removed in the future.

@@ -348,7 +348,7 @@ class SessionQuoteStorageStrategyPlugin extends AbstractPlugin implements QuoteS
     }
 
     /**
-     * @deprecated
+     * @deprecated Use {@link \Spryker\Client\Quote\QuoteClient::setQuote()} instead.
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *

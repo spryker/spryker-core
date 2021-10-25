@@ -44,7 +44,7 @@ interface ProductCategoryFilterClientInterface
      *
      * @api
      *
-     * @deprecated
+     * @deprecated Will be removed without replacement.
      *
      * Specification:
      * - Returns product category filters from storage based on category id and locale
