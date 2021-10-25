@@ -28,6 +28,7 @@
     </transfer>
 
     <transfer name="Store">
+        <property name="name" type="string"/>
     </transfer>
 
 </transfers>

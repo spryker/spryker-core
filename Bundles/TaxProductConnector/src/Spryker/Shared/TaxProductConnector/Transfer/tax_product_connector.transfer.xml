@@ -33,6 +33,7 @@
 
     <transfer name="TaxSet">
         <property name="taxRates" type="TaxRate[]" singular="taxRate"/>
+        <property name="idTaxSet" type="int"/>
     </transfer>
 
     <transfer name="TaxRate">

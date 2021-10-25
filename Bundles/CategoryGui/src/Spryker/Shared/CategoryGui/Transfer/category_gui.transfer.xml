@@ -16,6 +16,10 @@
         <property name="isClickable" type="bool"/>
         <property name="isSearchable" type="bool"/>
         <property name="parentCategoryNode" type="Node"/>
+        <property name="nodeCollection" type="NodeCollection"/>
+        <property name="name" type="string"/>
+        <property name="storeRelation" type="StoreRelation"/>
+        <property name="categoryKey" type="string"/>
     </transfer>
 
     <transfer name="CategoryLocalizedAttributes">
@@ -28,6 +32,8 @@
         <property name="path" type="string"/>
         <property name="name" type="string"/>
         <property name="fkParentCategoryNode" type="int"/>
+        <property name="isRoot" type="bool"/>
+        <property name="fkCategory" type="int"/>
     </transfer>
 
     <transfer name="TabItem">
@@ -49,18 +55,27 @@
     </transfer>
 
     <transfer name="StoreRelation">
+        <property name="stores" type="Store[]" singular="stores"/>
     </transfer>
 
     <transfer name="CategoryCriteria">
+        <property name="idCategory" type="int"/>
+        <property name="idCategoryNode" type="int"/>
+        <property name="withChildrenRecursively" type="bool"/>
+        <property name="isMain" type="bool"/>
+        <property name="localeName" type="string"/>
     </transfer>
 
     <transfer name="Store">
+        <property name="idStore" type="int"/>
     </transfer>
 
     <transfer name="Message">
+        <property name="value" type="string"/>
     </transfer>
 
     <transfer name="CategoryNodeUrlCriteria">
+        <property name="categoryNodeIds" type="int[]" singular="idCategoryNode"/>
     </transfer>
 
     <transfer name="NodeCollection">
@@ -68,6 +83,7 @@
     </transfer>
 
     <transfer name="CategoryCollection">
+        <property name="categories" type="Category[]" singular="category"/>
     </transfer>
 
     <transfer name="StoreWithState">

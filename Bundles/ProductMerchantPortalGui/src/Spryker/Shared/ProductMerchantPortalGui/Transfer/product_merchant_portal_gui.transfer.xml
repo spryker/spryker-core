@@ -3,6 +3,7 @@
 
     <transfer name="GuiTableConfiguration">
         <property name="editable" type="GuiTableEditableConfiguration"/>
+        <property name="dataSource" type="GuiTableDataSourceConfiguration"/>
     </transfer>
 
     <transfer name="GuiTableEditableConfiguration">
@@ -15,6 +16,8 @@
     </transfer>
 
     <transfer name="GuiTableDataRequest">
+        <property name="orderBy" type="string"/>
+        <property name="orderDirection" type="string"/>
     </transfer>
 
     <transfer name="GuiTableDataResponse">
@@ -94,17 +97,23 @@
         <property name="sortOrder" type="int"/>
         <property name="externalUrlSmall" type="string"/>
         <property name="externalUrlLarge" type="string"/>
+        <property name="idProductImage" type="int"/>
+        <property name="idProductImageSetToProductImage" type="int"/>
     </transfer>
 
     <transfer name="ProductImageSet">
         <property name="productImages" type="ProductImage[]" singular="productImage"/>
         <property name="locale" type="Locale"/>
         <property name="name" type="string"/>
+        <property name="idProduct" type="int"/>
+        <property name="idProductAbstract" type="int"/>
+        <property name="idProductImageSet" type="int"/>
     </transfer>
 
     <transfer name="Store">
         <property name="idStore" type="int"/>
         <property name="name" type="string"/>
+        <property name="availableLocaleIsoCodes" type="array" singular="availableLocaleCode"/>
     </transfer>
 
     <transfer name="Category">
@@ -143,6 +152,7 @@
     <transfer name="MerchantProduct">
         <property name="idMerchant" type="int"/>
         <property name="productAbstract" type="ProductAbstract"/>
+        <property name="products" type="ProductConcrete[]" singular="product"/>
     </transfer>
 
     <transfer name="LocalizedAttributes">
@@ -150,6 +160,10 @@
         <property name="description" type="string"/>
         <property name="locale" type="Locale"/>
         <property name="attributes" type="array" singular="attribute"/>
+        <property name="metaTitle" type="string"/>
+        <property name="metaKeywords" type="string"/>
+        <property name="metaDescription" type="string"/>
+        <property name="isSearchable" type="bool"/>
     </transfer>
 
     <transfer name="ProductAbstractResponse">
@@ -204,6 +218,9 @@
         <property name="fkPriceType" type="int"/>
         <property name="priceType" type="PriceType"/>
         <property name="priceDimension" type="PriceProductDimension"/>
+        <property name="idProduct" type="int"/>
+        <property name="volumeQuantity" type="int"/>
+        <property name="idPriceProduct" type="int"/>
     </transfer>
 
     <transfer name="MoneyValue">
@@ -213,6 +230,7 @@
         <property name="currency" type="Currency"/>
         <property name="fkStore" type="int"/>
         <property name="fkCurrency" type="int"/>
+        <property name="idEntity" type="int"/>
     </transfer>
 
     <transfer name="PriceType">
@@ -243,6 +261,11 @@
         <property name="priceProductStoreIds" type="int[]" singular="idPriceProductStore"/>
         <property name="onlyConcretePrices" type="bool"/>
         <property name="priceDimension" type="PriceProductDimension"/>
+        <property name="idProductConcrete" type="int"/>
+        <property name="idProductAbstract" type="int"/>
+        <property name="idCurrency" type="int"/>
+        <property name="idStore" type="int"/>
+        <property name="priceType" type="string"/>
     </transfer>
 
     <transfer name="ValidationResponse">
@@ -311,6 +334,7 @@
         <property name="fkProductAbstract" type="int"/>
         <property name="idProductConcrete" type="int"/>
         <property name="stocks" type="StockProduct[]" singular="stock"/>
+        <property name="prices" type="PriceProduct[]" singular="price"/>
     </transfer>
 
     <transfer name="ProductManagementAttributeCollection">
@@ -321,6 +345,7 @@
         <property name="isSuper" type="bool"/>
         <property name="key" type="string"/>
         <property name="values" type="ProductManagementAttributeValue[]" singular="value"/>
+        <property name="allowInput" type="bool"/>
     </transfer>
 
     <transfer name="ProductManagementAttributeFilter">
@@ -346,6 +371,7 @@
     </transfer>
 
     <transfer name="Merchant">
+        <property name="idMerchant" type="int"/>
     </transfer>
 
     <transfer name="StockProduct">
@@ -373,6 +399,7 @@
     <transfer name="ProductCriteria">
         <property name="idProductAbstract" type="int"/>
         <property name="attributes" type="string[]" associative="true" singular="attribute"/>
+        <property name="skus" type="string[]" singular="sku"/>
     </transfer>
 
     <transfer name="MerchantStockCriteria">
@@ -385,5 +412,9 @@
     </transfer>
 
     <transfer name="ZedUiFormResponse">
+    </transfer>
+
+    <transfer name="GuiTableDataSourceConfiguration">
+        <property name="type" type="string"/>
     </transfer>
 </transfers>
