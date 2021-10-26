@@ -117,6 +117,7 @@ class EventCollection implements EventCollectionInterface
      *
      * @return bool
      */
+    #[\ReturnTypeWillChange]
     public function offsetExists($offset)
     {
         return $this->has($offset);
@@ -131,6 +132,7 @@ class EventCollection implements EventCollectionInterface
      *
      * @return \SplPriorityQueue|array
      */
+    #[\ReturnTypeWillChange]
     public function offsetGet($offset)
     {
         return $this->get($offset);
@@ -146,6 +148,7 @@ class EventCollection implements EventCollectionInterface
      *
      * @return void
      */
+    #[\ReturnTypeWillChange]
     public function offsetSet($offset, $value)
     {
         $this->add($value, $offset);
@@ -160,6 +163,7 @@ class EventCollection implements EventCollectionInterface
      *
      * @return void
      */
+    #[\ReturnTypeWillChange]
     public function offsetUnset($offset)
     {
         unset($this->eventListeners[$offset]);
@@ -172,6 +176,7 @@ class EventCollection implements EventCollectionInterface
      *
      * @return \Traversable
      */
+    #[\ReturnTypeWillChange]
     public function getIterator()
     {
         return new ArrayIterator($this->eventListeners);

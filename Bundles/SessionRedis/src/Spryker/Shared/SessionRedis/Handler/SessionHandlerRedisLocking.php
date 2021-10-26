@@ -144,6 +144,7 @@ class SessionHandlerRedisLocking implements SessionHandlerInterface
      *
      * @return bool
      */
+    #[\ReturnTypeWillChange]
     public function gc($maxLifeTime): bool
     {
         return true;

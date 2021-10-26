@@ -613,6 +613,7 @@ class Container implements ContainerInterface, ArrayAccess
      *
      * @return mixed
      */
+    #[\ReturnTypeWillChange]
     public function offsetGet($offset)
     {
         $this->triggerError(sprintf('ArrayAccess for the container in Spryker (e.g. `$foo = $container[\'%s\']`) is no longer supported! Please use `ContainerInterface:get()` instead.', $offset));

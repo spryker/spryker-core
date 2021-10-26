@@ -51,6 +51,7 @@ class XmlBatchIterator implements CountableIteratorInterface
     /**
      * @return mixed
      */
+    #[\ReturnTypeWillChange]
     public function current()
     {
         return $this->batchData;
@@ -59,6 +60,7 @@ class XmlBatchIterator implements CountableIteratorInterface
     /**
      * @return void
      */
+    #[\ReturnTypeWillChange]
     public function next()
     {
         if ($this->batchData === null) {
@@ -86,6 +88,7 @@ class XmlBatchIterator implements CountableIteratorInterface
     /**
      * @return int
      */
+    #[\ReturnTypeWillChange]
     public function key()
     {
         return $this->offset;
@@ -94,6 +97,7 @@ class XmlBatchIterator implements CountableIteratorInterface
     /**
      * @inheritDoc
      */
+    #[\ReturnTypeWillChange]
     public function valid()
     {
         return $this->batchData !== null && $this->offset === 0;
@@ -102,6 +106,7 @@ class XmlBatchIterator implements CountableIteratorInterface
     /**
      * @inheritDoc
      */
+    #[\ReturnTypeWillChange]
     public function rewind()
     {
         $this->offset = 0;
@@ -110,6 +115,7 @@ class XmlBatchIterator implements CountableIteratorInterface
     /**
      * @inheritDoc
      */
+    #[\ReturnTypeWillChange]
     public function count()
     {
         $this->next();

@@ -74,6 +74,7 @@ class YamlBatchIterator implements CountableIteratorInterface
     /**
      * @return mixed
      */
+    #[\ReturnTypeWillChange]
     public function current()
     {
         $this->initialize();
@@ -84,6 +85,7 @@ class YamlBatchIterator implements CountableIteratorInterface
     /**
      * @return void
      */
+    #[\ReturnTypeWillChange]
     public function next()
     {
         $this->initialize();
@@ -94,6 +96,7 @@ class YamlBatchIterator implements CountableIteratorInterface
     /**
      * @return int
      */
+    #[\ReturnTypeWillChange]
     public function key()
     {
         return $this->offset;
@@ -102,6 +105,7 @@ class YamlBatchIterator implements CountableIteratorInterface
     /**
      * @inheritDoc
      */
+    #[\ReturnTypeWillChange]
     public function valid()
     {
         return ($this->batchData !== null && $this->offset === 0);
@@ -110,6 +114,7 @@ class YamlBatchIterator implements CountableIteratorInterface
     /**
      * @inheritDoc
      */
+    #[\ReturnTypeWillChange]
     public function rewind()
     {
         $this->offset = 0;
@@ -118,6 +123,7 @@ class YamlBatchIterator implements CountableIteratorInterface
     /**
      * @inheritDoc
      */
+    #[\ReturnTypeWillChange]
     public function count()
     {
         $this->initialize();

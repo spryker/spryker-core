@@ -162,6 +162,7 @@ class SessionHandlerRedis implements SessionHandlerInterface
      *
      * @return bool
      */
+    #[\ReturnTypeWillChange]
     public function gc($maxLifetime): bool
     {
         return true;

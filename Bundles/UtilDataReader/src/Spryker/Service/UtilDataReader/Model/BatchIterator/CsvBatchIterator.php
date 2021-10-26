@@ -75,6 +75,7 @@ class CsvBatchIterator implements CountableIteratorInterface
     /**
      * @return mixed
      */
+    #[\ReturnTypeWillChange]
     public function current()
     {
         return $this->batchData;
@@ -83,6 +84,7 @@ class CsvBatchIterator implements CountableIteratorInterface
     /**
      * @return void
      */
+    #[\ReturnTypeWillChange]
     public function next()
     {
         $this->loadChunk();
@@ -91,6 +93,7 @@ class CsvBatchIterator implements CountableIteratorInterface
     /**
      * @return int
      */
+    #[\ReturnTypeWillChange]
     public function key()
     {
         return $this->offset;
@@ -99,6 +102,7 @@ class CsvBatchIterator implements CountableIteratorInterface
     /**
      * @inheritDoc
      */
+    #[\ReturnTypeWillChange]
     public function valid()
     {
         return !empty($this->batchData);
@@ -107,6 +111,7 @@ class CsvBatchIterator implements CountableIteratorInterface
     /**
      * @inheritDoc
      */
+    #[\ReturnTypeWillChange]
     public function rewind()
     {
         $this->offset = 0;
@@ -117,6 +122,7 @@ class CsvBatchIterator implements CountableIteratorInterface
     /**
      * @inheritDoc
      */
+    #[\ReturnTypeWillChange]
     public function count()
     {
         return $this->getCsvReader()->getTotal();

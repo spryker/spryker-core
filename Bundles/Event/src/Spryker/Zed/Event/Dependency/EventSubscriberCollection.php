@@ -36,6 +36,7 @@ class EventSubscriberCollection implements EventSubscriberCollectionInterface
      *
      * @return bool
      */
+    #[\ReturnTypeWillChange]
     public function offsetExists($offset)
     {
         return isset($this->eventSubscribers[$offset]);
@@ -50,6 +51,7 @@ class EventSubscriberCollection implements EventSubscriberCollectionInterface
      *
      * @return \Spryker\Zed\Event\Dependency\Plugin\EventSubscriberInterface|array
      */
+    #[\ReturnTypeWillChange]
     public function offsetGet($offset)
     {
         return $this->eventSubscribers[$offset];
@@ -65,6 +67,7 @@ class EventSubscriberCollection implements EventSubscriberCollectionInterface
      *
      * @return void
      */
+    #[\ReturnTypeWillChange]
     public function offsetSet($offset, $value)
     {
         $this->eventSubscribers[$offset] = $value;
@@ -79,6 +82,7 @@ class EventSubscriberCollection implements EventSubscriberCollectionInterface
      *
      * @return void
      */
+    #[\ReturnTypeWillChange]
     public function offsetUnset($offset)
     {
         unset($this->eventSubscribers[$offset]);
@@ -91,6 +95,7 @@ class EventSubscriberCollection implements EventSubscriberCollectionInterface
      *
      * @return \Traversable<\Spryker\Zed\Event\Dependency\Plugin\EventSubscriberInterface>
      */
+    #[\ReturnTypeWillChange]
     public function getIterator()
     {
         return new ArrayIterator($this->eventSubscribers);

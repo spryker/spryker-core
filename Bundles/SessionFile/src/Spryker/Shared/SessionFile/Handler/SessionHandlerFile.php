@@ -65,7 +65,7 @@ class SessionHandlerFile implements SessionHandlerInterface
      *
      * @return bool
      */
-    public function open($savePath, $sessionName): bool
+    public function open($savePath, $sessionName)
     {
         if (!is_dir($this->savePath)) {
             mkdir($this->savePath, 0775, true);
@@ -87,7 +87,7 @@ class SessionHandlerFile implements SessionHandlerInterface
      *
      * @return string
      */
-    public function read($sessionId): string
+    public function read($sessionId)
     {
         $startTime = microtime(true);
         $sessionKey = $this->buildSessionKey($sessionId);
@@ -109,7 +109,7 @@ class SessionHandlerFile implements SessionHandlerInterface
      *
      * @return bool
      */
-    public function write($sessionId, $sessionData): bool
+    public function write($sessionId, $sessionData)
     {
         $sessionKey = $this->buildSessionKey($sessionId);
 
@@ -129,7 +129,7 @@ class SessionHandlerFile implements SessionHandlerInterface
      *
      * @return bool
      */
-    public function destroy($sessionId): bool
+    public function destroy($sessionId)
     {
         $sessionKey = $this->buildSessionKey($sessionId);
         $file = $this->savePath . DIRECTORY_SEPARATOR . $sessionKey;
@@ -147,7 +147,8 @@ class SessionHandlerFile implements SessionHandlerInterface
      *
      * @return bool
      */
-    public function gc($maxLifetime): bool
+    #[\ReturnTypeWillChange]
+    public function gc($maxLifetime)
     {
         $time = time();
         $files = glob($this->buildSessionFilePattern(), GLOB_NOSORT) ?: [];
