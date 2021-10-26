@@ -363,7 +363,7 @@ class Discount implements DiscountInterface
      */
     protected function hasDiscountItemQuantityDecisionRule(SpyDiscount $discountEntity): bool
     {
-        return str_contains($discountEntity->getDecisionRuleQueryString(), static::ITEM_QUANTITY_DECISION_RULE);
+        return strpos($discountEntity->getDecisionRuleQueryString(), static::ITEM_QUANTITY_DECISION_RULE) !== false;
     }
 
     /**
