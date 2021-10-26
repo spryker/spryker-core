@@ -7,9 +7,6 @@
 
 namespace Spryker\Service\Flysystem;
 
-use Generated\Shared\Transfer\FlysystemConfigTransfer;
-use League\Flysystem\FilesystemOperator;
-use Spryker\Service\Flysystem\Exception\BuilderNotFoundException;
 use Spryker\Service\Flysystem\Model\Provider\FilesystemProvider;
 use Spryker\Service\Flysystem\Model\Provider\FilesystemProviderInterface;
 use Spryker\Service\Flysystem\Model\Reader;
@@ -23,6 +20,8 @@ use Spryker\Service\Kernel\AbstractServiceFactory;
 class FlysystemServiceFactory extends AbstractServiceFactory
 {
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @var string
      */
     public const SPRYKER_ADAPTER_CLASS = 'sprykerAdapterClass';
@@ -33,7 +32,8 @@ class FlysystemServiceFactory extends AbstractServiceFactory
     public function createFilesystemProvider(): FilesystemProviderInterface
     {
         return new FilesystemProvider(
-            $this->buildFilesystemCollection(),
+            $this->getConfig(),
+            $this->getFilesystemBuilderPluginCollection()
         );
     }
 
@@ -65,94 +65,6 @@ class FlysystemServiceFactory extends AbstractServiceFactory
         return new Stream(
             $this->createFilesystemProvider(),
         );
-    }
-
-    /**
-     * @return array<\Generated\Shared\Transfer\FlysystemConfigTransfer>
-     */
-    protected function createConfigCollection()
-    {
-        $configCollection = [];
-        foreach ($this->getConfig()->getFilesystemConfig() as $name => $configData) {
-            $configTransfer = $this->createConfig($name, $configData);
-            $this->assertConfig($configTransfer);
-
-            $configCollection[$name] = $configTransfer;
-        }
-
-        return $configCollection;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\FlysystemConfigTransfer $configTransfer
-     *
-     * @return void
-     */
-    protected function assertConfig(FlysystemConfigTransfer $configTransfer)
-    {
-        $configTransfer->requireName();
-        $configTransfer->requireType();
-        $configTransfer->requireAdapterConfig();
-    }
-
-    /**
-     * @param string $name
-     * @param array $configData
-     *
-     * @return \Generated\Shared\Transfer\FlysystemConfigTransfer
-     */
-    protected function createConfig($name, array $configData): FlysystemConfigTransfer
-    {
-        $type = $configData[static::SPRYKER_ADAPTER_CLASS];
-        unset($configData[static::SPRYKER_ADAPTER_CLASS]);
-
-        $configTransfer = new FlysystemConfigTransfer();
-        $configTransfer->setName($name);
-        $configTransfer->setType($type);
-        $configTransfer->setAdapterConfig($configData);
-
-        $configTransfer->setFlysystemConfig(
-            $this->getConfig()->getFlysystemConfig(),
-        );
-
-        return $configTransfer;
-    }
-
-    /**
-     * @return array<\League\Flysystem\FilesystemOperator>
-     */
-    protected function buildFilesystemCollection(): array
-    {
-        $configCollection = $this->createConfigCollection();
-
-        $filesystemCollection = [];
-        foreach ($configCollection as $name => $configTransfer) {
-            $filesystemCollection[$name] = $this->buildFilesystemByType($configTransfer);
-        }
-
-        return $filesystemCollection;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\FlysystemConfigTransfer $configTransfer
-     *
-     * @throws \Spryker\Service\Flysystem\Exception\BuilderNotFoundException
-     *
-     * @return \League\Flysystem\FilesystemOperator
-     */
-    protected function buildFilesystemByType(FlysystemConfigTransfer $configTransfer): FilesystemOperator
-    {
-        $pluginCollection = $this->getFilesystemBuilderPluginCollection();
-        foreach ($pluginCollection as $plugin) {
-            if ($plugin->acceptType($configTransfer->getTypeOrFail())) {
-                return $plugin->build($configTransfer);
-            }
-        }
-
-        throw new BuilderNotFoundException(sprintf(
-            'FlysystemFileSystemBuilderPlugin "%s" was not found',
-            $configTransfer->getName(),
-        ));
     }
 
     /**
