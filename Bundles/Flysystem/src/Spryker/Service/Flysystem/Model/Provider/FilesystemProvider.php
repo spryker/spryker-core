@@ -117,7 +117,7 @@ class FilesystemProvider implements FilesystemProviderInterface
         $configTransfer->setAdapterConfig($configData);
 
         $configTransfer->setFlysystemConfig(
-            $this->config->getFlysystemConfig()
+            $this->config->getFlysystemConfig(),
         );
 
         return $configTransfer;
@@ -152,7 +152,7 @@ class FilesystemProvider implements FilesystemProviderInterface
 
         throw new BuilderNotFoundException(sprintf(
             'FlysystemFileSystemBuilderPlugin "%s" was not found',
-            $configTransfer->getNameOrFail()
+            $configTransfer->getNameOrFail(),
         ));
     }
 }

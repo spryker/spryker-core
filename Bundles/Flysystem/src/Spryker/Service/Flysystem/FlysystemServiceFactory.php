@@ -33,7 +33,7 @@ class FlysystemServiceFactory extends AbstractServiceFactory
     {
         return new FilesystemProvider(
             $this->getConfig(),
-            $this->getFilesystemBuilderPluginCollection()
+            $this->getFilesystemBuilderPluginCollection(),
         );
     }
 
