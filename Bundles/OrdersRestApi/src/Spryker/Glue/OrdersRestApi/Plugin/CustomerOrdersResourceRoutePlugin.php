@@ -20,6 +20,7 @@ class CustomerOrdersResourceRoutePlugin extends AbstractPlugin implements Resour
 {
     /**
      * @uses \Spryker\Client\Customer\Plugin\Authorization\CustomerReferenceMatchingEntityIdAuthorizationStrategyPlugin::STRATEGY_NAME
+     *
      * @var string
      */
     protected const STRATEGY_NAME = 'CustomerReferenceMatchingEntityId';

@@ -28,12 +28,14 @@ class AgentAuthRestApiConfig extends AbstractBundleConfig
 
     /**
      * @uses \Spryker\Zed\OauthAgentConnector\OauthAgentConnectorConfig::GRANT_TYPE_AGENT_CREDENTIALS
+     *
      * @var string
      */
     public const GRANT_TYPE_AGENT_CREDENTIALS = 'agent_credentials';
 
     /**
      * @uses \Spryker\Zed\OauthCustomerConnector\OauthCustomerConnectorConfig::GRANT_TYPE_CUSTOMER_IMPERSONATION
+     *
      * @var string
      */
     public const GRANT_TYPE_CUSTOMER_IMPERSONATION = 'customer_impersonation';

@@ -11,6 +11,7 @@ use Codeception\Test\Unit;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderItemState;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderProcess;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
+use Spryker\Zed\Oms\Business\Exception\StateNotFoundException;
 use Spryker\Zed\Oms\Business\OrderStateMachine\Builder;
 use Spryker\Zed\Oms\Business\OrderStateMachine\Finder;
 use Spryker\Zed\Oms\Business\OrderStateMachine\FinderInterface;
@@ -83,7 +84,7 @@ class FinderTest extends Unit
      */
     public function testGetStateDisplayNameShouldThrowExceptionWhenStateNotFound(): void
     {
-        $this->expectException('Spryker\Zed\Oms\Business\Exception\StateNotFoundException');
+        $this->expectException(StateNotFoundException::class);
         $this->expectExceptionMessage('State with name "not existing" not found in any StateMachine processes.');
         $finder = $this->createFinder();
 

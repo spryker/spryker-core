@@ -22,6 +22,7 @@ class ProductConfigurationPublisherTriggerPlugin extends AbstractPlugin implemen
 {
     /**
      * @uses \Orm\Zed\ProductConfiguration\Persistence\Map\SpyProductConfigurationTableMap::COL_ID_PRODUCT_CONFIGURATION
+     *
      * @var string
      */
     protected const COL_ID_PRODUCT_CONFIGURATION = 'spy_product_configuration.id_product_configuration';

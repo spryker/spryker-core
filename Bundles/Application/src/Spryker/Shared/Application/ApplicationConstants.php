@@ -18,6 +18,7 @@ interface ApplicationConstants
      * @deprecated Will be removed without replacement.
      *
      * @api
+     *
      * @var string
      */
     public const COUCHBASE_BUCKET_PREFIX = 'COUCHBASE_BUCKET_PREFIX';
@@ -26,12 +27,14 @@ interface ApplicationConstants
      * @deprecated Use {@link \Spryker\Shared\ErrorHandler\ErrorHandlerConstants::DISPLAY_ERRORS} instead.
      *
      * @api
+     *
      * @var string
      */
     public const DISPLAY_ERRORS = 'DISPLAY_ERRORS';
 
     /**
      * @api
+     *
      * @var string
      */
     public const ENABLE_APPLICATION_DEBUG = 'ENABLE_APPLICATION_DEBUG';
@@ -40,6 +43,7 @@ interface ApplicationConstants
      * @deprecated Use {@link \Spryker\Shared\WebProfiler\WebProfilerConstants::IS_WEB_PROFILER_ENABLED} instead.
      *
      * @api
+     *
      * @var string
      */
     public const ENABLE_WEB_PROFILER = 'ENABLE_WEB_PROFILER';
@@ -48,6 +52,7 @@ interface ApplicationConstants
      * @deprecated Use {@link \Spryker\Shared\WebProfiler\WebProfilerConstants::IS_WEB_PROFILER_ENABLED} instead.
      *
      * @api
+     *
      * @var string
      */
     public const SHOW_SYMFONY_TOOLBAR = 'SHOW_SYMFONY_TOOLBAR';
@@ -56,6 +61,7 @@ interface ApplicationConstants
      * @deprecated Will be removed without replacement.
      *
      * @api
+     *
      * @var string
      */
     public const STORE_PREFIX = 'STORE_PREFIX';
@@ -64,12 +70,14 @@ interface ApplicationConstants
      * @deprecated Will be removed without replacement.
      *
      * @api
+     *
      * @var string
      */
     public const BACKTRACE_USER_PATH = 'BACKTRACE_USER_PATH';
 
     /**
      * @deprecated Use {@link \Spryker\Shared\Twig\TwigConstants::YVES_THEME} instead.
+     *
      * @var string
      */
     public const YVES_THEME = 'YVES_THEME';
@@ -83,6 +91,7 @@ interface ApplicationConstants
      * - If request is secure and page is excluded from https, the application will allow http.
      *
      * @api
+     *
      * @var string
      */
     public const YVES_SSL_ENABLED = 'YVES_SSL_ENABLED';
@@ -95,6 +104,7 @@ interface ApplicationConstants
      * - Example: `['route-name-a' => '/url-a', 'route-name-b' => '/url-b']`
      *
      * @api
+     *
      * @var string
      */
     public const YVES_SSL_EXCLUDED = 'YVES_SSL_EXCLUDED';
@@ -107,6 +117,7 @@ interface ApplicationConstants
      * - Example: `['192.0.0.1', '10.0.0.0/8']`.
      *
      * @api
+     *
      * @var string
      */
     public const YVES_TRUSTED_PROXIES = 'YVES_TRUSTED_PROXIES';
@@ -118,6 +129,7 @@ interface ApplicationConstants
      * - A bit field of trusted Request::HEADER_*, to set which headers to trust from your proxies.
      *
      * @api
+     *
      * @var string
      */
     public const YVES_TRUSTED_HEADER = 'YVES_TRUSTED_HEADER';
@@ -129,18 +141,21 @@ interface ApplicationConstants
      * - List of trusted hosts managed by regexp.
      *
      * @api
+     *
      * @var string
      */
     public const YVES_TRUSTED_HOSTS = 'YVES_TRUSTED_HOSTS';
 
     /**
      * @deprecated Use {@link \Spryker\Shared\Http\HttpConstants::YVES_HTTP_STRICT_TRANSPORT_SECURITY_ENABLED} instead.
+     *
      * @var string
      */
     public const YVES_HTTP_STRICT_TRANSPORT_SECURITY_ENABLED = 'YVES_HTTP_STRICT_TRANSPORT_SECURITY_ENABLED';
 
     /**
      * @deprecated Use {@link \Spryker\Shared\Http\HttpConstants::YVES_HTTP_STRICT_TRANSPORT_SECURITY_CONFIG} instead.
+     *
      * @var string
      */
     public const YVES_HTTP_STRICT_TRANSPORT_SECURITY_CONFIG = 'YVES_HTTP_STRICT_TRANSPORT_SECURITY_CONFIG';
@@ -148,6 +163,7 @@ interface ApplicationConstants
     /**
      * @deprecated Use `YVES_SSL_ENABLED` only in combination with `YVES_SSL_EXCLUDED`.
      *   If `YVES_SSL_EXCLUDED` is empty the page is completely SSL enabled then.
+     *
      * @var string
      */
     public const YVES_COMPLETE_SSL_ENABLED = 'YVES_COMPLETE_SSL_ENABLED';
@@ -156,6 +172,7 @@ interface ApplicationConstants
      * @deprecated Will be removed without replacement.
      *
      * @api
+     *
      * @var string
      */
     public const YVES_COOKIE_VISITOR_ID_NAME = 'YVES_COOKIE_VISITOR_ID_NAME';
@@ -164,6 +181,7 @@ interface ApplicationConstants
      * @deprecated Will be removed without replacement.
      *
      * @api
+     *
      * @var string
      */
     public const YVES_COOKIE_VISITOR_ID_VALID_FOR = 'YVES_COOKIE_VISITOR_ID_VALID_FOR';
@@ -172,6 +190,7 @@ interface ApplicationConstants
      * @deprecated Will be removed without replacement.
      *
      * @api
+     *
      * @var string
      */
     public const YVES_COOKIE_DEVICE_ID_NAME = 'YVES_COOKIE_DEVICE_ID_NAME';
@@ -180,6 +199,7 @@ interface ApplicationConstants
      * @deprecated Will be removed without replacement.
      *
      * @api
+     *
      * @var string
      */
     public const YVES_COOKIE_DEVICE_ID_VALID_FOR = 'YVES_COOKIE_DEVICE_ID_VALID_FOR';
@@ -188,6 +208,7 @@ interface ApplicationConstants
      * @deprecated Will be removed without replacement.
      *
      * @api
+     *
      * @var string
      */
     public const YVES_AUTH_SETTINGS = 'YVES_AUTH_SETTINGS';
@@ -204,42 +225,49 @@ interface ApplicationConstants
 
     /**
      * @deprecated Use {@link \Spryker\Shared\Search\SearchConstants::ELASTICA_PARAMETER__HOST} instead.
+     *
      * @var string
      */
     public const ELASTICA_PARAMETER__HOST = 'ELASTICA_PARAMETER__HOST';
 
     /**
      * @deprecated Use {@link \Spryker\Shared\Search\SearchConstants::ELASTICA_PARAMETER__PORT} instead.
+     *
      * @var string
      */
     public const ELASTICA_PARAMETER__PORT = 'ELASTICA_PARAMETER__PORT';
 
     /**
      * @deprecated Use {@link \Spryker\Shared\Search\SearchConstants::ELASTICA_PARAMETER__TRANSPORT} instead.
+     *
      * @var string
      */
     public const ELASTICA_PARAMETER__TRANSPORT = 'ELASTICA_PARAMETER__TRANSPORT';
 
     /**
      * @deprecated Use {@link \Spryker\Shared\Search\SearchConstants::ELASTICA_PARAMETER__INDEX_NAME} instead.
+     *
      * @var string
      */
     public const ELASTICA_PARAMETER__INDEX_NAME = 'ELASTICA_PARAMETER__INDEX_NAME';
 
     /**
      * @deprecated Use {@link \Spryker\Shared\Search\SearchConstants::ELASTICA_PARAMETER__AUTH_HEADER} instead.
+     *
      * @var string
      */
     public const ELASTICA_PARAMETER__AUTH_HEADER = 'ELASTICA_PARAMETER__AUTH_HEADER';
 
     /**
      * @deprecated Use {@link \Spryker\Shared\Search\SearchConstants::ELASTICA_PARAMETER__DOCUMENT_TYPE} instead.
+     *
      * @var string
      */
     public const ELASTICA_PARAMETER__DOCUMENT_TYPE = 'ELASTICA_PARAMETER__DOCUMENT_TYPE';
 
     /**
      * @deprecated Use {@link \Spryker\Shared\Search\SearchConstants::ELASTICA_PARAMETER__EXTRA} instead.
+     *
      * @var string
      */
     public const ELASTICA_PARAMETER__EXTRA = 'ELASTICA_PARAMETER__EXTRA';
@@ -253,6 +281,7 @@ interface ApplicationConstants
      * @deprecated Will be removed without replacement.
      *
      * @api
+     *
      * @var string
      */
     public const ELASTICA_CLIENT_CONFIGURATION = 'ELASTICA_CLIENT_CONFIGURATION';
@@ -266,6 +295,7 @@ interface ApplicationConstants
      * - If request is secure and page is excluded from https, the application will allow http.
      *
      * @api
+     *
      * @var string
      */
     public const ZED_SSL_ENABLED = 'ZED_SSL_ENABLED';
@@ -278,6 +308,7 @@ interface ApplicationConstants
      * - Example: `['module-a/controller-a', 'module-b/controller-b']`
      *
      * @api
+     *
      * @var string
      */
     public const ZED_SSL_EXCLUDED = 'ZED_SSL_EXCLUDED';
@@ -290,6 +321,7 @@ interface ApplicationConstants
      * - Example: `['192.0.0.1', '10.0.0.0/8']`.
      *
      * @api
+     *
      * @var string
      */
     public const ZED_TRUSTED_PROXIES = 'ZED_TRUSTED_PROXIES';
@@ -301,18 +333,21 @@ interface ApplicationConstants
      * - List of trusted hosts managed by regexp.
      *
      * @api
+     *
      * @var string
      */
     public const ZED_TRUSTED_HOSTS = 'ZED_TRUSTED_HOSTS';
 
     /**
      * @deprecated Use {@link \Spryker\Shared\Http\HttpConstants::ZED_HTTP_STRICT_TRANSPORT_SECURITY_ENABLED} instead.
+     *
      * @var string
      */
     public const ZED_HTTP_STRICT_TRANSPORT_SECURITY_ENABLED = 'ZED_HTTP_STRICT_TRANSPORT_SECURITY_ENABLED';
 
     /**
      * @deprecated Use {@link \Spryker\Shared\Http\HttpConstants::ZED_HTTP_STRICT_TRANSPORT_SECURITY_CONFIG} instead.
+     *
      * @var string
      */
     public const ZED_HTTP_STRICT_TRANSPORT_SECURITY_CONFIG = 'ZED_HTTP_STRICT_TRANSPORT_SECURITY_CONFIG';
@@ -324,30 +359,35 @@ interface ApplicationConstants
      */
     /**
      * @deprecated Use queue-adapter specific configuration constants
+     *
      * @var string
      */
     public const ZED_RABBITMQ_USERNAME = 'ZED_RABBITMQ_USERNAME';
 
     /**
      * @deprecated Use queue-adapter specific configuration constants
+     *
      * @var string
      */
     public const ZED_RABBITMQ_PASSWORD = 'ZED_RABBITMQ_PASSWORD';
 
     /**
      * @deprecated Use queue-adapter specific configuration constants
+     *
      * @var string
      */
     public const ZED_RABBITMQ_HOST = 'ZED_RABBITMQ_HOST';
 
     /**
      * @deprecated Use queue-adapter specific configuration constants
+     *
      * @var string
      */
     public const ZED_RABBITMQ_PORT = 'ZED_RABBITMQ_PORT';
 
     /**
      * @deprecated Use queue-adapter specific configuration constants
+     *
      * @var string
      */
     public const ZED_RABBITMQ_VHOST = 'ZED_RABBITMQ_VHOST';
@@ -358,6 +398,7 @@ interface ApplicationConstants
      * @deprecated Will be removed without replacement.
      *
      * @api
+     *
      * @var string
      */
     public const PROJECT_TIMEZONE = 'PROJECT_TIMEZONE';
@@ -369,42 +410,49 @@ interface ApplicationConstants
 
     /**
      * @deprecated Unused, will be removed with next major release.
+     *
      * @var string
      */
     public const CLOUD_ENABLED = 'CLOUD_ENABLED';
 
     /**
      * @deprecated Unused, will be removed with next major release.
+     *
      * @var string
      */
     public const CLOUD_OBJECT_STORAGE_ENABLED = 'CLOUD_OBJECT_STORAGE_ENABLED';
 
     /**
      * @deprecated Unused, will be removed with next major release
+     *
      * @var string
      */
     public const CLOUD_CDN_ENABLED = 'CLOUD_CDN_ENABLED';
 
     /**
      * @deprecated Unused, will be removed with next major release.
+     *
      * @var string
      */
     public const CLOUD_CDN_STATIC_MEDIA_PREFIX = 'CLOUD_CDN_STATIC_MEDIA_PREFIX';
 
     /**
      * @deprecated Unused, will be removed with next major release.
+     *
      * @var string
      */
     public const CLOUD_CDN_STATIC_MEDIA_HTTP = 'CLOUD_CDN_STATIC_MEDIA_HTTP';
 
     /**
      * @deprecated Unused, will be removed with next major release.
+     *
      * @var string
      */
     public const CLOUD_CDN_STATIC_MEDIA_HTTPS = 'CLOUD_CDN_STATIC_MEDIA_HTTPS';
 
     /**
      * @deprecated Unused, will be removed with next major release.
+     *
      * @var string
      */
     public const CLOUD_CDN_PRODUCT_IMAGES_PATH_NAME = 'CLOUD_CDN_PRODUCT_IMAGES';
@@ -413,6 +461,7 @@ interface ApplicationConstants
      * Yves host name / domain without scheme and port (e.g. www.de.demoshop.local) (Required)
      *
      * @api
+     *
      * @var string
      */
     public const HOST_YVES = 'HOST_YVES';
@@ -423,6 +472,7 @@ interface ApplicationConstants
      * @deprecated Will be removed without replacement.
      *
      * @api
+     *
      * @var string
      */
     public const HOST_ZED = 'APPLICATION:HOST_ZED';
@@ -433,6 +483,7 @@ interface ApplicationConstants
      * @deprecated Will be removed without replacement.
      *
      * @api
+     *
      * @var string
      */
     public const PORT_YVES = 'APPLICATION:PORT_YVES';
@@ -443,6 +494,7 @@ interface ApplicationConstants
      * @deprecated Will be removed without replacement.
      *
      * @api
+     *
      * @var string
      */
     public const PORT_ZED = 'APPLICATION:PORT_ZED';
@@ -453,6 +505,7 @@ interface ApplicationConstants
      * @deprecated Will be removed without replacement.
      *
      * @api
+     *
      * @var string
      */
     public const PORT_SSL_YVES = 'APPLICATION:PORT_SSL_YVES';
@@ -463,6 +516,7 @@ interface ApplicationConstants
      * @deprecated Will be removed without replacement.
      *
      * @api
+     *
      * @var string
      */
     public const PORT_SSL_ZED = 'APPLICATION:PORT_SSL_ZED';
@@ -471,6 +525,7 @@ interface ApplicationConstants
      * Base URL for Yves including scheme and port (e.g. http://www.de.demoshop.local:8080)
      *
      * @api
+     *
      * @var string
      */
     public const BASE_URL_YVES = 'APPLICATION:BASE_URL_YVES';
@@ -479,6 +534,7 @@ interface ApplicationConstants
      * Base URL for Zed including scheme and port (e.g. http://zed.de.demoshop.local:9080)
      *
      * @api
+     *
      * @var string
      */
     public const BASE_URL_ZED = 'APPLICATION:BASE_URL_ZED';
@@ -489,6 +545,7 @@ interface ApplicationConstants
      * @deprecated Will be removed without replacement.
      *
      * @api
+     *
      * @var string
      */
     public const BASE_URL_STATIC_ASSETS = 'APPLICATION:BASE_URL_STATIC_ASSETS';
@@ -499,6 +556,7 @@ interface ApplicationConstants
      * @deprecated Will be removed without replacement.
      *
      * @api
+     *
      * @var string
      */
     public const BASE_URL_STATIC_MEDIA = 'APPLICATION:BASE_URL_STATIC_MEDIA';
@@ -509,6 +567,7 @@ interface ApplicationConstants
      * @deprecated Use {@link \Spryker\Shared\Application\ApplicationConstants::BASE_URL_YVES} instead.
      *
      * @api
+     *
      * @var string
      */
     public const BASE_URL_SSL_YVES = 'APPLICATION:BASE_URL_SSL_YVES';
@@ -519,6 +578,7 @@ interface ApplicationConstants
      * @deprecated Use {@link \Spryker\Shared\Application\ApplicationConstants::BASE_URL_ZED} instead.
      *
      * @api
+     *
      * @var string
      */
     public const BASE_URL_SSL_ZED = 'APPLICATION:BASE_URL_SSL_ZED';
@@ -529,6 +589,7 @@ interface ApplicationConstants
      * @deprecated Will be removed without replacement.
      *
      * @api
+     *
      * @var string
      */
     public const BASE_URL_SSL_STATIC_ASSETS = 'APPLICATION:BASE_URL_SSL_STATIC_ASSETS';
@@ -539,60 +600,70 @@ interface ApplicationConstants
      * @deprecated Will be removed without replacement.
      *
      * @api
+     *
      * @var string
      */
     public const BASE_URL_SSL_STATIC_MEDIA = 'APPLICATION:BASE_URL_SSL_STATIC_MEDIA';
 
     /**
      * @deprecated Use ApplicationConstants::HOST_ZED or ApplicationConstants::BASE_URL_ZED instead.
+     *
      * @var string
      */
     public const HOST_ZED_GUI = 'HOST_ZED_GUI';
 
     /**
      * @deprecated Use ApplicationConstants::HOST_ZED or ApplicationConstants::BASE_URL_ZED instead.
+     *
      * @var string
      */
     public const HOST_ZED_API = 'HOST_ZED_API';
 
     /**
      * @deprecated Use ApplicationConstants::BASE_URL_STATIC_ASSETS instead.
+     *
      * @var string
      */
     public const HOST_STATIC_ASSETS = 'HOST_STATIC_ASSETS';
 
     /**
      * @deprecated Use ApplicationConstants::BASE_URL_STATIC_MEDIA instead.
+     *
      * @var string
      */
     public const HOST_STATIC_MEDIA = 'HOST_STATIC_MEDIA';
 
     /**
      * @deprecated Use ApplicationConstants::BASE_URL_SSL_YVES instead.
+     *
      * @var string
      */
     public const HOST_SSL_YVES = 'HOST_SSL_YVES';
 
     /**
      * @deprecated Unused, will be removed with next major release.
+     *
      * @var string
      */
     public const HOST_SSL_ZED_GUI = 'HOST_SSL_ZED_GUI';
 
     /**
      * @deprecated Unused, will be removed with next major release.
+     *
      * @var string
      */
     public const HOST_SSL_ZED_API = 'HOST_SSL_ZED_API';
 
     /**
      * @deprecated Use ApplicationConstants::BASE_URL_SSL_STATIC_ASSETS instead.
+     *
      * @var string
      */
     public const HOST_SSL_STATIC_ASSETS = 'HOST_SSL_STATIC_ASSETS';
 
     /**
      * @deprecated Use ApplicationConstants::BASE_URL_SSL_STATIC_MEDIA instead.
+     *
      * @var string
      */
     public const HOST_SSL_STATIC_MEDIA = 'HOST_SSL_STATIC_MEDIA';
@@ -607,6 +678,7 @@ interface ApplicationConstants
      * - Defines environment name for twig.
      *
      * @api
+     *
      * @var string
      */
     public const TWIG_ENVIRONMENT_NAME = 'APPLICATION:TWIG_ENVIRONMENT_NAME';
@@ -618,6 +690,7 @@ interface ApplicationConstants
      * @api
      *
      * @deprecated Use {@link \Spryker\Shared\ErrorHandler\ErrorHandlerConstants::IS_PRETTY_ERROR_HANDLER_ENABLED} instead.
+     *
      * @var string
      */
     public const ENABLE_PRETTY_ERROR_HANDLER = 'APPLICATION:ENABLE_PRETTY_ERROR_HANDLER';

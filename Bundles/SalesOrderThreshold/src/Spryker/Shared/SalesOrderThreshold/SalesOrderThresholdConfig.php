@@ -56,6 +56,7 @@ class SalesOrderThresholdConfig
 
     /**
      * @uses \Spryker\Shared\Calculation\CalculationPriceMode::PRICE_MODE_NET
+     *
      * @var string
      */
     public const PRICE_MODE_NET = 'NET_MODE';
@@ -67,6 +68,7 @@ class SalesOrderThresholdConfig
 
     /**
      * @uses \Spryker\Shared\Tax\TaxConstants::TAX_EXEMPT_PLACEHOLDER
+     *
      * @var string
      */
     public const TAX_EXEMPT_PLACEHOLDER = 'Tax Exempt';

@@ -42,6 +42,7 @@ class MerchantUserSecurityPlugin extends AbstractPlugin implements SecurityPlugi
 
     /**
      * @see \Symfony\Component\Form\Extension\Csrf\CsrfExtension::loadTypeExtensions()
+     *
      * @var string
      */
     protected const FORM_FIELD_CSRF_TOKEN = '_token';

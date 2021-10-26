@@ -20,6 +20,7 @@ class AddressesResourceRoutePlugin extends AbstractPlugin implements ResourceRou
 {
     /**
      * @uses \Spryker\Client\Customer\Plugin\Authorization\CustomerReferenceMatchingEntityIdAuthorizationStrategyPlugin::STRATEGY_NAME
+     *
      * @var string
      */
     protected const STRATEGY_NAME = 'CustomerReferenceMatchingEntityId';

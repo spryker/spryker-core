@@ -80,12 +80,14 @@ class AclMerchantPortalFacadeTest extends Unit
 {
     /**
      * @uses \Spryker\Zed\AclMerchantPortal\Business\Writer\AclMerchantPortalWriter::ERROR_MESSAGE_MERCHANT_REFERENCE
+     *
      * @var string
      */
     protected const ERROR_MESSAGE_MERCHANT_REFERENCE = 'Merchant reference not found';
 
     /**
      * @uses \Spryker\Zed\AclMerchantPortal\Business\Writer\AclMerchantPortalWriter::ERROR_MESSAGE_MERCHANT_NAME
+     *
      * @var string
      */
     protected const ERROR_MESSAGE_MERCHANT_NAME = 'Merchant name not found';

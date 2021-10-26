@@ -19,6 +19,7 @@ class ShipmentMethodFilter implements ShipmentMethodFilterInterface
 {
     /**
      * @deprecated Use GiftCardConfig::getGiftCardOnlyShipmentMethods() instead.
+     *
      * @var string
      */
     public const NO_SHIPMENT_METHOD = 'No shipment';

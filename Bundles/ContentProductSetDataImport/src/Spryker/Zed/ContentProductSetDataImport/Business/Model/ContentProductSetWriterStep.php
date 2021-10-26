@@ -21,12 +21,14 @@ class ContentProductSetWriterStep extends PublishAwareStep implements DataImport
 {
     /**
      * @uses \Spryker\Shared\ContentProductSet\ContentProductSetConfig::CONTENT_TYPE_PRODUCT_SET
+     *
      * @var string
      */
     protected const CONTENT_TYPE_PRODUCT_SET = 'Product Set';
 
     /**
      * @uses \Spryker\Shared\ContentProductSet\ContentProductSetConfig::CONTENT_TERM_PRODUCT_SET
+     *
      * @var string
      */
     protected const CONTENT_TERM_PRODUCT_SET = 'Product Set';

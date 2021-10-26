@@ -28,6 +28,7 @@ class MerchantOrderItemTableExpander implements MerchantOrderItemTableExpanderIn
 
     /**
      * @uses \Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface::COLUMN_TYPE_TEXT
+     *
      * @var string
      */
     protected const COLUMN_TYPE_TEXT = 'text';

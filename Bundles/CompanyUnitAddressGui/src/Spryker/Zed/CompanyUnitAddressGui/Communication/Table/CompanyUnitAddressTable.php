@@ -50,6 +50,7 @@ class CompanyUnitAddressTable extends AbstractTable
 
     /**
      * @uses \Spryker\Zed\CompanyUnitAddressGui\Communication\Controller\EditCompanyUnitAddressController::indexAction()
+     *
      * @var string
      */
     protected const URL_COMPANY_UNIT_ADDRESS_EDIT = '/company-unit-address-gui/edit-company-unit-address';

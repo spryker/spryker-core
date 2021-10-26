@@ -20,6 +20,7 @@ class IndexSettingsUpdater implements InstallerInterface
 {
     /**
      * @phpstan-var non-empty-string
+     *
      * @var string
      */
     protected const SETTING_PATH_DELIMITER = '.';

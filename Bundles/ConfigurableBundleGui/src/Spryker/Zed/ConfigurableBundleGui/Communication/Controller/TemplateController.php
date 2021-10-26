@@ -22,12 +22,14 @@ class TemplateController extends AbstractController
 {
     /**
      * @uses \Spryker\Zed\ConfigurableBundleGui\Communication\Controller\TemplateController::indexAction()
+     *
      * @var string
      */
     protected const ROUTE_EDIT_TEMPLATE = '/configurable-bundle-gui/template/edit';
 
     /**
      * @uses \Spryker\Zed\ConfigurableBundleGui\Communication\Controller\TemplateController::indexAction()
+     *
      * @var string
      */
     protected const ROUTE_TEMPLATES_LIST = '/configurable-bundle-gui/template';

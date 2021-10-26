@@ -13,42 +13,49 @@ class OfferGuiConfig extends AbstractBundleConfig
 {
     /**
      * @uses \Spryker\Shared\Offer\OfferConfig
+     *
      * @var string
      */
     public const STATUS_PENDING = 'Pending';
 
     /**
      * @uses \Spryker\Shared\Offer\OfferConfig
+     *
      * @var string
      */
     public const STATUS_ON_OVERVIEW = 'On overview';
 
     /**
      * @uses \Spryker\Shared\Offer\OfferConfig
+     *
      * @var string
      */
     public const STATUS_SENT_TO_CUSTOMER = 'Sent to customer';
 
     /**
      * @uses \Spryker\Shared\Offer\OfferConfig
+     *
      * @var string
      */
     public const STATUS_CONFIRMED_BY_CUSTOMER = 'Confirmed by customer';
 
     /**
      * @uses \Spryker\Shared\Offer\OfferConfig
+     *
      * @var string
      */
     public const STATUS_CLOSE = 'Close';
 
     /**
      * @uses \Spryker\Shared\Price\PriceConfig::PRICE_MODE_NET
+     *
      * @var string
      */
     public const PRICE_MODE_NET = 'NET_MODE';
 
     /**
      * @uses \Spryker\Shared\Price\PriceConfig::PRICE_MODE_GROSS
+     *
      * @var string
      */
     public const PRICE_MODE_GROSS = 'GROSS_MODE';

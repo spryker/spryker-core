@@ -36,6 +36,7 @@ class ProductConfiguratorRequestSenderTest extends Unit
 {
     /**
      * @uses \Spryker\Client\ProductConfiguration\Sender\ProductConfiguratorRequestSender::GLOSSARY_KEY_PRODUCT_CONFIGURATION_CAN_NOT_OBTAIN_ACCESS_TOKEN
+     *
      * @var string
      */
     protected const GLOSSARY_KEY_PRODUCT_CONFIGURATION_CAN_NOT_OBTAIN_ACCESS_TOKEN = 'product_configuration.access_token.request.error.can_not_obtain_access_token';

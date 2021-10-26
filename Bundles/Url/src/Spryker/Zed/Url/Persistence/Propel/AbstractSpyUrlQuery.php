@@ -25,6 +25,7 @@ abstract class AbstractSpyUrlQuery extends BaseSpyUrlQuery
      * Used to map a resource type to a column
      *
      * @see AbstractSpyUrl::RESOURCE_PREFIX
+     *
      * @var string
      */
     public const RESOURCE_PREFIX = 'FkResource';

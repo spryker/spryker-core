@@ -77,12 +77,14 @@ class ProductAbstractGuiTableConfigurationProvider implements ProductAbstractGui
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Controller\UpdateProductAbstractController::indexAction()
+     *
      * @var string
      */
     protected const URL_ROW_ACTION_UPDATE_PRODUCT = '/product-merchant-portal-gui/update-product-abstract?product-abstract-id=${row.%s}';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Controller\ProductsController::tableDataAction()
+     *
      * @var string
      */
     protected const DATA_URL = '/product-merchant-portal-gui/products/table-data';

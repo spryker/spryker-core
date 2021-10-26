@@ -25,6 +25,7 @@ class TwigConfig extends AbstractBundleConfig
 
     /**
      * @uses \Spryker\Yves\Twig\TwigConfig::APPLICATION_YVES
+     *
      * @var string
      */
     protected const APPLICATION_YVES = 'YVES';

@@ -14,6 +14,7 @@ class EntityDefinitionNormalizer extends DefinitionNormalizer
 {
     /**
      * @phpstan-var array<string, string>
+     *
      * @var array
      */
     protected const TYPE_MAPPING = [

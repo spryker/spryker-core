@@ -23,6 +23,7 @@ class CompanyBusinessUnitAddressesRestApiConfig extends AbstractBundleConfig
 
     /**
      * @deprecated Will be removed with next major release.
+     *
      * @var string
      */
     public const ACTION_COMPANY_BUSINESS_UNIT_ADDRESSES_GET = 'get';
@@ -54,6 +55,7 @@ class CompanyBusinessUnitAddressesRestApiConfig extends AbstractBundleConfig
 
     /**
      * @uses \Spryker\Glue\GlueApplication\GlueApplicationConfig::COLLECTION_IDENTIFIER_CURRENT_USER
+     *
      * @var string
      */
     public const COLLECTION_IDENTIFIER_CURRENT_USER = 'mine';

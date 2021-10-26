@@ -28,12 +28,14 @@ class CompanyUsersRestApiConfig extends AbstractBundleConfig
 
     /**
      * @uses \Spryker\Glue\CompanyBusinessUnitsRestApi\CompanyBusinessUnitsRestApiConfig::RESOURCE_COMPANY_BUSINESS_UNITS
+     *
      * @var string
      */
     public const RESOURCE_COMPANY_BUSINESS_UNITS = 'company-business-units';
 
     /**
      * @uses \Spryker\Glue\CompanyRolesRestApi\CompanyRolesRestApiConfig::RESOURCE_COMPANY_ROLES
+     *
      * @var string
      */
     public const RESOURCE_COMPANY_ROLES = 'company-roles';
@@ -70,12 +72,14 @@ class CompanyUsersRestApiConfig extends AbstractBundleConfig
 
     /**
      * @uses \Spryker\Glue\GlueApplication\GlueApplicationConfig::COLLECTION_IDENTIFIER_CURRENT_USER
+     *
      * @var string
      */
     public const COLLECTION_IDENTIFIER_CURRENT_USER = 'mine';
 
     /**
      * @type string[]
+     *
      * @var array
      */
     protected const COMPANY_USER_RESOURCES = [];

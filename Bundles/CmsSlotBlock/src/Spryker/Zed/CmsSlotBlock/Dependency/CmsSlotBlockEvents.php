@@ -14,6 +14,7 @@ interface CmsSlotBlockEvents
      * - This events will be used for CmsSlotBlock publishing.
      *
      * @api
+     *
      * @var string
      */
     public const CMS_SLOT_BLOCK_PUBLISH = 'CmsSlotBlock.slot_block.publish';

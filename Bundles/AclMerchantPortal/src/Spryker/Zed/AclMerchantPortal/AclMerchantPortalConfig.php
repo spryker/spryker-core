@@ -45,12 +45,14 @@ class AclMerchantPortalConfig extends AbstractBundleConfig
 {
     /**
      * @uses \Spryker\Shared\Acl\AclConstants::VALIDATOR_WILDCARD
+     *
      * @var string
      */
     protected const RULE_VALIDATOR_WILDCARD = '*';
 
     /**
      * @uses \Spryker\Shared\Acl\AclConstants::ALLOW
+     *
      * @var string
      */
     protected const RULE_TYPE_ALLOW = 'allow';

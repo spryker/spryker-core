@@ -16,6 +16,7 @@ class ProductPageDataExpander implements ProductPageDataExpanderInterface
 {
     /**
      * @uses \Spryker\Shared\ProductPageSearch\ProductPageSearchConfig::PRODUCT_ABSTRACT_PAGE_LOAD_DATA
+     *
      * @var string
      */
     protected const PRODUCT_ABSTRACT_PAGE_LOAD_DATA = 'PRODUCT_ABSTRACT_PAGE_LOAD_DATA';

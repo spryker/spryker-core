@@ -60,6 +60,7 @@ class CategoryStoreDataImportPluginTest extends Unit
 
     /**
      * @uses \Spryker\Zed\CategoryDataImport\CategoryDataImportConfig::IMPORT_TYPE_CATEGORY_STORE
+     *
      * @var string
      */
     protected const IMPORT_TYPE_CATEGORY_STORE = 'category-store';

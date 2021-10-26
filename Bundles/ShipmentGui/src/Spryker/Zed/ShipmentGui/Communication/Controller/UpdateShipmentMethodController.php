@@ -19,6 +19,7 @@ class UpdateShipmentMethodController extends AbstractController
 {
     /**
      * @uses \Spryker\Zed\StockGui\Communication\Controller\WarehouseController::listAction()
+     *
      * @var string
      */
     protected const REDIRECT_URL = '/shipment-gui/shipment-method/index';

@@ -57,36 +57,42 @@ class CreateProductAbstractController extends AbstractController
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Controller\ProductsController::ID_TABLE_PRODUCT_LIST
+     *
      * @var string
      */
     protected const ID_TABLE_PRODUCT_LIST = 'product-list';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\ProductConcreteMapper::FIELD_NAME
+     *
      * @var string
      */
     protected const FIELD_NAME = 'name';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\ProductConcreteMapper::FIELD_SKU
+     *
      * @var string
      */
     protected const FIELD_SKU = 'sku';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\CreateProductAbstractWithSingleConcreteForm::FIELD_CONCRETE_NAME
+     *
      * @var string
      */
     protected const FIELD_CONCRETE_NAME = 'concreteName';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\CreateProductAbstractWithSingleConcreteForm::FIELD_CONCRETE_SKU
+     *
      * @var string
      */
     protected const FIELD_CONCRETE_SKU = 'concreteSku';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\CreateProductAbstractForm::FIELD_IS_SINGLE_CONCRETE
+     *
      * @var string
      */
     protected const FIELD_IS_SINGLE_CONCRETE = 'isSingleConcrete';

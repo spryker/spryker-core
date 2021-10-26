@@ -23,6 +23,7 @@ class ProductMeasurementSalesUnitWriterStep extends PublishAwareStep implements 
 {
     /**
      * @see \Spryker\Zed\ProductMeasurementUnit\Dependency\ProductMeasurementUnitEvents::PRODUCT_CONCRETE_MEASUREMENT_UNIT_PUBLISH
+     *
      * @var string
      */
     protected const PRODUCT_CONCRETE_MEASUREMENT_UNIT_PUBLISH = 'ProductMeasurementUnit.product_concrete_measurement_unit.publish';

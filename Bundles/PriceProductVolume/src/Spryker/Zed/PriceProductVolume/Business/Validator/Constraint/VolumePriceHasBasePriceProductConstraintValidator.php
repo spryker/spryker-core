@@ -19,12 +19,14 @@ class VolumePriceHasBasePriceProductConstraintValidator extends ConstraintValida
 {
     /**
      * @uses \Spryker\Shared\PriceProductVolume\PriceProductVolumeConfig::VOLUME_PRICE_TYPE
+     *
      * @var string
      */
     protected const VOLUME_PRICE_TYPE = 'volume_prices';
 
     /**
      * @uses \Spryker\Shared\PriceProduct\PriceProductConfig::PRICE_TYPE_DEFAULT
+     *
      * @var string
      */
     protected const PRICE_TYPE_DEFAULT = 'DEFAULT';

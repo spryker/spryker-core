@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Kernel;
 
+use Spryker\Zed\Permission\Business\PermissionFacadeInterface;
+
 trait PermissionAwareTrait
 {
     /**
@@ -20,7 +22,7 @@ trait PermissionAwareTrait
      */
     protected function can($permissionKey, $identifier, $context = null)
     {
-        if (interface_exists('\Spryker\Zed\Permission\Business\PermissionFacadeInterface')) {
+        if (interface_exists(PermissionFacadeInterface::class)) {
             return Locator::getInstance()->permission()->facade()->can($permissionKey, $identifier, $context);
         }
 

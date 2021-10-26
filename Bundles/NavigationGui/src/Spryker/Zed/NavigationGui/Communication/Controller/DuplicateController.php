@@ -24,6 +24,7 @@ class DuplicateController extends AbstractController
 
     /**
      * @uses \Spryker\Zed\NavigationGui\NavigationGuiConfig::REDIRECT_URL_DEFAULT
+     *
      * @var string
      */
     protected const REDIRECT_URL_DEFAULT = '/navigation-gui';

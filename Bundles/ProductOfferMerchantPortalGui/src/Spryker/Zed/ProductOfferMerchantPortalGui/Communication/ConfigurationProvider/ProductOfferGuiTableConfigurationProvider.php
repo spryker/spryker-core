@@ -93,30 +93,35 @@ class ProductOfferGuiTableConfigurationProvider implements GuiTableConfiguration
 
     /**
      * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\DataProvider\ProductOfferGuiTableDataProvider::COLUMN_DATA_APPROVAL_STATUS_WAITING_FOR_APPROVAL
+     *
      * @var string
      */
     protected const COLUMN_DATA_APPROVAL_STATUS_WAITING_FOR_APPROVAL = 'Pending';
 
     /**
      * @uses \Spryker\Shared\ProductOffer\ProductOfferConfig::STATUS_WAITING_FOR_APPROVAL
+     *
      * @var string
      */
     protected const APPROVAL_STATUS_WAITING_FOR_APPROVAL = 'waiting_for_approval';
 
     /**
      * @uses \Spryker\Shared\ProductOffer\ProductOfferConfig::STATUS_APPROVED
+     *
      * @var string
      */
     protected const APPROVAL_STATUS_APPROVED = 'approved';
 
     /**
      * @uses \Spryker\Shared\ProductOffer\ProductOfferConfig::STATUS_DENIED
+     *
      * @var string
      */
     protected const APPROVAL_STATUS_DENIED = 'denied';
 
     /**
      * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Controller\ProductOffersController::tableDataAction()
+     *
      * @var string
      */
     protected const DATA_URL = '/product-offer-merchant-portal-gui/product-offers/table-data';

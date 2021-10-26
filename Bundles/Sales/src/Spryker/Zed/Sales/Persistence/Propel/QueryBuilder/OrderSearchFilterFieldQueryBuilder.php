@@ -25,24 +25,28 @@ class OrderSearchFilterFieldQueryBuilder implements OrderSearchFilterFieldQueryB
 
     /**
      * @uses \Spryker\Shared\Sales\SalesConfig::ORDER_SEARCH_TYPES
+     *
      * @var string
      */
     public const SEARCH_TYPE_ALL = 'all';
 
     /**
      * @uses \Spryker\Shared\Sales\SalesConfig::ORDER_SEARCH_TYPES
+     *
      * @var string
      */
     protected const SEARCH_TYPE_ORDER_REFERENCE = 'orderReference';
 
     /**
      * @uses \Spryker\Shared\Sales\SalesConfig::ORDER_SEARCH_TYPES
+     *
      * @var string
      */
     protected const SEARCH_TYPE_ITEM_NAME = 'itemName';
 
     /**
      * @uses \Spryker\Shared\Sales\SalesConfig::ORDER_SEARCH_TYPES
+     *
      * @var string
      */
     protected const SEARCH_TYPE_ITEM_SKU = 'itemSku';
@@ -59,6 +63,7 @@ class OrderSearchFilterFieldQueryBuilder implements OrderSearchFilterFieldQueryB
 
     /**
      * @phpstan-var array<string, string>
+     *
      * @var array
      */
     protected const ORDER_SEARCH_TYPE_MAPPING = [
@@ -69,6 +74,7 @@ class OrderSearchFilterFieldQueryBuilder implements OrderSearchFilterFieldQueryB
 
     /**
      * @phpstan-var array<string, string>
+     *
      * @var array
      */
     protected const ORDER_BY_COLUMN_MAPPING = [
@@ -88,6 +94,7 @@ class OrderSearchFilterFieldQueryBuilder implements OrderSearchFilterFieldQueryB
 
     /**
      * @phpstan-var non-empty-string
+     *
      * @var string
      */
     protected const DELIMITER_ORDER_BY = '::';

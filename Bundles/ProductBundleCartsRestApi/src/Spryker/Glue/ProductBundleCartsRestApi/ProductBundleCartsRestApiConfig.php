@@ -23,24 +23,28 @@ class ProductBundleCartsRestApiConfig extends AbstractBundleConfig
 
     /**
      * @uses \Spryker\Glue\CartsRestApi\CartsRestApiConfig::RESOURCE_CARTS
+     *
      * @var string
      */
     public const RESOURCE_CARTS = 'carts';
 
     /**
      * @uses \Spryker\Glue\CartsRestApi\CartsRestApiConfig::RESOURCE_CART_ITEMS
+     *
      * @var string
      */
     public const RESOURCE_CART_ITEMS = 'items';
 
     /**
      * @uses \Spryker\Glue\CartsRestApi\CartsRestApiConfig::RESOURCE_GUEST_CARTS
+     *
      * @var string
      */
     public const RESOURCE_GUEST_CARTS = 'guest-carts';
 
     /**
      * @uses \Spryker\Glue\CartsRestApi\CartsRestApiConfig::RESOURCE_GUEST_CARTS_ITEMS
+     *
      * @var string
      */
     public const RESOURCE_GUEST_CARTS_ITEMS = 'guest-cart-items';

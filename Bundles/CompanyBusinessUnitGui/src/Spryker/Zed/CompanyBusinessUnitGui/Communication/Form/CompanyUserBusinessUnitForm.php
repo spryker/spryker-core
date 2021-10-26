@@ -39,6 +39,7 @@ class CompanyUserBusinessUnitForm extends AbstractType
 
     /**
      * @uses \Spryker\Zed\CompanyBusinessUnitGui\Communication\Controller\SuggestController::indexAction()
+     *
      * @var string
      */
     protected const ROUTE_SUGGEST = '/company-business-unit-gui/suggest';

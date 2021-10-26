@@ -23,36 +23,42 @@ class ProductConcreteValidator implements ProductConcreteValidatorInterface
 {
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\ProductConcreteMapper::FIELD_NAME
+     *
      * @var string
      */
     protected const FIELD_NAME = 'name';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\ProductConcreteMapper::FIELD_SKU
+     *
      * @var string
      */
     protected const FIELD_SKU = 'sku';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\ProductConcreteMapper::FIELD_ATTRIBUTE
+     *
      * @var string
      */
     protected const FIELD_ATTRIBUTE = 'attribute';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\ProductConcreteMapper::FIELD_SUPER_ATTRIBUTES
+     *
      * @var string
      */
     protected const FIELD_SUPER_ATTRIBUTES = 'superAttributes';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\ProductConcreteMapper::FIELD_KEY
+     *
      * @var string
      */
     protected const FIELD_KEY = 'key';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\ProductConcreteMapper::FIELD_VALUE
+     *
      * @var string
      */
     protected const FIELD_VALUE = 'value';

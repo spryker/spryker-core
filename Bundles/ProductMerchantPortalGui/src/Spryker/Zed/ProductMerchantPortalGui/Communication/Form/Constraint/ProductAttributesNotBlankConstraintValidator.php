@@ -19,6 +19,7 @@ class ProductAttributesNotBlankConstraintValidator extends ConstraintValidator
 {
     /**
      * @uses \Spryker\Zed\ProductAttribute\ProductAttributeConfig::DEFAULT_LOCALE
+     *
      * @var string
      */
     public const DEFAULT_LOCALE = '_';

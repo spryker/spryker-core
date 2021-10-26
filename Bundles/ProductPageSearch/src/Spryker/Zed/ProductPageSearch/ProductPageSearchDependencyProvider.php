@@ -164,6 +164,7 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
 
     /**
      * @deprecated Use {@link \Spryker\Zed\ProductPageSearch\ProductPageSearchDependencyProvider::PLUGINS_PRODUCT_ABSTRACT_MAP_EXPANDER} instead.
+     *
      * @var string
      */
     public const PLUGIN_PRODUCT_PAGE_MAP_EXPANDER = 'PLUGIN_PRODUCT_PAGE_MAP_EXPANDER';
@@ -200,6 +201,7 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
 
     /**
      * @deprecated Use ProductPageSearchDependencyProvider::PLUGINS_CONCRETE_PRODUCT_PAGE_MAP_EXPANDER instead.
+     *
      * @var string
      */
     public const PLUGINS_PRODUCT_CONCRETE_PAGE_MAP_EXPANDER = 'PLUGINS_PRODUCT_CONCRETE_PAGE_MAP_EXPANDER';

@@ -23,6 +23,7 @@ class ResponsePagination implements ResponsePaginationInterface
 
     /**
      * @param string $domainName
+     *
      * @var int
      */
     public const HARD_LIMIT = 500;

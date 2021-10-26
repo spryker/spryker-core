@@ -27,6 +27,7 @@ class DetailController extends AbstractController
 
     /**
      * @uses \Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Controller\IndexController::indexAction()
+     *
      * @var string
      */
     protected const ROUTE_RETURN_LIST = '/merchant-sales-return-merchant-user-gui';

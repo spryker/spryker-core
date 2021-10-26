@@ -315,6 +315,7 @@ class CustomersRestApiConfig extends AbstractBundleConfig
 
     /**
      * @uses \Spryker\Zed\Customer\Business\Customer\Customer::GLOSSARY_KEY_CONFIRM_EMAIL_LINK_INVALID_OR_USEDFIRM_EMAIL_LINK_INVALID_OR_USED
+     *
      * @var string
      */
     protected const ERROR_CUSTOMER_CONFIRMATION_CODE_INVALID_OR_USED = 'customer.error.confirm_email_link.invalid_or_used';
@@ -340,6 +341,7 @@ class CustomersRestApiConfig extends AbstractBundleConfig
 
     /**
      * @deprecated Will be removed without replacement.
+     *
      * @var string
      */
     public const FORMAT_SELF_LINK_ADDRESS_RESOURCE = '%s/%s/%s/%s';

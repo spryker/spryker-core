@@ -18,6 +18,7 @@ class EditCompanyBusinessUnitController extends AbstractController
 {
     /**
      * @see CompanyBusinessUnitForm::FIELD_ID_COMPANY_BUSINESS_UNIT
+     *
      * @var string
      */
     protected const PARAM_ID_COMPANY_BUSINESS_UNIT = 'id-company-business-unit';
@@ -29,6 +30,7 @@ class EditCompanyBusinessUnitController extends AbstractController
 
     /**
      * @see ListCompanyBusinessUnitController::indexAction()
+     *
      * @var string
      */
     protected const URL_BUSINESS_UNIT_LIST = '/company-business-unit-gui/list-company-business-unit';

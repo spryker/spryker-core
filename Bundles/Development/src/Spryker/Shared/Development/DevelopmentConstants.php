@@ -29,12 +29,14 @@ interface DevelopmentConstants
 
     /**
      * @see \Spryker\Shared\Kernel\KernelConstants::PROJECT_NAMESPACES
+     *
      * @var string
      */
     public const PROJECT_NAMESPACES = 'PROJECT_NAMESPACES';
 
     /**
      * @see \Spryker\Shared\Kernel\KernelConstants::CORE_NAMESPACES
+     *
      * @var string
      */
     public const CORE_NAMESPACES = 'CORE_NAMESPACES';
@@ -44,6 +46,7 @@ interface DevelopmentConstants
      * - Sets the permission mode for generated directories.
      *
      * @api
+     *
      * @var string
      */
     public const DIRECTORY_PERMISSION = 'DEVELOPMENT:DIRECTORY_PERMISSION';

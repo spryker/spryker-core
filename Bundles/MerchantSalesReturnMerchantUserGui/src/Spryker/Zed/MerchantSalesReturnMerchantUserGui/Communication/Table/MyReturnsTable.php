@@ -64,18 +64,21 @@ class MyReturnsTable extends AbstractTable
 
     /**
      * @uses \Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Controller\DetailController::indexAction()
+     *
      * @var string
      */
     protected const ROUTE_DETAIL = '/merchant-sales-return-merchant-user-gui/detail';
 
     /**
      * @uses \Spryker\Zed\SalesReturnGui\Communication\Controller\ReturnSlipController::indexAction()
+     *
      * @var string
      */
     protected const ROUTE_RETURN_SLIP = '/sales-return-gui/return-slip';
 
     /**
      * @uses \Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Controller\DetailController::PARAM_ID_RETURN
+     *
      * @var string
      */
     protected const PARAM_ID_RETURN = 'id-return';

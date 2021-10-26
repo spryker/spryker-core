@@ -31,6 +31,7 @@ class PasswordController extends AbstractController
 
     /**
      * @uses \Spryker\Zed\MerchantUser\Business\Updater\MerchantUserUpdater::RESET_RASSWORD_PATH
+     *
      * @var string
      */
     protected const RESET_RASSWORD_PATH = '/security-merchant-portal-gui/password/reset';

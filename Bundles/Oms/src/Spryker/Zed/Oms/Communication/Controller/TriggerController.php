@@ -22,6 +22,7 @@ class TriggerController extends AbstractController
 {
     /**
      * @deprecated Exists for Backward Compatibility reasons only. Use static::REQUEST_PARAMETER_ITEMS instead.
+     *
      * @var string
      */
     protected const REQUEST_PARAMETER_ID_SALES_ORDER_ITEM = 'id-sales-order-item';

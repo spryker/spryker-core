@@ -41,6 +41,7 @@ class EventTriggerForm extends AbstractType
 
     /**
      * @uses \Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Controller\OmsTriggerController::submitTriggerEventAction()
+     *
      * @var string
      */
     protected const ACTION_ROUTE = '/merchant-sales-return-merchant-user-gui/oms-trigger/submit-trigger-event';

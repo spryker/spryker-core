@@ -35,6 +35,7 @@ class ProductListUsedByTableMapper implements ProductListUsedByTableMapperInterf
 
     /**
      * @uses \Spryker\Zed\ConfigurableBundleGui\Communication\Controller\SlotController::editAction()
+     *
      * @var string
      */
     protected const ROUTE_EDIT_SLOT = '/configurable-bundle-gui/slot/edit';

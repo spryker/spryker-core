@@ -17,6 +17,7 @@ interface PropelConstants
      * - Key for propel configuration.
      *
      * @api
+     *
      * @var string
      */
     public const PROPEL = 'PROPEL';
@@ -26,6 +27,7 @@ interface PropelConstants
      * - key for propel configuration in
      *
      * @api
+     *
      * @var string
      */
     public const PROPEL_DEBUG = 'PROPEL_DEBUG';
@@ -38,6 +40,7 @@ interface PropelConstants
      * - Should only be used on non production environments.
      *
      * @api
+     *
      * @var string
      */
     public const PROPEL_SHOW_EXTENDED_EXCEPTION = 'PROPEL_SHOW_EXTENDED_EXCEPTION';
@@ -47,6 +50,7 @@ interface PropelConstants
      * - Name of database.
      *
      * @api
+     *
      * @var string
      */
     public const ZED_DB_DATABASE = 'ZED_DB_DATABASE';
@@ -56,6 +60,7 @@ interface PropelConstants
      * - Name of engine which should be used.
      *
      * @api
+     *
      * @var string
      */
     public const ZED_DB_ENGINE = 'ZED_DB_ENGINE';
@@ -65,6 +70,7 @@ interface PropelConstants
      * - Database host.
      *
      * @api
+     *
      * @var string
      */
     public const ZED_DB_HOST = 'ZED_DB_HOST';
@@ -74,6 +80,7 @@ interface PropelConstants
      * - Database port number.
      *
      * @api
+     *
      * @var string
      */
     public const ZED_DB_PORT = 'ZED_DB_PORT';
@@ -83,6 +90,7 @@ interface PropelConstants
      * - Database username.
      *
      * @api
+     *
      * @var string
      */
     public const ZED_DB_USERNAME = 'ZED_DB_USERNAME';
@@ -92,6 +100,7 @@ interface PropelConstants
      * - Database password.
      *
      * @api
+     *
      * @var string
      */
     public const ZED_DB_PASSWORD = 'ZED_DB_PASSWORD';
@@ -103,6 +112,7 @@ interface PropelConstants
      * @deprecated Will be removed without replacement.
      *
      * @api
+     *
      * @var string
      */
     public const ZED_DB_ENGINE_MYSQL = 'ZED_DB_ENGINE_MYSQL';
@@ -114,6 +124,7 @@ interface PropelConstants
      * @deprecated Will be removed without replacement.
      *
      * @api
+     *
      * @var string
      */
     public const ZED_DB_ENGINE_PGSQL = 'ZED_DB_ENGINE_PGSQL';
@@ -125,6 +136,7 @@ interface PropelConstants
      * @deprecated Will be removed without replacement.
      *
      * @api
+     *
      * @var string
      */
     public const ZED_DB_SUPPORTED_ENGINES = 'ZED_DB_SUPPORTED_ENGINES';
@@ -134,6 +146,7 @@ interface PropelConstants
      * - If this is enabled, create database command will be run as sudo.
      *
      * @api
+     *
      * @var string
      */
     public const USE_SUDO_TO_MANAGE_DATABASE = 'USE_SUDO_TO_MANAGE_DATABASE';
@@ -146,6 +159,7 @@ interface PropelConstants
      * @deprecated Will be removed without replacement.
      *
      * @api
+     *
      * @var string
      */
     public const SCHEMA_FILE_PATH_PATTERN = 'SCHEMA_FILE_PATH_PATTERN';
@@ -155,6 +169,7 @@ interface PropelConstants
      * - Path to log file.
      *
      * @api
+     *
      * @var string
      */
     public const LOG_FILE_PATH = 'PROPEL:LOG_FILE_PATH';
@@ -177,6 +192,7 @@ interface PropelConstants
      * $config[PropelConstants::ZED_DB_REPLICAS] = [];
      *
      * @api
+     *
      * @var string
      */
     public const ZED_DB_REPLICAS = 'PROPEL:ZED_DB_REPLICAS';

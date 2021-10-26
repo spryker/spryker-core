@@ -31,18 +31,21 @@ class UpdateProductOfferController extends AbstractProductOfferController
 
     /**
      * @uses \Spryker\Shared\ProductOffer\ProductOfferConfig::STATUS_WAITING_FOR_APPROVAL
+     *
      * @var string
      */
     protected const APPROVAL_STATUS_WAITING_FOR_APPROVAL = 'waiting_for_approval';
 
     /**
      * @uses \Spryker\Shared\ProductOffer\ProductOfferConfig::STATUS_APPROVED
+     *
      * @var string
      */
     protected const APPROVAL_STATUS_APPROVED = 'approved';
 
     /**
      * @uses \Spryker\Shared\ProductOffer\ProductOfferConfig::STATUS_DENIED
+     *
      * @var string
      */
     protected const APPROVAL_STATUS_DENIED = 'denied';

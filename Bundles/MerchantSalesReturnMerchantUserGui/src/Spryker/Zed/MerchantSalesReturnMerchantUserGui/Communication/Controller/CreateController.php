@@ -34,12 +34,14 @@ class CreateController extends AbstractController
 
     /**
      * @uses \Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Controller\IndexController::indexAction()
+     *
      * @var string
      */
     protected const ROUTE_RETURN_LIST = '/merchant-sales-return-merchant-user-gui';
 
     /**
      * @uses \Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Controller\DetailController::indexAction()
+     *
      * @var string
      */
     protected const ROUTE_RETURN_DETAIL = '/merchant-sales-return-merchant-user-gui/detail';

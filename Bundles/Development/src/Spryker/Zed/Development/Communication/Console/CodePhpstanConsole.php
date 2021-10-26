@@ -30,6 +30,7 @@ class CodePhpstanConsole extends Console
 
     /**
      * @deprecated Not Used
+     *
      * @var string
      */
     protected const OPTION_FORMAT = 'format';

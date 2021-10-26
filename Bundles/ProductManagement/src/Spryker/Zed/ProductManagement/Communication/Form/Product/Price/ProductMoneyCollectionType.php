@@ -28,6 +28,7 @@ class ProductMoneyCollectionType extends AbstractCollectionType
 {
     /**
      * @phpstan-var non-empty-string
+     *
      * @var string
      */
     public const PRICE_DELIMITER = '-';

@@ -19,6 +19,7 @@ class MerchantWriterStep extends PublishAwareStep implements DataImportStepInter
 {
     /**
      * @phpstan-var array<string>
+     *
      * @var array
      */
     protected const REQUIRED_DATA_SET_KEYS = [

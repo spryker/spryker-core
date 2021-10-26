@@ -17,6 +17,7 @@ interface DocumentationGeneratorRestApiConstants
      * - Enables generation of the documentation for enabled Rest API endpoints.
      *
      * @api
+     *
      * @var string
      */
     public const ENABLE_REST_API_DOCUMENTATION_GENERATION = 'ENABLE_REST_API_DOCUMENTATION_GENERATION';

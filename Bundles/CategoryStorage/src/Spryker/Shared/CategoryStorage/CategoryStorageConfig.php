@@ -16,6 +16,7 @@ class CategoryStorageConfig extends AbstractBundleConfig
      * - This events will be used for `spy_category_attribute` entity creation.
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_CATEGORY_ATTRIBUTE_CREATE = 'Entity.spy_category_attribute.create';
@@ -25,6 +26,7 @@ class CategoryStorageConfig extends AbstractBundleConfig
      * - This events will be used for `spy_category_attribute` entity changes.
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_CATEGORY_ATTRIBUTE_UPDATE = 'Entity.spy_category_attribute.update';
@@ -34,6 +36,7 @@ class CategoryStorageConfig extends AbstractBundleConfig
      * - This events will be used for `spy_category_attribute` entity deletion.
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_CATEGORY_ATTRIBUTE_DELETE = 'Entity.spy_category_attribute.delete';
@@ -43,6 +46,7 @@ class CategoryStorageConfig extends AbstractBundleConfig
      * - This events will be used for `spy_category` entity creation.
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_CATEGORY_CREATE = 'Entity.spy_category.create';
@@ -52,6 +56,7 @@ class CategoryStorageConfig extends AbstractBundleConfig
      * - This events will be used for `spy_category` entity changes.
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_CATEGORY_UPDATE = 'Entity.spy_category.update';
@@ -61,6 +66,7 @@ class CategoryStorageConfig extends AbstractBundleConfig
      * - This events will be used for `spy_category` entity deletion.
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_CATEGORY_DELETE = 'Entity.spy_category.delete';
@@ -70,6 +76,7 @@ class CategoryStorageConfig extends AbstractBundleConfig
      * - This events will be used for `spy_category_template` entity creation.
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_CATEGORY_TEMPLATE_CREATE = 'Entity.spy_category_template.create';
@@ -79,6 +86,7 @@ class CategoryStorageConfig extends AbstractBundleConfig
      * - This events will be used for `spy_category_template` entity changes.
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_CATEGORY_TEMPLATE_UPDATE = 'Entity.spy_category_template.update';
@@ -88,6 +96,7 @@ class CategoryStorageConfig extends AbstractBundleConfig
      * - This events will be used for `spy_category_template` entity deletion.
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_CATEGORY_TEMPLATE_DELETE = 'Entity.spy_category_template.delete';
@@ -97,6 +106,7 @@ class CategoryStorageConfig extends AbstractBundleConfig
      * - This events will be used for `CategoryNode` publish.
      *
      * @api
+     *
      * @var string
      */
     public const CATEGORY_NODE_PUBLISH = 'Category.node.publish';
@@ -106,6 +116,7 @@ class CategoryStorageConfig extends AbstractBundleConfig
      * - This events will be used for `CategoryNode` publish.
      *
      * @api
+     *
      * @var string
      */
     public const CATEGORY_NODE_UNPUBLISH = 'Category.node.unpublish';
@@ -115,6 +126,7 @@ class CategoryStorageConfig extends AbstractBundleConfig
      * - This events will be used for `spy_category_node` entity creation.
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_CATEGORY_NODE_CREATE = 'Entity.spy_category_node.create';
@@ -124,6 +136,7 @@ class CategoryStorageConfig extends AbstractBundleConfig
      * - This events will be used for `spy_category_node` entity changes.
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_CATEGORY_NODE_UPDATE = 'Entity.spy_category_node.update';
@@ -133,6 +146,7 @@ class CategoryStorageConfig extends AbstractBundleConfig
      * - This events will be used for `spy_category_node` entity deletion.
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_CATEGORY_NODE_DELETE = 'Entity.spy_category_node.delete';
@@ -142,6 +156,7 @@ class CategoryStorageConfig extends AbstractBundleConfig
      * - This events will be used for `CategoryTree` publish.
      *
      * @api
+     *
      * @var string
      */
     public const CATEGORY_TREE_PUBLISH = 'Category.tree.publish';
@@ -151,6 +166,7 @@ class CategoryStorageConfig extends AbstractBundleConfig
      * - This events will be used for `CategoryTree` unpublish.
      *
      * @api
+     *
      * @var string
      */
     public const CATEGORY_TREE_UNPUBLISH = 'Category.tree.unpublish';
@@ -160,6 +176,7 @@ class CategoryStorageConfig extends AbstractBundleConfig
      * - This event will be used after `Category` creation.
      *
      * @api
+     *
      * @var string
      */
     public const CATEGORY_AFTER_PUBLISH_CREATE = 'Category.after.publish_create';
@@ -169,6 +186,7 @@ class CategoryStorageConfig extends AbstractBundleConfig
      * - This event will be used after `Category` updating.
      *
      * @api
+     *
      * @var string
      */
     public const CATEGORY_AFTER_PUBLISH_UPDATE = 'Category.after.publish_update';
@@ -178,6 +196,7 @@ class CategoryStorageConfig extends AbstractBundleConfig
      * - This event will be used after `Category` deletion.
      *
      * @api
+     *
      * @var string
      */
     public const CATEGORY_AFTER_PUBLISH_DELETE = 'Category.after.publish_delete';

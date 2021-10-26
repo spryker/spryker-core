@@ -21,12 +21,14 @@ class ProductAbstractAttributeGuiTableConfigurationProvider implements ProductAb
 {
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Controller\ProductAttributesController::PARAM_ID_PRODUCT_ABSTRACT
+     *
      * @var string
      */
     protected const PARAM_ID_PRODUCT_ABSTRACT = 'idProductAbstract';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Controller\ProductAttributesController::PARAM_ATTRIBUTE_NAME
+     *
      * @var string
      */
     protected const PARAM_ATTRIBUTE_NAME = 'attribute_name';
@@ -88,24 +90,28 @@ class ProductAbstractAttributeGuiTableConfigurationProvider implements ProductAb
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Controller\ProductAttributesController::attributeDataAction()
+     *
      * @var string
      */
     protected const PRODUCT_ATTRIBUTES_DATA_URL = '/product-merchant-portal-gui/product-attributes/attribute-data/';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Controller\ProductAttributesController::saveAction()
+     *
      * @var string
      */
     protected const PRODUCT_ATTRIBUTE_SAVE_DATA_URL = '/product-merchant-portal-gui/product-attributes/save';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Controller\ProductAttributesController::deleteAction()
+     *
      * @var string
      */
     protected const PRODUCT_ATTRIBUTE_DELETE_URL = '/product-merchant-portal-gui/product-attributes/delete';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Controller\ProductAttributesController::tableDataAction()
+     *
      * @var string
      */
     protected const PRODUCT_ATTRIBUTES_TABLE_DATA_URL = '/product-merchant-portal-gui/product-attributes/table-data';

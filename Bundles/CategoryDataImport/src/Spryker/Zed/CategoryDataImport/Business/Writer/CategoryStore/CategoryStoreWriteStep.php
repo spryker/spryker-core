@@ -23,12 +23,14 @@ class CategoryStoreWriteStep extends PublishAwareStep implements DataImportStepI
 {
     /**
      * @uses \Spryker\Shared\CategoryStorage\CategoryStorageConstants::CATEGORY_STORE_PUBLISH
+     *
      * @var string
      */
     protected const EVENT_CATEGORY_STORE_PUBLISH = 'Category.category_store.publish';
 
     /**
      * @uses \Spryker\Zed\Category\Dependency\CategoryEvents::ENTITY_CATEGORY_PUBLISH
+     *
      * @var string
      */
     protected const ENTITY_CATEGORY_PUBLISH = 'Entity.spy_category.publish';

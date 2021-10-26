@@ -28,18 +28,21 @@ class ProductOfferGuiConfig extends AbstractBundleConfig
 
     /**
      * @uses \Spryker\Zed\ProductOfferGui\Communication\Controller\ProductOfferController::indexAction()
+     *
      * @var string
      */
     public const URL_PRODUCT_OFFER_LIST = '/product-offer-gui/list-product-offer';
 
     /**
      * @uses \Spryker\Zed\ProductOfferGui\Communication\Controller\EditController::updateApprovalStatusAction()
+     *
      * @var string
      */
     public const URL_UPDATE_APPROVAL_STATUS = '/product-offer-gui/edit/update-approval-status';
 
     /**
      * @uses \Spryker\Zed\ProductOfferGui\Communication\Controller\ViewController::indexAction()
+     *
      * @var string
      */
     public const URL_VIEW = '/product-offer-gui/view';

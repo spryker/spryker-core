@@ -28,6 +28,7 @@ class ProductAbstractAttributeTableDataProvider extends AbstractGuiTableDataProv
 
     /**
      * @uses ProductAbstractAttributeGuiTableConfigurationProvider::COL_KEY_ATTRIBUTE_NAME
+     *
      * @var string
      */
     protected const ATTRIBUTES_DEFAULT_SORT_FIELD = 'attribute_name';

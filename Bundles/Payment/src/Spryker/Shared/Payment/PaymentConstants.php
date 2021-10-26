@@ -16,6 +16,7 @@ interface PaymentConstants
      * @see \Spryker\Shared\Sales\SalesConstants::PAYMENT_METHOD_STATEMACHINE_MAPPING
      *
      * @api
+     *
      * @var string
      */
     public const PAYMENT_METHOD_STATEMACHINE_MAPPING = 'PAYMENT_METHOD_STATEMACHINE_MAPPING';

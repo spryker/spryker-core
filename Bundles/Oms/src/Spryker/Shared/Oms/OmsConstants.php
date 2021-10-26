@@ -17,6 +17,7 @@ interface OmsConstants
      * - Defines paths to OMS schemas
      *
      * @api
+     *
      * @var string
      */
     public const PROCESS_LOCATION = 'PROCESS_LOCATION';
@@ -26,6 +27,7 @@ interface OmsConstants
      * - Defines which of defined processes will be active
      *
      * @api
+     *
      * @var string
      */
     public const ACTIVE_PROCESSES = 'ACTIVE_PROCESSES';

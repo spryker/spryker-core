@@ -18,6 +18,7 @@ class PriceProductTableRowMatcher implements PriceProductTableRowMatcherInterfac
 {
     /**
      * @uses \Spryker\Shared\PriceProductOfferVolume\PriceProductOfferVolumeConfig::VOLUME_PRICE_TYPE
+     *
      * @var string
      */
     protected const VOLUME_PRICE_TYPE = 'volume_prices';

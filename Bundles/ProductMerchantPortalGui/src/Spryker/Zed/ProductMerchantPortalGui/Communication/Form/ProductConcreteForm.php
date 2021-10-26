@@ -39,12 +39,14 @@ class ProductConcreteForm extends AbstractType
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\ProductConcreteEditForm::FIELD_USE_ABSTRACT_PRODUCT_NAME
+     *
      * @var string
      */
     protected const FIELD_USE_ABSTRACT_PRODUCT_NAME = 'useAbstractProductName';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\ProductLocalizedAttributesForm::NAME_VALIDATION_GROUP
+     *
      * @var string
      */
     protected const NAME_VALIDATION_GROUP = 'name_validation_group';

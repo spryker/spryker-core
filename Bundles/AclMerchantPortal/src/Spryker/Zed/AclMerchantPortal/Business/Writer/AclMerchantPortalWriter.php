@@ -50,6 +50,7 @@ class AclMerchantPortalWriter implements AclMerchantPortalWriterInterface
 
     /**
      * @uses \Spryker\Shared\AclEntity\AclEntityConstants::SCOPE_SEGMENT
+     *
      * @var string
      */
     protected const SCOPE_SEGMENT = 'segment';

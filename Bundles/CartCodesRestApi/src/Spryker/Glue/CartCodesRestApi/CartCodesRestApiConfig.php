@@ -31,18 +31,21 @@ class CartCodesRestApiConfig extends AbstractBundleConfig
 
     /**
      * @uses \Spryker\Glue\CartsRestApi\CartsRestApiConfig::RESOURCE_CARTS
+     *
      * @var string
      */
     public const RESOURCE_CARTS = 'carts';
 
     /**
      * @uses \Spryker\Glue\CartsRestApi\CartsRestApiConfig::RESOURCE_GUEST_CARTS
+     *
      * @var string
      */
     public const RESOURCE_GUEST_CARTS = 'guest-carts';
 
     /**
      * @uses \Spryker\Glue\CartsRestApi\CartsRestApiConfig::RESPONSE_CODE_CART_NOT_FOUND
+     *
      * @var string
      */
     public const RESPONSE_CODE_CART_NOT_FOUND = '101';
@@ -64,6 +67,7 @@ class CartCodesRestApiConfig extends AbstractBundleConfig
 
     /**
      * @uses \Spryker\Glue\CartsRestApi\CartsRestApiConfig::EXCEPTION_MESSAGE_CART_WITH_ID_NOT_FOUND
+     *
      * @var string
      */
     public const EXCEPTION_MESSAGE_CART_WITH_ID_NOT_FOUND = 'Cart with given uuid not found.';

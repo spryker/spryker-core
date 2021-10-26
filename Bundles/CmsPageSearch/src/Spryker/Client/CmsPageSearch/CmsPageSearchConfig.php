@@ -53,12 +53,14 @@ class CmsPageSearchConfig extends AbstractBundleConfig
      * @deprecated For BC compatibility only. Use {@link \Spryker\Client\CmsPageSearch\CmsPageSearchConfig::FULL_TEXT_BOOSTED_BOOSTING_VALUE} instead.
      *
      * @uses \Spryker\Shared\Search\SearchConstants::FULL_TEXT_BOOSTED_BOOSTING_VALUE
+     *
      * @var string
      */
     protected const FULL_TEXT_BOOSTED_BOOSTING_VALUE_DEPRECATED = 'FULL_TEXT_BOOSTED_BOOSTING_VALUE';
 
     /**
      * @uses \Spryker\Shared\SearchElasticsearch\SearchElasticsearchConstants::FULL_TEXT_BOOSTED_BOOSTING_VALUE
+     *
      * @var string
      */
     protected const FULL_TEXT_BOOSTED_BOOSTING_VALUE = 'SEARCH_ELASTICSEARCH:FULL_TEXT_BOOSTED_BOOSTING_VALUE';

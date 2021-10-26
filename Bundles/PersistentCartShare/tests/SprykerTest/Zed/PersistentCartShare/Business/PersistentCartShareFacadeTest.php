@@ -33,30 +33,35 @@ class PersistentCartShareFacadeTest extends Test
 {
     /**
      * @uses \Spryker\Zed\ResourceShare\Business\ResourceShare\ResourceShareReader::GLOSSARY_KEY_RESOURCE_IS_NOT_FOUND_BY_PROVIDED_UUID
+     *
      * @var string
      */
     protected const GLOSSARY_KEY_RESOURCE_IS_NOT_FOUND_BY_PROVIDED_UUID = 'resource_share.reader.error.resource_is_not_found_by_provided_uuid';
 
     /**
      * @uses \Spryker\Zed\ResourceShare\Business\ResourceShare\ResourceShareValidator::GLOSSARY_KEY_RESOURCE_SHARE_IS_EXPIRED
+     *
      * @var string
      */
     protected const GLOSSARY_KEY_RESOURCE_SHARE_IS_EXPIRED = 'resource_share.validation.error.resource_share_is_expired';
 
     /**
      * @uses \Spryker\Zed\PersistentCartShare\Business\Reader\QuoteReader::GLOSSARY_KEY_QUOTE_IS_NOT_AVAILABLE
+     *
      * @var string
      */
     protected const GLOSSARY_KEY_ERROR_QUOTE_NOT_AVAILABLE = 'persistent_cart_share.error.quote_is_not_available';
 
     /**
      * @uses \Spryker\Zed\PersistentCartShare\Business\Reader\QuoteReader::GLOSSARY_KEY_RESOURCE_IS_NOT_AVAILABLE
+     *
      * @var string
      */
     protected const GLOSSARY_KEY_RESOURCE_IS_NOT_AVAILABLE = 'persistent_cart_share.error.resource_is_not_available';
 
     /**
      * @uses \Spryker\Shared\SharedCart\SharedCartConfig::PERMISSION_GROUP_FULL_ACCESS
+     *
      * @var string
      */
     public const SHARE_OPTION_FULL_ACCESS = 'FULL_ACCESS';

@@ -21,6 +21,7 @@ class RedirectUrlValidationEventDispatcherPlugin extends AbstractPlugin implemen
 {
     /**
      * @see \Spryker\Yves\Kernel\Controller\AbstractController::BC_REDIRECT_URL_VALIDATION_HANDLED
+     *
      * @var string
      */
     protected const BC_REDIRECT_URL_VALIDATION_HANDLED = 'BC_REDIRECT_URL_VALIDATION_HANDLED';

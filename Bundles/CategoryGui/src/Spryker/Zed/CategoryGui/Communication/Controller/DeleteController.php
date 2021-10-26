@@ -29,6 +29,7 @@ class DeleteController extends CategoryAbstractController
 
     /**
      * @uses \Spryker\Zed\CategoryGui\Communication\Controller\ListController::indexAction()
+     *
      * @var string
      */
     protected const ROUTE_CATEGORY_LIST = '/category-gui/list';

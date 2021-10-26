@@ -18,6 +18,7 @@ interface PropelOrmConstants
      * - Should only be used on non production environments.
      *
      * @api
+     *
      * @var string
      */
     public const PROPEL_SHOW_EXTENDED_EXCEPTION = 'PROPEL_SHOW_EXTENDED_EXCEPTION';

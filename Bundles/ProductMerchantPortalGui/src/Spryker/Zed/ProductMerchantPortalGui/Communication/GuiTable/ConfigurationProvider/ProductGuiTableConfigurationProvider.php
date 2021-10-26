@@ -72,18 +72,21 @@ class ProductGuiTableConfigurationProvider implements ProductGuiTableConfigurati
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Controller\ProductsConcreteController::tableDataAction()
+     *
      * @var string
      */
     protected const DATA_URL = '/product-merchant-portal-gui/products-concrete/table-data';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Controller\ProductsConcreteController::bulkEditAction()
+     *
      * @var string
      */
     protected const BULK_EDIT_URL = '/product-merchant-portal-gui/products-concrete/bulk-edit?product-ids=${rowIds}';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Controller\UpdateProductConcreteController::indexAction()
+     *
      * @var string
      */
     protected const ROW_EDIT_URL = '/product-merchant-portal-gui/update-product-concrete?product-id=${row.%s}';

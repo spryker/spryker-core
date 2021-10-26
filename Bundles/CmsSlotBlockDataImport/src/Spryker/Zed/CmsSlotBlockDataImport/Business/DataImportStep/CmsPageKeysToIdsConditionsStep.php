@@ -21,12 +21,14 @@ class CmsPageKeysToIdsConditionsStep implements DataImportStepInterface
 
     /**
      * @uses \Spryker\Zed\CmsSlotBlockDataImport\Business\Resolver\AllConditionResolver::KEY_ALL
+     *
      * @var string
      */
     protected const KEY_ALL = 'all';
 
     /**
      * @uses \Spryker\Zed\CmsSlotBlockDataImport\Business\Resolver\CmsPageKeysToIdsConditionResolver::KEY_CMS_PAGE_IDS
+     *
      * @var string
      */
     protected const KEY_CMS_PAGE_IDS = 'pageIds';

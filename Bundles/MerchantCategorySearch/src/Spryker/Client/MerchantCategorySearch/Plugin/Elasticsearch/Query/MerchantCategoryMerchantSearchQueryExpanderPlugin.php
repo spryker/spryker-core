@@ -27,6 +27,7 @@ class MerchantCategoryMerchantSearchQueryExpanderPlugin extends AbstractPlugin i
 
     /**
      * @uses \Spryker\Zed\MerchantCategorySearch\Communication\Expander\MerchantCategorySearchExpander::CATEGORY_KEYS
+     *
      * @var string
      */
     protected const CATEGORY_KEYS = 'category-keys';

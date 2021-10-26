@@ -48,24 +48,28 @@ class ProductLabelTable extends AbstractTable
 
     /**
      * @uses \Spryker\Zed\ProductLabelGui\Communication\Controller\IndexController::indexAction()
+     *
      * @var string
      */
     protected const URL_PRODUCT_LABEL_LIST = '/product-label-gui';
 
     /**
      * @uses \Spryker\Zed\ProductLabelGui\Communication\Controller\ViewController::indexAction()
+     *
      * @var string
      */
     protected const URL_PRODUCT_LABEL_VIEW = '/product-label-gui/view';
 
     /**
      * @uses \Spryker\Zed\ProductLabelGui\Communication\Controller\EditController::indexAction()
+     *
      * @var string
      */
     protected const URL_PRODUCT_LABEL_EDIT = '/product-label-gui/edit';
 
     /**
      * @uses \Spryker\Zed\ProductLabelGui\Communication\Controller\DeleteController::indexAction()
+     *
      * @var string
      */
     protected const URL_PRODUCT_LABEL_DELETE = '/product-label-gui/delete';

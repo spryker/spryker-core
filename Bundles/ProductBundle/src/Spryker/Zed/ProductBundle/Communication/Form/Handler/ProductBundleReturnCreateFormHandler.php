@@ -17,6 +17,7 @@ class ProductBundleReturnCreateFormHandler implements ProductBundleReturnCreateF
 {
     /**
      * @uses \Spryker\Zed\SalesReturnGui\Communication\Form\DataProvider\ReturnCreateFormDataProvider::CUSTOM_REASON_KEY
+     *
      * @var string
      */
     protected const CUSTOM_REASON_KEY = 'custom_reason';

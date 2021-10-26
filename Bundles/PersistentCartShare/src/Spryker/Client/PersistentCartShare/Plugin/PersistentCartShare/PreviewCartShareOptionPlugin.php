@@ -15,6 +15,7 @@ class PreviewCartShareOptionPlugin extends AbstractPlugin implements CartShareOp
 {
     /**
      * @uses \Spryker\Shared\PersistentCartShare\PersistentCartShareConfig::SHARE_OPTION_KEY_PREVIEW
+     *
      * @var string
      */
     protected const SHARE_OPTION_KEY_PREVIEW = 'PREVIEW';

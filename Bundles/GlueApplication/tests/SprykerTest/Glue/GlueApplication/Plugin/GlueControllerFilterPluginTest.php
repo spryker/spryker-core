@@ -32,6 +32,7 @@ class GlueControllerFilterPluginTest extends Unit
 {
     /**
      * @return void
+     *
      * @var string
      */
     protected const URL_TEST_RESOURCE = 'http://domain.tld/tests/1';
@@ -55,6 +56,7 @@ class GlueControllerFilterPluginTest extends Unit
 
     /**
      * @return void
+     *
      * @var string
      */
     protected const TESTS_POST_DATA = '{"data":{"type":"tests","attributes":{"attribute1":"1", "attribute2": "2"}}}';

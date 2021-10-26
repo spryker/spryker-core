@@ -64,30 +64,35 @@ class CreateReturnTest extends Unit
 
     /**
      * @uses \Spryker\Zed\SalesReturn\Business\Writer\ReturnWriter::GLOSSARY_KEY_CREATE_RETURN_ITEM_REQUIRED_FIELDS_ERROR
+     *
      * @var string
      */
     protected const GLOSSARY_KEY_CREATE_RETURN_ITEM_REQUIRED_FIELDS_ERROR = 'return.create_return.validation.required_item_fields_error';
 
     /**
      * @uses \Spryker\Zed\SalesReturn\Business\Validator\ReturnValidator::GLOSSARY_KEY_CREATE_RETURN_ITEM_ERROR
+     *
      * @var string
      */
     protected const GLOSSARY_KEY_CREATE_RETURN_ITEM_ERROR = 'return.create_return.validation.items_error';
 
     /**
      * @uses \Spryker\Zed\SalesReturn\Business\Validator\ReturnValidator::GLOSSARY_KEY_CREATE_RETURN_ITEM_CURRENCY_ERROR
+     *
      * @var string
      */
     protected const GLOSSARY_KEY_CREATE_RETURN_ITEM_CURRENCY_ERROR = 'return.create_return.validation.items_currency_error';
 
     /**
      * @uses \Spryker\Zed\SalesReturn\Business\Writer\ReturnWriter::GLOSSARY_KEY_CREATE_RETURN_RETURNABLE_ITEM_ERROR
+     *
      * @var string
      */
     protected const GLOSSARY_KEY_CREATE_RETURN_RETURNABLE_ITEM_ERROR = 'return.create_return.validation.returnable_items_error';
 
     /**
      * @uses \Spryker\Zed\SalesReturn\Business\Validator\ReturnValidator::GLOSSARY_KEY_CREATE_RETURN_STORE_ERROR
+     *
      * @var string
      */
     protected const GLOSSARY_KEY_CREATE_RETURN_STORE_ERROR = 'return.create_return.validation.store_error';

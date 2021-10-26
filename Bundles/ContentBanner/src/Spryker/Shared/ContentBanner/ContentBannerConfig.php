@@ -34,6 +34,7 @@ class ContentBannerConfig extends AbstractSharedConfig
 
     /**
      * @deprecated Use {@link \Spryker\Shared\ContentBanner\ContentBannerConfig::WIDGET_TEMPLATE_IDENTIFIER_BOTTOM_TITLE} instead.
+     *
      * @var string
      */
     public const WIDGET_TEMPLATE_IDENTIFIER_DEFAULT = 'default';

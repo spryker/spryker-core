@@ -28,36 +28,42 @@ class ProductReviewsRestApiConfig extends AbstractBundleConfig
 
     /**
      * @uses \Spryker\Glue\ProductsRestApi\ProductsRestApiConfig::RESOURCE_ABSTRACT_PRODUCTS
+     *
      * @var string
      */
     public const RESOURCE_ABSTRACT_PRODUCTS = 'abstract-products';
 
     /**
      * @uses \Spryker\Glue\AuthRestApi\AuthRestApiConfig::RESPONSE_CODE_INVALID_OR_MISSING_ACCESS_TOKEN
+     *
      * @var string
      */
     public const RESPONSE_CODE_INVALID_OR_MISSING_ACCESS_TOKEN = '005';
 
     /**
      * @uses \Spryker\Glue\ProductsRestApi\ProductsRestApiConfig::RESPONSE_CODE_CANT_FIND_ABSTRACT_PRODUCT
+     *
      * @var string
      */
     public const RESPONSE_CODE_CANT_FIND_ABSTRACT_PRODUCT = '301';
 
     /**
      * @uses \Spryker\Glue\ProductsRestApi\ProductsRestApiConfig::RESPONSE_CODE_ABSTRACT_PRODUCT_SKU_IS_NOT_SPECIFIED
+     *
      * @var string
      */
     public const RESPONSE_CODE_ABSTRACT_PRODUCT_SKU_IS_NOT_SPECIFIED = '311';
 
     /**
      * @uses \Spryker\Glue\ProductsRestApi\ProductsRestApiConfig::RESPONSE_DETAIL_CANT_FIND_ABSTRACT_PRODUCT
+     *
      * @var string
      */
     public const RESPONSE_DETAIL_CANT_FIND_ABSTRACT_PRODUCT = 'Abstract product is not found.';
 
     /**
      * @uses \Spryker\Glue\ProductsRestApi\ProductsRestApiConfig::RESPONSE_DETAIL_ABSTRACT_PRODUCT_SKU_IS_NOT_SPECIFIED
+     *
      * @var string
      */
     public const RESPONSE_DETAIL_ABSTRACT_PRODUCT_SKU_IS_NOT_SPECIFIED = 'Abstract product sku is not specified.';

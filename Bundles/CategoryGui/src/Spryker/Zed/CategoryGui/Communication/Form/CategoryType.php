@@ -75,6 +75,7 @@ class CategoryType extends CommonCategoryType
 
     /**
      * @uses \Spryker\Zed\CategoryGui\Communication\Controller\SearchController::categoryStoreAction()
+     *
      * @var string
      */
     protected const DEFAULT_ACTION_URL = '/category-gui/search/category-store';

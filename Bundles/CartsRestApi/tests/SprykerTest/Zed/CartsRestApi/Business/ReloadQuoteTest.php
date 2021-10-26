@@ -35,12 +35,14 @@ class ReloadQuoteTest extends Unit
 {
     /**
      * @uses \Spryker\Shared\Price\PriceConfig::PRICE_MODE_GROSS
+     *
      * @var string
      */
     protected const PRICE_GROSS_MODE = 'GROSS_MODE';
 
     /**
      * @uses \Spryker\Shared\PersistentCart\PersistentCartConfig::PERSISTENT_CART_ANONYMOUS_PREFIX
+     *
      * @var string
      */
     protected const PERSISTENT_CART_ANONYMOUS_PREFIX = 'anonymous:';

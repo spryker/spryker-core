@@ -19,12 +19,14 @@ class UniqueSkuInProductConcreteCollectionConstraintValidator extends AbstractCo
 {
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\AddProductConcreteForm::FIELD_PRODUCTS
+     *
      * @var string
      */
     protected const ADD_PRODUCT_CONCRETE_FORM_FIELD_PRODUCTS = 'products';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\ProductConcreteSuperAttributeForm::FIELD_SKU
+     *
      * @var string
      */
     protected const PRODUCT_CONCRETE_SUPER_ATTRIBUTE_FORM_FIELD_SKU = 'sku';

@@ -119,7 +119,7 @@ class CartClientTest extends Unit
 
         $quoteTransfer = $cartClientMock->addItem($itemTransfer);
 
-        $this->assertInstanceOf('Generated\Shared\Transfer\QuoteTransfer', $quoteTransfer);
+        $this->assertInstanceOf(QuoteTransfer::class, $quoteTransfer);
     }
 
     /**
@@ -156,7 +156,7 @@ class CartClientTest extends Unit
 
         $quoteTransfer = $cartClientMock->changeItemQuantity('sku', null, 1);
 
-        $this->assertInstanceOf('Generated\Shared\Transfer\QuoteTransfer', $quoteTransfer);
+        $this->assertInstanceOf(QuoteTransfer::class, $quoteTransfer);
     }
 
     /**
@@ -193,7 +193,7 @@ class CartClientTest extends Unit
 
         $quoteTransfer = $cartClientMock->changeItemQuantity('sku', null, 2);
 
-        $this->assertInstanceOf('Generated\Shared\Transfer\QuoteTransfer', $quoteTransfer);
+        $this->assertInstanceOf(QuoteTransfer::class, $quoteTransfer);
     }
 
     /**

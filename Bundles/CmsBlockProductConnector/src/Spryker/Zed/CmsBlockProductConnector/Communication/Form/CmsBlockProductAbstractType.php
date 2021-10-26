@@ -40,6 +40,7 @@ class CmsBlockProductAbstractType extends AbstractType
 
     /**
      * @deprecated Use {@link \Spryker\Zed\CmsBlockProductConnector\Communication\Form\CmsBlockProductAbstractType::OPTION_ASSIGNED_PRODUCT_ABSTRACTS} instead.
+     *
      * @var string
      */
     public const OPTION_PRODUCT_ABSTRACT_ARRAY = 'option-assigned-product-abstracts';

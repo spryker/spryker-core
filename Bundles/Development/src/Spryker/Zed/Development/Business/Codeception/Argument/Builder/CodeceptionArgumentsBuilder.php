@@ -14,6 +14,7 @@ class CodeceptionArgumentsBuilder implements CodeceptionArgumentsBuilderInterfac
 {
     /**
      * @see \Spryker\Zed\Development\Communication\Console\CodeTestConsole::OPTION_CONFIG_PATH
+     *
      * @var string
      */
     protected const OPTION_CONFIG_PATH = 'config';

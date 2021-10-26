@@ -60,6 +60,7 @@ class UrlDependencyProvider extends AbstractBundleDependencyProvider
 
     /**
      * @deprecated Use the `getConnection()` method from query container instead.
+     *
      * @var string
      */
     public const PLUGIN_PROPEL_CONNECTION = 'propel connection plugin';

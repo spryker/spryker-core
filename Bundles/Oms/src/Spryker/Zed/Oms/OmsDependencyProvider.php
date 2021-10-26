@@ -128,6 +128,7 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
 
     /**
      * @deprecated Use {@link \Spryker\Zed\Oms\OmsDependencyProvider::QUERY_CONTAINER_SALES} instead.
+     *
      * @var string
      */
     public const PROPEL_QUERY_SALES_ORDER_ITEM = 'PROPEL_QUERY_SALES_ORDER_ITEM';

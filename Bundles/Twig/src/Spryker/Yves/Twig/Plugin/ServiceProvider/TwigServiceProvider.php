@@ -38,7 +38,7 @@ class TwigServiceProvider extends AbstractPlugin implements ServiceProviderInter
             return $this->getFactory()->createFilesystemLoader();
         };
 
-        if (class_exists('\Symfony\Bridge\Twig\Extension\HttpKernelRuntime')) {
+        if (class_exists(HttpKernelRuntime::class)) {
             $app['twig'] = $app->share(
                 $app->extend(
                     'twig',

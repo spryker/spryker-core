@@ -14,6 +14,7 @@ interface ProductAlternativeEvents
      * - This events will be used for spy_product_alternative entity creation
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_PRODUCT_ALTERNATIVE_CREATE = 'Entity.spy_product_alternative.create';
@@ -23,6 +24,7 @@ interface ProductAlternativeEvents
      * - This events will be used for spy_product_alternative entity changes
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_PRODUCT_ALTERNATIVE_UPDATE = 'Entity.spy_product_alternative.update';
@@ -32,6 +34,7 @@ interface ProductAlternativeEvents
      * - This events will be used for spy_product_alternative entity deletion
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_PRODUCT_ALTERNATIVE_DELETE = 'Entity.spy_product_alternative.delete';
@@ -41,6 +44,7 @@ interface ProductAlternativeEvents
      * - This event is used for product_alternative publishing.
      *
      * @api
+     *
      * @var string
      */
     public const PRODUCT_ALTERNATIVE_PUBLISH = 'ProductAlternative.product_alternative.publish';
@@ -50,6 +54,7 @@ interface ProductAlternativeEvents
      * - This event is used for product_alternative unpublishing.
      *
      * @api
+     *
      * @var string
      */
     public const PRODUCT_ALTERNATIVE_UNPUBLISH = 'ProductAlternative.product_alternative.unpublish';
@@ -59,6 +64,7 @@ interface ProductAlternativeEvents
      * - This event is used for product_replacement_for publishing of abstract alternative products.
      *
      * @api
+     *
      * @var string
      */
     public const PRODUCT_REPLACEMENT_ABSTRACT_PUBLISH = 'ProductAlternative.product_abstract_replacement_for.publish';
@@ -68,6 +74,7 @@ interface ProductAlternativeEvents
      * - This event is used for product_replacement_for publishing of concrete alternative products.
      *
      * @api
+     *
      * @var string
      */
     public const PRODUCT_REPLACEMENT_CONCRETE_PUBLISH = 'ProductAlternative.product_concrete_replacement_for.publish';

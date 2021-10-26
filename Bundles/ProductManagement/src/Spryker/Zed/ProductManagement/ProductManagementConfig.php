@@ -27,12 +27,14 @@ class ProductManagementConfig extends AbstractBundleConfig
      * Hydration validity format is described in ProductValidity module.
      *
      * @see \Spryker\Zed\ProductValidity\Business\Validity\ProductValidityHydrator::VALIDITY_DATE_TIME_FORMAT
+     *
      * @var string
      */
     public const VALIDITY_DATE_TIME_FORMAT = 'Y-m-d G:i';
 
     /**
      * @uses \Spryker\Shared\PriceProduct\PriceProductConfig::PRICE_TYPE_DEFAULT
+     *
      * @var string
      */
     protected const PRICE_TYPE_DEFAULT = 'DEFAULT';

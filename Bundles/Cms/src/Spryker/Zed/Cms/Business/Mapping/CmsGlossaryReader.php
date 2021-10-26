@@ -21,6 +21,7 @@ class CmsGlossaryReader implements CmsGlossaryReaderInterface
 {
     /**
      * @var string
+     *
      * @uses \Spryker\Zed\Cms\Persistence\CmsQueryContainer::TEMPLATE_PATH
      */
     protected const COLUMN_TEMPLATE_PATH = 'template_path';

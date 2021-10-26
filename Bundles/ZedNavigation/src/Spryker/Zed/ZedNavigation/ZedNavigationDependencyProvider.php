@@ -35,6 +35,7 @@ class ZedNavigationDependencyProvider extends AbstractBundleDependencyProvider
 
     /**
      * @deprecated Use {@link \Spryker\Zed\ZedNavigation\ZedNavigationDependencyProvider::PLUGINS_NAVIGATION_ITEM_COLLECTION_FILTER} instead.
+     *
      * @var string
      */
     public const PLUGINS_NAVIGATION_ITEM_FILTER = 'PLUGINS_NAVIGATION_ITEM_FILTER';

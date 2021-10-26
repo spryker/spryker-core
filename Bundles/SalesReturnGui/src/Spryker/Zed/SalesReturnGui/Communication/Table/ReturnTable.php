@@ -58,18 +58,21 @@ class ReturnTable extends AbstractTable
 
     /**
      * @uses \Spryker\Zed\SalesReturnGui\Communication\Controller\DetailController::indexAction()
+     *
      * @var string
      */
     protected const ROUTE_DETAIL = '/sales-return-gui/detail';
 
     /**
      * @uses \Spryker\Zed\SalesReturnGui\Communication\Controller\ReturnSlipController::indexAction()
+     *
      * @var string
      */
     protected const ROUTE_RETURN_SLIP = '/sales-return-gui/return-slip';
 
     /**
      * @uses \Spryker\Zed\SalesReturnGui\Communication\Controller\AbstractReturnController::PARAM_ID_RETURN
+     *
      * @var string
      */
     protected const PARAM_ID_RETURN = 'id-return';

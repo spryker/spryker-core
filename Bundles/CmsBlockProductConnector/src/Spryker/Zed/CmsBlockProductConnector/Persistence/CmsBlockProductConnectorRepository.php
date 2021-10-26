@@ -17,6 +17,7 @@ class CmsBlockProductConnectorRepository extends AbstractRepository implements C
 {
     /**
      * @uses \Orm\Zed\CmsBlockProductConnector\Persistence\Map\SpyCmsBlockProductConnectorTableMap
+     *
      * @var string
      */
     protected const FK_PRODUCT_ABSTRACT = 'fkProductAbstract';

@@ -27,6 +27,7 @@ class ProductAbstractRelationCollectorQuery extends AbstractPropelCollectorQuery
 
     /**
      * @phpstan-var non-empty-string
+     *
      * @var string
      */
     public const LABEL_DELIMITER = ':#:';

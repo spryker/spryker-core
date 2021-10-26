@@ -21,18 +21,21 @@ class ProductConfigurationInstancePriceMapper implements ProductConfigurationIns
 {
     /**
      * @uses \Spryker\Shared\Price\PriceConfig::PRICE_MODE_GROSS
+     *
      * @var string
      */
     protected const KEY_PRICE_MODE_GROSS = 'GROSS_MODE';
 
     /**
      * @uses \Spryker\Shared\Price\PriceConfig::PRICE_MODE_NET
+     *
      * @var string
      */
     protected const KEY_PRICE_MODE_NET = 'NET_MODE';
 
     /**
      * @uses \Spryker\Shared\PriceProduct\PriceProductConfig::PRICE_DATA
+     *
      * @var string
      */
     protected const KEY_PRICE_DATA = 'priceData';
@@ -44,6 +47,7 @@ class ProductConfigurationInstancePriceMapper implements ProductConfigurationIns
 
     /**
      * @uses \Spryker\Shared\PriceProduct\PriceProductConfig::PRICE_TYPE_DEFAULT
+     *
      * @var string
      */
     protected const DEFAULT_PRICE_TYPE_NAME = 'DEFAULT';

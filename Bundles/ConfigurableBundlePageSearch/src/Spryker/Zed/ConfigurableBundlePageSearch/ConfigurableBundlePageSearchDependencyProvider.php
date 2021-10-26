@@ -32,6 +32,7 @@ class ConfigurableBundlePageSearchDependencyProvider extends AbstractBundleDepen
 
     /**
      * @deprecated Will be removed without replacement.
+     *
      * @var string
      */
     public const FACADE_SEARCH = 'FACADE_SEARCH';
@@ -53,6 +54,7 @@ class ConfigurableBundlePageSearchDependencyProvider extends AbstractBundleDepen
 
     /**
      * @deprecated Use {@link \Spryker\Zed\ConfigurableBundlePageSearch\ConfigurableBundlePageSearchDependencyProvider::PLUGINS_CONFIGURABLE_BUNDLE_TEMPLATE_MAP_EXPANDER} instead.
+     *
      * @var string
      */
     public const PLUGINS_CONFIGURABLE_BUNDLE_TEMPLATE_PAGE_MAP_EXPANDER = 'PLUGINS_CONFIGURABLE_BUNDLE_TEMPLATE_PAGE_MAP_EXPANDER';

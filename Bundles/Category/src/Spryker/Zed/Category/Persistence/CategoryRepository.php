@@ -102,6 +102,7 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
 
     /**
      * @uses \Orm\Zed\Locale\Persistence\Map\SpyLocaleTableMap::COL_LOCALE_NAME
+     *
      * @var string
      */
     protected const COL_LOCALE_NAME = 'spy_locale.locale_name';

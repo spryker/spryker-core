@@ -19,6 +19,7 @@ interface TranslatorConstants
      * @deprecated Use {@link \Spryker\Zed\Translator\TranslatorConstants::getProjectTranslationFilePathPatterns()} instead.
      *
      * @api
+     *
      * @var string
      */
     public const TRANSLATION_ZED_FILE_PATH_PATTERNS = 'TRANSLATOR:TRANSLATION_ZED_FILE_PATH_PATTERNS';
@@ -30,6 +31,7 @@ interface TranslatorConstants
      * @deprecated Use {@link \Spryker\Zed\Translator\TranslatorConstants::getTranslatorCacheDirectory()} instead.
      *
      * @api
+     *
      * @var string
      */
     public const TRANSLATION_ZED_CACHE_DIRECTORY = 'TRANSLATOR:TRANSLATION_ZED_CACHE_DIRECTORY';
@@ -39,6 +41,7 @@ interface TranslatorConstants
      * - Fallback locales that will be used if there is no translation for selected locale.
      *
      * @api
+     *
      * @var string
      */
     public const TRANSLATION_ZED_FALLBACK_LOCALES = 'TRANSLATOR:TRANSLATION_ZED_FALLBACK_LOCALES';
@@ -48,12 +51,14 @@ interface TranslatorConstants
      * - Enables default symfony translator debug.
      *
      * @api
+     *
      * @var string
      */
     public const TRANSLATION_ZED_DEBUG_ENABLED = 'TRANSLATOR:TRANSLATION_ZED_DEBUG_ENABLED';
 
     /**
      * @uses \Spryker\Shared\Kernel\KernelConstants::PROJECT_NAMESPACES
+     *
      * @var string
      */
     public const PROJECT_NAMESPACES = 'PROJECT_NAMESPACES';

@@ -66,6 +66,6 @@ class AbstractBundleDependencyProviderTest extends Unit
      */
     private function getAbstractBundleDependencyProviderMock(): AbstractBundleDependencyProvider
     {
-        return $this->getMockForAbstractClass('Spryker\Zed\Kernel\AbstractBundleDependencyProvider');
+        return $this->getMockForAbstractClass(AbstractBundleDependencyProvider::class);
     }
 }

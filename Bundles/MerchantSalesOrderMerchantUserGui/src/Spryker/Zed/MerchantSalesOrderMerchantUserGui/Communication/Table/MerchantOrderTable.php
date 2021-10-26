@@ -26,6 +26,7 @@ class MerchantOrderTable extends AbstractTable
 {
     /**
      * @uses \Spryker\Zed\MerchantSalesOrderMerchantUserGui\Communication\Controller\DetailController::REQUEST_PARAM_ID_MERCHANT_SALES_ORDER
+     *
      * @var string
      */
     protected const REQUEST_PARAM_ID_MERCHANT_SALES_ORDER = 'id-merchant-sales-order';
@@ -52,6 +53,7 @@ class MerchantOrderTable extends AbstractTable
 
     /**
      * @uses \Spryker\Zed\MerchantSalesOrderMerchantUserGui\Communication\Controller\DetailController::ROUTE_REDIRECT
+     *
      * @var string
      */
     protected const ROUTE_REDIRECT = '/merchant-sales-order-merchant-user-gui/detail';

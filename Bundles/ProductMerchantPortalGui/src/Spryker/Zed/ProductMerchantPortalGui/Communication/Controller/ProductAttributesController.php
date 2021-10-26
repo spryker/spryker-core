@@ -69,12 +69,14 @@ class ProductAttributesController extends AbstractController
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductAttributeGuiTableConfigurationProvider::COL_KEY_ATTRIBUTE_NAME
+     *
      * @var string
      */
     protected const PARAM_ATTRIBUTE_NAME = 'attribute_name';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductAttributeGuiTableConfigurationProvider::COL_KEY_ATTRIBUTE_DEFAULT
+     *
      * @var string
      */
     protected const PARAM_ATTRIBUTE_DEFAULT = 'attribute_default';

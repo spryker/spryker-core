@@ -17,6 +17,7 @@ interface LogConstants
      * - Class name of the class which implements LoggerConfigInterface. E.g. SprykerLoggerConfig::class
      *
      * @api
+     *
      * @var string
      */
     public const LOGGER_CONFIG_YVES = 'LOG:LOGGER_CONFIG_YVES';
@@ -26,6 +27,7 @@ interface LogConstants
      * - Channel name of Yves logger.
      *
      * @api
+     *
      * @var string
      */
     public const LOGGER_CHANNEL_YVES = 'LOG:LOGGER_CHANNEL_YVES';
@@ -35,6 +37,7 @@ interface LogConstants
      * - Class name of the class which implements LoggerConfigInterface. E.g. SprykerLoggerConfig::class
      *
      * @api
+     *
      * @var string
      */
     public const LOGGER_CONFIG_ZED = 'LOG:LOGGER_CONFIG_ZED';
@@ -44,6 +47,7 @@ interface LogConstants
      * - Channel name of Zed logger.
      *
      * @api
+     *
      * @var string
      */
     public const LOGGER_CHANNEL_ZED = 'LOG:LOGGER_CHANNEL_ZED';
@@ -53,6 +57,7 @@ interface LogConstants
      * - Class name of the class which implements LoggerConfigInterface. E.g. SprykerLoggerConfig::class
      *
      * @api
+     *
      * @var string
      */
     public const LOGGER_CONFIG = 'LOGGER_CONFIG';
@@ -62,6 +67,7 @@ interface LogConstants
      * - Log level were to start to log. E.g. when set to error, info messages will not be logged
      *
      * @api
+     *
      * @var string
      */
     public const LOG_LEVEL = 'LOG_LEVEL';
@@ -74,6 +80,7 @@ interface LogConstants
      * @deprecated Use the application specific constants. E.g. LOG_FILE_PATH_YVES
      *
      * @api
+     *
      * @var string
      */
     public const LOG_FILE_PATH = 'LOG_FILE_PATH';
@@ -84,6 +91,7 @@ interface LogConstants
      * - If set logs will be written to the specified file.
      *
      * @api
+     *
      * @var string
      */
     public const LOG_FILE_PATH_YVES = 'LOG_FILE_PATH_YVES';
@@ -95,6 +103,7 @@ interface LogConstants
      * @deprecated Will be removed without replacement.
      *
      * @api
+     *
      * @var string
      */
     public const LOG_FOLDER_PATH_INSTALLATION = 'LOG:LOG_FOLDER_PATH_INSTALLATION';
@@ -105,6 +114,7 @@ interface LogConstants
      * - If set logs will be written to the specified file.
      *
      * @api
+     *
      * @var string
      */
     public const LOG_FILE_PATH_ZED = 'LOG_FILE_PATH_ZED';
@@ -116,6 +126,7 @@ interface LogConstants
      * @deprecated Use the application specific constants. E.g. EXCEPTION_LOG_FILE_PATH_YVES
      *
      * @api
+     *
      * @var string
      */
     public const EXCEPTION_LOG_FILE_PATH = 'LOG:EXCEPTION_LOG_FILE_PATH';
@@ -125,6 +136,7 @@ interface LogConstants
      * - Absolute path to the log file which should be used be the stream handler for exceptions. E.g. /var/www/data/logs/spryker.log
      *
      * @api
+     *
      * @var string
      */
     public const EXCEPTION_LOG_FILE_PATH_YVES = 'LOG:EXCEPTION_LOG_FILE_PATH_YVES';
@@ -134,6 +146,7 @@ interface LogConstants
      * - Absolute path to the log file which should be used be the stream handler for exceptions. E.g. /var/www/data/logs/spryker.log
      *
      * @api
+     *
      * @var string
      */
     public const EXCEPTION_LOG_FILE_PATH_ZED = 'LOG:EXCEPTION_LOG_FILE_PATH_ZED';
@@ -164,6 +177,7 @@ interface LogConstants
      * ];
      *
      * @api
+     *
      * @var string
      */
     public const LOG_SANITIZE_FIELDS = 'LOG_SANITIZE_FIELDS';
@@ -173,6 +187,7 @@ interface LogConstants
      * - String which is used as value for the sanitized field
      *
      * @api
+     *
      * @var string
      */
     public const LOG_SANITIZED_VALUE = 'LOG_SANITIZED_VALUE';
@@ -182,6 +197,7 @@ interface LogConstants
      * - Name of the queue to send logs to.
      *
      * @api
+     *
      * @var string
      */
     public const LOG_QUEUE_NAME = 'LOG:LOG_QUEUE_NAME';
@@ -191,6 +207,7 @@ interface LogConstants
      * - Name of the error queue to send errors to.
      *
      * @api
+     *
      * @var string
      */
     public const LOG_ERROR_QUEUE_NAME = 'LOG:LOG_ERROR_QUEUE_NAME';
@@ -200,6 +217,7 @@ interface LogConstants
      * - Class name of the class which implements LoggerConfigInterface. E.g. SprykerLoggerConfig::class
      *
      * @api
+     *
      * @var string
      */
     public const LOGGER_CONFIG_GLUE = 'LOG:LOGGER_CONFIG_GLUE';
@@ -209,6 +227,7 @@ interface LogConstants
      * - Channel name of Glue logger.
      *
      * @api
+     *
      * @var string
      */
     public const LOGGER_CHANNEL_GLUE = 'LOG:LOGGER_CHANNEL_GLUE';
@@ -219,6 +238,7 @@ interface LogConstants
      * - If set logs will be written to the specified file.
      *
      * @api
+     *
      * @var string
      */
     public const LOG_FILE_PATH_GLUE = 'LOG_FILE_PATH_GLUE';
@@ -228,6 +248,7 @@ interface LogConstants
      * - Absolute path to the log file which should be used be the stream handler for exceptions. E.g. /var/www/data/logs/spryker.log
      *
      * @api
+     *
      * @var string
      */
     public const EXCEPTION_LOG_FILE_PATH_GLUE = 'LOG:EXCEPTION_LOG_FILE_PATH_GLUE';

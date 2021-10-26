@@ -28,6 +28,6 @@ class AbstractClientTest extends Unit
     {
         $abstractStub = new KernelClient();
 
-        $this->assertInstanceOf('SprykerTest\Client\Kernel\Fixtures\KernelClient', $abstractStub);
+        $this->assertInstanceOf(KernelClient::class, $abstractStub);
     }
 }

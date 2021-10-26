@@ -43,6 +43,7 @@ class ResetPassword implements ResetPasswordInterface
 
     /**
      * @uses \Spryker\Zed\SecurityGui\Communication\Controller\PasswordController::PARAM_TOKEN
+     *
      * @var string
      */
     protected const PARAM_TOKEN = 'token';

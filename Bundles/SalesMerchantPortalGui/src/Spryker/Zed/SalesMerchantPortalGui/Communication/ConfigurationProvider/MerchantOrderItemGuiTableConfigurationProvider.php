@@ -56,6 +56,7 @@ class MerchantOrderItemGuiTableConfigurationProvider implements MerchantOrderIte
 
     /**
      * @uses \Spryker\Zed\SalesMerchantPortalGui\Communication\Controller\ItemListController::tableDataAction()
+     *
      * @var string
      */
     protected const DATA_URL = '/sales-merchant-portal-gui/item-list/table-data';

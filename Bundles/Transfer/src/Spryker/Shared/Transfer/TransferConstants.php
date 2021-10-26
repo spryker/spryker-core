@@ -18,6 +18,7 @@ interface TransferConstants
      * - If false, transfer generation will run in normal mode.
      *
      * @api
+     *
      * @var string
      */
     public const IS_DEBUG_ENABLED = 'TRANSFER:IS_DEBUG_ENABLED';

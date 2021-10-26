@@ -8,6 +8,7 @@
 namespace SprykerTest\Shared\Kernel;
 
 use Codeception\Test\Unit;
+use InvalidArgumentException;
 use Spryker\Shared\Kernel\Store;
 
 /**
@@ -50,7 +51,7 @@ class StoreTest extends Unit
      */
     public function testInstance(): void
     {
-        $this->assertInstanceOf('\Spryker\Shared\Kernel\Store', $this->Store);
+        $this->assertInstanceOf(Store::class, $this->Store);
     }
 
     /**
@@ -82,7 +83,7 @@ class StoreTest extends Unit
      */
     public function testSetCurrentLocaleInvalid(): void
     {
-        $this->expectException('InvalidArgumentException');
+        $this->expectException(InvalidArgumentException::class);
         $newLocale = 'xy_XY';
         $this->Store->setCurrentLocale($newLocale);
     }

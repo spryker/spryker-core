@@ -29,12 +29,14 @@ class AvailabilityStorageEventSubscriber extends AbstractPlugin implements Event
 {
     /**
      * @uses \Spryker\Zed\Availability\Dependency\AvailabilityEvents::AVAILABILITY_PRODUCT_ABSTRACT_PUBLISH
+     *
      * @var string
      */
     protected const AVAILABILITY_PRODUCT_ABSTRACT_PUBLISH = 'Availability.product_abstract.publish';
 
     /**
      * @uses \Spryker\Zed\Availability\Dependency\AvailabilityEvents::AVAILABILITY_PRODUCT_ABSTRACT_UNPUBLISH
+     *
      * @var string
      */
     protected const AVAILABILITY_PRODUCT_ABSTRACT_UNPUBLISH = 'Availability.product_abstract.unpublish';

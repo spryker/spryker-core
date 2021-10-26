@@ -40,6 +40,7 @@ class ComparatorOperators implements ComparatorOperatorsInterface
 
     /**
      * @phpstan-var non-empty-string
+     *
      * @var string
      */
     public const LIST_DELIMITER = ';';

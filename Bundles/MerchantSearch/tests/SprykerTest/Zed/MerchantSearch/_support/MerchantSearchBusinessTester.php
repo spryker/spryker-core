@@ -44,6 +44,7 @@ class MerchantSearchBusinessTester extends Actor
 
     /**
      * @uses \Spryker\Zed\Merchant\MerchantConfig::STATUS_APPROVED
+     *
      * @var string
      */
     protected const MERCHANT_STATUS_APPROVED = 'approved';

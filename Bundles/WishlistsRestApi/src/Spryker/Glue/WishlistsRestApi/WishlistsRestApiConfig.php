@@ -76,6 +76,7 @@ class WishlistsRestApiConfig extends AbstractBundleConfig
 
     /**
      * @uses \Spryker\Glue\AuthRestApi\AuthRestApiConfig::RESPONSE_CODE_FORBIDDEN
+     *
      * @var string
      */
     public const RESPONSE_CODE_FORBIDDEN = '002';
@@ -122,6 +123,7 @@ class WishlistsRestApiConfig extends AbstractBundleConfig
 
     /**
      * @uses \Spryker\Glue\AuthRestApi\AuthRestApiConfig::RESPONSE_DETAIL_MISSING_ACCESS_TOKEN
+     *
      * @var string
      */
     public const RESPONSE_DETAIL_MISSING_ACCESS_TOKEN = 'Missing access token.';

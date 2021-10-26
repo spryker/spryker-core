@@ -13,6 +13,7 @@ class ConfigurableBundleCartsRestApiConfig extends AbstractBundleConfig
 {
     /**
      * @uses \Spryker\Shared\CartsRestApi\CartsRestApiConfig::ERROR_IDENTIFIER_UNAUTHORIZED_CART_ACTION
+     *
      * @var string
      */
     public const ERROR_IDENTIFIER_UNAUTHORIZED_CART_ACTION = 'ERROR_IDENTIFIER_UNAUTHORIZED_CART_ACTION';

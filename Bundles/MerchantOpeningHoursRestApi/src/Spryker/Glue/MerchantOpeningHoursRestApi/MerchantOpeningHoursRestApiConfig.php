@@ -18,30 +18,35 @@ class MerchantOpeningHoursRestApiConfig extends AbstractBundleConfig
 
     /**
      * @uses \Spryker\Glue\MerchantsRestApi\MerchantsRestApiConfig::RESOURCE_MERCHANTS
+     *
      * @var string
      */
     public const RESOURCE_MERCHANTS = 'merchants';
 
     /**
      * @uses \Spryker\Glue\MerchantsRestApi\MerchantsRestApiConfig::RESPONSE_CODE_MERCHANT_NOT_FOUND
+     *
      * @var string
      */
     public const RESPONSE_CODE_MERCHANT_NOT_FOUND = '3501';
 
     /**
      * @uses \Spryker\Glue\MerchantsRestApi\MerchantsRestApiConfig::RESPONSE_DETAIL_MERCHANT_NOT_FOUND
+     *
      * @var string
      */
     public const RESPONSE_DETAIL_MERCHANT_NOT_FOUND = 'Merchant not found.';
 
     /**
      * @uses \Spryker\Glue\MerchantsRestApi\MerchantsRestApiConfig::RESPONSE_CODE_MERCHANT_IDENTIFIER_MISSING
+     *
      * @var string
      */
     public const RESPONSE_CODE_MERCHANT_IDENTIFIER_MISSING = '3502';
 
     /**
      * @uses \Spryker\Glue\MerchantsRestApi\MerchantsRestApiConfig::RESPONSE_DETAIL_MERCHANT_IDENTIFIER_MISSING
+     *
      * @var string
      */
     public const RESPONSE_DETAIL_MERCHANT_IDENTIFIER_MISSING = 'Merchant identifier is not specified.';

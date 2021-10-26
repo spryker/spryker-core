@@ -29,6 +29,7 @@ class MerchantSalesOrderItemMapper
 
     /**
      * @phpstan-var array<string, string>
+     *
      * @var array
      */
     protected const FIELD_MAPPING = [

@@ -16,24 +16,28 @@ interface SessionConstants
      * @deprecated Will be removed without replacement.
      *
      * @api
+     *
      * @var string
      */
     public const SESSION_IS_TEST = 'SESSION:SESSION_IS_TEST';
 
     /**
      * @deprecated Use {@link \Spryker\Shared\SessionRedis\SessionRedisConstants::LOCKING_TIMEOUT_MILLISECONDS} instead.
+     *
      * @var string
      */
     public const SESSION_HANDLER_REDIS_LOCKING_TIMEOUT_MILLISECONDS = 'SESSION:SESSION_HANDLER_REDIS_LOCKING_TIMEOUT_MILLISECONDS';
 
     /**
      * @deprecated Use {@link \Spryker\Shared\SessionRedis\SessionRedisConstants::LOCKING_RETRY_DELAY_MICROSECONDS} instead.
+     *
      * @var string
      */
     public const SESSION_HANDLER_REDIS_LOCKING_RETRY_DELAY_MICROSECONDS = 'SESSION:SESSION_HANDLER_REDIS_LOCKING_RETRY_DELAY_MICROSECONDS';
 
     /**
      * @deprecated Use {@link \Spryker\Shared\SessionRedis\SessionRedisConstants::LOCKING_LOCK_TTL_MILLISECONDS} instead.
+     *
      * @var string
      */
     public const SESSION_HANDLER_REDIS_LOCKING_LOCK_TTL_MILLISECONDS = 'SESSION:SESSION_HANDLER_REDIS_LOCKING_LOCK_TTL_MILLISECONDS';
@@ -74,12 +78,14 @@ interface SessionConstants
      * - Available since PHP 7.3.0.
      *
      * @api
+     *
      * @var string
      */
     public const YVES_SESSION_COOKIE_SAMESITE = 'SESSION:YVES_SESSION_COOKIE_SAMESITE';
 
     /**
      * @deprecated Use {@link \Spryker\Shared\SessionFile\SessionFileConstants::YVES_SESSION_FILE_PATH} instead.
+     *
      * @var string
      */
     public const YVES_SESSION_FILE_PATH = 'SESSION:YVES_SESSION_FILE_PATH';
@@ -101,30 +107,35 @@ interface SessionConstants
 
     /**
      * @deprecated Use {@link \Spryker\Shared\SessionRedis\SessionRedisConstants::YVES_SESSION_REDIS_SCHEME} instead.
+     *
      * @var string
      */
     public const YVES_SESSION_REDIS_PROTOCOL = 'SESSION:YVES_SESSION_REDIS_PROTOCOL';
 
     /**
      * @deprecated Use {@link \Spryker\Shared\SessionRedis\SessionRedisConstants::YVES_SESSION_REDIS_PASSWORD} instead.
+     *
      * @var string
      */
     public const YVES_SESSION_REDIS_PASSWORD = 'SESSION:YVES_SESSION_REDIS_PASSWORD';
 
     /**
      * @deprecated Use {@link \Spryker\Shared\SessionRedis\SessionRedisConstants::YVES_SESSION_REDIS_HOST} instead.
+     *
      * @var string
      */
     public const YVES_SESSION_REDIS_HOST = 'SESSION:YVES_SESSION_REDIS_HOST';
 
     /**
      * @deprecated Use {@link \Spryker\Shared\SessionRedis\SessionRedisConstants::YVES_SESSION_REDIS_PORT} instead.
+     *
      * @var string
      */
     public const YVES_SESSION_REDIS_PORT = 'SESSION:YVES_SESSION_REDIS_PORT';
 
     /**
      * @deprecated Use {@link \Spryker\Shared\SessionRedis\SessionRedisConstants::YVES_SESSION_REDIS_DATABASE} instead.
+     *
      * @var string
      */
     public const YVES_SESSION_REDIS_DATABASE = 'SESSION:YVES_SESSION_REDIS_DATABASE';
@@ -137,6 +148,7 @@ interface SessionConstants
      * @api
      *
      * @deprecated Use {@link \Spryker\Shared\SessionRedis\SessionRedisConstants::YVES_SESSION_REDIS_DATA_SOURCE_NAMES} instead.
+     *
      * @var string
      */
     public const YVES_SESSION_PREDIS_CLIENT_CONFIGURATION = 'SESSION:YVES_SESSION_PREDIS_CLIENT_CONFIGURATION';
@@ -148,6 +160,7 @@ interface SessionConstants
      * @api
      *
      * @deprecated Use {@link \Spryker\Shared\SessionRedis\SessionRedisConstants::YVES_SESSION_REDIS_CLIENT_OPTIONS} instead.
+     *
      * @var string
      */
     public const YVES_SESSION_PREDIS_CLIENT_OPTIONS = 'SESSION:YVES_SESSION_PREDIS_CLIENT_OPTIONS';
@@ -193,12 +206,14 @@ interface SessionConstants
      * - Available since PHP 7.3.0.
      *
      * @api
+     *
      * @var string
      */
     public const ZED_SESSION_COOKIE_SAMESITE = 'SESSION:ZED_SESSION_COOKIE_SAMESITE';
 
     /**
      * @deprecated Use {@link \Spryker\Shared\SessionFile\SessionFileConstants::ZED_SESSION_FILE_PATH} instead.
+     *
      * @var string
      */
     public const ZED_SESSION_FILE_PATH = 'SESSION:ZED_SESSION_FILE_PATH';
@@ -215,30 +230,35 @@ interface SessionConstants
 
     /**
      * @deprecated Use {@link \Spryker\Shared\SessionRedis\SessionRedisConstants::ZED_SESSION_REDIS_SCHEME} instead.
+     *
      * @var string
      */
     public const ZED_SESSION_REDIS_PROTOCOL = 'SESSION:ZED_SESSION_REDIS_PROTOCOL';
 
     /**
      * @deprecated Use {@link \Spryker\Shared\SessionRedis\SessionRedisConstants::ZED_SESSION_REDIS_HOST} instead.
+     *
      * @var string
      */
     public const ZED_SESSION_REDIS_HOST = 'SESSION:ZED_SESSION_REDIS_HOST';
 
     /**
      * @deprecated Use {@link \Spryker\Shared\SessionRedis\SessionRedisConstants::ZED_SESSION_REDIS_PORT} instead.
+     *
      * @var string
      */
     public const ZED_SESSION_REDIS_PORT = 'SESSION:ZED_SESSION_REDIS_PORT';
 
     /**
      * @deprecated Use {@link \Spryker\Shared\SessionRedis\SessionRedisConstants::ZED_SESSION_REDIS_PASSWORD} instead.
+     *
      * @var string
      */
     public const ZED_SESSION_REDIS_PASSWORD = 'SESSION:ZED_SESSION_REDIS_PASSWORD';
 
     /**
      * @deprecated Use {@link \Spryker\Shared\SessionRedis\SessionRedisConstants::ZED_SESSION_REDIS_DATABASE} instead.
+     *
      * @var string
      */
     public const ZED_SESSION_REDIS_DATABASE = 'SESSION:ZED_SESSION_REDIS_DATABASE';
@@ -251,6 +271,7 @@ interface SessionConstants
      * @api
      *
      * @deprecated Use {@link \Spryker\Shared\SessionRedis\SessionRedisConstants::ZED_SESSION_REDIS_DATA_SOURCE_NAMES} instead.
+     *
      * @var string
      */
     public const ZED_SESSION_PREDIS_CLIENT_CONFIGURATION = 'SESSION:ZED_SESSION_PREDIS_CLIENT_CONFIGURATION';
@@ -262,6 +283,7 @@ interface SessionConstants
      * @api
      *
      * @deprecated Use {@link \Spryker\Shared\SessionRedis\SessionRedisConstants::ZED_SESSION_REDIS_CLIENT_OPTIONS} instead.
+     *
      * @var string
      */
     public const ZED_SESSION_PREDIS_CLIENT_OPTIONS = 'SESSION:ZED_SESSION_PREDIS_CLIENT_OPTIONS';

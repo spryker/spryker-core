@@ -23,18 +23,21 @@ class Application extends Container implements HttpKernelInterface, TerminableIn
 {
     /**
      * @see \Symfony\Cmf\Component\Routing\ChainRouterInterface
+     *
      * @var string
      */
     public const SERVICE_ROUTER = 'routers';
 
     /**
      * @see \Symfony\Component\HttpFoundation\Request
+     *
      * @var string
      */
     public const SERVICE_REQUEST = 'request';
 
     /**
      * @see \Symfony\Component\HttpFoundation\RequestStack
+     *
      * @var string
      */
     public const SERVICE_REQUEST_STACK = 'request_stack';

@@ -55,6 +55,7 @@ class ProductOfferTable extends AbstractTable
 
     /**
      * @phpstan-var array<string, string>
+     *
      * @var array
      */
     protected const APPROVAL_STATUS_CLASS_LABEL_MAPPING = [
@@ -65,6 +66,7 @@ class ProductOfferTable extends AbstractTable
 
     /**
      * @phpstan-var array<string, string>
+     *
      * @var array
      */
     protected const APPROVAL_STATUS_CLASS_BUTTON_MAPPING = [

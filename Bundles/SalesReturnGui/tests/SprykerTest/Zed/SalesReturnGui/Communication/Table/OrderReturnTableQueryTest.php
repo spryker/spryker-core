@@ -35,18 +35,21 @@ class OrderReturnTableQueryTest extends Unit
 
     /**
      * @uses \Spryker\Zed\SalesReturnGui\Communication\Table\OrderReturnTable::COL_ITEMS
+     *
      * @var string
      */
     protected const COL_ITEMS = 'items';
 
     /**
      * @uses \Spryker\Zed\SalesReturnGui\Communication\Table\OrderReturnTable::COL_RETURN_REFERENCE
+     *
      * @var string
      */
     protected const COL_RETURN_REFERENCE = 'return_reference';
 
     /**
      * @uses \Spryker\Zed\Twig\Communication\Plugin\Application\TwigApplicationPlugin::SERVICE_TWIG
+     *
      * @var string
      */
     public const SERVICE_TWIG = 'twig';

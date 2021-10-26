@@ -83,18 +83,21 @@ class ConfigurableBundleCartWriterTest extends Unit
 
     /**
      * @see \Spryker\Client\ConfigurableBundleCart\Writer\CartWriter::GLOSSARY_KEY_CONFIGURED_BUNDLE_NOT_FOUND
+     *
      * @var string
      */
     protected const GLOSSARY_KEY_CONFIGURED_BUNDLE_NOT_FOUND = 'configured_bundle_cart.error.configured_bundle_not_found';
 
     /**
      * @see \Spryker\Client\ConfigurableBundleCart\Writer\CartWriter::GLOSSARY_KEY_CONFIGURED_BUNDLE_CANNOT_BE_REMOVED
+     *
      * @var string
      */
     protected const GLOSSARY_KEY_CONFIGURED_BUNDLE_CANNOT_BE_REMOVED = 'configured_bundle_cart.error.configured_bundle_cannot_be_removed';
 
     /**
      * @see \Spryker\Client\ConfigurableBundleCart\Writer\CartWriter::GLOSSARY_KEY_CONFIGURED_BUNDLE_CANNOT_BE_UPDATED
+     *
      * @var string
      */
     protected const GLOSSARY_KEY_CONFIGURED_BUNDLE_CANNOT_BE_UPDATED = 'configured_bundle_cart.error.configured_bundle_cannot_be_updated';

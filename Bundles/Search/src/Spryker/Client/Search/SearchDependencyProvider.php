@@ -21,6 +21,7 @@ class SearchDependencyProvider extends AbstractDependencyProvider
 {
     /**
      * @deprecated Will be removed without replacement.
+     *
      * @var string
      */
     public const SEARCH_CONFIG_BUILDER = 'search config builder';

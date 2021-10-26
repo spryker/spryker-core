@@ -14,6 +14,7 @@ interface ProductDiscontinuedEvents
      * - This events will be used for spy_product_discontinued entity creation
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_PRODUCT_DISCONTINUED_CREATE = 'Entity.spy_product_discontinued.create';
@@ -23,6 +24,7 @@ interface ProductDiscontinuedEvents
      * - This events will be used for spy_product_discontinued entity changes
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_PRODUCT_DISCONTINUED_UPDATE = 'Entity.spy_product_discontinued.update';
@@ -32,6 +34,7 @@ interface ProductDiscontinuedEvents
      * - This events will be used for spy_product_discontinued entity deletion
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_PRODUCT_DISCONTINUED_DELETE = 'Entity.spy_product_discontinued.delete';
@@ -41,6 +44,7 @@ interface ProductDiscontinuedEvents
      * - This events will be used for spy_product_discontinued_note entity creation
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_PRODUCT_DISCONTINUED_NOTE_CREATE = 'Entity.spy_product_discontinued_note.create';
@@ -50,6 +54,7 @@ interface ProductDiscontinuedEvents
      * - This events will be used for spy_product_discontinued_note entity changes
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_PRODUCT_DISCONTINUED_NOTE_UPDATE = 'Entity.spy_product_discontinued_note.update';
@@ -59,6 +64,7 @@ interface ProductDiscontinuedEvents
      * - This events will be used for spy_product_discontinued_note entity deletion
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_PRODUCT_DISCONTINUED_NOTE_DELETE = 'Entity.spy_product_discontinued_note.delete';
@@ -68,6 +74,7 @@ interface ProductDiscontinuedEvents
      * - This event is used for product_discontinued publishing.
      *
      * @api
+     *
      * @var string
      */
     public const PRODUCT_DISCONTINUED_PUBLISH = 'ProductDiscontinued.product_discontinued.publish';
@@ -77,6 +84,7 @@ interface ProductDiscontinuedEvents
      * - This event is used for product_discontinued unpublishing.
      *
      * @api
+     *
      * @var string
      */
     public const PRODUCT_DISCONTINUED_UNPUBLISH = 'ProductDiscontinued.product_discontinued.unpublish';

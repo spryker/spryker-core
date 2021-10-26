@@ -126,6 +126,7 @@ class MerchantProfileGlossaryAttributeValuesFormType extends AbstractType
 
     /**
      * @see \Spryker\Zed\MerchantProfileMerchantPortalGui\Communication\Form\Constraint\HtmlTagWhitelistConstraint::$allowedHtmlTags
+     *
      * @var string
      */
     protected const CONSTRAINT_OPTION_ALLOWED_HTML_TAGS = 'allowedHtmlTags';

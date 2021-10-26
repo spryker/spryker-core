@@ -28,24 +28,28 @@ class ExpandQueryJoinCollectionWithCustomerFilterTest extends Unit
 {
     /**
      * @uses \Spryker\Zed\Sales\Persistence\Propel\QueryBuilder\OrderSearchFilterFieldQueryBuilder::CONDITION_GROUP_ALL
+     *
      * @var string
      */
     protected const CONDITION_GROUP_ALL = 'CONDITION_GROUP_ALL';
 
     /**
      * @uses \Spryker\Zed\CompanyBusinessUnitSalesConnector\Business\Expander\OrderSearchQueryExpander::COLUMN_FULL_NAME
+     *
      * @var string
      */
     protected const COLUMN_FULL_NAME = 'full_name';
 
     /**
      * @uses \Spryker\Zed\CompanyBusinessUnitSalesConnector\Business\Expander\OrderSearchQueryExpander::COLUMN_EMAIL
+     *
      * @var string
      */
     protected const COLUMN_EMAIL = 'spy_sales_order.email';
 
     /**
      * @see \Spryker\Zed\CompanyBusinessUnitSalesConnector\Business\Expander\OrderSearchQueryExpander::getConcatenatedFullNameColumn()
+     *
      * @var string
      */
     protected const COLUMN_FULL_NAME_EXPRESSION = 'CONCAT(first_name,\' \', last_name)';

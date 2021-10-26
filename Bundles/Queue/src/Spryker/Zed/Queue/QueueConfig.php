@@ -34,24 +34,28 @@ class QueueConfig extends AbstractBundleConfig
 
     /**
      * @uses \SIGINT
+     *
      * @var int
      */
     protected const SIGINT = 2;
 
     /**
      * @uses \SIGQUIT
+     *
      * @var int
      */
     protected const SIGQUIT = 3;
 
     /**
      * @uses \SIGABRT
+     *
      * @var int
      */
     protected const SIGABRT = 6;
 
     /**
      * @uses \SIGTERM
+     *
      * @var int
      */
     protected const SIGTERM = 15;

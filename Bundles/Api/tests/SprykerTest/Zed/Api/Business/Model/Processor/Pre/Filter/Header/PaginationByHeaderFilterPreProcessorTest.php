@@ -11,6 +11,7 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ApiFilterTransfer;
 use Generated\Shared\Transfer\ApiRequestTransfer;
 use Spryker\Zed\Api\ApiConfig;
+use Spryker\Zed\Api\Business\Exception\ApiDispatchingException;
 use Spryker\Zed\Api\Business\Model\Processor\Pre\Filter\Header\PaginationByHeaderFilterPreProcessor;
 
 /**
@@ -101,7 +102,7 @@ class PaginationByHeaderFilterPreProcessorTest extends Unit
      */
     public function testProcessWithInvalidOffsetPagination(): void
     {
-        $this->expectException('Spryker\Zed\Api\Business\Exception\ApiDispatchingException');
+        $this->expectException(ApiDispatchingException::class);
         $config = new ApiConfig();
         $processor = new PaginationByHeaderFilterPreProcessor($config);
 

@@ -61,12 +61,14 @@ class EditController extends BaseProductRelationController
 
     /**
      * @uses \Spryker\Zed\ProductRelationGui\Communication\Controller\EditController::indexAction()
+     *
      * @var string
      */
     protected const REDIRECT_URL_EDIT = '/product-relation-gui/edit/index';
 
     /**
      * @uses \Spryker\Zed\ProductRelationGui\Communication\Controller\ListController::indexAction()
+     *
      * @var string
      */
     protected const REDIRECT_URL_LIST = '/product-relation-gui/list/index';

@@ -13,6 +13,7 @@ class CartCodesRestApiConfig extends AbstractBundleConfig
 {
     /**
      * @uses \Spryker\Shared\CartsRestApi\CartsRestApiConfig::ERROR_IDENTIFIER_CART_NOT_FOUND
+     *
      * @var string
      */
     public const ERROR_IDENTIFIER_CART_NOT_FOUND = 'ERROR_IDENTIFIER_CART_NOT_FOUND';

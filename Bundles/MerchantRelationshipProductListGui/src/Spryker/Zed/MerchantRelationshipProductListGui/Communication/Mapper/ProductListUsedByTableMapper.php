@@ -35,6 +35,7 @@ class ProductListUsedByTableMapper implements ProductListUsedByTableMapperInterf
 
     /**
      * @uses \Spryker\Zed\MerchantRelationshipGui\Communication\Controller\EditMerchantRelationshipController::indexAction()
+     *
      * @var string
      */
     protected const ROUTE_EDIT_MERCHANT_RELATIONSHIP = '/merchant-relationship-gui/edit-merchant-relationship';

@@ -13,6 +13,7 @@ class GiftCardsRestApiConfig extends AbstractBundleConfig
 {
     /**
      * @uses \Spryker\Glue\CartsRestApi\CartsRestApiConfig::RESOURCE_CARTS
+     *
      * @var string
      */
     public const RESOURCE_CARTS = 'carts';
@@ -24,6 +25,7 @@ class GiftCardsRestApiConfig extends AbstractBundleConfig
 
     /**
      * @uses \Spryker\Glue\CartCodesRestApi\CartCodesRestApiConfig::RESOURCE_CART_CODES,
+     *
      * @var string
      */
     public const RESOURCE_CART_CODES = 'cart-codes';

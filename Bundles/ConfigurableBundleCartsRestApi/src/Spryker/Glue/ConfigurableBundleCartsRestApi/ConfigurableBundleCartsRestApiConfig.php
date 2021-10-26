@@ -26,24 +26,28 @@ class ConfigurableBundleCartsRestApiConfig extends AbstractBundleConfig
 
     /**
      * @uses \Spryker\Glue\CartsRestApi\CartsRestApiConfig::RESOURCE_CARTS
+     *
      * @var string
      */
     public const RESOURCE_CARTS = 'carts';
 
     /**
      * @uses \Spryker\Glue\CartsRestApi\CartsRestApiConfig::RESOURCE_GUEST_CARTS
+     *
      * @var string
      */
     public const RESOURCE_GUEST_CARTS = 'guest-carts';
 
     /**
      * @uses \Spryker\Glue\CartsRestApi\CartsRestApiConfig::RESPONSE_CODE_CART_ID_MISSING
+     *
      * @var string
      */
     public const RESPONSE_CODE_CART_ID_MISSING = '104';
 
     /**
      * @uses \Spryker\Glue\CartsRestApi\CartsRestApiConfig::RESPONSE_CODE_UNAUTHORIZED_CART_ACTION
+     *
      * @var string
      */
     public const RESPONSE_CODE_UNAUTHORIZED_CART_ACTION = '115';
@@ -85,12 +89,14 @@ class ConfigurableBundleCartsRestApiConfig extends AbstractBundleConfig
 
     /**
      * @uses \Spryker\Glue\CartsRestApi\CartsRestApiConfig::EXCEPTION_MESSAGE_CART_ID_MISSING
+     *
      * @var string
      */
     public const RESPONSE_DETAILS_CART_ID_MISSING = 'Cart uuid is missing.';
 
     /**
      * @uses \Spryker\Glue\CartsRestApi\CartsRestApiConfig::EXCEPTION_MESSAGE_UNAUTHORIZED_CART_ACTION
+     *
      * @var string
      */
     public const RESPONSE_DETAILS_UNAUTHORIZED_CART_ACTION = 'Unauthorized cart action.';

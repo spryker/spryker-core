@@ -31,6 +31,7 @@ class MerchantProductOfferWriterStep implements DataImportStepInterface, DataImp
 
     /**
      * @uses \Spryker\Shared\ProductOffer\ProductOfferConfig::STATUS_DENIED
+     *
      * @var string
      */
     protected const DEFAULT_APPROVAL_STATUS = 'denied';

@@ -46,12 +46,14 @@ class SalesMerchantPortalGuiRepository extends AbstractRepository implements Sal
 {
     /**
      * @uses \Spryker\Zed\SalesMerchantPortalGui\Communication\ConfigurationProvider\MerchantOrderGuiTableConfigurationProvider::COL_KEY_REFERENCE
+     *
      * @var string
      */
     public const COL_KEY_REFERENCE = 'reference';
 
     /**
      * @uses \Spryker\Zed\SalesMerchantPortalGui\Communication\ConfigurationProvider\MerchantOrderItemGuiTableConfigurationProvider::COL_KEY_SKU
+     *
      * @var string
      */
     protected const COL_KEY_SKU = 'sku';

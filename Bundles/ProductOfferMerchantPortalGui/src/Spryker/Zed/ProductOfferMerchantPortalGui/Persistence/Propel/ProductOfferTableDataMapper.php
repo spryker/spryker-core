@@ -24,78 +24,91 @@ class ProductOfferTableDataMapper
 {
     /**
      * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductOfferGuiTableConfigurationProvider::COL_KEY_OFFER_REFERENCE
+     *
      * @var string
      */
     protected const COL_KEY_OFFER_REFERENCE = 'offerReference';
 
     /**
      * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductOfferGuiTableConfigurationProvider::COL_KEY_MERCHANT_SKU
+     *
      * @var string
      */
     protected const COL_KEY_MERCHANT_SKU = 'merchantSku';
 
     /**
      * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductOfferGuiTableConfigurationProvider::COL_KEY_CONCRETE_SKU
+     *
      * @var string
      */
     protected const COL_KEY_CONCRETE_SKU = 'concreteSku';
 
     /**
      * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductOfferGuiTableConfigurationProvider::COL_KEY_IMAGE
+     *
      * @var string
      */
     protected const COL_KEY_IMAGE = 'image';
 
     /**
      * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductOfferGuiTableConfigurationProvider::COL_KEY_PRODUCT_NAME
+     *
      * @var string
      */
     protected const COL_KEY_PRODUCT_NAME = 'productName';
 
     /**
      * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductOfferGuiTableConfigurationProvider::COL_KEY_STORES
+     *
      * @var string
      */
     protected const COL_KEY_STORES = 'stores';
 
     /**
      * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductOfferGuiTableConfigurationProvider::COL_KEY_STOCK
+     *
      * @var string
      */
     protected const COL_KEY_STOCK = 'stock';
 
     /**
      * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductOfferGuiTableConfigurationProvider::COL_KEY_STATUS
+     *
      * @var string
      */
     protected const COL_KEY_STATUS = 'status';
 
     /**
      * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductOfferGuiTableConfigurationProvider::COL_KEY_APPROVAL_STATUS
+     *
      * @var string
      */
     protected const COL_KEY_APPROVAL_STATUS = 'approvalStatus';
 
     /**
      * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductOfferGuiTableConfigurationProvider::COL_KEY_VALID_FROM
+     *
      * @var string
      */
     protected const COL_KEY_VALID_FROM = 'validFrom';
 
     /**
      * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductOfferGuiTableConfigurationProvider::COL_KEY_VALID_TO
+     *
      * @var string
      */
     protected const COL_KEY_VALID_TO = 'validTo';
 
     /**
      * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductOfferGuiTableConfigurationProvider::COL_KEY_CREATED_AT
+     *
      * @var string
      */
     protected const COL_KEY_CREATED_AT = 'createdAt';
 
     /**
      * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductOfferGuiTableConfigurationProvider::COL_KEY_UPDATED_AT
+     *
      * @var string
      */
     protected const COL_KEY_UPDATED_AT = 'updatedAt';

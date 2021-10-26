@@ -27,6 +27,7 @@ class RouterLocaleEventDispatcherPlugin extends AbstractPlugin implements EventD
 {
     /**
      * @see \Spryker\Shared\Application\Application::SERVICE_ROUTER
+     *
      * @var string
      */
     protected const SERVICE_ROUTER = 'routers';

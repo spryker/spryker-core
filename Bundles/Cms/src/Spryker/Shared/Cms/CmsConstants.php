@@ -38,6 +38,7 @@ interface CmsConstants
 
     /**
      * @deprecated Use {@link \Spryker\Zed\Cms\CmsConfig::getThemeName()} instead.
+     *
      * @var string
      */
     public const YVES_THEME = 'YVES_THEME';

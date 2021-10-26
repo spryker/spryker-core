@@ -17,6 +17,7 @@ class ContentStorageConfig
      * - Term key as used for storage value structure.
      *
      * @api
+     *
      * @var string
      */
     public const TERM_KEY = 'term';
@@ -26,6 +27,7 @@ class ContentStorageConfig
      * - Content key as used for storage value structure.
      *
      * @api
+     *
      * @var string
      */
     public const CONTENT_KEY = 'parameters';
@@ -35,6 +37,7 @@ class ContentStorageConfig
      * - Content key as used for storage value structure.
      *
      * @api
+     *
      * @var string
      */
     public const ID_CONTENT = 'idContent';
@@ -44,6 +47,7 @@ class ContentStorageConfig
      * - Queue name as used for processing content messages.
      *
      * @api
+     *
      * @var string
      */
     public const CONTENT_SYNC_STORAGE_QUEUE = 'sync.storage.content';
@@ -53,6 +57,7 @@ class ContentStorageConfig
      * - Queue name as used for error content messages.
      *
      * @api
+     *
      * @var string
      */
     public const CONTENT_SYNC_STORAGE_ERROR_QUEUE = 'sync.storage.content.error';
@@ -62,6 +67,7 @@ class ContentStorageConfig
      * - Resource name, this will use for key generating.
      *
      * @api
+     *
      * @var string
      */
     public const CONTENT_RESOURCE_NAME = 'content';

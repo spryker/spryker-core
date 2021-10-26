@@ -14,6 +14,7 @@ class ProductLabelAfterImportPublishHook implements DataImporterAfterImportInter
 {
     /**
      * @uses \Spryker\Shared\ProductLabelStorage\ProductLabelStorageConfig::PRODUCT_LABEL_DICTIONARY_PUBLISH
+     *
      * @var string
      */
     protected const EVENT_PRODUCT_LABEL_DICTIONARY_PUBLISH = 'ProductLabel.product_label_dictionary.publish';

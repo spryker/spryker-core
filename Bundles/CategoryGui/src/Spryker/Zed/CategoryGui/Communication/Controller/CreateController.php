@@ -40,6 +40,7 @@ class CreateController extends CategoryAbstractController
 
     /**
      * @uses \Spryker\Zed\CategoryGui\Communication\Controller\EditController::indexAction()
+     *
      * @var string
      */
     protected const ROUTE_CATEGORY_EDIT = '/category-gui/edit';

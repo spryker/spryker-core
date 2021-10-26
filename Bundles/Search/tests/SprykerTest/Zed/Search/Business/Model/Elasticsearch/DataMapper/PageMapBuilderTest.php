@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\Search\Business\Model\Elasticsearch\DataMapper;
 use Codeception\Test\Unit;
 use Generated\Shared\Search\PageIndexMap;
 use Generated\Shared\Transfer\PageMapTransfer;
+use InvalidArgumentException;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilder;
 
 /**
@@ -47,7 +48,7 @@ class PageMapBuilderTest extends Unit
      */
     public function testAddingInvalidFieldShouldThrowException(): void
     {
-        $this->expectException('InvalidArgumentException');
+        $this->expectException(InvalidArgumentException::class);
         $pageMapTransfer = new PageMapTransfer();
         $this->pageMapBuilder->add($pageMapTransfer, 'non-existing-field', 'foo', 'bar');
     }

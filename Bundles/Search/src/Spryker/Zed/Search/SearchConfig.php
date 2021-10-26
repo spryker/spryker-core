@@ -17,12 +17,14 @@ class SearchConfig extends AbstractBundleConfig
 {
     /**
      * @uses \Spryker\Shared\SearchElasticsearch\SearchElasticsearchConstants::HOST
+     *
      * @var string
      */
     protected const HOST = 'SEARCH_ELASTICSEARCH:HOST';
 
     /**
      * @uses \Spryker\Shared\SearchElasticsearch\SearchElasticsearchConstants::PORT
+     *
      * @var string
      */
     protected const PORT = 'SEARCH_ELASTICSEARCH:PORT';

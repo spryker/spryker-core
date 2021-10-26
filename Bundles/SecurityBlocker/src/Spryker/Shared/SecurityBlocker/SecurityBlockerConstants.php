@@ -19,6 +19,7 @@ interface SecurityBlockerConstants
      * @api
      *
      * @deprecated Use {@link \Spryker\Shared\SecurityBlockerSecurityBlockerConstants::SECURITY_BLOCKER_REDIS_SCHEME} instead.
+     *
      * @var string
      */
     public const SECURITY_BLOCKER_REDIS_PROTOCOL = 'SECURITY_BLOCKER_REDIS:SECURITY_BLOCKER_REDIS_PROTOCOL';
@@ -28,6 +29,7 @@ interface SecurityBlockerConstants
      * - Defines a scheme|protocol (tcp:// or redis://) for Redis connection.
      *
      * @api
+     *
      * @var string
      */
     public const SECURITY_BLOCKER_REDIS_SCHEME = 'SECURITY_BLOCKER_REDIS:SECURITY_BLOCKER_REDIS_SCHEME';
@@ -37,6 +39,7 @@ interface SecurityBlockerConstants
      * - Defines a host for Redis connection.
      *
      * @api
+     *
      * @var string
      */
     public const SECURITY_BLOCKER_REDIS_HOST = 'SECURITY_BLOCKER_REDIS:SECURITY_BLOCKER_REDIS_HOST';
@@ -46,6 +49,7 @@ interface SecurityBlockerConstants
      * - Defines a port for Redis connection.
      *
      * @api
+     *
      * @var string
      */
     public const SECURITY_BLOCKER_REDIS_PORT = 'SECURITY_BLOCKER_REDIS:SECURITY_BLOCKER_REDIS_PORT';
@@ -55,6 +59,7 @@ interface SecurityBlockerConstants
      * - Defines a Redis database to connect to.
      *
      * @api
+     *
      * @var string
      */
     public const SECURITY_BLOCKER_REDIS_DATABASE = 'SECURITY_BLOCKER_REDIS:SECURITY_BLOCKER_REDIS_DATABASE';
@@ -64,6 +69,7 @@ interface SecurityBlockerConstants
      * - Defines a password for connecting to Redis.
      *
      * @api
+     *
      * @var string
      */
     public const SECURITY_BLOCKER_REDIS_PASSWORD = 'SECURITY_BLOCKER_REDIS:SECURITY_BLOCKER_REDIS_PASSWORD';
@@ -73,6 +79,7 @@ interface SecurityBlockerConstants
      * - Specifies an array of DSN strings for a multi-instance cluster/replication Redis setup.
      *
      * @api
+     *
      * @var string
      */
     public const SECURITY_BLOCKER_REDIS_DATA_SOURCE_NAMES = 'SECURITY_BLOCKER_REDIS:SECURITY_BLOCKER_REDIS_DATA_SOURCE_NAMES';
@@ -82,6 +89,7 @@ interface SecurityBlockerConstants
      * - Specifies an array of connection options.
      *
      * @api
+     *
      * @var string
      */
     public const SECURITY_BLOCKER_REDIS_CONNECTION_OPTIONS = 'SECURITY_BLOCKER_REDIS:SECURITY_BLOCKER_REDIS_CONNECTION_OPTIONS';
@@ -91,6 +99,7 @@ interface SecurityBlockerConstants
      * - Enables/disables data persistence for a Redis connection.
      *
      * @api
+     *
      * @var string
      */
     public const SECURITY_BLOCKER_REDIS_PERSISTENT_CONNECTION = 'SECURITY_BLOCKER_REDIS:SECURITY_BLOCKER_REDIS_PERSISTENT_CONNECTION';
@@ -100,6 +109,7 @@ interface SecurityBlockerConstants
      * - Specifies the TTL configuration, the period when number of unsuccessful tries will be counted.
      *
      * @api
+     *
      * @var string
      */
     public const SECURITY_BLOCKER_BLOCKING_TTL = 'SECURITY_BLOCKER:BLOCKING_TTL';
@@ -109,6 +119,7 @@ interface SecurityBlockerConstants
      * - Specifies number of failed login attempt an account can make during the `SECURITY_BLOCKER_BLOCKING_TTL` time before it is blocked.
      *
      * @api
+     *
      * @var string
      */
     public const SECURITY_BLOCKER_BLOCKING_NUMBER_OF_ATTEMPTS = 'SECURITY_BLOCKER:BLOCKING_NUMBER_OF_ATTEMPTS';
@@ -118,6 +129,7 @@ interface SecurityBlockerConstants
      * - Specifies the TTL configuration, the period for which the account is blocked if the number of attempts is exceeded.
      *
      * @api
+     *
      * @var string
      */
     public const SECURITY_BLOCKER_BLOCK_FOR = 'SECURITY_BLOCKER:SECURITY_BLOCKER_BLOCK_FOR';
@@ -127,6 +139,7 @@ interface SecurityBlockerConstants
      * - Specifies the TTL configuration, the period when number of unsuccessful tries will be counted for agent.
      *
      * @api
+     *
      * @var string
      */
     public const SECURITY_BLOCKER_AGENT_BLOCKING_TTL = 'SECURITY_BLOCKER:BLOCKING_AGENT_TTL';
@@ -136,6 +149,7 @@ interface SecurityBlockerConstants
      * - Specifies number of failed login attempt an agent can make during the `SECURITY_BLOCKER_AGENT_BLOCKING_TTL` time before it is blocked.
      *
      * @api
+     *
      * @var string
      */
     public const SECURITY_BLOCKER_AGENT_BLOCKING_NUMBER_OF_ATTEMPTS = 'SECURITY_BLOCKER:BLOCKING_NUMBER_AGENT_OF_ATTEMPTS';
@@ -145,6 +159,7 @@ interface SecurityBlockerConstants
      * - Specifies the TTL configuration, the period for which the agent is blocked if the number of attempts is exceeded for agent.
      *
      * @api
+     *
      * @var string
      */
     public const SECURITY_BLOCKER_AGENT_BLOCK_FOR = 'SECURITY_BLOCKER:SECURITY_BLOCKER_AGENT_BLOCK_FOR';

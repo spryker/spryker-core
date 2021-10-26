@@ -17,6 +17,7 @@ class MerchantProductOptionGroupWriterStep extends PublishAwareStep implements D
 {
     /**
      * @uses \Spryker\Shared\MerchantProductOptionStorage\MerchantProductOptionStorageConfig::MERCHANT_PRODUCT_OPTION_GROUP_PUBLISH
+     *
      * @var string
      */
     protected const EVENT_MERCHANT_PRODUCT_OPTION_GROUP_PUBLISH = 'MerchantProductOption.group.publish';

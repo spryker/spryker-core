@@ -13,6 +13,7 @@ interface MerchantRelationshipSalesOrderThresholdGuiConfig
      * @deprecated Will be removed in the next major.
      *
      * @uses \Spryker\Shared\SalesOrderThreshold\SalesOrderThresholdConfig::GROUP_HARD
+     *
      * @var string
      */
     public const GROUP_HARD = 'Hard';
@@ -21,6 +22,7 @@ interface MerchantRelationshipSalesOrderThresholdGuiConfig
      * @deprecated Will be removed in the next major.
      *
      * @uses \Spryker\Shared\SalesOrderThreshold\SalesOrderThresholdConfig::GROUP_SOFT
+     *
      * @var string
      */
     public const GROUP_SOFT = 'Soft';
@@ -29,6 +31,7 @@ interface MerchantRelationshipSalesOrderThresholdGuiConfig
      * @deprecated Will be removed in the next major.
      *
      * @uses \Spryker\Shared\SalesOrderThreshold\SalesOrderThresholdConfig::STRATEGY_KEY
+     *
      * @var string
      */
     public const HARD_TYPE_STRATEGY = 'hard-minimum-threshold';
@@ -37,6 +40,7 @@ interface MerchantRelationshipSalesOrderThresholdGuiConfig
      * @deprecated Will be removed in the next major.
      *
      * @uses \Spryker\Shared\SalesOrderThreshold\SalesOrderThresholdConfig::STRATEGY_KEY
+     *
      * @var string
      */
     public const SOFT_TYPE_STRATEGY_MESSAGE = 'soft-minimum-threshold';
@@ -45,6 +49,7 @@ interface MerchantRelationshipSalesOrderThresholdGuiConfig
      * @deprecated Will be removed in the next major.
      *
      * @uses \Spryker\Shared\SalesOrderThreshold\SalesOrderThresholdConfig::STRATEGY_KEY
+     *
      * @var string
      */
     public const SOFT_TYPE_STRATEGY_FIXED = 'soft-minimum-threshold-fixed-fee';
@@ -53,6 +58,7 @@ interface MerchantRelationshipSalesOrderThresholdGuiConfig
      * @deprecated Will be removed in the next major.
      *
      * @uses \Spryker\Shared\SalesOrderThreshold\SalesOrderThresholdConfig::STRATEGY_KEY
+     *
      * @var string
      */
     public const SOFT_TYPE_STRATEGY_FLEXIBLE = 'soft-minimum-threshold-flexible-fee';

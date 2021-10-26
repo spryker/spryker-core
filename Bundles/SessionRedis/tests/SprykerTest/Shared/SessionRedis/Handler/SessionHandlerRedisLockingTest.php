@@ -8,6 +8,7 @@
 namespace SprykerTest\Shared\SessionRedis\Handler;
 
 use Codeception\Test\Unit;
+use Spryker\Shared\SessionRedis\Handler\Exception\LockCouldNotBeAcquiredException;
 use Spryker\Shared\SessionRedis\Handler\KeyBuilder\SessionKeyBuilder;
 use Spryker\Shared\SessionRedis\Handler\LifeTime\SessionRedisLifeTimeCalculator;
 use Spryker\Shared\SessionRedis\Handler\Lock\SessionSpinLockLocker;
@@ -85,7 +86,7 @@ class SessionHandlerRedisLockingTest extends Unit
      */
     public function testReadingSessionDataWillThrowExceptionWhenImpossibleToAcquireLock(): void
     {
-        $this->expectException('Spryker\Shared\SessionRedis\Handler\Exception\LockCouldNotBeAcquiredException');
+        $this->expectException(LockCouldNotBeAcquiredException::class);
         $this->spinLockLockerMock
             ->expects($this->once())
             ->method('lock')

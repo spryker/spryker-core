@@ -22,12 +22,14 @@ class CartItemProductConfigurationRestRequestValidator implements CartItemProduc
 {
     /**
      * @uses \Spryker\Glue\CartsRestApi\CartsRestApiConfig::RESOURCE_CART_ITEMS
+     *
      * @var string
      */
     protected const RESOURCE_CART_ITEMS = 'items';
 
     /**
      * @uses \Spryker\Glue\CartsRestApi\CartsRestApiConfig::RESOURCE_GUEST_CARTS_ITEMS
+     *
      * @var string
      */
     protected const RESOURCE_GUEST_CARTS_ITEMS = 'guest-cart-items';

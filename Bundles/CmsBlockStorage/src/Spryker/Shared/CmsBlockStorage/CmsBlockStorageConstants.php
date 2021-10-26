@@ -17,6 +17,7 @@ class CmsBlockStorageConstants
      * - Queue name as used for processing cms block messages
      *
      * @api
+     *
      * @var string
      */
     public const CMS_BLOCK_SYNC_STORAGE_QUEUE = 'sync.storage.cms';
@@ -26,6 +27,7 @@ class CmsBlockStorageConstants
      * - Queue name as used for error cms block messages
      *
      * @api
+     *
      * @var string
      */
     public const CMS_BLOCK_SYNC_STORAGE_ERROR_QUEUE = 'sync.storage.cms.error';
@@ -35,6 +37,7 @@ class CmsBlockStorageConstants
      * - Resource name, this will use for key generating
      *
      * @api
+     *
      * @var string
      */
     public const CMS_BLOCK_RESOURCE_NAME = 'cms_block';

@@ -22,6 +22,7 @@ class ProductAbstractAttributeUniqueCombinationConstraintValidator extends Const
 {
     /**
      * @uses \Spryker\Zed\ProductAttribute\ProductAttributeConfig::DEFAULT_LOCALE
+     *
      * @var string
      */
     public const DEFAULT_LOCALE = '_';

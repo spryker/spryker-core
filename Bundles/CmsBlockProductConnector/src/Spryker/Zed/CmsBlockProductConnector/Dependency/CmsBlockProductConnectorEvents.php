@@ -14,6 +14,7 @@ interface CmsBlockProductConnectorEvents
      * - This events will be used for CmsBlockProduct connector publishing
      *
      * @api
+     *
      * @var string
      */
     public const CMS_BLOCK_PRODUCT_CONNECTOR_PUBLISH = 'CmsBlockProduct.connector.publish';
@@ -23,6 +24,7 @@ interface CmsBlockProductConnectorEvents
      * - This events will be used for CmsBlockProduct connector un-publishing
      *
      * @api
+     *
      * @var string
      */
     public const CMS_BLOCK_PRODUCT_CONNECTOR_UNPUBLISH = 'CmsBlockProduct.connector.unpublish';
@@ -32,6 +34,7 @@ interface CmsBlockProductConnectorEvents
      * - This events will be used for spy_cms_block_product_connector entity creation
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_CMS_BLOCK_PRODUCT_CONNECTOR_CREATE = 'Entity.spy_cms_block_product_connector.create';
@@ -41,6 +44,7 @@ interface CmsBlockProductConnectorEvents
      * - This events will be used for spy_cms_block_product_connector entity update
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_CMS_BLOCK_PRODUCT_CONNECTOR_UPDATE = 'Entity.spy_cms_block_product_connector.update';
@@ -50,6 +54,7 @@ interface CmsBlockProductConnectorEvents
      * - This events will be used for spy_cms_block_product_connector entity deletion
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_CMS_BLOCK_PRODUCT_CONNECTOR_DELETE = 'Entity.spy_cms_block_product_connector.delete';

@@ -38,6 +38,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
 
     /**
      * @deprecated not valid constant name. Use ZED_REQUEST_ERROR instead
+     *
      * @var string
      */
     public const HOST_NAME_ERROR =
@@ -111,36 +112,42 @@ Configured with %s %s:%s in %s. Error: Stacktrace:';
 
     /**
      * @deprecated Will be removed with next major. Logging is done by Log bundle.
+     *
      * @var string
      */
     public const EVENT_FIELD_TRANSFER_DATA = 'transfer_data';
 
     /**
      * @deprecated Will be removed with next major. Logging is done by Log bundle.
+     *
      * @var string
      */
     public const EVENT_FIELD_TRANSFER_CLASS = 'transfer_class';
 
     /**
      * @deprecated Will be removed with next major. Logging is done by Log bundle.
+     *
      * @var string
      */
     public const EVENT_FIELD_PATH_INFO = 'path_info';
 
     /**
      * @deprecated Will be removed with next major. Logging is done by Log bundle.
+     *
      * @var string
      */
     public const EVENT_FIELD_SUB_TYPE = 'sub_type';
 
     /**
      * @deprecated Will be removed with next major. Logging is done by Log bundle.
+     *
      * @var string
      */
     public const EVENT_NAME_TRANSFER_REQUEST = 'transfer_request';
 
     /**
      * @deprecated Will be removed with next major. Logging is done by Log bundle.
+     *
      * @var string
      */
     public const EVENT_NAME_TRANSFER_RESPONSE = 'transfer_response';

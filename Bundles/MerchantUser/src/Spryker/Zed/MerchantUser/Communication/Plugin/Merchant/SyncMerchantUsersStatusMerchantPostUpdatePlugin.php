@@ -21,6 +21,7 @@ class SyncMerchantUsersStatusMerchantPostUpdatePlugin extends AbstractPlugin imp
 {
     /**
      * @uses \Spryker\Zed\Merchant\MerchantConfig::STATUS_DENIED
+     *
      * @var string
      */
     protected const MERCHANT_STATUS_DENIED = 'denied';

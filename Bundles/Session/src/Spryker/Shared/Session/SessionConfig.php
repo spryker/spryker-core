@@ -18,12 +18,14 @@ class SessionConfig extends AbstractSharedConfig
 
     /**
      * @deprecated Use {@link \Spryker\Shared\SessionRedis\SessionRedisConfig::SESSION_HANDLER_REDIS} instead.
+     *
      * @var string
      */
     public const SESSION_HANDLER_REDIS = 'redis';
 
     /**
      * @deprecated Use {@link \Spryker\Shared\SessionRedis\SessionRedisConfig::SESSION_HANDLER_REDIS_LOCKING} instead.
+     *
      * @var string
      */
     public const SESSION_HANDLER_REDIS_LOCKING = 'redis_locking';
@@ -35,6 +37,7 @@ class SessionConfig extends AbstractSharedConfig
 
     /**
      * @deprecated Use {@link \Spryker\Shared\SessionFile\SessionFileConfig::SESSION_HANDLER_FILE} instead.
+     *
      * @var string
      */
     public const SESSION_HANDLER_FILE = 'file';

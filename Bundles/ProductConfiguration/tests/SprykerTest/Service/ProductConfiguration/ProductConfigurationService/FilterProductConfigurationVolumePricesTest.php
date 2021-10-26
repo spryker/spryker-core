@@ -27,12 +27,14 @@ class FilterProductConfigurationVolumePricesTest extends Unit
 {
     /**
      * @uses \Spryker\Shared\PriceProduct\PriceProductConfig::PRICE_TYPE_DEFAULT
+     *
      * @var string
      */
     protected const PRICE_TYPE_DEFAULT = 'DEFAULT';
 
     /**
      * @uses \Spryker\Service\ProductConfiguration\Filter\PriceProductConfigurationVolumeFilter::SINGLE_ITEM_QUANTITY
+     *
      * @var int
      */
     protected const SINGLE_ITEM_QUANTITY = 1;

@@ -8,6 +8,8 @@
 namespace SprykerTest\Zed\Setup\Business;
 
 use Codeception\Test\Unit;
+use Spryker\Zed\Setup\Business\Model\Cronjobs;
+use Spryker\Zed\Setup\Business\Model\DirectoryRemover;
 use Spryker\Zed\Setup\Business\SetupBusinessFactory;
 
 /**
@@ -37,7 +39,7 @@ class SetupBusinessFactoryTest extends Unit
     {
         $instance = $this->getFactory()->createModelCronjobs();
 
-        $this->assertInstanceOf('Spryker\Zed\Setup\Business\Model\Cronjobs', $instance);
+        $this->assertInstanceOf(Cronjobs::class, $instance);
     }
 
     /**
@@ -47,6 +49,6 @@ class SetupBusinessFactoryTest extends Unit
     {
         $instance = $this->getFactory()->createModelGeneratedDirectoryRemover();
 
-        $this->assertInstanceOf('Spryker\Zed\Setup\Business\Model\DirectoryRemover', $instance);
+        $this->assertInstanceOf(DirectoryRemover::class, $instance);
     }
 }

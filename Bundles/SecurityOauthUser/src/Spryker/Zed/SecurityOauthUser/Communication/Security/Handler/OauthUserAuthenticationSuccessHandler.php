@@ -21,6 +21,7 @@ class OauthUserAuthenticationSuccessHandler implements AuthenticationSuccessHand
 
     /**
      * @uses \Spryker\Zed\SecurityOauthUser\Communication\Plugin\Security\OauthUserSecurityPlugin::SECURITY_FIREWALL_NAME
+     *
      * @var string
      */
     protected const SECURITY_FIREWALL_NAME = 'OauthUser';

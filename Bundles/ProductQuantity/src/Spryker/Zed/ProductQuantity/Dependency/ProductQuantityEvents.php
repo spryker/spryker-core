@@ -14,6 +14,7 @@ interface ProductQuantityEvents
     * - This event is used for product_quantity publishing.
     *
     * @api
+    *
     * @var string
     */
     public const PRODUCT_QUANTITY_PUBLISH = 'ProductQuantity.product_quantity.publish';
@@ -23,6 +24,7 @@ interface ProductQuantityEvents
      * - This event is used for product_quantity unpublishing.
      *
      * @api
+     *
      * @var string
      */
     public const PRODUCT_QUANTITY_UNPUBLISH = 'ProductQuantity.product_quantity.unpublish';
@@ -32,6 +34,7 @@ interface ProductQuantityEvents
      * - This event is used for spy_product_quantity entity creation.
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_PRODUCT_QUANTITY_CREATE = 'Entity.spy_product_quantity.create';
@@ -41,6 +44,7 @@ interface ProductQuantityEvents
      * - This event is used for spy_product_quantity entity changes.
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_PRODUCT_QUANTITY_UPDATE = 'Entity.spy_product_quantity.update';
@@ -50,6 +54,7 @@ interface ProductQuantityEvents
      * - This event is used for spy_product_quantity entity deletion.
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_PRODUCT_QUANTITY_DELETE = 'Entity.spy_product_quantity.delete';

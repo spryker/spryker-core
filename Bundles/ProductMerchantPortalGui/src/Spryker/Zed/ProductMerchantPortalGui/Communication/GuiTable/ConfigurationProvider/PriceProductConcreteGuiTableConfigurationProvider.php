@@ -37,30 +37,35 @@ class PriceProductConcreteGuiTableConfigurationProvider implements PriceProductC
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\ProductConcreteEditForm::BLOCK_PREFIX
+     *
      * @var string
      */
     protected const BLOCK_PREFIX_PRODUCT_CONCRETE_EDIT_FORM = 'productConcreteEdit';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\ProductConcreteForm::BLOCK_PREFIX
+     *
      * @var string
      */
     protected const BLOCK_PREFIX_PRODUCT_CONCRETE_FORM = 'productConcrete';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Controller\UpdateProductConcreteController::priceTableDataAction()
+     *
      * @var string
      */
     protected const DATA_URL = '/product-merchant-portal-gui/update-product-concrete/price-table-data';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Controller\SavePriceProductConcreteController::indexAction()
+     *
      * @var string
      */
     protected const URL_SAVE_PRICES = '/product-merchant-portal-gui/save-price-product-concrete';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Controller\DeletePriceProductConcreteController::indexAction()
+     *
      * @var string
      */
     protected const URL_DELETE_PRICE = '/product-merchant-portal-gui/delete-price-product-concrete';

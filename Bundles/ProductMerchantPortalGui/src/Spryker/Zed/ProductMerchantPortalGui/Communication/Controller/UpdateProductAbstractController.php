@@ -41,6 +41,7 @@ class UpdateProductAbstractController extends AbstractUpdateProductController
 
     /**
      * @see \Spryker\Zed\ProductMerchantPortalGui\Communication\Controller\AddProductConcreteController::indexAction()
+     *
      * @var string
      */
     protected const URL_ADD_PRODUCT_CONCRETE = '/product-merchant-portal-gui/add-product-concrete';

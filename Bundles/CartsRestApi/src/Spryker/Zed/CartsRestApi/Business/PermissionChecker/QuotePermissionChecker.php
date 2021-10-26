@@ -16,12 +16,14 @@ class QuotePermissionChecker implements QuotePermissionCheckerInterface
 
     /**
      * @uses \Spryker\Client\SharedCart\Plugin\ReadSharedCartPermissionPlugin::KEY
+     *
      * @var string
      */
     protected const PERMISSION_PLUGIN_KEY_READ_SHARED_CART = 'ReadSharedCartPermissionPlugin';
 
     /**
      * @uses \Spryker\Client\SharedCart\Plugin\WriteSharedCartPermissionPlugin::KEY
+     *
      * @var string
      */
     protected const PERMISSION_PLUGIN_KEY_WRITE_SHARED_CART = 'WriteSharedCartPermissionPlugin';

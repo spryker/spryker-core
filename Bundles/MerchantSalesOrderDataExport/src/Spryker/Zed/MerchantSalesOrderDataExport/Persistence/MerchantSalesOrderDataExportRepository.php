@@ -29,12 +29,14 @@ class MerchantSalesOrderDataExportRepository extends AbstractRepository implemen
 
     /**
      * @uses \Spryker\Zed\MerchantSalesOrderDataExport\Persistence\Propel\Mapper\MerchantSalesOrderMapper::KEY_MERCHANT_NAME
+     *
      * @var string
      */
     protected const FILTER_CRITERIA_KEY_MERCHANT_NAME = 'merchant_name';
 
     /**
      * @uses \Spryker\Zed\MerchantSalesOrderDataExport\Persistence\Propel\Mapper\MerchantSalesOrderMapper::KEY_MERCHANT_ORDER_COMMENTS
+     *
      * @var string
      */
     protected const KEY_MERCHANT_ORDER_COMMENTS = 'merchant_order_comments';

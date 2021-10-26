@@ -23,6 +23,7 @@ class CookieEventDispatcherPlugin extends AbstractPlugin implements EventDispatc
 {
     /**
      * @uses \Spryker\Zed\Http\Communication\Plugin\Application\HttpApplicationPlugin::SERVICE_COOKIES
+     *
      * @var string
      */
     protected const SERVICE_COOKIES = 'cookies';

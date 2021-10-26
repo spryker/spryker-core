@@ -19,6 +19,7 @@ class EditCompanyUnitAddressController extends AbstractController
 {
     /**
      * @uses \Spryker\Zed\CompanyUnitAddressGui\Communication\Controller\ListCompanyUnitAddressController::indexAction()
+     *
      * @var string
      */
     protected const COMPANY_UNIT_ADDRESS_LIST_URL = '/company-unit-address-gui/list-company-unit-address';

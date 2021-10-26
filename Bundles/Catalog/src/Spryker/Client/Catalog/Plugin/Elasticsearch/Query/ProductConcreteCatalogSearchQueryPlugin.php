@@ -33,6 +33,7 @@ class ProductConcreteCatalogSearchQueryPlugin extends AbstractPlugin implements 
 
     /**
      * @uses \Spryker\Shared\ProductPageSearch\ProductPageSearchConstants::PRODUCT_CONCRETE_RESOURCE_NAME
+     *
      * @var string
      */
     protected const PRODUCT_CONCRETE_RESOURCE_NAME = 'product_concrete';

@@ -19,36 +19,42 @@ interface StorageConstants
 
     /**
      * @deprecated Use {@link \Spryker\Shared\StorageRedis\StorageRedisConstants::STORAGE_REDIS_SCHEME} instead.
+     *
      * @var string
      */
     public const STORAGE_REDIS_PROTOCOL = 'YVES_STORAGE_REDIS_PROTOCOL';
 
     /**
      * @deprecated Use {@link \Spryker\Shared\StorageRedis\StorageRedisConstants::STORAGE_REDIS_PASSWORD} instead.
+     *
      * @var string
      */
     public const STORAGE_REDIS_PASSWORD = 'YVES_STORAGE_REDIS_PASSWORD';
 
     /**
      * @deprecated Use {@link \Spryker\Shared\StorageRedis\StorageRedisConstants::STORAGE_REDIS_HOST} instead.
+     *
      * @var string
      */
     public const STORAGE_REDIS_HOST = 'YVES_STORAGE_REDIS_HOST';
 
     /**
      * @deprecated Use {@link \Spryker\Shared\StorageRedis\StorageRedisConstants::STORAGE_REDIS_PORT} instead.
+     *
      * @var string
      */
     public const STORAGE_REDIS_PORT = 'YVES_STORAGE_REDIS_PORT';
 
     /**
      * @deprecated Use {@link \Spryker\Shared\StorageRedis\StorageRedisConstants::STORAGE_REDIS_PERSISTENT_CONNECTION} instead.
+     *
      * @var string
      */
     public const STORAGE_PERSISTENT_CONNECTION = 'YVES_STORAGE_PERSISTENT_CONNECTION';
 
     /**
      * @deprecated Use {@link \Spryker\Shared\StorageRedis\StorageRedisConstants::STORAGE_REDIS_DATABASE} instead.
+     *
      * @var string
      */
     public const STORAGE_REDIS_DATABASE = 'YVES_STORAGE_REDIS_DATABASE';
@@ -83,6 +89,7 @@ interface StorageConstants
      * @api
      *
      * @deprecated Use {@link \Spryker\Shared\StorageRedis\StorageRedisConstants::STORAGE_REDIS_DATA_SOURCE_NAMES} instead.
+     *
      * @var string
      */
     public const STORAGE_PREDIS_CLIENT_CONFIGURATION = 'STORAGE_PREDIS_CLIENT_CONFIGURATION';
@@ -95,6 +102,7 @@ interface StorageConstants
      * @api
      *
      * @deprecated Use {@link \Spryker\Shared\StorageRedis\StorageRedisConstants::STORAGE_REDIS_CONNECTION_OPTIONS} instead.
+     *
      * @var string
      */
     public const STORAGE_PREDIS_CLIENT_OPTIONS = 'STORAGE_PREDIS_CLIENT_OPTIONS';

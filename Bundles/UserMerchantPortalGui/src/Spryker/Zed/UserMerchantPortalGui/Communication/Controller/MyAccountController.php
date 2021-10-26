@@ -27,6 +27,7 @@ class MyAccountController extends AbstractController
 
     /**
      * @see \Spryker\Zed\UserMerchantPortalGui\Communication\Controller\MyAccountController::indexAction()
+     *
      * @var string
      */
     protected const URL_CHANGE_PASSWORD = '/user-merchant-portal-gui/change-password';

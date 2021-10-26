@@ -70,6 +70,7 @@ class MerchantOrderGuiTableConfigurationProvider implements MerchantOrderGuiTabl
 
     /**
      * @uses \Spryker\Zed\SalesMerchantPortalGui\Communication\Controller\OrdersController::tableDataAction()
+     *
      * @var string
      */
     protected const DATA_URL = '/sales-merchant-portal-gui/orders/table-data';

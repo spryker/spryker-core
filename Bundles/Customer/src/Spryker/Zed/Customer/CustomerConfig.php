@@ -30,6 +30,7 @@ class CustomerConfig extends AbstractBundleConfig
 
     /**
      * @uses \Spryker\Zed\Customer\Communication\Plugin\Mail\CustomerRegistrationMailTypePlugin::MAIL_TYPE
+     *
      * @var string
      */
     public const CUSTOMER_REGISTRATION_MAIL_TYPE = 'customer registration mail';

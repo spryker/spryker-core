@@ -49,6 +49,7 @@ class ProductCategorySlotBlockConditionForm extends AbstractType
 
     /**
      * @uses \Spryker\Shared\CmsSlotBlockProductCategoryConnector\CmsSlotBlockProductCategoryConnectorConfig::CONDITION_KEY
+     *
      * @var string
      */
     protected const FIELD_PRODUCT_CATEGORY = 'productCategory';

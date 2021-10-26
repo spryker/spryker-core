@@ -48,6 +48,7 @@ class UserSecurityPlugin extends AbstractPlugin implements SecurityPluginInterfa
 
     /**
      * @uses \Spryker\Zed\Router\Communication\Plugin\Application\RouterApplicationPlugin::SERVICE_ROUTER
+     *
      * @var string
      */
     protected const SERVICE_ROUTER = 'routers';

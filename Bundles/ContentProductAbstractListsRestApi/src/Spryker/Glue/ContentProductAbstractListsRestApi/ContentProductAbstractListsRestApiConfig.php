@@ -13,6 +13,7 @@ class ContentProductAbstractListsRestApiConfig extends AbstractBundleConfig
 {
     /**
      * @deprecated Will be removed in the next major release.
+     *
      * @var string
      */
     public const ACTION_RESOURCE_CONTENT_PRODUCT_ABSTRACT_LISTS_GET = 'get';
@@ -24,18 +25,21 @@ class ContentProductAbstractListsRestApiConfig extends AbstractBundleConfig
 
     /**
      * @deprecated Will be removed in the next major release.
+     *
      * @var string
      */
     public const RESOURCE_CONTENT_PRODUCT_ABSTRACT_LISTS_PRODUCTS = 'content-product-abstract';
 
     /**
      * @see \Spryker\Glue\ProductsRestApi\ProductsRestApiConfig::RESOURCE_ABSTRACT_PRODUCTS
+     *
      * @var string
      */
     public const RESOURCE_ABSTRACT_PRODUCTS = 'abstract-products';
 
     /**
      * @deprecated Will be removed in the next major release.
+     *
      * @var string
      */
     public const CONTROLLER_CONTENT_PRODUCT_ABSTRACT_LIST = 'content-product-abstract-list';

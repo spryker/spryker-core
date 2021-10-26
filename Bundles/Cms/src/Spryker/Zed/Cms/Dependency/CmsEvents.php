@@ -14,6 +14,7 @@ interface CmsEvents
      * - This events will be used for spy_cms_page entity creation
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_CMS_PAGE_CREATE = 'Entity.spy_cms_page.create';
@@ -23,6 +24,7 @@ interface CmsEvents
      * - This events will be used for spy_cms_page entity changes
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_CMS_PAGE_UPDATE = 'Entity.spy_cms_page.update';
@@ -32,6 +34,7 @@ interface CmsEvents
      * - This events will be used for spy_cms_page entity deletion
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_CMS_PAGE_DELETE = 'Entity.spy_cms_page.delete';
@@ -41,6 +44,7 @@ interface CmsEvents
      * - This events will be used for cms version publish
      *
      * @api
+     *
      * @var string
      */
     public const CMS_VERSION_PUBLISH = 'Cms.version.publish';
@@ -50,6 +54,7 @@ interface CmsEvents
      * - This events will be used for cms version publish
      *
      * @api
+     *
      * @var string
      */
     public const CMS_VERSION_UNPUBLISH = 'Cms.version.unpublish';
@@ -59,6 +64,7 @@ interface CmsEvents
      * - This events will be used for spy_cms_version entity creation
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_CMS_VERSION_CREATE = 'Entity.spy_cms_version.create';
@@ -68,6 +74,7 @@ interface CmsEvents
      * - This events will be used for spy_cms_version entity changes
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_CMS_VERSION_UPDATE = 'Entity.spy_cms_version.update';
@@ -77,6 +84,7 @@ interface CmsEvents
      * - This events will be used for spy_cms_version entity deletion
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_CMS_VERSION_DELETE = 'Entity.spy_cms_version.delete';
@@ -86,6 +94,7 @@ interface CmsEvents
      * - Represents spy_cms_page_store entity creation.
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_CMS_STORE_CREATE = 'Entity.spy_cms_page_store.create';
@@ -95,6 +104,7 @@ interface CmsEvents
      * - Represents spy_cms_page_store entity changes.
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_CMS_STORE_UPDATE = 'Entity.spy_cms_page_store.update';
@@ -104,6 +114,7 @@ interface CmsEvents
      * - Represents spy_cms_page_store entity deletion.
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_CMS_STORE_DELETE = 'Entity.spy_cms_page_store.delete';

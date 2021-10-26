@@ -58,12 +58,14 @@ class HttpApplicationPlugin extends AbstractPlugin implements ApplicationPluginI
 
     /**
      * @uses \Spryker\Zed\Router\Communication\Plugin\Application\RouterApplicationPlugin::SERVICE_CONTROLLER_RESOLVER
+     *
      * @var string
      */
     protected const SERVICE_CONTROLLER_RESOLVER = 'controller-resolver';
 
     /**
      * @uses \Spryker\Zed\EventDispatcher\Communication\Plugin\Application\EventDispatcherApplicationPlugin::SERVICE_DISPATCHER
+     *
      * @var string
      */
     protected const SERVICE_EVENT_DISPATCHER = 'dispatcher';

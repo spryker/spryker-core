@@ -16,6 +16,7 @@ class QuoteWriter implements QuoteWriterInterface
 {
     /**
      * @uses \Spryker\Shared\Quote\QuoteConfig::STORAGE_STRATEGY_DATABASE
+     *
      * @var string
      */
     protected const STORAGE_STRATEGY_DATABASE = 'database';

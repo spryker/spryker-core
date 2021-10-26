@@ -29,6 +29,7 @@ class MerchantProductOfferGuiDependencyProvider extends AbstractBundleDependency
 
     /**
      * @uses \Spryker\Zed\Http\Communication\Plugin\Application\HttpApplicationPlugin::SERVICE_REQUEST_STACK
+     *
      * @var string
      */
     public const SERVICE_REQUEST_STACK = 'request_stack';

@@ -40,6 +40,7 @@ class MerchantTable extends AbstractTable
 
     /**
      * @phpstan-var array<string, string>
+     *
      * @var array
      */
     protected const STATUS_CLASS_LABEL_MAPPING = [
@@ -50,6 +51,7 @@ class MerchantTable extends AbstractTable
 
     /**
      * @phpstan-var array<string, string>
+     *
      * @var array
      */
     protected const STATUS_CLASS_BUTTON_MAPPING = [

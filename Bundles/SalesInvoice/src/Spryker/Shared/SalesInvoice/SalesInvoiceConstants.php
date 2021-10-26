@@ -17,6 +17,7 @@ interface SalesInvoiceConstants
      * - Name of the order invoice sequence for incremental reference generation.
      *
      * @api
+     *
      * @var string
      */
     public const ORDER_INVOICE_SEQUENCE = 'SALES_INVOICE:ORDER_INVOICE_SEQUENCE';

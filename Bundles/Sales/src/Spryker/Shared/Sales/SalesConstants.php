@@ -35,6 +35,7 @@ interface SalesConstants
      *    'PAYMENT_METHOD_1' => 'StateMachineProcess_1',
      *    'PAYMENT_METHOD_2' => 'StateMachineProcess_2',
      * ]
+     *
      * @var string
      */
     public const PAYMENT_METHOD_STATEMACHINE_MAPPING = 'PAYMENT_METHOD_STATEMACHINE_MAPPING';

@@ -27,18 +27,21 @@ class RequestAttributeEventDispatcherPluginTest extends Unit
 {
     /**
      * @uses \Spryker\Zed\Router\Communication\Plugin\EventDispatcher\RequestAttributesEventDispatcherPlugin::MODULE
+     *
      * @var string
      */
     protected const MODULE = 'module';
 
     /**
      * @uses \Spryker\Zed\Router\Communication\Plugin\EventDispatcher\RequestAttributesEventDispatcherPlugin::CONTROLLER
+     *
      * @var string
      */
     protected const CONTROLLER = 'controller';
 
     /**
      * @uses \Spryker\Zed\Router\Communication\Plugin\EventDispatcher\RequestAttributesEventDispatcherPlugin::ACTION
+     *
      * @var string
      */
     protected const ACTION = 'action';

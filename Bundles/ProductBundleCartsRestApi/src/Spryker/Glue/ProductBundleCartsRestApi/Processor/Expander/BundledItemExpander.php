@@ -20,12 +20,14 @@ class BundledItemExpander implements BundledItemExpanderInterface
 {
     /**
      * @uses \Spryker\Client\ProductBundle\Grouper\ProductBundleGrouper::BUNDLE_ITEMS
+     *
      * @var string
      */
     protected const BUNDLE_ITEMS = 'bundleItems';
 
     /**
      * @uses \Spryker\Client\ProductBundle\Grouper\ProductBundleGrouper::BUNDLE_PRODUCT
+     *
      * @var string
      */
     protected const BUNDLE_PRODUCT = 'bundleProduct';

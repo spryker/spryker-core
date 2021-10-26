@@ -51,6 +51,7 @@ class SecurityOauthUserDependencyProvider extends AbstractBundleDependencyProvid
 
     /**
      * @see \Spryker\Shared\Application\Application::SERVICE_ROUTER
+     *
      * @var string
      */
     public const SERVICE_ROUTER = 'routers';

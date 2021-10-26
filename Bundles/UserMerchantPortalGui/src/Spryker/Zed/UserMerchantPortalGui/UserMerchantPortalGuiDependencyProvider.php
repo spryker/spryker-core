@@ -32,6 +32,7 @@ class UserMerchantPortalGuiDependencyProvider extends AbstractBundleDependencyPr
 
     /**
      * @uses \Spryker\Zed\ZedUi\Communication\Plugin\Application\ZedUiApplicationPlugin::SERVICE_ZED_UI_FACTORY
+     *
      * @var string
      */
     public const SERVICE_ZED_UI_FACTORY = 'SERVICE_ZED_UI_FACTORY';

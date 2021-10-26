@@ -14,7 +14,9 @@ class ProductAttributeFilter implements ProductAttributeFilterInterface
 {
     /**
      * @uses \Spryker\Zed\Product\ProductConfig::ATTRIBUTE_MAP_PATH_DELIMITER
+     *
      * @phpstan-var non-empty-string
+     *
      * @var string
      */
     protected const ATTRIBUTE_MAP_PATH_DELIMITER = ':';

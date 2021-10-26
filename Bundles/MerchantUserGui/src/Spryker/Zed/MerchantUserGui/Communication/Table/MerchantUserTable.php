@@ -22,48 +22,56 @@ class MerchantUserTable extends AbstractTable
 {
     /**
      * @see \Orm\Zed\User\Persistence\Map\SpyUserTableMap::getPhpName()
+     *
      * @var string
      */
     protected const USER_PHP_TABLE_NAME = 'SpyUser';
 
     /**
      * @uses \Orm\Zed\User\Persistence\Map\SpyUserTableMap::COL_STATUS
+     *
      * @var string
      */
     protected const USER_COLUMN_STATUS = 'spy_user.status';
 
     /**
      * @uses \Orm\Zed\User\Persistence\Map\SpyUserTableMap::COL_FIRST_NAME
+     *
      * @var string
      */
     protected const USER_COLUMN_FIRST_NAME = 'spy_user.first_name';
 
     /**
      * @uses \Orm\Zed\User\Persistence\Map\SpyUserTableMap::COL_LAST_NAME
+     *
      * @var string
      */
     protected const USER_COLUMN_LAST_NAME = 'spy_user.last_name';
 
     /**
      * @uses \Orm\Zed\User\Persistence\Map\SpyUserTableMap::COL_USERNAME
+     *
      * @var string
      */
     protected const USER_COLUMN_USERNAME = 'spy_user.username';
 
     /**
      * @uses \Orm\Zed\User\Persistence\Map\SpyUserTableMap::COL_STATUS_ACTIVE
+     *
      * @var string
      */
     protected const USER_STATUS_ACTIVE = 'active';
 
     /**
      * @uses \Orm\Zed\User\Persistence\Map\SpyUserTableMap::COL_STATUS_BLOCKED
+     *
      * @var string
      */
     protected const USER_STATUS_BLOCKED = 'blocked';
 
     /**
      * @uses \Orm\Zed\User\Persistence\Map\SpyUserTableMap::COL_STATUS_DELETED
+     *
      * @var string
      */
     protected const USER_STATUS_DELETED = 'deleted';
@@ -100,6 +108,7 @@ class MerchantUserTable extends AbstractTable
 
     /**
      * @phpstan-var array<string, array<string, string>>
+     *
      * @var array
      */
     protected const STATUS_LABEL_MAPPING = [
@@ -119,6 +128,7 @@ class MerchantUserTable extends AbstractTable
 
     /**
      * @phpstan-var array<string, array<string, string>>
+     *
      * @var array
      */
     protected const STATUS_CHANGE_ACTION_MAPPING = [

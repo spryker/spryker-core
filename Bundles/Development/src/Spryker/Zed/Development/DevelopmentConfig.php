@@ -90,6 +90,7 @@ class DevelopmentConfig extends AbstractBundleConfig
 
     /**
      * @phpstan-var array<string, string>
+     *
      * @var array<string>
      */
     protected const INTERNAL_NAMESPACES_TO_PATH_MAPPING = [
@@ -103,6 +104,7 @@ class DevelopmentConfig extends AbstractBundleConfig
 
     /**
      * @phpstan-var array<string>
+     *
      * @var array
      */
     protected const INTERNAL_PACKAGE_DIRECTORIES = ['spryker', 'spryker-shop', 'spryker-merchant-portal'];

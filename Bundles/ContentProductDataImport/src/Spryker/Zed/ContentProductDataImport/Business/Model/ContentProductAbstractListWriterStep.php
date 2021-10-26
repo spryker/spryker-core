@@ -21,12 +21,14 @@ class ContentProductAbstractListWriterStep extends PublishAwareStep implements D
 {
     /**
      * @uses \Spryker\Shared\ContentProduct\ContentProductConfig::CONTENT_TYPE_PRODUCT_ABSTRACT_LIST
+     *
      * @var string
      */
     protected const CONTENT_TYPE_PRODUCT_ABSTRACT_LIST = 'Abstract Product List';
 
     /**
      * @uses \Spryker\Shared\ContentProduct\ContentProductConfig::CONTENT_TERM_PRODUCT_ABSTRACT_LIST
+     *
      * @var string
      */
     protected const CONTENT_TERM_PRODUCT_ABSTRACT_LIST = 'Abstract Product List';

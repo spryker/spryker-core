@@ -158,6 +158,7 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
 
     /**
      * @deprecated Will be removed in the next major version.
+     *
      * @var string
      */
     public const FACADE_CALCULATION = 'FACADE_CALCULATION';

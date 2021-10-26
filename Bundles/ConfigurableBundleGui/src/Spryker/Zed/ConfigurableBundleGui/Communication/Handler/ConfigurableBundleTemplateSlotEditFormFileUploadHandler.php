@@ -16,6 +16,7 @@ class ConfigurableBundleTemplateSlotEditFormFileUploadHandler implements Configu
 {
     /**
      * @phpstan-var non-empty-string
+     *
      * @var string
      */
     protected const FIELD_PATH_SEPARATOR = '.';

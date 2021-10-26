@@ -24,12 +24,14 @@ class InlineRendererFragmentHandlerPlugin extends AbstractPlugin implements Frag
 {
     /**
      * @uses \Spryker\Zed\Http\Communication\Plugin\Application\HttpApplicationPlugin::SERVICE_KERNEL
+     *
      * @var string
      */
     protected const SERVICE_KERNEL = 'kernel';
 
     /**
      * @uses \Spryker\Zed\EventDispatcher\Communication\Plugin\Application\EventDispatcherApplicationPlugin::SERVICE_DISPATCHER
+     *
      * @var string
      */
     protected const SERVICE_EVENT_DISPATCHER = 'dispatcher';

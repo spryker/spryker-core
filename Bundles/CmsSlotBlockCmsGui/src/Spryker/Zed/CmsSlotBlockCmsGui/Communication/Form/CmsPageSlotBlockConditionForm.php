@@ -33,6 +33,7 @@ class CmsPageSlotBlockConditionForm extends AbstractType
 
     /**
      * @uses \Spryker\Shared\CmsSlotBlockCmsConnector\CmsSlotBlockCmsConnectorConfig::CONDITION_KEY
+     *
      * @var string
      */
     protected const FIELD_CMS_PAGE = 'cms_page';

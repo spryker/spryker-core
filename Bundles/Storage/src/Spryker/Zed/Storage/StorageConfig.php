@@ -19,6 +19,7 @@ class StorageConfig extends AbstractBundleConfig
 
     /**
      * @deprecated Use {@link \Spryker\Zed\StorageRedis\StorageRedisConfig::DEFAULT_REDIS_DATABASE} instead.
+     *
      * @var int
      */
     public const DEFAULT_REDIS_DATABASE = 0;

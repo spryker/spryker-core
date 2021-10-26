@@ -40,6 +40,7 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
 {
     /**
      * @see https://angular.io/api/common/DatePipe for details.
+     *
      * @var string
      */
     protected const DEFAULT_UI_DATE_FORMAT = 'dd.MM.y';

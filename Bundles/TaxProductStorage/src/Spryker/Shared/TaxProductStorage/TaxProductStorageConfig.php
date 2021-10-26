@@ -16,6 +16,7 @@ class TaxProductStorageConfig extends AbstractSharedConfig
      *  - Queue name as used for processing product abstract product tax set messages.
      *
      * @api
+     *
      * @var string
      */
     public const PRODUCT_ABSTRACT_TAX_SET_SYNC_STORAGE_QUEUE = 'sync.storage.product_abstract_tax_set';
@@ -25,6 +26,7 @@ class TaxProductStorageConfig extends AbstractSharedConfig
      *  - Queue name as used for processing product abstract tax set error messages.
      *
      * @api
+     *
      * @var string
      */
     public const PRODUCT_ABSTRACT_TAX_SET_SYNC_STORAGE_ERROR_QUEUE = 'sync.storage.product_abstract_tax_set.error';
@@ -34,6 +36,7 @@ class TaxProductStorageConfig extends AbstractSharedConfig
      *  - Resource name, this will use for key generation.
      *
      * @api
+     *
      * @var string
      */
     public const PRODUCT_ABSTRACT_TAX_SET_RESOURCE_NAME = 'product_abstract_tax_set';

@@ -26,6 +26,7 @@ class MerchantOpeningHoursDateScheduleWriterStep extends PublishAwareStep implem
 
     /**
      * @uses \Spryker\Shared\MerchantOpeningHoursStorage\MerchantOpeningHoursStorageConfig::MERCHANT_OPENING_HOURS_PUBLISH
+     *
      * @var string
      */
     protected const MERCHANT_OPENING_HOURS_PUBLISH = 'MerchantOpeningHours.merchant_opening_hours_schedule.publish';

@@ -14,6 +14,7 @@ class TopButtonsProvider implements TopButtonsProviderInterface
 {
     /**
      * @uses \Spryker\Zed\ProductListGui\Communication\Controller\CreateController::indexAction()
+     *
      * @var string
      */
     protected const CREATE_PRODUCT_LIST_BUTTON_URL = '/product-list-gui/create';

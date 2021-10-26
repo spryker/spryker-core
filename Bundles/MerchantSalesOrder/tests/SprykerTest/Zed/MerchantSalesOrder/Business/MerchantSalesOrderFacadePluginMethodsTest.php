@@ -28,6 +28,7 @@ class MerchantSalesOrderFacadePluginMethodsTest extends Unit
 {
     /**
      * @uses \Spryker\Shared\Shipment\ShipmentConfig::SHIPMENT_EXPENSE_TYPE.
+     *
      * @var string
      */
     protected const VALID_SHIPMENT_EXPENSE_TYPE = 'SHIPMENT_EXPENSE_TYPE';

@@ -31,6 +31,7 @@ class CompanyBusinessUnitRepository extends AbstractRepository implements Compan
 
     /**
      * @see \Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap::COL_CUSTOMER_REFERENCE
+     *
      * @var string
      */
     protected const COL_CUSTOMER_REFERENCE = 'spy_customer.customer_reference';

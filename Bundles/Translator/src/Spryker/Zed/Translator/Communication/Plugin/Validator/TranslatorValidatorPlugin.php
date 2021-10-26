@@ -22,6 +22,7 @@ class TranslatorValidatorPlugin extends AbstractPlugin implements ValidatorPlugi
 {
     /**
      * @uses \Spryker\Zed\Translator\Communication\Plugin\Application\TranslatorApplicationPlugin::SERVICE_TRANSLATOR
+     *
      * @var string
      */
     protected const SERVICE_TRANSLATOR = 'translator';

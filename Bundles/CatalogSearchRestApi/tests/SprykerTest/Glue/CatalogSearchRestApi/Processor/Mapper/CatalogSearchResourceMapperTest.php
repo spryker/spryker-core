@@ -62,6 +62,7 @@ class CatalogSearchResourceMapperTest extends Unit
 
     /**
      * @deprecated Will be removed in next major release.
+     *
      * @var string
      */
     protected const KEY_PRODUCTS = 'products';

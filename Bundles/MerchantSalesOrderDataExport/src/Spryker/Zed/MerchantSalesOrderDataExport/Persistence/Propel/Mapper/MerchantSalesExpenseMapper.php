@@ -17,6 +17,7 @@ class MerchantSalesExpenseMapper
 {
     /**
      * @phpstan-var array<string, string>
+     *
      * @var array
      */
     protected const FIELD_MAPPING = [

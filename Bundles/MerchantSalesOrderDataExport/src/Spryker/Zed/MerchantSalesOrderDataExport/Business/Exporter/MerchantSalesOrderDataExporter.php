@@ -25,12 +25,14 @@ class MerchantSalesOrderDataExporter implements MerchantSalesOrderDataExporterIn
 
     /**
      * @uses \Spryker\Zed\MerchantSalesOrderDataExport\Persistence\MerchantSalesOrderDataExportRepository::FILTER_CRITERIA_PARAM_OFFSET
+     *
      * @var string
      */
     protected const FILTER_CRITERIA_KEY_OFFSET = 'offset';
 
     /**
      * @uses \Spryker\Zed\MerchantSalesOrderDataExport\Persistence\MerchantSalesOrderDataExportRepository::FILTER_CRITERIA_PARAM_LIMIT
+     *
      * @var string
      */
     protected const FILTER_CRITERIA_KEY_LIMIT = 'limit';
@@ -47,6 +49,7 @@ class MerchantSalesOrderDataExporter implements MerchantSalesOrderDataExporterIn
 
     /**
      * @uses \Spryker\Zed\MerchantSalesOrderDataExport\Persistence\Propel\Mapper\MerchantSalesOrderMapper::KEY_MERCHANT_NAME
+     *
      * @var string
      */
     protected const EXTENDED_DATA_EXPORT_CONFIGURATION_FIELD_MERCHANT_NAME = 'merchant_name';

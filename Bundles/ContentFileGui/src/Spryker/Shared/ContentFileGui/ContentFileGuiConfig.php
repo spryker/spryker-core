@@ -15,6 +15,7 @@ class ContentFileGuiConfig extends AbstractSharedConfig
      * @uses \Spryker\Shared\ContentFile\ContentFileConfig::CONTENT_TYPE_FILE_LIST
      *
      * Content item file list
+     *
      * @var string
      */
     public const CONTENT_TYPE_FILE_LIST = 'File List';
@@ -23,6 +24,7 @@ class ContentFileGuiConfig extends AbstractSharedConfig
      * @uses \Spryker\Shared\ContentFile\ContentFileConfig::CONTENT_TERM_FILE_LIST
      *
      * Content item file list
+     *
      * @var string
      */
     public const CONTENT_TERM_FILE_LIST = 'File List';
@@ -31,6 +33,7 @@ class ContentFileGuiConfig extends AbstractSharedConfig
      * @uses \Spryker\Shared\ContentFile\ContentFileConfig::TWIG_FUNCTION_NAME
      *
      * Content item file list function name
+     *
      * @var string
      */
     public const TWIG_FUNCTION_NAME = 'content_file_list';
@@ -39,6 +42,7 @@ class ContentFileGuiConfig extends AbstractSharedConfig
      * @uses \Spryker\Shared\ContentFile\ContentFileConfig::WIDGET_TEMPLATE_IDENTIFIER_TEXT_LINK
      *
      * Content item file list text-link template identifier
+     *
      * @var string
      */
     protected const WIDGET_TEMPLATE_IDENTIFIER_TEXT_LINK = 'text-link';
@@ -54,6 +58,7 @@ class ContentFileGuiConfig extends AbstractSharedConfig
      * @uses \Spryker\Shared\ContentFile\ContentFileConfig::WIDGET_TEMPLATE_IDENTIFIER_FILE_ICON_AND_SIZE
      *
      * Content item file list file-icon-and-size template identifier
+     *
      * @var string
      */
     protected const WIDGET_TEMPLATE_IDENTIFIER_FILE_ICON_AND_SIZE = 'file-icon-and-size';

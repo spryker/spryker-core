@@ -46,6 +46,7 @@ class UsersTable extends AbstractTable
 
     /**
      * @see \Spryker\Zed\User\Communication\Controller\EditController::confirmDeleteAction()
+     *
      * @var string
      */
     public const CONFIRM_DELETE_USER_URL = '/user/edit/confirm-delete';

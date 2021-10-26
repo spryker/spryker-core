@@ -19,36 +19,42 @@ abstract class AbstractSearchClientProvider extends AbstractClientProvider
 {
     /**
      * @uses \Spryker\Shared\SearchElasticsearch\SearchElasticsearchConstants::HOST
+     *
      * @var string
      */
     protected const HOST = 'SEARCH_ELASTICSEARCH:HOST';
 
     /**
      * @uses \Spryker\Shared\SearchElasticsearch\SearchElasticsearchConstants::PORT
+     *
      * @var string
      */
     protected const PORT = 'SEARCH_ELASTICSEARCH:PORT';
 
     /**
      * @uses \Spryker\Shared\SearchElasticsearch\SearchElasticsearchConstants::TRANSPORT
+     *
      * @var string
      */
     protected const TRANSPORT = 'SEARCH_ELASTICSEARCH:TRANSPORT';
 
     /**
      * @uses \Spryker\Shared\SearchElasticsearch\SearchElasticsearchConstants::AUTH_HEADER
+     *
      * @var string
      */
     protected const AUTH_HEADER = 'SEARCH_ELASTICSEARCH:AUTH_HEADER';
 
     /**
      * @uses \Spryker\Shared\SearchElasticsearch\SearchElasticsearchConstants::EXTRA
+     *
      * @var string
      */
     protected const EXTRA = 'SEARCH_ELASTICSEARCH:EXTRA';
 
     /**
      * @uses \Spryker\Shared\SearchElasticsearch\SearchElasticsearchConstants::CLIENT_CONFIGURATION
+     *
      * @var string
      */
     protected const CLIENT_CONFIGURATION = 'SEARCH_ELASTICSEARCH:CLIENT_CONFIGURATION';

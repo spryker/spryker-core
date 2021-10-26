@@ -21,12 +21,14 @@ class TouchWriter implements TouchWriterInterface
 
     /**
      * @uses \Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap::COL_ITEM_EVENT_DELETED
+     *
      * @var string
      */
     protected const COL_ITEM_EVENT_DELETED = 'deleted';
 
     /**
      * @uses \Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap::COL_ID_TOUCH
+     *
      * @var string
      */
     protected const COL_ID_TOUCH = 'spy_touch.id_touch';

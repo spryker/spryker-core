@@ -19,6 +19,7 @@ class RouterDependencyProvider extends AbstractBundleDependencyProvider
      * @deprecated Use {@link \Spryker\Zed\Router\RouterDependencyProvider::PLUGINS_BACKOFFICE_ROUTER} instead.
      * @deprecated Use {@link \Spryker\Zed\Router\RouterDependencyProvider::PLUGINS_BACKEND_GATEWAY_ROUTER} instead.
      * @deprecated Use {@link \Spryker\Zed\Router\RouterDependencyProvider::PLUGINS_BACKEND_API_ROUTER} instead.
+     *
      * @var string
      */
     public const ROUTER_PLUGINS = 'ROUTER_PLUGINS';
@@ -46,6 +47,7 @@ class RouterDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @deprecated Use {@link \Spryker\Zed\Router\RouterDependencyProvider::PLUGINS_BACKOFFICE_ROUTER_ENHANCER} instead.
      * @deprecated Use {@link \Spryker\Zed\Router\RouterDependencyProvider::PLUGINS_BACKEND_GATEWAY_ROUTER_ENHANCER} instead.
+     *
      * @var string
      */
     public const ROUTER_ENHANCER_PLUGINS = 'router enhancer plugin';

@@ -49,18 +49,21 @@ class CompanyBusinessUnitTable extends AbstractTable
 
     /**
      * @see CompanyBusinessUnitForm::FIELD_ID_COMPANY_BUSINESS_UNIT
+     *
      * @var string
      */
     protected const PARAM_ID_COMPANY_BUSINESS_UNIT = 'id-company-business-unit';
 
     /**
      * @see EditCompanyBusinessUnitController::indexAction()
+     *
      * @var string
      */
     protected const URL_COMPANY_BUSINESS_UNIT_EDIT = '/company-business-unit-gui/edit-company-business-unit';
 
     /**
      * @see DeleteCompanyBusinessUnitController::indexAction()
+     *
      * @var string
      */
     protected const URL_COMPANY_BUSINESS_UNIT_DELETE = '/company-business-unit-gui/delete-company-business-unit';

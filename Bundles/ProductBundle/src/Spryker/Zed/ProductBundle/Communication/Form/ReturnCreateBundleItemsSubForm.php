@@ -30,6 +30,7 @@ class ReturnCreateBundleItemsSubForm extends AbstractType
 {
     /**
      * @uses \Spryker\Zed\SalesReturnGui\Communication\Form\ReturnCreateItemsSubForm::FIELD_CUSTOM_REASON
+     *
      * @var string
      */
     public const FIELD_CUSTOM_REASON = 'customReason';

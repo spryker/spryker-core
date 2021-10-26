@@ -15,6 +15,7 @@ class JobsFilterByRole extends AbstractJobsFilter implements ChainableJobsFilter
 {
     /**
      * @see \Spryker\Zed\Scheduler\Business\PhpScheduleReader\Mapper\PhpScheduleMapper::KEY_ROLE
+     *
      * @var string
      */
     protected const KEY_ROLE = 'role';

@@ -26,6 +26,7 @@ class CartsRestApiConfig extends AbstractBundleConfig
 
     /**
      * @uses \Spryker\Glue\CustomersRestApi\CustomersRestApiConfig::RESOURCE_CUSTOMERS
+     *
      * @var string
      */
     public const RESOURCE_CUSTOMERS = 'customers';

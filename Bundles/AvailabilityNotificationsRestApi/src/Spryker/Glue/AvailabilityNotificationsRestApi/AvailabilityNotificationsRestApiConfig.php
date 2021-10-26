@@ -60,18 +60,21 @@ class AvailabilityNotificationsRestApiConfig extends AbstractBundleConfig
 
     /**
      * @uses \Spryker\Shared\AvailabilityNotification\AvailabilityNotificationConfig::MESSAGE_PRODUCT_NOT_FOUND
+     *
      * @var string
      */
     public const RESPONSE_DETAIL_PRODUCT_NOT_FOUND = 'Product not found.';
 
     /**
      * @uses \Spryker\Shared\AvailabilityNotification\AvailabilityNotificationConfig::MESSAGE_SUBSCRIPTION_ALREADY_EXISTS
+     *
      * @var string
      */
     public const RESPONSE_DETAIL_SUBSCRIPTION_ALREADY_EXISTS = 'Subscription already exists.';
 
     /**
      * @uses \Spryker\Shared\AvailabilityNotification\AvailabilityNotificationConfig::MESSAGE_SUBSCRIPTION_DOES_NOT_EXIST
+     *
      * @var string
      */
     public const RESPONSE_DETAIL_SUBSCRIPTION_DOES_NOT_EXIST = 'Subscription doesn\'t exist.';

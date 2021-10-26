@@ -33,6 +33,7 @@ class UrlTwigPlugin extends AbstractPlugin implements TwigPluginInterface
 
     /**
      * @uses \Spryker\Zed\Router\Communication\Plugin\Application\RouterApplicationPlugin::SERVICE_ROUTER
+     *
      * @var string
      */
     protected const SERVICE_ROUTER = 'routers';

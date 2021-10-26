@@ -13,12 +13,14 @@ class CmsPagesContentProductAbstractListsResourceRelationshipConfig extends Abst
 {
     /**
      * @uses \Spryker\Shared\ContentProduct\ContentProductConfig::TWIG_FUNCTION_NAME
+     *
      * @var string
      */
     public const TWIG_FUNCTION_NAME = 'content_product_abstract_list';
 
     /**
      * @uses \Spryker\Glue\ContentProductAbstractListsRestApi\ContentProductAbstractListsRestApiConfig::RESOURCE_CONTENT_PRODUCT_ABSTRACT_LISTS
+     *
      * @var string
      */
     public const RESOURCE_CONTENT_PRODUCT_ABSTRACT_LISTS = 'content-product-abstract-lists';

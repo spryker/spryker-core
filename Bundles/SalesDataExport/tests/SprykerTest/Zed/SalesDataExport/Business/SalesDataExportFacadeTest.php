@@ -30,6 +30,7 @@ class SalesDataExportFacadeTest extends Unit
 {
     /**
      * @uses \Spryker\Service\DataExport\Writer\DataExportLocalWriter::LOCAL_CONNECTION_PARAM_EXPORT_ROOT_DIR
+     *
      * @var string
      */
     protected const LOCAL_CONNECTION_PARAM_EXPORT_ROOT_DIR = 'export_root_dir';

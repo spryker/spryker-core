@@ -15,6 +15,7 @@ class ProductOptionSorter implements ProductOptionSorterInterface
 {
     /**
      * @phpstan-var non-empty-string
+     *
      * @var string
      */
     protected const SORT_VALUE_DELIMITER = '.';

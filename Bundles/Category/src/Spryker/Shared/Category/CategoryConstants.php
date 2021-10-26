@@ -17,6 +17,7 @@ interface CategoryConstants
      * - Defines the number of categories in the chunk to read.
      *
      * @api
+     *
      * @var string
      */
     public const CATEGORY_READ_CHUNK = 'CATEGORY:CATEGORY_READ_CHUNK';
@@ -27,6 +28,7 @@ interface CategoryConstants
      * - Impacts category create/update operations.
      *
      * @api
+     *
      * @var string
      */
     public const CATEGORY_IS_CLOSURE_TABLE_EVENTS_ENABLED = 'CATEGORY:CATEGORY_IS_CLOSURE_TABLE_EVENTS_ENABLED';

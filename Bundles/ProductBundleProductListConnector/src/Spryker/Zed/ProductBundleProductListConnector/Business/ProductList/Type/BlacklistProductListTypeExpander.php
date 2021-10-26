@@ -19,6 +19,7 @@ class BlacklistProductListTypeExpander implements ProductListTypeExpanderInterfa
 {
     /**
      * @uses \Orm\Zed\ProductList\Persistence\Map\SpyProductListTableMap::COL_TYPE_BLACKLIST
+     *
      * @var string
      */
     protected const PRODUCT_LIST_TYPE_BLACKLIST = 'blacklist';

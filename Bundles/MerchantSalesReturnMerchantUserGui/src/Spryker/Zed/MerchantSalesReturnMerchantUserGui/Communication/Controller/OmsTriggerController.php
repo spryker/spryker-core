@@ -54,6 +54,7 @@ class OmsTriggerController extends AbstractController
 
     /**
      * @uses \Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Controller\DetailController::ROUTE_REDIRECT
+     *
      * @var string
      */
     protected const REDIRECT_URL_DEFAULT = '/merchant-sales-return-merchant-user-gui/detail';

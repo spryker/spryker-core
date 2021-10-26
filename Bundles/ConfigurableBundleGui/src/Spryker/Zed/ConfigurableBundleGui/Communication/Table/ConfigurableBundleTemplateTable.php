@@ -66,24 +66,28 @@ class ConfigurableBundleTemplateTable extends AbstractTable
 
     /**
      * @uses \Spryker\Zed\ConfigurableBundleGui\Communication\Controller\TemplateController::editAction()
+     *
      * @var string
      */
     protected const ROUTE_EDIT_CONFIGURABLE_BUNDLE_TEMPLATE = '/configurable-bundle-gui/template/edit';
 
     /**
      * @uses \Spryker\Zed\ConfigurableBundleGui\Communication\Controller\TemplateController::activateAction()
+     *
      * @var string
      */
     protected const ROUTE_CONFIGURABLE_BUNDLE_TEMPLATE_ACTIVATE = '/configurable-bundle-gui/template/activate';
 
     /**
      * @uses \Spryker\Zed\ConfigurableBundleGui\Communication\Controller\TemplateController::deactivateAction()
+     *
      * @var string
      */
     protected const ROUTE_CONFIGURABLE_BUNDLE_TEMPLATE_DEACTIVATE = '/configurable-bundle-gui/template/deactivate';
 
     /**
      * @uses \Spryker\Zed\ConfigurableBundleGui\Communication\Controller\TemplateController::confirmDeleteAction()
+     *
      * @var string
      */
     protected const ROUTE_CONFIGURABLE_BUNDLE_TEMPLATE_CONFIRM_DELETE = '/configurable-bundle-gui/template/confirm-delete';

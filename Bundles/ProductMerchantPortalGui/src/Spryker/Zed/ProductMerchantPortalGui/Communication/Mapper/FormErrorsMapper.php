@@ -18,6 +18,7 @@ class FormErrorsMapper implements FormErrorsMapperInterface
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\AddProductConcreteForm::FIELD_ATTRIBUTES
+     *
      * @var string
      */
     protected const FIELD_ATTRIBUTES = 'attributes';

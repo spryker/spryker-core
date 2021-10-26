@@ -16,12 +16,14 @@ class BreadcrumbNavigationMergeStrategy implements NavigationMergeStrategyInterf
 {
     /**
      * @see \Spryker\Zed\ZedNavigation\Business\Model\Formatter\MenuFormatter::PAGES
+     *
      * @var string
      */
     protected const PAGES = 'pages';
 
     /**
      * @see \Spryker\Zed\ZedNavigation\Business\Model\Formatter\MenuFormatter::BUNDLE
+     *
      * @var string
      */
     protected const BUNDLE = 'bundle';

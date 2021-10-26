@@ -128,7 +128,7 @@ class EventConfig extends AbstractBundleConfig
         $bundleConfigResolver = new BundleConfigResolver();
         try {
             /** @var \Spryker\Client\RabbitMq\RabbitMqConfig $config */
-            $config = $bundleConfigResolver->resolve('\Spryker\Client\RabbitMq\RabbitMqFactory');
+            $config = $bundleConfigResolver->resolve('Spryker\Client\RabbitMq\RabbitMqFactory');
 
             return $this->hasEventRetryQueueConfig($config);
         } catch (BundleConfigNotFoundException $exception) {

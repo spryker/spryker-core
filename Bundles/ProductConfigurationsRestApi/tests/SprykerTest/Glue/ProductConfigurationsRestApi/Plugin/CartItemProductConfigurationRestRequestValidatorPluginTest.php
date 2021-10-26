@@ -36,6 +36,7 @@ class CartItemProductConfigurationRestRequestValidatorPluginTest extends Unit
 {
     /**
      * @uses \Spryker\Glue\CartsRestApi\CartsRestApiConfig::RESOURCE_CART_ITEMS
+     *
      * @var string
      */
     protected const CART_ITEMS_RESOURCE = 'items';

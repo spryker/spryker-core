@@ -13,6 +13,7 @@ use Spryker\Client\ProductLabelStorage\Dependency\Client\ProductLabelStorageToSt
 use Spryker\Client\ProductLabelStorage\Dependency\Service\ProductLabelStorageToSynchronizationServiceInterface;
 use Spryker\Client\ProductLabelStorage\ProductLabelStorageConfig;
 use Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface;
+use Spryker\Shared\ProductLabel\ProductLabelConstants;
 use Spryker\Shared\ProductLabelStorage\ProductLabelStorageConfig as SharedProductLabelStorageConfig;
 
 class LabelDictionary implements LabelDictionaryInterface
@@ -138,7 +139,7 @@ class LabelDictionary implements LabelDictionaryInterface
     protected function getStorageData(string $localeName, string $storeName)
     {
         if (ProductLabelStorageConfig::isCollectorCompatibilityMode()) {
-            $productLabelConstantsClassName = '\Spryker\Shared\ProductLabel\ProductLabelConstants';
+            $productLabelConstantsClassName = ProductLabelConstants::class;
             $collectorStorageKey = sprintf(
                 '%s.%s.resource.product_label_dictionary.%s',
                 strtolower($storeName),

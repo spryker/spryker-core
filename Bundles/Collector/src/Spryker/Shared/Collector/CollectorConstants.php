@@ -19,6 +19,7 @@ interface CollectorConstants
      * - Used to configure the default document type for Elastica.
      *
      * @api
+     *
      * @var string
      */
     public const ELASTICA_PARAMETER__DOCUMENT_TYPE = 'ELASTICA_PARAMETER__DOCUMENT_TYPE';
@@ -28,6 +29,7 @@ interface CollectorConstants
      * - Used to configure the default index name for Elastica.
      *
      * @api
+     *
      * @var string
      */
     public const ELASTICA_PARAMETER__INDEX_NAME = 'ELASTICA_PARAMETER__INDEX_NAME';
@@ -47,6 +49,7 @@ interface CollectorConstants
      * @deprecated Will be removed without replacement.
      *
      * @api
+     *
      * @var string
      */
     public const ZED_DB_ENGINE_MYSQL = 'ZED_DB_ENGINE_MYSQL';
@@ -58,6 +61,7 @@ interface CollectorConstants
      * @deprecated Will be removed without replacement.
      *
      * @api
+     *
      * @var string
      */
     public const ZED_DB_ENGINE_PGSQL = 'ZED_DB_ENGINE_PGSQL';
@@ -67,6 +71,7 @@ interface CollectorConstants
      * - Activate the deleted touch records cleanup
      *
      * @api
+     *
      * @var string
      */
     public const TOUCH_DELETE_CLEANUP_ACTIVE = 'COLLECTOR:TOUCH_DELETE_CLEANUP_ACTIVE';

@@ -17,12 +17,14 @@ class UniqueProductRelationByProductAbstractAndRelationTypeAndStoresConstraintVa
 {
     /**
      * @uses \Orm\Zed\Store\Persistence\Map\SpyStoreTableMap::COL_ID_STORE
+     *
      * @var string
      */
     protected const COL_ID_STORE = 'spy_store.id_store';
 
     /**
      * @uses \Orm\Zed\Store\Persistence\Map\SpyStoreTableMap::COL_NAME
+     *
      * @var string
      */
     protected const COL_STORE_NAME = 'spy_store.name';

@@ -18,12 +18,14 @@ class MerchantProductAbstractWriterStep extends PublishAwareStep implements Data
 {
     /**
      * @uses \Spryker\Shared\MerchantProductSearch\MerchantProductSearchConfig::MERCHANT_PRODUCT_ABSTRACT_PUBLISH
+     *
      * @var string
      */
     protected const MERCHANT_PRODUCT_ABSTRACT_PUBLISH = 'MerchantProduct.merchant_product_abstract.publish';
 
     /**
      * @uses \Spryker\Shared\MerchantProductStorage\MerchantProductStorageConfig::MERCHANT_PRODUCT_ABSTRACT_PUBLISH
+     *
      * @var string
      */
     protected const EVENT_MERCHANT_PRODUCT_ABSTRACT_PUBLISH = 'MerchantProductAbstract.publish';

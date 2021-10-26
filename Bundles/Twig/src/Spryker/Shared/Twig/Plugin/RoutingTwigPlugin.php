@@ -16,6 +16,7 @@ class RoutingTwigPlugin implements TwigPluginInterface
 {
     /**
      * @see \Spryker\Shared\Application\Application::SERVICE_ROUTER
+     *
      * @var string
      */
     protected const SERVICE_ROUTERS = 'routers';

@@ -22,6 +22,7 @@ class MerchantProfileWriterStep extends PublishAwareStep implements DataImportSt
 {
     /**
      * @uses \Spryker\Shared\GlossaryStorage\GlossaryStorageConfig::GLOSSARY_KEY_PUBLISH_WRITE
+     *
      * @var string
      */
     protected const GLOSSARY_KEY_PUBLISH_WRITE = 'Glossary.key.publish';

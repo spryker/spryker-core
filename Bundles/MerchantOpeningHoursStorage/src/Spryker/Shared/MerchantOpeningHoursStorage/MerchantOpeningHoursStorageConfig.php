@@ -14,6 +14,7 @@ class MerchantOpeningHoursStorageConfig
      * - Queue name as used for processing merchant opening hours messages.
      *
      * @api
+     *
      * @var string
      */
     public const MERCHANT_OPENING_HOURS_SYNC_STORAGE_QUEUE = 'sync.storage.merchant_opening_hours';
@@ -23,6 +24,7 @@ class MerchantOpeningHoursStorageConfig
      * - Queue name as used for processing merchant opening hours messages.
      *
      * @api
+     *
      * @var string
      */
     public const MERCHANT_OPENING_HOURS_SYNC_STORAGE_ERROR_QUEUE = 'sync.storage.merchant_opening_hours.error';
@@ -32,6 +34,7 @@ class MerchantOpeningHoursStorageConfig
      * - Key generation resource name of merchant opening hours.
      *
      * @api
+     *
      * @var string
      */
     public const MERCHANT_OPENING_HOURS_RESOURCE_NAME = 'merchant_opening_hours';
@@ -41,6 +44,7 @@ class MerchantOpeningHoursStorageConfig
      * - This event is used for merchant_opening_hours_weekday_schedule and merchant_opening_hours_date_schedule publishing.
      *
      * @api
+     *
      * @var string
      */
     public const MERCHANT_OPENING_HOURS_PUBLISH = 'MerchantOpeningHours.merchant_opening_hours_schedule.publish';
@@ -50,6 +54,7 @@ class MerchantOpeningHoursStorageConfig
      * - This event is used for spy_merchant_opening_hours_weekday_schedule entity creation.
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_MERCHANT_OPENING_HOURS_WEEKDAY_SCHEDULE_CREATE = 'Entity.spy_merchant_opening_hours_weekday_schedule.create';
@@ -59,6 +64,7 @@ class MerchantOpeningHoursStorageConfig
      * - This event is used for spy_merchant_opening_hours_date_schedule entity creation.
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_MERCHANT_OPENING_HOURS_DATE_SCHEDULE_CREATE = 'Entity.spy_merchant_opening_hours_date_schedule.create';

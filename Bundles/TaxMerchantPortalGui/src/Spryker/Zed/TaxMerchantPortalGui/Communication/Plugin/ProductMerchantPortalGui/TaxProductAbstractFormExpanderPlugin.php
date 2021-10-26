@@ -21,6 +21,7 @@ class TaxProductAbstractFormExpanderPlugin extends AbstractPlugin implements Pro
 {
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\ProductAbstractForm::GROUP_WITH_STORES
+     *
      * @var string
      */
     protected const GROUP_WITH_STORES = 'stores';

@@ -24,6 +24,7 @@ class RouterListenerEventDispatcherPlugin extends AbstractPlugin implements Even
 {
     /**
      * @see \Spryker\Shared\Application\Application::SERVICE_ROUTER
+     *
      * @var string
      */
     protected const SERVICE_ROUTER = 'routers';

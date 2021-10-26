@@ -39,6 +39,7 @@ class SecurityOauthUserConfig extends AbstractBundleConfig
 
     /**
      * @uses \Spryker\Zed\SecurityGui\SecurityGuiConfig::ROLE_BACK_OFFICE_USER
+     *
      * @var string
      */
     public const ROLE_BACK_OFFICE_USER = 'ROLE_BACK_OFFICE_USER';
@@ -55,6 +56,7 @@ class SecurityOauthUserConfig extends AbstractBundleConfig
 
     /**
      * @uses \Orm\Zed\User\Persistence\Map\SpyUserTableMap::COL_STATUS_ACTIVE
+     *
      * @var string
      */
     protected const OAUTH_USER_STATUS_ACTIVE = 'active';
@@ -76,18 +78,21 @@ class SecurityOauthUserConfig extends AbstractBundleConfig
 
     /**
      * @uses \Spryker\Zed\SecurityGui\SecurityGuiConfig::LOGIN_PATH
+     *
      * @var string
      */
     protected const LOGIN_PATH = '/security-gui/login';
 
     /**
      * @uses \Spryker\Zed\SecurityGui\Communication\Plugin\Security\UserSecurityPlugin::PATH_LOGOUT
+     *
      * @var string
      */
     protected const LOGOUT_PATH = '/auth/logout';
 
     /**
      * @uses \Spryker\Shared\Acl\AclConstants::ROOT_GROUP
+     *
      * @var string
      */
     protected const OAUTH_USER_GROUP_NAME = 'root_group';

@@ -14,6 +14,7 @@ class MerchantStorageConfig
      * - Queue name as used for processing merchant messages.
      *
      * @api
+     *
      * @var string
      */
     public const MERCHANT_SYNC_STORAGE_QUEUE = 'sync.storage.merchant';
@@ -23,6 +24,7 @@ class MerchantStorageConfig
      * - Queue name as used for error merchant messages.
      *
      * @api
+     *
      * @var string
      */
     public const MERCHANT_SYNC_STORAGE_ERROR_QUEUE = 'sync.storage.merchant.error';
@@ -32,6 +34,7 @@ class MerchantStorageConfig
      * - Resource name, this will use for key generating.
      *
      * @api
+     *
      * @var string
      */
     public const MERCHANT_RESOURCE_NAME = 'merchant';

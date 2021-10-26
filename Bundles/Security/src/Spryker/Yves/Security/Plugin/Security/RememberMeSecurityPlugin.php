@@ -25,6 +25,7 @@ class RememberMeSecurityPlugin implements SecurityPluginInterface
 
     /**
      * @uses \Spryker\Yves\EventDispatcher\Plugin\Application\EventDispatcherApplicationPlugin::SERVICE_DISPATCHER
+     *
      * @var string
      */
     protected const SERVICE_DISPATCHER = 'dispatcher';

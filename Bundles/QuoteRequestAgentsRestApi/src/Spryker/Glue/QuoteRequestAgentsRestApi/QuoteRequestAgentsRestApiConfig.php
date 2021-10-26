@@ -20,6 +20,7 @@ class QuoteRequestAgentsRestApiConfig extends AbstractBundleConfig
 
     /**
      * @uses \Spryker\Zed\QuoteRequest\Business\Writer\QuoteRequestWriter::GLOSSARY_KEY_QUOTE_REQUEST_COMPANY_USER_NOT_FOUND
+     *
      * @var string
      */
     protected const GLOSSARY_KEY_QUOTE_REQUEST_COMPANY_USER_NOT_FOUND = 'quote_request.validation.error.company_user_not_found';

@@ -27,12 +27,14 @@ class ProductConcreteTableExpander implements ProductConcreteTableExpanderInterf
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductGuiTableConfigurationProvider::COL_KEY_SKU
+     *
      * @var string
      */
     protected const COL_KEY_SKU = 'sku';
 
     /**
      * @uses \Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface::COLUMN_TYPE_TEXT
+     *
      * @var string
      */
     protected const COLUMN_TYPE_TEXT = 'text';

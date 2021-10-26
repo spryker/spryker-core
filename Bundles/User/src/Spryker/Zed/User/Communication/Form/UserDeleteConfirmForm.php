@@ -21,6 +21,7 @@ class UserDeleteConfirmForm extends AbstractType
 {
     /**
      * @see \Spryker\Zed\User\Communication\Controller\EditController::deleteAction()
+     *
      * @var string
      */
     protected const DELETE_USER_URL = '/user/edit/delete';

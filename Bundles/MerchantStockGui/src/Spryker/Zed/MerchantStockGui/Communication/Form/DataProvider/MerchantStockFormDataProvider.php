@@ -13,6 +13,7 @@ class MerchantStockFormDataProvider
 {
     /**
      * @uses \Spryker\Zed\MerchantStockGui\Communication\Form\MerchantStockFormType::FIELD_STOCKS
+     *
      * @var string
      */
     protected const STOCKS = 'stocks';

@@ -26,6 +26,7 @@ class MerchantProductOptionStorageFacadeTest extends Unit
 {
     /**
      * @uses \Spryker\Zed\MerchantProductOption\MerchantProductOptionConfig::STATUS_WAITING_FOR_APPROVAL
+     *
      * @var string
      */
     protected const STATUS_WAITING_FOR_APPROVAL = 'waiting_for_approval';

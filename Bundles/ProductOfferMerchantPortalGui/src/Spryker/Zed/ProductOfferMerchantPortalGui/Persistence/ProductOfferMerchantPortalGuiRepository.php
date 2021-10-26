@@ -50,12 +50,14 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
 {
     /**
      * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductOfferGuiTableConfigurationProvider::COL_KEY_OFFER_REFERENCE
+     *
      * @var string
      */
     protected const COL_KEY_OFFER_REFERENCE = 'offerReference';
 
     /**
      * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductGuiTableConfigurationProvider::COL_KEY_SKU
+     *
      * @var string
      */
     protected const COL_KEY_PRODUCT_SKU = 'sku';

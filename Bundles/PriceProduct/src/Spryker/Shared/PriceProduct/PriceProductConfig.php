@@ -20,12 +20,14 @@ class PriceProductConfig extends AbstractSharedConfig
 
     /**
      * @uses \Spryker\Shared\Price\PriceConfig::PRICE_MODE_NET
+     *
      * @var string
      */
     protected const PRICE_NET_MODE = 'NET_MODE';
 
     /**
      * @uses \Spryker\Shared\Price\PriceConfig::PRICE_MODE_GROSS
+     *
      * @var string
      */
     public const PRICE_GROSS_MODE = 'GROSS_MODE';
@@ -56,6 +58,7 @@ class PriceProductConfig extends AbstractSharedConfig
      * - Price data by price type.
      *
      * @api
+     *
      * @var string
      */
     public const PRICE_DATA_BY_PRICE_TYPE = 'priceDataByPriceType';

@@ -18,12 +18,14 @@ class StateMachineProcessWriterStep extends PublishAwareStep implements DataImpo
 {
     /**
      * @uses \Spryker\Zed\MerchantOms\MerchantOmsConfig::MERCHANT_OMS_STATE_MACHINE_NAME
+     *
      * @var string
      */
     protected const MERCHANT_OMS_STATE_MACHINE_NAME = 'Merchant';
 
     /**
      * @phpstan-var array<string>
+     *
      * @var array
      */
     protected const REQUIRED_DATA_SET_KEYS = [

@@ -36,6 +36,7 @@ class CompanyUserRoleForm extends AbstractType
 
     /**
      * @uses \Spryker\Zed\CompanyUserGui\Communication\Form\CompanyUserForm
+     *
      * @var string
      */
     protected const FIELD_FK_COMPANY = 'fk_company';

@@ -24,12 +24,14 @@ class ProductRelationDataImportConfig extends DataImportConfig
 
     /**
      * @uses \Spryker\Shared\ProductRelationStorage\ProductRelationStorageConfig::PRODUCT_ABSTRACT_RELATION_PUBLISH
+     *
      * @var string
      */
     public const PRODUCT_ABSTRACT_RELATION_PUBLISH = 'ProductRelation.product_abstract_relation.publish';
 
     /**
      * @uses \Spryker\Shared\ProductRelationStorage\ProductRelationStorageConfig::PRODUCT_ABSTRACT_RELATION_STORE_PUBLISH
+     *
      * @var string
      */
     public const PRODUCT_ABSTRACT_RELATION_STORE_PUBLISH = 'ProductRelation.product_abstract_relation_store.publish';

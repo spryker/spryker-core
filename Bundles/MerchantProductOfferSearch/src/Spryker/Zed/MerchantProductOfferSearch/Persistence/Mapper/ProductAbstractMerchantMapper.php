@@ -13,18 +13,21 @@ class ProductAbstractMerchantMapper implements ProductAbstractMerchantMapperInte
 {
     /**
      * @uses \Spryker\Zed\MerchantProductOfferSearch\Persistence\MerchantProductOfferSearchRepository::KEY_ABSTRACT_PRODUCT_ID
+     *
      * @var string
      */
     protected const KEY_ABSTRACT_PRODUCT_ID = 'id';
 
     /**
      * @uses \Spryker\Zed\MerchantProductOfferSearch\Persistence\MerchantProductOfferSearchRepository::KEY_MERCHANT_NAMES
+     *
      * @var string
      */
     protected const KEY_MERCHANT_NAMES = 'names';
 
     /**
      * @uses \Spryker\Zed\MerchantProductOfferSearch\Persistence\MerchantProductOfferSearchRepository::KEY_MERCHANT_REFERENCES
+     *
      * @var string
      */
     protected const KEY_MERCHANT_REFERENCES = 'references';

@@ -30,6 +30,7 @@ class CartValidator implements CartValidatorInterface
 
     /**
      * @uses \Spryker\Zed\Cart\CartConfig::OPERATION_ADD
+     *
      * @var string
      */
     protected const CART_CHANGE_OPERATION_ADD = 'add';

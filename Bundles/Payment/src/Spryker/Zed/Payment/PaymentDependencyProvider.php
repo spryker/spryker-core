@@ -32,30 +32,35 @@ class PaymentDependencyProvider extends AbstractBundleDependencyProvider
      * @deprecated Use {@link \Spryker\Zed\Checkout\CheckoutDependencyProvider::CHECKOUT_POST_HOOKS},
      * {@link \Spryker\Zed\Checkout\CheckoutDependencyProvider::CHECKOUT_ORDER_SAVERS},
      * {@link \Spryker\Zed\Checkout\CheckoutDependencyProvider::CHECKOUT_PRE_CONDITIONS} instead.
+     *
      * @var string
      */
     public const CHECKOUT_PLUGINS = 'checkout plugins';
 
     /**
      * @deprecated Use {@link \Spryker\Zed\Checkout\CheckoutDependencyProvider::CHECKOUT_PRE_CONDITIONS} instead.
+     *
      * @var string
      */
     public const CHECKOUT_PRE_CHECK_PLUGINS = 'pre check';
 
     /**
      * @deprecated Use {@link \Spryker\Zed\Checkout\CheckoutDependencyProvider::CHECKOUT_ORDER_SAVERS} instead.
+     *
      * @var string
      */
     public const CHECKOUT_ORDER_SAVER_PLUGINS = 'order saver';
 
     /**
      * @deprecated Use {@link \Spryker\Zed\Checkout\CheckoutDependencyProvider::CHECKOUT_POST_HOOKS} instead.
+     *
      * @var string
      */
     public const CHECKOUT_POST_SAVE_PLUGINS = 'post save';
 
     /**
      * @deprecated Use {@link \Spryker\Zed\SalesPayment\SalesPaymentDependencyProvider::SALES_PAYMENT_EXPANDER_PLUGINS} instead.
+     *
      * @var string
      */
     public const PAYMENT_HYDRATION_PLUGINS = 'payment hydration plugins';

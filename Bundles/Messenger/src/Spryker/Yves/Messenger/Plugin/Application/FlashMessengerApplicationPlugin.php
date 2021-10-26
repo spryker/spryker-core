@@ -22,6 +22,7 @@ class FlashMessengerApplicationPlugin extends AbstractPlugin implements Applicat
 
     /**
      * @uses \Spryker\Yves\Session\Plugin\Application\SessionApplicationPlugin::SERVICE_SESSION
+     *
      * @var string
      */
     protected const SERVICE_SESSION = 'session';

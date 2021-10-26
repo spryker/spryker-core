@@ -27,6 +27,7 @@ interface CustomerConstants
      * - Base URL for Yves including scheme and port (e.g. http://www.de.demoshop.local:8080)
      *
      * @api
+     *
      * @var string
      */
     public const BASE_URL_YVES = 'CUSTOMER:BASE_URL_YVES';

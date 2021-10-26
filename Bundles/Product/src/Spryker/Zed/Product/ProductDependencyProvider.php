@@ -59,6 +59,7 @@ class ProductDependencyProvider extends AbstractBundleDependencyProvider
 
     /**
      * @deprecated Will be removed without replacement.
+     *
      * @var string
      */
     public const PRODUCT_ABSTRACT_PLUGINS_BEFORE_CREATE = 'PRODUCT_ABSTRACT_PLUGINS_BEFORE_CREATE';
@@ -70,6 +71,7 @@ class ProductDependencyProvider extends AbstractBundleDependencyProvider
 
     /**
      * @deprecated Use {@link \Spryker\Zed\Product\ProductDependencyProvider::PLUGINS_PRODUCT_ABSTRACT_EXPANDER} instead.
+     *
      * @var string
      */
     public const PRODUCT_ABSTRACT_PLUGINS_READ = 'PRODUCT_ABSTRACT_PLUGINS_READ';
@@ -81,6 +83,7 @@ class ProductDependencyProvider extends AbstractBundleDependencyProvider
 
     /**
      * @deprecated Use {@link \Spryker\Zed\Product\ProductDependencyProvider::PLUGINS_PRODUCT_ABSTRACT_POST_CREATE} instead.
+     *
      * @var string
      */
     public const PRODUCT_ABSTRACT_PLUGINS_AFTER_CREATE = 'PRODUCT_ABSTRACT_PLUGINS_AFTER_CREATE';

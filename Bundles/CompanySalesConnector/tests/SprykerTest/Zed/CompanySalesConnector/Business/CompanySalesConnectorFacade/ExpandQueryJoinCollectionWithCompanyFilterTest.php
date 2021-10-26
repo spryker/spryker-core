@@ -27,12 +27,14 @@ class ExpandQueryJoinCollectionWithCompanyFilterTest extends Unit
 {
     /**
      * @uses \Orm\Zed\Sales\Persistence\Map\SpySalesOrderTableMap::COL_COMPANY_UUID
+     *
      * @var string
      */
     protected const COLUMN_COMPANY_UUID = 'spy_sales_order.company_uuid';
 
     /**
      * @uses \Propel\Runtime\ActiveQuery\Criteria::EQUAL
+     *
      * @var string
      */
     protected const COMPARISON_EQUAL = '=';

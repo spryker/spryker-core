@@ -14,6 +14,7 @@ interface MerchantProductOfferEvents
      * - This events will be used for merchant product offer publishing.
      *
      * @api
+     *
      * @var string
      */
     public const MERCHANT_PRODUCT_OFFER_PUBLISH = 'MerchantProductOffer.product_offer.publish';
@@ -23,6 +24,7 @@ interface MerchantProductOfferEvents
      * - This events will be used for merchant product offer un-publishing.
      *
      * @api
+     *
      * @var string
      */
     public const MERCHANT_PRODUCT_OFFER_UNPUBLISH = 'MerchantProductOffer.product_offer.unpublish';
@@ -32,6 +34,7 @@ interface MerchantProductOfferEvents
      * - This events will be used for spy_product_offer entity creation.
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_PRODUCT_OFFER_CREATE = 'Entity.spy_product_offer.create';
@@ -41,6 +44,7 @@ interface MerchantProductOfferEvents
      * - This events will be used for spy_product_offer entity changes.
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_PRODUCT_OFFER_UPDATE = 'Entity.spy_product_offer.update';
@@ -50,6 +54,7 @@ interface MerchantProductOfferEvents
      * - This events will be used for spy_product_offer entity deletion.
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_PRODUCT_OFFER_DELETE = 'Entity.spy_product_offer.delete';

@@ -14,6 +14,7 @@ interface CompanyUserStorageConfig
      *  - Queue name as used for processing company user messages.
      *
      * @api
+     *
      * @var string
      */
     public const COMPANY_USER_SYNC_STORAGE_QUEUE = 'sync.storage.company_user';
@@ -23,6 +24,7 @@ interface CompanyUserStorageConfig
      *  - Queue name as used for processing company user error messages.
      *
      * @api
+     *
      * @var string
      */
     public const COMPANY_USER_SYNC_STORAGE_ERROR_QUEUE = 'sync.storage.company_user.error';
@@ -32,6 +34,7 @@ interface CompanyUserStorageConfig
      *  - Resource name, this will use for key generation.
      *
      * @api
+     *
      * @var string
      */
     public const COMPANY_USER_RESOURCE_NAME = 'company_user';

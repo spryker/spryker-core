@@ -23,18 +23,21 @@ class OrderReturnTable extends AbstractTable
 {
     /**
      * @uses \Spryker\Zed\SalesReturnGui\Communication\Controller\ReturnController::PARAM_ID_ORDER
+     *
      * @var string
      */
     public const PARAM_ID_ORDER = 'id-order';
 
     /**
      * @uses \Spryker\Zed\SalesReturnGui\Communication\Controller\AbstractReturnController::PARAM_ID_RETURN
+     *
      * @var string
      */
     protected const PARAM_ID_RETURN = 'id-return';
 
     /**
      * @uses \Spryker\Zed\SalesReturnGui\Communication\Controller\DetailController::indexAction()
+     *
      * @var string
      */
     protected const URL_RETURN_DETAIL = '/sales-return-gui/detail';
@@ -46,6 +49,7 @@ class OrderReturnTable extends AbstractTable
 
     /**
      * @uses \Spryker\Zed\SalesReturnGui\Communication\Controller\SalesController
+     *
      * @var string
      */
     protected const BASE_URL = '/sales-return-gui/sales/';

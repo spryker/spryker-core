@@ -72,6 +72,7 @@ class ProductGuiTableConfigurationProvider implements GuiTableConfigurationProvi
 
     /**
      * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Controller\ProductListController::tableDataAction()
+     *
      * @var string
      */
     protected const DATA_URL = '/product-offer-merchant-portal-gui/product-list/table-data';

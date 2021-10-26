@@ -36,6 +36,7 @@ class GuiTableFacadeTest extends Unit
 {
     /**
      * @uses \Spryker\Zed\GuiTable\Business\ResponseFormatter\DataResponseFormatter::KEY_DATA_RESPONSE_ARRAY_DATA
+     *
      * @var string
      */
     protected const KEY_DATA_RESPONSE_ARRAY_DATA = 'data';

@@ -22,6 +22,7 @@ class MerchantUserUpdater implements MerchantUserUpdaterInterface
 {
     /**
      * @see \Orm\Zed\User\Persistence\Map\SpyUserTableMap::COL_STATUS_ACTIVE
+     *
      * @var string
      */
     protected const USER_STATUS_ACTIVE = 'active';
@@ -33,6 +34,7 @@ class MerchantUserUpdater implements MerchantUserUpdaterInterface
 
     /**
      * @see \Orm\Zed\User\Persistence\Map\SpyUserTableMap::COL_STATUS_BLOCKED
+     *
      * @var string
      */
     protected const USER_STATUS_BLOCKED = 'blocked';

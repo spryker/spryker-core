@@ -18,6 +18,7 @@ class ProductBundleStorageWriter implements ProductBundleStorageWriterInterface
 {
     /**
      * @uses \Orm\Zed\Product\Persistence\Map\SpyProductTableMap::COL_IS_ACTIVE
+     *
      * @var string
      */
     protected const COL_PRODUCT_CONCRETE_IS_ACTIVE = 'spy_product.is_active';

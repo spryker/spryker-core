@@ -24,12 +24,14 @@ class GiftCardCartCodeOperationMessageFinder implements GiftCardCartCodeOperatio
 
     /**
      * @uses \Spryker\Shared\CartCode\CartCodesConfig::MESSAGE_TYPE_SUCCESS
+     *
      * @var string
      */
     protected const MESSAGE_TYPE_SUCCESS = 'success';
 
     /**
      * @uses \Spryker\Shared\CartCode\CartCodesConfig::MESSAGE_TYPE_ERROR
+     *
      * @var string
      */
     protected const MESSAGE_TYPE_ERROR = 'error';

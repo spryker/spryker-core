@@ -14,6 +14,7 @@ class NestedRangeQuery extends AbstractNestedQuery
 {
     /**
      * @phpstan-var non-empty-string
+     *
      * @var string
      */
     protected const RANGE_DIVIDER = '-';

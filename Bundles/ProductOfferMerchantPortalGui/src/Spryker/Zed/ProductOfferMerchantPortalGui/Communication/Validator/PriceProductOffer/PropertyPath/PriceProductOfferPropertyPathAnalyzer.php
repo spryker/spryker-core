@@ -16,6 +16,7 @@ class PriceProductOfferPropertyPathAnalyzer implements PriceProductOfferProperty
 {
     /**
      * @uses \Spryker\Shared\PriceProductOfferVolume\PriceProductOfferVolumeConfig::VOLUME_PRICE_TYPE
+     *
      * @var string
      */
     protected const VOLUME_PRICE_TYPE = 'volume_prices';

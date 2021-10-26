@@ -82,12 +82,14 @@ class PriceProductFacadeTest extends Unit
 
     /**
      * @uses \Spryker\Shared\PriceProduct\PriceProductConfig::PRICE_DATA
+     *
      * @var string
      */
     protected const PRICE_DATA = 'priceData';
 
     /**
      * @uses \Spryker\Shared\PriceProduct\PriceProductConfig::PRICE_DATA_BY_PRICE_TYPE
+     *
      * @var string
      */
     protected const PRICE_DATA_BY_PRICE_TYPE = 'priceDataByPriceType';

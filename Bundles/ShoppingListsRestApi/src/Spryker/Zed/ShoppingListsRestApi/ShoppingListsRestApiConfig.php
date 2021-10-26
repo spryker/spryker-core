@@ -14,54 +14,63 @@ class ShoppingListsRestApiConfig extends AbstractBundleConfig
 {
     /**
      * @see \Spryker\Zed\ShoppingList\Business\Model\ShoppingListWriter::DUPLICATE_NAME_SHOPPING_LIST
+     *
      * @var string
      */
     public const DUPLICATE_NAME_SHOPPING_LIST = 'customer.account.shopping_list.error.duplicate_name';
 
     /**
      * @see \Spryker\Zed\ShoppingList\Business\Model\ShoppingListWriter::CANNOT_UPDATE_SHOPPING_LIST
+     *
      * @var string
      */
     public const CANNOT_UPDATE_SHOPPING_LIST = 'customer.account.shopping_list.error.cannot_update';
 
     /**
      * @see \Spryker\Zed\ShoppingList\Business\Model\ShoppingListWriter::GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_DELETE_FAILED
+     *
      * @var string
      */
     public const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_DELETE_FAILED = 'customer.account.shopping_list.delete.failed';
 
     /**
      * @see \Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator\ShoppingListItemValidator::ERROR_SHOPPING_LIST_NOT_FOUND
+     *
      * @var string
      */
     public const ERROR_SHOPPING_LIST_NOT_FOUND = 'customer.account.shopping_list.error.not_found';
 
     /**
      * @see \Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator\ShoppingListItemPermissionValidator::ERROR_SHOPPING_LIST_WRITE_PERMISSION_REQUIRED
+     *
      * @var string
      */
     public const ERROR_SHOPPING_LIST_WRITE_PERMISSION_REQUIRED = 'customer.account.shopping_list.error.write_permission_required';
 
     /**
      * @see \Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator\ShoppingListItemValidator::ERROR_SHOPPING_LIST_ITEM_QUANTITY_NOT_VALID
+     *
      * @var string
      */
     public const ERROR_SHOPPING_LIST_ITEM_QUANTITY_NOT_VALID = 'customer.account.shopping_list_item.error.quantity_not_valid';
 
     /**
      * @see \Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator\ShoppingListItemValidator::ERROR_SHOPPING_LIST_ITEM_PRODUCT_NOT_FOUND
+     *
      * @var string
      */
     public const ERROR_SHOPPING_LIST_ITEM_PRODUCT_NOT_FOUND = 'customer.account.shopping_list_item.error.product_not_found';
 
     /**
      * @see \Spryker\Zed\ShoppingList\Business\Model\ShoppingListItemOperation::ERROR_SHOPPING_LIST_ITEM_PRODUCT_NOT_ACTIVE
+     *
      * @var string
      */
     public const ERROR_SHOPPING_LIST_ITEM_PRODUCT_NOT_ACTIVE = 'customer.account.shopping_list_item.error.product_not_active';
 
     /**
      * @see \Spryker\Zed\ProductDiscontinued\Business\ShoppingListCheck\ShoppingListAddItemPreCheck::SHOPPING_LIST_PRE_ADD_CHECK_PRODUCT_DISCONTINUED
+     *
      * @var string
      */
     public const SHOPPING_LIST_PRE_ADD_CHECK_PRODUCT_DISCONTINUED = 'shopping_list.pre.check.product_discontinued';

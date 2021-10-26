@@ -85,18 +85,21 @@ class AddProductConcreteController extends AbstractController
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\AddProductConcreteForm::FIELD_ID_PRODUCT_ABSTRACT
+     *
      * @var string
      */
     protected const ADD_PRODUCT_CONCRETE_FORM_FIELD_ID_PRODUCT_ABSTRACT = 'idProductAbstract';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\AddProductConcreteForm::FIELD_EXISTING_ATTRIBUTES
+     *
      * @var string
      */
     protected const ADD_PRODUCT_CONCRETE_FORM_FIELD_EXISTING_ATTRIBUTES = 'existing_attributes';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\AddProductConcreteForm::FIELD_PRODUCTS
+     *
      * @var string
      */
     protected const FIELD_PRODUCTS = 'products';

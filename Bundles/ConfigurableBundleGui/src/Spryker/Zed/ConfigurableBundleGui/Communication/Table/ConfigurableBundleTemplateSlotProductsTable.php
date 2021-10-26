@@ -25,6 +25,7 @@ class ConfigurableBundleTemplateSlotProductsTable extends AbstractTable
 
     /**
      * @uses \Spryker\Zed\ConfigurableBundleGui\Communication\Controller\TemplateController::slotProductsTableAction()
+     *
      * @var string
      */
     protected const ROUTE_TABLE_RENDERING = '/slot-products-table?%s=%s';

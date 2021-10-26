@@ -36,6 +36,7 @@ abstract class AbstractSpyUrl extends BaseSpyUrl
      * Used to map a row to its resource type
      *
      * @see AbstractSpyUrlQuery::RESOURCE_PREFIX
+     *
      * @var string
      */
     public const RESOURCE_PREFIX = 'fk_resource_';

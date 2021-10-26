@@ -19,6 +19,7 @@ class ConfigurableBundleTemplateReader implements ConfigurableBundleTemplateRead
 {
     /**
      * @uses \Spryker\Client\ConfigurableBundlePageSearch\Plugin\Elasticsearch\ResultFormatter\ConfigurableBundleTemplatePageSearchResultFormatterPlugin::NAME
+     *
      * @var string
      */
     protected const FORMATTED_RESULT_KEY = 'ConfigurableBundleTemplateCollection';

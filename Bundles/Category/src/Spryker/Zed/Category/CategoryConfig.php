@@ -82,7 +82,7 @@ class CategoryConfig extends AbstractBundleConfig
      */
     public function getDefaultRedirectUrl(): string
     {
-        if (class_exists('\Spryker\Zed\CategoryGui\Communication\Controller\ListController')) {
+        if (class_exists('Spryker\Zed\CategoryGui\Communication\Controller\ListController')) {
             return static::REDIRECT_URL_CATEGORY_GUI;
         }
 

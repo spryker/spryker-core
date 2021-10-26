@@ -63,24 +63,28 @@ class ConfigurableBundleFacadeTest extends Unit
 
     /**
      * @see \Spryker\Zed\ConfigurableBundle\Business\Reader\ConfigurableBundleTemplateReader::GLOSSARY_KEY_CONFIGURABLE_BUNDLE_TEMPLATE_NOT_EXISTS
+     *
      * @var string
      */
     protected const GLOSSARY_KEY_CONFIGURABLE_BUNDLE_TEMPLATE_NOT_EXISTS = 'configurable_bundle.template.validation.error.not_exists';
 
     /**
      * @see \Spryker\Zed\ConfigurableBundle\Business\Updater\ConfigurableBundleTemplateUpdater::GLOSSARY_KEY_CONFIGURABLE_BUNDLE_TEMPLATE_ALREADY_ACTIVATED
+     *
      * @var string
      */
     protected const GLOSSARY_KEY_CONFIGURABLE_BUNDLE_TEMPLATE_ALREADY_ACTIVATED = 'configurable_bundle.template.validation.error.already_activated';
 
     /**
      * @see \Spryker\Zed\ConfigurableBundle\Business\Updater\ConfigurableBundleTemplateUpdater::GLOSSARY_KEY_CONFIGURABLE_BUNDLE_TEMPLATE_ALREADY_DEACTIVATED
+     *
      * @var string
      */
     protected const GLOSSARY_KEY_CONFIGURABLE_BUNDLE_TEMPLATE_ALREADY_DEACTIVATED = 'configurable_bundle.template.validation.error.already_deactivated';
 
     /**
      * @see \Spryker\Zed\ConfigurableBundle\Business\Reader\ConfigurableBundleTemplateSlotReader::GLOSSARY_KEY_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT_NOT_EXISTS
+     *
      * @var string
      */
     protected const GLOSSARY_KEY_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT_NOT_EXISTS = 'configurable_bundle.slot.validation.error.not_exists';

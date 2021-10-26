@@ -13,6 +13,7 @@ class CompanyUserTableButtonCreator extends AbstractButtonCreator implements Com
 {
     /**
      * @uses \Spryker\Zed\BusinessOnBehalfGui\Communication\Controller\CustomerController::attachCustomerAction
+     *
      * @var string
      */
     protected const PATH_ATTACH_CUSTOMER_TO_BUSINESS_UNIT = '/business-on-behalf-gui/customer/attach-customer';

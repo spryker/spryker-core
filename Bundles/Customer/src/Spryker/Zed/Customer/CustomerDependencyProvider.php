@@ -47,6 +47,7 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
 
     /**
      * @deprecated Use SERVICE_UTIL_DATE_TIME instead.
+     *
      * @var string
      */
     public const SERVICE_DATE_FORMATTER = 'SERVICE_DATE_FORMATTER';
@@ -73,6 +74,7 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
 
     /**
      * @uses \Spryker\Zed\Http\Communication\Plugin\Application\HttpApplicationPlugin::SERVICE_SUB_REQUEST
+     *
      * @var string
      */
     protected const SERVICE_SUB_REQUEST = 'sub_request';

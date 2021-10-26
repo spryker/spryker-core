@@ -21,18 +21,21 @@ class CmsSlotBlockProductCategoryConditionsStep implements DataImportStepInterfa
 
     /**
      * @uses \Spryker\Zed\CmsSlotBlockDataImport\Business\Resolver\AllConditionResolver::KEY_ALL
+     *
      * @var string
      */
     protected const KEY_ALL = 'all';
 
     /**
      * @uses \Spryker\Zed\CmsSlotBlockDataImport\Business\Resolver\CategoryKeysToIdsConditionResolver::KEY_CONDITION_CATEGORY_IDS
+     *
      * @var string
      */
     protected const KEY_CONDITION_CATEGORY_IDS = 'categoryIds';
 
     /**
      * @uses \Spryker\Zed\CmsSlotBlockDataImport\Business\Resolver\ProductAbstractSkusToIdsConditionResolver::KEY_PRODUCT_ABSTRACT_IDS
+     *
      * @var string
      */
     protected const KEY_PRODUCT_ABSTRACT_IDS = 'productIds';

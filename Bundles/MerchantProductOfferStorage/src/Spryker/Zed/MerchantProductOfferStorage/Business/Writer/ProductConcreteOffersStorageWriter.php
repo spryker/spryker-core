@@ -26,6 +26,7 @@ class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorage
 
     /**
      * @uses \Spryker\Shared\ProductOffer\ProductOfferConfig::STATUS_APPROVED
+     *
      * @var string
      */
     public const STATUS_APPROVED = 'approved';

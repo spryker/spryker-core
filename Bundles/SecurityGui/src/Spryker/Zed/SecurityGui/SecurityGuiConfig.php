@@ -43,12 +43,14 @@ class SecurityGuiConfig extends AbstractBundleConfig
 
     /**
      * @uses \Spryker\Zed\User\UserConfig::MIN_LENGTH_USER_PASSWORD
+     *
      * @var int
      */
     protected const MIN_LENGTH_USER_PASSWORD = 8;
 
     /**
      * @uses \Spryker\Zed\User\UserConfig::MAX_LENGTH_USER_PASSWORD
+     *
      * @var int
      */
     protected const MAX_LENGTH_USER_PASSWORD = 72;

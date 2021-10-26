@@ -55,12 +55,14 @@ class ShipmentCartConnectorFacadeTest extends Unit
 
     /**
      * @uses \Spryker\Zed\Cart\CartConfig::OPERATION_ADD
+     *
      * @var string
      */
     protected const OPERATION_ADD = 'add';
 
     /**
      * @uses \Spryker\Zed\Cart\CartConfig::OPERATION_REMOVE
+     *
      * @var string
      */
     protected const OPERATION_REMOVE = 'remove';

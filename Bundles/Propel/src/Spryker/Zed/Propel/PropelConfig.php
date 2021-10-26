@@ -39,6 +39,7 @@ class PropelConfig extends AbstractBundleConfig
      * - It can be modified by editing the sourcecode of postgres, which is not advised.
      *
      * @api
+     *
      * @var int
      */
     public const POSTGRES_INDEX_NAME_MAX_LENGTH = 63;

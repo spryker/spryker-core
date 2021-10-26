@@ -53,6 +53,7 @@ class OrderStateMachine implements OrderStateMachineInterface
 
     /**
      * @deprecated Not in use anymore, will be removed in the next major.
+     *
      * @var int
      */
     public const MAX_ON_ENTER = 50;

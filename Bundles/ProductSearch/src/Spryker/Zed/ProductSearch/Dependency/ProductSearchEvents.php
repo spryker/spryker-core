@@ -14,6 +14,7 @@ interface ProductSearchEvents
      * - This events will be used for synchronization_filter publishing
      *
      * @api
+     *
      * @var string
      */
     public const SYNCHRONIZATION_FILTER_PUBLISH = 'ProductSearch.synchronization_filter.publish';
@@ -23,6 +24,7 @@ interface ProductSearchEvents
      * - This events will be used for product search config publishing
      *
      * @api
+     *
      * @var string
      */
     public const PRODUCT_SEARCH_CONFIG_PUBLISH = 'ProductSearch.config.publish';
@@ -32,6 +34,7 @@ interface ProductSearchEvents
      * - This events will be used for product search config publishing
      *
      * @api
+     *
      * @var string
      */
     public const PRODUCT_SEARCH_CONFIG_UNPUBLISH = 'ProductSearch.config.unpublish';
@@ -41,6 +44,7 @@ interface ProductSearchEvents
      * - This events will be used for spy_product_search_attribute entity creation
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_PRODUCT_SEARCH_ATTRIBUTE_CREATE = 'Entity.spy_product_search_attribute.create';
@@ -50,6 +54,7 @@ interface ProductSearchEvents
      * - This events will be used for spy_product_search_attribute entity changes
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_PRODUCT_SEARCH_ATTRIBUTE_UPDATE = 'Entity.spy_product_search_attribute.update';
@@ -59,6 +64,7 @@ interface ProductSearchEvents
      * - This events will be used for spy_product_search_attribute entity deletion
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_PRODUCT_SEARCH_ATTRIBUTE_DELETE = 'Entity.spy_product_search_attribute.delete';
@@ -68,6 +74,7 @@ interface ProductSearchEvents
      * - Represents spy_product_search entity creation.
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_PRODUCT_SEARCH_CREATE = 'Entity.spy_product_search.create';
@@ -77,6 +84,7 @@ interface ProductSearchEvents
      * - Represents spy_product_search entity changes.
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_PRODUCT_SEARCH_UPDATE = 'Entity.spy_product_search.update';
@@ -86,6 +94,7 @@ interface ProductSearchEvents
      * - Represents spy_product_search entity deletion.
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_PRODUCT_SEARCH_DELETE = 'Entity.spy_product_search.delete';

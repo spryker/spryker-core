@@ -35,6 +35,7 @@ class ReturnSlipController extends AbstractController
 
     /**
      * @uses \Spryker\Zed\SalesReturnGui\Communication\Controller\IndexController::indexAction()
+     *
      * @var string
      */
     protected const ROUTE_RETURN_LIST = '/sales-return-gui';

@@ -13,6 +13,7 @@ class SalesReturnGuiConfig extends AbstractBundleConfig
 {
     /**
      * @phpstan-var array<string, string>
+     *
      * @var array
      */
     protected const ITEM_STATE_TO_LABEL_CLASS_MAPPING = [

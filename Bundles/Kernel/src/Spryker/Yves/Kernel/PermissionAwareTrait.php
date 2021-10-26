@@ -7,6 +7,8 @@
 
 namespace Spryker\Yves\Kernel;
 
+use Spryker\Client\Permission\PermissionClientInterface;
+
 trait PermissionAwareTrait
 {
     /**
@@ -19,7 +21,7 @@ trait PermissionAwareTrait
      */
     protected function can($permissionKey, $context = null)
     {
-        if (interface_exists('\Spryker\Client\Permission\PermissionClientInterface')) {
+        if (interface_exists(PermissionClientInterface::class)) {
             return Locator::getInstance()->permission()->client()->can($permissionKey, $context);
         }
 

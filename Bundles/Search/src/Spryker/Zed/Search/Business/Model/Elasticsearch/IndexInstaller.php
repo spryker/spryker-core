@@ -25,6 +25,7 @@ class IndexInstaller implements SearchInstallerInterface
 {
     /**
      * @phpstan-var non-empty-string
+     *
      * @var string
      */
     protected const SETTING_PATH_DELIMITER = '.';

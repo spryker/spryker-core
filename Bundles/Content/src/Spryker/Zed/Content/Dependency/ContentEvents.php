@@ -14,6 +14,7 @@ interface ContentEvents
      * - This events will be used for spy_content un-publishing.
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_CONTENT_UNPUBLISH = 'Entity.spy_content.unpublish';
@@ -23,6 +24,7 @@ interface ContentEvents
      * - This event will be used for spy_content entity changes.
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_CONTENT_UPDATE = 'Entity.spy_content.update';
@@ -32,6 +34,7 @@ interface ContentEvents
      * - This event will be used for spy_content entity creation.
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_CONTENT_CREATE = 'Entity.spy_content.create';
@@ -41,6 +44,7 @@ interface ContentEvents
      * - This events will be used for content publishing.
      *
      * @api
+     *
      * @var string
      */
     public const CONTENT_PUBLISH = 'Content.content.publish';

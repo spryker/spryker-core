@@ -32,6 +32,7 @@ class ProductLabelConstants
      * - Defines the number of product label relations in the chunk to be deassigned.
      *
      * @api
+     *
      * @var string
      */
     public const PRODUCT_LABEL_TO_DE_ASSIGN_CHUNK_SIZE = 'PRODUCT_LABEL:PRODUCT_LABEL_TO_DE_ASSIGN_CHUNK_SIZE';

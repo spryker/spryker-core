@@ -34,6 +34,7 @@ class CategoryStorageFacadeTest extends Unit
 {
     /**
      * @uses \Spryker\Shared\CategoryPageSearch\CategoryPageSearchConstants::CATEGORY_STORE_PUBLISH,
+     *
      * @var string
      */
     protected const CATEGORY_STORE_PUBLISH = 'Category.category_store.publish';

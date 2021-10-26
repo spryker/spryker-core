@@ -32,6 +32,7 @@ abstract class AbstractApplicationHelper extends Framework
     /**
      * @uses \Spryker\Yves\Http\Plugin\Application\HttpApplicationPlugin::SERVICE_KERNEL
      * @uses \Spryker\Zed\Http\Communication\Plugin\Application\HttpApplicationPlugin::SERVICE_KERNEL
+     *
      * @var string
      */
     protected const SERVICE_KERNEL = 'kernel';

@@ -28,6 +28,7 @@ class SalesReturnsRestApiConfig extends AbstractBundleConfig
 
     /**
      * @see \Spryker\Zed\MerchantSalesReturn\Business\Model\MerchantReturnValidator::ERROR_MESSAGE_MERCHANT_RETURN_ITEMS_FROM_DIFFERENT_MERCHANTS
+     *
      * @var string
      */
     protected const ERROR_MESSAGE_MERCHANT_RETURN_ITEMS_FROM_DIFFERENT_MERCHANTS = 'merchant_sales_return.message.items_from_different_merchant_detected';

@@ -34,12 +34,14 @@ class ProductReviewReader implements ProductReviewReaderInterface
 
     /**
      * @uses \Spryker\Client\ProductReview\Plugin\Elasticsearch\ResultFormatter\ProductReviewsResultFormatterPlugin::NAME
+     *
      * @var string
      */
     protected const PRODUCT_REVIEWS = 'productReviews';
 
     /**
      * @uses \Spryker\Client\ProductReview\Plugin\Elasticsearch\ResultFormatter\PaginatedProductReviewsResultFormatterPlugin::NAME
+     *
      * @var string
      */
     protected const PAGINATION = 'pagination';

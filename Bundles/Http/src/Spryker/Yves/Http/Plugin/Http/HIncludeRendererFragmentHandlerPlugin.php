@@ -27,6 +27,7 @@ class HIncludeRendererFragmentHandlerPlugin extends AbstractPlugin implements Fr
 
     /**
      * @uses \Spryker\Yves\Twig\Plugin\Application\TwigApplicationPlugin::SERVICE_TWIG
+     *
      * @var string
      */
     protected const SERVICE_TWIG = 'twig';

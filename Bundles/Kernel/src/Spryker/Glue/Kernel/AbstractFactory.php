@@ -21,6 +21,7 @@ abstract class AbstractFactory
 
     /**
      * @uses \Spryker\Glue\GlueApplication\Plugin\Application\GlueApplicationApplicationPlugin::SERVICE_RESOURCE_BUILDER
+     *
      * @var string
      */
     protected const SERVICE_RESOURCE_BUILDER = 'resource_builder';

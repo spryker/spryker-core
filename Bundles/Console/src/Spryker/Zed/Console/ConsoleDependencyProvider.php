@@ -32,6 +32,7 @@ class ConsoleDependencyProvider extends AbstractBundleDependencyProvider
 
     /**
      * @deprecated Use {@link \Spryker\Zed\Console\ConsoleDependencyProvider::APPLICATION_PLUGINS} instead.
+     *
      * @var string
      */
     public const SERVICE_PROVIDERS = 'service providers';

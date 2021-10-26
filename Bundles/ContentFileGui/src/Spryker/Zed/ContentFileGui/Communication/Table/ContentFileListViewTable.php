@@ -52,6 +52,7 @@ class ContentFileListViewTable extends AbstractTable
 
     /**
      * @deprecated Use {@link \Spryker\Zed\ContentFileGui\Communication\Table\ContentFileListViewTable::COL_ACTIONS} instead.
+     *
      * @var string
      */
     public const COL_SELECTED = 'Actions';

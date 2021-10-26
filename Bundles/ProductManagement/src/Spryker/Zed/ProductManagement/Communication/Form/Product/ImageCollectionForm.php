@@ -83,6 +83,7 @@ class ImageCollectionForm extends AbstractSubForm
 
     /**
      * @uses \Spryker\Zed\Gui\Communication\Form\Type\ImageType::OPTION_IMAGE_WIDTH
+     *
      * @var string
      */
     protected const OPTION_IMAGE_WIDTH = 'image_width';

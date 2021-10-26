@@ -22,12 +22,14 @@ class CsrfFormPlugin extends AbstractPlugin implements FormPluginInterface
 {
     /**
      * @uses \Spryker\Zed\Form\Communication\Plugin\Application\FormApplicationPlugin::SERVICE_FORM_CSRF_PROVIDER
+     *
      * @var string
      */
     protected const SERVICE_CSRF_PROVIDER = 'form.csrf_provider';
 
     /**
      * @uses \Spryker\Zed\Translator\Communication\Plugin\Application\TranslatorApplicationPlugin::SERVICE_TRANSLATOR
+     *
      * @var string
      */
     protected const SERVICE_TRANSLATOR = 'translator';

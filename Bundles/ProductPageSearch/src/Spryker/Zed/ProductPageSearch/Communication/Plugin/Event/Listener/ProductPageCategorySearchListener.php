@@ -22,6 +22,7 @@ class ProductPageCategorySearchListener extends AbstractProductPageSearchListene
 
     /**
      * @uses \Spryker\Zed\Category\Dependency\CategoryEvents::ENTITY_CATEGORY_PUBLISH
+     *
      * @var string
      */
     protected const ENTITY_CATEGORY_PUBLISH = 'Entity.spy_category.publish';

@@ -16,6 +16,7 @@ class CmsSlotBlockCategoryConnectorConfig extends AbstractBundleConfig
      * - Defines the key for visibility condition CMS Block in Slot.
      *
      * @api
+     *
      * @var string
      */
     public const CONDITION_KEY = 'category';

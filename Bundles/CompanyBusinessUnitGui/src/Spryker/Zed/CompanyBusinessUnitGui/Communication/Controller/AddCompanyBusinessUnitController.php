@@ -23,6 +23,7 @@ class AddCompanyBusinessUnitController extends AbstractController
 
     /**
      * @see ListCompanyBusinessUnitController::indexAction()
+     *
      * @var string
      */
     protected const URL_BUSINESS_UNIT_LIST = '/company-business-unit-gui/list-company-business-unit';

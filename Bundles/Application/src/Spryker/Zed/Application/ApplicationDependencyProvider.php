@@ -52,6 +52,7 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
 
     /**
      * @deprecated Use {@link \Spryker\Zed\Application\ApplicationDependencyProvider::PLUGINS_BACKOFFICE_APPLICATION} instead.
+     *
      * @var string
      */
     public const PLUGINS_APPLICATION = 'PLUGINS_APPLICATION';
@@ -73,12 +74,14 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
 
     /**
      * @deprecated Will be removed without replacement.
+     *
      * @var string
      */
     public const SERVICE_ENCODING = 'util encoding service';
 
     /**
      * @deprecated Will be removed without replacement.
+     *
      * @var string
      */
     public const ENVIRONMENT = 'ENVIRONMENT';

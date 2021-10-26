@@ -16,36 +16,42 @@ class EventTriggerFormDataProvider
 
     /**
      * @uses \Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Controller\OmsTriggerController::URL_PARAM_RETURN_REFERENCE
+     *
      * @var string
      */
     protected const URL_PARAM_RETURN_REFERENCE = 'return-reference';
 
     /**
      * @uses \Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Controller\OmsTriggerController::URL_PARAM_REDIRECT
+     *
      * @var string
      */
     protected const URL_PARAM_REDIRECT = 'redirect';
 
     /**
      * @uses \Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Controller\OmsTriggerController::URL_PARAM_EVENT
+     *
      * @var string
      */
     protected const URL_PARAM_EVENT = 'event';
 
     /**
      * @uses \Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Form\EventTriggerForm::OPTION_EVENT
+     *
      * @var string
      */
     protected const OPTION_EVENT = 'OPTION_EVENT';
 
     /**
      * @uses \Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Form\EventTriggerForm::OPTION_SUBMIT_BUTTON_CLASS
+     *
      * @var string
      */
     protected const OPTION_SUBMIT_BUTTON_CLASS = 'OPTION_SUBMIT_BUTTON_CLASS';
 
     /**
      * @uses \Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Form\EventTriggerForm::OPTION_ACTION_QUERY_PARAMETERS
+     *
      * @var string
      */
     protected const OPTION_ACTION_QUERY_PARAMETERS = 'OPTION_ACTION_QUERY_PARAMETERS';

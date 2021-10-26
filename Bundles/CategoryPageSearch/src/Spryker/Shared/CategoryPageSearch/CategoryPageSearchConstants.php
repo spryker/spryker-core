@@ -17,6 +17,7 @@ class CategoryPageSearchConstants
      * - Queue name as used for processing category messages
      *
      * @api
+     *
      * @var string
      */
     public const CATEGORY_SYNC_SEARCH_QUEUE = 'sync.search.category';
@@ -26,6 +27,7 @@ class CategoryPageSearchConstants
      * - Queue name as used for error category messages
      *
      * @api
+     *
      * @var string
      */
     public const CATEGORY_SYNC_SEARCH_ERROR_QUEUE = 'sync.search.category.error';
@@ -35,6 +37,7 @@ class CategoryPageSearchConstants
      * - Resource name, this will use for key generating
      *
      * @api
+     *
      * @var string
      */
     public const CATEGORY_NODE_RESOURCE_NAME = 'category_node';
@@ -44,6 +47,7 @@ class CategoryPageSearchConstants
      * - This events will be used for category_store publishing.
      *
      * @api
+     *
      * @var string
      */
     public const CATEGORY_STORE_PUBLISH = 'Category.category_store.publish';
@@ -53,6 +57,7 @@ class CategoryPageSearchConstants
      * - This events will be used for category_store un-publishing.
      *
      * @api
+     *
      * @var string
      */
     public const CATEGORY_STORE_UNPUBLISH = 'Category.category_store.unpublish';
@@ -62,6 +67,7 @@ class CategoryPageSearchConstants
      * - This events will be used for spy_category_store entity creation.
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_CATEGORY_STORE_CREATE = 'Entity.spy_category_store.create';
@@ -71,6 +77,7 @@ class CategoryPageSearchConstants
      * - This events will be used for spy_category_store entity changes.
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_CATEGORY_STORE_UPDATE = 'Entity.spy_category_store.update';
@@ -80,6 +87,7 @@ class CategoryPageSearchConstants
      * - This events will be used for `spy_category_store` entity deletion.
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_CATEGORY_STORE_DELETE = 'Entity.spy_category_store.delete';

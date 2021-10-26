@@ -17,6 +17,7 @@ interface SessionFileConstants
      * - Sets time to live for Zed sessions.
      *
      * @api
+     *
      * @var string
      */
     public const ZED_SESSION_TIME_TO_LIVE = 'SESSION_FILE:ZED_SESSION_TIME_TO_LIVE';
@@ -26,6 +27,7 @@ interface SessionFileConstants
      * - Sets file path for saving Zed sessions.
      *
      * @api
+     *
      * @var string
      */
     public const ZED_SESSION_FILE_PATH = 'SESSION_FILE:ZED_SESSION_FILE_PATH';
@@ -35,6 +37,7 @@ interface SessionFileConstants
      * - Sets time to live for Yves sessions.
      *
      * @api
+     *
      * @var string
      */
     public const YVES_SESSION_TIME_TO_LIVE = 'SESSION_FILE:YVES_SESSION_TIME_TO_LIVE';
@@ -44,6 +47,7 @@ interface SessionFileConstants
      * - Sets file path for saving Yves sessions.
      *
      * @api
+     *
      * @var string
      */
     public const YVES_SESSION_FILE_PATH = 'SESSION_FILE:YVES_SESSION_FILE_PATH';

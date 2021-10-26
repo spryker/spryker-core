@@ -21,12 +21,14 @@ abstract class AbstractPriceProductOfferGuiTableConfigurationProvider
 {
     /**
      * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Form\ProductOfferForm::FIELD_PRODUCT_OFFER_PRICES
+     *
      * @var string
      */
     protected const FIELD_PRODUCT_OFFER_PRICES = 'prices';
 
     /**
      * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Form\ProductOfferForm::BLOCK_PREFIX
+     *
      * @var string
      */
     protected const BLOCK_PREFIX = 'productOffer';

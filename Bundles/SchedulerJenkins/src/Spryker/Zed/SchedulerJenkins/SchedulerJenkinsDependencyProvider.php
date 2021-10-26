@@ -39,6 +39,7 @@ class SchedulerJenkinsDependencyProvider extends AbstractBundleDependencyProvide
 
     /**
      * @uses \Spryker\Zed\Twig\Communication\Plugin\Application\TwigApplicationPlugin::SERVICE_TWIG
+     *
      * @var string
      */
     public const SERVICE_TWIG = 'twig';

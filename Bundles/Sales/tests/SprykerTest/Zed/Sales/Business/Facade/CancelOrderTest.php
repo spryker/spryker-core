@@ -55,12 +55,14 @@ class CancelOrderTest extends Test
 
     /**
      * @see \Spryker\Zed\Sales\Business\Writer\OrderWriter::GLOSSARY_KEY_CUSTOMER_ORDER_NOT_FOUND
+     *
      * @var string
      */
     protected const GLOSSARY_KEY_CUSTOMER_ORDER_NOT_FOUND = 'sales.error.customer_order_not_found';
 
     /**
      * @see \Spryker\Zed\Sales\Business\Writer\OrderWriter::GLOSSARY_KEY_ORDER_CANNOT_BE_CANCELLED
+     *
      * @var string
      */
     protected const GLOSSARY_KEY_ORDER_CANNOT_BE_CANCELLED = 'sales.error.order_cannot_be_canceled_due_to_wrong_item_state';

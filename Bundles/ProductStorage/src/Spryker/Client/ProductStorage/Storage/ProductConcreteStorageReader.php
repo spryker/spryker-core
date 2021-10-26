@@ -46,6 +46,7 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
 
     /**
      * @uses \Spryker\Zed\Storage\Communication\Table\StorageTable::KV_PREFIX
+     *
      * @var string
      */
     protected const KV_PREFIX = 'kv:';

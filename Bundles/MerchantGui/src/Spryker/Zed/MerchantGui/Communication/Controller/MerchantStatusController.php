@@ -39,6 +39,7 @@ class MerchantStatusController extends AbstractController
 
     /**
      * @uses \Spryker\Zed\MerchantGui\Communication\Controller\ListMerchantController::indexAction()
+     *
      * @var string
      */
     protected const URL_REDIRECT_MERCHANT_LIST = '/merchant-gui/list-merchant';

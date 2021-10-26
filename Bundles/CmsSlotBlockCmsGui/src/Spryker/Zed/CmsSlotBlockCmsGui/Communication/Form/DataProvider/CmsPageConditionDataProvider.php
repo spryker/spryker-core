@@ -27,6 +27,7 @@ class CmsPageConditionDataProvider implements CmsPageConditionDataProviderInterf
 
     /**
      * @uses \Spryker\Zed\Cms\Persistence\CmsQueryContainer::CMS_NAME
+     *
      * @var string
      */
     protected const CMS_PAGE_NAME = 'name';

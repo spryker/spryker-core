@@ -21,6 +21,7 @@ class ProductConfigurationItemQuantityCounter implements ProductConfigurationIte
 
     /**
      * @uses \Spryker\Zed\Cart\CartConfig::OPERATION_REMOVE
+     *
      * @var string
      */
     protected const OPERATION_REMOVE = 'remove';

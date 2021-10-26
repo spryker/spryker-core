@@ -42,12 +42,14 @@ class PriceProductServiceTest extends Unit
 
     /**
      * @uses \Spryker\Shared\Price\PriceConfig::PRICE_MODE_GROSS
+     *
      * @var string
      */
     protected const PRICE_MODE_GROSS = 'GROSS_MODE';
 
     /**
      * @uses \Spryker\Shared\Price\PriceConfig::PRICE_MODE_NET
+     *
      * @var string
      */
     protected const PRICE_MODE_NET = 'NET_MODE';

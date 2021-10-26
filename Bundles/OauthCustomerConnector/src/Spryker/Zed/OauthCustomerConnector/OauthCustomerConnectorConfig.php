@@ -24,6 +24,7 @@ class OauthCustomerConnectorConfig extends AbstractBundleConfig
 
     /**
      * @uses \Spryker\Zed\Oauth\OauthConfig::GRANT_TYPE_PASSWORD
+     *
      * @var string
      */
     public const GRANT_TYPE_PASSWORD = 'password';

@@ -9,11 +9,15 @@ namespace SprykerTest\Zed\Acl\Business;
 
 use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\NavigationItemBuilder;
+use Generated\Shared\Transfer\CollectionTransfer;
 use Generated\Shared\Transfer\GroupCriteriaTransfer;
+use Generated\Shared\Transfer\GroupsTransfer;
+use Generated\Shared\Transfer\GroupTransfer;
 use Generated\Shared\Transfer\NavigationItemCollectionTransfer;
 use Generated\Shared\Transfer\NavigationItemTransfer;
 use Generated\Shared\Transfer\RolesTransfer;
 use Generated\Shared\Transfer\RoleTransfer;
+use Generated\Shared\Transfer\RulesTransfer;
 use Generated\Shared\Transfer\RuleTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Shared\Acl\AclConstants;
@@ -154,7 +158,7 @@ class AclTest extends Unit
 
         $transfer = $this->facade->addGroup($data['name'], $this->rolesTransfer);
 
-        $this->assertInstanceOf('\Generated\Shared\Transfer\GroupTransfer', $transfer);
+        $this->assertInstanceOf(GroupTransfer::class, $transfer);
         $this->assertNotNull($transfer->getIdAclGroup());
         $this->assertSame($data['name'], $transfer->getName());
     }
@@ -204,7 +208,7 @@ class AclTest extends Unit
         $dto2->setName($groupData2['name']);
         $this->facade->updateGroup($dto2, $this->rolesTransfer);
 
-        $this->assertInstanceOf('\Generated\Shared\Transfer\GroupTransfer', $dto2);
+        $this->assertInstanceOf(GroupTransfer::class, $dto2);
         $this->assertNotNull($groupDto->getIdAclGroup());
         $this->assertNotEquals($groupData2['name'], $groupDto->getName());
         $this->assertSame($groupData2['name'], $dto2->getName());
@@ -224,7 +228,7 @@ class AclTest extends Unit
 
         $groupDto = $this->facade->getGroup($id);
 
-        $this->assertInstanceOf('\Generated\Shared\Transfer\GroupTransfer', $groupDto);
+        $this->assertInstanceOf(GroupTransfer::class, $groupDto);
         $this->assertNotNull($groupDto->getIdAclGroup());
         $this->assertSame($id, $groupDto->getIdAclGroup());
         $this->assertSame($groupData['name'], $groupDto->getName());
@@ -244,7 +248,7 @@ class AclTest extends Unit
         try {
             $this->facade->getGroup($groupDto->getIdAclGroup());
         } catch (EmptyEntityException $e) {
-            $this->assertInstanceOf('\Spryker\Zed\Acl\Business\Exception\EmptyEntityException', $e);
+            $this->assertInstanceOf(EmptyEntityException::class, $e);
         }
     }
 
@@ -258,7 +262,7 @@ class AclTest extends Unit
         $groupData = $this->mockGroupData();
         $this->facade->addGroup($groupData['name'], $this->rolesTransfer);
 
-        $this->assertInstanceOf('\Generated\Shared\Transfer\RoleTransfer', $roleDto);
+        $this->assertInstanceOf(RoleTransfer::class, $roleDto);
         $this->assertNotNull($roleDto->getIdAclRole());
         $this->assertSame($roleData['name'], $roleDto->getName());
     }
@@ -332,7 +336,7 @@ class AclTest extends Unit
         try {
             $this->facade->getRoleById($roleDto->getIdAclRole());
         } catch (EmptyEntityException $e) {
-            $this->assertInstanceOf('\Spryker\Zed\Acl\Business\Exception\EmptyEntityException', $e);
+            $this->assertInstanceOf(EmptyEntityException::class, $e);
         }
     }
 
@@ -346,7 +350,7 @@ class AclTest extends Unit
         $transferRole = $this->facade->addRole($roleData['name']);
         $this->facade->addGroup($groupData['name'], $this->rolesTransfer);
 
-        $this->assertInstanceOf('\Generated\Shared\Transfer\RoleTransfer', $transferRole);
+        $this->assertInstanceOf(RoleTransfer::class, $transferRole);
         $this->assertNotNull($transferRole->getIdAclRole());
         $this->assertSame($roleData['name'], $transferRole->getName());
     }
@@ -371,7 +375,7 @@ class AclTest extends Unit
 
             $ruleDto = $this->facade->addRule($ruleTransfer);
 
-            $this->assertInstanceOf('\Generated\Shared\Transfer\RuleTransfer', $ruleDto);
+            $this->assertInstanceOf(RuleTransfer::class, $ruleDto);
             $this->assertNotNull($ruleDto->getIdAclRule());
             $this->assertSame($current['bundle'], $ruleDto->getBundle());
             $this->assertSame($current['controller'], $ruleDto->getController());
@@ -394,7 +398,7 @@ class AclTest extends Unit
         $ruleData[] = $this->mockRuleData('deny', $roleDto->getIdAclRole());
 
         $rulesCollectionDto = $this->facade->getRoleRules($roleDto->getIdAclRole());
-        $this->assertInstanceOf('\Generated\Shared\Transfer\RulesTransfer', $rulesCollectionDto);
+        $this->assertInstanceOf(RulesTransfer::class, $rulesCollectionDto);
 
         $index = 0;
         foreach ($rulesCollectionDto->getRules() as $current) {
@@ -423,7 +427,7 @@ class AclTest extends Unit
         $ruleData[] = $this->mockRuleData('deny', $roleDto->getIdAclRole());
 
         $rulesCollectionDto = $this->facade->getGroupRules($groupDto->getIdAclGroup());
-        $this->assertInstanceOf('\Generated\Shared\Transfer\RulesTransfer', $rulesCollectionDto);
+        $this->assertInstanceOf(RulesTransfer::class, $rulesCollectionDto);
 
         $index = 0;
         foreach ($rulesCollectionDto->getRules() as $current) {
@@ -460,7 +464,7 @@ class AclTest extends Unit
             try {
                 $this->facade->getRule($ruleDto->getIdAclRule());
             } catch (RuleNotFoundException $e) {
-                $this->assertInstanceOf('\Spryker\Zed\Acl\Business\Exception\RuleNotFoundException', $e);
+                $this->assertInstanceOf(RuleNotFoundException::class, $e);
             }
         }
     }
@@ -500,7 +504,7 @@ class AclTest extends Unit
         $this->assertSame(1, $added);
 
         $userGroupDto = $this->facade->getUserGroups($userDto->getIdUser());
-        $this->assertInstanceOf('\Generated\Shared\Transfer\GroupsTransfer', $userGroupDto);
+        $this->assertInstanceOf(GroupsTransfer::class, $userGroupDto);
 
         $groups = $userGroupDto->toArray();
         $group = $groups['groups'][0];
@@ -621,10 +625,10 @@ class AclTest extends Unit
     {
         $systemUsers = $this->userFacade->getSystemUsers();
 
-        $this->assertInstanceOf('\Generated\Shared\Transfer\CollectionTransfer', $systemUsers);
+        $this->assertInstanceOf(CollectionTransfer::class, $systemUsers);
 
         foreach ($systemUsers as $user) {
-            $this->assertInstanceOf('\Generated\Shared\Transfer\UserTransfer', $user);
+            $this->assertInstanceOf(UserTransfer::class, $user);
 
             $hasAccess = $this->facade->checkAccess($user, 'auth', 'login', 'index');
             $this->assertTrue($hasAccess);
@@ -641,10 +645,10 @@ class AclTest extends Unit
     {
         $systemUsers = $this->userFacade->getSystemUsers();
 
-        $this->assertInstanceOf('\Generated\Shared\Transfer\CollectionTransfer', $systemUsers);
+        $this->assertInstanceOf(CollectionTransfer::class, $systemUsers);
 
         foreach ($systemUsers as $user) {
-            $this->assertInstanceOf('\Generated\Shared\Transfer\UserTransfer', $user);
+            $this->assertInstanceOf(UserTransfer::class, $user);
 
             $hasAccess = $this->facade->checkAccess($user, rand(100, 999), rand(100, 999), rand(100, 999));
             $this->assertFalse($hasAccess);

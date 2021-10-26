@@ -18,6 +18,7 @@ class ProductConfigurationWriterStep extends PublishAwareStep implements DataImp
 {
     /**
      * @uses \Spryker\Shared\ProductConfigurationStorage\ProductConfigurationStorageConfig::PRODUCT_CONFIGURATION_PUBLISH
+     *
      * @var string
      */
     protected const EVENT_PRODUCT_CONFIGURATION_PUBLISH = 'Entity.spy_product_configuration.publish';

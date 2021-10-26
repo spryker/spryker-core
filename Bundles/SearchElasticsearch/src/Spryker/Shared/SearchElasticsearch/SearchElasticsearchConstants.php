@@ -18,6 +18,7 @@ interface SearchElasticsearchConstants
      * - I.e. to set the boost factor to 3 add this to your config: `$config[SearchElasticsearchConstants::FULL_TEXT_BOOSTED_BOOSTING_VALUE] = 3;`.
      *
      * @api
+     *
      * @var string
      */
     public const FULL_TEXT_BOOSTED_BOOSTING_VALUE = 'SEARCH_ELASTICSEARCH:FULL_TEXT_BOOSTED_BOOSTING_VALUE';
@@ -27,6 +28,7 @@ interface SearchElasticsearchConstants
      * - Elasticsearch connection host name. (Required).
      *
      * @api
+     *
      * @var string
      */
     public const HOST = 'SEARCH_ELASTICSEARCH:HOST';
@@ -36,6 +38,7 @@ interface SearchElasticsearchConstants
      * - Elasticsearch connection port number. (Required).
      *
      * @api
+     *
      * @var string
      */
     public const PORT = 'SEARCH_ELASTICSEARCH:PORT';
@@ -45,6 +48,7 @@ interface SearchElasticsearchConstants
      * - Elasticsearch connection transport name (i.e. "http"). (Required).
      *
      * @api
+     *
      * @var string
      */
     public const TRANSPORT = 'SEARCH_ELASTICSEARCH:TRANSPORT';
@@ -54,6 +58,7 @@ interface SearchElasticsearchConstants
      * - Elasticsearch connection authentication header parameters. (Optional).
      *
      * @api
+     *
      * @var string
      */
     public const AUTH_HEADER = 'SEARCH_ELASTICSEARCH:AUTH_HEADER';
@@ -63,6 +68,7 @@ interface SearchElasticsearchConstants
      * - Defines an array of extra Elasticsearch connection parameters (i.e. ['foo' => 'bar', ...]). (Optional)
      *
      * @api
+     *
      * @var string
      */
     public const EXTRA = 'SEARCH_ELASTICSEARCH:EXTRA';
@@ -74,6 +80,7 @@ interface SearchElasticsearchConstants
      * - @see http://elastica.io/ for details.
      *
      * @api
+     *
      * @var string
      */
     public const CLIENT_CONFIGURATION = 'SEARCH_ELASTICSEARCH:CLIENT_CONFIGURATION';
@@ -83,6 +90,7 @@ interface SearchElasticsearchConstants
      * - Sets the permission mode for generated directories.
      *
      * @api
+     *
      * @var string
      */
     public const DIRECTORY_PERMISSION = 'SEARCH_ELASTICSEARCH:DIRECTORY_PERMISSION';
@@ -92,6 +100,7 @@ interface SearchElasticsearchConstants
      * - Defines prefix for ElasticSearch indexes.
      *
      * @api
+     *
      * @var string
      */
     public const INDEX_PREFIX = 'SEARCH_ELASTICSEARCH:INDEX_PREFIX';

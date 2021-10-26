@@ -31,30 +31,35 @@ class PriceProductClientTest extends Unit
 {
     /**
      * @uses \Spryker\Shared\PriceProductVolume\PriceProductVolumeConfig::VOLUME_PRICE_TYPE
+     *
      * @var string
      */
     protected const VOLUME_PRICE_TYPE = 'volume_prices';
 
     /**
      * @uses \Spryker\Shared\PriceProductVolume\PriceProductVolumeConfig::VOLUME_PRICE_QUANTITY
+     *
      * @var string
      */
     protected const VOLUME_PRICE_QUANTITY = 'quantity';
 
     /**
      * @uses \Spryker\Shared\PriceProductVolume\PriceProductVolumeConfig::VOLUME_PRICE_NET_PRICE
+     *
      * @var string
      */
     protected const VOLUME_PRICE_NET_PRICE = 'net_price';
 
     /**
      * @uses \Spryker\Shared\PriceProductVolume\PriceProductVolumeConfig::VOLUME_PRICE_GROSS_PRICE
+     *
      * @var string
      */
     protected const VOLUME_PRICE_GROSS_PRICE = 'gross_price';
 
     /**
      * @uses \Spryker\Shared\PriceProduct\PriceProductConfig::PRICE_TYPE_DEFAULT
+     *
      * @var string
      */
     protected const PRICE_TYPE_DEFAULT = 'DEFAULT';

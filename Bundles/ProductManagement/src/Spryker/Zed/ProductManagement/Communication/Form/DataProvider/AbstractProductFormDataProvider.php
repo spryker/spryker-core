@@ -109,6 +109,7 @@ class AbstractProductFormDataProvider
 
     /**
      * @uses \Spryker\Shared\PriceProduct\PriceProductConfig::PRICE_DIMENSION_DEFAULT
+     *
      * @var string
      */
     protected const PRICE_DIMENSION_DEFAULT = 'PRICE_DIMENSION_DEFAULT';

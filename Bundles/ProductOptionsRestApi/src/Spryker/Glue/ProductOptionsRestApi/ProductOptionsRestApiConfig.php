@@ -13,12 +13,14 @@ class ProductOptionsRestApiConfig extends AbstractBundleConfig
 {
     /**
      * @uses \Spryker\Glue\ProductsRestApi\ProductsRestApiConfig::RESOURCE_ABSTRACT_PRODUCTS
+     *
      * @var string
      */
     public const RESOURCE_ABSTRACT_PRODUCTS = 'abstract-products';
 
     /**
      * @uses \Spryker\Glue\ProductsRestApi\ProductsRestApiConfig::RESOURCE_CONCRETE_PRODUCTS
+     *
      * @var string
      */
     public const RESOURCE_CONCRETE_PRODUCTS = 'concrete-products';

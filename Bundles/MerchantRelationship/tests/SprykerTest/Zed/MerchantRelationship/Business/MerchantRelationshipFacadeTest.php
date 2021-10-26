@@ -49,6 +49,7 @@ class MerchantRelationshipFacadeTest extends Unit
 
     /**
      * @uses \Spryker\Zed\MerchantRelationship\Business\Mapper\ProductListUsedByTableMapper::ENTITY_TITLE
+     *
      * @var string
      */
     protected const MR_ENTITY_TITLE = 'Merchant Relationship';

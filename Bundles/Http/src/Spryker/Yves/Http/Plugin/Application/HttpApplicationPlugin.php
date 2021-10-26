@@ -51,12 +51,14 @@ class HttpApplicationPlugin extends AbstractPlugin implements ApplicationPluginI
 
     /**
      * @uses \Spryker\Yves\EventDispatcher\Plugin\Application\EventDispatcherApplicationPlugin::SERVICE_DISPATCHER
+     *
      * @var string
      */
     protected const SERVICE_EVENT_DISPATCHER = 'dispatcher';
 
     /**
      * @uses \Spryker\Yves\Router\Plugin\Application\RouterApplicationPlugin::SERVICE_CONTROLLER_RESOLVER
+     *
      * @var string
      */
     protected const SERVICE_CONTROLLER_RESOLVER = 'controller-resolver';

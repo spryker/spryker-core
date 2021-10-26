@@ -45,6 +45,7 @@ class ProductAbstractForm extends AbstractType
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\ProductLocalizedAttributesForm::NAME_VALIDATION_GROUP
+     *
      * @var string
      */
     protected const NAME_VALIDATION_GROUP = 'name_validation_group';

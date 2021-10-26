@@ -15,18 +15,21 @@ class CategoryTreeFilterFormatter implements CategoryTreeFilterFormatterInterfac
 {
     /**
      * @uses \Spryker\Client\SearchElasticsearch\AggregationExtractor\CategoryExtractor::DOC_COUNT
+     *
      * @var string
      */
     protected const DOC_COUNT = 'doc_count';
 
     /**
      * @uses \Spryker\Client\SearchElasticsearch\AggregationExtractor\CategoryExtractor::KEY_BUCKETS
+     *
      * @var string
      */
     protected const KEY_BUCKETS = 'buckets';
 
     /**
      * @uses \Spryker\Client\SearchElasticsearch\AggregationExtractor\CategoryExtractor::KEY_KEY
+     *
      * @var string
      */
     protected const KEY_KEY = 'key';

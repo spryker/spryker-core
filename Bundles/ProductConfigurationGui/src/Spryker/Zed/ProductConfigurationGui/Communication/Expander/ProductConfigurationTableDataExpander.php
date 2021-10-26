@@ -13,12 +13,14 @@ class ProductConfigurationTableDataExpander implements ProductConfigurationTable
 {
     /**
      * @uses \Spryker\Zed\ProductManagement\Communication\Table\ProductTable::COL_PRODUCT_TYPES
+     *
      * @var string
      */
     protected const COL_PRODUCT_TYPES = 'product_types';
 
     /**
      * @uses \Spryker\Zed\ProductManagement\Communication\Table\ProductTable::COL_SKU
+     *
      * @var string
      */
     protected const COL_SKU = 'sku';
