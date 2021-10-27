@@ -108,7 +108,7 @@ class PropelPersistenceTester extends Actor
         $entityClassName = get_class($entity);
         $tableMapClassName = $entityClassName::TABLE_MAP;
         $tableMapClass = new $tableMapClassName();
-        /** @var \Propel\Runtime\Map\ColumnMap[] $columnMapCollection */
+        /** @var array<\Propel\Runtime\Map\ColumnMap> $columnMapCollection */
         $columnMapCollection = $tableMapClass->getColumns();
 
         foreach ($columnMapCollection as $columnMap) {

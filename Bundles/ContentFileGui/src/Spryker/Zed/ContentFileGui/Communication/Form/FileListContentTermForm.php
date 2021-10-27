@@ -74,7 +74,7 @@ class FileListContentTermForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormView $view
      * @param \Symfony\Component\Form\FormInterface $form
-     * @param mixed[] $options
+     * @param array<mixed> $options
      *
      * @return void
      */
@@ -100,7 +100,7 @@ class FileListContentTermForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param mixed[] $options
+     * @param array<mixed> $options
      *
      * @return void
      */

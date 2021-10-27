@@ -137,7 +137,7 @@ class MoneyBuilder implements MoneyBuilderInterface
     }
 
     /**
-     * @param int|string $amount
+     * @param string|int $amount
      * @param \Money\Currency $isoCode
      *
      * @return \Money\Money
