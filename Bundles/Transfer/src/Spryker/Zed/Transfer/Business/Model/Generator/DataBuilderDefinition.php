@@ -40,7 +40,7 @@ class DataBuilderDefinition implements DataBuilderDefinitionInterface
     }
 
     /**
-     * @param array $definition
+     * @param array<string, mixed> $definition
      *
      * @return $this
      */
@@ -56,7 +56,7 @@ class DataBuilderDefinition implements DataBuilderDefinitionInterface
     }
 
     /**
-     * @param array $properties
+     * @param array<array> $properties
      *
      * @throws \RuntimeException
      *

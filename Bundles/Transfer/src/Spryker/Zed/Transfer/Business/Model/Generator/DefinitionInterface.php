@@ -15,7 +15,7 @@ interface DefinitionInterface
     public function getName();
 
     /**
-     * @param array $definition
+     * @param array<string, mixed> $definition
      *
      * @return $this
      */

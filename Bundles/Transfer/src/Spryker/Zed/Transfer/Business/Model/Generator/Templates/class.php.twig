@@ -76,7 +76,7 @@ class {{ className }} extends {{ abstractClass }}
 {% endfor %}
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param bool $ignoreMissingProperty
      *
      * @throws \InvalidArgumentException
@@ -157,7 +157,7 @@ class {{ className }} extends {{ abstractClass }}
      * @param bool $isRecursive
      * @param bool $camelCasedKeys
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function modifiedToArray($isRecursive = true, $camelCasedKeys = false)
     {
@@ -179,7 +179,7 @@ class {{ className }} extends {{ abstractClass }}
      * @param bool $isRecursive
      * @param bool $camelCasedKeys
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function toArray($isRecursive = true, $camelCasedKeys = false)
     {
@@ -198,11 +198,11 @@ class {{ className }} extends {{ abstractClass }}
     }
 
     /**
-     * @param mixed $value
+     * @param array<string, mixed>|\ArrayObject<string, mixed> $value
      * @param bool $isRecursive
      * @param bool $camelCasedKeys
      *
-     * @return array
+     * @return array<string, mixed>
      */
     protected function addValuesToCollectionModified($value, $isRecursive, $camelCasedKeys)
     {
@@ -220,11 +220,11 @@ class {{ className }} extends {{ abstractClass }}
     }
 
     /**
-     * @param mixed $value
+     * @param array<string, mixed>|\ArrayObject<string, mixed> $value
      * @param bool $isRecursive
      * @param bool $camelCasedKeys
      *
-     * @return array
+     * @return array<string, mixed>
      */
     protected function addValuesToCollection($value, $isRecursive, $camelCasedKeys)
     {

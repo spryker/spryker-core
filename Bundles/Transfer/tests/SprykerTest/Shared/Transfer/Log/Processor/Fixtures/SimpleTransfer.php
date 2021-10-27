@@ -28,7 +28,7 @@ class SimpleTransfer extends AbstractTransfer implements TransferInterface
     protected $notSanitized = 'baz';
 
     /**
-     * @var array
+     * @var array<string, array<string, mixed>>
      */
     protected $transferMetadata = [
         'array' => [

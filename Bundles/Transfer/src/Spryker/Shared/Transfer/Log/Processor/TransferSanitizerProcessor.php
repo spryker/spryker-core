@@ -46,9 +46,9 @@ class TransferSanitizerProcessor
     }
 
     /**
-     * @param array $record
+     * @param array<string, array> $record
      *
-     * @return array
+     * @return array<string, array>
      */
     public function __invoke(array $record)
     {

@@ -56,22 +56,22 @@ class ClassDefinition implements ClassDefinitionInterface
     protected $name;
 
     /**
-     * @var array
+     * @var array<string, array>
      */
     protected $constants = [];
 
     /**
-     * @var array
+     * @var array<string, array>
      */
     protected $properties = [];
 
     /**
-     * @var array
+     * @var array<array>
      */
     protected $normalizedProperties = [];
 
     /**
-     * @var array
+     * @var array<string, array>
      */
     protected $methods = [];
 
@@ -86,12 +86,12 @@ class ClassDefinition implements ClassDefinitionInterface
     protected $deprecationDescription;
 
     /**
-     * @var array<string>
+     * @var array<string, string>
      */
     protected $useStatements = [];
 
     /**
-     * @var array
+     * @var array<string, string>
      */
     protected $propertyNameMap = [];
 
@@ -114,7 +114,7 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param array $definition
+     * @param array<string, mixed> $definition
      *
      * @return $this
      */
@@ -211,7 +211,7 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param array $property
+     * @param array<string, mixed> $property
      *
      * @return void
      */
@@ -240,7 +240,7 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param array $property
+     * @param array<string, mixed> $property
      *
      * @return void
      */
@@ -313,7 +313,7 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param array $property
+     * @param array<string, mixed> $property
      *
      * @return array
      */
@@ -336,7 +336,7 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param array $property
+     * @param array<string, mixed> $property
      *
      * @return array
      */
@@ -359,7 +359,7 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param array $property
+     * @param array<string, mixed> $property
      *
      * @return bool
      */
@@ -369,7 +369,7 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param array $property
+     * @param array<string, mixed> $property
      *
      * @return string
      */
@@ -405,7 +405,7 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param array $property
+     * @param array<string, mixed> $property
      *
      * @return bool
      */
@@ -415,7 +415,7 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param array $property
+     * @param array<string, mixed> $property
      *
      * @return string
      */
@@ -459,7 +459,7 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param array $property
+     * @param array<string, mixed> $property
      *
      * @return string
      */
@@ -517,7 +517,7 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param array $property
+     * @param array<string, mixed> $property
      *
      * @return void
      */
@@ -534,7 +534,7 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param array $property
+     * @param array<string, mixed> $property
      *
      * @return void
      */
@@ -582,7 +582,7 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param array $property
+     * @param array<string, mixed> $property
      *
      * @return void
      */
@@ -597,7 +597,7 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param array $property
+     * @param array<string, mixed> $property
      *
      * @return void
      */
@@ -619,7 +619,7 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param array $property
+     * @param array<string, mixed> $property
      *
      * @return string
      */
@@ -631,7 +631,7 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param array $property
+     * @param array<string, mixed> $property
      *
      * @return string
      */
@@ -643,7 +643,7 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param array $property
+     * @param array<string, mixed> $property
      *
      * @return string
      */
@@ -679,7 +679,7 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param array $property
+     * @param array<string, mixed> $property
      *
      * @return bool
      */
@@ -689,7 +689,7 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param array $property
+     * @param array<string, mixed> $property
      *
      * @return bool
      */
@@ -699,7 +699,7 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param array $property
+     * @param array<string, mixed> $property
      *
      * @return bool
      */
@@ -713,7 +713,7 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param array $property
+     * @param array<string, mixed> $property
      *
      * @return bool
      */
@@ -727,7 +727,7 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param array $property
+     * @param array<string, mixed> $property
      *
      * @return bool
      */
@@ -737,7 +737,7 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param array $property
+     * @param array<string, mixed> $property
      *
      * @return bool
      */
@@ -747,7 +747,7 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param array $property
+     * @param array<string, mixed> $property
      *
      * @return string|bool
      */
@@ -785,7 +785,7 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param array $property
+     * @param array<string, mixed> $property
      *
      * @return string|bool
      */
@@ -803,7 +803,7 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param array $property
+     * @param array<string, mixed> $property
      *
      * @return string|bool
      */
@@ -817,7 +817,7 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param array $property
+     * @param array<string, mixed> $property
      *
      * @return void
      */
@@ -847,7 +847,7 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param array $property
+     * @param array<string, mixed> $property
      *
      * @return void
      */
@@ -895,7 +895,7 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param array $property
+     * @param array<string, mixed> $property
      *
      * @return void
      */
@@ -941,10 +941,10 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param array $method
-     * @param array $property
+     * @param array<string, mixed> $method
+     * @param array<string, mixed> $property
      *
-     * @return array
+     * @return array<string, mixed>
      */
     protected function addSetTypeHint(array $method, array $property): array
     {
@@ -958,10 +958,10 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param array $method
-     * @param array $property
+     * @param array<string, mixed> $method
+     * @param array<string, mixed> $property
      *
-     * @return array
+     * @return array<string, mixed>
      */
     protected function addDefaultNull(array $method, array $property): array
     {
@@ -975,7 +975,7 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param array $property
+     * @param array<string, mixed> $property
      *
      * @return void
      */
@@ -995,7 +995,7 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param array $property
+     * @param array<string, mixed> $property
      *
      * @return bool
      */
@@ -1005,7 +1005,7 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param array $property
+     * @param array<string, mixed> $property
      *
      * @return void
      */
@@ -1034,7 +1034,7 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param array $property
+     * @param array<string, mixed> $property
      *
      * @return void
      */
@@ -1047,7 +1047,7 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param array $property
+     * @param array<string, mixed> $property
      *
      * @throws \Spryker\Zed\Transfer\Business\Exception\InvalidAssociativeValueException
      *
@@ -1063,7 +1063,7 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param array $property
+     * @param array<string, mixed> $property
      *
      * @throws \Spryker\Zed\Transfer\Business\Exception\InvalidAssociativeTypeException
      *
@@ -1080,7 +1080,7 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param array $property
+     * @param array<string, mixed> $property
      *
      * @return string|null
      */
@@ -1090,7 +1090,7 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param array $definition
+     * @param array<string, mixed> $definition
      *
      * @return void
      */
@@ -1127,7 +1127,7 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param array $property
+     * @param array<string, mixed> $property
      *
      * @return string
      */
@@ -1170,9 +1170,9 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param array $transferDefinition
+     * @param array<string, mixed> $transferDefinition
      *
-     * @return array
+     * @return array<string, mixed>
      */
     protected function shimTransferDefinitionPropertyTypes(array $transferDefinition): array
     {
@@ -1198,7 +1198,7 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param array $propertyDefinition
+     * @param array<string, mixed> $propertyDefinition
      * @param array<string> $shimChange
      *
      * @return array
@@ -1215,7 +1215,7 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param array $property
+     * @param array<string, mixed> $property
      *
      * @return string|null
      */
@@ -1225,7 +1225,7 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param array $property
+     * @param array<string, mixed> $property
      *
      * @return bool
      */
@@ -1235,7 +1235,7 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param array $property
+     * @param array<string, mixed> $property
      *
      * @return string
      */
@@ -1248,7 +1248,7 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param array $property
+     * @param array<string, mixed> $property
      *
      * @return string
      */
@@ -1261,7 +1261,7 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param array $property
+     * @param array<string, mixed> $property
      *
      * @return string
      */
@@ -1274,7 +1274,7 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param array $property
+     * @param array<string, mixed> $property
      *
      * @return string
      */
@@ -1331,9 +1331,9 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param array $method
+     * @param array<string, mixed> $method
      *
-     * @return array
+     * @return array<string, mixed>
      */
     protected function setTypeAssertionMode(array $method): array
     {
@@ -1361,10 +1361,10 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param array $method
-     * @param array $property
+     * @param array<string, mixed> $method
+     * @param array<string, mixed> $property
      *
-     * @return array
+     * @return array<string, mixed>
      */
     protected function addGetReturnTypeHint(array $method, array $property): array
     {
@@ -1376,10 +1376,10 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param array $method
-     * @param array $property
+     * @param array<string, mixed> $method
+     * @param array<string, mixed> $property
      *
-     * @return array
+     * @return array<string, mixed>
      */
     protected function addGetOrFailTypeHint(array $method, array $property): array
     {
@@ -1391,7 +1391,7 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param array $property
+     * @param array<string, mixed> $property
      *
      * @return string
      */
@@ -1421,7 +1421,7 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param array $property
+     * @param array<string, mixed> $property
      *
      * @return string|bool
      */
@@ -1451,7 +1451,7 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param array $property
+     * @param array<string, mixed> $property
      *
      * @return void
      */
@@ -1483,7 +1483,7 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param array $property
+     * @param array<string, mixed> $property
      *
      * @return string
      */
@@ -1503,7 +1503,7 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param array $property
+     * @param array<string, mixed> $property
      *
      * @throws \Spryker\Zed\Transfer\Business\Exception\InvalidSingularPropertyNameException
      *
@@ -1533,7 +1533,7 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param array $property
+     * @param array<string, mixed> $property
      *
      * @return string
      */
@@ -1545,7 +1545,7 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param array $property
+     * @param array<string, mixed> $property
      *
      * @return bool
      */

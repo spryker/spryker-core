@@ -45,7 +45,7 @@ class TransferDefinitionFinder implements FinderInterface
     public const TRANSFER_SCHEMA_SUFFIX = '.transfer.xml';
 
     /**
-     * @var array
+     * @var array<string>
      */
     protected $sourceDirectories;
 
@@ -55,7 +55,7 @@ class TransferDefinitionFinder implements FinderInterface
     protected $fileNamePattern;
 
     /**
-     * @param array $sourceDirectories
+     * @param array<string> $sourceDirectories
      * @param string $fileNamePattern
      */
     public function __construct(array $sourceDirectories, $fileNamePattern = '*.transfer.xml')

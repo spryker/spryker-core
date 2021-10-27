@@ -157,7 +157,7 @@ class PartiallyStrictTransfer extends AbstractTransfer
     protected $propTypedArrayAssocStrict = [];
 
     /**
-     * @var array
+     * @var array<string, string>
      */
     protected $transferPropertyNameMap = [
         'prop_scalar' => 'propScalar',
@@ -205,7 +205,7 @@ class PartiallyStrictTransfer extends AbstractTransfer
     ];
 
     /**
-     * @var array
+     * @var array<string, array<string, mixed>>
      */
     protected $transferMetadata = [
         self::PROP_SCALAR => [
@@ -1233,7 +1233,7 @@ class PartiallyStrictTransfer extends AbstractTransfer
 
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param bool $ignoreMissingProperty
      *
      * @throws \InvalidArgumentException
@@ -1299,7 +1299,7 @@ class PartiallyStrictTransfer extends AbstractTransfer
      * @param bool $isRecursive
      * @param bool $camelCasedKeys
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function modifiedToArray($isRecursive = true, $camelCasedKeys = false)
     {
@@ -1321,7 +1321,7 @@ class PartiallyStrictTransfer extends AbstractTransfer
      * @param bool $isRecursive
      * @param bool $camelCasedKeys
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function toArray($isRecursive = true, $camelCasedKeys = false)
     {
@@ -1340,11 +1340,11 @@ class PartiallyStrictTransfer extends AbstractTransfer
     }
 
     /**
-     * @param mixed $value
+     * @param array<string, mixed>|\ArrayObject<string, mixed> $value
      * @param bool $isRecursive
      * @param bool $camelCasedKeys
      *
-     * @return array
+     * @return array<string, mixed>
      */
     protected function addValuesToCollectionModified($value, $isRecursive, $camelCasedKeys)
     {
@@ -1362,11 +1362,11 @@ class PartiallyStrictTransfer extends AbstractTransfer
     }
 
     /**
-     * @param mixed $value
+     * @param array<string, mixed>|\ArrayObject<string, mixed> $value
      * @param bool $isRecursive
      * @param bool $camelCasedKeys
      *
-     * @return array
+     * @return array<string, mixed>
      */
     protected function addValuesToCollection($value, $isRecursive, $camelCasedKeys)
     {
@@ -1384,7 +1384,7 @@ class PartiallyStrictTransfer extends AbstractTransfer
     }
 
     /**
-     * @return array
+     * @return array<string, mixed>
      */
     public function modifiedToArrayRecursiveCamelCased()
     {
@@ -1430,7 +1430,7 @@ class PartiallyStrictTransfer extends AbstractTransfer
     }
 
     /**
-     * @return array
+     * @return array<string, mixed>
      */
     public function modifiedToArrayRecursiveNotCamelCased()
     {
@@ -1476,7 +1476,7 @@ class PartiallyStrictTransfer extends AbstractTransfer
     }
 
     /**
-     * @return array
+     * @return array<string, mixed>
      */
     public function modifiedToArrayNotRecursiveNotCamelCased()
     {
@@ -1493,7 +1493,7 @@ class PartiallyStrictTransfer extends AbstractTransfer
     }
 
     /**
-     * @return array
+     * @return array<string, mixed>
      */
     public function modifiedToArrayNotRecursiveCamelCased()
     {
@@ -1519,7 +1519,7 @@ class PartiallyStrictTransfer extends AbstractTransfer
     }
 
     /**
-     * @return array
+     * @return array<string, mixed>
      */
     public function toArrayNotRecursiveCamelCased()
     {
@@ -1542,7 +1542,7 @@ class PartiallyStrictTransfer extends AbstractTransfer
     }
 
     /**
-     * @return array
+     * @return array<string, mixed>
      */
     public function toArrayNotRecursiveNotCamelCased()
     {
@@ -1565,7 +1565,7 @@ class PartiallyStrictTransfer extends AbstractTransfer
     }
 
     /**
-     * @return array
+     * @return array<string, mixed>
      */
     public function toArrayRecursiveNotCamelCased()
     {
@@ -1588,7 +1588,7 @@ class PartiallyStrictTransfer extends AbstractTransfer
     }
 
     /**
-     * @return array
+     * @return array<string, mixed>
      */
     public function toArrayRecursiveCamelCased()
     {

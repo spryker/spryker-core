@@ -73,7 +73,7 @@ class EntityTransferDefinitionLoader extends TransferDefinitionLoader
     }
 
     /**
-     * @param array $definition
+     * @param array<string, mixed> $definition
      * @param string $module
      * @param string $containingModule
      *
@@ -103,7 +103,7 @@ class EntityTransferDefinitionLoader extends TransferDefinitionLoader
     }
 
     /**
-     * @param array $definition
+     * @param array<string, mixed> $definition
      * @param string $transferDefinitionFilePath
      *
      * @throws \Spryker\Zed\Transfer\Business\Exception\EmptyEntityTransferDefinitionException

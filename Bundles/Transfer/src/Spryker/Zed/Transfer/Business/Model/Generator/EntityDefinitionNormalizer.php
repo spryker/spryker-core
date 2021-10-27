@@ -70,9 +70,9 @@ class EntityDefinitionNormalizer extends DefinitionNormalizer
     }
 
     /**
-     * @param array $transferDefinitions
+     * @param array<array> $transferDefinitions
      *
-     * @return array
+     * @return array<array>
      */
     public function normalizeDefinitions(array $transferDefinitions)
     {
@@ -212,8 +212,8 @@ class EntityDefinitionNormalizer extends DefinitionNormalizer
     }
 
     /**
-     * @param array $normalizedDefinition
-     * @param array $allDefinitions
+     * @param array<string, mixed> $normalizedDefinition
+     * @param array<array> $allDefinitions
      *
      * @return mixed
      */
@@ -236,7 +236,7 @@ class EntityDefinitionNormalizer extends DefinitionNormalizer
     }
 
     /**
-     * @param array $transferDefinition
+     * @param array<string, mixed> $transferDefinition
      *
      * @return string|null
      */

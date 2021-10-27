@@ -45,9 +45,9 @@ class DefinitionNormalizer implements DefinitionNormalizerInterface
     public const KEY_STRICT_MODE = 'strict';
 
     /**
-     * @param array $transferDefinitions
+     * @param array<array> $transferDefinitions
      *
-     * @return array
+     * @return array<array>
      */
     public function normalizeDefinitions(array $transferDefinitions)
     {
@@ -88,10 +88,10 @@ class DefinitionNormalizer implements DefinitionNormalizerInterface
     }
 
     /**
-     * @param array $attributes
+     * @param array<array> $attributes
      * @param string $bundle
      *
-     * @return array
+     * @return array<array>
      */
     protected function addBundleToAttributes(array $attributes, $bundle)
     {
@@ -103,9 +103,9 @@ class DefinitionNormalizer implements DefinitionNormalizerInterface
     }
 
     /**
-     * @param array $transferDefinition
+     * @param array<string, mixed> $transferDefinition
      *
-     * @return array
+     * @return array<string, mixed>
      */
     protected function normalizeStrictMode(array $transferDefinition): array
     {
@@ -125,9 +125,9 @@ class DefinitionNormalizer implements DefinitionNormalizerInterface
     }
 
     /**
-     * @param array $transferDefinition
+     * @param array<string, mixed> $transferDefinition
      *
-     * @return array
+     * @return array<string, mixed>
      */
     protected function normalizeTransferDefinitionStrictMode(array $transferDefinition): array
     {
@@ -143,7 +143,7 @@ class DefinitionNormalizer implements DefinitionNormalizerInterface
     }
 
     /**
-     * @param array $propertyDefinitions
+     * @param array<string, mixed> $propertyDefinitions
      * @param bool $isTransferInStrictMode
      *
      * @return array

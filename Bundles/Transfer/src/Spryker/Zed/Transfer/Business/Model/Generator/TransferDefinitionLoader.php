@@ -124,7 +124,7 @@ class TransferDefinitionLoader implements LoaderInterface
     }
 
     /**
-     * @param array $definition
+     * @param array<string, mixed> $definition
      * @param string $module
      * @param string $containingModule
      *
@@ -155,7 +155,7 @@ class TransferDefinitionLoader implements LoaderInterface
     }
 
     /**
-     * @param array $transfer
+     * @param array<string, mixed> $transfer
      * @param string $bundle
      *
      * @throws \InvalidArgumentException
@@ -199,9 +199,9 @@ class TransferDefinitionLoader implements LoaderInterface
     /**
      * We need to shim casing issues for property names or singular names for BC reasons.
      *
-     * @param array $transfer
+     * @param array<string, mixed> $transfer
      *
-     * @return array
+     * @return array<string, mixed>
      */
     protected function normalize(array $transfer): array
     {

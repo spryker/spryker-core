@@ -10,9 +10,9 @@ namespace Spryker\Zed\Transfer\Business\Model\Generator;
 interface MergerInterface
 {
     /**
-     * @param array $transferDefinitions
+     * @param array<array> $transferDefinitions
      *
-     * @return array
+     * @return array<string, array>
      */
     public function merge(array $transferDefinitions);
 }

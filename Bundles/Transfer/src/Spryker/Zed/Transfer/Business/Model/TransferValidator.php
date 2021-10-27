@@ -38,7 +38,7 @@ class TransferValidator implements TransferValidatorInterface
     protected $typeMap;
 
     /**
-     * @var array
+     * @var array<string, string>
      */
     protected $simpleTypeMap = [
         'integer' => 'int',
@@ -51,7 +51,7 @@ class TransferValidator implements TransferValidatorInterface
     ];
 
     /**
-     * @var array
+     * @var array<string>
      */
     protected $simpleTypeWhitelist = [
         'int',
@@ -100,7 +100,7 @@ class TransferValidator implements TransferValidatorInterface
     }
 
     /**
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return bool
      */
@@ -135,7 +135,7 @@ class TransferValidator implements TransferValidatorInterface
 
     /**
      * @param string $module
-     * @param array $definition
+     * @param array<array> $definition
      * @param array $options
      *
      * @return bool
@@ -243,7 +243,7 @@ class TransferValidator implements TransferValidatorInterface
     }
 
     /**
-     * @param array $transfer
+     * @param array<string, mixed> $transfer
      *
      * @return bool
      */
@@ -311,7 +311,7 @@ class TransferValidator implements TransferValidatorInterface
     }
 
     /**
-     * @param array $definition
+     * @param array<string, mixed> $definition
      *
      * @return array
      */

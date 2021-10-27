@@ -470,7 +470,7 @@ class GeneratedTransferTest extends Unit
     }
 
     /**
-     * @return array
+     * @return array<string, mixed>
      */
     public function toArrayProvider(): array
     {
