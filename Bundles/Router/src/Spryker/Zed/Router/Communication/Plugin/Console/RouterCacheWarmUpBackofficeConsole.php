@@ -12,7 +12,9 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @method \Spryker\Zed\Router\Business\RouterFacade getFacade()
+ * @deprecated Use {@link \Spryker\Zed\Router\Communication\Plugin\Console\BackofficeRouterCacheWarmUpConsole} instead.
+ *
+ * @method \Spryker\Zed\Router\Business\RouterFacadeInterface getFacade()
  * @method \Spryker\Zed\Router\Communication\RouterCommunicationFactory getFactory()
  */
 class RouterCacheWarmUpBackofficeConsole extends Console

@@ -9,8 +9,10 @@ namespace Spryker\Zed\Router\Business;
 
 use Spryker\Shared\Router\Cache\CacheInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\Router\Business\Cache\BackendGatewayCacheWarmer;
+use Spryker\Zed\Router\Business\Cache\BackofficeCacheWarmer;
 use Spryker\Zed\Router\Business\Cache\Cache;
-use Spryker\Zed\Router\Business\Cache\CacheWarmer;
+use Spryker\Zed\Router\Business\Cache\MerchantPortalCacheWarmer;
 use Spryker\Zed\Router\Business\Loader\ClosureLoader;
 use Spryker\Zed\Router\Business\Loader\LoaderInterface;
 use Spryker\Zed\Router\Business\Router\ChainRouter;
@@ -22,6 +24,7 @@ use Spryker\Zed\Router\Business\Router\RouterResource\MerchantPortalRouterResour
 use Spryker\Zed\Router\Business\Router\RouterResource\RouterResource;
 use Spryker\Zed\Router\Business\RouterResource\ResourceInterface;
 use Spryker\Zed\Router\RouterDependencyProvider;
+use Symfony\Component\Filesystem\Filesystem;
 
 /**
  * @method \Spryker\Zed\Router\RouterConfig getConfig()
@@ -109,7 +112,11 @@ class RouterBusinessFactory extends AbstractBusinessFactory
      */
     public function createBackofficeCacheWarmer(): CacheInterface
     {
-        return new CacheWarmer($this->createBackofficeChainRouter());
+        return new BackofficeCacheWarmer(
+            $this->createBackofficeChainRouter(),
+            $this->createFilesystem(),
+            $this->getConfig()
+        );
     }
 
     /**
@@ -174,7 +181,11 @@ class RouterBusinessFactory extends AbstractBusinessFactory
      */
     public function createMerchantPortalCacheWarmer(): CacheInterface
     {
-        return new CacheWarmer($this->createMerchantPortalChainRouter());
+        return new MerchantPortalCacheWarmer(
+            $this->createMerchantPortalChainRouter(),
+            $this->createFilesystem(),
+            $this->getConfig()
+        );
     }
 
     /**
@@ -190,7 +201,11 @@ class RouterBusinessFactory extends AbstractBusinessFactory
      */
     public function createBackendGatewayCacheWarmer(): CacheInterface
     {
-        return new CacheWarmer($this->createBackendGatewayChainRouter());
+        return new BackendGatewayCacheWarmer(
+            $this->createBackendGatewayChainRouter(),
+            $this->createFilesystem(),
+            $this->getConfig()
+        );
     }
 
     /**
@@ -276,7 +291,7 @@ class RouterBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Use {@link \Spryker\Zed\Router\Business\RouterBusinessFactory::createBackofficeCache()} instead.
+     * @deprecated Use {@link \Spryker\Zed\Router\Business\RouterBusinessFactory::createBackofficeCacheWarmer()} instead.
      *
      * @return \Spryker\Shared\Router\Cache\CacheInterface
      */
@@ -295,5 +310,13 @@ class RouterBusinessFactory extends AbstractBusinessFactory
         return new RouterResource(
             $this->getConfig(),
         );
+    }
+
+    /**
+     * @return \Symfony\Component\Filesystem\Filesystem
+     */
+    public function createFilesystem(): Filesystem
+    {
+        return new Filesystem();
     }
 }
