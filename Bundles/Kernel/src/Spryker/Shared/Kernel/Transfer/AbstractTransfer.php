@@ -348,7 +348,7 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
     }
 
     /**
-     * @param array<string, mixed>|\ArrayObject<string, mixed> $value
+     * @param \ArrayObject<string, mixed>|array<string, mixed> $value
      * @param array<string, mixed> $values
      * @param string $arrayKey
      * @param bool $isRecursive

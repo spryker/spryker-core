@@ -115,7 +115,7 @@ class RouterBusinessFactory extends AbstractBusinessFactory
         return new BackofficeCacheWarmer(
             $this->createBackofficeChainRouter(),
             $this->createFilesystem(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -184,7 +184,7 @@ class RouterBusinessFactory extends AbstractBusinessFactory
         return new MerchantPortalCacheWarmer(
             $this->createMerchantPortalChainRouter(),
             $this->createFilesystem(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -204,7 +204,7 @@ class RouterBusinessFactory extends AbstractBusinessFactory
         return new BackendGatewayCacheWarmer(
             $this->createBackendGatewayChainRouter(),
             $this->createFilesystem(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
