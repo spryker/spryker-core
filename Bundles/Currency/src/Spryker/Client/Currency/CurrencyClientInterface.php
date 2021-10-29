@@ -46,4 +46,14 @@ interface CurrencyClientInterface
      * @return void
      */
     public function setCurrentCurrencyIsoCode(string $currencyIsoCode): void;
+
+    /**
+     * Specification:
+     * - Returns a list of currency codes available for current store.
+     *
+     * @api
+     *
+     * @return array<string>
+     */
+    public function getCurrencyIsoCodes(): array;
 }

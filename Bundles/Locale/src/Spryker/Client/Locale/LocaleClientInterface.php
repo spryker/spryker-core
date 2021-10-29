@@ -11,11 +11,31 @@ interface LocaleClientInterface
 {
     /**
      * Specification:
-     * - TODO: Add method specification.
+     * - Returns current locale name.
      *
      * @api
      *
      * @return string
      */
     public function getCurrentLocale();
+
+    /**
+     * Specification:
+     * - Returns current language based on current locale.
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getCurrentLanguage(): string;
+
+    /**
+     * Specification:
+     * - Returns a list of locale codes for current store.
+     *
+     * @api
+     *
+     * @return array<string>
+     */
+    public function getLocales(): array;
 }

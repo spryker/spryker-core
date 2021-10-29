@@ -26,4 +26,32 @@ class LocaleClient extends AbstractClient implements LocaleClientInterface
     {
         return Store::getInstance()->getCurrentLocale();
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getCurrentLanguage(): string
+    {
+        return $this->getFactory()
+            ->createLanguageReader()
+            ->getLanguageByLocaleCode(
+                $this->getCurrentLocale(),
+            );
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return array<string>
+     */
+    public function getLocales(): array
+    {
+        return Store::getInstance()->getLocales();
+    }
 }

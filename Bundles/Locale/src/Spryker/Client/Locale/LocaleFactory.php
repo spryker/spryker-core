@@ -11,4 +11,11 @@ use Spryker\Client\Kernel\AbstractFactory;
 
 class LocaleFactory extends AbstractFactory
 {
+    /**
+     * @return \Spryker\Client\Locale\LanguageReaderInterface
+     */
+    public function createLanguageReader(): LanguageReaderInterface
+    {
+        return new LanguageReader();
+    }
 }
