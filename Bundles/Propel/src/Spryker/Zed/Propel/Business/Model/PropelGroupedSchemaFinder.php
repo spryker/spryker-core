@@ -25,7 +25,7 @@ class PropelGroupedSchemaFinder implements PropelGroupedSchemaFinderInterface
     }
 
     /**
-     * @return array
+     * @return array<string, array>
      */
     public function getGroupedSchemaFiles()
     {
@@ -41,7 +41,7 @@ class PropelGroupedSchemaFinder implements PropelGroupedSchemaFinderInterface
      * @param \Symfony\Component\Finder\SplFileInfo $schemaFile
      * @param array $schemaFiles
      *
-     * @return array
+     * @return array<string, array>
      */
     private function addSchemaToList(SplFileInfo $schemaFile, array $schemaFiles)
     {

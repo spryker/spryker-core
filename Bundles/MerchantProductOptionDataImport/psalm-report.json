@@ -10,8 +10,7 @@
             "snippet": "class MerchantProductOptionDataImportBusinessFactory extends DataImportBusinessFactory",
             "selected_text": "MerchantProductOptionDataImportBusinessFactory",
             "error_level": 7,
-            "shortcode": 42,
-            "other_references": null
+            "shortcode": 42
         }
     ],
     "warning": [],

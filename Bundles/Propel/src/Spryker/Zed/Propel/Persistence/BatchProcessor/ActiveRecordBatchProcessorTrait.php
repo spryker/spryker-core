@@ -461,7 +461,7 @@ trait ActiveRecordBatchProcessorTrait
      * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface $entity
      * @param bool $requiresPrimaryKeyValue
      *
-     * @return array
+     * @return array<string, mixed>
      */
     protected function prepareValuesForInsert(
         array $columnMapCollection,
@@ -560,7 +560,7 @@ trait ActiveRecordBatchProcessorTrait
      * @param array $entityData
      * @param string|null $defaultValue
      *
-     * @return array
+     * @return array<string, mixed>
      */
     protected function prepareValuesForSave(ColumnMap $columnMap, array $entityData, ?string $defaultValue = null): array
     {

@@ -80,7 +80,7 @@ class PropelSchemaValidator implements PropelSchemaValidatorInterface
     }
 
     /**
-     * @return array
+     * @return array<string, array>
      */
     protected function getSchemaFilesForValidation(): array
     {

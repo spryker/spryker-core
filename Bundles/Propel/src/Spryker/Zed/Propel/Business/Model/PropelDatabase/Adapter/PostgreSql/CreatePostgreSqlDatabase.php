@@ -156,7 +156,10 @@ class CreatePostgreSqlDatabase implements CreateDatabaseInterface
                 throw new UnsupportedVersionException('The minimum required version for symfony/process is 4.2.0 to work with PHP 8');
             }
 
-            //@phpstan-ignore-next-line
+            /**
+             * @phpstan-ignore-next-line
+             * @psalm-suppress InvalidArgument
+             */
             return new Process($command);
         }
 
@@ -192,7 +195,7 @@ class CreatePostgreSqlDatabase implements CreateDatabaseInterface
     }
 
     /**
-     * @return array
+     * @return array<string, mixed>
      */
     protected function getEnvironmentVariables(): array
     {

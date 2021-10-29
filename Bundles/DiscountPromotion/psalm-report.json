@@ -11,8 +11,7 @@
             "snippet": "            $selectedAttributes = $this->getSelectedAttributes($request, $promotionItemTransfer->getAbstractSku());",
             "selected_text": "$promotionItemTransfer->getAbstractSku()",
             "error_level": 3,
-            "shortcode": 78,
-            "other_references": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -24,8 +23,7 @@
             "snippet": "        return $this->productClient->getProductAbstractFromStorageByIdForCurrentLocale($promotionItemTransfer->getIdProductAbstract());",
             "selected_text": "$promotionItemTransfer->getIdProductAbstract()",
             "error_level": 3,
-            "shortcode": 78,
-            "other_references": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -37,8 +35,7 @@
             "snippet": "        return $promotionItemTransfer->getAbstractSku() . '-' . $promotionItemTransfer->getIdDiscountPromotion();",
             "selected_text": "$promotionItemTransfer->getAbstractSku()",
             "error_level": 1,
-            "shortcode": 80,
-            "other_references": null
+            "shortcode": 80
         },
         {
             "severity": "info",
@@ -50,8 +47,7 @@
             "snippet": "        return $promotionItemTransfer->getAbstractSku() . '-' . $promotionItemTransfer->getIdDiscountPromotion();",
             "selected_text": "$promotionItemTransfer->getIdDiscountPromotion()",
             "error_level": 1,
-            "shortcode": 80,
-            "other_references": null
+            "shortcode": 80
         },
         {
             "severity": "info",
@@ -63,8 +59,7 @@
             "snippet": "        foreach ($cartChangeTransfer->getQuote()->getPromotionItems() as $promotionItemTransfer) {",
             "selected_text": "getPromotionItems",
             "error_level": 3,
-            "shortcode": 83,
-            "other_references": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -76,8 +71,7 @@
             "snippet": "            $groupedByIdAvailablePromotionItemTransfers[$promotionItemTransfer->getIdDiscountPromotion()][] = $promotionItemTransfer;",
             "selected_text": "$groupedByIdAvailablePromotionItemTransfers",
             "error_level": 3,
-            "shortcode": 125,
-            "other_references": null
+            "shortcode": 125
         },
         {
             "severity": "info",
@@ -89,8 +83,7 @@
             "snippet": "            $quoteTransfer->getStore()",
             "selected_text": "$quoteTransfer->getStore()",
             "error_level": 3,
-            "shortcode": 78,
-            "other_references": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -102,8 +95,7 @@
             "snippet": "     * @return int",
             "selected_text": "int",
             "error_level": 5,
-            "shortcode": 144,
-            "other_references": null
+            "shortcode": 144
         },
         {
             "severity": "info",
@@ -115,8 +107,7 @@
             "snippet": "        return $currentQuantity;",
             "selected_text": "$currentQuantity",
             "error_level": 5,
-            "shortcode": 139,
-            "other_references": null
+            "shortcode": 139
         },
         {
             "severity": "info",
@@ -128,8 +119,7 @@
             "snippet": "            ->queryDiscountPromotionByIdDiscount($discountTransfer->getIdDiscount())",
             "selected_text": "$discountTransfer->getIdDiscount()",
             "error_level": 3,
-            "shortcode": 78,
-            "other_references": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -141,8 +131,7 @@
             "snippet": "        if ($productAbstractAvailabilityTransfer->getAvailability()->lessThanOrEquals(0)) {",
             "selected_text": "lessThanOrEquals",
             "error_level": 3,
-            "shortcode": 83,
-            "other_references": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -154,8 +143,7 @@
             "snippet": "        if ($productAbstractAvailabilityTransfer->getAvailability()->lessThan($maxQuantity)) {",
             "selected_text": "lessThan",
             "error_level": 3,
-            "shortcode": 83,
-            "other_references": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -167,8 +155,7 @@
             "snippet": "            return $productAbstractAvailabilityTransfer->getAvailability()->toInt();",
             "selected_text": "toInt",
             "error_level": 3,
-            "shortcode": 83,
-            "other_references": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -180,8 +167,7 @@
             "snippet": "        $idDiscount = $discountConfiguratorTransfer->getDiscountGeneral()->getIdDiscount();",
             "selected_text": "getIdDiscount",
             "error_level": 3,
-            "shortcode": 83,
-            "other_references": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -193,8 +179,7 @@
             "snippet": "        $discountPromotionTransfer = $this->findDiscountPromotionByIdDiscount($idDiscount);",
             "selected_text": "$idDiscount",
             "error_level": 3,
-            "shortcode": 78,
-            "other_references": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -206,8 +191,7 @@
             "snippet": "        $discountCalculatorTransfer->setCollectorStrategyType(DiscountPromotionConfig::DISCOUNT_COLLECTOR_STRATEGY);",
             "selected_text": "setCollectorStrategyType",
             "error_level": 3,
-            "shortcode": 83,
-            "other_references": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -219,8 +203,7 @@
             "snippet": "        return $itemTransfer->getGroupKey() . '-' . DiscountPromotionConfig::DISCOUNT_COLLECTOR_STRATEGY . '-' . $itemTransfer->getIdDiscountPromotion();",
             "selected_text": "$itemTransfer->getGroupKey()",
             "error_level": 1,
-            "shortcode": 80,
-            "other_references": null
+            "shortcode": 80
         },
         {
             "severity": "info",
@@ -232,8 +215,7 @@
             "snippet": "        return $itemTransfer->getGroupKey() . '-' . DiscountPromotionConfig::DISCOUNT_COLLECTOR_STRATEGY . '-' . $itemTransfer->getIdDiscountPromotion();",
             "selected_text": "$itemTransfer->getIdDiscountPromotion()",
             "error_level": 1,
-            "shortcode": 80,
-            "other_references": null
+            "shortcode": 80
         },
         {
             "severity": "info",
@@ -245,8 +227,7 @@
             "snippet": "        return $discountConfiguratorTransfer->getDiscountCalculator()->getCollectorStrategyType() === DiscountPromotionConfig::DISCOUNT_COLLECTOR_STRATEGY;",
             "selected_text": "getCollectorStrategyType",
             "error_level": 3,
-            "shortcode": 83,
-            "other_references": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -258,8 +239,7 @@
             "snippet": "        $discountGeneralTransfer->requireIdDiscount();",
             "selected_text": "requireIdDiscount",
             "error_level": 3,
-            "shortcode": 83,
-            "other_references": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -271,8 +251,7 @@
             "snippet": "        $discountPromotionTransfer = $discountConfiguratorTransfer->getDiscountCalculator()->getDiscountPromotion() ?? new DiscountPromotionTransfer();",
             "selected_text": "getDiscountPromotion",
             "error_level": 3,
-            "shortcode": 83,
-            "other_references": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -284,8 +263,7 @@
             "snippet": "            $this->getFacade()->removePromotionByIdDiscount($discountConfiguratorTransfer->getDiscountGeneral()->getIdDiscount());",
             "selected_text": "$discountConfiguratorTransfer->getDiscountGeneral()->getIdDiscount()",
             "error_level": 3,
-            "shortcode": 78,
-            "other_references": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -297,8 +275,7 @@
             "snippet": "            $this->getFacade()->removePromotionByIdDiscount($discountConfiguratorTransfer->getDiscountGeneral()->getIdDiscount());",
             "selected_text": "getIdDiscount",
             "error_level": 3,
-            "shortcode": 83,
-            "other_references": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -310,8 +287,7 @@
             "snippet": "            $discountConfiguratorTransfer->getDiscountCalculator()->setDiscountPromotion(new DiscountPromotionTransfer());",
             "selected_text": "setDiscountPromotion",
             "error_level": 3,
-            "shortcode": 83,
-            "other_references": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -323,8 +299,7 @@
             "snippet": "        return $this->getFacade()->isDiscountWithPromotion($discountTransfer->getIdDiscount());",
             "selected_text": "$discountTransfer->getIdDiscount()",
             "error_level": 3,
-            "shortcode": 78,
-            "other_references": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -336,8 +311,7 @@
             "snippet": "        $discountPromotionTransfer = $collectedDiscountTransfer->getDiscount()->getDiscountPromotion();",
             "selected_text": "getDiscountPromotion",
             "error_level": 3,
-            "shortcode": 83,
-            "other_references": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -349,8 +323,7 @@
             "snippet": "            if ($itemTransfer->getOriginalItem() && $itemTransfer->getOriginalItem()->getIdDiscountPromotion()) {",
             "selected_text": "getIdDiscountPromotion",
             "error_level": 3,
-            "shortcode": 83,
-            "other_references": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -362,8 +335,7 @@
             "snippet": "        $discountConfiguratorTransfer->getDiscountCalculator()->setDiscountPromotion($discountPromotionTransfer);",
             "selected_text": "setDiscountPromotion",
             "error_level": 3,
-            "shortcode": 83,
-            "other_references": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -375,8 +347,7 @@
             "snippet": "        $discountConfiguratorTransfer->getDiscountCalculator()->setDiscountPromotion($discountPromotionTransfer);",
             "selected_text": "setDiscountPromotion",
             "error_level": 3,
-            "shortcode": 83,
-            "other_references": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -388,8 +359,7 @@
             "snippet": "        return $collectedDiscountTransfer->getDiscount()->getDiscountPromotion() !== null;",
             "selected_text": "getDiscountPromotion",
             "error_level": 3,
-            "shortcode": 83,
-            "other_references": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -401,8 +371,7 @@
             "snippet": "            ->findOneByIdDiscountPromotion($discountPromotionTransfer->getIdDiscountPromotion());",
             "selected_text": "$discountPromotionTransfer->getIdDiscountPromotion()",
             "error_level": 3,
-            "shortcode": 78,
-            "other_references": null
+            "shortcode": 78
         }
     ],
     "deprecation": [
@@ -416,8 +385,7 @@
             "snippet": "            ->setUnitGrossPrice($promotionItemTransfer->getUnitGrossPrice());",
             "selected_text": "setUnitGrossPrice",
             "error_level": 2,
-            "shortcode": 1,
-            "other_references": null
+            "shortcode": 1
         },
         {
             "severity": "info",
@@ -429,8 +397,7 @@
             "snippet": "class RemovePromotionItemsCalculatorPlugin extends AbstractPlugin implements CalculationPluginInterface",
             "selected_text": "RemovePromotionItemsCalculatorPlugin",
             "error_level": 2,
-            "shortcode": 152,
-            "other_references": null
+            "shortcode": 152
         },
         {
             "severity": "info",
@@ -442,8 +409,7 @@
             "snippet": "class CartGroupPromotionItems extends AbstractPlugin implements ItemExpanderPluginInterface",
             "selected_text": "CartGroupPromotionItems",
             "error_level": 2,
-            "shortcode": 152,
-            "other_references": null
+            "shortcode": 152
         },
         {
             "severity": "info",
@@ -455,8 +421,7 @@
             "snippet": "            $this->getFactory()->createDiscountFormPromotionType(),",
             "selected_text": "createDiscountFormPromotionType",
             "error_level": 2,
-            "shortcode": 1,
-            "other_references": null
+            "shortcode": 1
         }
     ]
 }

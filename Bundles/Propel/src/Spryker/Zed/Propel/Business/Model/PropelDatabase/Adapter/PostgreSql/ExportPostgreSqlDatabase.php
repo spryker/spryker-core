@@ -120,7 +120,7 @@ class ExportPostgreSqlDatabase implements ExportDatabaseInterface
     }
 
     /**
-     * @return array
+     * @return array<string, mixed>
      */
     protected function getEnvironmentVariables()
     {

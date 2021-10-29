@@ -14,7 +14,7 @@ class AssociativeArrayFormatter extends SimpleArrayFormatter
     /**
      * @param array $row
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getStructuredArrayFromRow($row)
     {

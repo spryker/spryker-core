@@ -14,12 +14,12 @@ use Symfony\Component\Console\Input\InputInterface;
 trait PropelConfiguratorTrait
 {
     /**
-     * @var array
+     * @var array<string, mixed>
      */
     protected $propelConfig = [];
 
     /**
-     * @param array $propelConfig
+     * @param array<string, mixed> $propelConfig
      *
      * @return static
      */

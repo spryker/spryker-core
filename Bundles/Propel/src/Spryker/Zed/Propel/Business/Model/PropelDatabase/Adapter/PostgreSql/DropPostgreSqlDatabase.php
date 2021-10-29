@@ -12,6 +12,7 @@ use RuntimeException;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Propel\PropelConstants;
 use Spryker\Zed\Propel\Business\Exception\UnSupportedCharactersInConfigurationValueException;
+use Spryker\Zed\Propel\Business\Exception\UnsupportedVersionException;
 use Spryker\Zed\Propel\Business\Model\PropelDatabase\Command\DropDatabaseInterface;
 use Spryker\Zed\Propel\PropelConfig;
 use Symfony\Component\Process\Process;
@@ -135,13 +136,22 @@ class DropPostgreSqlDatabase implements DropDatabaseInterface
     /**
      * @param string $command
      *
+     * @throws \UnsupportedVersionException
+     *
      * @return \Symfony\Component\Process\Process
      */
     protected function getProcess($command)
     {
         // Shim for Symfony 3.x, to be removed when Symfony dependency becomes 4.2+
         if (!method_exists(Process::class, 'fromShellCommandline')) {
-            //@phpstan-ignore-next-line
+            if (version_compare(PHP_VERSION, '8.0.0', '>=') === true) {
+                throw new UnsupportedVersionException('The minimum required version for symfony/process is 4.2.0 to work with PHP 8');
+            }
+
+            /**
+             * @phpstan-ignore-next-line
+             * @psalm-suppress InvalidArgument
+             */
             return new Process($command);
         }
 
@@ -199,7 +209,7 @@ class DropPostgreSqlDatabase implements DropDatabaseInterface
     }
 
     /**
-     * @return array
+     * @return array<string, mixed>
      */
     protected function getEnvironmentVariables(): array
     {

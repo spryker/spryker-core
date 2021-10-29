@@ -46,7 +46,7 @@ class PropelCommandConfigurator implements PropelCommandConfiguratorInterface
     }
 
     /**
-     * @return array
+     * @return array<string, mixed>
      */
     protected function buildPropelConfig(): array
     {

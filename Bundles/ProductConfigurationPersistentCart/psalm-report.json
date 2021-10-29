@@ -10,8 +10,7 @@
             "snippet": "    public function extend(PersistentCartChangeTransfer $persistentCartChangeTransfer, array $params = []): PersistentCartChangeTransfer",
             "selected_text": "$persistentCartChangeTransfer",
             "error_level": 7,
-            "shortcode": 230,
-            "other_references": null
+            "shortcode": 230
         }
     ],
     "warning": [],

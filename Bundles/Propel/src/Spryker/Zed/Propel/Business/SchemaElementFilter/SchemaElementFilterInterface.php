@@ -12,9 +12,9 @@ use SimpleXMLElement;
 interface SchemaElementFilterInterface
 {
     /**
-     * @param \SimpleXMLElement $schemaXmlElements
+     * @param \SimpleXMLElement $schemaXmlElement
      *
      * @return \SimpleXMLElement
      */
-    public function filter(SimpleXMLElement $schemaXmlElements): SimpleXMLElement;
+    public function filter(SimpleXMLElement $schemaXmlElement): SimpleXMLElement;
 }

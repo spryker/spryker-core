@@ -10,7 +10,7 @@ namespace Spryker\Zed\PropelOrm\Communication\Generator;
 interface ConfigurablePropelCommandInterface
 {
     /**
-     * @param array $propelConfig
+     * @param array<string, mixed> $propelConfig
      *
      * @return $this
      */

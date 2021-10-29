@@ -94,7 +94,7 @@ class PropelServiceProvider extends AbstractPlugin implements ServiceProviderInt
     }
 
     /**
-     * @return array
+     * @return array<string, mixed>
      */
     private function getPropelConfig()
     {

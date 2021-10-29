@@ -11,8 +11,7 @@
             "snippet": "        return $merchantProductOptionGroupQuery->find()->getData();",
             "selected_text": "getData",
             "error_level": 3,
-            "shortcode": 113,
-            "other_references": null
+            "shortcode": 113
         }
     ],
     "deprecation": []
