@@ -31,25 +31,54 @@ class MerchantProductOfferWishlistFacadeTest extends Unit
     protected $tester;
 
     /**
+     * @var \Generated\Shared\Transfer\CustomerTransfer
+     */
+    protected $customerTransfer;
+
+    /**
+     * @var \Generated\Shared\Transfer\MerchantTransfer
+     */
+    protected $merchantTransfer;
+
+    /**
+     * @var \Generated\Shared\Transfer\ProductOfferTransfer
+     */
+    protected $productOfferTransfer;
+
+    /**
+     * @var \Generated\Shared\Transfer\WishlistTransfer
+     */
+    protected $wishlistTransfer;
+
+    /**
+     * @return void
+     */
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $this->customerTransfer = $this->tester->haveCustomer();
+        $this->merchantTransfer = $this->tester->haveMerchant();
+        $this->productOfferTransfer = $this->tester->haveProductOffer([
+            ProductOfferTransfer::FK_MERCHANT => $this->merchantTransfer->getIdMerchant(),
+        ]);
+        $this->wishlistTransfer = $this->tester->haveWishlist([
+            WishlistTransfer::FK_CUSTOMER => $this->customerTransfer->getIdCustomer(),
+        ]);
+    }
+
+    /**
      * @return void
      */
     public function testCheckWishlistItemProductOfferRelationSuccess(): void
     {
         // Arrange
-        $customerTransfer = $this->tester->haveCustomer();
-        $merchantTransfer = $this->tester->haveMerchant();
-        $productOfferTransfer = $this->tester->haveProductOffer([
-            ProductOfferTransfer::FK_MERCHANT => $merchantTransfer->getIdMerchant(),
-        ]);
-        $wishlistTransfer = $this->tester->haveWishlist([
-            WishlistTransfer::FK_CUSTOMER => $customerTransfer->getIdCustomer(),
-        ]);
         $wishlistItemTransfer = $this->tester->haveItemInWishlist([
-            WishlistItemTransfer::FK_WISHLIST => $wishlistTransfer->getIdWishlist(),
-            WishlistItemTransfer::FK_CUSTOMER => $customerTransfer->getIdCustomer(),
-            WishlistItemTransfer::SKU => $productOfferTransfer->getConcreteSku(),
-            WishlistItemTransfer::WISHLIST_NAME => $wishlistTransfer->getName(),
-            WishlistItemTransfer::PRODUCT_OFFER_REFERENCE => $productOfferTransfer->getProductOfferReference(),
+            WishlistItemTransfer::FK_WISHLIST => $this->wishlistTransfer->getIdWishlist(),
+            WishlistItemTransfer::FK_CUSTOMER => $this->customerTransfer->getIdCustomer(),
+            WishlistItemTransfer::SKU => $this->productOfferTransfer->getConcreteSku(),
+            WishlistItemTransfer::WISHLIST_NAME => $this->wishlistTransfer->getName(),
+            WishlistItemTransfer::PRODUCT_OFFER_REFERENCE => $this->productOfferTransfer->getProductOfferReference(),
         ]);
 
         // Act
@@ -67,15 +96,12 @@ class MerchantProductOfferWishlistFacadeTest extends Unit
     {
         // Arrange
         $productTransfer = $this->tester->haveProduct();
-        $customerTransfer = $this->tester->haveCustomer();
-        $wishlistTransfer = $this->tester->haveWishlist([
-            WishlistTransfer::FK_CUSTOMER => $customerTransfer->getIdCustomer(),
-        ]);
+
         $wishlistItemTransfer = $this->tester->haveItemInWishlist([
-            WishlistItemTransfer::FK_WISHLIST => $wishlistTransfer->getIdWishlist(),
-            WishlistItemTransfer::FK_CUSTOMER => $customerTransfer->getIdCustomer(),
+            WishlistItemTransfer::FK_WISHLIST => $this->wishlistTransfer->getIdWishlist(),
+            WishlistItemTransfer::FK_CUSTOMER => $this->customerTransfer->getIdCustomer(),
             WishlistItemTransfer::SKU => $productTransfer->getSku(),
-            WishlistItemTransfer::WISHLIST_NAME => $wishlistTransfer->getName(),
+            WishlistItemTransfer::WISHLIST_NAME => $this->wishlistTransfer->getName(),
             WishlistItemTransfer::PRODUCT_OFFER_REFERENCE => 'TEST_PRODUCT_OFFER_REFERENCE',
         ]);
 
@@ -85,5 +111,51 @@ class MerchantProductOfferWishlistFacadeTest extends Unit
 
         // Assert
         $this->assertFalse($wishlistPreAddItemCheckResponseTransfer->getIsSuccess());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCheckUpdateWishlistItemProductOfferRelationSuccess(): void
+    {
+        // Arrange
+        $wishlistItemTransfer = $this->tester->haveItemInWishlist([
+            WishlistItemTransfer::FK_WISHLIST => $this->wishlistTransfer->getIdWishlist(),
+            WishlistItemTransfer::FK_CUSTOMER => $this->customerTransfer->getIdCustomer(),
+            WishlistItemTransfer::SKU => $this->productOfferTransfer->getConcreteSku(),
+            WishlistItemTransfer::WISHLIST_NAME => $this->wishlistTransfer->getName(),
+            WishlistItemTransfer::PRODUCT_OFFER_REFERENCE => $this->productOfferTransfer->getProductOfferReference(),
+        ]);
+
+        // Act
+        $wishlistPreUpdateItemCheckResponseTransfer = $this->tester->getFacade()
+            ->checkUpdateWishlistItemProductOfferRelation($wishlistItemTransfer);
+
+        // Assert
+        $this->assertTrue($wishlistPreUpdateItemCheckResponseTransfer->getIsSuccess());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCheckUpdateWishlistItemProductOfferRelationNotSuccess(): void
+    {
+        // Arrange
+        $productTransfer = $this->tester->haveProduct();
+
+        $wishlistItemTransfer = $this->tester->haveItemInWishlist([
+            WishlistItemTransfer::FK_WISHLIST => $this->wishlistTransfer->getIdWishlist(),
+            WishlistItemTransfer::FK_CUSTOMER => $this->customerTransfer->getIdCustomer(),
+            WishlistItemTransfer::SKU => $productTransfer->getSku(),
+            WishlistItemTransfer::WISHLIST_NAME => $this->wishlistTransfer->getName(),
+            WishlistItemTransfer::PRODUCT_OFFER_REFERENCE => 'TEST_PRODUCT_OFFER_REFERENCE',
+        ]);
+
+        // Act
+        $wishlistPreUpdateItemCheckResponseTransfer = $this->tester->getFacade()
+            ->checkUpdateWishlistItemProductOfferRelation($wishlistItemTransfer);
+
+        // Assert
+        $this->assertFalse($wishlistPreUpdateItemCheckResponseTransfer->getIsSuccess());
     }
 }

@@ -42,24 +42,32 @@ class ProductViewPriceExpander implements ProductViewPriceExpanderInterface
     protected $priceProductFilterExpanderPlugins;
 
     /**
+     * @var array<\Spryker\Client\PriceProductStorageExtension\Dependency\Plugin\PriceProductExpanderPluginInterface>
+     */
+    protected $priceProductExpanderPlugins;
+
+    /**
      * @param \Spryker\Client\PriceProductStorage\Storage\PriceAbstractStorageReaderInterface $priceAbstractStorageReader
      * @param \Spryker\Client\PriceProductStorage\Storage\PriceConcreteStorageReaderInterface $priceConcreteStorageReader
      * @param \Spryker\Client\PriceProductStorage\Dependency\Client\PriceProductStorageToPriceProductClientInterface $priceProductClient
      * @param \Spryker\Client\PriceProductStorage\Dependency\Service\PriceProductStorageToPriceProductServiceInterface $priceProductService
      * @param array<\Spryker\Client\PriceProductStorageExtension\Dependency\Plugin\PriceProductFilterExpanderPluginInterface> $priceProductFilterExpanderPlugins
+     * @param array<\Spryker\Client\PriceProductStorageExtension\Dependency\Plugin\PriceProductExpanderPluginInterface> $priceProductExpanderPlugins
      */
     public function __construct(
         PriceAbstractStorageReaderInterface $priceAbstractStorageReader,
         PriceConcreteStorageReaderInterface $priceConcreteStorageReader,
         PriceProductStorageToPriceProductClientInterface $priceProductClient,
         PriceProductStorageToPriceProductServiceInterface $priceProductService,
-        array $priceProductFilterExpanderPlugins
+        array $priceProductFilterExpanderPlugins,
+        array $priceProductExpanderPlugins
     ) {
         $this->priceAbstractStorageReader = $priceAbstractStorageReader;
         $this->priceConcreteStorageReader = $priceConcreteStorageReader;
         $this->priceProductClient = $priceProductClient;
         $this->priceProductService = $priceProductService;
         $this->priceProductFilterExpanderPlugins = $priceProductFilterExpanderPlugins;
+        $this->priceProductExpanderPlugins = $priceProductExpanderPlugins;
     }
 
     /**
@@ -73,9 +81,7 @@ class ProductViewPriceExpander implements ProductViewPriceExpanderInterface
         $priceProductConcreteTransfers = $this->findPriceConcreteData($productViewTransfer);
 
         if (empty($priceProductConcreteTransfers)) {
-            $productViewTransfer = $this->setPrices($productViewTransfer, $priceProductAbstractTransfers);
-
-            return $productViewTransfer;
+            return $this->setPrices($productViewTransfer, $priceProductAbstractTransfers);
         }
 
         $priceProductConcreteTransfers = $this->priceProductService->mergeConcreteAndAbstractPrices(
@@ -83,9 +89,7 @@ class ProductViewPriceExpander implements ProductViewPriceExpanderInterface
             $priceProductConcreteTransfers,
         );
 
-        $productViewTransfer = $this->setPrices($productViewTransfer, $priceProductConcreteTransfers);
-
-        return $productViewTransfer;
+        return $this->setPrices($productViewTransfer, $priceProductConcreteTransfers);
     }
 
     /**
@@ -96,6 +100,8 @@ class ProductViewPriceExpander implements ProductViewPriceExpanderInterface
      */
     protected function setPrices(ProductViewTransfer $productViewTransfer, array $priceProductTransfers): ProductViewTransfer
     {
+        $priceProductTransfers = $this->executePriceProductExpanderPlugins($priceProductTransfers, $productViewTransfer);
+
         $currentProductPriceTransfer = $this->priceProductClient->resolveProductPriceTransferByPriceProductFilter(
             $priceProductTransfers,
             $this->getPriceProductFilterFromProductView($productViewTransfer),
@@ -105,6 +111,23 @@ class ProductViewPriceExpander implements ProductViewPriceExpanderInterface
             ->setCurrentProductPrice($currentProductPriceTransfer)
             ->setPrice($currentProductPriceTransfer->getPrice())
             ->setPrices($currentProductPriceTransfer->getPrices());
+    }
+
+    /**
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     *
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
+     */
+    protected function executePriceProductExpanderPlugins(
+        array $priceProductTransfers,
+        ProductViewTransfer $productViewTransfer
+    ): array {
+        foreach ($this->priceProductExpanderPlugins as $priceProductExpanderPlugin) {
+            $priceProductTransfers = $priceProductExpanderPlugin->expand($priceProductTransfers, $productViewTransfer);
+        }
+
+        return $priceProductTransfers;
     }
 
     /**

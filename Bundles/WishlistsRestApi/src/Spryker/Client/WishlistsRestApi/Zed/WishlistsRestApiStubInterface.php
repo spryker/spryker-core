@@ -42,4 +42,11 @@ interface WishlistsRestApiStubInterface
      * @return \Generated\Shared\Transfer\WishlistItemResponseTransfer
      */
     public function deleteWishlistItem(WishlistItemRequestTransfer $wishlistItemRequestTransfer): WishlistItemResponseTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistItemRequestTransfer $wishlistItemRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistItemResponseTransfer
+     */
+    public function updateWishlistItem(WishlistItemRequestTransfer $wishlistItemRequestTransfer): WishlistItemResponseTransfer;
 }

@@ -80,4 +80,23 @@ interface WishlistsRestApiClientInterface
      * @return \Generated\Shared\Transfer\WishlistItemResponseTransfer
      */
     public function deleteWishlistItem(WishlistItemRequestTransfer $wishlistItemRequestTransfer): WishlistItemResponseTransfer;
+
+    /**
+     * Specification:
+     * - Makes Zed request.
+     * - Requires uuid, uuidWishlist, sku to be set on `WishlistItemRequestTransfer`.
+     * - Looks up the wishlist by uuid.
+     * - Executes `RestWishlistItemsAttributesUpdateStrategyPluginInterface` plugin stack.
+     * - Looks up the wishlist item by sku.
+     * - Updates product in the wishlist.
+     * - Returns `WishlistItemResponseTransfer.isSuccessful = true` on successful update.
+     * - Returns `WishlistItemResponseTransfer.isSuccessful = false` if the wishlist was not found by sku or the item is not found in the wishlist.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\WishlistItemRequestTransfer $wishlistItemRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistItemResponseTransfer
+     */
+    public function updateWishlistItem(WishlistItemRequestTransfer $wishlistItemRequestTransfer): WishlistItemResponseTransfer;
 }

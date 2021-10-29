@@ -21,7 +21,9 @@ class MerchantProductOfferAddItemPreCheckPlugin extends AbstractPlugin implement
 {
     /**
      * {@inheritDoc}
-     * - Returns `WishlistPreAddItemCheckResponse.isSuccess=false` if no one product offers found by `WishlistItem.productOfferReference` transfer property.
+     * - Gets product offer collection by `WishlistItem.sku` transfer property.
+     * - Checks if product offer exists in collection by `WishlistItem.productOfferReference` transfer object.
+     * - Returns `WishlistPreAddItemCheckResponseTransfer.success=true` if product offer found.
      *
      * @api
      *

@@ -58,4 +58,14 @@ class GatewayController extends AbstractGatewayController
     {
         return $this->getFacade()->deleteWishlistItem($wishlistItemRequestTransfer);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistItemRequestTransfer $wishlistItemRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistItemResponseTransfer
+     */
+    public function updateWishlistItemAction(WishlistItemRequestTransfer $wishlistItemRequestTransfer): WishlistItemResponseTransfer
+    {
+        return $this->getFacade()->updateWishlistItem($wishlistItemRequestTransfer);
+    }
 }

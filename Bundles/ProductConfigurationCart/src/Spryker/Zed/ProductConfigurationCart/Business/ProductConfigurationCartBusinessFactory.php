@@ -22,6 +22,7 @@ use Spryker\Zed\ProductConfigurationCart\Business\Expander\ProductConfigurationP
 use Spryker\Zed\ProductConfigurationCart\Business\Expander\ProductConfigurationPriceProductExpanderInterface;
 use Spryker\Zed\ProductConfigurationCart\Business\Validator\QuoteRequestProductConfigurationValidator;
 use Spryker\Zed\ProductConfigurationCart\Business\Validator\QuoteRequestProductConfigurationValidatorInterface;
+use Spryker\Zed\ProductConfigurationCart\Dependency\Facade\ProductConfigurationCartToProductConfigurationFacadeInterface;
 use Spryker\Zed\ProductConfigurationCart\Dependency\Service\ProductConfigurationCartToProductConfigurationServiceInterface;
 use Spryker\Zed\ProductConfigurationCart\ProductConfigurationCartDependencyProvider;
 
@@ -43,7 +44,9 @@ class ProductConfigurationCartBusinessFactory extends AbstractBusinessFactory
      */
     public function createProductConfigurationChecker(): ProductConfigurationCheckerInterface
     {
-        return new ProductConfigurationChecker();
+        return new ProductConfigurationChecker(
+            $this->getProductConfigurationFacade(),
+        );
     }
 
     /**
@@ -99,5 +102,13 @@ class ProductConfigurationCartBusinessFactory extends AbstractBusinessFactory
     public function getProductConfigurationService(): ProductConfigurationCartToProductConfigurationServiceInterface
     {
         return $this->getProvidedDependency(ProductConfigurationCartDependencyProvider::SERVICE_PRODUCT_CONFIGURATION);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductConfigurationCart\Dependency\Facade\ProductConfigurationCartToProductConfigurationFacadeInterface
+     */
+    public function getProductConfigurationFacade(): ProductConfigurationCartToProductConfigurationFacadeInterface
+    {
+        return $this->getProvidedDependency(ProductConfigurationCartDependencyProvider::FACADE_PRODUCT_CONFIGURATION);
     }
 }

@@ -13,6 +13,8 @@ use Spryker\Zed\Wishlist\Business\Deleter\WishlistDeleterInterface;
 use Spryker\Zed\Wishlist\Business\Model\Reader;
 use Spryker\Zed\Wishlist\Business\Model\Writer;
 use Spryker\Zed\Wishlist\Business\Transfer\WishlistTransferMapper;
+use Spryker\Zed\Wishlist\Business\Updater\WishlistItemUpdater;
+use Spryker\Zed\Wishlist\Business\Updater\WishlistItemUpdaterInterface;
 use Spryker\Zed\Wishlist\WishlistDependencyProvider;
 
 /**
@@ -75,6 +77,20 @@ class WishlistBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\Wishlist\Business\Updater\WishlistItemUpdaterInterface
+     */
+    public function createWishlistItemUpdater(): WishlistItemUpdaterInterface
+    {
+        return new WishlistItemUpdater(
+            $this->getEntityManager(),
+            $this->getRepository(),
+            $this->getProductFacade(),
+            $this->getUpdateItemPreCheckPlugins(),
+            $this->getWishlistPreUpdateItemPlugins(),
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\Wishlist\Dependency\QueryContainer\WishlistToProductBridge
      */
     protected function getProductQueryContainer()
@@ -107,6 +123,14 @@ class WishlistBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return array<\Spryker\Zed\WishlistExtension\Dependency\Plugin\UpdateItemPreCheckPluginInterface>
+     */
+    public function getUpdateItemPreCheckPlugins(): array
+    {
+        return $this->getProvidedDependency(WishlistDependencyProvider::PLUGINS_UPDATE_ITEM_PRE_CHECK);
+    }
+
+    /**
      * @return array<\Spryker\Zed\WishlistExtension\Dependency\Plugin\WishlistReloadItemsPluginInterface>
      */
     public function getWishlistReloadItemsPlugins(): array
@@ -128,6 +152,14 @@ class WishlistBusinessFactory extends AbstractBusinessFactory
     public function getWishlistPreAddItemPlugins()
     {
         return $this->getProvidedDependency(WishlistDependencyProvider::PLUGINS_WISHLIST_PRE_ADD_ITEM);
+    }
+
+    /**
+     * @return array<\Spryker\Zed\WishlistExtension\Dependency\Plugin\WishlistPreUpdateItemPluginInterface>
+     */
+    public function getWishlistPreUpdateItemPlugins(): array
+    {
+        return $this->getProvidedDependency(WishlistDependencyProvider::PLUGINS_WISHLIST_PRE_UPDATE_ITEM);
     }
 
     /**

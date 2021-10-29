@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\WishlistCollectionTransfer;
 use Generated\Shared\Transfer\WishlistFilterTransfer;
 use Generated\Shared\Transfer\WishlistItemCriteriaTransfer;
 use Generated\Shared\Transfer\WishlistItemMetaTransfer;
+use Generated\Shared\Transfer\WishlistItemResponseTransfer;
 use Generated\Shared\Transfer\WishlistItemTransfer;
 use Generated\Shared\Transfer\WishlistOverviewMetaTransfer;
 use Generated\Shared\Transfer\WishlistOverviewRequestTransfer;
@@ -186,6 +187,25 @@ class Reader implements ReaderInterface
         $wishlistItemTransfer = $this->executeWishlistItemExpanderPlugins($wishlistItemTransfer);
 
         return $wishlistItemTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistItemCriteriaTransfer $wishlistItemCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistItemResponseTransfer
+     */
+    public function getWishlistItem(WishlistItemCriteriaTransfer $wishlistItemCriteriaTransfer): WishlistItemResponseTransfer
+    {
+        $wishlistItemResponseTransfer = new WishlistItemResponseTransfer();
+        $wishlistItemTransfer = $this->findWishlistItem($wishlistItemCriteriaTransfer);
+
+        if (!$wishlistItemTransfer) {
+            return $wishlistItemResponseTransfer->setIsSuccess(false);
+        }
+
+        return $wishlistItemResponseTransfer
+            ->setIsSuccess(true)
+            ->setWishlistItem($wishlistItemTransfer);
     }
 
     /**

@@ -100,4 +100,22 @@ class WishlistsRestApiStub implements WishlistsRestApiStubInterface
 
         return $wishlistItemResponseTransfer;
     }
+
+    /**
+     * @uses \Spryker\Zed\WishlistsRestApi\Communication\Controller\GatewayController::updateWishlistItemAction()
+     *
+     * @param \Generated\Shared\Transfer\WishlistItemRequestTransfer $wishlistItemRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistItemResponseTransfer
+     */
+    public function updateWishlistItem(WishlistItemRequestTransfer $wishlistItemRequestTransfer): WishlistItemResponseTransfer
+    {
+        /** @var \Generated\Shared\Transfer\WishlistItemResponseTransfer $wishlistItemResponseTransfer */
+        $wishlistItemResponseTransfer = $this->zedStubClient->call(
+            '/wishlists-rest-api/gateway/update-wishlist-item',
+            $wishlistItemRequestTransfer,
+        );
+
+        return $wishlistItemResponseTransfer;
+    }
 }

@@ -25,6 +25,11 @@ use Generated\Shared\Transfer\ProductConfigurationTransfer;
 class ProductConfigurationFacadeTest extends Unit
 {
     /**
+     * @var string
+     */
+    protected const FAKE_SKU = 'FAKE_SKU';
+
+    /**
      * @var \SprykerTest\Zed\ProductConfiguration\ProductConfigurationBusinessTester
      */
     protected $tester;
@@ -84,5 +89,57 @@ class ProductConfigurationFacadeTest extends Unit
             $productConfigurationCollectionTransfer->getProductConfigurations(),
             'Expects empty collection when wrong product identifier passed to the criteria.',
         );
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetProductConfigurationCollectionBySku(): void
+    {
+        //Arrange
+        $productConcreteTransfer = $this->tester->haveProduct();
+        $productConfigurationTransfer = $this->tester->haveProductConfiguration(
+            [
+                ProductConfigurationTransfer::FK_PRODUCT => $productConcreteTransfer->getIdProductConcrete(),
+            ],
+        );
+
+        $productConfigurationFilterTransfer = (new ProductConfigurationFilterTransfer())
+            ->addSku($productConcreteTransfer->getSku());
+
+        //Act
+        $productConfigurationCollectionTransfer = $this->tester->getFacade()
+            ->getProductConfigurationCollection($productConfigurationFilterTransfer);
+
+        //Assert
+        $this->assertCount(1, $productConfigurationCollectionTransfer->getProductConfigurations());
+        $this->assertSame(
+            $productConfigurationTransfer->getIdProductConfiguration(),
+            $productConfigurationCollectionTransfer->getProductConfigurations()->offsetGet(0)->getIdProductConfiguration(),
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetProductConfigurationCollectionWithFakeSku(): void
+    {
+        //Arrange
+        $productConcreteTransfer = $this->tester->haveProduct();
+        $this->tester->haveProductConfiguration(
+            [
+                ProductConfigurationTransfer::FK_PRODUCT => $productConcreteTransfer->getIdProductConcrete(),
+            ],
+        );
+
+        $productConfigurationFilterTransfer = (new ProductConfigurationFilterTransfer())
+            ->addSku(static::FAKE_SKU);
+
+        //Act
+        $productConfigurationCollectionTransfer = $this->tester->getFacade()
+            ->getProductConfigurationCollection($productConfigurationFilterTransfer);
+
+        //Assert
+        $this->assertEmpty($productConfigurationCollectionTransfer->getProductConfigurations());
     }
 }

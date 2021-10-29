@@ -8,6 +8,7 @@
 namespace Spryker\Glue\WishlistsRestApi\Processor\Mapper;
 
 use Generated\Shared\Transfer\RestWishlistItemsAttributesTransfer;
+use Generated\Shared\Transfer\WishlistItemRequestTransfer;
 use Generated\Shared\Transfer\WishlistItemTransfer;
 
 class WishlistItemMapper implements WishlistItemMapperInterface
@@ -18,11 +19,20 @@ class WishlistItemMapper implements WishlistItemMapperInterface
     protected $restWishlistItemsAttributesMapperPlugins;
 
     /**
-     * @param array<\Spryker\Glue\WishlistsRestApiExtension\Dependency\Plugin\RestWishlistItemsAttributesMapperPluginInterface> $restWishlistItemsAttributesMapperPlugins
+     * @var array<\Spryker\Glue\WishlistsRestApiExtension\Dependency\Plugin\WishlistItemRequestMapperPluginInterface>
      */
-    public function __construct(array $restWishlistItemsAttributesMapperPlugins = [])
-    {
+    protected $wishlistItemRequestMapperPlugins;
+
+    /**
+     * @param array<\Spryker\Glue\WishlistsRestApiExtension\Dependency\Plugin\RestWishlistItemsAttributesMapperPluginInterface> $restWishlistItemsAttributesMapperPlugins
+     * @param array<\Spryker\Glue\WishlistsRestApiExtension\Dependency\Plugin\WishlistItemRequestMapperPluginInterface> $wishlistItemRequestMapperPlugins
+     */
+    public function __construct(
+        array $restWishlistItemsAttributesMapperPlugins = [],
+        array $wishlistItemRequestMapperPlugins = []
+    ) {
         $this->restWishlistItemsAttributesMapperPlugins = $restWishlistItemsAttributesMapperPlugins;
+        $this->wishlistItemRequestMapperPlugins = $wishlistItemRequestMapperPlugins;
     }
 
     /**
@@ -46,6 +56,26 @@ class WishlistItemMapper implements WishlistItemMapperInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\RestWishlistItemsAttributesTransfer $restWishlistItemsAttributesRequestTransfer
+     * @param \Generated\Shared\Transfer\WishlistItemRequestTransfer $wishlistItemRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistItemRequestTransfer
+     */
+    public function mapRestWishlistItemsAttributesToWishlistItemRequest(
+        RestWishlistItemsAttributesTransfer $restWishlistItemsAttributesRequestTransfer,
+        WishlistItemRequestTransfer $wishlistItemRequestTransfer
+    ): WishlistItemRequestTransfer {
+        $wishlistItemRequestTransfer
+            ->fromArray($restWishlistItemsAttributesRequestTransfer->toArray(), true)
+            ->setSku($restWishlistItemsAttributesRequestTransfer->getSku());
+
+        return $this->executeWishlistItemRequestMapperPlugins(
+            $restWishlistItemsAttributesRequestTransfer,
+            $wishlistItemRequestTransfer,
+        );
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
      * @param \Generated\Shared\Transfer\RestWishlistItemsAttributesTransfer $restWishlistItemsAttributesTransfer
      *
@@ -63,5 +93,25 @@ class WishlistItemMapper implements WishlistItemMapperInterface
         }
 
         return $restWishlistItemsAttributesTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RestWishlistItemsAttributesTransfer $restWishlistItemsAttributesRequestTransfer
+     * @param \Generated\Shared\Transfer\WishlistItemRequestTransfer $wishlistItemRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistItemRequestTransfer
+     */
+    protected function executeWishlistItemRequestMapperPlugins(
+        RestWishlistItemsAttributesTransfer $restWishlistItemsAttributesRequestTransfer,
+        WishlistItemRequestTransfer $wishlistItemRequestTransfer
+    ): WishlistItemRequestTransfer {
+        foreach ($this->wishlistItemRequestMapperPlugins as $wishlistItemRequestMapperPlugin) {
+            $wishlistItemRequestTransfer = $wishlistItemRequestMapperPlugin->map(
+                $restWishlistItemsAttributesRequestTransfer,
+                $wishlistItemRequestTransfer,
+            );
+        }
+
+        return $wishlistItemRequestTransfer;
     }
 }

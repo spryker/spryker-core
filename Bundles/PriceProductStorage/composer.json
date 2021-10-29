@@ -9,7 +9,7 @@
         "spryker/kernel": "^3.30.0",
         "spryker/log": "^3.0.0",
         "spryker/price-product": "^2.15.0 || ^4.24.0",
-        "spryker/price-product-storage-extension": "^1.2.0",
+        "spryker/price-product-storage-extension": "^1.3.0",
         "spryker/product": "^5.5.0 || ^6.0.0",
         "spryker/propel-orm": "^1.5.0",
         "spryker/quick-order-extension": "^1.1.0",

@@ -598,6 +598,28 @@ class WishlistFacadeTest extends Test
     /**
      * @return void
      */
+    public function testGetCustomerWishlistCollectionEnsureThatNumberOfItemsIsZero(): void
+    {
+        // Arrange
+        $customerTransfer = $this->tester->haveCustomer();
+        $this->tester->haveWishlist([
+            WishlistTransfer::FK_CUSTOMER => $customerTransfer->getIdCustomer(),
+        ]);
+
+        // Act
+        $wishlistCollectionTransfer = $this->wishlistFacade->getCustomerWishlistCollection($customerTransfer);
+
+        // Assert
+        $this->assertSame(
+            0,
+            $wishlistCollectionTransfer->getWishlists()->offsetGet(0)->getNumberOfItems(),
+            'Customer wishlist should contain expected number of wishlist items.',
+        );
+    }
+
+    /**
+     * @return void
+     */
     public function testGetWishlistByFilterShouldReturnWishlistByName(): void
     {
         // Arrange

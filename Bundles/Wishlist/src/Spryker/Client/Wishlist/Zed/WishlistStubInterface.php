@@ -10,6 +10,8 @@ namespace Spryker\Client\Wishlist\Zed;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\WishlistFilterTransfer;
 use Generated\Shared\Transfer\WishlistItemCollectionTransfer;
+use Generated\Shared\Transfer\WishlistItemCriteriaTransfer;
+use Generated\Shared\Transfer\WishlistItemResponseTransfer;
 use Generated\Shared\Transfer\WishlistItemTransfer;
 use Generated\Shared\Transfer\WishlistOverviewRequestTransfer;
 use Generated\Shared\Transfer\WishlistResponseTransfer;
@@ -107,4 +109,18 @@ interface WishlistStubInterface
      * @return \Generated\Shared\Transfer\WishlistResponseTransfer
      */
     public function getWishlistByFilter(WishlistFilterTransfer $wishlistFilterTransfer): WishlistResponseTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistItemCriteriaTransfer $wishlistItemCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistItemResponseTransfer
+     */
+    public function getWishlistItem(WishlistItemCriteriaTransfer $wishlistItemCriteriaTransfer): WishlistItemResponseTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistItemResponseTransfer
+     */
+    public function updateWishlistItem(WishlistItemTransfer $wishlistItemTransfer): WishlistItemResponseTransfer;
 }

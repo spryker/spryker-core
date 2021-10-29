@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductConfigurationCart;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\ProductConfigurationCart\Dependency\Facade\ProductConfigurationCartToProductConfigurationFacadeBridge;
 use Spryker\Zed\ProductConfigurationCart\Dependency\Service\ProductConfigurationCartToProductConfigurationServiceBridge;
 
 /**
@@ -22,6 +23,11 @@ class ProductConfigurationCartDependencyProvider extends AbstractBundleDependenc
     public const SERVICE_PRODUCT_CONFIGURATION = 'SERVICE_PRODUCT_CONFIGURATION';
 
     /**
+     * @var string
+     */
+    public const FACADE_PRODUCT_CONFIGURATION = 'FACADE_PRODUCT_CONFIGURATION';
+
+    /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -31,6 +37,7 @@ class ProductConfigurationCartDependencyProvider extends AbstractBundleDependenc
         $container = parent::provideBusinessLayerDependencies($container);
 
         $container = $this->addProductConfigurationService($container);
+        $container = $this->addProductConfigurationFacade($container);
 
         return $container;
     }
@@ -45,6 +52,22 @@ class ProductConfigurationCartDependencyProvider extends AbstractBundleDependenc
         $container->set(static::SERVICE_PRODUCT_CONFIGURATION, function (Container $container) {
             return new ProductConfigurationCartToProductConfigurationServiceBridge(
                 $container->getLocator()->productConfiguration()->service(),
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductConfigurationFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_PRODUCT_CONFIGURATION, function (Container $container) {
+            return new ProductConfigurationCartToProductConfigurationFacadeBridge(
+                $container->getLocator()->productConfiguration()->facade(),
             );
         });
 

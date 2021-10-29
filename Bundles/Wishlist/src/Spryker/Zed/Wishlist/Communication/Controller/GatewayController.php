@@ -10,6 +10,8 @@ namespace Spryker\Zed\Wishlist\Communication\Controller;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\WishlistFilterTransfer;
 use Generated\Shared\Transfer\WishlistItemCollectionTransfer;
+use Generated\Shared\Transfer\WishlistItemCriteriaTransfer;
+use Generated\Shared\Transfer\WishlistItemResponseTransfer;
 use Generated\Shared\Transfer\WishlistItemTransfer;
 use Generated\Shared\Transfer\WishlistOverviewRequestTransfer;
 use Generated\Shared\Transfer\WishlistResponseTransfer;
@@ -149,5 +151,25 @@ class GatewayController extends AbstractGatewayController
     public function getWishlistByFilterAction(WishlistFilterTransfer $wishlistFilterTransfer): WishlistResponseTransfer
     {
         return $this->getFacade()->getWishlistByFilter($wishlistFilterTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistItemCriteriaTransfer $wishlistItemCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistItemResponseTransfer
+     */
+    public function getWishlistItemAction(WishlistItemCriteriaTransfer $wishlistItemCriteriaTransfer): WishlistItemResponseTransfer
+    {
+        return $this->getFacade()->getWishlistItem($wishlistItemCriteriaTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistItemResponseTransfer
+     */
+    public function updateWishlistItemAction(WishlistItemTransfer $wishlistItemTransfer): WishlistItemResponseTransfer
+    {
+        return $this->getFacade()->updateWishlistItem($wishlistItemTransfer);
     }
 }

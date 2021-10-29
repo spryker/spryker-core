@@ -7,6 +7,7 @@
         "php": ">=7.4",
         "spryker/kernel": "^3.56.0",
         "spryker/product-configuration": "^0.2.0",
+        "spryker/product-configuration-wishlists-rest-api-extension": "^0.1.0",
         "spryker/product-configurations-rest-api-extension": "^0.2.0",
         "spryker/transfer": "^3.25.0",
         "spryker/util-encoding": "^2.0.0"

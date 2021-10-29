@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductDiscontinued\Business\WishlistCheck;
 
 use Generated\Shared\Transfer\WishlistItemTransfer;
 use Generated\Shared\Transfer\WishlistPreAddItemCheckResponseTransfer;
+use Generated\Shared\Transfer\WishlistPreUpdateItemCheckResponseTransfer;
 
 interface WishlistAddItemPreCheckInterface
 {
@@ -18,4 +19,11 @@ interface WishlistAddItemPreCheckInterface
      * @return \Generated\Shared\Transfer\WishlistPreAddItemCheckResponseTransfer
      */
     public function checkWishlistItemProductIsNotDiscontinued(WishlistItemTransfer $wishlistItemTransfer): WishlistPreAddItemCheckResponseTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistPreUpdateItemCheckResponseTransfer
+     */
+    public function checkUpdateWishlistItemProductIsNotDiscontinued(WishlistItemTransfer $wishlistItemTransfer): WishlistPreUpdateItemCheckResponseTransfer;
 }

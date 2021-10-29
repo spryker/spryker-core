@@ -8,6 +8,8 @@
 namespace SprykerTest\Zed\Wishlist;
 
 use Codeception\Actor;
+use Generated\Shared\Transfer\WishlistItemCriteriaTransfer;
+use Generated\Shared\Transfer\WishlistItemTransfer;
 
 /**
  * @method void wantToTest($text)
@@ -20,10 +22,26 @@ use Codeception\Actor;
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
+ * @method \Spryker\Zed\Wishlist\Business\WishlistFacadeInterface getFacade()
  *
  * @SuppressWarnings(PHPMD)
  */
 class WishlistBusinessTester extends Actor
 {
     use _generated\WishlistBusinessTesterActions;
+
+    /**
+     * @param int $idWishlistItem
+     *
+     * @return \Generated\Shared\Transfer\WishlistItemTransfer
+     */
+    public function getWishlistItemFromPersistence(int $idWishlistItem): WishlistItemTransfer
+    {
+        $wishlistItemCriteriaTransfer = (new WishlistItemCriteriaTransfer())
+            ->setIdWishlistItem($idWishlistItem);
+
+        return $this->getFacade()
+            ->getWishlistItem($wishlistItemCriteriaTransfer)
+            ->getWishlistItemOrFail();
+    }
 }

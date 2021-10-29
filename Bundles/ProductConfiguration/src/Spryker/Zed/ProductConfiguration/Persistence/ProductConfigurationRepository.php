@@ -41,6 +41,8 @@ class ProductConfigurationRepository extends AbstractRepository implements Produ
     }
 
     /**
+     * @module Product
+     *
      * @param \Orm\Zed\ProductConfiguration\Persistence\SpyProductConfigurationQuery $productConfigurationQuery
      * @param \Generated\Shared\Transfer\ProductConfigurationFilterTransfer $productConfigurationFilterTransfer
      *
@@ -54,6 +56,13 @@ class ProductConfigurationRepository extends AbstractRepository implements Produ
 
         if ($productConfigurationIds) {
             $productConfigurationQuery->filterByIdProductConfiguration_In($productConfigurationIds);
+        }
+
+        if ($productConfigurationFilterTransfer->getSkus()) {
+            $productConfigurationQuery
+                ->useSpyProductQuery()
+                    ->filterBySku_In(array_unique($productConfigurationFilterTransfer->getSkus()))
+                ->endUse();
         }
 
         if ($productConfigurationFilterTransfer->getFilter()) {

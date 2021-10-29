@@ -29,6 +29,7 @@
 
     <transfer name="ProductConfigurationFilter">
         <property name="productConfigurationIds" type="int[]" singular="productConfigurationId"/>
+        <property name="skus" type="string[]" singular="sku"/>
         <property name="filter" type="Filter"/>
     </transfer>
 

@@ -32,7 +32,7 @@ class MerchantProductOfferWishlistDependencyProvider extends AbstractBundleDepen
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    public function provideCommunicationLayerDependencies(Container $container)
+    public function provideCommunicationLayerDependencies(Container $container): Container
     {
         $container = parent::provideCommunicationLayerDependencies($container);
 
@@ -47,7 +47,7 @@ class MerchantProductOfferWishlistDependencyProvider extends AbstractBundleDepen
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    public function provideBusinessLayerDependencies(Container $container)
+    public function provideBusinessLayerDependencies(Container $container): Container
     {
         $container = parent::provideCommunicationLayerDependencies($container);
 

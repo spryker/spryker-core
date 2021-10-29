@@ -58,4 +58,8 @@
         <property name="concreteSkus" type="string[]" singular="concreteSku"/>
     </transfer>
 
+    <transfer name="WishlistPreUpdateItemCheckResponse">
+        <property name="isSuccess" type="bool"/>
+    </transfer>
+
 </transfers>

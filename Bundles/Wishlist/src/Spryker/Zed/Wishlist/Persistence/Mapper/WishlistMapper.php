@@ -92,7 +92,9 @@ class WishlistMapper implements WishlistMapperInterface
         SpyWishlistItem $wishlistItemEntity,
         WishlistItemTransfer $wishlistItemTransfer
     ): WishlistItemTransfer {
-        return $wishlistItemTransfer->fromArray($wishlistItemEntity->toArray(), true);
+        return $wishlistItemTransfer
+            ->fromArray($wishlistItemEntity->toArray(), true)
+            ->setWishlistName($wishlistItemEntity->getSpyWishlist()->getName());
     }
 
     /**

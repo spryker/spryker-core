@@ -74,4 +74,18 @@ class WishlistsRestApiClient extends AbstractClient implements WishlistsRestApiC
     {
         return $this->getFactory()->createZedStub()->deleteWishlistItem($wishlistItemRequestTransfer);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\WishlistItemRequestTransfer $wishlistItemRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistItemResponseTransfer
+     */
+    public function updateWishlistItem(WishlistItemRequestTransfer $wishlistItemRequestTransfer): WishlistItemResponseTransfer
+    {
+        return $this->getFactory()->createZedStub()->updateWishlistItem($wishlistItemRequestTransfer);
+    }
 }

@@ -96,4 +96,8 @@
         <property name="parameters" type="array" singular="parameters"/>
     </transfer>
 
+    <transfer name="WishlistPreUpdateItemCheckResponse">
+        <property name="isSuccess" type="bool"/>
+    </transfer>
+
 </transfers>

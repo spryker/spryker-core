@@ -20,6 +20,9 @@ class ProductViewPriceExpanderPlugin extends AbstractPlugin implements ProductVi
      * {@inheritDoc}
      * - Adds price value based on current store settings.
      * - Adds prices key-value array of available price types (e.g. DEFAULT, ORIGINAL).
+     * - Executes `PriceProductExpanderPluginInterface` plugin stack.
+     * - Executes `PriceProductFilterExpanderPluginInterface` plugin stack.
+     * - Returns expanded `ProductViewTransfer`.
      *
      * @api
      *

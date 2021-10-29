@@ -73,6 +73,27 @@ class WishlistEntityManager extends AbstractEntityManager implements WishlistEnt
     }
 
     /**
+     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistItemTransfer
+     */
+    public function updateWishlistItem(WishlistItemTransfer $wishlistItemTransfer): WishlistItemTransfer
+    {
+        $wishlistItemEntity = $this->getFactory()
+            ->createWishlistItemQuery()
+            ->filterByIdWishlistItem($wishlistItemTransfer->getIdWishlistItemOrFail())
+            ->findOne();
+
+        $wishlistItemEntity = $this->getFactory()
+            ->createWishlistMapper()
+            ->mapWishlistItemTransferToWishlistItemEntity($wishlistItemTransfer, $wishlistItemEntity);
+
+        $wishlistItemEntity->save();
+
+        return $wishlistItemTransfer;
+    }
+
+    /**
      * @phpstan-param \Orm\Zed\Wishlist\Persistence\SpyWishlistItemQuery<mixed> $wishlistItemQuery
      *
      * @phpstan-return \Orm\Zed\Wishlist\Persistence\SpyWishlistItemQuery<mixed>

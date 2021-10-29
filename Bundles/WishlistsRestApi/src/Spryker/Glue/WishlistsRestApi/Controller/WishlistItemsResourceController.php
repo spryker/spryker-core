@@ -74,4 +74,37 @@ class WishlistItemsResourceController extends AbstractController
             ->createWishlistItemAdder()
             ->add($restWishlistItemsAttributesTransfer, $restRequest);
     }
+
+    /**
+     * @Glue({
+     *     "patch": {
+     *          "path": "/wishlists/{wishlistId}/wishlist-items/{wishlistItemId}",
+     *          "summary": [
+     *              "Updates the wishlist item."
+     *          ],
+     *          "parameters": [{
+     *              "ref": "acceptLanguage"
+     *          }],
+     *          "responses": {
+     *              "403": "Unauthorized request.",
+     *              "404": "Wishlist not found.",
+     *              "422": "Cannot update the wishlist list item."
+     *          },
+     *          "responseAttributesClassName": "\\Generated\\Shared\\Transfer\\RestWishlistItemsAttributesTransfer"
+     *     }
+     * })
+     *
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param \Generated\Shared\Transfer\RestWishlistItemsAttributesTransfer $restWishlistItemsAttributesTransfer
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function patchAction(
+        RestRequestInterface $restRequest,
+        RestWishlistItemsAttributesTransfer $restWishlistItemsAttributesTransfer
+    ): RestResponseInterface {
+        return $this->getFactory()
+            ->createWishlistItemUpdater()
+            ->update($restRequest, $restWishlistItemsAttributesTransfer);
+    }
 }

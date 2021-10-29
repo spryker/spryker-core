@@ -10,6 +10,8 @@ namespace Spryker\Zed\Wishlist\Business;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\WishlistFilterTransfer;
 use Generated\Shared\Transfer\WishlistItemCollectionTransfer;
+use Generated\Shared\Transfer\WishlistItemCriteriaTransfer;
+use Generated\Shared\Transfer\WishlistItemResponseTransfer;
 use Generated\Shared\Transfer\WishlistItemTransfer;
 use Generated\Shared\Transfer\WishlistOverviewRequestTransfer;
 use Generated\Shared\Transfer\WishlistResponseTransfer;
@@ -231,4 +233,36 @@ interface WishlistFacadeInterface
      * @return \Generated\Shared\Transfer\WishlistResponseTransfer
      */
     public function getWishlistByFilter(WishlistFilterTransfer $wishlistFilterTransfer): WishlistResponseTransfer;
+
+    /**
+     * Specification:
+     * - Retrieves wishlist item by data provided in the `WishlistItemCriteriaTransfer`.
+     * - Executes `WishlistItemExpanderPluginInterface` plugins stack.
+     * - Returns "isSuccess=true" and return transfer on success or `isSuccess=false` otherwise.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\WishlistItemCriteriaTransfer $wishlistItemCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistItemResponseTransfer
+     */
+    public function getWishlistItem(WishlistItemCriteriaTransfer $wishlistItemCriteriaTransfer): WishlistItemResponseTransfer;
+
+    /**
+     * Specification:
+     * - Expects `WishlistItemTransfer.idWishlistItem` to be set.
+     * - Expects `WishlistItemTransfer.sku` to be set.
+     * - Executes `UpdateItemPreCheckPluginInterface` plugin stack.
+     * - Retrieves wishlist item by data provided in the `WishlistItemTransfer` from Persistence.
+     * - Executes `WishlistPreUpdateItemPluginInterface` plugin stack.
+     * - Updates existing wishlist item in database.
+     * - Returns `isSuccess=true` with updated wishlist item on success or `isSuccess=false` with error messages otherwise.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistItemResponseTransfer
+     */
+    public function updateWishlistItem(WishlistItemTransfer $wishlistItemTransfer): WishlistItemResponseTransfer;
 }

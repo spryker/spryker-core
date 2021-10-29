@@ -408,4 +408,90 @@ class WishlistsRestApiFacadeTest extends Test
             $wishlistItemResponseTransfer->getErrorIdentifier(),
         );
     }
+
+    /**
+     * @return void
+     */
+    public function testUpdateWishlistItemShouldUpdateItem(): void
+    {
+        //Arrange
+        $wishlistName = 'name';
+        $wishlist = $this->tester->haveWishlist(
+            [
+                'name' => $wishlistName,
+                'fkCustomer' => $this->customer->getIdCustomer(),
+            ],
+        );
+
+        $concreteProduct = $this->tester->haveProduct();
+
+        $wishlistItem = $this->tester->haveItemInWishlist(
+            [
+                'fkWishlist' => $wishlist->getIdWishlist(),
+                'fkCustomer' => $this->customer->getIdCustomer(),
+                'sku' => $concreteProduct->getSku(),
+                'wishlistName' => $wishlist->getName(),
+            ],
+        );
+
+        $secondConcreteProduct = $this->tester->haveProduct();
+
+        $wishlistItemRequestTransfer = (new WishlistItemRequestTransfer())
+            ->setUuidWishlist($wishlist->getUuid())
+            ->setIdCustomer($this->customer->getIdCustomer())
+            ->setSku($secondConcreteProduct->getSku())
+            ->setUuid($wishlistItem->getSku());
+
+        //Act
+        $wishlistItemResponseTransfer = $this->tester->getWishlistsRestApiFacade()->updateWishlistItem($wishlistItemRequestTransfer);
+
+        //Assert
+        $wishlistTransfer = $this->tester->getWishlistByName($this->customer->getIdCustomer(), $wishlistName);
+
+        $this->assertTrue($wishlistItemResponseTransfer->getIsSuccess());
+        $this->assertEmpty($wishlistItemResponseTransfer->getErrors());
+        $this->assertNull($wishlistItemResponseTransfer->getErrorIdentifier());
+        $this->assertNotNull($wishlistTransfer->getIdWishlist());
+        $this->assertSame(
+            $secondConcreteProduct->getSku(),
+            $wishlistItemResponseTransfer->getWishlistItem()->getSku(),
+        );
+        $this->assertNotSame(
+            $concreteProduct->getSku(),
+            $wishlistItemResponseTransfer->getWishlistItem()->getSku(),
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpdateNonExistingWishlistItemShouldReturnError(): void
+    {
+        //Arrange
+        $wishlistName = 'name';
+        $wishlist = $this->tester->haveWishlist(
+            [
+                'name' => $wishlistName,
+                'fkCustomer' => $this->customer->getIdCustomer(),
+            ],
+        );
+
+        $secondConcreteProduct = $this->tester->haveProduct();
+
+        $wishlistItemRequestTransfer = (new WishlistItemRequestTransfer())
+            ->setUuidWishlist($wishlist->getUuid())
+            ->setIdCustomer($this->customer->getIdCustomer())
+            ->setSku($secondConcreteProduct->getSku())
+            ->setUuid('FAKE_SKU');
+
+        //Act
+        $wishlistItemResponseTransfer = $this->tester->getWishlistsRestApiFacade()->updateWishlistItem($wishlistItemRequestTransfer);
+
+        //Assert
+        $this->assertFalse($wishlistItemResponseTransfer->getIsSuccess());
+        $this->assertSame(
+            WishlistsRestApiConfig::ERROR_IDENTIFIER_ITEM_WITH_SKU_NOT_FOUND_IN_WISHLIST,
+            $wishlistItemResponseTransfer->getErrorIdentifier(),
+        );
+    }
 }

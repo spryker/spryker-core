@@ -10,4 +10,7 @@
     <transfer name="WishlistItemRequest">
     </transfer>
 
+    <transfer name="WishlistItemResponse">
+    </transfer>
+
 </transfers>
