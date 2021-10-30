@@ -94,7 +94,7 @@ class ConfigurableBundleTemplatePublisher implements ConfigurableBundleTemplateP
 
     /**
      * @param array<\Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer> $configurableBundleTemplateTransfers
-     * @param array<\Generated\Shared\Transfer\ConfigurableBundleTemplatePageSearchTransfer[]> $groupedConfigurableBundleTemplatePageSearchTransfers
+     * @param array<array<\Generated\Shared\Transfer\ConfigurableBundleTemplatePageSearchTransfer>> $groupedConfigurableBundleTemplatePageSearchTransfers
      *
      * @return void
      */
@@ -121,7 +121,7 @@ class ConfigurableBundleTemplatePublisher implements ConfigurableBundleTemplateP
     /**
      * @param array<int> $configurableBundleTemplateIds
      *
-     * @return array<\Generated\Shared\Transfer\ConfigurableBundleTemplatePageSearchTransfer[]>
+     * @return array<array<\Generated\Shared\Transfer\ConfigurableBundleTemplatePageSearchTransfer>>
      */
     protected function getConfigurableBundleTemplatePageSearchTransfers(array $configurableBundleTemplateIds): array
     {
@@ -135,7 +135,7 @@ class ConfigurableBundleTemplatePublisher implements ConfigurableBundleTemplateP
     /**
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplatePageSearchCollectionTransfer $configurableBundleTemplatePageSearchCollectionTransfer
      *
-     * @return array<\Generated\Shared\Transfer\ConfigurableBundleTemplatePageSearchTransfer[]>
+     * @return array<array<\Generated\Shared\Transfer\ConfigurableBundleTemplatePageSearchTransfer>>
      */
     protected function groupConfigurableBundleTemplatePageSearchTransfers(
         ConfigurableBundleTemplatePageSearchCollectionTransfer $configurableBundleTemplatePageSearchCollectionTransfer

@@ -15,7 +15,7 @@ use Spryker\Zed\Payment\Exception\CheckoutPluginNotFoundException;
 class CheckoutPluginCollection implements CheckoutPluginCollectionInterface
 {
     /**
-     * @var array<\Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPluginInterface[]>
+     * @var array<array<\Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPluginInterface>>
      */
     protected $plugins = [];
 

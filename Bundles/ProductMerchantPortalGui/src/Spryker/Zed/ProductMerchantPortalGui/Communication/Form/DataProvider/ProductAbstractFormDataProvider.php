@@ -126,7 +126,7 @@ class ProductAbstractFormDataProvider implements ProductAbstractFormDataProvider
     }
 
     /**
-     * @return array<int[]>
+     * @return array<array<int>>
      */
     public function getOptions(): array
     {

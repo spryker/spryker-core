@@ -128,7 +128,7 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
     /**
      * @param string $bundledProductSku
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductBundle\Persistence\SpyProductBundle>
+     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductBundle\Persistence\SpyProductBundle[]
      */
     protected function getBundlesUsingProductBySku($bundledProductSku)
     {

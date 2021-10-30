@@ -56,7 +56,7 @@ class ValidityUpdater implements ValidityUpdaterInterface
     }
 
     /**
-     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductLabel\Persistence\SpyProductLabel>
+     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductLabel\Persistence\SpyProductLabel[]
      */
     protected function findLabelsBecomingActive()
     {
@@ -67,7 +67,7 @@ class ValidityUpdater implements ValidityUpdaterInterface
     }
 
     /**
-     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductLabel\Persistence\SpyProductLabel>
+     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductLabel\Persistence\SpyProductLabel[]
      */
     protected function findLabelsBecomingInactive()
     {
@@ -78,8 +78,8 @@ class ValidityUpdater implements ValidityUpdaterInterface
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductLabel\Persistence\SpyProductLabel> $productLabelsBecomingActive
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductLabel\Persistence\SpyProductLabel> $productLabelsBecomingInactive
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductLabel\Persistence\SpyProductLabel[] $productLabelsBecomingActive
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductLabel\Persistence\SpyProductLabel[] $productLabelsBecomingInactive
      *
      * @return void
      */
@@ -92,7 +92,7 @@ class ValidityUpdater implements ValidityUpdaterInterface
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductLabel\Persistence\SpyProductLabel> $productLabelEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductLabel\Persistence\SpyProductLabel[] $productLabelEntities
      *
      * @return void
      */
@@ -105,7 +105,7 @@ class ValidityUpdater implements ValidityUpdaterInterface
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductLabel\Persistence\SpyProductLabel> $productLabelEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductLabel\Persistence\SpyProductLabel[] $productLabelEntities
      *
      * @return void
      */

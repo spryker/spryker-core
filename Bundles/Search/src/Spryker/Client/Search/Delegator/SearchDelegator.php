@@ -173,7 +173,7 @@ class SearchDelegator implements SearchDelegatorInterface
     /**
      * @param array<\Generated\Shared\Transfer\SearchDocumentTransfer> $searchDocumentTransfers
      *
-     * @return array<\Generated\Shared\Transfer\SearchDocumentTransfer[]>
+     * @return array<array<\Generated\Shared\Transfer\SearchDocumentTransfer>>
      */
     protected function groupSearchDocumentTransfersBySearchAdapterPluginName(array $searchDocumentTransfers): array
     {

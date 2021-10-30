@@ -102,7 +102,7 @@ class NavigationStorageWriter implements NavigationStorageWriterInterface
     }
 
     /**
-     * @param array<\Generated\Shared\Transfer\NavigationTreeTransfer[]> $navigationTreeTransfers
+     * @param array<array<\Generated\Shared\Transfer\NavigationTreeTransfer>> $navigationTreeTransfers
      * @param array $spyNavigationMenuTranslationStorageEntities
      *
      * @return void
@@ -149,7 +149,7 @@ class NavigationStorageWriter implements NavigationStorageWriterInterface
     /**
      * @param array $navigationIds
      *
-     * @return array<\Generated\Shared\Transfer\NavigationTreeTransfer[]>
+     * @return array<array<\Generated\Shared\Transfer\NavigationTreeTransfer>>
      */
     protected function getNavigationTreeTransfer(array $navigationIds)
     {

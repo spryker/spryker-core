@@ -514,8 +514,6 @@ class ProductAttributesController extends AbstractController
     }
 
     /**
-     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer> $localizedAttributesTransfers
-     *
      * @param \ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer> $localizedAttributesTransfers
      * @param string $attributeName
      *

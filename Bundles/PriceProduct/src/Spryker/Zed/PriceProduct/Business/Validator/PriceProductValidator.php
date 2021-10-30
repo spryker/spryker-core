@@ -46,8 +46,6 @@ class PriceProductValidator implements PriceProductValidatorInterface
     }
 
     /**
-     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
-     *
      * @param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      *
      * @return \Generated\Shared\Transfer\ValidationResponseTransfer
@@ -62,8 +60,6 @@ class PriceProductValidator implements PriceProductValidatorInterface
     }
 
     /**
-     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
-     *
      * @param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      * @param \Generated\Shared\Transfer\ValidationResponseTransfer $validationResponseTransfer
      *
@@ -100,8 +96,6 @@ class PriceProductValidator implements PriceProductValidatorInterface
     }
 
     /**
-     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
-     *
      * @param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      * @param \Generated\Shared\Transfer\ValidationResponseTransfer $validationResponseTransfer
      *

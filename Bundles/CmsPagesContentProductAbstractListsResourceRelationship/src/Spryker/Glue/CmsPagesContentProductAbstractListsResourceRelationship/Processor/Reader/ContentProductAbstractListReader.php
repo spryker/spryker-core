@@ -51,7 +51,7 @@ class ContentProductAbstractListReader implements ContentProductAbstractListRead
      * @param array<string> $cmsPageUuids
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
-     * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]>
+     * @return array<array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>>
      */
     public function getContentProductAbstractListsResources(array $cmsPageUuids, RestRequestInterface $restRequest): array
     {
@@ -92,7 +92,7 @@ class ContentProductAbstractListReader implements ContentProductAbstractListRead
      *
      * @param array<\Generated\Shared\Transfer\CmsPageStorageTransfer> $cmsPageStorageTransfers
      *
-     * @return array<string[]>
+     * @return array<array<string>>
      */
     protected function getGroupedContentProductAbstractListKeys(array $cmsPageStorageTransfers): array
     {
@@ -117,9 +117,9 @@ class ContentProductAbstractListReader implements ContentProductAbstractListRead
      * @phpstan-return array<string, array<string, \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>>
      *
      * @param array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface> $contentProductAbstractListResources
-     * @param array<string[]> $groupedContentProductAbstractListKeys
+     * @param array<array<string>> $groupedContentProductAbstractListKeys
      *
-     * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]>
+     * @return array<array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>>
      */
     protected function groupContentProductAbstractListsByCmsPageUuid(
         array $contentProductAbstractListResources,

@@ -32,8 +32,6 @@ class VolumePriceHasBasePriceProductConstraintValidator extends ConstraintValida
     protected const PRICE_TYPE_DEFAULT = 'DEFAULT';
 
     /**
-     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
-     *
      * @param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      * @param \Symfony\Component\Validator\Constraint $constraint
      *

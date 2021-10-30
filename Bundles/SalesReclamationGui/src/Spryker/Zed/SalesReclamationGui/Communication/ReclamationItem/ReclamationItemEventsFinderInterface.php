@@ -13,7 +13,7 @@ interface ReclamationItemEventsFinderInterface
 {
     /**
      * @param \ArrayObject<int, \Generated\Shared\Transfer\ReclamationItemTransfer> $reclamationItems
-     * @param array<string[]> $eventsGroupedByItem
+     * @param array<array<string>> $eventsGroupedByItem
      *
      * @return array<string>
      */

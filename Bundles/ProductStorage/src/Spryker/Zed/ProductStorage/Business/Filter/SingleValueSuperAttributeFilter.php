@@ -15,10 +15,10 @@ class SingleValueSuperAttributeFilter implements SingleValueSuperAttributeFilter
     protected const SINGLE_VALUE_ATTRIBUTE_COUNT = 1;
 
     /**
-     * @param array<string[]> $productConcreteSuperAttributeMap
-     * @param array<string[]> $superAttributeVariations
+     * @param array<array<string>> $productConcreteSuperAttributeMap
+     * @param array<array<string>> $superAttributeVariations
      *
-     * @return array<string[]>
+     * @return array<array<string>>
      */
     public function filterOutSingleValueSuperAttributes(
         array $productConcreteSuperAttributeMap,
@@ -39,7 +39,7 @@ class SingleValueSuperAttributeFilter implements SingleValueSuperAttributeFilter
 
     /**
      * @param array<string> $attributes
-     * @param array<string[]> $superAttributeVariations
+     * @param array<array<string>> $superAttributeVariations
      *
      * @return array<string>
      */
@@ -60,7 +60,7 @@ class SingleValueSuperAttributeFilter implements SingleValueSuperAttributeFilter
     }
 
     /**
-     * @param array<string[]> $superAttributeVariations
+     * @param array<array<string>> $superAttributeVariations
      * @param string $attributeName
      *
      * @return bool

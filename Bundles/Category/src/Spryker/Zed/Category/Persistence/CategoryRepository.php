@@ -424,7 +424,7 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      * @param \Generated\Shared\Transfer\CategoryCriteriaTransfer $categoryCriteriaTransfer
      *
-     * @return array<\Generated\Shared\Transfer\NodeTransfer[]>
+     * @return array<array<\Generated\Shared\Transfer\NodeTransfer>>
      */
     public function getCategoryNodeChildNodesCollectionIndexedByParentNodeId(
         CategoryTransfer $categoryTransfer,
@@ -753,7 +753,7 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
     {
         $storeRelationTransfer = new StoreRelationTransfer();
 
-        /** @var \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Category\Persistence\SpyCategoryStore> $categoryStoreEntities */
+        /** @var \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Category\Persistence\SpyCategoryStore[] $categoryStoreEntities */
         $categoryStoreEntities = $this->getFactory()
             ->createCategoryStoreQuery()
             ->joinWithSpyCategory()

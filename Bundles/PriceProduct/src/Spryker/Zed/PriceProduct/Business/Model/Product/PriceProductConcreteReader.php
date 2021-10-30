@@ -287,7 +287,7 @@ class PriceProductConcreteReader implements PriceProductConcreteReaderInterface
     /**
      * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      *
-     * @return array<\Generated\Shared\Transfer\PriceProductTransfer[]>
+     * @return array<array<\Generated\Shared\Transfer\PriceProductTransfer>>
      */
     protected function indexPriceProductTransferByProductSku(array $priceProductTransfers): array
     {

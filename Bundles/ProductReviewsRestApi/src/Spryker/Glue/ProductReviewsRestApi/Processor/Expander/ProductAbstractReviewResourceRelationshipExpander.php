@@ -104,7 +104,7 @@ class ProductAbstractReviewResourceRelationshipExpander implements ProductAbstra
     }
 
     /**
-     * @param array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]> $productReviewsRestResourcesCollection
+     * @param array<array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>> $productReviewsRestResourcesCollection
      * @param array $productAbstractDataCollection
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $resource
      *

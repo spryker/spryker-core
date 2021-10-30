@@ -37,7 +37,7 @@ class ContentMapper implements ContentMapperInterface
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Content\Persistence\SpyContent> $contentEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Content\Persistence\SpyContent[] $contentEntities
      * @param array<\Generated\Shared\Transfer\ContentTransfer> $contentTransfers
      *
      * @return array<\Generated\Shared\Transfer\ContentTransfer>

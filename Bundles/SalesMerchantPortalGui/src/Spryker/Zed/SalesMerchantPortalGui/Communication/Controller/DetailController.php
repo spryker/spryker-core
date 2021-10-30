@@ -172,7 +172,7 @@ class DetailController extends AbstractSalesMerchantPortalGuiController
     /**
      * @param \Generated\Shared\Transfer\MerchantOrderTransfer $merchantOrderTransfer
      *
-     * @return array<\Generated\Shared\Transfer\MerchantOrderItemTransfer[]>
+     * @return array<array<\Generated\Shared\Transfer\MerchantOrderItemTransfer>>
      */
     protected function getMerchantOrderItemTransfersIndexedByIdShipment(MerchantOrderTransfer $merchantOrderTransfer): array
     {

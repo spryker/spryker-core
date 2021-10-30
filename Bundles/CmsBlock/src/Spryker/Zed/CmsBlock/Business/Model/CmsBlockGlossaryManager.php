@@ -168,7 +168,7 @@ class CmsBlockGlossaryManager implements CmsBlockGlossaryManagerInterface
      * @param int $idCmsBlock
      * @param array $placeholders
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\CmsBlock\Persistence\SpyCmsBlockGlossaryKeyMapping>
+     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\CmsBlock\Persistence\SpyCmsBlockGlossaryKeyMapping[]
      */
     protected function getGlossaryMappingCollection(int $idCmsBlock, array $placeholders): ObjectCollection
     {

@@ -66,7 +66,7 @@ class CategoryTreeStorageWriter implements CategoryTreeStorageWriterInterface
     }
 
     /**
-     * @param array<\Generated\Shared\Transfer\CategoryNodeStorageTransfer[][]> $categoryNodeStorageTransferTreesIndexedByStoreAndLocale
+     * @param array<array<array<\Generated\Shared\Transfer\CategoryNodeStorageTransfer>>> $categoryNodeStorageTransferTreesIndexedByStoreAndLocale
      *
      * @return void
      */
@@ -106,7 +106,7 @@ class CategoryTreeStorageWriter implements CategoryTreeStorageWriterInterface
     }
 
     /**
-     * @return array<\Generated\Shared\Transfer\CategoryNodeStorageTransfer[][]>
+     * @return array<array<array<\Generated\Shared\Transfer\CategoryNodeStorageTransfer>>>
      */
     protected function getCategoryNodeStorageTransferTrees(): array
     {

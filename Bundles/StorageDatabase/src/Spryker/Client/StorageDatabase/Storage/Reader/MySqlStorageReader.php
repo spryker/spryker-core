@@ -104,7 +104,7 @@ class MySqlStorageReader extends AbstractStorageReader
 
     /**
      * @param \Propel\Runtime\Connection\StatementInterface $statement
-     * @param array<string[][]> $queryDataPerTable
+     * @param array<array<array<string>>> $queryDataPerTable
      *
      * @return \Propel\Runtime\Connection\StatementInterface
      */

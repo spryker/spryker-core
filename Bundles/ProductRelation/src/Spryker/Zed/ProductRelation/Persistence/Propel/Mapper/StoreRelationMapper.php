@@ -15,7 +15,7 @@ use Propel\Runtime\Collection\ObjectCollection;
 class StoreRelationMapper
 {
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductRelation\Persistence\SpyProductRelationStore> $productRelationStoreEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductRelation\Persistence\SpyProductRelationStore[] $productRelationStoreEntities
      * @param \Generated\Shared\Transfer\StoreRelationTransfer $storeRelationTransfer
      *
      * @return \Generated\Shared\Transfer\StoreRelationTransfer

@@ -208,7 +208,7 @@ class ProductValidator implements ProductValidatorInterface
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
-     * @return array<string[]>
+     * @return array<array<string>>
      */
     protected function getProductSkusFromCartChangeTransfer(CartChangeTransfer $cartChangeTransfer): array
     {

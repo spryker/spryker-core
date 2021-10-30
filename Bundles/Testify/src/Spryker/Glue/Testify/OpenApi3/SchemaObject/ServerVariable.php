@@ -12,7 +12,7 @@ use Spryker\Glue\Testify\OpenApi3\Primitive\StringPrimitive;
 use Spryker\Glue\Testify\OpenApi3\Property\PropertyDefinition;
 
 /**
- * @property-read string[] $enum
+ * @property-read array<string> $enum
  * @property-read string $default
  * @property-read string $description
  */

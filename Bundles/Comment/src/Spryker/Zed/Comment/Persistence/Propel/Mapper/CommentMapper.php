@@ -21,7 +21,7 @@ use Propel\Runtime\Collection\ObjectCollection;
 class CommentMapper
 {
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Comment\Persistence\SpyCommentTag> $commentTagEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Comment\Persistence\SpyCommentTag[] $commentTagEntities
      *
      * @return array<\Generated\Shared\Transfer\CommentTagTransfer>
      */
@@ -82,7 +82,7 @@ class CommentMapper
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Comment\Persistence\SpyComment> $commentEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Comment\Persistence\SpyComment[] $commentEntities
      *
      * @return array<\Generated\Shared\Transfer\CommentTransfer>
      */

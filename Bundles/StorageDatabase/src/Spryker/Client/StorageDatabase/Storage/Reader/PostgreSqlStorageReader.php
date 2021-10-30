@@ -101,7 +101,7 @@ class PostgreSqlStorageReader extends AbstractStorageReader
 
     /**
      * @param \Propel\Runtime\Connection\StatementInterface $statement
-     * @param array<string[]> $queryDataPerTable
+     * @param array<array<string>> $queryDataPerTable
      *
      * @return \Propel\Runtime\Connection\StatementInterface
      */

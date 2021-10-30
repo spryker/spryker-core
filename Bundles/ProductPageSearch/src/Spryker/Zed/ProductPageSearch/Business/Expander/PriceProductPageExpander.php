@@ -58,7 +58,7 @@ class PriceProductPageExpander implements PriceProductPageExpanderInterface
     /**
      * @param array<int> $productAbstractIds
      *
-     * @return array<\Generated\Shared\Transfer\PriceProductTransfer[][]>
+     * @return array<array<array<\Generated\Shared\Transfer\PriceProductTransfer>>>
      */
     protected function findPricesByIdProductAbstractIn(array $productAbstractIds): array
     {
@@ -82,7 +82,7 @@ class PriceProductPageExpander implements PriceProductPageExpanderInterface
     /**
      * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $productPrices
      *
-     * @return array<\Generated\Shared\Transfer\PriceProductTransfer[][]>
+     * @return array<array<array<\Generated\Shared\Transfer\PriceProductTransfer>>>
      */
     protected function getProductPricesMappedByIdAndStoreName(array $productPrices): array
     {

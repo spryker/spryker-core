@@ -97,7 +97,7 @@ class ShoppingListItemExpander implements ShoppingListItemExpanderInterface
 
     /**
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
-     * @param array<int[]> $groupedProductOptionIdsByShoppingListItemIds
+     * @param array<array<int>> $groupedProductOptionIdsByShoppingListItemIds
      * @param array<\Generated\Shared\Transfer\ProductOptionTransfer> $indexedByIdsUniqueProductOptionTransfers
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
@@ -126,7 +126,7 @@ class ShoppingListItemExpander implements ShoppingListItemExpanderInterface
     /**
      * @param \Generated\Shared\Transfer\ShoppingListProductOptionCollectionTransfer $shoppingListProductOptionCollectionTransfer
      *
-     * @return array<int[]>
+     * @return array<array<int>>
      */
     protected function groupProductOptionIdsByShoppingListItemIds(
         ShoppingListProductOptionCollectionTransfer $shoppingListProductOptionCollectionTransfer

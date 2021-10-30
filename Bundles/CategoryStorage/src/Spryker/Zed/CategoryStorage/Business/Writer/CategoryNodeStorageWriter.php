@@ -144,7 +144,7 @@ class CategoryNodeStorageWriter implements CategoryNodeStorageWriterInterface
     }
 
     /**
-     * @param array<\Generated\Shared\Transfer\CategoryNodeStorageTransfer[][]> $categoryNodeStorageTransferTreesIndexedByStoreAndLocale
+     * @param array<array<array<\Generated\Shared\Transfer\CategoryNodeStorageTransfer>>> $categoryNodeStorageTransferTreesIndexedByStoreAndLocale
      *
      * @return void
      */

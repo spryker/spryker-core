@@ -53,7 +53,7 @@ class Reader implements ReaderInterface
      */
     public function getProductImagesSetCollectionByProductAbstractId($idProductAbstract)
     {
-        /** @var \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductImage\Persistence\SpyProductImageSet> $productImageSetCollection */
+        /** @var \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductImage\Persistence\SpyProductImageSet[] $productImageSetCollection */
         $productImageSetCollection = $this->productImageContainer
             ->queryImageSetByProductAbstractId($idProductAbstract)
             ->find();

@@ -14,7 +14,7 @@ interface TranslationMapperInterface
      * @param array<\Generated\Shared\Transfer\LocaleTransfer> $localeTransfers
      * @param array<\Generated\Shared\Transfer\GlossaryKeyTransfer> $glossaryKeyTransfers
      *
-     * @return array<string[]>
+     * @return array<array<string>>
      */
     public function mapTranslationsByKeyNameAndLocaleName(
         array $translationTransfers,

@@ -19,15 +19,15 @@ use Spryker\Glue\Testify\OpenApi3\Collection\SecuritySchemes;
 use Spryker\Glue\Testify\OpenApi3\Property\PropertyDefinition;
 
 /**
- * @property-read \Spryker\Glue\Testify\OpenApi3\SchemaObject\Schema[] $schemas
- * @property-read \Spryker\Glue\Testify\OpenApi3\SchemaObject\Response[] $responses
- * @property-read \Spryker\Glue\Testify\OpenApi3\SchemaObject\Parameter[] $parameters
- * @property-read \Spryker\Glue\Testify\OpenApi3\SchemaObject\Example[] $examples
- * @property-read \Spryker\Glue\Testify\OpenApi3\SchemaObject\RequestBody[] $requestBodies
- * @property-read \Spryker\Glue\Testify\OpenApi3\SchemaObject\Header[] $headers
- * @property-read \Spryker\Glue\Testify\OpenApi3\SchemaObject\SecurityScheme[] $securitySchemes
- * @property-read \Spryker\Glue\Testify\OpenApi3\SchemaObject\Link[] $links
- * @property-read \Spryker\Glue\Testify\OpenApi3\Collection\Callback[] $callbacks
+ * @property-read array<\Spryker\Glue\Testify\OpenApi3\SchemaObject\Schema> $schemas
+ * @property-read array<\Spryker\Glue\Testify\OpenApi3\SchemaObject\Response> $responses
+ * @property-read array<\Spryker\Glue\Testify\OpenApi3\SchemaObject\Parameter> $parameters
+ * @property-read array<\Spryker\Glue\Testify\OpenApi3\SchemaObject\Example> $examples
+ * @property-read array<\Spryker\Glue\Testify\OpenApi3\SchemaObject\RequestBody> $requestBodies
+ * @property-read array<\Spryker\Glue\Testify\OpenApi3\SchemaObject\Header> $headers
+ * @property-read array<\Spryker\Glue\Testify\OpenApi3\SchemaObject\SecurityScheme> $securitySchemes
+ * @property-read array<\Spryker\Glue\Testify\OpenApi3\SchemaObject\Link> $links
+ * @property-read array<\Spryker\Glue\Testify\OpenApi3\Collection\Callback> $callbacks
  */
 class Components extends AbstractObject
 {

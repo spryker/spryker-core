@@ -39,7 +39,7 @@ class GlossaryStorageClient extends AbstractClient implements GlossaryStorageCli
      *
      * @param array<string> $keyNames
      * @param string $localeName
-     * @param array<string[]> $parameters
+     * @param array<array<string>> $parameters
      *
      * @return array<string>
      */

@@ -14,7 +14,7 @@ use Propel\Runtime\Collection\ObjectCollection;
 class ProductReplacementStorageMapper
 {
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductReplacementForStorage> $productReplacementForStorageEntityCollection
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductReplacementForStorage[] $productReplacementForStorageEntityCollection
      *
      * @return array<\Generated\Shared\Transfer\SynchronizationDataTransfer>
      */

@@ -83,9 +83,9 @@ class ProductReviewRestResponseBuilder implements ProductReviewRestResponseBuild
     }
 
     /**
-     * @param array<\Generated\Shared\Transfer\ProductReviewTransfer[]> $indexedProductReviewTransfers
+     * @param array<array<\Generated\Shared\Transfer\ProductReviewTransfer>> $indexedProductReviewTransfers
      *
-     * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]>
+     * @return array<array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>>
      */
     public function createRestResourceCollection(array $indexedProductReviewTransfers): array
     {

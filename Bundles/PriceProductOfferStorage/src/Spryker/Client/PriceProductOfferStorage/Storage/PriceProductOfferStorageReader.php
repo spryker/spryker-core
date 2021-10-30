@@ -55,7 +55,7 @@ class PriceProductOfferStorageReader implements PriceProductOfferStorageReaderIn
     protected static $storageKeyBuilder;
 
     /**
-     * @var array<\Generated\Shared\Transfer\PriceProductTransfer[]>
+     * @var array<array<\Generated\Shared\Transfer\PriceProductTransfer>>
      */
     protected static $productOfferPricesByIdProductConcrete = [];
 

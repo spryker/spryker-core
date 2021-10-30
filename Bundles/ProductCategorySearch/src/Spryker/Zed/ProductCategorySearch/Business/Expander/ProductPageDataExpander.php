@@ -47,7 +47,7 @@ class ProductPageDataExpander implements ProductPageDataExpanderInterface
     protected const ID_LOCALE = 'id_locale';
 
     /**
-     * @var array<int[][][]>
+     * @var array<array<array<array<int>>>>
      */
     protected static $categoryTreeIds;
 
@@ -185,7 +185,7 @@ class ProductPageDataExpander implements ProductPageDataExpanderInterface
      * @param array<int> $directParentCategoryNodeIds
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param \Generated\Shared\Transfer\ProductPageSearchTransfer $productAbstractPageSearchTransfer
-     * @param array<string[]> $categoryTreeNames
+     * @param array<array<string>> $categoryTreeNames
      *
      * @return void
      */
@@ -217,7 +217,7 @@ class ProductPageDataExpander implements ProductPageDataExpanderInterface
      * @param array<int> $directParentCategoryNodeIds
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param \Generated\Shared\Transfer\ProductPageSearchTransfer $productAbstractPageSearchTransfer
-     * @param array<string[]> $categoryTreeNames
+     * @param array<array<string>> $categoryTreeNames
      *
      * @return void
      */
@@ -245,7 +245,7 @@ class ProductPageDataExpander implements ProductPageDataExpanderInterface
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      * @param \Generated\Shared\Transfer\ProductPageSearchTransfer $productAbstractPageSearchTransfer
-     * @param array<\Orm\Zed\ProductCategory\Persistence\SpyProductCategory[]> $productCategoryEntities
+     * @param array<array<\Orm\Zed\ProductCategory\Persistence\SpyProductCategory>> $productCategoryEntities
      *
      * @return void
      */

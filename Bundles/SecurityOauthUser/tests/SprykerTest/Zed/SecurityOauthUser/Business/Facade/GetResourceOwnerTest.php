@@ -117,7 +117,7 @@ class GetResourceOwnerTest extends Unit
     }
 
     /**
-     * @return array<\Generated\Shared\Transfer\ResourceOwnerRequestTransfer[]>
+     * @return array<array<\Generated\Shared\Transfer\ResourceOwnerRequestTransfer>>
      */
     public function getResourceOwnerThrowExceptionWhenRequiredDataIsNotProvidedDataProvider(): array
     {

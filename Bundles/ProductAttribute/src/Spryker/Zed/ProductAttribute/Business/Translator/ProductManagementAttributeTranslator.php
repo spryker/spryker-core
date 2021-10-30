@@ -87,7 +87,7 @@ class ProductManagementAttributeTranslator implements ProductManagementAttribute
     /**
      * @param \Generated\Shared\Transfer\ProductManagementAttributeTransfer $productManagementAttributeTransfer
      * @param array<\Generated\Shared\Transfer\LocaleTransfer> $localeTransfers
-     * @param array<string[]> $translationsByLocaleNameAndGlossaryKey
+     * @param array<array<string>> $translationsByLocaleNameAndGlossaryKey
      *
      * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer
      */

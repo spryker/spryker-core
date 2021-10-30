@@ -68,7 +68,7 @@ class StateHistoryExpander implements StateHistoryExpanderInterface
     /**
      * @param array<\Generated\Shared\Transfer\ItemStateTransfer> $itemStateTransfers
      *
-     * @return array<\Generated\Shared\Transfer\ItemStateTransfer[]>
+     * @return array<array<\Generated\Shared\Transfer\ItemStateTransfer>>
      */
     protected function mapItemStatesByIdSalesOrderItem(array $itemStateTransfers): array
     {

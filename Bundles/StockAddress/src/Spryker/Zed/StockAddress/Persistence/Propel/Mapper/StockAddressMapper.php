@@ -18,7 +18,7 @@ use Propel\Runtime\Collection\ObjectCollection;
 class StockAddressMapper
 {
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\StockAddress\Persistence\SpyStockAddress> $stockAddressEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\StockAddress\Persistence\SpyStockAddress[] $stockAddressEntities
      * @param array<\Generated\Shared\Transfer\StockAddressTransfer> $stockAddressTransfers
      *
      * @return array<\Generated\Shared\Transfer\StockAddressTransfer>

@@ -107,7 +107,7 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param \Generated\Shared\Transfer\ShipmentTransfer|null $defaultShipmentTransfer
      *
-     * @return array<int[]>
+     * @return array<array<int>>
      */
     public function getItemIdsGroupedByShipmentIds(
         OrderTransfer $orderTransfer,
@@ -497,7 +497,7 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
      * @param iterable|array $salesOrderItemIdsWithShipmentIds
      * @param \Generated\Shared\Transfer\ShipmentTransfer|null $defaultShipmentTransfer
      *
-     * @return array<int[]>
+     * @return array<array<int>>
      */
     protected function groupSalesOrderItemIdsByShipmentId(
         iterable $salesOrderItemIdsWithShipmentIds,
@@ -563,7 +563,7 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
     /**
      * @param int $idStore
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Shipment\Persistence\SpyShipmentMethod>
+     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Shipment\Persistence\SpyShipmentMethod[]
      */
     protected function getActiveMethodsWithMethodPricesAndCarrierForStore(int $idStore): ObjectCollection
     {
@@ -701,10 +701,10 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Shipment\Persistence\SpyShipmentMethod> $shipmentMethodEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Shipment\Persistence\SpyShipmentMethod[] $shipmentMethodEntities
      * @param int $idStore
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Shipment\Persistence\SpyShipmentMethod>
+     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Shipment\Persistence\SpyShipmentMethod[]
      */
     protected function expandShipmentMethodEntitiesWithShipmentMethodPricesForStore(
         ObjectCollection $shipmentMethodEntities,
@@ -750,7 +750,7 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
 
     /**
      * @param \Orm\Zed\Shipment\Persistence\SpyShipmentMethod $shipmentMethodEntity
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Shipment\Persistence\SpyShipmentMethodPrice> $shipmentMethodPriceEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Shipment\Persistence\SpyShipmentMethodPrice[] $shipmentMethodPriceEntities
      *
      * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethod
      */

@@ -31,8 +31,6 @@ abstract class AbstractDeletePriceProductController extends AbstractController
     protected const RESPONSE_NOTIFICATION_MESSAGE_ERROR = 'Something went wrong, please try again.';
 
     /**
-     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
-     *
      * @param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      * @param array<int> $priceProductDefaultIds
      * @param int $volumeQuantity
@@ -55,8 +53,6 @@ abstract class AbstractDeletePriceProductController extends AbstractController
     }
 
     /**
-     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
-     *
      * @param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      * @param array<int> $priceProductDefaultIds
      *

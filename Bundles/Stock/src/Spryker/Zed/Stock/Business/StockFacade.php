@@ -304,7 +304,7 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
      *
      * @api
      *
-     * @return array<string[]>
+     * @return array<array<string>>
      */
     public function getWarehouseToStoreMapping()
     {
@@ -318,7 +318,7 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
      *
      * @api
      *
-     * @return array<string[]>
+     * @return array<array<string>>
      */
     public function getStoreToWarehouseMapping()
     {

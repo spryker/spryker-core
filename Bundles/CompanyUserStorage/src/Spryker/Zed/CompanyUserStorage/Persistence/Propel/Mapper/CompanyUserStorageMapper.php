@@ -31,7 +31,7 @@ class CompanyUserStorageMapper implements CompanyUserStorageMapperInterface
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\CompanyUserStorage\Persistence\SpyCompanyUserStorage> $companyUserStorageEntityCollection
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\CompanyUserStorage\Persistence\SpyCompanyUserStorage[] $companyUserStorageEntityCollection
      *
      * @return array<\Generated\Shared\Transfer\SynchronizationDataTransfer>
      */

@@ -462,7 +462,7 @@ class ShoppingListEntityManager extends AbstractEntityManager implements Shoppin
         $shoppingListItemMapper = $this->getFactory()->createShoppingListItemMapper();
 
         /**
-         * @var \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ShoppingList\Persistence\SpyShoppingListItem> $shoppingListItemEntityCollection
+         * @var \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ShoppingList\Persistence\SpyShoppingListItem[] $shoppingListItemEntityCollection
          */
         $shoppingListItemEntityCollection = new ObjectCollection();
         $shoppingListItemEntityCollection->setModel(SpyShoppingListItem::class);
@@ -476,7 +476,7 @@ class ShoppingListEntityManager extends AbstractEntityManager implements Shoppin
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ShoppingList\Persistence\SpyShoppingListItem> $shoppingListItemEntityCollection
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ShoppingList\Persistence\SpyShoppingListItem[] $shoppingListItemEntityCollection
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
      */

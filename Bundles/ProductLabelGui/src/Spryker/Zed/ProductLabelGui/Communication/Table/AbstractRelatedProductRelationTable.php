@@ -126,7 +126,7 @@ abstract class AbstractRelatedProductRelationTable extends AbstractRelatedProduc
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Product\Persistence\SpyProductAbstract> $productAbstractEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Product\Persistence\SpyProductAbstract[] $productAbstractEntities
      *
      * @return array
      */

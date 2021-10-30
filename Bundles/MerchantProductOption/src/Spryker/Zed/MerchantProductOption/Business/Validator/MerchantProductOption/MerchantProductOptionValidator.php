@@ -128,8 +128,6 @@ class MerchantProductOptionValidator implements MerchantProductOptionValidatorIn
     }
 
     /**
-     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $itemTransfers
-     *
      * @phpstan-return array<int|null>
      *
      * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $itemTransfers
@@ -153,8 +151,6 @@ class MerchantProductOptionValidator implements MerchantProductOptionValidatorIn
     }
 
     /**
-     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\ProductOptionTransfer> $productOptionTransfers
-     *
      * @phpstan-return array<int|null>
      *
      * @param \ArrayObject<int, \Generated\Shared\Transfer\ProductOptionTransfer> $productOptionTransfers

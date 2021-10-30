@@ -105,7 +105,7 @@ class MerchantRepository extends AbstractRepository implements MerchantRepositor
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Merchant\Persistence\Base\SpyMerchantStore> $merchantStoreEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Merchant\Persistence\Base\SpyMerchantStore[] $merchantStoreEntities
      * @param int $idMerchant
      *
      * @return array<\Orm\Zed\Merchant\Persistence\Base\SpyMerchantStore>
@@ -125,7 +125,7 @@ class MerchantRepository extends AbstractRepository implements MerchantRepositor
     /**
      * @param array<int> $merchantIds
      *
-     * @return array<\Generated\Shared\Transfer\UrlTransfer[]>
+     * @return array<array<\Generated\Shared\Transfer\UrlTransfer>>
      */
     public function getUrlsMapByMerchantIds(array $merchantIds): array
     {
@@ -201,7 +201,7 @@ class MerchantRepository extends AbstractRepository implements MerchantRepositor
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
      * @param \Generated\Shared\Transfer\PaginationTransfer|null $paginationTransfer
      *
-     * @return \Propel\Runtime\Collection\Collection<\Propel\Runtime\ActiveRecord\ActiveRecordInterface>|\Propel\Runtime\Collection\ObjectCollection<\Propel\Runtime\ActiveRecord\ActiveRecordInterface>
+     * @return \Propel\Runtime\Collection\Collection|\Propel\Runtime\Collection\ObjectCollection|\Propel\Runtime\ActiveRecord\ActiveRecordInterface[]
      */
     protected function getPaginatedCollection(ModelCriteria $query, ?PaginationTransfer $paginationTransfer = null)
     {

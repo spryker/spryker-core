@@ -30,7 +30,7 @@ use Spryker\Zed\AclEntity\Persistence\Reader\AclEntityMetadataReaderInterface;
 class AclQueryDirector implements AclQueryDirectorInterface
 {
     /**
-     * @var \Propel\Runtime\Collection\ObjectCollection<\Propel\Runtime\ActiveRecord\ActiveRecordInterface>
+     * @var \Propel\Runtime\Collection\ObjectCollection|\Propel\Runtime\ActiveRecord\ActiveRecordInterface[]
      */
     protected $recursionCache;
 

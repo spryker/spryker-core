@@ -22,7 +22,7 @@ interface UtilCsvServiceInterface
      *
      * @param \Symfony\Component\HttpFoundation\File\UploadedFile $file
      *
-     * @return array<string[]>
+     * @return array<array<string>>
      */
     public function readUploadedFile(UploadedFile $file): array;
 

@@ -275,7 +275,7 @@ interface StockFacadeInterface
      *
      * @api
      *
-     * @return array<string[]>
+     * @return array<array<string>>
      */
     public function getWarehouseToStoreMapping();
 
@@ -290,7 +290,7 @@ interface StockFacadeInterface
      *
      * @api
      *
-     * @return array<string[]>
+     * @return array<array<string>>
      */
     public function getStoreToWarehouseMapping();
 

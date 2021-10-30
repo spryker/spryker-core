@@ -129,7 +129,7 @@ class ProductOfferSynchronizationDataBulkRepositoryPlugin extends AbstractPlugin
      * @param int $limit
      * @param array $ids
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\MerchantProductOfferStorage\Persistence\SpyProductOfferStorage>
+     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\MerchantProductOfferStorage\Persistence\SpyProductOfferStorage[]
      */
     protected function getProductOfferStorageEntities(int $offset, int $limit, array $ids): ObjectCollection
     {

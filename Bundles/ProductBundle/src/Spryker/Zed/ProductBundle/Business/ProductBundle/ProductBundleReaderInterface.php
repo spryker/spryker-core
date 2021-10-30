@@ -28,7 +28,7 @@ interface ProductBundleReaderInterface
     /**
      * @param array<string> $skus
      *
-     * @return array<\Generated\Shared\Transfer\ProductForBundleTransfer[]>
+     * @return array<array<\Generated\Shared\Transfer\ProductForBundleTransfer>>
      */
     public function getProductForBundleTransfersByProductConcreteSkus(array $skus): array;
 }

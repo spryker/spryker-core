@@ -46,7 +46,7 @@ class MerchantStorageCommunicationTester extends Actor
     /**
      * @param array<int> $merchantIds
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\MerchantStorage\Persistence\Base\SpyMerchantStorage>
+     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\MerchantStorage\Persistence\Base\SpyMerchantStorage[]
      */
     public function findMerchantStorageEntitiesByIdMerchants(array $merchantIds): ObjectCollection
     {

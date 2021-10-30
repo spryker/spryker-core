@@ -383,7 +383,7 @@ class ProductStorageClientTest extends Unit
     }
 
     /**
-     * @return array<mixed[]>
+     * @return array<array<mixed>>
      */
     public function superAttributesDataProvider(): array
     {

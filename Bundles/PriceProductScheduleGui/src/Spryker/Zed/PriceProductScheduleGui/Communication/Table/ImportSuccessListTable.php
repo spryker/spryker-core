@@ -91,7 +91,7 @@ class ImportSuccessListTable extends AbstractTable
     {
         $query = $this->prepareQuery();
 
-        /** @var \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductSchedule> $priceProductScheduleCollection */
+        /** @var \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductSchedule[] $priceProductScheduleCollection */
         $priceProductScheduleCollection = $this->runQuery($query, $config, true);
 
         return $this->mapPriceProductScheduleCollection($priceProductScheduleCollection);

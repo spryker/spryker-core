@@ -54,9 +54,7 @@ class CreateReturnFormHandler implements CreateReturnFormHandlerInterface
     }
 
     /**
-     * @phpstan-param \Symfony\Component\Form\FormInterface<mixed> $returnCreateForm
-     *
-     * @param \Symfony\Component\Form\FormInterface $returnCreateForm
+     * @param \Symfony\Component\Form\FormInterface|mixed[] $returnCreateForm
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return \Generated\Shared\Transfer\ReturnResponseTransfer
@@ -77,9 +75,7 @@ class CreateReturnFormHandler implements CreateReturnFormHandlerInterface
     }
 
     /**
-     * @phpstan-param array<string, mixed> $returnCreateFormData
-     *
-     * @param array $returnCreateFormData
+     * @param array<string, mixed> $returnCreateFormData
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return \Generated\Shared\Transfer\ReturnCreateRequestTransfer
@@ -109,9 +105,7 @@ class CreateReturnFormHandler implements CreateReturnFormHandlerInterface
     }
 
     /**
-     * @phpstan-param array<string, mixed> $returnItemFormData
-     *
-     * @param array $returnItemFormData
+     * @param array<string, mixed> $returnItemFormData
      *
      * @return string|null
      */
@@ -125,9 +119,7 @@ class CreateReturnFormHandler implements CreateReturnFormHandlerInterface
     }
 
     /**
-     * @phpstan-param array<string, mixed> $returnItemFormData
-     *
-     * @param array $returnItemFormData
+     * @param array<string, mixed> $returnItemFormData
      *
      * @return bool
      */

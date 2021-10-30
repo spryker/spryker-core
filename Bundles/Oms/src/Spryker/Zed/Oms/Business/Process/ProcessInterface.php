@@ -163,7 +163,7 @@ interface ProcessInterface
     public function getManualEvents();
 
     /**
-     * @return array<string[]>
+     * @return array<array<string>>
      */
     public function getManualEventsBySource();
 

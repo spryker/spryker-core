@@ -24,7 +24,7 @@ class CompanyGuiFormatter implements CompanyGuiFormatterInterface
     /**
      * @param \Generated\Shared\Transfer\CompanyCollectionTransfer $companyCollectionTransfer
      *
-     * @return array<string[]>
+     * @return array<array<string>>
      */
     public function formatCompanyCollectionToSuggestions(CompanyCollectionTransfer $companyCollectionTransfer): array
     {

@@ -44,7 +44,7 @@ class PaymentProviderMapper
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Payment\Persistence\SpyPaymentProvider> $paymentProviderEntityCollection
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Payment\Persistence\SpyPaymentProvider[] $paymentProviderEntityCollection
      * @param \Generated\Shared\Transfer\PaymentProviderCollectionTransfer $paymentProviderCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\PaymentProviderCollectionTransfer

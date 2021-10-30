@@ -16,7 +16,7 @@ interface ProductCategoryTreeBuilderInterface
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return array<int[]>
+     * @return array<array<int>>
      */
     public function buildProductCategoryTree(LocaleTransfer $localeTransfer, StoreTransfer $storeTransfer): array;
 
@@ -24,7 +24,7 @@ interface ProductCategoryTreeBuilderInterface
      * @param array<int> $categoryNodeIds
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
-     * @return array<string[]>
+     * @return array<array<string>>
      */
     public function buildProductCategoryTreeNames(array $categoryNodeIds, LocaleTransfer $localeTransfer): array;
 }

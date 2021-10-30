@@ -19,7 +19,7 @@ interface ProductResourceAliasStorageRepositoryInterface
     /**
      * @param array<int> $productAbstractIds
      *
-     * @return array<string[]>
+     * @return array<array<string>>
      */
     public function getProductAbstractSkuList(array $productAbstractIds): array;
 
@@ -33,7 +33,7 @@ interface ProductResourceAliasStorageRepositoryInterface
     /**
      * @param array<int> $productConcreteIds
      *
-     * @return array<string[]>
+     * @return array<array<string>>
      */
     public function getProductConcreteSkuList(array $productConcreteIds): array;
 }

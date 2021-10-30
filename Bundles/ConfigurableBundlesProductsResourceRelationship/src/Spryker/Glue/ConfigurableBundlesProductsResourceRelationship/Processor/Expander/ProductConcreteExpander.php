@@ -61,7 +61,7 @@ class ProductConcreteExpander implements ProductConcreteExpanderInterface
     /**
      * @param array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface> $resources
      *
-     * @return array<int[]>
+     * @return array<array<int>>
      */
     protected function getMappedProductConcreteIdsByProductListId(array $resources): array
     {
@@ -86,7 +86,7 @@ class ProductConcreteExpander implements ProductConcreteExpanderInterface
     }
 
     /**
-     * @param array<int[]> $mappedProductConcreteIds
+     * @param array<array<int>> $mappedProductConcreteIds
      *
      * @return array<int>
      */
@@ -103,9 +103,9 @@ class ProductConcreteExpander implements ProductConcreteExpanderInterface
 
     /**
      * @param array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface> $productConcreteRestResources
-     * @param array<int[]> $mappedProductConcreteIdsBySku
+     * @param array<array<int>> $mappedProductConcreteIdsBySku
      *
-     * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]>
+     * @return array<array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>>
      */
     protected function mapProductConcreteRestResourcesByProductId(
         array $productConcreteRestResources,
@@ -127,7 +127,7 @@ class ProductConcreteExpander implements ProductConcreteExpanderInterface
     }
 
     /**
-     * @param array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]> $mappedProductConcreteRestResources
+     * @param array<array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>> $mappedProductConcreteRestResources
      * @param array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface> $resources
      *
      * @return void

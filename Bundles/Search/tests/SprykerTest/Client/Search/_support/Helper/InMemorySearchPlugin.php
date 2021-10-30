@@ -17,7 +17,7 @@ class InMemorySearchPlugin implements InMemorySearchPluginInterface
     use MessageFormatter;
 
     /**
-     * @var array<\Generated\Shared\Transfer\SearchDocumentTransfer[]>
+     * @var array<array<\Generated\Shared\Transfer\SearchDocumentTransfer>>
      */
     protected $data = [];
 

@@ -14,7 +14,7 @@ class CmsSlotBlockConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return array<string[]>
+     * @return array<string, array<string>>
      */
     public function getTemplateConditionsAssignment(): array
     {

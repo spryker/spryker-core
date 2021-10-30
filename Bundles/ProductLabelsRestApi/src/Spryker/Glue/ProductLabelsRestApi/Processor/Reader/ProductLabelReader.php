@@ -147,7 +147,7 @@ class ProductLabelReader implements ProductLabelReaderInterface
      * @param array<string> $productConcreteSkus
      * @param string $localeName
      *
-     * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]>
+     * @return array<array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>>
      */
     public function getProductLabelsByProductConcreteSkus(array $productConcreteSkus, string $localeName): array
     {

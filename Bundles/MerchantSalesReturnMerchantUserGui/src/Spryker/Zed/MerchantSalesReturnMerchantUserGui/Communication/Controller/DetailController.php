@@ -53,11 +53,9 @@ class DetailController extends AbstractController
     protected const MESSAGE_MERCHANT_NOT_FOUND_ERROR = 'Merchant for current user not found.';
 
     /**
-     * @phpstan-return \Symfony\Component\HttpFoundation\RedirectResponse|array<mixed>
-     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array<string, mixed>
      */
     public function indexAction(Request $request)
     {
@@ -125,11 +123,9 @@ class DetailController extends AbstractController
     }
 
     /**
-     * @phpstan-return array<int, string>
-     *
      * @param \Generated\Shared\Transfer\ReturnTransfer $returnTransfer
      *
-     * @return array<string>
+     * @return array<int, string>
      */
     protected function extractUniqueOrderReferencesFromReturn(ReturnTransfer $returnTransfer): array
     {
@@ -147,11 +143,9 @@ class DetailController extends AbstractController
     }
 
     /**
-     * @phpstan-return array<string, string>
-     *
      * @param array<\Generated\Shared\Transfer\MerchantOrderItemTransfer> $merchantOrderItemTransfers
      *
-     * @return array<string>
+     * @return array<string, string>
      */
     protected function extractUniqueItemStateLabelsFromReturn(array $merchantOrderItemTransfers): array
     {
@@ -170,11 +164,9 @@ class DetailController extends AbstractController
     }
 
     /**
-     * @phpstan-return array<int, string>
-     *
      * @param array<\Generated\Shared\Transfer\MerchantOrderItemTransfer> $merchantOrderItemTransfers
      *
-     * @return array<string>
+     * @return array<int, string>
      */
     protected function extractUniqueOrderItemManualEvents(array $merchantOrderItemTransfers): array
     {
@@ -188,11 +180,9 @@ class DetailController extends AbstractController
     }
 
     /**
-     * @phpstan-return array<int, int>
-     *
      * @param \Generated\Shared\Transfer\ReturnTransfer $returnTransfer
      *
-     * @return array<int>
+     * @return array<int, int>
      */
     protected function extractSalesOrderItemIdsFromReturn(ReturnTransfer $returnTransfer): array
     {

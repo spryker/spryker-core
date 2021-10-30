@@ -53,9 +53,9 @@ class MerchantSalesExpenseMapper
     }
 
     /**
-     * @param array<mixed[]> $merchantSalesExpenseRows
+     * @param array<array<mixed>> $merchantSalesExpenseRows
      *
-     * @return array<mixed[]>
+     * @return array<array<mixed>>
      */
     public function mapMerchantSalesExpenseDataByField(array $merchantSalesExpenseRows): array
     {

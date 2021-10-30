@@ -34,7 +34,7 @@ class ProductAttributesMapper implements ProductAttributesMapperInterface
      * @param \Symfony\Component\Form\FormErrorIterator $errors
      * @param array $attributesInitialData
      *
-     * @return array<string[]>
+     * @return array<array<string>>
      */
     public function mapErrorsToAttributesData(FormErrorIterator $errors, array $attributesInitialData): array
     {
@@ -61,7 +61,7 @@ class ProductAttributesMapper implements ProductAttributesMapperInterface
     }
 
     /**
-     * @param array<string[][]> $attributesInitialData
+     * @param array<array<array<string>>> $attributesInitialData
      * @param array<string> $attributes
      *
      * @return array<string>
@@ -87,7 +87,7 @@ class ProductAttributesMapper implements ProductAttributesMapperInterface
      *
      * @phpstan-return ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer>
      *
-     * @param array<string[][]> $attributesInitialData
+     * @param array<array<array<string>>> $attributesInitialData
      * @param \ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer> $localizedAttributesTransfers
      *
      * @return \ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer>

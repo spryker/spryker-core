@@ -151,9 +151,9 @@ class ProductConcreteAttributeTableDataProvider extends AbstractGuiTableDataProv
     /**
      * @param array $attributes
      * @param string $columnName
-     * @param array<string[]> $data
+     * @param array<array<string>> $data
      *
-     * @return array<string[]>
+     * @return array<array<string>>
      */
     protected function appendAttributes(
         array $attributes,
@@ -177,7 +177,7 @@ class ProductConcreteAttributeTableDataProvider extends AbstractGuiTableDataProv
      * @param string $orderBy
      * @param string $orderDirection
      *
-     * @return array<string[]>
+     * @return array<array<string>>
      */
     protected function sortAttributesArray(array $attributes, string $orderBy, string $orderDirection): array
     {

@@ -26,7 +26,7 @@ class SalesOrderThresholdReader implements SalesOrderThresholdReaderInterface
     protected $translationHydrator;
 
     /**
-     * @var array<\Generated\Shared\Transfer\SalesOrderThresholdTransfer[]>
+     * @var array<array<\Generated\Shared\Transfer\SalesOrderThresholdTransfer>>
      */
     protected static $salesOrderThresholdTransfersCache = [];
 

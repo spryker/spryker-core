@@ -136,7 +136,7 @@ class DropPostgreSqlDatabase implements DropDatabaseInterface
     /**
      * @param string $command
      *
-     * @throws \UnsupportedVersionException
+     * @throws \Spryker\Zed\Propel\Business\Exception\UnsupportedVersionException
      *
      * @return \Symfony\Component\Process\Process
      */

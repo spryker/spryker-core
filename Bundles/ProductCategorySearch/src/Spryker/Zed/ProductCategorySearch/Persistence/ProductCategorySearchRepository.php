@@ -69,7 +69,7 @@ class ProductCategorySearchRepository extends AbstractRepository implements Prod
      *
      * @param array<int> $productAbstractIds
      *
-     * @return array<\Orm\Zed\ProductCategory\Persistence\SpyProductCategory[]>
+     * @return array<array<\Orm\Zed\ProductCategory\Persistence\SpyProductCategory>>
      */
     public function getMappedProductCategoriesByIdProductAbstractAndStore(array $productAbstractIds): array
     {

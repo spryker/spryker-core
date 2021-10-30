@@ -118,9 +118,9 @@ class ExporterPluginResolver implements ExporterPluginResolverInterface
 
     /**
      * @param array<string> $resources
-     * @param array<\Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataPluginInterface[]> $synchronizationDataPlugins
+     * @param array<array<\Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataPluginInterface>> $synchronizationDataPlugins
      *
-     * @return array<\Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataPluginInterface[]>
+     * @return array<array<\Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataPluginInterface>>
      */
     protected function filterEffectivePlugins(array $resources, array $synchronizationDataPlugins): array
     {
@@ -141,7 +141,7 @@ class ExporterPluginResolver implements ExporterPluginResolverInterface
     /**
      * @param array<\Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataPluginInterface> $synchronizationDataPlugins
      *
-     * @return array<\Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataPluginInterface[]>
+     * @return array<array<\Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataPluginInterface>>
      */
     protected function mapPluginsByResourceAndQueueName(array $synchronizationDataPlugins): array
     {

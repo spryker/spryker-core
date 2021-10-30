@@ -189,7 +189,7 @@ class ProductPageMapCategoryExpander implements ProductPageMapCategoryExpanderIn
     /**
      * @param array<array> $sortedCategories
      *
-     * @return array<int[]>
+     * @return array<array<int>>
      */
     protected function getParentCategoryMap(array $sortedCategories): array
     {

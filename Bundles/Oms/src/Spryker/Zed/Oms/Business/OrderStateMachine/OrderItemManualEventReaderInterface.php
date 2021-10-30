@@ -12,7 +12,7 @@ interface OrderItemManualEventReaderInterface
     /**
      * @param iterable<\Generated\Shared\Transfer\ItemTransfer> $orderItemTransfers
      *
-     * @return array<string[]>
+     * @return array<array<string>>
      */
     public function getManualEventsByIdSalesOrder(iterable $orderItemTransfers): array;
 }

@@ -88,9 +88,9 @@ class SharedCartRepository extends AbstractRepository implements SharedCartRepos
     }
 
     /**
-     * @param array<int[]> $quoteIdsByPermissions
+     * @param array<array<int>> $quoteIdsByPermissions
      *
-     * @return array<int[]>
+     * @return array<array<int>>
      */
     protected function groupQuoteIdsByIdPermission(array $quoteIdsByPermissions): array
     {
@@ -300,7 +300,7 @@ class SharedCartRepository extends AbstractRepository implements SharedCartRepos
      * @param int $idCompanyUser
      * @param array<int> $idPermissions
      *
-     * @return array<int[]>
+     * @return array<array<int>>
      */
     protected function getCompanyUserQuotesWithPermissions(int $idCompanyUser, array $idPermissions): array
     {

@@ -17,7 +17,7 @@ interface ProductConcreteEditFormDataProviderInterface
     public function getData(int $idProductConcrete): array;
 
     /**
-     * @return array<string[]>
+     * @return array<array<string>>
      */
     public function getOptions(): array;
 }

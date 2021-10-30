@@ -122,7 +122,7 @@ class TwigExpressionsToHtmlConverter implements TwigExpressionsToHtmlConverterIn
     }
 
     /**
-     * @param array<string[]> $twigExpressionMatches
+     * @param array<array<string>> $twigExpressionMatches
      * @param array<\Generated\Shared\Transfer\ContentWidgetTemplateTransfer> $contentWidgetTemplateTransfers
      * @param array<\Generated\Shared\Transfer\TwigExpressionTransfer> $twigExpressionTransfers
      *

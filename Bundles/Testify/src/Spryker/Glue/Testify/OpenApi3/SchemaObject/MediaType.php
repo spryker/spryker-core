@@ -15,8 +15,8 @@ use Spryker\Glue\Testify\OpenApi3\Property\PropertyDefinition;
 /**
  * @property-read \Spryker\Glue\Testify\OpenApi3\SchemaObject\Schema $schema
  * @property-read mixed $example
- * @property-read \Spryker\Glue\Testify\OpenApi3\SchemaObject\Example[] $examples
- * @property-read \Spryker\Glue\Testify\OpenApi3\SchemaObject\Encoding[] $encoding
+ * @property-read array<\Spryker\Glue\Testify\OpenApi3\SchemaObject\Example> $examples
+ * @property-read array<\Spryker\Glue\Testify\OpenApi3\SchemaObject\Encoding> $encoding
  */
 class MediaType extends AbstractObject
 {

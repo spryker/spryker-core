@@ -50,11 +50,9 @@ class DetailController extends AbstractController
     protected const MESSAGE_MERCHANT_ORDER_NOT_FOUND_ERROR = 'Merchant sales order #%d not found.';
 
     /**
-     * @phpstan-return \Symfony\Component\HttpFoundation\RedirectResponse|array<mixed>
-     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array<string, mixed>
      */
     public function indexAction(Request $request)
     {
@@ -194,15 +192,10 @@ class DetailController extends AbstractController
     }
 
     /**
-     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\ShipmentGroupTransfer> $groupedMerchantOrderItemsByShipment
-     * @phpstan-param array<int|string, \Generated\Shared\Transfer\MerchantOrderItemTransfer> $merchantOrderItemsWithOrderItemIdKey
-     *
-     * @phpstan-return array<int|string, array<int|string, string>>
-     *
      * @param \ArrayObject<int, \Generated\Shared\Transfer\ShipmentGroupTransfer> $groupedMerchantOrderItemsByShipment
-     * @param array $merchantOrderItemsWithOrderItemIdKey
+     * @param array<\Generated\Shared\Transfer\MerchantOrderItemTransfer> $merchantOrderItemsWithOrderItemIdKey
      *
-     * @return array
+     * @return array<array<string>>
      */
     protected function extractUniqueEvents(ArrayObject $groupedMerchantOrderItemsByShipment, array $merchantOrderItemsWithOrderItemIdKey): array
     {

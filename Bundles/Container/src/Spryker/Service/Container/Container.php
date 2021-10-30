@@ -76,7 +76,7 @@ class Container implements ContainerInterface, ArrayAccess
     /**
      * This is a storage for services which should be extended, but at the point where extend was called the service was not found.
      *
-     * @var array<\Closure[]>
+     * @var array<array<\Closure>>
      */
     protected $toBeExtended = [];
 

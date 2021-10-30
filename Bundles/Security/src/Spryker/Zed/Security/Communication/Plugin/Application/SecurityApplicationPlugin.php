@@ -300,7 +300,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
     protected const POSITIONS = ['logout', 'pre_auth', 'guard', 'form', 'http', 'remember_me', 'anonymous', 'user_session_handler'];
 
     /**
-     * @var array<string[]>
+     * @var array<array<string>>
      */
     protected $securityRoutes = [];
 

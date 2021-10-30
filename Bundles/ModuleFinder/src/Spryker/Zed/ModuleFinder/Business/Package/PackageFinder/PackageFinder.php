@@ -55,7 +55,7 @@ class PackageFinder implements PackageFinderInterface
     }
 
     /**
-     * @return \Symfony\Component\Finder\Finder<\Symfony\Component\Finder\SplFileInfo>
+     * @return \Symfony\Component\Finder\Finder|\Symfony\Component\Finder\SplFileInfo[]
      */
     protected function getPackageFinder(): Finder
     {

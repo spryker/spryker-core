@@ -195,7 +195,7 @@ class Trigger implements TriggerInterface
     /**
      * @param array<\Generated\Shared\Transfer\StateMachineItemTransfer> $stateMachineItems
      *
-     * @return array<\Generated\Shared\Transfer\StateMachineItemTransfer[]>
+     * @return array<array<\Generated\Shared\Transfer\StateMachineItemTransfer>>
      */
     protected function groupItemsByEvent(array $stateMachineItems)
     {

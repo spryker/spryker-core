@@ -53,7 +53,7 @@ abstract class AbstractProductOfferFormDataProvider
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
-     * @return array<int[]>
+     * @return array<array<int>>
      */
     public function getOptions(ProductAbstractTransfer $productAbstractTransfer): array
     {

@@ -17,7 +17,7 @@ interface ContentBannerReaderInterface
      * @param array<string> $cmsPageUuids
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
-     * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]>
+     * @return array<array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>>
      */
     public function getContentBannersResources(array $cmsPageUuids, RestRequestInterface $restRequest): array;
 }

@@ -92,7 +92,7 @@ class OrderExpander implements OrderExpanderInterface
     /**
      * @param array<int> $salesOrderIds
      *
-     * @return array<\Generated\Shared\Transfer\ItemTransfer[]>
+     * @return array<array<\Generated\Shared\Transfer\ItemTransfer>>
      */
     protected function getMappedOrderItemsBySalesOrderIds(array $salesOrderIds): array
     {

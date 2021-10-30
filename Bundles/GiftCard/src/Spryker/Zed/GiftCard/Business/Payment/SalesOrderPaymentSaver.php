@@ -104,8 +104,6 @@ class SalesOrderPaymentSaver implements SalesOrderPaymentSaverInterface
     }
 
     /**
-     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\PaymentTransfer> $paymentTransferCollection
-     *
      * @param \ArrayObject<int, \Generated\Shared\Transfer\PaymentTransfer> $paymentTransferCollection
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
      *

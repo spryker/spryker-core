@@ -291,7 +291,7 @@ class ProductAbstractImageStorageWriter implements ProductAbstractImageStorageWr
     /**
      * @param array<int> $productAbstractIds
      *
-     * @return array<\Orm\Zed\ProductImageStorage\Persistence\SpyProductAbstractImageStorage[]>
+     * @return array<array<\Orm\Zed\ProductImageStorage\Persistence\SpyProductAbstractImageStorage>>
      */
     protected function findProductAbstractImageStorageEntitiesByProductAbstractIds(array $productAbstractIds)
     {

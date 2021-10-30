@@ -310,7 +310,7 @@ class Process implements ProcessInterface
     }
 
     /**
-     * @return array<string[]>
+     * @return array<array<string>>
      */
     public function getManuallyExecutableEventsBySource()
     {
@@ -334,7 +334,7 @@ class Process implements ProcessInterface
      * @param array $eventsBySource
      * @param \Spryker\Zed\StateMachine\Business\Process\EventInterface $event
      *
-     * @return array<string[]>
+     * @return array<array<string>>
      */
     protected function groupTransitionsBySourceName(array $transitions, array $eventsBySource, EventInterface $event)
     {

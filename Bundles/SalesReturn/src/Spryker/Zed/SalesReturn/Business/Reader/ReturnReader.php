@@ -250,7 +250,7 @@ class ReturnReader implements ReturnReaderInterface
     /**
      * @param array<\Generated\Shared\Transfer\ReturnItemTransfer> $returnItemTransfers
      *
-     * @return array<\Generated\Shared\Transfer\ReturnItemTransfer[]>
+     * @return array<array<\Generated\Shared\Transfer\ReturnItemTransfer>>
      */
     protected function mapReturnItemsByIdReturn(array $returnItemTransfers): array
     {

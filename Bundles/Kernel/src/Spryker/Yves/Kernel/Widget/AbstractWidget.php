@@ -30,7 +30,7 @@ abstract class AbstractWidget implements WidgetInterface
     protected const SERVICE_LOCALE = 'locale';
 
     /**
-     * @var array
+     * @var array<string, mixed>
      */
     protected $parameters = [];
 

@@ -61,7 +61,7 @@ class ProductBundleMapper
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductBundle\Persistence\SpyProductBundle> $productBundleEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductBundle\Persistence\SpyProductBundle[] $productBundleEntities
      * @param \Generated\Shared\Transfer\ProductBundleCollectionTransfer $productBundleCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\ProductBundleCollectionTransfer
@@ -141,9 +141,9 @@ class ProductBundleMapper
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductBundle\Persistence\SpyProductBundle> $productBundleEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductBundle\Persistence\SpyProductBundle[] $productBundleEntities
      *
-     * @return array<\Generated\Shared\Transfer\ProductForBundleTransfer[]>
+     * @return array<array<\Generated\Shared\Transfer\ProductForBundleTransfer>>
      */
     protected function mapProductBundleEntitiesToGroupedProductForBundleTransfers(Collection $productBundleEntities): array
     {

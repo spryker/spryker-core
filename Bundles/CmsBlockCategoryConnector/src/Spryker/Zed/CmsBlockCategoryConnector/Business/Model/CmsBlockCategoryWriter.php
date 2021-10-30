@@ -108,7 +108,7 @@ class CmsBlockCategoryWriter implements CmsBlockCategoryWriterInterface
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryConnector> $relations
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryConnector[] $relations
      *
      * @return void
      */
@@ -189,7 +189,7 @@ class CmsBlockCategoryWriter implements CmsBlockCategoryWriterInterface
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryConnector> $relations
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryConnector[] $relations
      *
      * @return void
      */

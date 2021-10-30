@@ -48,7 +48,7 @@ class ProductPageSearchMapper implements ProductPageSearchMapperInterface
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductPageSearch\Persistence\SpyProductConcretePageSearch> $productConcretePageSearchEntityCollection
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductPageSearch\Persistence\SpyProductConcretePageSearch[] $productConcretePageSearchEntityCollection
      *
      * @return array<\Generated\Shared\Transfer\SynchronizationDataTransfer>
      */

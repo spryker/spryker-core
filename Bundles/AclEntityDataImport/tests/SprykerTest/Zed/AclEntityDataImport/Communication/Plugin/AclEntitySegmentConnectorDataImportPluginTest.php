@@ -230,7 +230,7 @@ class AclEntitySegmentConnectorDataImportPluginTest extends Unit
     }
 
     /**
-     * @return array<\string[]>
+     * @return array<array<\string>>
      */
     public function importThrowsDataImportExceptionWhenImportDataDoesntContainsRequiredFieldProvider(): array
     {

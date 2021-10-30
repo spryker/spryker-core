@@ -72,7 +72,7 @@ class StorageDatabaseConfig extends AbstractBundleConfig
      *
      * @api
      *
-     * @return array<string[]>
+     * @return array<array<string>>
      */
     public function getResourceNameToStorageTableMap(): array
     {

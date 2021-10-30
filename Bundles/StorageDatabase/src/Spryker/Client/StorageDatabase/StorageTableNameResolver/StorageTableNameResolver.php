@@ -24,7 +24,7 @@ EOT;
     protected $config;
 
     /**
-     * @var array<string[]>
+     * @var array<array<string>>
      */
     protected $resourceNameToStorageTableMap;
 

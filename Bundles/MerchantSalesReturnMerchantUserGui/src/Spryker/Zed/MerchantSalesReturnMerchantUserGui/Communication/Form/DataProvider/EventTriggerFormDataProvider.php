@@ -57,13 +57,11 @@ class EventTriggerFormDataProvider
     protected const OPTION_ACTION_QUERY_PARAMETERS = 'OPTION_ACTION_QUERY_PARAMETERS';
 
     /**
-     * @phpstan-return array<int|string, mixed>
-     *
      * @param string $returnReference
      * @param string $event
      * @param string $redirect
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getOptions(
         string $returnReference,

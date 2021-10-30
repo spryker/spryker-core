@@ -14,7 +14,7 @@ class ProductLabelMapper implements ProductLabelMapperInterface
     /**
      * @param array<\Generated\Shared\Transfer\ProductLabelTransfer> $productLabelTransfers
      *
-     * @return array<int[]>
+     * @return array<array<int>>
      */
     public function getProductLabelIdsMappedByIdProductAbstractAndStoreName(array $productLabelTransfers): array
     {
@@ -32,9 +32,9 @@ class ProductLabelMapper implements ProductLabelMapperInterface
 
     /**
      * @param \Generated\Shared\Transfer\ProductLabelTransfer $productLabelTransfer
-     * @param array<int[]> $productLabelIdsMap
+     * @param array<array<int>> $productLabelIdsMap
      *
-     * @return array<int[]>
+     * @return array<array<int>>
      */
     protected function mapProductLabelTransferToProductLabelIdsByIdProductAbstractAndStoreName(
         ProductLabelTransfer $productLabelTransfer,

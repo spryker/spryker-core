@@ -93,8 +93,6 @@ class PriceProductTransformer implements DataTransformerInterface
     }
 
     /**
-     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $value
-     *
      * @param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $value
      *
      * @return mixed

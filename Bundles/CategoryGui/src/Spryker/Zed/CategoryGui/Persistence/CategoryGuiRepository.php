@@ -100,7 +100,7 @@ class CategoryGuiRepository extends AbstractRepository implements CategoryGuiRep
      *
      * @param array<int> $categoryIds
      *
-     * @return array<string[]>
+     * @return array<array<string>>
      */
     public function getCategoryStoreNamesGroupedByIdCategory(array $categoryIds): array
     {

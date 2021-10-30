@@ -159,7 +159,7 @@ class ResolveOauthUserTest extends Unit
     }
 
     /**
-     * @return array<string[]>
+     * @return array<array<string>>
      */
     public function resolveOauthUserShouldNotResolveOauthUserWithInactiveStatusDataProvider(): array
     {

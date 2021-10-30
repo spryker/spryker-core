@@ -107,9 +107,9 @@ class MerchantSalesOrderItemMapper
     }
 
     /**
-     * @param array<mixed[]> $merchantSalesOrderItemRows
+     * @param array<array<mixed>> $merchantSalesOrderItemRows
      *
-     * @return array<mixed[]>
+     * @return array<array<mixed>>
      */
     public function mapMerchantSalesOrderItemDataByField(array $merchantSalesOrderItemRows): array
     {

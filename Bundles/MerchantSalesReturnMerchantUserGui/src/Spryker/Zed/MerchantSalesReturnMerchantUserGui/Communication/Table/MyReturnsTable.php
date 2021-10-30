@@ -170,7 +170,7 @@ class MyReturnsTable extends AbstractTable
      */
     protected function prepareData(TableConfiguration $config): array
     {
-        /** @var \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\SalesReturn\Persistence\SpySalesReturn> $salesReturnEntityCollection */
+        /** @var \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\SalesReturn\Persistence\SpySalesReturn[] $salesReturnEntityCollection */
         $salesReturnEntityCollection = $this->runQuery(
             $this->prepareQuery(),
             $config,
@@ -222,11 +222,9 @@ class MyReturnsTable extends AbstractTable
     }
 
     /**
-     * @phpstan-return array<array<string|int|null>>
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\SalesReturn\Persistence\SpySalesReturn[] $salesReturnEntityCollection
      *
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\SalesReturn\Persistence\SpySalesReturn> $salesReturnEntityCollection
-     *
-     * @return array<array<int|string|null>>
+     * @return array<array<string|int|null>>
      */
     protected function mapReturns(ObjectCollection $salesReturnEntityCollection): array
     {

@@ -55,7 +55,7 @@ class ProductCategoryTreeBuilder implements ProductCategoryTreeBuilderInterface
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return array<int[]>
+     * @return array<array<int>>
      */
     public function buildProductCategoryTree(LocaleTransfer $localeTransfer, StoreTransfer $storeTransfer): array
     {
@@ -80,7 +80,7 @@ class ProductCategoryTreeBuilder implements ProductCategoryTreeBuilderInterface
      * @param array<int> $categoryNodeIds
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
-     * @return array<string[]>
+     * @return array<array<string>>
      */
     public function buildProductCategoryTreeNames(array $categoryNodeIds, LocaleTransfer $localeTransfer): array
     {
@@ -101,11 +101,11 @@ class ProductCategoryTreeBuilder implements ProductCategoryTreeBuilderInterface
     }
 
     /**
-     * @param array<int[]> $categoryTree
+     * @param array<array<int>> $categoryTree
      * @param int $idCategoryNode
      * @param array $categories
      *
-     * @return array<int[]>
+     * @return array<array<int>>
      */
     protected function buildProductCategoryTreeByIdCategoryNodeForStoreAndLocale(
         array $categoryTree,

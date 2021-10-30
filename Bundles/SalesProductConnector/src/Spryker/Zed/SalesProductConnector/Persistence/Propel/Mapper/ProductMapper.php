@@ -13,7 +13,7 @@ use Propel\Runtime\Collection\ObjectCollection;
 class ProductMapper
 {
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Product\Persistence\SpyProduct> $productEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Product\Persistence\SpyProduct[] $productEntities
      *
      * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
      */

@@ -103,7 +103,7 @@ class MetadataExpander implements MetadataExpanderInterface
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
-     * @return array<string[]>
+     * @return array<array<string>>
      */
     protected function getAbstractAndConcreteSkusFromCartChangeTransfer(CartChangeTransfer $cartChangeTransfer): array
     {

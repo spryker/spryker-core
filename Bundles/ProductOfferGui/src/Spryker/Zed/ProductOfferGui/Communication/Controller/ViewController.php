@@ -30,11 +30,9 @@ class ViewController extends AbstractController
     protected const MESSAGE_PRODUCT_OFFER_NOT_FOUND = 'Product offer not found';
 
     /**
-     * @phpstan-return \Symfony\Component\HttpFoundation\RedirectResponse|array<string, mixed>
-     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array<string, mixed>
      */
     public function indexAction(Request $request)
     {

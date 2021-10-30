@@ -571,10 +571,10 @@ class Reader implements ReaderInterface
     }
 
     /**
-     * @param array<\Generated\Shared\Transfer\PriceProductTransfer[]> $indexedAbstractPriceProductTransfers
-     * @param array<\Generated\Shared\Transfer\PriceProductTransfer[]> $indexedConcretePriceProductTransfers
+     * @param array<array<\Generated\Shared\Transfer\PriceProductTransfer>> $indexedAbstractPriceProductTransfers
+     * @param array<array<\Generated\Shared\Transfer\PriceProductTransfer>> $indexedConcretePriceProductTransfers
      *
-     * @return array<\Generated\Shared\Transfer\PriceProductTransfer[]>
+     * @return array<array<\Generated\Shared\Transfer\PriceProductTransfer>>
      */
     protected function mergeIndexedPriceProductTransfers(array $indexedAbstractPriceProductTransfers, array $indexedConcretePriceProductTransfers): array
     {
@@ -598,7 +598,7 @@ class Reader implements ReaderInterface
     }
 
     /**
-     * @param array<\Generated\Shared\Transfer\PriceProductTransfer[]> $priceProductTransfers
+     * @param array<array<\Generated\Shared\Transfer\PriceProductTransfer>> $priceProductTransfers
      * @param array<\Generated\Shared\Transfer\PriceProductFilterTransfer> $priceProductFilterTransfers
      *
      * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
@@ -667,7 +667,7 @@ class Reader implements ReaderInterface
     /**
      * @param array<\Generated\Shared\Transfer\PriceProductFilterTransfer> $priceProductFilterTransfers
      *
-     * @return array<\Generated\Shared\Transfer\PriceProductTransfer[]>
+     * @return array<array<\Generated\Shared\Transfer\PriceProductTransfer>>
      */
     protected function findPricesForConcreteProducts(array $priceProductFilterTransfers): array
     {
@@ -692,7 +692,7 @@ class Reader implements ReaderInterface
      * @param array<string> $productConcreteSkus
      * @param array<\Generated\Shared\Transfer\PriceProductFilterTransfer> $priceProductFilterTransfers
      *
-     * @return array<\Generated\Shared\Transfer\PriceProductTransfer[]>
+     * @return array<array<\Generated\Shared\Transfer\PriceProductTransfer>>
      */
     protected function findPricesForAbstractProducts(array $productConcreteSkus, array $priceProductFilterTransfers): array
     {
@@ -711,7 +711,7 @@ class Reader implements ReaderInterface
      * @param array<\Generated\Shared\Transfer\PriceProductFilterTransfer> $priceProductFilterTransfers
      * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      *
-     * @return array<\Generated\Shared\Transfer\PriceProductTransfer[]>
+     * @return array<array<\Generated\Shared\Transfer\PriceProductTransfer>>
      */
     protected function groupPriceProductTransfersByFilter(array $priceProductFilterTransfers, array $priceProductTransfers): array
     {

@@ -92,7 +92,7 @@ class TwigFilesystemLoaderTest extends Unit
     }
 
     /**
-     * @return array<string[]>
+     * @return array<array<string>>
      */
     public function templateNameContentProvider(): array
     {

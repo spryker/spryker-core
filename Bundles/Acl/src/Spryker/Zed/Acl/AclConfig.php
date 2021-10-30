@@ -92,7 +92,7 @@ class AclConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return array
+     * @return array<int, array<string, mixed>>
      */
     public function getInstallerRoles()
     {

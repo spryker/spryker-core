@@ -116,7 +116,7 @@ class ContentStorageWriter implements ContentStorageWriterInterface
 
     /**
      * @param \Generated\Shared\Transfer\ContentTransfer $contentTransfer
-     * @param array<\Generated\Shared\Transfer\ContentStorageTransfer[]> $contentStorageTransfers
+     * @param array<array<\Generated\Shared\Transfer\ContentStorageTransfer>> $contentStorageTransfers
      * @param array<string> $availableLocales
      *
      * @return void
@@ -169,7 +169,7 @@ class ContentStorageWriter implements ContentStorageWriterInterface
     /**
      * @param array<\Generated\Shared\Transfer\ContentStorageTransfer> $contentStorageTransfers
      *
-     * @return array<\Generated\Shared\Transfer\ContentStorageTransfer[]>
+     * @return array<array<\Generated\Shared\Transfer\ContentStorageTransfer>>
      */
     protected function groupByIdContentAndLocale(iterable $contentStorageTransfers): array
     {

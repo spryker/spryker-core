@@ -44,7 +44,7 @@ class SalesOrderItemMapper implements SalesOrderItemMapperInterface
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Sales\Persistence\SpySalesOrderItem> $salesOrderItemEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $salesOrderItemEntities
      *
      * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */

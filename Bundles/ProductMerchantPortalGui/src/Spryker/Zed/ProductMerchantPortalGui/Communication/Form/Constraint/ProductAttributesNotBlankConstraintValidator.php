@@ -48,7 +48,7 @@ class ProductAttributesNotBlankConstraintValidator extends ConstraintValidator
     }
 
     /**
-     * @param array<string[]> $attributes
+     * @param array<array<string>> $attributes
      * @param \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\Constraint\ProductAttributesNotBlankConstraint $constraint
      *
      * @return void
@@ -112,7 +112,7 @@ class ProductAttributesNotBlankConstraintValidator extends ConstraintValidator
     }
 
     /**
-     * @param array<string[]> $existingAttributes
+     * @param array<array<string>> $existingAttributes
      *
      * @return array<string>
      */
@@ -156,8 +156,6 @@ class ProductAttributesNotBlankConstraintValidator extends ConstraintValidator
     }
 
     /**
-     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer> $localizedAttributesTransfers
-     *
      * @param \ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer> $localizedAttributesTransfers
      *
      * @return array

@@ -28,7 +28,7 @@ class CategoryNodeStorageMapper
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\CategoryStorage\Persistence\Base\SpyCategoryNodeStorage> $categoryNodeStorageEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\CategoryStorage\Persistence\Base\SpyCategoryNodeStorage[] $categoryNodeStorageEntities
      * @param array<\Generated\Shared\Transfer\CategoryNodeStorageTransfer> $categoryNodeStorageTransfers
      *
      * @return array<\Generated\Shared\Transfer\CategoryNodeStorageTransfer>

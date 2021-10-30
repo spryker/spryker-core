@@ -103,7 +103,7 @@ class QuoteShareDetailsQuoteResponseExpander implements QuoteResponseExpanderInt
     /**
      * @param array<\Generated\Shared\Transfer\SpyCompanyUserEntityTransfer> $companyUserTransferCollection
      *
-     * @return array<\Generated\Shared\Transfer\SpyCompanyUserEntityTransfer[]>
+     * @return array<array<\Generated\Shared\Transfer\SpyCompanyUserEntityTransfer>>
      */
     protected function groupCompanyUsersByQuoteId(array $companyUserTransferCollection): array
     {

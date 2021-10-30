@@ -76,7 +76,7 @@ class Finder implements FinderInterface
     /**
      * @param array<\Generated\Shared\Transfer\StateMachineItemTransfer> $stateMachineItems
      *
-     * @return array<string[]>
+     * @return array<array<string>>
      */
     public function getManualEventsForStateMachineItems(array $stateMachineItems)
     {
@@ -215,7 +215,7 @@ class Finder implements FinderInterface
      * @param array<\Spryker\Zed\StateMachine\Business\Process\ProcessInterface> $processes
      * @param array<string> $sourceStates
      *
-     * @return array<\Generated\Shared\Transfer\StateMachineItemTransfer[]>
+     * @return array<array<\Generated\Shared\Transfer\StateMachineItemTransfer>>
      */
     public function filterItemsWithOnEnterEvent(
         array $stateMachineItems,
@@ -399,7 +399,7 @@ class Finder implements FinderInterface
      * @param array $statesByFlag
      * @param string $historySortDirection
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\StateMachine\Persistence\SpyStateMachineItemState>
+     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\StateMachine\Persistence\SpyStateMachineItemState[]
      */
     protected function getFlaggedStateMachineItems(StateMachineProcessTransfer $stateMachineProcessTransfer, array $statesByFlag, string $historySortDirection)
     {

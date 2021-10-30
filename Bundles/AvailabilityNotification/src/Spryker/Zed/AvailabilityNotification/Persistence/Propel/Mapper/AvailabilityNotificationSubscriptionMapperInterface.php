@@ -24,7 +24,7 @@ interface AvailabilityNotificationSubscriptionMapperInterface
     ): AvailabilityNotificationSubscriptionTransfer;
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\AvailabilityNotification\Persistence\SpyAvailabilityNotificationSubscription> $availabilityNotificationSubscriptionEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\AvailabilityNotification\Persistence\SpyAvailabilityNotificationSubscription[] $availabilityNotificationSubscriptionEntities
      * @param \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionCollectionTransfer $availabilityNotificationSubscriptionCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionCollectionTransfer

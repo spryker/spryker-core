@@ -22,7 +22,7 @@ class NopaymentQueryContainer extends AbstractQueryContainer implements Nopaymen
      *
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItem
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Nopayment\Persistence\SpyNopaymentPaid>
+     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Nopayment\Persistence\SpyNopaymentPaid[]
      */
     public function queryOrderItem(SpySalesOrderItem $orderItem)
     {

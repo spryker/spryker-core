@@ -108,7 +108,7 @@ class CompanyUsersRestApiMapper
     /**
      * @param \Propel\Runtime\Collection\ObjectCollection $companyRoles
      *
-     * @return array<\Orm\Zed\CompanyRole\Persistence\SpyCompanyRole[]>
+     * @return array<array<\Orm\Zed\CompanyRole\Persistence\SpyCompanyRole>>
      */
     protected function indexCompanyRoleEntities(ObjectCollection $companyRoles): array
     {

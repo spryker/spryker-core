@@ -218,7 +218,7 @@ class TransferConfig extends AbstractBundleConfig
      *
      * @phpstan-return array<string, array<string, array<string, string>>>
      *
-     * @return array<string[][]>
+     * @return array<array<array<string>>>
      */
     public function getTypeShims(): array
     {

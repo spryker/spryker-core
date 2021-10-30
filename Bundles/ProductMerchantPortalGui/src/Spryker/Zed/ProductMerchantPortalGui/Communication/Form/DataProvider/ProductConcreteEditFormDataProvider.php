@@ -147,7 +147,7 @@ class ProductConcreteEditFormDataProvider implements ProductConcreteEditFormData
     }
 
     /**
-     * @return array<string[]>
+     * @return array<array<string>>
      */
     public function getOptions(): array
     {

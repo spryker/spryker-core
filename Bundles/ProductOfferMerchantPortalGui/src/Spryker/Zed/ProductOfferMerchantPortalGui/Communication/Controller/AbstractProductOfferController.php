@@ -71,8 +71,6 @@ class AbstractProductOfferController extends AbstractController
     }
 
     /**
-     * @phpstan-param array<\Generated\Shared\Transfer\LocalizedAttributesTransfer> $localizedAttributes
-     *
      * @param array<\Generated\Shared\Transfer\LocalizedAttributesTransfer> $localizedAttributes
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *

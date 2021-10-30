@@ -67,7 +67,7 @@ class PricePageDataLoaderPlugin extends AbstractPlugin implements ProductPageDat
     /**
      * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $productPrices
      *
-     * @return array<\Generated\Shared\Transfer\PriceProductTransfer[][]>
+     * @return array<array<array<\Generated\Shared\Transfer\PriceProductTransfer>>>
      */
     protected function getProductPricesMappedByIdAndStoreName(array $productPrices): array
     {

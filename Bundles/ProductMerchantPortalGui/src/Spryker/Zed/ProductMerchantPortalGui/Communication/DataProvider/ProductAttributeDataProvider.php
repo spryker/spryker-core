@@ -19,7 +19,7 @@ class ProductAttributeDataProvider implements ProductAttributeDataProviderInterf
      * @param array<string> $attributes
      * @param \ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer> $localizedAttributeTransfers
      *
-     * @return array<string[]>
+     * @return array<array<string>>
      */
     public function getData(array $attributes, ArrayObject $localizedAttributeTransfers): array
     {
@@ -84,9 +84,9 @@ class ProductAttributeDataProvider implements ProductAttributeDataProviderInterf
 
     /**
      * @param \Generated\Shared\Transfer\LocalizedAttributesTransfer $localizedAttributesTransfer
-     * @param array<string[]> $data
+     * @param array<array<string>> $data
      *
-     * @return array<string[]>
+     * @return array<array<string>>
      */
     protected function addLocalizedAttributes(
         LocalizedAttributesTransfer $localizedAttributesTransfer,

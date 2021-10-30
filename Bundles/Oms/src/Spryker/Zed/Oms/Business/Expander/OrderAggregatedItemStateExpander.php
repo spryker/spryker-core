@@ -57,7 +57,7 @@ class OrderAggregatedItemStateExpander implements OrderAggregatedItemStateExpand
 
     /**
      * @param array<\Generated\Shared\Transfer\OrderTransfer> $orderTransfers
-     * @param array<\Generated\Shared\Transfer\AggregatedItemStateTransfer[]> $aggregatedItemStateMap
+     * @param array<array<\Generated\Shared\Transfer\AggregatedItemStateTransfer>> $aggregatedItemStateMap
      *
      * @return array<\Generated\Shared\Transfer\OrderTransfer>
      */
@@ -75,7 +75,7 @@ class OrderAggregatedItemStateExpander implements OrderAggregatedItemStateExpand
     /**
      * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return array<\Generated\Shared\Transfer\AggregatedItemStateTransfer[]>
+     * @return array<array<\Generated\Shared\Transfer\AggregatedItemStateTransfer>>
      */
     protected function getAggregatedItemStateMap(array $itemTransfers): array
     {

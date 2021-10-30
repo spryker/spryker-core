@@ -24,8 +24,8 @@ use Spryker\Glue\Testify\OpenApi3\Reference\ReferableInterface;
  * @property-read \Spryker\Glue\Testify\OpenApi3\SchemaObject\Operation $head
  * @property-read \Spryker\Glue\Testify\OpenApi3\SchemaObject\Operation $patch
  * @property-read \Spryker\Glue\Testify\OpenApi3\SchemaObject\Operation $trace
- * @property-read \Spryker\Glue\Testify\OpenApi3\SchemaObject\Server[] $servers
- * @property-read \Spryker\Glue\Testify\OpenApi3\SchemaObject\Parameter[] $parameters
+ * @property-read array<\Spryker\Glue\Testify\OpenApi3\SchemaObject\Server> $servers
+ * @property-read array<\Spryker\Glue\Testify\OpenApi3\SchemaObject\Parameter> $parameters
  *
  * @property-read \Spryker\Glue\Testify\OpenApi3\SchemaObject\License $license
  * @property-read string $version

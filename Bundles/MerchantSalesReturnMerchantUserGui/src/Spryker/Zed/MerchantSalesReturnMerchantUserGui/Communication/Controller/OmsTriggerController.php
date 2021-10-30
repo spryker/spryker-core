@@ -196,11 +196,9 @@ class OmsTriggerController extends AbstractController
     }
 
     /**
-     * @phpstan-return array<int, int>
-     *
      * @param \Generated\Shared\Transfer\ReturnTransfer $returnTransfer
      *
-     * @return array<int>
+     * @return array<int, int>
      */
     protected function extractSalesOrderItemIdsFromReturn(ReturnTransfer $returnTransfer): array
     {

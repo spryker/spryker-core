@@ -14,7 +14,7 @@ use Spryker\Glue\Testify\OpenApi3\Property\PropertyDefinition;
 
 /**
  * @property-read string $contentType
- * @property-read \Spryker\Glue\Testify\OpenApi3\SchemaObject\Header[] $headers
+ * @property-read array<\Spryker\Glue\Testify\OpenApi3\SchemaObject\Header> $headers
  * @property-read string $style
  * @property-read bool $explode
  * @property-read bool $allowReserved

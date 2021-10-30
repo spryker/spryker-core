@@ -521,7 +521,7 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Product\Persistence\SpyProduct> $productConcreteEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Product\Persistence\SpyProduct[] $productConcreteEntities
      *
      * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
      */
@@ -606,7 +606,7 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
      */
     public function getActiveProductAbstractsByProductAbstractIds(array $productAbstractIds): array
     {
-        /** @var \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Product\Persistence\SpyProductAbstract> $productAbstractEntities */
+        /** @var \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Product\Persistence\SpyProductAbstract[] $productAbstractEntities */
         $productAbstractEntities = $this->getFactory()
             ->createProductAbstractQuery()
             ->filterByIdProductAbstract_In($productAbstractIds)
@@ -697,7 +697,7 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Product\Persistence\SpyProductAbstract> $productAbstractEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Product\Persistence\SpyProductAbstract[] $productAbstractEntities
      *
      * @return array<\Generated\Shared\Transfer\ProductAbstractTransfer>
      */

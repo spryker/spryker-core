@@ -18,18 +18,18 @@ use Spryker\Glue\Testify\OpenApi3\Primitive\StringPrimitive;
 use Spryker\Glue\Testify\OpenApi3\Property\PropertyDefinition;
 
 /**
- * @property-read string[] $tags
+ * @property-read array<string> $tags
  * @property-read string $summary
  * @property-read string $description
  * @property-read \Spryker\Glue\Testify\OpenApi3\SchemaObject\ExternalDocumentation $externalDocs
  * @property-read string $operationId
- * @property-read \Spryker\Glue\Testify\OpenApi3\SchemaObject\Parameter[] $parameters
+ * @property-read array<\Spryker\Glue\Testify\OpenApi3\SchemaObject\Parameter> $parameters
  * @property-read \Spryker\Glue\Testify\OpenApi3\SchemaObject\RequestBody $requestBody
- * @property-read \Spryker\Glue\Testify\OpenApi3\SchemaObject\Response[] $responses
- * @property-read \Spryker\Glue\Testify\OpenApi3\Collection\Callback[] $callbacks
+ * @property-read array<\Spryker\Glue\Testify\OpenApi3\SchemaObject\Response> $responses
+ * @property-read array<\Spryker\Glue\Testify\OpenApi3\Collection\Callback> $callbacks
  * @property-read bool $deprecated
  * @property-read \Spryker\Glue\Testify\OpenApi3\Collection\SecurityRequirements $security
- * @property-read \Spryker\Glue\Testify\OpenApi3\SchemaObject\Server[] $servers
+ * @property-read array<\Spryker\Glue\Testify\OpenApi3\SchemaObject\Server> $servers
  */
 class Operation extends AbstractObject
 {

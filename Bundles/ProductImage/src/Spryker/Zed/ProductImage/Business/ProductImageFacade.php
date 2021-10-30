@@ -272,7 +272,7 @@ class ProductImageFacade extends AbstractFacade implements ProductImageFacadeInt
      * @param array<int> $productIds
      * @param string $productImageSetName
      *
-     * @return array<\Generated\Shared\Transfer\ProductImageTransfer[]>
+     * @return array<array<\Generated\Shared\Transfer\ProductImageTransfer>>
      */
     public function getProductImagesByProductIdsAndProductImageSetName(array $productIds, string $productImageSetName): array
     {

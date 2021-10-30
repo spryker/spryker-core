@@ -110,10 +110,10 @@ class MerchantSalesOrderMapper
     }
 
     /**
-     * @param array<mixed[]> $merchantSalesOrderRows
+     * @param array<array<mixed>> $merchantSalesOrderRows
      * @param array<string> $fields
      *
-     * @return array<mixed[]>
+     * @return array<array<mixed>>
      */
     public function mapMerchantSalesOrderDataByField(array $merchantSalesOrderRows, array $fields): array
     {

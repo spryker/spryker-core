@@ -279,7 +279,7 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
      *
      * @api
      *
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Sales\Persistence\SpySalesOrderItem> $salesOrderItems
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $salesOrderItems
      *
      * @return void
      */

@@ -48,10 +48,9 @@ class EventTriggerForm extends AbstractType
 
     /**
      * @phpstan-param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
-     * @phpstan-param array<string, mixed> $options
      *
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param \Symfony\Component\Form\FormBuilderInterface|mixed[] $builder
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -77,10 +76,9 @@ class EventTriggerForm extends AbstractType
 
     /**
      * @phpstan-param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
-     * @phpstan-param array<string, mixed> $options
      *
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param \Symfony\Component\Form\FormBuilderInterface|mixed[] $builder
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -103,10 +101,9 @@ class EventTriggerForm extends AbstractType
 
     /**
      * @phpstan-param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
-     * @phpstan-param array<string, mixed> $options
      *
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param \Symfony\Component\Form\FormBuilderInterface|mixed[] $builder
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -120,9 +117,7 @@ class EventTriggerForm extends AbstractType
     }
 
     /**
-     * @phpstan-param array<string, mixed> $options
-     *
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return string
      */

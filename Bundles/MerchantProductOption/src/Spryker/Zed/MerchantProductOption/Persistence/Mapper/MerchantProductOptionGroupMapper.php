@@ -28,7 +28,7 @@ class MerchantProductOptionGroupMapper
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\MerchantProductOption\Persistence\SpyMerchantProductOptionGroup> $merchantProductOptionGroupEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\MerchantProductOption\Persistence\SpyMerchantProductOptionGroup[] $merchantProductOptionGroupEntities
      * @param \Generated\Shared\Transfer\MerchantProductOptionGroupCollectionTransfer $merchantProductOptionGroupCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantProductOptionGroupCollectionTransfer

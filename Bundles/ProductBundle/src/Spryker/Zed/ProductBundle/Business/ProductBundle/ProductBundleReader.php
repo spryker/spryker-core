@@ -124,7 +124,7 @@ class ProductBundleReader implements ProductBundleReaderInterface
     /**
      * @param int $idProductConcrete
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductBundle\Persistence\SpyProductBundle>
+     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductBundle\Persistence\SpyProductBundle[]
      */
     protected function findBundledProducts($idProductConcrete)
     {
@@ -149,7 +149,7 @@ class ProductBundleReader implements ProductBundleReaderInterface
     /**
      * @param array<string> $skus
      *
-     * @return array<\Generated\Shared\Transfer\ProductForBundleTransfer[]>
+     * @return array<array<\Generated\Shared\Transfer\ProductForBundleTransfer>>
      */
     public function getProductForBundleTransfersByProductConcreteSkus(array $skus): array
     {

@@ -88,7 +88,7 @@ class CartValidator implements CartValidatorInterface
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
-     * @return array<\Generated\Shared\Transfer\PromotionItemTransfer[]>
+     * @return array<array<\Generated\Shared\Transfer\PromotionItemTransfer>>
      */
     protected function groupAvailableQuotePromotionItemsById(CartChangeTransfer $cartChangeTransfer): array
     {

@@ -15,7 +15,7 @@ use Spryker\Glue\Testify\OpenApi3\Reference\ReferableInterface;
 
 /**
  * @property-read string $description
- * @property-read \Spryker\Glue\Testify\OpenApi3\SchemaObject\MediaType[] $content
+ * @property-read array<\Spryker\Glue\Testify\OpenApi3\SchemaObject\MediaType> $content
  * @property-read bool $required
  */
 class RequestBody extends AbstractObject implements ReferableInterface

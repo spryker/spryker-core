@@ -447,7 +447,7 @@ interface GuiTableConfigurationBuilderInterface
      *
      * @api
      *
-     * @param array<string[]> $data
+     * @param array<array<string>> $data
      *
      * @return $this
      */

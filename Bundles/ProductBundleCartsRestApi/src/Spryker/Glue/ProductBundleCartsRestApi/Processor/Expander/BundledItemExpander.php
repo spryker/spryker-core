@@ -91,7 +91,7 @@ class BundledItemExpander implements BundledItemExpanderInterface
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return array<\Generated\Shared\Transfer\ItemTransfer[]>
+     * @return array<array<\Generated\Shared\Transfer\ItemTransfer>>
      */
     protected function getGroupedBundledItems(QuoteTransfer $quoteTransfer): array
     {
@@ -115,7 +115,7 @@ class BundledItemExpander implements BundledItemExpanderInterface
     /**
      * @phpstan-param array<string, array<\Generated\Shared\Transfer\ItemTransfer>> $groupedBundledItems
      *
-     * @param array<\Generated\Shared\Transfer\ItemTransfer[]> $groupedBundledItems
+     * @param array<array<\Generated\Shared\Transfer\ItemTransfer>> $groupedBundledItems
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $restResource
      * @param string $localeName
      *

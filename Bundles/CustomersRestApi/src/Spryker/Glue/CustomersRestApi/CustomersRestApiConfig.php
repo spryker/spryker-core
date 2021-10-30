@@ -326,7 +326,7 @@ class CustomersRestApiConfig extends AbstractBundleConfig
      *
      * @api
      *
-     * @return array<mixed[]>
+     * @return array<array<mixed>>
      */
     public function getErrorMapping(): array
     {

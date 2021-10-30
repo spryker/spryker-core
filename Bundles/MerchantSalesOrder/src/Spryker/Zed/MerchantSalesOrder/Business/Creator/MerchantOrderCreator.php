@@ -95,7 +95,7 @@ class MerchantOrderCreator implements MerchantOrderCreatorInterface
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return array<\Generated\Shared\Transfer\ItemTransfer[]>
+     * @return array<array<\Generated\Shared\Transfer\ItemTransfer>>
      */
     protected function getOrderItemsGroupedByMerchantReference(OrderTransfer $orderTransfer): array
     {

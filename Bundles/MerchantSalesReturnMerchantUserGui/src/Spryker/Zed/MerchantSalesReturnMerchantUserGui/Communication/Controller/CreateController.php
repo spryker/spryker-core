@@ -72,11 +72,9 @@ class CreateController extends AbstractController
     protected const MESSAGE_RETURN_CREATE_FAIL = 'Return has not been created.';
 
     /**
-     * @phpstan-return \Symfony\Component\HttpFoundation\RedirectResponse|array<mixed>
-     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array<string, mixed>
      */
     public function indexAction(Request $request)
     {
@@ -123,14 +121,10 @@ class CreateController extends AbstractController
     }
 
     /**
-     * @phpstan-param \Symfony\Component\Form\FormInterface<mixed> $returnCreateForm
-     *
-     * @phpstan-return \Symfony\Component\HttpFoundation\RedirectResponse|array<mixed>
-     *
-     * @param \Symfony\Component\Form\FormInterface $returnCreateForm
+     * @param \Symfony\Component\Form\FormInterface|mixed[] $returnCreateForm
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array<string, mixed>
      */
     protected function processReturnCreateForm(FormInterface $returnCreateForm, OrderTransfer $orderTransfer)
     {

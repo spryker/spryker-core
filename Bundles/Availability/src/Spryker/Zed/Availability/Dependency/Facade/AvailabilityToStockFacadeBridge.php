@@ -70,7 +70,7 @@ class AvailabilityToStockFacadeBridge implements AvailabilityToStockFacadeInterf
     }
 
     /**
-     * @return array<string[]>
+     * @return array<array<string>>
      */
     public function getStoreToWarehouseMapping()
     {

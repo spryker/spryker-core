@@ -33,7 +33,7 @@ use Spryker\Glue\Testify\OpenApi3\Reference\ReferableInterface;
  * @property-read bool $uniqueItems
  * @property-read int $maxProperties
  * @property-read int $minProperties
- * @property-read string[] $required
+ * @property-read array<string> $required
  * @property-read array $enum
  * @property-read string $type
  * @property-read Schemas $allOf

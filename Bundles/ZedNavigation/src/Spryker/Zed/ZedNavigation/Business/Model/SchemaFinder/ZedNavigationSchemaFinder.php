@@ -27,7 +27,7 @@ class ZedNavigationSchemaFinder implements ZedNavigationSchemaFinderInterface
     /**
      * @param string $fileNamePattern
      *
-     * @return \Symfony\Component\Finder\Finder<\Symfony\Component\Finder\SplFileInfo>
+     * @return \Symfony\Component\Finder\Finder|\Symfony\Component\Finder\SplFileInfo[]
      */
     public function getSchemaFiles(string $fileNamePattern)
     {

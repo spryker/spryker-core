@@ -229,7 +229,7 @@ class ProductCategoryPageDataExpanderPlugin extends AbstractPlugin implements Pr
      * @param array<int> $directParentCategories
      * @param int $idProductAbstract
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductCategory\Persistence\SpyProductCategory>
+     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductCategory\Persistence\SpyProductCategory[]
      */
     protected function findNodeEntitiesWithProductOrderPosition(array $directParentCategories, $idProductAbstract)
     {

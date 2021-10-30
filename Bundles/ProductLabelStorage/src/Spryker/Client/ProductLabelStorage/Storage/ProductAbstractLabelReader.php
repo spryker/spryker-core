@@ -95,7 +95,7 @@ class ProductAbstractLabelReader implements ProductAbstractLabelReaderInterface
      * @param string $localeName
      * @param string $storeName
      *
-     * @return array<\Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[]>
+     * @return array<array<\Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer>>
      */
     public function getProductLabelsByProductAbstractIds(array $productAbstractIds, string $localeName, string $storeName): array
     {
@@ -113,11 +113,11 @@ class ProductAbstractLabelReader implements ProductAbstractLabelReaderInterface
     }
 
     /**
-     * @param array<int[]> $productLabelIdsByProductAbstractIds
+     * @param array<array<int>> $productLabelIdsByProductAbstractIds
      * @param string $localeName
      * @param string $storeName
      *
-     * @return array<\Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[]>
+     * @return array<array<\Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer>>
      */
     protected function getProductLabelDictionaryItemTransfersGroupedByProductAbstractIds(
         array $productLabelIdsByProductAbstractIds,
@@ -191,7 +191,7 @@ class ProductAbstractLabelReader implements ProductAbstractLabelReaderInterface
     /**
      * @param array<int> $productAbstractIds
      *
-     * @return array<int[]>
+     * @return array<array<int>>
      */
     protected function getProductLabelIdsByProductAbstractIds(array $productAbstractIds): array
     {
@@ -243,7 +243,7 @@ class ProductAbstractLabelReader implements ProductAbstractLabelReaderInterface
     /**
      * @param array $storageDataItems
      *
-     * @return array<int[]>
+     * @return array<array<int>>
      */
     protected function getProductLabelIdsGroupedByIdProductAbstract(array $storageDataItems): array
     {

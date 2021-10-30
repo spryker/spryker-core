@@ -63,11 +63,9 @@ class CreateController extends AbstractController
     protected const MESSAGE_PARAM_ID = '%id%';
 
     /**
-     * @phpstan-return \Symfony\Component\HttpFoundation\RedirectResponse|array<string, mixed>
-     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array<string, mixed>
      */
     public function indexAction(Request $request)
     {
@@ -81,11 +79,9 @@ class CreateController extends AbstractController
     }
 
     /**
-     * @phpstan-return \Symfony\Component\HttpFoundation\RedirectResponse|array<string, mixed>
-     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array<string, mixed>
      */
     protected function executeIndexAction(Request $request)
     {
@@ -114,7 +110,7 @@ class CreateController extends AbstractController
     }
 
     /**
-     * @param \Symfony\Component\Form\FormInterface<mixed> $returnCreateForm
+     * @param \Symfony\Component\Form\FormInterface|mixed[] $returnCreateForm
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|array<string, mixed>

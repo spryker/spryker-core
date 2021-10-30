@@ -334,7 +334,7 @@ class CmsPageStorageWriter implements CmsPageStorageWriterInterface
      * @param \Orm\Zed\Cms\Persistence\SpyCmsPage $cmsPageEntity
      * @param array $cmsPageStorageEntities
      * @param array $pairs
-     * @param array<string[]> $localeNameMap
+     * @param array<array<string>> $localeNameMap
      *
      * @return array
      */
@@ -391,7 +391,7 @@ class CmsPageStorageWriter implements CmsPageStorageWriterInterface
     }
 
     /**
-     * @return array<string[]>
+     * @return array<array<string>>
      */
     protected function getLocaleNameMapByStoreName(): array
     {

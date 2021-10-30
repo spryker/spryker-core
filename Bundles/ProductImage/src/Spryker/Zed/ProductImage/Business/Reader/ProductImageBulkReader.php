@@ -36,7 +36,7 @@ class ProductImageBulkReader implements ProductImageBulkReaderInterface
      * @param array<int> $productIds
      * @param string $productImageSetName
      *
-     * @return array<\Generated\Shared\Transfer\ProductImageTransfer[]>
+     * @return array<array<\Generated\Shared\Transfer\ProductImageTransfer>>
      */
     public function getProductImagesByProductIdsAndProductImageSetName(array $productIds, string $productImageSetName): array
     {
@@ -80,7 +80,7 @@ class ProductImageBulkReader implements ProductImageBulkReaderInterface
     /**
      * @param array<int> $productSetIds
      *
-     * @return array<\Generated\Shared\Transfer\ProductImageTransfer[]>
+     * @return array<array<\Generated\Shared\Transfer\ProductImageTransfer>>
      */
     protected function getProductImagesByProductSetIds(array $productSetIds): array
     {

@@ -191,7 +191,7 @@ class CategoryNodePageSearchWriter implements CategoryNodePageSearchWriterInterf
     }
 
     /**
-     * @return array<string[]>
+     * @return array<array<string>>
      */
     protected function getLocaleNameMapByStoreName(): array
     {

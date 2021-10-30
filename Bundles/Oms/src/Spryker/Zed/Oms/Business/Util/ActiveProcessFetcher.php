@@ -27,7 +27,7 @@ class ActiveProcessFetcher implements ActiveProcessFetcherInterface
     protected static $reservedStatesCache = [];
 
     /**
-     * @var array<string[]>
+     * @var array<array<string>>
      */
     protected static $reservedStateProcessNamesCache = [];
 

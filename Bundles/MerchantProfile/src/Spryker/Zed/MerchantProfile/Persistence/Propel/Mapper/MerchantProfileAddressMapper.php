@@ -32,7 +32,7 @@ class MerchantProfileAddressMapper implements MerchantProfileAddressMapperInterf
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\MerchantProfile\Persistence\SpyMerchantProfileAddress> $merchantProfileAddressEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\MerchantProfile\Persistence\SpyMerchantProfileAddress[] $merchantProfileAddressEntities
      * @param \ArrayObject<int, \Generated\Shared\Transfer\MerchantProfileAddressTransfer> $merchantProfileAddressTransfers
      *
      * @return \ArrayObject<int, \Generated\Shared\Transfer\MerchantProfileAddressTransfer>

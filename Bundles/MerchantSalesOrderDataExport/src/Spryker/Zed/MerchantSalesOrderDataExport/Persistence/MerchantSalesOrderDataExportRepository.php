@@ -122,7 +122,7 @@ class MerchantSalesOrderDataExportRepository extends AbstractRepository implemen
         foreach ($selectedColumns as $selectedField => $selectedColumn) {
             $merchantSalesOrderQuery->addAsColumn(sprintf('"%s"', $selectedColumn), $selectedColumn);
         }
-        /** @var \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrder> $merchantSalesOrderDataEntities */
+        /** @var \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrder[] $merchantSalesOrderDataEntities */
         $merchantSalesOrderDataEntities = $merchantSalesOrderQuery->find();
         $merchantSalesOrderData = $merchantSalesOrderDataEntities->toArray();
 
@@ -186,7 +186,7 @@ class MerchantSalesOrderDataExportRepository extends AbstractRepository implemen
             $merchantSalesOrderItemQuery->addAsColumn(sprintf('"%s"', $selectedColumn), $selectedColumn);
         }
 
-        /** @var \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItem> $merchantSalesOrderItemDataEntities */
+        /** @var \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItem[] $merchantSalesOrderItemDataEntities */
         $merchantSalesOrderItemDataEntities = $merchantSalesOrderItemQuery->find();
         $merchantSalesOrderItemData = $merchantSalesOrderItemDataEntities->toArray();
 
@@ -238,7 +238,7 @@ class MerchantSalesOrderDataExportRepository extends AbstractRepository implemen
             $merchantSalesOrderQuery->addAsColumn(sprintf('"%s"', $selectedColumn), $selectedColumn);
         }
 
-        /** @var \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrder> $merchantOrderExpenseDataEntities */
+        /** @var \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrder[] $merchantOrderExpenseDataEntities */
         $merchantOrderExpenseDataEntities = $merchantSalesOrderQuery->find();
         $merchantOrderExpenseData = $merchantOrderExpenseDataEntities->toArray();
 
@@ -347,7 +347,7 @@ class MerchantSalesOrderDataExportRepository extends AbstractRepository implemen
      */
     protected function buildMerchantSalesOrderBaseQuery(int $offset, int $limit): SpyMerchantSalesOrderQuery
     {
-        /** @var \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderQuery<\Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrder> $spyMerchantSalesOrderQuery */
+        /** @var \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderQuery|\Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrder[] $spyMerchantSalesOrderQuery */
         $spyMerchantSalesOrderQuery = $this->getFactory()
             ->getMerchantSalesOrderPropelQuery()
             ->orderByMerchantReference()
@@ -382,7 +382,7 @@ class MerchantSalesOrderDataExportRepository extends AbstractRepository implemen
      */
     protected function buildMerchantSalesOrderItemBaseQuery(int $offset, int $limit): SpyMerchantSalesOrderItemQuery
     {
-        /** @var \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItemQuery<\Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItem> $spyMerchantSalesOrderItemQuery */
+        /** @var \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItemQuery|\Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItem[] $spyMerchantSalesOrderItemQuery */
         $spyMerchantSalesOrderItemQuery = $this->getFactory()
             ->getMerchantSalesOrderItemPropelQuery()
             ->leftJoinStateMachineItemState()
@@ -431,7 +431,7 @@ class MerchantSalesOrderDataExportRepository extends AbstractRepository implemen
      */
     protected function buildMerchantSalesOrderWithExpenseBaseQuery(int $offset, int $limit): SpyMerchantSalesOrderQuery
     {
-        /** @var \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderQuery<\Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrder> $spyMerchantSalesOrderQuery */
+        /** @var \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderQuery|\Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrder[] $spyMerchantSalesOrderQuery */
         $spyMerchantSalesOrderQuery = $this->getFactory()
             ->getMerchantSalesOrderPropelQuery()
             ->orderByMerchantReference()
@@ -511,7 +511,7 @@ class MerchantSalesOrderDataExportRepository extends AbstractRepository implemen
      */
     public function getCommentsByOrderIds(array $salesOrderIds): array
     {
-        /** @var \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Sales\Persistence\SpySalesOrderComment> $salesOrderCommentEntities */
+        /** @var \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Sales\Persistence\SpySalesOrderComment[] $salesOrderCommentEntities */
         $salesOrderCommentEntities = $this->getFactory()
             ->getSalesOrderCommentPropelQuery()
             ->filterByFkSalesOrder_In($salesOrderIds)
@@ -541,9 +541,9 @@ class MerchantSalesOrderDataExportRepository extends AbstractRepository implemen
     }
 
     /**
-     * @param array<string[]> $rowItemsData
+     * @param array<array<string>> $rowItemsData
      *
-     * @return array<string[]>
+     * @return array<array<string>>
      */
     protected function formatRowItemDataKeys(array $rowItemsData): array
     {

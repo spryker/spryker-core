@@ -133,7 +133,7 @@ class ProductOptionStorageWriter implements ProductOptionStorageWriterInterface
     }
 
     /**
-     * @param array<\Orm\Zed\ProductOptionStorage\Persistence\SpyProductAbstractOptionStorage[]> $productAbstractOptionStorageEntities
+     * @param array<array<\Orm\Zed\ProductOptionStorage\Persistence\SpyProductAbstractOptionStorage>> $productAbstractOptionStorageEntities
      * @param array<int> $productAbstractIds
      *
      * @return array<\Orm\Zed\ProductOptionStorage\Persistence\SpyProductAbstractOptionStorage>
@@ -156,7 +156,7 @@ class ProductOptionStorageWriter implements ProductOptionStorageWriterInterface
     }
 
     /**
-     * @param array<\Orm\Zed\ProductOptionStorage\Persistence\SpyProductAbstractOptionStorage[]> $productAbstractOptionStorageEntities
+     * @param array<array<\Orm\Zed\ProductOptionStorage\Persistence\SpyProductAbstractOptionStorage>> $productAbstractOptionStorageEntities
      *
      * @return void
      */
@@ -191,7 +191,7 @@ class ProductOptionStorageWriter implements ProductOptionStorageWriterInterface
     /**
      * @param int $idProductAbstract
      * @param array $productOptions
-     * @param array<\Orm\Zed\ProductOptionStorage\Persistence\SpyProductAbstractOptionStorage[]> $productAbstractOptionStorageEntities
+     * @param array<array<\Orm\Zed\ProductOptionStorage\Persistence\SpyProductAbstractOptionStorage>> $productAbstractOptionStorageEntities
      *
      * @return void
      */
@@ -250,7 +250,7 @@ class ProductOptionStorageWriter implements ProductOptionStorageWriterInterface
     /**
      * @param array<int> $productAbstractIds
      *
-     * @return array<\Orm\Zed\ProductOptionStorage\Persistence\SpyProductAbstractOptionStorage[]>
+     * @return array<array<\Orm\Zed\ProductOptionStorage\Persistence\SpyProductAbstractOptionStorage>>
      */
     protected function findProductStorageOptionEntitiesByProductAbstractIds(array $productAbstractIds): array
     {

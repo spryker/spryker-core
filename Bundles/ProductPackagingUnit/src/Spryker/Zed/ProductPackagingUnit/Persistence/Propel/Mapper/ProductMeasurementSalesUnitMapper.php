@@ -16,7 +16,7 @@ use Propel\Runtime\Collection\ObjectCollection;
 class ProductMeasurementSalesUnitMapper
 {
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Sales\Persistence\SpySalesOrderItem> $salesOrderItemEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $salesOrderItemEntities
      *
      * @return array<\Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer>
      */

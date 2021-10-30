@@ -227,7 +227,7 @@ class CategoryTable extends AbstractTable
 
     /**
      * @param \Orm\Zed\Category\Persistence\SpyCategory $categoryEntity
-     * @param array<string[]> $categoryStoreNamesGroupedByIdCategory
+     * @param array<array<string>> $categoryStoreNamesGroupedByIdCategory
      *
      * @return array
      */
@@ -377,7 +377,7 @@ class CategoryTable extends AbstractTable
 
     /**
      * @param int $idCategory
-     * @param array<string[]> $categoryStoreNamesGroupedByIdCategory
+     * @param array<array<string>> $categoryStoreNamesGroupedByIdCategory
      *
      * @return string
      */

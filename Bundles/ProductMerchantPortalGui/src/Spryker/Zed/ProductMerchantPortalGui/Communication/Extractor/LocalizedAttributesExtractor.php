@@ -29,8 +29,6 @@ class LocalizedAttributesExtractor implements LocalizedAttributesExtractorInterf
     }
 
     /**
-     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer> $localizedAttributeTransfers
-     *
      * @param \ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer> $localizedAttributeTransfers
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *

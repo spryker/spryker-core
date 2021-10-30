@@ -22,7 +22,7 @@ abstract class AbstractIntlMoneyFormatter implements MoneyFormatterInterface
     protected $converter;
 
     /**
-     * @var array<\Money\Formatter\IntlMoneyFormatter[]>
+     * @var array<array<\Money\Formatter\IntlMoneyFormatter>>
      */
     protected static $formatters = [];
 

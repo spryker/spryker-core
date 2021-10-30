@@ -133,7 +133,7 @@ class ProductConcreteTableExpander implements ProductConcreteTableExpanderInterf
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteAvailabilityCollectionTransfer $productConcreteAvailabilityCollectionTransfer
      *
-     * @return array<float[]>
+     * @return array<array<float>>
      */
     protected function getProductAvailabilitiesGroupedByProductSkus(
         ProductConcreteAvailabilityCollectionTransfer $productConcreteAvailabilityCollectionTransfer

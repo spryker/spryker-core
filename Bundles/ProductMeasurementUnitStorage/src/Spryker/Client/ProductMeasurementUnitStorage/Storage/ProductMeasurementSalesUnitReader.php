@@ -91,7 +91,7 @@ class ProductMeasurementSalesUnitReader implements ProductMeasurementSalesUnitRe
     /**
      * @param array<\Generated\Shared\Transfer\ProductConcreteMeasurementUnitStorageTransfer> $productConcreteMeasurementUnitStorageTransfers
      *
-     * @return array<\Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]>
+     * @return array<array<\Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer>>
      */
     protected function getProductMeasurementSalesUnits(array $productConcreteMeasurementUnitStorageTransfers): array
     {
@@ -118,7 +118,7 @@ class ProductMeasurementSalesUnitReader implements ProductMeasurementSalesUnitRe
      * @param array<\Generated\Shared\Transfer\ProductConcreteMeasurementSalesUnitTransfer> $productConcreteMeasurementSalesUnitTransfers
      * @param array<\Generated\Shared\Transfer\ProductMeasurementUnitTransfer> $indexedProductMeasurementUnitTransfers
      *
-     * @return array<\Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]>
+     * @return array<array<\Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer>>
      */
     protected function convertToProductMeasurementSalesUnitTransfers(
         array $productConcreteMeasurementSalesUnitTransfers,

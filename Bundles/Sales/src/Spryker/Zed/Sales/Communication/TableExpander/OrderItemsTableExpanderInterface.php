@@ -17,7 +17,7 @@ interface OrderItemsTableExpanderInterface
     public function getColumnHeaders(): array;
 
     /**
-     * @phpstan-return array<int, string[]>
+     * @phpstan-return array<int, array<string>>
      *
      * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *

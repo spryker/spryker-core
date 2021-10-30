@@ -111,7 +111,7 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
     protected $dataSourceUrl;
 
     /**
-     * @var array<string[]>
+     * @var array<array<string>>
      */
     protected $dataSourceInlineData;
 
@@ -799,7 +799,7 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
     /**
      * @api
      *
-     * @param array<string[]> $data
+     * @param array<array<string>> $data
      *
      * @return $this
      */

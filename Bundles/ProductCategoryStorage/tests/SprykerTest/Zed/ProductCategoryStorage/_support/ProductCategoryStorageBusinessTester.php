@@ -49,7 +49,7 @@ class ProductCategoryStorageBusinessTester extends Actor
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductCategoryStorage\Persistence\SpyProductAbstractCategoryStorage>
+     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductCategoryStorage\Persistence\SpyProductAbstractCategoryStorage[]
      */
     public function getProductAbstractCategoryStorageEntities(ProductConcreteTransfer $productConcreteTransfer): ObjectCollection
     {

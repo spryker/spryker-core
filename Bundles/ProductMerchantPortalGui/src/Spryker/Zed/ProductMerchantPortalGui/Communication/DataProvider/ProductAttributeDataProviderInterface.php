@@ -18,7 +18,7 @@ interface ProductAttributeDataProviderInterface
      * @param array<string> $attributes
      * @param \ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer> $localizedAttributeTransfers
      *
-     * @return array<string[]>
+     * @return array<array<string>>
      */
     public function getData(array $attributes, ArrayObject $localizedAttributeTransfers): array;
 

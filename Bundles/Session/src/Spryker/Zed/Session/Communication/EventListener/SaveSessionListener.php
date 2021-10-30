@@ -31,7 +31,7 @@ class SaveSessionListener implements EventSubscriberInterface
     }
 
     /**
-     * @return array<array[]>
+     * @return array<array<array>>
      */
     public static function getSubscribedEvents(): array
     {

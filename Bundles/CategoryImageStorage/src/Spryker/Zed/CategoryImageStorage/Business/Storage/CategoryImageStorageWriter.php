@@ -74,7 +74,7 @@ class CategoryImageStorageWriter implements CategoryImageStorageWriterInterface
     /**
      * @param array<\Generated\Shared\Transfer\SpyCategoryImageSetEntityTransfer> $categoryImageSets
      *
-     * @return array<\Generated\Shared\Transfer\SpyCategoryImageSetEntityTransfer[][]>
+     * @return array<array<array<\Generated\Shared\Transfer\SpyCategoryImageSetEntityTransfer>>>
      */
     protected function getImageSetsIndexedByCategoryIdAndLocale(array $categoryImageSets): array
     {
@@ -89,8 +89,8 @@ class CategoryImageStorageWriter implements CategoryImageStorageWriterInterface
     }
 
     /**
-     * @param array<\Generated\Shared\Transfer\SpyCategoryImageSetEntityTransfer[][]> $imagesSets
-     * @param array<\Generated\Shared\Transfer\SpyCategoryImageStorageEntityTransfer[]> $spyCategoryImageStorageEntities
+     * @param array<array<array<\Generated\Shared\Transfer\SpyCategoryImageSetEntityTransfer>>> $imagesSets
+     * @param array<array<\Generated\Shared\Transfer\SpyCategoryImageStorageEntityTransfer>> $spyCategoryImageStorageEntities
      *
      * @return void
      */
@@ -214,7 +214,7 @@ class CategoryImageStorageWriter implements CategoryImageStorageWriterInterface
     /**
      * @param array $categoryIds
      *
-     * @return array<\Generated\Shared\Transfer\SpyCategoryImageStorageEntityTransfer[]>
+     * @return array<array<\Generated\Shared\Transfer\SpyCategoryImageStorageEntityTransfer>>
      */
     protected function findCategoryImageStorageTransfersByCategoryIds(array $categoryIds): array
     {
@@ -229,7 +229,7 @@ class CategoryImageStorageWriter implements CategoryImageStorageWriterInterface
     }
 
     /**
-     * @param array<\Generated\Shared\Transfer\SpyCategoryImageStorageEntityTransfer[]> $spyCategoryImageStorageEntities
+     * @param array<array<\Generated\Shared\Transfer\SpyCategoryImageStorageEntityTransfer>> $spyCategoryImageStorageEntities
      *
      * @return void
      */

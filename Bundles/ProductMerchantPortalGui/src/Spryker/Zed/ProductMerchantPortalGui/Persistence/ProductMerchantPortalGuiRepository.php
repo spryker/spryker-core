@@ -393,7 +393,7 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
         $orderColumn = ProductAbstractTableDataMapper::PRODUCT_ABSTRACT_DATA_COLUMN_MAP[$orderColumn] ?? $orderColumn;
 
         if ($orderColumn === SpyProductAbstractTableMap::COL_SKU) {
-            /** @var \Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstractQuery<\Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstract> $merchantProductAbstractQuery */
+            /** @var \Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstractQuery|\Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstract[] $merchantProductAbstractQuery */
             $merchantProductAbstractQuery = $this->addNaturalSorting($merchantProductAbstractQuery, $orderColumn, $orderDirection);
         }
 
@@ -732,7 +732,7 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
         $orderColumn = ProductTableDataMapper::PRODUCT_DATA_COLUMN_MAP[$orderColumn] ?? $orderColumn;
 
         if ($orderColumn === SpyProductTableMap::COL_SKU) {
-            /** @var \Orm\Zed\Product\Persistence\SpyProductQuery<\Orm\Zed\Product\Persistence\SpyProduct> $productConcreteQuery */
+            /** @var \Orm\Zed\Product\Persistence\SpyProductQuery|\Orm\Zed\Product\Persistence\SpyProduct[] $productConcreteQuery */
             $productConcreteQuery = $this->addNaturalSorting($productConcreteQuery, $orderColumn, $orderDirection);
         }
 

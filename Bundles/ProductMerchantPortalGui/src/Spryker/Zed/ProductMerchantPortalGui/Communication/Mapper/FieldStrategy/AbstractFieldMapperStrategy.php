@@ -140,8 +140,6 @@ abstract class AbstractFieldMapperStrategy implements FieldMapperStrategyInterfa
     }
 
     /**
-     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
-     *
      * @param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer|null

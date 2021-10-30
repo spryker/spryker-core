@@ -48,7 +48,7 @@ class ProductLabelByProductConcreteSkuExpander implements ProductLabelByProductC
 
     /**
      * @param array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface> $restResources
-     * @param array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]> $productLabelResources
+     * @param array<array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>> $productLabelResources
      *
      * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>
      */

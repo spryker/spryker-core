@@ -147,7 +147,7 @@ class ProductAbstractLabelStorageWriter implements ProductAbstractLabelStorageWr
     /**
      * @param array<int> $uniqueProductAbstractIds
      * @param array<\Generated\Shared\Transfer\ProductAbstractLabelStorageTransfer> $productAbstractLabelStorageTransfers
-     * @param array<int[]> $productLabelIds
+     * @param array<array<int>> $productLabelIds
      *
      * @return void
      */
@@ -166,7 +166,7 @@ class ProductAbstractLabelStorageWriter implements ProductAbstractLabelStorageWr
 
     /**
      * @param int $productAbstractId
-     * @param array<int[]> $productLabelIds
+     * @param array<array<int>> $productLabelIds
      * @param \Generated\Shared\Transfer\ProductAbstractLabelStorageTransfer|null $productAbstractLabelStorageTransfer
      *
      * @return void
@@ -197,7 +197,7 @@ class ProductAbstractLabelStorageWriter implements ProductAbstractLabelStorageWr
     /**
      * @param array $productAbstractIds
      *
-     * @return array<int[]>
+     * @return array<array<int>>
      */
     protected function getGroupedProductLabelIdsByProductAbstractIds(array $productAbstractIds): array
     {
@@ -212,7 +212,7 @@ class ProductAbstractLabelStorageWriter implements ProductAbstractLabelStorageWr
     /**
      * @param array<\Generated\Shared\Transfer\ProductLabelProductAbstractTransfer> $productLabelProductAbstractTransfers
      *
-     * @return array<int[]>
+     * @return array<array<int>>
      */
     protected function getProductLabelIdsGroupedByProductAbstractIdsFromProductLabelProductAbstractTransfers(
         array $productLabelProductAbstractTransfers

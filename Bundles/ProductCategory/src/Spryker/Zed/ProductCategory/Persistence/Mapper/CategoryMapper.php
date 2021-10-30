@@ -48,7 +48,7 @@ class CategoryMapper implements CategoryMapperInterface
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductCategory\Persistence\SpyProductCategory> $productCategoryEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductCategory\Persistence\SpyProductCategory[] $productCategoryEntities
      * @param \Generated\Shared\Transfer\CategoryCollectionTransfer $categoryCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\CategoryCollectionTransfer

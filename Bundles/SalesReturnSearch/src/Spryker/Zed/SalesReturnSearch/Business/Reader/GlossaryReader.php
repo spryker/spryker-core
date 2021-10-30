@@ -37,7 +37,7 @@ class GlossaryReader implements GlossaryReaderInterface
     /**
      * @param array<\Generated\Shared\Transfer\ReturnReasonTransfer> $returnReasonTransfers
      *
-     * @return array<string[]>
+     * @return array<array<string>>
      */
     public function getReturnReasonTranslations(array $returnReasonTransfers): array
     {
@@ -67,7 +67,7 @@ class GlossaryReader implements GlossaryReaderInterface
      * @param array<\Generated\Shared\Transfer\TranslationTransfer> $translationTransfers
      * @param array<\Generated\Shared\Transfer\GlossaryKeyTransfer> $glossaryKeyTransfers
      *
-     * @return array<string[]>
+     * @return array<array<string>>
      */
     protected function mapReturnReasonTranslations(array $translationTransfers, array $glossaryKeyTransfers): array
     {

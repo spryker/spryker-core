@@ -37,7 +37,7 @@ class QueueDataImporter extends DataImporterDataSetWriterAware implements QueueD
     protected $queueMessageHelper;
 
     /**
-     * @var \SplQueue<\Generated\Shared\Transfer\QueueReceiveMessageTransfer>
+     * @var \SplQueue|\Generated\Shared\Transfer\QueueReceiveMessageTransfer[]
      */
     protected $queueReceiveMessageBuffer;
 

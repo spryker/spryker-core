@@ -16,7 +16,7 @@ use Propel\Runtime\Collection\ObjectCollection;
 interface CategoryImageMapperInterface
 {
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\CategoryImage\Persistence\SpyCategoryImageSet> $categoryImageSetEntityCollection
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\CategoryImage\Persistence\SpyCategoryImageSet[] $categoryImageSetEntityCollection
      *
      * @return array<\Generated\Shared\Transfer\CategoryImageSetTransfer>
      */
@@ -30,7 +30,7 @@ interface CategoryImageMapperInterface
     public function mapCategoryImageSet(SpyCategoryImageSet $categoryImageSetEntity): CategoryImageSetTransfer;
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\CategoryImage\Persistence\SpyCategoryImage> $categoryImageEntityCollection
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\CategoryImage\Persistence\SpyCategoryImage[] $categoryImageEntityCollection
      * @param \Orm\Zed\CategoryImage\Persistence\SpyCategoryImageSet|null $categoryImageSetEntity
      *
      * @return array<\Generated\Shared\Transfer\CategoryImageTransfer>

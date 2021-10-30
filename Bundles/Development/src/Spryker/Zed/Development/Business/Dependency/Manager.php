@@ -149,7 +149,7 @@ class Manager implements ManagerInterface
     }
 
     /**
-     * @return \Symfony\Component\Finder\Finder<\Symfony\Component\Finder\SplFileInfo>
+     * @return \Symfony\Component\Finder\Finder|\Symfony\Component\Finder\SplFileInfo[]
      */
     protected function collectCoreModules()
     {

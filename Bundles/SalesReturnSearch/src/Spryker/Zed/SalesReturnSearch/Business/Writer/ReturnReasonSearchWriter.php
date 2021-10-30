@@ -122,8 +122,8 @@ class ReturnReasonSearchWriter implements ReturnReasonSearchWriterInterface
 
     /**
      * @param array<\Generated\Shared\Transfer\ReturnReasonTransfer> $returnReasonTransfers
-     * @param array<\Generated\Shared\Transfer\ReturnReasonSearchTransfer[]> $returnReasonSearchTransfers
-     * @param array<string[]> $returnReasonTranslations
+     * @param array<array<\Generated\Shared\Transfer\ReturnReasonSearchTransfer>> $returnReasonSearchTransfers
+     * @param array<array<string>> $returnReasonTranslations
      *
      * @return void
      */
@@ -146,8 +146,8 @@ class ReturnReasonSearchWriter implements ReturnReasonSearchWriterInterface
 
     /**
      * @param \Generated\Shared\Transfer\ReturnReasonTransfer $returnReasonTransfer
-     * @param array<\Generated\Shared\Transfer\ReturnReasonSearchTransfer[]> $returnReasonSearchTransfers
-     * @param array<string[]> $returnReasonTranslations
+     * @param array<array<\Generated\Shared\Transfer\ReturnReasonSearchTransfer>> $returnReasonSearchTransfers
+     * @param array<array<string>> $returnReasonTranslations
      * @param array<\Generated\Shared\Transfer\LocaleTransfer> $localeTransfers
      *
      * @return void

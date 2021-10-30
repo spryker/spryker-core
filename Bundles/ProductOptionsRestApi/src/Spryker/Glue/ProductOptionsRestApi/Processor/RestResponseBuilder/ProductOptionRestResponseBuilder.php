@@ -60,7 +60,7 @@ class ProductOptionRestResponseBuilder implements ProductOptionRestResponseBuild
      * @param string $parentResourceType
      * @param array<\Spryker\Glue\GlueApplication\Rest\Request\Data\SortInterface> $sorts
      *
-     * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]>
+     * @return array<array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>>
      */
     public function createProductOptionRestResources(
         array $productAbstractOptionStorageTransfers,
@@ -92,7 +92,7 @@ class ProductOptionRestResponseBuilder implements ProductOptionRestResponseBuild
      * @param array<\Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer> $productAbstractOptionStorageTransfers
      * @param array<\Spryker\Glue\GlueApplication\Rest\Request\Data\SortInterface> $sorts
      *
-     * @return array<\Generated\Shared\Transfer\RestProductOptionsAttributesTransfer[]>
+     * @return array<array<\Generated\Shared\Transfer\RestProductOptionsAttributesTransfer>>
      */
     protected function getSortedRestProductOptionsAttributesTransfers(
         array $productAbstractOptionStorageTransfers,

@@ -97,7 +97,7 @@ class AvailabilityNotificationsRestApiConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return array<mixed[]>
+     * @return array<array<mixed>>
      */
     public function getErrorIdentifierToRestErrorMapping(): array
     {

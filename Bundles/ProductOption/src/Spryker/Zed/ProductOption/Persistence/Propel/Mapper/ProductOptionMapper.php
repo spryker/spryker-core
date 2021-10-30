@@ -36,7 +36,7 @@ class ProductOptionMapper
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Sales\Persistence\SpySalesOrderItem> $salesOrderItemEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $salesOrderItemEntities
      *
      * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
@@ -58,7 +58,7 @@ class ProductOptionMapper
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductOption\Persistence\SpyProductOptionValue> $productOptionValueEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductOption\Persistence\SpyProductOptionValue[] $productOptionValueEntities
      *
      * @return array<\Generated\Shared\Transfer\ProductOptionValueTransfer>
      */

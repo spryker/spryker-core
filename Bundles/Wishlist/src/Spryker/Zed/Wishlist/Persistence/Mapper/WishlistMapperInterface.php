@@ -17,7 +17,7 @@ use Propel\Runtime\Collection\ObjectCollection;
 interface WishlistMapperInterface
 {
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Wishlist\Persistence\SpyWishlist> $wishlistEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Wishlist\Persistence\SpyWishlist[] $wishlistEntities
      * @param \Generated\Shared\Transfer\WishlistCollectionTransfer $wishlistCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\WishlistCollectionTransfer

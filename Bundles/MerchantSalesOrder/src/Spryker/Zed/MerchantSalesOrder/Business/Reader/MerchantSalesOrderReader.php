@@ -253,8 +253,6 @@ class MerchantSalesOrderReader implements MerchantSalesOrderReaderInterface
     }
 
     /**
-     * @phpstan-param array<string> $merchantReferences
-     *
      * @param array<string> $merchantReferences
      *
      * @return \Generated\Shared\Transfer\MerchantCollectionTransfer

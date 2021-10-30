@@ -148,8 +148,6 @@ class PriceProductValidationMapper implements PriceProductValidationMapperInterf
     }
 
     /**
-     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
-     *
      * @param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      * @param array<mixed> $propertyPath
      *

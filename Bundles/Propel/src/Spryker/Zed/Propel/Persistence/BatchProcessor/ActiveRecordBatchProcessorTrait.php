@@ -32,14 +32,14 @@ trait ActiveRecordBatchProcessorTrait
     /**
      * @phpstan-var array<string, array<int, \Propel\Runtime\ActiveRecord\ActiveRecordInterface>>
      *
-     * @var array<\Propel\Runtime\ActiveRecord\ActiveRecordInterface[]>
+     * @var array<array<\Propel\Runtime\ActiveRecord\ActiveRecordInterface>>
      */
     protected $entitiesToInsert = [];
 
     /**
      * @phpstan-var array<string, array<\Propel\Runtime\ActiveRecord\ActiveRecordInterface>>
      *
-     * @var array<\Propel\Runtime\ActiveRecord\ActiveRecordInterface[]>
+     * @var array<array<\Propel\Runtime\ActiveRecord\ActiveRecordInterface>>
      */
     protected $entitiesToUpdate = [];
 
@@ -109,7 +109,7 @@ trait ActiveRecordBatchProcessorTrait
     /**
      * @phpstan-param array<string, array<\Propel\Runtime\ActiveRecord\ActiveRecordInterface>>
      *
-     * @param array<\Propel\Runtime\ActiveRecord\ActiveRecordInterface[]> $entitiesToInsert
+     * @param array<array<\Propel\Runtime\ActiveRecord\ActiveRecordInterface>> $entitiesToInsert
      *
      * @return void
      */
@@ -132,7 +132,7 @@ trait ActiveRecordBatchProcessorTrait
      *
      * @phpstan-param array<string, array<\Propel\Runtime\ActiveRecord\ActiveRecordInterface>>
      *
-     * @param array<\Propel\Runtime\ActiveRecord\ActiveRecordInterface[]> $entitiesToInsert
+     * @param array<array<\Propel\Runtime\ActiveRecord\ActiveRecordInterface>> $entitiesToInsert
      *
      * @return void
      */
@@ -151,7 +151,7 @@ trait ActiveRecordBatchProcessorTrait
     /**
      * @phpstan-param array<string, array<\Propel\Runtime\ActiveRecord\ActiveRecordInterface>>
      *
-     * @param array<\Propel\Runtime\ActiveRecord\ActiveRecordInterface[]> $entitiesToUpdate
+     * @param array<array<\Propel\Runtime\ActiveRecord\ActiveRecordInterface>> $entitiesToUpdate
      *
      * @return void
      */

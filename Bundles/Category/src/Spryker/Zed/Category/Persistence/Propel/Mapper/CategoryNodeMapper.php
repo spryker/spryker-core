@@ -17,7 +17,7 @@ use Propel\Runtime\Collection\ObjectCollection;
 class CategoryNodeMapper
 {
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Category\Persistence\SpyCategoryNode> $nodeEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Category\Persistence\SpyCategoryNode[] $nodeEntities
      * @param \Generated\Shared\Transfer\NodeCollectionTransfer $nodeCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\NodeCollectionTransfer

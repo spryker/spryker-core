@@ -204,7 +204,7 @@ class NopaymentFacadeTest extends Unit
     }
 
     /**
-     * @return array<int[]>
+     * @return array<array<int>>
      */
     public function getDateForPriceToPayTest(): array
     {

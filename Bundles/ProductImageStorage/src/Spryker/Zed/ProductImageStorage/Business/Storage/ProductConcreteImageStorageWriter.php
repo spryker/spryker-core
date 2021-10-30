@@ -98,7 +98,7 @@ class ProductConcreteImageStorageWriter implements ProductConcreteImageStorageWr
     }
 
     /**
-     * @param array<\Orm\Zed\ProductImageStorage\Persistence\SpyProductConcreteImageStorage[]> $productConcreteImageStorageEntities
+     * @param array<array<\Orm\Zed\ProductImageStorage\Persistence\SpyProductConcreteImageStorage>> $productConcreteImageStorageEntities
      * @param array<\Orm\Zed\Product\Persistence\SpyProductLocalizedAttributes> $productConcreteLocalizedEntities
      *
      * @return void
@@ -256,7 +256,7 @@ class ProductConcreteImageStorageWriter implements ProductConcreteImageStorageWr
     /**
      * @param array<int> $productIds
      *
-     * @return array<\Generated\Shared\Transfer\SpyProductImageSetEntityTransfer[][]>
+     * @return array<array<array<\Generated\Shared\Transfer\SpyProductImageSetEntityTransfer>>>
      */
     protected function getImageSets(array $productIds): array
     {
@@ -279,11 +279,11 @@ class ProductConcreteImageStorageWriter implements ProductConcreteImageStorageWr
     }
 
     /**
-     * @param array<int[]> $productLocalizedAttributeIds
-     * @param array<\Generated\Shared\Transfer\SpyProductImageSetEntityTransfer[][]> $productImageSetsBulk
-     * @param array<\Generated\Shared\Transfer\SpyProductImageSetEntityTransfer[]> $productDefaultImageSetsBulk
+     * @param array<array<int>> $productLocalizedAttributeIds
+     * @param array<array<array<\Generated\Shared\Transfer\SpyProductImageSetEntityTransfer>>> $productImageSetsBulk
+     * @param array<array<\Generated\Shared\Transfer\SpyProductImageSetEntityTransfer>> $productDefaultImageSetsBulk
      *
-     * @return array<\Generated\Shared\Transfer\SpyProductImageSetEntityTransfer[][]>
+     * @return array<array<array<\Generated\Shared\Transfer\SpyProductImageSetEntityTransfer>>>
      */
     protected function getImageSetsForLocalizedAttributes(
         array $productLocalizedAttributeIds,
@@ -317,7 +317,7 @@ class ProductConcreteImageStorageWriter implements ProductConcreteImageStorageWr
      *
      * @param array<\Generated\Shared\Transfer\SpyProductImageSetEntityTransfer> $productImageSets
      *
-     * @return array<\Generated\Shared\Transfer\SpyProductImageSetEntityTransfer[][]>
+     * @return array<array<array<\Generated\Shared\Transfer\SpyProductImageSetEntityTransfer>>>
      */
     protected function indexImageSetsByProductIdAndLocale(array $productImageSets): array
     {
@@ -335,7 +335,7 @@ class ProductConcreteImageStorageWriter implements ProductConcreteImageStorageWr
     /**
      * @param array<\Generated\Shared\Transfer\SpyProductImageSetEntityTransfer> $productImageSets
      *
-     * @return array<\Generated\Shared\Transfer\SpyProductImageSetEntityTransfer[]>
+     * @return array<array<\Generated\Shared\Transfer\SpyProductImageSetEntityTransfer>>
      */
     protected function indexImageSetsByProductId(array $productImageSets): array
     {
@@ -363,7 +363,7 @@ class ProductConcreteImageStorageWriter implements ProductConcreteImageStorageWr
     /**
      * @param array<int> $productConcreteIds
      *
-     * @return array<\Orm\Zed\ProductImageStorage\Persistence\SpyProductConcreteImageStorage[]>
+     * @return array<array<\Orm\Zed\ProductImageStorage\Persistence\SpyProductConcreteImageStorage>>
      */
     protected function findProductConcreteImageStorageEntitiesByProductConcreteIds(array $productConcreteIds)
     {

@@ -341,7 +341,7 @@ class CmsBlockStorageWriter implements CmsBlockStorageWriterInterface
 
     /**
      * @param int $idCmsBlock
-     * @param array<string[]> $localeNameMap
+     * @param array<array<string>> $localeNameMap
      * @param array $cmsBlockStores
      * @param array $cmsBlockEntity
      * @param array $mappedCmsBlockStorageEntities
@@ -379,7 +379,7 @@ class CmsBlockStorageWriter implements CmsBlockStorageWriterInterface
     }
 
     /**
-     * @return array<string[]>
+     * @return array<array<string>>
      */
     protected function getLocaleNameMapByStoreName(): array
     {

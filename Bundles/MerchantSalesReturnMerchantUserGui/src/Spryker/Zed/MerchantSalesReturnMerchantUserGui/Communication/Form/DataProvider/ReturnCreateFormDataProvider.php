@@ -63,11 +63,9 @@ class ReturnCreateFormDataProvider
     }
 
     /**
-     * @phpstan-return array<mixed>
-     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getData(OrderTransfer $orderTransfer): array
     {
@@ -79,9 +77,7 @@ class ReturnCreateFormDataProvider
     }
 
     /**
-     * @phpstan-return array<int|string, mixed>
-     *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getOptions(): array
     {
@@ -91,11 +87,9 @@ class ReturnCreateFormDataProvider
     }
 
     /**
-     * @phpstan-return array<int, array<string, \Generated\Shared\Transfer\ItemTransfer>>
-     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return array
+     * @return array<int, array<string, \Generated\Shared\Transfer\ItemTransfer>>
      */
     protected function mapReturnItemTransfers(OrderTransfer $orderTransfer): array
     {
@@ -109,9 +103,7 @@ class ReturnCreateFormDataProvider
     }
 
     /**
-     * @phpstan-return array<int|string, mixed>
-     *
-     * @return array<string>
+     * @return array<string, mixed>
      */
     protected function prepareReturnReasonChoices(): array
     {

@@ -57,13 +57,11 @@ class EventItemTriggerFormDataProvider
     protected const OPTION_ACTION_QUERY_PARAMETERS = 'OPTION_ACTION_QUERY_PARAMETERS';
 
     /**
-     * @phpstan-return array<int|string, mixed>
-     *
      * @param string $merchantSalesOrderItemReference
      * @param string $eventName
      * @param string $redirect
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getOptions(
         string $merchantSalesOrderItemReference,

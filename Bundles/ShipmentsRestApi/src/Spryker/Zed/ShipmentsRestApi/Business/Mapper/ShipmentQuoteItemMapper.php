@@ -174,7 +174,7 @@ class ShipmentQuoteItemMapper implements ShipmentQuoteItemMapperInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return array<\Generated\Shared\Transfer\ItemTransfer[]>
+     * @return array<array<\Generated\Shared\Transfer\ItemTransfer>>
      */
     protected function mapBundledItemsByBundleItemIdentifier(QuoteTransfer $quoteTransfer): array
     {

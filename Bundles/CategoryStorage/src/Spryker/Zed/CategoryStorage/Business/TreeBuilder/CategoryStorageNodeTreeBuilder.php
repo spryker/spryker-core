@@ -39,7 +39,7 @@ class CategoryStorageNodeTreeBuilder implements CategoryStorageNodeTreeBuilderIn
      * @param array<int> $categoryNodeIds
      * @param array<\Generated\Shared\Transfer\NodeTransfer> $nodeTransfers
      *
-     * @return array<\Generated\Shared\Transfer\CategoryNodeStorageTransfer[][]>
+     * @return array<array<array<\Generated\Shared\Transfer\CategoryNodeStorageTransfer>>>
      */
     public function buildCategoryNodeStorageTransferTreesForLocaleAndStore(array $categoryNodeIds, array $nodeTransfers): array
     {
@@ -83,7 +83,7 @@ class CategoryStorageNodeTreeBuilder implements CategoryStorageNodeTreeBuilderIn
     }
 
     /**
-     * @return array<string[]>
+     * @return array<array<string>>
      */
     protected function getLocaleNameMapByStoreName(): array
     {

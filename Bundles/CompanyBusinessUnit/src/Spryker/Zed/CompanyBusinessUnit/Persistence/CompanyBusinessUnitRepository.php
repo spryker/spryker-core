@@ -216,7 +216,7 @@ class CompanyBusinessUnitRepository extends AbstractRepository implements Compan
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
      * @param \Generated\Shared\Transfer\PaginationTransfer|null $paginationTransfer
      *
-     * @return \Propel\Runtime\Collection\Collection|\Propel\Runtime\Collection\ObjectCollection<\Generated\Shared\Transfer\SpyCompanyBusinessUnitEntityTransfer>
+     * @return \Propel\Runtime\Collection\Collection|\Propel\Runtime\Collection\ObjectCollection|\Generated\Shared\Transfer\SpyCompanyBusinessUnitEntityTransfer[]
      */
     protected function getPaginatedCollection(ModelCriteria $query, ?PaginationTransfer $paginationTransfer = null)
     {

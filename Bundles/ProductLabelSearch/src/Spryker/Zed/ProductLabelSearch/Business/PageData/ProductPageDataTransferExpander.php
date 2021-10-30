@@ -61,7 +61,7 @@ class ProductPageDataTransferExpander implements ProductPageDataTransferExpander
 
     /**
      * @param array<\Generated\Shared\Transfer\ProductPayloadTransfer> $payloadTransfers
-     * @param array<int[]> $productLabelIdsMappedByIdProductAbstract
+     * @param array<array<int>> $productLabelIdsMappedByIdProductAbstract
      *
      * @return array<\Generated\Shared\Transfer\ProductPayloadTransfer>
      */

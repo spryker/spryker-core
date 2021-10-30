@@ -60,8 +60,8 @@ class ProductAbstractRelationReader implements ProductAbstractRelationReaderInte
     }
 
     /**
-     * @param array<int[]> $relationsToDeAssign
-     * @param array<int[]> $relationsToAssign
+     * @param array<array<int>> $relationsToDeAssign
+     * @param array<array<int>> $relationsToAssign
      *
      * @return array<int>
      */

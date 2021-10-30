@@ -185,7 +185,7 @@ class ProductRelationStorageWriter implements ProductRelationStorageWriterInterf
     }
 
     /**
-     * @param array<\Generated\Shared\Transfer\ProductRelationTransfer[][]> $productRelations
+     * @param array<array<array<\Generated\Shared\Transfer\ProductRelationTransfer>>> $productRelations
      *
      * @return void
      */

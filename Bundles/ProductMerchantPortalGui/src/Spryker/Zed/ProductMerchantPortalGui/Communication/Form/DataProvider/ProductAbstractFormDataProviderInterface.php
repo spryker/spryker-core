@@ -20,7 +20,7 @@ interface ProductAbstractFormDataProviderInterface
     public function findProductAbstract(int $idProductAbstract, int $idMerchant): ?ProductAbstractTransfer;
 
     /**
-     * @return array<int[]>
+     * @return array<array<int>>
      */
     public function getOptions(): array;
 

@@ -42,11 +42,9 @@ class MerchantShipmentEditController extends AbstractMerchantShipmentController
     protected const MESSAGE_MERCHANT_REFERENCE_NOT_FOUND = 'Merchant reference not found.';
 
     /**
-     * @phpstan-return \Symfony\Component\HttpFoundation\RedirectResponse|array<mixed>
-     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array<string, mixed>
      */
     public function indexAction(Request $request)
     {

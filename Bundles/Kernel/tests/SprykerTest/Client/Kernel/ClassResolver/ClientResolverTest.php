@@ -36,7 +36,7 @@ class ClientResolverTest extends Unit
     protected $tester;
 
     /**
-     * @return array<string[]>
+     * @return array<array<string>>
      */
     public function resolverDataProvider(): array
     {
@@ -49,7 +49,7 @@ class ClientResolverTest extends Unit
     }
 
     /**
-     * @return array<string[]>
+     * @return array<array<string>>
      */
     public function resolverExceptionDataProvider(): array
     {
