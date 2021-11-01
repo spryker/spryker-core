@@ -87,7 +87,7 @@ interface DevelopmentFacadeInterface
      *
      * @param string $module
      * @param string $toModule
-     * @param array $methods
+     * @param array<string> $methods
      *
      * @return void
      */
@@ -191,7 +191,7 @@ interface DevelopmentFacadeInterface
      * @api
      *
      * @param string|bool $moduleToView
-     * @param array $excludedModules
+     * @param array<string> $excludedModules
      * @param bool $showIncomingDependencies
      *
      * @return string

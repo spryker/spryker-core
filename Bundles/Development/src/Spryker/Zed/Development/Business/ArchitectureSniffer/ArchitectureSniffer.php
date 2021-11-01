@@ -169,7 +169,7 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
      * @param string $directory
      * @param array<string> $options
      *
-     * @return array
+     * @return array<array<string, mixed>>
      */
     public function run($directory, array $options = []): array
     {
@@ -201,11 +201,11 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
     }
 
     /**
-     * @param array $fileViolations
+     * @param array<string, array<array<string, mixed>>> $fileViolations
      * @param string $directory
      * @param array<string> $options
      *
-     * @return array
+     * @return array<array<string, mixed>>
      */
     protected function runAnalyzer(array $fileViolations, $directory, array $options): array
     {
@@ -273,7 +273,7 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
     }
 
     /**
-     * @param array $command
+     * @param array<string> $command
      *
      * @return \Symfony\Component\Process\Process
      */
@@ -317,9 +317,9 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
     }
 
     /**
-     * @param array $array
+     * @param array<string, array<array<string, mixed>>> $array
      *
-     * @return array
+     * @return array<array<string, mixed>>
      */
     protected function formatViolations(array $array): array
     {

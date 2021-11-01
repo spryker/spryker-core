@@ -379,7 +379,7 @@ class ComposerDependencyParser implements ComposerDependencyParserInterface
     }
 
     /**
-     * @param array $require
+     * @param array<string, string> $require
      * @param \Generated\Shared\Transfer\ComposerDependencyCollectionTransfer $composerDependencyCollectionTransfer
      * @param bool $isDev
      *
@@ -404,7 +404,7 @@ class ComposerDependencyParser implements ComposerDependencyParserInterface
     }
 
     /**
-     * @param array $suggested
+     * @param array<string, string> $suggested
      * @param \Generated\Shared\Transfer\ComposerDependencyCollectionTransfer $composerDependencyCollectionTransfer
      *
      * @return void

@@ -78,7 +78,7 @@ class ProjectModuleFinder implements ProjectModuleFinderInterface
     }
 
     /**
-     * @return array
+     * @return array<string>
      */
     protected function getProjectDirectories(): array
     {
@@ -93,7 +93,7 @@ class ProjectModuleFinder implements ProjectModuleFinderInterface
     }
 
     /**
-     * @param array $projectOrganizationModuleDirectories
+     * @param array<string> $projectOrganizationModuleDirectories
      *
      * @return \Symfony\Component\Finder\Finder|\Symfony\Component\Finder\SplFileInfo[]
      */

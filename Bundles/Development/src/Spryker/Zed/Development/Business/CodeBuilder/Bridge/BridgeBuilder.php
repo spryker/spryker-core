@@ -106,7 +106,7 @@ class BridgeBuilder
     /**
      * @param string $bundle
      * @param string $toBundle
-     * @param array $methods
+     * @param array<string> $methods
      *
      * @throws \Symfony\Component\Console\Exception\InvalidArgumentException
      *
@@ -304,7 +304,7 @@ class BridgeBuilder
     /**
      * @param string $source
      * @param string $target
-     * @param array $methods
+     * @param array<string> $methods
      *
      * @return \Generated\Shared\Transfer\BridgeBuilderDataTransfer
      */

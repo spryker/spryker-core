@@ -1146,7 +1146,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
 
     /**
      * @param string $bundleToView
-     * @param array $excludedBundles
+     * @param array<string> $excludedBundles
      *
      * @return \Spryker\Zed\Development\Business\DependencyTree\DependencyGraph\OutgoingGraphBuilder
      */

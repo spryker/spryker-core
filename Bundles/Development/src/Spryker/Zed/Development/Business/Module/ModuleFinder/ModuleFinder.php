@@ -76,7 +76,7 @@ class ModuleFinder implements ModuleFinderInterface
     }
 
     /**
-     * @param array $moduleTransferCollection
+     * @param array<\Generated\Shared\Transfer\ModuleTransfer> $moduleTransferCollection
      * @param \Generated\Shared\Transfer\ModuleFilterTransfer|null $moduleFilterTransfer
      *
      * @return array<\Generated\Shared\Transfer\ModuleTransfer>
@@ -151,7 +151,7 @@ class ModuleFinder implements ModuleFinderInterface
     }
 
     /**
-     * @param array $moduleTransferCollection
+     * @param array<\Generated\Shared\Transfer\ModuleTransfer> $moduleTransferCollection
      * @param \Generated\Shared\Transfer\ModuleFilterTransfer|null $moduleFilterTransfer
      *
      * @return array<\Generated\Shared\Transfer\ModuleTransfer>

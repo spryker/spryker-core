@@ -27,7 +27,7 @@ class DependencyFilter implements DependencyFilterCompositeInterface
     }
 
     /**
-     * @param array $dependency
+     * @param array<string, string> $dependency
      *
      * @return bool
      */

@@ -10,7 +10,7 @@ namespace Spryker\Zed\Development\Business\DependencyTree\DependencyFilter;
 interface DependencyFilterInterface
 {
     /**
-     * @param array $dependency
+     * @param array<string, string> $dependency
      *
      * @return bool
      */

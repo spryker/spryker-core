@@ -100,7 +100,7 @@ class ModuleOverview implements ModuleOverviewInterface
     }
 
     /**
-     * @param array $moduleOverviewTransferCollection
+     * @param array<string, \Generated\Shared\Transfer\ModuleOverviewTransfer> $moduleOverviewTransferCollection
      * @param string $moduleName
      *
      * @return \Generated\Shared\Transfer\ModuleOverviewTransfer

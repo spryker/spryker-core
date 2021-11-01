@@ -242,7 +242,7 @@ class DependencyViolationFinderConsole extends AbstractCoreModuleAwareConsole
     }
 
     /**
-     * @param array $modulesToValidate
+     * @param array<\Generated\Shared\Transfer\ModuleTransfer> $modulesToValidate
      * @param string|null $dependencyType
      *
      * @return void

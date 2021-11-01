@@ -120,7 +120,7 @@ class SprykerSdkDependencyFinder extends AbstractFileDependencyFinder
     }
 
     /**
-     * @param array $useStatements
+     * @param array<string> $useStatements
      * @param string $module
      *
      * @return array
@@ -143,7 +143,7 @@ class SprykerSdkDependencyFinder extends AbstractFileDependencyFinder
     }
 
     /**
-     * @param array $useStatementFragments
+     * @param array<int, string> $useStatementFragments
      *
      * @return bool
      */

@@ -102,13 +102,13 @@ class DependencyTree extends AbstractDependencyTree
     protected $fileInfoExtractor;
 
     /**
-     * @var array
+     * @var array<string>
      */
     protected $engineBundles;
 
     /**
      * @param \Spryker\Zed\Development\Business\DependencyTree\FileInfoExtractor $fileInfoExtractor
-     * @param array $engineBundles
+     * @param array<string> $engineBundles
      */
     public function __construct(FileInfoExtractor $fileInfoExtractor, array $engineBundles)
     {

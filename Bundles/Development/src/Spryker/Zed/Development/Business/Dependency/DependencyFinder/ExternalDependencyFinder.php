@@ -127,7 +127,7 @@ class ExternalDependencyFinder extends AbstractFileDependencyFinder
     }
 
     /**
-     * @param array $useStatements
+     * @param array<string> $useStatements
      *
      * @return array
      */

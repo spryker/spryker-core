@@ -15,12 +15,12 @@ use Spryker\Zed\Development\Business\DependencyTree\DependencyTree;
 class InTestDependencyFilter implements DependencyFilterInterface
 {
     /**
-     * @param array $dependency
+     * @param array<string, string> $dependency
      *
      * @return bool
      */
     public function filter(array $dependency)
     {
-        return $dependency[DependencyTree::META_IN_TEST];
+        return (bool)$dependency[DependencyTree::META_IN_TEST];
     }
 }

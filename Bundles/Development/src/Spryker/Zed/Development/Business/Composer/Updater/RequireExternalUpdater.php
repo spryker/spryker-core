@@ -37,19 +37,19 @@ class RequireExternalUpdater implements UpdaterInterface
     protected $externalDependencyTree;
 
     /**
-     * @var array
+     * @var array<string, string>
      */
     protected $externalToInternalMap;
 
     /**
-     * @var array
+     * @var array<string>
      */
     protected $ignorableDependencies;
 
     /**
      * @param array $externalDependencyTree
-     * @param array $externalToInternalMap
-     * @param array $ignorableDependencies
+     * @param array<string, string> $externalToInternalMap
+     * @param array<string> $ignorableDependencies
      */
     public function __construct(array $externalDependencyTree, array $externalToInternalMap, array $ignorableDependencies)
     {

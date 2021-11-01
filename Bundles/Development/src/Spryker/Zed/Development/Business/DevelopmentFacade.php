@@ -94,7 +94,7 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
      *
      * @param string $module
      * @param string $toModule
-     * @param array $methods
+     * @param array<string> $methods
      *
      * @return void
      */
@@ -230,7 +230,7 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
      * @api
      *
      * @param string $moduleToView
-     * @param array $excludedModules
+     * @param array<string> $excludedModules
      * @param bool $showIncomingDependencies
      *
      * @return string

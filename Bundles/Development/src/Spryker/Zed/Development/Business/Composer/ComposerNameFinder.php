@@ -134,7 +134,7 @@ class ComposerNameFinder implements ComposerNameFinderInterface
     }
 
     /**
-     * @param array $moduleTransferCollection
+     * @param array<\Generated\Shared\Transfer\ModuleTransfer> $moduleTransferCollection
      *
      * @return \Generated\Shared\Transfer\ModuleTransfer
      */

@@ -424,7 +424,7 @@ class AutoloadUpdater implements UpdaterInterface
     }
 
     /**
-     * @param array $pathParts
+     * @param array<string> $pathParts
      *
      * @return string
      */

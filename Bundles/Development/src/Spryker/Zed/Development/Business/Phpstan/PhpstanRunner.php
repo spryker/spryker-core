@@ -359,11 +359,11 @@ class PhpstanRunner implements PhpstanRunnerInterface
     }
 
     /**
-     * @param array $paths
+     * @param array<string, string> $paths
      * @param string $moduleDirectoryPath
      * @param string|null $namespace
      *
-     * @return array
+     * @return array<string, string>
      */
     protected function addPath(array $paths, string $moduleDirectoryPath, $namespace = null): array
     {
@@ -448,7 +448,7 @@ class PhpstanRunner implements PhpstanRunnerInterface
      *
      * @throws \RuntimeException
      *
-     * @return array
+     * @return array<string, string>
      */
     protected function resolveCorePaths($module)
     {

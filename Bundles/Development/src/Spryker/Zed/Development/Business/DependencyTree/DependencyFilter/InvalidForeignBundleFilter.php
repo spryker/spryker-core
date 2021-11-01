@@ -12,12 +12,12 @@ use Spryker\Zed\Development\Business\DependencyTree\DependencyTree;
 class InvalidForeignBundleFilter implements DependencyFilterInterface
 {
     /**
-     * @var array
+     * @var array<string>
      */
     protected $allowedBundles;
 
     /**
-     * @param array $allowedBundles
+     * @param array<string> $allowedBundles
      */
     public function __construct(array $allowedBundles)
     {
@@ -25,7 +25,7 @@ class InvalidForeignBundleFilter implements DependencyFilterInterface
     }
 
     /**
-     * @param array $dependency
+     * @param array<string, string> $dependency
      *
      * @return bool
      */

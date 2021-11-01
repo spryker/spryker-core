@@ -89,12 +89,12 @@ class CodeStyleSnifferConfiguration implements CodeStyleSnifferConfigurationInte
     protected $developmentConfig;
 
     /**
-     * @var array
+     * @var array<string, mixed>
      */
     protected $moduleConfig;
 
     /**
-     * @var array
+     * @var array<string, mixed>
      */
     protected $configurationOptions;
 
@@ -107,7 +107,7 @@ class CodeStyleSnifferConfiguration implements CodeStyleSnifferConfigurationInte
     }
 
     /**
-     * @param array $moduleConfig
+     * @param array<string, mixed> $moduleConfig
      *
      * @return $this
      */
@@ -119,7 +119,7 @@ class CodeStyleSnifferConfiguration implements CodeStyleSnifferConfigurationInte
     }
 
     /**
-     * @param array $configurationOptions
+     * @param array<string, mixed> $configurationOptions
      *
      * @return $this
      */

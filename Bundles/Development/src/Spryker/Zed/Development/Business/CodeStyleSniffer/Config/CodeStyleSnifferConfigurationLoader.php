@@ -39,7 +39,7 @@ class CodeStyleSnifferConfigurationLoader implements CodeStyleSnifferConfigurati
     }
 
     /**
-     * @param array $configurationOptions
+     * @param array<string, mixed> $configurationOptions
      * @param string $modulePath
      *
      * @return \Spryker\Zed\Development\Business\CodeStyleSniffer\Config\CodeStyleSnifferConfigurationInterface

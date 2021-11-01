@@ -12,7 +12,7 @@ use Spryker\Zed\Development\Business\DependencyTree\DependencyTree;
 class ConstantsToForeignConstantsFilter implements DependencyFilterInterface
 {
     /**
-     * @param array $dependency
+     * @param array<string, string> $dependency
      *
      * @return bool
      */

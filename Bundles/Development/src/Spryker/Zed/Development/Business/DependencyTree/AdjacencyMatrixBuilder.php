@@ -23,7 +23,7 @@ class AdjacencyMatrixBuilder implements AdjacencyMatrixBuilderInterface
     protected $filter;
 
     /**
-     * @var array
+     * @var array<string>
      */
     protected $bundleList;
 
@@ -33,7 +33,7 @@ class AdjacencyMatrixBuilder implements AdjacencyMatrixBuilderInterface
     protected $matrix = [];
 
     /**
-     * @param array $bundleList
+     * @param array<string> $bundleList
      * @param \Spryker\Zed\Development\Business\DependencyTree\DependencyTreeReader\DependencyTreeReaderInterface $dependencyTreeReader
      * @param \Spryker\Zed\Development\Business\DependencyTree\DependencyFilter\TreeFilterInterface $filter
      */
