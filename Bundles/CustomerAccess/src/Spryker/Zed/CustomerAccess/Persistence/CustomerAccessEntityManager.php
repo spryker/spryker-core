@@ -61,7 +61,7 @@ class CustomerAccessEntityManager extends AbstractEntityManager implements Custo
         $updatedContentTypeAccessCollection = new ArrayObject();
         foreach ($customerAccessTransfer->getContentTypeAccess() as $contentTypeAccess) {
             $customerAccessEntity = $this->getCustomerAccessEntityByContentType($contentTypeAccess);
-            $customerAccessEntity = $customerAccessEntity ? $customerAccessEntity : $this->createCustomerAccessEntity($contentTypeAccess);
+            $customerAccessEntity = $customerAccessEntity ?: $this->createCustomerAccessEntity($contentTypeAccess);
             $customerAccessEntity->setIsRestricted(true);
             $customerAccessEntity->save();
             $updatedContentTypeAccessCollection->append(

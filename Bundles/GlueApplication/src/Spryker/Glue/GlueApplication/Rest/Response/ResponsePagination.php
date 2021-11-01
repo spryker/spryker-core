@@ -118,7 +118,7 @@ class ResponsePagination implements ResponsePaginationInterface
             $inputPageLimit = $restRequest->getPage()->getLimit();
         }
 
-        return $restResponse->getLimit() ? $restResponse->getLimit() : $inputPageLimit;
+        return $restResponse->getLimit() ?: $inputPageLimit;
     }
 
     /**
