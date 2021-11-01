@@ -20,7 +20,7 @@ class ProductAttributeConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return array
+     * @return array<string>
      */
     public function getAllowedStores()
     {
@@ -30,7 +30,7 @@ class ProductAttributeConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return array
+     * @return array<string, string>
      */
     public function getAttributeAvailableTypes()
     {

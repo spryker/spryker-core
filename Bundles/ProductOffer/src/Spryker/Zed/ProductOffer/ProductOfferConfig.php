@@ -31,7 +31,7 @@ class ProductOfferConfig extends AbstractBundleConfig
      *
      * @api
      *
-     * @return array
+     * @return array<string, array<string>>
      */
     public function getStatusTree(): array
     {

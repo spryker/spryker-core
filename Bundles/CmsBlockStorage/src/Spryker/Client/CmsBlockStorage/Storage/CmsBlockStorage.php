@@ -75,7 +75,7 @@ class CmsBlockStorage implements CmsBlockStorageInterface
     }
 
     /**
-     * @param array $options
+     * @param array<string, mixed> $options
      * @param string $localeName
      * @param string $storeName
      *
@@ -182,7 +182,7 @@ class CmsBlockStorage implements CmsBlockStorageInterface
     }
 
     /**
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return array<string>
      */
@@ -240,7 +240,7 @@ class CmsBlockStorage implements CmsBlockStorageInterface
     }
 
     /**
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return \Generated\Shared\Transfer\CmsBlockRequestTransfer
      */

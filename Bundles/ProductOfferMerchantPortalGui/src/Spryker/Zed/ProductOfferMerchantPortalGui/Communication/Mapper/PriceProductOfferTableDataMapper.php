@@ -247,9 +247,7 @@ class PriceProductOfferTableDataMapper implements PriceProductOfferTableDataMapp
     }
 
     /**
-     * @phpstan-return array<int, string>
-     *
-     * @return array<string>
+     * @return array<int, string>
      */
     protected function getStoreNamesIndexedByIdStore(): array
     {

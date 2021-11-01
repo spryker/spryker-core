@@ -30,7 +30,7 @@ use SprykerTest\Zed\SalesSplit\Business\Model\Fixtures\SpySalesOrderItemMock;
 class OrderItemSplitTest extends Unit
 {
     /**
-     * @var array
+     * @var array<string>
      */
     protected $notCopiedOrderItemFields = [
         'id_sales_order_item',

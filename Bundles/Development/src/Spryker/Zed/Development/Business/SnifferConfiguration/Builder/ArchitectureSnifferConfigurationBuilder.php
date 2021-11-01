@@ -55,7 +55,7 @@ class ArchitectureSnifferConfigurationBuilder implements SnifferConfigurationBui
 
     /**
      * @param string $absoluteModulePath
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @throws \RuntimeException
      *
@@ -82,7 +82,7 @@ class ArchitectureSnifferConfigurationBuilder implements SnifferConfigurationBui
 
     /**
      * @param array $moduleConfig
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @throws \Spryker\Zed\Development\Business\Exception\ArchitectureSniffer\InvalidTypeException
      *

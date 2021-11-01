@@ -83,7 +83,7 @@ abstract class AbstractButtonTwig extends AbstractPlugin implements TwigPluginIn
     /**
      * @param string $url
      * @param string $title
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return \Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\UrlGeneratorInterface
      */

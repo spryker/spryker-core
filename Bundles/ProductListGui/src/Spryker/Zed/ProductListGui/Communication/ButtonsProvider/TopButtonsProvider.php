@@ -25,7 +25,7 @@ class TopButtonsProvider implements TopButtonsProviderInterface
     protected const CREATE_PRODUCT_LIST_BUTTON_TITLE = 'Create a Product List';
 
     /**
-     * @var array
+     * @var array<string, string>
      */
     protected const CREATE_PRODUCT_LIST_BUTTON_OPTIONS = [
         'class' => 'btn-create',

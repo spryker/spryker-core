@@ -43,7 +43,7 @@ class CmsBlockType extends AbstractType
     public const OPTION_WRONG_TEMPLATE_CATEGORY_LIST = 'option-wring-template-category-list';
 
     /**
-     * @var array
+     * @var array<string>
      */
     public const SUPPORTED_CATEGORY_TEMPLATE_LIST = [
         CmsBlockCategoryConnectorConfig::CATEGORY_TEMPLATE_WITH_CMS_BLOCK,
@@ -52,7 +52,7 @@ class CmsBlockType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */

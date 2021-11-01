@@ -37,14 +37,14 @@ class CatalogConfig extends AbstractBundleConfig
     protected const PAGINATION_DEFAULT_ITEMS_PER_PAGE = 10;
 
     /**
-     * @var array
+     * @var array<int>
      */
     protected const PAGINATION_VALID_ITEMS_PER_PAGE = [
         10,
     ];
 
     /**
-     * @var array
+     * @var array<int>
      */
     protected const PAGINATION_CATALOG_SEARCH_VALID_ITEMS_PER_PAGE = [12, 24, 36];
 

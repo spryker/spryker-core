@@ -50,7 +50,7 @@ class BridgeBuilder
     protected const DEFAULT_TO_TYPE = 'Facade';
 
     /**
-     * @var array
+     * @var array<string, string>
      */
     protected const APPLICATION_LAYER_MAP = [
         'Facade' => 'Zed',
@@ -58,7 +58,7 @@ class BridgeBuilder
     ];
 
     /**
-     * @var array
+     * @var array<string, string>
      */
     protected const MODULE_LAYER_MAP = [
         'Facade' => 'Business',

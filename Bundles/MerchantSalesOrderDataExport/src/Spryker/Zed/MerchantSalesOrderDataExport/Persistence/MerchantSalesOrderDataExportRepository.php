@@ -455,11 +455,9 @@ class MerchantSalesOrderDataExportRepository extends AbstractRepository implemen
     }
 
     /**
-     * @phpstan-return array<string, string>
-     *
      * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer $dataExportConfigurationTransfer
      *
-     * @return array<string>
+     * @return array<string, string>
      */
     protected function getMerchantSalesOrderSelectedColumns(DataExportConfigurationTransfer $dataExportConfigurationTransfer): array
     {
@@ -471,11 +469,9 @@ class MerchantSalesOrderDataExportRepository extends AbstractRepository implemen
     }
 
     /**
-     * @phpstan-return array<string, string>
-     *
      * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer $dataExportConfigurationTransfer
      *
-     * @return array<string>
+     * @return array<string, string>
      */
     public function getMerchantSalesOrderItemSelectedColumns(DataExportConfigurationTransfer $dataExportConfigurationTransfer): array
     {
@@ -487,11 +483,9 @@ class MerchantSalesOrderDataExportRepository extends AbstractRepository implemen
     }
 
     /**
-     * @phpstan-return array<string, string>
-     *
      * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer $dataExportConfigurationTransfer
      *
-     * @return array<string>
+     * @return array<string, string>
      */
     public function getSalesExpenseSelectedColumns(DataExportConfigurationTransfer $dataExportConfigurationTransfer): array
     {
@@ -503,8 +497,6 @@ class MerchantSalesOrderDataExportRepository extends AbstractRepository implemen
     }
 
     /**
-     * @phpstan-return array<int, \Generated\Shared\Transfer\CommentTransfer>
-     *
      * @param array<int> $salesOrderIds
      *
      * @return array<\Generated\Shared\Transfer\CommentTransfer>

@@ -26,7 +26,7 @@ class ContentNavigationConstraint extends Constraint
     /**
      * @param \Spryker\Zed\ContentNavigationGui\Dependency\Facade\ContentNavigationGuiToContentNavigationFacadeInterface $contentNavigationFacade
      * @param \Spryker\Zed\ContentNavigationGui\Dependency\Service\ContentNavigationGuiToUtilEncodingServiceInterface $utilEncodingService
-     * @param array|null $options
+     * @param array<string, mixed>|null $options
      */
     public function __construct(
         ContentNavigationGuiToContentNavigationFacadeInterface $contentNavigationFacade,

@@ -11,7 +11,7 @@ interface SnifferConfigurationBuilderInterface
 {
     /**
      * @param string $absoluteModulePath
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return array
      */

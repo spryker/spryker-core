@@ -58,7 +58,7 @@ abstract class FileInfoTable extends AbstractTable
     /**
      * @param array $item
      *
-     * @return array
+     * @return array<string>
      */
     abstract protected function buildLinks($item);
 

@@ -83,10 +83,8 @@ class MerchantProductCartValidator implements MerchantProductCartValidatorInterf
     }
 
     /**
-     * @phpstan-param array<string, string> $concreteProductSkuMerchantReferenceMap
-     *
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param array $concreteProductSkuMerchantReferenceMap
+     * @param array<string, string> $concreteProductSkuMerchantReferenceMap
      *
      * @return bool
      */

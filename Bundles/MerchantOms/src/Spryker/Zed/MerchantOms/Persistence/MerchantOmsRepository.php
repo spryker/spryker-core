@@ -17,9 +17,7 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 class MerchantOmsRepository extends AbstractRepository implements MerchantOmsRepositoryInterface
 {
     /**
-     * @phpstan-param array<mixed> $stateIds
-     *
-     * @param array $stateIds
+     * @param array<mixed> $stateIds
      *
      * @return array<\Generated\Shared\Transfer\StateMachineItemTransfer>
      */

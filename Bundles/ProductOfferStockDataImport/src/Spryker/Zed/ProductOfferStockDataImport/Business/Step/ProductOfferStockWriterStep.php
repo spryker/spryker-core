@@ -24,7 +24,7 @@ class ProductOfferStockWriterStep extends PublishAwareStep implements DataImport
     protected const IS_NEVER_OUT_OF_STOCK = ProductOfferStockDataSetInterface::IS_NEVER_OUT_OF_STOCK;
 
     /**
-     * @var array
+     * @var array<string>
      */
     protected const REQUIRED_DATA_SET_KEYS = [
         self::FK_STOCK,

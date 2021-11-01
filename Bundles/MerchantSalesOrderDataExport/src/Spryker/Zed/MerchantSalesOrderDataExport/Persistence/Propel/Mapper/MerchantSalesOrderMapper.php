@@ -39,9 +39,7 @@ class MerchantSalesOrderMapper
     protected const KEY_PRICE_MODE = 'price_mode';
 
     /**
-     * @phpstan-var array<string, string>
-     *
-     * @var array
+     * @var array<string, string>
      */
     protected const FIELD_MAPPING = [
         'merchant_order_reference' => SpyMerchantSalesOrderTableMap::COL_MERCHANT_SALES_ORDER_REFERENCE,
@@ -100,9 +98,7 @@ class MerchantSalesOrderMapper
     }
 
     /**
-     * @phpstan-return array<string, string>
-     *
-     * @return array<string>
+     * @return array<string, string>
      */
     public function getFieldMapping(): array
     {

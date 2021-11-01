@@ -23,10 +23,8 @@ class UniqueVolumePriceConstraint extends SymfonyConstraint
     protected $volumePriceExtractor;
 
     /**
-     * @phpstan-param array<mixed> $options
-     *
      * @param \Spryker\Zed\PriceProductVolume\Business\VolumePriceExtractor\VolumePriceExtractorInterface $volumePriceExtractor
-     * @param array|null $options
+     * @param array<string, mixed>|null $options
      */
     public function __construct(
         VolumePriceExtractorInterface $volumePriceExtractor,

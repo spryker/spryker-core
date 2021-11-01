@@ -55,9 +55,7 @@ class CustomerAccessPermissionConfig extends AbstractBundleConfig
     /**
      * Constant used to connect zed content type access settings with the content type permission plugin used in yves shop
      *
-     * @phpstan-var array<string, string>
-     *
-     * @var array
+     * @var array<string, string>
      */
     protected const CONTENT_TYPE_PERMISSION_PLUGIN = [
         self::CONTENT_TYPE_PRICE => SeePricePermissionPlugin::KEY,
@@ -68,9 +66,7 @@ class CustomerAccessPermissionConfig extends AbstractBundleConfig
     ];
 
     /**
-     * @phpstan-var array<string, string>
-     *
-     * @var array
+     * @var array<string, string>
      */
     protected const CONTENT_TYPE_PERMISSION_ACCESS = [
         self::CONTENT_TYPE_ADD_TO_CART => '|^(/en|/de)?/cart(?!/add)',

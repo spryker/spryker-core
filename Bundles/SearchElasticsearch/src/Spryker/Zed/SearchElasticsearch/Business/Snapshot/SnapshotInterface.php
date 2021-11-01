@@ -12,7 +12,7 @@ interface SnapshotInterface
     /**
      * @param string $repositoryName
      * @param string $snapshotName
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return bool
      */
@@ -21,7 +21,7 @@ interface SnapshotInterface
     /**
      * @param string $repositoryName
      * @param string $snapshotName
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return bool
      */

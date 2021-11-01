@@ -27,7 +27,7 @@ class MailToRendererBridge implements MailToRendererInterface
 
     /**
      * @param string $template
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return string
      */

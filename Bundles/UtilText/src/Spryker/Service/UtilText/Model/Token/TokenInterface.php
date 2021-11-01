@@ -11,7 +11,7 @@ interface TokenInterface
 {
     /**
      * @param string $rawToken
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return string
      */

@@ -24,7 +24,7 @@ class SchedulerJenkinsToTwigEnvironmentBridge implements SchedulerJenkinsToTwigE
 
     /**
      * @param string $template
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return string
      */

@@ -389,11 +389,9 @@ class Reader implements ReaderInterface
     }
 
     /**
-     * @phpstan-return array<int, string>
-     *
      * @param array<\Generated\Shared\Transfer\WishlistItemTransfer> $itemCollection
      *
-     * @return array
+     * @return array<int, string>
      */
     protected function getSkuCollection(array $itemCollection)
     {

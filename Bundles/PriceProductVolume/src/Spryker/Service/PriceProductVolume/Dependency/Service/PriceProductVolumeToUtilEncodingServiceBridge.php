@@ -36,9 +36,7 @@ class PriceProductVolumeToUtilEncodingServiceBridge implements PriceProductVolum
     }
 
     /**
-     * @phpstan-param array<mixed> $value
-     *
-     * @param array $value
+     * @param array<mixed> $value
      * @param int|null $options
      * @param int|null $depth
      *

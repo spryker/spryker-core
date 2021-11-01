@@ -164,7 +164,7 @@ class StorageRedisToRedisClientBridge implements StorageRedisToRedisClientInterf
     /**
      * @param string $connectionKey
      * @param int $cursor
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return array [string, string[]]
      */

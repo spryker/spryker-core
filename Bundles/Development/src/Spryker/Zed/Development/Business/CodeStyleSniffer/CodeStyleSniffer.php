@@ -71,7 +71,7 @@ class CodeStyleSniffer
 
     /**
      * @param string|null $module
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return int
      */

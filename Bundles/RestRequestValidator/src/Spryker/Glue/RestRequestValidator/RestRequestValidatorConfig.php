@@ -83,7 +83,7 @@ class RestRequestValidatorConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getConstraintCollectionOptions(): array
     {
@@ -94,7 +94,7 @@ class RestRequestValidatorConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return array
+     * @return array<string>
      */
     private function getCoreNamespaces(): array
     {
@@ -109,7 +109,7 @@ class RestRequestValidatorConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return array
+     * @return array<string>
      */
     private function getProjectNamespaces(): array
     {

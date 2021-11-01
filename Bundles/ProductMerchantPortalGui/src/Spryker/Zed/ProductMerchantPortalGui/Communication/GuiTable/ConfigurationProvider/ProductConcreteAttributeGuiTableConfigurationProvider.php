@@ -337,11 +337,9 @@ class ProductConcreteAttributeGuiTableConfigurationProvider implements ProductCo
     }
 
     /**
-     * @phpstan-return array<string, string|null>
-     *
      * @param \Generated\Shared\Transfer\ProductManagementAttributeCollectionTransfer $productManagementAttributeCollectionTransfer
      *
-     * @return array<string>
+     * @return array<string, string|null>
      */
     protected function getNonSuperAttributeKeysIndexedByKeys(ProductManagementAttributeCollectionTransfer $productManagementAttributeCollectionTransfer): array
     {

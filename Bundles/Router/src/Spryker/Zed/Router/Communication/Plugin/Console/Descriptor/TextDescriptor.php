@@ -18,7 +18,7 @@ class TextDescriptor extends Descriptor
 {
     /**
      * @param \Symfony\Component\Routing\RouteCollection $routes
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -62,7 +62,7 @@ class TextDescriptor extends Descriptor
 
     /**
      * @param \Symfony\Component\Routing\Route $route
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */

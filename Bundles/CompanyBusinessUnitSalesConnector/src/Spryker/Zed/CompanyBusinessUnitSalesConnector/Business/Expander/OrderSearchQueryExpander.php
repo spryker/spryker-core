@@ -23,9 +23,7 @@ class OrderSearchQueryExpander implements OrderSearchQueryExpanderInterface
     protected const CONDITION_GROUP_ALL = 'CONDITION_GROUP_ALL';
 
     /**
-     * @psalm-var array<string, string>
-     *
-     * @var array
+     * @var array<string, string>
      */
     protected const MAPPED_ORDER_BY_FILTERS = [
         'customerName' => self::COLUMN_FULL_NAME,

@@ -34,9 +34,7 @@ interface MerchantSalesOrderMerchantUserGuiToCustomerFacadeInterface
     public function getAddresses(CustomerTransfer $customerTransfer);
 
     /**
-     * @phpstan-return array<mixed>
-     *
-     * @return array
+     * @return array<mixed>
      */
     public function getAllSalutations(): array;
 }

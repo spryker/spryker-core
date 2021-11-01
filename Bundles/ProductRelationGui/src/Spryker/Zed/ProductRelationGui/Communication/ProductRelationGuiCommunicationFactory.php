@@ -107,7 +107,7 @@ class ProductRelationGuiCommunicationFactory extends AbstractCommunicationFactor
 
     /**
      * @param \Generated\Shared\Transfer\ProductRelationTransfer $data
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return \Symfony\Component\Form\FormInterface
      */

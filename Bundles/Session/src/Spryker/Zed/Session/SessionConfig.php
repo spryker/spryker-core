@@ -47,7 +47,7 @@ class SessionConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getSessionStorageOptions()
     {
@@ -153,7 +153,7 @@ class SessionConfig extends AbstractBundleConfig
      *
      * @deprecated Use {@link \Spryker\Shared\SessionExtension\Dependency\Plugin\SessionHandlerProviderPluginInterface} instead.
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getSessionHandlerRedisConnectionOptionsZed(): array
     {
@@ -277,7 +277,7 @@ class SessionConfig extends AbstractBundleConfig
      *
      * @deprecated Use {@link \Spryker\Shared\SessionExtension\Dependency\Plugin\SessionHandlerProviderPluginInterface} instead.
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getSessionHandlerRedisConnectionOptionsYves(): array
     {

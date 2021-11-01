@@ -24,7 +24,7 @@ abstract class Descriptor implements DescriptorInterface
     /**
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      * @param object $object
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @throws \InvalidArgumentException
      *
@@ -70,7 +70,7 @@ abstract class Descriptor implements DescriptorInterface
 
     /**
      * @param \Symfony\Component\Routing\RouteCollection $routes
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return mixed
      */
@@ -78,7 +78,7 @@ abstract class Descriptor implements DescriptorInterface
 
     /**
      * @param \Spryker\Yves\Router\Route\Route $route
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return mixed
      */

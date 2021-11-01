@@ -65,7 +65,7 @@ interface WishlistRestResponseBuilderInterface
     public function createErrorResponseFromErrorMessage(RestErrorMessageTransfer $errorMessage): RestResponseInterface;
 
     /**
-     * @param array $errors
+     * @param array<string> $errors
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */

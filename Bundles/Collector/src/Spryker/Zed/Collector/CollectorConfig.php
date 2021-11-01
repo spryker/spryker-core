@@ -133,7 +133,7 @@ class CollectorConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return array
+     * @return array<string, array<string>>
      */
     protected function getQueryToDbEngineClassMap()
     {
@@ -144,7 +144,7 @@ class CollectorConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return array
+     * @return array<string, string>
      */
     protected function getMysqlDbEngineClassMap()
     {
@@ -155,7 +155,7 @@ class CollectorConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return array
+     * @return array<string, string>
      */
     protected function getPostgresDbEngineClassMap()
     {
@@ -168,7 +168,7 @@ class CollectorConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return array
+     * @return array<string, string>
      */
     public function getCurrentBulkQueryClassNames()
     {

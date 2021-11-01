@@ -14,7 +14,7 @@ class TranslatorConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return array
+     * @return array<string>
      */
     public function getProjectNamespaces(): array
     {

@@ -26,7 +26,7 @@ class ProductListUsedByTableMapper implements ProductListUsedByTableMapperInterf
     protected const EDIT_BUTTON_TITLE = 'Edit Merchant Relationship';
 
     /**
-     * @var array
+     * @var array<string, string>
      */
     protected const EDIT_BUTTON_OPTIONS = [
         'class' => 'btn-edit btn-xs',

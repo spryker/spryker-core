@@ -107,9 +107,7 @@ class MerchantUserTable extends AbstractTable
     protected const ACTIONS = 'actions';
 
     /**
-     * @phpstan-var array<string, array<string, string>>
-     *
-     * @var array
+     * @var array<string, array<string, string>>
      */
     protected const STATUS_LABEL_MAPPING = [
         'active' => [
@@ -127,9 +125,7 @@ class MerchantUserTable extends AbstractTable
     ];
 
     /**
-     * @phpstan-var array<string, array<string, string>>
-     *
-     * @var array
+     * @var array<string, array<string, string>>
      */
     protected const STATUS_CHANGE_ACTION_MAPPING = [
         'active' => [

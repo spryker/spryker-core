@@ -168,7 +168,7 @@ class ApiConfig extends AbstractBundleConfig
      *
      * @api
      *
-     * @return array
+     * @return array<string>
      */
     public function getHttpMethodsForItem()
     {
@@ -184,7 +184,7 @@ class ApiConfig extends AbstractBundleConfig
      *
      * @api
      *
-     * @return array
+     * @return array<string>
      */
     public function getHttpMethodsForCollection()
     {
@@ -228,7 +228,7 @@ class ApiConfig extends AbstractBundleConfig
      *
      * @api
      *
-     * @return array
+     * @return array<string>
      */
     public function getAllowedRequestMethods()
     {

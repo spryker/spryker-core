@@ -27,7 +27,7 @@ class OauthCompanyUserConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return array
+     * @return array<string>
      */
     public function getCompanyUserScopes(): array
     {

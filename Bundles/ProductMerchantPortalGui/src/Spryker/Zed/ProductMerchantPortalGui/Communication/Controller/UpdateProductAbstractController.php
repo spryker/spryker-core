@@ -215,8 +215,6 @@ class UpdateProductAbstractController extends AbstractUpdateProductController
     }
 
     /**
-     * @phpstan-param array<int> $initialCategoryIds
-     *
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      * @param array<int> $initialCategoryIds
      *
@@ -325,13 +323,9 @@ class UpdateProductAbstractController extends AbstractUpdateProductController
     }
 
     /**
-     * @phpstan-param ArrayObject<int, \Generated\Shared\Transfer\ProductImageSetTransfer> $imageSets
-     *
-     * @phpstan-return array<int, array<int, \Generated\Shared\Transfer\ProductImageSetTransfer>>
-     *
      * @param \ArrayObject<int, \Generated\Shared\Transfer\ProductImageSetTransfer> $imageSets
      *
-     * @return array<\Generated\Shared\Transfer\LocalizedAttributesTransfer>
+     * @return array<int, array<int, \Generated\Shared\Transfer\ProductImageSetTransfer>>
      */
     protected function getImageSetsGroupedByIdLocale(ArrayObject $imageSets): array
     {
@@ -346,13 +340,10 @@ class UpdateProductAbstractController extends AbstractUpdateProductController
     }
 
     /**
-     * @phpstan-param ArrayObject<int, \Generated\Shared\Transfer\ProductImageSetTransfer> $imageSets
-     * @phpstan-param array<int, mixed> $imageSetsErrors
-     *
      * @phpstan-return \SplObjectStorage<object, mixed>
      *
      * @param \ArrayObject<int, \Generated\Shared\Transfer\ProductImageSetTransfer> $imageSets
-     * @param array $imageSetsErrors
+     * @param array<int, mixed> $imageSetsErrors
      *
      * @return \SplObjectStorage
      */

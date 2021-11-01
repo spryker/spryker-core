@@ -85,7 +85,7 @@ class PriceProductScheduleGuiConfig extends AbstractBundleConfig
     protected const FILE_MAX_SIZE = '50M';
 
     /**
-     * @var array
+     * @var array<string>
      */
     protected const FILE_MIME_TYPES = ['text/csv', 'text/plain'];
 
@@ -233,7 +233,7 @@ class PriceProductScheduleGuiConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return array
+     * @return array<string>
      */
     public function getFileMimeTypes(): array
     {

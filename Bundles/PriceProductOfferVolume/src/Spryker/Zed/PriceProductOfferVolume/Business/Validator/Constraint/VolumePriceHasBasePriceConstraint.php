@@ -23,10 +23,8 @@ class VolumePriceHasBasePriceConstraint extends SymfonyConstraint
     protected $priceProductVolumeService;
 
     /**
-     * @phpstan-param array<mixed> $options
-     *
      * @param \Spryker\Zed\PriceProductOfferVolume\Dependency\Service\PriceProductOfferVolumeToPriceProductVolumeInterface $priceProductVolumeService
-     * @param array|null $options
+     * @param array<string, mixed>|null $options
      */
     public function __construct(
         PriceProductOfferVolumeToPriceProductVolumeInterface $priceProductVolumeService,

@@ -214,7 +214,7 @@ class TwigConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getTwigOptions(): array
     {

@@ -27,20 +27,20 @@ class AllBundleFinder implements AllBundleFinderInterface
     protected $filter;
 
     /**
-     * @var array
+     * @var array<string>
      */
     protected $projectNamespaces;
 
     /**
-     * @var array
+     * @var array<string>
      */
     protected $coreNamespaces;
 
     /**
      * @param \Symfony\Component\Finder\Finder $finder
      * @param \Laminas\Filter\FilterInterface $filter
-     * @param array $projectNamespaces
-     * @param array $coreNamespaces
+     * @param array<string> $projectNamespaces
+     * @param array<string> $coreNamespaces
      */
     public function __construct(Finder $finder, FilterInterface $filter, $projectNamespaces = [], $coreNamespaces = [])
     {

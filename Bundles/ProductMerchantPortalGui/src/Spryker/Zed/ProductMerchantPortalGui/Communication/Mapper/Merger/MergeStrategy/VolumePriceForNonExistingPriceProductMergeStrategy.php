@@ -27,8 +27,6 @@ class VolumePriceForNonExistingPriceProductMergeStrategy extends AbstractPricePr
     }
 
     /**
-     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
-     *
      * @param \Generated\Shared\Transfer\PriceProductTransfer $newPriceProductTransfer
      * @param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      *
@@ -77,8 +75,6 @@ class VolumePriceForNonExistingPriceProductMergeStrategy extends AbstractPricePr
     }
 
     /**
-     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
-     *
      * @param \Generated\Shared\Transfer\PriceProductTransfer $newPriceProductTransfer
      * @param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      *

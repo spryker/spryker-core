@@ -107,11 +107,9 @@ class OrderExpander implements OrderExpanderInterface
     }
 
     /**
-     * @phpstan-return array<int, string|null>
-     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return array<string>
+     * @return array<int, string>
      */
     protected function getMerchantReferences(OrderTransfer $orderTransfer): array
     {

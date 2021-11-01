@@ -91,7 +91,7 @@ class MerchantOrderReader implements MerchantOrderReaderInterface
     /**
      * @param \Generated\Shared\Transfer\MerchantOrderItemCollectionTransfer $merchantOrderItemTransfers
      *
-     * @return array <int,\Generated\Shared\Transfer\MerchantOrderItemTransfer>
+     * @return array <int, \Generated\Shared\Transfer\MerchantOrderItemTransfer>
      */
     protected function getMerchantOrderItemsIndexedByIdOrderItem(
         MerchantOrderItemCollectionTransfer $merchantOrderItemTransfers

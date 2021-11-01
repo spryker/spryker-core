@@ -28,7 +28,7 @@ abstract class AbstractForm implements FormTypeInterface
      * @see \Symfony\Component\Form\FormTypeExtensionInterface::buildForm()
      *
      * @param \Symfony\Component\Form\FormBuilderInterface $builder The form builder
-     * @param array $options The options
+     * @param array<string, mixed> $options The options
      *
      * @return void
      */
@@ -94,7 +94,7 @@ abstract class AbstractForm implements FormTypeInterface
      *
      * @param \Symfony\Component\Form\FormView $view The view
      * @param \Symfony\Component\Form\FormInterface $form The form
-     * @param array $options The options
+     * @param array<string, mixed> $options The options
      *
      * @return void
      */
@@ -117,7 +117,7 @@ abstract class AbstractForm implements FormTypeInterface
      *
      * @param \Symfony\Component\Form\FormView $view The view
      * @param \Symfony\Component\Form\FormInterface $form The form
-     * @param array $options The options
+     * @param array<string, mixed> $options The options
      *
      * @return void
      */

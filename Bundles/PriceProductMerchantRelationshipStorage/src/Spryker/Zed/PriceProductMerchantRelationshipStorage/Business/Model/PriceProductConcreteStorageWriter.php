@@ -12,11 +12,9 @@ use Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer;
 class PriceProductConcreteStorageWriter extends AbstractPriceProductMerchantRelationshipStorageWriter implements PriceProductConcreteStorageWriterInterface
 {
     /**
-     * @phpstan-param array<mixed> $businessUnitProducts
-     *
      * @deprecated Will be removed without replacement.
      *
-     * @param array $businessUnitProducts
+     * @param array<mixed> $businessUnitProducts
      *
      * @return void
      */

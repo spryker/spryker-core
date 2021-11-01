@@ -67,7 +67,7 @@ class ContentBannerGuiConfig extends AbstractSharedConfig
     /**
      * @api
      *
-     * @return array
+     * @return array<string, string>
      */
     public function getContentWidgetTemplates(): array
     {

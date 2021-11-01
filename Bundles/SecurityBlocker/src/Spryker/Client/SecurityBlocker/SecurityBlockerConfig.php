@@ -92,7 +92,7 @@ class SecurityBlockerConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return array
+     * @return array<string, mixed>
      */
     protected function getConnectionOptions(): array
     {
@@ -102,8 +102,6 @@ class SecurityBlockerConfig extends AbstractBundleConfig
     /**
      * Specification:
      * - Returns the security configuration per type.
-     *
-     * @phpstan-return array<int|string, \Generated\Shared\Transfer\SecurityBlockerConfigurationSettingsTransfer>
      *
      * @api
      *

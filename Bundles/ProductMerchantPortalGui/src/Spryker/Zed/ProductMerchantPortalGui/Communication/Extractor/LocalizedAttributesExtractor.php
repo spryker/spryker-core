@@ -53,8 +53,6 @@ class LocalizedAttributesExtractor implements LocalizedAttributesExtractorInterf
     }
 
     /**
-     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer> $localizedAttributeTransfers
-     *
      * @param array<string> $attributes
      * @param \ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer> $localizedAttributeTransfers
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
@@ -86,8 +84,6 @@ class LocalizedAttributesExtractor implements LocalizedAttributesExtractorInterf
     }
 
     /**
-     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer> $localizedAttributeTransfers
-     *
      * @param array<string> $attributes
      * @param \ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer> $localizedAttributeTransfers
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer

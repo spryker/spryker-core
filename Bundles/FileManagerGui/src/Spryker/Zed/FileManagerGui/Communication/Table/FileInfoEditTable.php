@@ -12,9 +12,9 @@ use Spryker\Service\UtilText\Model\Url\Url;
 class FileInfoEditTable extends FileInfoTable
 {
     /**
-     * @param array $item
+     * @param array<string, mixed> $item
      *
-     * @return array
+     * @return array<string>
      */
     protected function buildLinks($item)
     {

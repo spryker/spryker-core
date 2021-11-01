@@ -25,8 +25,6 @@ class ProductOfferRestWishlistItemsAttributesDeleteStrategyPlugin extends Abstra
      *
      * @api
      *
-     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\WishlistItemTransfer> $wishlistItemTransfers
-     *
      * @param \Generated\Shared\Transfer\WishlistItemRequestTransfer $wishlistItemRequestTransfer
      * @param \ArrayObject<int, \Generated\Shared\Transfer\WishlistItemTransfer> $wishlistItemTransfers
      *
@@ -46,8 +44,6 @@ class ProductOfferRestWishlistItemsAttributesDeleteStrategyPlugin extends Abstra
      * {@inheritDoc}
      *
      * @api
-     *
-     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\WishlistItemTransfer> $wishlistItemTransfers
      *
      * @param \Generated\Shared\Transfer\WishlistItemRequestTransfer $wishlistItemRequestTransfer
      * @param \ArrayObject<int, \Generated\Shared\Transfer\WishlistItemTransfer> $wishlistItemTransfers

@@ -25,11 +25,9 @@ class CompanyUserCompanyFormDataProvider
     }
 
     /**
-     * @phpstan-return array<string, int>
-     *
      * @param int|null $idCompany
      *
-     * @return array<int>
+     * @return array<string, int>
      */
     public function getOptions(?int $idCompany): array
     {

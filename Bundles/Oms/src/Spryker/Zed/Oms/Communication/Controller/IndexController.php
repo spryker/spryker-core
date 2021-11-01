@@ -31,7 +31,7 @@ class IndexController extends AbstractController
     public const DEFAULT_FONT_SIZE = 14;
 
     /**
-     * @var array
+     * @var array<string, string>
      */
     protected $formatContentTypes = [
         'jpg' => 'image/jpeg',

@@ -48,7 +48,7 @@ class QueueProxy implements QueueProxyInterface
 
     /**
      * @param string $queueName
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return array
      */
@@ -88,7 +88,7 @@ class QueueProxy implements QueueProxyInterface
     /**
      * @param string $queueName
      * @param int $chunkSize
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return array<\Generated\Shared\Transfer\QueueReceiveMessageTransfer>
      */
@@ -101,7 +101,7 @@ class QueueProxy implements QueueProxyInterface
 
     /**
      * @param string $queueName
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return \Generated\Shared\Transfer\QueueReceiveMessageTransfer
      */
@@ -150,7 +150,7 @@ class QueueProxy implements QueueProxyInterface
 
     /**
      * @param string $queueName
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return bool
      */
@@ -163,7 +163,7 @@ class QueueProxy implements QueueProxyInterface
 
     /**
      * @param string $queueName
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return bool
      */

@@ -132,7 +132,7 @@ class ShoppingListsRestApiConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return array
+     * @return array<string, array<string, mixed>>
      */
     public static function getErrorIdentifierToRestErrorMapping(): array
     {

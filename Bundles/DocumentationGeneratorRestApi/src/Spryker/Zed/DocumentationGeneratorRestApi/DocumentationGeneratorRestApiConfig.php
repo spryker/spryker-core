@@ -154,7 +154,7 @@ class DocumentationGeneratorRestApiConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return array
+     * @return array<string>
      */
     public function getAnnotationSourceDirectories(): array
     {
@@ -175,7 +175,7 @@ class DocumentationGeneratorRestApiConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return array
+     * @return array<string>
      */
     protected function getProjectAnnotationSourceDirectoryPatterns(): array
     {

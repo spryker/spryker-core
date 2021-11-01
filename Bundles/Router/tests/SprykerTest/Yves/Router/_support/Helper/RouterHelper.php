@@ -52,7 +52,7 @@ class RouterHelper extends Module
      * @param callable $controller
      * @param array $defaults
      * @param array $requirements
-     * @param array $options
+     * @param array<string, mixed> $options
      * @param string|null $host
      * @param array $schemes
      * @param array $methods

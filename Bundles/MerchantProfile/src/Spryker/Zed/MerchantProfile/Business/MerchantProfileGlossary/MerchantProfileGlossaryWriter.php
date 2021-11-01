@@ -133,9 +133,7 @@ class MerchantProfileGlossaryWriter implements MerchantProfileGlossaryWriterInte
     }
 
     /**
-     * @phpstan-param array<string> $merchantProfileData
-     *
-     * @param array $merchantProfileData
+     * @param array<string> $merchantProfileData
      * @param string $merchantProfileGlossaryKeyFieldName
      * @param int $fkMerchant
      *

@@ -57,7 +57,7 @@ class CmsBlockConfig extends AbstractBundleConfig
      *
      * @param string $templateRelativePath
      *
-     * @return array
+     * @return array<string>
      */
     public function getTemplateRealPaths($templateRelativePath): array
     {
@@ -97,7 +97,7 @@ class CmsBlockConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return array
+     * @return array<string>
      */
     public function getThemeNames(): array
     {

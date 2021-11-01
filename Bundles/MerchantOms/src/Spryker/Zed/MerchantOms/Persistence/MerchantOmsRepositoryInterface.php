@@ -12,9 +12,7 @@ use Generated\Shared\Transfer\StateMachineItemTransfer;
 interface MerchantOmsRepositoryInterface
 {
     /**
-     * @phpstan-param array<mixed> $stateIds
-     *
-     * @param array $stateIds
+     * @param array<mixed> $stateIds
      *
      * @return array<\Generated\Shared\Transfer\StateMachineItemTransfer>
      */

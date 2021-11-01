@@ -16,7 +16,7 @@ interface ManagerInterface
      * @api
      *
      * @param string $queueName
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return array
      */
@@ -29,7 +29,7 @@ interface ManagerInterface
      * @api
      *
      * @param string $queueName
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return bool
      */
@@ -42,7 +42,7 @@ interface ManagerInterface
      * @api
      *
      * @param string $queueName
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return bool
      */

@@ -56,7 +56,7 @@ class ZedNavigationConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return array
+     * @return array<string>
      */
     public function getNavigationSchemaPathPattern()
     {

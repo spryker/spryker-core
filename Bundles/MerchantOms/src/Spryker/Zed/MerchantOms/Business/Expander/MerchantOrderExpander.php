@@ -72,11 +72,9 @@ class MerchantOrderExpander implements MerchantOrderExpanderInterface
     }
 
     /**
-     * @phpstan-return array<array-key, int|null>
-     *
      * @param \Generated\Shared\Transfer\MerchantOrderTransfer $merchantOrderTransfer
      *
-     * @return array<int>
+     * @return array<int|null>
      */
     protected function getStateMachineItemStateIds(MerchantOrderTransfer $merchantOrderTransfer): array
     {

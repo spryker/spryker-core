@@ -128,11 +128,9 @@ class MerchantOrderItemTableExpander implements MerchantOrderItemTableExpanderIn
     }
 
     /**
-     * @phpstan-return array<string, string>
-     *
      * @param \Generated\Shared\Transfer\ProductOfferCollectionTransfer $productOfferCollectionTransfer
      *
-     * @return array<string>
+     * @return array<string, string>
      */
     protected function getMerchantSkusIndexedByProductOfferReferences(
         ProductOfferCollectionTransfer $productOfferCollectionTransfer

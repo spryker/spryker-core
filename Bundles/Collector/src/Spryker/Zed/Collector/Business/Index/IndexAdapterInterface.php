@@ -13,7 +13,7 @@ interface IndexAdapterInterface
 {
     /**
      * @param string|int $id
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return \Elastica\Document
      */
@@ -21,7 +21,7 @@ interface IndexAdapterInterface
 
     /**
      * @param array<\Elastica\Document> $documents
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return \Elastica\Bulk\ResponseSet
      */

@@ -14,8 +14,6 @@ use Spryker\DecimalObject\Decimal;
 class ProductOfferStockResultMapper implements ProductOfferStockResultMapperInterface
 {
     /**
-     * @phpstan-param \ArrayObject<int,\Generated\Shared\Transfer\ProductOfferStockTransfer> $productOfferStockTransfers
-     *
      * @param \ArrayObject<int, \Generated\Shared\Transfer\ProductOfferStockTransfer> $productOfferStockTransfers
      *
      * @return \Generated\Shared\Transfer\ProductOfferStockResultTransfer

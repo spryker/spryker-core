@@ -58,7 +58,7 @@ class RouterHelper extends Module
     protected $routerPlugins = [];
 
     /**
-     * @var array
+     * @var array<string, mixed>
      */
     protected $config = [
         self::CONFIG_KEY_ROUTER_PLUGINS => [],
@@ -127,7 +127,7 @@ class RouterHelper extends Module
      * @param callable $controller
      * @param array $defaults
      * @param array $requirements
-     * @param array $options
+     * @param array<string, mixed> $options
      * @param string|null $host
      * @param array $schemes
      * @param array $methods

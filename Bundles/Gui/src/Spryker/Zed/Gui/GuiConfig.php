@@ -18,7 +18,7 @@ class GuiConfig extends AbstractBundleConfig
     protected const FORM_RESOURCES_PATH = '/Presentation/Form/Type';
 
     /**
-     * @var array
+     * @var array<string>
      */
     protected const FORM_DEFAULT_TEMPLATE_FILE_NAMES = [
         'form_div_layout.html.twig',

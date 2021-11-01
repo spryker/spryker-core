@@ -82,7 +82,7 @@ class DatasetForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -182,7 +182,7 @@ class DatasetForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array|null $options
+     * @param array<string, mixed>|null $options
      *
      * @return $this
      */
@@ -202,7 +202,7 @@ class DatasetForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array|null $options
+     * @param array<string, mixed>|null $options
      *
      * @return $this
      */

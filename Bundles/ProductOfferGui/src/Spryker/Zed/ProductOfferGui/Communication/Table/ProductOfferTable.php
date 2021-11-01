@@ -54,9 +54,7 @@ class ProductOfferTable extends AbstractTable
     protected const STORE_CLASS_LABEL = 'label-info';
 
     /**
-     * @phpstan-var array<string, string>
-     *
-     * @var array
+     * @var array<string, string>
      */
     protected const APPROVAL_STATUS_CLASS_LABEL_MAPPING = [
         SharedProductOfferGuiConfig::STATUS_WAITING_FOR_APPROVAL => 'label-warning',
@@ -65,9 +63,7 @@ class ProductOfferTable extends AbstractTable
     ];
 
     /**
-     * @phpstan-var array<string, string>
-     *
-     * @var array
+     * @var array<string, string>
      */
     protected const APPROVAL_STATUS_CLASS_BUTTON_MAPPING = [
         SharedProductOfferGuiConfig::STATUS_APPROVED => 'btn-create',
@@ -231,11 +227,9 @@ class ProductOfferTable extends AbstractTable
     }
 
     /**
-     * @phpstan-return array<mixed>
-     *
      * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
-     * @return array
+     * @return array<mixed>
      */
     protected function prepareData(TableConfiguration $config): array
     {
@@ -311,9 +305,7 @@ class ProductOfferTable extends AbstractTable
     }
 
     /**
-     * @phpstan-param array<string, mixed> $item
-     *
-     * @param array $item
+     * @param array<string, mixed> $item
      *
      * @return string
      */
@@ -339,9 +331,7 @@ class ProductOfferTable extends AbstractTable
     }
 
     /**
-     * @phpstan-param array<string, mixed> $item
-     *
-     * @param array $item
+     * @param array<string, mixed> $item
      *
      * @return string
      */

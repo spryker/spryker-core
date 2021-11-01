@@ -84,7 +84,7 @@ class SearchElasticsearchConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return array
+     * @return array<string>
      */
     public function getJsonSchemaDefinitionDirectories(): array
     {
@@ -166,7 +166,7 @@ class SearchElasticsearchConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getClientConfig(): array
     {

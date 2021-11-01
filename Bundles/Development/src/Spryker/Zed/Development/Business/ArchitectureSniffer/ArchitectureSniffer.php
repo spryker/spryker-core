@@ -284,7 +284,7 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
 
     /**
      * @param string $directory
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @throws \Exception
      *
@@ -467,7 +467,7 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
     }
 
     /**
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return bool
      */
@@ -484,7 +484,7 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
 
     /**
      * @param array $results
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return array
      */

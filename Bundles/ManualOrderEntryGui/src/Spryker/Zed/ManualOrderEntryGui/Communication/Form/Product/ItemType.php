@@ -82,7 +82,7 @@ class ItemType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -111,7 +111,7 @@ class ItemType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -127,7 +127,7 @@ class ItemType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -146,7 +146,7 @@ class ItemType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -165,7 +165,7 @@ class ItemType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -179,7 +179,7 @@ class ItemType extends AbstractType
     }
 
     /**
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return \Symfony\Component\Validator\Constraints\Regex
      */
@@ -195,7 +195,7 @@ class ItemType extends AbstractType
     }
 
     /**
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return \Symfony\Component\Validator\Constraints\Regex
      */
@@ -211,7 +211,7 @@ class ItemType extends AbstractType
     }
 
     /**
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return string
      */
@@ -227,7 +227,7 @@ class ItemType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormEvent $event
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -247,7 +247,7 @@ class ItemType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormEvent $event
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */

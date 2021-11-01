@@ -63,7 +63,7 @@ class ZedNavigationTwigPlugin extends AbstractPlugin implements TwigPluginInterf
     protected $navigation;
 
     /**
-     * @var array
+     * @var array<string, array>
      */
     protected $navigations = [];
 
@@ -176,7 +176,7 @@ class ZedNavigationTwigPlugin extends AbstractPlugin implements TwigPluginInterf
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param string|null $navigationType
      *
-     * @return array
+     * @return array<string, array>
      */
     protected function buildNavigation(Request $request, ?string $navigationType = null): array
     {

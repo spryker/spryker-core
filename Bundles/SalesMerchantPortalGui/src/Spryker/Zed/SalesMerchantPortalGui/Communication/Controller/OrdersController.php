@@ -18,9 +18,7 @@ use Symfony\Component\HttpFoundation\Response;
 class OrdersController extends AbstractController
 {
     /**
-     * @phpstan-return array<mixed>
-     *
-     * @return array
+     * @return array<mixed>
      */
     public function indexAction(): array
     {

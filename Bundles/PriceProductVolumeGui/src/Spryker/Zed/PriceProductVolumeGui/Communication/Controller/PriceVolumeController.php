@@ -295,7 +295,7 @@ class PriceVolumeController extends AbstractController
     /**
      * @param string $url
      * @param array $query
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return string
      */

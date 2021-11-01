@@ -13,9 +13,7 @@ use Spryker\Zed\Transfer\Business\Model\Generator\Helper\PluralizerInterface;
 class EntityDefinitionNormalizer extends DefinitionNormalizer
 {
     /**
-     * @phpstan-var array<string, string>
-     *
-     * @var array
+     * @var array<string, string>
      */
     protected const TYPE_MAPPING = [
         'double' => 'float',

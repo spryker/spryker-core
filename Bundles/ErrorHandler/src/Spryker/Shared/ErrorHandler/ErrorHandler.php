@@ -88,9 +88,7 @@ class ErrorHandler
     }
 
     /**
-     * @phpstan-return array<string, int|string>
-     *
-     * @return array
+     * @return array<string, int|string>
      */
     protected function getLastError()
     {

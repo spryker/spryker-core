@@ -55,7 +55,7 @@ class MerchantOrderItemTableDataMapper
     protected const COL_KEY_STATE = 'state';
 
     /**
-     * @var array
+     * @var array<string, string>
      */
     public const MERCHANT_ORDER_ITEM_DATA_COLUMN_MAP = [
         self::COL_KEY_SKU => SpySalesOrderItemTableMap::COL_SKU,

@@ -65,7 +65,7 @@ class ButtonGroupTwigPlugin extends AbstractPlugin implements TwigPluginInterfac
     /**
      * @param array $buttons
      * @param string $title
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return \Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\UrlGeneratorInterface
      */

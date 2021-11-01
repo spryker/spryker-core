@@ -94,12 +94,10 @@ class AbstractProductOfferController extends AbstractController
     }
 
     /**
-     * @phpstan-return array<mixed>
-     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param string $formName
      *
-     * @return array
+     * @return array<mixed>
      */
     protected function getDefaultInitialData(Request $request, string $formName): array
     {
@@ -141,14 +139,10 @@ class AbstractProductOfferController extends AbstractController
     }
 
     /**
-     * @phpstan-param array<string, mixed> $responseData
-     *
-     * @phpstan-return array<string, mixed>
-     *
-     * @param array<mixed> $responseData
+     * @param array<string, mixed> $responseData
      * @param \Generated\Shared\Transfer\ProductOfferResponseTransfer|null $productOfferResponseTransfer
      *
-     * @return array<mixed>
+     * @return array<string, mixed>
      */
     protected function addErrorResponseDataToResponse(array $responseData, ?ProductOfferResponseTransfer $productOfferResponseTransfer = null): array
     {

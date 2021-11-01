@@ -32,7 +32,7 @@ class CompanyTableActionViewSupplier extends AbstractPlugin implements CompanyTa
     protected const BUTTON_TITLE = 'View items';
 
     /**
-     * @var array
+     * @var array<string, string>
      */
     protected const BUTTON_DEFAULT_OPTIONS = [
         'class' => 'btn-view',

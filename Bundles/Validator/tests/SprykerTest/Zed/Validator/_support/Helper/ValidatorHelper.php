@@ -57,7 +57,7 @@ class ValidatorHelper extends Module
     protected $constraintPlugins = [];
 
     /**
-     * @var array
+     * @var array<string, mixed>
      */
     protected $config = [
         self::CONFIG_KEY_VALIDATOR_PLUGINS => [],

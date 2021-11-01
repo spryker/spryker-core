@@ -42,7 +42,7 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
     protected const ID_SALES_ORDER = 'id_sales_order';
 
     /**
-     * @var array
+     * @var array<string, string>
      */
     protected const SORT_KEYS_MAP = [
         'createdAt' => SpySalesOrderTableMap::COL_CREATED_AT,

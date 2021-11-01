@@ -10,9 +10,7 @@ namespace Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\Configurat
 interface StoreFilterOptionsProviderInterface
 {
     /**
-     * @phpstan-return array<int, string>
-     *
-     * @return array<string>
+     * @return array<int, string>
      */
     public function getStoreOptions(): array;
 }

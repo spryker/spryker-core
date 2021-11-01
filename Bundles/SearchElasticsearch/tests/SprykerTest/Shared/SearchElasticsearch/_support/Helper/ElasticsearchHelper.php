@@ -256,7 +256,7 @@ class ElasticsearchHelper extends Module
     /**
      * @param string $repositoryName
      * @param string $snapshotName
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */

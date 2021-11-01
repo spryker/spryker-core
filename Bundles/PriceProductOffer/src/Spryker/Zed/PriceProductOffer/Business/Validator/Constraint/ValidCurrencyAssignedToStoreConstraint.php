@@ -23,10 +23,8 @@ class ValidCurrencyAssignedToStoreConstraint extends SymfonyConstraint
     protected $storeFacade;
 
     /**
-     * @phpstan-param array<string, mixed> $options
-     *
      * @param \Spryker\Zed\PriceProductOffer\Dependency\Facade\PriceProductOfferToStoreFacadeInterface $storeFacade
-     * @param array|null $options
+     * @param array<string, mixed>|null $options
      */
     public function __construct(PriceProductOfferToStoreFacadeInterface $storeFacade, $options = null)
     {

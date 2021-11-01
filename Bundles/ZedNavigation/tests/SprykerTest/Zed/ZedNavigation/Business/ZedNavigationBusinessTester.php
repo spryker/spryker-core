@@ -152,7 +152,7 @@ class ZedNavigationBusinessTester extends Unit
     }
 
     /**
-     * @param array $navigationItem
+     * @param array<string, mixed> $navigationItem
      *
      * @return bool
      */

@@ -26,7 +26,7 @@ class MerchantRelationshipGuiCommunicationFactory extends AbstractCommunicationF
 {
     /**
      * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer|null $data
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return \Symfony\Component\Form\FormInterface
      */
@@ -37,7 +37,7 @@ class MerchantRelationshipGuiCommunicationFactory extends AbstractCommunicationF
 
     /**
      * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer|null $data
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return \Symfony\Component\Form\FormInterface
      */

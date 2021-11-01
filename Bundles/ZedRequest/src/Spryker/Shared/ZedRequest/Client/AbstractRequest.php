@@ -12,7 +12,7 @@ use Spryker\Shared\Kernel\Transfer\TransferInterface;
 abstract class AbstractRequest extends AbstractObject implements EmbeddedTransferInterface, RequestInterface
 {
     /**
-     * @var array
+     * @var array<string, mixed>
      */
     protected $values = [
         'host' => null,

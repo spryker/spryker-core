@@ -131,7 +131,7 @@ class WishlistsRestApiConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return array
+     * @return array<string, array<string, mixed>>
      */
     public function getErrorIdentifierToRestErrorMapping(): array
     {

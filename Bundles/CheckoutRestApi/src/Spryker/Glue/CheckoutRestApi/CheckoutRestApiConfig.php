@@ -138,7 +138,7 @@ class CheckoutRestApiConfig extends AbstractBundleConfig
     public const RESPONSE_DETAILS_INVALID_PAYMENT = 'Payment method "%s" of payment provider "%s" is invalid';
 
     /**
-     * @var array
+     * @var array<string>
      */
     protected const PAYMENT_REQUIRED_FIELDS = [
         'paymentMethod',
@@ -146,12 +146,12 @@ class CheckoutRestApiConfig extends AbstractBundleConfig
     ];
 
     /**
-     * @var array
+     * @var array<string, array>
      */
     protected const PAYMENT_METHOD_REQUIRED_FIELDS = [];
 
     /**
-     * @var array
+     * @var array<string, array<string, string>>
      */
     protected const ERROR_IDENTIFIER_TO_REST_ERROR_MAPPING = [
         SharedCheckoutRestApiConfig::ERROR_IDENTIFIER_UNABLE_TO_DELETE_CART => [
@@ -191,7 +191,7 @@ class CheckoutRestApiConfig extends AbstractBundleConfig
      *
      * @param string $paymentMethodName
      *
-     * @return array
+     * @return array<string>
      */
     public function getRequiredRequestDataForPaymentMethod(string $paymentMethodName): array
     {
@@ -223,7 +223,7 @@ class CheckoutRestApiConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return array
+     * @return array<string, array<string, mixed>>
      */
     public function getErrorIdentifierToRestErrorMapping(): array
     {

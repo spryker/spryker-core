@@ -12,7 +12,7 @@ use Symfony\Component\Validator\Constraints\Collection;
 interface RestRequestValidatorToConstraintCollectionAdapterInterface
 {
     /**
-     * @param array|null $options
+     * @param array<string, mixed>|null $options
      *
      * @return \Symfony\Component\Validator\Constraints\Collection
      */

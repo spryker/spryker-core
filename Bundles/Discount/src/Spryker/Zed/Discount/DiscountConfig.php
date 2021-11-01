@@ -54,7 +54,7 @@ class DiscountConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return array
+     * @return array<string, array<mixed>>
      */
     public function getVoucherCodeCharacters()
     {

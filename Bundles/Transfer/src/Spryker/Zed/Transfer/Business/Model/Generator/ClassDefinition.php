@@ -36,7 +36,7 @@ class ClassDefinition implements ClassDefinitionInterface
     protected const EXTRA_TYPE_HINTS = 'extra_type_hints';
 
     /**
-     * @var array
+     * @var array<string, array<string, string>>
      */
     protected const SUPPORTED_VALUE_OBJECTS = [
         'decimal' => [
@@ -497,7 +497,7 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @return array
+     * @return array<string, string>
      */
     public function getPropertyNameMap(): array
     {

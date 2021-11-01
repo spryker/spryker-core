@@ -221,9 +221,7 @@ class WishlistRestResponseBuilder implements WishlistRestResponseBuilderInterfac
     }
 
     /**
-     * @phpstan-param array<mixed> $errors
-     *
-     * @param array $errors
+     * @param array<string> $errors
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */

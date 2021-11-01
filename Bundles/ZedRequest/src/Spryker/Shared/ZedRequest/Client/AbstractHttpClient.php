@@ -188,14 +188,14 @@ Configured with %s %s:%s in %s. Error: Stacktrace:';
     protected $utilNetworkService;
 
     /**
-     * @var array
+     * @var array<string, mixed>
      */
     protected $clientConfiguration;
 
     /**
      * @param string $baseUrl
      * @param \Spryker\Service\UtilNetwork\UtilNetworkServiceInterface $utilNetworkService
-     * @param array $clientConfiguration
+     * @param array<string, mixed> $clientConfiguration
      */
     public function __construct(
         $baseUrl,
@@ -379,7 +379,7 @@ Configured with %s %s:%s in %s. Error: Stacktrace:';
     }
 
     /**
-     * @param array $clientConfiguration
+     * @param array<string, mixed> $clientConfiguration
      *
      * @return \GuzzleHttp\Client
      */
@@ -391,7 +391,7 @@ Configured with %s %s:%s in %s. Error: Stacktrace:';
     }
 
     /**
-     * @return array
+     * @return array<string, mixed>
      */
     protected function getClientConfiguration()
     {
@@ -403,9 +403,9 @@ Configured with %s %s:%s in %s. Error: Stacktrace:';
     }
 
     /**
-     * @param array $config
+     * @param array<string, mixed> $config
      *
-     * @return array
+     * @return array<string, mixed>
      */
     protected function addCookiesToForwardDebugProfiler(array $config): array
     {
@@ -514,9 +514,9 @@ Configured with %s %s:%s in %s. Error: Stacktrace:';
     }
 
     /**
-     * @param array $config
+     * @param array<string, mixed> $config
      *
-     * @return array
+     * @return array<string, mixed>
      */
     protected function addCookiesToForwardDebugSession(array $config): array
     {
@@ -538,10 +538,10 @@ Configured with %s %s:%s in %s. Error: Stacktrace:';
     }
 
     /**
-     * @param array $config
+     * @param array<string, mixed> $config
      * @param string $name
      *
-     * @return array
+     * @return array<string, mixed>
      */
     protected function addCookie(array $config, string $name): array
     {

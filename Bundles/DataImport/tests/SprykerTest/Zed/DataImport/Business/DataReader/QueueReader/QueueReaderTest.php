@@ -102,7 +102,7 @@ class QueueReaderTest extends Unit
     /**
      * @param string|null $queueName
      * @param int $chunkSize
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return array
      */

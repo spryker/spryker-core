@@ -56,11 +56,9 @@ class PriceProductOfferReader implements PriceProductOfferReaderInterface
     }
 
     /**
-     * @phpstan-return array<string, mixed>
-     *
      * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getProductOfferPricesData(ProductOfferTransfer $productOfferTransfer): array
     {
@@ -91,14 +89,10 @@ class PriceProductOfferReader implements PriceProductOfferReaderInterface
     }
 
     /**
-     * @phpstan-param array<string, \Generated\Shared\Transfer\PriceProductTransfer> $priceTable
-     *
-     * @phpstan-return array<string, \Generated\Shared\Transfer\PriceProductTransfer>
-     *
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
-     * @param array $priceTable
+     * @param array<string, \Generated\Shared\Transfer\PriceProductTransfer> $priceTable
      *
-     * @return array
+     * @return array<string, \Generated\Shared\Transfer\PriceProductTransfer>
      */
     protected function getPriceTable(
         PriceProductTransfer $priceProductTransfer,
@@ -132,14 +126,10 @@ class PriceProductOfferReader implements PriceProductOfferReaderInterface
     }
 
     /**
-     * @phpstan-param array<string, mixed> $priceData
-     *
-     * @phpstan-return array<string, mixed>
-     *
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
-     * @param array $priceData
+     * @param array<string, mixed> $priceData
      *
-     * @return array
+     * @return array<string, mixed>
      */
     protected function getPriceData(
         PriceProductTransfer $priceProductTransfer,
@@ -186,14 +176,10 @@ class PriceProductOfferReader implements PriceProductOfferReaderInterface
     }
 
     /**
-     * @phpstan-param array<string, mixed> $priceDataByPriceType
-     *
-     * @phpstan-return array<string, mixed>
-     *
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
-     * @param array $priceDataByPriceType
+     * @param array<string, mixed> $priceDataByPriceType
      *
-     * @return array
+     * @return array<string, mixed>
      */
     protected function getPriceDataByPriceType(
         PriceProductTransfer $priceProductTransfer,
@@ -209,11 +195,9 @@ class PriceProductOfferReader implements PriceProductOfferReaderInterface
     }
 
     /**
-     * @phpstan-return array<string, mixed>
-     *
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      *
-     * @return array
+     * @return array<string, mixed>
      */
     protected function getDecodedPriceData(PriceProductTransfer $priceProductTransfer): array
     {

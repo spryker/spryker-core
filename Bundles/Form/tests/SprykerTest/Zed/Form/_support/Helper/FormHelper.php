@@ -47,7 +47,7 @@ class FormHelper extends Module
     protected $formPlugins = [];
 
     /**
-     * @var array
+     * @var array<string, mixed>
      */
     protected $config = [
         self::CONFIG_KEY_FORM_PLUGINS => [],

@@ -38,12 +38,10 @@ class ReturnCreateTemplateProvider implements ReturnCreateTemplateProviderInterf
     /**
      * @phpstan-param \Symfony\Component\Form\FormInterface<mixed> $returnCreateForm
      *
-     * @phpstan-return array<string, mixed>
-     *
      * @param \Symfony\Component\Form\FormInterface $returnCreateForm
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function provide(FormInterface $returnCreateForm, OrderTransfer $orderTransfer): array
     {

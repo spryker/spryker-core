@@ -55,7 +55,7 @@ class ReadQuoteCollectionTest extends Unit
     ];
 
     /**
-     * @var array
+     * @var array<string, mixed>
      */
     protected const CUSTOMER_DATA = [
         'customer_reference' => 'tester-de',

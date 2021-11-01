@@ -29,7 +29,7 @@ interface CmsBlockStorageClientInterface
      *
      * @api
      *
-     * @param array $options
+     * @param array<string, mixed> $options
      * @param string $localeName
      * @param string $storeName
      *

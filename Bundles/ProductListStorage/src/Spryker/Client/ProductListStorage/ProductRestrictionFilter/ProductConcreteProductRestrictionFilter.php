@@ -48,7 +48,7 @@ class ProductConcreteProductRestrictionFilter extends AbstractProductRestriction
     }
 
     /**
-     * @param mixed $productListStorageTransfer
+     * @param \Generated\Shared\Transfer\ProductAbstractProductListStorageTransfer|\Generated\Shared\Transfer\ProductConcreteProductListStorageTransfer|mixed $productListStorageTransfer
      *
      * @throws \Spryker\Client\ProductListStorage\Exception\NotSupportedProductListTransferTypeException
      *

@@ -25,7 +25,7 @@ class RouterConfig extends AbstractBundleConfig
      *
      * @see \Symfony\Component\Routing\Router::setOptions()
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getRouterConfiguration(): array
     {
@@ -45,7 +45,7 @@ class RouterConfig extends AbstractBundleConfig
      *
      * @see \Symfony\Component\Routing\Router::setOptions()
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getDevelopmentRouterConfiguration(): array
     {

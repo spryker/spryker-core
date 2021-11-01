@@ -15,7 +15,7 @@ use SprykerTest\Service\Flysystem\FlysystemServiceTest;
 class FlysystemConfigStub extends SprykerFlysystemConfig
 {
     /**
-     * @return array
+     * @return array<string, mixed>
      */
     public function getFilesystemConfig(): array
     {

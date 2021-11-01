@@ -32,7 +32,7 @@ abstract class AbstractGenerator implements GeneratorInterface
     /**
      * @param \Twig\Environment $twig
      * @param \Spryker\Zed\Development\Business\IdeAutoCompletion\FileWriterInterface $fileWriter
-     * @param array $options
+     * @param array<string, mixed> $options
      */
     public function __construct(Environment $twig, FileWriterInterface $fileWriter, array $options)
     {

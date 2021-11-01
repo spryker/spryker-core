@@ -22,7 +22,7 @@ class ProductMeasurementUnitConfig extends AbstractBundleConfig
     /**
      * Infrastructural measurement units list.
      *
-     * @var array
+     * @var array<string, mixed>
      */
     public const INFRASTRUCTURAL_MEASUREMENT_UNITS = [
         [

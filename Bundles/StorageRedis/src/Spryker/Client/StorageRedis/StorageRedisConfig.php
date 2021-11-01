@@ -112,7 +112,7 @@ class StorageRedisConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return array
+     * @return array<string, mixed>
      */
     protected function getConnectionOptions(): array
     {

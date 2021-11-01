@@ -20,12 +20,10 @@ interface ContentBannerReaderInterface
     public function getContentBannerById(RestRequestInterface $restRequest): RestResponseInterface;
 
     /**
-     * @phpstan-return array<string, \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>
-     *
      * @param array<string> $contentBannerKeys
      * @param string $localeName
      *
-     * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>
+     * @return array<string, \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>
      */
     public function getContentBannersResources(array $contentBannerKeys, string $localeName): array;
 }

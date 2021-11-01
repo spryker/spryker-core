@@ -38,7 +38,7 @@ class SequenceNumber implements SequenceNumberInterface
     /**
      * @see \Spryker\Shared\SequenceNumber\SequenceNumberConstants::LIMIT_LIST
      *
-     * @var array
+     * @var array<string, int>
      */
     protected $limitList;
 
@@ -46,7 +46,7 @@ class SequenceNumber implements SequenceNumberInterface
      * @param \Spryker\Zed\SequenceNumber\Business\Generator\RandomNumberGeneratorInterface $randomNumberGenerator
      * @param \Generated\Shared\Transfer\SequenceNumberSettingsTransfer $sequenceNumberSettings
      * @param \Propel\Runtime\Connection\ConnectionInterface $connection
-     * @param array $limitList
+     * @param array<string, int> $limitList
      */
     public function __construct(
         RandomNumberGeneratorInterface $randomNumberGenerator,

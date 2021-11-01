@@ -10,7 +10,7 @@ namespace Spryker\Shared\ZedRequest\Client;
 abstract class AbstractObject implements ObjectInterface
 {
     /**
-     * @var array
+     * @var array<string, mixed>
      */
     protected $values;
 

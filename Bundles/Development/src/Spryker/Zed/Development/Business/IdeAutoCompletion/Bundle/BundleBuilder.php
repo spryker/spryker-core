@@ -26,7 +26,7 @@ class BundleBuilder implements BundleBuilderInterface
 
     /**
      * @param array<\Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\MethodBuilder\BundleMethodBuilderInterface> $bundleMethodBuilders
-     * @param array $options
+     * @param array<string, mixed> $options
      */
     public function __construct(array $bundleMethodBuilders, array $options)
     {

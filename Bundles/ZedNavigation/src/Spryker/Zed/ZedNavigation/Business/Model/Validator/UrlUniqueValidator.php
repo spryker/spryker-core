@@ -10,7 +10,7 @@ namespace Spryker\Zed\ZedNavigation\Business\Model\Validator;
 class UrlUniqueValidator implements UrlUniqueValidatorInterface
 {
     /**
-     * @var array
+     * @var array<string>
      */
     protected $urls = [];
 

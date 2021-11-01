@@ -252,7 +252,7 @@ class CartsRestApiConfig extends AbstractBundleConfig
     public const HEADER_ANONYMOUS_CUSTOMER_UNIQUE_ID = 'X-Anonymous-Customer-Unique-Id';
 
     /**
-     * @var array
+     * @var array<string>
      */
     protected const GUEST_CART_RESOURCES = [
         self::RESOURCE_GUEST_CARTS,
@@ -272,7 +272,7 @@ class CartsRestApiConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return array
+     * @return array<string, array<string, mixed>>
      */
     public function getErrorIdentifierToRestErrorMapping(): array
     {

@@ -32,7 +32,7 @@ class OmsConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return array
+     * @return array<string>
      */
     public function getActiveProcesses()
     {
@@ -42,7 +42,7 @@ class OmsConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getGraphDefaults()
     {

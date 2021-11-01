@@ -52,7 +52,7 @@ class SearchConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getElasticsearchConfig()
     {

@@ -78,7 +78,7 @@ class ProductTableDataMapper
     protected const COL_KEY_VALID_TO = 'validTo';
 
     /**
-     * @var array
+     * @var array<string, string>
      */
     public const PRODUCT_DATA_COLUMN_MAP = [
         self::COL_KEY_SKU => SpyProductTableMap::COL_SKU,

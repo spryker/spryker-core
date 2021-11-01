@@ -10,11 +10,9 @@ namespace Spryker\Zed\CmsContentWidgetContentConnector\Business\Mapper;
 interface CmsContentItemKeyMapperInterface
 {
     /**
-     * @phpstan-return array<string, string>
-     *
      * @param array<string> $contentItemKeys
      *
-     * @return array<string>
+     * @return array<string, string>
      */
     public function mapContentItemKeys(array $contentItemKeys): array;
 }

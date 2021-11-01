@@ -141,7 +141,7 @@ class MoneyType extends AbstractType
      * @param \Symfony\Component\Form\FormBuilderInterface|\Symfony\Component\Form\FormInterface $builder
      * @param string $fieldName
      * @param string $validationGroups
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -201,7 +201,7 @@ class MoneyType extends AbstractType
      *
      * @param \Symfony\Component\Form\FormView $view
      * @param \Symfony\Component\Form\FormInterface $form
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @throws \Exception
      *

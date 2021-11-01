@@ -42,7 +42,7 @@ class PriceProductStorageConfig extends AbstractSharedConfig
     /**
      * @see \Spryker\Shared\PriceProduct\PriceProductConfig::PRICE_MODES
      *
-     * @var array
+     * @var array<string>
      */
     public const PRICE_MODES = [
         'NET_MODE',

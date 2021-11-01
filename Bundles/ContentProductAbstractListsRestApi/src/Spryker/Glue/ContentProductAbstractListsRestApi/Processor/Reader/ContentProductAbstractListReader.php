@@ -37,12 +37,10 @@ class ContentProductAbstractListReader implements ContentProductAbstractListRead
     }
 
     /**
-     * @phpstan-return array<string, \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>
-     *
      * @param array<string> $contentProductAbstractListKeys
      * @param string $localeName
      *
-     * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>
+     * @return array<string, \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>
      */
     public function getContentProductAbstractListsResources(array $contentProductAbstractListKeys, string $localeName): array
     {

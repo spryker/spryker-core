@@ -71,7 +71,7 @@ class ProductTableDataMapper
     protected const COL_KEY_VALID_TO = 'validTo';
 
     /**
-     * @var array
+     * @var array<string, string>
      */
     public const PRODUCT_DATA_COLUMN_MAP = [
         self::COL_KEY_SKU => SpyProductTableMap::COL_SKU,
@@ -97,9 +97,7 @@ class ProductTableDataMapper
     }
 
     /**
-     * @phpstan-param array<mixed> $productTableDataArray
-     *
-     * @param array $productTableDataArray
+     * @param array<mixed> $productTableDataArray
      * @param \Generated\Shared\Transfer\ProductConcreteCollectionTransfer $productConcreteCollectionTransfer
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
@@ -125,14 +123,10 @@ class ProductTableDataMapper
     }
 
     /**
-     * @phpstan-param array<mixed> $productTableRowDataArray
-     *
-     * @phpstan-return array<mixed>
-     *
-     * @param array $productTableRowDataArray
+     * @param array<mixed> $productTableRowDataArray
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
-     * @return array
+     * @return array<mixed>
      */
     protected function prepareProductAttributesTableData(array $productTableRowDataArray, LocaleTransfer $localeTransfer): array
     {
@@ -160,9 +154,7 @@ class ProductTableDataMapper
     }
 
     /**
-     * @phpstan-param array<mixed> $productTableRowDataArray
-     *
-     * @param array $productTableRowDataArray
+     * @param array<mixed> $productTableRowDataArray
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer

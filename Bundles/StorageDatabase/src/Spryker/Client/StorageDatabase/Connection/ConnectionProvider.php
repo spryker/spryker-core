@@ -117,7 +117,7 @@ class ConnectionProvider implements ConnectionProviderInterface
     /**
      * @throws \Spryker\Client\StorageDatabase\Exception\InvalidConnectionConfigurationException
      *
-     * @return array
+     * @return array<string, mixed>
      */
     protected function getPropelConfig(): array
     {

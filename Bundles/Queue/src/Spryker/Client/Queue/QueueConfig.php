@@ -15,7 +15,7 @@ class QueueConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getQueueAdapterConfiguration()
     {
@@ -25,7 +25,7 @@ class QueueConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getDefaultQueueAdapterConfiguration()
     {

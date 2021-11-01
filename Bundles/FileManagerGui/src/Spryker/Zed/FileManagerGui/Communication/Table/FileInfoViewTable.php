@@ -14,7 +14,7 @@ class FileInfoViewTable extends FileInfoTable
     /**
      * @param array $item
      *
-     * @return array
+     * @return array<string>
      */
     protected function buildLinks($item)
     {

@@ -84,7 +84,7 @@ class SetupConfig extends AbstractBundleConfig
      *
      * Please customize this stack on project level.
      *
-     * @return array
+     * @return array<mixed>
      */
     public function getSetupInstallCommandNames()
     {
@@ -98,7 +98,7 @@ class SetupConfig extends AbstractBundleConfig
      *
      * @deprecated The commands will be moved to project level in the next major.
      *
-     * @return array
+     * @return array<mixed>
      */
     private function getDefaultSetupInstallCommandNames()
     {

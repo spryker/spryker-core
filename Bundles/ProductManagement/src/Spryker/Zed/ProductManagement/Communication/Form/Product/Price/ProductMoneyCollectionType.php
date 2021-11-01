@@ -134,7 +134,7 @@ class ProductMoneyCollectionType extends AbstractCollectionType
      *
      * @param \Symfony\Component\Form\FormView $formViewCollection
      * @param \Symfony\Component\Form\FormInterface $form
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */

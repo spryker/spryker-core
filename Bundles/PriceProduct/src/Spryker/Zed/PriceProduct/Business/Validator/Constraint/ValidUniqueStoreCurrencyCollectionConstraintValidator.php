@@ -16,9 +16,7 @@ use Traversable;
 class ValidUniqueStoreCurrencyCollectionConstraintValidator extends AbstractConstraintValidator
 {
     /**
-     * @phpstan-param \Traversable<int, \Generated\Shared\Transfer\PriceProductTransfer> $value
-     *
-     * @param \Traversable $value
+     * @param \Traversable<int, \Generated\Shared\Transfer\PriceProductTransfer> $value
      * @param \Symfony\Component\Validator\Constraint $constraint
      *
      * @throws \Symfony\Component\Validator\Exception\UnexpectedTypeException

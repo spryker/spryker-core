@@ -73,7 +73,7 @@ class AclConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return array
+     * @return array<array<string, mixed>>
      */
     public function getInstallerRules()
     {
@@ -108,7 +108,7 @@ class AclConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return array
+     * @return array<array>
      */
     public function getInstallerGroups()
     {
@@ -122,7 +122,7 @@ class AclConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return array
+     * @return array<string, array>
      */
     public function getInstallerUsers()
     {
@@ -137,7 +137,7 @@ class AclConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return array
+     * @return array<array>
      */
     public function getUserRuleWhitelist()
     {

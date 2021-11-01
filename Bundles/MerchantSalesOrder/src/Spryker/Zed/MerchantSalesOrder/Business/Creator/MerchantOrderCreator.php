@@ -165,8 +165,6 @@ class MerchantOrderCreator implements MerchantOrderCreatorInterface
     }
 
     /**
-     * @phpstan-param \ArrayObject<array-key, \Generated\Shared\Transfer\ExpenseTransfer> $expenseTransfers
-     *
      * @param \Generated\Shared\Transfer\MerchantOrderTransfer $merchantOrderTransfer
      * @param \ArrayObject<int, \Generated\Shared\Transfer\ExpenseTransfer> $expenseTransfers
      *

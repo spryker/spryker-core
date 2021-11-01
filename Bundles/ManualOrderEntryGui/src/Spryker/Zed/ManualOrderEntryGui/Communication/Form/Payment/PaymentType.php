@@ -50,7 +50,7 @@ class PaymentType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -61,7 +61,7 @@ class PaymentType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -109,7 +109,7 @@ class PaymentType extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $paymentMethodSubForms
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */

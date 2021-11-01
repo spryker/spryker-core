@@ -47,7 +47,7 @@ class SalesFacadeTest extends Unit
     protected const NON_EXISTING_ORDER_REFERENCE = 'test--111';
 
     /**
-     * @var array
+     * @var array<string, string>
      */
     protected const ORDER_WRONG_SEARCH_PARAMS = [
         'orderReference' => '123_wrong',

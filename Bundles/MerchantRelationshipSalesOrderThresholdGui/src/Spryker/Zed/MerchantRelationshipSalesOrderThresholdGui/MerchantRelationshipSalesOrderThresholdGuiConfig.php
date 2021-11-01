@@ -95,7 +95,7 @@ class MerchantRelationshipSalesOrderThresholdGuiConfig extends AbstractBundleCon
     protected const STRATEGY_TYPE_TO_FORM_TYPE_MAP = [];
 
     /**
-     * @var array
+     * @var array<string, string>
      */
     protected const STRATEGY_GROUP_TO_FORM_TYPE_MAP = [
         self::GROUP_HARD => MerchantRelationshipHardThresholdFormMapper::class,
@@ -134,9 +134,9 @@ class MerchantRelationshipSalesOrderThresholdGuiConfig extends AbstractBundleCon
     /**
      * @api
      *
-     * @phpstan-return array<class-string<\Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\Mapper\ThresholdGroup\MerchantRelationshipThresholdFormMapperInterface>>
+     * @phpstan-return array<string, class-string<\Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\Mapper\ThresholdGroup\MerchantRelationshipThresholdFormMapperInterface>>
      *
-     * @return array<string>
+     * @return array<string, string>
      */
     public function getStrategyGroupToFormTypeMap(): array
     {

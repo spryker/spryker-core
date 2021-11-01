@@ -28,7 +28,7 @@ class ProductAbstractAttributeUniqueCombinationConstraintValidator extends Const
     public const DEFAULT_LOCALE = '_';
 
     /**
-     * @var array
+     * @var array<string, string>
      */
     public const LOCALE_NAME_MAP = [
         self::DEFAULT_LOCALE => ProductAttributeGuiTableConfigurationProvider::COL_KEY_ATTRIBUTE_DEFAULT,

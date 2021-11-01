@@ -114,7 +114,7 @@ class ProductOfferTableDataMapper
     protected const COL_KEY_UPDATED_AT = 'updatedAt';
 
     /**
-     * @var array
+     * @var array<string, string>
      */
     public const PRODUCT_OFFER_DATA_COLUMN_MAP = [
         self::COL_KEY_OFFER_REFERENCE => SpyProductOfferTableMap::COL_PRODUCT_OFFER_REFERENCE,

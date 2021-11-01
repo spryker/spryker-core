@@ -22,7 +22,7 @@ class SalesReturnConfig extends AbstractBundleConfig
     protected const GLOBAL_RETURNABLE_NUMBER_OF_DAYS = 30;
 
     /**
-     * @var array
+     * @var array<string>
      */
     protected const RETURNABLE_STATE_NAMES = [
         'shipped',

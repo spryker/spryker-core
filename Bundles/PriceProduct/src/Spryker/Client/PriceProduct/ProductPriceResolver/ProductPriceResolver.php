@@ -86,9 +86,7 @@ class ProductPriceResolver implements ProductPriceResolverInterface
     /**
      * {@inheritDoc}
      *
-     * @phpstan-param array<mixed> $priceMap
-     *
-     * @param array $priceMap
+     * @param array<mixed> $priceMap
      *
      * @return \Generated\Shared\Transfer\CurrentProductPriceTransfer
      */
@@ -270,9 +268,7 @@ class ProductPriceResolver implements ProductPriceResolverInterface
     }
 
     /**
-     * @phpstan-param array<mixed> $priceMap
-     *
-     * @param array $priceMap
+     * @param array<mixed> $priceMap
      *
      * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */

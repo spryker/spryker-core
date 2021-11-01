@@ -31,7 +31,7 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
      * @api
      *
      * @param string|null $module
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return int Exit code
      */
@@ -46,7 +46,7 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
      * @api
      *
      * @param string|null $module
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return int
      */
@@ -61,7 +61,7 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
      * @api
      *
      * @param string|null $module
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return int
      */
@@ -76,7 +76,7 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
      * @api
      *
      * @param string|null $module
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return int Exit code
      */
@@ -111,7 +111,7 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
      * @deprecated Use Spryk tool instead.
      *
      * @param string $module
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -475,7 +475,7 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
      * @api
      *
      * @param string $directory
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return array
      */

@@ -104,7 +104,7 @@ class QueueConfig extends AbstractBundleConfig
      *
      *  e.g: 'mail' => $option
      *
-     * @return array
+     * @return array<string, mixed>
      */
     protected function getQueueReceiverOptions()
     {
@@ -114,7 +114,7 @@ class QueueConfig extends AbstractBundleConfig
     /**
      * Queue check options can be defined
      *
-     * @return array
+     * @return array<string, mixed>
      */
     protected function getMessageCheckOptions()
     {
@@ -186,7 +186,7 @@ class QueueConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getQueueAdapterConfiguration()
     {
@@ -196,7 +196,7 @@ class QueueConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getDefaultQueueAdapterConfiguration(): array
     {

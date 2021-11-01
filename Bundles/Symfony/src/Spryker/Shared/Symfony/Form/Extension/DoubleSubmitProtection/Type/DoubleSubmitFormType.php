@@ -89,7 +89,7 @@ class DoubleSubmitFormType extends AbstractTypeExtension
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder The form builder
-     * @param array $options The options
+     * @param array<string, mixed> $options The options
      *
      * @return void
      */
@@ -107,7 +107,7 @@ class DoubleSubmitFormType extends AbstractTypeExtension
     /**
      * @param \Symfony\Component\Form\FormView $view The form view
      * @param \Symfony\Component\Form\FormInterface $form The form
-     * @param array $options The options
+     * @param array<string, mixed> $options The options
      *
      * @return void
      */

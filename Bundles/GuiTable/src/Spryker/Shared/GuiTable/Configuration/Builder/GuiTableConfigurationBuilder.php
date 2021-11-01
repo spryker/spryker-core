@@ -332,12 +332,10 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
     /**
      * @api
      *
-     * @phpstan-param array<int, string> $values
-     *
      * @param string $id
      * @param string $title
      * @param bool $isMultiselect
-     * @param array<string> $values select values in format of ['value1' => 'title1', 'value2' => 'title2']
+     * @param array<int|string, string> $values select values in format of ['value1' => 'title1', 'value2' => 'title2']
      *
      * @return $this
      */
@@ -521,7 +519,7 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
      * @param string $title
      * @param string $type
      * @param string|null $component
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @throws \Spryker\Shared\GuiTable\Exception\InvalidConfigurationException
      *
@@ -658,7 +656,7 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
      * @param string $title
      * @param string $type
      * @param string|null $component
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @throws \Spryker\Shared\GuiTable\Exception\InvalidConfigurationException
      *
@@ -978,14 +976,10 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
     /**
      * @api
      *
-     * @phpstan-param array<mixed> $initialData
-     * @phpstan-param array<mixed> $addButton
-     * @phpstan-param array<mixed> $cancelButton
-     *
      * @param string $formInputName
-     * @param array|null $initialData
-     * @param array|null $addButton
-     * @param array|null $cancelButton
+     * @param array<string, mixed> $initialData
+     * @param array<string, mixed>|null $addButton
+     * @param array<string, mixed>|null $cancelButton
      *
      * @return $this
      */
@@ -1014,13 +1008,10 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
     /**
      * @api
      *
-     * @phpstan-param array<mixed> $saveButton
-     * @phpstan-param array<mixed> $cancelButton
-     *
      * @param string $url
      * @param string $method
-     * @param array|null $saveButton
-     * @param array|null $cancelButton
+     * @param array<string, mixed>|null $saveButton
+     * @param array<string, mixed>|null $cancelButton
      *
      * @return $this
      */
@@ -1047,12 +1038,10 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
     /**
      * @api
      *
-     * @phpstan-param array<string, mixed> $options
-     *
      * @param string $id
      * @param string $title
      * @param string $inputType
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -1077,12 +1066,10 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
     /**
      * @api
      *
-     * @phpstan-param array<mixed> $options
-     *
      * @param string $id
      * @param string $title
      * @param bool $isMultiselect
-     * @param array $options
+     * @param array<int|string, mixed> $options
      * @param string|null $placeholder
      *
      * @return $this
@@ -1120,9 +1107,7 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
     }
 
     /**
-     * @phpstan-param array<mixed> $initialData
-     *
-     * @param array $initialData
+     * @param array<string, mixed> $initialData
      *
      * @return \Generated\Shared\Transfer\GuiTableEditableInitialDataTransfer
      */
@@ -1164,9 +1149,7 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
     }
 
     /**
-     * @phpstan-param array<mixed> $addButton
-     *
-     * @param array|null $addButton
+     * @param array<string, mixed>|null $addButton
      *
      * @return \Generated\Shared\Transfer\GuiTableEditableButtonTransfer
      */
@@ -1179,9 +1162,7 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
     }
 
     /**
-     * @phpstan-param array<mixed> $saveButton
-     *
-     * @param array|null $saveButton
+     * @param array<string, mixed>|null $saveButton
      *
      * @return \Generated\Shared\Transfer\GuiTableEditableButtonTransfer
      */
@@ -1194,9 +1175,7 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
     }
 
     /**
-     * @phpstan-param array<mixed> $cancelButton
-     *
-     * @param array|null $cancelButton
+     * @param array<string, mixed>|null $cancelButton
      *
      * @return \Generated\Shared\Transfer\GuiTableEditableButtonTransfer
      */

@@ -40,9 +40,7 @@ class MerchantProductAbstractMapper
     protected const KEY_STORE_NAME = 'store_name';
 
     /**
-     * @phpstan-param array<int, mixed> $merchantData
-     *
-     * @param array $merchantData
+     * @param array<int, mixed> $merchantData
      * @param array<\Generated\Shared\Transfer\ProductAbstractMerchantTransfer> $productAbstractMerchantTransfers
      *
      * @return array<\Generated\Shared\Transfer\ProductAbstractMerchantTransfer>
@@ -59,13 +57,9 @@ class MerchantProductAbstractMapper
     }
 
     /**
-     * @phpstan-param array<int, mixed> $merchantData
+     * @param array<int, mixed> $merchantData
      *
-     * @phpstan-return array<int, mixed>
-     *
-     * @param array $merchantData
-     *
-     * @return array
+     * @return array<int, mixed>
      */
     protected function groupMerchantDataByIdProductAbstract(array $merchantData): array
     {

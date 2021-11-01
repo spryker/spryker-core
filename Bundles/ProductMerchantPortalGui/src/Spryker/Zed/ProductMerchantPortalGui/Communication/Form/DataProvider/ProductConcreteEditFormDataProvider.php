@@ -157,9 +157,6 @@ class ProductConcreteEditFormDataProvider implements ProductConcreteEditFormData
     }
 
     /**
-     * @phpstan-param \ArrayObject<int,\Generated\Shared\Transfer\LocalizedAttributesTransfer> $productConcreteLocalizedAttributesTransfers
-     * @phpstan-param \ArrayObject<int,\Generated\Shared\Transfer\LocalizedAttributesTransfer> $productAbstractLocalizedAttributesTransfers
-     *
      * @param \ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer> $productConcreteLocalizedAttributesTransfers
      * @param \ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer> $productAbstractLocalizedAttributesTransfers
      *
@@ -188,9 +185,6 @@ class ProductConcreteEditFormDataProvider implements ProductConcreteEditFormData
     }
 
     /**
-     * @phpstan-param \ArrayObject<int,\Generated\Shared\Transfer\LocalizedAttributesTransfer> $productConcreteAttributes
-     * @phpstan-param \ArrayObject<int,\Generated\Shared\Transfer\LocalizedAttributesTransfer> $productAbstractAttributes
-     *
      * @param \ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer> $productConcreteAttributes
      * @param \ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer> $productAbstractAttributes
      *
@@ -217,9 +211,6 @@ class ProductConcreteEditFormDataProvider implements ProductConcreteEditFormData
     }
 
     /**
-     * @phpstan-param \ArrayObject<int,\Generated\Shared\Transfer\ProductImageSetTransfer> $productImageSetTransfers
-     * @phpstan-param \ArrayObject<int,\Generated\Shared\Transfer\ProductImageSetTransfer> $productImageSetTransfersToCompare
-     *
      * @param \ArrayObject<int, \Generated\Shared\Transfer\ProductImageSetTransfer> $productImageSetTransfers
      * @param \ArrayObject<int, \Generated\Shared\Transfer\ProductImageSetTransfer> $productImageSetTransfersToCompare
      *
@@ -234,8 +225,6 @@ class ProductConcreteEditFormDataProvider implements ProductConcreteEditFormData
     }
 
     /**
-     * @phpstan-param \ArrayObject<int,\Generated\Shared\Transfer\ProductImageSetTransfer> $productImageSetTransfers
-     *
      * @param \ArrayObject<int, \Generated\Shared\Transfer\ProductImageSetTransfer> $productImageSetTransfers
      *
      * @return array

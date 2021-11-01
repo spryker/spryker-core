@@ -695,8 +695,6 @@ class ProductOfferFacadeTest extends Unit
     }
 
     /**
-     * @phpstan-return \ArrayObject<string, \Generated\Shared\Transfer\ItemTransfer>
-     *
      * @return \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer>
      */
     protected function createCartItems(): ArrayObject

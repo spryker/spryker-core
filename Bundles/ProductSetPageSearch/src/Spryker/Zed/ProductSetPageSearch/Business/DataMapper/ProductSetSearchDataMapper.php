@@ -28,7 +28,7 @@ class ProductSetSearchDataMapper implements ProductSetSearchDataMapperInterface
     protected const KEY_WEIGHT = 'weight';
 
     /**
-     * @var array
+     * @var array<string>
      */
     protected const FILTERED_KEYS = [
         'locale',

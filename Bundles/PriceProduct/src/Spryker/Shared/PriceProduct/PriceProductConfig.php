@@ -66,7 +66,7 @@ class PriceProductConfig extends AbstractSharedConfig
     /**
      * List of price modes
      *
-     * @var array
+     * @var array<string>
      */
     public const PRICE_MODES = [
         'NET_MODE',

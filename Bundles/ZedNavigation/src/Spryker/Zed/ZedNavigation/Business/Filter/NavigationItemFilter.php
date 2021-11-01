@@ -153,7 +153,7 @@ class NavigationItemFilter implements NavigationItemFilterInterface
     }
 
     /**
-     * @param array $navigationItem
+     * @param array<string, mixed> $navigationItem
      *
      * @return bool
      */

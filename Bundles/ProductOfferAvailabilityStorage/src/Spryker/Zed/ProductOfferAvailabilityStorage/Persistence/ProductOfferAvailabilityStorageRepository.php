@@ -130,9 +130,7 @@ class ProductOfferAvailabilityStorageRepository extends AbstractRepository imple
     }
 
     /**
-     * @phpstan-param array<mixed> $productOfferAvailabilityRequestsData
-     *
-     * @param array $productOfferAvailabilityRequestsData
+     * @param array<mixed> $productOfferAvailabilityRequestsData
      *
      * @return array<\Generated\Shared\Transfer\ProductOfferAvailabilityRequestTransfer>
      */

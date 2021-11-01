@@ -1190,7 +1190,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
     /**
      * @param \Spryker\Service\Container\ContainerInterface $container
      * @param string $firewallName
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return \Symfony\Component\Security\Http\Authentication\AuthenticationSuccessHandlerInterface
      */
@@ -1214,7 +1214,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
     /**
      * @param \Spryker\Service\Container\ContainerInterface $container
      * @param string $firewallName
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return \Symfony\Component\Security\Http\Authentication\AuthenticationFailureHandlerInterface
      */
@@ -1327,7 +1327,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
     /**
      * @param \Spryker\Service\Container\ContainerInterface $container
      * @param string $firewallName
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return \Symfony\Component\Security\Http\Logout\LogoutSuccessHandlerInterface
      */
@@ -1347,7 +1347,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
 
     /**
      * @param \Spryker\Service\Container\ContainerInterface $container
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return \Symfony\Component\Security\Csrf\CsrfTokenManager|null
      */
@@ -1358,7 +1358,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
 
     /**
      * @param \Symfony\Component\Security\Http\Firewall\LogoutListener $listener
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return \Symfony\Component\Security\Http\Firewall\LogoutListener
      */

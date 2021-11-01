@@ -36,7 +36,7 @@ class TopOrdersChartPlugin extends AbstractPlugin implements ChartPluginInterfac
     public const TITLE = 'Top Orders';
 
     /**
-     * @var array
+     * @var array<string, string>
      */
     public const OPTIONS = [
         'orientation' => 'h',

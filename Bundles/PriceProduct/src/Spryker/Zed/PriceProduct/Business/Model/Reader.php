@@ -627,10 +627,8 @@ class Reader implements ReaderInterface
     }
 
     /**
-     * @phpstan-param array<array<\Generated\Shared\Transfer\PriceProductTransfer>> $priceProductTransfers
-     *
      * @param string $priceProductCriteriaIdentifier
-     * @param array $priceProductTransfers
+     * @param array<array<\Generated\Shared\Transfer\PriceProductTransfer>> $priceProductTransfers
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer|null

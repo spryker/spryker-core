@@ -12,7 +12,7 @@ use Symfony\Component\Validator\Constraint as SymfonyConstraint;
 class Currency extends SymfonyConstraint
 {
     /**
-     * @var array
+     * @var array<string>
      */
     protected const VALID_CURRENCIES = [
         'FJD',

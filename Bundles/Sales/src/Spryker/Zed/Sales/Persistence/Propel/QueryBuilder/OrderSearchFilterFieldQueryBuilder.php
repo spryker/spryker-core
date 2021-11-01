@@ -62,9 +62,7 @@ class OrderSearchFilterFieldQueryBuilder implements OrderSearchFilterFieldQueryB
     protected const SEARCH_TYPE_DATE_TO = 'dateTo';
 
     /**
-     * @phpstan-var array<string, string>
-     *
-     * @var array
+     * @var array<string, string>
      */
     protected const ORDER_SEARCH_TYPE_MAPPING = [
         self::SEARCH_TYPE_ORDER_REFERENCE => SpySalesOrderTableMap::COL_ORDER_REFERENCE,
@@ -73,9 +71,7 @@ class OrderSearchFilterFieldQueryBuilder implements OrderSearchFilterFieldQueryB
     ];
 
     /**
-     * @phpstan-var array<string, string>
-     *
-     * @var array
+     * @var array<string, string>
      */
     protected const ORDER_BY_COLUMN_MAPPING = [
         self::SEARCH_TYPE_ORDER_REFERENCE => SpySalesOrderTableMap::COL_ID_SALES_ORDER,

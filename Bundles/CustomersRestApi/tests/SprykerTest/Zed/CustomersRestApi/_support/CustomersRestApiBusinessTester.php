@@ -39,7 +39,7 @@ class CustomersRestApiBusinessTester extends Actor
     use _generated\CustomersRestApiBusinessTesterActions;
 
     /**
-     * @var array
+     * @var array<string, mixed>
      */
     public const CUSTOMER = [
         'customerReference' => 'DE-test-customer-reference',
@@ -47,14 +47,14 @@ class CustomersRestApiBusinessTester extends Actor
     ];
 
     /**
-     * @var array
+     * @var array<string, mixed>
      */
     protected const GUEST_CUSTOMER = [
         'customerReference' => 'anonymous:test-guest-customer-reference',
     ];
 
     /**
-     * @var array
+     * @var array<string, mixed>
      */
     public const ADDRESS_1 = [
         'id' => 'dd1ddd99-1315-5eae-aaaf-9e74f78a33d52',
@@ -73,7 +73,7 @@ class CustomersRestApiBusinessTester extends Actor
     ];
 
     /**
-     * @var array
+     * @var array<string, mixed>
      */
     public const ADDRESS_2 = [
         'id' => 'b3840c0d-07e3-58b3-87e7-dabec8170324',

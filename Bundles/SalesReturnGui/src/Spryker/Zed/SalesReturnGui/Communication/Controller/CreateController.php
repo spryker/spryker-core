@@ -139,12 +139,10 @@ class CreateController extends AbstractController
     /**
      * @phpstan-param \Symfony\Component\Form\FormInterface<mixed> $returnCreateForm
      *
-     * @phpstan-return array<string, mixed>
-     *
      * @param \Symfony\Component\Form\FormInterface $returnCreateForm
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return array
+     * @return array<string, mixed>
      */
     protected function provideTemplateData(FormInterface $returnCreateForm, OrderTransfer $orderTransfer): array
     {

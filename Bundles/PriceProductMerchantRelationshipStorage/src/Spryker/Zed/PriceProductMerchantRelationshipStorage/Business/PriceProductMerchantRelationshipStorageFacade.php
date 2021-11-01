@@ -21,11 +21,9 @@ class PriceProductMerchantRelationshipStorageFacade extends AbstractFacade imple
      *
      * @api
      *
-     * @phpstan-param array<mixed> $businessUnitProducts
-     *
      * @deprecated Will be removed without replacement.
      *
-     * @param array $businessUnitProducts
+     * @param array<mixed> $businessUnitProducts
      *
      * @return void
      */
@@ -40,11 +38,9 @@ class PriceProductMerchantRelationshipStorageFacade extends AbstractFacade imple
      *
      * @api
      *
-     * @phpstan-param array<mixed> $businessUnitProducts
-     *
      * @deprecated Will be removed without replacement
      *
-     * @param array $businessUnitProducts
+     * @param array<mixed> $businessUnitProducts
      *
      * @return void
      */

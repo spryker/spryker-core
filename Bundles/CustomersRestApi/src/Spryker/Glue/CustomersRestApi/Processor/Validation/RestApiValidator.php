@@ -28,7 +28,7 @@ class RestApiValidator implements RestApiValidatorInterface
     protected const CUSTOMERS_GENDER_ENUM_FEMALE = 'Female';
 
     /**
-     * @var array
+     * @var array<string>
      */
     public const CUSTOMERS_GENDERS_ENUM = [
         self::CUSTOMERS_GENDER_ENUM_MALE,

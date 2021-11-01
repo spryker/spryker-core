@@ -82,7 +82,7 @@ class MerchantOrderTableDataMapper
     public const COL_KEY_STORE = 'store';
 
     /**
-     * @var array
+     * @var array<string, string>
      */
     public const MERCHANT_ORDER_DATA_COLUMN_MAP = [
         self::COL_KEY_REFERENCE => SpySalesOrderTableMap::COL_ORDER_REFERENCE,

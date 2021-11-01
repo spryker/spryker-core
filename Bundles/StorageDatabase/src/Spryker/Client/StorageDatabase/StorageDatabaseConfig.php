@@ -34,7 +34,7 @@ class StorageDatabaseConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getConnectionConfigForCurrentEngine(): array
     {
@@ -120,7 +120,7 @@ class StorageDatabaseConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return array
+     * @return array<string, array<string, mixed>>
      */
     protected function getConnectionConfigData(): array
     {

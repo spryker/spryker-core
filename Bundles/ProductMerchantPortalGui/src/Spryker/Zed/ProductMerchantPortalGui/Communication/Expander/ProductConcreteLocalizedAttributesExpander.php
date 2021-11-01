@@ -82,8 +82,6 @@ class ProductConcreteLocalizedAttributesExpander implements ProductConcreteLocal
     }
 
     /**
-     * @phpstan-return ArrayObject<int, \Generated\Shared\Transfer\ProductManagementAttributeTransfer>
-     *
      * @param array<mixed> $attributes
      *
      * @return \ArrayObject<int, \Generated\Shared\Transfer\ProductManagementAttributeTransfer>

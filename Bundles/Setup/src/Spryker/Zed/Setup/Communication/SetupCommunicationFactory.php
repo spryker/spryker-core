@@ -18,7 +18,7 @@ class SetupCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @deprecated Will be removed without replacement. Use `vendor/bin/install` instead.
      *
-     * @return array
+     * @return array<mixed>
      */
     public function getSetupInstallCommandNames()
     {

@@ -35,7 +35,7 @@ class ProductAttributeType extends Constraint
     /**
      * @param \Generated\Shared\Transfer\ProductManagementAttributeTransfer $productManagementAttributeTransfer
      * @param array $fields
-     * @param array $options
+     * @param array<string, mixed> $options
      */
     public function __construct(
         ProductManagementAttributeTransfer $productManagementAttributeTransfer,

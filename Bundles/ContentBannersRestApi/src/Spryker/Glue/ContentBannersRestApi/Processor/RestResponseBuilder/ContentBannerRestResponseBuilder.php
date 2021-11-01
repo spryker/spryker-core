@@ -94,13 +94,9 @@ class ContentBannerRestResponseBuilder implements ContentBannerRestResponseBuild
     }
 
     /**
-     * @phpstan-param array<string, \Generated\Shared\Transfer\ContentBannerTypeTransfer> $contentBannerTypeTransfers
+     * @param array<string, \Generated\Shared\Transfer\ContentBannerTypeTransfer> $contentBannerTypeTransfers
      *
-     * @phpstan-return array<string, \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>
-     *
-     * @param array<\Generated\Shared\Transfer\ContentBannerTypeTransfer> $contentBannerTypeTransfers
-     *
-     * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>
+     * @return array<string, \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>
      */
     public function createContentBannersRestResources(array $contentBannerTypeTransfers): array
     {

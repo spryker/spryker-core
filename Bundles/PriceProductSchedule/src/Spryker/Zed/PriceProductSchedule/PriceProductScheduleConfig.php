@@ -94,7 +94,7 @@ class PriceProductScheduleConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return array
+     * @return array<string, string>
      */
     public function getImportFileToTransferFieldsMap(): array
     {

@@ -44,7 +44,7 @@ class CartsRestApiConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return array
+     * @return array<string, string>
      */
     public static function getErrorToErrorIdentifierMapping(): array
     {

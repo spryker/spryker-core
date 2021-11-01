@@ -110,12 +110,10 @@ class RestProductOfferPricesAttributesMapper implements RestProductOfferPricesAt
     }
 
     /**
-     * @phpstan-return array<int, array> $volumePriceData
-     *
      * @param \Generated\Shared\Transfer\CurrentProductPriceTransfer $currentProductPriceTransfer
      * @param string $priceTypeName
      *
-     * @return array|null
+     * @return array<int, array>|null
      */
     protected function getVolumePricesData(
         CurrentProductPriceTransfer $currentProductPriceTransfer,
@@ -156,9 +154,7 @@ class RestProductOfferPricesAttributesMapper implements RestProductOfferPricesAt
     }
 
     /**
-     * @phpstan-param array<string, mixed> $volumePriceData
-     *
-     * @param array $volumePriceData
+     * @param array<string, mixed> $volumePriceData
      * @param \Generated\Shared\Transfer\RestProductPriceVolumesAttributesTransfer $restProductPriceVolumesAttributesTransfer
      *
      * @return \Generated\Shared\Transfer\RestProductPriceVolumesAttributesTransfer

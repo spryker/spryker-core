@@ -490,7 +490,7 @@ class OrdersTable extends AbstractTable
     /**
      * @param \Spryker\Service\UtilText\Model\Url\Url|string $url
      * @param string $title
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return string
      */

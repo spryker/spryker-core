@@ -125,8 +125,6 @@ class PriceFieldMapperStrategy extends AbstractFieldMapperStrategy
     }
 
     /**
-     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
-     *
      * @param string $priceTypeName
      * @param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      *

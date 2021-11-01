@@ -47,7 +47,7 @@ class YvesUrlFunctionProvider extends TwigFunctionProvider
     }
 
     /**
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return array
      */

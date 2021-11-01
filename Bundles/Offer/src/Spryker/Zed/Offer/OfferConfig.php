@@ -50,7 +50,7 @@ class OfferConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return array
+     * @return array<string>
      */
     public function getIncompleteOfferStatuses(): array
     {

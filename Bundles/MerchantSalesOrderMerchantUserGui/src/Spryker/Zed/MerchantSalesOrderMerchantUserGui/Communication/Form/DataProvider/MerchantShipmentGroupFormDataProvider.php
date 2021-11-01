@@ -164,12 +164,10 @@ class MerchantShipmentGroupFormDataProvider
     }
 
     /**
-     * @phpstan-return array<mixed>
-     *
      * @param \Generated\Shared\Transfer\MerchantOrderTransfer $merchantOrderTransfer
      * @param \Generated\Shared\Transfer\ShipmentTransfer|null $shipmentTransfer
      *
-     * @return array
+     * @return array<mixed>
      */
     public function getOptions(MerchantOrderTransfer $merchantOrderTransfer, ?ShipmentTransfer $shipmentTransfer = null): array
     {
@@ -198,12 +196,10 @@ class MerchantShipmentGroupFormDataProvider
     }
 
     /**
-     * @phpstan-return array<mixed>
-     *
      * @param \Generated\Shared\Transfer\MerchantOrderTransfer $merchantOrderTransfer
      * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
      *
-     * @return array
+     * @return array<mixed>
      */
     protected function getShipmentSelectedItemsIds(MerchantOrderTransfer $merchantOrderTransfer, ShipmentTransfer $shipmentTransfer): array
     {

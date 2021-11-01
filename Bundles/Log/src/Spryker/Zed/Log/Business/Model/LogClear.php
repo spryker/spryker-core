@@ -17,13 +17,13 @@ class LogClear implements LogClearInterface
     protected $filesystem;
 
     /**
-     * @var array
+     * @var array<string>
      */
     protected $logFileDirectories = [];
 
     /**
      * @param \Symfony\Component\Filesystem\Filesystem $filesystem
-     * @param array $logFileDirectories
+     * @param array<string> $logFileDirectories
      */
     public function __construct(Filesystem $filesystem, array $logFileDirectories)
     {

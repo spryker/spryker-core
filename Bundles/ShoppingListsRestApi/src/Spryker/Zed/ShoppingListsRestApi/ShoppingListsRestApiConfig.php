@@ -78,7 +78,7 @@ class ShoppingListsRestApiConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return array
+     * @return array<string, string>
      */
     public static function getResponseErrorMapping(): array
     {

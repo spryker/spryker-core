@@ -39,11 +39,9 @@ class ViewController extends AbstractController
     protected const PARAM_PRICE_TYPE_NAME = 'price-type-name';
 
     /**
-     * @phpstan-return array<string, mixed>
-     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function indexAction(Request $request): array
     {
@@ -79,12 +77,9 @@ class ViewController extends AbstractController
     }
 
     /**
-     * @phpstan-param array<string, mixed> $query
-     * @phpstan-param array<string, mixed> $options
-     *
      * @param string $url
-     * @param array $query
-     * @param array $options
+     * @param array<string, mixed> $query
+     * @param array<string, mixed> $options
      *
      * @return string
      */

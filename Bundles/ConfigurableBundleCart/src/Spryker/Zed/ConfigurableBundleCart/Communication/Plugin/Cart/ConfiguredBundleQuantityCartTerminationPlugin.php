@@ -19,7 +19,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class ConfiguredBundleQuantityCartTerminationPlugin extends AbstractPlugin implements CartTerminationPluginInterface
 {
     /**
-     * @var array
+     * @var array<string>
      */
     protected const SUBSCRIBED_TERMINATION_EVENTS = [
         'add',

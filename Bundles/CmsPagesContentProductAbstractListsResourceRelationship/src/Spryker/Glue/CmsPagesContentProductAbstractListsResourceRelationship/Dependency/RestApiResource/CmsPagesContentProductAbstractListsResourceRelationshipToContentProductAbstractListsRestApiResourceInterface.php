@@ -10,12 +10,10 @@ namespace Spryker\Glue\CmsPagesContentProductAbstractListsResourceRelationship\D
 interface CmsPagesContentProductAbstractListsResourceRelationshipToContentProductAbstractListsRestApiResourceInterface
 {
     /**
-     * @phpstan-return array<string, \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>
-     *
      * @param array<string> $contentProductAbstractListKeys
      * @param string $localeName
      *
-     * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>
+     * @return array<string, \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>
      */
     public function getContentProductAbstractListsByKeys(
         array $contentProductAbstractListKeys,

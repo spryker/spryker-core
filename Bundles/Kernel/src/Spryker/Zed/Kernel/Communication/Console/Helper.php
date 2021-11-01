@@ -187,7 +187,7 @@ trait Helper
 
     /**
      * @param string $question
-     * @param array $options
+     * @param array<string, mixed> $options
      * @param string $default
      *
      * @return mixed

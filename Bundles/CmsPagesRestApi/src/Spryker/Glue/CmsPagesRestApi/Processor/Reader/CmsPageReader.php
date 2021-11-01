@@ -143,11 +143,9 @@ class CmsPageReader implements CmsPageReaderInterface
     }
 
     /**
-     * @phpstan-return array<string, mixed>
-     *
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
-     * @return array
+     * @return array<string, mixed>
      */
     protected function getAllRequestParameters(RestRequestInterface $restRequest): array
     {

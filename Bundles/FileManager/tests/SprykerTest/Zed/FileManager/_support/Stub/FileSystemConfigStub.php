@@ -15,7 +15,7 @@ use SprykerTest\Service\FileSystem\FileSystemServiceTest;
 class FileSystemConfigStub extends SprykerFileSystemConfig
 {
     /**
-     * @return array
+     * @return array<string, mixed>
      */
     public function getFilesystemConfig(): array
     {

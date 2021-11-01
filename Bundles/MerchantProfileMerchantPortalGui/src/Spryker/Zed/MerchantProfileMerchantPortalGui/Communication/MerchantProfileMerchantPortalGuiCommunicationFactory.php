@@ -31,7 +31,7 @@ class MerchantProfileMerchantPortalGuiCommunicationFactory extends AbstractCommu
 {
     /**
      * @param \Generated\Shared\Transfer\MerchantTransfer|null $data
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return \Symfony\Component\Form\FormInterface
      */

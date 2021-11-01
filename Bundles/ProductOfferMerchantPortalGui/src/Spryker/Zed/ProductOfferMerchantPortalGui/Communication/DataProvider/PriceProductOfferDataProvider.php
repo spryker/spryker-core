@@ -47,8 +47,6 @@ class PriceProductOfferDataProvider implements PriceProductOfferDataProviderInte
     }
 
     /**
-     * @phpstan-return ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>
-     *
      * @param int $idProductOffer
      *
      * @return \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>

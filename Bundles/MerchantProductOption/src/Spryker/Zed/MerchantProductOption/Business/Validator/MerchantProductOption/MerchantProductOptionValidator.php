@@ -128,11 +128,9 @@ class MerchantProductOptionValidator implements MerchantProductOptionValidatorIn
     }
 
     /**
-     * @phpstan-return array<int|null>
-     *
      * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return array
+     * @return array<int|null>
      */
     protected function extractProductOptionGroupIdsFromItemTransfers(ArrayObject $itemTransfers): array
     {
@@ -151,12 +149,10 @@ class MerchantProductOptionValidator implements MerchantProductOptionValidatorIn
     }
 
     /**
-     * @phpstan-return array<int|null>
-     *
      * @param \ArrayObject<int, \Generated\Shared\Transfer\ProductOptionTransfer> $productOptionTransfers
      * @param array<int> $productOptionGroupIds
      *
-     * @return array
+     * @return array<int|null>
      */
     protected function extractProductOptionGroupIds(ArrayObject $productOptionTransfers, array $productOptionGroupIds): array
     {

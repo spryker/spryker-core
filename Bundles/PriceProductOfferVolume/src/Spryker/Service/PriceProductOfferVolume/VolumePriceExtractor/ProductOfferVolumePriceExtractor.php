@@ -78,9 +78,7 @@ class ProductOfferVolumePriceExtractor implements ProductOfferVolumePriceExtract
     }
 
     /**
-     * @phpstan-param array<mixed> $volumePriceData
-     *
-     * @param array $volumePriceData
+     * @param array<mixed> $volumePriceData
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer

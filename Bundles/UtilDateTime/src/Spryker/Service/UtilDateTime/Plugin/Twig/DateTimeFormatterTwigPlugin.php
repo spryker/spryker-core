@@ -16,7 +16,7 @@ use Twig\TwigFilter;
 class DateTimeFormatterTwigPlugin extends AbstractTwigExtensionPlugin
 {
     /**
-     * @var array
+     * @var array<string>
      */
     protected $filterFunctions = [
         'formatDate',

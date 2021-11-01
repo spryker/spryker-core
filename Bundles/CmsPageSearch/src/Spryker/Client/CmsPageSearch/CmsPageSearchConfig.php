@@ -35,7 +35,7 @@ class CmsPageSearchConfig extends AbstractBundleConfig
     protected const PAGINATION_DEFAULT_ITEMS_PER_PAGE = 12;
 
     /**
-     * @var array
+     * @var array<int>
      */
     protected const PAGINATION_VALID_ITEMS_PER_PAGE_OPTIONS = [12, 24, 36];
 

@@ -51,9 +51,7 @@ class SalesConfig extends AbstractBundleConfig
      *    'PAYMENT_METHOD_2' => 'StateMachineProcess_2',
      * ]
      *
-     * @phpstan-return array<string, string>
-     *
-     * @return array<string>
+     * @return array<string, string>
      */
     protected function getPaymentMethodStatemachineMapping()
     {

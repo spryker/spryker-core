@@ -22,13 +22,9 @@ class MerchantProductOptionListActionViewDataExpanderPlugin extends AbstractPlug
      *
      * @api
      *
-     * @phpstan-param array<mixed> $viewData
+     * @param array<mixed> $viewData
      *
-     * @phpstan-return array<mixed>
-     *
-     * @param array $viewData
-     *
-     * @return array
+     * @return array<mixed>
      */
     public function expand(array $viewData): array
     {

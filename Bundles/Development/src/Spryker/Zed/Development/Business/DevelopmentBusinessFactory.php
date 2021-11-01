@@ -1846,7 +1846,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
 
     /**
      * @param \Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\BundleBuilderInterface $bundleBuilder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\IdeAutoCompletionWriterInterface
      */
@@ -1873,7 +1873,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return array<\Spryker\Zed\Development\Business\IdeAutoCompletion\Generator\GeneratorInterface>
      */
@@ -1886,7 +1886,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\Generator\GeneratorInterface
      */
@@ -1904,7 +1904,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\Generator\GeneratorInterface
      */

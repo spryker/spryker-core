@@ -74,7 +74,7 @@ class AbstractTransfer extends ParentAbstractTransfer
     protected $transferCollection;
 
     /**
-     * @var array
+     * @var array<string, string>
      */
     protected $transferPropertyNameMap = [
         'string' => 'string',
@@ -87,7 +87,7 @@ class AbstractTransfer extends ParentAbstractTransfer
     ];
 
     /**
-     * @var array
+     * @var array<string, array<string, mixed>>
      */
     protected $transferMetadata = [
         self::STRING => [

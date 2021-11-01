@@ -12,7 +12,7 @@ interface FileWriterInterface
     /**
      * @param string $fileName
      * @param string $fileContent
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */

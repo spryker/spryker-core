@@ -24,9 +24,7 @@ class StateMachineProcessWriterStep extends PublishAwareStep implements DataImpo
     protected const MERCHANT_OMS_STATE_MACHINE_NAME = 'Merchant';
 
     /**
-     * @phpstan-var array<string>
-     *
-     * @var array
+     * @var array<string>
      */
     protected const REQUIRED_DATA_SET_KEYS = [
         MerchantOmsProcessDataSetInterface::MERCHANT_OMS_PROCESS_NAME,

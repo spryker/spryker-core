@@ -191,11 +191,9 @@ class CartHandler implements CartHandlerInterface
     }
 
     /**
-     * @phpstan-return array<string, bool>
-     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return array
+     * @return array<string, bool>
      */
     protected function createExistingSkuIndex(QuoteTransfer $quoteTransfer)
     {

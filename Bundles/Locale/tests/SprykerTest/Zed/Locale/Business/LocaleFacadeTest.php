@@ -37,12 +37,12 @@ class LocaleFacadeTest extends Unit
     protected $localeQueryContainer;
 
     /**
-     * @var array
+     * @var array<string>
      */
     protected $availableLocales = [];
 
     /**
-     * @var array
+     * @var array<string>
      */
     protected $localeNames = [];
 

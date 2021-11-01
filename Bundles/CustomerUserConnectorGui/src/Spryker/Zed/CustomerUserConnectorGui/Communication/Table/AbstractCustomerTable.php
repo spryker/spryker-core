@@ -55,7 +55,7 @@ abstract class AbstractCustomerTable extends AbstractTable
     public const COL_CHECKBOX = 'checkbox';
 
     /**
-     * @var array
+     * @var array<int, string>
      */
     public const GENDER_MAP = [
         0 => 'Male',

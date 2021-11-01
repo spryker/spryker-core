@@ -342,7 +342,7 @@ class Container implements ContainerInterface, ArrayAccess
 
     /**
      * @param string $id
-     * @param array $aliases
+     * @param array<string> $aliases
      *
      * @return void
      */

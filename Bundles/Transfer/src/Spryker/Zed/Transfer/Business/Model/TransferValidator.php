@@ -136,7 +136,7 @@ class TransferValidator implements TransferValidatorInterface
     /**
      * @param string $module
      * @param array<array> $definition
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return bool
      */

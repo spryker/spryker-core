@@ -74,9 +74,7 @@ class ProductViewOfferExpander implements ProductViewOfferExpanderInterface
     }
 
     /**
-     * @phpstan-param array<mixed> $selectedAttributes
-     *
-     * @param array $selectedAttributes
+     * @param array<mixed> $selectedAttributes
      *
      * @return string|null
      */

@@ -37,11 +37,9 @@ class OmsRenderFormController extends AbstractController
     protected const URL_PARAM_MERCHANT_SALES_ORDER_ITEM_REFERENCE = 'merchantSalesOrderItemReference';
 
     /**
-     * @phpstan-return array<string, mixed>
-     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function orderAction(Request $request): array
     {
@@ -64,11 +62,9 @@ class OmsRenderFormController extends AbstractController
     }
 
     /**
-     * @phpstan-return array<string, mixed>
-     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function orderItemAction(Request $request): array
     {

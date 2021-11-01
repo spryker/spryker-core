@@ -217,7 +217,7 @@ class UrlStorageReader implements UrlStorageReaderInterface
 
     /**
      * @param array $urlDetails
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return \Generated\Shared\Transfer\UrlStorageResourceMapTransfer|null
      */

@@ -38,11 +38,9 @@ class ProductOfferStockReader implements ProductOfferStockReaderInterface
     }
 
     /**
-     * @phpstan-return array<string, mixed>
-     *
      * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getProductOfferStockData(ProductOfferTransfer $productOfferTransfer): array
     {
@@ -75,12 +73,10 @@ class ProductOfferStockReader implements ProductOfferStockReaderInterface
     }
 
     /**
-     * @phpstan-return array<string, mixed>
-     *
      * @param \Generated\Shared\Transfer\ProductOfferStockTransfer $productOfferStockTransfer
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return array
+     * @return array<string, mixed>
      */
     protected function executeProductOfferStockTableExpanderPlugins(
         ProductOfferStockTransfer $productOfferStockTransfer,

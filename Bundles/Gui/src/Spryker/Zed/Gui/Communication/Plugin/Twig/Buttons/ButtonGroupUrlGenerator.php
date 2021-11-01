@@ -30,14 +30,14 @@ class ButtonGroupUrlGenerator implements UrlGeneratorInterface
     protected $title;
 
     /**
-     * @var array
+     * @var array<string, mixed>
      */
     protected $options = [];
 
     /**
      * @param array $buttons
      * @param string $title
-     * @param array $options
+     * @param array<string, mixed> $options
      */
     public function __construct(array $buttons, $title, array $options)
     {

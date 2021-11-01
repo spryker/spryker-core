@@ -101,7 +101,7 @@ class OmsTriggerFormFactory implements OmsTriggerFormFactoryInterface
 
     /**
      * @param mixed|null $data
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return \Symfony\Component\Form\FormInterface
      */

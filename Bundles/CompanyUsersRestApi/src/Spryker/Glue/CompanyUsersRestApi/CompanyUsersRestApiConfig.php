@@ -78,9 +78,7 @@ class CompanyUsersRestApiConfig extends AbstractBundleConfig
     public const COLLECTION_IDENTIFIER_CURRENT_USER = 'mine';
 
     /**
-     * @type string[]
-     *
-     * @var array
+     * @var array<string>
      */
     protected const COMPANY_USER_RESOURCES = [];
 

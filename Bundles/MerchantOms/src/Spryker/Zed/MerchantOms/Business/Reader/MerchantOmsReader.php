@@ -25,11 +25,9 @@ class MerchantOmsReader implements MerchantOmsReaderInterface
     }
 
     /**
-     * @phpstan-return array<int|string, array<int, \Generated\Shared\Transfer\StateMachineItemTransfer>>
-     *
      * @param array<int> $merchantOrderItemIds
      *
-     * @return array
+     * @return array<int|string, array<int, \Generated\Shared\Transfer\StateMachineItemTransfer>>
      */
     public function getMerchantOrderItemsStateHistory(array $merchantOrderItemIds): array
     {

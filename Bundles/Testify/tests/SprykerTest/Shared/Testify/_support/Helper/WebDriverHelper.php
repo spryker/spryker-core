@@ -124,7 +124,7 @@ class WebDriverHelper extends Extension
 
     /**
      * @param array $config
-     * @param array $options
+     * @param array<string, mixed> $options
      */
     public function __construct(array $config, array $options)
     {
@@ -370,7 +370,7 @@ class WebDriverHelper extends Extension
     }
 
     /**
-     * @return array<string>
+     * @return array<string, mixed>
      */
     protected function getWebDriverConfig(): array
     {

@@ -76,7 +76,7 @@ class ApplicationConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return array
+     * @return array<string>
      */
     public function getSslExcludedResources()
     {
@@ -86,7 +86,7 @@ class ApplicationConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return array
+     * @return array<string>
      */
     public function getTrustedProxies()
     {
@@ -109,7 +109,7 @@ class ApplicationConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return array
+     * @return array<string>
      */
     public function getTrustedHosts()
     {

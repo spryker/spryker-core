@@ -233,11 +233,9 @@ class MerchantOrderTable extends AbstractTable
     }
 
     /**
-     * @phpstan-return array<mixed>
-     *
      * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
-     * @return array
+     * @return array<mixed>
      */
     protected function prepareData(TableConfiguration $config): array
     {
@@ -270,9 +268,7 @@ class MerchantOrderTable extends AbstractTable
     }
 
     /**
-     * @phpstan-param array<string, mixed> $item
-     *
-     * @param array $item
+     * @param array<string, mixed> $item
      *
      * @return string
      */
@@ -291,9 +287,7 @@ class MerchantOrderTable extends AbstractTable
     }
 
     /**
-     * @phpstan-param array<string, mixed> $item
-     *
-     * @param array $item
+     * @param array<string, mixed> $item
      *
      * @return string
      */
@@ -343,9 +337,7 @@ class MerchantOrderTable extends AbstractTable
     }
 
     /**
-     * @phpstan-param array<string, mixed> $item
-     *
-     * @param array $item
+     * @param array<string, mixed> $item
      *
      * @return string
      */

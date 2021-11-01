@@ -285,12 +285,10 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
      *
      * @api
      *
-     * @phpstan-return array<mixed>
-     *
      * @param string $sku
      * @param \Generated\Shared\Transfer\PriceProductDimensionTransfer|null $priceProductDimensionTransfer
      *
-     * @return array
+     * @return array<mixed>
      */
     public function findPricesBySkuGroupedForCurrentStore(
         string $sku,
@@ -306,11 +304,9 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
      *
      * @api
      *
-     * @phpstan-return array<mixed>
-     *
      * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      *
-     * @return array
+     * @return array<mixed>
      */
     public function groupPriceProductCollection(array $priceProductTransfers)
     {
@@ -395,9 +391,7 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
      *
      * @api
      *
-     * @phpstan-param array<mixed> $priceData
-     *
-     * @param array $priceData
+     * @param array<mixed> $priceData
      *
      * @return string
      */

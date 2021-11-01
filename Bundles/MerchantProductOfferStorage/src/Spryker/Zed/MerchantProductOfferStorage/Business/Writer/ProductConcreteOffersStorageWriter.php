@@ -18,9 +18,7 @@ use Spryker\Zed\MerchantProductOfferStorage\Persistence\MerchantProductOfferStor
 class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorageWriterInterface
 {
     /**
-     * @phpstan-var array<mixed>
-     *
-     * @var array
+     * @var array<mixed>
      */
     public static $storeNames = [];
 
@@ -162,12 +160,10 @@ class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorage
     }
 
     /**
-     * @phpstan-return array<mixed>
-     *
      * @param array<string> $productConcreteSkus
      * @param \Generated\Shared\Transfer\ProductOfferCollectionTransfer $productOfferCollectionTransfer
      *
-     * @return array
+     * @return array<mixed>
      */
     protected function getProductOfferReferencesGroupedByConcreteSku(
         array $productConcreteSkus,

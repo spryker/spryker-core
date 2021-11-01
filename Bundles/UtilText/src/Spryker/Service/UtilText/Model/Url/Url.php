@@ -129,7 +129,7 @@ class Url
      *
      * @param string $url
      * @param array $query
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return self
      */

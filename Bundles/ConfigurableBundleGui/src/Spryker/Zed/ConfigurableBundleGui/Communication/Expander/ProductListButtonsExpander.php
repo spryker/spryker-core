@@ -26,7 +26,7 @@ class ProductListButtonsExpander implements ProductListButtonsExpanderInterface
     protected const CONFIGURABLE_BUNDLE_TEMPLATE_LIST_BUTTON_TITLE = 'Configurable Bundle Templates';
 
     /**
-     * @var array
+     * @var array<string, string>
      */
     protected const CONFIGURABLE_BUNDLE_TEMPLATE_LIST_BUTTON_OPTIONS = [
         'class' => 'btn-view',

@@ -30,7 +30,7 @@ class UserConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return array
+     * @return array<string>
      */
     public function getSystemUsers()
     {
@@ -47,7 +47,7 @@ class UserConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return array
+     * @return array<array>
      */
     public function getInstallerUsers()
     {
@@ -82,7 +82,7 @@ class UserConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return array
+     * @return array<string>
      */
     private function getUserFromGlobalConfig()
     {

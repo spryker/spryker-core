@@ -43,7 +43,7 @@ class InMemoryQueueAdapter implements InMemoryAdapterInterface
 
     /**
      * @param string $queueName
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -54,7 +54,7 @@ class InMemoryQueueAdapter implements InMemoryAdapterInterface
 
     /**
      * @param string $queueName
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -67,7 +67,7 @@ class InMemoryQueueAdapter implements InMemoryAdapterInterface
 
     /**
      * @param string $queueName
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -81,7 +81,7 @@ class InMemoryQueueAdapter implements InMemoryAdapterInterface
     /**
      * @param string $queueName
      * @param int $chunkSize
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return array<\Generated\Shared\Transfer\QueueReceiveMessageTransfer>
      */
@@ -104,7 +104,7 @@ class InMemoryQueueAdapter implements InMemoryAdapterInterface
 
     /**
      * @param string $queueName
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return \Generated\Shared\Transfer\QueueReceiveMessageTransfer
      */

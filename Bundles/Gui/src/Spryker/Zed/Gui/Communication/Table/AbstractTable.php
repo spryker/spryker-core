@@ -1135,7 +1135,7 @@ abstract class AbstractTable
     /**
      * @param string $url
      * @param string $title
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return string
      */
@@ -1152,7 +1152,7 @@ abstract class AbstractTable
     /**
      * @param string $url
      * @param string $title
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return string
      */
@@ -1169,7 +1169,7 @@ abstract class AbstractTable
     /**
      * @param string $url
      * @param string $title
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return string
      */
@@ -1187,7 +1187,7 @@ abstract class AbstractTable
      * @param string $title
      * @param string $url
      * @param bool $separated
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return array
      */
@@ -1204,7 +1204,7 @@ abstract class AbstractTable
     /**
      * @param array $buttonGroupItems
      * @param string $title
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return string
      */
@@ -1221,7 +1221,7 @@ abstract class AbstractTable
     /**
      * @param string $url
      * @param string $title
-     * @param array $options
+     * @param array<string, mixed> $options
      * @param string $formClassName
      *
      * @return string
@@ -1245,7 +1245,7 @@ abstract class AbstractTable
     /**
      * @deprecated Use {@link \Spryker\Zed\Gui\Communication\Table\AbstractTable::createForm()} instead.
      *
-     * @param array $options
+     * @param array<string, mixed> $options
      * @param string $name
      *
      * @return \Symfony\Component\Form\FormInterface
@@ -1462,7 +1462,7 @@ abstract class AbstractTable
 
     /**
      * @param array $defaultOptions
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return string
      */
@@ -1504,7 +1504,7 @@ abstract class AbstractTable
 
     /**
      * @param array $defaultOptions
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return array
      */

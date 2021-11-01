@@ -26,7 +26,7 @@ class ProductListButtonsExpander implements ProductListButtonsExpanderInterface
     protected const MERCHANT_RELATION_LIST_BUTTON_TITLE = 'Merchant Relations';
 
     /**
-     * @var array
+     * @var array<string, string>
      */
     protected const MERCHANT_RELATION_LIST_BUTTON_OPTIONS = [
         'class' => 'btn-view',

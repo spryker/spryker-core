@@ -72,11 +72,9 @@ class ViewController extends AbstractController
     }
 
     /**
-     * @phpstan-return array<string, mixed>
-     *
      * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
      *
-     * @return array
+     * @return array<string, mixed>
      */
     protected function getViewSections(ProductOfferTransfer $productOfferTransfer): array
     {

@@ -23,7 +23,7 @@ class UrlStorageCategoryNodeMapperPlugin extends AbstractPlugin implements UrlSt
      * @api
      *
      * @param \Generated\Shared\Transfer\UrlStorageTransfer $urlStorageTransfer
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return \Generated\Shared\Transfer\UrlStorageResourceMapTransfer
      */

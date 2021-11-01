@@ -88,7 +88,7 @@ class ProductCategoryFilterGuiCommunicationFactory extends AbstractCommunication
 
     /**
      * @param array|null $data
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return \Symfony\Component\Form\FormInterface
      */
@@ -101,7 +101,7 @@ class ProductCategoryFilterGuiCommunicationFactory extends AbstractCommunication
      * @deprecated Use {@link getProductCategoryFilterForm()} instead.
      *
      * @param array|null $data
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return \Symfony\Component\Form\FormInterface
      */

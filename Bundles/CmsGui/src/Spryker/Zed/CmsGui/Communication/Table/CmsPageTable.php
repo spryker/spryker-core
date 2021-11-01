@@ -129,7 +129,7 @@ class CmsPageTable extends AbstractTable
      * @param array $item
      * @param string $urlPrefix
      *
-     * @return array
+     * @return array<string>
      */
     protected function buildLinks(array $item, $urlPrefix)
     {

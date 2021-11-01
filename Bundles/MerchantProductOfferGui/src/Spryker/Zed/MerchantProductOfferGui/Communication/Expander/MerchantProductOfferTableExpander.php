@@ -89,15 +89,10 @@ class MerchantProductOfferTableExpander implements MerchantProductOfferTableExpa
     }
 
     /**
-     * @phpstan-param array<string, mixed> $rowData
-     * @phpstan-param array<string, mixed> $productOfferData
+     * @param array<string, mixed> $rowData
+     * @param array<string, mixed> $productOfferData
      *
-     * @phpstan-return array<string, mixed>
-     *
-     * @param array $rowData
-     * @param array $productOfferData
-     *
-     * @return array
+     * @return array<string, mixed>
      */
     public function expandData(array $rowData, array $productOfferData): array
     {
@@ -109,16 +104,11 @@ class MerchantProductOfferTableExpander implements MerchantProductOfferTableExpa
     }
 
     /**
-     * @phpstan-param array<string, mixed> $rowData
-     * @phpstan-param array<string, mixed> $extensionData
-     *
-     * @phpstan-return array<string, mixed>
-     *
-     * @param array $rowData
+     * @param array<string, mixed> $rowData
      * @param string $key
-     * @param array $extensionData
+     * @param array<string, mixed> $extensionData
      *
-     * @return array
+     * @return array<string, mixed>
      */
     protected function insertAfterHeader(array $rowData, string $key, array $extensionData): array
     {

@@ -38,7 +38,7 @@ abstract class AbstractZedClient implements AbstractZedClientInterface
     protected const SUCCESS_MESSAGES = 'successMessages';
 
     /**
-     * @var array
+     * @var array<string, array>>
      */
     protected static $statusMessages = [
         self::INFO_MESSAGES => [],

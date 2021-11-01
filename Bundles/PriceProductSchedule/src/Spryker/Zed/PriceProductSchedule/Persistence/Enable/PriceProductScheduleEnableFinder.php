@@ -45,7 +45,7 @@ class PriceProductScheduleEnableFinder implements PriceProductScheduleEnableFind
     protected const MESSAGE_NOT_SUPPORTED_DB_ENGINE = 'DB engine "%s" is not supported. Please extend EXPRESSION_CONCATENATED_RESULT_MAP';
 
     /**
-     * @var array
+     * @var array<string, string>
      */
     protected const EXPRESSION_CONCATENATED_RESULT_MAP = [
         PropelConfig::DB_ENGINE_PGSQL => 'CAST(CONCAT(CONCAT(CAST(EXTRACT(epoch from now() - %s) + EXTRACT(epoch from %s - now()) AS INT), \'.\'), %s + %s) as DECIMAL)',

@@ -27,8 +27,6 @@ interface ShipmentOrderItemTemplatePluginInterface
      *
      * @api
      *
-     * @phpstan-param \ArrayObject<int,\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
-     *
      * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
      * @return array<mixed>

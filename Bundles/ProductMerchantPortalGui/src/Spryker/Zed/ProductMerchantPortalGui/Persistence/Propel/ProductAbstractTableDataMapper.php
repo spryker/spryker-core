@@ -87,7 +87,7 @@ class ProductAbstractTableDataMapper
     protected $utilEncodingService;
 
     /**
-     * @var array
+     * @var array<string, string>
      */
     public const PRODUCT_ABSTRACT_DATA_COLUMN_MAP = [
         self::COL_KEY_SKU => SpyProductAbstractTableMap::COL_SKU,

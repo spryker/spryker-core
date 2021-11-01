@@ -46,12 +46,10 @@ class ContentBannerReader implements ContentBannerReaderInterface
     }
 
     /**
-     * @phpstan-return array<string, array<string, \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>>
-     *
      * @param array<string> $cmsPageUuids
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
-     * @return array<array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>>
+     * @return array<string, array<string, \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>>
      */
     public function getContentBannersResources(array $cmsPageUuids, RestRequestInterface $restRequest): array
     {
@@ -83,11 +81,9 @@ class ContentBannerReader implements ContentBannerReaderInterface
     }
 
     /**
-     * @phpstan-return array<string, array<string, string>>
-     *
      * @param array<\Generated\Shared\Transfer\CmsPageStorageTransfer> $cmsPageStorageTransfers
      *
-     * @return array<array<string>>
+     * @return array<string, array<string, string>>
      */
     protected function getGroupedContentBannerKeys(array $cmsPageStorageTransfers): array
     {
@@ -105,15 +101,10 @@ class ContentBannerReader implements ContentBannerReaderInterface
     }
 
     /**
-     * @phpstan-param array<string, \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface> $contentBannerResources
-     * @phpstan-param array<string, array<string, string>> $groupedContentBannerKeys
+     * @param array<string, \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface> $contentBannerResources
+     * @param array<string, array<string, string>> $groupedContentBannerKeys
      *
-     * @phpstan-return array<string, array<string, \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>>
-     *
-     * @param array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface> $contentBannerResources
-     * @param array<array<string>> $groupedContentBannerKeys
-     *
-     * @return array<array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>>
+     * @return array<string, array<string, \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>>
      */
     protected function groupRestResourcesByCmsPageUuid(array $contentBannerResources, array $groupedContentBannerKeys): array
     {

@@ -69,7 +69,7 @@ class ModuleBuilder
 
     /**
      * @param string $module
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -126,7 +126,7 @@ class ModuleBuilder
     /**
      * @param string $namespace
      * @param string $module
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */

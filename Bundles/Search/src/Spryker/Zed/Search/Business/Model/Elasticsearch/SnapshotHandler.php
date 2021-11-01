@@ -72,7 +72,7 @@ class SnapshotHandler implements SnapshotHandlerInterface
     /**
      * @param string $repositoryName
      * @param string $snapshotName
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return bool
      */
@@ -84,7 +84,7 @@ class SnapshotHandler implements SnapshotHandlerInterface
     /**
      * @param string $repositoryName
      * @param string $snapshotName
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return bool
      */
@@ -96,7 +96,7 @@ class SnapshotHandler implements SnapshotHandlerInterface
     /**
      * @param string $repositoryName
      * @param string $snapshotName
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return bool
      */
@@ -108,7 +108,7 @@ class SnapshotHandler implements SnapshotHandlerInterface
     /**
      * @param string $repositoryName
      * @param string $snapshotName
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return bool
      */

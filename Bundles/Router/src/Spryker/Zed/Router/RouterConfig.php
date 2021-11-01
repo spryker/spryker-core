@@ -26,7 +26,7 @@ class RouterConfig extends AbstractBundleConfig
      *
      * @see \Symfony\Component\Routing\Router::setOptions()
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getBackofficeRouterConfiguration(): array
     {
@@ -75,7 +75,7 @@ class RouterConfig extends AbstractBundleConfig
      *
      * @see \Symfony\Component\Routing\Router::setOptions()
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getMerchantPortalRouterConfiguration(): array
     {
@@ -111,7 +111,7 @@ class RouterConfig extends AbstractBundleConfig
      *
      * @see \Symfony\Component\Routing\Router::setOptions()
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getBackendGatewayRouterConfiguration(): array
     {
@@ -162,7 +162,7 @@ class RouterConfig extends AbstractBundleConfig
      *
      * @see \Symfony\Component\Routing\Router::setOptions()
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getRouterConfiguration(): array
     {
@@ -182,7 +182,7 @@ class RouterConfig extends AbstractBundleConfig
      *
      * @see \Symfony\Component\Routing\Router::setOptions()
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getDevelopmentRouterConfiguration(): array
     {
@@ -256,9 +256,9 @@ class RouterConfig extends AbstractBundleConfig
     }
 
     /**
-     * @param array $directories
+     * @param array<string> $directories
      *
-     * @return array
+     * @return array<string>
      */
     protected function filterDirectories(array $directories): array
     {

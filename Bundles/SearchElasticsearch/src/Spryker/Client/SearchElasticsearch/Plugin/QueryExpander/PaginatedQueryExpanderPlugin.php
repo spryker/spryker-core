@@ -22,10 +22,8 @@ class PaginatedQueryExpanderPlugin extends AbstractPlugin implements QueryExpand
      *
      * @api
      *
-     * @phpstan-param array<mixed> $requestParameters
-     *
      * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface $searchQuery
-     * @param array $requestParameters
+     * @param array<mixed> $requestParameters
      *
      * @return \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface
      */
@@ -37,10 +35,8 @@ class PaginatedQueryExpanderPlugin extends AbstractPlugin implements QueryExpand
     }
 
     /**
-     * @phpstan-param array<mixed> $requestParameters
-     *
      * @param \Elastica\Query $query
-     * @param array $requestParameters
+     * @param array<mixed> $requestParameters
      *
      * @return void
      */

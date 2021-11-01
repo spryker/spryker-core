@@ -17,7 +17,7 @@ class ProductAttributesNotBlank extends Constraint
     public $message = 'All attribute values should be specified';
 
     /**
-     * @param array $options
+     * @param array<string, mixed> $options
      */
     public function __construct(array $options = [])
     {

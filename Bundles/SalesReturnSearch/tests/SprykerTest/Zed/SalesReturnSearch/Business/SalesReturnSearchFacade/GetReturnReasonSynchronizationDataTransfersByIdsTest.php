@@ -24,7 +24,7 @@ use Generated\Shared\Transfer\FilterTransfer;
 class GetReturnReasonSynchronizationDataTransfersByIdsTest extends Unit
 {
     /**
-     * @var array
+     * @var array<string>
      */
     protected const RETURN_REASON_GLOSSARY_KEYS = [
         'return-reason-1',

@@ -25,14 +25,10 @@ class AuthorizationRouterParameterExpanderPlugin extends AbstractPlugin implemen
      *
      * @api
      *
-     * @phpstan-param array<mixed> $resourceConfiguration
-     *
-     * @phpstan-return array<mixed>
-     *
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $resourceRoutePlugin
-     * @param array $resourceConfiguration
+     * @param array<mixed> $resourceConfiguration
      *
-     * @return array
+     * @return array<mixed>
      */
     public function expandResourceConfiguration(ResourceRoutePluginInterface $resourceRoutePlugin, array $resourceConfiguration): array
     {
@@ -53,15 +49,10 @@ class AuthorizationRouterParameterExpanderPlugin extends AbstractPlugin implemen
      *
      * @api
      *
-     * @phpstan-param array<mixed> $resourceConfiguration
-     * @phpstan-param array<mixed> $routeParams
+     * @param array<mixed> $resourceConfiguration
+     * @param array<mixed> $routeParams
      *
-     * @phpstan-return array<mixed>
-     *
-     * @param array $resourceConfiguration
-     * @param array $routeParams
-     *
-     * @return array
+     * @return array<mixed>
      */
     public function expandRouteParameters(array $resourceConfiguration, array $routeParams): array
     {

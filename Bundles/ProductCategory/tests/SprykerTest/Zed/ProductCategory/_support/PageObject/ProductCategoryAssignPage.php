@@ -75,14 +75,14 @@ class ProductCategoryAssignPage
     public const PRODUCT_ID = 'id';
 
     /**
-     * @var array
+     * @var array<string, int>
      */
     public const CATEGORY = [
         self::CATEGORY_ID => 2,
     ];
 
     /**
-     * @var array
+     * @var array<string, array<string, int>>
      */
     public const PRODUCTS = [
         self::PRODUCT_A => [

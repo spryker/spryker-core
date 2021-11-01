@@ -41,7 +41,7 @@ class TwigConfig extends AbstractSharedConfig
     /**
      * @api
      *
-     * @return array
+     * @return array<string>
      */
     public function getProjectNamespaces(): array
     {
@@ -51,7 +51,7 @@ class TwigConfig extends AbstractSharedConfig
     /**
      * @api
      *
-     * @return array
+     * @return array<string>
      */
     public function getCoreNamespaces(): array
     {
@@ -84,7 +84,7 @@ class TwigConfig extends AbstractSharedConfig
      *
      * @api
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getDefaultTwigOptions(): array
     {

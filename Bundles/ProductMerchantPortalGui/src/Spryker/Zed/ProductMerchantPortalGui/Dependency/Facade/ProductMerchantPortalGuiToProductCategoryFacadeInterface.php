@@ -21,20 +21,16 @@ interface ProductMerchantPortalGuiToProductCategoryFacadeInterface
     public function getCategoryTransferCollectionByIdProductAbstract(int $idProductAbstract, LocaleTransfer $localeTransfer): CategoryCollectionTransfer;
 
     /**
-     * @phpstan-param array<int> $productIdsToAssign
-     *
      * @param int $idCategory
-     * @param array $productIdsToAssign
+     * @param array<int> $productIdsToAssign
      *
      * @return void
      */
     public function createProductCategoryMappings($idCategory, array $productIdsToAssign);
 
     /**
-     * @phpstan-param array<int> $productIdsToUnAssign
-     *
      * @param int $idCategory
-     * @param array $productIdsToUnAssign
+     * @param array<int> $productIdsToUnAssign
      *
      * @return void
      */

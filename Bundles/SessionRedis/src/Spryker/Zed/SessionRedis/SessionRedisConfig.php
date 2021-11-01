@@ -178,7 +178,7 @@ class SessionRedisConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return array
+     * @return array<string, mixed>
      */
     protected function getZedConnectionOptions(): array
     {
@@ -218,7 +218,7 @@ class SessionRedisConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return array
+     * @return array<string, mixed>
      */
     protected function getYvesConnectionOptions(): array
     {

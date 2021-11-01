@@ -17,12 +17,12 @@ class PropelSchemaFinder implements PropelSchemaFinderInterface
     public const FILE_NAME_PATTERN = '*_*.schema.xml';
 
     /**
-     * @var array
+     * @var array<string>
      */
     protected $pathPatterns;
 
     /**
-     * @param array $pathPatterns
+     * @param array<string> $pathPatterns
      */
     public function __construct(array $pathPatterns)
     {

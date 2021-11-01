@@ -123,8 +123,6 @@ class PriceProductTableDataMapper implements PriceProductTableDataMapperInterfac
     }
 
     /**
-     * @phpstan-param array<\Generated\Shared\Transfer\PriceTypeTransfer> $priceTypeTransfers
-     *
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      * @param array<\Generated\Shared\Transfer\PriceTypeTransfer> $priceTypeTransfers
      *

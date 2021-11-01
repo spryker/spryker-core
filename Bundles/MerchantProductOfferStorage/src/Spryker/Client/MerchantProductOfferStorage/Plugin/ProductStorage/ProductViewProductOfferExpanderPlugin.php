@@ -24,10 +24,8 @@ class ProductViewProductOfferExpanderPlugin extends AbstractPlugin implements Pr
      *
      * @api
      *
-     * @phpstan-param array<mixed> $productData
-     *
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
-     * @param array $productData
+     * @param array<mixed> $productData
      * @param string $localeName
      * @param \Generated\Shared\Transfer\ProductStorageCriteriaTransfer|null $productStorageCriteriaTransfer
      *

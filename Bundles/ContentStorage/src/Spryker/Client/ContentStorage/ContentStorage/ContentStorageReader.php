@@ -65,12 +65,10 @@ class ContentStorageReader implements ContentStorageReaderInterface
     }
 
     /**
-     * @phpstan-return array<string, \Generated\Shared\Transfer\ContentTypeContextTransfer>
-     *
      * @param array<string> $contentKeys
      * @param string $localeName
      *
-     * @return array<\Generated\Shared\Transfer\ContentTypeContextTransfer>
+     * @return array<string, \Generated\Shared\Transfer\ContentTypeContextTransfer>
      */
     public function getContentTypeContextByKeys(array $contentKeys, string $localeName): array
     {
@@ -147,9 +145,7 @@ class ContentStorageReader implements ContentStorageReaderInterface
     }
 
     /**
-     * @phpstan-param array<string, mixed> $content
-     *
-     * @param array $content
+     * @param array<string, mixed> $content
      * @param string $contentKey
      *
      * @return \Generated\Shared\Transfer\ContentTypeContextTransfer

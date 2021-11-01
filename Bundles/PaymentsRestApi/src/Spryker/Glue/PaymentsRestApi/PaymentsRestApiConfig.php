@@ -17,12 +17,12 @@ class PaymentsRestApiConfig extends AbstractBundleConfig
     public const RESOURCE_PAYMENT_METHODS = 'payment-methods';
 
     /**
-     * @var array
+     * @var array<string, int>
      */
     protected const PAYMENT_METHOD_PRIORITY = [];
 
     /**
-     * @var array
+     * @var array<string>
      */
     protected const PAYMENT_REQUIRED_FIELDS = [
         'paymentMethod',
@@ -30,7 +30,7 @@ class PaymentsRestApiConfig extends AbstractBundleConfig
     ];
 
     /**
-     * @var array
+     * @var array<string, array>
      */
     protected const PAYMENT_METHOD_REQUIRED_FIELDS = [];
 

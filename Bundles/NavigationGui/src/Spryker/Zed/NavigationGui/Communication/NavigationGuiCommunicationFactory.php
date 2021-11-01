@@ -41,7 +41,7 @@ class NavigationGuiCommunicationFactory extends AbstractCommunicationFactory
      * @deprecated Use {@link getNavigationForm()} instead.
      *
      * @param \Generated\Shared\Transfer\NavigationTransfer|null $data
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return \Symfony\Component\Form\FormInterface
      */
@@ -52,7 +52,7 @@ class NavigationGuiCommunicationFactory extends AbstractCommunicationFactory
 
     /**
      * @param \Generated\Shared\Transfer\NavigationTransfer|null $data
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return \Symfony\Component\Form\FormInterface
      */
@@ -73,7 +73,7 @@ class NavigationGuiCommunicationFactory extends AbstractCommunicationFactory
 
     /**
      * @param \Generated\Shared\Transfer\NavigationTransfer|null $data
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return \Symfony\Component\Form\FormInterface
      */
@@ -94,7 +94,7 @@ class NavigationGuiCommunicationFactory extends AbstractCommunicationFactory
      * @deprecated Use {@link getUpdateNavigationForm()} instead.
      *
      * @param \Generated\Shared\Transfer\NavigationTransfer|null $data
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return \Symfony\Component\Form\FormInterface
      */
@@ -105,7 +105,7 @@ class NavigationGuiCommunicationFactory extends AbstractCommunicationFactory
 
     /**
      * @param \Generated\Shared\Transfer\NavigationTransfer|null $data
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return \Symfony\Component\Form\FormInterface
      */
@@ -136,7 +136,7 @@ class NavigationGuiCommunicationFactory extends AbstractCommunicationFactory
      * @deprecated Use {@link getNavigationNodeForm()} instead.
      *
      * @param \Generated\Shared\Transfer\NavigationNodeTransfer|null $data
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return \Symfony\Component\Form\FormInterface
      */
@@ -147,7 +147,7 @@ class NavigationGuiCommunicationFactory extends AbstractCommunicationFactory
 
     /**
      * @param \Generated\Shared\Transfer\NavigationNodeTransfer|null $data
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return \Symfony\Component\Form\FormInterface
      */

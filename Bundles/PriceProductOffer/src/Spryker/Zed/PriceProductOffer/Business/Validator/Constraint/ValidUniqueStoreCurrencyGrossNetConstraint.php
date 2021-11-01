@@ -23,10 +23,8 @@ class ValidUniqueStoreCurrencyGrossNetConstraint extends SymfonyConstraint
     protected $priceProductOfferRepository;
 
     /**
-     * @phpstan-param array<mixed> $options
-     *
      * @param \Spryker\Zed\PriceProductOffer\Persistence\PriceProductOfferRepositoryInterface $priceProductOfferRepository
-     * @param array|null $options
+     * @param array<string, mixed>|null $options
      */
     public function __construct(PriceProductOfferRepositoryInterface $priceProductOfferRepository, $options = null)
     {

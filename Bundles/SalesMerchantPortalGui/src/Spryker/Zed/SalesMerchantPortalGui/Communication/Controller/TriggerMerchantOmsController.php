@@ -124,8 +124,6 @@ class TriggerMerchantOmsController extends AbstractSalesMerchantPortalGuiControl
     }
 
     /**
-     * @phpstan-param \ArrayObject<int,\Generated\Shared\Transfer\MerchantOrderItemTransfer> $merchantOrderItemTransfers
-     *
      * @param string $eventName
      * @param \ArrayObject<int, \Generated\Shared\Transfer\MerchantOrderItemTransfer> $merchantOrderItemTransfers
      *

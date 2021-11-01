@@ -26,12 +26,12 @@ use Symfony\Component\HttpFoundation\Response;
 class SubRequestHandlerTest extends Unit
 {
     /**
-     * @var array
+     * @var array<string, string>
      */
     public const GET_PARAMS = ['fruit' => 'mango'];
 
     /**
-     * @var array
+     * @var array<string, string>
      */
     public const POST_PARAMS = ['fruit' => 'orange'];
 

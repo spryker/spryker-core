@@ -63,9 +63,7 @@ class QuoteRequestAgentsRestApiConfig extends AbstractBundleConfig
      *
      * @api
      *
-     * @phpstan-return array<string|int, array<string, mixed>>
-     *
-     * @return array
+     * @return array<string, array<string, mixed>>
      */
     public function getErrorIdentifierToRestErrorMapping(): array
     {

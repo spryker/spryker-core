@@ -114,7 +114,7 @@ class MoneyCollectionType extends AbstractCollectionType
     }
 
     /**
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return \Spryker\Zed\Money\Communication\Form\DataProvider\MoneyCollectionDataProviderInterface
      */
@@ -138,7 +138,7 @@ class MoneyCollectionType extends AbstractCollectionType
     }
 
     /**
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return array
      */

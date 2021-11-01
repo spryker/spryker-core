@@ -49,7 +49,7 @@ class CustomerTable extends AbstractTable
     public const COL_EMAIL = 'email';
 
     /**
-     * @var array
+     * @var array<int, string>
      */
     public const GENDER_MAP = [
         0 => 'Male',

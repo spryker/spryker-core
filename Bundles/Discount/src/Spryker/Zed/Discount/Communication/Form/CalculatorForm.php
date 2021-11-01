@@ -158,7 +158,7 @@ class CalculatorForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface|\Symfony\Component\Form\FormInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */

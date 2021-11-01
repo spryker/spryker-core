@@ -56,12 +56,12 @@ class ResolvableCacheBuilderHelper extends Module
     protected const PATH_TO_CACHE_FILE = 'vfs://root/directory/cacheFile.php';
 
     /**
-     * @var array
+     * @var array<string>
      */
     protected $projectOrganizations = ['Pyz'];
 
     /**
-     * @var array
+     * @var array<string>
      */
     protected $coreOrganizations = ['Spryker'];
 

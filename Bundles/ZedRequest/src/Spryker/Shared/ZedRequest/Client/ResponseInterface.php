@@ -65,7 +65,7 @@ interface ResponseInterface
     public function hasErrorMessage($messageString);
 
     /**
-     * @param array $errorMessages
+     * @param array<\Generated\Shared\Transfer\MessageTransfer> $errorMessages
      *
      * @return $this
      */
@@ -98,7 +98,7 @@ interface ResponseInterface
     public function addInfoMessage(MessageTransfer $message);
 
     /**
-     * @param array $messages
+     * @param array<\Generated\Shared\Transfer\MessageTransfer> $messages
      *
      * @return $this
      */
@@ -117,7 +117,7 @@ interface ResponseInterface
     public function hasSuccessMessage($messageString);
 
     /**
-     * @param array $successMessages
+     * @param array<\Generated\Shared\Transfer\MessageTransfer> $successMessages
      *
      * @return $this
      */

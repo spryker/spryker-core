@@ -150,7 +150,7 @@ class LogConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return array
+     * @return array<string>
      */
     public function getLogFileDirectories()
     {

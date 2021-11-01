@@ -37,11 +37,9 @@ class SecuritySystemUserConfig extends AbstractBundleConfig
     protected const ZED_SESSION_TIME_TO_LIVE = 'SESSION:ZED_SESSION_TIME_TO_LIVE';
 
     /**
-     * @phpstan-return array<string, mixed>
-     *
      * @api
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getUsersCredentials(): array
     {

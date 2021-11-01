@@ -12,11 +12,9 @@ use Generated\Shared\Transfer\RestCmsPagesAttributesTransfer;
 class CmsPageMapper implements CmsPageMapperInterface
 {
     /**
-     * @phpstan-return array<string, \Generated\Shared\Transfer\RestCmsPagesAttributesTransfer>
-     *
      * @param array<\Generated\Shared\Transfer\CmsPageStorageTransfer> $cmsPageStorageTransfers
      *
-     * @return array<\Generated\Shared\Transfer\RestCmsPagesAttributesTransfer>
+     * @return array<string, \Generated\Shared\Transfer\RestCmsPagesAttributesTransfer>
      */
     public function mapCmsPageStorageTransfersToRestCmsPagesAttributesTransfers(array $cmsPageStorageTransfers): array
     {

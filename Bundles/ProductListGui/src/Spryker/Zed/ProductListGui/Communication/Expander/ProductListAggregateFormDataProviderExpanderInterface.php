@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\ProductListAggregateFormTransfer;
 interface ProductListAggregateFormDataProviderExpanderInterface
 {
     /**
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return array
      */

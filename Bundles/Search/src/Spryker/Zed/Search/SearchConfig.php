@@ -30,7 +30,7 @@ class SearchConfig extends AbstractBundleConfig
     protected const PORT = 'SEARCH_ELASTICSEARCH:PORT';
 
     /**
-     * @var array
+     * @var array<string>
      */
     protected const BLACKLIST_SETTINGS_FOR_INDEX_UPDATE = [
         'index.number_of_shards',
@@ -38,7 +38,7 @@ class SearchConfig extends AbstractBundleConfig
     ];
 
     /**
-     * @var array
+     * @var array<string>
      */
     protected const STATIC_INDEX_SETTINGS = [
         'index.number_of_shards',
@@ -49,7 +49,7 @@ class SearchConfig extends AbstractBundleConfig
     ];
 
     /**
-     * @var array
+     * @var array<string>
      */
     protected const DYNAMIC_INDEX_SETTINGS = [
         'index.number_of_replicas',
@@ -118,7 +118,7 @@ class SearchConfig extends AbstractBundleConfig
      *
      * @deprecated Use {@link \Spryker\Zed\SearchElasticsearch\SearchElasticsearchConfig::getJsonSchemaDefinitionDirectories()} instead.
      *
-     * @return array
+     * @return array<string>
      */
     public function getJsonIndexDefinitionDirectories()
     {

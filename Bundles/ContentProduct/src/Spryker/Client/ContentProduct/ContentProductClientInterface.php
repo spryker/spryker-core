@@ -34,12 +34,10 @@ interface ContentProductClientInterface
      *
      * @api
      *
-     * @phpstan-return array<string, \Generated\Shared\Transfer\ContentProductAbstractListTypeTransfer>
-     *
      * @param array<string> $contentKeys
      * @param string $localeName
      *
-     * @return array<\Generated\Shared\Transfer\ContentProductAbstractListTypeTransfer>
+     * @return array<string, \Generated\Shared\Transfer\ContentProductAbstractListTypeTransfer>
      */
     public function executeProductAbstractListTypeByKeys(array $contentKeys, string $localeName): array;
 }

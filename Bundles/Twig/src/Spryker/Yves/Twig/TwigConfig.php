@@ -25,7 +25,7 @@ class TwigConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return array
+     * @return array<string>
      */
     public function getTemplatePaths()
     {
@@ -37,9 +37,9 @@ class TwigConfig extends AbstractBundleConfig
     }
 
     /**
-     * @param array $paths
+     * @param array<string> $paths
      *
-     * @return array
+     * @return array<string>
      */
     protected function addProjectTemplatePaths(array $paths)
     {
@@ -68,7 +68,7 @@ class TwigConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return array
+     * @return array<string>
      */
     public function getProjectNamespaces(): array
     {
@@ -78,7 +78,7 @@ class TwigConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return array
+     * @return array<string>
      */
     public function getCoreNamespaces(): array
     {
@@ -155,7 +155,7 @@ class TwigConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getTwigOptions(): array
     {

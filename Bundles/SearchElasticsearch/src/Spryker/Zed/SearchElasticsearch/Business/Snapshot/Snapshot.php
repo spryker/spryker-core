@@ -28,7 +28,7 @@ class Snapshot implements SnapshotInterface
     /**
      * @param string $repositoryName
      * @param string $snapshotName
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return bool
      */
@@ -40,7 +40,7 @@ class Snapshot implements SnapshotInterface
     /**
      * @param string $repositoryName
      * @param string $snapshotName
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return bool
      */

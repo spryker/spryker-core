@@ -65,7 +65,7 @@ class OauthCustomerConnectorConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return array
+     * @return array<string>
      */
     public function getCustomerScopes(): array
     {

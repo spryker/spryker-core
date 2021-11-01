@@ -92,7 +92,7 @@ class ApplicationConfig extends AbstractBundleConfig
      *
      * @deprecated Use {@link \Spryker\Shared\Router\RouterConstants::ZED_SSL_EXCLUDED_ROUTE_NAMES} instead.
      *
-     * @return array
+     * @return array<string>
      */
     public function getSslExcludedResources()
     {
@@ -102,7 +102,7 @@ class ApplicationConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return array
+     * @return array<string>
      */
     public function getTrustedProxies()
     {
@@ -125,7 +125,7 @@ class ApplicationConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return array
+     * @return array<string>
      */
     public function getTrustedHosts()
     {

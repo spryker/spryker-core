@@ -38,13 +38,11 @@ class EventTriggerFormDataProvider
     protected const URL_PARAM_EVENT = 'event';
 
     /**
-     * @phpstan-return array<string, mixed>
-     *
      * @param int $idMerchantSalesOrder
      * @param string $event
      * @param string $redirect
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getOptions(
         int $idMerchantSalesOrder,

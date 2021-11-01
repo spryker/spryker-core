@@ -61,14 +61,14 @@ class DevelopmentConfig extends AbstractBundleConfig
     protected const GROUP_SPRYKER_TEST = 'SprykerTest';
 
     /**
-     * @var array
+     * @var array<string>
      */
     public const APPLICATION_NAMESPACES = [
         'Orm',
     ];
 
     /**
-     * @var array
+     * @var array<string>
      */
     public const APPLICATIONS = [
         'Client',
@@ -80,7 +80,7 @@ class DevelopmentConfig extends AbstractBundleConfig
     ];
 
     /**
-     * @var array
+     * @var array<string>
      */
     protected const INTERNAL_NAMESPACES_LIST = [
         self::NAMESPACE_SPRYKER,
@@ -89,9 +89,7 @@ class DevelopmentConfig extends AbstractBundleConfig
     ];
 
     /**
-     * @phpstan-var array<string, string>
-     *
-     * @var array<string>
+     * @var array<string, string>
      */
     protected const INTERNAL_NAMESPACES_TO_PATH_MAPPING = [
         self::NAMESPACE_SPRYKER => APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . 'vendor/spryker/',
@@ -103,9 +101,7 @@ class DevelopmentConfig extends AbstractBundleConfig
     ];
 
     /**
-     * @phpstan-var array<string>
-     *
-     * @var array
+     * @var array<string>
      */
     protected const INTERNAL_PACKAGE_DIRECTORIES = ['spryker', 'spryker-shop', 'spryker-merchant-portal'];
 
@@ -165,7 +161,7 @@ class DevelopmentConfig extends AbstractBundleConfig
      *
      * @api
      *
-     * @return array
+     * @return array<string>
      */
     public function getApplications()
     {
@@ -177,7 +173,7 @@ class DevelopmentConfig extends AbstractBundleConfig
      *
      * @api
      *
-     * @return array
+     * @return array<string>
      */
     public function getApplicationNamespaces()
     {
@@ -350,7 +346,7 @@ class DevelopmentConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return array
+     * @return array<string, string>
      */
     public function getExternalToInternalNamespaceMap()
     {
@@ -473,7 +469,7 @@ class DevelopmentConfig extends AbstractBundleConfig
      *
      * @deprecated Will be removed without replacement.
      *
-     * @return array
+     * @return array<string>
      */
     public function getIgnorableDependencies()
     {
@@ -519,7 +515,7 @@ class DevelopmentConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getClientIdeAutoCompletionOptions()
     {
@@ -532,7 +528,7 @@ class DevelopmentConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getGlueIdeAutoCompletionOptions()
     {
@@ -545,7 +541,7 @@ class DevelopmentConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getServiceIdeAutoCompletionOptions()
     {
@@ -556,7 +552,7 @@ class DevelopmentConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return array
+     * @return array<string, mixed>
      */
     protected function getDefaultIdeAutoCompletionOptions()
     {
@@ -577,9 +573,7 @@ class DevelopmentConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @phpstan-return array<string, string>
-     *
-     * @return array<string>
+     * @return array<string, string>
      */
     public function getIdeAutoCompletionSourceDirectoryGlobPatterns()
     {
@@ -640,7 +634,7 @@ class DevelopmentConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return array
+     * @return array<string>
      */
     public function getProjectNamespaces()
     {
@@ -650,7 +644,7 @@ class DevelopmentConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return array
+     * @return array<string>
      */
     public function getCoreNamespaces()
     {

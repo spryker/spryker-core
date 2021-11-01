@@ -10,14 +10,10 @@ namespace Spryker\Zed\MerchantProductGui\Communication\Expander;
 interface MerchantProductViewDataExpanderInterface
 {
     /**
-     * @phpstan-param array<string, mixed> $viewData
-     *
-     * @phpstan-return array<string, mixed>
-     *
-     * @param array $viewData
+     * @param array<string, mixed> $viewData
      * @param int $idProductAbstract
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function expandDataWithMerchantByIdProductAbstract(array $viewData, int $idProductAbstract): array;
 }

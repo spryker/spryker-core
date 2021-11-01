@@ -17,7 +17,7 @@ class ContentBannerGuiConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return array
+     * @return array<string, string>
      */
     public function getContentWidgetTemplates(): array
     {

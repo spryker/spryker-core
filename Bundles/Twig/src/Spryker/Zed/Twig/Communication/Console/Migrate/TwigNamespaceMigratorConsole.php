@@ -95,7 +95,7 @@ class TwigNamespaceMigratorConsole extends Console
     }
 
     /**
-     * @return array
+     * @return array<string, string>
      */
     protected function buildSearchAndReplaceMap(): array
     {
@@ -113,7 +113,7 @@ class TwigNamespaceMigratorConsole extends Console
     }
 
     /**
-     * @return array
+     * @return array<string, string>
      */
     protected function buildNamespaceMap(): array
     {

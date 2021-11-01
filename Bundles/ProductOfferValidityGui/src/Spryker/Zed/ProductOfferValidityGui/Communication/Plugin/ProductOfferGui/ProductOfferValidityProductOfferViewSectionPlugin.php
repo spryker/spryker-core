@@ -36,11 +36,9 @@ class ProductOfferValidityProductOfferViewSectionPlugin extends AbstractPlugin i
      *
      * @api
      *
-     * @phpstan-return array<mixed>
-     *
      * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
      *
-     * @return array
+     * @return array<mixed>
      */
     public function getData(ProductOfferTransfer $productOfferTransfer): array
     {

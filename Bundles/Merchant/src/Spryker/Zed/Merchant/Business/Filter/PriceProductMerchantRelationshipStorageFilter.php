@@ -28,8 +28,6 @@ class PriceProductMerchantRelationshipStorageFilter implements PriceProductMerch
     }
 
     /**
-     * @phpstan-return array<int, \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer|null>
-     *
      * @param array<\Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer> $priceProductMerchantRelationshipStorageTransfers
      *
      * @return array<\Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer>
@@ -42,6 +40,7 @@ class PriceProductMerchantRelationshipStorageFilter implements PriceProductMerch
             return [];
         }
 
+        /** @var array<\Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer> $priceProductMerchantRelationshipStorageTransfers */
         $priceProductMerchantRelationshipStorageTransfers = array_map(function (PriceProductMerchantRelationshipStorageTransfer $priceProductMerchantRelationshipStorageTransfer) use ($activeMerchantIds) {
             return $this->getPriceProductMerchantRelationshipStorageTransferWithFilteredUngroupedPricesByMerchantActive(
                 $priceProductMerchantRelationshipStorageTransfer,

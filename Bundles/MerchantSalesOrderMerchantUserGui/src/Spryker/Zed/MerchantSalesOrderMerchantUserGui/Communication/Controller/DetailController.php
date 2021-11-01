@@ -148,10 +148,8 @@ class DetailController extends AbstractController
     }
 
     /**
-     * @phpstan-param array<int, array<\Generated\Shared\Transfer\StateMachineItemTransfer>> $merchantOrderItemsStateHistory
-     *
      * @param \Generated\Shared\Transfer\MerchantOrderTransfer $merchantOrderTransfer
-     * @param array $merchantOrderItemsStateHistory
+     * @param array<int, array<\Generated\Shared\Transfer\StateMachineItemTransfer>> $merchantOrderItemsStateHistory
      *
      * @return \Generated\Shared\Transfer\MerchantOrderTransfer
      */
@@ -173,13 +171,9 @@ class DetailController extends AbstractController
     }
 
     /**
-     * @phpstan-param \ArrayObject<int,\Generated\Shared\Transfer\MerchantOrderItemTransfer> $merchantOrderItems
-     *
-     * @phpstan-return array<array-key, int|null>
-     *
      * @param \ArrayObject<int, \Generated\Shared\Transfer\MerchantOrderItemTransfer> $merchantOrderItems
      *
-     * @return array<int>
+     * @return array<int|null>
      */
     protected function extractMerchantOrderItemIds(ArrayObject $merchantOrderItems): array
     {
@@ -238,15 +232,11 @@ class DetailController extends AbstractController
     }
 
     /**
-     * @phpstan-param array <string, string> $data
-     *
-     * @phpstan-return array <string, string>
-     *
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param \Generated\Shared\Transfer\MerchantOrderTransfer $merchantOrderTransfer
      *
-     * @return array
+     * @return array<string, mixed>
      */
     protected function renderActions(Request $request, array $data, MerchantOrderTransfer $merchantOrderTransfer): array
     {
@@ -281,11 +271,9 @@ class DetailController extends AbstractController
     }
 
     /**
-     * @phpstan-return array<int|string, \Generated\Shared\Transfer\MerchantOrderItemTransfer>
-     *
      * @param \Generated\Shared\Transfer\MerchantOrderTransfer $merchantOrderTransfer
      *
-     * @return array
+     * @return array<int|string, \Generated\Shared\Transfer\MerchantOrderItemTransfer>
      */
     protected function groupMerchantOrderItemsByIdSalesOrderItem(MerchantOrderTransfer $merchantOrderTransfer): array
     {

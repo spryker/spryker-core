@@ -10,11 +10,9 @@ namespace Spryker\Glue\CmsPagesRestApi\Processor\Mapper;
 interface CmsPageMapperInterface
 {
     /**
-     * @phpstan-return array<string, \Generated\Shared\Transfer\RestCmsPagesAttributesTransfer>
-     *
      * @param array<\Generated\Shared\Transfer\CmsPageStorageTransfer> $cmsPageStorageTransfers
      *
-     * @return array<\Generated\Shared\Transfer\RestCmsPagesAttributesTransfer>
+     * @return array<string, \Generated\Shared\Transfer\RestCmsPagesAttributesTransfer>
      */
     public function mapCmsPageStorageTransfersToRestCmsPagesAttributesTransfers(array $cmsPageStorageTransfers): array;
 }

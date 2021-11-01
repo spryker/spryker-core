@@ -18,8 +18,6 @@ interface ProductBundleStorageClientInterface
      *
      * @api
      *
-     * @phpstan-return array<int, \Generated\Shared\Transfer\ProductBundleStorageTransfer>
-     *
      * @param \Generated\Shared\Transfer\ProductBundleStorageCriteriaTransfer $productBundleStorageCriteriaTransfer
      *
      * @return array<\Generated\Shared\Transfer\ProductBundleStorageTransfer>

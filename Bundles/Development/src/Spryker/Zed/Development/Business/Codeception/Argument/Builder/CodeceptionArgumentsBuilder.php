@@ -53,7 +53,7 @@ class CodeceptionArgumentsBuilder implements CodeceptionArgumentsBuilderInterfac
     }
 
     /**
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return \Spryker\Zed\Development\Business\Codeception\Argument\CodeceptionArguments
      */
@@ -72,7 +72,7 @@ class CodeceptionArgumentsBuilder implements CodeceptionArgumentsBuilderInterfac
 
     /**
      * @param \Spryker\Zed\Development\Business\Codeception\Argument\CodeceptionArguments $codeceptionArguments
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return \Spryker\Zed\Development\Business\Codeception\Argument\CodeceptionArguments
      */
@@ -87,7 +87,7 @@ class CodeceptionArgumentsBuilder implements CodeceptionArgumentsBuilderInterfac
 
     /**
      * @param \Spryker\Zed\Development\Business\Codeception\Argument\CodeceptionArguments $codeceptionArguments
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return \Spryker\Zed\Development\Business\Codeception\Argument\CodeceptionArguments
      */
@@ -105,7 +105,7 @@ class CodeceptionArgumentsBuilder implements CodeceptionArgumentsBuilderInterfac
 
     /**
      * @param \Spryker\Zed\Development\Business\Codeception\Argument\CodeceptionArguments $codeceptionArguments
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return \Spryker\Zed\Development\Business\Codeception\Argument\CodeceptionArguments
      */
@@ -123,7 +123,7 @@ class CodeceptionArgumentsBuilder implements CodeceptionArgumentsBuilderInterfac
 
     /**
      * @param \Spryker\Zed\Development\Business\Codeception\Argument\CodeceptionArguments $codeceptionArguments
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return \Spryker\Zed\Development\Business\Codeception\Argument\CodeceptionArguments
      */
@@ -138,7 +138,7 @@ class CodeceptionArgumentsBuilder implements CodeceptionArgumentsBuilderInterfac
 
     /**
      * @param \Spryker\Zed\Development\Business\Codeception\Argument\CodeceptionArguments $codeceptionArguments
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return \Spryker\Zed\Development\Business\Codeception\Argument\CodeceptionArguments
      */
@@ -167,7 +167,7 @@ class CodeceptionArgumentsBuilder implements CodeceptionArgumentsBuilderInterfac
 
     /**
      * @param \Spryker\Zed\Development\Business\Codeception\Argument\CodeceptionArguments $codeceptionArguments
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return \Spryker\Zed\Development\Business\Codeception\Argument\CodeceptionArguments
      */

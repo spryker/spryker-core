@@ -120,11 +120,9 @@ abstract class AbstractMerchantShipmentController extends AbstractController
     }
 
     /**
-     * @phpstan-return array<int|string, \Generated\Shared\Transfer\MerchantOrderItemTransfer>
-     *
      * @param \Generated\Shared\Transfer\MerchantOrderTransfer $merchantOrderTransfer
      *
-     * @return array
+     * @return array<int|string, \Generated\Shared\Transfer\MerchantOrderItemTransfer>
      */
     protected function groupMerchantOrderItemsByIdSalesOrderItem(MerchantOrderTransfer $merchantOrderTransfer): array
     {
@@ -193,13 +191,9 @@ abstract class AbstractMerchantShipmentController extends AbstractController
     }
 
     /**
-     * @phpstan-param \ArrayObject<int,\Generated\Shared\Transfer\MerchantOrderItemTransfer> $merchantOrderItems
-     *
-     * @phpstan-return array<int, int|null>
-     *
      * @param \ArrayObject<int, \Generated\Shared\Transfer\MerchantOrderItemTransfer> $merchantOrderItems
      *
-     * @return array<int>
+     * @return array<int, int|null>
      */
     protected function extractMerchantOrderItemIds(ArrayObject $merchantOrderItems): array
     {
@@ -212,10 +206,8 @@ abstract class AbstractMerchantShipmentController extends AbstractController
     }
 
     /**
-     * @phpstan-param array<int, array<\Generated\Shared\Transfer\StateMachineItemTransfer>> $merchantOrderItemsStateHistory
-     *
      * @param \Generated\Shared\Transfer\MerchantOrderTransfer $merchantOrderTransfer
-     * @param array $merchantOrderItemsStateHistory
+     * @param array<int, array<\Generated\Shared\Transfer\StateMachineItemTransfer>> $merchantOrderItemsStateHistory
      *
      * @return \Generated\Shared\Transfer\MerchantOrderTransfer
      */

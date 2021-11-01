@@ -78,9 +78,7 @@ class ProductBundleSynchronizationDataBulkRepositoryPlugin extends AbstractPlugi
      *
      * @api
      *
-     * @phpstan-return array<string, string>
-     *
-     * @return array
+     * @return array<string, string>
      */
     public function getParams(): array
     {

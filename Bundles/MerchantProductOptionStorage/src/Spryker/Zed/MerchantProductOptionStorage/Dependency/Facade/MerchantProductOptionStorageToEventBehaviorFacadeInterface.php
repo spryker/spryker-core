@@ -10,11 +10,9 @@ namespace Spryker\Zed\MerchantProductOptionStorage\Dependency\Facade;
 interface MerchantProductOptionStorageToEventBehaviorFacadeInterface
 {
     /**
-     * @phpstan-return array<mixed>
-     *
      * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
      *
-     * @return array
+     * @return array<mixed>
      */
     public function getEventTransferIds(array $eventTransfers);
 }

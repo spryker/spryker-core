@@ -95,7 +95,7 @@ class SalesOrderThresholdGuiConfig extends AbstractBundleConfig
     protected const STRATEGY_TYPE_TO_FORM_TYPE_MAP = [];
 
     /**
-     * @var array
+     * @var array<string, string>
      */
     protected const STRATEGY_GROUP_TO_FORM_TYPE_MAP = [
         self::GROUP_HARD => GlobalHardThresholdFormMapper::class,
@@ -111,7 +111,7 @@ class SalesOrderThresholdGuiConfig extends AbstractBundleConfig
     protected const STRATEGY_TYPE_TO_DATA_PROVIDER_MAP = [];
 
     /**
-     * @var array
+     * @var array<string, string>
      */
     protected const STRATEGY_GROUP_TO_DATA_PROVIDER_MAP = [
         self::GROUP_HARD => GlobalHardThresholdDataProvider::class,

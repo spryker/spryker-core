@@ -12,12 +12,12 @@ use Symfony\Component\Finder\Finder;
 class ZedNavigationSchemaFinder implements ZedNavigationSchemaFinderInterface
 {
     /**
-     * @var array
+     * @var array<string>
      */
     protected $pathPattern;
 
     /**
-     * @param array $pathPattern
+     * @param array<string> $pathPattern
      */
     public function __construct(array $pathPattern)
     {
@@ -40,7 +40,7 @@ class ZedNavigationSchemaFinder implements ZedNavigationSchemaFinderInterface
     }
 
     /**
-     * @return array
+     * @return array<string>
      */
     protected function getPaths()
     {

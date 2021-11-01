@@ -86,11 +86,9 @@ class HttpConfig extends AbstractBundleConfig
     }
 
     /**
-     * @phpstan-return array<string, mixed>
-     *
      * @api
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getStrictTransportSecurityConfig(): array
     {

@@ -39,9 +39,7 @@ class MerchantTable extends AbstractTable
     public const COL_STORES = 'stores';
 
     /**
-     * @phpstan-var array<string, string>
-     *
-     * @var array
+     * @var array<string, string>
      */
     protected const STATUS_CLASS_LABEL_MAPPING = [
         MerchantGuiConfig::STATUS_WAITING_FOR_APPROVAL => 'label-warning',
@@ -50,9 +48,7 @@ class MerchantTable extends AbstractTable
     ];
 
     /**
-     * @phpstan-var array<string, string>
-     *
-     * @var array
+     * @var array<string, string>
      */
     protected const STATUS_CLASS_BUTTON_MAPPING = [
         MerchantGuiConfig::STATUS_APPROVED => 'btn-create',

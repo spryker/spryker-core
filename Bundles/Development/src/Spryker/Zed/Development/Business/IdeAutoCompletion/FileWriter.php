@@ -12,7 +12,7 @@ class FileWriter implements FileWriterInterface
     /**
      * @param string $fileName
      * @param string $fileContent
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -26,7 +26,7 @@ class FileWriter implements FileWriterInterface
     }
 
     /**
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return string
      */
@@ -51,7 +51,7 @@ class FileWriter implements FileWriterInterface
 
     /**
      * @param string $directory
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */

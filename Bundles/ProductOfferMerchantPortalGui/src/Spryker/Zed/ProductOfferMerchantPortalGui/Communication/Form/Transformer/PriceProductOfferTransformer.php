@@ -164,8 +164,6 @@ class PriceProductOfferTransformer implements DataTransformerInterface
     }
 
     /**
-     * @phpstan-return ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>
-     *
      * @return \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>
      */
     protected function getPersistedPriceProductTransfers(): ArrayObject
@@ -270,13 +268,11 @@ class PriceProductOfferTransformer implements DataTransformerInterface
     }
 
     /**
-     * @phpstan-return array<mixed>
-     *
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      * @param array<mixed> $prices
      * @param array<\Generated\Shared\Transfer\PriceTypeTransfer> $priceTypes
      *
-     * @return array
+     * @return array<mixed>
      */
     protected function addPrices(PriceProductTransfer $priceProductTransfer, array $prices, array $priceTypes): array
     {
