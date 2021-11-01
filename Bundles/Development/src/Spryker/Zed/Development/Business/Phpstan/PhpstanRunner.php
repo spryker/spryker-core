@@ -524,6 +524,8 @@ class PhpstanRunner implements PhpstanRunnerInterface
      * @param string $path
      * @param string $fallbackPath
      *
+     * @throws \RuntimeException
+     *
      * @return int
      */
     protected function getDefaultLevel($path, $fallbackPath)
@@ -537,14 +539,23 @@ class PhpstanRunner implements PhpstanRunnerInterface
             $configFile = $directory . 'phpstan.json';
         }
 
+        $neonLevel = $this->neonConfigLevel($path);
         if (!file_exists($configFile)) {
-            return $configLevel;
+            return $neonLevel ?: $configLevel;
         }
 
         $content = file_get_contents($configFile);
         $json = json_decode($content, true);
+        if (!isset($json[static::DEFAULT_LEVEL])) {
+            return $neonLevel ?: $configLevel;
+        }
 
-        return $json[static::DEFAULT_LEVEL];
+        $definedMininumLevel = $json[static::DEFAULT_LEVEL];
+        if ($neonLevel && $definedMininumLevel && $neonLevel !== $definedMininumLevel) {
+            throw new RuntimeException('Can\'t resolve level from both neon and json file, as they differ.');
+        }
+
+        return $neonLevel ?: $definedMininumLevel;
     }
 
     /**
@@ -590,5 +601,26 @@ class PhpstanRunner implements PhpstanRunnerInterface
         }
 
         return false;
+    }
+
+    /**
+     * @param string $path
+     *
+     * @return int|null
+     */
+    protected function neonConfigLevel(string $path): ?int
+    {
+        $file = $path . 'phpstan.neon';
+        if (!file_exists($file)) {
+            return null;
+        }
+
+        $content = file_get_contents($file);
+        preg_match('/\blevel:\s*(\d)\b/', $content, $matches);
+        if (!$matches) {
+            return null;
+        }
+
+        return (int)$matches[1] ?: null;
     }
 }
