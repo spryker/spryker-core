@@ -31,7 +31,7 @@ class AbstractIndexMap implements IndexMapInterface
     {
         $metadata = $this->getMetadata($propertyName);
 
-        return isset($metadata['type']) ? $metadata['type'] : null;
+        return $metadata['type'] ?? null;
     }
 
     /**

@@ -189,9 +189,7 @@ class CatalogSearchResourceMapperTest extends Unit
      */
     protected function getProductsFromRestCatalogSearchAttributesTransfer(): ArrayObject
     {
-        return isset($this->restSearchAttributesTransfer[static::KEY_ABSTRACT_PRODUCTS])
-            ? $this->restSearchAttributesTransfer[static::KEY_ABSTRACT_PRODUCTS]
-            : $this->restSearchAttributesTransfer[static::KEY_PRODUCTS];
+        return $this->restSearchAttributesTransfer[static::KEY_ABSTRACT_PRODUCTS] ?? $this->restSearchAttributesTransfer[static::KEY_PRODUCTS];
     }
 
     /**

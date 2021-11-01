@@ -231,8 +231,7 @@ class ProductConcreteStorageWriter implements ProductConcreteStorageWriterInterf
         array $mappedProductConcreteStorageEntities,
         array $pairs
     ) {
-        $productConcreteStorageEntity = isset($mappedProductConcreteStorageEntities[$idProduct][$localeName]) ?
-            $mappedProductConcreteStorageEntities[$idProduct][$localeName] :
+        $productConcreteStorageEntity = $mappedProductConcreteStorageEntities[$idProduct][$localeName] ??
             new SpyProductConcreteStorage();
 
         $pairs[] = [

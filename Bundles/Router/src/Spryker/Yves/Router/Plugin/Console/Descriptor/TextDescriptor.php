@@ -68,7 +68,7 @@ class TextDescriptor extends Descriptor
     {
         $tableHeaders = ['Property', 'Value'];
         $tableRows = [
-            ['Route Name', isset($options['name']) ? $options['name'] : ''],
+            ['Route Name', $options['name'] ?? ''],
             ['Path', $route->getPath()],
             ['Path Regex', $route->compile()->getRegex()],
             ['Host', ($route->getHost() !== '' ? $route->getHost() : 'ANY')],

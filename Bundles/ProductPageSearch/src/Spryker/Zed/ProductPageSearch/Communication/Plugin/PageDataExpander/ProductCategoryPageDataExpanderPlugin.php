@@ -168,7 +168,7 @@ class ProductCategoryPageDataExpanderPlugin extends AbstractPlugin implements Pr
             $this->loadNames($localeTransfer);
         }
 
-        return isset(static::$categoryName[$idCategory]) ? static::$categoryName[$idCategory] : null;
+        return static::$categoryName[$idCategory] ?? null;
     }
 
     /**

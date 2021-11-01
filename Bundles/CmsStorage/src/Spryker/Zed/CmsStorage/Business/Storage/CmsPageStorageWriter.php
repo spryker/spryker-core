@@ -352,8 +352,7 @@ class CmsPageStorageWriter implements CmsPageStorageWriterInterface
             $localeNames = $localeNameMap[$storeName];
 
             foreach ($localeNames as $localeName) {
-                $cmsPageStorageEntity = isset($cmsPageStorageEntities[$idCmsPage][$localeName][$storeName]) ?
-                    $cmsPageStorageEntities[$idCmsPage][$localeName][$storeName] :
+                $cmsPageStorageEntity = $cmsPageStorageEntities[$idCmsPage][$localeName][$storeName] ??
                     new SpyCmsPageStorage();
 
                 $pairs[] = [

@@ -56,9 +56,9 @@ class CategoryNodeDataPageMapBuilder extends AbstractPlugin implements NamedPage
             ->addSearchResultData($pageMapTransfer, 'url', $data['spy_urls'][0]['url'])
             ->addSearchResultData($pageMapTransfer, 'type', static::TYPE_CATEGORY)
             ->addFullTextBoosted($pageMapTransfer, $categoryAttribute['name'])
-            ->addFullText($pageMapTransfer, isset($categoryAttribute['meta_title']) ? $categoryAttribute['meta_title'] : '')
-            ->addFullText($pageMapTransfer, isset($categoryAttribute['meta_keywords']) ? $categoryAttribute['meta_keywords'] : '')
-            ->addFullText($pageMapTransfer, isset($categoryAttribute['meta_description']) ? $categoryAttribute['meta_description'] : '')
+            ->addFullText($pageMapTransfer, $categoryAttribute['meta_title'] ?? '')
+            ->addFullText($pageMapTransfer, $categoryAttribute['meta_keywords'] ?? '')
+            ->addFullText($pageMapTransfer, $categoryAttribute['meta_description'] ?? '')
             ->addSuggestionTerms($pageMapTransfer, $categoryAttribute['name'])
             ->addCompletionTerms($pageMapTransfer, $categoryAttribute['name']);
 

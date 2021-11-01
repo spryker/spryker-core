@@ -322,7 +322,7 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
         if ($filterTransfer) {
             if ($filterTransfer->getOrderBy() && isset(static::SORT_KEYS_MAP[$filterTransfer->getOrderBy()])) {
                 $filterTransfer->setOrderBy(
-                    isset(static::SORT_KEYS_MAP[$filterTransfer->getOrderBy()]) ? static::SORT_KEYS_MAP[$filterTransfer->getOrderBy()] : null,
+                    static::SORT_KEYS_MAP[$filterTransfer->getOrderBy()] ?? null,
                 );
             }
 

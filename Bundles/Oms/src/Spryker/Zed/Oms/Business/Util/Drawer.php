@@ -319,7 +319,7 @@ class Drawer implements DrawerInterface
      */
     protected function addNode(StateInterface $state, $attributes = [], $name = null, $highlighted = false)
     {
-        $name = $name === null ? $state->getName() : $name;
+        $name = $name ?? $state->getName();
 
         $label = [];
         $label[] = str_replace(' ', $this->br, trim($name));
@@ -543,7 +543,7 @@ class Drawer implements DrawerInterface
      */
     protected function addEdgeFromState(TransitionInterface $transition, $fromName)
     {
-        $fromName = $fromName !== null ? $fromName : $transition->getSource()->getName();
+        $fromName = $fromName ?? $transition->getSource()->getName();
 
         return $fromName;
     }
@@ -556,7 +556,7 @@ class Drawer implements DrawerInterface
      */
     protected function addEdgeToState(TransitionInterface $transition, $toName)
     {
-        $toName = $toName !== null ? $toName : $transition->getTarget()->getName();
+        $toName = $toName ?? $transition->getTarget()->getName();
 
         return $toName;
     }

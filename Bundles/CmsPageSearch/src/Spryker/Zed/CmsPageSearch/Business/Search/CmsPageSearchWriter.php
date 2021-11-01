@@ -365,8 +365,7 @@ class CmsPageSearchWriter implements CmsPageSearchWriterInterface
             foreach ($cmsPageStores as $cmsPageStore) {
                 $storeName = $cmsPageStore->getSpyStore()->getName();
 
-                $cmsPageSearchEntity = isset($cmsPageSearchEntities[$idCmsPage][$localeName][$storeName]) ?
-                    $cmsPageSearchEntities[$idCmsPage][$localeName][$storeName] :
+                $cmsPageSearchEntity = $cmsPageSearchEntities[$idCmsPage][$localeName][$storeName] ??
                     new SpyCmsPageSearch();
 
                 $pairs[] = [

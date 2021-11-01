@@ -1086,7 +1086,7 @@ class ClassDefinition implements ClassDefinitionInterface
      */
     protected function getPropertyDeprecationDescription(array $property): ?string
     {
-        return isset($property['deprecated']) ? $property['deprecated'] : null;
+        return $property['deprecated'] ?? null;
     }
 
     /**
@@ -1539,7 +1539,7 @@ class ClassDefinition implements ClassDefinitionInterface
      */
     protected function getPropertySingularName(array $property): string
     {
-        $property['name'] = isset($property['singular']) ? $property['singular'] : $property['name'];
+        $property['name'] = $property['singular'] ?? $property['name'];
 
         return $this->getPropertyName($property);
     }

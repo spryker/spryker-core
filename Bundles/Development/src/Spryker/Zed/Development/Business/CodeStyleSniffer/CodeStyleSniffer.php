@@ -82,7 +82,7 @@ class CodeStyleSniffer
             [$namespace, $module] = explode('.', $module, 2);
         }
 
-        $pathOption = isset($options['path']) ? $options['path'] : null;
+        $pathOption = $options['path'] ?? null;
         $defaults = [
             static::OPTION_IGNORE => $namespace || $pathOption ? null : 'vendor/',
         ];

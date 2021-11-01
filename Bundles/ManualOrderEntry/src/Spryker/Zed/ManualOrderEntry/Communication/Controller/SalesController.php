@@ -60,7 +60,6 @@ class SalesController extends AbstractController
      */
     protected function getOrderSourceName(OrderSourceTransfer $orderSourceTransfer): string
     {
-        return $orderSourceTransfer->getName() !== null ?
-            $orderSourceTransfer->getName() : '-';
+        return $orderSourceTransfer->getName() ?? '-';
     }
 }

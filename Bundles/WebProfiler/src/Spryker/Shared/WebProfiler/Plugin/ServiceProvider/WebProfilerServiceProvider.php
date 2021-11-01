@@ -165,7 +165,7 @@ class WebProfilerServiceProvider implements ServiceProviderInterface, Controller
         });
 
         $app['web_profiler.controller.router'] = $app->share(function ($app) {
-            return new RouterController($app['profiler'], $app['twig'], isset($app['url_matcher']) ? $app['url_matcher'] : null, $app['routes']);
+            return new RouterController($app['profiler'], $app['twig'], $app['url_matcher'] ?? null, $app['routes']);
         });
 
         $app['web_profiler.controller.exception'] = $app->share(function ($app) {

@@ -86,7 +86,7 @@ class EntityDefinitionNormalizer extends DefinitionNormalizer
                 self::KEY_BUNDLE => $transferDefinition[self::KEY_BUNDLE],
                 self::KEY_CONTAINING_BUNDLE => $transferDefinition[self::KEY_CONTAINING_BUNDLE],
                 self::KEY_NAME => $transferName,
-                self::KEY_DEPRECATED => isset($transferDefinition[self::KEY_DEPRECATED]) ? $transferDefinition[self::KEY_DEPRECATED] : null,
+                self::KEY_DEPRECATED => $transferDefinition[self::KEY_DEPRECATED] ?? null,
                 self::KEY_PROPERTY => $properties,
                 self::ENTITY_NAMESPACE => $this->findEntityNamespace($transferDefinition),
             ];

@@ -426,7 +426,7 @@ class ProductConcreteFormAddDataProvider
             }
 
             $inputType = static::DEFAULT_INPUT_TYPE;
-            $value = isset($productAttributeValues[$type]) ? $productAttributeValues[$type] : null;
+            $value = $productAttributeValues[$type] ?? null;
             $shouldBeTextArea = mb_strlen($value) > 255;
 
             if ($shouldBeTextArea) {

@@ -253,8 +253,8 @@ class MenuFormatter implements MenuFormatterInterface
         }
 
         return [
-            self::LABEL => $label !== null ? $label : $title,
-            self::TITLE => $title !== null ? $title : $label,
+            self::LABEL => $label ?? $title,
+            self::TITLE => $title ?? $label,
         ];
     }
 
@@ -265,7 +265,7 @@ class MenuFormatter implements MenuFormatterInterface
      */
     protected function getPageLabel(array $page)
     {
-        return isset($page[self::LABEL]) ? $page[self::LABEL] : null;
+        return $page[self::LABEL] ?? null;
     }
 
     /**
@@ -275,7 +275,7 @@ class MenuFormatter implements MenuFormatterInterface
      */
     protected function getPageTitle(array $page)
     {
-        return isset($page[self::TITLE]) ? $page[self::TITLE] : null;
+        return $page[self::TITLE] ?? null;
     }
 
     /**

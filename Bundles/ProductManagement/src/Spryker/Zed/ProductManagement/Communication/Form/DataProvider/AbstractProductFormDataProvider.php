@@ -536,7 +536,7 @@ class AbstractProductFormDataProvider
     {
         $values = [];
         foreach ($this->attributeTransferCollection as $type => $attributeTransfer) {
-            $attributeValue = isset($attributes[$type]) ? $attributes[$type] : null;
+            $attributeValue = $attributes[$type] ?? null;
 
             if ($isNew) {
                 $attributeValue = null;
@@ -569,7 +569,7 @@ class AbstractProductFormDataProvider
             $isSuper = $attributeTransfer->getIsSuper();
             $inputType = $attributeTransfer->getInputType();
             $allowInput = $attributeTransfer->getAllowInput();
-            $value = isset($productAttributeValues[$type]) ? $productAttributeValues[$type] : null;
+            $value = $productAttributeValues[$type] ?? null;
             $checkboxDisabled = false;
             $valueDisabled = true;
 
@@ -614,7 +614,7 @@ class AbstractProductFormDataProvider
             $isSuper = false;
             $inputType = self::DEFAULT_INPUT_TYPE;
             $allowInput = false;
-            $value = isset($productAttributeValues[$type]) ? $productAttributeValues[$type] : null;
+            $value = $productAttributeValues[$type] ?? null;
             $shouldBeTextArea = mb_strlen($value) > 255;
             $checkboxDisabled = true;
             $valueDisabled = true;
@@ -655,7 +655,7 @@ class AbstractProductFormDataProvider
                 continue;
             }
 
-            $value = isset($productAttributes[$type]) ? $productAttributes[$type] : null;
+            $value = $productAttributes[$type] ?? null;
 
             if ($isNew) {
                 $value = null;
@@ -741,7 +741,7 @@ class AbstractProductFormDataProvider
             $id = $attributeTransfer->getIdProductManagementAttribute();
             $allowInput = $attributeTransfer->getAllowInput();
 
-            $value = isset($productAttributeValues[$type]) ? $productAttributeValues[$type] : null;
+            $value = $productAttributeValues[$type] ?? null;
 
             $checkboxDisabled = false;
             $valueDisabled = true;

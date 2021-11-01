@@ -164,7 +164,7 @@ class ResourceRouter implements ResourceRouterInterface
      */
     protected function isValidChildParent(array $resources, array $currentResource, int $resourceNr): bool
     {
-        $nextResource = isset($resources[$resourceNr + 1]) ? $resources[$resourceNr + 1] : null;
+        $nextResource = $resources[$resourceNr + 1] ?? null;
         if (!$nextResource) {
             return false;
         }

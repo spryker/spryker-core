@@ -151,9 +151,7 @@ class CatalogSearchSuggestionsResourceMapperTest extends Unit
     protected function getProductsFromRestCatalogSearchAttributesTransfer(
         RestCatalogSearchSuggestionsAttributesTransfer $restCatalogSearchSuggestionsAttributes
     ): ArrayObject {
-        return isset($restCatalogSearchSuggestionsAttributes[static::KEY_ABSTRACT_PRODUCTS])
-            ? $restCatalogSearchSuggestionsAttributes[static::KEY_ABSTRACT_PRODUCTS]
-            : $restCatalogSearchSuggestionsAttributes[static::KEY_PRODUCTS];
+        return $restCatalogSearchSuggestionsAttributes[static::KEY_ABSTRACT_PRODUCTS] ?? $restCatalogSearchSuggestionsAttributes[static::KEY_PRODUCTS];
     }
 
     /**

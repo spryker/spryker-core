@@ -73,7 +73,7 @@ class CorsFilterPostProcessor implements PostProcessorInterface
         }
 
         $requestHeaders = $apiRequestTransfer->getHeaderData();
-        $origin = isset($requestHeaders[static::HEADER_ORIGIN]) ? $requestHeaders[static::HEADER_ORIGIN] : null;
+        $origin = $requestHeaders[static::HEADER_ORIGIN] ?? null;
         $allowedOrigin = $origin ?: $this->apiConfig->getAllowedOrigin();
 
         $headers[static::HEADER_ACCESS_CONTROL_ALLOW_ORIGIN] = $allowedOrigin ?: '*';

@@ -150,7 +150,7 @@ class ShipmentCarrierFormType extends AbstractType
     protected function createShipmentCarrierRequestTransfer(string $carrierName, ExecutionContextInterface $context): ShipmentCarrierRequestTransfer
     {
         $formData = $context->getRoot()->getData();
-        $carrierId = isset($formData[static::FIELD_CARRIER_ID]) ? $formData[static::FIELD_CARRIER_ID] : null;
+        $carrierId = $formData[static::FIELD_CARRIER_ID] ?? null;
 
         return (new ShipmentCarrierRequestTransfer())
             ->setCarrierName($carrierName)

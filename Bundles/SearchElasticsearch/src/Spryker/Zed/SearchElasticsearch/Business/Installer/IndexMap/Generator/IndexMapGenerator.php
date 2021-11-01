@@ -185,7 +185,7 @@ class IndexMapGenerator implements IndexMapGeneratorInterface
      */
     protected function getMappingProperties(array $mapping): array
     {
-        return isset($mapping[static::PROPERTIES]) ? $mapping[static::PROPERTIES] : [];
+        return $mapping[static::PROPERTIES] ?? [];
     }
 
     /**

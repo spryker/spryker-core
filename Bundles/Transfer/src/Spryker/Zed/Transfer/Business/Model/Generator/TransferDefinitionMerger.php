@@ -61,7 +61,7 @@ class TransferDefinitionMerger implements MergerInterface
 
         $mergedDefinition = [
             'name' => $existingDefinition['name'],
-            'entity-namespace' => isset($existingDefinition['entity-namespace']) ? $existingDefinition['entity-namespace'] : null,
+            'entity-namespace' => $existingDefinition['entity-namespace'] ?? null,
             'deprecated' => $this->mergeDeprecatedClassDefinition($existingDefinition, $definitionToMerge),
             'property' => $this->mergeProperty($existingDefinition['property'], $definitionToMerge['property'], $transferName),
         ];

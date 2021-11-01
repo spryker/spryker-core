@@ -686,8 +686,7 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
             $storeName = $productAbstractStore['SpyStore']['name'];
             $productAbstractLocalizedEntity[SharedProductPageSearchConfig::PRODUCT_ABSTRACT_PAGE_LOAD_DATA] = $productPayloadTransfer;
 
-            $searchEntity = isset($mappedProductAbstractPageSearchEntities[$idProductAbstract][$storeName][$localeName]) ?
-                $mappedProductAbstractPageSearchEntities[$idProductAbstract][$storeName][$localeName] :
+            $searchEntity = $mappedProductAbstractPageSearchEntities[$idProductAbstract][$storeName][$localeName] ??
                 new SpyProductAbstractPageSearch();
 
             unset($mappedProductAbstractPageSearchEntities[$idProductAbstract][$storeName][$localeName]);

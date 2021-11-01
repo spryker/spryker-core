@@ -134,8 +134,7 @@ class ProductOptionGroupDataHelper extends Module
             ->setPrices(new ArrayObject());
 
         foreach ($overridePrices as $overridePrice) {
-            $currencyCode = isset($overridePrice[static::CURRENCY_CODE]) ?
-                $overridePrice[static::CURRENCY_CODE] :
+            $currencyCode = $overridePrice[static::CURRENCY_CODE] ??
                 static::DEFAULT_CURRENCY;
             $storeName = array_key_exists(static::STORE_NAME, $overridePrice) ?
                 $overridePrice[static::STORE_NAME] :

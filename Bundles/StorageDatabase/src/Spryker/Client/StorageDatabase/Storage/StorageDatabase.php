@@ -113,7 +113,7 @@ class StorageDatabase implements StorageDatabaseInterface
 
         foreach ($keys as $key) {
             $prefixedKey = $this->getPrefixedKeyName($key);
-            $results[$prefixedKey] = isset($data[$key]) ? $data[$key] : null;
+            $results[$prefixedKey] = $data[$key] ?? null;
         }
 
         return $results;

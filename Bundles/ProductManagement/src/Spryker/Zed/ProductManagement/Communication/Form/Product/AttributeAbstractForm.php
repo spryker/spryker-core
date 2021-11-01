@@ -135,7 +135,7 @@ class AttributeAbstractForm extends AbstractSubForm
     {
         parent::buildForm($builder, $options);
 
-        $this->localeTransfer = isset($options[static::OPTION_LOCALE_TRANSFER]) ? $options[static::OPTION_LOCALE_TRANSFER] : null;
+        $this->localeTransfer = $options[static::OPTION_LOCALE_TRANSFER] ?? null;
 
         $this
             ->addCheckboxNameField($builder, $options)

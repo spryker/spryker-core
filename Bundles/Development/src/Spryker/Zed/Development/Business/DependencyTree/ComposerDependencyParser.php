@@ -366,13 +366,13 @@ class ComposerDependencyParser implements ComposerDependencyParserInterface
             ));
         }
 
-        $require = isset($content['require']) ? $content['require'] : [];
+        $require = $content['require'] ?? [];
         $this->addComposerDependencies($require, $composerDependencies);
 
-        $requireDev = isset($content['require-dev']) ? $content['require-dev'] : [];
+        $requireDev = $content['require-dev'] ?? [];
         $this->addComposerDependencies($requireDev, $composerDependencies, true);
 
-        $suggested = isset($content['suggest']) ? $content['suggest'] : [];
+        $suggested = $content['suggest'] ?? [];
         $this->addSuggestedDependencies($suggested, $composerDependencies);
 
         return $composerDependencies;

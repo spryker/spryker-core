@@ -92,8 +92,8 @@ class ServerProcessor
      */
     protected function getUrl()
     {
-        $serverName = isset($_SERVER['SERVER_NAME']) ? $_SERVER['SERVER_NAME'] : null;
-        $requestUri = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '';
+        $serverName = $_SERVER['SERVER_NAME'] ?? null;
+        $requestUri = $_SERVER['REQUEST_URI'] ?? '';
 
         $protocol = 'http://';
 
@@ -131,7 +131,7 @@ class ServerProcessor
     {
         $utilNetworkHost = new Host();
 
-        return isset($_SERVER['COMPUTERNAME']) ? $_SERVER['COMPUTERNAME'] : $utilNetworkHost->getHostname();
+        return $_SERVER['COMPUTERNAME'] ?? $utilNetworkHost->getHostname();
     }
 
     /**
@@ -139,7 +139,7 @@ class ServerProcessor
      */
     protected function getUserAgent()
     {
-        return isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : null;
+        return $_SERVER['HTTP_USER_AGENT'] ?? null;
     }
 
     /**
@@ -147,7 +147,7 @@ class ServerProcessor
      */
     protected function getRemoteAddress()
     {
-        return isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : null;
+        return $_SERVER['REMOTE_ADDR'] ?? null;
     }
 
     /**
@@ -163,6 +163,6 @@ class ServerProcessor
      */
     protected function getHttpReferer()
     {
-        return isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : null;
+        return $_SERVER['HTTP_REFERER'] ?? null;
     }
 }
