@@ -20,6 +20,8 @@ use Spryker\Zed\Discount\Business\Distributor\Distributor;
 use Spryker\Zed\Discount\Business\Distributor\DistributorInterface;
 use Spryker\Zed\Discount\Business\Exception\CalculatorException;
 use Spryker\Zed\Discount\Business\Exception\QueryStringException;
+use Spryker\Zed\Discount\Business\Filter\CollectedDiscountItemFilter;
+use Spryker\Zed\Discount\Business\Filter\CollectedDiscountItemFilterInterface;
 use Spryker\Zed\Discount\Business\QueryString\ClauseValidator;
 use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
 use Spryker\Zed\Discount\Business\QueryString\LogicalComparators;
@@ -58,6 +60,11 @@ class CalculatorTest extends Unit
      * @var int
      */
     public const ITEM_GROSS_PRICE_500 = 500;
+
+    /**
+     * @var \SprykerTest\Zed\Discount\DiscountBusinessTester
+     */
+    protected $tester;
 
     /**
      * @return void
@@ -161,7 +168,8 @@ class CalculatorTest extends Unit
         $quoteTransfer = new QuoteTransfer();
 
         $itemTransfer = new ItemTransfer();
-        $itemTransfer->setUnitGrossPrice(self::ITEM_GROSS_PRICE_500);
+        $itemTransfer->setUnitGrossPrice(static::ITEM_GROSS_PRICE_500);
+        $itemTransfer->setUnitPrice(static::ITEM_GROSS_PRICE_500);
         $itemTransfer->setSku('sku1');
         $quoteTransfer->addItem($itemTransfer);
         $quoteTransfer->addItem(clone $itemTransfer);
@@ -186,6 +194,7 @@ class CalculatorTest extends Unit
             $distributor,
             $calculatorPlugins,
             [],
+            $this->createCollectedDiscountItemFilter(),
         );
     }
 
@@ -612,6 +621,7 @@ class CalculatorTest extends Unit
             $distributorMock,
             $calculatorPlugins,
             $this->getCollectedDiscountGroupingPlugins(),
+            $this->createCollectedDiscountItemFilter(),
         );
     }
 
@@ -694,5 +704,13 @@ class CalculatorTest extends Unit
         $discountTransfer->setAmount($amount);
 
         return $discountTransfer;
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Business\Filter\CollectedDiscountItemFilterInterface
+     */
+    protected function createCollectedDiscountItemFilter(): CollectedDiscountItemFilterInterface
+    {
+        return new CollectedDiscountItemFilter();
     }
 }

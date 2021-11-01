@@ -16,6 +16,7 @@ use Spryker\Shared\Log\LoggerTrait;
 use Spryker\Zed\Discount\Business\Distributor\DistributorInterface;
 use Spryker\Zed\Discount\Business\Exception\CalculatorException;
 use Spryker\Zed\Discount\Business\Exception\QueryStringException;
+use Spryker\Zed\Discount\Business\Filter\CollectedDiscountItemFilterInterface;
 use Spryker\Zed\Discount\Business\QueryString\SpecificationBuilderInterface;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface;
 use Spryker\Zed\Discount\Dependency\Plugin\CollectorStrategyPluginInterface;
@@ -66,24 +67,32 @@ class Calculator implements CalculatorInterface
     protected $collectorStrategyResolver;
 
     /**
+     * @var \Spryker\Zed\Discount\Business\Filter\CollectedDiscountItemFilterInterface
+     */
+    protected $collectedDiscountsItemFilter;
+
+    /**
      * @param \Spryker\Zed\Discount\Business\QueryString\SpecificationBuilderInterface $collectorBuilder
      * @param \Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface $messengerFacade
      * @param \Spryker\Zed\Discount\Business\Distributor\DistributorInterface $distributor
      * @param array<\Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface> $calculatorPlugins
      * @param array<\Spryker\Zed\DiscountExtension\Dependency\Plugin\CollectedDiscountGroupingStrategyPluginInterface> $collectedDiscountGroupingPlugins
+     * @param \Spryker\Zed\Discount\Business\Filter\CollectedDiscountItemFilterInterface $collectedDiscountsItemFilter
      */
     public function __construct(
         SpecificationBuilderInterface $collectorBuilder,
         DiscountToMessengerInterface $messengerFacade,
         DistributorInterface $distributor,
         array $calculatorPlugins,
-        array $collectedDiscountGroupingPlugins
+        array $collectedDiscountGroupingPlugins,
+        CollectedDiscountItemFilterInterface $collectedDiscountsItemFilter
     ) {
         $this->collectorBuilder = $collectorBuilder;
         $this->calculatorPlugins = $calculatorPlugins;
         $this->collectedDiscountGroupingPlugins = $collectedDiscountGroupingPlugins;
         $this->messengerFacade = $messengerFacade;
         $this->distributor = $distributor;
+        $this->collectedDiscountsItemFilter = $collectedDiscountsItemFilter;
     }
 
     /**
@@ -105,6 +114,8 @@ class Calculator implements CalculatorInterface
         }
 
         $this->distributeDiscountAmount($collectedDiscountTransfers);
+
+        $collectedDiscountTransfers = $this->collectedDiscountsItemFilter->filter($collectedDiscountTransfers);
 
         $this->addDiscountsAppliedMessage(
             $collectedDiscountTransfers,

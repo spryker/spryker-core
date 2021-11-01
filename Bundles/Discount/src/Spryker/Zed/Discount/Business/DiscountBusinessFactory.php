@@ -40,6 +40,8 @@ use Spryker\Zed\Discount\Business\Distributor\DiscountableItem\DiscountableItemT
 use Spryker\Zed\Discount\Business\Distributor\DiscountableItem\DiscountableItemTransformerInterface;
 use Spryker\Zed\Discount\Business\Distributor\Distributor;
 use Spryker\Zed\Discount\Business\Distributor\DistributorInterface;
+use Spryker\Zed\Discount\Business\Filter\CollectedDiscountItemFilter;
+use Spryker\Zed\Discount\Business\Filter\CollectedDiscountItemFilterInterface;
 use Spryker\Zed\Discount\Business\Filter\DiscountableItemFilter;
 use Spryker\Zed\Discount\Business\Persistence\DiscountConfiguratorHydrate;
 use Spryker\Zed\Discount\Business\Persistence\DiscountEntityMapper;
@@ -533,6 +535,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
             $this->createDistributor(),
             $this->getCalculatorPlugins(),
             $this->getCollectedDiscountGroupingPlugins(),
+            $this->createCollectedDiscountItemFilter(),
             $this->createDiscountableItemFilter(),
         );
 
@@ -699,5 +702,13 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
         return new QuoteDiscountMaxUsageValidator(
             $this->getRepository(),
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Business\Filter\CollectedDiscountItemFilterInterface
+     */
+    public function createCollectedDiscountItemFilter(): CollectedDiscountItemFilterInterface
+    {
+        return new CollectedDiscountItemFilter();
     }
 }

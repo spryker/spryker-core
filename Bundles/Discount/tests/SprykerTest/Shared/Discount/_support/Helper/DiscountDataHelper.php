@@ -11,10 +11,23 @@ use Codeception\Module;
 use Generated\Shared\DataBuilder\DiscountBuilder;
 use Generated\Shared\DataBuilder\DiscountConfiguratorBuilder;
 use Generated\Shared\DataBuilder\DiscountGeneralBuilder;
+use Generated\Shared\DataBuilder\DiscountMoneyAmountBuilder;
 use Generated\Shared\DataBuilder\DiscountVoucherBuilder;
 use Generated\Shared\DataBuilder\MoneyValueBuilder;
 use Generated\Shared\Transfer\DiscountGeneralTransfer;
+use Generated\Shared\Transfer\DiscountMoneyAmountTransfer;
+use Generated\Shared\Transfer\DiscountTransfer;
+use Generated\Shared\Transfer\DiscountVoucherTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
+use Orm\Zed\Discount\Persistence\SpyDiscount;
+use Orm\Zed\Discount\Persistence\SpyDiscountAmount;
+use Orm\Zed\Discount\Persistence\SpyDiscountAmountQuery;
 use Orm\Zed\Discount\Persistence\SpyDiscountQuery;
+use Orm\Zed\Discount\Persistence\SpyDiscountStore;
+use Orm\Zed\Discount\Persistence\SpyDiscountStoreQuery;
+use Orm\Zed\Discount\Persistence\SpyDiscountVoucher;
+use Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool;
+use Orm\Zed\Discount\Persistence\SpyDiscountVoucherPoolQuery;
 use Orm\Zed\Sales\Persistence\SpySalesDiscount;
 use Spryker\Zed\Discount\Business\DiscountFacadeInterface;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainer;
@@ -83,6 +96,110 @@ class DiscountDataHelper extends Module
     }
 
     /**
+     * @param string $name
+     * @param bool $isActive
+     *
+     * @return int
+     */
+    public function haveDiscountVoucherPool(string $name, bool $isActive = true): int
+    {
+        $discountVoucherPoolEntity = (new SpyDiscountVoucherPool())
+            ->setIsActive($isActive)
+            ->setName($name);
+        $discountVoucherPoolEntity->save();
+
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($discountVoucherPoolEntity): void {
+            $this->cleanupDiscountVoucherPool($discountVoucherPoolEntity);
+        });
+
+        return $discountVoucherPoolEntity->getIdDiscountVoucherPool();
+    }
+
+    /**
+     * @param array $discountOverride
+     * @param int $discountMinimumItemAmount
+     *
+     * @return \Generated\Shared\Transfer\DiscountTransfer
+     */
+    public function haveDiscountWithMinimumItemAmount(array $discountOverride = [], int $discountMinimumItemAmount = 1): DiscountTransfer
+    {
+        $discountTransfer = (new DiscountBuilder($discountOverride))->build();
+
+        $discountEntity = (new SpyDiscount())
+            ->fromArray($discountTransfer->toArray())
+            ->setMinimumItemAmount($discountMinimumItemAmount);
+        $discountEntity->save();
+
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($discountEntity): void {
+            $this->cleanupDiscount($discountEntity);
+        });
+
+        return $discountTransfer->fromArray($discountEntity->toArray(), true);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
+     *
+     * @return int
+     */
+    public function haveDiscountStore(StoreTransfer $storeTransfer, DiscountTransfer $discountTransfer): int
+    {
+        $discountStoreEntity = (new SpyDiscountStore())
+            ->setFkStore($storeTransfer->getIdStore())
+            ->setFkDiscount($discountTransfer->getIdDiscount());
+        $discountStoreEntity->save();
+
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($discountStoreEntity): void {
+            $this->cleanupDiscountStore($discountStoreEntity);
+        });
+
+        return $discountStoreEntity->getIdDiscountStore();
+    }
+
+    /**
+     * @param array $discountAmountOverride
+     *
+     * @return \Generated\Shared\Transfer\DiscountMoneyAmountTransfer
+     */
+    public function haveDiscountAmount(array $discountAmountOverride = []): DiscountMoneyAmountTransfer
+    {
+        $discountMoneyAmountTransfer = (new DiscountMoneyAmountBuilder($discountAmountOverride))->build();
+
+        $discountAmountEntity = (new SpyDiscountAmount())->fromArray($discountMoneyAmountTransfer->toArray());
+        $discountAmountEntity->save();
+
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($discountAmountEntity): void {
+            $this->cleanupDiscountAmount($discountAmountEntity);
+        });
+
+        return $discountMoneyAmountTransfer->fromArray($discountAmountEntity->toArray(), true);
+    }
+
+    /**
+     * @param string $voucherCode
+     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
+     *
+     * @return \Generated\Shared\Transfer\DiscountVoucherTransfer
+     */
+    public function haveDiscountVoucher(string $voucherCode, DiscountTransfer $discountTransfer): DiscountVoucherTransfer
+    {
+        $voucherEntity = new SpyDiscountVoucher();
+        $voucherEntity->setFkDiscountVoucherPool($discountTransfer->getFkDiscountVoucherPool());
+        $voucherEntity->setCode($voucherCode);
+        $voucherEntity->setIsActive(true);
+        $voucherEntity->save();
+
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($voucherEntity): void {
+            $this->debug('Deleting Discount Voucher: ' . $voucherEntity->getIdDiscountVoucher());
+            $voucherEntity->delete();
+        });
+
+        return (new DiscountVoucherTransfer())
+            ->fromArray($voucherEntity->toArray(), true);
+    }
+
+    /**
      * @return \Spryker\Zed\Discount\Business\DiscountFacadeInterface
      */
     private function getDiscountFacade(): DiscountFacadeInterface
@@ -130,5 +247,53 @@ class DiscountDataHelper extends Module
         });
 
         return $salesDiscountEntity;
+    }
+
+    /**
+     * @param \Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool $discountVoucherPoolEntity
+     *
+     * @return void
+     */
+    protected function cleanupDiscountVoucherPool(SpyDiscountVoucherPool $discountVoucherPoolEntity): void
+    {
+        SpyDiscountVoucherPoolQuery::create()
+            ->filterByIdDiscountVoucherPool($discountVoucherPoolEntity->getIdDiscountVoucherPool())
+            ->delete();
+    }
+
+    /**
+     * @param \Orm\Zed\Discount\Persistence\SpyDiscount $discountEntity
+     *
+     * @return void
+     */
+    protected function cleanupDiscount(SpyDiscount $discountEntity): void
+    {
+        SpyDiscountQuery::create()
+            ->filterByIdDiscount($discountEntity->getIdDiscount())
+            ->delete();
+    }
+
+    /**
+     * @param \Orm\Zed\Discount\Persistence\SpyDiscountStore $discountStoreEntity
+     *
+     * @return void
+     */
+    protected function cleanupDiscountStore(SpyDiscountStore $discountStoreEntity): void
+    {
+        SpyDiscountStoreQuery::create()
+            ->findByIdDiscountStore($discountStoreEntity->getIdDiscountStore())
+            ->delete();
+    }
+
+    /**
+     * @param \Orm\Zed\Discount\Persistence\SpyDiscountAmount $discountAmountEntity
+     *
+     * @return void
+     */
+    protected function cleanupDiscountAmount(SpyDiscountAmount $discountAmountEntity): void
+    {
+        SpyDiscountAmountQuery::create()
+            ->findByIdDiscountAmount($discountAmountEntity->getIdDiscountAmount())
+            ->delete();
     }
 }

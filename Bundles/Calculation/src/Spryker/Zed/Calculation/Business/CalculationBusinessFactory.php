@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Calculation\Business;
 
+use Spryker\Zed\Calculation\Business\Filter\CalculatedDiscountFilter;
+use Spryker\Zed\Calculation\Business\Filter\CalculatedDiscountFilterInterface;
 use Spryker\Zed\Calculation\Business\Model\Aggregator\DiscountAmountAggregator;
 use Spryker\Zed\Calculation\Business\Model\Aggregator\DiscountAmountAggregator\DiscountAmountAggregatorForGrossAmount;
 use Spryker\Zed\Calculation\Business\Model\Aggregator\ItemDiscountAmountFullAggregator;
@@ -159,7 +161,17 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
      */
     public function createDiscountAmountAggregatorForGenericAmount()
     {
-        return new DiscountAmountAggregator();
+        return new DiscountAmountAggregator(
+            $this->createCalculatedDiscountFilter(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Calculation\Business\Filter\CalculatedDiscountFilterInterface
+     */
+    public function createCalculatedDiscountFilter(): CalculatedDiscountFilterInterface
+    {
+        return new CalculatedDiscountFilter();
     }
 
     /**

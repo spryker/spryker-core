@@ -8,9 +8,13 @@
 namespace SprykerTest\Zed\Discount;
 
 use Codeception\Actor;
+use Generated\Shared\DataBuilder\ItemBuilder;
+use Generated\Shared\Transfer\CurrencyTransfer;
+use Generated\Shared\Transfer\DiscountMoneyAmountTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 
 /**
  * @method void wantToTest($text)
@@ -36,11 +40,35 @@ class DiscountBusinessTester extends Actor
     public const VOUCHER_CODE = 'testCode1';
 
     /**
+     * @var int
+     */
+    protected const DEFAULT_ITEM_QUANTITY = 3;
+
+    /**
+     * @var string
+     */
+    protected const STORE_DE = 'DE';
+
+    /**
+     * @var string
+     */
+    protected const CURRENCY_EUR = 'EUR';
+
+    /**
+     * @var int
+     */
+    protected const DISCOUNT_VOUCHER_POOL_NAME_LENGTH = 10;
+
+    /**
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function createQuoteTransferWithoutVoucherDiscount(): QuoteTransfer
     {
-        return $this->createQuoteTransfer();
+        return $this->createQuoteTransferWithItems([
+            [
+                ItemTransfer::QUANTITY => static::DEFAULT_ITEM_QUANTITY,
+            ],
+        ]);
     }
 
     /**
@@ -48,20 +76,69 @@ class DiscountBusinessTester extends Actor
      */
     public function createQuoteTransferWithVoucherDiscount(): QuoteTransfer
     {
-        return $this->createQuoteTransfer()
-            ->addVoucherDiscount((new DiscountTransfer())->setVoucherCode(static::VOUCHER_CODE));
+        return $this->createQuoteTransferWithItems([
+            [
+                ItemTransfer::QUANTITY => static::DEFAULT_ITEM_QUANTITY,
+            ],
+        ])->addVoucherDiscount((new DiscountTransfer())->setVoucherCode(static::VOUCHER_CODE));
     }
 
     /**
+     * @param array $itemsData
+     *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function createQuoteTransfer(): QuoteTransfer
+    public function createQuoteTransferWithItems(array $itemsData = []): QuoteTransfer
     {
         $quoteTransfer = new QuoteTransfer();
 
-        $itemTransfer = new ItemTransfer();
-        $itemTransfer->setQuantity(3);
+        $quoteTransfer->setStore($this->haveStore([
+            StoreTransfer::NAME => static::STORE_DE,
+        ]));
 
-        return $quoteTransfer->addItem($itemTransfer);
+        $quoteTransfer->setCurrency(
+            (new CurrencyTransfer())->setCode(static::CURRENCY_EUR),
+        );
+
+        foreach ($itemsData as $itemData) {
+            $itemTransfer = (new ItemBuilder($itemData))->build();
+            $quoteTransfer->addItem($itemTransfer);
+        }
+
+        return $quoteTransfer;
+    }
+
+    /**
+     * @param array $discountOverride
+     * @param int $discountMinimumItemAmount
+     *
+     * @return \Generated\Shared\Transfer\DiscountTransfer
+     */
+    public function createDiscountTransferWithDiscountVoucherPool(
+        array $discountOverride = [],
+        int $discountMinimumItemAmount = 1
+    ): DiscountTransfer {
+        $discountVoucherPoolId = $this->haveDiscountVoucherPool(
+            $this->generateRandomString(static::DISCOUNT_VOUCHER_POOL_NAME_LENGTH),
+        );
+
+        $discountOverride += [
+            DiscountTransfer::FK_DISCOUNT_VOUCHER_POOL => $discountVoucherPoolId,
+        ];
+        $discountTransfer = $this->haveDiscountWithMinimumItemAmount($discountOverride, $discountMinimumItemAmount);
+
+        $this->haveDiscountStore(
+            $this->haveStore([StoreTransfer::NAME => static::STORE_DE]),
+            $discountTransfer,
+        );
+
+        $currencyTransfer = $this->haveCurrencyTransfer([CurrencyTransfer::CODE => static::CURRENCY_EUR]);
+        $this->haveDiscountAmount([
+            DiscountMoneyAmountTransfer::FK_CURRENCY => $currencyTransfer->getIdCurrency(),
+            DiscountMoneyAmountTransfer::GROSS_AMOUNT => $discountTransfer->getAmount(),
+            DiscountMoneyAmountTransfer::FK_DISCOUNT => $discountTransfer->getIdDiscount(),
+        ]);
+
+        return $discountTransfer;
     }
 }
