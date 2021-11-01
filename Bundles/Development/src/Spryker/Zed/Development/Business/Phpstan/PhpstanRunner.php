@@ -551,6 +551,10 @@ class PhpstanRunner implements PhpstanRunnerInterface
         }
 
         $definedMininumLevel = $json[static::DEFAULT_LEVEL];
+        if (!$neonLevel && !$definedMininumLevel) {
+            return $configLevel;
+        }
+
         if ($neonLevel && $definedMininumLevel && $neonLevel !== $definedMininumLevel) {
             throw new RuntimeException('Can\'t resolve level from both neon and json file, as they differ.');
         }
