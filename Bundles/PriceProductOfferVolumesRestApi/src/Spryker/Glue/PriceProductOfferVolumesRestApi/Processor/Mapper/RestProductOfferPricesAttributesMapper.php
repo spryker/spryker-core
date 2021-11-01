@@ -113,7 +113,7 @@ class RestProductOfferPricesAttributesMapper implements RestProductOfferPricesAt
      * @param \Generated\Shared\Transfer\CurrentProductPriceTransfer $currentProductPriceTransfer
      * @param string $priceTypeName
      *
-     * @return array<int, array>|null
+     * @return array<int, array<string, mixed>>|null
      */
     protected function getVolumePricesData(
         CurrentProductPriceTransfer $currentProductPriceTransfer,
@@ -132,7 +132,7 @@ class RestProductOfferPricesAttributesMapper implements RestProductOfferPricesAt
     }
 
     /**
-     * @param array<int, array> $volumePricesData
+     * @param array<int, array<string, mixed>> $volumePricesData
      * @param \ArrayObject<int, \Generated\Shared\Transfer\RestProductPriceVolumesAttributesTransfer> $restProductPriceVolumesAttributesTransfers
      *
      * @return \ArrayObject<int, \Generated\Shared\Transfer\RestProductPriceVolumesAttributesTransfer>
