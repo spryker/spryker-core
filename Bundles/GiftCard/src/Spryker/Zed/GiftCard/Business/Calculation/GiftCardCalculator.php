@@ -170,7 +170,7 @@ class GiftCardCalculator implements GiftCardCalculatorInterface
             $giftCardTransfer = $this->giftCardActualValueHydrator->hydrate($giftCardTransfer);
 
             if ($giftCardPaymentTransfer) {
-                $giftCardPaymentTransfer->setAmount(
+                $giftCardPaymentTransfer->setAvailableAmount(
                     $giftCardTransfer->getActualValue(),
                 );
 
