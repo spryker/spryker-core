@@ -107,7 +107,7 @@ class ProductItemTaxRateCalculator implements CalculatorInterface
     }
 
     /**
-     * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $itemTransfers
+     * @param iterable<int, \Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
      * @return array<string>
      */
@@ -122,7 +122,7 @@ class ProductItemTaxRateCalculator implements CalculatorInterface
     }
 
     /**
-     * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $itemTransfers
+     * @param iterable<int, \Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
      * @return array<int>
      */
