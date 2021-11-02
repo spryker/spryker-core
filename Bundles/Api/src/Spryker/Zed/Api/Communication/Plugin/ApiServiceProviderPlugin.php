@@ -14,9 +14,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
- * @deprecated Use {@link \Spryker\Zed\Api\Communication\Plugin\ApiControllerEventDispatcherPlugin} instead.
- *
- * @see \Spryker\Zed\Api\Communication\Plugin\ApiControllerEventDispatcherPlugin
+ * @deprecated Use {@link \Spryker\Zed\Api\Communication\Plugin\EventDispatcher\ApiControllerEventDispatcherPlugin} instead.
  *
  * @method \Spryker\Zed\Api\Communication\ApiCommunicationFactory getFactory()
  * @method \Spryker\Zed\Api\Business\ApiFacadeInterface getFacade()
