@@ -25,9 +25,16 @@ class SaveSessionListener implements EventSubscriberInterface
         }
 
         $request = $event->getRequest();
-        if ($request->hasSession() && ($session = $request->getSession())->isStarted()) {
-            $session->save();
+        if (!$request->hasSession()) {
+            return;
         }
+
+        $session = $request->getSession();
+        if (!$session->isStarted()) {
+            return;
+        }
+
+        $session->save();
     }
 
     /**
