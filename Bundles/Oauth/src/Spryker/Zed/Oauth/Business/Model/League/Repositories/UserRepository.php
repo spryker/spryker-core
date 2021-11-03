@@ -33,7 +33,7 @@ class UserRepository implements UserRepositoryInterface
      * @param string $grantType The grant type used
      * @param \League\OAuth2\Server\Entities\ClientEntityInterface $clientEntity
      *
-     * @return \League\OAuth2\Server\Entities\UserEntityInterface
+     * @return \League\OAuth2\Server\Entities\UserEntityInterface|null
      */
     public function getUserEntityByUserCredentials(
         $username,
